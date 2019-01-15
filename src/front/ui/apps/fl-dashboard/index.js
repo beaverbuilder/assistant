@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { CurrentlyViewing } from 'components/currently-viewing'
+import { CurrentlyViewing } from './currently-viewing'
 
 export const DashboardTab = props => {
     return (
