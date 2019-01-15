@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: Assistant - Prototype
+ * Plugin Name: Assistant
  * Plugin URI: TBD
  * Author: Justin, Robby & Brent
  * Version: 0.1
