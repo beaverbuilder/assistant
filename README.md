@@ -1,6 +1,6 @@
-# Assistant Concept - Planning Work
+# Assistant - Work In Progress
 
-This is a collection of scratch work and pieces to be used in the assistant product concept. This is basically a static mockup at this point built with react.
+A tool for seeing what's happening inside WordPress and quickly navigating between pages & posts.
 
 ## Installation
 After cloning the repo you will need to build the js and css bundles before the plugin will display. You can do that by:
