@@ -1,6 +1,7 @@
 import React, { StrictMode, useState } from 'react'
 import { render } from 'react-dom'
 import { UI, ShowUITrigger } from './ui'
+import { CurrentPageViewContext } from 'components'
 
 /**
  * Setup the primary UI

@@ -1,8 +1,9 @@
-import React from 'react'
-import { HorizontalGroup, VerticalGroup, Padding, Icon } from 'components'
+import React, { useContext } from 'react'
+import { HorizontalGroup, VerticalGroup, Padding, Icon, CurrentPageViewContext } from 'components'
 import './style.scss'
 
 export const CurrentlyViewing = props => {
+	const { name, intro } = useContext(CurrentPageViewContext)
 
 	return (
 		<div className="fl-asst-currently-viewing">
@@ -11,8 +12,8 @@ export const CurrentlyViewing = props => {
 					<Icon />
 				</Padding>
 				<VerticalGroup>
-					<div className="fl-asst-pretitle">You Are Currently Viewing Page</div>
-					<div className="fl-asst-title">That Page You're Currently View, You Know The One</div>
+					<div className="fl-asst-pretitle">{intro}</div>
+					<div className="fl-asst-title">{name}</div>
 				</VerticalGroup>
 			</HorizontalGroup>
 		</div>

@@ -6,3 +6,5 @@ import './style.scss'
 export { Button, Icon }
 
 export { HorizontalGroup, VerticalGroup, Padding } from './layout-helpers'
+
+export { CurrentPageViewContext } from './contexts'
