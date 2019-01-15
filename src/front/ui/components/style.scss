@@ -1,0 +1,51 @@
+.fl-asst-button {
+    display: inline-flex;
+    flex-direction: row;
+    border: 2px solid transparent;
+    background: transparent;
+    color: var(--fl-text-color);
+    fill: currentColor;
+    line-height: 1.2;
+    padding: 7px 10px;
+
+    &:hover {
+        top:0;
+        border: 2px solid transparent;
+        background: #E7EBEF;
+        color: var(--fl-text-color);
+        fill: currentColor;
+    }
+    &:focus {
+        top:0;
+        border: 2px solid var(--fl-accent-color);
+        background: #E7EBEF;
+        color: var(--fl-text-color);
+        fill: currentColor;
+    }
+    &.fl-asst-button-is-selected {
+        color: var(--fl-accent-text-color);
+        border-color: var(--fl-accent-color);
+    }
+
+    &.fl-asst-outline-button {
+        background:white;
+        color: var(--fl-accent-text-color);
+        border-color: var(--fl-accent-color);
+
+        &:focus {
+            background: var(--fl-accent-color);
+            color: white;
+        }
+    }
+}
+.fl-asst-icon {
+    margin: 0 8px;
+    fill: currentColor;
+
+    &:first-child {
+        margin-left:0;
+    }
+    &:last-child {
+        margin-right:0;
+    }
+}

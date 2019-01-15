@@ -1,0 +1,26 @@
+:root {
+    --fl-background-color: #ffffff;
+    --fl-line-color: #DAE1E8;
+    --fl-text-color: #4B5A69;
+
+    --fl-accent-color: #3AA4CC;
+    --fl-accent-text-color: #1B81A8;
+
+    --fl-asst-alternate-bg-color: #F9FBFC;
+}
+.fl-asst-panel-contents {
+    background: var(--fl-background-color);
+    position: absolute;
+    height:100%;
+    width: 100%;
+    color: var(--fl-text-color);
+    font-size: 14px;
+    overflow: auto;
+
+    /**
+     * Top & Bottom Content Offsets
+     * Good idea to override these with calculated values for each screen.
+     */
+    padding-top:72px; // Match the header height
+    padding-bottom:50px; // Match the tab footer
+}
