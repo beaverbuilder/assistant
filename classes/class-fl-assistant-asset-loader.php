@@ -72,6 +72,7 @@ class FL_Assistant_Asset_Loader {
             'api' => array(
                 'root' => esc_url_raw( get_rest_url() ),
                 'nonce' => wp_create_nonce( 'wp_rest' ),
+                'plugin_url' => FL_ASSISTANT_URL,
             ),
             'current_page_view' => self::get_current_view(),
 			'site' => array(
@@ -160,31 +161,10 @@ class FL_Assistant_Asset_Loader {
             $post_type = get_post_type_object(get_post_type())->labels->singular_name;
             $intro = sprintf( esc_html__('Currently Viewing %s', 'fl-assistant'), $post_type );
             $name = get_the_title();
+        } elseif ( is_author() ) {
+            $intro = __('Currently Viewing Author', 'fl-assistant');
+            $name = wp_get_current_user()->display_name;
         }
-
-        /* JUST FOR REFERENCE - wp-includes/template-loader.php
-        $template = false;
-    	if     ( is_embed()          && $template = get_embed_template()          ) :
-    	elseif ( is_404()            && $template = get_404_template()            ) :
-    	elseif ( is_search()         && $template = get_search_template()         ) :
-    	elseif ( is_front_page()     && $template = get_front_page_template()     ) :
-    	elseif ( is_home()           && $template = get_home_template()           ) :
-    	elseif ( is_post_type_archive() && $template = get_post_type_archive_template() ) :
-    	elseif ( is_tax()            && $template = get_taxonomy_template()       ) :
-    	elseif ( is_attachment()     && $template = get_attachment_template()     ) :
-    		remove_filter('the_content', 'prepend_attachment');
-    	elseif ( is_single()         && $template = get_single_template()         ) :
-    	elseif ( is_page()           && $template = get_page_template()           ) :
-    	elseif ( is_singular()       && $template = get_singular_template()       ) :
-    	elseif ( is_category()       && $template = get_category_template()       ) :
-    	elseif ( is_tag()            && $template = get_tag_template()            ) :
-    	elseif ( is_author()         && $template = get_author_template()         ) :
-    	elseif ( is_date()           && $template = get_date_template()           ) :
-    	elseif ( is_archive()        && $template = get_archive_template()        ) :
-    	else :
-    		$template = get_index_template();
-    	endif;
-        */
 
         $data['intro'] = $intro;
         $data['name'] = $name;

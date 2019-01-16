@@ -28,3 +28,10 @@ export const Padding = ({ className, children }) => {
         <div className={classes}>{children}</div>
     )
 }
+
+export const Separator = props => {
+    const classes = classname({
+        'fl-asst-separator' : true
+    })
+    return <hr className={classes} />
+}
