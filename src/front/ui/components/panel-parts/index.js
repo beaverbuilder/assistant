@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon } from 'components'
+import { Button, AppTabButton, Icon } from 'components'
 import './style.scss'
 
 export const PanelFrame = ({ children }) => {
@@ -16,39 +16,21 @@ export const PanelFrame = ({ children }) => {
     )
 }
 
-export const PanelHeader = ({ title, onClose }) => {
-    return (
-        <div className="fl-asst-panel-header">
-            <div className="fl-asst-panel-title-bar">
-                <div className="fl-asst-panel-title">
-                    <Icon />
-                    <span>{title}</span>
-                </div>
-                <div className="fl-asst-panel-title-actions">
-                    <Button onClick={onClose}>
-                        <Icon name="close" />
-                    </Button>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 export const PanelChrome = ({ tabs, activeTabName, onTabClick, onClose }) => {
     return (
         <div className="fl-asst-panel-chrome">
-            <Button>
+            <AppTabButton>
                 <Icon name="notification-active" />
-            </Button>
+            </AppTabButton>
 
             <div className="fl-asst-app-tabs-area">
                 { Object.keys(tabs).map( key => {
                     const tab = tabs[key]
                     const isSelected = ( key === activeTabName ) ? true : false
                     return (
-                        <Button key={key} isSelected={isSelected} onClick={() => onTabClick(key)}>
+                        <AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick(key)}>
                             <Icon />
-                        </Button>
+                        </AppTabButton>
                     )
                 }) }
             </div>
@@ -57,5 +39,11 @@ export const PanelChrome = ({ tabs, activeTabName, onTabClick, onClose }) => {
                 <Icon name="close" />
             </Button>
         </div>
+    )
+}
+
+export const ScreenHeader = ({ children }) => {
+    return (
+        <div className="fl-asst-screen-header">{children}</div>
     )
 }

@@ -43,6 +43,7 @@
         }
     }
 }
+
 .fl-asst-icon {
     margin: 0 8px;
     fill: currentColor;
@@ -52,5 +53,26 @@
     }
     &:last-child {
         margin-right:0;
+    }
+}
+
+.fl-asst-app-tab-button {
+    border-radius: 0;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 7px 12px;
+
+    &:hover {
+        border: none;
+        border-bottom: 3px solid transparent;
+    }
+
+    &:focus {
+        border: none;
+        border-bottom: 3px solid transparent;
+    }
+
+    &.fl-asst-button-is-selected {
+        border-bottom-color: var(--fl-accent-color);
     }
 }

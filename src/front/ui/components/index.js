@@ -1,10 +1,14 @@
 import React from 'react'
-import { Icon } from './icon'
-import { Button } from './button'
 import './style.scss'
 
-export { Button, Icon }
+export { Icon } from './icon'
+export { Button, AppTabButton } from './button'
 
-export { HorizontalGroup, VerticalGroup, Padding, Separator } from './layout-helpers'
+export {
+    HorizontalGroup,
+    VerticalGroup,
+    Padding,
+    Separator,
+} from './layout-helpers'
 
 export { CurrentPageViewContext } from './contexts'

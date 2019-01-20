@@ -30,6 +30,7 @@ const App = props => {
 
 // Render App into the document
 const root = document.createElement('div')
+root.classList.add('fl-asst')
 document.body.appendChild(root)
 
 render(<App />, root)

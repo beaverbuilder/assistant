@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from 'react'
+import { ScreenHeader } from 'components/panel-parts'
 import { PostList } from 'components/post-list'
 import { TabBar } from 'components/tab-bar'
 
 export const NavigateTab = props => {
-    const [ currentTab, setCurrentTab ] = useState( 'post' )
+    const [ currentTab, setCurrentTab ] = useState( 'page' )
     const { types } = FLAssistantInitialData.site
     const tabs = []
 
@@ -21,6 +22,11 @@ export const NavigateTab = props => {
 
     return (
         <Fragment>
+
+            <ScreenHeader>
+                <div className="fl-asst-screen-title">Find</div>
+            </ScreenHeader>
+
             <TabBar tabs={ tabs } />
             <PostList type={ currentTab } />
         </Fragment>

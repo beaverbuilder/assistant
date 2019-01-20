@@ -11,3 +11,15 @@ export const Button = props => {
         <button className={classes} onClick={onClick}>{children}</button>
     )
 }
+
+export const AppTabButton = props => {
+    const { children, isSelected, onClick, className } = props
+    const classes = classname({
+        'fl-asst-button': true,
+        'fl-asst-app-tab-button': true,
+        'fl-asst-button-is-selected': isSelected
+    }, className )
+    return (
+        <button className={classes} onClick={onClick}>{children}</button>
+    )
+}
