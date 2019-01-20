@@ -19,18 +19,19 @@ export const PanelFrame = ({ children }) => {
 export const PanelChrome = ({ tabs, activeTabName, onTabClick, onClose }) => {
     return (
         <div className="fl-asst-panel-chrome">
-            <AppTabButton>
-                <Icon name="notification-active" />
+            <AppTabButton onClick={ () => onTabClick('fl-notifications')}>
+                <Icon name="notifications-active" />
             </AppTabButton>
 
             <div className="fl-asst-app-tabs-area">
                 { Object.keys(tabs).map( key => {
                     const tab = tabs[key]
                     const isSelected = ( key === activeTabName ) ? true : false
+
+                    if ( tab.showTabIcon === false ) return null
+
                     return (
-                        <AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick(key)}>
-                            <Icon />
-                        </AppTabButton>
+                        <AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick(key)}>{tab.icon}</AppTabButton>
                     )
                 }) }
             </div>

@@ -8,14 +8,20 @@ import './style.scss'
 const tabs = {
     'fl-dashboard': {
 		label: 'Dashboard',
-        title: `Welcome, ${ FLAssistantInitialData.user.name }`,
-        content: <DashboardTab />
+        content: <DashboardTab />,
+        icon: <Icon />,
     },
     'fl-navigate': {
 		label: 'Navigate',
-        title: 'Navigate',
-        content: <NavigateTab />
+        content: <NavigateTab />,
+        icon: <Icon name="find-app" />,
     },
+    'fl-notifications': {
+        label: 'Notifications',
+        content: <div>Notifications Here</div>,
+        icon: <Icon name="notifications-active" />,
+        showTabIcon: false,
+    }
 }
 const initialTabName = 'fl-navigate'
 
@@ -53,7 +59,6 @@ const UI = ({ isShowing, toggleUI }) => {
         </PanelFrame>
     )
 }
-
 
 /**
  * Button To Show/Hide The UI
