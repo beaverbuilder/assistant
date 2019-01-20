@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
-import { Button, Icon } from 'components'
-import { PanelFrame, PanelHeader, PanelFooter } from 'components/panel-parts'
+import { Button, Icon, VerticalGroup, Separator } from 'components'
+import { PanelFrame, PanelChrome } from 'components/panel-parts'
 import { TabManager, Tab } from 'components/tabs'
 import { DashboardTab, NavigateTab } from 'apps'
 import './style.scss'
@@ -16,15 +16,8 @@ const tabs = {
         title: 'Navigate',
         content: <NavigateTab />
     },
-    'scratchwork': {
-		label: 'Scratchwork',
-        title: 'Scratchwork',
-        content: <div>Just a place for junk experiments.</div>
-    },
 }
-const initialTabName = 'fl-dashboard'
-
-
+const initialTabName = 'fl-navigate'
 
 /**
  * Main UI Controller
@@ -37,19 +30,26 @@ const UI = ({ isShowing, toggleUI }) => {
 
     return (
         <PanelFrame>
-            <div className="fl-asst-panel-contents">
-                <TabManager activeTabName={activeTabName}>
-                    {Object.keys(tabs).map( key => {
-                        const tab = tabs[key]
-                        return (
-                            <Tab key={key} name={key}>{tab.content}</Tab>
-                        )
-                    })}
-                </TabManager>
-            </div>
+            <div className="fl-asst-panel-wrap">
+                <PanelChrome
+                    tabs={tabs}
+                    onTabClick={setActiveTabName}
+                    activeTabName={activeTabName}
+                    onClose={toggleUI}
+                />
+                <Separator isSlim={true} />
 
-            <PanelHeader title={title} onClose={toggleUI} />
-            <PanelFooter tabs={tabs} onTabClick={setActiveTabName} activeTabName={activeTabName} />
+                <div className="fl-asst-panel-contents">
+                    <TabManager activeTabName={activeTabName}>
+                        {Object.keys(tabs).map( key => {
+                            const tab = tabs[key]
+                            return (
+                                <Tab key={key} name={key}>{tab.content}</Tab>
+                            )
+                        })}
+                    </TabManager>
+                </div>
+            </div>
         </PanelFrame>
     )
 }

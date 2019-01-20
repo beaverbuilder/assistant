@@ -34,21 +34,28 @@ export const PanelHeader = ({ title, onClose }) => {
     )
 }
 
-export const PanelFooter = ({ tabs, onTabClick, activeTabName }) => {
+export const PanelChrome = ({ tabs, activeTabName, onTabClick, onClose }) => {
     return (
-        <div className="fl-asst-footer">
-            <div className="fl-asst-footer-tabs">
-                {Object.keys(tabs).map( key => {
+        <div className="fl-asst-panel-chrome">
+            <Button>
+                <Icon name="notification-active" />
+            </Button>
+
+            <div className="fl-asst-app-tabs-area">
+                { Object.keys(tabs).map( key => {
                     const tab = tabs[key]
                     const isSelected = ( key === activeTabName ) ? true : false
                     return (
                         <Button key={key} isSelected={isSelected} onClick={() => onTabClick(key)}>
                             <Icon />
-                            <span>{tab.label}</span>
                         </Button>
                     )
-                })}
+                }) }
             </div>
+
+            <Button onClick={onClose}>
+                <Icon name="close" />
+            </Button>
         </div>
     )
 }

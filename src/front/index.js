@@ -6,7 +6,7 @@ import { CurrentPageViewContext } from 'components'
 /**
  * Setup the primary UI
  */
-const initialIsShowingUI = false
+const initialIsShowingUI = true
 
 /**
  * The Root Component

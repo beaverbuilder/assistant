@@ -9,11 +9,17 @@ import request from 'utils/request'
  * @return {Object}
  */
 export function getPosts( args, complete ) {
-	let route = `fl-assistant/v1/posts?type=${ args.type }`
+	const route = `fl-assistant/v1/posts?type=${ args.type }`
 
 	if ( args.search ) {
 		route += `&search=${ args.search }`
 	}
+
+	return request( { route, complete } )
+}
+
+export function getUsers( args = {}, complete ) {
+	const route = `fl-assistant/v1/users`
 
 	return request( { route, complete } )
 }

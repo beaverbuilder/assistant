@@ -7,6 +7,10 @@
     fill: currentColor;
     line-height: 1.2;
     padding: 7px 10px;
+    font-family: var(--fl-asst-base-font-family);
+    font-size: var(--fl-asst-base-text-size);
+    font-weight: normal;
+    line-height: 1.2;
 
     &:hover {
         top:0;
@@ -21,6 +25,7 @@
         background: #E7EBEF;
         color: var(--fl-text-color);
         fill: currentColor;
+        outline: none;
     }
     &.fl-asst-button-is-selected {
         color: var(--fl-accent-text-color);

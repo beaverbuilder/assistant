@@ -29,9 +29,10 @@ export const Padding = ({ className, children }) => {
     )
 }
 
-export const Separator = props => {
+export const Separator = ({ isSlim }) => {
     const classes = classname({
-        'fl-asst-separator' : true
+        'fl-asst-separator' : true,
+        'fl-asst-separator-slim' : isSlim,
     })
     return <hr className={classes} />
 }
