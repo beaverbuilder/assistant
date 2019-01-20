@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { Button, Icon, VerticalGroup, Separator } from 'components'
 import { PanelFrame, PanelChrome } from 'components/panel-parts'
 import { TabManager, Tab } from 'components/tabs'
-import { DashboardTab, NavigateTab } from 'apps'
+import { DashboardTab, NavigateTab, NotificationsTab } from 'apps'
 import './style.scss'
 
 const tabs = {
@@ -18,7 +18,7 @@ const tabs = {
     },
     'fl-notifications': {
         label: 'Notifications',
-        content: <div>Notifications Here</div>,
+        content: <NotificationsTab />,
         icon: <Icon name="notifications-active" />,
         showTabIcon: false,
     }
