@@ -11,8 +11,7 @@ import './style.scss'
  * Main UI Controller
  */
 export const UI = ({ isShowing, toggleUI }) => {
-	const apps = useStore( 'apps' )
-	const activeApp = useStore( 'activeApp' )
+	const { apps, activeApp } = useStore()
     const { label, title } = apps[ activeApp ]
 
     if ( !isShowing ) return null

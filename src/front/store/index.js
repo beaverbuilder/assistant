@@ -8,18 +8,11 @@ const store = createStore( reducers, {
 	...FLAssistantInitialData,
 } )
 
-export const useStore = ( key ) => {
-	const [ value, setValue ] = useState( store.getState()[ key ] )
-
-	const unsubscribe = store.subscribe( () => {
-		setValue( store.getState()[ key ] )
-	} )
-
-	useEffect( () => {
-		return () => unsubscribe()
-	} )
-
-	return value
+export const useStore = () => {
+	const [ state, setState ] = useState( store.getState() )
+	const unsubscribe = store.subscribe( () => setState( store.getState() ) )
+	useEffect( () => () => unsubscribe() )
+	return state
 }
 
 export default store
