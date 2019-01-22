@@ -1,23 +1,17 @@
 import React, { Fragment, useState } from 'react'
+import { connect } from 'react-redux'
 import { Button, Icon, VerticalGroup, Separator } from 'components'
 import { PanelFrame, PanelChrome } from 'components/panel-parts'
 import { TabManager, Tab } from 'components/tabs'
-import store from 'store'
 import 'apps/core'
 import './style.scss'
 
 /**
  * Main UI Controller
  */
-const UI = ({ isShowing, toggleUI }) => {
-	const { apps } = store.getState()
-	const [ tabs, setTabs ] = useState(apps)
+const UI = ({ isShowing, toggleUI, apps }) => {
     const [ activeTabName, setActiveTabName ] = useState('fl-navigate')
-    const { label, title } = tabs[activeTabName]
-
-	store.subscribe( () => {
-		setTabs( store.getState().apps )
-	} )
+    const { label, title } = apps[activeTabName]
 
     if ( !isShowing ) return null
 
@@ -25,7 +19,7 @@ const UI = ({ isShowing, toggleUI }) => {
         <PanelFrame>
             <div className="fl-asst-panel-wrap">
                 <PanelChrome
-                    tabs={tabs}
+                    tabs={apps}
                     onTabClick={setActiveTabName}
                     activeTabName={activeTabName}
                     onClose={toggleUI}
@@ -34,8 +28,8 @@ const UI = ({ isShowing, toggleUI }) => {
 
                 <div className="fl-asst-panel-contents">
                     <TabManager activeTabName={activeTabName}>
-                        {Object.keys(tabs).map( key => {
-                            const tab = tabs[key]
+                        {Object.keys(apps).map( key => {
+                            const tab = apps[key]
                             return (
                                 <Tab key={key} name={key}>{tab.content}</Tab>
                             )
@@ -47,10 +41,18 @@ const UI = ({ isShowing, toggleUI }) => {
     )
 }
 
+export default connect(
+	state => {
+		return {
+			apps: state.apps
+		}
+	}
+)( UI )
+
 /**
  * Button To Show/Hide The UI
  */
-const ShowUITrigger = ({ onClick }) => {
+export const ShowUITrigger = ({ onClick }) => {
     const styles = {
         position: 'fixed',
         right: 0,
@@ -66,5 +68,3 @@ const ShowUITrigger = ({ onClick }) => {
         </div>
     )
 }
-
-export { UI, ShowUITrigger }

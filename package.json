@@ -14,7 +14,7 @@
         "classnames": "^2.2.6",
         "react": "^16.8.0-alpha.0",
         "react-dom": "^16.8.0-alpha.0",
-        "react-redux": "^5.1.1",
+        "react-redux": "^6.0.0",
         "redux": "^4.0.1",
         "redux-actions": "^2.6.4",
         "uuid": "^3.3.2"
