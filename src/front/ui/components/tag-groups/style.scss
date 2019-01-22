@@ -18,18 +18,39 @@
     .fl-asst-tag {
         display: inline-flex;
         font-size: 14px;
-        font-weight: 500;
-        padding: 8px 10px;
+        padding: 5px 8px;
         margin-right: 5px;
         margin-bottom: 5px;
         background:white;
         border: 1px solid #DAE1E8;
         color: #5A6367;
+
+        &:hover {
+            top:0;
+            color: black;
+            border-color: #BEC4C9;
+        }
+
+        &:focus {
+            top:0;
+        }
     }
     .fl-asst-tag-count {
         opacity: .75;
         padding-left: 10px;
         font-weight: normal;
+    }
+}
+.fl-asst-tag-group-appearance-muted {
+    .fl-asst-tag {
+        color: white;
+        background-color: var(--fl-asst-base-art-color);
+        border-color: transparent;
+
+        &:hover {
+            color: white;
+            background-color: #60758A;
+        }
     }
 }
 .fl-asst-tag-group-appearance-vibrant {
@@ -38,6 +59,10 @@
         color: white;
         background-color: var(--fl-asst-base-art-color);
         border-color: transparent;
+
+        &:hover {
+            color: white;
+        }
     }
     .fl-asst-tag:nth-child(5n+1) { background-color: #007DAC; }
     .fl-asst-tag:nth-child(5n+2) { background-color: #02C67A; }

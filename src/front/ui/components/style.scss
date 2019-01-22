@@ -30,6 +30,10 @@
     &.fl-asst-button-is-selected {
         color: var(--fl-accent-text-color);
         border-color: var(--fl-accent-color);
+
+        .fl-asst-icon {
+            fill: var(--fl-accent-color);
+        }
     }
 
     &.fl-asst-outline-button {
@@ -56,7 +60,7 @@
     }
 }
 
-.fl-asst-app-tab-button {
+.fl-asst-button.fl-asst-app-tab-button {
     border-radius: 0;
     border: none;
     border-bottom: 3px solid transparent;

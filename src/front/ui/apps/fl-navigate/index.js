@@ -35,6 +35,12 @@ export const NavigateTab = props => {
                     <Tag count="9">Categories</Tag>
                     <Tag count="23">Tags</Tag>
                 </TagGroup>
+                <TagGroup title="Find By Something Else" appearance="muted">
+                    <Tag>Today</Tag>
+                    <Tag>This Week</Tag>
+                    <Tag>This Month</Tag>
+                    <Tag>2019</Tag>
+                </TagGroup>
                 <TagGroup title="Find By Date Edited">
                     <Tag>Today</Tag>
                     <Tag>This Week</Tag>
@@ -42,8 +48,6 @@ export const NavigateTab = props => {
                     <Tag>2019</Tag>
                 </TagGroup>
             </ScreenHeader>
-
-            <TabBar tabs={ tabs } />
             <PostList type={ currentTab } />
         </Fragment>
     )

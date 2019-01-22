@@ -5,7 +5,8 @@ import './style.scss'
 export const TagGroup = ({ title, children, appearance }) => {
     const classes = classname({
         'fl-asst-tag-group' : true,
-        'fl-asst-tag-group-appearance-vibrant' : 'vibrant' == appearance ? true : false
+        'fl-asst-tag-group-appearance-vibrant' : 'vibrant' == appearance ? true : false,
+        'fl-asst-tag-group-appearance-muted' : 'muted' == appearance ? true : false,
     })
     return (
         <div className={classes}>

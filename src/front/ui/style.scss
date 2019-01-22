@@ -4,7 +4,7 @@
     --fl-text-color: #4B5A69;
     --fl-asst-base-art-color: #7A8998; /* Icons and buttons at rest */
 
-    --fl-utility-background-color: #F6F8F9; /* Utility containers like partials */
+    --fl-utility-background-color: #EDF2F4; /* Utility containers like partials */
     --fl-asst-alternate-bg-color: #F9FBFC; /* Alternating items in a list */
 
     --fl-accent-color: #3AA4CC;
@@ -21,8 +21,12 @@
     input, select, button, textarea {
         font-family: var(--fl-asst-base-font-family);
         font-size: var(--fl-asst-base-text-size);
+        font-weight: normal;
+        line-height: 1.2;
+        text-transform: none;
         padding: 8px;
         margin:0;
+        border-radius: 2px;
     }
 
     .fl-asst-panel-wrap {
@@ -38,5 +42,9 @@
         flex: 1 1 auto;
         color: var(--fl-text-color);
         overflow: auto;
+    }
+
+    .fl-asst-icon {
+        fill: var(--fl-asst-base-art-color);
     }
 }

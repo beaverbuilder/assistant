@@ -19,7 +19,7 @@ export const PanelFrame = ({ children }) => {
 export const PanelChrome = ({ tabs, activeTabName, onTabClick, onClose }) => {
     return (
         <div className="fl-asst-panel-chrome">
-            <AppTabButton onClick={ () => onTabClick('fl-notifications')}>
+            <AppTabButton onClick={ () => onTabClick('fl-notifications')} isSelected={ activeTabName === 'fl-notifications' ? true : false }>
                 <Icon name="notifications-active" />
             </AppTabButton>
 
