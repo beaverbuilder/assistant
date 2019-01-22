@@ -1,22 +1,18 @@
 import React, { Fragment, useState } from 'react'
-import { connect } from 'react-redux'
 import { Button, Icon, VerticalGroup, Separator } from 'components'
 import { PanelFrame, PanelChrome } from 'components/panel-parts'
 import { TabManager, Tab } from 'components/tabs'
-import { updateActiveApp } from 'store/actions'
-import 'apps/core'
+import { setActiveApp } from 'store/actions'
+import { useStore } from 'store'
+import 'apps'
 import './style.scss'
 
 /**
  * Main UI Controller
  */
-const UI = ( {
-	isShowing,
-	toggleUI,
-	apps,
-	activeApp,
-	setActiveApp,
-} ) => {
+export const UI = ({ isShowing, toggleUI }) => {
+	const apps = useStore( 'apps' )
+	const activeApp = useStore( 'activeApp' )
     const { label, title } = apps[ activeApp ]
 
     if ( !isShowing ) return null
@@ -46,22 +42,6 @@ const UI = ( {
         </PanelFrame>
     )
 }
-
-export default connect(
-	state => {
-		return {
-			activeApp: state.activeApp,
-			apps: state.apps,
-		}
-	},
-	dispatch => {
-		return {
-			setActiveApp: key => {
-				dispatch( updateActiveApp( key ) )
-			}
-		}
-	}
-)( UI )
 
 /**
  * Button To Show/Hide The UI

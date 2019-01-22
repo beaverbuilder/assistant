@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 export function activeApp( state = {}, action ) {
 	switch ( action.type ) {
-		case 'UPDATE_ACTIVE_APP':
+		case 'SET_ACTIVE_APP':
 			return action.key
 		default:
 			return state
@@ -11,7 +11,7 @@ export function activeApp( state = {}, action ) {
 
 export function apps( state = {}, action ) {
 	switch ( action.type ) {
-		case 'ADD_APP':
+		case 'REGISTER_APP':
 			return {
 				[ action.key ]: {
 					label: 'Untitled App',

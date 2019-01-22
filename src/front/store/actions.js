@@ -1,14 +1,16 @@
-export function addApp( key, config ) {
-	return {
-		type: 'ADD_APP',
+import store from 'store'
+
+export function registerApp( key, config ) {
+	store.dispatch( {
+		type: 'REGISTER_APP',
 		key,
 		config,
-	}
+	} )
 }
 
-export function updateActiveApp( key ) {
-	return {
-		type: 'UPDATE_ACTIVE_APP',
+export function setActiveApp( key ) {
+	store.dispatch( {
+		type: 'SET_ACTIVE_APP',
 		key,
-	}
+	} )
 }

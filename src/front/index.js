@@ -1,7 +1,7 @@
 import React, { StrictMode, useState } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import UI, { ShowUITrigger } from './ui'
+import { UI, ShowUITrigger } from './ui'
 import './api'
 import store from 'store'
 
