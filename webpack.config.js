@@ -6,7 +6,7 @@ const production = process.env.NODE_ENV === 'production' ? '.min' : ''
 const alias = {
     ui: path.resolve( __dirname, './src/front/ui/'),
     components: path.resolve( __dirname, './src/front/ui/components'),
-    apps: path.resolve( __dirname, './src/front/ui/apps'),
+    apps: path.resolve( __dirname, './src/front/apps'),
     utils: path.resolve( __dirname, './src/utils'),
 	store: path.resolve( __dirname, './src/front/store/'),
 }
