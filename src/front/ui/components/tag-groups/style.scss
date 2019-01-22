@@ -46,10 +46,13 @@
         color: white;
         background-color: var(--fl-asst-base-art-color);
         border-color: transparent;
+        transition-property: background-color;
+        transition-duration: .15s;
 
         &:hover {
             color: white;
             background-color: #60758A;
+            border-color: transparent;
         }
     }
 }
@@ -59,18 +62,53 @@
         color: white;
         background-color: var(--fl-asst-base-art-color);
         border-color: transparent;
+        transition-property: background-color;
+        transition-duration: .15s;
 
         &:hover {
             color: white;
+            border-color: transparent;
         }
     }
-    .fl-asst-tag:nth-child(5n+1) { background-color: #007DAC; }
-    .fl-asst-tag:nth-child(5n+2) { background-color: #02C67A; }
-    .fl-asst-tag:nth-child(5n+3) { background-color: #5713FE; }
+    .fl-asst-tag:nth-child(5n+1) {
+        /* Blue */
+        background-color: #007DAC;
+
+        &:hover {
+            background-color: #008DC3;
+        }
+    }
+    .fl-asst-tag:nth-child(5n+2) {
+        /* Green */
+        background-color: #02C67A;
+
+        &:hover {
+            background-color: #00DD88;
+        }
+    }
+    .fl-asst-tag:nth-child(5n+3) {
+        /* Purple */
+        background-color: #5713FE;
+
+        &:hover {
+            background-color: #6E32FF;
+        }
+    }
     .fl-asst-tag:nth-child(5n+4) {
         /* yellow */
         color: black;
         background-color: #FFC400;
+
+        &:hover {
+            background-color: #FFD137;
+        }
     }
-    .fl-asst-tag:nth-child(5n+5) { background-color: #E01041; }
+    .fl-asst-tag:nth-child(5n+5) {
+        /* Red */
+        background-color: #E01041;
+
+        &:hover {
+            background-color: #FF003C;
+        }
+    }
 }
