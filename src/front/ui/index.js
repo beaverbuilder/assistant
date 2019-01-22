@@ -16,7 +16,6 @@ const UI = ({ isShowing, toggleUI }) => {
     const { label, title } = tabs[activeTabName]
 
 	store.subscribe( () => {
-		console.log( 'here' )
 		setTabs( store.getState().apps )
 	} )
 
