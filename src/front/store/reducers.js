@@ -1,5 +1,14 @@
 import { combineReducers } from 'redux'
 
+export function activeApp( state = {}, action ) {
+	switch ( action.type ) {
+		case 'UPDATE_ACTIVE_APP':
+			return action.key
+		default:
+			return state
+	}
+}
+
 export function apps( state = {}, action ) {
 	switch ( action.type ) {
 		case 'ADD_APP':
@@ -20,7 +29,10 @@ export function apps( state = {}, action ) {
 
 export default function( state = {}, action ) {
 
-	const reducers = { apps }
+	const reducers = {
+		activeApp,
+		apps,
+	}
 
 	Object.entries( state ).map( ( [ key, value ] ) => {
 		if ( ! reducers[ key ] ) {

@@ -3,15 +3,21 @@ import { connect } from 'react-redux'
 import { Button, Icon, VerticalGroup, Separator } from 'components'
 import { PanelFrame, PanelChrome } from 'components/panel-parts'
 import { TabManager, Tab } from 'components/tabs'
+import { updateActiveApp } from 'store/actions'
 import 'apps/core'
 import './style.scss'
 
 /**
  * Main UI Controller
  */
-const UI = ({ isShowing, toggleUI, apps }) => {
-    const [ activeTabName, setActiveTabName ] = useState('fl-navigate')
-    const { label, title } = apps[activeTabName]
+const UI = ( {
+	isShowing,
+	toggleUI,
+	apps,
+	activeApp,
+	setActiveApp,
+} ) => {
+    const { label, title } = apps[ activeApp ]
 
     if ( !isShowing ) return null
 
@@ -20,14 +26,14 @@ const UI = ({ isShowing, toggleUI, apps }) => {
             <div className="fl-asst-panel-wrap">
                 <PanelChrome
                     tabs={apps}
-                    onTabClick={setActiveTabName}
-                    activeTabName={activeTabName}
+                    onTabClick={setActiveApp}
+                    activeTabName={activeApp}
                     onClose={toggleUI}
                 />
                 <Separator isSlim={true} />
 
                 <div className="fl-asst-panel-contents">
-                    <TabManager activeTabName={activeTabName}>
+                    <TabManager activeTabName={activeApp}>
                         {Object.keys(apps).map( key => {
                             const tab = apps[key]
                             return (
@@ -44,7 +50,15 @@ const UI = ({ isShowing, toggleUI, apps }) => {
 export default connect(
 	state => {
 		return {
-			apps: state.apps
+			activeApp: state.activeApp,
+			apps: state.apps,
+		}
+	},
+	dispatch => {
+		return {
+			setActiveApp: key => {
+				dispatch( updateActiveApp( key ) )
+			}
 		}
 	}
 )( UI )

@@ -5,3 +5,10 @@ export function addApp( key, config ) {
 		config,
 	}
 }
+
+export function updateActiveApp( key ) {
+	return {
+		type: 'UPDATE_ACTIVE_APP',
+		key,
+	}
+}
