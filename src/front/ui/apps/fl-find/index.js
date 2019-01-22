@@ -1,10 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { ScreenHeader } from 'components/panel-parts'
 import { PostList } from 'components/post-list'
-import { TabBar } from 'components/tab-bar'
-import { TagGroup, Tag } from 'components/tag-groups'
+import { TagGroup, Tag } from 'components'
 
-export const NavigateTab = props => {
+export const FindTab = props => {
     const [ currentTab, setCurrentTab ] = useState( 'page' )
     const { types } = FLAssistantInitialData.site
     const tabs = []
@@ -23,7 +22,6 @@ export const NavigateTab = props => {
 
     return (
         <Fragment>
-
             <ScreenHeader>
                 <div className="fl-asst-screen-title">Find</div>
                 <TagGroup title="Find By Type" appearance="vibrant">

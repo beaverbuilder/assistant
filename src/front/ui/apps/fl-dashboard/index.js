@@ -9,8 +9,10 @@ export const DashboardTab = props => {
         <Fragment>
             <ScreenHeader>
                 <div className="fl-asst-screen-title">Welcome, {name}</div>
+                <CurrentlyViewing />
             </ScreenHeader>
-			<CurrentlyViewing />
+
+            Widgets, yo.
             <Separator />
 		</Fragment>
     )
