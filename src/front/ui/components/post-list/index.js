@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react'
 import classname from 'classnames'
-import { getPosts } from 'utils/api'
+import { getPosts } from 'utils/rest-api'
 import { Icon } from 'components'
 import { PostListItem } from 'components/post-list/item'
 import { PostListFilter } from 'components/post-list/filter'

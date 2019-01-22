@@ -8,6 +8,7 @@ const alias = {
     components: path.resolve( __dirname, './src/front/ui/components'),
     apps: path.resolve( __dirname, './src/front/ui/apps'),
     utils: path.resolve( __dirname, './src/utils'),
+	store: path.resolve( __dirname, './src/front/store/'),
 }
 const entry = {
     front: './src/front/index.js',

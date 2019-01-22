@@ -1,7 +1,9 @@
 import React, { StrictMode, useState } from 'react'
 import { render } from 'react-dom'
+import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
-import { CurrentPageViewContext } from 'components'
+import './api'
+import store from 'store'
 
 /**
  * Setup the primary UI
@@ -18,13 +20,15 @@ const App = props => {
     const toggleUI = () => isShowingUI ? setIsShowingUI(false) : setIsShowingUI(true)
 
     return (
-        <StrictMode>
-            {/* This is the button that toggles the UI panel */}
-            <ShowUITrigger onClick={toggleUI} />
+		<StrictMode>
+			<Provider store={store}>
+	            {/* This is the button that toggles the UI panel */}
+	            <ShowUITrigger onClick={toggleUI} />
 
-            {/* This is the panel itself */}
-            <UI isShowing={isShowingUI} toggleUI={toggleUI} />
-        </StrictMode>
+	            {/* This is the panel itself */}
+	            <UI isShowing={isShowingUI} toggleUI={toggleUI} />
+			</Provider>
+		</StrictMode>
     )
 }
 
