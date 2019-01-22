@@ -3,7 +3,9 @@ import { Icon } from 'components'
 import { DashboardTab } from './fl-dashboard'
 import { NavigateTab } from './fl-navigate'
 import { NotificationsTab } from './fl-notifications'
-import { registerApp } from 'store/actions'
+import { useDispatch } from 'store'
+
+const { registerApp } = useDispatch()
 
 registerApp( 'fl-dashboard', {
 	label: 'Dashboard',

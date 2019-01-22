@@ -2,8 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { Button, Icon, VerticalGroup, Separator } from 'components'
 import { PanelFrame, PanelChrome } from 'components/panel-parts'
 import { TabManager, Tab } from 'components/tabs'
-import { setActiveApp } from 'store/actions'
-import { useStore } from 'store'
+import { useStore, useDispatch } from 'store'
 import 'apps'
 import './style.scss'
 
@@ -12,6 +11,7 @@ import './style.scss'
  */
 export const UI = ({ isShowing, toggleUI }) => {
 	const { apps, activeApp } = useStore()
+	const { setActiveApp } = useDispatch()
     const { label, title } = apps[ activeApp ]
 
     if ( !isShowing ) return null
