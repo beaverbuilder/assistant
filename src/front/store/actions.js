@@ -1,5 +1,3 @@
-import store from 'store'
-
 export function registerApp( key, config ) {
 	return {
 		type: 'REGISTER_APP',
