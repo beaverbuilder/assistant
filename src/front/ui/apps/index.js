@@ -1,4 +1,6 @@
+import store from 'store'
+import { addApp } from 'store/actions'
 
-export { DashboardTab } from './fl-dashboard'
-export { NavigateTab } from './fl-navigate'
-export { NotificationsTab } from './fl-notifications'
+export const registerApp = ( key, config ) => {
+	store.dispatch( addApp( key, config ) )
+}

@@ -1,2 +1,2 @@
-import './api'
+import './rest-api'
 import './request'

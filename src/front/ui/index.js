@@ -2,35 +2,23 @@ import React, { Fragment, useState } from 'react'
 import { Button, Icon, VerticalGroup, Separator } from 'components'
 import { PanelFrame, PanelChrome } from 'components/panel-parts'
 import { TabManager, Tab } from 'components/tabs'
-import { DashboardTab, NavigateTab, NotificationsTab } from 'apps'
+import store from 'store'
+import 'apps/core'
 import './style.scss'
-
-const tabs = {
-    'fl-dashboard': {
-		label: 'Dashboard',
-        content: <DashboardTab />,
-        icon: <Icon />,
-    },
-    'fl-navigate': {
-		label: 'Navigate',
-        content: <NavigateTab />,
-        icon: <Icon name="find-app" />,
-    },
-    'fl-notifications': {
-        label: 'Notifications',
-        content: <NotificationsTab />,
-        icon: <Icon name="notifications-active" />,
-        showTabIcon: false,
-    }
-}
-const initialTabName = 'fl-navigate'
 
 /**
  * Main UI Controller
  */
 const UI = ({ isShowing, toggleUI }) => {
-    const [ activeTabName, setActiveTabName ] = useState(initialTabName)
+	const { apps } = store.getState()
+	const [ tabs, setTabs ] = useState(apps)
+    const [ activeTabName, setActiveTabName ] = useState('fl-navigate')
     const { label, title } = tabs[activeTabName]
+
+	store.subscribe( () => {
+		console.log( 'here' )
+		setTabs( store.getState().apps )
+	} )
 
     if ( !isShowing ) return null
 
