@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react'
-import { Button, Icon, VerticalGroup, Separator } from 'components'
+import React, { Fragment, useState, cloneElement } from 'react'
+import { Button, Icon, VerticalGroup, Separator, CurrentTabContext } from 'components'
 import { PanelFrame, PanelChrome } from 'components/panel-parts'
 import { TabManager, Tab } from 'components/tabs'
 import { useStore, useDispatch } from 'store'
@@ -32,7 +32,11 @@ export const UI = ({ isShowing, toggleUI }) => {
                         {Object.keys(apps).map( key => {
                             const tab = apps[key]
                             return (
-                                <Tab key={key} name={key}>{tab.content}</Tab>
+                                <Tab key={key} name={key}>
+									<CurrentTabContext.Provider value={tab}>
+										{tab.content()}
+									</CurrentTabContext.Provider>
+								</Tab>
                             )
                         })}
                     </TabManager>

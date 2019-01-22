@@ -10,25 +10,25 @@ const { registerApp } = useDispatch()
 
 registerApp( 'fl-notifications', {
 	label: 'Notifications',
-	content: <NotificationsTab />,
+	content: props => <NotificationsTab {...props} />,
 	icon: <Icon name="notifications-active" />,
 	showTabIcon: false,
 } )
 
 registerApp( 'fl-media', {
 	label: 'Media',
-	content: <MediaTab />,
+	content: props => <MediaTab {...props} />,
 	icon: <Icon />,
 } )
 
 registerApp( 'fl-find', {
 	label: 'Find',
-	content: <FindTab />,
+	content: props => <FindTab {...props} />,
 	icon: <Icon name="find-app" />,
 } )
 
 registerApp( 'fl-dashboard', {
 	label: 'Dashboard',
-	content: <DashboardTab />,
+	content: props => <DashboardTab {...props} />,
 	icon: <Icon />,
 } )

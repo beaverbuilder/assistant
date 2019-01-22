@@ -5,7 +5,6 @@ export const MediaTab = props => {
     return (
         <Fragment>
             <ScreenHeader>
-                <div className="fl-asst-screen-title">Media</div>
                 <TagGroup appearance="vibrant">
                     <Tag>All</Tag>
                     <Tag>Images</Tag>

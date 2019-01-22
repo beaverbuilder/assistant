@@ -23,8 +23,7 @@ export const FindTab = props => {
     return (
         <Fragment>
             <ScreenHeader>
-                <div className="fl-asst-screen-title">Find</div>
-                <TagGroup title="Find By Type" appearance="vibrant">
+                <TagGroup appearance="vibrant">
                     <Tag count="3">Posts</Tag>
                     <Tag count="54">Pages</Tag>
                     <Tag count="29">Products</Tag>
@@ -33,13 +32,13 @@ export const FindTab = props => {
                     <Tag count="9">Categories</Tag>
                     <Tag count="23">Tags</Tag>
                 </TagGroup>
-                <TagGroup title="Find By Something Else" appearance="muted">
+                <TagGroup title="Something Else" appearance="muted">
                     <Tag>Today</Tag>
                     <Tag>This Week</Tag>
                     <Tag>This Month</Tag>
                     <Tag>2019</Tag>
                 </TagGroup>
-                <TagGroup title="Find By Date Edited">
+                <TagGroup title="Last Edited">
                     <Tag>Today</Tag>
                     <Tag>This Week</Tag>
                     <Tag>This Month</Tag>

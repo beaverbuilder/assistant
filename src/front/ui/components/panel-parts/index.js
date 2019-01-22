@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, AppTabButton, Icon } from 'components'
+import React, { useContext } from 'react'
+import { Button, AppTabButton, Icon, CurrentTabContext } from 'components'
 import './style.scss'
 
 export const PanelFrame = ({ children }) => {
@@ -43,8 +43,13 @@ export const PanelChrome = ({ tabs, activeTabName, onTabClick, onClose }) => {
     )
 }
 
-export const ScreenHeader = ({ children }) => {
+export const ScreenHeader = ({ children, showTitle, title }) => {
+    const tab = useContext(CurrentTabContext)
+    const screenTitle = title ? title : tab.label
     return (
-        <div className="fl-asst-screen-header">{children}</div>
+        <div className="fl-asst-screen-header">
+            { showTitle !== false && <div className="fl-asst-screen-title">{screenTitle}</div> }
+            {children}
+        </div>
     )
 }

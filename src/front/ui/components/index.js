@@ -13,4 +13,4 @@ export {
 
 export { TagGroup, Tag } from './tag-groups'
 export { ScreenHeader } from './panel-parts'
-export { CurrentPageViewContext } from './contexts'
+export { CurrentPageViewContext, CurrentTabContext } from './contexts'

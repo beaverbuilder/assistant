@@ -5,7 +5,6 @@ export const NotificationsTab = props => {
     return (
         <Fragment>
             <ScreenHeader>
-                <div className="fl-asst-screen-title">Notifications</div>
                 <TagGroup appearance="muted">
                     <Tag>Today</Tag>
                     <Tag>This Week</Tag>

@@ -7,8 +7,7 @@ export const DashboardTab = props => {
     const { name } = FLAssistantInitialData.user
     return (
         <Fragment>
-            <ScreenHeader>
-                <div className="fl-asst-screen-title">Welcome, {name}</div>
+            <ScreenHeader title={`Welcome, ${name}`}>
                 <CurrentlyViewing />
             </ScreenHeader>
 
