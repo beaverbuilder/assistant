@@ -6,10 +6,9 @@ export const NotificationsTab = props => {
         <Fragment>
             <ScreenHeader>
                 <TagGroup appearance="muted">
-                    <Tag>Today</Tag>
-                    <Tag>This Week</Tag>
-                    <Tag>This Month</Tag>
-                    <Tag>2019</Tag>
+                    <Tag count="0">All</Tag>
+                    <Tag count="0">Comments</Tag>
+                    <Tag count="0">Notices</Tag>
                 </TagGroup>
             </ScreenHeader>
 
