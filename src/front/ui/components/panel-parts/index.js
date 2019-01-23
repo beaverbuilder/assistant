@@ -76,7 +76,7 @@ export const ExpandedContents = ({ children }) => {
             <div className="fl-asst-expanded-contents-footer">
                 <button className="fl-asst-button fl-asst-more-button" onClick={toggleExpanded}>
                     <svg className="fl-asst-icon" width="51px" height="4px" viewBox="0 0 51 4">
-                    <g transform="translate(-195.000000, -184.000000)" fillRule="nonzero" strokeWidth="4">
+                    <g transform="translate(-195.000000, -184.000000)" fillRule="nonzero" strokeWidth="4" strokeLinecap="round">
                         <path d="M197.5,186 L244,186"></path>
                     </g>
                     </svg>

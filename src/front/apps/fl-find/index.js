@@ -3,6 +3,8 @@ import { PostList } from 'components/post-list'
 import { TagGroup, Tag, ScreenHeader, ExpandedContents } from 'components'
 
 export const FindTab = props => {
+
+    // Previous tab logic
     const [ currentTab, setCurrentTab ] = useState( 'page' )
     const { types } = FLAssistantInitialData.site
     const tabs = []
@@ -12,12 +14,21 @@ export const FindTab = props => {
         onClick: () => setCurrentTab( key ),
         isSelected: key === currentTab,
     } ) )
+    tabs.push( {
+        label: 'Favorites',
+        onClick: () => setCurrentTab( 'favorites' ),
+        isSelected: 'favorites' === currentTab,
+    })
 
-	tabs.push( {
-	   label: 'Favorites',
-	   onClick: () => setCurrentTab( 'favorites' ),
-	   isSelected: 'favorites' === currentTab,
-   } )
+    // NEW - Trying out a new query setup
+    const query = {
+        type: ['post', 'page', 'author'],
+        timePeriod: 'today',
+    }
+
+    const toggleValue = ( key, value ) => {
+        console.log('set', key, value )
+    }
 
     return (
         <Fragment>
@@ -32,15 +43,9 @@ export const FindTab = props => {
                 </TagGroup>
 
                 <ExpandedContents>
-                    <TagGroup title="Something Else" appearance="muted">
-                        <Tag>Today</Tag>
-                        <Tag>This Week</Tag>
-                        <Tag isSelected={true}>This Month</Tag>
-                        <Tag>2019</Tag>
-                    </TagGroup>
                     <TagGroup title="Last Edited">
-                        <Tag isSelected={true}>Today</Tag>
-                        <Tag isSelected={true}>This Week</Tag>
+                        <Tag isSelected={true} onClick={() => toggleValue('timePeriod', 'today')}>Today</Tag>
+                        <Tag>This Week</Tag>
                         <Tag>This Month</Tag>
                         <Tag>2019</Tag>
                     </TagGroup>

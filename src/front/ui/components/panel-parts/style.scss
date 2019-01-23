@@ -41,7 +41,7 @@
 }
 .fl-asst-screen-header {
     background: var(--fl-utility-background-color);
-    padding: 10px 20px 27px;
+    padding: 10px 20px 20px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -65,16 +65,14 @@
         bottom:0;
         left:0;
         right:0;
-        padding: 5px 20px;
     }
 }
 
 .fl-asst-button.fl-asst-more-button {
     background-color: transparent;
     color: black;
-    fill: var(--fl-asst-base-art-color);
     stroke: var(--fl-asst-base-art-color);
-    padding: 7px;
+    padding: 6px;
 
     &:hover {
         color:black;
@@ -82,7 +80,8 @@
     }
 
     &:focus {
-        border-color: var(--fl-asst-base-art-color);
+        border-color: transparent;
+        stroke: var(--fl-accent-color);
     }
 }
 
