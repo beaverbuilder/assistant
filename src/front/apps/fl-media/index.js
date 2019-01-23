@@ -6,7 +6,6 @@ export const MediaTab = props => {
         <Fragment>
             <ScreenHeader>
                 <TagGroup appearance="vibrant">
-                    <Tag>All</Tag>
                     <Tag>Images</Tag>
                     <Tag>Videos</Tag>
                     <Tag>Documents</Tag>

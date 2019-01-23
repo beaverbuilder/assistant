@@ -25,7 +25,6 @@ export const FindTab = props => {
                 <TagGroup appearance="vibrant">
                     <Tag count="3">Posts</Tag>
                     <Tag count="54">Pages</Tag>
-                    <Tag count="29" isSelected={true}>Products</Tag>
                     <Tag count="149" isSelected={true}>Media</Tag>
                     <Tag count="13">Authors</Tag>
                     <Tag count="9">Categories</Tag>
