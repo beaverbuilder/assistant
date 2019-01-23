@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Icon = ({ name }) => {
+export const Icon = ({ name, isSelected }) => {
     switch(name) {
         case 'close':
             return (
@@ -44,6 +44,26 @@ export const Icon = ({ name }) => {
                     </g>
                 </svg>
             )
+
+        case 'find-app':
+            return (
+                <svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="transparent" transform="translate(-145.000000, -145.000000)" fillRule="nonzero" strokeWidth="2" stroke="currentColor">
+                        <circle cx="158.5" cy="155.5" r="5.5"></circle>
+                        <path d="M172.014075,163 L172.014075,148 C172.014075,146.895431 171.118644,146 170.014075,146 L148,146 C146.895431,146 146,146.895431 146,148 L146,165.010842 C146,166.115411 146.895431,167.010842 148,167.010842 L170.014075,167.010842 L162.5,159.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                    </g>
+                </svg>
+            )
+        case 'media-app':
+            return (
+                <svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(-187.000000, -145.000000)" fillRule="nonzero" fill="transparent" stroke="#3AA4CC" strokeWidth="2" stroke="currentColor">
+                        <path d="M214.014075,161 L214.014075,148 C214.014075,146.895431 213.118644,146 212.014075,146 L190,146 C188.895431,146 188,146.895431 188,148 L188,165.010842 C188,166.115411 188.895431,167.010842 190,167.010842 L214.014075,167.010842 L205,158 L201.5,161 L195,154.5 L191.5,157.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <circle cx="207" cy="152" r="3"></circle>
+                    </g>
+                </svg>
+            )
+        /*
         case 'find-app':
             return (
                 <svg className="fl-asst-icon" width="28px" height="23px" viewBox="0 0 28 23">
@@ -54,6 +74,7 @@ export const Icon = ({ name }) => {
                     </g>
                 </svg>
             )
+        */
         default:
             return (
                 <svg className="fl-asst-icon" width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg">
