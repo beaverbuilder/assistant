@@ -54,13 +54,15 @@ export const ShowUITrigger = ({ onClick }) => {
         position: 'fixed',
         right: 0,
         bottom: 0,
-        padding: 10
+        padding: 10,
     }
+	const buttonStyles = {
+		borderRadius: '8px'
+	}
     return (
         <div style={styles}>
-            <Button className="fl-asst-outline-button" onClick={onClick}>
-                <Icon />
-                <span>Assistant</span>
+            <Button className="fl-asst-outline-button" onClick={onClick} style={buttonStyles}>
+                <Icon name="find-app"/>
             </Button>
         </div>
     )
