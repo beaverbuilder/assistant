@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react'
-import { ScreenHeader } from 'components/panel-parts'
 import { PostList } from 'components/post-list'
-import { TagGroup, Tag } from 'components'
+import { TagGroup, Tag, ScreenHeader, ExpandedContents } from 'components'
 
 export const FindTab = props => {
     const [ currentTab, setCurrentTab ] = useState( 'page' )
@@ -32,18 +31,22 @@ export const FindTab = props => {
                     <Tag count="9">Categories</Tag>
                     <Tag count="23">Tags</Tag>
                 </TagGroup>
-                <TagGroup title="Something Else" appearance="muted">
-                    <Tag>Today</Tag>
-                    <Tag>This Week</Tag>
-                    <Tag>This Month</Tag>
-                    <Tag>2019</Tag>
-                </TagGroup>
-                <TagGroup title="Last Edited">
-                    <Tag>Today</Tag>
-                    <Tag>This Week</Tag>
-                    <Tag>This Month</Tag>
-                    <Tag>2019</Tag>
-                </TagGroup>
+
+                <ExpandedContents>
+                    <TagGroup title="Something Else" appearance="muted">
+                        <Tag>Today</Tag>
+                        <Tag>This Week</Tag>
+                        <Tag>This Month</Tag>
+                        <Tag>2019</Tag>
+                    </TagGroup>
+                    <TagGroup title="Last Edited">
+                        <Tag>Today</Tag>
+                        <Tag>This Week</Tag>
+                        <Tag>This Month</Tag>
+                        <Tag>2019</Tag>
+                    </TagGroup>
+                </ExpandedContents>
+                
             </ScreenHeader>
             <PostList type={ currentTab } />
         </Fragment>

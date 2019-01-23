@@ -1,6 +1,6 @@
 import React, { Fragment, useState, cloneElement } from 'react'
 import { Button, Icon, VerticalGroup, Separator, CurrentTabContext } from 'components'
-import { PanelFrame, PanelChrome } from 'components/panel-parts'
+import { PanelFrame, PanelChrome } from 'components'
 import { TabManager, Tab } from 'components/tabs'
 import { useStore, useDispatch } from 'store'
 import 'apps'

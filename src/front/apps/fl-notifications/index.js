@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Tag, TagGroup, ScreenHeader } from 'components'
+import { Tag, TagGroup, ScreenHeader, EmptyMessage } from 'components'
 
 export const NotificationsTab = props => {
     return (
@@ -13,7 +13,7 @@ export const NotificationsTab = props => {
                 </TagGroup>
             </ScreenHeader>
 
-            <div>Get your notifications here.</div>
+            <EmptyMessage>No Notifications</EmptyMessage>
         </Fragment>
     )
 }

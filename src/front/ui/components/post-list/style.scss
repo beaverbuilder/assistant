@@ -43,10 +43,6 @@
         }
     }
 
-    &:nth-child(even) {
-        background-color: var(--fl-asst-alternate-bg-color);
-    }
-
     .fl-asst-list-item-visual {
         flex: 0 0;
         padding-right: 20px;
@@ -54,10 +50,9 @@
         .fl-asst-list-item-image-box {
             width: 50px;
             padding-top:100%;
-            background: var(--fl-background-color);
+            background: var(--fl-utility-background-color);
 			background-size: cover;
-            border: 1px solid var(--fl-line-color);
-            border-radius: 4px;
+            border-radius: 2px;
         }
         .fl-asst-list-item-image-box:before {
             content: "";

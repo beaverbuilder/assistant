@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { CurrentlyViewing } from './currently-viewing'
-import { Separator } from 'components'
+import { Separator, Widget } from 'components'
 import { ScreenHeader } from 'components/panel-parts'
 
 export const DashboardTab = props => {
@@ -11,8 +11,14 @@ export const DashboardTab = props => {
                 <CurrentlyViewing />
             </ScreenHeader>
 
-            Widgets, yo.
+            <Widget title="Recently Edited">
+                Content Here.
+            </Widget>
             <Separator />
+
+            <Widget title="Collaborators">
+                Content Here.
+            </Widget>
 		</Fragment>
     )
 }

@@ -12,5 +12,13 @@ export {
 } from './layout-helpers'
 
 export { TagGroup, Tag } from './tag-groups'
-export { ScreenHeader } from './panel-parts'
+export {
+    PanelChrome,
+    PanelFrame,
+    ScreenHeader,
+    ExpandedContents,
+    EmptyMessage
+} from './panel-parts'
+
 export { CurrentPageViewContext, CurrentTabContext } from './contexts'
+export { Widget } from './widgets'

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Tag, TagGroup, ScreenHeader } from 'components'
+import { Tag, TagGroup, ScreenHeader, EmptyMessage } from 'components'
 
 export const MediaTab = props => {
     return (
@@ -12,7 +12,7 @@ export const MediaTab = props => {
                     <Tag>Documents</Tag>
                 </TagGroup>
             </ScreenHeader>
-            Media.
+            <EmptyMessage>Come Back Later.</EmptyMessage>
         </Fragment>
     )
 }

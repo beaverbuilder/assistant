@@ -60,6 +60,14 @@
     }
 }
 
+.fl-asst-tab {
+    flex: 1 1 auto;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
 .fl-asst-button.fl-asst-app-tab-button {
     border-radius: 0;
     border: none;
