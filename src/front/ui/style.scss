@@ -2,13 +2,12 @@
     --fl-background-color: #ffffff;
     --fl-line-color: #DAE1E8;
     --fl-text-color: #4B5A69;
+    --fl-asst-muted-text-color: #7B8D95;
     --fl-asst-base-art-color: #7A8998; /* Icons and buttons at rest */
 
     --fl-utility-background-color: #EDF2F4; /* Utility containers like partials */
-    --fl-asst-alternate-bg-color: #F9FBFC; /* Alternating items in a list */
 
     --fl-accent-color: #3AA4CC;
-    --fl-accent-text-color: #1B81A8;
 
     --fl-asst-base-text-size: 14px;
     --fl-asst-base-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
@@ -17,6 +16,7 @@
 .fl-asst {
     font-family: var(--fl-asst-base-font-family);
     font-size: var(--fl-asst-base-text-size);
+    color: var(--fl-text-color);
 
     input, select, button, textarea {
         font-family: var(--fl-asst-base-font-family);
@@ -27,6 +27,10 @@
         padding: 8px;
         margin:0;
         border-radius: 2px;
+    }
+
+    button {
+        justify-content: center;
     }
 
     .fl-asst-panel-wrap {

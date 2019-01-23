@@ -30,8 +30,8 @@
     transition-delay:.2s;
 
     &:hover {
-        background: #F2F7F9;
-        border-color: var(--fl-line-color);
+        background: var(--fl-utility-background-color);
+        border-color: var(--fl-utility-background-color);
         cursor: pointer;
 
         .fl-asst-list-item-actions {
@@ -66,14 +66,14 @@
         max-width: calc(100% - 50px);
 
         .fl-asst-list-item-title {
-            color: var(--fl-accent-text-color);
+            color: var(--fl-accent-color);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
         .fl-asst-list-item-meta {
             font-size: 13px;
-            color: #7B8D95;
+            color: var(--fl-asst-muted-text-color);
         }
     }
 

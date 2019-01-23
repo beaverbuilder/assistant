@@ -25,8 +25,8 @@ export const FindTab = props => {
                 <TagGroup appearance="vibrant">
                     <Tag count="3">Posts</Tag>
                     <Tag count="54">Pages</Tag>
-                    <Tag count="29">Products</Tag>
-                    <Tag count="149">Media</Tag>
+                    <Tag count="29" isSelected={true}>Products</Tag>
+                    <Tag count="149" isSelected={true}>Media</Tag>
                     <Tag count="13">Authors</Tag>
                     <Tag count="9">Categories</Tag>
                     <Tag count="23">Tags</Tag>
@@ -36,17 +36,17 @@ export const FindTab = props => {
                     <TagGroup title="Something Else" appearance="muted">
                         <Tag>Today</Tag>
                         <Tag>This Week</Tag>
-                        <Tag>This Month</Tag>
+                        <Tag isSelected={true}>This Month</Tag>
                         <Tag>2019</Tag>
                     </TagGroup>
                     <TagGroup title="Last Edited">
-                        <Tag>Today</Tag>
-                        <Tag>This Week</Tag>
+                        <Tag isSelected={true}>Today</Tag>
+                        <Tag isSelected={true}>This Week</Tag>
                         <Tag>This Month</Tag>
                         <Tag>2019</Tag>
                     </TagGroup>
                 </ExpandedContents>
-                
+
             </ScreenHeader>
             <PostList type={ currentTab } />
         </Fragment>

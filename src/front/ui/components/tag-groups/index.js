@@ -16,9 +16,10 @@ export const TagGroup = ({ title, children, appearance }) => {
     )
 }
 
-export const Tag = ({ children, onClick, count }) => {
+export const Tag = ({ children, onClick, count, isSelected }) => {
     const classes = classname({
-        'fl-asst-tag' : true
+        'fl-asst-tag' : true,
+        'is-selected' : isSelected,
     })
     return (
         <button className={classes} onClick={onClick}>

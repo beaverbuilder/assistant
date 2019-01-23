@@ -24,15 +24,29 @@
         background:white;
         border: 1px solid #DAE1E8;
         color: #5A6367;
+        user-select: none;
 
         &:hover {
             top:0;
             color: black;
-            border-color: #BEC4C9;
         }
 
         &:focus {
             top:0;
+            box-shadow: 0 0 0px 2px var(--fl-accent-color);
+            border-color: var(--fl-background-color);
+        }
+
+        &.is-selected {
+            background-color: var(--fl-accent-color);
+            color: white;
+            fill: white;
+            box-shadow: 0 0 0px 2px var(--fl-accent-color);
+            border-color: var(--fl-background-color);
+
+            &:hover {
+                background-color: #008DC3;
+            }
         }
     }
     .fl-asst-tag-count {
@@ -54,6 +68,10 @@
             background-color: #60758A;
             border-color: transparent;
         }
+
+        &.is-selected:hover {
+            border-color: var(--fl-background-color);
+        }
     }
 }
 .fl-asst-tag-group-appearance-vibrant {
@@ -67,7 +85,7 @@
 
         &:hover {
             color: white;
-            border-color: transparent;
+            border-color: var(--fl-background-color);
         }
     }
     .fl-asst-tag:nth-child(5n+1) {

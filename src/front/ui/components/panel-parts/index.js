@@ -63,13 +63,26 @@ export const ScreenHeader = ({ children, showTitle, title }) => {
 }
 
 export const ExpandedContents = ({ children }) => {
-    /*
     const [isExpanded, setIsExpanded ] = useState(false)
     const toggleExpanded = () => {
         isExpanded ? setIsExpanded(false) : setIsExpanded(true)
-    }*/
+    }
+    const classes = classname({
+        'fl-asst-expanded-contents' : true,
+    })
     return (
-        <div className="fl-asst-screen-header-expanded-contents">{children}</div>
+        <div className={classes}>
+            { isExpanded && children}
+            <div className="fl-asst-expanded-contents-footer">
+                <button className="fl-asst-button fl-asst-more-button" onClick={toggleExpanded}>
+                    <svg className="fl-asst-icon" width="51px" height="4px" viewBox="0 0 51 4">
+                    <g transform="translate(-195.000000, -184.000000)" fillRule="nonzero" strokeWidth="4">
+                        <path d="M197.5,186 L244,186"></path>
+                    </g>
+                    </svg>
+                </button>
+            </div>
+        </div>
     )
 }
 
