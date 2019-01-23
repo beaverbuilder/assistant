@@ -4,7 +4,6 @@
     border: 2px solid transparent;
     background: transparent;
     color: var(--fl-text-color);
-    fill: currentColor;
     line-height: 1.2;
     padding: 7px 10px;
     font-family: var(--fl-asst-base-font-family);
@@ -18,22 +17,20 @@
         border: 2px solid transparent;
         background: #E7EBEF;
         color: var(--fl-text-color);
-        fill: currentColor;
     }
     &:focus {
         top:0;
         border: 2px solid var(--fl-accent-color);
         background: #E7EBEF;
         color: var(--fl-text-color);
-        fill: currentColor;
         outline: none;
     }
     &.fl-asst-button-is-selected {
         color: var(--fl-accent-color);
         border-color: var(--fl-accent-color);
 
-        .fl-asst-icon {
-            fill: var(--fl-accent-color);
+        & > svg {
+            color: var(--fl-accent-color);
         }
     }
 
@@ -47,19 +44,12 @@
             color: white;
         }
     }
-}
 
-.fl-asst-icon {
-    margin: 0 8px;
-    fill: currentColor;
-
-    &:first-child {
-        margin-left:0;
-    }
-    &:last-child {
-        margin-right:0;
+    & > svg {
+        color: var(--fl-asst-base-art-color);
     }
 }
+
 
 .fl-asst-tab {
     flex: 1 1 auto;
