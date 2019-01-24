@@ -3,27 +3,13 @@ import { PostList } from 'components/post-list'
 import { TagGroup, Tag, ScreenHeader, ExpandedContents } from 'components'
 
 export const FindTab = props => {
-
-    // Previous tab logic
-    const [ currentTab, setCurrentTab ] = useState( 'page' )
-    const { types } = FLAssistantInitialData.site
-    const tabs = []
-
-    Object.keys( types ).map( ( key ) => tabs.push( {
-        label: types[ key ],
-        onClick: () => setCurrentTab( key ),
-        isSelected: key === currentTab,
-    } ) )
-    tabs.push( {
-        label: 'Favorites',
-        onClick: () => setCurrentTab( 'favorites' ),
-        isSelected: 'favorites' === currentTab,
-    })
-
-    // NEW - Trying out a new query setup
+    console.log('render find')
     const query = {
-        type: ['post', 'page', 'author'],
-        timePeriod: 'today',
+        post_type: 'page',
+        numberposts: -1,
+        orderby: 'title',
+        order: 'ASC',
+        s: '',
     }
 
     const toggleValue = ( key, value ) => {
@@ -36,7 +22,6 @@ export const FindTab = props => {
                 <TagGroup appearance="vibrant">
                     <Tag count="3">Posts</Tag>
                     <Tag count="54">Pages</Tag>
-                    <Tag count="149" isSelected={true}>Media</Tag>
                     <Tag count="13">Authors</Tag>
                     <Tag count="9">Categories</Tag>
                     <Tag count="23">Tags</Tag>
@@ -44,7 +29,7 @@ export const FindTab = props => {
 
                 <ExpandedContents>
                     <TagGroup title="Last Edited">
-                        <Tag isSelected={true} onClick={() => toggleValue('timePeriod', 'today')}>Today</Tag>
+                        <Tag>Today</Tag>
                         <Tag>This Week</Tag>
                         <Tag>This Month</Tag>
                         <Tag>2019</Tag>
@@ -52,15 +37,8 @@ export const FindTab = props => {
                 </ExpandedContents>
 
             </ScreenHeader>
-			<PostList
-				query={ {
-					post_type: 'page',
-					numberposts: -1,
-					orderby: 'title',
-					order: 'ASC',
-					s: '',
-				} }
-			/>
+
+			<PostList query={query} />
         </Fragment>
     )
 }

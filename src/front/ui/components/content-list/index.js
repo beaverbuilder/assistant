@@ -14,6 +14,7 @@ export const ContentList = ( {
 	itemClass = '',
 } ) => {
 	const [ results, setResults ] = useState( null )
+	console.log('ContentList')
 
 	useEffect( () => {
 		setResults( null )

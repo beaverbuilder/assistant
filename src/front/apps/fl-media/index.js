@@ -1,7 +1,12 @@
 import React, { Fragment } from 'react'
-import { Tag, TagGroup, ScreenHeader, EmptyMessage } from 'components'
+import { Tag, TagGroup, ScreenHeader, EmptyMessage, ContentList } from 'components'
 
 export const MediaTab = props => {
+    console.log('render media')
+    const query = {
+        'posts_per_page' : 100,
+        'post_type' : 'attachment'
+    }
     return (
         <Fragment>
             <ScreenHeader>
@@ -11,7 +16,13 @@ export const MediaTab = props => {
                     <Tag>Documents</Tag>
                 </TagGroup>
             </ScreenHeader>
-            <EmptyMessage>Come Back Later.</EmptyMessage>
+            <ContentList query={query} item={<Item />} />
         </Fragment>
+    )
+}
+
+const Item = ({ title }) => {
+    return (
+        <div>{title}</div>
     )
 }
