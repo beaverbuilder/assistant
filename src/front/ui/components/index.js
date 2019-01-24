@@ -22,3 +22,4 @@ export {
 
 export { CurrentPageViewContext, CurrentTabContext } from './contexts'
 export { Widget } from './widgets'
+export { ContentList } from './content-list'

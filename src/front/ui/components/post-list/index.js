@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import classname from 'classnames'
 import { getPosts } from 'utils/rest-api'
 import { Icon } from 'components'

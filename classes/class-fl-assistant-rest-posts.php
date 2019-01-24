@@ -33,16 +33,8 @@ final class FL_Assistant_REST_Posts {
 	 */
 	static public function posts( $request ) {
 		$response = array();
-		$post_type = $request->get_param( 'type' );
-		$search = $request->get_param( 'search' );
-
-		$posts = get_posts( array(
-			'post_type' => $post_type ? $post_type : 'post',
-			'numberposts' => -1,
-			'orderby' => 'title',
-			'order' => 'ASC',
-			's' => $search ? $search : '',
-		) );
+		$params = $request->get_params();
+		$posts = get_posts( $params );
 
 		foreach ( $posts as $post ) {
 			$response[] = array(
