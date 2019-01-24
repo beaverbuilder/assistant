@@ -35,6 +35,21 @@ export function getPosts( args, complete ) {
 }
 
 /**
+ * Returns data for a single post.
+ *
+ * @since 0.1
+ * @param {Number} id
+ * @param {Function} complete
+ * @return {Object}
+ */
+export function getPost( id, complete ) {
+	return request( {
+		route: `fl-assistant/v1/post/${ id }`,
+		complete
+	} )
+}
+
+/**
  * Returns any array of post terms.
  *
  * @since 0.1
@@ -50,6 +65,21 @@ export function getTerms( args, complete ) {
 }
 
 /**
+ * Returns data for a single term.
+ *
+ * @since 0.1
+ * @param {Number} id
+ * @param {Function} complete
+ * @return {Object}
+ */
+export function getTerm( id, complete ) {
+	return request( {
+		route: `fl-assistant/v1/term/${ id }`,
+		complete
+	} )
+}
+
+/**
  * Returns any array of users.
  *
  * @since 0.1
@@ -60,6 +90,21 @@ export function getTerms( args, complete ) {
 export function getUsers( args, complete ) {
 	return request( {
 		route: addQueryArgs( 'fl-assistant/v1/users', args ),
+		complete
+	} )
+}
+
+/**
+ * Returns data for a single user.
+ *
+ * @since 0.1
+ * @param {Number} id
+ * @param {Function} complete
+ * @return {Object}
+ */
+export function getUser( id, complete ) {
+	return request( {
+		route: `fl-assistant/v1/user/${ id }`,
 		complete
 	} )
 }

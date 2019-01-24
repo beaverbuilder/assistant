@@ -22,6 +22,29 @@ final class FL_Assistant_REST_Terms {
 				),
 			)
 		);
+
+		register_rest_route(
+			FL_Assistant_REST::$namespace, '/term/(?P<id>\d+)', array(
+				array(
+					'methods'  => WP_REST_Server::READABLE,
+					'callback' => __CLASS__ . '::term',
+				),
+			)
+		);
+	}
+
+	/**
+	 * Returns an array of response data for a single term.
+	 *
+	 * @since  0.1
+	 * @param object $term
+	 * @return array
+	 */
+	static public function get_term_response_data( $term ) {
+		return array(
+			'title' => $term->name,
+			'url' => get_term_link( $term ),
+		);
 	}
 
 	/**
@@ -37,11 +60,23 @@ final class FL_Assistant_REST_Terms {
 		$terms = get_terms( $params );
 
 		foreach ( $terms as $term ) {
-			$response[] = array(
-				'title' => $term->name,
-				'url' => get_term_link( $term ),
-			);
+			$response[] = self::get_term_response_data( $term );
 		}
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns data for a single term.
+	 *
+	 * @since  0.1
+	 * @param object $request
+	 * @return array
+	 */
+	static public function term( $request ) {
+		$id = $request->get_param( 'id' );
+		$term = get_term( $id );
+		$response = self::get_term_response_data( $term );
 
 		return rest_ensure_response( $response );
 	}

@@ -22,10 +22,36 @@ final class FL_Assistant_REST_Users {
 				),
 			)
 		);
+
+		register_rest_route(
+			FL_Assistant_REST::$namespace, '/user/(?P<id>\d+)', array(
+				array(
+					'methods'  => WP_REST_Server::READABLE,
+					'callback' => __CLASS__ . '::user',
+				),
+			)
+		);
 	}
 
 	/**
-	 * Returns an array of posts and related data.
+	 * Returns an array of response data for a single user.
+	 *
+	 * @since  0.1
+	 * @param object $user
+	 * @return array
+	 */
+	static public function get_user_response_data( $user ) {
+		return array(
+			'date' => $user->user_registered,
+			'edit_url' => get_edit_user_link( $user->ID, '' ),
+			'thumbnail' => get_avatar_url( $user->ID ),
+			'title' => $user->display_name,
+			'url' => get_author_posts_url( $user->ID ),
+		);
+	}
+
+	/**
+	 * Returns an array of users and related data.
 	 *
 	 * @since  0.1
 	 * @param object $request
@@ -33,9 +59,27 @@ final class FL_Assistant_REST_Users {
 	 */
 	static public function users( $request ) {
 		$response = array();
-        $user_id = $request->get_param( 'id' );
+		$params = $request->get_params();
+		$users = get_users( $params );
 
-        $response['test'] = 'Hey dog';
+		foreach ( $users as $user ) {
+			$response[] = self::get_user_response_data( $user );
+		}
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns data for a single user.
+	 *
+	 * @since  0.1
+	 * @param object $request
+	 * @return array
+	 */
+	static public function user( $request ) {
+		$id = $request->get_param( 'id' );
+		$user = get_user_by( 'id', $id );
+		$response = self::get_user_response_data( $user );
 
 		return rest_ensure_response( $response );
 	}
