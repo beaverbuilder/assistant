@@ -31,7 +31,6 @@ export const FindTab = props => {
                     'post_type': 'page'
                 }
             },
-            count: 27,
         },
         {
             label : 'Categories',

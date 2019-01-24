@@ -11,12 +11,13 @@
     padding: 20px;
 }
 .fl-asst-separator {
+    flex: 0 0 8px;
     background-color: #E7EBEF;
     border-top:none;
     height: 8px;
     margin:0;
 
     &.fl-asst-separator-slim {
-        height: 3px;
+        flex: 0 0 3px;
     }
 }
