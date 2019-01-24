@@ -3,6 +3,7 @@ import classname from 'classnames'
 import { getContent } from 'utils/rest-api'
 import { Icon } from 'components'
 import { ContentListContainer, ContentListItem } from './parts'
+import './style.scss'
 
 export const ContentList = ( {
 	type = 'posts',
