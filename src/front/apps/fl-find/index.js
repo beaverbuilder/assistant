@@ -58,20 +58,30 @@ export const FindTab = props => {
         setQuery( Object.assign({}, args ))
     }
 
+    const dateTags = [
+        {
+            label: 'Today'
+        },
+        {
+            label: 'This Week',
+        },
+        {
+            label: 'This Month',
+        },
+        {
+            label: '2019'
+        }
+    ]
+
     return (
         <Fragment>
             <ScreenHeader>
 
                 <TagGroupControl tags={typeTags} appearance="vibrant" onChange={changeType} />
 
-                { false &&<ExpandedContents>
-                    <TagGroup title="Last Edited">
-                        <Tag>Today</Tag>
-                        <Tag>This Week</Tag>
-                        <Tag>This Month</Tag>
-                        <Tag>2019</Tag>
-                    </TagGroup>
-                </ExpandedContents> }
+                <ExpandedContents>
+                    <TagGroupControl tags={dateTags} title="Last Edited" />
+                </ExpandedContents>
 
             </ScreenHeader>
 
