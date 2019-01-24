@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import { Tag, TagGroup, ScreenHeader, EmptyMessage, ContentList } from 'components'
 
 export const MediaTab = props => {
-    console.log('render media')
     const query = {
         'posts_per_page' : 100,
         'post_type' : 'attachment'

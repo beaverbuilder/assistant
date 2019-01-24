@@ -21,11 +21,6 @@ export const DashboardTab = props => {
             <Widget title="Collaborators">
                 Content Here.
             </Widget>
-            <Separator />
-
-            <Widget title="You Tell Me">
-                Something Great Here!
-            </Widget>
 		</Fragment>
     )
 }

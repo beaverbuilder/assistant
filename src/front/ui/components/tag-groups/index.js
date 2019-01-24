@@ -28,3 +28,22 @@ export const Tag = ({ children, onClick, count, isSelected }) => {
         </button>
     )
 }
+
+export const TagGroupControl = ({ title, tags, appearance, onChange }) => {
+    return (
+        <TagGroup title={title} appearance={appearance}>
+            { tags.map( (tag, i) => {
+                const { label, value, count } = tag
+                const isSelected = false
+                return (
+                    <Tag
+                        key={i}
+                        count={count}
+                        onClick={() => onChange(value)}
+                        isSelected={isSelected}
+                    >{label}</Tag>
+                )
+            })}
+        </TagGroup>
+    )
+}
