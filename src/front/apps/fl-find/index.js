@@ -38,6 +38,16 @@ export const FindTab = props => {
             value: {
                 type: 'terms',
                 args: {
+                    'taxonomy': 'category',
+                    'hide_empty': false
+                }
+            }
+        },
+        {
+            label : 'Tags',
+            value: {
+                type: 'terms',
+                args: {
                     'taxonomy': 'post_tag',
                     'hide_empty': false
                 }
@@ -46,7 +56,7 @@ export const FindTab = props => {
     ]
     const changeType = ({ type, args }) => {
         setType(type)
-        setQuery( Object.assign({}, query, args ))
+        setQuery( Object.assign({}, args ))
     }
 
     return (
@@ -66,7 +76,7 @@ export const FindTab = props => {
 
             </ScreenHeader>
 
-			<ContentList query={query} />
+			<ContentList type={type} query={query} />
         </Fragment>
     )
 }
