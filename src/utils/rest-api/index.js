@@ -16,6 +16,8 @@ export function getContent( type, args, complete ) {
 			return getPosts( args, complete )
 		case 'terms':
 			return getTerms( args, complete )
+		case 'comments':
+			return getComments( args, complete )
 	}
 }
 
@@ -75,6 +77,36 @@ export function getTerms( args, complete ) {
 export function getTerm( id, complete ) {
 	return request( {
 		route: `fl-assistant/v1/term/${ id }`,
+		complete
+	} )
+}
+
+/**
+ * Returns any array of comments.
+ *
+ * @since 0.1
+ * @param {Object} args
+ * @param {Function} complete
+ * @return {Object}
+ */
+export function getComments( args, complete ) {
+	return request( {
+		route: addQueryArgs( 'fl-assistant/v1/comments', args ),
+		complete
+	} )
+}
+
+/**
+ * Returns data for a single comment.
+ *
+ * @since 0.1
+ * @param {Number} id
+ * @param {Function} complete
+ * @return {Object}
+ */
+export function getComment( id, complete ) {
+	return request( {
+		route: `fl-assistant/v1/comment/${ id }`,
 		complete
 	} )
 }

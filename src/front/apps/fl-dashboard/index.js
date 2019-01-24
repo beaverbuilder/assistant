@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import { CurrentlyViewing } from './currently-viewing'
 import { Separator, Widget, Tag, TagGroup } from 'components'
 import { ScreenHeader } from 'components/panel-parts'
-import { PostItem } from 'components/post-list'
 
 export const DashboardTab = props => {
     const { name } = FLAssistantInitialData.user
@@ -24,10 +23,6 @@ export const DashboardTab = props => {
                         <Tag count="4">Pages</Tag>
                     </TagGroup>
                 </div>
-                <PostItem post={dummiePost} />
-                <PostItem post={dummiePost} />
-                <PostItem post={dummiePost} />
-                <PostItem post={dummiePost} />
             </Widget>
             <Separator />
 

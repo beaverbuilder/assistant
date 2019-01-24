@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { PostList } from 'components/post-list'
-import { TagGroup, Tag, ScreenHeader, ExpandedContents } from 'components'
+import { TagGroup, Tag, ScreenHeader, ExpandedContents, ContentList } from 'components'
 
 export const FindTab = props => {
 
@@ -52,7 +51,8 @@ export const FindTab = props => {
                 </ExpandedContents>
 
             </ScreenHeader>
-			<PostList
+			<ContentList
+				type="posts"
 				query={ {
 					post_type: 'page',
 					numberposts: -1,
