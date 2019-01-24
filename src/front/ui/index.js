@@ -55,7 +55,7 @@ export const ShowUITrigger = ({ onClick }) => {
         right: 0,
         bottom: 0,
         padding: 10,
-		zIndex: 9,
+		zIndex: 999,
     }
 	const buttonStyles = {
 		borderRadius: '8px'
