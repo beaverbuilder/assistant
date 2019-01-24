@@ -68,7 +68,11 @@ export const request = ( { route, data, complete } ) => {
  * @param {Object} args
  * @return {Object}
  */
-export const addQueryArgs = ( route, args = {} ) => {
+export const addQueryArgs = ( route, args ) => {
+	if ( ! args ) {
+		return route
+	}
+
 	const keys = Object.keys( args )
 
 	if ( keys.length && route.indexOf( '?' ) === -1 ) {
