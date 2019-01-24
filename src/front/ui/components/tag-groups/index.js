@@ -16,11 +16,12 @@ export const TagGroup = ({ title, children, appearance }) => {
     )
 }
 
-export const Tag = ({ children, onClick, count, isSelected }) => {
+export const Tag = ({ children, onClick = () => {}, count, isSelected }) => {
     const classes = classname({
         'fl-asst-tag' : true,
         'is-selected' : isSelected,
     })
+
     return (
         <button className={classes} onClick={onClick}>
             {children}
@@ -29,7 +30,7 @@ export const Tag = ({ children, onClick, count, isSelected }) => {
     )
 }
 
-export const TagGroupControl = ({ title, tags, appearance, onChange }) => {
+export const TagGroupControl = ({ title, tags, appearance, onChange = () => {} }) => {
     return (
         <TagGroup title={title} appearance={appearance}>
             { tags.map( (tag, i) => {
