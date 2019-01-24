@@ -1,5 +1,5 @@
 .fl-asst-tag-group {
-    
+
 }
 .fl-asst-tag-group-title {
     font-size: 12px;
@@ -29,6 +29,7 @@
 
         &:focus {
             top:0;
+            outline: none;
             box-shadow: 0 0 0px 2px var(--fl-accent-color);
             border-color: var(--fl-background-color);
         }

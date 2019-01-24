@@ -6,4 +6,12 @@
         font-weight: 500;
         margin-bottom:8px;
     }
+
+    &.fl-asst-widget-no-padding {
+        padding:0;
+
+        .fl-asst-widget-title {
+            padding: 20px 20px 0;
+        }
+    }
 }

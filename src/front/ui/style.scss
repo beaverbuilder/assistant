@@ -2,7 +2,7 @@
     --fl-background-color: #ffffff;
     --fl-line-color: #DAE1E8;
     --fl-text-color: #4B5A69;
-    --fl-asst-muted-text-color: #7B8D95;
+    --fl-asst-muted-text-color: #52646c;
     --fl-asst-base-art-color: #7A8998; /* Icons and buttons at rest */
 
     --fl-utility-background-color: #EDF2F4; /* Utility containers like partials */
@@ -14,11 +14,26 @@
 }
 
 .fl-asst {
+    all: unset;
     font-family: var(--fl-asst-base-font-family);
     font-size: var(--fl-asst-base-text-size);
     color: var(--fl-text-color);
 
-    input, select, button, textarea {
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="password"],
+    input[type="search"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="color"],
+    textarea {
         font-family: var(--fl-asst-base-font-family);
         font-size: var(--fl-asst-base-text-size);
         font-weight: normal;
@@ -26,11 +41,29 @@
         text-transform: none;
         padding: 8px;
         margin:0;
+        background-color: var(--fl-background-color);
+        background-image: none;
+        border: 1px solid var(--fl-line-color);
         border-radius: 2px;
+        box-shadow: none;
+        max-width: none;
+        width: 100%;
     }
 
     button {
+        font-family: var(--fl-asst-base-font-family);
+        font-size: var(--fl-asst-base-text-size);
+        font-weight: normal;
+        line-height: 1.2;
+        text-transform: none;
         justify-content: center;
+        box-shadow: none;
+        text-shadow: none;
+        border-radius: 2px;
+    }
+
+    hr {
+        background-image: none;
     }
 
     .fl-asst-panel-wrap {

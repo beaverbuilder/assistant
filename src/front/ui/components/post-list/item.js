@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon, Button } from 'components'
 
-export const PostListItem = props => {
+export const PostItem = props => {
     const { post } = props
     const viewPost = () => window.location.href = post.url
     const editPost = () => window.location.href = post.edit_url
@@ -21,8 +21,6 @@ export const PostListItem = props => {
             <div className="fl-asst-list-item-actions">
                 <Button onClick={ viewPost }>View</Button>
                 <Button onClick={ editPost }>Edit</Button>
-                <Button><Icon name="star-outline" /></Button>
-                <Button><Icon name="more" /></Button>
             </div>
         </li>
     )
