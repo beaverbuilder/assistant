@@ -7,7 +7,7 @@ import './style.scss'
 
 export const ContentList = ( {
 	type = 'posts',
-	query = {},
+	query = null,
 	container = <ContentListContainer />,
 	containerClass = '',
 	item = <ContentListItem />,
