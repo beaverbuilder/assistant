@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { ContentList } from 'components'
+import { ContentList, PostListItem } from 'components'
 import { TagGroup, Tag, TagGroupControl, ScreenHeader, ExpandedContents } from 'components'
 
 export const FindTab = props => {
@@ -75,7 +75,13 @@ export const FindTab = props => {
 
             </ScreenHeader>
 
-			<ContentList type={type} query={query} />
+			<ContentList
+                type={type}
+                query={query}
+                item={<PostListItem />}
+                containerClass='fl-asst-post-list'
+                itemClass='fl-asst-post-list-item'
+            />
         </Fragment>
     )
 }

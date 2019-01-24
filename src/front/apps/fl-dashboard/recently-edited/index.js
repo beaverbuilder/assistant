@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Separator, Widget, Tag, TagGroup, ContentList } from 'components'
+import { Separator, Widget, Tag, TagGroup, ContentList, PostListItem } from 'components'
 
 export const RecentlyEditedWidget = props => {
     const [postType, setPostType] = useState('any')
@@ -19,7 +19,12 @@ export const RecentlyEditedWidget = props => {
                     <Tag onClick={ () => setPostType('page')} isSelect={isTagSelected('page')}>Pages</Tag>
                 </TagGroup>
             </div>
-            <ContentList query={recentQuery} />
+            <ContentList
+                query={recentQuery}
+                item={<PostListItem />}
+                containerClass='fl-asst-post-list'
+                itemClass='fl-asst-post-list-item'
+             />
         </Widget>
     )
 }
