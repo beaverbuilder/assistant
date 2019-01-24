@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { PostList } from 'components/post-list'
+import { ContentList } from 'components'
 import { TagGroup, Tag, TagGroupControl, ScreenHeader, ExpandedContents } from 'components'
 
 export const FindTab = props => {
@@ -10,39 +10,43 @@ export const FindTab = props => {
         order: 'ASC',
         /*s: '',*/
     }
+    const [type, setType] = useState('posts')
     const [query, setQuery] = useState(defaultQuery)
 
     const typeTags = [
         {
             label : 'Posts',
-            value: { type: 'post', postType: 'post' }
+            value: {
+                type: 'posts',
+                args: {
+                    'post_type': 'post'
+                }
+            }
         },
         {
             label : 'Pages',
-            value: { type: 'post', postType: 'page' },
+            value: {
+                type: 'posts',
+                args: {
+                    'post_type': 'page'
+                }
+            },
             count: 27,
-        },
-        /*
-        {
-            label : 'Authors',
-            value: 'user'
         },
         {
             label : 'Categories',
-            value: 'cat'
+            value: {
+                type: 'terms',
+                args: {
+                    'taxonomy': 'post_tag',
+                    'hide_empty': false
+                }
+            }
         },
-        {
-            label : 'Tags',
-            value: 'tag'
-        },
-        */
     ]
-    const changeType = value => {
-        console.log(value)
-        const query = {
-            'post_type': value.postType
-        }
-        setQuery( Object.assign({}, defaultQuery, query ))
+    const changeType = ({ type, args }) => {
+        setType(type)
+        setQuery( Object.assign({}, query, args ))
     }
 
     return (
@@ -62,7 +66,7 @@ export const FindTab = props => {
 
             </ScreenHeader>
 
-			<PostList query={query} />
+			<ContentList query={query} />
         </Fragment>
     )
 }
