@@ -54,6 +54,7 @@
 
 .fl-asst-tab {
     flex: 1 1 auto;
+    overflow: auto;
 
     &[hidden] {
         display: none;

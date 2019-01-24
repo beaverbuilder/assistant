@@ -2,6 +2,7 @@
     list-style: none;
     padding:0;
     margin:0;
+    overflow: hidden;
 }
 
 .fl-asst-list-loading {
@@ -64,7 +65,7 @@
     .fl-asst-list-item-content {
         flex: 1 1 auto;
         padding-right: 20px;
-        max-width: calc(100% - 50px);
+        max-width: calc(100% - 90px);
 
         .fl-asst-list-item-title {
             color: var(--fl-accent-color);

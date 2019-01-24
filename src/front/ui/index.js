@@ -62,7 +62,7 @@ export const ShowUITrigger = ({ onClick }) => {
 	}
     return (
         <div style={styles}>
-            <Button className="fl-asst-outline-button" onClick={onClick} style={buttonStyles}>
+            <Button className="fl-asst-outline-button" onClick={onClick} style={buttonStyles} isSelected={true}>
                 <Icon name="find-app"/>
             </Button>
         </div>
