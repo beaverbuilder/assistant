@@ -13,8 +13,7 @@ const cache = {}
  * @param {Object} args
  * @return {Object}
  */
-export default function request( args ) {
-	const { route, data, complete } = args
+export const request = ( { route, data, complete } ) => {
 	const { api } = FLAssistantInitialData
 	const method = data ? 'POST' : 'GET'
 	let body = null
@@ -59,4 +58,29 @@ export default function request( args ) {
 			}
 		}
 	}
+}
+
+/**
+ * Adds query args to a route.
+ *
+ * @since 0.1
+ * @param {String} route
+ * @param {Object} args
+ * @return {Object}
+ */
+export const addQueryArgs = ( route, args = {} ) => {
+	const keys = Object.keys( args )
+
+	if ( keys.length && route.indexOf( '?' ) === -1 ) {
+		route += '?'
+	}
+
+	keys.map( ( key, index ) => {
+		route += `${ key }=${ encodeURIComponent( args[ key ] ) }`
+		if ( index < keys.length - 1 ) {
+			route += '&'
+		}
+	} )
+
+	return route
 }

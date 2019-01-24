@@ -1,52 +1,51 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react'
-import classname from 'classnames'
-import { getPosts } from 'utils/rest-api'
-import { Icon } from 'components'
-import { PostItem } from 'components/post-list/item'
-import { PostListFilter } from 'components/post-list/filter'
+import React from 'react'
+import { Button, ContentList, Icon } from 'components'
 import './style.scss'
 
-export const PostList = props => {
-    const [ posts, setPosts ] = useState( null )
-	const [ search, setSearch ] = useState( '' )
-    const { type } = props
-    const classes = classname( {
-        'fl-asst-list': true,
-        'fl-asst-post-list': true
-    } )
+export const PostList = ( { query } ) => {
+    return (
+		<ContentList
+			type="posts"
+			query={ query }
+			containerClass='fl-asst-post-list'
+			item={ <PostListItem /> }
+			itemClass='fl-asst-post-list-item'
+		/>
+    )
+}
 
-    useEffect( () => {
-		setSearch( '' )
-    }, [ type ] )
+export const PostListItem = ( {
+	url = window.location.href,
+	edit_url = window.location.href,
+	thumbnail = null,
+	title = '',
+	author = '',
+	date = '',
+	className = ''
+} ) => {
 
-	useEffect( () => {
-		setPosts( null )
-		const request = getPosts( { type, search }, data => setPosts( data ) )
-		return () => request.cancel()
-    }, [ type, search ] )
+    const viewPost = () => window.location.href = url
+    const editPost = () => window.location.href = edit_url
+    const thumbStyles = {
+        backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
+    }
 
     return (
-		<Fragment>
-			<PostListFilter
-				key={ type }
-				onChange={ value => setSearch( value ) }
-			/>
-			{ ! posts &&
-				<div className="fl-asst-list-loading">
-					<Icon name="spinner" />
-				</div>
-			}
-			{ posts &&
-				<ul className={ classes }>
-					{ posts.map( ( post, key ) =>
-						<PostItem
-							key={ key }
-							post={ post }
-						/>
-					) }
-				</ul>
-			}
-		</Fragment>
+        <li className={ className }>
+            <div className="fl-asst-list-item-visual" onClick={ viewPost }>
+                <div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
+            </div>
+            <div className="fl-asst-list-item-content" onClick={ viewPost }>
+                <div className="fl-asst-list-item-title">{ title }</div>
+                <div className="fl-asst-list-item-meta">By { author } - { date }</div>
+            </div>
+            <div className="fl-asst-list-item-actions">
+                <Button onClick={ viewPost }>View</Button>
+                <Button onClick={ editPost }>Edit</Button>
+                <Button><Icon name="star-outline" /></Button>
+                <Button><Icon name="more" /></Button>
+            </div>
+        </li>
     )
 }
 

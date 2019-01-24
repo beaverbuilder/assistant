@@ -52,7 +52,15 @@ export const FindTab = props => {
                 </ExpandedContents>
 
             </ScreenHeader>
-            <PostList type={ currentTab } />
+			<PostList
+				query={ {
+					post_type: 'page',
+					numberposts: -1,
+					orderby: 'title',
+					order: 'ASC',
+					s: '',
+				} }
+			/>
         </Fragment>
     )
 }

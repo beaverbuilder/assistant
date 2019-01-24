@@ -1,25 +1,4 @@
-.fl-asst-list {
-    list-style: none;
-    padding:0;
-    margin:0;
-    overflow: hidden;
-}
-
-.fl-asst-list-loading {
-	padding: 40px;
-	text-align: center;
-}
-
-.fl-asst-list-filter {
-	display: flex;
-	padding: 10px 20px;
-}
-
-.fl-asst-list-filter input {
-	margin-right: 10px;
-}
-
-.fl-asst-list-item {
+.fl-asst-post-list-item {
     position: relative;
     display: flex;
     flex-direction: row;
