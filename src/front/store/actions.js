@@ -12,3 +12,10 @@ export function setActiveApp( key ) {
 		key,
 	}
 }
+
+export function setShowUI( show ) {
+	return {
+		type: 'SET_SHOW_UI',
+		show,
+	}
+}

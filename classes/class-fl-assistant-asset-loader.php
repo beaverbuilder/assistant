@@ -68,7 +68,13 @@ class FL_Assistant_Asset_Loader {
     static public function initial_data() {
 		$user = wp_get_current_user();
 
+		// TODO: What is initial state vs config? Need to sort this out better.
         return array(
+
+			// TODO: Pull from user meta.
+			'activeApp' => 'fl-dashboard',
+			'showUI' => true,
+
             'api' => array(
                 'root' => esc_url_raw( get_rest_url() ),
                 'nonce' => wp_create_nonce( 'wp_rest' ),
