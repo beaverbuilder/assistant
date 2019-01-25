@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { TagGroup, Tag, TagGroupControl, ScreenHeader, ExpandedContents, ContentList } from 'components'
+import { getWeek } from 'utils'
 
 export const FindTab = props => {
     const [type, setType] = useState('posts')
@@ -60,7 +61,10 @@ export const FindTab = props => {
             value: 'year'
         }
     ]
-    const changeDate = value => setDate(value)
+    const changeDate = value => {
+        console.log('set date', value )
+        setDate(value)
+    }
 
     // Setup the query
     let query = {}
@@ -77,6 +81,26 @@ export const FindTab = props => {
                 order: 'ASC',
                 s: '',
             }
+
+            const now = new Date()
+            switch(date) {
+                case 'today':
+                    query['year'] = now.getFullYear()
+                    query['month'] = now.getMonth() + 1
+                    query['day'] = now.getDay()
+                    break
+                case 'week':
+                    query['year'] = now.getFullYear()
+                    query['w'] = getWeek(now)
+                    break
+                case 'month':
+                    query['year'] = now.getFullYear()
+                    query['month'] = now.getMonth() + 1
+                    break
+                case 'year':
+                    query['year'] = now.getFullYear()
+                    break
+            }
             break
 
         // Handle taxonomy queries
@@ -89,12 +113,14 @@ export const FindTab = props => {
             break
     }
 
+    console.log('before render', query)
+
     return (
         <Fragment>
             <ScreenHeader>
                 <TagGroupControl tags={typeTags} value={typeTagValue} onChange={changeType} appearance="vibrant" />
                 <ExpandedContents>
-                    <TagGroupControl tags={dateTags} value={date} title="Last Edited" onChange={changeDate} />
+                    <TagGroupControl tags={dateTags} value={date} title="Created" onChange={changeDate} />
                 </ExpandedContents>
             </ScreenHeader>
 

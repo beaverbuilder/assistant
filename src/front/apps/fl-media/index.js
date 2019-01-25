@@ -31,9 +31,7 @@ export const MediaTab = props => {
     )
 }
 
-const Item = props => {
-    console.log(props)
-    const { title, url, className } = props
+const Item = ({ title, url, className }) => {
     const classes = classname({
         'fl-asst-grid-item' : true,
     }, className )
