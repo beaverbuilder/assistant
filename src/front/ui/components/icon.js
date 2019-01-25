@@ -34,32 +34,12 @@ export const Icon = ({ name, isSelected }) => {
                     </g>
                 </svg>
             )
-
-        case 'notifications-active':
-            return (
-                <svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1">
-                    <g fill="currentColor" transform="translate(-319.000000, -53.000000)">
-                        <path d="M327,72 C328.04,72 328.882353,71.1945 328.882353,70.2 L325.117647,70.2 C325.117647,71.1945 325.96,72 327,72 Z M332.976668,66.0590357 L332.976668,61.65 C332.976668,58.8825 331.108235,56.574 328.411765,55.962 L328.411765,55.0911483 C328.411765,54.3441483 327.781176,54 327,54 C326.218824,54 325.588235,54.3441483 325.588235,55.0911483 L325.588235,55.962 C322.891765,56.574 320.98235,58.8825 320.98235,61.65 L320.98235,66.0590357 L319,67.0215302 L319,68.9750312 L335,68.9750312 L335,67.0215302 L332.976668,66.0590357 Z M331.056143,67.0382342 L322.940315,67.0382342 L322.940315,61.65 C322.940315,59.4135 324.661176,57.6 327,57.6 C329.338824,57.6 331.056143,59.4135 331.056143,61.65 L331.056143,67.0382342 Z"></path>
-                        <circle fill="#E10000" cx="336.5" cy="55.5" r="2.5"></circle>
-                    </g>
-                </svg>
-            )
-
-        case 'find-app':
+        case 'trigger-button':
             return (
                 <svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <g fill="transparent" transform="translate(-145.000000, -145.000000)" fillRule="nonzero" strokeWidth="2" stroke="currentColor">
                         <circle cx="158.5" cy="155.5" r="5.5"></circle>
                         <path d="M172.014075,163 L172.014075,148 C172.014075,146.895431 171.118644,146 170.014075,146 L148,146 C146.895431,146 146,146.895431 146,148 L146,165.010842 C146,166.115411 146.895431,167.010842 148,167.010842 L170.014075,167.010842 L162.5,159.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                    </g>
-                </svg>
-            )
-        case 'media-app':
-            return (
-                <svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <g transform="translate(-187.000000, -145.000000)" fillRule="nonzero" fill="transparent" stroke="#3AA4CC" strokeWidth="2" stroke="currentColor">
-                        <path d="M214.014075,161 L214.014075,148 C214.014075,146.895431 213.118644,146 212.014075,146 L190,146 C188.895431,146 188,146.895431 188,148 L188,165.010842 C188,166.115411 188.895431,167.010842 190,167.010842 L214.014075,167.010842 L205,158 L201.5,161 L195,154.5 L191.5,157.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                        <circle cx="207" cy="152" r="3"></circle>
                     </g>
                 </svg>
             )

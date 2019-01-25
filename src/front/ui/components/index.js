@@ -9,6 +9,7 @@ export {
     VerticalGroup,
     Padding,
     Separator,
+    Heading,
 } from './layout-helpers'
 
 export { TagGroup, Tag, TagGroupControl } from './tag-groups'

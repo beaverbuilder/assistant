@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Separator, Widget } from 'components'
+import { Separator, Widget, Icon } from 'components'
 import { ScreenHeader } from 'components/panel-parts'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
@@ -22,5 +22,11 @@ export const DashboardTab = props => {
                 Content Here.
             </Widget>
 		</Fragment>
+    )
+}
+
+export const DashboardIcon = props => {
+    return (
+        <Icon />
     )
 }

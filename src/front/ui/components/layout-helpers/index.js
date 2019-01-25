@@ -36,3 +36,13 @@ export const Separator = ({ isSlim }) => {
     })
     return <hr className={classes} />
 }
+
+export const Heading = ({ children, level = 2, className }) => {
+    const classes = classname({
+        'fl-asst-heading' : true,
+        [`fl-asst-heading-${level}`] : level
+    }, className )
+    return (
+        <div className={classes}>{children}</div>
+    )
+}
