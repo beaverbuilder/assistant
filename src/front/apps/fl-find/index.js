@@ -19,7 +19,10 @@ export const FindTab = props => {
             value: {
                 type: 'posts',
                 args: {
-                    'post_type': 'post'
+                    'post_type': 'post',
+                    numberposts: -1,
+                    orderby: 'title',
+                    order: 'ASC',
                 }
             }
         },
@@ -28,7 +31,10 @@ export const FindTab = props => {
             value: {
                 type: 'posts',
                 args: {
-                    'post_type': 'page'
+                    'post_type': 'page',
+                    numberposts: -1,
+                    orderby: 'title',
+                    order: 'ASC',
                 }
             },
         },
@@ -37,7 +43,7 @@ export const FindTab = props => {
             value: {
                 type: 'terms',
                 args: {
-                    'taxonomy': 'category',
+                    taxonomy: 'category',
                     'hide_empty': false
                 }
             }
@@ -47,7 +53,7 @@ export const FindTab = props => {
             value: {
                 type: 'terms',
                 args: {
-                    'taxonomy': 'post_tag',
+                    taxonomy: 'post_tag',
                     'hide_empty': false
                 }
             }

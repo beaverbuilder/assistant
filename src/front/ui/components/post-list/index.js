@@ -42,8 +42,6 @@ export const PostListItem = ( {
             <div className="fl-asst-list-item-actions">
                 <Button onClick={ viewPost }>View</Button>
                 <Button onClick={ editPost }>Edit</Button>
-                <Button><Icon name="star-outline" /></Button>
-                <Button><Icon name="more" /></Button>
             </div>
         </li>
     )
