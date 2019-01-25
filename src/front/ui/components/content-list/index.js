@@ -40,12 +40,19 @@ export const ContentList = ( {
 		)
 	}
 
-	return cloneElement( container, {
-		className: classname( containerClass, 'fl-asst-list' ),
-	}, results.map( ( result, key ) => cloneElement( item, {
-		className: classname( itemClass, 'fl-asst-list-item' ),
-		key,
-		...itemConfig,
-		...result,
-	} ) ) )
+	return cloneElement(
+		container,
+		{
+			className: classname( containerClass, 'fl-asst-list' ),
+		},
+		/* Children */
+		results.map( ( result, key ) => {
+			return cloneElement( item, {
+				className: classname( itemClass, 'fl-asst-list-item' ),
+				key,
+				...itemConfig,
+				...result,
+			} )
+		} )
+	)
 }
