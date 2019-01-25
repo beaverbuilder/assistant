@@ -13,9 +13,9 @@ export const ContentList = ( {
 	item = <ContentListItem />,
 	itemClass = '',
 	itemConfig = {
-		showThumb: false,
-		showMeta: false,
-		showActions: false,
+		showThumb: true,
+		showMeta: true,
+		showActions: true,
 	}
 } ) => {
 	const [ results, setResults ] = useState( null )

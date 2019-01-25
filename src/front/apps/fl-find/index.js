@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { ContentList } from 'components'
-import { TagGroup, Tag, TagGroupControl, ScreenHeader, ExpandedContents } from 'components'
+import { TagGroup, Tag, TagGroupControl, ScreenHeader, ExpandedContents, ContentList } from 'components'
 
 export const FindTab = props => {
     const [type, setType] = useState('posts')
@@ -74,8 +73,6 @@ export const FindTab = props => {
         }
         typeTagValue = [type, subType]
     }
-
-    console.log(query, typeTagValue )
 
     return (
         <Fragment>
