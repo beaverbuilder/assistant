@@ -30,17 +30,21 @@ export const Tag = ({ children, onClick = () => {}, count, isSelected }) => {
     )
 }
 
-export const TagGroupControl = ({ title, tags, appearance, onChange = () => {} }) => {
+export const TagGroupControl = ({ title, tags, value, appearance, onChange }) => {
     return (
         <TagGroup title={title} appearance={appearance}>
             { tags.map( (tag, i) => {
-                const { label, value, count } = tag
-                const isSelected = false
+                const { label, count } = tag
+                let isSelected = value == tag.value
+                if ( Array.isArray( value ) ) {
+                    isSelected = JSON.stringify(value) === JSON.stringify(tag.value)
+                }
+                console.log(value, tag.value, isSelected)
                 return (
                     <Tag
                         key={i}
                         count={count}
-                        onClick={() => onChange(value)}
+                        onClick={() => onChange(tag.value)}
                         isSelected={isSelected}
                     >{label}</Tag>
                 )

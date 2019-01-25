@@ -3,102 +3,92 @@ import { ContentList } from 'components'
 import { TagGroup, Tag, TagGroupControl, ScreenHeader, ExpandedContents } from 'components'
 
 export const FindTab = props => {
-    const defaultQuery = {
-        post_type: 'page',
-        numberposts: -1,
-        orderby: 'title',
-        order: 'ASC',
-        /*s: '',*/
-    }
     const [type, setType] = useState('posts')
-    const [query, setQuery] = useState(defaultQuery)
+    const [subType, setSubType] = useState('page')
+    const [date, setDate] = useState('today')
 
     const typeTags = [
         {
-            label : 'Posts',
-            value: {
-                type: 'posts',
-                args: {
-                    'post_type': 'post',
-                    numberposts: -1,
-                    orderby: 'title',
-                    order: 'ASC',
-                }
-            }
+            label: 'Posts',
+            value: ['posts', 'post'],
         },
         {
-            label : 'Pages',
-            value: {
-                type: 'posts',
-                args: {
-                    'post_type': 'page',
-                    numberposts: -1,
-                    orderby: 'title',
-                    order: 'ASC',
-                }
-            },
+            label: 'Pages',
+            value: ['posts', 'page'],
         },
         {
-            label : 'Categories',
-            value: {
-                type: 'terms',
-                args: {
-                    taxonomy: 'category',
-                    'hide_empty': false
-                }
-            }
+            label: 'Media',
+            value: ['posts', 'attachment'],
         },
         {
-            label : 'Tags',
-            value: {
-                type: 'terms',
-                args: {
-                    taxonomy: 'post_tag',
-                    'hide_empty': false
-                }
-            }
+            label: 'Categories',
+            value: ['terms', 'category'],
+        },
+        {
+            label: 'Tags',
+            value: ['terms', 'post_tag'],
         },
     ]
-    const changeType = ({ type, args }) => {
-        setType(type)
-        setQuery( Object.assign({}, args ))
+    const changeType = value => {
+        if ( Array.isArray(value) ) {
+            const [type, subType] = value
+            setType(type)
+            setSubType(subType)
+        } else {
+            setType(value)
+        }
     }
 
     const dateTags = [
         {
-            label: 'Today'
+            label: 'Today',
+            value: 'today',
         },
         {
             label: 'This Week',
+            value: 'week',
         },
         {
             label: 'This Month',
+            value: 'month',
         },
         {
-            label: '2019'
+            label: '2019',
+            value: 'year'
         }
     ]
+    const changeDate = value => setDate(value)
+
+    let query = {
+        post_type: subType,
+        numberposts: -1,
+        orderby: 'title',
+        order: 'ASC',
+        s: '',
+    }
+    let typeTagValue = [type, subType]
+    if ( 'terms' === type ) {
+        query = {
+            taxonomy: subType,
+            'hide_empty': false
+        }
+        typeTagValue = [type, subType]
+    }
+
+    console.log(query, typeTagValue )
 
     return (
         <Fragment>
             <ScreenHeader>
-
-                <TagGroupControl tags={typeTags} appearance="vibrant" onChange={changeType} />
-
+                <TagGroupControl tags={typeTags} value={typeTagValue} onChange={changeType} appearance="vibrant" />
                 <ExpandedContents>
-                    <TagGroupControl tags={dateTags} title="Last Edited" />
+                    <TagGroupControl tags={dateTags} value={date} title="Last Edited" onChange={changeDate} />
                 </ExpandedContents>
-
             </ScreenHeader>
+
 			<ContentList
-				type="posts"
-				query={ {
-					post_type: 'post',
-					numberposts: -1,
-					orderby: 'title',
-					order: 'ASC',
-					s: '',
-				} }
+				type={type}
+				query={query}
                 itemConfig={{
                     showThumb: true,
             		showMeta: true,
