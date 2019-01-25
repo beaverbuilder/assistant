@@ -37,8 +37,12 @@ export const ContentListItem = ( {
 			}
             <div className="fl-asst-list-item-content" onClick={ view }>
                 <div className="fl-asst-list-item-title">{ title }</div>
-                { showMeta &&
-					<div className="fl-asst-list-item-meta">By { author } - { date }</div>
+                { showMeta && ( author || date ) &&
+					<div className="fl-asst-list-item-meta">
+						{ author && <span>By { author }</span> }
+						{ author && date && <span> - </span> }
+						{ date && <span>{ date }</span> }
+					</div>
 				}
             </div>
             { showActions &&
