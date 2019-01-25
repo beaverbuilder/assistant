@@ -113,8 +113,6 @@ export const FindTab = props => {
             break
     }
 
-    console.log('before render', query)
-
     return (
         <Fragment>
             <ScreenHeader>
