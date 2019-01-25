@@ -1,66 +1,93 @@
 import React, { Fragment, useState } from 'react'
-import { TagGroup, Tag, ScreenHeader, ExpandedContents, ContentList } from 'components'
+import { TagGroup, Tag, TagGroupControl, ScreenHeader, ExpandedContents, ContentList } from 'components'
 
 export const FindTab = props => {
+    const defaultQuery = {
+        post_type: 'page',
+        numberposts: -1,
+        orderby: 'title',
+        order: 'ASC',
+        /*s: '',*/
+    }
+    const [type, setType] = useState('posts')
+    const [query, setQuery] = useState(defaultQuery)
 
-    // Previous tab logic
-    const [ currentTab, setCurrentTab ] = useState( 'page' )
-    const { types } = FLAssistantInitialData.site
-    const tabs = []
-
-    Object.keys( types ).map( ( key ) => tabs.push( {
-        label: types[ key ],
-        onClick: () => setCurrentTab( key ),
-        isSelected: key === currentTab,
-    } ) )
-    tabs.push( {
-        label: 'Favorites',
-        onClick: () => setCurrentTab( 'favorites' ),
-        isSelected: 'favorites' === currentTab,
-    })
-
-    // NEW - Trying out a new query setup
-    const query = {
-        type: ['post', 'page', 'author'],
-        timePeriod: 'today',
+    const typeTags = [
+        {
+            label : 'Posts',
+            value: {
+                type: 'posts',
+                args: {
+                    'post_type': 'post'
+                }
+            }
+        },
+        {
+            label : 'Pages',
+            value: {
+                type: 'posts',
+                args: {
+                    'post_type': 'page'
+                }
+            },
+        },
+        {
+            label : 'Categories',
+            value: {
+                type: 'terms',
+                args: {
+                    'taxonomy': 'category',
+                    'hide_empty': false
+                }
+            }
+        },
+        {
+            label : 'Tags',
+            value: {
+                type: 'terms',
+                args: {
+                    'taxonomy': 'post_tag',
+                    'hide_empty': false
+                }
+            }
+        },
+    ]
+    const changeType = ({ type, args }) => {
+        setType(type)
+        setQuery( Object.assign({}, args ))
     }
 
-    const toggleValue = ( key, value ) => {
-        console.log('set', key, value )
-    }
+    const dateTags = [
+        {
+            label: 'Today'
+        },
+        {
+            label: 'This Week',
+        },
+        {
+            label: 'This Month',
+        },
+        {
+            label: '2019'
+        }
+    ]
 
     return (
         <Fragment>
             <ScreenHeader>
-                <TagGroup appearance="vibrant">
-                    <Tag count="3">Posts</Tag>
-                    <Tag count="54">Pages</Tag>
-                    <Tag count="149" isSelected={true}>Media</Tag>
-                    <Tag count="13">Authors</Tag>
-                    <Tag count="9">Categories</Tag>
-                    <Tag count="23">Tags</Tag>
-                </TagGroup>
+
+                <TagGroupControl tags={typeTags} appearance="vibrant" onChange={changeType} />
 
                 <ExpandedContents>
-                    <TagGroup title="Last Edited">
-                        <Tag isSelected={true} onClick={() => toggleValue('timePeriod', 'today')}>Today</Tag>
-                        <Tag>This Week</Tag>
-                        <Tag>This Month</Tag>
-                        <Tag>2019</Tag>
-                    </TagGroup>
+                    <TagGroupControl tags={dateTags} title="Last Edited" />
                 </ExpandedContents>
 
             </ScreenHeader>
+
 			<ContentList
-				type="posts"
-				query={ {
-					post_type: 'post',
-					numberposts: -1,
-					orderby: 'title',
-					order: 'ASC',
-					s: '',
-				} }
-			/>
+                type={type}
+                query={query}
+            />
         </Fragment>
     )
 }
