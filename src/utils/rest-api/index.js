@@ -18,6 +18,8 @@ export function getContent( type, args, complete ) {
 			return getTerms( args, complete )
 		case 'comments':
 			return getComments( args, complete )
+		case 'users':
+			return getUsers( args, complete )
 	}
 }
 
