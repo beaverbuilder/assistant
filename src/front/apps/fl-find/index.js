@@ -61,10 +61,7 @@ export const FindTab = props => {
             value: 'year'
         }
     ]
-    const changeDate = value => {
-        console.log('set date', value )
-        setDate(value)
-    }
+    const changeDate = value => setDate(value)
 
     // Setup the query
     let query = {}
