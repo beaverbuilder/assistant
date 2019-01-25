@@ -32,6 +32,12 @@ export const ContentList = ( {
 				<Icon name="spinner" />
 			</div>
 		)
+	} else if ( ! results.length ) {
+		return (
+			<div className="fl-asst-list-no-results">
+				<span>No results found.</span>
+			</div>
+		)
 	}
 
 	return cloneElement( container, {
