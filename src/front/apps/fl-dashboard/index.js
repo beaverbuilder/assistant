@@ -18,8 +18,18 @@ export const DashboardTab = props => {
             <RecentlyEditedWidget />
             <Separator />
 
-            <Widget title="Collaborators">
-                Content Here.
+            <Widget title="Project Status">
+                <ul>
+                    <li>Notifications - Tags aren't hooked up yet.</li>
+                    <li>Media - Tags aren't hooked up yet</li>
+                    <li>Media - Image urls aren't coming from server yet</li>
+                    <li>Find - "Today" tag might be a little iffy. Needs more testing</li>
+                </ul>
+            </Widget>
+            <Separator />
+
+            <Widget title="Another Widget">
+                Great Widget Here
             </Widget>
 		</Fragment>
     )

@@ -8,7 +8,7 @@ import store from 'store'
 /**
  * Setup the primary UI
  */
-const initialIsShowingUI = true
+const initialIsShowingUI = false
 
 /**
  * The Root Component

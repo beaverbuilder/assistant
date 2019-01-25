@@ -6,8 +6,8 @@ export const NotificationsTab = props => {
         <Fragment>
             <ScreenHeader>
                 <TagGroup appearance="muted">
-                    <Tag count="0">All</Tag>
-                    <Tag count="0">Comments</Tag>
+                    <Tag>All</Tag>
+                    <Tag>Comments</Tag>
                 </TagGroup>
             </ScreenHeader>
 

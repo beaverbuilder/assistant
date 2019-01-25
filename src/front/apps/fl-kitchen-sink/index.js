@@ -14,7 +14,7 @@ export const KitchenSinkTab = props => {
     return (
         <Fragment>
             <ScreenHeader>
-                These are examples of different UI components. Check out the `fl-kitchen-sink` app for details.
+                These are examples of different UI components. Check out the source for this app for usage examples.
                 <ExpandedContents>Made Ya Look!</ExpandedContents>
             </ScreenHeader>
 
@@ -27,7 +27,7 @@ export const KitchenSinkTab = props => {
                     <Tag count="23">Four (with count)</Tag>
                     <Tag>Five</Tag>
                 </TagGroup>
-                <TagGroup title="Muted (appearance) Tag Group" appearance="muted">
+                <TagGroup title="Muted Tag Group" appearance="muted">
                     <Tag isSelected={true}>Alligator (selected)</Tag>
                     <Tag>Squirrel</Tag>
                     <Tag>Turtle</Tag>
@@ -35,7 +35,7 @@ export const KitchenSinkTab = props => {
                     <Tag>Gopher</Tag>
                     <Tag count="13,203">Armadillo</Tag>
                 </TagGroup>
-                <TagGroup title="Vibrant (appearance) Tag Group" appearance="vibrant">
+                <TagGroup title="Vibrant Tag Group" appearance="vibrant">
                     <Tag>One</Tag>
                     <Tag>Two</Tag>
                     <Tag>Three</Tag>
