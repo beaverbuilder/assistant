@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Separator, Widget, Tag, TagGroup, ContentList, PostListItem } from 'components'
+import { Separator, Widget, Tag, TagGroup, ContentList } from 'components'
 
 export const RecentlyEditedWidget = props => {
     const [postType, setPostType] = useState('any')
@@ -21,7 +21,6 @@ export const RecentlyEditedWidget = props => {
             </div>
             <ContentList
                 query={recentQuery}
-                item={<PostListItem />}
                 containerClass='fl-asst-post-list'
                 itemClass='fl-asst-post-list-item'
              />

@@ -24,6 +24,7 @@ final class FL_Assistant_REST {
 			return;
 		}
 
+		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-comments.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-posts.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-terms.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-users.php';

@@ -12,6 +12,11 @@ export const ContentList = ( {
 	containerClass = '',
 	item = <ContentListItem />,
 	itemClass = '',
+	itemConfig = {
+		showThumb: false,
+		showMeta: false,
+		showActions: false,
+	}
 } ) => {
 	const [ results, setResults ] = useState( null )
 	console.log('ContentList')
@@ -35,6 +40,7 @@ export const ContentList = ( {
 	}, results.map( ( result, key ) => cloneElement( item, {
 		className: classname( itemClass, 'fl-asst-list-item' ),
 		key,
+		...itemConfig,
 		...result,
 	} ) ) )
 }

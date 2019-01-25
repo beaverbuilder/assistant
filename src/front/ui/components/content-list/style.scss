@@ -7,3 +7,98 @@
 	padding: 40px;
 	text-align: center;
 }
+
+.fl-asst-list-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding:10px 20px;
+    align-items:center;
+    border: 1px solid transparent;
+    background: transparent;
+    transition-property: background-color;
+    transition-duration: .5s;
+    transition-delay:.2s;
+
+    &:hover {
+        background: var(--fl-utility-background-color);
+        border-color: var(--fl-utility-background-color);
+        cursor: pointer;
+
+        .fl-asst-list-item-actions {
+            display: flex;
+            animation-name: slideInRight;
+            animation-duration: .25s;
+            animation-delay: .2s;
+            animation-fill-mode: forwards;
+        }
+    }
+
+    .fl-asst-list-item-visual {
+        flex: 0 0;
+        padding-right: 20px;
+
+        .fl-asst-list-item-image-box {
+            width: 50px;
+            padding-top:100%;
+            background: var(--fl-utility-background-color);
+			background-size: cover;
+            border-radius: 2px;
+        }
+        .fl-asst-list-item-image-box:before {
+            content: "";
+            display: block;
+        }
+    }
+
+    .fl-asst-list-item-content {
+        flex: 1 1 auto;
+        padding-right: 20px;
+        max-width: calc(100% - 90px);
+
+        .fl-asst-list-item-title {
+            color: var(--fl-accent-color);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 16px;
+        }
+        .fl-asst-list-item-meta {
+            font-size: 13px;
+            color: var(--fl-asst-muted-text-color);
+        }
+    }
+
+    .fl-asst-list-item-actions {
+        position: absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        margin: -1px;
+
+        display: flex;
+        flex-direction: row;
+        align-items:center;
+        padding: 10px;
+
+        background: var(--fl-background-color);
+        border: 1px solid var(--fl-accent-color);
+        color: var(--fl-accent-color);
+
+        display:none;
+        transform: translateX(100%);
+
+        .fl-asst-button {
+            color: inherit;
+        }
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}

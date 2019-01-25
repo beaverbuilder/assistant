@@ -84,14 +84,16 @@ export const FindTab = props => {
                 </ExpandedContents>
 
             </ScreenHeader>
-
 			<ContentList
-                type={type}
-                query={query}
-                item={<PostListItem />}
-                containerClass='fl-asst-post-list'
-                itemClass='fl-asst-post-list-item'
-            />
+				type="posts"
+				query={ {
+					post_type: 'post',
+					numberposts: -1,
+					orderby: 'title',
+					order: 'ASC',
+					s: '',
+				} }
+			/>
         </Fragment>
     )
 }
