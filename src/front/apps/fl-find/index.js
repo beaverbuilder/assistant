@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { ContentList, PostListItem } from 'components'
+import { ContentList } from 'components'
 import { TagGroup, Tag, TagGroupControl, ScreenHeader, ExpandedContents } from 'components'
 
 export const FindTab = props => {
@@ -19,7 +19,10 @@ export const FindTab = props => {
             value: {
                 type: 'posts',
                 args: {
-                    'post_type': 'post'
+                    'post_type': 'post',
+                    numberposts: -1,
+                    orderby: 'title',
+                    order: 'ASC',
                 }
             }
         },
@@ -28,7 +31,10 @@ export const FindTab = props => {
             value: {
                 type: 'posts',
                 args: {
-                    'post_type': 'page'
+                    'post_type': 'page',
+                    numberposts: -1,
+                    orderby: 'title',
+                    order: 'ASC',
                 }
             },
         },
@@ -37,7 +43,7 @@ export const FindTab = props => {
             value: {
                 type: 'terms',
                 args: {
-                    'taxonomy': 'category',
+                    taxonomy: 'category',
                     'hide_empty': false
                 }
             }
@@ -47,7 +53,7 @@ export const FindTab = props => {
             value: {
                 type: 'terms',
                 args: {
-                    'taxonomy': 'post_tag',
+                    taxonomy: 'post_tag',
                     'hide_empty': false
                 }
             }

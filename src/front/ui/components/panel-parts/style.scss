@@ -46,10 +46,11 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
+    margin-bottom: 3px;
 
     .fl-asst-screen-title {
         font-size: 18px;
-        font-weight: 500;
+        font-weight: 600;
         margin-bottom: 10px;
 
         &:last-child {
