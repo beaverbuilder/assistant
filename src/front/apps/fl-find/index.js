@@ -54,7 +54,7 @@ export const FindTab = props => {
 			<ContentList
 				type="posts"
 				query={ {
-					post_type: 'page',
+					post_type: 'post',
 					numberposts: -1,
 					orderby: 'title',
 					order: 'ASC',

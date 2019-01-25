@@ -10,36 +10,45 @@ export const ContentListContainer = ( { className, children } ) => {
 }
 
 export const ContentListItem = ( {
-	url = window.location.href,
-	edit_url = window.location.href,
+	url = null,
+	edit_url = null,
 	thumbnail = null,
 	title = '',
 	author = '',
 	date = '',
-	className = ''
+	className = '',
+	showThumb = true,
+	showMeta = true,
+	showActions = true,
 } ) => {
 
-    const viewPost = () => window.location.href = url
-    const editPost = () => window.location.href = edit_url
+    const view = () => url ? window.location.href = url : null
+    const edit = () => edit_url ? window.location.href = edit_url : null
     const thumbStyles = {
         backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
     }
 
     return (
         <li className={ className }>
-            <div className="fl-asst-list-item-visual" onClick={ viewPost }>
-                <div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
-            </div>
-            <div className="fl-asst-list-item-content" onClick={ viewPost }>
+            { showThumb &&
+				<div className="fl-asst-list-item-visual" onClick={ view }>
+	                <div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
+	            </div>
+			}
+            <div className="fl-asst-list-item-content" onClick={ view }>
                 <div className="fl-asst-list-item-title">{ title }</div>
-                <div className="fl-asst-list-item-meta">By { author } - { date }</div>
+                { showMeta &&
+					<div className="fl-asst-list-item-meta">By { author } - { date }</div>
+				}
             </div>
-            <div className="fl-asst-list-item-actions">
-                <Button onClick={ viewPost }>View</Button>
-                <Button onClick={ editPost }>Edit</Button>
-                <Button><Icon name="star-outline" /></Button>
-                <Button><Icon name="more" /></Button>
-            </div>
+            { showActions &&
+				<div className="fl-asst-list-item-actions">
+	                <Button onClick={ view }>View</Button>
+	                <Button onClick={ edit }>Edit</Button>
+	                <Button><Icon name="star-outline" /></Button>
+	                <Button><Icon name="more" /></Button>
+	            </div>
+			}
         </li>
     )
 }

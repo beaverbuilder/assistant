@@ -21,7 +21,9 @@ export const NotificationsTab = props => {
                 </ExpandedContents>
             </ScreenHeader>
 
-            <ContentList type="comments" />
+            <ContentList
+				type="comments"
+			/>
         </Fragment>
     )
 }
