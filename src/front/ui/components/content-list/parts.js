@@ -45,8 +45,6 @@ export const ContentListItem = ( {
 				<div className="fl-asst-list-item-actions">
 	                <Button onClick={ view }>View</Button>
 	                <Button onClick={ edit }>Edit</Button>
-	                <Button><Icon name="star-outline" /></Button>
-	                <Button><Icon name="more" /></Button>
 	            </div>
 			}
         </li>

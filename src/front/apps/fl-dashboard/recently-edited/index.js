@@ -21,8 +21,11 @@ export const RecentlyEditedWidget = props => {
             </div>
             <ContentList
                 query={recentQuery}
-                containerClass='fl-asst-post-list'
-                itemClass='fl-asst-post-list-item'
+                itemConfig={{
+                    showThumb: true,
+            		showMeta: true,
+            		showActions: true,
+                }}
              />
         </Widget>
     )

@@ -15,7 +15,14 @@ export const MediaTab = props => {
                     <Tag>Documents</Tag>
                 </TagGroup>
             </ScreenHeader>
-            <ContentList query={query} item={<Item />} />
+            <ContentList
+                query={query}
+                itemConfig={{
+                    showThumb: true,
+            		showMeta: true,
+            		showActions: true,
+                }}
+             />
         </Fragment>
     )
 }

@@ -8,7 +8,6 @@ export const NotificationsTab = props => {
                 <TagGroup appearance="muted">
                     <Tag count="0">All</Tag>
                     <Tag count="0">Comments</Tag>
-                    <Tag count="0">Notices</Tag>
                 </TagGroup>
 
                 <ExpandedContents>
@@ -21,9 +20,7 @@ export const NotificationsTab = props => {
                 </ExpandedContents>
             </ScreenHeader>
 
-            <ContentList
-				type="comments"
-			/>
+            <ContentList type="comments" />
         </Fragment>
     )
 }

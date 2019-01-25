@@ -93,6 +93,11 @@ export const FindTab = props => {
 					order: 'ASC',
 					s: '',
 				} }
+                itemConfig={{
+                    showThumb: true,
+            		showMeta: true,
+            		showActions: true,
+                }}
 			/>
         </Fragment>
     )

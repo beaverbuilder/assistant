@@ -4,7 +4,7 @@ import reducers from './reducers'
 import * as actions from './actions'
 
 const store = createStore( reducers, {
-	activeApp: 'fl-notifications',
+	activeApp: 'fl-dashboard',
 	apps: {},
 	...FLAssistantInitialData,
 } )
