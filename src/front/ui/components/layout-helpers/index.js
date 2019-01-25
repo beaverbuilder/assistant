@@ -46,3 +46,14 @@ export const Heading = ({ children, level = 2, className }) => {
         <div className={classes}>{children}</div>
     )
 }
+
+export const AspectBox = ({ className, children, ratio = 'square' }) => {
+    const classes = classname({
+        'fl-asst-aspect-box' : true,
+    }, className )
+    return (
+        <div className={classes}>
+            <div>{children}</div>
+        </div>
+    )
+}

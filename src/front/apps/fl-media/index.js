@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
-import { Tag, TagGroup, ScreenHeader, EmptyMessage, ContentList } from 'components'
+import classname from 'classnames'
+import { Tag, TagGroup, ScreenHeader, EmptyMessage, ContentList, AspectBox } from 'components'
+import './style.scss'
 
 export const MediaTab = props => {
     const query = {
@@ -17,6 +19,8 @@ export const MediaTab = props => {
             </ScreenHeader>
             <ContentList
                 query={query}
+                containerClass="fl-asst-grid-list"
+                item={<Item />}
                 itemConfig={{
                     showThumb: true,
             		showMeta: true,
@@ -27,9 +31,18 @@ export const MediaTab = props => {
     )
 }
 
-const Item = ({ title }) => {
+const Item = props => {
+    console.log(props)
+    const { title, url, className } = props
+    const classes = classname({
+        'fl-asst-grid-item' : true,
+    }, className )
     return (
-        <div>{title}</div>
+        <li className={classes}>
+            <a className="fl-asst-grid-item-anchor" href={url}>
+                <AspectBox>{title}</AspectBox>
+            </a>
+        </li>
     )
 }
 
