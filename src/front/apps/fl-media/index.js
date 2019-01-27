@@ -21,24 +21,22 @@ export const MediaTab = props => {
                 query={query}
                 containerClass="fl-asst-grid-list"
                 item={<Item />}
-                itemConfig={{
-                    showThumb: true,
-            		showMeta: true,
-            		showActions: true,
-                }}
              />
         </Fragment>
     )
 }
 
-const Item = ({ title, url, className }) => {
+const Item = ({ title, url, className, urls }) => {
     const classes = classname({
         'fl-asst-grid-item' : true,
     }, className )
+    const styles = {
+        backgroundImage: `url(${urls.medium})`
+    }
     return (
         <li className={classes}>
             <a className="fl-asst-grid-item-anchor" href={url}>
-                <AspectBox>{title}</AspectBox>
+                <AspectBox style={styles} />
             </a>
         </li>
     )
