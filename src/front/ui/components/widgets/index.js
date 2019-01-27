@@ -1,5 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
+import { Heading } from 'components'
 import './style.scss'
 
 export const Widget = ({ children, title, isPadded }) => {
@@ -9,7 +10,7 @@ export const Widget = ({ children, title, isPadded }) => {
     })
     return (
         <div className={classes}>
-            { title && <div className="fl-asst-widget-title">{title}</div> }
+            { title && <Heading className="fl-asst-widget-title">{title}</Heading> }
             <div className="fl-asst-widget-contents">{children}</div>
         </div>
     )

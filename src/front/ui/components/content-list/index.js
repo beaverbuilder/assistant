@@ -32,14 +32,27 @@ export const ContentList = ( {
 				<Icon name="spinner" />
 			</div>
 		)
+	} else if ( ! results.length ) {
+		return (
+			<div className="fl-asst-list-no-results">
+				<span>No results found.</span>
+			</div>
+		)
 	}
 
-	return cloneElement( container, {
-		className: classname( containerClass, 'fl-asst-list' ),
-	}, results.map( ( result, key ) => cloneElement( item, {
-		className: classname( itemClass, 'fl-asst-list-item' ),
-		key,
-		...itemConfig,
-		...result,
-	} ) ) )
+	return cloneElement(
+		container,
+		{
+			className: classname( containerClass, 'fl-asst-list' ),
+		},
+		/* Children */
+		results.map( ( result, key ) => {
+			return cloneElement( item, {
+				className: classname( itemClass, 'fl-asst-list-item' ),
+				key,
+				...itemConfig,
+				...result,
+			} )
+		} )
+	)
 }

@@ -41,7 +41,7 @@ final class FL_Assistant_REST_Posts {
 	 * @return array
 	 */
 	static public function get_post_response_data( $post ) {
-		return array(
+		$response = array(
 			'author' => get_the_author_meta( 'display_name', $post->post_author ),
 			'date' => get_the_date( '', $post ),
 			'edit_url' => get_edit_post_link( $post->ID, '' ),
@@ -49,6 +49,16 @@ final class FL_Assistant_REST_Posts {
 			'title' => ! empty( $post->post_title ) ? $post->post_title : $post->post_name,
 			'url' => get_permalink( $post ),
 		);
+
+		if ( 'attachment' === $post->post_type ) {
+			$size = wp_get_attachment_image_src($post->ID, 'medium');
+			$response['urls'] = array(
+				'medium' => $size[0]
+			);
+			$response['thumbnail'] = wp_get_attachment_image_src($post->ID, 'thumbnail')[0];
+		}
+
+		return $response;
 	}
 
 	/**

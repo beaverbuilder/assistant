@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import { Button, AppTabButton, Icon, CurrentTabContext } from 'components'
+import { NotificationsIcon } from 'apps/fl-notifications'
 import './style.scss'
 
 export const PanelFrame = ({ children }) => {
@@ -24,7 +25,7 @@ export const PanelChrome = ({ tabs, activeTabName, onTabClick, onClose }) => {
 
             <div className="fl-asst-panel-chrome-area">
                 <AppTabButton onClick={ () => onTabClick('fl-notifications')} isSelected={isNotificationsSelected}>
-                    <Icon name="notifications-active" isSelected={isNotificationsSelected} />
+                    <NotificationsIcon isSelected={isNotificationsSelected} />
                 </AppTabButton>
             </div>
 

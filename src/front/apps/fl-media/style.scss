@@ -1,0 +1,16 @@
+.fl-asst-grid-list {
+    display: flex;
+    flex-flow: wrap;
+    padding: 10px;
+}
+.fl-asst-grid-item {
+    display: block;
+    flex: 1 1 50%;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.fl-asst-grid-item-anchor {
+    display: block;
+    overflow: auto;
+}

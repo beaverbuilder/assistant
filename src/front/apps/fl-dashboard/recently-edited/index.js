@@ -9,14 +9,14 @@ export const RecentlyEditedWidget = props => {
     if ( postType ) {
         recentQuery['post_type'] = postType
     }
-    const isTagSelected = value => postType === value ? true : false
+    const isTagSelected = value => postType === value
     return (
         <Widget title="Recently Edited" isPadded={false}>
             <div style={{ padding: '0 20px'}}>
                 <TagGroup appearance="vibrant">
-                    <Tag onClick={ () => setPostType('any')} isSelect={isTagSelected('any')}>Any Type</Tag>
-                    <Tag onClick={ () => setPostType('post')} isSelect={isTagSelected('post')}>Posts</Tag>
-                    <Tag onClick={ () => setPostType('page')} isSelect={isTagSelected('page')}>Pages</Tag>
+                    <Tag onClick={ () => setPostType('any')} isSelected={isTagSelected('any')}>Any Type</Tag>
+                    <Tag onClick={ () => setPostType('post')} isSelected={isTagSelected('post')}>Posts</Tag>
+                    <Tag onClick={ () => setPostType('page')} isSelected={isTagSelected('page')}>Pages</Tag>
                 </TagGroup>
             </div>
             <ContentList
