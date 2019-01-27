@@ -48,8 +48,6 @@ final class FL_Assistant_REST_Posts {
 			'thumbnail' => get_the_post_thumbnail_url( $post, 'thumbnail' ),
 			'title' => ! empty( $post->post_title ) ? $post->post_title : $post->post_name,
 			'url' => get_permalink( $post ),
-
-			'test' => $post
 		);
 
 		if ( 'attachment' === $post->post_type ) {
