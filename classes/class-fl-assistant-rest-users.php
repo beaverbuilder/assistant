@@ -31,6 +31,15 @@ final class FL_Assistant_REST_Users {
 				),
 			)
 		);
+
+		register_rest_route(
+			FL_Assistant_REST::$namespace, '/user/(?P<id>\d+)/state', array(
+				array(
+					'methods'  => WP_REST_Server::CREATABLE,
+					'callback' => __CLASS__ . '::update_user_state',
+				),
+			)
+		);
 	}
 
 	/**
@@ -82,6 +91,20 @@ final class FL_Assistant_REST_Users {
 		$response = self::get_user_response_data( $user );
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Updates the saved state for a user.
+	 *
+	 * @since  0.1
+	 * @param object $request
+	 * @return void
+	 */
+	static public function update_user_state( $request ) {
+		$id = $request->get_param( 'id' );
+		$state = json_decode( $request->get_param( 'state' ) );
+
+		FL_Assistant_Data::update_user_state( $id, $state );
 	}
 }
 

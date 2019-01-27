@@ -27,12 +27,13 @@ class FL_Assistant_Asset_Loader {
     static public function enqueue() {
 
         if ( self::should_enqueue() ) {
-            wp_enqueue_script( 'fl-assistant-utils', FL_ASSISTANT_URL . 'build/utils.bundle.js', array(), FL_ASSISTANT_VERSION, true );
 
-            wp_enqueue_script( 'fl-assistant-front', FL_ASSISTANT_URL . 'build/front.bundle.js', array(), FL_ASSISTANT_VERSION, true );
-            wp_enqueue_style( 'fl-assistant-front', FL_ASSISTANT_URL . 'build/front.bundle.css', array(), FL_ASSISTANT_VERSION, null );
+			wp_enqueue_script( 'fl-assistant-front', FL_ASSISTANT_URL . 'build/front.bundle.js', array(), FL_ASSISTANT_VERSION, true );
+			wp_enqueue_style( 'fl-assistant-front', FL_ASSISTANT_URL . 'build/front.bundle.css', array(), FL_ASSISTANT_VERSION, null );
 
-            wp_localize_script( 'fl-assistant-front', 'FLAssistantInitialData', FL_Assistant_Initial_Data::get() );
+			wp_localize_script( 'fl-assistant-front', 'FLAssistantInitialData', FL_Assistant_Data::get_all() );
+
+			wp_enqueue_script( 'fl-assistant-utils', FL_ASSISTANT_URL . 'build/utils.bundle.js', array(), FL_ASSISTANT_VERSION, true );
         }
     }
 

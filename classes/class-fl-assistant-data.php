@@ -1,30 +1,43 @@
 <?php
 
 /**
- * Handles loading the initial frontend data.
+ * Handles working with backend assistant data.
  *
  * @since 0.1
  */
-class FL_Assistant_Initial_Data {
+class FL_Assistant_Data {
+
+	/**
+	 * Default state for the current user.
+	 *
+	 * @since 0.1
+	 * @var string $default_user_state
+	 */
+	static public $default_user_state = array(
+		'activeApp' => 'fl-dashboard',
+		'showUI' => true,
+	);
 
     /**
-     * Setup the data structure for sending to js on page load.
+     * Returns an array of all assistant data.
 	 *
 	 * NOTE: Kept in alphabetical order.
      *
      * @since 0.1
-     * @return Array
+     * @return array
      */
-    static public function get() {
+    static public function get_all() {
+		$user_state = self::get_current_user_state();
+
         return array(
-			'activeApp' => 'fl-dashboard',
+			'activeApp' => $user_state['activeApp'],
 			'apiNonce' => wp_create_nonce( 'wp_rest' ),
 			'apiRoot' => esc_url_raw( get_rest_url() ),
 			'currentPageView' => self::get_current_view(),
 			'contentTypes' => self::get_post_types(),
-			'currentUser' => self::get_current_user(),
+			'currentUser' => self::get_current_user_data(),
 			'pluginURL' => FL_ASSISTANT_URL,
-			'showUI' => true,
+			'showUI' => $user_state['showUI'],
         );
     }
 
@@ -32,7 +45,7 @@ class FL_Assistant_Initial_Data {
      * Get post type slugs and names.
      *
      * @since 0.1
-     * @return Array
+     * @return array
      */
     static public function get_post_types() {
         $data = [];
@@ -54,7 +67,7 @@ class FL_Assistant_Initial_Data {
      * Get info about the current page view.
 	 *
      * @since 0.1
-     * @return Array
+     * @return array
      */
     static public function get_current_view() {
         $data = [];
@@ -121,15 +134,59 @@ class FL_Assistant_Initial_Data {
     }
 
     /**
+     * Get the saved state for a user.
+	 *
+     * @since 0.1
+	 * @param int $id
+     * @return array
+     */
+    static public function get_user_state( $id ) {
+		$saved = get_user_meta( $id, 'fl_assistant_state', true );
+
+		return array_merge(
+			self::$default_user_state,
+			$saved ? (array) $saved : array()
+		);
+	}
+
+    /**
+     * Update the saved state for a user.
+	 *
+     * @since 0.1
+	 * @param int $id
+	 * @param array $state
+     * @return void
+     */
+    static public function update_user_state( $id, $state ) {
+		$saved = self::get_user_state( $id );
+
+		update_user_meta( $id, 'fl_assistant_state', array_merge(
+			$saved,
+			$state ? (array) $state : array()
+		) );
+	}
+
+    /**
+     * Get the saved state for the current user.
+	 *
+     * @since 0.1
+     * @return array
+     */
+    static public function get_current_user_state() {
+		return self::get_user_state( wp_get_current_user()->ID );
+	}
+
+    /**
      * Get info about the current user.
 	 *
      * @since 0.1
-     * @return Array
+     * @return array
      */
-    static public function get_current_user() {
+    static public function get_current_user_data() {
 		$user = wp_get_current_user();
 
 		return array(
+			'id' => $user->ID,
 			'name' => $user->display_name,
 		);
 	}

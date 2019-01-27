@@ -1,4 +1,5 @@
 import { request, addQueryArgs } from 'utils/request'
+import store from 'store'
 
 /**
  * Returns any array of content for the given type
@@ -140,5 +141,22 @@ export function getUser( id, complete ) {
 	return request( {
 		route: `fl-assistant/v1/user/${ id }`,
 		complete
+	} )
+}
+
+/**
+ * Updates the saved state for the current user.
+ *
+ * @since 0.1
+ * @param {Object} state
+ * @return {Object}
+ */
+export function updateUserState( state ) {
+	const { id } = store.getState().currentUser
+	return request( {
+		route: `fl-assistant/v1/user/${ id }/state`,
+		args: {
+			state: JSON.stringify( state ),
+		}
 	} )
 }
