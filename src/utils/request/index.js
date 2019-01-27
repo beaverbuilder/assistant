@@ -1,3 +1,5 @@
+import store from 'store'
+
 /**
  * Cached response data for GET requests.
  *
@@ -14,7 +16,7 @@ const cache = {}
  * @return {Object}
  */
 export const request = ( { route, args, complete } ) => {
-	const { apiNonce, apiRoot } = FLAssistantInitialData
+	const { apiNonce, apiRoot } = store.getState()
 	const method = args ? 'POST' : 'GET'
 	let body = null
 	let promise = null
