@@ -1,4 +1,4 @@
-export function registerApp( key, config ) {
+export const registerApp = ( key, config ) => {
 	return {
 		type: 'REGISTER_APP',
 		key,
@@ -6,14 +6,14 @@ export function registerApp( key, config ) {
 	}
 }
 
-export function setActiveApp( key ) {
+export const setActiveApp = ( key ) => {
 	return {
 		type: 'SET_ACTIVE_APP',
 		key,
 	}
 }
 
-export function setShowUI( show ) {
+export const setShowUI = ( show ) => {
 	return {
 		type: 'SET_SHOW_UI',
 		show,
