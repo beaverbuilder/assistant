@@ -1,7 +1,7 @@
 import React, { cloneElement, useEffect, useState } from 'react'
 import classname from 'classnames'
 import { getContent } from 'utils/rest-api'
-import { Icon } from 'components'
+import { Icon, EmptyMessage } from 'components'
 import { ContentListContainer, ContentListItem } from './parts'
 import './style.scss'
 
@@ -34,9 +34,7 @@ export const ContentList = ( {
 		)
 	} else if ( ! results.length ) {
 		return (
-			<div className="fl-asst-list-no-results">
-				<span>No results found.</span>
-			</div>
+			<EmptyMessage>No Results Found</EmptyMessage>
 		)
 	}
 
