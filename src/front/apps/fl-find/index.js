@@ -5,7 +5,7 @@ import { getWeek } from 'utils'
 export const FindTab = props => {
     const [type, setType] = useState('posts')
     const [subType, setSubType] = useState('page')
-    const [date, setDate] = useState()
+    const [date, setDate] = useState('')
     const [status, setStatus] = useState('publish')
 
     const typeTags = [
