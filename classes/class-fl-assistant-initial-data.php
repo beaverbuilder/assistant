@@ -8,33 +8,23 @@
 class FL_Assistant_Initial_Data {
 
     /**
-     * Setup the data structure for sending to js on page lowad.
+     * Setup the data structure for sending to js on page load.
+	 *
+	 * NOTE: Kept in alphabetical order.
      *
      * @since 0.1
      * @return Array
      */
     static public function get() {
-		$user = wp_get_current_user();
-
-		// TODO: What is initial state vs config? Need to sort this out better.
         return array(
-
-			// TODO: Pull from user meta.
 			'activeApp' => 'fl-dashboard',
+			'apiNonce' => wp_create_nonce( 'wp_rest' ),
+			'apiRoot' => esc_url_raw( get_rest_url() ),
+			'currentPageView' => self::get_current_view(),
+			'contentTypes' => self::get_post_types(),
+			'currentUser' => self::get_current_user(),
+			'pluginURL' => FL_ASSISTANT_URL,
 			'showUI' => true,
-
-            'api' => array(
-                'root' => esc_url_raw( get_rest_url() ),
-                'nonce' => wp_create_nonce( 'wp_rest' ),
-                'plugin_url' => FL_ASSISTANT_URL,
-            ),
-            'current_page_view' => self::get_current_view(),
-			'site' => array(
-	            'types' => self::get_post_types(),
-			),
-			'user' => array(
-				'name' => $user->display_name,
-			),
         );
     }
 
@@ -61,7 +51,8 @@ class FL_Assistant_Initial_Data {
     }
 
     /**
-     * Get info about the current page view
+     * Get info about the current page view.
+	 *
      * @since 0.1
      * @return Array
      */
@@ -128,4 +119,18 @@ class FL_Assistant_Initial_Data {
 
         return $data;
     }
+
+    /**
+     * Get info about the current user.
+	 *
+     * @since 0.1
+     * @return Array
+     */
+    static public function get_current_user() {
+		$user = wp_get_current_user();
+
+		return array(
+			'name' => $user->display_name,
+		);
+	}
 }

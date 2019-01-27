@@ -5,7 +5,7 @@ import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 
 export const DashboardTab = props => {
-    const { name } = FLAssistantInitialData.user
+    const { name } = FLAssistantInitialData.currentUser
     const recentQuery = {
 
     }

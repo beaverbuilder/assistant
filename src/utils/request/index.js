@@ -14,7 +14,7 @@ const cache = {}
  * @return {Object}
  */
 export const request = ( { route, args, complete } ) => {
-	const { api } = FLAssistantInitialData
+	const { apiNonce, apiRoot } = FLAssistantInitialData
 	const method = args ? 'POST' : 'GET'
 	let body = null
 	let promise = null
@@ -32,12 +32,12 @@ export const request = ( { route, args, complete } ) => {
 			} )
 		}
 
-		promise = fetch( api.root + route, {
+		promise = fetch( apiRoot + route, {
 			body,
 			method,
 			credentials: 'same-origin',
 			headers: {
-				'X-WP-Nonce': api.nonce,
+				'X-WP-Nonce': apiNonce,
 			},
 		} ).then( response => {
 			return response.json()
