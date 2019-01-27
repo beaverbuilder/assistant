@@ -55,6 +55,7 @@ final class FL_Assistant_REST_Posts {
 			$response['urls'] = array(
 				'medium' => $size[0]
 			);
+			$response['thumbnail'] = wp_get_attachment_image_src($post->ID, 'thumbnail')[0];
 		}
 
 		return $response;

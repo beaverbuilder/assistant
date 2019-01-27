@@ -6,6 +6,7 @@ export const FindTab = props => {
     const [type, setType] = useState('posts')
     const [subType, setSubType] = useState('page')
     const [date, setDate] = useState()
+    const [status, setStatus] = useState('publish')
 
     const typeTags = [
         {
@@ -63,6 +64,33 @@ export const FindTab = props => {
     ]
     const changeDate = value => setDate(value)
 
+    const statusTags = [
+        {
+            label: 'Any',
+            value: 'any',
+        },
+        {
+            label: 'Published',
+            value: 'publish',
+        },
+        {
+            label: 'Draft',
+            value: 'draft',
+        },
+        {
+            label: 'Pending',
+            value: 'pending',
+        },
+        {
+            label: 'Scheduled',
+            value: 'future',
+        },
+        {
+            label: 'Private',
+            value: 'private',
+        },
+    ]
+
     // Setup the query
     let query = {}
     let typeTagValue = [type, subType] // Value to pass to the 'type' tag group
@@ -77,6 +105,7 @@ export const FindTab = props => {
                 orderby: 'title',
                 order: 'ASC',
                 s: '',
+                post_status: status,
             }
 
             const now = new Date()
@@ -116,6 +145,7 @@ export const FindTab = props => {
                 <TagGroupControl tags={typeTags} value={typeTagValue} onChange={changeType} appearance="vibrant" />
                 <ExpandedContents>
                     <TagGroupControl tags={dateTags} value={date} title="Created" onChange={changeDate} />
+                    <TagGroupControl tags={statusTags} value={status} title="Status" onChange={setStatus} />
                 </ExpandedContents>
             </ScreenHeader>
 

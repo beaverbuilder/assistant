@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'store'
 
-// Import tab views and their icons 
+// Import tab views and their icons
 import { DashboardTab, DashboardIcon } from './fl-dashboard'
 import { FindTab, FindIcon } from './fl-find'
 import { NotificationsTab, NotificationsIcon } from './fl-notifications'
@@ -16,13 +16,13 @@ registerApp( 'fl-notifications', {
 	icon: props => <NotificationsIcon {...props} />,
 	showTabIcon: false,
 } )
-
+/*
 registerApp( 'fl-kitchen-sink', {
 	label: 'UI Kitchen Sink',
 	content: props => <KitchenSinkTab {...props} />,
 	icon: props => <KitchenSinkIcon {...props} />,
 } )
-
+*/
 registerApp( 'fl-media', {
 	label: 'Media',
 	content: props => <MediaTab {...props} />,
