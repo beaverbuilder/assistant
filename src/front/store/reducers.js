@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-export function activeApp( state = {}, action ) {
+export const activeApp = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_ACTIVE_APP':
 		return action.key
@@ -9,7 +9,7 @@ export function activeApp( state = {}, action ) {
 	}
 }
 
-export function apps( state = {}, action ) {
+export const apps = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'REGISTER_APP':
 		return {
@@ -27,11 +27,21 @@ export function apps( state = {}, action ) {
 	}
 }
 
-export default function( state = {}, action ) {
+export const showUI = ( state = {}, action ) => {
+	switch ( action.type ) {
+	case 'SET_SHOW_UI':
+		return action.show
+	default:
+		return state
+	}
+}
+
+export default ( state = {}, action ) => {
 
 	const reducers = {
 		activeApp,
 		apps,
+		showUI,
 	}
 
 	Object.entries( state ).map( ( [ key, value ] ) => {

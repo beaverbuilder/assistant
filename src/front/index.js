@@ -1,24 +1,20 @@
-import React, { StrictMode, useState } from 'react'
+import React, { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
-import store from 'store'
+import store, { useStore, useDispatch } from 'store'
 import './api'
 import './apps'
-
-/**
- * Setup the primary UI
- */
-const initialIsShowingUI = true
 
 /**
  * The Root Component
  */
 const App = () => {
-	const [ isShowingUI, setIsShowingUI ] = useState(initialIsShowingUI)
+	const { showUI } = useStore()
+	const { setShowUI } = useDispatch()
 
 	// Create a toggle function to show/hide the panel
-	const toggleUI = () => isShowingUI ? setIsShowingUI(false) : setIsShowingUI(true)
+	const toggleUI = () => showUI ? setShowUI(false) : setShowUI(true)
 
 	return (
 		<StrictMode>
@@ -27,7 +23,7 @@ const App = () => {
 				<ShowUITrigger onClick={toggleUI} />
 
 				{/* This is the panel itself */}
-				<UI isShowing={isShowingUI} toggleUI={toggleUI} />
+				<UI isShowing={showUI} toggleUI={toggleUI} />
 			</Provider>
 		</StrictMode>
 	)

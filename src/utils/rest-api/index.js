@@ -1,4 +1,5 @@
 import { request, addQueryArgs } from 'utils/request'
+import store from 'store'
 
 /**
  * Returns any array of content for the given type
@@ -10,7 +11,7 @@ import { request, addQueryArgs } from 'utils/request'
  * @param {Function} complete
  * @return {Object}
  */
-export function getContent( type, args, complete ) {
+export const getContent = ( type, args, complete ) => {
 	switch ( type ) {
 	case 'posts':
 		return getPosts( args, complete )
@@ -31,7 +32,7 @@ export function getContent( type, args, complete ) {
  * @param {Function} complete
  * @return {Object}
  */
-export function getPosts( args, complete ) {
+export const getPosts = ( args, complete ) => {
 	return request( {
 		route: addQueryArgs( 'fl-assistant/v1/posts', args ),
 		complete
@@ -46,7 +47,7 @@ export function getPosts( args, complete ) {
  * @param {Function} complete
  * @return {Object}
  */
-export function getPost( id, complete ) {
+export const getPost = ( id, complete ) => {
 	return request( {
 		route: `fl-assistant/v1/post/${ id }`,
 		complete
@@ -61,7 +62,7 @@ export function getPost( id, complete ) {
  * @param {Function} complete
  * @return {Object}
  */
-export function getTerms( args, complete ) {
+export const getTerms = ( args, complete ) => {
 	return request( {
 		route: addQueryArgs( 'fl-assistant/v1/terms', args ),
 		complete
@@ -76,7 +77,7 @@ export function getTerms( args, complete ) {
  * @param {Function} complete
  * @return {Object}
  */
-export function getTerm( id, complete ) {
+export const getTerm = ( id, complete ) => {
 	return request( {
 		route: `fl-assistant/v1/term/${ id }`,
 		complete
@@ -91,7 +92,7 @@ export function getTerm( id, complete ) {
  * @param {Function} complete
  * @return {Object}
  */
-export function getComments( args, complete ) {
+export const getComments = ( args, complete ) => {
 	return request( {
 		route: addQueryArgs( 'fl-assistant/v1/comments', args ),
 		complete
@@ -106,7 +107,7 @@ export function getComments( args, complete ) {
  * @param {Function} complete
  * @return {Object}
  */
-export function getComment( id, complete ) {
+export const getComment = ( id, complete ) => {
 	return request( {
 		route: `fl-assistant/v1/comment/${ id }`,
 		complete
@@ -121,7 +122,7 @@ export function getComment( id, complete ) {
  * @param {Function} complete
  * @return {Object}
  */
-export function getUsers( args, complete ) {
+export const getUsers = ( args, complete ) => {
 	return request( {
 		route: addQueryArgs( 'fl-assistant/v1/users', args ),
 		complete
@@ -136,9 +137,26 @@ export function getUsers( args, complete ) {
  * @param {Function} complete
  * @return {Object}
  */
-export function getUser( id, complete ) {
+export const getUser = ( id, complete ) => {
 	return request( {
 		route: `fl-assistant/v1/user/${ id }`,
 		complete
+	} )
+}
+
+/**
+ * Updates the saved state for the current user.
+ *
+ * @since 0.1
+ * @param {Object} state
+ * @return {Object}
+ */
+export const updateUserState = ( state ) => {
+	const { id } = store.getState().currentUser
+	return request( {
+		route: `fl-assistant/v1/user/${ id }/state`,
+		args: {
+			state: JSON.stringify( state ),
+		}
 	} )
 }

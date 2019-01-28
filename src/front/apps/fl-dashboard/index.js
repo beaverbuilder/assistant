@@ -3,12 +3,13 @@ import { Separator, Widget } from 'components'
 import { ScreenHeader } from 'components/panel-parts'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
+import { useStore } from 'store'
 
 export const DashboardTab = () => {
-	const { name } = FLAssistantInitialData.user
+	const { currentUser } = useStore()
 	return (
 		<Fragment>
-			<ScreenHeader title={`Welcome, ${name}`}>
+			<ScreenHeader title={`Welcome, ${currentUser.name}`}>
 				<CurrentlyViewing />
 			</ScreenHeader>
 

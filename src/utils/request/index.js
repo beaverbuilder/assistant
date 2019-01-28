@@ -1,3 +1,5 @@
+import store from 'store'
+
 /**
  * Cached response data for GET requests.
  *
@@ -10,12 +12,12 @@ const cache = {}
  * Cancellable fetch request with caching.
  *
  * @since 0.1
- * @param {Object} args
+ * @param {Object}
  * @return {Object}
  */
-export const request = ( { route, data, complete } ) => {
-	const { api } = FLAssistantInitialData
-	const method = data ? 'POST' : 'GET'
+export const request = ( { route, args, complete } ) => {
+	const { apiNonce, apiRoot } = store.getState()
+	const method = args ? 'POST' : 'GET'
 	let body = null
 	let promise = null
 
@@ -25,19 +27,19 @@ export const request = ( { route, data, complete } ) => {
 		}
 	} else {
 
-		if ( data ) {
+		if ( args ) {
 			body = new FormData()
-			Object.entries( data ).map( ( [ key, value ] ) => {
+			Object.entries( args ).map( ( [ key, value ] ) => {
 				body.append( key, value )
 			} )
 		}
 
-		promise = fetch( api.root + route, {
+		promise = fetch( apiRoot + route, {
 			body,
 			method,
 			credentials: 'same-origin',
 			headers: {
-				'X-WP-Nonce': api.nonce,
+				'X-WP-Nonce': apiNonce,
 			},
 		} ).then( response => {
 			return response.json()

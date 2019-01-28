@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react'
-import { createStore, bindActionCreators } from 'redux'
+import { createStore, applyMiddleware, bindActionCreators, compose } from 'redux'
+import { applyEffects } from './middleware'
 import reducers from './reducers'
 import * as actions from './actions'
 
 const store = createStore( reducers, {
-	activeApp: 'fl-dashboard',
 	apps: {},
 	...FLAssistantInitialData,
-}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
-	name: 'Assistant'
-}) )
+}, compose(
+		applyMiddleware(applyEffects),
+		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
+			name: 'Assistant'
+		})
+   )
+)
 
 export const useStore = () => {
 	const [ state, setState ] = useState( store.getState() )
