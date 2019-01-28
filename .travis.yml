@@ -12,6 +12,8 @@ jobs:
 
     - name: PHP lint and tests
       install:
+        - composer config --list --global
+        - which composer
         - composer global require wp-coding-standards/wpcs
         - /composer/vendor/bin/phpcs --config-set installed_paths /composer/vendor/wp-coding-standards/wpcs
       script:
