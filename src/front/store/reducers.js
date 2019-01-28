@@ -29,10 +29,10 @@ export const apps = ( state = {}, action ) => {
 
 export const showUI = ( state = {}, action ) => {
 	switch ( action.type ) {
-		case 'SET_SHOW_UI':
-			return action.show
-		default:
-			return state
+	case 'SET_SHOW_UI':
+		return action.show
+	default:
+		return state
 	}
 }
 

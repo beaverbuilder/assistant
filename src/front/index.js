@@ -1,4 +1,4 @@
-import React, { StrictMode, useState } from 'react'
+import React, { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
@@ -9,12 +9,12 @@ import './apps'
 /**
  * The Root Component
  */
-const App = props => {
+const App = () => {
 	const { showUI } = useStore()
 	const { setShowUI } = useDispatch()
 
-    // Create a toggle function to show/hide the panel
-    const toggleUI = () => showUI ? setShowUI(false) : setShowUI(true)
+	// Create a toggle function to show/hide the panel
+	const toggleUI = () => showUI ? setShowUI(false) : setShowUI(true)
 
 	return (
 		<StrictMode>
