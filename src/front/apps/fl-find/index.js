@@ -3,41 +3,41 @@ import { TagGroupControl, ScreenHeader, ExpandedContents, ContentList } from 'co
 import { getWeek } from 'utils'
 
 export const FindTab = () => {
-	const [type, setType] = useState('posts')
-	const [subType, setSubType] = useState('page')
-	const [date, setDate] = useState('')
-	const [status, setStatus] = useState('publish')
+	const [ type, setType ] = useState( 'posts' )
+	const [ subType, setSubType ] = useState( 'page' )
+	const [ date, setDate ] = useState( '' )
+	const [ status, setStatus ] = useState( 'publish' )
 	const now = new Date()
 
 	const typeTags = [
 		{
 			label: 'Posts',
-			value: ['posts', 'post'],
+			value: [ 'posts', 'post' ],
 		},
 		{
 			label: 'Pages',
-			value: ['posts', 'page'],
+			value: [ 'posts', 'page' ],
 		},
 		{
 			label: 'Media',
-			value: ['posts', 'attachment'],
+			value: [ 'posts', 'attachment' ],
 		},
 		{
 			label: 'Categories',
-			value: ['terms', 'category'],
+			value: [ 'terms', 'category' ],
 		},
 		{
 			label: 'Tags',
-			value: ['terms', 'post_tag'],
+			value: [ 'terms', 'post_tag' ],
 		},
 	]
 	const changeType = value => {
-		if ( Array.isArray(value) ) {
-			const [type, subType] = value
-			setType(type)
-			setSubType(subType)
+		if ( Array.isArray( value ) ) {
+			const [ type, subType ] = value
+			setType( type )
+			setSubType( subType )
 		} else {
-			setType(value)
+			setType( value )
 		}
 	}
 
@@ -63,7 +63,7 @@ export const FindTab = () => {
 			value: 'year'
 		}
 	]
-	const changeDate = value => setDate(value)
+	const changeDate = value => setDate( value )
 
 	const statusTags = [
 		{
@@ -94,9 +94,9 @@ export const FindTab = () => {
 
 	// Setup the query
 	let query = {}
-	let typeTagValue = [type, subType] // Value to pass to the 'type' tag group
+	let typeTagValue = [ type, subType ] // Value to pass to the 'type' tag group
 
-	switch(type) {
+	switch ( type ) {
 
 	// Handle post queries
 	case 'posts':
@@ -109,22 +109,22 @@ export const FindTab = () => {
 			post_status: status,
 		}
 
-		switch(date) {
+		switch ( date ) {
 		case 'today':
-			query['year'] = now.getFullYear()
-			query['month'] = now.getMonth() + 1
-			query['day'] = now.getDay()
+			query.year = now.getFullYear()
+			query.month = now.getMonth() + 1
+			query.day = now.getDay()
 			break
 		case 'week':
-			query['year'] = now.getFullYear()
-			query['w'] = getWeek(now)
+			query.year = now.getFullYear()
+			query.w = getWeek( now )
 			break
 		case 'month':
-			query['year'] = now.getFullYear()
-			query['month'] = now.getMonth() + 1
+			query.year = now.getFullYear()
+			query.month = now.getMonth() + 1
 			break
 		case 'year':
-			query['year'] = now.getFullYear()
+			query.year = now.getFullYear()
 			break
 		}
 		break
@@ -135,7 +135,7 @@ export const FindTab = () => {
 			taxonomy: subType,
 			'hide_empty': false
 		}
-		typeTagValue = [type, subType]
+		typeTagValue = [ type, subType ]
 		break
 	}
 

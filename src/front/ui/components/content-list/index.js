@@ -43,6 +43,7 @@ export const ContentList = ( {
 		{
 			className: classname( containerClass, 'fl-asst-list' ),
 		},
+
 		/* Children */
 		results.map( ( result, key ) => {
 			return cloneElement( item, {
