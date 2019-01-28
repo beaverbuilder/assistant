@@ -1,40 +1,46 @@
 {
-    "name": "fl-assistant",
-    "title": "Assistant",
-    "version": "0.1.0",
-    "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
-    "scripts": {
-        "build": "webpack --watch",
-        "production": "NODE_ENV=production webpack"
-    },
-    "license": "GPL-2.0+",
-    "dependencies": {
-        "@polymer/lit-element": "^0.6.5",
-        "@wordpress/i18n": "^3.1.0",
-        "classnames": "^2.2.6",
-        "react": "^16.8.0-alpha.0",
-        "react-dom": "^16.8.0-alpha.0",
-        "react-redux": "^6.0.0",
-        "redux": "^4.0.1",
-        "redux-actions": "^2.6.4",
-        "uuid": "^3.3.2"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.2.2",
-        "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-        "@babel/preset-env": "^7.2.3",
-        "@babel/preset-react": "^7.0.0",
-        "@wordpress/babel-preset-default": "^3.0.1",
-        "babel-loader": "^8.0.4",
-        "css-loader": "^1.0.1",
-        "eslint": "^5.9.0",
-        "extract-text-webpack-plugin": "^3.0.2",
-        "mini-css-extract-plugin": "^0.4.4",
-        "node-sass": "^4.10.0",
-        "postcss-loader": "^3.0.0",
-        "sass-loader": "^7.1.0",
-        "style-loader": "^0.23.1",
-        "webpack": "^4.25.1",
-        "webpack-cli": "^3.1.2"
-    }
+  "name": "fl-assistant",
+  "title": "Assistant",
+  "version": "0.1.0",
+  "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
+  "scripts": {
+    "build": "webpack --watch",
+    "build-test": "jest && eslint src",
+    "js-lint": "eslint src",
+    "js-lint-fix": "eslint src --fix",
+    "js-test": "jest",
+    "production": "NODE_ENV=production webpack"
+  },
+  "license": "GPL-2.0+",
+  "dependencies": {
+    "@polymer/lit-element": "^0.6.5",
+    "@wordpress/i18n": "^3.1.0",
+    "classnames": "^2.2.6",
+    "react": "^16.8.0-alpha.0",
+    "react-dom": "^16.8.0-alpha.0",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.4",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "@wordpress/babel-preset-default": "^3.0.1",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.12.1",
+    "eslint-plugin-react": "^7.12.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "jest": "^24.0.0",
+    "mini-css-extract-plugin": "^0.4.4",
+    "node-sass": "^4.10.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  }
 }

@@ -2,8 +2,9 @@ import React, { StrictMode, useState } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
-import './api'
 import store, { useStore, useDispatch } from 'store'
+import './api'
+import './apps'
 
 /**
  * The Root Component
@@ -15,7 +16,7 @@ const App = props => {
     // Create a toggle function to show/hide the panel
     const toggleUI = () => showUI ? setShowUI(false) : setShowUI(true)
 
-    return (
+	return (
 		<StrictMode>
 			<Provider store={store}>
 				{/* This is the button that toggles the UI panel */}
@@ -25,7 +26,7 @@ const App = props => {
 				<UI isShowing={showUI} toggleUI={toggleUI} />
 			</Provider>
 		</StrictMode>
-    )
+	)
 }
 
 // Render App into the document

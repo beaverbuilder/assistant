@@ -29,7 +29,7 @@ export const request = ( { route, args, complete } ) => {
 
 		if ( args ) {
 			body = new FormData()
-			Object.entries( args ).map( ( [ key, value ], index ) => {
+			Object.entries( data ).map( ( [ key, value ] ) => {
 				body.append( key, value )
 			} )
 		}
