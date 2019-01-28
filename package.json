@@ -5,8 +5,11 @@
   "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
   "scripts": {
     "build": "webpack --watch",
-    "production": "NODE_ENV=production webpack",
-    "test": "jest"
+    "build-test": "jest && eslint src",
+    "js-lint": "eslint src",
+    "js-lint-fix": "eslint src --fix",
+    "js-test": "jest",
+    "production": "NODE_ENV=production webpack"
   },
   "license": "GPL-2.0+",
   "dependencies": {
@@ -28,7 +31,8 @@
     "@wordpress/babel-preset-default": "^3.0.1",
     "babel-loader": "^8.0.4",
     "css-loader": "^1.0.1",
-    "eslint": "^5.9.0",
+    "eslint": "^5.12.1",
+    "eslint-plugin-react": "^7.12.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "jest": "^24.0.0",
     "mini-css-extract-plugin": "^0.4.4",
