@@ -23,10 +23,4 @@ describe( 'actions', () => {
 			} )
 		} )
 	} )
-
-	describe( 'travisTesting', () => {
-		it( 'test should pass!', () => {
-			expect( travisTesting() ).toEqual( true )
-		} )
-	} )
 } )
