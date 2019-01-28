@@ -1,6 +1,7 @@
 import {
 	registerApp,
 	setActiveApp,
+	travisTesting,
 } from '../actions'
 
 describe( 'actions', () => {
@@ -20,6 +21,12 @@ describe( 'actions', () => {
 				type: 'SET_ACTIVE_APP',
 				key: 'test',
 			} )
+		} )
+	} )
+
+	describe( 'travisTesting', () => {
+		it( 'test should fail!', () => {
+			expect( travisTesting() ).toEqual( false )
 		} )
 	} )
 } )

@@ -12,3 +12,7 @@ export function setActiveApp( key ) {
 		key,
 	}
 }
+
+export function travisTesting() {
+	return true
+}
