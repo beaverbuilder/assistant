@@ -14,8 +14,8 @@ jobs:
         - npm run build-test
 
     - name: PHP lint and tests
-      before_install:
+      install:
         - composer global require wp-coding-standards/wpcs
-        - phpcs --config-set installed_paths /composer/vendor/wp-coding-standards/wpcs
+        - /composer/vendor/bin/phpcs --config-set installed_paths /composer/vendor/wp-coding-standards/wpcs
       script:
-        - /composer/vendor/bin/phpcs --standard=phpcs.xml --extensions=php .
+        - /composer/vendor/bin/phpcs
