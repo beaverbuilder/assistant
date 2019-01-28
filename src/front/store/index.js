@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createStore, applyMiddleware, bindActionCreators, compose } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { applyEffects } from './middleware'
 import reducers from './reducers'
 import * as actions from './actions'
@@ -7,12 +8,7 @@ import * as actions from './actions'
 const store = createStore( reducers, {
 	apps: {},
 	...FLAssistantInitialData,
-}, compose(
-		applyMiddleware(applyEffects),
-		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
-			name: 'Assistant'
-		})
-   )
+}, composeWithDevTools( applyMiddleware(applyEffects) )
 )
 
 export const useStore = () => {
