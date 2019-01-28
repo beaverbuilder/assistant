@@ -8,6 +8,9 @@ none
 # Sass
 .sass-cache/
 
+#Jest
+/coverage/
+
 # OS X metadata
 .DS_Store
 

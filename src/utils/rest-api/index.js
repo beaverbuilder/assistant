@@ -12,14 +12,14 @@ import { request, addQueryArgs } from 'utils/request'
  */
 export function getContent( type, args, complete ) {
 	switch ( type ) {
-		case 'posts':
-			return getPosts( args, complete )
-		case 'terms':
-			return getTerms( args, complete )
-		case 'comments':
-			return getComments( args, complete )
-		case 'users':
-			return getUsers( args, complete )
+	case 'posts':
+		return getPosts( args, complete )
+	case 'terms':
+		return getTerms( args, complete )
+	case 'comments':
+		return getComments( args, complete )
+	case 'users':
+		return getUsers( args, complete )
 	}
 }
 

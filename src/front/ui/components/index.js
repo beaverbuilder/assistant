@@ -1,25 +1,24 @@
-import React from 'react'
 import './style.scss'
 
 export { Icon } from './icon'
 export { Button, AppTabButton } from './button'
 
 export {
-    HorizontalGroup,
-    VerticalGroup,
-    Padding,
-    Separator,
-    Heading,
-    AspectBox,
+	HorizontalGroup,
+	VerticalGroup,
+	Padding,
+	Separator,
+	Heading,
+	AspectBox,
 } from './layout-helpers'
 
 export { TagGroup, Tag, TagGroupControl } from './tag-groups'
 export {
-    PanelChrome,
-    PanelFrame,
-    ScreenHeader,
-    ExpandedContents,
-    EmptyMessage
+	PanelChrome,
+	PanelFrame,
+	ScreenHeader,
+	ExpandedContents,
+	EmptyMessage
 } from './panel-parts'
 
 export { CurrentPageViewContext, CurrentTabContext } from './contexts'
