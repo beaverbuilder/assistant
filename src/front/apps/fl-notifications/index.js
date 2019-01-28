@@ -4,12 +4,7 @@ import { Tag, TagGroup, ScreenHeader, ContentList } from 'components'
 export const NotificationsTab = () => {
 	return (
 		<Fragment>
-			<ScreenHeader>
-				<TagGroup appearance="muted">
-					<Tag>All</Tag>
-					<Tag>Comments</Tag>
-				</TagGroup>
-			</ScreenHeader>
+			<ScreenHeader />
 
 			<ContentList
 				type="comments"
