@@ -6,6 +6,7 @@ import { DashboardTab, DashboardIcon } from './fl-dashboard'
 import { FindTab, FindIcon } from './fl-find'
 import { NotificationsTab, NotificationsIcon } from './fl-notifications'
 import { MediaTab, MediaIcon } from './fl-media'
+
 //import { KitchenSinkTab, KitchenSinkIcon } from './fl-kitchen-sink'
 
 const { registerApp } = useDispatch()
@@ -16,6 +17,7 @@ registerApp( 'fl-notifications', {
 	icon: props => <NotificationsIcon {...props} />,
 	showTabIcon: false,
 } )
+
 /*
 registerApp( 'fl-kitchen-sink', {
 	label: 'UI Kitchen Sink',

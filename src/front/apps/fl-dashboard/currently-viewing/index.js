@@ -3,7 +3,7 @@ import { VerticalGroup, CurrentPageViewContext } from 'components'
 import './style.scss'
 
 export const CurrentlyViewing = () => {
-	const { name, intro } = useContext(CurrentPageViewContext)
+	const { name, intro } = useContext( CurrentPageViewContext )
 
 	return (
 		<div className="fl-asst-currently-viewing">

@@ -8,11 +8,13 @@ import './style.scss'
 /**
  * Main UI Controller
  */
-export const UI = ({ isShowing, toggleUI }) => {
+export const UI = ( { isShowing, toggleUI } ) => {
 	const { apps, activeApp } = useStore()
 	const { setActiveApp } = useDispatch()
 
-	if ( !isShowing ) return null
+	if ( ! isShowing ) {
+		return null
+	}
 
 	return (
 		<PanelFrame>
@@ -27,7 +29,7 @@ export const UI = ({ isShowing, toggleUI }) => {
 
 				<div className="fl-asst-panel-contents">
 					<TabManager activeTabName={activeApp}>
-						{Object.keys(apps).map( key => {
+						{Object.keys( apps ).map( key => {
 							const tab = apps[key]
 							return (
 								<Tab key={key} name={key}>
@@ -36,7 +38,7 @@ export const UI = ({ isShowing, toggleUI }) => {
 									</CurrentTabContext.Provider>
 								</Tab>
 							)
-						})}
+						} )}
 					</TabManager>
 				</div>
 			</div>
@@ -47,7 +49,7 @@ export const UI = ({ isShowing, toggleUI }) => {
 /**
  * Button To Show/Hide The UI
  */
-export const ShowUITrigger = ({ onClick }) => {
+export const ShowUITrigger = ( { onClick } ) => {
 	const styles = {
 		position: 'fixed',
 		right: 0,
