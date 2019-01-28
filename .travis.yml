@@ -1,11 +1,12 @@
-language: generic
+sudo: false
 
-before_install:
-  - nvm install
+dist: trusty
+
+language: generic
 
 jobs:
   include:
-    - name: JS unit tests
+    - name: JS lint and tests
       before_install:
         - nvm install --latest-npm
       install:

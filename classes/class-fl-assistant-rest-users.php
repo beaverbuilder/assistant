@@ -51,11 +51,11 @@ final class FL_Assistant_REST_Users {
 	 */
 	static public function get_user_response_data( $user ) {
 		return array(
-			'date' => $user->user_registered,
-			'edit_url' => get_edit_user_link( $user->ID, '' ),
+			'date'      => $user->user_registered,
+			'edit_url'  => get_edit_user_link( $user->ID, '' ),
 			'thumbnail' => get_avatar_url( $user->ID ),
-			'title' => $user->display_name,
-			'url' => get_author_posts_url( $user->ID ),
+			'title'     => $user->display_name,
+			'url'       => get_author_posts_url( $user->ID ),
 		);
 	}
 
@@ -68,8 +68,8 @@ final class FL_Assistant_REST_Users {
 	 */
 	static public function users( $request ) {
 		$response = array();
-		$params = $request->get_params();
-		$users = get_users( $params );
+		$params   = $request->get_params();
+		$users    = get_users( $params );
 
 		foreach ( $users as $user ) {
 			$response[] = self::get_user_response_data( $user );
@@ -86,8 +86,8 @@ final class FL_Assistant_REST_Users {
 	 * @return array
 	 */
 	static public function user( $request ) {
-		$id = $request->get_param( 'id' );
-		$user = get_user_by( 'id', $id );
+		$id       = $request->get_param( 'id' );
+		$user     = get_user_by( 'id', $id );
 		$response = self::get_user_response_data( $user );
 
 		return rest_ensure_response( $response );
@@ -101,7 +101,7 @@ final class FL_Assistant_REST_Users {
 	 * @return void
 	 */
 	static public function update_user_state( $request ) {
-		$id = $request->get_param( 'id' );
+		$id    = $request->get_param( 'id' );
 		$state = json_decode( $request->get_param( 'state' ) );
 
 		FL_Assistant_Data::update_user_state( $id, $state );

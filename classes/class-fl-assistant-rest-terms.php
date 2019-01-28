@@ -43,7 +43,7 @@ final class FL_Assistant_REST_Terms {
 	static public function get_term_response_data( $term ) {
 		return array(
 			'title' => $term->name,
-			'url' => get_term_link( $term ),
+			'url'   => get_term_link( $term ),
 		);
 	}
 
@@ -56,8 +56,8 @@ final class FL_Assistant_REST_Terms {
 	 */
 	static public function terms( $request ) {
 		$response = array();
-		$params = $request->get_params();
-		$terms = get_terms( $params );
+		$params   = $request->get_params();
+		$terms    = get_terms( $params );
 
 		foreach ( $terms as $term ) {
 			$response[] = self::get_term_response_data( $term );
@@ -74,8 +74,8 @@ final class FL_Assistant_REST_Terms {
 	 * @return array
 	 */
 	static public function term( $request ) {
-		$id = $request->get_param( 'id' );
-		$term = get_term( $id );
+		$id       = $request->get_param( 'id' );
+		$term     = get_term( $id );
 		$response = self::get_term_response_data( $term );
 
 		return rest_ensure_response( $response );
