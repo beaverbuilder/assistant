@@ -3,7 +3,6 @@ import { Button, Icon, VerticalGroup, Separator, CurrentTabContext } from 'compo
 import { PanelFrame, PanelChrome } from 'components'
 import { TabManager, Tab } from 'components/tabs'
 import { useStore, useDispatch } from 'store'
-import 'apps'
 import './style.scss'
 
 /**
