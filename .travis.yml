@@ -13,11 +13,3 @@ jobs:
         - npm ci
       script:
         - npm run build-test
-
-    - name: PHP lint and tests
-      install:
-        - composer global require wp-coding-standards/wpcs
-        - export PATH="$HOME/.composer/vendor/bin:$PATH"
-        - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
-      script:
-        - phpcs
