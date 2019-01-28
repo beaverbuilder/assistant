@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { VerticalGroup, Padding, Icon, CurrentPageViewContext } from 'components'
+import { VerticalGroup, CurrentPageViewContext } from 'components'
 import './style.scss'
 
-export const CurrentlyViewing = props => {
+export const CurrentlyViewing = () => {
 	const { name, intro } = useContext(CurrentPageViewContext)
 
 	return (

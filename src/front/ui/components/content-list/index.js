@@ -24,7 +24,7 @@ export const ContentList = ( {
 		setResults( null )
 		const request = getContent( type, query, data => setResults( data ) )
 		return () => request.cancel()
-    }, [ query ] )
+	}, [ query ] )
 
 	if ( ! results ) {
 		return (

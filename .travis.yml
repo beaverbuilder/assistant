@@ -11,4 +11,4 @@ jobs:
       install:
         - npm ci
       script:
-        - npm run test
+        - npm run build-test
