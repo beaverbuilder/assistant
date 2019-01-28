@@ -1,8 +1,5 @@
 language: generic
 
-before_install:
-  - nvm install
-
 jobs:
   include:
     - name: JS lint and tests
