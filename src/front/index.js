@@ -14,7 +14,7 @@ const initialIsShowingUI = true
 /**
  * The Root Component
  */
-const App = () => {
+const App = props => {
 	const [ isShowingUI, setIsShowingUI ] = useState(initialIsShowingUI)
 
 	// Create a toggle function to show/hide the panel
