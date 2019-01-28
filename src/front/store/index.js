@@ -7,7 +7,9 @@ const store = createStore( reducers, {
 	activeApp: 'fl-dashboard',
 	apps: {},
 	...FLAssistantInitialData,
-} )
+}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
+	name: 'Assistant'
+}) )
 
 export const useStore = () => {
 	const [ state, setState ] = useState( store.getState() )
