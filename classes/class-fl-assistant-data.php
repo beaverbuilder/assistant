@@ -31,7 +31,7 @@ class FL_Assistant_Data {
 
 		return array(
 			'activeApp'       => $user_state['activeApp'],
-			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
+			'apiNonce'        => wp_create_nonce('wp_rest'),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'currentPageView' => self::get_current_view(),
 			'contentTypes'    => self::get_post_types(),

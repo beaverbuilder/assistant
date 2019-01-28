@@ -5,10 +5,19 @@ before_install:
 
 jobs:
   include:
-    - name: JS unit tests
+    - name: JS lint and tests
       before_install:
         - nvm install --latest-npm
       install:
         - npm ci
       script:
         - npm run build-test
+
+    - name: PHP lint and tests
+      before_install:
+        - if [[ "$SNIFF" == "1" ]]; then composer self-update; fi
+        - if [[ "$SNIFF" == "1" ]]; then composer require squizlabs/php_codesniffer:dev-master; fi
+        - if [[ "$SNIFF" == "1" ]]; then composer install; fi
+        - phpenv rehash
+      script:
+        - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
