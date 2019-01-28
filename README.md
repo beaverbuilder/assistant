@@ -1,6 +1,6 @@
 # Assistant - Work In Progress
 
-![Master Branch Status](https://travis-ci.org/beaverbuilder/assistant.svg?branch=master)
+[![Master Build Status](https://travis-ci.org/beaverbuilder/assistant.svg?branch=master)](https://travis-ci.org/beaverbuilder/assistant)
 
 A tool for seeing what's happening inside WordPress and quickly navigating between pages & posts.
 
