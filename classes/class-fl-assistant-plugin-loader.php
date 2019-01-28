@@ -59,6 +59,7 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 		 */
 		static public function load_files() {
 			require_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-asset-loader.php';
+			require_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-data.php';
 			require_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest.php';
 
 			do_action( 'fl_assistant_loaded' );
