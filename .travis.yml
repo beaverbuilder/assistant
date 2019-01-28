@@ -15,9 +15,7 @@ jobs:
 
     - name: PHP lint and tests
       before_install:
-        - if [[ "$SNIFF" == "1" ]]; then composer self-update; fi
-        - if [[ "$SNIFF" == "1" ]]; then composer require squizlabs/php_codesniffer:dev-master; fi
-        - if [[ "$SNIFF" == "1" ]]; then composer install; fi
-        - phpenv rehash
+        - composer global require wp-coding-standards/wpcs
+        - phpcs --config-set installed_paths /composer/vendor/wp-coding-standards/wpcs
       script:
-        - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
+        - /composer/vendor/bin/phpcs --standard=phpcs.xml --extensions=php .
