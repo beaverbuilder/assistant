@@ -1,3 +1,7 @@
+sudo: false
+
+dist: trusty
+
 language: generic
 
 jobs:
@@ -13,6 +17,7 @@ jobs:
     - name: PHP lint and tests
       install:
         - composer global require wp-coding-standards/wpcs
-        - /vendor/bin/phpcs --config-set installed_paths /vendor/wp-coding-standards/wpcs
+        - export PATH="$HOME/.composer/vendor/bin:$PATH"
+        - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
       script:
-        - /vendor/bin/phpcs
+        - phpcs
