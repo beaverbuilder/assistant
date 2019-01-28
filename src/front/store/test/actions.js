@@ -25,8 +25,8 @@ describe( 'actions', () => {
 	} )
 
 	describe( 'travisTesting', () => {
-		it( 'test should fail!', () => {
-			expect( travisTesting() ).toEqual( false )
+		it( 'test should pass!', () => {
+			expect( travisTesting() ).toEqual( true )
 		} )
 	} )
 } )
