@@ -109,7 +109,7 @@ export const FindTab = () => {
 		case 'today':
 			query.year = now.getFullYear()
 			query.month = now.getMonth() + 1
-			query.day = now.getDay()
+			query.day = now.getDate()
 			break
 		case 'week':
 			query.year = now.getFullYear()
