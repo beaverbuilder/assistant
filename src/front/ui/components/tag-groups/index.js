@@ -33,7 +33,7 @@ export const Tag = ( { children, onClick = () => {}, count, isSelected, isDisabl
 	)
 }
 
-export const TagGroupControl = ( { title, tags, value, appearance, onChange, isDisabled, limit=8 } ) => {
+export const TagGroupControl = ( { title, tags, value, appearance, onChange, isDisabled, limit = 8 } ) => {
 	const [ moreShowing, setMoreShowing ] = useState( false )
 	const renderMoreTag = tags.length > limit
 	let items = tags
