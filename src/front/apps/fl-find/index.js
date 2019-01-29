@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { TagGroupControl, ScreenHeader, ExpandedContents, ContentList } from 'components'
+import { useStore } from 'store'
 import { getWeek } from 'utils'
 
 export const FindTab = () => {
@@ -7,30 +8,24 @@ export const FindTab = () => {
 	const [ subType, setSubType ] = useState( 'page' )
 	const [ date, setDate ] = useState( '' )
 	const [ status, setStatus ] = useState( 'publish' )
+	const { contentTypes, taxonomies } = useStore()
 	const now = new Date()
+	const typeTags = []
 
-	const typeTags = [
-		{
-			label: 'Posts',
-			value: [ 'posts', 'post' ],
-		},
-		{
-			label: 'Pages',
-			value: [ 'posts', 'page' ],
-		},
-		{
-			label: 'Media',
-			value: [ 'posts', 'attachment' ],
-		},
-		{
-			label: 'Categories',
-			value: [ 'terms', 'category' ],
-		},
-		{
-			label: 'Tags',
-			value: [ 'terms', 'post_tag' ],
-		},
-	]
+	Object.keys( contentTypes ).map( type => {
+		typeTags.push( {
+			label: contentTypes[ type ],
+			value: [ 'posts', type ],
+		} )
+	} )
+
+	Object.keys( taxonomies ).map( type => {
+		typeTags.push( {
+			label: taxonomies[ type ],
+			value: [ 'terms', type ],
+		} )
+	} )
+
 	const changeType = value => {
 		if ( Array.isArray( value ) ) {
 			const [ type, subType ] = value
@@ -59,10 +54,11 @@ export const FindTab = () => {
 			value: 'month',
 		},
 		{
-			label: '2019',
+			label: now.getFullYear(),
 			value: 'year'
 		}
 	]
+
 	const changeDate = value => setDate( value )
 
 	const statusTags = [
@@ -106,14 +102,14 @@ export const FindTab = () => {
 			orderby: 'title',
 			order: 'ASC',
 			s: '',
-			post_status: status,
+			post_status: 'attachment' === subType ? 'any' : status,
 		}
 
 		switch ( date ) {
 		case 'today':
 			query.year = now.getFullYear()
 			query.month = now.getMonth() + 1
-			query.day = now.getDay()
+			query.day = now.getDate()
 			break
 		case 'week':
 			query.year = now.getFullYear()
@@ -129,7 +125,7 @@ export const FindTab = () => {
 		}
 		break
 
-		// Handle taxonomy queries
+	// Handle taxonomy queries
 	case 'terms':
 		query = {
 			taxonomy: subType,
@@ -143,20 +139,19 @@ export const FindTab = () => {
 		<Fragment>
 			<ScreenHeader>
 				<TagGroupControl tags={typeTags} value={typeTagValue} onChange={changeType} appearance="vibrant" />
-				<ExpandedContents>
-					<TagGroupControl tags={dateTags} value={date} title="Created" onChange={changeDate} />
-					<TagGroupControl tags={statusTags} value={status} title="Status" onChange={setStatus} />
-				</ExpandedContents>
+				{ 'posts' === type &&
+					<ExpandedContents>
+						<TagGroupControl tags={dateTags} value={date} title="Created" onChange={changeDate} />
+						{ 'attachment' !== subType &&
+							<TagGroupControl tags={statusTags} value={status} title="Status" onChange={setStatus} />
+						}
+					</ExpandedContents>
+				}
 			</ScreenHeader>
 
 			<ContentList
 				type={type}
 				query={query}
-				itemConfig={{
-					showThumb: true,
-					showMeta: true,
-					showActions: true,
-				}}
 			/>
 		</Fragment>
 	)

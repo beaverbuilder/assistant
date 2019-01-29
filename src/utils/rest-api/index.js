@@ -21,6 +21,8 @@ export const getContent = ( type, args, complete ) => {
 		return getComments( args, complete )
 	case 'users':
 		return getUsers( args, complete )
+	case 'updates':
+		return getUpdates( complete )
 	}
 }
 
@@ -158,5 +160,20 @@ export const updateUserState = ( state ) => {
 		args: {
 			state: JSON.stringify( state ),
 		}
+	} )
+}
+
+/**
+ * Returns any array of updates.
+ *
+ * @since 0.1
+ * @param {Object} args
+ * @param {Function} complete
+ * @return {Object}
+ */
+export const getUpdates = ( complete ) => {
+	return request( {
+		route: 'fl-assistant/v1/updates',
+		complete
 	} )
 }
