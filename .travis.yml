@@ -12,4 +12,4 @@ jobs:
       install:
         - npm ci
       script:
-        - npm run build-test
+        - npm run test
