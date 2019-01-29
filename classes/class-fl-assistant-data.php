@@ -38,7 +38,7 @@ class FL_Assistant_Data {
 			'currentUser'     => self::get_current_user_data(),
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'showUI'          => $user_state['showUI'],
-			'taxonomies'	  => self::get_taxonomies(),
+			'taxonomies'      => self::get_taxonomies(),
 		);
 	}
 

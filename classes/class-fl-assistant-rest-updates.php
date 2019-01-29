@@ -44,9 +44,9 @@ final class FL_Assistant_REST_Updates {
 		}
 
 		return array(
-			'author' => $plugin['AuthorName'],
+			'author'    => $plugin['AuthorName'],
 			'thumbnail' => $thumbnail,
-			'title' => $plugin['Name'],
+			'title'     => $plugin['Name'],
 		);
 	}
 
@@ -70,9 +70,9 @@ final class FL_Assistant_REST_Updates {
 		}
 
 		return array(
-			'author' => strip_tags( $theme->Author ),
+			'author'    => strip_tags( $theme->Author ),
 			'thumbnail' => $theme->get_screenshot(),
-			'title' => $theme->Name,
+			'title'     => $theme->Name,
 		);
 	}
 
@@ -85,26 +85,28 @@ final class FL_Assistant_REST_Updates {
 	 */
 	static public function updates( $request ) {
 		$response = array();
+		$plugins  = current_user_can( 'update_plugins' );
+		$themes   = current_user_can( 'update_themes' );
 
-		if ( $plugins = current_user_can( 'update_plugins' ) ) {
-                $update_plugins = get_site_transient( 'update_plugins' );
-                if ( ! empty( $update_plugins->response ) ) {
-					foreach ( $update_plugins->response as $key => $update ) {
-						$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
-						$response[] = self::get_plugin_response_data( $update, $plugin );
-					}
+		if ( $plugins ) {
+			$update_plugins = get_site_transient( 'update_plugins' );
+			if ( ! empty( $update_plugins->response ) ) {
+				foreach ( $update_plugins->response as $key => $update ) {
+					$plugin     = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
+					$response[] = self::get_plugin_response_data( $update, $plugin );
 				}
-        }
+			}
+		}
 
-        if ( $themes = current_user_can( 'update_themes' ) ) {
-                $update_themes = get_site_transient( 'update_themes' );
-                if ( ! empty( $update_themes->response ) ) {
-					foreach ( $update_themes->response as $key => $update ) {
-						$theme = wp_get_theme( $key );
-						$response[] = self::get_theme_response_data( $update, $theme );
-					}
+		if ( $themes ) {
+			$update_themes = get_site_transient( 'update_themes' );
+			if ( ! empty( $update_themes->response ) ) {
+				foreach ( $update_themes->response as $key => $update ) {
+					$theme      = wp_get_theme( $key );
+					$response[] = self::get_theme_response_data( $update, $theme );
 				}
-        }
+			}
+		}
 
 		return rest_ensure_response( $response );
 	}

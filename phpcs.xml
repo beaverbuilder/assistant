@@ -3,6 +3,7 @@
 
 	<rule ref="WordPress-Core">
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
+		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
 	</rule>
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
