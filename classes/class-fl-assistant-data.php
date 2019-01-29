@@ -123,7 +123,8 @@ class FL_Assistant_Data {
 
         } elseif ( is_singular() || is_attachment() ) {
 
-            $post_type = get_post_type_object( get_post_type() )->labels->singular_name;
+			$labels = $post_type = get_post_type_object( get_post_type() )->labels;
+            $post_type = $labels->singular_name;
             $intro = sprintf( esc_html__('Currently Viewing %s', 'fl-assistant'), $post_type );
             $name = $obj->post_title;
 
@@ -133,9 +134,9 @@ class FL_Assistant_Data {
 			}
 
 			$actions[] = [
-				'label' => __('Edit', 'fl-assistant'),
+				'label' => $labels->edit_item,
 				'href' => get_edit_post_link(),
-				'capability' => 'edit_post'
+				'capability' => 'edit_pages'
 			];
 
         } elseif ( is_author() ) {
