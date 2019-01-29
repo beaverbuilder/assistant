@@ -1,18 +1,33 @@
-import React, { Fragment } from 'react'
-import { Tag, TagGroup, ScreenHeader, ContentList } from 'components'
+import React, { Fragment, useState } from 'react'
+import { TagGroupControl, ScreenHeader, ContentList } from 'components'
 
 export const NotificationsTab = () => {
+	const [ type, setType ] = useState( 'comments' )
+
+	const tags = [
+		{
+			label: 'Comments',
+			value: 'comments',
+		},
+		{
+			label: 'Updates',
+			value: 'updates',
+		},
+	]
+
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<TagGroup appearance="muted">
-					<Tag>Comments</Tag>
-					<Tag>Updates</Tag>
-				</TagGroup>
+				<TagGroupControl
+					tags={ tags }
+					value={ type }
+					onChange={ value => setType( value ) }
+					appearance="vibrant"
+				/>
 			</ScreenHeader>
 
 			<ContentList
-				type="updates"
+				type={ type }
 			/>
 		</Fragment>
 	)
