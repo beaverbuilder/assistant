@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react'
-import { Separator, Widget } from 'components'
+import { Separator, Widget, ActionGroup } from 'components'
 import { ScreenHeader } from 'components/panel-parts'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
 
 export const DashboardTab = () => {
-	const { currentUser } = useStore()
+	const { currentUser, dashboardApp } = useStore()
+	const { adminActions } = dashboardApp
+
 	return (
 		<Fragment>
 			<ScreenHeader title={`Welcome, ${currentUser.name}`}>
@@ -16,18 +18,18 @@ export const DashboardTab = () => {
 			<RecentlyEditedWidget />
 			<Separator />
 
+			<Widget title="Admin Links">
+				<ActionGroup actions={adminActions} appearance="muted" />
+			</Widget>
+			<Separator />
+
 			<Widget title="Project Status">
 				<ul>
-					<li>Notifications - Tags aren't hooked up yet.</li>
 					<li>Media - Tags aren't hooked up yet</li>
 					<li>Find - "Today" tag might be a little iffy. Needs more testing</li>
 				</ul>
 			</Widget>
 			<Separator />
-
-			<Widget title="Another Widget">
-                Great Widget Here
-			</Widget>
 		</Fragment>
 	)
 }

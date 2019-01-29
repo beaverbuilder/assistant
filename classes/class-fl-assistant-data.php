@@ -38,6 +38,10 @@ class FL_Assistant_Data {
 			'currentUser' => self::get_current_user_data(),
 			'pluginURL' => FL_ASSISTANT_URL,
 			'showUI' => $user_state['showUI'],
+
+			'dashboardApp' => [
+				'adminActions' => self::get_admin_actions(),
+			],
         );
     }
 
@@ -71,15 +75,14 @@ class FL_Assistant_Data {
      */
     static public function get_current_view() {
         $data = [];
+		$actions = [];
         $intro = __('Currently Viewing', 'fl-assistant');
         $name = __('Untitled', 'fl-assistant');
 
-        if ( is_embed() ) {
+		$obj = get_queried_object();
+		$data['queried_object'] = $obj;
 
-            $intro = __('Currently Viewing Embed', 'fl-assistant');
-            $name = get_the_title();
-
-        } elseif ( is_404() ) {
+        if ( is_404() ) {
 
             $name = __('Page Not Found', 'fl-assistant');
 
@@ -93,45 +96,182 @@ class FL_Assistant_Data {
             $intro = __('Currently Viewing Front Page', 'fl-assistant');
             $name = get_the_title();
 
+			$actions[] = [
+				'label' => __('Edit', 'fl-assistant'),
+				'href' => get_edit_post_link(),
+				'capability' => 'edit_pages',
+			];
+
         } elseif ( is_post_type_archive() ) {
 
-            $intro = __('Currently Viewing Post Type Archive', 'fl-assistant');
-            $name = get_the_archive_title();
+			$post_type = get_post_type_object( 'post' );
+			$intro = __('Currently Viewing Post Type Archive', 'fl-assistant');
+			$name = $post_type->labels->singular;
 
-        } elseif ( is_tax() ) {
+		} elseif ( is_tax() || is_category() || is_tag() ) {
 
-            $intro = __('Currently Viewing Taxonomy', 'fl-assistant');
-            $name = get_the_title();
+			$labels = get_taxonomy_labels($obj);
 
-        } elseif ( is_category() ) {
+            $intro = sprintf( esc_html__('Currently Viewing %s', 'fl-assistant'), $labels->singular_name );
+            $name = $obj->name;
 
-            $intro = __('Currently Viewing Category', 'fl-assistant');
-            $name = get_cat_name();
+			$actions[] = [
+				'label' => $labels->edit_item,
+				'href' => '#',
+				'capability' => 'manage_categories',
+			];
 
-        } elseif ( is_tag() ) {
+        } elseif ( is_singular() || is_attachment() ) {
 
-            $intro = __('Currently Viewing Tag', 'fl-assistant');
-            $name = get_tag_name();
-
-        } elseif ( is_attachment() ) {
-
-            $intro = __('Currently Viewing Attachment', 'fl-assistant');
-            $name = get_the_title();
-
-        } elseif ( is_singular() ) {
-            $post_type = get_post_type_object(get_post_type())->labels->singular_name;
+            $post_type = get_post_type_object( get_post_type() )->labels->singular_name;
             $intro = sprintf( esc_html__('Currently Viewing %s', 'fl-assistant'), $post_type );
-            $name = get_the_title();
+            $name = $obj->post_title;
+
+			if ( is_attachment() ) {
+				$meta = wp_get_attachment_metadata($obj->ID);
+				$name = basename($meta['file']);
+			}
+
+			$actions[] = [
+				'label' => __('Edit', 'fl-assistant'),
+				'href' => get_edit_post_link(),
+				'capability' => 'edit_post'
+			];
+
         } elseif ( is_author() ) {
+
             $intro = __('Currently Viewing Author', 'fl-assistant');
             $name = wp_get_current_user()->display_name;
+
         }
 
         $data['intro'] = $intro;
         $data['name'] = $name;
+		$data['actions'] = self::filter_actions_by_capability( $actions );
+
+		$theme = wp_get_theme();
+		$data['theme'] = [
+			'name' => $theme->get('Name'),
+			'team' => $theme->get('Author'),
+			'screenshot' => $theme->get_screenshot(),
+			'version' => $theme->get('Version')
+		];
 
         return $data;
     }
+
+	/**
+	 * Filter an array of actions by their capability
+	 *
+	 * @since 0.1
+	 * @param Array $actions
+	 * @return array
+	 */
+	static public function filter_actions_by_capability( $actions = [], $exclude_unset = true ) {
+
+		foreach( $actions as $i => $action ) {
+			$defaults = [
+				'label' => '',
+				'capability' => ''
+			];
+			$action = wp_parse_args( $action, $defaults );
+			$cap = $action['capability'];
+
+			// Remove actions without a capability set
+			if ( $exclude_unset && ( '' === $cap || empty( $cap )) ) {
+				unset( $actions[$i] );
+			}
+			// Test capability
+			if ( is_string( $cap ) && ! current_user_can( $cap ) ) {
+				unset( $actions[$i] );
+			}
+
+			// Test array of capabilities
+			if ( is_array( $cap ) ) {
+				foreach( $cap as $single_cap ) {
+					if ( ! current_user_can( $single_cap ) ) {
+						unset( $actions[$i] );
+					}
+				}
+			}
+		}
+
+		return $actions;
+	}
+
+	/**
+	 * Get an action set for allowed admin links.
+	 *
+	 * @since 0.1
+	 * @return array
+	 */
+	static public function get_admin_actions() {
+		$actions = [];
+
+		// Customize Link
+		if ( $customize_url = self::get_customize_url() ) {
+			$actions[] = [
+				'label' => __('Customize'),
+				'href' => $customize_url,
+				'capability' => 'customize',
+			];
+		}
+
+		// Your User Profile Link
+		$user_id = get_current_user_id();
+
+		if ( current_user_can( 'read' ) ) {
+			$profile_url = get_edit_profile_url( $user_id );
+		}
+		$actions[] = [
+			'label' => __('Your Profile'),
+			'href' => $profile_url,
+			'capability' => 'read',
+		];
+
+		// About Link
+		if ( current_user_can( 'read' ) ) {
+			$about_url = self_admin_url( 'about.php' );
+		}
+		$actions[] = [
+			'label' => __('About WordPress'),
+			'href' => $about_url,
+			'capability' => 'read'
+		];
+
+		return self::filter_actions_by_capability ( $actions );
+	}
+
+	/**
+	 * Get customize url
+	 *
+	 * @since 0.1
+	 * @return string
+	 */
+	static public function get_customize_url() {
+		global $wp_customize;
+
+		// Don't show for users who can't access the customizer or when in the admin.
+		if ( ! current_user_can( 'customize' ) || is_admin() ) {
+			return;
+		}
+
+		// Don't show if the user cannot edit a given customize_changeset post currently being previewed.
+		if ( is_customize_preview() && $wp_customize->changeset_post_id() && ! current_user_can( get_post_type_object( 'customize_changeset' )->cap->edit_post, $wp_customize->changeset_post_id() ) ) {
+			return;
+		}
+
+		$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		if ( is_customize_preview() && $wp_customize->changeset_uuid() ) {
+			$current_url = remove_query_arg( 'customize_changeset_uuid', $current_url );
+		}
+
+		$customize_url = add_query_arg( 'url', urlencode( $current_url ), wp_customize_url() );
+		if ( is_customize_preview() ) {
+			$customize_url = add_query_arg( array( 'changeset_uuid' => $wp_customize->changeset_uuid() ), $customize_url );
+		}
+		return $customize_url;
+	}
 
     /**
      * Get the saved state for a user.

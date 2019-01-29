@@ -61,6 +61,7 @@
         flex: 1 1 auto;
         padding-right: 20px;
         max-width: calc(100% - 90px);
+        user-select: none;
 
         .fl-asst-list-item-title {
             color: var(--fl-accent-color);

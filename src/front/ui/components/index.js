@@ -12,7 +12,7 @@ export {
 	AspectBox,
 } from './layout-helpers'
 
-export { TagGroup, Tag, TagGroupControl } from './tag-groups'
+export { TagGroup, Tag, TagGroupControl, ActionGroup } from './tag-groups'
 export {
 	PanelChrome,
 	PanelFrame,

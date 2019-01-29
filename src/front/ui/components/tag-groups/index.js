@@ -17,19 +17,28 @@ export const TagGroup = ({ title, children, appearance, isDisabled }) => {
 	)
 }
 
-export const Tag = ({ children, onClick = () => {}, count, isSelected, isDisabled }) => {
+export const Tag = ({ children, onClick = () => {}, count, isSelected, isDisabled, href, target }) => {
 	const classes = classname({
+		'fl-asst-button' : true,
 		'fl-asst-tag' : true,
 		'is-selected' : isSelected,
 		'is-disabled' : isDisabled,
 	})
-
-	return (
-		<button className={classes} onClick={onClick}>
-			{children}
-			{ count && <span className="fl-asst-tag-count">{count}</span> }
-		</button>
-	)
+	if (href) {
+		return (
+			<a className={classes} href={href} target={target}>
+				{children}
+				{ count && <span className="fl-asst-tag-count">{count}</span> }
+			</a>
+		)
+	} else {
+		return (
+			<button className={classes} onClick={onClick}>
+				{children}
+				{ count && <span className="fl-asst-tag-count">{count}</span> }
+			</button>
+		)
+	}
 }
 
 export const TagGroupControl = ({ title, tags, value, appearance, onChange, isDisabled }) => {
@@ -52,6 +61,18 @@ export const TagGroupControl = ({ title, tags, value, appearance, onChange, isDi
 					>{label}</Tag>
 				)
 			})}
+		</TagGroup>
+	)
+}
+
+export const ActionGroup = ({ actions = [], appearance }) => {
+	return (
+		<TagGroup appearance={appearance}>
+		{ actions.map( (action, i) => {
+			return (
+				<Tag key={i} {...action}>{action.label}</Tag>
+			)
+		})}
 		</TagGroup>
 	)
 }
