@@ -102,7 +102,7 @@ export const FindTab = () => {
 			orderby: 'title',
 			order: 'ASC',
 			s: '',
-			post_status: status,
+			post_status: 'attachment' === subType ? 'any' : status,
 		}
 
 		switch ( date ) {
@@ -139,10 +139,14 @@ export const FindTab = () => {
 		<Fragment>
 			<ScreenHeader>
 				<TagGroupControl tags={typeTags} value={typeTagValue} onChange={changeType} appearance="vibrant" />
-				<ExpandedContents>
-					<TagGroupControl tags={dateTags} value={date} title="Created" onChange={changeDate} />
-					<TagGroupControl tags={statusTags} value={status} title="Status" onChange={setStatus} />
-				</ExpandedContents>
+				{ 'posts' === type &&
+					<ExpandedContents>
+						<TagGroupControl tags={dateTags} value={date} title="Created" onChange={changeDate} />
+						{ 'attachment' !== subType &&
+							<TagGroupControl tags={statusTags} value={status} title="Status" onChange={setStatus} />
+						}
+					</ExpandedContents>
+				}
 			</ScreenHeader>
 
 			<ContentList
