@@ -99,14 +99,15 @@ class FL_Assistant_Data {
 
 		} elseif ( is_tax() || is_category() || is_tag() ) {
 
-			$labels = get_taxonomy_labels($obj);
+			$tax = get_taxonomy($obj->taxonomy);
+			$labels = $tax->labels;
 
             $intro = sprintf( esc_html__('Currently Viewing %s', 'fl-assistant'), $labels->singular_name );
             $name = $obj->name;
 
 			$actions[] = [
 				'label' => $labels->edit_item,
-				'href' => '#',
+				'href' => get_edit_term_link($obj->term_id, $obj->taxonomy, null ),
 				'capability' => 'manage_categories',
 			];
 
