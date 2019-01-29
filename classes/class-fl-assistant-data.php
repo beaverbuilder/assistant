@@ -31,14 +31,14 @@ class FL_Assistant_Data {
 
 		return array(
 			'activeApp'       => $user_state['activeApp'],
-			'apiNonce'        => wp_create_nonce('wp_rest'),
+			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'currentPageView' => self::get_current_view(),
 			'contentTypes'    => self::get_post_types(),
 			'currentUser'     => self::get_current_user_data(),
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'showUI'          => $user_state['showUI'],
-			'taxonomies'	  => self::get_taxonomies(),
+			'taxonomies'      => self::get_taxonomies(),
 		);
 	}
 

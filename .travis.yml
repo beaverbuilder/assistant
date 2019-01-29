@@ -1,15 +1,32 @@
 sudo: false
-
 dist: trusty
 
-language: generic
+language: php
+
+php: 7.2
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+    - node_modules
 
 jobs:
   include:
-    - name: JS lint and tests
-      before_install:
-        - nvm install --latest-npm
-      install:
-        - npm ci
+    - stage: Tests
+      name:  Lint & Tests
+      before_install: nvm install --latest-npm
+      install: npm ci
+      before_script:
+        - export PATH="$HOME/.composer/vendor/bin:$PATH"
+        - phpenv config-rm xdebug.ini
+        - composer global require wp-coding-standards/wpcs
+        - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
       script:
         - npm run test
+        - phpcs --standard=$TRAVIS_BUILD_DIR/phpcs.xml $TRAVIS_BUILD_DIR
