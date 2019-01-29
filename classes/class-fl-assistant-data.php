@@ -31,33 +31,35 @@ class FL_Assistant_Data {
 
 		return array(
 			'activeApp'       => $user_state['activeApp'],
-			'apiNonce'        => wp_create_nonce('wp_rest'),
+			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'currentPageView' => self::get_current_view(),
-			'contentTypes' => self::get_post_types(),
-			'currentUser' => self::get_current_user_data(),
-			'pluginURL' => FL_ASSISTANT_URL,
-			'showUI' => $user_state['showUI'],
-			'taxonomies'	  => self::get_taxonomies(),
-			'dashboardApp' => [
+			'contentTypes'    => self::get_post_types(),
+			'currentUser'     => self::get_current_user_data(),
+			'pluginURL'       => FL_ASSISTANT_URL,
+			'showUI'          => $user_state['showUI'],
+			'taxonomies'      => self::get_taxonomies(),
+			'dashboardApp'    => [
 				'adminActions' => self::get_admin_actions(),
 			],
-        );
-    }
+		);
+	}
 
-    /**
-     * Get post type slugs and names.
-     *
-     * @since 0.1
-     * @return array
-     */
-    static public function get_post_types() {
-        $data = [];
-        $types = get_post_types( array(
-            'public' => true,
-        ), 'objects' );
+	/**
+	 * Get post type slugs and names.
+	 *
+	 * @since 0.1
+	 * @return array
+	 */
+	static public function get_post_types() {
+		$data  = [];
+		$types = get_post_types(
+			array(
+				'public' => true,
+			), 'objects'
+		);
 
-        foreach ( $types as $slug => $type ) {
+		foreach ( $types as $slug => $type ) {
 			if ( 'attachment' === $slug ) {
 				continue;
 			}
@@ -93,19 +95,19 @@ class FL_Assistant_Data {
 	/**
 	 * Get info about the current page view.
 	 *
-     * @since 0.1
-     * @return array
-     */
-    static public function get_current_view() {
-        $data = [];
+	 * @since 0.1
+	 * @return array
+	 */
+	static public function get_current_view() {
+		$data    = [];
 		$actions = [];
-        $intro = __('Currently Viewing', 'fl-assistant');
-        $name = __('Untitled', 'fl-assistant');
+		$intro   = __( 'Currently Viewing', 'fl-assistant' );
+		$name    = __( 'Untitled', 'fl-assistant' );
 
-		$obj = get_queried_object();
+		$obj                    = get_queried_object();
 		$data['queried_object'] = $obj;
 
-        if ( is_404() ) {
+		if ( is_404() ) {
 
 			$name = __( 'Page Not Found', 'fl-assistant' );
 
@@ -117,58 +119,58 @@ class FL_Assistant_Data {
 		} elseif ( is_post_type_archive() ) {
 
 			$post_type = get_post_type_object( 'post' );
-			$intro = __('Currently Viewing Post Type Archive', 'fl-assistant');
-			$name = $post_type->labels->singular;
+			$intro     = __( 'Currently Viewing Post Type Archive', 'fl-assistant' );
+			$name      = $post_type->labels->singular;
 
 		} elseif ( is_tax() || is_category() || is_tag() ) {
 
-			$tax = get_taxonomy($obj->taxonomy);
+			$tax    = get_taxonomy( $obj->taxonomy );
 			$labels = $tax->labels;
 
-            $intro = sprintf( esc_html__('Currently Viewing %s', 'fl-assistant'), $labels->singular_name );
-            $name = $obj->name;
+			$intro = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $labels->singular_name );
+			$name  = $obj->name;
 
 			$actions[] = [
-				'label' => $labels->edit_item,
-				'href' => get_edit_term_link($obj->term_id, $obj->taxonomy, null ),
+				'label'      => $labels->edit_item,
+				'href'       => get_edit_term_link( $obj->term_id, $obj->taxonomy, null ),
 				'capability' => 'manage_categories',
 			];
 
-        } elseif ( is_singular() || is_attachment() ) {
+		} elseif ( is_singular() || is_attachment() ) {
 
-			$labels = $post_type = get_post_type_object( get_post_type() )->labels;
-            $post_type = $labels->singular_name;
-            $intro = sprintf( esc_html__('Currently Viewing %s', 'fl-assistant'), $post_type );
-            $name = $obj->post_title;
+			$labels    = $post_type = get_post_type_object( get_post_type() )->labels;
+			$post_type = $labels->singular_name;
+			$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $post_type );
+			$name      = $obj->post_title;
 
 			if ( is_attachment() ) {
-				$meta = wp_get_attachment_metadata($obj->ID);
-				$name = basename($meta['file']);
+				$meta = wp_get_attachment_metadata( $obj->ID );
+				$name = basename( $meta['file'] );
 			}
 
 			$actions[] = [
-				'label' => $labels->edit_item,
-				'href' => get_edit_post_link( $obj->ID, ''),
-				'capability' => 'edit_pages'
+				'label'      => $labels->edit_item,
+				'href'       => get_edit_post_link( $obj->ID, '' ),
+				'capability' => 'edit_pages',
 			];
 
-        } elseif ( is_author() ) {
+		} elseif ( is_author() ) {
 
-            $intro = __('Currently Viewing Author', 'fl-assistant');
-            $name = wp_get_current_user()->display_name;
+			$intro = __( 'Currently Viewing Author', 'fl-assistant' );
+			$name  = wp_get_current_user()->display_name;
 
-        }
+		}
 
-        $data['intro'] = $intro;
-        $data['name'] = $name;
+		$data['intro']   = $intro;
+		$data['name']    = $name;
 		$data['actions'] = self::filter_actions_by_capability( $actions );
 
-		$theme = wp_get_theme();
+		$theme         = wp_get_theme();
 		$data['theme'] = [
-			'name' => $theme->get('Name'),
-			'team' => $theme->get('Author'),
+			'name'       => $theme->get( 'Name' ),
+			'team'       => $theme->get( 'Author' ),
 			'screenshot' => $theme->get_screenshot(),
-			'version' => $theme->get('Version')
+			'version'    => $theme->get( 'Version' ),
 		];
 
 		return $data;
@@ -183,28 +185,28 @@ class FL_Assistant_Data {
 	 */
 	static public function filter_actions_by_capability( $actions = [], $exclude_unset = true ) {
 
-		foreach( $actions as $i => $action ) {
+		foreach ( $actions as $i => $action ) {
 			$defaults = [
-				'label' => '',
-				'capability' => ''
+				'label'      => '',
+				'capability' => '',
 			];
-			$action = wp_parse_args( $action, $defaults );
-			$cap = $action['capability'];
+			$action   = wp_parse_args( $action, $defaults );
+			$cap      = $action['capability'];
 
 			// Remove actions without a capability set
-			if ( $exclude_unset && ( '' === $cap || empty( $cap )) ) {
-				unset( $actions[$i] );
+			if ( $exclude_unset && ( '' === $cap || empty( $cap ) ) ) {
+				unset( $actions[ $i ] );
 			}
 			// Test capability
 			if ( is_string( $cap ) && ! current_user_can( $cap ) ) {
-				unset( $actions[$i] );
+				unset( $actions[ $i ] );
 			}
 
 			// Test array of capabilities
 			if ( is_array( $cap ) ) {
-				foreach( $cap as $single_cap ) {
+				foreach ( $cap as $single_cap ) {
 					if ( ! current_user_can( $single_cap ) ) {
-						unset( $actions[$i] );
+						unset( $actions[ $i ] );
 					}
 				}
 			}
@@ -225,8 +227,8 @@ class FL_Assistant_Data {
 		// Customize Link
 		if ( $customize_url = self::get_customize_url() ) {
 			$actions[] = [
-				'label' => __('Customize'),
-				'href' => $customize_url,
+				'label'      => __( 'Customize' ),
+				'href'       => $customize_url,
 				'capability' => 'customize',
 			];
 		}
@@ -238,8 +240,8 @@ class FL_Assistant_Data {
 			$profile_url = get_edit_profile_url( $user_id );
 		}
 		$actions[] = [
-			'label' => __('Your Profile'),
-			'href' => $profile_url,
+			'label'      => __( 'Your Profile' ),
+			'href'       => $profile_url,
 			'capability' => 'read',
 		];
 
@@ -248,12 +250,12 @@ class FL_Assistant_Data {
 			$about_url = self_admin_url( 'about.php' );
 		}
 		$actions[] = [
-			'label' => __('About WordPress'),
-			'href' => $about_url,
-			'capability' => 'read'
+			'label'      => __( 'About WordPress' ),
+			'href'       => $about_url,
+			'capability' => 'read',
 		];
 
-		return self::filter_actions_by_capability ( $actions );
+		return self::filter_actions_by_capability( $actions );
 	}
 
 	/**
@@ -287,8 +289,8 @@ class FL_Assistant_Data {
 		return $customize_url;
 	}
 
-    /**
-     * Get the saved state for a user.
+	/**
+	 * Get the saved state for a user.
 	 *
 	 * @since 0.1
 	 * @param int $id
