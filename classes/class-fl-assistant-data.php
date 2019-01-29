@@ -38,6 +38,7 @@ class FL_Assistant_Data {
 			'currentUser'     => self::get_current_user_data(),
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'showUI'          => $user_state['showUI'],
+			'taxonomies'	  => self::get_taxonomies(),
 		);
 	}
 
@@ -60,6 +61,29 @@ class FL_Assistant_Data {
 				continue;
 			}
 			$data[ $slug ] = esc_html( $type->labels->name );
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Get taxonomy slugs and names.
+	 *
+	 * @since 0.1
+	 * @return array
+	 */
+	static public function get_taxonomies() {
+		$data  = [];
+		$types = self::get_post_types();
+
+		foreach ( $types as $type_slug => $type_name ) {
+			$taxonomies = get_object_taxonomies( $type_slug, 'objects' );
+			foreach ( $taxonomies as $taxonomy_slug => $taxonomy ) {
+				if ( ! $taxonomy->public || ! $taxonomy->show_ui || 'post_format' == $taxonomy_slug ) {
+					continue;
+				}
+				$data[ $taxonomy_slug ] = $taxonomy->label;
+			}
 		}
 
 		return $data;
