@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classname from 'classnames'
+import { Button } from 'components'
 import './style.scss'
 
 export const TagGroup = ( { title, children, appearance, isDisabled } ) => {
@@ -41,10 +42,18 @@ export const Tag = ({ children, onClick = () => {}, count, isSelected, isDisable
 	}
 }
 
-export const TagGroupControl = ( { title, tags, value, appearance, onChange, isDisabled } ) => {
+export const TagGroupControl = ( { title, tags, value, appearance, onChange, isDisabled, limit = 8 } ) => {
+	const [ moreShowing, setMoreShowing ] = useState( false )
+	const renderMoreTag = tags.length > limit
+	let items = tags
+
+	if ( renderMoreTag && ! moreShowing ) {
+		items = tags.filter( ( tag, i ) => i < limit )
+	}
+
 	return (
 		<TagGroup title={title} appearance={appearance} isDisabled={isDisabled}>
-			{ tags.map( ( tag, i ) => {
+			{ items.map( ( tag, i ) => {
 				const { label, count } = tag
 
 				let isSelected = value == tag.value
@@ -61,6 +70,11 @@ export const TagGroupControl = ( { title, tags, value, appearance, onChange, isD
 					>{label}</Tag>
 				)
 			} )}
+			{ renderMoreTag &&
+				<Button
+					onClick={() => setMoreShowing( ! moreShowing )}
+				>{ moreShowing ? 'Less...' : 'More...' }</Button>
+			}
 		</TagGroup>
 	)
 }
