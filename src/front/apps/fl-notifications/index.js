@@ -28,6 +28,9 @@ export const NotificationsTab = () => {
 
 			<ContentList
 				type={ type }
+				itemConfig={ {
+					showActions: false,
+				} }
 			/>
 		</Fragment>
 	)
