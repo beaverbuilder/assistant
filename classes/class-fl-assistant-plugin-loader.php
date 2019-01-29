@@ -76,8 +76,8 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 			global $pagenow;
 
 			if ( 'plugins.php' == $pagenow ) {
-				add_action( 'admin_notices',           __CLASS__ . '::admin_notice' );
-				add_action( 'network_admin_notices',   __CLASS__ . '::admin_notice' );
+				add_action( 'admin_notices', __CLASS__ . '::admin_notice' );
+				add_action( 'network_admin_notices', __CLASS__ . '::admin_notice' );
 			}
 		}
 
@@ -116,6 +116,7 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 
 			if ( version_compare( phpversion(), '5.6', '<' ) ) {
 				$url   = 'http://www.wpupdatephp.com/contact-host/';
+				/* translators: php upgrade url. */
 				$error = sprintf( __( 'Assistant requires PHP 5.6 or above. Please <a href="%s">update your PHP version</a> before continuing.', 'fl-assistant' ), $url );
 			}
 

@@ -5,9 +5,9 @@ import './style.scss'
 
 export const TabBar = props => {
 	const { tabs } = props
-	const classes = classname({
+	const classes = classname( {
 		'fl-asst-tab-bar': true
-	})
+	} )
 	return (
 		<div className={ classes }>
 			{ tabs.map( ( tab, index ) =>

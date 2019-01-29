@@ -14,7 +14,7 @@ const App = () => {
 	const { setShowUI } = useDispatch()
 
 	// Create a toggle function to show/hide the panel
-	const toggleUI = () => showUI ? setShowUI(false) : setShowUI(true)
+	const toggleUI = () => showUI ? setShowUI( false ) : setShowUI( true )
 
 	return (
 		<StrictMode>
@@ -30,8 +30,8 @@ const App = () => {
 }
 
 // Render App into the document
-const root = document.createElement('div')
-root.classList.add('fl-asst')
-document.body.appendChild(root)
+const root = document.createElement( 'div' )
+root.classList.add( 'fl-asst' )
+document.body.appendChild( root )
 
-render(<App />, root)
+render( <App />, root )

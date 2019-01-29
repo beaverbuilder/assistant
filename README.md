@@ -13,3 +13,12 @@ npm install
 npm run build
 ```
 If that looks foreign, ask Brent or Justin about it.
+
+## Development
+Use the following npm commands after cloning the repo to work on the project:
+
+`npm run dev` - Build development files and watch for changes.
+
+`npm run test` - Run unit tests and linters.
+
+`npm run fix` - Attempt to fix errors caught by linters.

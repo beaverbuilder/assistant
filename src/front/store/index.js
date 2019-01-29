@@ -5,12 +5,12 @@ import reducers from './reducers'
 import * as actions from './actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ name: 'Assistant' }) || compose
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__( { name: 'Assistant' } ) || compose
 
 const store = createStore( reducers, {
 	apps: {},
 	...FLAssistantInitialData,
-}, composeEnhancers( applyMiddleware(applyEffects) ) )
+}, composeEnhancers( applyMiddleware( applyEffects ) ) )
 
 export const useStore = () => {
 	const [ state, setState ] = useState( store.getState() )

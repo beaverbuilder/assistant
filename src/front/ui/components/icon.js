@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const Icon = ({ name }) => {
-	switch(name) {
+export const Icon = ( { name } ) => {
+	switch ( name ) {
 	case 'close':
 		return (
 			<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">

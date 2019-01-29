@@ -42,12 +42,12 @@ final class FL_Assistant_REST_Comments {
 	 */
 	static public function get_comment_response_data( $comment ) {
 		return array(
-			'author' => $comment->comment_author,
-			'date' => $comment->comment_date,
-			'edit_url' => get_edit_comment_link( $comment ),
+			'author'    => $comment->comment_author,
+			'date'      => $comment->comment_date,
+			'edit_url'  => get_edit_comment_link( $comment ),
 			'thumbnail' => get_avatar_url( $comment->comment_author_email ),
-			'title' => $comment->comment_content,
-			'url' => get_comment_link( $comment ),
+			'title'     => $comment->comment_content,
+			'url'       => get_comment_link( $comment ),
 		);
 	}
 
@@ -60,7 +60,7 @@ final class FL_Assistant_REST_Comments {
 	 */
 	static public function comments( $request ) {
 		$response = array();
-		$params = $request->get_params();
+		$params   = $request->get_params();
 		$comments = get_comments( $params );
 
 		foreach ( $comments as $comment ) {
@@ -80,8 +80,8 @@ final class FL_Assistant_REST_Comments {
 	 * @return array
 	 */
 	static public function comment( $request ) {
-		$id = $request->get_param( 'id' );
-		$comment = get_comment( $id );
+		$id       = $request->get_param( 'id' );
+		$comment  = get_comment( $id );
 		$response = self::get_comment_response_data( $comment );
 
 		return rest_ensure_response( $response );

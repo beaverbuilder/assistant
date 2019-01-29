@@ -5,8 +5,8 @@ import './style.scss'
 
 export const MediaTab = () => {
 	const query = {
-		'posts_per_page' : 100,
-		'post_type' : 'attachment'
+		'posts_per_page': 100,
+		'post_type': 'attachment'
 	}
 	return (
 		<Fragment>
@@ -26,9 +26,9 @@ export const MediaTab = () => {
 	)
 }
 
-const Item = ({ url, className, urls }) => {
-	const classes = classname({
-		'fl-asst-grid-item' : true,
+const Item = ( { url, className, urls } ) => {
+	const classes = classname( {
+		'fl-asst-grid-item': true,
 	}, className )
 	const styles = {
 		backgroundImage: `url(${urls.medium})`

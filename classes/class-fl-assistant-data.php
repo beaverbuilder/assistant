@@ -15,24 +15,24 @@ class FL_Assistant_Data {
 	 */
 	static public $default_user_state = array(
 		'activeApp' => 'fl-dashboard',
-		'showUI' => true,
+		'showUI'    => true,
 	);
 
-    /**
-     * Returns an array of all assistant data.
+	/**
+	 * Returns an array of all assistant data.
 	 *
 	 * NOTE: Kept in alphabetical order.
-     *
-     * @since 0.1
-     * @return array
-     */
-    static public function get_all() {
+	 *
+	 * @since 0.1
+	 * @return array
+	 */
+	static public function get_all() {
 		$user_state = self::get_current_user_state();
 
-        return array(
-			'activeApp' => $user_state['activeApp'],
-			'apiNonce' => wp_create_nonce( 'wp_rest' ),
-			'apiRoot' => esc_url_raw( get_rest_url() ),
+		return array(
+			'activeApp'       => $user_state['activeApp'],
+			'apiNonce'        => wp_create_nonce('wp_rest'),
+			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'currentPageView' => self::get_current_view(),
 			'contentTypes' => self::get_post_types(),
 			'currentUser' => self::get_current_user_data(),
@@ -61,14 +61,14 @@ class FL_Assistant_Data {
 			if ( 'attachment' === $slug ) {
 				continue;
 			}
-            $data[ $slug ] = esc_html( $type->labels->name );
-        }
+			$data[ $slug ] = esc_html( $type->labels->name );
+		}
 
-        return $data;
-    }
+		return $data;
+	}
 
-    /**
-     * Get info about the current page view.
+	/**
+	 * Get info about the current page view.
 	 *
      * @since 0.1
      * @return array
@@ -84,17 +84,17 @@ class FL_Assistant_Data {
 
         if ( is_404() ) {
 
-            $name = __('Page Not Found', 'fl-assistant');
+			$name = __( 'Page Not Found', 'fl-assistant' );
 
-        } elseif ( is_search() ) {
+		} elseif ( is_search() ) {
 
-            $intro = __('Currently Viewing Search Results For', 'fl-assistant');
-            $name = get_search_query();
+			$intro = __( 'Currently Viewing Search Results For', 'fl-assistant' );
+			$name  = get_search_query();
 
-        } elseif ( is_front_page() ) {
+		} elseif ( is_front_page() ) {
 
-            $intro = __('Currently Viewing Front Page', 'fl-assistant');
-            $name = get_the_title();
+			$intro = __( 'Currently Viewing Front Page', 'fl-assistant' );
+			$name  = get_the_title();
 
 			$actions[] = [
 				'label' => __('Edit', 'fl-assistant'),
@@ -157,8 +157,8 @@ class FL_Assistant_Data {
 			'version' => $theme->get('Version')
 		];
 
-        return $data;
-    }
+		return $data;
+	}
 
 	/**
 	 * Filter an array of actions by their capability
@@ -276,11 +276,11 @@ class FL_Assistant_Data {
     /**
      * Get the saved state for a user.
 	 *
-     * @since 0.1
+	 * @since 0.1
 	 * @param int $id
-     * @return array
-     */
-    static public function get_user_state( $id ) {
+	 * @return array
+	 */
+	static public function get_user_state( $id ) {
 		$saved = get_user_meta( $id, 'fl_assistant_state', true );
 
 		return array_merge(
@@ -289,44 +289,46 @@ class FL_Assistant_Data {
 		);
 	}
 
-    /**
-     * Update the saved state for a user.
+	/**
+	 * Update the saved state for a user.
 	 *
-     * @since 0.1
+	 * @since 0.1
 	 * @param int $id
 	 * @param array $state
-     * @return void
-     */
-    static public function update_user_state( $id, $state ) {
+	 * @return void
+	 */
+	static public function update_user_state( $id, $state ) {
 		$saved = self::get_user_state( $id );
 
-		update_user_meta( $id, 'fl_assistant_state', array_merge(
-			$saved,
-			$state ? (array) $state : array()
-		) );
+		update_user_meta(
+			$id, 'fl_assistant_state', array_merge(
+				$saved,
+				$state ? (array) $state : array()
+			)
+		);
 	}
 
-    /**
-     * Get the saved state for the current user.
+	/**
+	 * Get the saved state for the current user.
 	 *
-     * @since 0.1
-     * @return array
-     */
-    static public function get_current_user_state() {
+	 * @since 0.1
+	 * @return array
+	 */
+	static public function get_current_user_state() {
 		return self::get_user_state( wp_get_current_user()->ID );
 	}
 
-    /**
-     * Get info about the current user.
+	/**
+	 * Get info about the current user.
 	 *
-     * @since 0.1
-     * @return array
-     */
-    static public function get_current_user_data() {
+	 * @since 0.1
+	 * @return array
+	 */
+	static public function get_current_user_data() {
 		$user = wp_get_current_user();
 
 		return array(
-			'id' => $user->ID,
+			'id'   => $user->ID,
 			'name' => $user->display_name,
 		);
 	}

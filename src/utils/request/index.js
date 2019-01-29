@@ -77,7 +77,7 @@ export const addQueryArgs = ( route, args ) => {
 
 	const keys = Object.keys( args )
 
-	if ( keys.length && route.indexOf( '?' ) === -1 ) {
+	if ( keys.length && -1 === route.indexOf( '?' ) ) {
 		route += '?'
 	}
 

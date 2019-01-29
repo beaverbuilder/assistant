@@ -6,7 +6,8 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "wordpress"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -18,17 +19,16 @@
     "plugins": [
         "react"
     ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
     "rules": {
-        "react/prop-types": [
+        "camelcase": [
             "off"
         ],
-        "react/display-name": [
-            "off"
-        ],
-        "react/no-unescaped-entities": [
-            "off"
-        ],
-        "no-undef": [
+        "comma-dangle": [
             "off"
         ],
         "indent": [
@@ -39,13 +39,29 @@
             "error",
             "unix"
         ],
+        "no-undef": [
+            "off"
+        ],
         "quotes": [
             "error",
             "single"
         ],
+        "react/prop-types": [
+            "off"
+        ],
+        "react/display-name": [
+            "off"
+        ],
+        "react/no-unescaped-entities": [
+            "off"
+        ],
         "semi": [
             "error",
             "never"
+        ],
+        "space-in-parens" : [
+          "error",
+          "always"
         ]
     }
 }
