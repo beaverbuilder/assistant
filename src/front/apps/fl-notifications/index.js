@@ -6,18 +6,13 @@ export const NotificationsTab = () => {
 		<Fragment>
 			<ScreenHeader>
 				<TagGroup appearance="muted">
-					<Tag>All</Tag>
 					<Tag>Comments</Tag>
+					<Tag>Updates</Tag>
 				</TagGroup>
 			</ScreenHeader>
 
 			<ContentList
-				type="comments"
-				itemConfig={{
-					showThumb: true,
-					showMeta: true,
-					showActions: true,
-				}}
+				type="updates"
 			/>
 		</Fragment>
 	)
