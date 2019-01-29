@@ -91,18 +91,7 @@ class FL_Assistant_Data {
 			$intro = __( 'Currently Viewing Search Results For', 'fl-assistant' );
 			$name  = get_search_query();
 
-		} elseif ( is_front_page() ) {
-
-			$intro = __( 'Currently Viewing Front Page', 'fl-assistant' );
-			$name  = get_the_title();
-
-			$actions[] = [
-				'label' => __('Edit', 'fl-assistant'),
-				'href' => get_edit_post_link(),
-				'capability' => 'edit_pages',
-			];
-
-        } elseif ( is_post_type_archive() ) {
+		} elseif ( is_post_type_archive() ) {
 
 			$post_type = get_post_type_object( 'post' );
 			$intro = __('Currently Viewing Post Type Archive', 'fl-assistant');
@@ -135,7 +124,7 @@ class FL_Assistant_Data {
 
 			$actions[] = [
 				'label' => $labels->edit_item,
-				'href' => get_edit_post_link(),
+				'href' => get_edit_post_link( $obj->ID, ''),
 				'capability' => 'edit_pages'
 			];
 
