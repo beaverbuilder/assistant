@@ -57,9 +57,6 @@ class FL_Assistant_Data {
 		);
 
 		foreach ( $types as $slug => $type ) {
-			if ( 'attachment' === $slug ) {
-				continue;
-			}
 			$data[ $slug ] = esc_html( $type->labels->name );
 		}
 
