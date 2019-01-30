@@ -8,7 +8,7 @@ export const Button = forwardRef( (props, ref) => {
 		'fl-asst-button-is-selected': isSelected
 	}, className )
 	return (
-		<button className={classes} ref={ref} onClick={onClick} style={style}>{children}</button>
+		<button type="button" className={classes} ref={ref} onClick={onClick} style={style}>{children}</button>
 	)
 } )
 
@@ -20,6 +20,6 @@ export const AppTabButton = forwardRef( (props, ref) => {
 		'fl-asst-button-is-selected': isSelected
 	}, className )
 	return (
-		<button className={classes} onClick={onClick} title={tooltip}>{children}</button>
+		<button type="button" ref={ref} className={classes} onClick={onClick} title={tooltip}>{children}</button>
 	)
 } )

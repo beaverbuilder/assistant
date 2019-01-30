@@ -26,7 +26,6 @@ export const DashboardTab = () => {
 			<Widget title="Project Status">
 				<ul>
 					<li>Media - Tags aren't hooked up yet</li>
-					<li>Find - "Today" tag might be a little iffy. Needs more testing</li>
 				</ul>
 			</Widget>
 			<Separator />
