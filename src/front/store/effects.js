@@ -19,7 +19,7 @@ export default {
 	},
 
 	SET_SHOW_UI: action => {
-		updateUserState( { showUI: action.show } )
+		updateUserState( { isShowingUI: action.show } )
 	},
 
 	SET_PANEL_POSITION: ( action, store ) => {
