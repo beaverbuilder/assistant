@@ -9,51 +9,40 @@ import './style.scss'
  * Main UI Controller
  */
 export const UI = ( { isShowing, toggleUI } ) => {
-	const { showUI, apps, activeApp, panelPosition } = useStore()
-	const { setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
+	const { apps, activeApp, panelPosition } = useStore()
+	const { setActiveApp } = useDispatch()
 
 	if ( ! isShowing ) {
 		return null
 	}
 
-	const uiContext = {
-		isShowingUI: showUI,
-		activeApp,
-		setActiveApp,
-		panelPosition,
-		togglePanelPosition,
-		setPanelPosition,
-	}
-
 	return (
-		<UIContext.Provider value={uiContext}>
-			<PanelFrame position={panelPosition}>
-				<div className="fl-asst-panel-wrap">
-					<PanelChrome
-						tabs={apps}
-						onTabClick={setActiveApp}
-						activeTabName={activeApp}
-						onClose={toggleUI}
-					/>
-					<Separator isSlim={true} />
+		<PanelFrame position={panelPosition}>
+			<div className="fl-asst-panel-wrap">
+				<PanelChrome
+					tabs={apps}
+					onTabClick={setActiveApp}
+					activeTabName={activeApp}
+					onClose={toggleUI}
+				/>
+				<Separator isSlim={true} />
 
-					<div className="fl-asst-panel-contents">
-						<TabManager activeTabName={activeApp}>
-							{Object.keys( apps ).map( key => {
-								const tab = apps[key]
-								return (
-									<Tab key={key} name={key}>
-										<CurrentTabContext.Provider value={tab}>
-											{tab.content()}
-										</CurrentTabContext.Provider>
-									</Tab>
-								)
-							} )}
-						</TabManager>
-					</div>
+				<div className="fl-asst-panel-contents">
+					<TabManager activeTabName={activeApp}>
+						{Object.keys( apps ).map( key => {
+							const tab = apps[key]
+							return (
+								<Tab key={key} name={key}>
+									<CurrentTabContext.Provider value={tab}>
+										{tab.content()}
+									</CurrentTabContext.Provider>
+								</Tab>
+							)
+						} )}
+					</TabManager>
 				</div>
-			</PanelFrame>
-		</UIContext.Provider>
+			</div>
+		</PanelFrame>
 	)
 }
 
