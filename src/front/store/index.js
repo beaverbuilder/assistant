@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { createStore, applyMiddleware, bindActionCreators, compose } from 'redux'
 import { applyEffects } from './middleware'
 import reducers from './reducers'
 import * as actions from './actions'
+import { CurrentTabContext } from 'components'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__( { name: 'Assistant' } ) || compose
 
 const store = createStore( reducers, {
 	apps: {},
+	appState: {},
 	...FLAssistantInitialData,
 }, composeEnhancers( applyMiddleware( applyEffects ) ) )
 
@@ -21,6 +23,18 @@ export const useStore = () => {
 
 export const useDispatch = () => {
 	return bindActionCreators( actions, store.dispatch )
+}
+
+export const useAppState = ( key, value ) => {
+	const { appState } = store.getState()
+	const { app } = useContext( CurrentTabContext )
+	const [ state, setState ] = useState(
+		appState[ app ] && appState[ app ][ key ] ? appState[ app ][ key ] : value
+	)
+	return [ state, newState => {
+		store.dispatch( actions.setAppState( app, key, newState ) )
+		setState( newState )
+	} ]
 }
 
 export default store
