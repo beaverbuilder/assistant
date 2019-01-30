@@ -3,7 +3,7 @@ import { TagGroupControl, ScreenHeader, ContentQuery } from 'components'
 import { useAppState } from 'store'
 
 export const NotificationsTab = () => {
-	const [ type, setType ] = useAppState( 'fl-notifications', 'type', 'comments' )
+	const [ type, setType ] = useAppState( 'type', 'comments' )
 
 	const tags = [
 		{

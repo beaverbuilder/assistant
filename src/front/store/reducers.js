@@ -14,6 +14,7 @@ export const apps = ( state = {}, action ) => {
 	case 'REGISTER_APP':
 		return {
 			[ action.key ]: {
+				app: action.key,
 				label: 'Untitled App',
 				content: '',
 				icon: null,

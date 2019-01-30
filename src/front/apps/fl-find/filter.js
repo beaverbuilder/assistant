@@ -4,10 +4,10 @@ import { useStore, useAppState } from 'store'
 import { getWeek } from 'utils'
 
 export const FindFilter = ( { onChange } ) => {
-	const [ type, setType ] = useAppState( 'fl-find', 'type', 'posts' )
-	const [ subType, setSubType ] = useAppState( 'fl-find', 'subType', 'page' )
-	const [ date, setDate ] = useAppState( 'fl-find', 'date', '' )
-	const [ status, setStatus ] = useAppState( 'fl-find', 'status', 'publish' )
+	const [ type, setType ] = useAppState( 'type', 'posts' )
+	const [ subType, setSubType ] = useAppState( 'subType', 'page' )
+	const [ date, setDate ] = useAppState( 'date', '' )
+	const [ status, setStatus ] = useAppState( 'status', 'publish' )
 	const { contentTypes, taxonomies } = useStore()
 	const now = new Date()
 	const typeTags = []

@@ -4,7 +4,7 @@ import { FindFilter } from './filter'
 import { useAppState } from 'store'
 
 export const FindTab = () => {
-	const [ data, setData ] = useAppState( 'fl-find', 'data', { type: 'posts', query: null } )
+	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
 	return (
 		<Fragment>
 			<ScreenHeader>
