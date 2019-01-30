@@ -15,7 +15,8 @@ class FL_Assistant_Data {
 	 */
 	static public $default_user_state = array(
 		'activeApp' => 'fl-dashboard',
-		'showUI'    => true,
+		'isShowingUI' => false,
+		'panelPosition' => 'end',
 	);
 
 	/**
@@ -31,13 +32,14 @@ class FL_Assistant_Data {
 
 		return array(
 			'activeApp'       => $user_state['activeApp'],
+			'panelPosition'	  => $user_state['panelPosition'],
 			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'currentPageView' => self::get_current_view(),
 			'contentTypes'    => self::get_post_types(),
 			'currentUser'     => self::get_current_user_data(),
 			'pluginURL'       => FL_ASSISTANT_URL,
-			'showUI'          => $user_state['showUI'],
+			'isShowingUI'	  => $user_state['isShowingUI'],
 			'taxonomies'      => self::get_taxonomies(),
 			'dashboardApp'    => [
 				'adminActions' => self::get_admin_actions(),

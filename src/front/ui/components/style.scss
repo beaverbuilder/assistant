@@ -4,7 +4,7 @@
     align-items: center;
     border: 2px solid transparent;
     border-radius: 2px;
-    background: transparent;
+    background: var(--fl-utility-background-color);
     color: var(--fl-text-color);
     line-height: 1.2;
     padding: 7px 10px;
@@ -40,6 +40,10 @@
         }
     }
 
+    &.fl-asst-button-transparent {
+        background: transparent;
+    }
+
     &.fl-asst-outline-button {
         background:white;
         color: var(--fl-accent-color);
@@ -71,6 +75,7 @@
 .fl-asst-button.fl-asst-app-tab-button {
     border-radius: 0;
     border: none;
+    background: transparent;
     border-bottom: 2px solid transparent;
     padding: 7px 10px;
 

@@ -55,12 +55,23 @@ export const appState = ( state = {}, action ) => {
 	}
 }
 
-export const showUI = ( state = {}, action ) => {
+export const isShowingUI = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_SHOW_UI':
 		return action.show
 	default:
 		return state
+	}
+}
+
+export const panelPosition = ( state = 'end', action ) => {
+	switch ( action.type ) {
+		case 'TOGGLE_PANEL_POSITION':
+			return 'start' === state ? 'end' : 'start'
+		case 'SET_PANEL_POSITION':
+			return action.position
+		default:
+			return state
 	}
 }
 
@@ -70,7 +81,8 @@ export default ( state = {}, action ) => {
 		activeApp,
 		apps,
 		appState,
-		showUI,
+		isShowingUI,
+		panelPosition,
 	}
 
 	Object.entries( state ).map( ( [ key, value ] ) => {

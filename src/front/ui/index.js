@@ -1,29 +1,39 @@
-import React from 'react'
-import { Button, Icon, Separator, CurrentTabContext } from 'components'
-import { PanelFrame, PanelChrome } from 'components'
-import { TabManager, Tab } from 'components/tabs'
+import React, { useContext } from 'react'
+import {
+	Button,
+	Icon,
+	Separator,
+	Tab,
+	TabManager,
+	CurrentTabContext,
+	PanelFrame,
+	PanelChrome,
+	UIContext
+} from 'components'
+
 import { useStore, useDispatch } from 'store'
 import './style.scss'
 
 /**
  * Main UI Controller
  */
-export const UI = ( { isShowing, toggleUI } ) => {
-	const { apps, activeApp } = useStore()
+export const UI = props => {
+	const { apps, activeApp, panelPosition } = useStore()
 	const { setActiveApp } = useDispatch()
+	const { isShowingUI, toggleIsShowingUI } = useContext( UIContext )
 
-	if ( ! isShowing ) {
+	if ( ! isShowingUI ) {
 		return null
 	}
 
 	return (
-		<PanelFrame>
+		<PanelFrame position={panelPosition}>
 			<div className="fl-asst-panel-wrap">
 				<PanelChrome
 					tabs={apps}
 					onTabClick={setActiveApp}
 					activeTabName={activeApp}
-					onClose={toggleUI}
+					onClose={toggleIsShowingUI}
 				/>
 				<Separator isSlim={true} />
 
@@ -49,7 +59,9 @@ export const UI = ( { isShowing, toggleUI } ) => {
 /**
  * Button To Show/Hide The UI
  */
-export const ShowUITrigger = ( { onClick } ) => {
+export const ShowUITrigger = props => {
+	const { toggleIsShowingUI } = useContext( UIContext )
+
 	const styles = {
 		position: 'fixed',
 		right: 0,
@@ -62,7 +74,7 @@ export const ShowUITrigger = ( { onClick } ) => {
 	}
 	return (
 		<div style={styles}>
-			<Button className="fl-asst-outline-button" onClick={onClick} style={buttonStyles} isSelected={true}>
+			<Button className="fl-asst-outline-button" onClick={toggleIsShowingUI} style={buttonStyles} isSelected={true}>
 				<Icon name="trigger-button"/>
 			</Button>
 		</div>

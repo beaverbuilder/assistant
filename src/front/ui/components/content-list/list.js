@@ -14,10 +14,11 @@ export const ContentList = ( {
 	itemThumb = true,
 	itemMeta = true,
 	itemActions = true,
+	placeholderItemCount = 10
 } ) => {
 
 	if ( ! data ) {
-		return <ContentListLoading />
+		return <ContentListLoading itemCount={placeholderItemCount} />
 	} else if ( ! data.length ) {
 		return <EmptyMessage>No Results Found</EmptyMessage>
 	}

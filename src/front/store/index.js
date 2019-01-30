@@ -1,18 +1,18 @@
 import { useEffect, useState, useContext } from 'react'
-import { createStore, applyMiddleware, bindActionCreators, compose } from 'redux'
-import { applyEffects } from './middleware'
+import { createStore, applyMiddleware, bindActionCreators } from 'redux'
+import { applyEffects, composeEnhancers } from './middleware'
 import reducers from './reducers'
 import * as actions from './actions'
 import { CurrentTabContext } from 'components'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__( { name: 'Assistant' } ) || compose
 
 const store = createStore( reducers, {
 	apps: {},
 	appState: {},
 	...FLAssistantInitialData,
 }, composeEnhancers( applyMiddleware( applyEffects ) ) )
+
+// Custom React Hooks
 
 export const useStore = () => {
 	const [ state, setState ] = useState( store.getState() )

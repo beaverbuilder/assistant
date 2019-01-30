@@ -30,9 +30,22 @@ export const setAppState = ( app, key, value ) => {
 	}
 }
 
-export const setShowUI = ( show ) => {
+export const setIsShowingUI = ( show ) => {
 	return {
 		type: 'SET_SHOW_UI',
 		show,
+	}
+}
+
+export const setPanelPosition = position => {
+	return {
+		type: 'SET_PANEL_POSITION',
+		position,
+	}
+}
+
+export const togglePanelPosition = () => {
+	return {
+		type: 'TOGGLE_PANEL_POSITION'
 	}
 }

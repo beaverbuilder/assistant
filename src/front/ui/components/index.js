@@ -22,6 +22,8 @@ export {
 	EmptyMessage
 } from './panel-parts'
 
-export { CurrentPageViewContext, CurrentTabContext } from './contexts'
+export { CurrentPageViewContext, CurrentTabContext, UIContext } from './contexts'
 export { ContentList, ContentQuery } from './content-list'
 export { Widget } from './widgets'
+export { Stack, StackContext } from './stacks'
+export { Tab, TabManager } from './tabs'
