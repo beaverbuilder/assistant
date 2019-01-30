@@ -43,6 +43,17 @@ export const Icon = ( { name } ) => {
 				</g>
 			</svg>
 		)
+	case 'default-app':
+		return (
+			<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g transform="translate(-103, -212)" fill="transparent" fillRule="nonzero" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+					<path d="M119,213 L128,213 C129.104569,213 130,213.895431 130,215 L130,232 C130,233.104569 129.104569,234 128,234 C124.888889,234 122.555556,234 121,234 M116.011108,234 C114.168714,234 110.831678,234 106,234 C104.895431,234 104,233.104569 104,232 L104,215 C104,213.895431 104.895431,213 106,213 L114,213" ></path>
+					<polyline points="121 234 110 223 114 219"></polyline>
+					<polyline transform="translate(119.000000, 220.000000) rotate(-180.000000) translate(-119.000000, -220.000000) " points="124 227 114 217 118 213"></polyline>
+					<circle cx="117" cy="223" r="1"></circle>
+				</g>
+			</svg>
+		)
 	default:
 		return (
 			<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg">

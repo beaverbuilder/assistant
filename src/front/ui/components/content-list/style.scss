@@ -22,6 +22,7 @@
     align-items:center;
     border: 1px solid transparent;
     background: transparent;
+    overflow: hidden;
     transition-property: background-color;
     transition-duration: .5s;
     transition-delay:.2s;
@@ -82,7 +83,6 @@
         top:0;
         right:0;
         bottom:0;
-        margin: -1px;
 
         display: flex;
         flex-direction: row;

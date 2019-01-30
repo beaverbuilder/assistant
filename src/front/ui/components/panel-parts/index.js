@@ -20,11 +20,16 @@ export const PanelFrame = ( { children } ) => {
 
 export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 	const isNotificationsSelected = 'fl-notifications' === activeTabName ? true : false
+	const notificationsLabel = tabs['fl-notifications'].label
 	return (
 		<div className="fl-asst-panel-chrome">
 
 			<div className="fl-asst-panel-chrome-area">
-				<AppTabButton onClick={ () => onTabClick( 'fl-notifications' )} isSelected={isNotificationsSelected}>
+				<AppTabButton
+					onClick={ () => onTabClick( 'fl-notifications' )}
+					isSelected={isNotificationsSelected}
+					tooltip={notificationsLabel}
+					>
 					<NotificationsIcon isSelected={isNotificationsSelected} />
 				</AppTabButton>
 			</div>
@@ -39,8 +44,12 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 							return null
 						}
 
+						if ( 'function' !== typeof tab.icon ) {
+							tab.icon = props => <Icon name="default-app" {...props} />
+						}
+
 						return (
-							<AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick( key )}>
+							<AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick( key )} tooltip={tab.label}>
 								{tab.icon( { key, isSelected } )}
 							</AppTabButton>
 						)
@@ -64,6 +73,17 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 		<div className="fl-asst-screen-header">
 			{ false !== showTitle && <div className="fl-asst-screen-title">{screenTitle}</div> }
 			{children}
+		</div>
+	)
+}
+
+export const ScreenFooter = ({ children, className }) => {
+	const classes = classname({
+		'fl-asst-screen-footer' : true,
+	})
+	return (
+		<div className={classes}>
+			<div className="fl-asst-screen-footer-content">{children}</div>
 		</div>
 	)
 }
