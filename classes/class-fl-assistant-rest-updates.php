@@ -85,9 +85,11 @@ final class FL_Assistant_REST_Updates {
 	 */
 	static public function updates( $request ) {
 		$response = array();
+		$plugins  = current_user_can( 'update_plugins' );
+		$themes   = current_user_can( 'update_themes' );
 
-		if ( $plugins = current_user_can( 'update_plugins' ) ) {
-				$update_plugins = get_site_transient( 'update_plugins' );
+		if ( $plugins ) {
+			$update_plugins = get_site_transient( 'update_plugins' );
 			if ( ! empty( $update_plugins->response ) ) {
 				foreach ( $update_plugins->response as $key => $update ) {
 					$plugin     = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
@@ -96,8 +98,8 @@ final class FL_Assistant_REST_Updates {
 			}
 		}
 
-		if ( $themes = current_user_can( 'update_themes' ) ) {
-				$update_themes = get_site_transient( 'update_themes' );
+		if ( $themes ) {
+			$update_themes = get_site_transient( 'update_themes' );
 			if ( ! empty( $update_themes->response ) ) {
 				foreach ( $update_themes->response as $key => $update ) {
 					$theme      = wp_get_theme( $key );
