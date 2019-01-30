@@ -1,13 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { TagGroupControl, ExpandedContents } from 'components'
-import { useStore } from 'store'
+import { useStore, useAppState } from 'store'
 import { getWeek } from 'utils'
 
-export const ContentFilter = ( { onChange } ) => {
-	const [ type, setType ] = useState( 'posts' )
-	const [ subType, setSubType ] = useState( 'page' )
-	const [ date, setDate ] = useState( '' )
-	const [ status, setStatus ] = useState( 'publish' )
+export const FindFilter = ( { onChange } ) => {
+	const [ type, setType ] = useAppState( 'fl-find', 'type', 'posts' )
+	const [ subType, setSubType ] = useAppState( 'fl-find', 'subType', 'page' )
+	const [ date, setDate ] = useAppState( 'fl-find', 'date', '' )
+	const [ status, setStatus ] = useAppState( 'fl-find', 'status', 'publish' )
 	const { contentTypes, taxonomies } = useStore()
 	const now = new Date()
 	const typeTags = []

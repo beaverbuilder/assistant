@@ -1,12 +1,14 @@
 import React, { Fragment, useState } from 'react'
 import { ScreenHeader, ContentQuery, ContentFilter } from 'components'
+import { FindFilter } from './filter'
+import { useAppState } from 'store'
 
 export const FindTab = () => {
-	const [ data, setData ] = useState( { type: 'posts', query: null } )
+	const [ data, setData ] = useAppState( 'fl-find', 'data', { type: 'posts', query: null } )
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<ContentFilter onChange={ setData } />
+				<FindFilter onChange={ setData } />
 			</ScreenHeader>
 			<ContentQuery type={ data.type } query={ data.query } />
 		</Fragment>
