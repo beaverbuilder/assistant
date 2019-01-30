@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react'
-import { ScreenHeader, ContentQuery, ContentFilter } from 'components'
+import React, { Fragment } from 'react'
+import { ScreenHeader, ContentQuery } from 'components'
 import { FindFilter } from './filter'
 import { useAppState } from 'store'
 

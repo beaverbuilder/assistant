@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Widget, Tag, TagGroup, ContentQuery } from 'components'
 import { useAppState } from 'store'
 

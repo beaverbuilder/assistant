@@ -1,5 +1,4 @@
-import React, { createContext } from 'react'
-import store from 'store'
+import { createContext } from 'react'
 
 export const CurrentPageViewContext = createContext( FLAssistantInitialData.currentPageView )
 

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import classname from 'classnames'
 
-export const Button = forwardRef( (props, ref) => {
+export const Button = forwardRef( ( props, ref ) => {
 	const { children, isSelected, onClick, className, style } = props
 	const classes = classname( {
 		'fl-asst-button': true,
@@ -12,7 +12,7 @@ export const Button = forwardRef( (props, ref) => {
 	)
 } )
 
-export const AppTabButton = forwardRef( (props, ref) => {
+export const AppTabButton = forwardRef( ( props, ref ) => {
 	const { children, isSelected, onClick, className, tooltip } = props
 	const classes = classname( {
 		'fl-asst-button': true,

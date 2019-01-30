@@ -163,14 +163,13 @@ class FL_Assistant_Data {
 					$enabled = get_post_meta( $wp_the_query->post->ID, '_fl_builder_enabled', true );
 
 					$actions[] = [
-						'label' => FLBuilderModel::get_branding(),
-						'href' => FLBuilderModel::get_edit_url( $wp_the_query->post->ID ),
+						'label'      => FLBuilderModel::get_branding(),
+						'href'       => FLBuilderModel::get_edit_url( $wp_the_query->post->ID ),
 						'capability' => 'edit_pages',
-						'isEnabled' => $enabled,
+						'isEnabled'  => $enabled,
 					];
 				}
 			}
-
 		} elseif ( is_author() ) {
 
 			$intro = __( 'Currently Viewing Author', 'fl-assistant' );

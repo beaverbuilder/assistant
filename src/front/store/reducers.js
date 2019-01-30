@@ -30,9 +30,9 @@ export const apps = ( state = {}, action ) => {
 }
 
 export const appState = ( state = {}, action ) => {
+	const { config } = action
 	switch ( action.type ) {
 	case 'REGISTER_APP':
-		const { config } = action
 		return {
 			[ action.key ]: config.state,
 			...state,
