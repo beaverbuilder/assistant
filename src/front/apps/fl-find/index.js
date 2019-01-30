@@ -1,10 +1,9 @@
 import React, { Fragment, useState, useContext } from 'react'
-import { ScreenHeader, ContentQuery, ContentFilter, CurrentTabContext } from 'components'
+import { ScreenHeader, ContentQuery, ContentFilter } from 'components'
 
 export const FindTab = () => {
 	const [ data, setData ] = useState( { type: 'posts', query: null } )
-	const currentTab = useContext(CurrentTabContext)
-	console.log(currentTab)
+
 	return (
 		<Fragment>
 			<ScreenHeader>
