@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Widget, Tag, TagGroup, ContentQuery } from 'components'
+import { useAppState } from 'store'
 
 export const RecentlyEditedWidget = () => {
-	const [ postType, setPostType ] = useState( 'any' )
+	const [ postType, setPostType ] = useAppState( 'fl-dashboard', 'post-type', 'any' )
 	const recentQuery = {
 		'posts_per_page': 5,
 	}

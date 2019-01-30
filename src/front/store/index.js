@@ -9,6 +9,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
 
 const store = createStore( reducers, {
 	apps: {},
+	appState: {},
 	...FLAssistantInitialData,
 }, composeEnhancers( applyMiddleware( applyEffects ) ) )
 
@@ -21,6 +22,17 @@ export const useStore = () => {
 
 export const useDispatch = () => {
 	return bindActionCreators( actions, store.dispatch )
+}
+
+export const useAppState = ( app, key, value ) => {
+	const { appState } = store.getState()
+	const [ state, setState ] = useState(
+		appState[ app ] && appState[ app ][ key ] ? appState[ app ][ key ] : value
+	)
+	return [ state, newState => {
+		store.dispatch( actions.setAppState( app, key, newState ) )
+		setState( newState )
+	} ]
 }
 
 export default store

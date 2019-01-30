@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { TagGroupControl, ScreenHeader, ContentQuery } from 'components'
+import { useAppState } from 'store'
 
 export const NotificationsTab = () => {
-	const [ type, setType ] = useState( 'comments' )
+	const [ type, setType ] = useAppState( 'fl-notifications', 'type', 'comments' )
 
 	const tags = [
 		{

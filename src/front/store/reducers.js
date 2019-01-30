@@ -18,9 +18,36 @@ export const apps = ( state = {}, action ) => {
 				content: '',
 				icon: null,
 				showTabIcon: true,
+				state: {},
 				...action.config,
 			},
 			...state,
+		}
+	default:
+		return state
+	}
+}
+
+export const appState = ( state = {}, action ) => {
+	switch ( action.type ) {
+	case 'REGISTER_APP':
+		const { config } = action
+		return {
+			[ action.key ]: config.state,
+			...state,
+		}
+	case 'HYDRATE_APP_STATE':
+		return {
+			...state,
+			[ action.app ]: action.state,
+		}
+	case 'SET_APP_STATE':
+		return {
+			...state,
+			[ action.app ]: {
+				...state[ action.app ],
+				[ action.key ]: action.value,
+			},
 		}
 	default:
 		return state
@@ -41,6 +68,7 @@ export default ( state = {}, action ) => {
 	const reducers = {
 		activeApp,
 		apps,
+		appState,
 		showUI,
 	}
 

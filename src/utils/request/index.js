@@ -7,7 +7,7 @@ import store from 'store'
  * @since 0.1
  * @type {Number}
  */
-const CACHE_EXPIRES = 60000
+const CACHE_EXPIRES = 180000
 
 /**
  * Cancellable fetch request with caching.
