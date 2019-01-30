@@ -23,13 +23,6 @@ export const DashboardTab = () => {
 				<ActionGroup actions={adminActions} appearance="" />
 			</Widget>
 			<Separator />
-
-			<Widget title="Project Status">
-				<ul>
-					<li>Media - Tags aren't hooked up yet</li>
-				</ul>
-			</Widget>
-			<Separator />
 		</Fragment>
 	)
 }

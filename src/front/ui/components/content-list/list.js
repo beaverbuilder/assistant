@@ -17,7 +17,7 @@ export const ContentList = ( {
 
 	if ( ! data ) {
 		return (
-			<div className="fl-asst-list-loading">
+			<div className="fl-asst-list fl-asst-list-loading">
 				<Icon name="spinner" />
 			</div>
 		)
