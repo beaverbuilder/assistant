@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react'
 import classname from 'classnames'
-import { Icon, EmptyMessage } from 'components'
+import { EmptyMessage } from 'components'
 import { ContentListLoading } from './loading'
 import { ContentListContainer, ContentListItem } from './parts'
 import './style.scss'
