@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { TagGroupControl, ScreenHeader, ContentList } from 'components'
+import { TagGroupControl, ScreenHeader, ContentQuery } from 'components'
 
 export const NotificationsTab = () => {
 	const [ type, setType ] = useState( 'comments' )
@@ -26,11 +26,9 @@ export const NotificationsTab = () => {
 				/>
 			</ScreenHeader>
 
-			<ContentList
+			<ContentQuery
 				type={ type }
-				itemConfig={ {
-					showActions: false,
-				} }
+				showActions={ false }
 			/>
 		</Fragment>
 	)

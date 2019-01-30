@@ -17,9 +17,9 @@ export const ContentListItem = ( {
 	author = '',
 	date = '',
 	className = '',
-	showThumb = true,
-	showMeta = true,
-	showActions = true,
+	itemThumb = true,
+	itemMeta = true,
+	itemActions = true,
 } ) => {
 
 	const view = () => url ? window.location.href = url : null
@@ -30,14 +30,14 @@ export const ContentListItem = ( {
 
 	return (
 		<li className={ className }>
-			{ showThumb &&
+			{ itemThumb &&
 				<div className="fl-asst-list-item-visual" onClick={ view }>
 					<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 				</div>
 			}
 			<div className="fl-asst-list-item-content" onClick={ view }>
 				<div className="fl-asst-list-item-title">{ title }</div>
-				{ showMeta && ( author || date ) &&
+				{ itemMeta && ( author || date ) &&
 					<div className="fl-asst-list-item-meta">
 						{ author && <span>By { author }</span> }
 						{ author && date && <span> - </span> }
@@ -45,7 +45,7 @@ export const ContentListItem = ( {
 					</div>
 				}
 			</div>
-			{ showActions &&
+			{ itemActions &&
 				<div className="fl-asst-list-item-actions">
 					<Button onClick={ view }>View</Button>
 					<Button onClick={ edit }>Edit</Button>

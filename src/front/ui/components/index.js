@@ -22,5 +22,5 @@ export {
 } from './panel-parts'
 
 export { CurrentPageViewContext, CurrentTabContext } from './contexts'
+export { ContentFilter, ContentList, ContentQuery } from './content-list'
 export { Widget } from './widgets'
-export { ContentList } from './content-list'
