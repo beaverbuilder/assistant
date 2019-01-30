@@ -5,8 +5,28 @@
 }
 
 .fl-asst-list-loading {
-	padding: 40px;
-	text-align: center;
+	.fl-asst-list-item-title,
+	.fl-asst-list-item-meta {
+		position: relative;
+		text-indent: -9999px;
+		&::before {
+			content: '';
+			display: block;
+			padding: 3px;
+			position: absolute;
+			right: 0;
+			left: 0;
+			background-image: linear-gradient(to right, #EDF2F4, #C6CFD2, #EDF2F4);
+			background-size: 200% 100%;
+			background-position: 100%;
+			animation-name: animateBackground;
+            animation-duration: 2s;
+			animation-iteration-count: infinite;
+		}
+	}
+	.fl-asst-list-item-meta {
+		width: 75%;
+	}
 }
 
 .fl-asst-list-no-results {
@@ -108,5 +128,17 @@
     }
     100% {
         transform: translateX(0px);
+    }
+}
+
+@keyframes animateBackground {
+    0% {
+        background-position: 100%;
+    }
+    50% {
+        background-position: 0;
+    }
+    100% {
+        background-position: 100%;
     }
 }
