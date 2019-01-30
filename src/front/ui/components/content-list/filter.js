@@ -135,7 +135,7 @@ export const ContentFilter = ( { onChange } ) => {
 
 	useEffect( () => {
 		onChange( { type, query } )
-	}, [ type, date, status ] )
+	}, [ type, subType, date, status ] )
 
 	return (
 		<Fragment>
