@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react'
-import { Separator, Widget, ActionGroup } from 'components'
-import { ScreenHeader } from 'components/panel-parts'
+import React, { Fragment, useContext } from 'react'
+import { Separator, Widget, ActionGroup, StackContext, ScreenHeader } from 'components'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
@@ -8,6 +7,8 @@ import { useStore } from 'store'
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
 	const { adminActions } = dashboardApp
+
+	const stack = useContext(StackContext)
 
 	return (
 		<Fragment>

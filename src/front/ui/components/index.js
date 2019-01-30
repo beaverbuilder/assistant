@@ -25,4 +25,4 @@ export {
 export { CurrentPageViewContext, CurrentTabContext } from './contexts'
 export { ContentFilter, ContentList, ContentQuery } from './content-list'
 export { Widget } from './widgets'
-export { Stack } from './stacks'
+export { Stack, StackContext } from './stacks'
