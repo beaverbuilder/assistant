@@ -19,7 +19,7 @@ export const DashboardTab = () => {
 			<Separator />
 
 			<Widget title="Admin Links">
-				<ActionGroup actions={adminActions} appearance="muted" />
+				<ActionGroup actions={adminActions} appearance="" />
 			</Widget>
 			<Separator />
 
