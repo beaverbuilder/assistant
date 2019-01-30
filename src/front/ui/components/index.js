@@ -17,6 +17,7 @@ export {
 	PanelChrome,
 	PanelFrame,
 	ScreenHeader,
+	ScreenFooter,
 	ExpandedContents,
 	EmptyMessage
 } from './panel-parts'

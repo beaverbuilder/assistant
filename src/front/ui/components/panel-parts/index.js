@@ -68,6 +68,17 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 	)
 }
 
+export const ScreenFooter = ({ children, className }) => {
+	const classes = classname({
+		'fl-asst-screen-footer' : true,
+	})
+	return (
+		<div className={classes}>
+			<div className="fl-asst-screen-footer-content">{children}</div>
+		</div>
+	)
+}
+
 export const ExpandedContents = ( { children } ) => {
 	const [ isExpanded, setIsExpanded ] = useState( false )
 	const toggleExpanded = () => {

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { TagGroupControl, ScreenHeader, ExpandedContents, ContentList } from 'components'
+import { TagGroupControl, ScreenHeader, ScreenFooter, Button, ExpandedContents, ContentList, Tag, TagGroup } from 'components'
 import { useStore } from 'store'
 import { getWeek } from 'utils'
 
@@ -148,6 +148,12 @@ export const FindTab = () => {
 					</ExpandedContents>
 				}
 			</ScreenHeader>
+
+			<ScreenFooter>
+				<TagGroup>
+					<Tag>Test</Tag>
+				</TagGroup>
+			</ScreenFooter>
 
 			<ContentList
 				type={type}
