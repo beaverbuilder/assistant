@@ -20,11 +20,16 @@ export const PanelFrame = ( { children } ) => {
 
 export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 	const isNotificationsSelected = 'fl-notifications' === activeTabName ? true : false
+	const notificationsLabel = tabs['fl-notifications'].label
 	return (
 		<div className="fl-asst-panel-chrome">
 
 			<div className="fl-asst-panel-chrome-area">
-				<AppTabButton onClick={ () => onTabClick( 'fl-notifications' )} isSelected={isNotificationsSelected}>
+				<AppTabButton
+					onClick={ () => onTabClick( 'fl-notifications' )}
+					isSelected={isNotificationsSelected}
+					tooltip={notificationsLabel}
+					>
 					<NotificationsIcon isSelected={isNotificationsSelected} />
 				</AppTabButton>
 			</div>
@@ -44,7 +49,7 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 						}
 
 						return (
-							<AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick( key )}>
+							<AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick( key )} tooltip={tab.label}>
 								{tab.icon( { key, isSelected } )}
 							</AppTabButton>
 						)
