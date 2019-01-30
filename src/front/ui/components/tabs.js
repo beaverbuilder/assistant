@@ -9,7 +9,7 @@ export const TabManager = ( { activeTabName, children } ) => {
 
 export const Tab = ( { children, isSelected } ) => {
 	return (
-		<div className="fl-asst-tab" hidden={! isSelected}>
+		<div className="fl-asst-tab" hidden={ ! isSelected }>
 			{children}
 		</div>
 	)

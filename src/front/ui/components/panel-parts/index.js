@@ -39,6 +39,10 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 							return null
 						}
 
+						if ( 'function' !== typeof tab.icon ) {
+							tab.icon = props => <Icon name="default-app" {...props} />
+						}
+
 						return (
 							<AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick( key )}>
 								{tab.icon( { key, isSelected } )}
