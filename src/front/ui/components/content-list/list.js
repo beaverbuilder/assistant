@@ -1,6 +1,7 @@
 import React, { cloneElement } from 'react'
 import classname from 'classnames'
 import { Icon, EmptyMessage } from 'components'
+import { ContentListLoading } from './loading'
 import { ContentListContainer, ContentListItem } from './parts'
 import './style.scss'
 
@@ -16,15 +17,9 @@ export const ContentList = ( {
 } ) => {
 
 	if ( ! data ) {
-		return (
-			<div className="fl-asst-list-loading">
-				<Icon name="spinner" />
-			</div>
-		)
+		return <ContentListLoading />
 	} else if ( ! data.length ) {
-		return (
-			<EmptyMessage>No Results Found</EmptyMessage>
-		)
+		return <EmptyMessage>No Results Found</EmptyMessage>
 	}
 
 	return cloneElement(
