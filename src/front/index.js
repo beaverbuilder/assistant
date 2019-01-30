@@ -11,14 +11,16 @@ import './apps'
  * The Root Component
  */
 const App = () => {
-	const { showUI, apps, activeApp, panelPosition } = useStore()
-	const { setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
+	const { isShowingUI, apps, activeApp, panelPosition } = useStore()
+	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
 
 	// Create a toggle function to show/hide the panel
-	const toggleUI = () => showUI ? setShowUI( false ) : setShowUI( true )
+	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
 
 	const ui = {
-		isShowingUI: showUI,
+		isShowingUI,
+		setIsShowingUI,
+		toggleIsShowingUI,
 		activeApp,
 		setActiveApp,
 		panelPosition,
@@ -31,10 +33,10 @@ const App = () => {
 			<Provider store={store}>
 				<UIContext.Provider value={ui}>
 					{/* This is the button that toggles the UI panel */}
-					<ShowUITrigger onClick={toggleUI} />
+					<ShowUITrigger />
 
 					{/* This is the panel itself */}
-					<UI isShowing={showUI} toggleUI={toggleUI} />
+					<UI />
 				</UIContext.Provider>
 			</Provider>
 		</StrictMode>

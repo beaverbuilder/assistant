@@ -64,6 +64,15 @@ export const showUI = ( state = {}, action ) => {
 	}
 }
 
+export const isShowingUI = ( state = {}, action ) => {
+	switch ( action.type ) {
+	case 'SET_SHOW_UI':
+		return action.show
+	default:
+		return state
+	}
+}
+
 export const panelPosition = ( state = 'end', action ) => {
 	switch ( action.type ) {
 		case 'TOGGLE_PANEL_POSITION':
@@ -82,6 +91,7 @@ export default ( state = {}, action ) => {
 		apps,
 		appState,
 		showUI,
+		isShowingUI,
 		panelPosition,
 	}
 
