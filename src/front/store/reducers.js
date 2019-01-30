@@ -64,6 +64,17 @@ export const showUI = ( state = {}, action ) => {
 	}
 }
 
+export const panelPosition = ( state = 'end', action ) => {
+	switch ( action.type ) {
+		case 'TOGGLE_PANEL_POSITION':
+			return 'start' === state ? 'end' : 'start'
+		case 'SET_PANEL_POSITION':
+			return action.position
+		default:
+			return state
+	}
+}
+
 export default ( state = {}, action ) => {
 
 	const reducers = {
@@ -71,6 +82,7 @@ export default ( state = {}, action ) => {
 		apps,
 		appState,
 		showUI,
+		panelPosition,
 	}
 
 	Object.entries( state ).map( ( [ key, value ] ) => {

@@ -4,7 +4,7 @@ import { Button, AppTabButton, Icon, CurrentTabContext } from 'components'
 import { NotificationsIcon } from 'apps/fl-notifications'
 import './style.scss'
 
-export const PanelFrame = ( { children } ) => {
+export const PanelFrame = ( { children, position = 'end', size = 'slim' } ) => {
 	const styles = {
 		position: 'fixed',
 		top: 0,
@@ -13,6 +13,16 @@ export const PanelFrame = ( { children } ) => {
 		left: 'auto',
 		width: 440,
 	}
+
+	if ( 'start' === position ) {
+		styles.left = 0
+		styles.right = 'auto'
+	}
+
+	if ( 'medium' === size ) {
+		styles.width = 720
+	}
+
 	return (
 		<div className="fl-asst-panel-frame" style={styles}>{children}</div>
 	)

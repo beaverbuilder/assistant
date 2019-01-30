@@ -3,6 +3,7 @@ import classname from 'classnames'
 import './style.scss'
 
 export const StackContext = createContext()
+StackContext.displayName = 'StackContext'
 
 export const Stack = ({ children }) => {
     const classes = classname({
