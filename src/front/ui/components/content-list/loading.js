@@ -1,8 +1,8 @@
 import React from 'react'
 import { ContentList } from './list'
 
-export const ContentListLoading = () => {
-	const data = Array( 10 ).fill( {
+export const ContentListLoading = ({ itemCount = 10 }) => {
+	const data = Array( itemCount ).fill( {
 		author: 'Loading...',
 		title: 'Loading...',
 	} )

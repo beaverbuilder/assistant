@@ -27,7 +27,7 @@ export const RecentlyEditedWidget = () => {
 					<Tag onClick={ () => setPostType( 'page' )} isSelected={isTagSelected( 'page' )}>Pages</Tag>
 				</TagGroup>
 			</div>
-			<ContentQuery query={recentQuery} />
+			<ContentQuery query={recentQuery} placeholderItemCount={5} />
 		</Widget>
 	)
 }
