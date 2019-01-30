@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Widget, Tag, TagGroup, ContentList } from 'components'
+import { Widget, Tag, TagGroup, ContentQuery } from 'components'
 
 export const RecentlyEditedWidget = () => {
 	const [ postType, setPostType ] = useState( 'any' )
@@ -19,14 +19,7 @@ export const RecentlyEditedWidget = () => {
 					<Tag onClick={ () => setPostType( 'page' )} isSelected={isTagSelected( 'page' )}>Pages</Tag>
 				</TagGroup>
 			</div>
-			<ContentList
-				query={recentQuery}
-				itemConfig={{
-					showThumb: true,
-					showMeta: true,
-					showActions: true,
-				}}
-			/>
+			<ContentQuery query={recentQuery} />
 		</Widget>
 	)
 }

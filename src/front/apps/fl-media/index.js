@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import classname from 'classnames'
-import { Tag, TagGroup, ScreenHeader, ContentList, AspectBox } from 'components'
+import { Tag, TagGroup, ScreenHeader, ContentQuery, AspectBox } from 'components'
 import './style.scss'
 
 export const MediaTab = () => {
@@ -17,7 +17,7 @@ export const MediaTab = () => {
 					<Tag>Documents</Tag>
 				</TagGroup>
 			</ScreenHeader>
-			<ContentList
+			<ContentQuery
 				query={query}
 				containerClass="fl-asst-grid-list"
 				item={<Item />}
