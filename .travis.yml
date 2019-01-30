@@ -27,6 +27,7 @@ jobs:
         - phpenv config-rm xdebug.ini
         - composer global require wp-coding-standards/wpcs
         - phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+        - phpcs --config-set ignore_warnings_on_exit 1
       script:
         - npm run test
         - phpcs --standard=$TRAVIS_BUILD_DIR/phpcs.xml $TRAVIS_BUILD_DIR

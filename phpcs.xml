@@ -2,7 +2,9 @@
 <ruleset name="WordPress Coding Standards">
 
 	<rule ref="WordPress-Core">
+		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
+		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
 		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
 	</rule>
 

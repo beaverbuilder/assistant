@@ -138,7 +138,8 @@ class FL_Assistant_Data {
 
 		} elseif ( is_singular() || is_attachment() ) {
 
-			$labels    = $post_type = get_post_type_object( get_post_type() )->labels;
+			$post_type = get_post_type_object( get_post_type() );
+			$labels    = $post_type->labels;
 			$post_type = $labels->singular_name;
 			$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $post_type );
 			$name      = $obj->post_title;
@@ -223,9 +224,10 @@ class FL_Assistant_Data {
 	 */
 	static public function get_admin_actions() {
 		$actions = [];
+		$customize_url = self::get_customize_url();
 
 		// Customize Link
-		if ( $customize_url = self::get_customize_url() ) {
+		if ( $customize_url ) {
 			$actions[] = [
 				'label'      => __( 'Customize' ),
 				'href'       => $customize_url,
