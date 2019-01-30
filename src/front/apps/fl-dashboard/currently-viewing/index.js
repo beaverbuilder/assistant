@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useStore } from 'store'
 import { ActionGroup, VerticalGroup, HorizontalGroup, ExpandedContents } from 'components'
 import './style.scss'
@@ -28,7 +28,7 @@ export const CurrentlyViewing = () => {
 	)
 }
 
-const ThemeItem = ({ name, screenshot, version, team }) => {
+const ThemeItem = ( { name, screenshot, version, team } ) => {
 	return (
 		<HorizontalGroup className="fl-asst-theme-item">
 			<VerticalGroup className="fl-asst-theme-item-details">
