@@ -149,12 +149,6 @@ export const FindTab = () => {
 				}
 			</ScreenHeader>
 
-			<ScreenFooter>
-				<TagGroup>
-					<Tag>Test</Tag>
-				</TagGroup>
-			</ScreenFooter>
-
 			<ContentList
 				type={type}
 				query={query}

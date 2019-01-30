@@ -59,7 +59,6 @@
     overflow: auto;
     display: flex;
     flex-direction: column;
-    padding-bottom: calc( 44px + 44px ); /* Footer toolbar + gradient */
 
     &[hidden] {
         display: none;

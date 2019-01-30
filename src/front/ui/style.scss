@@ -82,5 +82,7 @@
         color: var(--fl-text-color);
         display: flex;
         flex-direction: column;
+        position: relative;
+        overflow: auto;
     }
 }
