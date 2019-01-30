@@ -68,7 +68,7 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 			</div>
 
 			<div className="fl-asst-panel-chrome-area">
-				<Button onClick={onClose}>
+				<Button onClick={onClose} appearance="icon">
 					<Icon name="close" />
 				</Button>
 			</div>

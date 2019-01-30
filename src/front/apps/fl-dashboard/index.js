@@ -1,11 +1,12 @@
 import React, { Fragment, useContext } from 'react'
-import { Separator, Widget, ActionGroup, StackContext, ScreenHeader } from 'components'
+import { Button, Separator, Widget, ActionGroup, StackContext, ScreenHeader, UIContext } from 'components'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
 
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
+	const { togglePanelPosition } = useContext(UIContext)
 	const { adminActions } = dashboardApp
 
 	const stack = useContext(StackContext)
@@ -21,6 +22,11 @@ export const DashboardTab = () => {
 
 			<Widget title="Admin Links">
 				<ActionGroup actions={adminActions} appearance="" />
+			</Widget>
+			<Separator />
+
+			<Widget title="Just Testing">
+				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
 			</Widget>
 			<Separator />
 		</Fragment>
