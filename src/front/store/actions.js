@@ -30,13 +30,6 @@ export const setAppState = ( app, key, value ) => {
 	}
 }
 
-export const setShowUI = ( show ) => {
-	return {
-		type: 'SET_SHOW_UI',
-		show,
-	}
-}
-
 export const setIsShowingUI = ( show ) => {
 	return {
 		type: 'SET_SHOW_UI',

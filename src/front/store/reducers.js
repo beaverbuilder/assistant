@@ -55,15 +55,6 @@ export const appState = ( state = {}, action ) => {
 	}
 }
 
-export const showUI = ( state = {}, action ) => {
-	switch ( action.type ) {
-	case 'SET_SHOW_UI':
-		return action.show
-	default:
-		return state
-	}
-}
-
 export const isShowingUI = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_SHOW_UI':
@@ -90,7 +81,6 @@ export default ( state = {}, action ) => {
 		activeApp,
 		apps,
 		appState,
-		showUI,
 		isShowingUI,
 		panelPosition,
 	}

@@ -16,7 +16,6 @@ class FL_Assistant_Data {
 	static public $default_user_state = array(
 		'activeApp' => 'fl-dashboard',
 		'isShowingUI' => false,
-		'showUI'    => false,
 		'panelPosition' => 'end',
 	);
 
@@ -41,7 +40,6 @@ class FL_Assistant_Data {
 			'currentUser'     => self::get_current_user_data(),
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'isShowingUI'	  => $user_state['isShowingUI'],
-			'showUI'          => $user_state['showUI'],
 			'taxonomies'      => self::get_taxonomies(),
 			'dashboardApp'    => [
 				'adminActions' => self::get_admin_actions(),
