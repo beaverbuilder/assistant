@@ -1,12 +1,13 @@
+import md5 from 'md5'
 import store from 'store'
 
 /**
- * Cached response data for GET requests.
+ * Milliseconds until cache expires.
  *
  * @since 0.1
- * @type {Object}
+ * @type {Number}
  */
-const cache = {}
+const CACHE_EXPIRES = 180000
 
 /**
  * Cancellable fetch request with caching.
@@ -18,12 +19,13 @@ const cache = {}
 export const request = ( { route, args, complete } ) => {
 	const { apiNonce, apiRoot } = store.getState()
 	const method = args ? 'POST' : 'GET'
+	const cache = getCache( route )
 	let body = null
 	let promise = null
 
-	if ( 'GET' === method && cache[ route ] ) {
+	if ( 'GET' === method && cache ) {
 		if ( complete ) {
-			complete( cache[ route ] )
+			complete( cache )
 		}
 	} else {
 
@@ -45,7 +47,7 @@ export const request = ( { route, args, complete } ) => {
 			return response.json()
 		} ).then( json => {
 			if ( 'GET' === method ) {
-				cache[ route ] = json
+				setCache( route, json )
 			}
 			if ( ! promise.cancelled && complete ) {
 				complete( json )
@@ -60,6 +62,42 @@ export const request = ( { route, args, complete } ) => {
 			}
 		}
 	}
+}
+
+/**
+ * Returns a cached response from local storage.
+ *
+ * @since 0.1
+ * @param {String} route
+ * @return {Object}
+ */
+export const getCache = ( route ) => {
+	const item = localStorage.getItem( `fl-assistant-${ md5( route ) }` )
+
+	if ( item ) {
+		const parsed = JSON.parse( item )
+		const now = new Date().getTime()
+		if ( now - parsed.expires < CACHE_EXPIRES ) {
+			return parsed.data
+		}
+	}
+
+	return null
+}
+
+/**
+ * Saves a cached response to local storage.
+ *
+ * @since 0.1
+ * @param {String} route
+ */
+export const setCache = ( route, response ) => {
+	const item = JSON.stringify( {
+		expires: new Date().getTime(),
+		data: response,
+	} )
+
+	localStorage.setItem( `fl-assistant-${ md5( route ) }`, item )
 }
 
 /**

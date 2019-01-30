@@ -29,7 +29,7 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 					onClick={ () => onTabClick( 'fl-notifications' )}
 					isSelected={isNotificationsSelected}
 					tooltip={notificationsLabel}
-					>
+				>
 					<NotificationsIcon isSelected={isNotificationsSelected} />
 				</AppTabButton>
 			</div>
@@ -77,10 +77,10 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 	)
 }
 
-export const ScreenFooter = ({ children, className }) => {
-	const classes = classname({
-		'fl-asst-screen-footer' : true,
-	})
+export const ScreenFooter = ( { children } ) => {
+	const classes = classname( {
+		'fl-asst-screen-footer': true,
+	} )
 	return (
 		<div className={classes}>
 			<div className="fl-asst-screen-footer-content">{children}</div>
