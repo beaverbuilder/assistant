@@ -48,6 +48,8 @@
     overflow: hidden;
     position: relative;
     margin-bottom: 3px;
+    -webkit-user-select: none;
+    user-select: none;
 
     .fl-asst-screen-title {
         font-size: 18px;
