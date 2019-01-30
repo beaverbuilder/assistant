@@ -15,7 +15,7 @@
 }
 
 .fl-asst {
-    all: unset;
+    box-sizing: border-box;
     font-family: var(--fl-asst-base-font-family);
     font-size: var(--fl-asst-base-text-size);
     line-height: 1.5;
