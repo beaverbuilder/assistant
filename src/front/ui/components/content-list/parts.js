@@ -1,6 +1,5 @@
 import React from 'react'
 import classname from 'classnames'
-import { Button } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (

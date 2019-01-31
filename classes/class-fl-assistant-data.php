@@ -14,9 +14,9 @@ class FL_Assistant_Data {
 	 * @var string $default_user_state
 	 */
 	static public $default_user_state = array(
-		'activeApp'      => 'fl-dashboard',
-		'isShowingUI'    => false,
-		'panelPosition'  => 'end',
+		'activeApp'     => 'fl-dashboard',
+		'isShowingUI'   => false,
+		'panelPosition' => 'end',
 	);
 
 	/**

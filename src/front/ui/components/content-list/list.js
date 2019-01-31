@@ -1,5 +1,4 @@
 import React, { cloneElement, useContext, useState } from 'react'
-import classname from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
 import { EmptyMessage, AppContext } from 'components'
 import { ContentListContainer, ContentListItem, ContentListItemLoading } from './parts'
@@ -19,7 +18,7 @@ export const ContentList = ( {
 	placeholderItem = <ContentListItemLoading />,
 	placeholderItemCount = 10
 } ) => {
-	const [ requests, setRequests ] = useState( [] )
+	const [ requests ] = useState( [] )
 	const appContext = useContext( AppContext )
 
 	const loadItems = () => {
@@ -51,18 +50,18 @@ export const ContentList = ( {
 			useWindow={ false }
 		>
 			{ cloneElement( container, {
-					className: containerClass
-				},
-				data.map( ( props, key ) => {
-					return cloneElement( item, {
-						className: itemClass,
-						key,
-						itemThumb,
-						itemMeta,
-						itemActions,
-						...props,
-					} )
+				className: containerClass
+			},
+			data.map( ( props, key ) => {
+				return cloneElement( item, {
+					className: itemClass,
+					key,
+					itemThumb,
+					itemMeta,
+					itemActions,
+					...props,
 				} )
+			} )
 			) }
 		</InfiniteScroll>
 	)
