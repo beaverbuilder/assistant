@@ -30,6 +30,7 @@ export const NotificationsTab = () => {
 			<ContentQuery
 				type={ type }
 				showActions={ false }
+				pagination
 			/>
 		</Fragment>
 	)

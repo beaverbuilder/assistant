@@ -96,7 +96,7 @@ export const FindFilter = ( { onChange } ) => {
 	case 'posts':
 		query = {
 			post_type: subType,
-			numberposts: -1,
+			posts_per_page: 20,
 			orderby: 'title',
 			order: 'ASC',
 			s: '',

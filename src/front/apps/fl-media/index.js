@@ -5,7 +5,7 @@ import './style.scss'
 
 export const MediaTab = () => {
 	const query = {
-		'posts_per_page': 100,
+		'posts_per_page': 20,
 		'post_type': 'attachment'
 	}
 	return (
@@ -21,6 +21,7 @@ export const MediaTab = () => {
 				query={query}
 				containerClass="fl-asst-grid-list"
 				item={<Item />}
+				pagination
 			/>
 		</Fragment>
 	)
