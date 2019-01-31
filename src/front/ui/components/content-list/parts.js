@@ -45,12 +45,6 @@ export const ContentListItem = ( {
 					</div>
 				}
 			</div>
-			{ itemActions &&
-				<div className="fl-asst-list-item-actions">
-					<Button onClick={ view }>View</Button>
-					<Button onClick={ edit }>Edit</Button>
-				</div>
-			}
 		</li>
 	)
 }
