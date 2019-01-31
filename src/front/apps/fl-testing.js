@@ -14,18 +14,21 @@ const DetailScreen = () => {
     )
 }
 
+const MainScreen = () => {
+    const ui = useContext( UIContext )
+    const app = useContext( AppContext )
+    const stack = useContext( StackContext )
+    console.log('fl-testing', { ui, app, stack })
+    return (
+        <div>
+            <ScreenHeader />
+
+            <Button onClick={ () => {} }>Push View</Button>
+        </div>
+    )
+}
+
 registerApp( 'fl-testing', {
 	label: 'Test',
-	content: props => {
-        const ui = useContext( UIContext )
-        const app = useContext( AppContext )
-        const stack = useContext( StackContext )
-		return (
-			<div>
-                <ScreenHeader />
-
-                <Button onClick={ () => {} }>Push View</Button>
-			</div>
-		)
-	},
+	content: props => <MainScreen {...props} />,
 } )

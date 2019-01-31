@@ -49,7 +49,6 @@ export const UI = () => {
 							<AppContext.Provider key={key} value={app}>
 								<Tab name={key} isSelected={app.isActive}>
 									<Stack>
-									{ console.log(key, stack )}
 									{ app.content() }
 									</Stack>
 								</Tab>

@@ -6,7 +6,7 @@ UIContext.displayName = 'UIContext'
 export const AppContext = createContext()
 AppContext.displayName = 'AppContext'
 
-export const StackContext = createContext('test')
+export const StackContext = createContext()
 StackContext.displayName = 'StackContext'
 
 export const PageViewContext = createContext()

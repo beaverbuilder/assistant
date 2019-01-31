@@ -7,9 +7,6 @@ import { FindTab, FindIcon } from './fl-find'
 import { NotificationsTab, NotificationsIcon } from './fl-notifications'
 import { MediaTab, MediaIcon } from './fl-media'
 
-// Test screen
-import './fl-testing'
-
 const { registerApp } = useDispatch()
 
 registerApp( 'fl-notifications', {
