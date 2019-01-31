@@ -23,11 +23,11 @@ export default {
 	},
 
 	SET_PANEL_POSITION: ( action, store ) => {
-		updateUserState( { panelPosition: action.position })
+		updateUserState( { panelPosition: action.position } )
 	},
 
 	TOGGLE_PANEL_POSITION: ( action, store ) => {
 		const { panelPosition } = store.getState()
-		updateUserState( { panelPosition })
+		updateUserState( { panelPosition } )
 	},
 }

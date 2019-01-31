@@ -66,12 +66,12 @@ export const isShowingUI = ( state = {}, action ) => {
 
 export const panelPosition = ( state = 'end', action ) => {
 	switch ( action.type ) {
-		case 'TOGGLE_PANEL_POSITION':
-			return 'start' === state ? 'end' : 'start'
-		case 'SET_PANEL_POSITION':
-			return action.position
-		default:
-			return state
+	case 'TOGGLE_PANEL_POSITION':
+		return 'start' === state ? 'end' : 'start'
+	case 'SET_PANEL_POSITION':
+		return action.position
+	default:
+		return state
 	}
 }
 

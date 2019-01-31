@@ -6,7 +6,7 @@ export const Button = forwardRef( ( props, ref ) => {
 	const classes = classname( {
 		'fl-asst-button': true,
 		'fl-asst-button-is-selected': isSelected,
-		'fl-asst-button-transparent': 'icon' === appearance || 'transparent' === appearance 
+		'fl-asst-button-transparent': 'icon' === appearance || 'transparent' === appearance
 	}, className )
 	return (
 		<button type="button" className={classes} ref={ref} onClick={onClick} style={style}>{children}</button>
