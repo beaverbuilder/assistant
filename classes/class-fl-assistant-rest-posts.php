@@ -46,7 +46,7 @@ final class FL_Assistant_REST_Posts {
 			'date'      => get_the_date( '', $post ),
 			'edit_url'  => get_edit_post_link( $post->ID, '' ),
 			'thumbnail' => get_the_post_thumbnail_url( $post, 'thumbnail' ),
-			'title'     => ! empty( $post->post_title ) ? $post->post_title : $post->post_name,
+			'title'     => empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
 			'url'       => get_permalink( $post ),
 		);
 

@@ -127,7 +127,7 @@ export const FindFilter = ( { onChange } ) => {
 	case 'terms':
 		query = {
 			taxonomy: subType,
-			'hide_empty': false
+			hide_empty: 0
 		}
 		typeTagValue = [ type, subType ]
 		break

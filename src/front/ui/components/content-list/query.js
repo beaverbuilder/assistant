@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getContent } from 'utils/rest-api'
+import { getPagedContent } from 'utils/rest-api'
 import { ContentList } from 'components'
 
 export const ContentQuery = ( {
@@ -8,41 +8,26 @@ export const ContentQuery = ( {
 	query,
 	...props
 } ) => {
-	const [ results, setResults ] = useState( null )
+	const [ results, setResults ] = useState( [] )
 	const [ hasMore, setHasMore ] = useState( true )
 
-	const dataLoader = () => {
-		let paged = Object.assign( {}, query )
-		let perPage = 10
+	useEffect( () => {
+		setResults( [] )
+		setHasMore( true )
+	}, [ type, query ] )
 
-		if ( 'posts' === type ) {
-			paged.offset = results ? results.length : 0
-			paged.posts_per_page = paged.posts_per_page ? paged.posts_per_page : perPage
-			perPage = paged.posts_per_page
-		}
-
-		return getContent( type, paged, data => {
-			if ( data.length < perPage ) {
-				setHasMore( false )
-			}
-			if ( data.length ) {
-				setResults( results ? results.concat( data ) : data )
-			}
+	const dataLoader = ( offset ) => {
+		return getPagedContent( type, query, offset, ( data, more ) => {
+			setHasMore( pagination && more ? true : false )
+			setResults( results.concat( data ) )
 		} )
 	}
-
-	useEffect( () => {
-		setResults( null )
-		setHasMore( true )
-		const request = dataLoader()
-		return () => request.cancel()
-	}, [ type, query ] )
 
 	return (
 		<ContentList
 			data={ results }
 			dataHasMore={ hasMore }
-			dataLoader={ pagination && query ? dataLoader : null }
+			dataLoader={ dataLoader }
 			{ ...props }
 		/>
 	)

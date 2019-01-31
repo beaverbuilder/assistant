@@ -21,7 +21,7 @@ export const MediaTab = () => {
 				query={query}
 				containerClass="fl-asst-grid-list"
 				item={<Item />}
-				pagination
+				pagination={true}
 			/>
 		</Fragment>
 	)

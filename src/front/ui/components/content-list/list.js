@@ -1,14 +1,14 @@
 import React, { cloneElement, useContext, useState } from 'react'
 import classname from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
-import { EmptyMessage, CurrentTabContext, UIContext } from 'components'
+import { EmptyMessage, CurrentTabContext } from 'components'
 import { ContentListContainer, ContentListItem, ContentListItemLoading } from './parts'
 import './style.scss'
 
 export const ContentList = ( {
-	data = null,
+	data = [],
 	dataLoader = () => {},
-	dataHasMore = true,
+	dataHasMore = false,
 	container = <ContentListContainer />,
 	containerClass = '',
 	item = <ContentListItem />,
@@ -19,22 +19,40 @@ export const ContentList = ( {
 	placeholderItem = <ContentListItemLoading />,
 	placeholderItemCount = 10
 } ) => {
+	const [ requests, setRequests ] = useState( [] )
 	const currentTab = useContext( CurrentTabContext )
 
-	const getItems = () => {
-		return data.map( ( props, key ) => {
-			return cloneElement( item, {
-				className: itemClass,
-				key,
-				itemThumb,
-				itemMeta,
-				itemActions,
-				...props,
-			} )
-		} )
+	const loadItems = () => {
+		requests.length && requests.pop().cancel()
+		requests.push( dataLoader( data.length ) )
 	}
 
-	const getPlaceholderItems = ( count = placeholderItemCount ) => {
+	const getItems = () => {
+		return (
+			<InfiniteScroll
+				getScrollParent={ () => currentTab.scrollParent.current }
+				hasMore={ dataHasMore }
+				loadMore={ loadItems }
+				loader={ getPlaceholderItems() }
+				threshold={ 500 }
+				useWindow={ false }
+			>
+			{ data.map( ( props, key ) => {
+				return cloneElement( item, {
+					className: itemClass,
+					key,
+					itemThumb,
+					itemMeta,
+					itemActions,
+					...props,
+				} )
+			} ) }
+			</InfiniteScroll>
+		)
+	}
+
+	const getPlaceholderItems = () => {
+		const count = data.length ? 1 : placeholderItemCount
 		return Array( count ).fill().map( ( item, key ) => {
 			return cloneElement( placeholderItem, {
 				className: itemClass,
@@ -43,30 +61,9 @@ export const ContentList = ( {
 		} )
 	}
 
-	const getInfiniteScroller = () => {
-		return (
-			<InfiniteScroll
-				getScrollParent={ () => currentTab.scrollParent.current }
-				hasMore={ dataHasMore }
-				loadMore={ dataLoader }
-				loader={ getPlaceholderItems( 1 ) }
-				threshold={ 500 }
-				useWindow={ false }
-			>
-				{ getItems() }
-			</InfiniteScroll>
-		)
-	}
-
-	if ( ! data ) {
-		return getPlaceholderItems()
-	} else if ( ! data.length ) {
+	if ( ! data.length && ! dataHasMore ) {
 		return <EmptyMessage>No Results Found</EmptyMessage>
 	}
 
-	return cloneElement( container, {
-			className: containerClass
-		},
-		dataLoader ? getInfiniteScroller() : getItems()
-	)
+	return cloneElement( container, { className: containerClass }, getItems() )
 }

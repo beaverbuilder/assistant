@@ -26,11 +26,10 @@ export const NotificationsTab = () => {
 					appearance="vibrant"
 				/>
 			</ScreenHeader>
-
 			<ContentQuery
 				type={ type }
 				showActions={ false }
-				pagination
+				pagination={ true }
 			/>
 		</Fragment>
 	)
