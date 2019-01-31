@@ -27,6 +27,43 @@ export const getContent = ( type, args, complete ) => {
 }
 
 /**
+ * Returns any array of paginated content.
+ *
+ * @since 0.1
+ * @param {String} type
+ * @param {Object} args
+ * @param {Number} offset
+ * @param {Function} complete
+ * @return {Object}
+ */
+export const getPagedContent = ( type, args, offset, complete ) => {
+	let paged = Object.assign( {}, args )
+	let perPage = 20
+
+	switch ( type ) {
+	case 'posts':
+		paged.offset = offset
+		paged.posts_per_page = paged.posts_per_page ? paged.posts_per_page : perPage
+		perPage = paged.posts_per_page
+		break
+	case 'terms':
+	case 'comments':
+	case 'users':
+		paged.offset = offset
+		paged.number = paged.number ? paged.number : perPage
+		perPage = paged.number
+		break
+	case 'updates':
+		break
+	}
+
+	return getContent( type, paged, data => {
+		const hasMore = data.length && data.length === perPage ? true : false
+		complete( data, hasMore )
+	} )
+}
+
+/**
  * Returns any array of posts.
  *
  * @since 0.1

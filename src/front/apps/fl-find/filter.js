@@ -96,7 +96,7 @@ export const FindFilter = ( { onChange } ) => {
 	case 'posts':
 		query = {
 			post_type: subType,
-			numberposts: -1,
+			posts_per_page: 20,
 			orderby: 'title',
 			order: 'ASC',
 			s: '',
@@ -127,7 +127,7 @@ export const FindFilter = ( { onChange } ) => {
 	case 'terms':
 		query = {
 			taxonomy: subType,
-			'hide_empty': false
+			hide_empty: 0
 		}
 		typeTagValue = [ type, subType ]
 		break

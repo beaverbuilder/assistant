@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import {
 	Button,
 	Icon,
@@ -21,6 +21,7 @@ export const UI = () => {
 	const { apps, activeApp, panelPosition } = useStore()
 	const { setActiveApp } = useDispatch()
 	const { isShowingUI, toggleIsShowingUI } = useContext( UIContext )
+	const scrollParent = useRef( null )
 
 	if ( ! isShowingUI ) {
 		return null
@@ -37,10 +38,11 @@ export const UI = () => {
 				/>
 				<Separator isSlim={true} />
 
-				<div className="fl-asst-panel-contents">
+				<div className="fl-asst-panel-contents" ref={scrollParent}>
 					{Object.keys( apps ).map( key => {
 						const app = apps[key]
 						app.isActive = app.app === activeApp ? true : false
+						app.scrollParent = scrollParent
 						return (
 							<AppContext.Provider key={key} value={app}>
 								<Tab name={key} isSelected={app.isActive}>

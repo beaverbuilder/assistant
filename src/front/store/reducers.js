@@ -19,7 +19,6 @@ export const apps = ( state = {}, action ) => {
 				content: '',
 				icon: null,
 				showTabIcon: true,
-				state: {},
 				...action.config,
 			},
 			...state,

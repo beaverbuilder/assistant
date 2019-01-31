@@ -10,7 +10,13 @@ export const FindTab = () => {
 			<ScreenHeader>
 				<FindFilter onChange={ setData } />
 			</ScreenHeader>
-			<ContentQuery type={ data.type } query={ data.query } />
+			{ data.query &&
+				<ContentQuery
+					type={ data.type }
+					query={ data.query }
+					pagination={ true }
+				/>
+			}
 		</Fragment>
 	)
 }

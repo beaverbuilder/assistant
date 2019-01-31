@@ -1,8 +1,9 @@
 import React from 'react'
+import classname from 'classnames'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
-		<ul className={ className }>
+		<ul className={ classname( className, 'fl-asst-list' ) }>
 			{ children }
 		</ul>
 	)
@@ -25,7 +26,7 @@ export const ContentListItem = ( {
 	}
 
 	return (
-		<li className={ className }>
+		<li className={ classname( className, 'fl-asst-list-item' ) }>
 			{ itemThumb &&
 				<div className="fl-asst-list-item-visual" onClick={ view }>
 					<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
@@ -42,5 +43,16 @@ export const ContentListItem = ( {
 				}
 			</div>
 		</li>
+	)
+}
+
+export const ContentListItemLoading = ( { className } ) => {
+	return (
+		<ContentListItem
+			className={ classname( className, 'fl-asst-list-item-loading' ) }
+			itemActions={ false }
+			author='Loading...'
+			title='Loading...'
+		/>
 	)
 }

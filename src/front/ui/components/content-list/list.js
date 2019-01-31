@@ -1,12 +1,13 @@
-import React, { cloneElement } from 'react'
-import classname from 'classnames'
-import { EmptyMessage } from 'components'
-import { ContentListLoading } from './loading'
-import { ContentListContainer, ContentListItem } from './parts'
+import React, { cloneElement, useContext, useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
+import { EmptyMessage, AppContext } from 'components'
+import { ContentListContainer, ContentListItem, ContentListItemLoading } from './parts'
 import './style.scss'
 
 export const ContentList = ( {
-	data = null,
+	data = [],
+	dataLoader = () => {},
+	dataHasMore = false,
 	container = <ContentListContainer />,
 	containerClass = '',
 	item = <ContentListItem />,
@@ -14,31 +15,54 @@ export const ContentList = ( {
 	itemThumb = true,
 	itemMeta = true,
 	itemActions = true,
+	placeholderItem = <ContentListItemLoading />,
 	placeholderItemCount = 10
 } ) => {
+	const [ requests ] = useState( [] )
+	const appContext = useContext( AppContext )
 
-	if ( ! data ) {
-		return <ContentListLoading itemCount={placeholderItemCount} />
-	} else if ( ! data.length ) {
+	const loadItems = () => {
+		requests.length && requests.pop().cancel()
+		requests.push( dataLoader( data.length ) )
+	}
+
+	const getPlaceholderItems = () => {
+		const count = data.length ? 1 : placeholderItemCount
+		return Array( count ).fill().map( ( item, key ) => {
+			return cloneElement( placeholderItem, {
+				className: itemClass,
+				key,
+			} )
+		} )
+	}
+
+	if ( ! data.length && ! dataHasMore ) {
 		return <EmptyMessage>No Results Found</EmptyMessage>
 	}
 
-	return cloneElement(
-		container,
-		{
-			className: classname( containerClass, 'fl-asst-list' ),
-		},
-
-		/* Children */
-		data.map( ( props, key ) => {
-			return cloneElement( item, {
-				className: classname( itemClass, 'fl-asst-list-item' ),
-				key,
-				itemThumb,
-				itemMeta,
-				itemActions,
-				...props,
+	return (
+		<InfiniteScroll
+			getScrollParent={ () => appContext.scrollParent.current }
+			hasMore={ dataHasMore }
+			loadMore={ loadItems }
+			loader={ getPlaceholderItems() }
+			threshold={ 500 }
+			useWindow={ false }
+		>
+			{ cloneElement( container, {
+				className: containerClass
+			},
+			data.map( ( props, key ) => {
+				return cloneElement( item, {
+					className: itemClass,
+					key,
+					itemThumb,
+					itemMeta,
+					itemActions,
+					...props,
+				} )
 			} )
-		} )
+			) }
+		</InfiniteScroll>
 	)
 }

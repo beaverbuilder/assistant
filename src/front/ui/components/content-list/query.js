@@ -1,16 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import { getContent } from 'utils/rest-api'
+import { getPagedContent } from 'utils/rest-api'
 import { ContentList } from 'components'
 
-export const ContentQuery = props => {
-	const { type = 'posts', query } = props
-	const [ results, setResults ] = useState( null )
+export const ContentQuery = ( {
+	type = 'posts',
+	pagination = false,
+	query,
+	...props
+} ) => {
+	const [ results, setResults ] = useState( [] )
+	const [ hasMore, setHasMore ] = useState( true )
 
 	useEffect( () => {
-		setResults( null )
-		const request = getContent( type, query, data => setResults( data ) )
-		return () => request.cancel()
+		setResults( [] )
+		setHasMore( true )
 	}, [ type, query ] )
 
-	return <ContentList data={ results } { ...props } />
+	const dataLoader = ( offset ) => {
+		return getPagedContent( type, query, offset, ( data, more ) => {
+			setHasMore( pagination && more ? true : false )
+			setResults( results.concat( data ) )
+		} )
+	}
+
+	return (
+		<ContentList
+			data={ results }
+			dataHasMore={ hasMore }
+			dataLoader={ dataLoader }
+			{ ...props }
+		/>
+	)
 }
