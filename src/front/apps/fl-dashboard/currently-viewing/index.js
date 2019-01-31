@@ -1,5 +1,12 @@
 import React, { useContext } from 'react'
-import { ActionGroup, VerticalGroup, HorizontalGroup, ExpandedContents, PageViewContext } from 'components'
+import {
+	ActionGroup,
+	VerticalGroup,
+	HorizontalGroup,
+	ExpandedContents,
+	PageViewContext
+} from 'components'
+
 import './style.scss'
 
 export const CurrentlyViewing = () => {
