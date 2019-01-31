@@ -14,9 +14,9 @@ export const RecentlyEditedWidget = () => {
 	}
 	const isTagSelected = value => postType === value
 
-	const classes = classname({
-		'fl-asst-recently-edited-widget' : true
-	})
+	const classes = classname( {
+		'fl-asst-recently-edited-widget': true
+	} )
 
 	return (
 		<Widget title="Recently Edited" isPadded={false} className={classes}>

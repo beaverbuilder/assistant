@@ -6,10 +6,10 @@ import { useStore } from 'store'
 
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
-	const { togglePanelPosition } = useContext(UIContext)
+	const { togglePanelPosition } = useContext( UIContext )
 	const { adminActions } = dashboardApp
 
-	const stack = useContext(StackContext)
+	const stack = useContext( StackContext )
 
 	return (
 		<Fragment>
