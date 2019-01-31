@@ -27,30 +27,6 @@ export const ContentList = ( {
 		requests.push( dataLoader( data.length ) )
 	}
 
-	const getItems = () => {
-		return (
-			<InfiniteScroll
-				getScrollParent={ () => appContext.scrollParent.current }
-				hasMore={ dataHasMore }
-				loadMore={ loadItems }
-				loader={ getPlaceholderItems() }
-				threshold={ 500 }
-				useWindow={ false }
-			>
-				{ data.map( ( props, key ) => {
-					return cloneElement( item, {
-						className: itemClass,
-						key,
-						itemThumb,
-						itemMeta,
-						itemActions,
-						...props,
-					} )
-				} ) }
-			</InfiniteScroll>
-		)
-	}
-
 	const getPlaceholderItems = () => {
 		const count = data.length ? 1 : placeholderItemCount
 		return Array( count ).fill().map( ( item, key ) => {
@@ -65,5 +41,29 @@ export const ContentList = ( {
 		return <EmptyMessage>No Results Found</EmptyMessage>
 	}
 
-	return cloneElement( container, { className: containerClass }, getItems() )
+	return (
+		<InfiniteScroll
+			getScrollParent={ () => appContext.scrollParent.current }
+			hasMore={ dataHasMore }
+			loadMore={ loadItems }
+			loader={ getPlaceholderItems() }
+			threshold={ 500 }
+			useWindow={ false }
+		>
+			{ cloneElement( container, {
+					className: containerClass
+				},
+				data.map( ( props, key ) => {
+					return cloneElement( item, {
+						className: itemClass,
+						key,
+						itemThumb,
+						itemMeta,
+						itemActions,
+						...props,
+					} )
+				} )
+			) }
+		</InfiniteScroll>
+	)
 }
