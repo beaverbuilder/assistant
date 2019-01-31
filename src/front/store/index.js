@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, bindActionCreators } from 'redux'
 import { applyEffects, composeEnhancers } from './middleware'
 import reducers from './reducers'
 import * as actions from './actions'
-import { CurrentTabContext } from 'components'
+import { AppContext } from 'components'
 
 
 const store = createStore( reducers, {
@@ -27,7 +27,7 @@ export const useDispatch = () => {
 
 export const useAppState = ( key, value ) => {
 	const { appState } = store.getState()
-	const { app } = useContext( CurrentTabContext )
+	const { app } = useContext( AppContext )
 	const [ state, setState ] = useState(
 		appState[ app ] && appState[ app ][ key ] ? appState[ app ][ key ] : value
 	)

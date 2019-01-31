@@ -2,7 +2,7 @@ import React, { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
-import { UIContext } from 'components'
+import { UIContext, PageViewContext } from 'components'
 import store, { useStore, useDispatch } from 'store'
 import './api'
 import './apps'
@@ -11,12 +11,13 @@ import './apps'
  * The Root Component
  */
 const App = () => {
-	const { isShowingUI, activeApp, panelPosition } = useStore()
+	const { isShowingUI, activeApp, panelPosition, currentPageView } = useStore()
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
 
 	// Create a toggle function to show/hide the panel
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
 
+	// Create a store-bound value object for UIContext.Provider
 	const ui = {
 		isShowingUI,
 		setIsShowingUI,
@@ -32,11 +33,13 @@ const App = () => {
 		<StrictMode>
 			<Provider store={store}>
 				<UIContext.Provider value={ui}>
-					{/* This is the button that toggles the UI panel */}
-					<ShowUITrigger />
+					<PageViewContext.Provider value={currentPageView}>
+						{/* This is the button that toggles the UI panel */}
+						{ !isShowingUI && <ShowUITrigger /> }
 
-					{/* This is the panel itself */}
-					<UI />
+						{/* This is the panel itself */}
+						<UI />
+					</PageViewContext.Provider>
 				</UIContext.Provider>
 			</Provider>
 		</StrictMode>

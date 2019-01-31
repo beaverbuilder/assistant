@@ -13,17 +13,24 @@ export {
 } from './layout-helpers'
 
 export { TagGroup, Tag, TagGroupControl, ActionGroup } from './tag-groups'
+
 export {
 	PanelChrome,
 	PanelFrame,
 	ScreenHeader,
 	ScreenFooter,
 	ExpandedContents,
-	EmptyMessage
+	EmptyMessage,
 } from './panel-parts'
 
-export { CurrentPageViewContext, CurrentTabContext, UIContext } from './contexts'
+export {
+	PageViewContext,
+	UIContext,
+	AppContext,
+	StackContext,
+} from './contexts'
+
 export { ContentList, ContentQuery } from './content-list'
 export { Widget } from './widgets'
-export { Stack, StackContext } from './stacks'
-export { Tab, TabManager } from './tabs'
+export { Stack } from './stacks'
+export { Tab } from './tabs'
