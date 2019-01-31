@@ -35,7 +35,7 @@ const App = () => {
 				<UIContext.Provider value={ui}>
 					<PageViewContext.Provider value={currentPageView}>
 						{/* This is the button that toggles the UI panel */}
-						{ !isShowingUI && <ShowUITrigger /> }
+						{ ! isShowingUI && <ShowUITrigger /> }
 
 						{/* This is the panel itself */}
 						<UI />

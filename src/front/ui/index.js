@@ -6,11 +6,9 @@ import {
 	Tab,
 	PanelFrame,
 	PanelChrome,
-
 	Stack,
 	AppContext,
 	UIContext,
-	StackContext,
 } from 'components'
 
 import { useStore, useDispatch } from 'store'
@@ -28,8 +26,6 @@ export const UI = () => {
 		return null
 	}
 
-	const stack = useContext( StackContext )
-
 	return (
 		<PanelFrame position={panelPosition}>
 			<div className="fl-asst-panel-wrap">
@@ -42,14 +38,14 @@ export const UI = () => {
 				<Separator isSlim={true} />
 
 				<div className="fl-asst-panel-contents">
-					{Object.keys( apps ).map( ( key, i ) => {
+					{Object.keys( apps ).map( key => {
 						const app = apps[key]
 						app.isActive = app.app === activeApp ? true : false
 						return (
 							<AppContext.Provider key={key} value={app}>
 								<Tab name={key} isSelected={app.isActive}>
 									<Stack>
-									{ app.content() }
+										{ app.content() }
 									</Stack>
 								</Tab>
 							</AppContext.Provider>
