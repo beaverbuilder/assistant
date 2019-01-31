@@ -11,7 +11,7 @@ import './apps'
  * The Root Component
  */
 const App = () => {
-	const { isShowingUI, apps, activeApp, panelPosition } = useStore()
+	const { isShowingUI, activeApp, panelPosition } = useStore()
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
 
 	// Create a toggle function to show/hide the panel

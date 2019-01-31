@@ -17,7 +17,7 @@ import './style.scss'
 /**
  * Main UI Controller
  */
-export const UI = props => {
+export const UI = () => {
 	const { apps, activeApp, panelPosition } = useStore()
 	const { setActiveApp } = useDispatch()
 	const { isShowingUI, toggleIsShowingUI } = useContext( UIContext )
@@ -59,7 +59,7 @@ export const UI = props => {
 /**
  * Button To Show/Hide The UI
  */
-export const ShowUITrigger = props => {
+export const ShowUITrigger = () => {
 	const { toggleIsShowingUI } = useContext( UIContext )
 
 	const styles = {

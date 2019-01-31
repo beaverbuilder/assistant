@@ -1,4 +1,4 @@
-import { hydrateAppState, setPanelPosition } from 'store/actions'
+import { hydrateAppState } from 'store/actions'
 import { updateUserState } from 'utils/rest-api'
 
 export default {
@@ -22,7 +22,7 @@ export default {
 		updateUserState( { isShowingUI: action.show } )
 	},
 
-	SET_PANEL_POSITION: ( action, store ) => {
+	SET_PANEL_POSITION: ( action ) => {
 		updateUserState( { panelPosition: action.position } )
 	},
 
