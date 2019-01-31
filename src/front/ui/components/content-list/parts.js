@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
@@ -19,11 +18,9 @@ export const ContentListItem = ( {
 	className = '',
 	itemThumb = true,
 	itemMeta = true,
-	itemActions = true,
 } ) => {
 
 	const view = () => url ? window.location.href = url : null
-	const edit = () => edit_url ? window.location.href = edit_url : null
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
 	}
@@ -45,12 +42,6 @@ export const ContentListItem = ( {
 					</div>
 				}
 			</div>
-			{ itemActions &&
-				<div className="fl-asst-list-item-actions">
-					<Button onClick={ view }>View</Button>
-					<Button onClick={ edit }>Edit</Button>
-				</div>
-			}
 		</li>
 	)
 }
