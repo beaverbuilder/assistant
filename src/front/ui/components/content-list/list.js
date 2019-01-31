@@ -1,7 +1,7 @@
 import React, { cloneElement, useContext, useState } from 'react'
 import classname from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
-import { EmptyMessage, CurrentTabContext } from 'components'
+import { EmptyMessage, AppContext } from 'components'
 import { ContentListContainer, ContentListItem, ContentListItemLoading } from './parts'
 import './style.scss'
 
@@ -20,7 +20,7 @@ export const ContentList = ( {
 	placeholderItemCount = 10
 } ) => {
 	const [ requests, setRequests ] = useState( [] )
-	const currentTab = useContext( CurrentTabContext )
+	const appContext = useContext( AppContext )
 
 	const loadItems = () => {
 		requests.length && requests.pop().cancel()
@@ -30,7 +30,7 @@ export const ContentList = ( {
 	const getItems = () => {
 		return (
 			<InfiniteScroll
-				getScrollParent={ () => currentTab.scrollParent.current }
+				getScrollParent={ () => appContext.scrollParent.current }
 				hasMore={ dataHasMore }
 				loadMore={ loadItems }
 				loader={ getPlaceholderItems() }

@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { Button, Separator, Widget, ActionGroup, StackContext, ScreenHeader, UIContext } from 'components'
+import { Button, Separator, Widget, ActionGroup, ScreenHeader, UIContext } from 'components'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
@@ -7,9 +7,9 @@ import { useStore } from 'store'
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
 	const { togglePanelPosition } = useContext( UIContext )
-	const { adminActions } = dashboardApp
 
-	const stack = useContext( StackContext )
+	// @TODO: Rename dashboardApp and move into app state
+	const { adminActions } = dashboardApp
 
 	return (
 		<Fragment>

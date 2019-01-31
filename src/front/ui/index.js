@@ -4,11 +4,11 @@ import {
 	Icon,
 	Separator,
 	Tab,
-	TabManager,
-	CurrentTabContext,
 	PanelFrame,
 	PanelChrome,
-	UIContext
+	Stack,
+	AppContext,
+	UIContext,
 } from 'components'
 
 import { useStore, useDispatch } from 'store'
@@ -17,7 +17,7 @@ import './style.scss'
 /**
  * Main UI Controller
  */
-export const UI = props => {
+export const UI = () => {
 	const { apps, activeApp, panelPosition } = useStore()
 	const { setActiveApp } = useDispatch()
 	const { isShowingUI, toggleIsShowingUI } = useContext( UIContext )
@@ -39,18 +39,20 @@ export const UI = props => {
 				<Separator isSlim={true} />
 
 				<div className="fl-asst-panel-contents" ref={scrollParent}>
-					<TabManager activeTabName={activeApp}>
-						{Object.keys( apps ).map( key => {
-							const tab = { ...apps[key], scrollParent }
-							return (
-								<Tab key={key} name={key}>
-									<CurrentTabContext.Provider value={tab}>
-										{tab.content()}
-									</CurrentTabContext.Provider>
+					{Object.keys( apps ).map( key => {
+						const app = apps[key]
+						app.isActive = app.app === activeApp ? true : false
+						app.scrollParent = scrollParent
+						return (
+							<AppContext.Provider key={key} value={app}>
+								<Tab name={key} isSelected={app.isActive}>
+									<Stack>
+										{ app.content() }
+									</Stack>
 								</Tab>
-							)
-						} )}
-					</TabManager>
+							</AppContext.Provider>
+						)
+					} )}
 				</div>
 			</div>
 		</PanelFrame>
@@ -60,7 +62,7 @@ export const UI = props => {
 /**
  * Button To Show/Hide The UI
  */
-export const ShowUITrigger = props => {
+export const ShowUITrigger = () => {
 	const { toggleIsShowingUI } = useContext( UIContext )
 
 	const styles = {
