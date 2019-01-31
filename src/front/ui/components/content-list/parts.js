@@ -10,7 +10,6 @@ export const ContentListContainer = ( { className, children } ) => {
 
 export const ContentListItem = ( {
 	url = null,
-	edit_url = null,
 	thumbnail = null,
 	title = '',
 	author = '',

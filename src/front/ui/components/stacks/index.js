@@ -1,18 +1,24 @@
-import React, { createContext } from 'react'
+import React from 'react'
 import classname from 'classnames'
+import { StackContext } from 'components'
 import './style.scss'
 
-export const StackContext = createContext()
-StackContext.displayName = 'StackContext'
+export const Stack = ( { children, className } ) => {
 
-export const Stack = ( { children } ) => {
 	const classes = classname( {
 		'fl-asst-view-stack': true,
-	} )
+	}, className )
 
 	const context = {
-		pushView: component => {},
-		popView: () => {},
+		pushView: () => {
+
+			//console.log( 'push', component )
+
+		},
+		popView: () => {
+
+			//console.log( 'pop' )
+		},
 	}
 
 	return (

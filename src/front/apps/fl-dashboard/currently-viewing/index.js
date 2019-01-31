@@ -1,11 +1,16 @@
-import React from 'react'
-import { useStore } from 'store'
-import { ActionGroup, VerticalGroup, HorizontalGroup, ExpandedContents } from 'components'
+import React, { useContext } from 'react'
+import {
+	ActionGroup,
+	VerticalGroup,
+	HorizontalGroup,
+	ExpandedContents,
+	PageViewContext
+} from 'components'
+
 import './style.scss'
 
 export const CurrentlyViewing = () => {
-	const { currentPageView } = useStore()
-	const { intro, name, theme, actions } = currentPageView
+	const { intro, name, theme, actions } = useContext( PageViewContext )
 
 	return (
 		<div className="fl-asst-currently-viewing">

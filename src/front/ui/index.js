@@ -4,11 +4,11 @@ import {
 	Icon,
 	Separator,
 	Tab,
-	TabManager,
-	CurrentTabContext,
 	PanelFrame,
 	PanelChrome,
-	UIContext
+	Stack,
+	AppContext,
+	UIContext,
 } from 'components'
 
 import { useStore, useDispatch } from 'store'
@@ -38,18 +38,19 @@ export const UI = () => {
 				<Separator isSlim={true} />
 
 				<div className="fl-asst-panel-contents">
-					<TabManager activeTabName={activeApp}>
-						{Object.keys( apps ).map( key => {
-							const tab = apps[key]
-							return (
-								<Tab key={key} name={key}>
-									<CurrentTabContext.Provider value={tab}>
-										{tab.content()}
-									</CurrentTabContext.Provider>
+					{Object.keys( apps ).map( key => {
+						const app = apps[key]
+						app.isActive = app.app === activeApp ? true : false
+						return (
+							<AppContext.Provider key={key} value={app}>
+								<Tab name={key} isSelected={app.isActive}>
+									<Stack>
+										{ app.content() }
+									</Stack>
 								</Tab>
-							)
-						} )}
-					</TabManager>
+							</AppContext.Provider>
+						)
+					} )}
 				</div>
 			</div>
 		</PanelFrame>

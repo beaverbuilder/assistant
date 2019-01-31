@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
-import { Button, AppTabButton, Icon, CurrentTabContext } from 'components'
+import { Button, AppTabButton, Icon, AppContext } from 'components'
 import { NotificationsIcon } from 'apps/fl-notifications'
 import './style.scss'
 
@@ -77,7 +77,7 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 }
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
-	const tab = useContext( CurrentTabContext )
+	const tab = useContext( AppContext )
 	const screenTitle = title ? title : tab.label
 	return (
 		<div className="fl-asst-screen-header">

@@ -7,6 +7,8 @@ import { useStore } from 'store'
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
 	const { togglePanelPosition } = useContext( UIContext )
+
+	// @TODO: Rename dashboardApp and move into app state
 	const { adminActions } = dashboardApp
 
 	return (

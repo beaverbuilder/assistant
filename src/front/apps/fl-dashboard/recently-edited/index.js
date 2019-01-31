@@ -1,5 +1,4 @@
 import React from 'react'
-import classname from 'classnames'
 import { Widget, Tag, TagGroup, ContentQuery } from 'components'
 import { useAppState } from 'store'
 
