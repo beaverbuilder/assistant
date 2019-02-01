@@ -50,18 +50,18 @@ export const ContentList = ( {
 			useWindow={ false }
 		>
 			{ cloneElement( container, {
-					className: containerClass
-				},
-				data.map( ( props, key ) => {
-					return cloneElement( item, {
-						className: itemClass,
-						key,
-						itemThumb,
-						itemMeta,
-						itemActions,
-						...props,
-					} )
+				className: containerClass
+			},
+			data.map( ( props, key ) => {
+				return cloneElement( item, {
+					className: itemClass,
+					key,
+					itemThumb,
+					itemMeta,
+					itemActions,
+					...props,
 				} )
+			} )
 			) }
 		</InfiniteScroll>
 	)

@@ -1,6 +1,6 @@
 import { getPagedContent } from 'utils/rest-api'
 
-export const notificationQuery = ( type ) => {
+export const notificationQuery = () => {
 	return {}
 }
 
