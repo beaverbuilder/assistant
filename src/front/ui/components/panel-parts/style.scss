@@ -62,6 +62,11 @@
         }
     }
 
+    .fl-asst-expanded-contents-wrap {
+        margin: 0 -2px;
+        padding: 0 2px;
+    }
+
     .fl-asst-expanded-contents-footer {
         display: flex;
         flex-direction: column;
@@ -101,7 +106,7 @@
     background-color: transparent;
     color: black;
     stroke: var(--fl-asst-base-art-color);
-    padding: 6px;
+    padding: 4px;
 
     &:hover {
         color:black;
