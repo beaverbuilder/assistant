@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react'
+import posed from 'react-pose'
 import classname from 'classnames'
 
 export const Button = forwardRef( ( props, ref ) => {
@@ -13,6 +14,11 @@ export const Button = forwardRef( ( props, ref ) => {
 	)
 } )
 
+const PosedAppButton = posed.button({
+	hoverable: true,
+	focusable: true,
+})
+
 export const AppTabButton = forwardRef( ( props, ref ) => {
 	const { children, isSelected, onClick, className, tooltip } = props
 	const classes = classname( {
@@ -21,6 +27,6 @@ export const AppTabButton = forwardRef( ( props, ref ) => {
 		'fl-asst-button-is-selected': isSelected
 	}, className )
 	return (
-		<button type="button" ref={ref} className={classes} onClick={onClick} title={tooltip}>{children}</button>
+		<PosedAppButton type="button" ref={ref} className={classes} onClick={onClick} title={tooltip}>{children}</PosedAppButton>
 	)
 } )
