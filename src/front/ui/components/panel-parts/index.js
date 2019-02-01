@@ -10,7 +10,7 @@ const PanelBox = posed.div( {
 		position: 'fixed',
 		top: 0,
 		bottom: 0,
-		width: ({ panelWidth }) => panelWidth,
+		width: ( { panelWidth } ) => panelWidth,
 		zIndex: 999999,
 	},
 	trailingEdgeVisible: {
@@ -24,12 +24,12 @@ const PanelBox = posed.div( {
 		flip: true,
 	},
 	leadingEdgeVisible: {
-		right: ({ panelWidth }) => `calc( 100vw - ${panelWidth}px )`,
+		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
 		x: '0%',
 		flip: true,
 	},
 	leadingEdgeHidden: {
-		right: ({ panelWidth }) => `calc( 100vw - ${panelWidth}px )`,
+		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
 		x: '-100%',
 		flip: true,
 	},
@@ -127,20 +127,20 @@ export const ScreenFooter = ( { children } ) => {
 	)
 }
 
-const MoreButton = posed.button({
+const MoreButton = posed.button( {
 	hoverable: true,
 	focusable: true,
-})
-const MoreButtonPath = posed.polyline({
+} )
+const MoreButtonPath = posed.polyline( {
 	init: {
-		points: "2,4 25,4 48,4",
+		points: '2,4 25,4 48,4',
 	},
 	hover: {
-		points: ({ isExpanded }) => isExpanded ? "2,6 25,2 48,6" : "2,2 25,6 48,2",
+		points: ( { isExpanded } ) => isExpanded ? '2,6 25,2 48,6' : '2,2 25,6 48,2',
 	},
-})
+} )
 
-const Expander = posed.div({
+const Expander = posed.div( {
 	init: {
 		overflow: 'hidden',
 	},
@@ -152,7 +152,7 @@ const Expander = posed.div({
 		height: '0px',
 		opacity: 0,
 	},
-})
+} )
 
 export const ExpandedContents = ( { children } ) => {
 	const [ isExpanded, setIsExpanded ] = useState( false )
