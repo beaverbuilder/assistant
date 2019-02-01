@@ -36,7 +36,7 @@ export const UI = () => {
 
 				<div className="fl-asst-panel-contents" ref={scrollParent}>
 					{Object.keys( apps ).map( key => {
-						const app = apps[key]
+						const app = Object.assign( {}, apps[ key ] )
 						app.isActive = app.app === activeApp ? true : false
 						app.scrollParent = scrollParent
 						return (

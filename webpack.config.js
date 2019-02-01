@@ -12,18 +12,13 @@ const alias = {
 	store: path.resolve( __dirname, './src/front/store/' ),
 }
 
-const entry = {
-    front: './src/front/index.js',
-    utils: './src/utils/index.js',
-}
-
 const config = {
-	entry,
+	entry: './src/index.js',
 	mode: 'development',
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
-        filename: `[name].bundle.js`,
+        filename: `bundle.js`,
     },
     resolve: {
         alias,
@@ -43,7 +38,7 @@ const config = {
     },
     plugins: [
         new MiniCssExtractPlugin( {
-            filename: `[name].bundle.css`,
+            filename: `bundle.css`,
         } ),
     ]
 }
