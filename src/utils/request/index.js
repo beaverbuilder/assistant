@@ -6,7 +6,7 @@ import store from 'store'
  *
  * @type {Number}
  */
-const CACHE_EXPIRES = 180000
+const CACHE_EXPIRES = 600000
 
 /**
  * GET requests that are currently running.
@@ -25,7 +25,7 @@ const requests = []
  * @param {Object}
  * @return {Object}
  */
-export const getRequest = ( { route, complete = Function } ) => {
+export const getRequest = ( { route, complete = () => {} } ) => {
 	const promise = getCachedRequest( route, complete )
 
 	if ( promise.cached ) {
@@ -59,7 +59,7 @@ export const getRequest = ( { route, complete = Function } ) => {
  * @param {Function}
  * @return {Object|Boolean}
  */
-export const getCachedRequest = ( route, complete = Function ) => {
+export const getCachedRequest = ( route, complete = () => {} ) => {
 	const cache = getCache( route )
 	const promise = {
 		cancel: () => promise.cancelled = true,
@@ -80,7 +80,7 @@ export const getCachedRequest = ( route, complete = Function ) => {
  * @param {Object}
  * @return {Object}
  */
-export const postRequest = ( { route, args = {}, complete = Function } ) => {
+export const postRequest = ( { route, args = {}, complete = () => {} } ) => {
 	const body = new FormData()
 
 	Object.entries( args ).map( ( [ key, value ] ) => {
@@ -103,7 +103,7 @@ export const postRequest = ( { route, args = {}, complete = Function } ) => {
  * @param {Object}
  * @return {Object}
  */
-export const request = ( { method, route, body, complete = Function } ) => {
+export const request = ( { method, route, body, complete = () => {} } ) => {
 	const { apiNonce, apiRoot } = store.getState()
 
 	const promise = fetch( apiRoot + route, {
@@ -133,7 +133,7 @@ export const request = ( { method, route, body, complete = Function } ) => {
  * @return {Object}
  */
 export const getCache = ( route ) => {
-	const item = localStorage.getItem( `fl-assistant-${ md5( route ) }` )
+	const item = localStorage.getItem( `fl-request-${ md5( route ) }` )
 
 	if ( item ) {
 		const parsed = JSON.parse( item )
@@ -155,9 +155,10 @@ export const setCache = ( route, response ) => {
 	const item = JSON.stringify( {
 		expires: new Date().getTime(),
 		data: response,
+		route,
 	} )
 
-	localStorage.setItem( `fl-assistant-${ md5( route ) }`, item )
+	localStorage.setItem( `fl-request-${ md5( route ) }`, item )
 }
 
 /**
