@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDispatch } from 'store'
 import { Button, ScreenHeader, StackContext } from 'components'
+import posed from 'react-pose'
 
 const { registerApp } = useDispatch()
 
@@ -13,6 +14,10 @@ const DetailScreen = () => {
 		</div>
 	)
 }
+
+const Box = posed.div({
+
+})
 
 const MainScreen = () => {
 	const { pushView } = useContext( StackContext )

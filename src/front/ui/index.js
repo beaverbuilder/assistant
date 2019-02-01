@@ -13,6 +13,7 @@ import {
 
 import { useStore, useDispatch } from 'store'
 import './style.scss'
+import posed from 'react-pose'
 
 /**
  * Main UI Controller
@@ -23,12 +24,8 @@ export const UI = () => {
 	const { isShowingUI, toggleIsShowingUI } = useContext( UIContext )
 	const scrollParent = useRef( null )
 
-	if ( ! isShowingUI ) {
-		return null
-	}
-
 	return (
-		<PanelFrame position={panelPosition}>
+		<PanelFrame position={panelPosition} isShowing={isShowingUI}>
 			<div className="fl-asst-panel-wrap">
 				<PanelChrome
 					tabs={apps}
