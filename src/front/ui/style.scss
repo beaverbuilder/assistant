@@ -84,5 +84,6 @@
         flex-direction: column;
         position: relative;
         overflow: auto;
+        overscroll-behavior: contain;
     }
 }
