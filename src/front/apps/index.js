@@ -9,27 +9,27 @@ import { MediaTab, MediaIcon } from './fl-media'
 
 const { registerApp } = useDispatch()
 
-// registerApp( 'fl-notifications', {
-// 	label: 'Notifications',
-// 	content: props => <NotificationsTab {...props} />,
-// 	icon: props => <NotificationsIcon {...props} />,
-// 	showTabIcon: false,
-// } )
-//
-// registerApp( 'fl-media', {
-// 	label: 'Media',
-// 	content: props => <MediaTab {...props} />,
-// 	icon: props => <MediaIcon {...props} />,
-// } )
-//
+registerApp( 'fl-notifications', {
+	label: 'Notifications',
+	content: props => <NotificationsTab {...props} />,
+	icon: props => <NotificationsIcon {...props} />,
+	showTabIcon: false,
+} )
+
+registerApp( 'fl-media', {
+	label: 'Media',
+	content: props => <MediaTab {...props} />,
+	icon: props => <MediaIcon {...props} />,
+} )
+
 registerApp( 'fl-find', {
 	label: 'Find',
 	content: props => <FindTab {...props} />,
 	icon: props => <FindIcon {...props} />,
 } )
-//
-// registerApp( 'fl-dashboard', {
-// 	label: 'Dashboard',
-// 	content: props => <DashboardTab {...props} />,
-// 	icon: props => <DashboardIcon {...props} />,
-// } )
+
+registerApp( 'fl-dashboard', {
+	label: 'Dashboard',
+	content: props => <DashboardTab {...props} />,
+	icon: props => <DashboardIcon {...props} />,
+} )
