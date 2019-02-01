@@ -13,7 +13,6 @@ import {
 
 import { useStore, useDispatch } from 'store'
 import './style.scss'
-import posed from 'react-pose'
 
 /**
  * Main UI Controller

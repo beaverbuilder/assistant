@@ -5,11 +5,11 @@ import { Button, AppTabButton, Icon, AppContext } from 'components'
 import { NotificationsIcon } from 'apps/fl-notifications'
 import './style.scss'
 
-const PanelBox = posed.div({
+const PanelBox = posed.div( {
 	init: {
 		position: 'fixed',
-		top:0,
-		bottom:0,
+		top: 0,
+		bottom: 0,
 		width: 440,
 		zIndex: 99999,
 	},
@@ -33,9 +33,9 @@ const PanelBox = posed.div({
 		x: '-100%',
 		flip: true,
 	},
-})
+} )
 
-export const PanelFrame = ({ children, position = 'end', isShowing = true }) => {
+export const PanelFrame = ( { children, position = 'end', isShowing = true } ) => {
 
 	let pose = 'leadingEdgeVisible'
 	if ( 'start' === position ) {
