@@ -61,8 +61,8 @@ final class FL_Assistant_REST_Comments {
 	static public function comments( $request ) {
 		$response   = array();
 		$params     = $request->get_params();
-		$post_types = array( 'post_type' => array_keys( get_post_types() ) );
-		$comments   = get_comments( array_merge( $post_types, $params ) );
+		$post_types = array_keys( get_post_types() );
+		$comments   = get_comments( array_merge( array( 'post_type' => $post_types ), $params ) );
 
 		foreach ( $comments as $comment ) {
 			$response[] = self::get_comment_response_data( $comment );
