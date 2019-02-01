@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { TagGroupControl, ScreenHeader, ContentQuery } from 'components'
 import { useAppState } from 'store'
+import { notificationQuery } from './queries'
 
 export const NotificationsTab = () => {
 	const [ type, setType ] = useAppState( 'type', 'comments' )
@@ -28,6 +29,7 @@ export const NotificationsTab = () => {
 			</ScreenHeader>
 			<ContentQuery
 				type={ type }
+				query={ notificationQuery() }
 				showActions={ false }
 				pagination={ true }
 			/>

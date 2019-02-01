@@ -1,13 +1,10 @@
 import React, { Fragment } from 'react'
 import classname from 'classnames'
 import { Tag, TagGroup, ScreenHeader, ContentQuery, AspectBox } from 'components'
+import { mediaQuery } from './queries'
 import './style.scss'
 
 export const MediaTab = () => {
-	const query = {
-		'posts_per_page': 20,
-		'post_type': 'attachment'
-	}
 	return (
 		<Fragment>
 			<ScreenHeader>
@@ -18,7 +15,7 @@ export const MediaTab = () => {
 				</TagGroup>
 			</ScreenHeader>
 			<ContentQuery
-				query={query}
+				query={mediaQuery()}
 				containerClass="fl-asst-grid-list"
 				item={<Item />}
 				pagination={true}

@@ -33,7 +33,7 @@
     "@wordpress/babel-preset-default": "^3.0.2",
     "babel-loader": "^8.0.5",
     "css-loader": "^1.0.1",
-    "eslint": "^5.12.1",
+    "eslint": "^5.13.0",
     "eslint-config-wordpress": "^2.0.0",
     "eslint-plugin-react": "^7.12.4",
     "jest": "^24.0.0",
