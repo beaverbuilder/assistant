@@ -57,7 +57,7 @@ export const getPagedContent = ( type, args, offset, complete ) => {
 
 	return getContent( type, paged, data => {
 		const hasMore = data.length && data.length === perPage ? true : false
-		complete( data, hasMore )
+		complete && complete( data, hasMore )
 	} )
 }
 
