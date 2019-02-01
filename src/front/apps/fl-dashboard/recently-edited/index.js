@@ -1,15 +1,10 @@
 import React from 'react'
 import { Widget, Tag, TagGroup, ContentQuery } from 'components'
 import { useAppState } from 'store'
+import { recentQuery } from './queries'
 
 export const RecentlyEditedWidget = () => {
 	const [ postType, setPostType ] = useAppState( 'post-type', 'any' )
-	const recentQuery = {
-		'posts_per_page': 5,
-	}
-	if ( postType ) {
-		recentQuery['post_type'] = postType
-	}
 	const isTagSelected = value => postType === value
 
 	return (
@@ -21,7 +16,7 @@ export const RecentlyEditedWidget = () => {
 					<Tag onClick={ () => setPostType( 'page' )} isSelected={isTagSelected( 'page' )}>Pages</Tag>
 				</TagGroup>
 			</div>
-			<ContentQuery query={recentQuery} placeholderItemCount={5} />
+			<ContentQuery query={recentQuery( postType )} placeholderItemCount={5} />
 		</Widget>
 	)
 }
