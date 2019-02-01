@@ -1,30 +1,59 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
+import posed from 'react-pose'
 import { Button, AppTabButton, Icon, AppContext } from 'components'
 import { NotificationsIcon } from 'apps/fl-notifications'
 import './style.scss'
 
-export const PanelFrame = ( { children, position = 'end', size = 'slim' } ) => {
-	const styles = {
+const PanelBox = posed.div( {
+	init: {
 		position: 'fixed',
 		top: 0,
 		bottom: 0,
-		right: 0,
-		left: 'auto',
 		width: 440,
-	}
+		zIndex: 99999,
+	},
+	leadingEdgeVisible: {
+		right: 0,
+		x: '0%',
+		flip: true,
+	},
+	leadingEdgeHidden: {
+		right: 0,
+		x: '100%',
+		flip: true,
+	},
+	trailingEdgeVisible: {
+		right: 'calc( 100vw - 440px )',
+		x: '0%',
+		flip: true,
+	},
+	trailingEdgeHidden: {
+		right: 'calc( 100vw - 440px )',
+		x: '-100%',
+		flip: true,
+	},
+} )
 
+export const PanelFrame = ( { children, position = 'end', isShowing = true } ) => {
+
+	let pose = 'leadingEdgeVisible'
 	if ( 'start' === position ) {
-		styles.left = 0
-		styles.right = 'auto'
-	}
-
-	if ( 'medium' === size ) {
-		styles.width = 720
+		if ( isShowing ) {
+			pose = 'trailingEdgeVisible'
+		} else {
+			pose = 'trailingEdgeHidden'
+		}
+	} else {
+		if ( isShowing ) {
+			pose = 'leadingEdgeVisible'
+		} else {
+			pose = 'leadingEdgeHidden'
+		}
 	}
 
 	return (
-		<div className="fl-asst-panel-frame" style={styles}>{children}</div>
+		<PanelBox pose={pose} className="fl-asst-panel-frame">{children}</PanelBox>
 	)
 }
 
