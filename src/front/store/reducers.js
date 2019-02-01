@@ -54,10 +54,10 @@ export const appState = ( state = {}, action ) => {
 	}
 }
 
-export const isShowingUI = ( state = {}, action ) => {
+export const isShowingUI = ( state = true, action ) => {
 	switch ( action.type ) {
 	case 'SET_SHOW_UI':
-		return action.show
+		return action.show ? true : false
 	default:
 		return state
 	}

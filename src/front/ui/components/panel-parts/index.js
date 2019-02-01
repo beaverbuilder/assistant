@@ -10,26 +10,26 @@ const PanelBox = posed.div( {
 		position: 'fixed',
 		top: 0,
 		bottom: 0,
-		width: 440,
-		zIndex: 99999,
-	},
-	leadingEdgeVisible: {
-		right: 0,
-		x: '0%',
-		flip: true,
-	},
-	leadingEdgeHidden: {
-		right: 0,
-		x: '100%',
-		flip: true,
+		width: ({ panelWidth }) => panelWidth,
+		zIndex: 999999,
 	},
 	trailingEdgeVisible: {
-		right: 'calc( 100vw - 440px )',
+		right: 0,
 		x: '0%',
 		flip: true,
 	},
 	trailingEdgeHidden: {
-		right: 'calc( 100vw - 440px )',
+		right: 0,
+		x: '100%',
+		flip: true,
+	},
+	leadingEdgeVisible: {
+		right: ({ panelWidth }) => `calc( 100vw - ${panelWidth}px )`,
+		x: '0%',
+		flip: true,
+	},
+	leadingEdgeHidden: {
+		right: ({ panelWidth }) => `calc( 100vw - ${panelWidth}px )`,
 		x: '-100%',
 		flip: true,
 	},
@@ -37,23 +37,23 @@ const PanelBox = posed.div( {
 
 export const PanelFrame = ( { children, position = 'end', isShowing = true } ) => {
 
-	let pose = 'leadingEdgeVisible'
+	let pose = ''
 	if ( 'start' === position ) {
-		if ( isShowing ) {
-			pose = 'trailingEdgeVisible'
-		} else {
-			pose = 'trailingEdgeHidden'
-		}
-	} else {
 		if ( isShowing ) {
 			pose = 'leadingEdgeVisible'
 		} else {
 			pose = 'leadingEdgeHidden'
 		}
+	} else {
+		if ( isShowing ) {
+			pose = 'trailingEdgeVisible'
+		} else {
+			pose = 'trailingEdgeHidden'
+		}
 	}
 
 	return (
-		<PanelBox pose={pose} className="fl-asst-panel-frame">{children}</PanelBox>
+		<PanelBox pose={pose} className="fl-asst-panel-frame" panelWidth={440}>{children}</PanelBox>
 	)
 }
 
@@ -127,6 +127,33 @@ export const ScreenFooter = ( { children } ) => {
 	)
 }
 
+const MoreButton = posed.button({
+	hoverable: true,
+	focusable: true,
+})
+const MoreButtonPath = posed.polyline({
+	init: {
+		points: "2,4 25,4 48,4",
+	},
+	hover: {
+		points: ({ isExpanded }) => isExpanded ? "2,6 25,2 48,6" : "2,2 25,6 48,2",
+	},
+})
+
+const Expander = posed.div({
+	init: {
+		overflow: 'hidden',
+	},
+	open: {
+		height: 'auto',
+		opacity: 1,
+	},
+	closed: {
+		height: '0px',
+		opacity: 0,
+	},
+})
+
 export const ExpandedContents = ( { children } ) => {
 	const [ isExpanded, setIsExpanded ] = useState( false )
 	const toggleExpanded = () => {
@@ -137,15 +164,15 @@ export const ExpandedContents = ( { children } ) => {
 	} )
 	return (
 		<div className={classes}>
-			{ isExpanded && children}
+			<Expander pose={ isExpanded ? 'open' : 'closed' } className="fl-asst-expanded-contents-wrap">{children}</Expander>
 			<div className="fl-asst-expanded-contents-footer">
-				<button className="fl-asst-button fl-asst-more-button" onClick={toggleExpanded}>
-					<svg className="fl-asst-icon" width="51px" height="4px" viewBox="0 0 51 4">
-						<g transform="translate(-195.000000, -184.000000)" fillRule="nonzero" strokeWidth="4" strokeLinecap="round">
-							<path d="M197.5,186 L244,186"></path>
+				<MoreButton className="fl-asst-button fl-asst-more-button" onClick={toggleExpanded}>
+					<svg className="fl-asst-icon" width="50px" height="8px" viewBox="0 0 50 8">
+						<g fill="transparent" fillRule="nonzero" strokeWidth="4" strokeLinecap="round">
+							<MoreButtonPath isExpanded={isExpanded} />
 						</g>
 					</svg>
-				</button>
+				</MoreButton>
 			</div>
 		</div>
 	)
