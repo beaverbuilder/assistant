@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { useAppState } from 'store'
 import { notificationQuery } from './queries'
 import { CommentDetailView } from './comments'
@@ -13,19 +13,12 @@ import {
 
 export const NotificationsTab = () => {
 	const [ type, setType ] = useAppState( 'type', 'comments' )
-	const [ item, setItem ] = useAppState( 'item', null )
-	const { pushView, popView } = useContext( StackContext )
+	const [ item, setItem ] = useState( null )
+	const { pushView } = useContext( StackContext )
 
 	useEffect( () => {
 		if ( item ) {
-			pushView(
-				<CommentDetailView
-					data={ item }
-					onClose={ () => setItem( null ) }
-				/>
-			)
-		} else {
-			popView()
+			pushView( <CommentDetailView data={ item } /> )
 		}
 	}, [ item ] )
 
