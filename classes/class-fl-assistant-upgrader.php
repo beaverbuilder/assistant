@@ -2,8 +2,6 @@
 
 /**
  * Custom upgrader skin for handling updates via the rest api.
- *
- * @since 0.1
  */
 class FL_Assistant_Upgrader extends WP_Upgrader_Skin {
 	public function header() {}

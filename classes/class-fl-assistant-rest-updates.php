@@ -108,7 +108,10 @@ final class FL_Assistant_REST_Updates {
 					'items' => [],
 				);
 				foreach ( $update_plugins->response as $key => $update ) {
-					$plugin     	    = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
+					$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
+					if ( $update->new_version == $plugin['Version'] ) {
+						continue;
+					}
 					$plugins['items'][] = self::get_plugin_response_data( $update, $plugin );
 				}
 				$response[] = $plugins;
@@ -123,6 +126,7 @@ final class FL_Assistant_REST_Updates {
 					'items' => [],
 				);
 				foreach ( $update_themes->response as $key => $update ) {
+					// TODO: Don't update if versions match.
 					$theme      	   = wp_get_theme( $key );
 					$themes['items'][] = self::get_theme_response_data( $update, $theme );
 				}
