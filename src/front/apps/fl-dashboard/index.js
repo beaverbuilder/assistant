@@ -6,16 +6,28 @@ import {
 	Widget,
 	ActionGroup,
 	ScreenHeader,
-	UIContext
+	UIContext,
+	StackContext,
 } from 'components'
 
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
 
+const DetailView = () => {
+	const { popView } = useContext( StackContext )
+	return (
+		<Fragment>
+			<div>Detail View</div>
+			<Button onClick={popView}>Pop View</Button>
+		</Fragment>
+	)
+}
+
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
 	const { togglePanelPosition } = useContext( UIContext )
+	const { pushView } = useContext( StackContext )
 
 	// @TODO: Rename dashboardApp and move into app state
 	const { adminActions } = dashboardApp
@@ -36,12 +48,12 @@ export const DashboardTab = () => {
 
 			<Widget title="Just Testing">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
+				<Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button>
 			</Widget>
 			<Separator />
 		</Fragment>
 	)
 }
-
 
 const OuterBoxPath = posed.path({
 	init: {
