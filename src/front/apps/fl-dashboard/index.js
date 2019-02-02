@@ -15,10 +15,21 @@ import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
 
 const DetailView = () => {
-	const { popView } = useContext( StackContext )
+	const { popView, pushView } = useContext( StackContext )
 	return (
 		<Fragment>
 			<div>Detail View</div>
+			<Button onClick={popView}>Pop View</Button>
+			<Button onClick={() => pushView(<DetailView2 />)}>Push</Button>
+		</Fragment>
+	)
+}
+
+const DetailView2 = () => {
+	const { popView } = useContext( StackContext )
+	return (
+		<Fragment>
+			<div>Detail View 2</div>
 			<Button onClick={popView}>Pop View</Button>
 		</Fragment>
 	)
