@@ -5,6 +5,12 @@ import { Button, AppTabButton, Icon, AppContext, StackContext } from 'components
 import { NotificationsIcon } from 'apps/fl-notifications'
 import './style.scss'
 
+const transition = () => ({
+	type: 'spring',
+	damping: 30,
+	stiffness: 200,
+})
+
 const PanelBox = posed.div( {
 	init: {
 		position: 'fixed',
@@ -17,21 +23,25 @@ const PanelBox = posed.div( {
 		right: 0,
 		x: '0%',
 		flip: true,
+		transition,
 	},
 	trailingEdgeHidden: {
 		right: 0,
 		x: '100%',
 		flip: true,
+		transition,
 	},
 	leadingEdgeVisible: {
 		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
 		x: '0%',
 		flip: true,
+		transition,
 	},
 	leadingEdgeHidden: {
 		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
 		x: '-100%',
 		flip: true,
+		transition,
 	},
 } )
 
