@@ -46,20 +46,8 @@ export const DashboardTab = () => {
 const OuterBoxPath = posed.path({
 	init: {
 		d: "M124,167.010842 C126.671358,167.010842 128.67605,167.010842 130.014075,167.010842 L130.014075,148 C130.014075,146.895431 129.118644,146 128.014075,146 L106,146 C104.895431,146 104,146.895431 104,148 L104,165.010842 C104,166.115411 104.895431,167.010842 106,167.010842 L110,167.010842",
-		stroke: 'yellow',
+
 	},
-	hover: {
-		stroke: props => {
-			console.log('hover', props )
-			return '#123123'
-		},
-	},
-	hoverEnd: {
-		stroke: props => {
-			console.log('hoverEnd', props)
-			return 'red'
-		},
-	}
 })
 
 export const DashboardIcon = () => {
