@@ -25,10 +25,10 @@ const requests = []
  * @param {Object}
  * @return {Object}
  */
-export const getRequest = ( { route, complete = () => {} } ) => {
+export const getRequest = ( { route, cached = true, complete = () => {} } ) => {
 	const promise = getCachedRequest( route, complete )
 
-	if ( promise.cached ) {
+	if ( cached && promise.cached ) {
 		return promise
 	}
 

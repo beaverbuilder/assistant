@@ -22,7 +22,7 @@ export const NotificationsTab = () => {
 
 	return (
 		<Fragment>
-			{ item &&
+			{ 'comments' === type && item &&
 				<CommentDetailView
 					data={ item }
 					onClose={ () => setItem( null ) }
@@ -40,8 +40,8 @@ export const NotificationsTab = () => {
 				type={ type }
 				query={ notificationQuery() }
 				pagination={ true }
-				item={ 'updates' === type ? <UpdatesListItem /> : <ContentListItem /> }
-				itemClick={ data => setItem( data ) }
+				item={ 'comments' === type ? <ContentListItem /> : <UpdatesListItem /> }
+				itemClick={ 'comments' === type ? data => setItem( data ) : null }
 			/>
 		</Fragment>
 	)

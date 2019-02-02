@@ -2,8 +2,33 @@
 	display: none;
 	position: absolute;
 	right: 25px;
+	button {
+	    transition-property: background-color;
+	    transition-duration: .5s;
+	    transition-delay:.2s;
+	}
+	button:focus {
+		border: 2px solid transparent;
+	}
 }
 
-.fl-asst-update-item:hover .fl-asst-update-button {
-	display: block;
+.fl-asst-update-item:hover {
+	.fl-asst-update-button {
+		display: block;
+		button {
+			background: var(--fl-utility-button-color);
+		}
+	}
+}
+
+.fl-asst-update-item-updating,
+.fl-asst-update-item-updated,
+.fl-asst-update-item-error {
+	.fl-asst-update-button {
+		display: block;
+	}
+}
+
+.fl-asst-update-button svg {
+	margin-right: 4px;
 }

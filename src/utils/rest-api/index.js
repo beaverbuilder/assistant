@@ -192,13 +192,28 @@ export const updateUserState = ( state ) => {
 /**
  * Returns any array of updates.
  *
- * @param {Object} args
  * @param {Function} complete
  * @return {Object}
  */
 export const getUpdates = ( complete ) => {
 	return getRequest( {
 		route: 'fl-assistant/v1/updates',
+		complete
+	} )
+}
+
+/**
+ * Updates a single plugin.
+ *
+ * @param {String} plugin
+ * @param {Function} complete
+ * @return {Object}
+ */
+export const updatePlugin = ( plugin, complete ) => {
+	const t = new Date().getTime()
+	return getRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/updates/update-plugin', { plugin, t } ),
+		cached: false,
 		complete
 	} )
 }
