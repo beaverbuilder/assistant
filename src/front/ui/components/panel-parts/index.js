@@ -1,9 +1,15 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { Button, AppTabButton, Icon, AppContext } from 'components'
+import { Button, AppTabButton, Icon, AppContext, StackContext } from 'components'
 import { NotificationsIcon } from 'apps/fl-notifications'
 import './style.scss'
+
+const transition = () => ( {
+	type: 'spring',
+	damping: 30,
+	stiffness: 200,
+} )
 
 const PanelBox = posed.div( {
 	init: {
@@ -17,21 +23,25 @@ const PanelBox = posed.div( {
 		right: 0,
 		x: '0%',
 		flip: true,
+		transition,
 	},
 	trailingEdgeHidden: {
 		right: 0,
 		x: '100%',
 		flip: true,
+		transition,
 	},
 	leadingEdgeVisible: {
 		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
 		x: '0%',
 		flip: true,
+		transition,
 	},
 	leadingEdgeHidden: {
 		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
 		x: '-100%',
 		flip: true,
+		transition,
 	},
 } )
 
@@ -107,11 +117,21 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const tab = useContext( AppContext )
+	const { isRootView, popView } = useContext( StackContext )
 	const screenTitle = title ? title : tab.label
+	const titleClasses = classname( {
+		'fl-asst-screen-title': true,
+		'has-back-button': ! isRootView
+	} )
 	return (
 		<div className="fl-asst-screen-header">
-			{ false !== showTitle && <div className="fl-asst-screen-title">{screenTitle}</div> }
-			{children}
+			{ false !== showTitle && <div className={titleClasses}>
+				{ ! isRootView && <Button onClick={popView} appearance="icon" className="fl-asst-button-back">
+					<Icon name="back" />
+				</Button> }
+				{screenTitle}
+			</div> }
+			<div className="fl-asst-screen-header-contents">{children}</div>
 		</div>
 	)
 }
