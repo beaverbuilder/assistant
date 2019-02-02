@@ -179,7 +179,7 @@ export const clearCache = ( type = 'cache' ) => {
 	const keys = Object.keys( localStorage )
 
 	keys.map( key => {
-		if ( key.indexOf( `fl-request-${ type }` ) > -1 ) {
+		if ( -1 < key.indexOf( `fl-request-${ type }` ) ) {
 			localStorage.removeItem( key )
 		}
 	} )

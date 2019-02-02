@@ -63,12 +63,12 @@ final class FL_Assistant_REST_Updates {
 
 		return array(
 			'author'    => $plugin['AuthorName'],
-			'meta'		=> $plugin['Version'] . ' by ' . $plugin['AuthorName'],
-			'plugin'	=> $update->plugin,
+			'meta'      => $plugin['Version'] . ' by ' . $plugin['AuthorName'],
+			'plugin'    => $update->plugin,
 			'thumbnail' => $thumbnail,
 			'title'     => $plugin['Name'],
-			'type'		=> 'plugin',
-			'version'	=> $plugin['Version'],
+			'type'      => 'plugin',
+			'version'   => $plugin['Version'],
 		);
 	}
 
@@ -93,12 +93,12 @@ final class FL_Assistant_REST_Updates {
 
 		return array(
 			'author'    => strip_tags( $theme->Author ),
-			'meta'		=> $theme->Version . ' by ' . strip_tags( $theme->Author ),
-			'theme'		=> $update['theme'],
+			'meta'      => $theme->Version . ' by ' . strip_tags( $theme->Author ),
+			'theme'     => $update['theme'],
 			'thumbnail' => $theme->get_screenshot(),
 			'title'     => $theme->Name,
-			'type'		=> 'theme',
-			'version'	=> $theme->Version,
+			'type'      => 'theme',
+			'version'   => $theme->Version,
 		);
 	}
 
@@ -110,9 +110,9 @@ final class FL_Assistant_REST_Updates {
 	 * @return array
 	 */
 	static public function updates( $request ) {
-		$response 		= array();
+		$response       = array();
 		$update_plugins = get_site_transient( 'update_plugins' );
-		$update_themes 	= get_site_transient( 'update_themes' );
+		$update_themes  = get_site_transient( 'update_themes' );
 
 		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
 			$plugins = array(
@@ -164,12 +164,16 @@ final class FL_Assistant_REST_Updates {
 
 		$plugin = $request->get_param( 'plugin' );
 
-		$upgrader = new Plugin_Upgrader( new FL_Assistant_Upgrader( array(
-			'title'  => __( 'Update Plugin', 'fl-assistant' ),
-			'nonce'  => 'upgrade-plugin_' . $plugin,
-			'url' 	 => 'update.php?action=upgrade-plugin&plugin=' . urlencode( $plugin ),
-			'plugin' => $plugin,
-		) ) );
+		$upgrader = new Plugin_Upgrader(
+			new FL_Assistant_Upgrader(
+				array(
+					'title'  => __( 'Update Plugin', 'fl-assistant' ),
+					'nonce'  => 'upgrade-plugin_' . $plugin,
+					'url'    => 'update.php?action=upgrade-plugin&plugin=' . urlencode( $plugin ),
+					'plugin' => $plugin,
+				)
+			)
+		);
 
 		$upgrader->upgrade( $plugin );
 	}
@@ -193,12 +197,16 @@ final class FL_Assistant_REST_Updates {
 
 		$theme = $request->get_param( 'theme' );
 
-		$upgrader = new Theme_Upgrader( new FL_Assistant_Upgrader( array(
-			'title'  => __( 'Update Theme', 'fl-assistant' ),
-			'nonce'  => 'upgrade-theme_' . $theme,
-			'url' 	 => 'update.php?action=upgrade-theme&theme=' . urlencode( $theme ),
-			'theme'  => $theme,
-		) ) );
+		$upgrader = new Theme_Upgrader(
+			new FL_Assistant_Upgrader(
+				array(
+					'title' => __( 'Update Theme', 'fl-assistant' ),
+					'nonce' => 'upgrade-theme_' . $theme,
+					'url'   => 'update.php?action=upgrade-theme&theme=' . urlencode( $theme ),
+					'theme' => $theme,
+				)
+			)
+		);
 
 		$upgrader->upgrade( $theme );
 	}

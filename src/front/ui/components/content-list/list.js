@@ -78,7 +78,7 @@ export const ContentList = ( {
 			threshold={ 500 }
 			useWindow={ false }
 		>
-		{ cloneElement( container, { className: containerClass }, renderItems( data ) ) }
+			{ cloneElement( container, { className: containerClass }, renderItems( data ) ) }
 		</InfiniteScroll>
 	)
 }

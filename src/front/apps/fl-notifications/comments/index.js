@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { Button, Padding, Separator } from 'components'
+import React from 'react'
+import { Button, Padding } from 'components'
 import './style.scss'
 
 export const CommentDetailView = ( { data, onClose } ) => {

@@ -18,7 +18,7 @@ export const ContentListGroupLabel = ( { label } ) => {
 }
 
 export const ContentListItem = ( { className, data, onClick, children } ) => {
-	const { author, date, meta, thumbnail, title, url } = data
+	const { meta, thumbnail, title, url } = data
 
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
@@ -50,7 +50,7 @@ export const ContentListItem = ( { className, data, onClick, children } ) => {
 
 export const ContentListItemLoading = ( { className } ) => {
 	const data = {
-		author: 'Loading...',
+		meta: 'Loading...',
 		title: 'Loading...',
 	}
 	return (
