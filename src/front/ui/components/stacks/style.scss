@@ -4,6 +4,7 @@
     flex-direction: column;
     position: relative;
     min-height: 300px;
+    overflow: hidden;
 
     .fl-asst-stack-view {
         flex: 1 1 auto;
