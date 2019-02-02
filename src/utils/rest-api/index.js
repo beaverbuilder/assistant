@@ -71,6 +71,7 @@ export const getPagedContent = ( type, args, offset, complete ) => {
 export const getPosts = ( args, complete ) => {
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/posts', args ),
+		cacheKey: 'posts',
 		complete
 	} )
 }
@@ -85,6 +86,7 @@ export const getPosts = ( args, complete ) => {
 export const getPost = ( id, complete ) => {
 	return getRequest( {
 		route: `fl-assistant/v1/post/${ id }`,
+		cacheKey: 'posts',
 		complete
 	} )
 }
@@ -99,6 +101,7 @@ export const getPost = ( id, complete ) => {
 export const getTerms = ( args, complete ) => {
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/terms', args ),
+		cacheKey: 'terms',
 		complete
 	} )
 }
@@ -113,6 +116,7 @@ export const getTerms = ( args, complete ) => {
 export const getTerm = ( id, complete ) => {
 	return getRequest( {
 		route: `fl-assistant/v1/term/${ id }`,
+		cacheKey: 'terms',
 		complete
 	} )
 }
@@ -127,6 +131,7 @@ export const getTerm = ( id, complete ) => {
 export const getComments = ( args, complete ) => {
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/comments', args ),
+		cacheKey: 'comments',
 		complete
 	} )
 }
@@ -141,6 +146,7 @@ export const getComments = ( args, complete ) => {
 export const getComment = ( id, complete ) => {
 	return getRequest( {
 		route: `fl-assistant/v1/comment/${ id }`,
+		cacheKey: 'comments',
 		complete
 	} )
 }
@@ -155,6 +161,7 @@ export const getComment = ( id, complete ) => {
 export const getUsers = ( args, complete ) => {
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/users', args ),
+		cacheKey: 'users',
 		complete
 	} )
 }
@@ -169,6 +176,7 @@ export const getUsers = ( args, complete ) => {
 export const getUser = ( id, complete ) => {
 	return getRequest( {
 		route: `fl-assistant/v1/user/${ id }`,
+		cacheKey: 'users',
 		complete
 	} )
 }
@@ -192,13 +200,45 @@ export const updateUserState = ( state ) => {
 /**
  * Returns any array of updates.
  *
- * @param {Object} args
  * @param {Function} complete
  * @return {Object}
  */
 export const getUpdates = ( complete ) => {
 	return getRequest( {
 		route: 'fl-assistant/v1/updates',
+		cached: false,
+		complete
+	} )
+}
+
+/**
+ * Updates a single plugin.
+ *
+ * @param {String} plugin
+ * @param {Function} complete
+ * @return {Object}
+ */
+export const updatePlugin = ( plugin, complete ) => {
+	const t = new Date().getTime()
+	return getRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/updates/update-plugin', { plugin, t } ),
+		cached: false,
+		complete
+	} )
+}
+
+/**
+ * Updates a single theme.
+ *
+ * @param {String} theme
+ * @param {Function} complete
+ * @return {Object}
+ */
+export const updateTheme = ( theme, complete ) => {
+	const t = new Date().getTime()
+	return getRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/updates/update-theme', { theme, t } ),
+		cached: false,
 		complete
 	} )
 }
