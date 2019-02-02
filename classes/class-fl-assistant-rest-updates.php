@@ -84,27 +84,37 @@ final class FL_Assistant_REST_Updates {
 	 * @return array
 	 */
 	static public function updates( $request ) {
-		$response = array();
-		$plugins  = current_user_can( 'update_plugins' );
-		$themes   = current_user_can( 'update_themes' );
+		$response 			 = array();
+		$can_update_plugins  = current_user_can( 'update_plugins' );
+		$can_update_themes   = current_user_can( 'update_themes' );
 
-		if ( $plugins ) {
+		if ( $can_update_plugins ) {
 			$update_plugins = get_site_transient( 'update_plugins' );
 			if ( ! empty( $update_plugins->response ) ) {
+				$plugins = array(
+					'label' => __( 'Plugins', 'fl-assistant' ),
+					'items' => [],
+				);
 				foreach ( $update_plugins->response as $key => $update ) {
-					$plugin     = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
-					$response[] = self::get_plugin_response_data( $update, $plugin );
+					$plugin     	    = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
+					$plugins['items'][] = self::get_plugin_response_data( $update, $plugin );
 				}
+				$response[] = $plugins;
 			}
 		}
 
-		if ( $themes ) {
+		if ( $can_update_themes ) {
 			$update_themes = get_site_transient( 'update_themes' );
 			if ( ! empty( $update_themes->response ) ) {
+				$themes = array(
+					'label' => __( 'Themes', 'fl-assistant' ),
+					'items' => [],
+				);
 				foreach ( $update_themes->response as $key => $update ) {
-					$theme      = wp_get_theme( $key );
-					$response[] = self::get_theme_response_data( $update, $theme );
+					$theme      	   = wp_get_theme( $key );
+					$themes['items'][] = self::get_theme_response_data( $update, $theme );
 				}
+				$response[] = $themes;
 			}
 		}
 

@@ -9,6 +9,14 @@ export const ContentListContainer = ( { className, children } ) => {
 	)
 }
 
+export const ContentListGroupLabel = ( { label } ) => {
+	return (
+		<li className='fl-asst-list-group-heading'>
+			{ label }
+		</li>
+	)
+}
+
 export const ContentListItem = ( {
 	url = null,
 	thumbnail = null,

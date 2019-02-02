@@ -1,7 +1,12 @@
-import React, { cloneElement, useContext, useState } from 'react'
+import React, { Fragment, cloneElement, useContext, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { EmptyMessage, AppContext } from 'components'
-import { ContentListContainer, ContentListItem, ContentListItemLoading } from './parts'
+import {
+	ContentListContainer,
+	ContentListGroupLabel,
+	ContentListItem,
+	ContentListItemLoading
+} from './parts'
 import './style.scss'
 
 export const ContentList = ( {
@@ -10,6 +15,7 @@ export const ContentList = ( {
 	dataHasMore = false,
 	container = <ContentListContainer />,
 	containerClass = '',
+	groupLabel = <ContentListGroupLabel />,
 	item = <ContentListItem />,
 	itemClass = '',
 	itemThumb = true,
@@ -26,7 +32,31 @@ export const ContentList = ( {
 		requests.push( dataLoader( data.length ) )
 	}
 
-	const getPlaceholderItems = () => {
+	const renderItem = ( props, key ) => {
+		return cloneElement( item, {
+			className: itemClass,
+			key,
+			itemThumb,
+			itemMeta,
+			...props,
+		} )
+	}
+
+	const renderItems = ( items ) => {
+		return items.map( ( props, key ) => {
+			if ( props.items ) {
+				return (
+					<Fragment key={ key }>
+						{ cloneElement( groupLabel, { label: props.label } ) }
+						{ renderItems( props.items ) }
+					</Fragment>
+				)
+			}
+			return renderItem( props, key )
+		} )
+	}
+
+	const renderPlaceholderItems = () => {
 		const count = data.length ? 1 : placeholderItemCount
 		return Array( count ).fill().map( ( item, key ) => {
 			return cloneElement( placeholderItem, {
@@ -45,24 +75,11 @@ export const ContentList = ( {
 			getScrollParent={ () => appContext.scrollParent.current }
 			hasMore={ dataHasMore }
 			loadMore={ loadItems }
-			loader={ getPlaceholderItems() }
+			loader={ renderPlaceholderItems() }
 			threshold={ 500 }
 			useWindow={ false }
 		>
-			{ cloneElement( container, {
-				className: containerClass
-			},
-			data.map( ( props, key ) => {
-				return cloneElement( item, {
-					className: itemClass,
-					key,
-					itemThumb,
-					itemMeta,
-					itemActions,
-					...props,
-				} )
-			} )
-			) }
+		{ cloneElement( container, { className: containerClass }, renderItems( data ) ) }
 		</InfiniteScroll>
 	)
 }
