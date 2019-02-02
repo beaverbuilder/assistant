@@ -5,5 +5,9 @@
     left: 0;
     right: 0;
     bottom: 0;
+	overflow: auto;
     z-index: 1;
+}
+.fl-asst-comment-content {
+	padding-bottom: 10px;
 }
