@@ -14,6 +14,24 @@ import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
 
+const TestingSheet = props => {
+	const {
+		popView,
+		pushView,
+		popToRoot,
+		isRootView,
+		isCurrentView,
+		viewCount,
+	} = useContext( StackContext )
+	return (
+		<div>
+			<div>Is Root View: { isRootView ? 'Yes' : 'No' }</div>
+			<div>Is Current View: { isCurrentView ? 'Yes' : 'No' }</div>
+			<div>View Count: {viewCount}</div>
+		</div>
+	)
+}
+
 const DetailView = () => {
 	const { popView, pushView } = useContext( StackContext )
 	return (
@@ -21,6 +39,8 @@ const DetailView = () => {
 			<div>Detail View</div>
 			<Button onClick={popView}>Pop View</Button>
 			<Button onClick={() => pushView( <DetailView2 /> )}>Push</Button>
+			<Separator />
+			<TestingSheet />
 		</Fragment>
 	)
 }
@@ -32,6 +52,9 @@ const DetailView2 = () => {
 			<div>Detail View 2</div>
 			<Button onClick={popView}>Pop View</Button>
 			<Button onClick={popToRoot}>Pop To Root</Button>
+
+			<Separator />
+			<TestingSheet />
 		</Fragment>
 	)
 }
@@ -39,7 +62,7 @@ const DetailView2 = () => {
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
 	const { togglePanelPosition } = useContext( UIContext )
-	const { pushView } = useContext( StackContext )
+	const { pushView, popView, isRootView } = useContext( StackContext )
 
 	// @TODO: Rename dashboardApp and move into app state
 	const { adminActions } = dashboardApp
@@ -60,7 +83,11 @@ export const DashboardTab = () => {
 
 			<Widget title="Just Testing">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
-				<Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button>
+				<div><Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button></div>
+				<div><Button onClick={popView}>Pop (do nothing)</Button></div>
+
+				<Separator />
+				<TestingSheet />
 			</Widget>
 			<Separator />
 		</Fragment>

@@ -52,12 +52,12 @@ export const Stack = ( { children, className } ) => {
 			}
 			if ( 'pop' === action ) {
 				const newViews = views
-
-				// ditch the last item
+				// ditch the last 'future' item
 				newViews.pop()
 				setViews( newViews )
 			}
 			if ( 'root' === action ) {
+				// Drop the last 'future' item.
 				views.pop()
 				setViews( views )
 			}
@@ -66,7 +66,11 @@ export const Stack = ( { children, className } ) => {
 	} )
 
 	// Setup the API that will be exposed with StackContext
-	const context = {
+	const api = {
+		isRootView: false,
+		isCurrentView: false,
+		viewCount: views.length,
+
 		pushView: children => {
 			const newViews = views
 			newViews.push( {
@@ -78,6 +82,8 @@ export const Stack = ( { children, className } ) => {
 			setAction( 'push' )
 		},
 		popView: () => {
+			if ( views.length < 2 ) return
+
 			const newViews = views
 			newViews[ newViews.length - 1 ].pose = 'future'
 			newViews[ newViews.length - 2 ].pose = 'present'
@@ -85,6 +91,8 @@ export const Stack = ( { children, className } ) => {
 			setAction( 'pop' )
 		},
 		popToRoot: () => {
+			if ( views.length < 2 ) return
+			
 			const current = views[ views.length - 1 ]
 			current.pose = 'future'
 			const root = views[0]
@@ -99,14 +107,19 @@ export const Stack = ( { children, className } ) => {
 	}, className )
 
 	return (
-		<StackContext.Provider value={context}>
-			<div className={classes}>
-			{ views.map( view => {
-				return (
+		<div className={classes}>
+		{ views.map( ( view, i ) => {
+			const checks = {
+				isRootView: 0 === i,
+				isCurrentView: view.pose === 'present' ? true : false,
+			}
+			const context = Object.assign({}, api, checks)
+			return (
+				<StackContext.Provider key={i} value={context}>
 					<StackView key={view.key} {...view} />
-				)
-			} ) }
-			</div>
-		</StackContext.Provider>
+				</StackContext.Provider>
+			)
+		} ) }
+		</div>
 	)
 }
