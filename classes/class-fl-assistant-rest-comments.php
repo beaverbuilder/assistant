@@ -45,6 +45,7 @@ final class FL_Assistant_REST_Comments {
 			'author'    => $comment->comment_author,
 			'date'      => $comment->comment_date,
 			'edit_url'  => get_edit_comment_link( $comment ),
+			'id'		=> $comment->comment_ID,
 			'thumbnail' => get_avatar_url( $comment->comment_author_email ),
 			'title'     => $comment->comment_content,
 			'url'       => get_comment_link( $comment ),
