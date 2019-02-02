@@ -6,4 +6,4 @@ export const notificationQuery = () => {
 
 // Preload
 getPagedContent( 'comments', notificationQuery(), 0 )
-getPagedContent( 'updates', notificationQuery(), 0 )
+//getPagedContent( 'updates', notificationQuery(), 0 )
