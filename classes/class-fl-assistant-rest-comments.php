@@ -41,11 +41,13 @@ final class FL_Assistant_REST_Comments {
 	 * @return array
 	 */
 	static public function get_comment_response_data( $comment ) {
+		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		return array(
 			'author'    => $comment->comment_author,
-			'date'      => $comment->comment_date,
+			'date'      => $date,
 			'edit_url'  => get_edit_comment_link( $comment ),
 			'id'		=> $comment->comment_ID,
+			'meta'		=> $comment->comment_author . ' - ' . $date,
 			'thumbnail' => get_avatar_url( $comment->comment_author_email ),
 			'title'     => $comment->comment_content,
 			'url'       => get_comment_link( $comment ),

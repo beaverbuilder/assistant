@@ -3,7 +3,7 @@ import { TagGroupControl, ScreenHeader, ContentQuery, ContentListItem } from 'co
 import { useAppState } from 'store'
 import { UpdatesListItem } from './updates/list-item'
 import { notificationQuery } from './queries'
-import { CommentDetailView } from './comment-detail'
+import { CommentDetailView } from './comments'
 
 export const NotificationsTab = () => {
 	const [ type, setType ] = useAppState( 'type', 'comments' )

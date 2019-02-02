@@ -54,8 +54,10 @@ final class FL_Assistant_REST_Updates {
 
 		return array(
 			'author'    => $plugin['AuthorName'],
+			'meta'		=> $plugin['Version'] . ' by ' . $plugin['AuthorName'],
 			'thumbnail' => $thumbnail,
 			'title'     => $plugin['Name'],
+			'version'	=> $plugin['Version'],
 		);
 	}
 

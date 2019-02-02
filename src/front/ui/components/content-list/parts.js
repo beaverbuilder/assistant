@@ -18,7 +18,7 @@ export const ContentListGroupLabel = ( { label } ) => {
 }
 
 export const ContentListItem = ( { className, data, onClick, children } ) => {
-	const { author, date, thumbnail, title, url } = data
+	const { author, date, meta, thumbnail, title, url } = data
 
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
@@ -39,13 +39,9 @@ export const ContentListItem = ( { className, data, onClick, children } ) => {
 			</div>
 			<div className="fl-asst-list-item-content">
 				<div className="fl-asst-list-item-title">{ title }</div>
-				{ ( author || date ) &&
-					<div className="fl-asst-list-item-meta">
-						{ author && <span>{ author }</span> }
-						{ author && date && <span> - </span> }
-						{ date && <span>{ date }</span> }
-					</div>
-				}
+				<div className="fl-asst-list-item-meta">
+					{ meta }
+				</div>
 			</div>
 			{ children }
 		</li>

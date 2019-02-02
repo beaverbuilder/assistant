@@ -41,10 +41,13 @@ final class FL_Assistant_REST_Posts {
 	 * @return array
 	 */
 	static public function get_post_response_data( $post ) {
+		$author = get_the_author_meta( 'display_name', $post->post_author );
+		$date = get_the_date( '', $post );
 		$response = array(
-			'author'    => get_the_author_meta( 'display_name', $post->post_author ),
-			'date'      => get_the_date( '', $post ),
+			'author'    => $author,
+			'date'      => $date,
 			'edit_url'  => get_edit_post_link( $post->ID, '' ),
+			'meta'		=> $author . ' - ' . $date,
 			'thumbnail' => get_the_post_thumbnail_url( $post, 'thumbnail' ),
 			'title'     => empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
 			'url'       => get_permalink( $post ),
