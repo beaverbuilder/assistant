@@ -14,56 +14,13 @@ import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
 
-const StackTestingSheet = () => {
-	const {
-		isRootView,
-		isCurrentView,
-		viewCount,
-	} = useContext( StackContext )
-	return (
-		<div>
-			<div>Is Root View: { isRootView ? 'Yes' : 'No' }</div>
-			<div>Is Current View: { isCurrentView ? 'Yes' : 'No' }</div>
-			<div>View Count: {viewCount}</div>
-		</div>
-	)
-}
-
 const DetailView = () => {
 	const { popView, pushView } = useContext( StackContext )
 	return (
 		<Fragment>
 			<ScreenHeader title="Detail View 1" />
-			<Button onClick={popView}>Pop View</Button>
-			<Button onClick={() => pushView( <DetailView2 /> )}>Push</Button>
 
-			<Separator />
-			<StackTestingSheet />
-		</Fragment>
-	)
-}
-
-const DetailView2 = () => {
-	const { popView, popToRoot } = useContext( StackContext )
-	return (
-		<Fragment>
-			<ScreenHeader title="Detail View 2" />
-
-			<StackTestingSheet />
-
-			<h2>Long Content</h2>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
-			<Button onClick={popView}>Pop View</Button>
-			<Button onClick={popToRoot}>Pop To Root</Button>
+			<Button onClick={ () => pushView( <DetailView /> )}>Next</Button>
 		</Fragment>
 	)
 }
@@ -93,14 +50,7 @@ export const DashboardTab = () => {
 			<Widget title="Just Testing">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
 
-				<Separator />
-
-				<div><Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button></div>
-
-				<div><Button onClick={popView}>Pop (do nothing cause root)</Button></div>
-
-				<Separator />
-				<StackTestingSheet />
+				<Button onClick={ () => pushView( <DetailView />, { shouldAnimate: false } )}>Push Detail View</Button>
 			</Widget>
 			<Separator />
 		</Fragment>
