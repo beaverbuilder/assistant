@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classname from 'classnames'
 import { updatePlugin, updateTheme } from 'utils/rest-api'
 import { Button, ContentListItem, Icon } from 'components'
@@ -8,13 +8,11 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 	const [ updating, setUpdating ] = useState( false )
 	const [ updated, setUpdated ] = useState( false )
 	const [ error, setError ] = useState( false )
+	const [ promise, setPromise ] = useState( null )
 	const [ buttonText, setButtonText ] = useState( 'Update' )
 
-	const classes = classname( className, {
-		'fl-asst-update-item': true,
-		'fl-asst-update-item-updating': updating,
-		'fl-asst-update-item-updated': updated,
-		'fl-asst-update-item-error': error,
+	useEffect( () => {
+		return () => promise && promise.cancel()
 	} )
 
 	const updateClicked = () => {
@@ -29,9 +27,9 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 		setButtonText( 'Updating' )
 
 		if ( 'plugin' === type ) {
-			updatePlugin( plugin, updateComplete )
+			setPromise( updatePlugin( plugin, updateComplete ) )
 		} else {
-			updateTheme( theme, updateComplete )
+			setPromise( updateTheme( theme, updateComplete ) )
 		}
 	}
 
@@ -50,6 +48,13 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 			}, 3000 )
 		}
 	}
+
+	const classes = classname( className, {
+		'fl-asst-update-item': true,
+		'fl-asst-update-item-updating': updating,
+		'fl-asst-update-item-updated': updated,
+		'fl-asst-update-item-error': error,
+	} )
 
 	return (
 		<ContentListItem className={ classes } { ...props }>
