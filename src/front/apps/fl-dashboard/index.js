@@ -14,11 +14,8 @@ import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
 
-const TestingSheet = props => {
+const StackTestingSheet = () => {
 	const {
-		popView,
-		pushView,
-		popToRoot,
 		isRootView,
 		isCurrentView,
 		viewCount,
@@ -36,11 +33,12 @@ const DetailView = () => {
 	const { popView, pushView } = useContext( StackContext )
 	return (
 		<Fragment>
-			<div>Detail View</div>
+			<ScreenHeader title="Detail View 1" />
 			<Button onClick={popView}>Pop View</Button>
 			<Button onClick={() => pushView( <DetailView2 /> )}>Push</Button>
+
 			<Separator />
-			<TestingSheet />
+			<StackTestingSheet />
 		</Fragment>
 	)
 }
@@ -49,12 +47,12 @@ const DetailView2 = () => {
 	const { popView, popToRoot } = useContext( StackContext )
 	return (
 		<Fragment>
-			<div>Detail View 2</div>
+			<ScreenHeader title="Detail View 2" />
 			<Button onClick={popView}>Pop View</Button>
 			<Button onClick={popToRoot}>Pop To Root</Button>
 
 			<Separator />
-			<TestingSheet />
+			<StackTestingSheet />
 		</Fragment>
 	)
 }
@@ -62,7 +60,7 @@ const DetailView2 = () => {
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
 	const { togglePanelPosition } = useContext( UIContext )
-	const { pushView, popView, isRootView } = useContext( StackContext )
+	const { pushView, popView } = useContext( StackContext )
 
 	// @TODO: Rename dashboardApp and move into app state
 	const { adminActions } = dashboardApp
@@ -83,11 +81,15 @@ export const DashboardTab = () => {
 
 			<Widget title="Just Testing">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
-				<div><Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button></div>
-				<div><Button onClick={popView}>Pop (do nothing)</Button></div>
 
 				<Separator />
-				<TestingSheet />
+
+				<div><Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button></div>
+
+				<div><Button onClick={popView}>Pop (do nothing cause root)</Button></div>
+
+				<Separator />
+				<StackTestingSheet />
 			</Widget>
 			<Separator />
 		</Fragment>

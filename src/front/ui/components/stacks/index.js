@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
 import { StackContext } from 'components'
@@ -52,11 +52,13 @@ export const Stack = ( { children, className } ) => {
 			}
 			if ( 'pop' === action ) {
 				const newViews = views
+
 				// ditch the last 'future' item
 				newViews.pop()
 				setViews( newViews )
 			}
 			if ( 'root' === action ) {
+
 				// Drop the last 'future' item.
 				views.pop()
 				setViews( views )
@@ -82,7 +84,9 @@ export const Stack = ( { children, className } ) => {
 			setAction( 'push' )
 		},
 		popView: () => {
-			if ( views.length < 2 ) return
+			if ( 2 > views.length ) {
+				return
+			}
 
 			const newViews = views
 			newViews[ newViews.length - 1 ].pose = 'future'
@@ -91,13 +95,15 @@ export const Stack = ( { children, className } ) => {
 			setAction( 'pop' )
 		},
 		popToRoot: () => {
-			if ( views.length < 2 ) return
-			
+			if ( 2 > views.length ) {
+				return
+			}
+
 			const current = views[ views.length - 1 ]
 			current.pose = 'future'
 			const root = views[0]
 			root.pose = 'present'
-			setViews( [root, current] )
+			setViews( [ root, current ] )
 			setAction( 'root' )
 		},
 	}
@@ -108,18 +114,18 @@ export const Stack = ( { children, className } ) => {
 
 	return (
 		<div className={classes}>
-		{ views.map( ( view, i ) => {
-			const checks = {
-				isRootView: 0 === i,
-				isCurrentView: view.pose === 'present' ? true : false,
-			}
-			const context = Object.assign({}, api, checks)
-			return (
-				<StackContext.Provider key={i} value={context}>
-					<StackView key={view.key} {...view} />
-				</StackContext.Provider>
-			)
-		} ) }
+			{ views.map( ( view, i ) => {
+				const checks = {
+					isRootView: 0 === i,
+					isCurrentView: 'present' === view.pose ? true : false,
+				}
+				const context = Object.assign( {}, api, checks )
+				return (
+					<StackContext.Provider key={i} value={context}>
+						<StackView key={view.key} {...view} />
+					</StackContext.Provider>
+				)
+			} ) }
 		</div>
 	)
 }
