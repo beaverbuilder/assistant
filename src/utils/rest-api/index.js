@@ -206,7 +206,7 @@ export const updateUserState = ( state ) => {
 export const getUpdates = ( complete ) => {
 	return getRequest( {
 		route: 'fl-assistant/v1/updates',
-		cacheKey: 'updates',
+		cached: false,
 		complete
 	} )
 }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import classname from 'classnames'
-import { clearCache } from 'utils/request'
 import { updatePlugin } from 'utils/rest-api'
 import { Button, ContentListItem, Icon } from 'components'
 import './style.scss'
@@ -32,7 +31,6 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 				setUpdating( false )
 				setUpdated( true )
 				setButtonText( 'Updated!' )
-				clearCache( 'updates' )
 			} else if ( response.error ) {
 				setUpdating( false )
 				setError( true )
