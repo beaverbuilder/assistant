@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { Button, StackContext } from 'components'
+import { StackContext } from 'components'
 import './style.scss'
 
-export const StackView = posed.div({
+export const StackView = posed.div( {
 	init: {
 		position: 'absolute',
 		top: 0,
@@ -22,38 +22,37 @@ export const StackView = posed.div({
 	future: {
 		x: '80%'
 	},
-})
+} )
 StackView.displayName = 'StackView'
 
 
-
 export const Stack = ( { children, className } ) => {
-	const [views, setViews] = useState([
+	const [ views, setViews ] = useState( [
 		{
 			key: Date.now(),
 			pose: 'present',
 			children,
 		}
-	])
-	const [action, setAction] = useState()
+	] )
+	const [ action, setAction ] = useState()
 
 	useEffect( () => {
-		console.log('effect', action )
 		if ( action ) {
 			if ( 'push' === action ) {
 				setViews( views.map( view => {
-					switch( view.pose ) {
-						case 'future':
-							view.pose = 'present'
-							break
-						case 'present':
-							view.pose = 'past'
+					switch ( view.pose ) {
+					case 'future':
+						view.pose = 'present'
+						break
+					case 'present':
+						view.pose = 'past'
 					}
 					return view
-				}))
+				} ) )
 			}
 			if ( 'pop' === action ) {
 				const newViews = views
+
 				// ditch the last item
 				newViews.pop()
 				setViews( newViews )
@@ -69,20 +68,20 @@ export const Stack = ( { children, className } ) => {
 	const context = {
 		pushView: children => {
 			const newViews = views
-			newViews.push({
+			newViews.push( {
 				key: Date.now(),
 				pose: 'future',
 				children,
-			})
+			} )
 			setViews( newViews )
-			setAction('push')
+			setAction( 'push' )
 		},
 		popView: () => {
 			const newViews = views
 			newViews[ newViews.length - 1 ].pose = 'future'
 			newViews[ newViews.length - 2 ].pose = 'present'
 			setViews( newViews )
-			setAction('pop')
+			setAction( 'pop' )
 		},
 	}
 
@@ -91,9 +90,9 @@ export const Stack = ( { children, className } ) => {
 			<Fragment>
 				{ views.map( view => {
 					return (
-						<StackView {...view} />
+						<StackView key={view.key} {...view} />
 					)
-				}) }
+				} ) }
 			</Fragment>
 		)
 	}

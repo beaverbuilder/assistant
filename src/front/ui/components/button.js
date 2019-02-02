@@ -14,10 +14,10 @@ export const Button = forwardRef( ( props, ref ) => {
 	)
 } )
 
-const PosedAppButton = posed.button({
+const PosedAppButton = posed.button( {
 	hoverable: true,
 	focusable: true,
-})
+} )
 
 export const AppTabButton = forwardRef( ( props, ref ) => {
 	const { children, isSelected, onClick, className, tooltip } = props
