@@ -4,24 +4,58 @@ import posed from 'react-pose'
 import { StackContext } from 'components'
 import './style.scss'
 
-export const StackView = posed.div( {
-	init: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0,
-		backgroundColor: 'var(--fl-background-color)'
-	},
-	past: {
-		x: '-100%',
-	},
-	present: {
-		x: '0%',
-	},
-	future: {
-		x: '100%'
-	},
+const handleTransition = () => {
+	return {
+		type: 'spring',
+		stiffness: 300,
+		damping: 30,
+	}
+}
+
+export const StackView = posed.div( props => {
+	const { shouldAnimate } = props
+
+	if ( false === shouldAnimate ) {
+		return {
+			init: {
+				position: 'absolute',
+				top: 0,
+				left: 0,
+				right: 0,
+				bottom: 0,
+				backgroundColor: 'var(--fl-background-color)'
+			},
+			past: {},
+			present: {},
+			future: {},
+		}
+	}
+
+	return {
+		init: {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			right: 0,
+			bottom: 0,
+			backgroundColor: 'var(--fl-background-color)'
+		},
+		past: {
+			x: '-50%',
+			opacity: 0,
+			transition: handleTransition,
+		},
+		present: {
+			x: '0%',
+			opacity: 1,
+			transition: handleTransition,
+		},
+		future: {
+			x: '80%',
+			opacity: 0,
+			transition: handleTransition,
+		},
+	}
 } )
 StackView.displayName = 'StackView'
 
@@ -32,10 +66,12 @@ export const Stack = ( { children, className } ) => {
 			key: Date.now(),
 			pose: 'present',
 			children,
+			config: { shouldAnimate: true },
 		}
 	] )
 	const [ action, setAction ] = useState()
 
+	// After DOM is mounted, "push" new view on.
 	useEffect( () => {
 		if ( action ) {
 			if ( 'push' === action ) {
@@ -50,22 +86,26 @@ export const Stack = ( { children, className } ) => {
 					return view
 				} ) )
 			}
-			if ( 'pop' === action ) {
-				const newViews = views
-
-				// ditch the last 'future' item
-				newViews.pop()
-				setViews( newViews )
-			}
-			if ( 'root' === action ) {
-
-				// Drop the last 'future' item.
-				views.pop()
-				setViews( views )
-			}
 			setAction( null )
 		}
 	} )
+
+	// After pop transition completes, cleanup data
+	const poseComplete = name => {
+		if ( action && 'pop' === action && 'future' === name ) {
+			const newViews = views
+
+			// ditch the last 'future' item
+			newViews.pop()
+			setViews( newViews )
+		}
+		if ( action && 'root' === action && 'future' === name ) {
+
+			// Drop the last 'future' item.
+			views.pop()
+			setViews( views )
+		}
+	}
 
 	// Setup the API that will be exposed with StackContext
 	const api = {
@@ -73,12 +113,16 @@ export const Stack = ( { children, className } ) => {
 		isCurrentView: false,
 		viewCount: views.length,
 
-		pushView: children => {
+		pushView: (
+			children,
+			config = { shouldAnimate: true }
+		) => {
 			const newViews = views
 			newViews.push( {
 				key: Date.now(),
 				pose: 'future',
 				children,
+				config,
 			} )
 			setViews( newViews )
 			setAction( 'push' )
@@ -115,16 +159,19 @@ export const Stack = ( { children, className } ) => {
 	return (
 		<div className={classes}>
 			{ views.map( ( view, i ) => {
+				const { key, pose } = view
 				const checks = {
 					isRootView: 0 === i,
-					isCurrentView: 'present' === view.pose ? true : false,
+					isCurrentView: 'present' === pose ? true : false,
 				}
 				const ref = createRef()
 				const context = Object.assign( { ref }, api, checks )
+				const props = Object.assign( { ref }, view )
 				view.className = 'fl-asst-stack-view'
+
 				return (
 					<StackContext.Provider key={i} value={context}>
-						<StackView key={view.key} ref={ref} {...view} />
+						<StackView key={key} onPoseComplete={poseComplete} {...props} />
 					</StackContext.Provider>
 				)
 			} ) }
