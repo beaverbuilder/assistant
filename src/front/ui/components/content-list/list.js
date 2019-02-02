@@ -41,15 +41,17 @@ export const ContentList = ( {
 
 	const renderItems = ( items ) => {
 		return items.map( ( props, key ) => {
-			if ( props.items ) {
+			if ( props.items && props.items.length ) {
 				return (
 					<Fragment key={ key }>
 						{ cloneElement( groupLabel, { label: props.label } ) }
 						{ renderItems( props.items ) }
 					</Fragment>
 				)
+			} else if ( ! props.items ) {
+				return renderItem( props, key )
 			}
-			return renderItem( props, key )
+			return null
 		} )
 	}
 
