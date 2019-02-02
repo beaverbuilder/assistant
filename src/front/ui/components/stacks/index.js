@@ -20,7 +20,7 @@ export const StackView = posed.div( {
 		x: '0%',
 	},
 	future: {
-		x: '80%'
+		x: '100%'
 	},
 } )
 StackView.displayName = 'StackView'
@@ -57,14 +57,15 @@ export const Stack = ( { children, className } ) => {
 				newViews.pop()
 				setViews( newViews )
 			}
+			if ( 'root' === action ) {
+				views.pop()
+				setViews( views )
+			}
 			setAction( null )
 		}
 	} )
 
-	const classes = classname( {
-		'fl-asst-stack': true,
-	}, className )
-
+	// Setup the API that will be exposed with StackContext
 	const context = {
 		pushView: children => {
 			const newViews = views
@@ -83,24 +84,28 @@ export const Stack = ( { children, className } ) => {
 			setViews( newViews )
 			setAction( 'pop' )
 		},
+		popToRoot: () => {
+			const current = views[ views.length - 1 ]
+			current.pose = 'future'
+			const root = views[0]
+			root.pose = 'present'
+			setViews( [root, current] )
+			setAction( 'root' )
+		},
 	}
 
-	const getViews = () => {
-		return (
-			<Fragment>
-				{ views.map( view => {
-					return (
-						<StackView key={view.key} {...view} />
-					)
-				} ) }
-			</Fragment>
-		)
-	}
+	const classes = classname( {
+		'fl-asst-stack': true,
+	}, className )
 
 	return (
 		<StackContext.Provider value={context}>
 			<div className={classes}>
-				{ getViews() }
+			{ views.map( view => {
+				return (
+					<StackView key={view.key} {...view} />
+				)
+			} ) }
 			</div>
 		</StackContext.Provider>
 	)

@@ -26,11 +26,12 @@ const DetailView = () => {
 }
 
 const DetailView2 = () => {
-	const { popView } = useContext( StackContext )
+	const { popView, popToRoot } = useContext( StackContext )
 	return (
 		<Fragment>
 			<div>Detail View 2</div>
 			<Button onClick={popView}>Pop View</Button>
+			<Button onClick={popToRoot}>Pop To Root</Button>
 		</Fragment>
 	)
 }
