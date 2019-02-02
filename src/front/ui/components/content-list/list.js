@@ -1,6 +1,6 @@
 import React, { Fragment, cloneElement, useContext, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
-import { EmptyMessage, AppContext } from 'components'
+import { EmptyMessage, StackContext } from 'components'
 import {
 	ContentListContainer,
 	ContentListGroupLabel,
@@ -23,7 +23,7 @@ export const ContentList = ( {
 	placeholderItemCount = 10
 } ) => {
 	const [ requests ] = useState( [] )
-	const appContext = useContext( AppContext )
+	const stackContext = useContext( StackContext )
 
 	const loadItems = () => {
 		requests.length && requests.pop().cancel()
@@ -71,7 +71,7 @@ export const ContentList = ( {
 
 	return (
 		<InfiniteScroll
-			getScrollParent={ () => appContext.scrollParent.current }
+			getScrollParent={ () => stackContext.ref.current }
 			hasMore={ dataHasMore }
 			loadMore={ loadItems }
 			loader={ renderPlaceholderItems() }
