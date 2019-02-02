@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import classname from 'classnames'
-import { updatePlugin } from 'utils/rest-api'
+import { updatePlugin, updateTheme } from 'utils/rest-api'
 import { Button, ContentListItem, Icon } from 'components'
 import './style.scss'
 
@@ -18,6 +18,8 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 	} )
 
 	const updateClicked = () => {
+		const { type, plugin, theme } = props.data
+
 		if ( updating || updated || error ) {
 			return
 		}
@@ -26,21 +28,27 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 		setError( false )
 		setButtonText( 'Updating' )
 
-		updatePlugin( props.data.plugin, response => {
-			if ( response.success ) {
-				setUpdating( false )
-				setUpdated( true )
-				setButtonText( 'Updated!' )
-			} else if ( response.error ) {
-				setUpdating( false )
-				setError( true )
-				setButtonText( 'Error!' )
-				setTimeout( () => {
-					setError( false )
-					setButtonText( 'Update' )
-				}, 3000 )
-			}
-		} )
+		if ( 'plugin' === type ) {
+			updatePlugin( plugin, updateComplete )
+		} else {
+			updateTheme( theme, updateComplete )
+		}
+	}
+
+	const updateComplete = response => {
+		if ( response.success ) {
+			setUpdating( false )
+			setUpdated( true )
+			setButtonText( 'Updated!' )
+		} else if ( response.error ) {
+			setUpdating( false )
+			setError( true )
+			setButtonText( 'Error!' )
+			setTimeout( () => {
+				setError( false )
+				setButtonText( 'Update' )
+			}, 3000 )
+		}
 	}
 
 	return (

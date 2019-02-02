@@ -226,3 +226,19 @@ export const updatePlugin = ( plugin, complete ) => {
 		complete
 	} )
 }
+
+/**
+ * Updates a single theme.
+ *
+ * @param {String} theme
+ * @param {Function} complete
+ * @return {Object}
+ */
+export const updateTheme = ( theme, complete ) => {
+	const t = new Date().getTime()
+	return getRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/updates/update-theme', { theme, t } ),
+		cached: false,
+		complete
+	} )
+}

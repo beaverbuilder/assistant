@@ -31,6 +31,15 @@ final class FL_Assistant_REST_Updates {
 				),
 			)
 		);
+
+		register_rest_route(
+			FL_Assistant_REST::$namespace, '/updates/update-theme', array(
+				array(
+					'methods'  => WP_REST_Server::READABLE,
+					'callback' => __CLASS__ . '::update_theme',
+				),
+			)
+		);
 	}
 
 	/**
@@ -84,9 +93,12 @@ final class FL_Assistant_REST_Updates {
 
 		return array(
 			'author'    => strip_tags( $theme->Author ),
+			'meta'		=> $theme->Version . ' by ' . strip_tags( $theme->Author ),
+			'theme'		=> $update['theme'],
 			'thumbnail' => $theme->get_screenshot(),
 			'title'     => $theme->Name,
 			'type'		=> 'theme',
+			'version'	=> $theme->Version,
 		);
 	}
 
@@ -98,40 +110,36 @@ final class FL_Assistant_REST_Updates {
 	 * @return array
 	 */
 	static public function updates( $request ) {
-		$response = array();
+		$response 		= array();
+		$update_plugins = get_site_transient( 'update_plugins' );
+		$update_themes 	= get_site_transient( 'update_themes' );
 
-		if ( current_user_can( 'update_plugins' ) ) {
-			$update_plugins = get_site_transient( 'update_plugins' );
-			if ( ! empty( $update_plugins->response ) ) {
-				$plugins = array(
-					'label' => __( 'Plugins', 'fl-assistant' ),
-					'items' => [],
-				);
-				foreach ( $update_plugins->response as $key => $update ) {
-					$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
-					if ( $update->new_version == $plugin['Version'] ) {
-						continue;
-					}
+		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
+			$plugins = array(
+				'label' => __( 'Plugins', 'fl-assistant' ),
+				'items' => [],
+			);
+			foreach ( $update_plugins->response as $key => $update ) {
+				$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
+				if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
 					$plugins['items'][] = self::get_plugin_response_data( $update, $plugin );
 				}
-				$response[] = $plugins;
 			}
+			$response[] = $plugins;
 		}
 
-		if ( current_user_can( 'update_themes' ) ) {
-			$update_themes = get_site_transient( 'update_themes' );
-			if ( ! empty( $update_themes->response ) ) {
-				$themes = array(
-					'label' => __( 'Themes', 'fl-assistant' ),
-					'items' => [],
-				);
-				foreach ( $update_themes->response as $key => $update ) {
-					// TODO: Don't update if versions match.
-					$theme      	   = wp_get_theme( $key );
+		if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
+			$themes = array(
+				'label' => __( 'Themes', 'fl-assistant' ),
+				'items' => [],
+			);
+			foreach ( $update_themes->response as $key => $update ) {
+				$theme = wp_get_theme( $key );
+				if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
 					$themes['items'][] = self::get_theme_response_data( $update, $theme );
 				}
-				$response[] = $themes;
 			}
+			$response[] = $themes;
 		}
 
 		return rest_ensure_response( $response );
@@ -164,6 +172,35 @@ final class FL_Assistant_REST_Updates {
 		) ) );
 
 		$upgrader->upgrade( $plugin );
+	}
+
+	/**
+	 * Updates a single plugin.
+	 *
+	 * @since  0.1
+	 * @param object $request
+	 * @return array
+	 */
+	static public function update_theme( $request ) {
+		if ( ! current_user_can( 'update_themes' ) ) {
+			die();
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+		require_once ABSPATH . 'wp-admin/includes/class-theme-upgrader.php';
+		require_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-upgrader.php';
+
+		$theme = $request->get_param( 'theme' );
+
+		$upgrader = new Theme_Upgrader( new FL_Assistant_Upgrader( array(
+			'title'  => __( 'Update Theme', 'fl-assistant' ),
+			'nonce'  => 'upgrade-theme_' . $theme,
+			'url' 	 => 'update.php?action=upgrade-theme&theme=' . urlencode( $theme ),
+			'theme'  => $theme,
+		) ) );
+
+		$upgrader->upgrade( $theme );
 	}
 }
 
