@@ -24,12 +24,13 @@ export const MediaTab = () => {
 	)
 }
 
-const Item = ( { url, className, urls } ) => {
+const Item = ( { className, data } ) => {
+	const { url, urls } = data
 	const classes = classname( {
 		'fl-asst-grid-item': true,
 	}, className )
 	const styles = {
-		backgroundImage: urls ? `url(${urls.medium})` : ''
+		backgroundImage: `url(${urls.medium})`
 	}
 	return (
 		<li className={classes}>
