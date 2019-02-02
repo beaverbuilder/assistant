@@ -9,50 +9,54 @@ export const ContentListContainer = ( { className, children } ) => {
 	)
 }
 
-export const ContentListItem = ( {
-	url = null,
-	thumbnail = null,
-	title = '',
-	author = '',
-	date = '',
-	className = '',
-	itemThumb = true,
-	itemMeta = true,
-} ) => {
+export const ContentListGroupLabel = ( { label } ) => {
+	return (
+		<li className='fl-asst-list-group-heading'>
+			{ label }
+		</li>
+	)
+}
 
-	const view = () => url ? window.location.href = url : null
+export const ContentListItem = ( { className, data, onClick, children } ) => {
+	const { meta, thumbnail, title, url } = data
+
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
 	}
 
+	const view = () => {
+		if ( onClick ) {
+			onClick( data )
+		} else if ( url ) {
+			window.location.href = url
+		}
+	}
+
 	return (
-		<li className={ classname( className, 'fl-asst-list-item' ) }>
-			{ itemThumb &&
-				<div className="fl-asst-list-item-visual" onClick={ view }>
-					<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
-				</div>
-			}
-			<div className="fl-asst-list-item-content" onClick={ view }>
-				<div className="fl-asst-list-item-title">{ title }</div>
-				{ itemMeta && ( author || date ) &&
-					<div className="fl-asst-list-item-meta">
-						{ author && <span>By { author }</span> }
-						{ author && date && <span> - </span> }
-						{ date && <span>{ date }</span> }
-					</div>
-				}
+		<li className={ classname( className, 'fl-asst-list-item' ) } onClick={ view }>
+			<div className="fl-asst-list-item-visual">
+				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
+			<div className="fl-asst-list-item-content">
+				<div className="fl-asst-list-item-title">{ title }</div>
+				<div className="fl-asst-list-item-meta">
+					{ meta }
+				</div>
+			</div>
+			{ children }
 		</li>
 	)
 }
 
 export const ContentListItemLoading = ( { className } ) => {
+	const data = {
+		meta: 'Loading...',
+		title: 'Loading...',
+	}
 	return (
 		<ContentListItem
 			className={ classname( className, 'fl-asst-list-item-loading' ) }
-			itemActions={ false }
-			author='Loading...'
-			title='Loading...'
+			data={ data }
 		/>
 	)
 }

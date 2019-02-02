@@ -41,10 +41,13 @@ final class FL_Assistant_REST_Comments {
 	 * @return array
 	 */
 	static public function get_comment_response_data( $comment ) {
+		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		return array(
 			'author'    => $comment->comment_author,
-			'date'      => $comment->comment_date,
+			'date'      => $date,
 			'edit_url'  => get_edit_comment_link( $comment ),
+			'id'        => $comment->comment_ID,
+			'meta'      => $comment->comment_author . ' - ' . $date,
 			'thumbnail' => get_avatar_url( $comment->comment_author_email ),
 			'title'     => $comment->comment_content,
 			'url'       => get_comment_link( $comment ),
@@ -61,8 +64,8 @@ final class FL_Assistant_REST_Comments {
 	static public function comments( $request ) {
 		$response   = array();
 		$params     = $request->get_params();
-		$post_types = array( 'post_type' => array_keys( get_post_types() ) );
-		$comments   = get_comments( array_merge( $post_types, $params ) );
+		$post_types = array_keys( get_post_types() );
+		$comments   = get_comments( array_merge( array( 'post_type' => $post_types ), $params ) );
 
 		foreach ( $comments as $comment ) {
 			$response[] = self::get_comment_response_data( $comment );

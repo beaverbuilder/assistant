@@ -25,10 +25,15 @@ const requests = []
  * @param {Object}
  * @return {Object}
  */
-export const getRequest = ( { route, complete = () => {} } ) => {
-	const promise = getCachedRequest( route, complete )
+export const getRequest = ( {
+	route,
+	cached = true,
+	cacheKey = 'cache',
+	complete = () => {} }
+) => {
+	const promise = getCachedRequest( cacheKey, route, complete )
 
-	if ( promise.cached ) {
+	if ( cached && promise.cached ) {
 		return promise
 	}
 
@@ -38,7 +43,7 @@ export const getRequest = ( { route, complete = () => {} } ) => {
 			route,
 			method: 'GET',
 			complete: data => {
-				setCache( route, data )
+				cached && setCache( cacheKey, route, data )
 				requests[ route ].map( promise =>
 					! promise.cancelled && promise.resolve( data )
 				)
@@ -56,11 +61,12 @@ export const getRequest = ( { route, complete = () => {} } ) => {
  * Returns a promise that resolves if cached.
  *
  * @param {String}
+ * @param {String}
  * @param {Function}
  * @return {Object|Boolean}
  */
-export const getCachedRequest = ( route, complete = () => {} ) => {
-	const cache = getCache( route )
+export const getCachedRequest = ( key, route, complete = () => {} ) => {
+	const cache = getCache( key, route )
 	const promise = {
 		cancel: () => promise.cancelled = true,
 		resolve: data => complete( data ),
@@ -129,11 +135,12 @@ export const request = ( { method, route, body, complete = () => {} } ) => {
 /**
  * Returns a cached response from local storage.
  *
- * @param {String} route
+ * @param {String}
+ * @param {String}
  * @return {Object}
  */
-export const getCache = ( route ) => {
-	const item = localStorage.getItem( `fl-request-${ md5( route ) }` )
+export const getCache = ( key, route ) => {
+	const item = localStorage.getItem( `fl-request-${ key }-${ md5( route ) }` )
 
 	if ( item ) {
 		const parsed = JSON.parse( item )
@@ -149,23 +156,40 @@ export const getCache = ( route ) => {
 /**
  * Saves a cached response to local storage.
  *
- * @param {String} route
+ * @param {String}
+ * @param {String}
+ * @param {Function|Null}
  */
-export const setCache = ( route, response ) => {
+export const setCache = ( key, route, response ) => {
 	const item = JSON.stringify( {
 		expires: new Date().getTime(),
 		data: response,
 		route,
 	} )
 
-	localStorage.setItem( `fl-request-${ md5( route ) }`, item )
+	localStorage.setItem( `fl-request-${ key }-${ md5( route ) }`, item )
+}
+
+/**
+ * Clears the cache for the passed type.
+ *
+ * @param {String}
+ */
+export const clearCache = ( type = 'cache' ) => {
+	const keys = Object.keys( localStorage )
+
+	keys.map( key => {
+		if ( -1 < key.indexOf( `fl-request-${ type }` ) ) {
+			localStorage.removeItem( key )
+		}
+	} )
 }
 
 /**
  * Adds query args to a route.
  *
- * @param {String} route
- * @param {Object} args
+ * @param {String}
+ * @param {Object}
  * @return {Object}
  */
 export const addQueryArgs = ( route, args ) => {

@@ -1,10 +1,13 @@
 import React, { Fragment } from 'react'
-import { TagGroupControl, ScreenHeader, ContentQuery } from 'components'
+import { TagGroupControl, ScreenHeader, ContentQuery, ContentListItem } from 'components'
 import { useAppState } from 'store'
+import { UpdatesListItem } from './updates/list-item'
 import { notificationQuery } from './queries'
+import { CommentDetailView } from './comments'
 
 export const NotificationsTab = () => {
 	const [ type, setType ] = useAppState( 'type', 'comments' )
+	const [ item, setItem ] = useAppState( 'item', null )
 
 	const tags = [
 		{
@@ -19,6 +22,12 @@ export const NotificationsTab = () => {
 
 	return (
 		<Fragment>
+			{ 'comments' === type && item &&
+				<CommentDetailView
+					data={ item }
+					onClose={ () => setItem( null ) }
+				/>
+			}
 			<ScreenHeader>
 				<TagGroupControl
 					tags={ tags }
@@ -30,8 +39,9 @@ export const NotificationsTab = () => {
 			<ContentQuery
 				type={ type }
 				query={ notificationQuery() }
-				showActions={ false }
 				pagination={ true }
+				item={ 'comments' === type ? <ContentListItem /> : <UpdatesListItem /> }
+				itemClick={ 'comments' === type ? data => setItem( data ) : null }
 			/>
 		</Fragment>
 	)
