@@ -29,7 +29,7 @@ const Item = ( { url, className, urls } ) => {
 		'fl-asst-grid-item': true,
 	}, className )
 	const styles = {
-		backgroundImage: `url(${urls.medium})`
+		backgroundImage: urls ? `url(${urls.medium})` : ''
 	}
 	return (
 		<li className={classes}>
