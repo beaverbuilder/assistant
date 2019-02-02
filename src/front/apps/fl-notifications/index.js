@@ -40,11 +40,8 @@ export const NotificationsTab = () => {
 				type={ type }
 				query={ notificationQuery() }
 				pagination={ true }
-<<<<<<< HEAD
 				item={ 'updates' === type ? <UpdatesListItem /> : <ContentListItem /> }
-=======
 				itemClick={ data => setItem( data ) }
->>>>>>> comments
 			/>
 		</Fragment>
 	)
