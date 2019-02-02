@@ -1,13 +1,33 @@
-import React, { Fragment } from 'react'
-import { TagGroupControl, ScreenHeader, ContentQuery, ContentListItem } from 'components'
+import React, { Fragment, useContext, useEffect } from 'react'
 import { useAppState } from 'store'
-import { UpdatesListItem } from './updates/list-item'
 import { notificationQuery } from './queries'
 import { CommentDetailView } from './comments'
+import { UpdatesListItem } from './updates'
+import {
+	ContentListItem,
+	ContentQuery,
+	ScreenHeader,
+	StackContext,
+	TagGroupControl
+} from 'components'
 
 export const NotificationsTab = () => {
 	const [ type, setType ] = useAppState( 'type', 'comments' )
 	const [ item, setItem ] = useAppState( 'item', null )
+	const { pushView, popView } = useContext( StackContext )
+
+	useEffect( () => {
+		if ( item ) {
+			pushView(
+				<CommentDetailView
+					data={ item }
+					onClose={ () => setItem( null ) }
+				/>
+			)
+		} else {
+			popView()
+		}
+	}, [ item ] )
 
 	const tags = [
 		{
@@ -22,12 +42,6 @@ export const NotificationsTab = () => {
 
 	return (
 		<Fragment>
-			{ 'comments' === type && item &&
-				<CommentDetailView
-					data={ item }
-					onClose={ () => setItem( null ) }
-				/>
-			}
 			<ScreenHeader>
 				<TagGroupControl
 					tags={ tags }

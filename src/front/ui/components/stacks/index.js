@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
 import { StackContext } from 'components'
@@ -119,7 +119,7 @@ export const Stack = ( { children, className } ) => {
 					isRootView: 0 === i,
 					isCurrentView: 'present' === view.pose ? true : false,
 				}
-				const ref = useRef( null )
+				const ref = createRef()
 				const context = Object.assign( { ref }, api, checks )
 				view.className = 'fl-asst-stack-view'
 				return (
