@@ -15,7 +15,7 @@ import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
 
 const DetailView = () => {
-	const { popView, pushView } = useContext( StackContext )
+	const { pushView } = useContext( StackContext )
 	return (
 		<Fragment>
 			<ScreenHeader title="Detail View 1" />
@@ -28,7 +28,7 @@ const DetailView = () => {
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
 	const { togglePanelPosition } = useContext( UIContext )
-	const { pushView, popView } = useContext( StackContext )
+	const { pushView } = useContext( StackContext )
 
 	// @TODO: Rename dashboardApp and move into app state
 	const { adminActions } = dashboardApp
@@ -52,7 +52,6 @@ export const DashboardTab = () => {
 
 				<Button onClick={ () => pushView( <DetailView />, { shouldAnimate: false } )}>Push Detail View</Button>
 			</Widget>
-			<Separator />
 		</Fragment>
 	)
 }

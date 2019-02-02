@@ -1,11 +1,13 @@
 .fl-asst-stack {
     flex: 1 1 auto;
-    position: relative;
     display: flex;
     flex-direction: column;
+    position: relative;
+    min-height: 300px;
 
     .fl-asst-stack-view {
         flex: 1 1 auto;
         overflow: auto;
+        overscroll-behavior: contain;
     }
 }

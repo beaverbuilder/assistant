@@ -4,7 +4,7 @@ import posed from 'react-pose'
 import { StackContext } from 'components'
 import './style.scss'
 
-const handleTransition = props => {
+const handleTransition = () => {
 	return {
 		type: 'spring',
 		stiffness: 300,
@@ -15,18 +15,20 @@ const handleTransition = props => {
 export const StackView = posed.div( props => {
 	const { shouldAnimate } = props
 
-	if ( false === shouldAnimate ) return {
-		init: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			right: 0,
-			bottom: 0,
-			backgroundColor: 'var(--fl-background-color)'
-		},
-		past: {},
-		present: {},
-		future: {},
+	if ( false === shouldAnimate ) {
+		return {
+			init: {
+				position: 'absolute',
+				top: 0,
+				left: 0,
+				right: 0,
+				bottom: 0,
+				backgroundColor: 'var(--fl-background-color)'
+			},
+			past: {},
+			present: {},
+			future: {},
+		}
 	}
 
 	return {
@@ -98,6 +100,7 @@ export const Stack = ( { children, className } ) => {
 			setViews( newViews )
 		}
 		if ( action && 'root' === action && 'future' === name ) {
+
 			// Drop the last 'future' item.
 			views.pop()
 			setViews( views )
@@ -156,13 +159,13 @@ export const Stack = ( { children, className } ) => {
 	return (
 		<div className={classes}>
 			{ views.map( ( view, i ) => {
-				const { key, pose, config } = view
+				const { key, pose } = view
 				const checks = {
 					isRootView: 0 === i,
 					isCurrentView: 'present' === pose ? true : false,
 				}
 				const context = Object.assign( {}, api, checks )
-				const props = Object.assign({}, view )
+				const props = Object.assign( {}, view )
 				view.className = 'fl-asst-stack-view'
 
 				return (

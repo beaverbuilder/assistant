@@ -5,11 +5,11 @@ import { Button, AppTabButton, Icon, AppContext, StackContext } from 'components
 import { NotificationsIcon } from 'apps/fl-notifications'
 import './style.scss'
 
-const transition = () => ({
+const transition = () => ( {
 	type: 'spring',
 	damping: 30,
 	stiffness: 200,
-})
+} )
 
 const PanelBox = posed.div( {
 	init: {
@@ -119,10 +119,10 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const tab = useContext( AppContext )
 	const { isRootView, popView } = useContext( StackContext )
 	const screenTitle = title ? title : tab.label
-	const titleClasses = classname({
+	const titleClasses = classname( {
 		'fl-asst-screen-title': true,
-		'has-back-button' : ! isRootView
-	})
+		'has-back-button': ! isRootView
+	} )
 	return (
 		<div className="fl-asst-screen-header">
 			{ false !== showTitle && <div className={titleClasses}>
