@@ -48,11 +48,22 @@ const DetailView2 = () => {
 	return (
 		<Fragment>
 			<ScreenHeader title="Detail View 2" />
+
+			<StackTestingSheet />
+
+			<h2>Long Content</h2>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
+			<p>Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum. Donec sed odio dui.</p>
 			<Button onClick={popView}>Pop View</Button>
 			<Button onClick={popToRoot}>Pop To Root</Button>
-
-			<Separator />
-			<StackTestingSheet />
 		</Fragment>
 	)
 }

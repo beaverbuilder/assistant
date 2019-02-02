@@ -1,6 +1,11 @@
-.fl-asst-view-stack {
+.fl-asst-stack {
     flex: 1 1 auto;
     position: relative;
     display: flex;
     flex-direction: column;
+
+    .fl-asst-stack-view {
+        flex: 1 1 auto;
+        overflow: auto;
+    }
 }

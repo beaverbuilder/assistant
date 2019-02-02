@@ -120,6 +120,7 @@ export const Stack = ( { children, className } ) => {
 					isCurrentView: 'present' === view.pose ? true : false,
 				}
 				const context = Object.assign( {}, api, checks )
+				view.className = 'fl-asst-stack-view'
 				return (
 					<StackContext.Provider key={i} value={context}>
 						<StackView key={view.key} {...view} />
