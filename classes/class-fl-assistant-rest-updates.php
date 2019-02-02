@@ -22,6 +22,15 @@ final class FL_Assistant_REST_Updates {
 				),
 			)
 		);
+
+		register_rest_route(
+			FL_Assistant_REST::$namespace, '/updates/update-plugin', array(
+				array(
+					'methods'  => WP_REST_Server::READABLE,
+					'callback' => __CLASS__ . '::update_plugin',
+				),
+			)
+		);
 	}
 
 	/**
@@ -84,11 +93,9 @@ final class FL_Assistant_REST_Updates {
 	 * @return array
 	 */
 	static public function updates( $request ) {
-		$response 			 = array();
-		$can_update_plugins  = current_user_can( 'update_plugins' );
-		$can_update_themes   = current_user_can( 'update_themes' );
+		$response = array();
 
-		if ( $can_update_plugins ) {
+		if ( current_user_can( 'update_plugins' ) ) {
 			$update_plugins = get_site_transient( 'update_plugins' );
 			if ( ! empty( $update_plugins->response ) ) {
 				$plugins = array(
@@ -103,7 +110,7 @@ final class FL_Assistant_REST_Updates {
 			}
 		}
 
-		if ( $can_update_themes ) {
+		if ( current_user_can( 'update_themes' ) ) {
 			$update_themes = get_site_transient( 'update_themes' );
 			if ( ! empty( $update_themes->response ) ) {
 				$themes = array(
@@ -119,6 +126,35 @@ final class FL_Assistant_REST_Updates {
 		}
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Updates a single plugin.
+	 *
+	 * @since  0.1
+	 * @param object $request
+	 * @return array
+	 */
+	static public function update_plugin( $request ) {
+		if ( ! current_user_can( 'update_plugins' ) ) {
+			die();
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+		require_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
+		require_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-upgrader.php';
+
+		$plugin = $request->get_param( 'plugin' );
+
+		$upgrader = new Plugin_Upgrader( new FL_Assistant_Upgrader( array(
+			'title'  => __( 'Update Plugin', 'fl-assistant' ),
+			'nonce'  => 'upgrade-plugin_' . $plugin,
+			'url' 	 => 'update.php?action=upgrade-plugin&plugin=' . urlencode( $plugin ),
+			'plugin' => $plugin,
+		) ) );
+
+		$upgrader->upgrade( $plugin );
 	}
 }
 
