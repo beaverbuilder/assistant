@@ -18,9 +18,7 @@ export const ContentList = ( {
 	groupLabel = <ContentListGroupLabel />,
 	item = <ContentListItem />,
 	itemClass = '',
-	itemThumb = true,
-	itemMeta = true,
-	itemActions = true,
+	itemClick = null,
 	placeholderItem = <ContentListItemLoading />,
 	placeholderItemCount = 10
 } ) => {
@@ -35,10 +33,9 @@ export const ContentList = ( {
 	const renderItem = ( props, key ) => {
 		return cloneElement( item, {
 			className: itemClass,
+			onClick: itemClick,
+			data: props,
 			key,
-			itemThumb,
-			itemMeta,
-			...props,
 		} )
 	}
 

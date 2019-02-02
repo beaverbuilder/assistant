@@ -17,35 +17,31 @@ export const ContentListGroupLabel = ( { label } ) => {
 	)
 }
 
-export const ContentListItem = ( {
-	url = null,
-	thumbnail = null,
-	title = '',
-	author = '',
-	date = '',
-	className = '',
-	itemThumb = true,
-	itemMeta = true,
-	children,
-} ) => {
+export const ContentListItem = ( { className, data, onClick, children } ) => {
+	const { author, date, thumbnail, title, url } = data
 
-	const view = () => url ? window.location.href = url : null
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
 	}
 
+	const view = () => {
+		if ( onClick ) {
+			onClick( data )
+		} else if ( url ) {
+			window.location.href = url
+		}
+	}
+
 	return (
-		<li className={ classname( className, 'fl-asst-list-item' ) }>
-			{ itemThumb &&
-				<div className="fl-asst-list-item-visual" onClick={ view }>
-					<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
-				</div>
-			}
-			<div className="fl-asst-list-item-content" onClick={ view }>
+		<li className={ classname( className, 'fl-asst-list-item' ) } onClick={ view }>
+			<div className="fl-asst-list-item-visual">
+				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
+			</div>
+			<div className="fl-asst-list-item-content">
 				<div className="fl-asst-list-item-title">{ title }</div>
-				{ itemMeta && ( author || date ) &&
+				{ ( author || date ) &&
 					<div className="fl-asst-list-item-meta">
-						{ author && <span>By { author }</span> }
+						{ author && <span>{ author }</span> }
 						{ author && date && <span> - </span> }
 						{ date && <span>{ date }</span> }
 					</div>
@@ -57,12 +53,14 @@ export const ContentListItem = ( {
 }
 
 export const ContentListItemLoading = ( { className } ) => {
+	const data = {
+		author: 'Loading...',
+		title: 'Loading...',
+	}
 	return (
 		<ContentListItem
 			className={ classname( className, 'fl-asst-list-item-loading' ) }
-			itemActions={ false }
-			author='Loading...'
-			title='Loading...'
+			data={ data }
 		/>
 	)
 }
