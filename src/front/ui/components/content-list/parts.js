@@ -26,6 +26,7 @@ export const ContentListItem = ( {
 	className = '',
 	itemThumb = true,
 	itemMeta = true,
+	children,
 } ) => {
 
 	const view = () => url ? window.location.href = url : null
@@ -50,6 +51,7 @@ export const ContentListItem = ( {
 					</div>
 				}
 			</div>
+			{ children }
 		</li>
 	)
 }

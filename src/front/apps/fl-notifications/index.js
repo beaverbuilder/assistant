@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
-import { TagGroupControl, ScreenHeader, ContentQuery } from 'components'
+import { TagGroupControl, ScreenHeader, ContentQuery, ContentListItem } from 'components'
 import { useAppState } from 'store'
+import { UpdatesListItem } from './updates/list-item'
 import { notificationQuery } from './queries'
 
 export const NotificationsTab = () => {
@@ -32,6 +33,7 @@ export const NotificationsTab = () => {
 				query={ notificationQuery() }
 				showActions={ false }
 				pagination={ true }
+				item={ 'updates' === type ? <UpdatesListItem /> : <ContentListItem /> }
 			/>
 		</Fragment>
 	)

@@ -1,0 +1,9 @@
+.fl-asst-update-button {
+	display: none;
+	position: absolute;
+	right: 25px;
+}
+
+.fl-asst-update-item:hover .fl-asst-update-button {
+	display: block;
+}

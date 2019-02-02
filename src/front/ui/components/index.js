@@ -30,7 +30,12 @@ export {
 	StackContext,
 } from './contexts'
 
-export { ContentList, ContentQuery } from './content-list'
+export {
+	ContentList,
+	ContentQuery,
+	ContentListItem
+} from './content-list'
+
 export { Widget } from './widgets'
 export { Stack } from './stacks'
 export { Tab } from './tabs'
