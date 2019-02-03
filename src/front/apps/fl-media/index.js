@@ -33,11 +33,11 @@ const Item = ( { className, data } ) => {
 		backgroundImage: `url(${urls.medium})`
 	}
 	return (
-		<li className={classes}>
+		<div className={classes}>
 			<a className="fl-asst-grid-item-anchor" href={url}>
 				<AspectBox style={styles} />
 			</a>
-		</li>
+		</div>
 	)
 }
 

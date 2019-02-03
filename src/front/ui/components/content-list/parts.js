@@ -3,17 +3,17 @@ import classname from 'classnames'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
-		<ul className={ classname( className, 'fl-asst-list' ) }>
+		<div className={ classname( className, 'fl-asst-list' ) }>
 			{ children }
-		</ul>
+		</div>
 	)
 }
 
 export const ContentListGroupLabel = ( { label } ) => {
 	return (
-		<li className='fl-asst-list-group-heading'>
+		<div className='fl-asst-list-group-heading'>
 			{ label }
-		</li>
+		</div>
 	)
 }
 
@@ -33,7 +33,7 @@ export const ContentListItem = ( { className, data, onClick, children } ) => {
 	}
 
 	return (
-		<li className={ classname( className, 'fl-asst-list-item' ) } onClick={ view }>
+		<div className={ classname( className, 'fl-asst-list-item' ) } onClick={ view }>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
@@ -44,7 +44,7 @@ export const ContentListItem = ( { className, data, onClick, children } ) => {
 				</div>
 			</div>
 			{ children }
-		</li>
+		</div>
 	)
 }
 
