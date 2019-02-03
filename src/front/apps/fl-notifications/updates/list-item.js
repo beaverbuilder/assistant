@@ -26,7 +26,8 @@ export const UpdatesListItem = ( { className, removeItem, updateItem, ...props }
 		setError( false )
 		setButtonText( 'Updating' )
 
-		updateComplete( { success: true } )
+		// Fake updating for now until server side issues are fixed.
+		setTimeout( () => updateComplete( { success: true } ), 3000 )
 
 		// if ( 'plugin' === type ) {
 		// 	setPromise( updatePlugin( plugin, updateComplete ) )
