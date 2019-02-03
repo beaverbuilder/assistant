@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import classname from 'classnames'
-import { updatePlugin, updateTheme } from 'utils/rest-api'
+
+//import { updatePlugin, updateTheme } from 'utils/rest-api'
 import { Button, ContentListItem, Icon } from 'components'
 import './style.scss'
 
-export const UpdatesListItem = ( { className, ...props } ) => {
+export const UpdatesListItem = ( { className, removeItem, ...props } ) => {
 	const [ updating, setUpdating ] = useState( false )
 	const [ updated, setUpdated ] = useState( false )
 	const [ error, setError ] = useState( false )
-	const [ promise, setPromise ] = useState( null )
+
+	//const [ promise, setPromise ] = useState( null )
 	const [ buttonText, setButtonText ] = useState( 'Update' )
 
 	useEffect( () => {
-		return () => promise && promise.cancel()
+
+		//return () => promise && promise.cancel()
 	} )
 
 	const updateClicked = () => {
-		const { type, plugin, theme } = props.data
+
+		//const { type, plugin, theme } = props.data
 
 		if ( updating || updated || error ) {
 			return
@@ -26,11 +30,14 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 		setError( false )
 		setButtonText( 'Updating' )
 
-		if ( 'plugin' === type ) {
-			setPromise( updatePlugin( plugin, updateComplete ) )
-		} else {
-			setPromise( updateTheme( theme, updateComplete ) )
-		}
+		// Fake updating for now until server side issues are fixed.
+		setTimeout( () => updateComplete( { success: true } ), 3000 )
+
+		// if ( 'plugin' === type ) {
+		// 	setPromise( updatePlugin( plugin, updateComplete ) )
+		// } else {
+		// 	setPromise( updateTheme( theme, updateComplete ) )
+		// }
 	}
 
 	const updateComplete = response => {
@@ -38,6 +45,11 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 			setUpdating( false )
 			setUpdated( true )
 			setButtonText( 'Updated!' )
+			setTimeout( () => {
+				setUpdated( false )
+				setButtonText( 'Update' )
+				removeItem()
+			}, 3000 )
 		} else if ( response.error ) {
 			setUpdating( false )
 			setError( true )

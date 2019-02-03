@@ -1,3 +1,4 @@
 export { ContentList } from './list'
-export { ContentQuery } from './query'
+export { ContentListContainer } from './parts'
 export { ContentListItem } from './parts'
+export { ContentQuery } from './query'

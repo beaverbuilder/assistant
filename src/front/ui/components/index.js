@@ -32,8 +32,9 @@ export {
 
 export {
 	ContentList,
+	ContentListContainer,
+	ContentListItem,
 	ContentQuery,
-	ContentListItem
 } from './content-list'
 
 export { Widget } from './widgets'

@@ -28,6 +28,7 @@ export const ContentQuery = ( {
 			data={ results }
 			dataHasMore={ hasMore }
 			dataLoader={ dataLoader }
+			dataSetter={ setResults }
 			{ ...props }
 		/>
 	)

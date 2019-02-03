@@ -1,5 +1,10 @@
-import { addQueryArgs, getRequest, postRequest } from 'utils/request'
 import store from 'store'
+import {
+	addQueryArgs,
+	clearCache,
+	getRequest,
+	postRequest
+} from 'utils/request'
 
 /**
  * Returns any array of content for the given type
@@ -35,23 +40,17 @@ export const getContent = ( type, args, complete ) => {
  * @return {Object}
  */
 export const getPagedContent = ( type, args, offset, complete ) => {
-	let paged = Object.assign( {}, args )
+	let paged = Object.assign( { offset }, args )
 	let perPage = 20
 
 	switch ( type ) {
 	case 'posts':
-		paged.offset = offset
 		paged.posts_per_page = paged.posts_per_page ? paged.posts_per_page : perPage
 		perPage = paged.posts_per_page
 		break
-	case 'terms':
-	case 'comments':
-	case 'users':
-		paged.offset = offset
+	default:
 		paged.number = paged.number ? paged.number : perPage
 		perPage = paged.number
-		break
-	case 'updates':
 		break
 	}
 
@@ -220,6 +219,7 @@ export const getUpdates = ( complete ) => {
  */
 export const updatePlugin = ( plugin, complete ) => {
 	const t = new Date().getTime()
+	clearCache( 'updates' )
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/updates/update-plugin', { plugin, t } ),
 		cached: false,
@@ -236,6 +236,7 @@ export const updatePlugin = ( plugin, complete ) => {
  */
 export const updateTheme = ( theme, complete ) => {
 	const t = new Date().getTime()
+	clearCache( 'updates' )
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/updates/update-theme', { theme, t } ),
 		cached: false,

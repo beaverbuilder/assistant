@@ -6,6 +6,7 @@ import { UpdatesListItem } from './updates'
 import {
 	ContentListItem,
 	ContentQuery,
+	EmptyMessage,
 	ScreenHeader,
 	StackContext,
 	TagGroupControl
@@ -47,11 +48,26 @@ export const NotificationsTab = () => {
 				type={ type }
 				query={ notificationQuery() }
 				pagination={ true }
-				item={ 'comments' === type ? <ContentListItem /> : <UpdatesListItem /> }
-				itemClick={ 'comments' === type ? data => setItem( data ) : null }
+				item={ <NotificationsTabListItem type={ type } setItem={ setItem } /> }
+				emptyMessage={ <NotificationsTabEmptyMessage /> }
 			/>
 		</Fragment>
 	)
+}
+
+export const NotificationsTabListItem = ( { type, setItem, ...props } ) => {
+	switch ( type ) {
+	case 'comments':
+		return <ContentListItem onClick={ data => setItem( data ) } { ...props } />
+	case 'updates':
+		return <UpdatesListItem { ...props } />
+	default:
+		return null
+	}
+}
+
+export const NotificationsTabEmptyMessage = () => {
+	return <EmptyMessage>You're all up to date!</EmptyMessage>
 }
 
 export const NotificationsIcon = () => {
