@@ -47,11 +47,23 @@ export const NotificationsTab = () => {
 				type={ type }
 				query={ notificationQuery() }
 				pagination={ true }
-				item={ 'comments' === type ? <ContentListItem /> : <UpdatesListItem /> }
-				itemClick={ 'comments' === type ? data => setItem( data ) : null }
+				item={ <NotificationsTabListItem type={ type } setItem={ setItem } /> }
 			/>
 		</Fragment>
 	)
+}
+
+export const NotificationsTabListItem = ( { type, setItem, ...props } ) => {
+	switch ( type ) {
+	case 'comments':
+		return <ContentListItem onClick={ data => setItem( data ) } { ...props } />
+		break
+	case 'updates':
+		return <UpdatesListItem { ...props } />
+		break
+	default:
+		return null
+	}
 }
 
 export const NotificationsIcon = () => {

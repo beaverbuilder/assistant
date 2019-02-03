@@ -11,64 +11,124 @@ import './style.scss'
 
 export const ContentList = ( {
 	data = [],
-	dataLoader = () => {},
 	dataHasMore = false,
+	dataLoader = () => {},
+	dataSetter = () => {},
 	container = <ContentListContainer />,
-	containerClass = '',
-	groupLabel = <ContentListGroupLabel />,
+	group = <ContentListGroupLabel />,
 	item = <ContentListItem />,
-	itemClass = '',
-	itemClick = null,
 	placeholderItem = <ContentListItemLoading />,
 	placeholderItemCount = 10
 } ) => {
 	const [ requests ] = useState( [] )
 	const stackContext = useContext( StackContext )
 
-	const loadItems = () => {
-		requests.length && requests.pop().cancel()
+	/**
+	 * Cancels an existing request and runs the data loader.
+	 * Passed to the InfiniteScroll component.
+	 */
+	const loadItems = ( offset ) => {
+		if ( requests.length ) {
+			requests.pop().cancel()
+		}
 		requests.push( dataLoader( data.length ) )
 	}
 
-	const renderItem = ( props, key ) => {
+	/**
+	 * Checks an array to see if it has any valid items.
+	 */
+	const hasItems = ( items ) => {
+		let itemsFound = false
+		items.map( ( itemData ) => {
+			if ( itemData && itemData.items ) {
+				itemData.items.map( ( groupItem ) => {
+					if ( groupItem ) {
+						itemsFound = true
+					}
+				} )
+			} else if ( itemData ) {
+				itemsFound = true
+			}
+		} )
+		return itemsFound
+	}
+
+	/**
+	 * Updates an item with new data.
+	 */
+	const updateItem = ( itemKey, groupKey, newData ) => {
+		const itemData = isNaN( groupKey ) ? data[ itemKey ] : data[ groupKey ].items[ itemKey ]
+		if ( isNaN( groupKey ) ) {
+			data[ itemKey ] = { ...itemData, ...newData }
+		} else {
+			data[ groupKey ].items[ itemKey ] = { ...itemData, ...newData }
+		}
+		dataSetter( data )
+	}
+
+	/**
+	 * Removes an item by setting it to null to preserve keys.
+	 */
+	const removeItem = ( itemKey, groupKey ) => {
+		if ( isNaN( groupKey ) ) {
+			data[ itemKey ] = null
+		} else {
+			data[ groupKey ].items[ itemKey ] = null
+		}
+		dataSetter( data )
+	}
+
+	/**
+	 * Renders a single item.
+	 */
+	const renderItem = ( itemData, itemKey, groupKey = null ) => {
 		return cloneElement( item, {
-			className: itemClass,
-			onClick: itemClick,
-			data: props,
-			key,
+			data: itemData,
+			key: itemKey,
+			removeItem: () => removeItem( itemKey, groupKey ),
+			updateItem: newData => updateItem( itemKey, groupKey, newData ),
 		} )
 	}
 
-	const renderItems = ( items ) => {
-		return items.map( ( props, key ) => {
-			if ( props.items && props.items.length ) {
+	/**
+	 * Renders all items in an array.
+	 */
+	const renderItems = ( items, groupKey = null ) => {
+		return items.map( ( itemData, itemKey ) => {
+			if ( itemData && itemData.items && hasItems( itemData.items ) ) {
 				return (
-					<Fragment key={ key }>
-						{ cloneElement( groupLabel, { label: props.label } ) }
-						{ renderItems( props.items ) }
+					<Fragment key={ itemKey }>
+						{ cloneElement( group, { label: itemData.label } ) }
+						{ renderItems( itemData.items, itemKey ) }
 					</Fragment>
 				)
-			} else if ( ! props.items ) {
-				return renderItem( props, key )
+			} else if ( itemData && ! itemData.items ) {
+				return renderItem( itemData, itemKey, groupKey )
 			}
 			return null
 		} )
 	}
 
+	/**
+	 * Renders the placeholder items for loading.
+	 */
 	const renderPlaceholderItems = () => {
 		const count = data.length ? 1 : placeholderItemCount
 		return Array( count ).fill().map( ( item, key ) => {
-			return cloneElement( placeholderItem, {
-				className: itemClass,
-				key,
-			} )
+			return cloneElement( placeholderItem, { key } )
 		} )
 	}
 
-	if ( ! data.length && ! dataHasMore ) {
+	/**
+	 * Nothing found! Show an empty message...
+	 */
+	if ( ! hasItems( data ) && ! dataHasMore ) {
 		return <EmptyMessage>No Results Found</EmptyMessage>
 	}
 
+	/**
+	 * Render the InfiniteScroll component and child items.
+	 */
 	return (
 		<InfiniteScroll
 			getScrollParent={ () => stackContext.ref.current }
@@ -78,7 +138,7 @@ export const ContentList = ( {
 			threshold={ 500 }
 			useWindow={ false }
 		>
-			{ cloneElement( container, { className: containerClass }, renderItems( data ) ) }
+			{ cloneElement( container, {}, renderItems( data ) ) }
 		</InfiniteScroll>
 	)
 }

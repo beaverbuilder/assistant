@@ -1,3 +1,4 @@
+import './console'
 import './rest-api'
 import './request'
 

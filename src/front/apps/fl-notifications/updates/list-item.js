@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import classname from 'classnames'
 import { updatePlugin, updateTheme } from 'utils/rest-api'
 import { Button, ContentListItem, Icon } from 'components'
 import './style.scss'
 
-export const UpdatesListItem = ( { className, ...props } ) => {
+export const UpdatesListItem = ( { className, removeItem, updateItem, ...props } ) => {
 	const [ updating, setUpdating ] = useState( false )
 	const [ updated, setUpdated ] = useState( false )
 	const [ error, setError ] = useState( false )
@@ -26,11 +26,13 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 		setError( false )
 		setButtonText( 'Updating' )
 
-		if ( 'plugin' === type ) {
-			setPromise( updatePlugin( plugin, updateComplete ) )
-		} else {
-			setPromise( updateTheme( theme, updateComplete ) )
-		}
+		updateComplete( { success: true } )
+
+		// if ( 'plugin' === type ) {
+		// 	setPromise( updatePlugin( plugin, updateComplete ) )
+		// } else {
+		// 	setPromise( updateTheme( theme, updateComplete ) )
+		// }
 	}
 
 	const updateComplete = response => {
@@ -38,6 +40,11 @@ export const UpdatesListItem = ( { className, ...props } ) => {
 			setUpdating( false )
 			setUpdated( true )
 			setButtonText( 'Updated!' )
+			setTimeout( () => {
+				setUpdated( false )
+				setButtonText( 'Update' )
+				removeItem()
+			}, 3000 )
 		} else if ( response.error ) {
 			setUpdating( false )
 			setError( true )
