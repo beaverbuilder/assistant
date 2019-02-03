@@ -2,10 +2,11 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { useAppState } from 'store'
 import { notificationQuery } from './queries'
 import { CommentDetailView } from './comments'
-import { UpdatesListItem } from './updates'
+import { UpdatesEmptyMessage, UpdatesListItem } from './updates'
 import {
 	ContentListItem,
 	ContentQuery,
+	EmptyMessage,
 	ScreenHeader,
 	StackContext,
 	TagGroupControl
@@ -48,6 +49,7 @@ export const NotificationsTab = () => {
 				query={ notificationQuery() }
 				pagination={ true }
 				item={ <NotificationsTabListItem type={ type } setItem={ setItem } /> }
+				emptyMessage={ <NotificationsTabEmptyMessage /> }
 			/>
 		</Fragment>
 	)
@@ -64,6 +66,10 @@ export const NotificationsTabListItem = ( { type, setItem, ...props } ) => {
 	default:
 		return null
 	}
+}
+
+export const NotificationsTabEmptyMessage = () => {
+	return <EmptyMessage>You're all up to date!</EmptyMessage>
 }
 
 export const NotificationsIcon = () => {

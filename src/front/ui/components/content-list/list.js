@@ -1,8 +1,9 @@
 import React, { Fragment, cloneElement, useContext, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
-import { EmptyMessage, StackContext } from 'components'
+import { StackContext } from 'components'
 import {
 	ContentListContainer,
+	ContentListEmptyMessage,
 	ContentListGroupLabel,
 	ContentListItem,
 	ContentListItemLoading
@@ -15,6 +16,7 @@ export const ContentList = ( {
 	dataLoader = () => {},
 	dataSetter = () => {},
 	container = <ContentListContainer />,
+	emptyMessage = <ContentListEmptyMessage />,
 	group = <ContentListGroupLabel />,
 	item = <ContentListItem />,
 	placeholderItem = <ContentListItemLoading />,
@@ -123,7 +125,7 @@ export const ContentList = ( {
 	 * Nothing found! Show an empty message...
 	 */
 	if ( ! hasItems( data ) && ! dataHasMore ) {
-		return <EmptyMessage>No Results Found</EmptyMessage>
+		return emptyMessage
 	}
 
 	/**

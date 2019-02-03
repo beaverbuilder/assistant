@@ -1,5 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
+import { EmptyMessage } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
@@ -59,4 +60,8 @@ export const ContentListItemLoading = ( { className } ) => {
 			data={ data }
 		/>
 	)
+}
+
+export const ContentListEmptyMessage = () => {
+	return <EmptyMessage>No Results Found</EmptyMessage>
 }
