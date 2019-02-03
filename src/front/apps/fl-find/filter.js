@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { TagGroupControl, ExpandedContents } from 'components'
 import { useStore, useAppState } from 'store'
-import { getWeek } from 'utils'
+import { getWeek } from 'utils/datetime'
 import { postQuery, termQuery } from './queries'
 
 export const FindFilter = ( { onChange } ) => {
