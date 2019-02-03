@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import classname from 'classnames'
-import { Tag, TagGroup, ScreenHeader, ContentQuery, AspectBox } from 'components'
+import { Tag, TagGroup, ScreenHeader, ContentListContainer, ContentQuery, AspectBox } from 'components'
 import { mediaQuery } from './queries'
 import './style.scss'
 
@@ -16,7 +16,7 @@ export const MediaTab = () => {
 			</ScreenHeader>
 			<ContentQuery
 				query={mediaQuery()}
-				containerClass="fl-asst-grid-list"
+				container={<ContentListContainer className={ 'fl-asst-grid-list' } /> }
 				item={<Item />}
 				pagination={true}
 			/>

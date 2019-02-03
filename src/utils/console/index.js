@@ -1,6 +1,6 @@
 export const warn = ( message ) => {
-	if ( console && console.warn ) {
-		console.warn( message )
+	if ( console && console.warn ) { // eslint-disable-line no-console
+		console.warn( message ) // eslint-disable-line no-console
 	}
 }
 

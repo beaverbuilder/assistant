@@ -29,7 +29,7 @@ export const ContentList = ( {
 	 * Cancels an existing request and runs the data loader.
 	 * Passed to the InfiniteScroll component.
 	 */
-	const loadItems = ( offset ) => {
+	const loadItems = () => {
 		if ( requests.length ) {
 			requests.pop().cancel()
 		}

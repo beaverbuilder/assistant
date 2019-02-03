@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { useAppState } from 'store'
 import { notificationQuery } from './queries'
 import { CommentDetailView } from './comments'
-import { UpdatesEmptyMessage, UpdatesListItem } from './updates'
+import { UpdatesListItem } from './updates'
 import {
 	ContentListItem,
 	ContentQuery,
@@ -59,10 +59,8 @@ export const NotificationsTabListItem = ( { type, setItem, ...props } ) => {
 	switch ( type ) {
 	case 'comments':
 		return <ContentListItem onClick={ data => setItem( data ) } { ...props } />
-		break
 	case 'updates':
 		return <UpdatesListItem { ...props } />
-		break
 	default:
 		return null
 	}
