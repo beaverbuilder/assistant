@@ -8,7 +8,7 @@ export const Comments = () => {
 		<ContentQuery
 			type={ 'comments' }
 			query={ commentsQuery() }
-			pagination={ false }
+			pagination={ true }
 			emptyMessage={ <NotificationsTabEmptyMessage /> }
 		/>
 	)
