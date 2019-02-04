@@ -19,7 +19,7 @@ export const termQuery = ( type ) => {
 }
 
 // Preload
-getPagedContent( 'posts', postQuery( 'post', 'publish' ), 0 )
-getPagedContent( 'posts', postQuery( 'page', 'publish' ), 0 )
-getPagedContent( 'terms', termQuery( 'category' ), 0 )
-getPagedContent( 'terms', termQuery( 'post_tag' ), 0 )
+getPagedContent( 'posts', postQuery( 'post', 'publish' ) )
+getPagedContent( 'posts', postQuery( 'page', 'publish' ) )
+getPagedContent( 'terms', termQuery( 'category' ) )
+getPagedContent( 'terms', termQuery( 'post_tag' ) )

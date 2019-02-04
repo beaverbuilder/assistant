@@ -17,8 +17,11 @@ final class FL_Assistant_REST_Users {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/users', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::users',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::users',
+					'permission_callback' => function() {
+						return current_user_can( 'list_users' );
+					},
 				),
 			)
 		);
@@ -26,17 +29,23 @@ final class FL_Assistant_REST_Users {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/user/(?P<id>\d+)', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::user',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::user',
+					'permission_callback' => function() {
+						return current_user_can( 'list_users' );
+					},
 				),
 			)
 		);
 
 		register_rest_route(
-			FL_Assistant_REST::$namespace, '/user/(?P<id>\d+)/state', array(
+			FL_Assistant_REST::$namespace, '/current-user/state', array(
 				array(
-					'methods'  => WP_REST_Server::CREATABLE,
-					'callback' => __CLASS__ . '::update_user_state',
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => __CLASS__ . '::update_user_state',
+					'permission_callback' => function() {
+						return ! ! wp_get_current_user()->ID;
+					},
 				),
 			)
 		);
@@ -51,6 +60,7 @@ final class FL_Assistant_REST_Users {
 	 */
 	static public function get_user_response_data( $user ) {
 		return array(
+			'content'   => get_the_author_meta( 'description', $user->ID ),
 			'date'      => $user->user_registered,
 			'edit_url'  => get_edit_user_link( $user->ID, '' ),
 			'thumbnail' => get_avatar_url( $user->ID ),
@@ -101,7 +111,7 @@ final class FL_Assistant_REST_Users {
 	 * @return void
 	 */
 	static public function update_user_state( $request ) {
-		$id    = $request->get_param( 'id' );
+		$id    = wp_get_current_user()->ID;
 		$state = json_decode( $request->get_param( 'state' ) );
 
 		FL_Assistant_Data::update_user_state( $id, $state );
