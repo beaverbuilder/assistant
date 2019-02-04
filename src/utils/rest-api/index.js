@@ -187,9 +187,8 @@ export const getUser = ( id, complete ) => {
  * @return {Object}
  */
 export const updateUserState = ( state ) => {
-	const { id } = store.getState().currentUser
 	return postRequest( {
-		route: `fl-assistant/v1/user/${ id }/state`,
+		route: `fl-assistant/v1/current-user/state`,
 		args: {
 			state: JSON.stringify( state ),
 		}

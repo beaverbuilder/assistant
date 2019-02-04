@@ -19,6 +19,9 @@ final class FL_Assistant_REST_Comments {
 				array(
 					'methods'  => WP_REST_Server::READABLE,
 					'callback' => __CLASS__ . '::comments',
+					'permission_callback' => function() {
+						return current_user_can( 'moderate_comments' );
+					}
 				),
 			)
 		);
@@ -28,6 +31,9 @@ final class FL_Assistant_REST_Comments {
 				array(
 					'methods'  => WP_REST_Server::READABLE,
 					'callback' => __CLASS__ . '::comment',
+					'permission_callback' => function() {
+						return current_user_can( 'moderate_comments' );
+					}
 				),
 			)
 		);

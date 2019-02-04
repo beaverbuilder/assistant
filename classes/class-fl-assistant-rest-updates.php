@@ -19,6 +19,9 @@ final class FL_Assistant_REST_Updates {
 				array(
 					'methods'  => WP_REST_Server::READABLE,
 					'callback' => __CLASS__ . '::updates',
+					'permission_callback' => function() {
+						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
+					}
 				),
 			)
 		);
@@ -28,6 +31,9 @@ final class FL_Assistant_REST_Updates {
 				array(
 					'methods'  => WP_REST_Server::READABLE,
 					'callback' => __CLASS__ . '::update_plugin',
+					'permission_callback' => function() {
+						return current_user_can( 'update_plugins' );
+					}
 				),
 			)
 		);
@@ -37,6 +43,9 @@ final class FL_Assistant_REST_Updates {
 				array(
 					'methods'  => WP_REST_Server::READABLE,
 					'callback' => __CLASS__ . '::update_theme',
+					'permission_callback' => function() {
+						return current_user_can( 'update_themes' );
+					}
 				),
 			)
 		);
