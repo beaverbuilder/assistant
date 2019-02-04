@@ -8,4 +8,4 @@ export const mediaQuery = () => {
 }
 
 // Preload
-getPagedContent( 'posts', mediaQuery(), 0 )
+getPagedContent( 'posts', mediaQuery() )

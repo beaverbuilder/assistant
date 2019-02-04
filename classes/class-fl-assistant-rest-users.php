@@ -60,6 +60,7 @@ final class FL_Assistant_REST_Users {
 	 */
 	static public function get_user_response_data( $user ) {
 		return array(
+			'content'	=> get_the_author_meta( 'description', $user->ID ),
 			'date'      => $user->user_registered,
 			'edit_url'  => get_edit_user_link( $user->ID, '' ),
 			'thumbnail' => get_avatar_url( $user->ID ),

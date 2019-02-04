@@ -39,7 +39,7 @@ export const getContent = ( type, args, complete ) => {
  * @param {Function} complete
  * @return {Object}
  */
-export const getPagedContent = ( type, args, offset, complete ) => {
+export const getPagedContent = ( type, args, offset = 0, complete ) => {
 	let paged = Object.assign( { offset }, args )
 	let perPage = 20
 

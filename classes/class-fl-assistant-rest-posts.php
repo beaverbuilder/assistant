@@ -51,6 +51,7 @@ final class FL_Assistant_REST_Posts {
 		$date = get_the_date( '', $post );
 		$response = array(
 			'author'    => $author,
+			'content'	=> $post->post_content,
 			'date'      => $date,
 			'edit_url'  => get_edit_post_link( $post->ID, '' ),
 			'meta'      => $author . ' - ' . $date,

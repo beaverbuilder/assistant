@@ -72,6 +72,7 @@ final class FL_Assistant_REST_Updates {
 
 		return array(
 			'author'    => $plugin['AuthorName'],
+			'content'	=> $plugin['Description'],
 			'meta'      => $plugin['Version'] . ' by ' . $plugin['AuthorName'],
 			'plugin'    => $update->plugin,
 			'thumbnail' => $thumbnail,
@@ -102,6 +103,7 @@ final class FL_Assistant_REST_Updates {
 
 		return array(
 			'author'    => strip_tags( $theme->Author ),
+			'content'	=> $theme->Description,
 			'meta'      => $theme->Version . ' by ' . strip_tags( $theme->Author ),
 			'theme'     => $update['theme'],
 			'thumbnail' => $theme->get_screenshot(),
