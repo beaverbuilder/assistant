@@ -17,11 +17,11 @@ final class FL_Assistant_REST_Posts {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/posts', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::posts',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::posts',
 					'permission_callback' => function() {
 						return current_user_can( 'edit_posts' );
-					}
+					},
 				),
 			)
 		);
@@ -29,11 +29,11 @@ final class FL_Assistant_REST_Posts {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/post/(?P<id>\d+)', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::post',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::post',
 					'permission_callback' => function() {
 						return current_user_can( 'edit_posts' );
-					}
+					},
 				),
 			)
 		);
@@ -51,7 +51,7 @@ final class FL_Assistant_REST_Posts {
 		$date = get_the_date( '', $post );
 		$response = array(
 			'author'    => $author,
-			'content'	=> $post->post_content,
+			'content'   => $post->post_content,
 			'date'      => $date,
 			'edit_url'  => get_edit_post_link( $post->ID, '' ),
 			'meta'      => $author . ' - ' . $date,

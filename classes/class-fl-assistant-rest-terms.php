@@ -17,11 +17,11 @@ final class FL_Assistant_REST_Terms {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/terms', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::terms',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::terms',
 					'permission_callback' => function() {
 						return current_user_can( 'edit_posts' );
-					}
+					},
 				),
 			)
 		);
@@ -29,11 +29,11 @@ final class FL_Assistant_REST_Terms {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/term/(?P<id>\d+)', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::term',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::term',
 					'permission_callback' => function() {
 						return current_user_can( 'edit_posts' );
-					}
+					},
 				),
 			)
 		);

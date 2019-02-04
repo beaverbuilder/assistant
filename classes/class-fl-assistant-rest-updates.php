@@ -17,11 +17,11 @@ final class FL_Assistant_REST_Updates {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/updates', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::updates',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::updates',
 					'permission_callback' => function() {
 						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
-					}
+					},
 				),
 			)
 		);
@@ -29,11 +29,11 @@ final class FL_Assistant_REST_Updates {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/updates/update-plugin', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::update_plugin',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::update_plugin',
 					'permission_callback' => function() {
 						return current_user_can( 'update_plugins' );
-					}
+					},
 				),
 			)
 		);
@@ -41,11 +41,11 @@ final class FL_Assistant_REST_Updates {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/updates/update-theme', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::update_theme',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::update_theme',
 					'permission_callback' => function() {
 						return current_user_can( 'update_themes' );
-					}
+					},
 				),
 			)
 		);
@@ -72,7 +72,7 @@ final class FL_Assistant_REST_Updates {
 
 		return array(
 			'author'    => $plugin['AuthorName'],
-			'content'	=> $plugin['Description'],
+			'content'   => $plugin['Description'],
 			'meta'      => $plugin['Version'] . ' by ' . $plugin['AuthorName'],
 			'plugin'    => $update->plugin,
 			'thumbnail' => $thumbnail,
@@ -103,7 +103,7 @@ final class FL_Assistant_REST_Updates {
 
 		return array(
 			'author'    => strip_tags( $theme->Author ),
-			'content'	=> $theme->Description,
+			'content'   => $theme->Description,
 			'meta'      => $theme->Version . ' by ' . strip_tags( $theme->Author ),
 			'theme'     => $update['theme'],
 			'thumbnail' => $theme->get_screenshot(),

@@ -20,6 +20,7 @@ export const UpdatesListItem = ( { className, removeItem, ...props } ) => {
 
 	const updateClicked = e => {
 		e.stopPropagation()
+
 		//const { type, plugin, theme } = props.data
 
 		if ( updating || updated || error ) {

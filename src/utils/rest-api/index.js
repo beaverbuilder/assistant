@@ -1,4 +1,3 @@
-import store from 'store'
 import {
 	addQueryArgs,
 	clearCache,
@@ -188,7 +187,7 @@ export const getUser = ( id, complete ) => {
  */
 export const updateUserState = ( state ) => {
 	return postRequest( {
-		route: `fl-assistant/v1/current-user/state`,
+		route: 'fl-assistant/v1/current-user/state',
 		args: {
 			state: JSON.stringify( state ),
 		}
