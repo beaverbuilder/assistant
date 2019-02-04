@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import classname from 'classnames'
-import { EmptyMessage } from 'components'
+import { EmptyMessage, Padding, ScreenHeader, Separator, StackContext } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
@@ -19,22 +19,23 @@ export const ContentListGroupLabel = ( { label } ) => {
 }
 
 export const ContentListItem = ( { className, data, onClick, children } ) => {
-	const { meta, thumbnail, title, url } = data
+	const { meta, thumbnail, title } = data
+	const { pushView } = useContext( StackContext )
 
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
 	}
 
-	const view = () => {
+	const handleClick = () => {
 		if ( onClick ) {
 			onClick( data )
-		} else if ( url ) {
-			window.location.href = url
+		} else {
+			pushView( <ContentListDetail data={ data } /> )
 		}
 	}
 
 	return (
-		<div className={ classname( className, 'fl-asst-list-item' ) } onClick={ view }>
+		<div className={ classname( className, 'fl-asst-list-item' ) } onClick={ handleClick }>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
@@ -64,4 +65,18 @@ export const ContentListItemLoading = ( { className } ) => {
 
 export const ContentListEmptyMessage = () => {
 	return <EmptyMessage>No Results Found</EmptyMessage>
+}
+
+export const ContentListDetail = ( { className, data } ) => {
+	const { content, meta, title } = data
+	return (
+		<div className={ classname( className, 'fl-asst-list-detail' ) }>
+			<ScreenHeader title={ title } />
+			<Padding>
+				{ meta }
+				{ meta && <Separator /> }
+				<div dangerouslySetInnerHTML={ { __html: content } } />
+			</Padding>
+		</div>
+	)
 }

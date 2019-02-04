@@ -18,7 +18,8 @@ export const UpdatesListItem = ( { className, removeItem, ...props } ) => {
 		//return () => promise && promise.cancel()
 	} )
 
-	const updateClicked = () => {
+	const updateClicked = e => {
+		e.stopPropagation()
 
 		//const { type, plugin, theme } = props.data
 

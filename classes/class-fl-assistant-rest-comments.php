@@ -17,8 +17,11 @@ final class FL_Assistant_REST_Comments {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/comments', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::comments',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::comments',
+					'permission_callback' => function() {
+						return current_user_can( 'moderate_comments' );
+					},
 				),
 			)
 		);
@@ -26,8 +29,11 @@ final class FL_Assistant_REST_Comments {
 		register_rest_route(
 			FL_Assistant_REST::$namespace, '/comment/(?P<id>\d+)', array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => __CLASS__ . '::comment',
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::comment',
+					'permission_callback' => function() {
+						return current_user_can( 'moderate_comments' );
+					},
 				),
 			)
 		);

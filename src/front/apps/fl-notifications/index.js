@@ -1,29 +1,13 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import React, { Fragment } from 'react'
 import { useAppState } from 'store'
-import { notificationQuery } from './queries'
-import { CommentDetailView } from './comments'
-import { UpdatesListItem } from './updates'
-import {
-	ContentListItem,
-	ContentQuery,
-	EmptyMessage,
-	ScreenHeader,
-	StackContext,
-	TagGroupControl
-} from 'components'
+import { ScreenHeader, TagGroupControl } from 'components'
+import { Comments } from './comments'
+import { Updates } from './updates'
 
 export const NotificationsTab = () => {
-	const [ type, setType ] = useAppState( 'type', 'comments' )
-	const [ item, setItem ] = useState( null )
-	const { pushView } = useContext( StackContext )
+	const [ activeTab, setActiveTab ] = useAppState( 'activeTab', 'comments' )
 
-	useEffect( () => {
-		if ( item ) {
-			pushView( <CommentDetailView data={ item } /> )
-		}
-	}, [ item ] )
-
-	const tags = [
+	const tabs = [
 		{
 			label: 'Comments',
 			value: 'comments',
@@ -38,36 +22,16 @@ export const NotificationsTab = () => {
 		<Fragment>
 			<ScreenHeader>
 				<TagGroupControl
-					tags={ tags }
-					value={ type }
-					onChange={ value => setType( value ) }
+					tags={ tabs }
+					value={ activeTab }
+					onChange={ value => setActiveTab( value ) }
 					appearance="vibrant"
 				/>
 			</ScreenHeader>
-			<ContentQuery
-				type={ type }
-				query={ notificationQuery() }
-				pagination={ true }
-				item={ <NotificationsTabListItem type={ type } setItem={ setItem } /> }
-				emptyMessage={ <NotificationsTabEmptyMessage /> }
-			/>
+			{ 'comments' === activeTab && <Comments /> }
+			{ 'updates' === activeTab && <Updates /> }
 		</Fragment>
 	)
-}
-
-export const NotificationsTabListItem = ( { type, setItem, ...props } ) => {
-	switch ( type ) {
-	case 'comments':
-		return <ContentListItem onClick={ data => setItem( data ) } { ...props } />
-	case 'updates':
-		return <UpdatesListItem { ...props } />
-	default:
-		return null
-	}
-}
-
-export const NotificationsTabEmptyMessage = () => {
-	return <EmptyMessage>You're all up to date!</EmptyMessage>
 }
 
 export const NotificationsIcon = () => {

@@ -1,4 +1,3 @@
-import store from 'store'
 import {
 	addQueryArgs,
 	clearCache,
@@ -39,7 +38,7 @@ export const getContent = ( type, args, complete ) => {
  * @param {Function} complete
  * @return {Object}
  */
-export const getPagedContent = ( type, args, offset, complete ) => {
+export const getPagedContent = ( type, args, offset = 0, complete ) => {
 	let paged = Object.assign( { offset }, args )
 	let perPage = 20
 
@@ -187,9 +186,8 @@ export const getUser = ( id, complete ) => {
  * @return {Object}
  */
 export const updateUserState = ( state ) => {
-	const { id } = store.getState().currentUser
 	return postRequest( {
-		route: `fl-assistant/v1/user/${ id }/state`,
+		route: 'fl-assistant/v1/current-user/state',
 		args: {
 			state: JSON.stringify( state ),
 		}
@@ -205,7 +203,7 @@ export const updateUserState = ( state ) => {
 export const getUpdates = ( complete ) => {
 	return getRequest( {
 		route: 'fl-assistant/v1/updates',
-		cached: false,
+		cacheKey: 'updates',
 		complete
 	} )
 }
