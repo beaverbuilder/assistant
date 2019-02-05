@@ -35,7 +35,7 @@ class FL_Assistant_Data {
 			'panelPosition'   => $user_state['panelPosition'],
 			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
-			'cms'			  => 'wordpress',
+			'cms'             => 'wordpress',
 			'contentTypes'    => self::get_post_types(),
 			'currentPageView' => self::get_current_view(),
 			'currentUser'     => self::get_current_user_data(),

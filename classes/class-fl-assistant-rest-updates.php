@@ -125,6 +125,8 @@ final class FL_Assistant_REST_Updates {
 		$update_plugins = get_site_transient( 'update_plugins' );
 		$update_themes  = get_site_transient( 'update_themes' );
 
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
 		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
 			$plugins = array(
 				'label' => __( 'Plugins', 'fl-assistant' ),
