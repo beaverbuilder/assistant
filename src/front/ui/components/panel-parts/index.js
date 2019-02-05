@@ -73,15 +73,17 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 	return (
 		<div className="fl-asst-panel-chrome">
 
-			<div className="fl-asst-panel-chrome-area">
-				<AppTabButton
-					onClick={ () => onTabClick( 'fl-notifications' )}
-					isSelected={isNotificationsSelected}
-					tooltip={notificationsLabel}
-				>
-					<NotificationsIcon isSelected={isNotificationsSelected} />
-				</AppTabButton>
-			</div>
+			{ tabs['fl-notifications'] &&
+				<div className="fl-asst-panel-chrome-area">
+					<AppTabButton
+						onClick={ () => onTabClick( 'fl-notifications' )}
+						isSelected={isNotificationsSelected}
+						tooltip={notificationsLabel}
+					>
+						<NotificationsIcon isSelected={isNotificationsSelected} />
+					</AppTabButton>
+				</div>
+			}
 
 			<div className="fl-asst-app-tabs-wrap">
 				<div className="fl-asst-app-tabs-area">
@@ -129,7 +131,7 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 				{ ! isRootView && <Button onClick={popView} appearance="icon" className="fl-asst-button-back">
 					<Icon name="back" />
 				</Button> }
-				{screenTitle}
+				<div className="fl-asst-screen-title-text">{screenTitle}</div>
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>
 		</div>
