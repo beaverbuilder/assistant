@@ -5,11 +5,10 @@ import reducers from './reducers'
 import * as actions from './actions'
 import { AppContext } from 'components'
 
-
 const store = createStore( reducers, {
 	apps: {},
 	appState: {},
-	...FLAssistantInitialData,
+	...( 'undefined' === typeof FLAssistantInitialData ? {} : FLAssistantInitialData ),
 }, composeEnhancers( applyMiddleware( applyEffects ) ) )
 
 // Custom React Hooks
