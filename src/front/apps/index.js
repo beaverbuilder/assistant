@@ -42,8 +42,8 @@ const config = {
  * TODO: In the future we should look at better ways to
  * register apps based on where assistant is loaded.
  */
- if ( 'wordpress' === cms ) {
- 	Object.keys( config ).map( key => {
- 		registerApp( key, config[ key ] )
- 	} )
- }
+if ( 'wordpress' === cms ) {
+	Object.keys( config ).map( key => {
+		registerApp( key, config[ key ] )
+	} )
+}
