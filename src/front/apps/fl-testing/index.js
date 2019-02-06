@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import posed from 'react-pose'
 import { ScreenHeader, ExpandedContents, Button, Icon, UIContext, StackContext, AspectBox } from 'components'
 import { useDispatch } from 'store'
@@ -53,12 +53,33 @@ const TestingApp = () => {
     )
 }
 
+const ListItemBox = posed.div({
+    normal: {
+        x: '0%',
+        height: 'auto',
+        background: 'transparent'
+    },
+    deleted: {
+        x: '100%',
+        height: 0,
+        background: 'red',
+        applyAtEnd: {
+            display:'none'
+        }
+    }
+})
+
+const onPoseComplete = pose => {
+    console.log('after complete, delete from data')
+}
+
 const ListItemA = ({ title, meta, onClick, onAccessoryClick }) => {
+    const [isDeleted, setIsDeleted] = useState(false)
     const imgStyles = {
         backgroundImage: 'url(https://place-hold.it/100x100/red/white&text=Test)'
     }
     return (
-        <div className="fl-asst-list-item">
+        <ListItemBox pose={ isDeleted ? 'deleted' : 'normal' } onPoseComplete={onPoseComplete} className="fl-asst-list-item">
             <div className="fl-asst-list-item-wrap">
                 <div className="fl-asst-list-item-visual">
                     <div className="fl-asst-list-item-image-box" style={imgStyles}></div>
@@ -72,9 +93,9 @@ const ListItemA = ({ title, meta, onClick, onAccessoryClick }) => {
                 </div>
             </div>
             <ExpandedContents>
-                <AspectBox>Testing</AspectBox>
+                <Button onClick={() => setIsDeleted(true)}>Delete</Button>
             </ExpandedContents>
-        </div>
+        </ListItemBox>
     )
 }
 
