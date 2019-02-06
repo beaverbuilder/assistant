@@ -7,6 +7,8 @@ import { FindTab, FindIcon } from './fl-find'
 import { NotificationsTab, NotificationsIcon } from './fl-notifications'
 import { MediaTab, MediaIcon } from './fl-media'
 
+import './fl-testing'
+
 const { registerApp } = useDispatch()
 const { cms } = store.getState()
 
@@ -31,7 +33,7 @@ const config = {
 		label: 'Dashboard',
 		content: props => <DashboardTab {...props} />,
 		icon: props => <DashboardIcon {...props} />,
-	}
+	},
 }
 
 /**

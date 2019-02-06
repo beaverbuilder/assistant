@@ -1,0 +1,50 @@
+.fl-asst-list-test {
+    .fl-asst-list-item {
+        padding:0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .fl-asst-list-item-wrap {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 20px;
+        padding-right: 0;
+        padding-bottom:0;
+
+        .fl-asst-list-item-content {
+            padding:0;
+
+            .fl-asst-list-item-title {
+                white-space: normal;
+            }
+        }
+
+        .fl-asst-list-item-accessory {
+            flex: 0 0 auto;
+
+            button {
+                padding: 10px;
+            }
+        }
+    }
+
+    .fl-asst-expanded-contents {
+        visibility: hidden;
+        right:0;
+
+        .fl-asst-expanded-contents-footer {
+            .fl-asst-more-button {
+                margin:0;
+                width: 100%;
+            }
+        }
+    }
+    .fl-asst-list-item:hover {
+        .fl-asst-expanded-contents {
+            visibility: visible;
+        }
+    }
+}
