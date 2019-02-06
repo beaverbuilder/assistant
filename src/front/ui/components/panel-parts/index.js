@@ -131,7 +131,7 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 				{ ! isRootView && <Button onClick={popView} appearance="icon" className="fl-asst-button-back">
 					<Icon name="back" />
 				</Button> }
-				{screenTitle}
+				<div className="fl-asst-screen-title-text">{screenTitle}</div>
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>
 		</div>
@@ -158,7 +158,7 @@ const MoreButtonPath = posed.polyline( {
 		points: '2,4 25,4 48,4',
 	},
 	hover: {
-		points: ( { isExpanded } ) => isExpanded ? '2,6 25,2 48,6' : '2,2 25,6 48,2',
+		points: ( { isExpanded } ) => isExpanded ? '5,6 25,2 45,6' : '5,2 25,6 45,2',
 	},
 } )
 

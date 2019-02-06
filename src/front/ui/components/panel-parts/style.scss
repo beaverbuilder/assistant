@@ -11,6 +11,10 @@
     padding: 0 8px;
     position: relative;
 
+    .fl-asst-button {
+        margin:0;
+    }
+
     .fl-asst-panel-chrome-area {
         flex: 1 1 50%;
         display: flex;
@@ -41,7 +45,7 @@
 }
 .fl-asst-screen-header {
     background: var(--fl-utility-background-color);
-    padding: 10px 0 20px;
+    padding: 20px 0 20px;
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
@@ -64,7 +68,14 @@
 
         .fl-asst-button-back {
             margin:0;
-            width: 45px;
+            flex: 0 0 45px;
+        }
+
+        .fl-asst-screen-title-text {
+            flex: 1 1 auto;
+            overflow: hidden;
+    		text-overflow: ellipsis;
+    		white-space: nowrap;
         }
 
         &:last-child {

@@ -17,6 +17,10 @@ const App = () => {
 	// Create a toggle function to show/hide the panel
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
 
+	const goToURL = url => {
+		window.location = url
+	}
+
 	// Create a store-bound value object for UIContext.Provider
 	const ui = {
 		isShowingUI,
@@ -27,6 +31,7 @@ const App = () => {
 		panelPosition,
 		togglePanelPosition,
 		setPanelPosition,
+		goToURL,
 	}
 
 	return (
