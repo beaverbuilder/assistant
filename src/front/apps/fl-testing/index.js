@@ -61,7 +61,7 @@ const ListItemBox = posed.div({
     },
     deleted: {
         x: '100%',
-        height: 0,
+        height: '0px',
         background: 'red',
         applyAtEnd: {
             display:'none'
