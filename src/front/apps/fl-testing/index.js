@@ -55,7 +55,7 @@ const TestingApp = () => {
 
 const ListItemA = ({ title, meta, onClick, onAccessoryClick }) => {
     const imgStyles = {
-        backgroundImage: 'url(https://bb-fresh-dev-2.local/wp-content/uploads/2019/01/047ecc32-2e57-34e7-8d77-a4d9974f0038-150x150.jpg)'
+        backgroundImage: 'url(https://place-hold.it/100x100/red/white&text=Test)'
     }
     return (
         <div className="fl-asst-list-item">
