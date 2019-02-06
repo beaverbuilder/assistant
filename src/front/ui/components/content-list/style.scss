@@ -24,9 +24,6 @@
 			background-image: linear-gradient(to right, #EDF2F4, #C6CFD2, #EDF2F4);
 			background-size: 200% 100%;
 			background-position: 100%;
-			animation-name: animateBackground;
-            animation-duration: 2s;
-			animation-iteration-count: infinite;
 		}
 	}
 	.fl-asst-list-item-meta {
@@ -50,20 +47,11 @@
     overflow: hidden;
     transition-property: background-color;
     transition-duration: .5s;
-    transition-delay:.2s;
 
     &:hover {
         background: var(--fl-utility-background-color);
         border-color: var(--fl-utility-background-color);
         cursor: pointer;
-
-        .fl-asst-list-item-actions {
-            display: flex;
-            animation-name: slideInRight;
-            animation-duration: .25s;
-            animation-delay: .2s;
-            animation-fill-mode: forwards;
-        }
     }
 
     .fl-asst-list-item-visual {
@@ -131,25 +119,4 @@
 	.fl-asst-separator {
 		margin: 15px 0;
 	}
-}
-
-@keyframes slideInRight {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(0px);
-    }
-}
-
-@keyframes animateBackground {
-    0% {
-        background-position: 100%;
-    }
-    50% {
-        background-position: 0;
-    }
-    100% {
-        background-position: 100%;
-    }
 }

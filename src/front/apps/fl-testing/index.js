@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import posed from 'react-pose'
-import { ScreenHeader, ExpandedContents, Button, Icon, UIContext, StackContext } from 'components'
+import { ScreenHeader, ExpandedContents, Button, Icon, UIContext, StackContext, AspectBox } from 'components'
 import { useDispatch } from 'store'
 const { registerApp } = useDispatch()
 import './style.scss'
@@ -17,17 +17,37 @@ const TestingApp = () => {
         <Fragment>
             <ScreenHeader />
 
-            <div className="fl-asst-list">
+            <div className="fl-asst-list fl-asst-list-test">
+                <ListItemA
+                    title="Sed posuere consectetur est at lobortis est at lobortis"
+                    meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
+                    onClick={ () => goToURL( 'https://www.amazon.com' )}
+                    onAccessoryClick={ () => pushView( <DetailView1 /> ) }
+                />
+                <ListItemA
+                    title="Sed posuere est at lobortis consectetur est at lobortis"
+                    meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
+                    onClick={ () => goToURL( 'https://www.amazon.com' )}
+                    onAccessoryClick={ () => pushView( <DetailView1 /> ) }
+                />
+                <ListItemA
+                    title="Sed posuere consectetur est at lobortis est at lobortis"
+                    meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
+                    onClick={ () => goToURL( 'https://www.amazon.com' )}
+                    onAccessoryClick={ () => pushView( <DetailView1 /> ) }
+                />
                 <ListItemA
                     title="Sed posuere consectetur est at lobortis"
                     meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
                     onClick={ () => goToURL( 'https://www.amazon.com' )}
                     onAccessoryClick={ () => pushView( <DetailView1 /> ) }
                 />
-
-                <div className="fl-asst-list-item">
-                    Item
-                </div>
+                <ListItemA
+                    title="Sed posuere consectetur est at lobortis"
+                    meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
+                    onClick={ () => goToURL( 'https://www.amazon.com' )}
+                    onAccessoryClick={ () => pushView( <DetailView1 /> ) }
+                />
             </div>
         </Fragment>
     )
@@ -47,12 +67,12 @@ const ListItemA = ({ title, meta, onClick, onAccessoryClick }) => {
                     <div className="fl-asst-list-item-title">{title}</div>
                     <div className="fl-asst-list-item-meta">{meta}</div>
                 </div>
-                <div>
-                    <Button appearance="icon"><Icon /></Button>
+                <div className="fl-asst-list-item-accessory">
+                    <Button appearance="icon" onClick={onAccessoryClick}><Icon /></Button>
                 </div>
             </div>
             <ExpandedContents>
-                Expanded Contents
+                <AspectBox>Testing</AspectBox>
             </ExpandedContents>
         </div>
     )
