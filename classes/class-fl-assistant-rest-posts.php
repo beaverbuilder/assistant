@@ -81,9 +81,13 @@ final class FL_Assistant_REST_Posts {
 	static public function posts( $request ) {
 		$response = array();
 		$params   = $request->get_params();
-		$posts    = get_posts( array_merge( $params, array(
-			'perm' => 'editable',
-		) ) );
+		$posts    = get_posts(
+			array_merge(
+				$params, array(
+					'perm' => 'editable',
+				)
+			)
+		);
 
 		foreach ( $posts as $post ) {
 			$response[] = self::get_post_response_data( $post );
