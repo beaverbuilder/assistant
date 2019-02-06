@@ -20,7 +20,7 @@ final class FL_Assistant_REST_Terms {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::terms',
 					'permission_callback' => function() {
-						return current_user_can( 'edit_posts' );
+						return current_user_can( 'edit_terms' );
 					},
 				),
 			)
@@ -32,7 +32,7 @@ final class FL_Assistant_REST_Terms {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::term',
 					'permission_callback' => function() {
-						return current_user_can( 'edit_posts' );
+						return current_user_can( 'edit_terms' );
 					},
 				),
 			)

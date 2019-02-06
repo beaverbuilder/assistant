@@ -20,7 +20,7 @@ final class FL_Assistant_REST_Posts {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::posts',
 					'permission_callback' => function() {
-						return current_user_can( 'edit_posts' );
+						return current_user_can( 'edit_published_posts' );
 					},
 				),
 			)
@@ -32,7 +32,7 @@ final class FL_Assistant_REST_Posts {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::post',
 					'permission_callback' => function() {
-						return current_user_can( 'edit_posts' );
+						return current_user_can( 'edit_published_posts' );
 					},
 				),
 			)
@@ -81,7 +81,9 @@ final class FL_Assistant_REST_Posts {
 	static public function posts( $request ) {
 		$response = array();
 		$params   = $request->get_params();
-		$posts    = get_posts( $params );
+		$posts    = get_posts( array_merge( $params, array(
+			'perm' => 'editable',
+		) ) );
 
 		foreach ( $posts as $post ) {
 			$response[] = self::get_post_response_data( $post );
