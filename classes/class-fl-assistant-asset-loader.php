@@ -43,19 +43,23 @@ class FL_Assistant_Asset_Loader {
 	 */
 	static public function should_enqueue() {
 
-		$should_enqueue = true;
-
-		if ( ! is_user_logged_in() || is_customize_preview() ) {
-			$should_enqueue = false;
+		// Users must be logged in.
+		if ( ! is_user_logged_in() ) {
+			return false;
 		}
 
-		// If Beaver Builder is active, don't enqueue
+		// There is no read-only assistant (for now). Users must be able to edit.
+		if ( ! current_user_can( 'edit_published_posts' ) ) {
+			return false;
+		}
+
+		// If Beaver Builder is active, don't enqueue.
 		if ( class_exists( 'FLBuilderModel' ) ) {
 			if ( FLBuilderModel::is_builder_active() || FLBuilderModel::is_builder_draft_preview() ) {
-				$should_enqueue = false;
+				return false;
 			}
 		}
-		return $should_enqueue;
+		return true;
 	}
 }
 
