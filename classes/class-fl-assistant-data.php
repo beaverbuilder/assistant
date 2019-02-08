@@ -32,15 +32,15 @@ class FL_Assistant_Data {
 
 		return array(
 			'activeApp'       => $user_state['activeApp'],
-			'panelPosition'   => $user_state['panelPosition'],
 			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'cms'             => 'wordpress',
 			'contentTypes'    => self::get_post_types(),
 			'currentPageView' => self::get_current_view(),
 			'currentUser'     => self::get_current_user_data(),
-			'pluginURL'       => FL_ASSISTANT_URL,
 			'isShowingUI'     => $user_state['isShowingUI'],
+			'panelPosition'   => $user_state['panelPosition'],
+			'pluginURL'       => FL_ASSISTANT_URL,
 			'taxonomies'      => self::get_taxonomies(),
 			'dashboardApp'    => [
 				'adminActions' => self::get_admin_actions(),
@@ -63,6 +63,9 @@ class FL_Assistant_Data {
 		);
 
 		foreach ( $types as $slug => $type ) {
+			if ( ! current_user_can( $type->cap->edit_published_posts ) ) {
+				continue;
+			}
 			if ( 'attachment' === $slug ) {
 				continue;
 			}
@@ -364,8 +367,9 @@ class FL_Assistant_Data {
 		$user = wp_get_current_user();
 
 		return array(
-			'id'   => $user->ID,
-			'name' => $user->display_name,
+			'id'   			=> $user->ID,
+			'name' 			=> $user->display_name,
+			'capabilities' 	=> $user->allcaps,
 		);
 	}
 }
