@@ -36,10 +36,9 @@ export const UI = () => {
 				<div className="fl-asst-panel-contents">
 					{Object.keys( apps ).map( key => {
 						const app = Object.assign( {}, apps[ key ] )
-						app.isActive = app.app === activeApp ? true : false
-						return (
+						return ! app.enabled ? null : (
 							<AppContext.Provider key={key} value={app}>
-								<Tab name={key} isSelected={app.isActive}>
+								<Tab name={key} isSelected={app.app === activeApp}>
 									<Stack>
 										{ app.content() }
 									</Stack>

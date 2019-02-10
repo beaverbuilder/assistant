@@ -1,22 +1,33 @@
 import React, { Fragment } from 'react'
-import { useAppState } from 'store'
-import { ScreenHeader, TagGroupControl } from 'components'
+import { useAppState, useDispatch, useStore } from 'store'
+import { currentUserCan } from 'utils/wordpress/user'
+import { AppTabButton, ScreenHeader, TagGroupControl } from 'components'
 import { Comments } from './comments'
 import { Updates } from './updates'
 
 export const NotificationsTab = () => {
-	const [ activeTab, setActiveTab ] = useAppState( 'activeTab', 'comments' )
+	const canModerateComments = currentUserCan( 'moderate_comments' )
+	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
+	const defaultTab = canModerateComments ? 'comments' : 'updates'
+	const [ activeTab, setActiveTab ] = useAppState( 'activeTab', defaultTab )
+	const tabs = []
+	const content = {}
 
-	const tabs = [
-		{
+	if ( canModerateComments ) {
+		tabs.push( {
 			label: 'Comments',
 			value: 'comments',
-		},
-		{
+		} )
+		content['comments'] = <Comments />
+	}
+
+	if ( canUpdate ) {
+		tabs.push( {
 			label: 'Updates',
 			value: 'updates',
-		},
-	]
+		} )
+		content['updates'] = <Updates />
+	}
 
 	return (
 		<Fragment>
@@ -28,9 +39,29 @@ export const NotificationsTab = () => {
 					appearance="vibrant"
 				/>
 			</ScreenHeader>
-			{ 'comments' === activeTab && <Comments /> }
-			{ 'updates' === activeTab && <Updates /> }
+			{ content[ activeTab ] ? content[ activeTab ] : null }
 		</Fragment>
+	)
+}
+
+export const NotificationsTabButton = () => {
+	const { apps, activeApp } = useStore()
+	const { setActiveApp } = useDispatch()
+	const notifications = apps[ 'fl-notifications' ] ? apps[ 'fl-notifications' ] : null
+	const active = 'fl-notifications' === activeApp
+
+	if ( ! notifications || ! notifications.enabled ) {
+		return null
+	}
+
+	return (
+		<AppTabButton
+			onClick={ () => setActiveApp( 'fl-notifications' ) }
+			isSelected={ active }
+			tooltip={ notifications.label }
+		>
+			<NotificationsIcon isSelected={ active } />
+		</AppTabButton>
 	)
 }
 

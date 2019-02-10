@@ -15,9 +15,10 @@ export const apps = ( state = {}, action ) => {
 		return {
 			[ action.key ]: {
 				app: action.key,
-				label: 'Untitled App',
 				content: '',
+				enabled: true,
 				icon: null,
+				label: 'Untitled App',
 				showTabIcon: true,
 				...action.config,
 			},
