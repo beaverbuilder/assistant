@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
 import { Button, AppTabButton, Icon, AppContext, StackContext } from 'components'
-import { NotificationsIcon } from 'apps/fl-notifications'
+import { NotificationsTabButton } from 'apps/fl-notifications'
 import './style.scss'
 
 const transition = () => ( {
@@ -73,17 +73,9 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 	return (
 		<div className="fl-asst-panel-chrome">
 
-			{ tabs['fl-notifications'] &&
-				<div className="fl-asst-panel-chrome-area">
-					<AppTabButton
-						onClick={ () => onTabClick( 'fl-notifications' )}
-						isSelected={isNotificationsSelected}
-						tooltip={notificationsLabel}
-					>
-						<NotificationsIcon isSelected={isNotificationsSelected} />
-					</AppTabButton>
-				</div>
-			}
+			<div className="fl-asst-panel-chrome-area">
+				<NotificationsTabButton />
+			</div>
 
 			<div className="fl-asst-app-tabs-wrap">
 				<div className="fl-asst-app-tabs-area">
@@ -91,7 +83,7 @@ export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
 						const tab = tabs[key]
 						const isSelected = ( key === activeTabName ) ? true : false
 
-						if ( false === tab.showTabIcon ) {
+						if ( false === tab.enabled || false === tab.showTabIcon ) {
 							return null
 						}
 
