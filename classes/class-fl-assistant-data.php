@@ -367,9 +367,9 @@ class FL_Assistant_Data {
 		$user = wp_get_current_user();
 
 		return array(
-			'id'   			=> $user->ID,
-			'name' 			=> $user->display_name,
-			'capabilities' 	=> $user->allcaps,
+			'id'           => $user->ID,
+			'name'         => $user->display_name,
+			'capabilities' => $user->allcaps,
 		);
 	}
 }

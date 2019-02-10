@@ -68,8 +68,6 @@ export const PanelFrame = ( { children, position = 'end', isShowing = true } ) =
 }
 
 export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
-	const isNotificationsSelected = 'fl-notifications' === activeTabName ? true : false
-	const notificationsLabel = tabs['fl-notifications'] ? tabs['fl-notifications'].label : ''
 	return (
 		<div className="fl-asst-panel-chrome">
 

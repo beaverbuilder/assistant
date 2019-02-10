@@ -18,7 +18,7 @@ export const NotificationsTab = () => {
 			label: 'Comments',
 			value: 'comments',
 		} )
-		content['comments'] = <Comments />
+		content.comments = <Comments />
 	}
 
 	if ( canUpdate ) {
@@ -26,7 +26,7 @@ export const NotificationsTab = () => {
 			label: 'Updates',
 			value: 'updates',
 		} )
-		content['updates'] = <Updates />
+		content.updates = <Updates />
 	}
 
 	return (
