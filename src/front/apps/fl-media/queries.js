@@ -1,4 +1,4 @@
-import { getPagedContent } from 'utils/rest-api'
+import { getPagedContent } from 'utils/wordpress/rest'
 
 export const mediaQuery = () => {
 	return {
