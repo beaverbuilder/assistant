@@ -6,7 +6,7 @@ import store from 'store'
  *
  * @type {Number}
  */
-const CACHE_EXPIRES = 600000
+const CACHE_EXPIRES = 30000
 
 /**
  * GET requests that are currently running.
