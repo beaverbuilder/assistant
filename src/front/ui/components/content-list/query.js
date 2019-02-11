@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getPagedContent } from 'utils/wordpress/rest'
+import { getPagedContent } from 'utils/wordpress'
 import { ContentList } from 'components'
 
 export const ContentQuery = ( {

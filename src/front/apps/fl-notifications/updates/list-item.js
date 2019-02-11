@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import classname from 'classnames'
 
-//import { updatePlugin, updateTheme } from 'utils/wordpress/rest'
+//import { updatePlugin, updateTheme } from 'utils/wordpress'
 import { Button, ContentListItem, Icon } from 'components'
 import './style.scss'
 
