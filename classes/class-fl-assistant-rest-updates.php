@@ -27,6 +27,18 @@ final class FL_Assistant_REST_Updates {
 		);
 
 		register_rest_route(
+			FL_Assistant_REST::$namespace, '/updates/count', array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::updates_count',
+					'permission_callback' => function() {
+						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
+					},
+				),
+			)
+		);
+
+		register_rest_route(
 			FL_Assistant_REST::$namespace, '/updates/update-plugin', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -156,6 +168,31 @@ final class FL_Assistant_REST_Updates {
 		}
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns the number of updates found.
+	 *
+	 * @since  0.1
+	 * @param object $request
+	 * @return array
+	 */
+	static public function updates_count( $request ) {
+		$count			= 0;
+		$update_plugins = get_site_transient( 'update_plugins' );
+		$update_themes  = get_site_transient( 'update_themes' );
+
+		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
+			$count += count( $update_plugins->response );
+		}
+
+		if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
+			$count += count( $update_themes->response );
+		}
+
+		return rest_ensure_response( array(
+			'count' => $count,
+		) );
 	}
 
 	/**

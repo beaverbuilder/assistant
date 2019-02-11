@@ -10,6 +10,10 @@ class FL_Assistant_Heartbeat {
 	 * @return void
 	 */
 	static public function init() {
+		add_filter( 'heartbeat_settings', function( $settings ) {
+			$settings['interval'] = 15;
+			return $settings;
+		} );
 		add_filter( 'heartbeat_received', __CLASS__ . '::received', 11, 2 );
 	}
 

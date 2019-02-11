@@ -28,13 +28,28 @@ final class FL_Assistant_REST_Notifications {
 	}
 
 	/**
-	 * Returns the notifcation count for the current user.
+	 * Returns the notification count for the current user.
 	 *
 	 * @param object $request
 	 * @return array
 	 */
 	static public function count( $request ) {
-		return array( 'count' => 10 );
+		$count = 0;
+
+		// Comments count
+		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/comments/count' );
+		$request->set_query_params( array( 'status' => 'hold' ) );
+		$response = rest_do_request( $request );
+		$data = $response->get_data();
+		$count += $data['count'];
+
+		// Updates count
+		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/updates/count' );
+		$response = rest_do_request( $request );
+		$data = $response->get_data();
+		$count += $data['count'];
+
+		return array( 'count' => $count );
 	}
 }
 

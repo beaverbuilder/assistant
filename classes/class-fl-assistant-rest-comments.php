@@ -27,6 +27,18 @@ final class FL_Assistant_REST_Comments {
 		);
 
 		register_rest_route(
+			FL_Assistant_REST::$namespace, '/comments/count', array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::comments_count',
+					'permission_callback' => function() {
+						return current_user_can( 'moderate_comments' );
+					},
+				),
+			)
+		);
+
+		register_rest_route(
 			FL_Assistant_REST::$namespace, '/comment/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -79,6 +91,24 @@ final class FL_Assistant_REST_Comments {
 		}
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns the number of comments found given
+	 * the current args.
+	 *
+	 * @since  0.1
+	 * @param object $request
+	 * @return array
+	 */
+	static public function comments_count( $request ) {
+		$params     = $request->get_params();
+		$post_types = array_keys( get_post_types() );
+		$comments   = get_comments( array_merge( array( 'post_type' => $post_types ), $params ) );
+
+		return rest_ensure_response( array(
+			'count' => count( $comments ),
+		) );
 	}
 
 	/**

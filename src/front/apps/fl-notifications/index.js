@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useAppState, useDispatch, useStore } from 'store'
-import { currentUserCan, useHeartbeat } from 'utils/wordpress'
+import { currentUserCan, getNotificationsCount, useHeartbeat } from 'utils/wordpress'
 import { AppTabButton, ScreenHeader, TagGroupControl } from 'components'
 import { Comments } from './comments'
 import { Updates } from './updates'
@@ -54,6 +54,11 @@ export const NotificationsTabButton = () => {
 	if ( ! notifications || ! notifications.enabled ) {
 		return null
 	}
+
+	useEffect( () => {
+		const request = getNotificationsCount( data => setCount( data.count ) )
+		return () => request.cancel()
+	} )
 
 	useHeartbeat( '/fl-assistant/v1/notifications/count', data => {
 		setCount( data.count )
