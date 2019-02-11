@@ -61,6 +61,7 @@ final class FL_Assistant_REST_Comments {
 	static public function get_comment_response_data( $comment ) {
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		return array(
+			'approved'	=> !! $comment->comment_approved,
 			'author'    => $comment->comment_author,
 			'content'   => $comment->comment_content,
 			'date'      => $date,
