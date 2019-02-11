@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Handles working with REST endpoinst via
+ * Handles working with REST endpoints via
  * the heartbeat API.
  */
 class FL_Assistant_Heartbeat {
