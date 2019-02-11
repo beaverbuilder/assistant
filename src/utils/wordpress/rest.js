@@ -9,37 +9,39 @@ import {
  * Returns any array of content for the given type
  * such as posts or terms.
  *
- * @param {String} type
- * @param {Object} args
- * @param {Function} complete
+ * @param {String}
+ * @param {Object}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getContent = ( type, args, complete ) => {
+export const getContent = ( type, query, onSuccess, onError ) => {
 	switch ( type ) {
 	case 'posts':
-		return getPosts( args, complete )
+		return getPosts( query, onSuccess, onError )
 	case 'terms':
-		return getTerms( args, complete )
+		return getTerms( query, onSuccess, onError )
 	case 'comments':
-		return getComments( args, complete )
+		return getComments( query, onSuccess, onError )
 	case 'users':
-		return getUsers( args, complete )
+		return getUsers( query, onSuccess, onError )
 	case 'updates':
-		return getUpdates( complete )
+		return getUpdates( onSuccess, onError )
 	}
 }
 
 /**
  * Returns any array of paginated content.
  *
- * @param {String} type
- * @param {Object} args
- * @param {Number} offset
- * @param {Function} complete
+ * @param {String}
+ * @param {Object}
+ * @param {Number}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getPagedContent = ( type, args, offset = 0, complete ) => {
-	let paged = Object.assign( { offset }, args )
+export const getPagedContent = ( type, query, offset = 0, onSuccess, onError ) => {
+	let paged = Object.assign( { offset }, query )
 	let perPage = 20
 
 	switch ( type ) {
@@ -55,134 +57,150 @@ export const getPagedContent = ( type, args, offset = 0, complete ) => {
 
 	return getContent( type, paged, data => {
 		const hasMore = data.length && data.length === perPage ? true : false
-		complete && complete( data, hasMore )
-	} )
+		onSuccess && onSuccess( data, hasMore )
+	}, onError )
 }
 
 /**
  * Returns any array of posts.
  *
- * @param {Object} args
- * @param {Function} complete
+ * @param {Object}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getPosts = ( args, complete ) => {
+export const getPosts = ( query, onSuccess, onError ) => {
 	return getRequest( {
-		route: addQueryArgs( 'fl-assistant/v1/posts', args ),
+		route: addQueryArgs( 'fl-assistant/v1/posts', query ),
 		cacheKey: 'posts',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Returns data for a single post.
  *
- * @param {Number} id
- * @param {Function} complete
+ * @param {Number}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getPost = ( id, complete ) => {
+export const getPost = ( id, onSuccess, onError ) => {
 	return getRequest( {
 		route: `fl-assistant/v1/post/${ id }`,
 		cacheKey: 'posts',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Returns any array of post terms.
  *
- * @param {Object} args
- * @param {Function} complete
+ * @param {Object}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getTerms = ( args, complete ) => {
+export const getTerms = ( query, onSuccess, onError ) => {
 	return getRequest( {
-		route: addQueryArgs( 'fl-assistant/v1/terms', args ),
+		route: addQueryArgs( 'fl-assistant/v1/terms', query ),
 		cacheKey: 'terms',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Returns data for a single term.
  *
- * @param {Number} id
- * @param {Function} complete
+ * @param {Number}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getTerm = ( id, complete ) => {
+export const getTerm = ( id, onSuccess, onError ) => {
 	return getRequest( {
 		route: `fl-assistant/v1/term/${ id }`,
 		cacheKey: 'terms',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Returns any array of comments.
  *
- * @param {Object} args
- * @param {Function} complete
+ * @param {Object}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getComments = ( args, complete ) => {
+export const getComments = ( query, onSuccess, onError ) => {
 	return getRequest( {
-		route: addQueryArgs( 'fl-assistant/v1/comments', args ),
+		route: addQueryArgs( 'fl-assistant/v1/comments', query ),
 		cacheKey: 'comments',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Returns data for a single comment.
  *
- * @param {Number} id
- * @param {Function} complete
+ * @param {Number}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getComment = ( id, complete ) => {
+export const getComment = ( id, onSuccess, onError ) => {
 	return getRequest( {
 		route: `fl-assistant/v1/comment/${ id }`,
 		cacheKey: 'comments',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Returns any array of users.
  *
- * @param {Object} args
- * @param {Function} complete
+ * @param {Object}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getUsers = ( args, complete ) => {
+export const getUsers = ( query, onSuccess, onError ) => {
 	return getRequest( {
-		route: addQueryArgs( 'fl-assistant/v1/users', args ),
+		route: addQueryArgs( 'fl-assistant/v1/users', query ),
 		cacheKey: 'users',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Returns data for a single user.
  *
- * @param {Number} id
- * @param {Function} complete
+ * @param {Number}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getUser = ( id, complete ) => {
+export const getUser = ( id, onSuccess, onError ) => {
 	return getRequest( {
 		route: `fl-assistant/v1/user/${ id }`,
 		cacheKey: 'users',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Updates the saved state for the current user.
  *
- * @param {Object} state
+ * @param {Object}
  * @return {Object}
  */
 export const updateUserState = ( state ) => {
@@ -197,47 +215,53 @@ export const updateUserState = ( state ) => {
 /**
  * Returns any array of updates.
  *
- * @param {Function} complete
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const getUpdates = ( complete ) => {
+export const getUpdates = ( onSuccess, onError ) => {
 	return getRequest( {
 		route: 'fl-assistant/v1/updates',
 		cacheKey: 'updates',
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Updates a single plugin.
  *
- * @param {String} plugin
- * @param {Function} complete
+ * @param {String}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const updatePlugin = ( plugin, complete ) => {
+export const updatePlugin = ( plugin, onSuccess, onError ) => {
 	const t = new Date().getTime()
 	clearCache( 'updates' )
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/updates/update-plugin', { plugin, t } ),
 		cached: false,
-		complete
+		onSuccess,
+		onError,
 	} )
 }
 
 /**
  * Updates a single theme.
  *
- * @param {String} theme
- * @param {Function} complete
+ * @param {String}
+ * @param {Function}
+ * @param {Function}
  * @return {Object}
  */
-export const updateTheme = ( theme, complete ) => {
+export const updateTheme = ( theme, onSuccess, onError ) => {
 	const t = new Date().getTime()
 	clearCache( 'updates' )
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/updates/update-theme', { theme, t } ),
 		cached: false,
-		complete
+		onSuccess,
+		onError,
 	} )
 }

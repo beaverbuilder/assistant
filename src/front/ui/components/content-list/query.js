@@ -12,14 +12,17 @@ export const ContentQuery = ( {
 	const [ hasMore, setHasMore ] = useState( true )
 
 	useEffect( () => {
-		setResults( [] )
 		setHasMore( true )
+		setResults( [] )
 	}, [ type, query ] )
 
 	const dataLoader = ( offset ) => {
 		return getPagedContent( type, query, offset, ( data, more ) => {
 			setHasMore( pagination && more ? true : false )
 			setResults( results.concat( data ) )
+		}, () => {
+			setHasMore( false )
+			setResults( [] )
 		} )
 	}
 
