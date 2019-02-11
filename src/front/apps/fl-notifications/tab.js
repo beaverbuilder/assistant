@@ -1,16 +1,18 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useAppState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import { ScreenHeader, TagGroupControl } from 'components'
-import { Comments } from './comments'
-import { Updates } from './updates'
+import { CommentsFilter, CommentsList } from './comments'
+import { UpdatesList } from './updates'
 
 export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )
 	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
-	const defaultTab = canModerateComments ? 'comments' : 'updates'
-	const [ activeTab, setActiveTab ] = useAppState( 'activeTab', defaultTab )
+	const defaultTag = canModerateComments ? 'comments' : 'updates'
+	const [ activeTag, setActiveTag ] = useAppState( 'activeTag', defaultTag )
+	const [ query, setQuery ] = useState( [] )
 	const tabs = []
+	const filters = {}
 	const content = {}
 
 	if ( canModerateComments ) {
@@ -18,7 +20,8 @@ export const NotificationsTab = () => {
 			label: 'Comments',
 			value: 'comments',
 		} )
-		content.comments = <Comments />
+		filters.comments = <CommentsFilter onChange={ setQuery } />
+		content.comments = <CommentsList query={ query } />
 	}
 
 	if ( canUpdate ) {
@@ -26,7 +29,7 @@ export const NotificationsTab = () => {
 			label: 'Updates',
 			value: 'updates',
 		} )
-		content.updates = <Updates />
+		content.updates = <UpdatesList />
 	}
 
 	return (
@@ -34,12 +37,13 @@ export const NotificationsTab = () => {
 			<ScreenHeader>
 				<TagGroupControl
 					tags={ tabs }
-					value={ activeTab }
-					onChange={ value => setActiveTab( value ) }
+					value={ activeTag }
+					onChange={ value => setActiveTag( value ) }
 					appearance="vibrant"
 				/>
+				{ filters[ activeTag ] ? filters[ activeTag ] : null }
 			</ScreenHeader>
-			{ content[ activeTab ] ? content[ activeTab ] : null }
+			{ content[ activeTag ] ? content[ activeTag ] : null }
 		</Fragment>
 	)
 }
