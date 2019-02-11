@@ -29,12 +29,13 @@ export const getRequest = ( {
 	route,
 	cached = true,
 	cacheKey = 'cache',
-	complete = () => {} }
-) => {
-	const promise = getCachedRequest( cacheKey, route, complete )
+	onSuccess = () => {},
+	onError = () => {},
+} ) => {
+	const result = getCachedRequest( cacheKey, route, onSuccess, onError )
 
-	if ( cached && promise.cached ) {
-		return promise
+	if ( cached && result.cached ) {
+		return result
 	}
 
 	if ( ! requests[ route ] ) {
@@ -42,19 +43,25 @@ export const getRequest = ( {
 		request( {
 			route,
 			method: 'GET',
-			complete: data => {
+			onSuccess: data => {
 				cached && setCache( cacheKey, route, data )
-				requests[ route ].map( promise =>
-					! promise.cancelled && promise.resolve( data )
+				requests[ route ].map( result =>
+					! result.cancelled && result.onSuccess( data )
 				)
 				requests[ route ] = null
 			},
+			onError: error => {
+				requests[ route ].map( result =>
+					! result.cancelled && result.onError( error )
+				)
+				requests[ route ] = null
+			}
 		} )
 	}
 
-	requests[ route ].push( promise )
+	requests[ route ].push( result )
 
-	return promise
+	return result
 }
 
 /**
@@ -63,21 +70,24 @@ export const getRequest = ( {
  * @param {String}
  * @param {String}
  * @param {Function}
+ * @param {Function}
  * @return {Object|Boolean}
  */
-export const getCachedRequest = ( key, route, complete = () => {} ) => {
+export const getCachedRequest = ( key, route, onSuccess, onError ) => {
 	const cache = getCache( key, route )
-	const promise = {
-		cancel: () => promise.cancelled = true,
-		resolve: data => complete( data ),
+	const result = {
+		cached: !! cache,
+		cancelled: false,
+		cancel: () => result.cancelled = true,
+		onSuccess,
+		onError,
 	}
 
 	if ( cache ) {
-		promise.cached = true
-		promise.resolve( cache )
+		onSuccess( cache )
 	}
 
-	return promise
+	return result
 }
 
 /**
@@ -86,21 +96,25 @@ export const getCachedRequest = ( key, route, complete = () => {} ) => {
  * @param {Object}
  * @return {Object}
  */
-export const postRequest = ( { route, args = {}, complete = () => {} } ) => {
+export const postRequest = ( {
+	route,
+	args = {},
+	onSuccess = () => {},
+	onError = () => {},
+} ) => {
 	const body = new FormData()
 
 	Object.entries( args ).map( ( [ key, value ] ) => {
 		body.append( key, value )
 	} )
 
-	const promise = request( {
+	return request( {
 		method: 'POST',
 		route,
 		body,
-		complete,
+		onSuccess,
+		onError,
 	} )
-
-	return promise
 }
 
 /**
@@ -109,7 +123,13 @@ export const postRequest = ( { route, args = {}, complete = () => {} } ) => {
  * @param {Object}
  * @return {Object}
  */
-export const request = ( { method, route, body, complete = () => {} } ) => {
+export const request = ( {
+	method,
+	route,
+	body,
+	onSuccess = () => {},
+	onError = () => {},
+} ) => {
 	const { apiNonce, apiRoot } = store.getState()
 
 	const promise = fetch( apiRoot + route, {
@@ -120,16 +140,23 @@ export const request = ( { method, route, body, complete = () => {} } ) => {
 			'X-WP-Nonce': apiNonce,
 		},
 	} ).then( response => {
+		if ( ! response.ok ) {
+			throw Error( response.statusText )
+		}
 		return response.json()
 	} ).then( json => {
 		if ( ! promise.cancelled ) {
-			complete( json )
+			onSuccess( json )
+		}
+	} ).catch( error => {
+		if ( ! promise.cancelled ) {
+			onError( error )
 		}
 	} )
 
-	promise.cancel = () => promise.cancelled = true
-
-	return promise
+	return {
+		cancel: () => promise.cancelled = true
+	}
 }
 
 /**
