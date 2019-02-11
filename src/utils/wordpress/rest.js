@@ -1,9 +1,5 @@
-import {
-	addQueryArgs,
-	clearCache,
-	getRequest,
-	postRequest
-} from 'utils/request'
+import { clearCache, getRequest, postRequest } from 'utils/request'
+import { addQueryArgs } from 'utils/url'
 
 /**
  * Returns any array of content for the given type

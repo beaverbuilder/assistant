@@ -29,6 +29,7 @@ class FL_Assistant_Asset_Loader {
 		$ver = FL_ASSISTANT_VERSION;
 
 		if ( self::should_enqueue() ) {
+			wp_enqueue_script( 'heartbeat' );
 			wp_enqueue_style( 'fl-assistant-front', $url . 'build/bundle.css', array(), $ver, null );
 			wp_enqueue_script( 'fl-assistant-front', $url . 'build/bundle.js', array(), $ver, true );
 			wp_localize_script( 'fl-assistant-front', 'FLAssistantInitialData', FL_Assistant_Data::get_all() );
