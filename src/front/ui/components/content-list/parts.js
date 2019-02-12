@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Clipboard from 'react-clipboard.js'
 import classname from 'classnames'
 import {
 	EmptyMessage,
@@ -95,6 +96,7 @@ export const ContentListDetail = ( { className, data } ) => {
 			</ScreenHeader>
 			<Padding>
 				<div>By { meta }</div>
+				<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
 			</Padding>
 		</div>
 	)
