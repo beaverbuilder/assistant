@@ -1,6 +1,16 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
-import { EmptyMessage, Padding, ScreenHeader, StackContext, Heading } from 'components'
+import {
+	EmptyMessage,
+	Padding,
+	ScreenHeader,
+	StackContext,
+	Heading,
+	Button,
+	Icon,
+	TagGroup,
+	Tag,
+} from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
@@ -18,7 +28,7 @@ export const ContentListGroupLabel = ( { label } ) => {
 	)
 }
 
-export const ContentListItem = ( { className, data, onClick, children } ) => {
+export const ContentListItem = ( { className, data, onClick } ) => {
 	const { meta, thumbnail, title } = data
 	const { pushView } = useContext( StackContext )
 
@@ -45,7 +55,11 @@ export const ContentListItem = ( { className, data, onClick, children } ) => {
 					{ meta }
 				</div>
 			</div>
-			{ children }
+			<div className="fl-asst-list-item-accessory">
+				<Button appearance="icon">
+					<Icon />
+				</Button>
+			</div>
 		</div>
 	)
 }
@@ -68,15 +82,20 @@ export const ContentListEmptyMessage = () => {
 }
 
 export const ContentListDetail = ( { className, data } ) => {
-	const { content, meta, title } = data
+	const { content, meta, title, url, edit_url } = data
+
+	console.log(data)
+
 	return (
 		<div className={ classname( className, 'fl-asst-list-detail' ) }>
-			<ScreenHeader title="Post">
-
+			<ScreenHeader title={title}>
+				<TagGroup>
+					<Tag href={url}>View</Tag>
+					<Tag href={edit_url}>Edit</Tag>
+				</TagGroup>
 			</ScreenHeader>
 			<Padding>
-				<Heading>{title}</Heading>
-				{ meta }
+				<div>By { meta }</div>
 			</Padding>
 		</div>
 	)
