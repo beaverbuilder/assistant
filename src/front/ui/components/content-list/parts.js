@@ -56,7 +56,7 @@ export const ContentListItem = ( { className, data, onClick } ) => {
 			</div>
 			<div className="fl-asst-list-item-accessory">
 				<Button appearance="icon">
-					<Icon />
+					<Icon name="forward" />
 				</Button>
 			</div>
 		</div>
