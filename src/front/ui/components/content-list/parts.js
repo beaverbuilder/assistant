@@ -27,7 +27,7 @@ export const ContentListGroupLabel = ( { label } ) => {
 	)
 }
 
-export const ContentListItem = ( { className, data, onClick } ) => {
+export const ContentListItem = ( { className, data, onClick, onAccessoryClick } ) => {
 	const { meta, thumbnail, title } = data
 	const { pushView } = useContext( StackContext )
 
@@ -55,9 +55,9 @@ export const ContentListItem = ( { className, data, onClick } ) => {
 				</div>
 			</div>
 			<div className="fl-asst-list-item-accessory">
-				<Button appearance="icon">
+				{ onAccessoryClick && <Button appearance="icon" onClick={onAccessoryClick}>
 					<Icon name="forward" />
-				</Button>
+				</Button> }
 			</div>
 		</div>
 	)
