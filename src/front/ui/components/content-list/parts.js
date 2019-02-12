@@ -5,7 +5,6 @@ import {
 	Padding,
 	ScreenHeader,
 	StackContext,
-	Heading,
 	Button,
 	Icon,
 	TagGroup,
@@ -82,7 +81,7 @@ export const ContentListEmptyMessage = () => {
 }
 
 export const ContentListDetail = ( { className, data } ) => {
-	const { content, meta, title, url, edit_url } = data
+	const { meta, title, url, edit_url } = data
 
 	return (
 		<div className={ classname( className, 'fl-asst-list-detail' ) }>
