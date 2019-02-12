@@ -9,6 +9,7 @@ const handleTransition = () => {
 		type: 'tween',
 		duration: 220
 	}
+
 	/*
 	return {
 		type: 'spring',
