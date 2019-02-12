@@ -84,8 +84,6 @@ export const ContentListEmptyMessage = () => {
 export const ContentListDetail = ( { className, data } ) => {
 	const { content, meta, title, url, edit_url } = data
 
-	console.log(data)
-
 	return (
 		<div className={ classname( className, 'fl-asst-list-detail' ) }>
 			<ScreenHeader title={title}>
