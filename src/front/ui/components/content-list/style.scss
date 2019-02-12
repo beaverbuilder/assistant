@@ -42,15 +42,11 @@
     flex-direction: row;
     padding:10px 20px;
     align-items:center;
-    border: 1px solid transparent;
     background: transparent;
     overflow: hidden;
-    transition-property: background-color;
-    transition-duration: .5s;
 
     &:hover {
-        background: var(--fl-utility-background-color);
-        border-color: var(--fl-utility-background-color);
+        background: #F9FBFC;
         cursor: pointer;
     }
 
