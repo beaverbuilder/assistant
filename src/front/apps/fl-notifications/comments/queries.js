@@ -1,8 +1,10 @@
-import { getPagedContent } from 'utils/wordpress/rest'
+import { getPagedContent } from 'utils/wordpress'
 
-export const commentsQuery = () => {
-	return {}
+export const commentsQuery = ( status ) => {
+	return {
+		status,
+	}
 }
 
 // Preload
-getPagedContent( 'comments', commentsQuery() )
+getPagedContent( 'comments', commentsQuery( 'all' ) )

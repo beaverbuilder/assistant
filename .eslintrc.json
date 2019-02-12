@@ -4,11 +4,6 @@
         "commonjs": true,
         "es6": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "wordpress"
-    ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -16,6 +11,11 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "wordpress"
+    ],
     "plugins": [
         "react"
     ],
@@ -23,6 +23,12 @@
       "react": {
         "version": "detect"
       }
+    },
+    "globals": {
+      "describe": "readable",
+      "expect": "readable",
+      "it": "readable",
+      "FLAssistantInitialData": "readable"
     },
     "rules": {
         "camelcase": [
@@ -38,9 +44,6 @@
         "linebreak-style": [
             "error",
             "unix"
-        ],
-        "no-undef": [
-            "off"
         ],
         "quotes": [
             "error",

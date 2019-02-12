@@ -1,5 +1,5 @@
 import { hydrateAppState } from 'store/actions'
-import { updateUserState } from 'utils/wordpress/rest'
+import { updateUserState } from 'utils/wordpress'
 
 export default {
 	REGISTER_APP: ( { key }, { dispatch } ) => {
