@@ -27,7 +27,8 @@ export const ContentListGroupLabel = ( { label } ) => {
 	)
 }
 
-export const ContentListItem = ( { className, data, onClick, onAccessoryClick } ) => {
+export const ContentListItem = props => {
+	const { className, data, onClick, onAccessoryClick } = props
 	const { meta, thumbnail, title } = data
 	const { pushView } = useContext( StackContext )
 
