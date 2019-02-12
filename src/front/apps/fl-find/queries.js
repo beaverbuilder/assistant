@@ -1,4 +1,4 @@
-import { getPagedContent } from 'utils/wordpress/rest'
+import { getPagedContent } from 'utils/wordpress'
 
 export const postQuery = ( type, status ) => {
 	return {
