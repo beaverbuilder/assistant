@@ -134,7 +134,7 @@ export const Stack = ( { children, className } ) => {
 				children,
 				config,
 			} )
-			setViews( newViews )
+			setViews( Array.from( newViews ) )
 			setAction( 'push' )
 		},
 		popView: () => {
@@ -145,7 +145,7 @@ export const Stack = ( { children, className } ) => {
 			const newViews = views
 			newViews[ newViews.length - 1 ].pose = 'future'
 			newViews[ newViews.length - 2 ].pose = 'present'
-			setViews( newViews )
+			setViews( Array.from( newViews ) )
 			setAction( 'pop' )
 		},
 		popToRoot: () => {
