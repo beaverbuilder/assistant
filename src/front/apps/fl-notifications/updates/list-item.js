@@ -5,7 +5,7 @@ import classname from 'classnames'
 import { Button, ContentListItem, Icon } from 'components'
 import './style.scss'
 
-export const UpdatesListItem = ( { className, removeItem, ...props } ) => {
+export const UpdatesListItem = ( { className, removeItem, updateItem, ...props } ) => {
 	const [ updating, setUpdating ] = useState( false )
 	const [ updated, setUpdated ] = useState( false )
 	const [ error, setError ] = useState( false )
@@ -42,15 +42,12 @@ export const UpdatesListItem = ( { className, removeItem, ...props } ) => {
 	}
 
 	const updateComplete = response => {
+		const { meta_updated } = props.data
 		if ( response.success ) {
 			setUpdating( false )
 			setUpdated( true )
 			setButtonText( 'Updated!' )
-			setTimeout( () => {
-				setUpdated( false )
-				setButtonText( 'Update' )
-				removeItem()
-			}, 3000 )
+			updateItem( { meta: meta_updated } )
 		} else if ( response.error ) {
 			setUpdating( false )
 			setError( true )

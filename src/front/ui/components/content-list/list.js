@@ -59,25 +59,25 @@ export const ContentList = ( {
 	 * Updates an item with new data.
 	 */
 	const updateItem = ( itemKey, groupKey, newData ) => {
-		const itemData = isNaN( groupKey ) ? data[ itemKey ] : data[ groupKey ].items[ itemKey ]
-		if ( isNaN( groupKey ) ) {
+		const itemData = null === groupKey ? data[ itemKey ] : data[ groupKey ].items[ itemKey ]
+		if ( null === groupKey ) {
 			data[ itemKey ] = { ...itemData, ...newData }
 		} else {
 			data[ groupKey ].items[ itemKey ] = { ...itemData, ...newData }
 		}
-		dataSetter( data )
+		dataSetter( data.slice( 0 ) )
 	}
 
 	/**
 	 * Removes an item by setting it to null to preserve keys.
 	 */
 	const removeItem = ( itemKey, groupKey ) => {
-		if ( isNaN( groupKey ) ) {
+		if ( null === groupKey ) {
 			data[ itemKey ] = null
 		} else {
 			data[ groupKey ].items[ itemKey ] = null
 		}
-		dataSetter( data )
+		dataSetter( data.slice( 0 ) )
 	}
 
 	/**
