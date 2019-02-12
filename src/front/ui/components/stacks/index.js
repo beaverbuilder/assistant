@@ -9,14 +9,6 @@ const handleTransition = () => {
 		type: 'tween',
 		duration: 220
 	}
-
-	/*
-	return {
-		type: 'spring',
-		stiffness: 450,
-		damping: 35,
-		mass: 1.2,
-	}*/
 }
 
 export const StackView = posed.div( props => {
@@ -68,7 +60,7 @@ export const StackView = posed.div( props => {
 		},
 		future: {
 			x: '80%',
-			opacity: 0,
+			opacity: .7,
 			transition: handleTransition,
 			applyAtEnd: {
 				pointerEvents: 'none'
@@ -112,17 +104,16 @@ export const Stack = ( { children, className } ) => {
 	// After pop transition completes, cleanup data
 	const poseComplete = name => {
 		if ( action && 'pop' === action && 'future' === name ) {
-			const newViews = views
 
 			// ditch the last 'future' item
-			newViews.pop()
-			setViews( newViews )
+			views.pop()
+			setViews( Array.from(views) )
 		}
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
 			views.pop()
-			setViews( views )
+			setViews( Array.from(views) )
 		}
 	}
 
@@ -156,6 +147,8 @@ export const Stack = ( { children, className } ) => {
 			newViews[ newViews.length - 2 ].pose = 'present'
 			setViews( newViews )
 			setAction( 'pop' )
+
+			console.log('pop', views )
 		},
 		popToRoot: () => {
 			if ( 2 > views.length ) {
@@ -174,6 +167,8 @@ export const Stack = ( { children, className } ) => {
 	const classes = classname( {
 		'fl-asst-stack': true,
 	}, className )
+
+	console.log('render', views.length )
 
 	return (
 		<div className={classes}>
