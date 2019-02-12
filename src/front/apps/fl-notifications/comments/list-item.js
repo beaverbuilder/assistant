@@ -13,10 +13,10 @@ export const CommentsListItem = ( { className, data, ...props } ) => {
 
 	// Truncate title
 	const title = truncate( data.title, 6 )
-	const newDate = Object.assign( {}, data, { title } )
+	const newData = Object.assign( {}, data, { title } )
 
 	return (
-		<ContentListItem className={ classes } data={ newDate } { ...props }>
+		<ContentListItem className={ classes } data={ newData } { ...props }>
 			{ ! approved &&
 				<div className='fl-asst-comment-pending-icon'>
 					<Icon name='red-dot' />
