@@ -45,7 +45,7 @@ export const ContentListItem = props => {
 	}
 
 	return (
-		<div className={ classname( className, 'fl-asst-list-item' ) } onClick={ handleClick }>
+		<div className={ classname( className, 'fl-asst-list-item' ) } onClick={ e => handleClick( props, e ) }>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
@@ -56,7 +56,7 @@ export const ContentListItem = props => {
 				</div>
 			</div>
 			<div className="fl-asst-list-item-accessory">
-				{ onAccessoryClick && <Button appearance="icon" onClick={onAccessoryClick}>
+				{ onAccessoryClick && <Button appearance="icon" onClick={ e => onAccessoryClick( props, e ) }>
 					<Icon name="forward" />
 				</Button> }
 			</div>
