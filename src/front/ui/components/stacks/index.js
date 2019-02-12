@@ -41,12 +41,14 @@ export const StackView = posed.div( props => {
 			backgroundColor: 'var(--fl-background-color)'
 		},
 		past: {
-			x: '-50%',
+			x: '0%',
+			scale: .9,
 			opacity: 0,
 			transition: handleTransition,
 		},
 		present: {
 			x: '0%',
+			scale: 1,
 			opacity: 1,
 			transition: handleTransition,
 		},

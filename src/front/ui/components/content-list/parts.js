@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
-import { EmptyMessage, Padding, ScreenHeader, Separator, StackContext } from 'components'
+import { EmptyMessage, Padding, ScreenHeader, StackContext, Heading } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
@@ -71,11 +71,12 @@ export const ContentListDetail = ( { className, data } ) => {
 	const { content, meta, title } = data
 	return (
 		<div className={ classname( className, 'fl-asst-list-detail' ) }>
-			<ScreenHeader title={ title } />
+			<ScreenHeader title="Post">
+
+			</ScreenHeader>
 			<Padding>
+				<Heading>{title}</Heading>
 				{ meta }
-				{ meta && <Separator /> }
-				<div dangerouslySetInnerHTML={ { __html: content } } />
 			</Padding>
 		</div>
 	)
