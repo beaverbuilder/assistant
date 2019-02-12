@@ -13,7 +13,7 @@ export const CommentsListItem = ( { className, data, ...props } ) => {
 
 	// Truncate title
 	const title = truncate( data.title, 6 )
-	const newDate = Object.assign({}, data, { title })
+	const newDate = Object.assign( {}, data, { title } )
 
 	return (
 		<ContentListItem className={ classes } data={ newDate } { ...props }>
