@@ -61,7 +61,7 @@ final class FL_Assistant_REST_Comments {
 	static public function get_comment_response_data( $comment ) {
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		return array(
-			'approved'	=> !! $comment->comment_approved,
+			'approved'  => ! ! $comment->comment_approved,
 			'author'    => $comment->comment_author,
 			'content'   => $comment->comment_content,
 			'date'      => $date,
@@ -107,9 +107,11 @@ final class FL_Assistant_REST_Comments {
 		$post_types = array_keys( get_post_types() );
 		$comments   = get_comments( array_merge( array( 'post_type' => $post_types ), $params ) );
 
-		return rest_ensure_response( array(
-			'count' => count( $comments ),
-		) );
+		return rest_ensure_response(
+			array(
+				'count' => count( $comments ),
+			)
+		);
 	}
 
 	/**

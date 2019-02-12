@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useStore } from 'store'
-import { getNotificationsCount, useHeartbeat } from 'utils/wordpress'
+import { useHeartbeat } from 'utils/wordpress'
 import { AppTabButton } from 'components'
 
 export const NotificationsIcon = ( { count = 0 } ) => {
@@ -25,12 +25,7 @@ export const NotificationsTabButton = () => {
 		return null
 	}
 
-	useEffect( () => {
-		const request = getNotificationsCount( data => setCount( data.count ) )
-		return () => request.cancel()
-	} )
-
-	useHeartbeat( '/fl-assistant/v1/notifications/count', data => {
+	useHeartbeat( 'fl-assistant/v1/notifications/count', data => {
 		setCount( data.count )
 	} )
 

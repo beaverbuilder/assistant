@@ -178,7 +178,7 @@ final class FL_Assistant_REST_Updates {
 	 * @return array
 	 */
 	static public function updates_count( $request ) {
-		$count			= 0;
+		$count          = 0;
 		$update_plugins = get_site_transient( 'update_plugins' );
 		$update_themes  = get_site_transient( 'update_themes' );
 
@@ -190,9 +190,11 @@ final class FL_Assistant_REST_Updates {
 			$count += count( $update_themes->response );
 		}
 
-		return rest_ensure_response( array(
-			'count' => $count,
-		) );
+		return rest_ensure_response(
+			array(
+				'count' => $count,
+			)
+		);
 	}
 
 	/**

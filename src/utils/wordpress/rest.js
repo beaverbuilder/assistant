@@ -261,19 +261,3 @@ export const updateTheme = ( theme, onSuccess, onError ) => {
 		onError,
 	} )
 }
-
-/**
- * Returns the number of notifications.
- *
- * @param {Function}
- * @param {Function}
- * @return {Object}
- */
-export const getNotificationsCount = ( onSuccess, onError ) => {
-	return getRequest( {
-		route: 'fl-assistant/v1/notifications/count',
-		cached: false,
-		onSuccess,
-		onError,
-	} )
-}
