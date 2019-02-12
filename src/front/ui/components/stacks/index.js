@@ -9,14 +9,6 @@ const handleTransition = () => {
 		type: 'tween',
 		duration: 220
 	}
-
-	/*
-	return {
-		type: 'spring',
-		stiffness: 450,
-		damping: 35,
-		mass: 1.2,
-	}*/
 }
 
 export const StackView = posed.div( props => {
@@ -53,7 +45,7 @@ export const StackView = posed.div( props => {
 			scale: .9,
 			opacity: 0,
 			transition: handleTransition,
-			applyAtEnd: {
+			applyAtStart: {
 				pointerEvents: 'none'
 			}
 		},
@@ -70,7 +62,7 @@ export const StackView = posed.div( props => {
 			x: '80%',
 			opacity: 0,
 			transition: handleTransition,
-			applyAtEnd: {
+			applyAtStart: {
 				pointerEvents: 'none'
 			}
 		},
@@ -112,17 +104,16 @@ export const Stack = ( { children, className } ) => {
 	// After pop transition completes, cleanup data
 	const poseComplete = name => {
 		if ( action && 'pop' === action && 'future' === name ) {
-			const newViews = views
 
 			// ditch the last 'future' item
-			newViews.pop()
-			setViews( newViews )
+			views.pop()
+			setViews( Array.from( views ) )
 		}
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
 			views.pop()
-			setViews( views )
+			setViews( Array.from( views ) )
 		}
 	}
 
@@ -143,7 +134,7 @@ export const Stack = ( { children, className } ) => {
 				children,
 				config,
 			} )
-			setViews( newViews )
+			setViews( Array.from( newViews ) )
 			setAction( 'push' )
 		},
 		popView: () => {
@@ -154,7 +145,7 @@ export const Stack = ( { children, className } ) => {
 			const newViews = views
 			newViews[ newViews.length - 1 ].pose = 'future'
 			newViews[ newViews.length - 2 ].pose = 'present'
-			setViews( newViews )
+			setViews( Array.from( newViews ) )
 			setAction( 'pop' )
 		},
 		popToRoot: () => {

@@ -1,10 +1,19 @@
-import React, { Fragment } from 'react'
-import { ScreenHeader, ContentQuery } from 'components'
+import React, { Fragment, useContext } from 'react'
+import { ScreenHeader, ContentQuery, UIContext } from 'components'
 import { FindFilter } from './filter'
 import { useAppState } from 'store'
 
 export const FindTab = () => {
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
+	const { goToURL } = useContext( UIContext )
+
+	const itemProps = {
+		onAccessoryClick: ( { data }, e ) => {
+			const { url } = data
+			goToURL( url )
+			e.stopPropagation()
+		}
+	}
 	return (
 		<Fragment>
 			<ScreenHeader>
@@ -15,6 +24,7 @@ export const FindTab = () => {
 					type={ data.type }
 					query={ data.query }
 					pagination={ true }
+					itemProps={ itemProps }
 				/>
 			}
 		</Fragment>

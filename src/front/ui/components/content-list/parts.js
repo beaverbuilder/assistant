@@ -28,7 +28,7 @@ export const ContentListGroupLabel = ( { label } ) => {
 }
 
 export const ContentListItem = props => {
-	const { className, data, onClick, onAccessoryClick } = props
+	const { className, children, data, onClick, onAccessoryClick } = props
 	const { meta, thumbnail, title } = data
 	const { pushView } = useContext( StackContext )
 
@@ -60,6 +60,7 @@ export const ContentListItem = props => {
 					<Icon name="forward" />
 				</Button> }
 			</div>
+			{children}
 		</div>
 	)
 }
