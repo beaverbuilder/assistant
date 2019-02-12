@@ -6,10 +6,17 @@ import './style.scss'
 
 const handleTransition = () => {
 	return {
-		type: 'spring',
-		stiffness: 300,
-		damping: 30,
+		type: 'tween',
+		duration: 220
 	}
+
+	/*
+	return {
+		type: 'spring',
+		stiffness: 450,
+		damping: 35,
+		mass: 1.2,
+	}*/
 }
 
 export const StackView = posed.div( props => {
@@ -38,22 +45,34 @@ export const StackView = posed.div( props => {
 			left: 0,
 			right: 0,
 			bottom: 0,
-			backgroundColor: 'var(--fl-background-color)'
+			backgroundColor: 'var(--fl-background-color)',
+			pointerEvents: 'auto'
 		},
 		past: {
-			x: '-50%',
+			x: '0%',
+			scale: .9,
 			opacity: 0,
 			transition: handleTransition,
+			applyAtEnd: {
+				pointerEvents: 'none'
+			}
 		},
 		present: {
 			x: '0%',
+			scale: 1,
 			opacity: 1,
 			transition: handleTransition,
+			applyAtEnd: {
+				pointerEvents: 'auto'
+			}
 		},
 		future: {
 			x: '80%',
 			opacity: 0,
 			transition: handleTransition,
+			applyAtEnd: {
+				pointerEvents: 'none'
+			}
 		},
 	}
 } )

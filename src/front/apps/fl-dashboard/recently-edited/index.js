@@ -1,11 +1,30 @@
-import React from 'react'
-import { Widget, Tag, TagGroup, ContentQuery } from 'components'
+import React, { Fragment, useContext } from 'react'
+import {
+	Widget,
+	Tag,
+	TagGroup,
+	ContentQuery,
+	StackContext,
+	ScreenHeader,
+	UIContext,
+} from 'components'
 import { useAppState } from 'store'
 import { recentQuery } from './queries'
 
 export const RecentlyEditedWidget = () => {
 	const [ postType, setPostType ] = useAppState( 'post-type', 'any' )
 	const isTagSelected = value => postType === value
+	const { pushView } = useContext( StackContext )
+	const { goToURL } = useContext( UIContext )
+
+	const itemProps = {
+		onClick: () => pushView( <RecentPostDetailView /> ),
+		onAccessoryClick: ( { data }, e ) => {
+			const { url } = data
+			goToURL( url )
+			e.stopPropagation()
+		}
+	}
 
 	return (
 		<Widget title="Recently Edited" isPadded={false}>
@@ -16,7 +35,19 @@ export const RecentlyEditedWidget = () => {
 					<Tag onClick={ () => setPostType( 'page' )} isSelected={isTagSelected( 'page' )}>Pages</Tag>
 				</TagGroup>
 			</div>
-			<ContentQuery query={recentQuery( postType )} placeholderItemCount={5} />
+			<ContentQuery
+				query={recentQuery( postType )}
+				placeholderItemCount={5}
+				itemProps={itemProps}
+			/>
 		</Widget>
+	)
+}
+
+const RecentPostDetailView = () => {
+	return (
+		<Fragment>
+			<ScreenHeader title="Recent Post Test" />
+		</Fragment>
 	)
 }
