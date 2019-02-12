@@ -1,11 +1,9 @@
-import React, { Fragment, useContext } from 'react'
+import React, { useContext } from 'react'
 import {
 	Widget,
 	Tag,
 	TagGroup,
 	ContentQuery,
-	StackContext,
-	ScreenHeader,
 	UIContext,
 } from 'components'
 import { useAppState } from 'store'
@@ -14,7 +12,6 @@ import { recentQuery } from './queries'
 export const RecentlyEditedWidget = () => {
 	const [ postType, setPostType ] = useAppState( 'post-type', 'any' )
 	const isTagSelected = value => postType === value
-	const { pushView } = useContext( StackContext )
 	const { goToURL } = useContext( UIContext )
 
 	const itemProps = {

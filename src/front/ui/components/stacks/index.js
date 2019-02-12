@@ -107,13 +107,13 @@ export const Stack = ( { children, className } ) => {
 
 			// ditch the last 'future' item
 			views.pop()
-			setViews( Array.from(views) )
+			setViews( Array.from( views ) )
 		}
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
 			views.pop()
-			setViews( Array.from(views) )
+			setViews( Array.from( views ) )
 		}
 	}
 
@@ -147,8 +147,6 @@ export const Stack = ( { children, className } ) => {
 			newViews[ newViews.length - 2 ].pose = 'present'
 			setViews( newViews )
 			setAction( 'pop' )
-
-			console.log('pop', views )
 		},
 		popToRoot: () => {
 			if ( 2 > views.length ) {
@@ -167,8 +165,6 @@ export const Stack = ( { children, className } ) => {
 	const classes = classname( {
 		'fl-asst-stack': true,
 	}, className )
-
-	console.log('render', views.length )
 
 	return (
 		<div className={classes}>
