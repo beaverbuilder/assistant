@@ -19,7 +19,7 @@ export const RecentlyEditedWidget = () => {
 
 	const itemProps = {
 		onClick: () => pushView( <RecentPostDetailView /> ),
-		onAccessoryClick: ({ data }, e ) => {
+		onAccessoryClick: ( { data }, e ) => {
 			const { url } = data
 			goToURL( url )
 			e.stopPropagation()
