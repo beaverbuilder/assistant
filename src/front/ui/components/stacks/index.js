@@ -45,7 +45,7 @@ export const StackView = posed.div( props => {
 			scale: .9,
 			opacity: 0,
 			transition: handleTransition,
-			applyAtEnd: {
+			applyAtStart: {
 				pointerEvents: 'none'
 			}
 		},
@@ -60,9 +60,9 @@ export const StackView = posed.div( props => {
 		},
 		future: {
 			x: '80%',
-			opacity: .7,
+			opacity: 0,
 			transition: handleTransition,
-			applyAtEnd: {
+			applyAtStart: {
 				pointerEvents: 'none'
 			}
 		},
