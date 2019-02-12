@@ -18,7 +18,6 @@ export const RecentlyEditedWidget = () => {
 	const { goToURL } = useContext( UIContext )
 
 	const itemProps = {
-		onClick: () => pushView( <RecentPostDetailView /> ),
 		onAccessoryClick: ( { data }, e ) => {
 			const { url } = data
 			goToURL( url )
@@ -41,13 +40,5 @@ export const RecentlyEditedWidget = () => {
 				itemProps={itemProps}
 			/>
 		</Widget>
-	)
-}
-
-const RecentPostDetailView = () => {
-	return (
-		<Fragment>
-			<ScreenHeader title="Recent Post Test" />
-		</Fragment>
 	)
 }
