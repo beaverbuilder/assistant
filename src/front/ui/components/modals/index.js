@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { Stack, Button, Icon, Separator, Padding, Toolbar, UIContext } from 'components'
+import { Stack, Button, Icon, Separator, Toolbar, UIContext } from 'components'
 import './style.scss'
 
 export const useModals = () => {
-	const [ modals, setModals ] = useState([])
+	const [ modals, setModals ] = useState( [] )
 
 	// Render all the current modals - This gets called inside <UI />
 	const renderModals = () => {
@@ -60,7 +60,7 @@ export const useModals = () => {
 			initialPose: 'offscreen',
 			pose: 'onscreen',
 			children: message,
-			config: Object.assign({ expiry: 3000, appearance: null }, config ),
+			config: Object.assign( { expiry: 3000, appearance: null }, config ),
 		} )
 		setModals( Array.from( modals ) )
 	}
@@ -75,7 +75,7 @@ export const useModals = () => {
 					modals[i].pose = 'offscreen'
 				}
 				return modal
-			})
+			} )
 		} else {
 			modals[ modals.length - 1 ].pose = 'offscreen'
 		}
@@ -87,9 +87,9 @@ export const useModals = () => {
 		if ( 'offscreen' === pose ) {
 			modals.map( ( modal, i ) => {
 				if ( modal.key === modalID ) {
-					modals.splice(i, 1)
+					modals.splice( i, 1 )
 				}
-			})
+			} )
 			setModals( Array.from( modals ) )
 		}
 	}
@@ -105,7 +105,7 @@ export const useModals = () => {
 export const Modal = ( { children, pose, initialPose, onPoseComplete, modalID } ) => {
 	const { dismissModal } = useContext( UIContext )
 	const complete = pose => {
-		onPoseComplete(pose, modalID)
+		onPoseComplete( pose, modalID )
 	}
 	return (
 		<ModalBox className="fl-asst-modal-screen" pose={pose} initialPose={initialPose} onPoseComplete={complete}>
@@ -172,7 +172,7 @@ const Notification = ( { children, pose, initialPose, onPoseComplete, appearance
 	}, [] )
 
 	const complete = pose => {
-		onPoseComplete(pose, modalID)
+		onPoseComplete( pose, modalID )
 	}
 
 	return (
