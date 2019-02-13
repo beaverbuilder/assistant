@@ -39,7 +39,7 @@ export const getContent = ( type, query, onSuccess, onError ) => {
 	case 'users':
 		return getUsers( query, onSuccess, onError )
 	case 'updates':
-		return getUpdates( onSuccess, onError )
+		return getUpdates( query, onSuccess, onError )
 	}
 }
 
@@ -233,9 +233,9 @@ export const updateUserState = ( state ) => {
  * @param {Function}
  * @return {Object}
  */
-export const getUpdates = ( onSuccess, onError ) => {
+export const getUpdates = ( query, onSuccess, onError ) => {
 	return restRequest( {
-		route: 'fl-assistant/v1/updates',
+		route: addQueryArgs( 'fl-assistant/v1/updates', query ),
 		cacheKey: 'updates',
 		onSuccess,
 		onError,

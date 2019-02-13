@@ -1,8 +1,8 @@
 import { getPagedContent } from 'utils/wordpress'
 
-export const updatesQuery = () => {
-	return {}
+export const updatesQuery = ( type ) => {
+	return { type }
 }
 
 // Preload
-getPagedContent( 'updates', updatesQuery() )
+getPagedContent( 'updates', updatesQuery( 'all' ) )

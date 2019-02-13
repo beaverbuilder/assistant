@@ -116,35 +116,40 @@ final class FL_Assistant_REST_Updates {
 		$response       = array();
 		$update_plugins = get_site_transient( 'update_plugins' );
 		$update_themes  = get_site_transient( 'update_themes' );
+		$type			= $request->get_param( 'type' );
 
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
-			$plugins = array(
-				'label' => __( 'Plugins', 'fl-assistant' ),
-				'items' => [],
-			);
-			foreach ( $update_plugins->response as $key => $update ) {
-				$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
-				if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
-					$plugins['items'][] = self::get_plugin_response_data( $update, $plugin );
+		if ( ! $type || 'all' === $type || 'plugins' === $type ) {
+			if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
+				$plugins = array(
+					'label' => __( 'Plugins', 'fl-assistant' ),
+					'items' => [],
+				);
+				foreach ( $update_plugins->response as $key => $update ) {
+					$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
+					if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
+						$plugins['items'][] = self::get_plugin_response_data( $update, $plugin );
+					}
 				}
+				$response[] = $plugins;
 			}
-			$response[] = $plugins;
 		}
 
-		if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
-			$themes = array(
-				'label' => __( 'Themes', 'fl-assistant' ),
-				'items' => [],
-			);
-			foreach ( $update_themes->response as $key => $update ) {
-				$theme = wp_get_theme( $key );
-				if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
-					$themes['items'][] = self::get_theme_response_data( $update, $theme );
+		if ( ! $type || 'all' === $type || 'themes' === $type ) {
+			if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
+				$themes = array(
+					'label' => __( 'Themes', 'fl-assistant' ),
+					'items' => [],
+				);
+				foreach ( $update_themes->response as $key => $update ) {
+					$theme = wp_get_theme( $key );
+					if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
+						$themes['items'][] = self::get_theme_response_data( $update, $theme );
+					}
 				}
+				$response[] = $themes;
 			}
-			$response[] = $themes;
 		}
 
 		return rest_ensure_response( $response );

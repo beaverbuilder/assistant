@@ -2,13 +2,12 @@ import React from 'react'
 import { ContentQuery } from 'components'
 import { UpdatesListItem } from './list-item'
 import { UpdatesEmptyMessage } from './empty-message'
-import { updatesQuery } from './queries'
 
-export const UpdatesList = () => {
+export const UpdatesList = ( { query } ) => {
 	return (
 		<ContentQuery
 			type={ 'updates' }
-			query={ updatesQuery() }
+			query={ query }
 			pagination={ false }
 			item={ <UpdatesListItem /> }
 			emptyMessage={ <UpdatesEmptyMessage /> }
