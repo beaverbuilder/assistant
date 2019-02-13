@@ -18,7 +18,7 @@ export const CommentsListItem = ( { className, data, ...props } ) => {
 		<ContentListItem className={ classes } data={ newData } { ...props }>
 			{ ! approved &&
 				<div className='fl-asst-comment-pending-icon'>
-					<Icon name='red-dot' />
+					<Icon name='blue-dot' />
 				</div>
 			}
 		</ContentListItem>

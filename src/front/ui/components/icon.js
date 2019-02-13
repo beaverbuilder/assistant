@@ -18,10 +18,10 @@ export const Icon = ( { name } ) => {
 				<path fill="currentColor" d="M3.25,6.75 C1.83246521,6.75 0.684326172,7.86875 0.684326172,9.25 C0.684326172,10.63125 1.83246521,11.75 3.25,11.75 C4.66753479,11.75 5.81567383,10.63125 5.81567383,9.25 C5.81567383,7.86875 4.66753479,6.75 3.25,6.75 Z"></path>
 			</svg>
 		)
-	case 'red-dot':
+	case 'blue-dot':
 		return (
 			<svg width="5px" height="5px" viewBox="0 0 5 5" version="1.1">
-				<circle fill="#E10000" cx="2.5" cy="2.5" r="2.5"></circle>
+				<circle fill="#3AA4CC" cx="2.5" cy="2.5" r="2.5"></circle>
 			</svg>
 		)
 	case 'small-spinner':
