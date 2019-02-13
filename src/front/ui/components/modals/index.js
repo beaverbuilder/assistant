@@ -23,6 +23,7 @@ export const useModals = () => {
 						onPoseComplete={onModalComplete}
 						appearance={config.appearance}
 						expiry={config.expiry}
+						onClick={ 'function' === typeof config.onClick ? e => config.onClick() : null }
 					>
 						{children}
 					</Notification>
@@ -104,9 +105,11 @@ export const useModals = () => {
 
 export const Modal = ( { children, pose, initialPose, onPoseComplete, modalID } ) => {
 	const { dismissModal } = useContext( UIContext )
+
 	const complete = pose => {
 		onPoseComplete( pose, modalID )
 	}
+
 	return (
 		<ModalBox className="fl-asst-modal-screen" pose={pose} initialPose={initialPose} onPoseComplete={complete}>
 			<Toolbar>
@@ -153,7 +156,7 @@ const ModalBox = posed.div( {
 ModalBox.displayName = 'ModalBox'
 
 
-const Notification = ( { children, pose, initialPose, onPoseComplete, appearance, modalID, expiry } ) => {
+const Notification = ( { children, pose, initialPose, onPoseComplete, appearance, modalID, expiry, onClick } ) => {
 	const { dismissModal } = useContext( UIContext )
 	const classes = classname( {
 		'fl-asst-notification': true,
@@ -175,11 +178,16 @@ const Notification = ( { children, pose, initialPose, onPoseComplete, appearance
 		onPoseComplete( pose, modalID )
 	}
 
+	const dismiss = e => {
+		dismissModal( modalID )
+		e.stopPropagation()
+	}
+
 	return (
 		<div className="fl-asst-modal-screen fl-asst-modal-notification-screen">
 			<NotificationBox className={classes} pose={pose} initialPose={initialPose} onPoseComplete={complete}>
-				<div className="fl-asst-notification-message">{children}</div>
-				<Button onClick={() => dismissModal( modalID )} appearance="icon">
+				<Button onClick={onClick} className="fl-asst-notification-message" appearance="transparent">{children}</Button>
+				<Button onClick={dismiss} appearance="icon">
 					<Icon name="close" />
 				</Button>
 			</NotificationBox>
