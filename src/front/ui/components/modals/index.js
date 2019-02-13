@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { Stack, Button, Icon, Separator, Toolbar, UIContext } from 'components'
+import { Stack, Button, Icon, Separator, Padding, Toolbar, UIContext } from 'components'
 import './style.scss'
 
 export const useModals = () => {
@@ -9,6 +9,9 @@ export const useModals = () => {
 
 	// Render all the current modals - This gets called inside <UI />
 	const renderModals = () => {
+
+		console.log( modals.length )
+
 		return modals.map( ( modal ) => {
 			const { type, children, key, pose, initialPose, config } = modal
 
@@ -72,26 +75,26 @@ export const useModals = () => {
 
 				if ( modal.key === id ) {
 					modals[i].pose = 'offscreen'
-					modals[i].shouldDelete = true
 				}
 				return modal
 			})
 		} else {
 			modals[ modals.length - 1 ].pose = 'offscreen'
-			modals[ modals.length - 1 ].shouldDelete = true
 		}
 		setModals( Array.from( modals ) )
 	}
 
-	const onModalComplete = pose => {
-		console.log('complete', pose)
+	const onModalComplete = ( pose, modalID ) => {
 
-		modals.map( ( modal, i ) => {
-			if ( modal.shouldDelete ) {
-				modals.splice(i, 1)
-			}
-		})
-		setModals( Array.from( modals ) )
+		if ( 'offscreen' === pose ) {
+			modals.map( ( modal, i ) => {
+				if ( modal.key === modalID ) {
+					modals.splice(i, 1)
+					console.log('kill', modalID )
+				}
+			})
+			setModals( Array.from( modals ) )
+		}
 	}
 
 	return {
@@ -104,8 +107,11 @@ export const useModals = () => {
 
 export const Modal = ( { children, pose, initialPose, onPoseComplete, modalID } ) => {
 	const { dismissModal } = useContext( UIContext )
+	const complete = pose => {
+		onPoseComplete(pose, modalID)
+	}
 	return (
-		<ModalBox className="fl-asst-modal-screen" pose={pose} initialPose={initialPose} onPoseComplete={onPoseComplete}>
+		<ModalBox className="fl-asst-modal-screen" pose={pose} initialPose={initialPose} onPoseComplete={complete}>
 			<Toolbar>
 				<div className="fl-asst-toolbar-spacer" />
 				<Button onClick={ () => dismissModal( modalID )} appearance="icon">
@@ -130,10 +136,6 @@ const transition = () => {
 }
 
 const ModalBox = posed.div( {
-	init: {
-		display: 'flex',
-		flexDirection: 'column',
-	},
 	onscreen: {
 		opacity: 1,
 		scale: 1,
@@ -172,9 +174,13 @@ const Notification = ( { children, pose, initialPose, onPoseComplete, appearance
 		}
 	}, [] )
 
+	const complete = pose => {
+		onPoseComplete(pose, modalID)
+	}
+
 	return (
 		<div className="fl-asst-modal-screen fl-asst-modal-notification-screen">
-			<NotificationBox className={classes} pose={pose} initialPose={initialPose} onPoseComplete={onPoseComplete}>
+			<NotificationBox className={classes} pose={pose} initialPose={initialPose} onPoseComplete={complete}>
 				<div className="fl-asst-notification-message">{children}</div>
 				<Button onClick={() => dismissModal( modalID )} appearance="icon">
 					<Icon name="close" />
