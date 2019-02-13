@@ -13,6 +13,7 @@ import {
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { useStore } from 'store'
+import './style.scss'
 
 const DetailView = () => {
 	const { pushView } = useContext( StackContext )
@@ -27,7 +28,7 @@ const DetailView = () => {
 
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
-	const { togglePanelPosition, presentModal } = useContext( UIContext )
+	const { togglePanelPosition, presentModal, presentNotification } = useContext( UIContext )
 	const { pushView } = useContext( StackContext )
 
 	// @TODO: Rename dashboardApp and move into app state
@@ -47,12 +48,13 @@ export const DashboardTab = () => {
 			</Widget>
 			<Separator />
 
-			<Widget title="Just Testing">
+			<Widget title="Just Testing" className="fl-asst-testing-widget">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
-
 				<Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button>
-
-				<Button onClick={ () => presentModal( <TestModal /> ) }>Present Modal</Button>
+				<Button onClick={ () => presentModal( <TestModal /> ) }>Present Modal View</Button>
+				<Button onClick={ () => presentNotification('You have a new notification') }>Present Notification</Button>
+				<Button onClick={ () => presentNotification('This is your first warning', { appearance: 'warning' }) }>Present Warning</Button>
+				<Button onClick={ () => presentNotification('Something went terribly wrong', { appearance: 'error' }) }>Present Error</Button>
 			</Widget>
 		</Fragment>
 	)

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
+import classname from 'classnames'
 import posed from 'react-pose'
 import { Stack, Button, Icon, Separator, Toolbar, UIContext } from 'components'
 import './style.scss'
@@ -7,9 +8,24 @@ export const useModals = () => {
 	const [ modals, setModals ] = useState( [] )
 	const [ action, setAction ] = useState()
 
+    // Render all the current modals - This gets called inside <UI />
 	const renderModals = () => {
 		return modals.map( ( modal ) => {
-			const { children, key, pose } = modal
+			const { type, children, key, pose, config } = modal
+
+            if ( 'notification' === type ) {
+                return (
+                    <Notification
+                        key={key}
+                        pose={pose}
+                        onPoseComplete={onModalComplete}
+                        appearance={config.appearance}
+                    >
+                        {children}
+                    </Notification>
+                )
+            }
+
 			return (
 				<Modal key={key} pose={pose} onPoseComplete={onModalComplete}>{children}</Modal>
 			)
@@ -18,6 +34,7 @@ export const useModals = () => {
 
 	const presentModal = ( children, config = {} ) => {
 		modals.push( {
+            type: 'modal',
 			key: Date.now(),
 			pose: 'offscreen',
 			children,
@@ -26,6 +43,18 @@ export const useModals = () => {
 		setModals( Array.from( modals ) )
 		setAction( 'present' )
 	}
+
+    const presentNotification = ( message = '', config = { expiry: 5000, appearance: null } ) => {
+        modals.push( {
+            type: 'notification',
+			key: Date.now(),
+			pose: 'offscreen',
+			children: message,
+			config,
+		} )
+		setModals( Array.from( modals ) )
+		setAction( 'present' )
+    }
 
 	// After DOM is mounted, "present" new model.
 	useEffect( () => {
@@ -62,6 +91,7 @@ export const useModals = () => {
 		renderModals,
 		presentModal,
 		dismissModal,
+        presentNotification,
 	}
 }
 
@@ -111,3 +141,41 @@ const ModalBox = posed.div( {
 	}
 } )
 ModalBox.displayName = 'ModalBox'
+
+
+const Notification = ({ children, pose, onPoseComplete, appearance }) => {
+    const { dismissModal } = useContext( UIContext )
+    const classes = classname({
+        'fl-asst-notification' : true,
+        'fl-asst-notification-warning' : 'warning' === appearance,
+        'fl-asst-notification-error' : 'error' === appearance,
+    })
+    return (
+        <div className="fl-asst-modal-screen fl-asst-modal-notification-screen">
+            <NotificationBox className={classes} pose={pose} onPoseComplete={onPoseComplete}>
+                <div className="fl-asst-notification-message">{children}</div>
+                <Button onClick={dismissModal} appearance="icon">
+                    <Icon name="close" />
+                </Button>
+            </NotificationBox>
+        </div>
+    )
+}
+
+const notificationTransition = () => {
+	return {
+		type: 'tween',
+		duration: 150
+	}
+}
+
+const NotificationBox = posed.div({
+    onscreen: {
+        y: '0%',
+        transition: notificationTransition,
+    },
+    offscreen: {
+        y: '-100%',
+        transition: notificationTransition,
+    },
+})

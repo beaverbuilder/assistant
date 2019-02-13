@@ -15,7 +15,7 @@ const App = () => {
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
 
 	// Setup top-level modal handling
-	const { renderModals, presentModal, dismissModal } = useModals()
+	const { renderModals, presentModal, dismissModal, presentNotification } = useModals()
 
 	// Create a toggle function to show/hide the panel
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
@@ -38,6 +38,7 @@ const App = () => {
 		presentModal,
 		dismissModal,
 		renderModals,
+		presentNotification,
 	}
 
 	return (
