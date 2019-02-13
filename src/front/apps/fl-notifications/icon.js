@@ -27,9 +27,8 @@ export const NotificationsTabButton = () => {
 		return null
 	}
 
-	useHeartbeat( 'fl-assistant/v1/notifications/count', data => { console.log(count, data )
+	useHeartbeat( 'fl-assistant/v1/notifications/count', data => {
 		if ( count && data.comments > count.comments ) {
-			console.log('heartbeat', data )
 			clearCache( 'comments' )
 			presentNotification( 'You have a new comment!', {
 				onClick: dismiss => {
