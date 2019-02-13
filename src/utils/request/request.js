@@ -1,4 +1,4 @@
-import { getCache, setCache } from './cache'
+import { cacheKey, getCache, setCache } from './cache'
 
 /**
  * GET requests that are currently running.
@@ -49,6 +49,7 @@ export const getRequest = ( {
 				requests[ route ] = null
 			},
 			onError: error => {
+				clearCache( cacheKey )
 				requests[ route ].map( result =>
 					! result.cancelled && result.onError( error )
 				)
