@@ -212,6 +212,9 @@ final class FL_Assistant_REST_Updates {
 		if ( ! current_user_can( 'update_plugins' ) ) {
 			die();
 		}
+		if ( self::is_updating() ) {
+			wp_send_json( array( 'error' => true ) );
+		}
 
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
@@ -235,7 +238,7 @@ final class FL_Assistant_REST_Updates {
 	}
 
 	/**
-	 * Updates a single plugin.
+	 * Updates a single theme.
 	 *
 	 * @since  0.1
 	 * @param object $request
@@ -244,6 +247,9 @@ final class FL_Assistant_REST_Updates {
 	static public function update_theme( $request ) {
 		if ( ! current_user_can( 'update_themes' ) ) {
 			die();
+		}
+		if ( self::is_updating() ) {
+			wp_send_json( array( 'error' => true ) );
 		}
 
 		require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -265,6 +271,21 @@ final class FL_Assistant_REST_Updates {
 		);
 
 		$upgrader->upgrade( $theme );
+	}
+
+	/**
+	 * Checks to see if WordPress is currently updating.
+	 * If the wp-content/upgrade folder isn't empty, it is
+	 * likely that WordPress is updating something.
+	 */
+	static public function is_updating() {
+		$path = WP_CONTENT_DIR . '/upgrade';
+
+		if ( file_exists( $path ) && count( scandir( $path ) ) > 2 ) {
+			return true;
+		}
+
+		return false;
 	}
 }
 
