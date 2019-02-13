@@ -2,7 +2,7 @@ import React, { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
-import { UIContext, PageViewContext } from 'components'
+import { UIContext, PageViewContext, useModals } from 'components'
 import store, { useStore, useDispatch } from 'store'
 import './api'
 import './apps'
@@ -13,6 +13,9 @@ import './apps'
 const App = () => {
 	const { isShowingUI, activeApp, panelPosition, currentPageView } = useStore()
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
+
+	// Setup top-level modal handling
+	const { renderModals, presentModal, dismissModal } = useModals()
 
 	// Create a toggle function to show/hide the panel
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
@@ -32,6 +35,9 @@ const App = () => {
 		togglePanelPosition,
 		setPanelPosition,
 		goToURL,
+		presentModal,
+		dismissModal,
+		renderModals,
 	}
 
 	return (
@@ -39,10 +45,7 @@ const App = () => {
 			<Provider store={store}>
 				<UIContext.Provider value={ui}>
 					<PageViewContext.Provider value={currentPageView}>
-						{/* This is the button that toggles the UI panel */}
 						{ ! isShowingUI && <ShowUITrigger /> }
-
-						{/* This is the panel itself */}
 						<UI />
 					</PageViewContext.Provider>
 				</UIContext.Provider>

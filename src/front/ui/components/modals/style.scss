@@ -1,0 +1,21 @@
+.fl-asst-modal-screen {
+    background: var(--fl-background-color);
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    display: flex;
+    flex-direction: column;
+}
+
+.fl-asst-toolbar {
+    flex: 0 0 44px;
+    display:flex;
+    flex-direction: row;
+}
+.fl-asst-modal-contents {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}

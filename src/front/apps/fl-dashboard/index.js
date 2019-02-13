@@ -27,7 +27,7 @@ const DetailView = () => {
 
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useStore()
-	const { togglePanelPosition } = useContext( UIContext )
+	const { togglePanelPosition, presentModal } = useContext( UIContext )
 	const { pushView } = useContext( StackContext )
 
 	// @TODO: Rename dashboardApp and move into app state
@@ -50,11 +50,27 @@ export const DashboardTab = () => {
 			<Widget title="Just Testing">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
 
-				<Button onClick={ () => pushView( <DetailView />, { shouldAnimate: false } )}>Push Detail View</Button>
+				<Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button>
+
+				<Button onClick={ () => presentModal( <TestModal /> ) }>Present Modal</Button>
 			</Widget>
 		</Fragment>
 	)
 }
+
+const TestModal = () => {
+	const { pushView } = useContext( StackContext )
+	return (
+		<Fragment>
+			Testing Modal!
+
+			<Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button>
+		</Fragment>
+	)
+}
+
+
+// Icon
 
 const OuterBoxPath = posed.path( {
 	init: {
