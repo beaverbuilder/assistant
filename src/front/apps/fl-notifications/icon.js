@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDispatch, useStore } from 'store'
+import { clearCache } from 'utils/request'
 import { useHeartbeat } from 'utils/wordpress'
-import { AppTabButton } from 'components'
+import { AppTabButton, UIContext } from 'components'
 
 export const NotificationsIcon = ( { count = 0 } ) => {
 	return (
@@ -15,9 +16,10 @@ export const NotificationsIcon = ( { count = 0 } ) => {
 }
 
 export const NotificationsTabButton = () => {
-	const [ count, setCount ] = useState( 0 )
+	const [ count, setCount ] = useState( null )
 	const { apps, activeApp } = useStore()
 	const { setActiveApp } = useDispatch()
+	const { presentNotification } = useContext( UIContext )
 	const notifications = apps[ 'fl-notifications' ] ? apps[ 'fl-notifications' ] : null
 	const active = 'fl-notifications' === activeApp
 
@@ -26,7 +28,14 @@ export const NotificationsTabButton = () => {
 	}
 
 	useHeartbeat( 'fl-assistant/v1/notifications/count', data => {
-		setCount( data.count )
+		if ( count && data.comments > count.comments ) {
+			clearCache( 'comments' )
+			presentNotification( 'You have a new comment!' )
+		}
+		if ( count && data.updates > count.updates ) {
+			clearCache( 'updates' )
+		}
+		setCount( data )
 	} )
 
 	return (
@@ -35,7 +44,7 @@ export const NotificationsTabButton = () => {
 			isSelected={ active }
 			tooltip={ notifications.label }
 		>
-			<NotificationsIcon count={ count } />
+			<NotificationsIcon count={ count ? count.total : 0 } />
 		</AppTabButton>
 	)
 }

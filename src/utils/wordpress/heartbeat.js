@@ -25,5 +25,5 @@ export const useHeartbeat = ( route, onTick ) => {
 		doc.on( tickEvent, ( e, data ) => data[ key ] ? onTick( data[ key ] ) : null )
 
 		return () => doc.off( `${ sendEvent } ${ tickEvent }` )
-	}, [ route ] )
+	} )
 }

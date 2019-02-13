@@ -34,22 +34,26 @@ final class FL_Assistant_REST_Notifications {
 	 * @return array
 	 */
 	static public function count( $request ) {
-		$count = 0;
+		$result = array(
+			'total' => 0,
+		);
 
 		// Pending comments count
 		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/comments/count' );
 		$request->set_query_params( array( 'status' => 'hold' ) );
 		$response = rest_do_request( $request );
 		$data = $response->get_data();
-		$count += $data['count'];
+		$result['comments'] = $data['total'];
+		$result['total'] += $data['total'];
 
 		// Updates count
 		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/updates/count' );
 		$response = rest_do_request( $request );
 		$data = $response->get_data();
-		$count += $data['count'];
+		$result['updates'] = $data['total'];
+		$result['total'] += $data['total'];
 
-		return array( 'count' => $count );
+		return $result;
 	}
 }
 
