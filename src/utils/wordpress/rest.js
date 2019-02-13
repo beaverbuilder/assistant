@@ -1,4 +1,4 @@
-import { clearCache, getRequest, postRequest } from 'utils/request'
+import { getRequest, postRequest } from 'utils/request'
 import { addQueryArgs } from 'utils/url'
 
 /**
@@ -234,7 +234,6 @@ export const getUpdates = ( onSuccess, onError ) => {
  */
 export const updatePlugin = ( plugin, onSuccess, onError ) => {
 	const t = new Date().getTime()
-	clearCache( 'updates' )
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/updates/update-plugin', { plugin, t } ),
 		cached: false,
@@ -253,7 +252,6 @@ export const updatePlugin = ( plugin, onSuccess, onError ) => {
  */
 export const updateTheme = ( theme, onSuccess, onError ) => {
 	const t = new Date().getTime()
-	clearCache( 'updates' )
 	return getRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/updates/update-theme', { theme, t } ),
 		cached: false,
