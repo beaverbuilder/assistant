@@ -186,8 +186,10 @@ const Notification = ( { children, pose, initialPose, onPoseComplete, appearance
 	let mainClick = null
 	if ( 'function' === typeof onClick ) {
 		mainClick = e => {
-			const dismiss = () => { dismissModal( modalID ) }
-			onClick( dismiss , modalID, e )
+			const dismiss = () => {
+				dismissModal( modalID )
+			}
+			onClick( dismiss, modalID, e )
 		}
 	}
 

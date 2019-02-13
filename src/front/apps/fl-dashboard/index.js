@@ -36,11 +36,11 @@ export const DashboardTab = () => {
 
 	const showBasicNotification = () => {
 		presentNotification( 'You have a new notification', {
-				onClick: dismiss => {
-					setActiveApp('fl-notifications')
-					dismiss()
-				}
-		})
+			onClick: dismiss => {
+				setActiveApp( 'fl-notifications' )
+				dismiss()
+			}
+		} )
 	}
 
 	return (
