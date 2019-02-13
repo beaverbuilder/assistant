@@ -17,6 +17,7 @@ export const useModals = () => {
 				return (
 					<Notification
 						key={key}
+						modalID={key}
 						pose={pose}
 						onPoseComplete={onModalComplete}
 						appearance={config.appearance}
@@ -27,7 +28,7 @@ export const useModals = () => {
 			}
 
 			return (
-				<Modal key={key} pose={pose} onPoseComplete={onModalComplete}>{children}</Modal>
+				<Modal key={key} modalID={key} pose={pose} onPoseComplete={onModalComplete}>{children}</Modal>
 			)
 		} )
 	}
@@ -73,15 +74,30 @@ export const useModals = () => {
 		}
 	} )
 
-	const dismissModal = () => {
-		modals[ modals.length - 1 ].pose = 'offscreen'
+	const dismissModal = ( id, e ) => {
+		if ( id && Number.isInteger( id ) ) {
+			modals.map( ( modal, i ) => {
+				if ( modal.key === id ) {
+					modals[i].pose = 'offscreen'
+				}
+				return modal
+			})
+			console.log('dismiss by key', id )
+		} else {
+			console.log('dismiss last' )
+			modals[ modals.length - 1 ].pose = 'offscreen'
+		}
 		setModals( Array.from ( modals ) )
 		setAction( 'dismiss' )
 	}
 
 	const onModalComplete = pose => {
 		if ( 'dismiss' === action && 'offscreen' === pose ) {
-			modals.pop()
+			modals.map( ( modal, i ) => {
+				if ( 'offscreen' === modal.pose ) {
+					modals.splice(i, 1)
+				}
+			})
 			setModals( Array.from( modals ) )
 			setAction( null )
 		}
@@ -95,13 +111,13 @@ export const useModals = () => {
 	}
 }
 
-export const Modal = ( { children, pose, onPoseComplete } ) => {
+export const Modal = ( { children, pose, onPoseComplete, modalID } ) => {
 	const { dismissModal } = useContext( UIContext )
 	return (
 		<ModalBox className="fl-asst-modal-screen" pose={pose} onPoseComplete={onPoseComplete}>
 			<Toolbar>
 				<div className="fl-asst-toolbar-spacer" />
-				<Button onClick={dismissModal} appearance="icon">
+				<Button onClick={ () => dismissModal( modalID )} appearance="icon">
 					<Icon name="close" />
 				</Button>
 			</Toolbar>
@@ -143,7 +159,7 @@ const ModalBox = posed.div( {
 ModalBox.displayName = 'ModalBox'
 
 
-const Notification = ( { children, pose, onPoseComplete, appearance } ) => {
+const Notification = ( { children, pose, onPoseComplete, appearance, modalID } ) => {
 	const { dismissModal } = useContext( UIContext )
 	const classes = classname( {
 		'fl-asst-notification': true,
@@ -154,7 +170,7 @@ const Notification = ( { children, pose, onPoseComplete, appearance } ) => {
 		<div className="fl-asst-modal-screen fl-asst-modal-notification-screen">
 			<NotificationBox className={classes} pose={pose} onPoseComplete={onPoseComplete}>
 				<div className="fl-asst-notification-message">{children}</div>
-				<Button onClick={dismissModal} appearance="icon">
+				<Button onClick={() => dismissModal( modalID )} appearance="icon">
 					<Icon name="close" />
 				</Button>
 			</NotificationBox>
