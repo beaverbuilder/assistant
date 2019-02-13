@@ -30,7 +30,12 @@ export const NotificationsTabButton = () => {
 	useHeartbeat( 'fl-assistant/v1/notifications/count', data => {
 		if ( count && data.comments > count.comments ) {
 			clearCache( 'comments' )
-			presentNotification( 'You have a new comment!' )
+			presentNotification( 'You have a new comment!', {
+				onClick: dismiss => {
+					setActiveApp( 'fl-notifications' )
+					dismiss()
+				}
+			} )
 		}
 		if ( count && data.updates > count.updates ) {
 			clearCache( 'updates' )

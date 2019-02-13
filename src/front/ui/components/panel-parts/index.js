@@ -142,6 +142,15 @@ export const ScreenFooter = ( { children } ) => {
 const MoreButton = posed.button( {
 	hoverable: true,
 	focusable: true,
+	init: {
+		opacity: .5,
+	},
+	hover: {
+		opacity: 1,
+	},
+	focus: {
+		opacity: 1,
+	}
 } )
 const MoreButtonPath = posed.polyline( {
 	init: {
