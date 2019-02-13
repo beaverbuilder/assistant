@@ -1,4 +1,3 @@
-import store from 'store'
 import { getCache, setCache } from './cache'
 
 /**
@@ -19,7 +18,10 @@ const requests = []
  * @return {Object}
  */
 export const getRequest = ( {
+	root,
 	route,
+	credentials,
+	headers,
 	cached = true,
 	cacheKey = 'cache',
 	onSuccess = () => {},
@@ -34,7 +36,10 @@ export const getRequest = ( {
 	if ( ! requests[ route ] ) {
 		requests[ route ] = []
 		request( {
+			root,
 			route,
+			credentials,
+			headers,
 			method: 'GET',
 			onSuccess: data => {
 				cached && setCache( cacheKey, route, data )
@@ -90,7 +95,10 @@ export const getCachedRequest = ( key, route, onSuccess, onError ) => {
  * @return {Object}
  */
 export const postRequest = ( {
+	root,
 	route,
+	credentials,
+	headers,
 	args = {},
 	onSuccess = () => {},
 	onError = () => {},
@@ -103,7 +111,10 @@ export const postRequest = ( {
 
 	return request( {
 		method: 'POST',
+		root,
 		route,
+		credentials,
+		headers,
 		body,
 		onSuccess,
 		onError,
@@ -118,20 +129,19 @@ export const postRequest = ( {
  */
 export const request = ( {
 	method,
+	root,
 	route,
 	body,
+	credentials,
+	headers = {},
 	onSuccess = () => {},
 	onError = () => {},
 } ) => {
-	const { apiNonce, apiRoot } = store.getState()
-
-	const promise = fetch( apiRoot + route, {
-		body,
+	const promise = fetch( root + route, {
 		method,
-		credentials: 'same-origin',
-		headers: {
-			'X-WP-Nonce': apiNonce,
-		},
+		body,
+		credentials,
+		headers,
 	} ).then( response => {
 		if ( ! response.ok ) {
 			throw Error( response.statusText )
