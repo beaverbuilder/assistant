@@ -10,8 +10,6 @@ export const useModals = () => {
 	// Render all the current modals - This gets called inside <UI />
 	const renderModals = () => {
 
-		console.log( modals.length )
-
 		return modals.map( ( modal ) => {
 			const { type, children, key, pose, initialPose, config } = modal
 
@@ -90,7 +88,6 @@ export const useModals = () => {
 			modals.map( ( modal, i ) => {
 				if ( modal.key === modalID ) {
 					modals.splice(i, 1)
-					console.log('kill', modalID )
 				}
 			})
 			setModals( Array.from( modals ) )
