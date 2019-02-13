@@ -23,7 +23,7 @@ export const useModals = () => {
 						onPoseComplete={onModalComplete}
 						appearance={config.appearance}
 						expiry={config.expiry}
-						onClick={ 'function' === typeof config.onClick ? e => config.onClick() : null }
+						onClick={ 'function' === typeof config.onClick ? config.onClick : null }
 					>
 						{children}
 					</Notification>
@@ -183,10 +183,18 @@ const Notification = ( { children, pose, initialPose, onPoseComplete, appearance
 		e.stopPropagation()
 	}
 
+	let mainClick = null
+	if ( 'function' === typeof onClick ) {
+		mainClick = e => {
+			const dismiss = () => { dismissModal( modalID ) }
+			onClick( dismiss , modalID, e )
+		}
+	}
+
 	return (
 		<div className="fl-asst-modal-screen fl-asst-modal-notification-screen">
 			<NotificationBox className={classes} pose={pose} initialPose={initialPose} onPoseComplete={complete}>
-				<Button onClick={onClick} className="fl-asst-notification-message" appearance="transparent">{children}</Button>
+				<Button onClick={mainClick} className="fl-asst-notification-message" appearance="transparent">{children}</Button>
 				<Button onClick={dismiss} appearance="icon">
 					<Icon name="close" />
 				</Button>
