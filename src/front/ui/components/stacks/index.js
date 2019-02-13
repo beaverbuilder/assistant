@@ -6,9 +6,8 @@ import './style.scss'
 
 const handleTransition = () => {
 	return {
-		type: 'spring',
-		stiffness: 300,
-		damping: 30,
+		type: 'tween',
+		duration: 220
 	}
 }
 
@@ -18,12 +17,14 @@ export const StackView = posed.div( props => {
 	if ( false === shouldAnimate ) {
 		return {
 			init: {
+				display: 'flex',
+				flexDirection: 'column',
 				position: 'absolute',
 				top: 0,
 				left: 0,
 				right: 0,
 				bottom: 0,
-				backgroundColor: 'var(--fl-background-color)'
+				backgroundColor: 'var(--fl-background-color)',
 			},
 			past: {},
 			present: {},
@@ -33,27 +34,41 @@ export const StackView = posed.div( props => {
 
 	return {
 		init: {
+			display: 'flex',
+			flexDirection: 'column',
 			position: 'absolute',
 			top: 0,
 			left: 0,
 			right: 0,
 			bottom: 0,
-			backgroundColor: 'var(--fl-background-color)'
+			backgroundColor: 'var(--fl-background-color)',
+			pointerEvents: 'auto'
 		},
 		past: {
-			x: '-50%',
+			x: '0%',
+			scale: .9,
 			opacity: 0,
 			transition: handleTransition,
+			applyAtStart: {
+				pointerEvents: 'none'
+			}
 		},
 		present: {
 			x: '0%',
+			scale: 1,
 			opacity: 1,
 			transition: handleTransition,
+			applyAtEnd: {
+				pointerEvents: 'auto'
+			}
 		},
 		future: {
 			x: '80%',
 			opacity: 0,
 			transition: handleTransition,
+			applyAtStart: {
+				pointerEvents: 'none'
+			}
 		},
 	}
 } )
@@ -93,17 +108,18 @@ export const Stack = ( { children, className } ) => {
 	// After pop transition completes, cleanup data
 	const poseComplete = name => {
 		if ( action && 'pop' === action && 'future' === name ) {
-			const newViews = views
 
 			// ditch the last 'future' item
-			newViews.pop()
-			setViews( newViews )
+			views.pop()
+			setViews( Array.from( views ) )
+			setAction( null )
 		}
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
 			views.pop()
-			setViews( views )
+			setViews( Array.from( views ) )
+			setAction( null )
 		}
 	}
 
@@ -113,10 +129,7 @@ export const Stack = ( { children, className } ) => {
 		isCurrentView: false,
 		viewCount: views.length,
 
-		pushView: (
-			children,
-			config = { shouldAnimate: true }
-		) => {
+		pushView: ( children, config = { shouldAnimate: true } ) => {
 			const newViews = views
 			newViews.push( {
 				key: Date.now(),
@@ -124,7 +137,7 @@ export const Stack = ( { children, className } ) => {
 				children,
 				config,
 			} )
-			setViews( newViews )
+			setViews( Array.from( newViews ) )
 			setAction( 'push' )
 		},
 		popView: () => {
@@ -135,7 +148,7 @@ export const Stack = ( { children, className } ) => {
 			const newViews = views
 			newViews[ newViews.length - 1 ].pose = 'future'
 			newViews[ newViews.length - 2 ].pose = 'present'
-			setViews( newViews )
+			setViews( Array.from( newViews ) )
 			setAction( 'pop' )
 		},
 		popToRoot: () => {

@@ -40,23 +40,25 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    padding:10px 20px;
-    align-items:center;
-    border: 1px solid transparent;
+    padding:0;
+    align-items: stretch;
     background: transparent;
     overflow: hidden;
-    transition-property: background-color;
-    transition-duration: .5s;
 
     &:hover {
-        background: var(--fl-utility-background-color);
-        border-color: var(--fl-utility-background-color);
+        background: #F9FBFC;
         cursor: pointer;
+    }
+
+    & > * {
+        flex: 1 1 auto;
+        align-items: center;
     }
 
     .fl-asst-list-item-visual {
         flex: 0 0;
-        padding-right: 20px;
+        padding: 10px 20px;
+        padding-right:0;
 
         .fl-asst-list-item-image-box {
             width: 50px;
@@ -73,15 +75,16 @@
 
     .fl-asst-list-item-content {
         flex: 1 1 auto;
-        padding-right: 20px;
         max-width: calc(100% - 90px);
         user-select: none;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding-left: 20px;
 
         .fl-asst-list-item-title {
             color: var(--fl-accent-color);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
             font-size: 16px;
             line-height: 1.4;
         }
@@ -89,6 +92,12 @@
             font-size: 13px;
             color: var(--fl-asst-muted-text-color);
         }
+    }
+
+    .fl-asst-list-item-accessory {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
     }
 
     .fl-asst-list-item-actions {

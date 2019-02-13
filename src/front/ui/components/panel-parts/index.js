@@ -195,3 +195,12 @@ export const EmptyMessage = ( { children } ) => {
 		<div className="fl-asst-empty-message">{children}</div>
 	)
 }
+
+export const Toolbar = ( { children } ) => {
+	const classes = classname( {
+		'fl-asst-toolbar': true,
+	} )
+	return (
+		<div className={classes}>{children}</div>
+	)
+}

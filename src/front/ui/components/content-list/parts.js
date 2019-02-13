@@ -1,6 +1,16 @@
 import React, { useContext } from 'react'
+import Clipboard from 'react-clipboard.js'
 import classname from 'classnames'
-import { EmptyMessage, Padding, ScreenHeader, Separator, StackContext } from 'components'
+import {
+	EmptyMessage,
+	Padding,
+	ScreenHeader,
+	StackContext,
+	Button,
+	Icon,
+	TagGroup,
+	Tag,
+} from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
@@ -18,7 +28,8 @@ export const ContentListGroupLabel = ( { label } ) => {
 	)
 }
 
-export const ContentListItem = ( { className, data, onClick, children } ) => {
+export const ContentListItem = props => {
+	const { className, children, data, onClick, onAccessoryClick } = props
 	const { meta, thumbnail, title } = data
 	const { pushView } = useContext( StackContext )
 
@@ -35,7 +46,7 @@ export const ContentListItem = ( { className, data, onClick, children } ) => {
 	}
 
 	return (
-		<div className={ classname( className, 'fl-asst-list-item' ) } onClick={ handleClick }>
+		<div className={ classname( className, 'fl-asst-list-item' ) } onClick={ e => handleClick( props, e ) }>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
@@ -45,7 +56,12 @@ export const ContentListItem = ( { className, data, onClick, children } ) => {
 					{ meta }
 				</div>
 			</div>
-			{ children }
+			<div className="fl-asst-list-item-accessory">
+				{ onAccessoryClick && <Button appearance="icon" onClick={ e => onAccessoryClick( props, e ) }>
+					<Icon name="forward" />
+				</Button> }
+			</div>
+			{children}
 		</div>
 	)
 }
@@ -68,14 +84,19 @@ export const ContentListEmptyMessage = () => {
 }
 
 export const ContentListDetail = ( { className, data } ) => {
-	const { content, meta, title } = data
+	const { meta, title, url, edit_url } = data
+
 	return (
 		<div className={ classname( className, 'fl-asst-list-detail' ) }>
-			<ScreenHeader title={ title } />
+			<ScreenHeader title={title}>
+				<TagGroup>
+					<Tag href={url}>View</Tag>
+					<Tag href={edit_url}>Edit</Tag>
+				</TagGroup>
+			</ScreenHeader>
 			<Padding>
-				{ meta }
-				{ meta && <Separator /> }
-				<div dangerouslySetInnerHTML={ { __html: content } } />
+				<div>By { meta }</div>
+				<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
 			</Padding>
 		</div>
 	)

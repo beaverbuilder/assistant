@@ -1,0 +1,62 @@
+.fl-asst-modal-screen {
+    background: var(--fl-background-color);
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    display: flex;
+    flex-direction: column;
+}
+
+.fl-asst-modal-notification-screen {
+    background: transparent;
+    pointer-events: none;
+
+    .fl-asst-notification {
+        flex: 0 0 44px;
+        display: flex;
+        flex-direction: row;
+        background: var(--fl-accent-color);
+        color: var(--fl-background-color);
+        margin-left: -1px; // overlap the panel border
+        min-height: 44px;
+        pointer-events: auto;
+
+        &.fl-asst-notification-warning {
+            background: var(--fl-warning-color);
+        }
+        &.fl-asst-notification-error {
+            background: var(--fl-error-color);
+        }
+
+        .fl-asst-notification-message {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-weight: 600;
+            padding: 0 20px;
+        }
+
+        .fl-asst-button > svg {
+            color: var(--fl-background-color);
+        }
+    }
+}
+
+.fl-asst-toolbar {
+    flex: 0 0 44px;
+    display:flex;
+    flex-direction: row;
+
+    .fl-asst-toolbar-spacer {
+        flex: 1 1 auto;
+    }
+}
+.fl-asst-modal-contents {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}

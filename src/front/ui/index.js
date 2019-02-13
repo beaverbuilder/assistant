@@ -20,7 +20,7 @@ import './style.scss'
 export const UI = () => {
 	const { apps, activeApp, panelPosition } = useStore()
 	const { setActiveApp } = useDispatch()
-	const { isShowingUI, toggleIsShowingUI } = useContext( UIContext )
+	const { isShowingUI, toggleIsShowingUI, renderModals } = useContext( UIContext )
 
 	return (
 		<PanelFrame position={panelPosition} isShowing={isShowingUI}>
@@ -48,6 +48,8 @@ export const UI = () => {
 					} )}
 				</div>
 			</div>
+
+			{ renderModals() }
 		</PanelFrame>
 	)
 }

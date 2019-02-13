@@ -19,6 +19,7 @@ export const ContentList = ( {
 	emptyMessage = <ContentListEmptyMessage />,
 	group = <ContentListGroupLabel />,
 	item = <ContentListItem />,
+	itemProps = {},
 	placeholderItem = <ContentListItemLoading />,
 	placeholderItemCount = 10
 } ) => {
@@ -89,6 +90,7 @@ export const ContentList = ( {
 			key: itemKey,
 			removeItem: () => removeItem( itemKey, groupKey ),
 			updateItem: newData => updateItem( itemKey, groupKey, newData ),
+			...itemProps
 		} )
 	}
 
