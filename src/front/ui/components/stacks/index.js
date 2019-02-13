@@ -108,12 +108,14 @@ export const Stack = ( { children, className } ) => {
 			// ditch the last 'future' item
 			views.pop()
 			setViews( Array.from( views ) )
+			setAction( null )
 		}
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
 			views.pop()
 			setViews( Array.from( views ) )
+			setAction( null )
 		}
 	}
 
@@ -123,10 +125,7 @@ export const Stack = ( { children, className } ) => {
 		isCurrentView: false,
 		viewCount: views.length,
 
-		pushView: (
-			children,
-			config = { shouldAnimate: true }
-		) => {
+		pushView: ( children, config = { shouldAnimate: true } ) => {
 			const newViews = views
 			newViews.push( {
 				key: Date.now(),

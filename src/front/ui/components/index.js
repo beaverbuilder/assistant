@@ -12,7 +12,12 @@ export {
 	AspectBox,
 } from './layout-helpers'
 
-export { TagGroup, Tag, TagGroupControl, ActionGroup } from './tag-groups'
+export {
+	TagGroup,
+	Tag,
+	TagGroupControl,
+	ActionGroup
+} from './tag-groups'
 
 export {
 	PanelChrome,
@@ -21,6 +26,7 @@ export {
 	ScreenFooter,
 	ExpandedContents,
 	EmptyMessage,
+	Toolbar,
 } from './panel-parts'
 
 export {
@@ -40,3 +46,4 @@ export {
 export { Widget } from './widgets'
 export { Stack } from './stacks'
 export { Tab } from './tabs'
+export { useModals } from './modals'
