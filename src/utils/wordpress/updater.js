@@ -1,4 +1,5 @@
-import { updatePlugin, updateTheme } from 'utils/wordpress'
+import store from 'store'
+import { adminAjaxRequest, updatePlugin, updateTheme } from 'utils/wordpress'
 
 /**
  * Cached queue array retrieved from local storage.
@@ -88,7 +89,7 @@ const requestUpdate = () => {
 		if ( ! isUpdateUpdating( type, key ) ) {
 			current = { type, key }
 			if ( 'plugin' === type ) {
-				updatePlugin( key, requestUpdateComplete )
+				updatePlugin( key, requestUpdateComplete, requestUpdateError )
 			} else {
 				updateTheme( key, requestUpdateComplete )
 			}
@@ -107,6 +108,15 @@ const requestUpdateComplete = response => {
 	cacheQueue()
 	resolveSubscription( type, key, response )
 	requestUpdate()
+}
+
+/**
+ * Callback for update request errors.
+ *
+ * @param {Object}
+ */
+const requestUpdateError = response => {
+	requestUpdateComplete( { success: false } )
 }
 
 /**

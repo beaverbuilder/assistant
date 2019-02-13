@@ -16,7 +16,7 @@ export const UpdatesListItem = props => {
 			if ( response.success ) {
 				updateItem( { meta: meta_updated } )
 				setUpdated( true )
-			} else if ( response.error ) {
+			} else {
 				setError( true )
 				setTimeout( () => setError( false ), 3000 )
 			}
