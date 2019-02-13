@@ -129,8 +129,8 @@ export const postRequest = ( {
  */
 export const request = ( {
 	method,
-	root,
-	route,
+	root = '',
+	route = '',
 	body,
 	credentials,
 	headers = {},

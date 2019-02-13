@@ -1,3 +1,4 @@
+export * from './admin-ajax'
 export * from './heartbeat'
 export * from './rest'
 export * from './updater'
