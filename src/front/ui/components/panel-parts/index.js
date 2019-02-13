@@ -196,7 +196,7 @@ export const EmptyMessage = ( { children } ) => {
 	)
 }
 
-export const Toolbar = ({ children }) => {
+export const Toolbar = ( { children } ) => {
 	const classes = classname( {
 		'fl-asst-toolbar': true,
 	} )

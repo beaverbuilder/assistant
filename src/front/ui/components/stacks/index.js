@@ -88,12 +88,12 @@ export const Stack = ( { children, className } ) => {
 			if ( 'push' === action ) {
 				setViews( views.map( view => {
 					switch ( view.pose ) {
-						case 'future':
-							view.pose = 'present'
-							break
-						case 'present':
-							view.pose = 'past'
-						}
+					case 'future':
+						view.pose = 'present'
+						break
+					case 'present':
+						view.pose = 'past'
+					}
 					return view
 				} ) )
 			}
@@ -108,14 +108,14 @@ export const Stack = ( { children, className } ) => {
 			// ditch the last 'future' item
 			views.pop()
 			setViews( Array.from( views ) )
-			setAction(null)
+			setAction( null )
 		}
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
 			views.pop()
 			setViews( Array.from( views ) )
-			setAction(null)
+			setAction( null )
 		}
 	}
 
