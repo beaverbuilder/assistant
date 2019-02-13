@@ -2,7 +2,6 @@ import React from 'react'
 import classname from 'classnames'
 import { ContentListItem, Icon } from 'components'
 import { truncate } from 'utils/text'
-import './style.scss'
 
 export const CommentsListItem = ( { className, data, ...props } ) => {
 	const { approved } = data
@@ -19,7 +18,7 @@ export const CommentsListItem = ( { className, data, ...props } ) => {
 		<ContentListItem className={ classes } data={ newData } { ...props }>
 			{ ! approved &&
 				<div className='fl-asst-comment-pending-icon'>
-					<Icon name='red-dot' />
+					<Icon name='blue-dot' />
 				</div>
 			}
 		</ContentListItem>

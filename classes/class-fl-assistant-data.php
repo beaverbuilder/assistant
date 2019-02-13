@@ -32,6 +32,7 @@ class FL_Assistant_Data {
 
 		return array(
 			'activeApp'       => $user_state['activeApp'],
+			'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'cms'             => 'wordpress',
@@ -42,6 +43,9 @@ class FL_Assistant_Data {
 			'panelPosition'   => $user_state['panelPosition'],
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'taxonomies'      => self::get_taxonomies(),
+			'updateNonce'     => wp_create_nonce( 'updates' ),
+
+			// Temp
 			'dashboardApp'    => [
 				'adminActions' => self::get_admin_actions(),
 			],

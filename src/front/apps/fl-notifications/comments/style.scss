@@ -3,8 +3,9 @@
 }
 .fl-asst-comment-pending-icon {
     line-height: 0;
+	display: flex;
 	position: absolute;
 	left: 7px;
-	height: 5px;
+	height: 100%;
 	width: 5px;
 }

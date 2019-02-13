@@ -1,5 +1,22 @@
-import { clearCache, getRequest, postRequest } from 'utils/request'
+import store from 'store'
+import { getRequest, postRequest } from 'utils/request'
 import { addQueryArgs } from 'utils/url'
+
+/**
+ * Fetch request for the WordPress REST API.
+ */
+export const restRequest = ( { method = 'GET', ...args } ) => {
+	const { apiNonce, apiRoot } = store.getState()
+	const wpArgs = {
+		root: apiRoot,
+		credentials: 'same-origin',
+		headers: {
+			'X-WP-Nonce': apiNonce,
+		},
+		...args,
+	}
+	return 'GET' === method ? getRequest( wpArgs ) : postRequest( wpArgs )
+}
 
 /**
  * Returns any array of content for the given type
@@ -22,7 +39,7 @@ export const getContent = ( type, query, onSuccess, onError ) => {
 	case 'users':
 		return getUsers( query, onSuccess, onError )
 	case 'updates':
-		return getUpdates( onSuccess, onError )
+		return getUpdates( query, onSuccess, onError )
 	}
 }
 
@@ -66,7 +83,7 @@ export const getPagedContent = ( type, query, offset = 0, onSuccess, onError ) =
  * @return {Object}
  */
 export const getPosts = ( query, onSuccess, onError ) => {
-	return getRequest( {
+	return restRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/posts', query ),
 		cacheKey: 'posts',
 		onSuccess,
@@ -83,7 +100,7 @@ export const getPosts = ( query, onSuccess, onError ) => {
  * @return {Object}
  */
 export const getPost = ( id, onSuccess, onError ) => {
-	return getRequest( {
+	return restRequest( {
 		route: `fl-assistant/v1/post/${ id }`,
 		cacheKey: 'posts',
 		onSuccess,
@@ -100,7 +117,7 @@ export const getPost = ( id, onSuccess, onError ) => {
  * @return {Object}
  */
 export const getTerms = ( query, onSuccess, onError ) => {
-	return getRequest( {
+	return restRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/terms', query ),
 		cacheKey: 'terms',
 		onSuccess,
@@ -117,7 +134,7 @@ export const getTerms = ( query, onSuccess, onError ) => {
  * @return {Object}
  */
 export const getTerm = ( id, onSuccess, onError ) => {
-	return getRequest( {
+	return restRequest( {
 		route: `fl-assistant/v1/term/${ id }`,
 		cacheKey: 'terms',
 		onSuccess,
@@ -134,7 +151,7 @@ export const getTerm = ( id, onSuccess, onError ) => {
  * @return {Object}
  */
 export const getComments = ( query, onSuccess, onError ) => {
-	return getRequest( {
+	return restRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/comments', query ),
 		cacheKey: 'comments',
 		onSuccess,
@@ -151,7 +168,7 @@ export const getComments = ( query, onSuccess, onError ) => {
  * @return {Object}
  */
 export const getComment = ( id, onSuccess, onError ) => {
-	return getRequest( {
+	return restRequest( {
 		route: `fl-assistant/v1/comment/${ id }`,
 		cacheKey: 'comments',
 		onSuccess,
@@ -168,7 +185,7 @@ export const getComment = ( id, onSuccess, onError ) => {
  * @return {Object}
  */
 export const getUsers = ( query, onSuccess, onError ) => {
-	return getRequest( {
+	return restRequest( {
 		route: addQueryArgs( 'fl-assistant/v1/users', query ),
 		cacheKey: 'users',
 		onSuccess,
@@ -185,7 +202,7 @@ export const getUsers = ( query, onSuccess, onError ) => {
  * @return {Object}
  */
 export const getUser = ( id, onSuccess, onError ) => {
-	return getRequest( {
+	return restRequest( {
 		route: `fl-assistant/v1/user/${ id }`,
 		cacheKey: 'users',
 		onSuccess,
@@ -200,7 +217,8 @@ export const getUser = ( id, onSuccess, onError ) => {
  * @return {Object}
  */
 export const updateUserState = ( state ) => {
-	return postRequest( {
+	return restRequest( {
+		method: 'POST',
 		route: 'fl-assistant/v1/current-user/state',
 		args: {
 			state: JSON.stringify( state ),
@@ -215,48 +233,10 @@ export const updateUserState = ( state ) => {
  * @param {Function}
  * @return {Object}
  */
-export const getUpdates = ( onSuccess, onError ) => {
-	return getRequest( {
-		route: 'fl-assistant/v1/updates',
+export const getUpdates = ( query, onSuccess, onError ) => {
+	return restRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/updates', query ),
 		cacheKey: 'updates',
-		onSuccess,
-		onError,
-	} )
-}
-
-/**
- * Updates a single plugin.
- *
- * @param {String}
- * @param {Function}
- * @param {Function}
- * @return {Object}
- */
-export const updatePlugin = ( plugin, onSuccess, onError ) => {
-	const t = new Date().getTime()
-	clearCache( 'updates' )
-	return getRequest( {
-		route: addQueryArgs( 'fl-assistant/v1/updates/update-plugin', { plugin, t } ),
-		cached: false,
-		onSuccess,
-		onError,
-	} )
-}
-
-/**
- * Updates a single theme.
- *
- * @param {String}
- * @param {Function}
- * @param {Function}
- * @return {Object}
- */
-export const updateTheme = ( theme, onSuccess, onError ) => {
-	const t = new Date().getTime()
-	clearCache( 'updates' )
-	return getRequest( {
-		route: addQueryArgs( 'fl-assistant/v1/updates/update-theme', { theme, t } ),
-		cached: false,
 		onSuccess,
 		onError,
 	} )

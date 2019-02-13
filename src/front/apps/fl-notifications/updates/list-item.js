@@ -1,65 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import classname from 'classnames'
-
-//import { updatePlugin, updateTheme } from 'utils/wordpress'
+import { updater } from 'utils/wordpress'
 import { Button, ContentListItem, Icon } from 'components'
-import './style.scss'
 
-export const UpdatesListItem = ( { className, removeItem, ...props } ) => {
-	const [ updating, setUpdating ] = useState( false )
-	const [ updated, setUpdated ] = useState( false )
+export const UpdatesListItem = props => {
+	const { className, data, updateItem } = props
+	const { key, type, meta_updated } = data
 	const [ error, setError ] = useState( false )
-
-	//const [ promise, setPromise ] = useState( null )
-	const [ buttonText, setButtonText ] = useState( 'Update' )
+	const [ updated, setUpdated ] = useState( false )
+	const [ updating, setUpdating ] = useState( updater.isQueued( type, key ) )
 
 	useEffect( () => {
-
-		//return () => promise && promise.cancel()
+		updater.subscribe( type, key, response => {
+			setUpdating( false )
+			if ( response.success ) {
+				updateItem( { meta: meta_updated } )
+				setUpdated( true )
+			} else {
+				setError( true )
+				setTimeout( () => setError( false ), 3000 )
+			}
+		} )
+		return () => updater.unsubscribe( type, key )
 	} )
 
 	const updateClicked = e => {
 		e.stopPropagation()
-
-		//const { type, plugin, theme } = props.data
-
-		if ( updating || updated || error ) {
+		if ( error || updated || updating ) {
 			return
 		}
-
 		setUpdating( true )
-		setError( false )
-		setButtonText( 'Updating' )
-
-		// Fake updating for now until server side issues are fixed.
-		setTimeout( () => updateComplete( { success: true } ), 3000 )
-
-		// if ( 'plugin' === type ) {
-		// 	setPromise( updatePlugin( plugin, updateComplete ) )
-		// } else {
-		// 	setPromise( updateTheme( theme, updateComplete ) )
-		// }
+		updater.queue( type, key )
 	}
 
-	const updateComplete = response => {
-		if ( response.success ) {
-			setUpdating( false )
-			setUpdated( true )
-			setButtonText( 'Updated!' )
-			setTimeout( () => {
-				setUpdated( false )
-				setButtonText( 'Update' )
-				removeItem()
-			}, 3000 )
-		} else if ( response.error ) {
-			setUpdating( false )
-			setError( true )
-			setButtonText( 'Error!' )
-			setTimeout( () => {
-				setError( false )
-				setButtonText( 'Update' )
-			}, 3000 )
+	const getButtonText = () => {
+		if ( updated ) {
+			return 'Updated!'
+		} else if ( error ) {
+			return 'Error!'
 		}
+		return 'Update'
 	}
 
 	const classes = classname( className, {
@@ -74,7 +54,7 @@ export const UpdatesListItem = ( { className, removeItem, ...props } ) => {
 			<div className='fl-asst-update-button'>
 				<Button onClick={ updateClicked }>
 					{ updating && <Icon name='small-spinner' /> }
-					{ buttonText }
+					{ getButtonText() }
 				</Button>
 			</div>
 		</ContentListItem>

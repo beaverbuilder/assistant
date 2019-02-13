@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
-import { request } from 'utils/request'
 import { addLeadingSlash } from 'utils/url'
+import { restRequest } from 'utils/wordpress'
 
 export const useHeartbeat = ( route, onTick ) => {
 
 	// Initial request on mount
 	useEffect( () => {
-		const req = request( {
+		const req = restRequest( {
 			route,
-			method: 'GET',
+			cached: false,
 			onSuccess: onTick,
 		} )
 		return () => req.cancel()
