@@ -1,7 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
 import { ContentListItem, Icon } from 'components'
-import './style.scss'
 
 export const CommentsListItem = ( { className, data, ...props } ) => {
 	const { approved } = data

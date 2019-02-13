@@ -5,7 +5,7 @@ import { ContentList } from 'components'
 export const ContentQuery = ( {
 	type = 'posts',
 	pagination = false,
-	query,
+	query = {},
 	...props
 } ) => {
 	const [ results, setResults ] = useState( [] )
@@ -14,7 +14,7 @@ export const ContentQuery = ( {
 	useEffect( () => {
 		setHasMore( true )
 		setResults( [] )
-	}, [ type, query ] )
+	}, [ type, JSON.stringify( query ) ] )
 
 	const dataLoader = ( offset ) => {
 		return getPagedContent( type, query, offset, ( data, more ) => {
