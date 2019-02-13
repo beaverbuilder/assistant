@@ -177,7 +177,7 @@ final class FL_Assistant_REST_Updates {
 
 		return rest_ensure_response(
 			array(
-				'count' => $count,
+				'total' => $count,
 			)
 		);
 	}

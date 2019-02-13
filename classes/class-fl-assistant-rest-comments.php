@@ -109,7 +109,7 @@ final class FL_Assistant_REST_Comments {
 
 		return rest_ensure_response(
 			array(
-				'count' => count( $comments ),
+				'total' => count( $comments ),
 			)
 		);
 	}
