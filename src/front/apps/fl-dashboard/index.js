@@ -52,9 +52,9 @@ export const DashboardTab = () => {
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
 				<Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button>
 				<Button onClick={ () => presentModal( <TestModal /> ) }>Present Modal View</Button>
-				<Button onClick={ () => presentNotification('You have a new notification') }>Present Notification</Button>
-				<Button onClick={ () => presentNotification('This is your first warning', { appearance: 'warning' }) }>Present Warning</Button>
-				<Button onClick={ () => presentNotification('Something went terribly wrong', { appearance: 'error' }) }>Present Error</Button>
+				<Button onClick={ () => presentNotification( 'You have a new notification' ) }>Present Notification</Button>
+				<Button onClick={ () => presentNotification( 'This is your first warning', { appearance: 'warning' } ) }>Present Warning</Button>
+				<Button onClick={ () => presentNotification( 'Something went terribly wrong', { appearance: 'error' } ) }>Present Error</Button>
 			</Widget>
 		</Fragment>
 	)

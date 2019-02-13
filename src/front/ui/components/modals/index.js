@@ -6,84 +6,91 @@ import './style.scss'
 
 export const useModals = () => {
 	const [ modals, setModals ] = useState( [] )
-	const [ action, setAction ] = useState()
 
-    // Render all the current modals - This gets called inside <UI />
+	// Render all the current modals - This gets called inside <UI />
 	const renderModals = () => {
-		return modals.map( ( modal ) => {
-			const { type, children, key, pose, config } = modal
 
-            if ( 'notification' === type ) {
-                return (
-                    <Notification
-                        key={key}
-                        pose={pose}
-                        onPoseComplete={onModalComplete}
-                        appearance={config.appearance}
-                    >
-                        {children}
-                    </Notification>
-                )
-            }
+		return modals.map( ( modal ) => {
+			const { type, children, key, pose, initialPose, config } = modal
+
+			if ( 'notification' === type ) {
+				return (
+					<Notification
+						key={key}
+						modalID={key}
+						pose={pose}
+						initialPose={initialPose}
+						onPoseComplete={onModalComplete}
+						appearance={config.appearance}
+						expiry={config.expiry}
+					>
+						{children}
+					</Notification>
+				)
+			}
 
 			return (
-				<Modal key={key} pose={pose} onPoseComplete={onModalComplete}>{children}</Modal>
+				<Modal
+					key={key}
+					modalID={key}
+					pose={pose}
+					initialPose={initialPose}
+					onPoseComplete={onModalComplete}
+				>{children}</Modal>
 			)
 		} )
 	}
 
 	const presentModal = ( children, config = {} ) => {
 		modals.push( {
-            type: 'modal',
+			type: 'modal',
 			key: Date.now(),
-			pose: 'offscreen',
+			initialPose: 'offscreen',
+			pose: 'onscreen',
 			children,
 			config,
 		} )
 		setModals( Array.from( modals ) )
-		setAction( 'present' )
 	}
 
-    const presentNotification = ( message = '', config = { expiry: 5000, appearance: null } ) => {
-        modals.push( {
-            type: 'notification',
+	const presentNotification = ( message = '', config = {} ) => {
+		modals.push( {
+			type: 'notification',
 			key: Date.now(),
-			pose: 'offscreen',
+			initialPose: 'offscreen',
+			pose: 'onscreen',
 			children: message,
-			config,
+			config: Object.assign( { expiry: 3000, appearance: null }, config ),
 		} )
 		setModals( Array.from( modals ) )
-		setAction( 'present' )
-    }
-
-	// After DOM is mounted, "present" new model.
-	useEffect( () => {
-		if ( action ) {
-			if ( 'present' === action ) {
-				setModals( modals.map( modal => {
-					switch ( modal.pose ) {
-					case 'offscreen':
-						modal.pose = 'onscreen'
-						break
-					}
-					return modal
-				} ) )
-			}
-			setAction( null )
-		}
-	} )
-
-	const dismissModal = () => {
-		modals[ modals.length - 1 ].pose = 'offscreen'
-		setModals( Array.from ( modals ) )
-		setAction( 'dismiss' )
 	}
 
-	const onModalComplete = pose => {
-		if ( 'dismiss' === action && 'offscreen' === pose ) {
-			modals.pop()
+	const dismissModal = ( id ) => {
+
+		if ( Number.isInteger( id ) ) {
+
+			modals.map( ( modal, i ) => {
+
+				if ( modal.key === id ) {
+					modals[i].pose = 'offscreen'
+				}
+				return modal
+			} )
+		} else {
+			modals[ modals.length - 1 ].pose = 'offscreen'
+		}
+		setModals( Array.from( modals ) )
+	}
+
+	const onModalComplete = ( pose, modalID ) => {
+
+		if ( 'offscreen' === pose ) {
+			modals.map( ( modal, i ) => {
+				if ( modal.key === modalID ) {
+					modals.splice( i, 1 )
+				}
+			} )
 			setModals( Array.from( modals ) )
-			setAction( null )
 		}
 	}
 
@@ -91,17 +98,20 @@ export const useModals = () => {
 		renderModals,
 		presentModal,
 		dismissModal,
-        presentNotification,
+		presentNotification,
 	}
 }
 
-export const Modal = ( { children, pose, onPoseComplete } ) => {
+export const Modal = ( { children, pose, initialPose, onPoseComplete, modalID } ) => {
 	const { dismissModal } = useContext( UIContext )
+	const complete = pose => {
+		onPoseComplete( pose, modalID )
+	}
 	return (
-		<ModalBox className="fl-asst-modal-screen" pose={pose} onPoseComplete={onPoseComplete}>
+		<ModalBox className="fl-asst-modal-screen" pose={pose} initialPose={initialPose} onPoseComplete={complete}>
 			<Toolbar>
 				<div className="fl-asst-toolbar-spacer" />
-				<Button onClick={dismissModal} appearance="icon">
+				<Button onClick={ () => dismissModal( modalID )} appearance="icon">
 					<Icon name="close" />
 				</Button>
 			</Toolbar>
@@ -143,23 +153,38 @@ const ModalBox = posed.div( {
 ModalBox.displayName = 'ModalBox'
 
 
-const Notification = ({ children, pose, onPoseComplete, appearance }) => {
-    const { dismissModal } = useContext( UIContext )
-    const classes = classname({
-        'fl-asst-notification' : true,
-        'fl-asst-notification-warning' : 'warning' === appearance,
-        'fl-asst-notification-error' : 'error' === appearance,
-    })
-    return (
-        <div className="fl-asst-modal-screen fl-asst-modal-notification-screen">
-            <NotificationBox className={classes} pose={pose} onPoseComplete={onPoseComplete}>
-                <div className="fl-asst-notification-message">{children}</div>
-                <Button onClick={dismissModal} appearance="icon">
-                    <Icon name="close" />
-                </Button>
-            </NotificationBox>
-        </div>
-    )
+const Notification = ( { children, pose, initialPose, onPoseComplete, appearance, modalID, expiry } ) => {
+	const { dismissModal } = useContext( UIContext )
+	const classes = classname( {
+		'fl-asst-notification': true,
+		'fl-asst-notification-warning': 'warning' === appearance,
+		'fl-asst-notification-error': 'error' === appearance,
+	} )
+
+	useEffect( () => {
+		if ( expiry ) {
+			const timer = setTimeout( () => {
+				dismissModal( modalID )
+			}, expiry )
+
+			return () => clearTimeout( timer )
+		}
+	}, [] )
+
+	const complete = pose => {
+		onPoseComplete( pose, modalID )
+	}
+
+	return (
+		<div className="fl-asst-modal-screen fl-asst-modal-notification-screen">
+			<NotificationBox className={classes} pose={pose} initialPose={initialPose} onPoseComplete={complete}>
+				<div className="fl-asst-notification-message">{children}</div>
+				<Button onClick={() => dismissModal( modalID )} appearance="icon">
+					<Icon name="close" />
+				</Button>
+			</NotificationBox>
+		</div>
+	)
 }
 
 const notificationTransition = () => {
@@ -169,13 +194,13 @@ const notificationTransition = () => {
 	}
 }
 
-const NotificationBox = posed.div({
-    onscreen: {
-        y: '0%',
-        transition: notificationTransition,
-    },
-    offscreen: {
-        y: '-100%',
-        transition: notificationTransition,
-    },
-})
+const NotificationBox = posed.div( {
+	onscreen: {
+		y: '0%',
+		transition: notificationTransition,
+	},
+	offscreen: {
+		y: '-100%',
+		transition: notificationTransition,
+	},
+} )
