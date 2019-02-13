@@ -1,4 +1,4 @@
-import { cacheKey, getCache, setCache } from './cache'
+import { clearCache, getCache, setCache } from './cache'
 
 /**
  * GET requests that are currently running.

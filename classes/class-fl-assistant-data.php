@@ -32,7 +32,7 @@ class FL_Assistant_Data {
 
 		return array(
 			'activeApp'       => $user_state['activeApp'],
-			'ajaxUrl'		  => admin_url( 'admin-ajax.php' ),
+			'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'cms'             => 'wordpress',

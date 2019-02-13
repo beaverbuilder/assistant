@@ -59,16 +59,16 @@ final class FL_Assistant_REST_Updates {
 		}
 
 		return array(
-			'author'    	=> $plugin['AuthorName'],
-			'content'   	=> $plugin['Description'],
-			'key'			=> $update->plugin,
-			'meta'      	=> $plugin['Version'] . ' by ' . $plugin['AuthorName'],
-			'meta_updated' 	=> $update->new_version . ' by ' . $plugin['AuthorName'],
-			'plugin'    	=> $update->plugin,
-			'thumbnail' 	=> $thumbnail,
-			'title'     	=> $plugin['Name'],
-			'type'      	=> 'plugin',
-			'version'   	=> $plugin['Version'],
+			'author'       => $plugin['AuthorName'],
+			'content'      => $plugin['Description'],
+			'key'          => $update->plugin,
+			'meta'         => $plugin['Version'] . ' by ' . $plugin['AuthorName'],
+			'meta_updated' => $update->new_version . ' by ' . $plugin['AuthorName'],
+			'plugin'       => $update->plugin,
+			'thumbnail'    => $thumbnail,
+			'title'        => $plugin['Name'],
+			'type'         => 'plugin',
+			'version'      => $plugin['Version'],
 		);
 	}
 
@@ -92,16 +92,16 @@ final class FL_Assistant_REST_Updates {
 		}
 
 		return array(
-			'author'    	=> strip_tags( $theme->Author ),
-			'content'   	=> $theme->Description,
-			'key'			=> $update['theme'],
-			'meta'      	=> $theme->Version . ' by ' . strip_tags( $theme->Author ),
-			'meta_updated' 	=> $update['new_version'] . ' by ' . strip_tags( $theme->Author ),
-			'theme'     	=> $update['theme'],
-			'thumbnail' 	=> $theme->get_screenshot(),
-			'title'     	=> $theme->Name,
-			'type'      	=> 'theme',
-			'version'   	=> $theme->Version,
+			'author'       => strip_tags( $theme->Author ),
+			'content'      => $theme->Description,
+			'key'          => $update['theme'],
+			'meta'         => $theme->Version . ' by ' . strip_tags( $theme->Author ),
+			'meta_updated' => $update['new_version'] . ' by ' . strip_tags( $theme->Author ),
+			'theme'        => $update['theme'],
+			'thumbnail'    => $theme->get_screenshot(),
+			'title'        => $theme->Name,
+			'type'         => 'theme',
+			'version'      => $theme->Version,
 		);
 	}
 
@@ -116,7 +116,7 @@ final class FL_Assistant_REST_Updates {
 		$response       = array();
 		$update_plugins = get_site_transient( 'update_plugins' );
 		$update_themes  = get_site_transient( 'update_themes' );
-		$type			= $request->get_param( 'type' );
+		$type           = $request->get_param( 'type' );
 
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 

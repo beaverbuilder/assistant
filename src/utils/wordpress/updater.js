@@ -1,5 +1,4 @@
-import store from 'store'
-import { adminAjaxRequest, updatePlugin, updateTheme } from 'utils/wordpress'
+import { updatePlugin, updateTheme } from 'utils/wordpress'
 
 /**
  * Cached queue array retrieved from local storage.
@@ -115,7 +114,7 @@ const requestUpdateComplete = response => {
  *
  * @param {Object}
  */
-const requestUpdateError = response => {
+const requestUpdateError = () => {
 	requestUpdateComplete( { success: false } )
 }
 
