@@ -70,6 +70,7 @@ export const Modal = ({ children, pose, onPoseComplete }) => {
     return (
         <ModalBox className="fl-asst-modal-screen" pose={pose} onPoseComplete={onPoseComplete}>
             <Toolbar>
+                <div className="fl-asst-toolbar-spacer" />
                 <Button onClick={dismissModal} appearance="icon">
                     <Icon name="close" />
                 </Button>
@@ -84,18 +85,29 @@ export const Modal = ({ children, pose, onPoseComplete }) => {
     )
 }
 
+const transition = () => {
+	return {
+		type: 'tween',
+		duration: 220
+	}
+}
+
 const ModalBox = posed.div({
     onscreen: {
-        y: '0%',
+        opacity: 1,
+        scale: 1,
         applyAtEnd: {
             pointerEvents: 'auto',
-        }
+        },
+        transition,
     },
     offscreen: {
-        y: '100%',
+        opacity: 0,
+        scale: .9,
         applyAtStart: {
             pointerEvents: 'none'
-        }
+        },
+        transition,
     }
 })
 ModalBox.displayName = 'ModalBox'

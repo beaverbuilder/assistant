@@ -13,6 +13,10 @@
     flex: 0 0 44px;
     display:flex;
     flex-direction: row;
+
+    .fl-asst-toolbar-spacer {
+        flex: 1 1 auto;
+    }
 }
 .fl-asst-modal-contents {
     flex: 1 1 auto;
