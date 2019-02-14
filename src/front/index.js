@@ -4,7 +4,6 @@ import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
 import { UIContext, PageViewContext, useModals, useAppFrame } from 'components'
 import store, { useConfig, useStore, useDispatch } from 'store'
-import { goToURL } from 'utils/url'
 import './api'
 import './apps'
 

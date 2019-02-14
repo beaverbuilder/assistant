@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { TagGroupControl } from 'components'
-import { mediaQuery } from './queries'
+import { attachmentQuery } from './queries'
 
 export const MediaListFilter = ( { onChange } ) => {
 	const [ activeTag, setActiveTag ] = useState( 'image' )
@@ -24,7 +24,7 @@ export const MediaListFilter = ( { onChange } ) => {
 	]
 
 	useEffect( () => {
-		onChange( mediaQuery( activeTag ) )
+		onChange( attachmentQuery( activeTag ) )
 	}, [ activeTag ] )
 
 	return (

@@ -1,6 +1,6 @@
 import { getPagedContent } from 'utils/wordpress'
 
-export const mediaQuery = ( type ) => {
+export const attachmentQuery = ( type ) => {
 	return {
 		posts_per_page: 20,
 		post_type: 'attachment',
@@ -9,4 +9,4 @@ export const mediaQuery = ( type ) => {
 }
 
 // Preload
-getPagedContent( 'posts', mediaQuery( 'image' ) )
+getPagedContent( 'posts', attachmentQuery( 'image' ) )
