@@ -5,55 +5,13 @@ import { Button, AppTabButton, Icon, AppContext, StackContext, UIContext } from 
 import { NotificationsTabButton } from 'apps/fl-notifications'
 import './style.scss'
 
-/*
-const PanelBox = posed.div( {
-	init: {
-		position: 'fixed',
-		top: 0,
-		zIndex: 999999,
-	},
-	trailingEdgeVisible: {
-		right: 0,
-		x: '0%',
-		flip: true,
-		transition,
-
-	},
-	trailingEdgeHidden: {
-		right: 0,
-		x: '100%',
-		flip: true,
-		transition,
-	},
-	leadingEdgeVisible: {
-		right: ( { style } ) => {
-			const { width } = style
-			return `calc( 100vw - ${width}px )`
-		},
-		x: '0%',
-		flip: true,
-		transition,
-	},
-	leadingEdgeHidden: {
-		right: ( { style } ) => {
-			const { width } = style
-			return `calc( 100vw - ${width}px )`
-		},
-		x: '-100%',
-		flip: true,
-		transition,
-	},
-} )
-*/
-
 const PanelBox = posed.div( () => {
 
 	const transition = () => {
 		return {
-			type: 'spring',
-			stiffness: 200,
-			damping: 40,
-			mass: 1
+			type: 'tween',
+			duration: 350,
+			ease: 'easeInOut'
 		}
 	}
 
@@ -83,9 +41,15 @@ const PanelBox = posed.div( () => {
 				return 'end' === alignment ? '100%' : '-100%'
 			}
 		},
-		y: ( { frameSize } ) => 'full' === frameSize ? '10%' : '0%',
+		y: ({ frameSize }) => {
+			if ( 'full' === frameSize ) {
+				return '100%'
+			} else {
+				return '0%'
+			}
+		},
 		opacity: ( { frameSize } ) => 'full' === frameSize ? 0 : 1,
-		scale: ( { frameSize } ) => 'full' === frameSize ? .9 : 1,
+		scale: 1,
 		width: ( { style } ) => style.width,
 		height: ( { style } ) => style.height,
 		applyAtStart: {
@@ -98,8 +62,8 @@ const PanelBox = posed.div( () => {
 		init,
 		hidden,
 		normal: {
-			right: ( { alignment, style } ) => {
-				if ( 'end' === alignment ) {
+			right: ( { frameSize, alignment, style } ) => {
+				if ( 'end' === alignment || 'full' === frameSize ) {
 					return 0
 				} else {
 					return `calc( 100vw - ${style.width}px )`
