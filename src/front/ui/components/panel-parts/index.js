@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
 import { Button, AppTabButton, Icon, AppContext, StackContext, UIContext } from 'components'
@@ -48,7 +48,7 @@ const PanelBox = posed.div( {
 
 const PanelBox = posed.div( () => {
 
-	const transition = props => {
+	const transition = () => {
 		return {
 			type: 'spring',
 			stiffness: 200,
@@ -62,32 +62,32 @@ const PanelBox = posed.div( () => {
 		top: 0,
 		right: 0,
 		zIndex: 999999,
-		width: ({ style }) => style.width,
-		height: ({ style }) => style.height,
+		width: ( { style } ) => style.width,
+		height: ( { style } ) => style.height,
 		boxShadow: '0px 0px 40px rgba(0, 0, 0, 0.1)',
 		borderLeft: '1px solid var(--fl-line-color)'
 	}
 
 	const hidden = {
-		right:({ alignment, style }) => {
+		right: ( { alignment, style } ) => {
 			if ( 'end' === alignment ) {
 				return 0
 			} else {
 				return `calc( 100vw - ${style.width}px )`
 			}
 		},
-		x: ({ alignment, frameSize }) => {
+		x: ( { alignment, frameSize } ) => {
 			if ( 'full' === frameSize ) {
 				return '0%'
 			} else {
 				return 'end' === alignment ? '100%' : '-100%'
 			}
 		},
-		y: ({ frameSize }) => 'full' === frameSize ? '10%' : '0%',
-		opacity: ({ frameSize }) => 'full' === frameSize ? 0 : 1,
-		scale: ({ frameSize }) => 'full' === frameSize ? .9 : 1,
-		width: ({ style }) => style.width,
-		height: ({ style }) => style.height,
+		y: ( { frameSize } ) => 'full' === frameSize ? '10%' : '0%',
+		opacity: ( { frameSize } ) => 'full' === frameSize ? 0 : 1,
+		scale: ( { frameSize } ) => 'full' === frameSize ? .9 : 1,
+		width: ( { style } ) => style.width,
+		height: ( { style } ) => style.height,
 		applyAtStart: {
 			pointerEvents: 'none',
 		},
@@ -98,7 +98,7 @@ const PanelBox = posed.div( () => {
 		init,
 		hidden,
 		normal: {
-			right: ({ alignment, style }) => {
+			right: ( { alignment, style } ) => {
 				if ( 'end' === alignment ) {
 					return 0
 				} else {
@@ -109,15 +109,15 @@ const PanelBox = posed.div( () => {
 			y: '0%',
 			scale: 1,
 			opacity: 1,
-			width: ({ style }) => style.width,
-			height: ({ style }) => style.height,
+			width: ( { style } ) => style.width,
+			height: ( { style } ) => style.height,
 			applyAtEnd: {
 				pointerEvents: 'auto',
 			},
 			transition,
 		},
 	}
-})
+} )
 
 export const PanelFrame = ( { children } ) => {
 	const { isShowingUI, appFrame } = useContext( UIContext )
