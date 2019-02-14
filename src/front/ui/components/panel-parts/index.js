@@ -67,13 +67,19 @@ const PanelBox = posed.div( {
 		transition,
 	},
 	leadingEdgeVisible: {
-		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
+		right: ( { style } ) => {
+			const { width } = style
+			return `calc( 100vw - ${width}px )`
+		},
 		x: '0%',
 		flip: true,
 		transition,
 	},
 	leadingEdgeHidden: {
-		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
+		right: ( { style } ) => {
+			const { width } = style
+			return `calc( 100vw - ${width}px )`
+		},
 		x: '-100%',
 		flip: true,
 		transition,
