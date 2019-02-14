@@ -4,5 +4,5 @@ export function truncate( string, words = 5 ) {
 		return
 	}
 
-	return string.split( ' ' ).slice( 0, words ).join( ' ' )
+	return string.split( ' ' ).slice( 0, words ).join( ' ' ) + String.fromCharCode(8230)
 }
