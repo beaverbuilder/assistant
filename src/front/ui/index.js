@@ -18,12 +18,12 @@ import './style.scss'
  * Main UI Controller
  */
 export const UI = () => {
-	const { apps, activeApp, panelPosition } = useStore()
+	const { apps, activeApp } = useStore()
 	const { setActiveApp } = useDispatch()
-	const { isShowingUI, toggleIsShowingUI, renderModals } = useContext( UIContext )
+	const { toggleIsShowingUI, renderModals } = useContext( UIContext )
 
 	return (
-		<PanelFrame position={panelPosition} isShowing={isShowingUI}>
+		<PanelFrame>
 			<div className="fl-asst-panel-wrap">
 				<PanelChrome
 					tabs={apps}
