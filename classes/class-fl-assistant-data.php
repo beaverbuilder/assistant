@@ -57,14 +57,14 @@ class FL_Assistant_Data {
 		 * adding it to the config.
 		 */
 		$state = array(
-			'activeApp'       => $user_state['activeApp'],
-			'isShowingUI'     => $user_state['isShowingUI'],
-			'panelPosition'   => $user_state['panelPosition'],
+			'activeApp'     => $user_state['activeApp'],
+			'isShowingUI'   => $user_state['isShowingUI'],
+			'panelPosition' => $user_state['panelPosition'],
 		);
 
 		return array(
 			'config' => $config,
-			'state' => $state,
+			'state'  => $state,
 		);
 	}
 

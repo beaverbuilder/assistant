@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import { TagGroupControl, ExpandedContents } from 'components'
-import { useConfig, useStore, useAppState } from 'store'
+import { useConfig, useAppState } from 'store'
 import { getWeek } from 'utils/datetime'
 import { postQuery, termQuery } from './queries'
 
