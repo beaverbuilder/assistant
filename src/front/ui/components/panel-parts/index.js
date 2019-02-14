@@ -1,69 +1,106 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { Button, AppTabButton, Icon, AppContext, StackContext } from 'components'
+import { Button, AppTabButton, Icon, AppContext, StackContext, UIContext } from 'components'
 import { NotificationsTabButton } from 'apps/fl-notifications'
 import './style.scss'
 
-const transition = () => ( {
-	type: 'spring',
-	damping: 30,
-	stiffness: 200,
-} )
+const PanelBox = posed.div( () => {
 
-const PanelBox = posed.div( {
-	init: {
-		position: 'fixed',
-		top: 0,
-		bottom: 0,
-		width: ( { panelWidth } ) => panelWidth,
-		zIndex: 999999,
-	},
-	trailingEdgeVisible: {
-		right: 0,
-		x: '0%',
-		flip: true,
-		transition,
-	},
-	trailingEdgeHidden: {
-		right: 0,
-		x: '100%',
-		flip: true,
-		transition,
-	},
-	leadingEdgeVisible: {
-		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
-		x: '0%',
-		flip: true,
-		transition,
-	},
-	leadingEdgeHidden: {
-		right: ( { panelWidth } ) => `calc( 100vw - ${panelWidth}px )`,
-		x: '-100%',
-		flip: true,
-		transition,
-	},
-} )
-
-export const PanelFrame = ( { children, position = 'end', isShowing = true } ) => {
-
-	let pose = ''
-	if ( 'start' === position ) {
-		if ( isShowing ) {
-			pose = 'leadingEdgeVisible'
-		} else {
-			pose = 'leadingEdgeHidden'
-		}
-	} else {
-		if ( isShowing ) {
-			pose = 'trailingEdgeVisible'
-		} else {
-			pose = 'trailingEdgeHidden'
+	const transition = () => {
+		return {
+			type: 'tween',
+			duration: 350,
+			ease: 'easeInOut'
 		}
 	}
 
+	const init = {
+		position: 'fixed',
+		top: 0,
+		right: 0,
+		zIndex: 999999,
+		width: ( { style } ) => style.width,
+		height: ( { style } ) => style.height,
+		boxShadow: '0px 0px 40px rgba(0, 0, 0, 0.1)',
+		borderLeft: '1px solid var(--fl-line-color)'
+	}
+
+	const hidden = {
+		right: ( { alignment, style } ) => {
+			if ( 'end' === alignment ) {
+				return 0
+			} else {
+				return `calc( 100vw - ${style.width}px )`
+			}
+		},
+		x: ( { alignment, frameSize } ) => {
+			if ( 'full' === frameSize ) {
+				return '0%'
+			} else {
+				return 'end' === alignment ? '100%' : '-100%'
+			}
+		},
+		y: ( { frameSize } ) => {
+			if ( 'full' === frameSize ) {
+				return '100%'
+			} else {
+				return '0%'
+			}
+		},
+		opacity: ( { frameSize } ) => 'full' === frameSize ? 0 : 1,
+		scale: 1,
+		width: ( { style } ) => style.width,
+		height: ( { style } ) => style.height,
+		applyAtStart: {
+			pointerEvents: 'none',
+		},
+		transition,
+	}
+
+	return {
+		init,
+		hidden,
+		normal: {
+			right: ( { frameSize, alignment, style } ) => {
+				if ( 'end' === alignment || 'full' === frameSize ) {
+					return 0
+				} else {
+					return `calc( 100vw - ${style.width}px )`
+				}
+			},
+			x: '0%',
+			y: '0%',
+			scale: 1,
+			opacity: 1,
+			width: ( { style } ) => style.width,
+			height: ( { style } ) => style.height,
+			applyAtEnd: {
+				pointerEvents: 'auto',
+			},
+			transition,
+		},
+	}
+} )
+
+export const PanelFrame = ( { children } ) => {
+	const { isShowingUI, appFrame } = useContext( UIContext )
+
+	const styles = {
+		width: appFrame.width,
+		height: appFrame.height,
+	}
+
+	const key = Date.now() // make sure PanelBox re-renders when frame does
+
 	return (
-		<PanelBox pose={pose} className="fl-asst-panel-frame" panelWidth={440}>{children}</PanelBox>
+		<PanelBox
+			pose={ isShowingUI ? 'normal' : 'hidden' }
+			poseKey={key}
+			style={styles}
+			frameSize={appFrame.size}
+			alignment={appFrame.alignment}
+		>{children}</PanelBox>
 	)
 }
 

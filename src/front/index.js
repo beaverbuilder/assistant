@@ -2,8 +2,9 @@ import React, { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
-import { UIContext, PageViewContext, useModals } from 'components'
+import { UIContext, PageViewContext, useModals, useAppFrame } from 'components'
 import store, { useConfig, useStore, useDispatch } from 'store'
+import { goToURL } from 'utils/url'
 import './api'
 import './apps'
 
@@ -15,26 +16,30 @@ const App = () => {
 	const { isShowingUI, activeApp, panelPosition } = useStore()
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
 
+	const { appFrame, setAppFrameSize } = useAppFrame()
+
 	// Setup top-level modal handling
 	const { renderModals, presentModal, dismissModal, presentNotification } = useModals()
 
 	// Create a toggle function to show/hide the panel
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
 
-	const goToURL = url => {
-		window.location = url
-	}
-
 	// Create a store-bound value object for UIContext.Provider
 	const ui = {
 		isShowingUI,
 		setIsShowingUI,
 		toggleIsShowingUI,
+
 		activeApp,
 		setActiveApp,
+
+		appFrame,
+		setAppFrameSize,
+
 		panelPosition,
 		togglePanelPosition,
 		setPanelPosition,
+
 		goToURL,
 		presentModal,
 		dismissModal,
