@@ -1,9 +1,40 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
 import { Button, AppTabButton, Icon, AppContext, StackContext } from 'components'
 import { NotificationsTabButton } from 'apps/fl-notifications'
 import './style.scss'
+
+function useWindowSize() {
+	const isClient = typeof window === 'object'
+
+	const getSize = () => {
+		return {
+			width: isClient ? window.innerWidth : undefined,
+			height: isClient ? window.innerHeight : undefined,
+		}
+	}
+
+	const [windowSize, setWindowSize] = useState( getSize() )
+
+	function handleResize() {
+		setWindowSize( getSize() )
+	}
+
+	useEffect( () => {
+		if ( ! isClient ) {
+			return false
+		}
+
+		window.addEventListener('resize', handleResize)
+		return () => window.removeEventListener('resize', handleResize)
+	}, [] )
+
+	return windowSize
+}
+
+
+
 
 const transition = () => ( {
 	type: 'spring',
@@ -16,7 +47,10 @@ const PanelBox = posed.div( {
 		position: 'fixed',
 		top: 0,
 		bottom: 0,
-		width: ( { panelWidth } ) => panelWidth,
+		/*
+		width: ( { panelWidth } ) => {
+			return panelWidth
+		},*/
 		zIndex: 999999,
 	},
 	trailingEdgeVisible: {
@@ -24,6 +58,7 @@ const PanelBox = posed.div( {
 		x: '0%',
 		flip: true,
 		transition,
+
 	},
 	trailingEdgeHidden: {
 		right: 0,
@@ -46,6 +81,7 @@ const PanelBox = posed.div( {
 } )
 
 export const PanelFrame = ( { children, position = 'end', isShowing = true } ) => {
+	const { width } = useWindowSize()
 
 	let pose = ''
 	if ( 'start' === position ) {
@@ -62,8 +98,14 @@ export const PanelFrame = ( { children, position = 'end', isShowing = true } ) =
 		}
 	}
 
+	const size = 440 // slim
+	const panelWidth = size > ( width * .6 ) ? width : size
+	const styles = {
+		width: panelWidth
+	}
+
 	return (
-		<PanelBox pose={pose} className="fl-asst-panel-frame" panelWidth={440}>{children}</PanelBox>
+		<PanelBox pose={pose} className="fl-asst-panel-frame" style={styles}>{children}</PanelBox>
 	)
 }
 
