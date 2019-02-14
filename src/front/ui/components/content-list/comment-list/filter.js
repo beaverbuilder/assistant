@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { ExpandedContents, TagGroupControl } from 'components'
-import { updatesQuery } from './queries'
+import { commentsQuery } from './queries'
 
-export const UpdatesFilter = ( { onChange } ) => {
+export const CommentListFilter = ( { onChange } ) => {
 	const [ activeTag, setActiveTag ] = useState( 'all' )
 	const tags = [
 		{
@@ -10,17 +10,17 @@ export const UpdatesFilter = ( { onChange } ) => {
 			value: 'all',
 		},
 		{
-			label: 'Plugins',
-			value: 'plugins',
+			label: 'Pending',
+			value: 'hold',
 		},
 		{
-			label: 'Themes',
-			value: 'themes',
+			label: 'Approved',
+			value: 'approve',
 		}
 	]
 
 	useEffect( () => {
-		onChange( updatesQuery( activeTag ) )
+		onChange( commentsQuery( activeTag ) )
 	}, [ activeTag ] )
 
 	return (

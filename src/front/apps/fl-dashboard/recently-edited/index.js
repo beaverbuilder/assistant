@@ -1,26 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
 	Widget,
 	Tag,
 	TagGroup,
-	ContentQuery,
-	UIContext,
+	PostList,
 } from 'components'
 import { useAppState } from 'store'
 import { recentQuery } from './queries'
 
 export const RecentlyEditedWidget = () => {
-	const [ postType, setPostType ] = useAppState( 'post-type', 'any' )
+	const [ postType, setPostType ] = useAppState( 'recentPostType', 'any' )
 	const isTagSelected = value => postType === value
-	const { goToURL } = useContext( UIContext )
-
-	const itemProps = {
-		onAccessoryClick: ( { data }, e ) => {
-			const { url } = data
-			goToURL( url )
-			e.stopPropagation()
-		}
-	}
 
 	return (
 		<Widget title="Recently Edited" isPadded={false}>
@@ -31,10 +21,9 @@ export const RecentlyEditedWidget = () => {
 					<Tag onClick={ () => setPostType( 'page' )} isSelected={isTagSelected( 'page' )}>Pages</Tag>
 				</TagGroup>
 			</div>
-			<ContentQuery
+			<PostList
 				query={recentQuery( postType )}
 				placeholderItemCount={5}
-				itemProps={itemProps}
 			/>
 		</Widget>
 	)

@@ -3,7 +3,7 @@ import classname from 'classnames'
 import { updater } from 'utils/wordpress'
 import { Button, ContentListItem, Icon } from 'components'
 
-export const UpdatesListItem = props => {
+export const UpdateListItem = props => {
 	const { className, data, updateItem } = props
 	const { key, type, meta_updated } = data
 	const [ error, setError ] = useState( false )

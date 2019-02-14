@@ -39,8 +39,17 @@ export {
 export {
 	ContentList,
 	ContentListContainer,
+	ContentListDetail,
 	ContentListItem,
 	ContentQuery,
+	CommentList,
+	CommentListFilter,
+	MediaList,
+	MediaListFilter,
+	PostList,
+	PostListFilter,
+	UpdateList,
+	UpdateListFilter,
 } from './content-list'
 
 export { Widget } from './widgets'

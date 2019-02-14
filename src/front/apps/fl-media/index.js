@@ -1,43 +1,18 @@
-import React, { Fragment } from 'react'
-import classname from 'classnames'
-import { Tag, TagGroup, ScreenHeader, ContentListContainer, ContentQuery, AspectBox } from 'components'
-import { mediaQuery } from './queries'
-import './style.scss'
+import React, { Fragment, useState } from 'react'
+import { ScreenHeader, MediaList, MediaListFilter } from 'components'
 
 export const MediaTab = () => {
+	const [ query, setQuery ] = useState( [] )
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<TagGroup appearance="vibrant">
-					<Tag>Images</Tag>
-					<Tag>Videos</Tag>
-					<Tag>Documents</Tag>
-				</TagGroup>
+				<MediaListFilter onChange={ setQuery } />
 			</ScreenHeader>
-			<ContentQuery
-				query={mediaQuery()}
-				container={<ContentListContainer className={ 'fl-asst-grid-list' } /> }
-				item={<Item />}
-				pagination={true}
+			<MediaList
+				query={ query }
+				pagination={ true }
 			/>
 		</Fragment>
-	)
-}
-
-const Item = ( { className, data } ) => {
-	const { url, urls } = data
-	const classes = classname( {
-		'fl-asst-grid-item': true,
-	}, className )
-	const styles = {
-		backgroundImage: `url(${urls.medium})`
-	}
-	return (
-		<div className={classes}>
-			<a className="fl-asst-grid-item-anchor" href={url}>
-				<AspectBox style={styles} />
-			</a>
-		</div>
 	)
 }
 

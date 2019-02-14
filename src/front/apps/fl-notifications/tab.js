@@ -1,9 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAppState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
-import { ScreenHeader, TagGroupControl } from 'components'
-import { CommentsFilter, CommentsList } from './comments'
-import { UpdatesFilter, UpdatesList } from './updates'
+import {
+	CommentList,
+	CommentListFilter,
+	ScreenHeader,
+	TagGroupControl,
+	UpdateListFilter,
+	UpdateList
+} from 'components'
 
 export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )
@@ -24,8 +29,8 @@ export const NotificationsTab = () => {
 			label: 'Comments',
 			value: 'comments',
 		} )
-		filters.comments = <CommentsFilter onChange={ setQuery } />
-		content.comments = <CommentsList query={ query } />
+		filters.comments = <CommentListFilter onChange={ setQuery } />
+		content.comments = <CommentList query={ query } pagination={ true } />
 	}
 
 	if ( canUpdate ) {
@@ -33,8 +38,8 @@ export const NotificationsTab = () => {
 			label: 'Updates',
 			value: 'updates',
 		} )
-		filters.updates = <UpdatesFilter onChange={ setQuery } />
-		content.updates = <UpdatesList query={ query } />
+		filters.updates = <UpdateListFilter onChange={ setQuery } />
+		content.updates = <UpdateList query={ query } />
 	}
 
 	return (

@@ -1,6 +1,6 @@
 import React, { Fragment, cloneElement, useContext, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
-import { StackContext } from 'components'
+import { EmptyMessage, StackContext } from 'components'
 import {
 	ContentListContainer,
 	ContentListEmptyMessage,
@@ -11,6 +11,7 @@ import {
 import './style.scss'
 
 export const ContentList = ( {
+	className = '',
 	data = [],
 	dataHasMore = false,
 	dataLoader = () => {},
@@ -131,6 +132,9 @@ export const ContentList = ( {
 	 * Nothing found! Show an empty message...
 	 */
 	if ( ! hasItems( data ) && ! dataHasMore ) {
+		if ( 'string' === typeof emptyMessage ) {
+			return <EmptyMessage>{ emptyMessage }</EmptyMessage>
+		}
 		return emptyMessage
 	}
 
@@ -146,7 +150,7 @@ export const ContentList = ( {
 			threshold={ 500 }
 			useWindow={ false }
 		>
-			{ cloneElement( container, {}, renderItems( data ) ) }
+			{ cloneElement( container, { className }, renderItems( data ) ) }
 		</InfiniteScroll>
 	)
 }
