@@ -75,6 +75,22 @@ describe( 'reducers', () => {
 				bar: { test: true },
 			} )
 		} )
+
+		it( 'should set the value of multiple keys on an app state', () => {
+			const state = {
+				foo: { test: 'a', something: 'b' },
+				bar: { test: 1, something: 2  },
+			}
+			const action = {
+				type: 'SET_APP_STATE',
+				app: 'foo',
+				key: { test: 'c', something: 'd' },
+			}
+			expect( reducers.appState( state, action ) ).toEqual( {
+				foo: { test: 'c', something: 'd' },
+				bar: { test: 1, something: 2  },
+			} )
+		} )
 	} )
 
 	describe( 'isShowingUI', () => {
