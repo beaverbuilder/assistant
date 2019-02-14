@@ -28,7 +28,8 @@
       "describe": "readable",
       "expect": "readable",
       "it": "readable",
-      "FLAssistantInitialData": "readable"
+      "FL_ASSISTANT_INITIAL_STATE": "readable",
+      "FL_ASSISTANT_CONFIG": "readable"
     },
     "rules": {
         "camelcase": [

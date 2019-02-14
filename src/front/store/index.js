@@ -1,14 +1,14 @@
 import { useEffect, useState, useContext } from 'react'
-import { createStore, applyMiddleware, bindActionCreators } from 'redux'
+import { createStore, combineReducers, applyMiddleware, bindActionCreators } from 'redux'
 import { applyEffects, composeEnhancers } from './middleware'
-import reducers from './reducers'
+import * as reducers from './reducers'
 import * as actions from './actions'
 import { AppContext } from 'components'
 
-const store = createStore( reducers, {
+const store = createStore( combineReducers( reducers ), {
 	apps: {},
 	appState: {},
-	...( 'undefined' === typeof FLAssistantInitialData ? {} : FLAssistantInitialData ),
+	...( 'undefined' === typeof FL_ASSISTANT_INITIAL_STATE ? {} : FL_ASSISTANT_INITIAL_STATE ),
 }, composeEnhancers( applyMiddleware( applyEffects ) ) )
 
 /**
@@ -43,6 +43,13 @@ export const useAppState = ( key, value ) => {
 		state && undefined !== state[ key ] ? state[ key ] : value,
 		newState => store.dispatch( actions.setAppState( app, key, newState ) )
 	]
+}
+
+/**
+ * Custom hook for accessing the global config object.
+ */
+export const useConfig = () => {
+	return { ...FL_ASSISTANT_CONFIG }
 }
 
 export default store
