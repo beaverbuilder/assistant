@@ -23,7 +23,7 @@ export const UI = () => {
 	const { isShowingUI, toggleIsShowingUI, renderModals } = useContext( UIContext )
 
 	return (
-		<PanelFrame position={panelPosition} isShowing={isShowingUI}>
+		<PanelFrame>
 			<div className="fl-asst-panel-wrap">
 				<PanelChrome
 					tabs={apps}
