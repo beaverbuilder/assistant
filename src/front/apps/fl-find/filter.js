@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import { TagGroupControl, ExpandedContents } from 'components'
-import { useStore, useAppState } from 'store'
+import { useConfig, useAppState } from 'store'
 import { getWeek } from 'utils/datetime'
 import { postQuery, termQuery } from './queries'
 
@@ -9,7 +9,7 @@ export const FindFilter = ( { onChange } ) => {
 	const [ subType, setSubType ] = useAppState( 'subType', 'page' )
 	const [ date, setDate ] = useAppState( 'date', '' )
 	const [ status, setStatus ] = useAppState( 'status', 'publish' )
-	const { contentTypes, taxonomies } = useStore()
+	const { contentTypes, taxonomies } = useConfig()
 	const now = new Date()
 	const typeTags = []
 

@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux'
-
 export const activeApp = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_ACTIVE_APP':
@@ -42,6 +40,15 @@ export const appState = ( state = {}, action ) => {
 			[ action.app ]: action.state,
 		}
 	case 'SET_APP_STATE':
+		if ( 'object' === typeof action.key ) {
+			return {
+				...state,
+				[ action.app ]: {
+					...state[ action.app ],
+					...action.key,
+				},
+			}
+		}
 		return {
 			...state,
 			[ action.app ]: {
@@ -72,23 +79,4 @@ export const panelPosition = ( state = 'end', action ) => {
 	default:
 		return state
 	}
-}
-
-export default ( state = {}, action ) => {
-
-	const reducers = {
-		activeApp,
-		apps,
-		appState,
-		isShowingUI,
-		panelPosition,
-	}
-
-	Object.entries( state ).map( ( [ key, value ] ) => {
-		if ( ! reducers[ key ] ) {
-			reducers[ key ] = ( state = value ) => state
-		}
-	} )
-
-	return combineReducers( reducers )( state, action )
 }

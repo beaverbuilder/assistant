@@ -30,8 +30,12 @@ class FL_Assistant_Data {
 	static public function get_all() {
 		$user_state = self::get_current_user_state();
 
-		return array(
-			'activeApp'       => $user_state['activeApp'],
+		/**
+		 * This will hydrate the config object that can be
+		 * accessed using the useConfig hook. If you need
+		 * state, consider adding to the store instead.
+		 */
+		$config = array(
 			'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
@@ -39,16 +43,28 @@ class FL_Assistant_Data {
 			'contentTypes'    => self::get_post_types(),
 			'currentPageView' => self::get_current_view(),
 			'currentUser'     => self::get_current_user_data(),
-			'isShowingUI'     => $user_state['isShowingUI'],
-			'panelPosition'   => $user_state['panelPosition'],
-			'pluginURL'       => FL_ASSISTANT_URL,
-			'taxonomies'      => self::get_taxonomies(),
-			'updateNonce'     => wp_create_nonce( 'updates' ),
-
-			// Temp
 			'dashboardApp'    => [
 				'adminActions' => self::get_admin_actions(),
 			],
+			'pluginURL'       => FL_ASSISTANT_URL,
+			'taxonomies'      => self::get_taxonomies(),
+			'updateNonce'     => wp_create_nonce( 'updates' ),
+		);
+
+		/**
+		 * This will hydrate the redux store. Each key must
+		 * have a reducer. If it doesn't need one, consider
+		 * adding it to the config.
+		 */
+		$state = array(
+			'activeApp'     => $user_state['activeApp'],
+			'isShowingUI'   => $user_state['isShowingUI'],
+			'panelPosition' => $user_state['panelPosition'],
+		);
+
+		return array(
+			'config' => $config,
+			'state'  => $state,
 		);
 	}
 

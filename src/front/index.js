@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
 import { UIContext, PageViewContext, useModals, useAppFrame } from 'components'
-import store, { useStore, useDispatch } from 'store'
+import store, { useConfig, useStore, useDispatch } from 'store'
 import { goToURL } from 'utils/url'
 import './api'
 import './apps'
@@ -12,7 +12,8 @@ import './apps'
  * The Root Component
  */
 const App = () => {
-	const { isShowingUI, activeApp, panelPosition, currentPageView } = useStore()
+	const { currentPageView } = useConfig()
+	const { isShowingUI, activeApp, panelPosition } = useStore()
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
 
 	const { appFrame, setAppFrameSize } = useAppFrame()

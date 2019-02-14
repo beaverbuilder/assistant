@@ -13,7 +13,7 @@ import {
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { AppFrameTestingWidget } from './ui-testing'
-import { useStore } from 'store'
+import { useConfig } from 'store'
 import './style.scss'
 
 const DetailView = () => {
@@ -28,7 +28,7 @@ const DetailView = () => {
 }
 
 export const DashboardTab = () => {
-	const { currentUser, dashboardApp } = useStore()
+	const { currentUser, dashboardApp } = useConfig()
 	const { togglePanelPosition, presentModal, presentNotification, setActiveApp } = useContext( UIContext )
 	const { pushView } = useContext( StackContext )
 	const { setAppFrameSize } = useContext( UIContext )
@@ -64,7 +64,6 @@ export const DashboardTab = () => {
 
 			<Widget title="Just Testing" className="fl-asst-testing-widget">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
-				<Button onClick={ () => pushView( <DetailView /> )}>Push Detail View</Button>
 				<Button onClick={ () => {
 					presentModal( <TestModal /> )
 					setAppFrameSize( 'wide' )
