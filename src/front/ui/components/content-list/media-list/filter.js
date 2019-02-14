@@ -3,19 +3,23 @@ import { TagGroupControl } from 'components'
 import { mediaQuery } from './queries'
 
 export const MediaListFilter = ( { onChange } ) => {
-	const [ activeTag, setActiveTag ] = useState( 'images' )
+	const [ activeTag, setActiveTag ] = useState( 'image' )
 	const tags = [
 		{
 			label: 'Images',
-			value: 'images',
+			value: 'image',
 		},
 		{
 			label: 'Videos',
-			value: 'videos',
+			value: 'video',
+		},
+		{
+			label: 'Audio',
+			value: 'audio',
 		},
 		{
 			label: 'Documents',
-			value: 'documents',
+			value: 'application',
 		}
 	]
 
