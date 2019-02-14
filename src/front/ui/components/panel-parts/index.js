@@ -41,7 +41,7 @@ const PanelBox = posed.div( () => {
 				return 'end' === alignment ? '100%' : '-100%'
 			}
 		},
-		y: ({ frameSize }) => {
+		y: ( { frameSize } ) => {
 			if ( 'full' === frameSize ) {
 				return '100%'
 			} else {

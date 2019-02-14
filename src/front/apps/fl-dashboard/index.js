@@ -30,7 +30,6 @@ const DetailView = () => {
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useConfig()
 	const { togglePanelPosition, presentModal, presentNotification, setActiveApp } = useContext( UIContext )
-	const { pushView } = useContext( StackContext )
 	const { setAppFrameSize } = useContext( UIContext )
 
 	// @TODO: Rename dashboardApp and move into app state
