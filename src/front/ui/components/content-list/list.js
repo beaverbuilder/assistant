@@ -1,4 +1,4 @@
-import React, { Fragment, cloneElement, useContext, useState } from 'react'
+import React, { Fragment, cloneElement, useContext, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { StackContext } from 'components'
 import {
@@ -25,6 +25,10 @@ export const ContentList = ( {
 } ) => {
 	const [ requests ] = useState( [] )
 	const stackContext = useContext( StackContext )
+
+	useEffect( () => {
+		return () => requests.length && requests.pop().cancel()
+	}, [] )
 
 	/**
 	 * Cancels an existing request and runs the data loader.
