@@ -19,6 +19,7 @@ const PanelBox = posed.div( () => {
 		position: 'fixed',
 		top: 0,
 		right: 0,
+		left: 'auto',
 		zIndex: 999999,
 		width: ( { style } ) => style.width,
 		height: ( { style } ) => style.height,
@@ -27,11 +28,18 @@ const PanelBox = posed.div( () => {
 	}
 
 	const hidden = {
-		right: ( { alignment, style } ) => {
-			if ( 'end' === alignment ) {
+		right: ( { frameSize, alignment } ) => {
+			if ( 'end' === alignment || 'full' === frameSize ) {
 				return 0
 			} else {
-				return `calc( 100vw - ${style.width}px )`
+				return 'auto'
+			}
+		},
+		left: ( { alignment } ) => {
+			if ( 'start' === alignment ) {
+				return 0
+			} else {
+				return 'auto'
 			}
 		},
 		x: ( { alignment, frameSize } ) => {
@@ -62,11 +70,18 @@ const PanelBox = posed.div( () => {
 		init,
 		hidden,
 		normal: {
-			right: ( { frameSize, alignment, style } ) => {
+			right: ( { frameSize, alignment } ) => {
 				if ( 'end' === alignment || 'full' === frameSize ) {
 					return 0
 				} else {
-					return `calc( 100vw - ${style.width}px )`
+					return 'auto'
+				}
+			},
+			left: ( { alignment } ) => {
+				if ( 'start' === alignment ) {
+					return 0
+				} else {
+					return 'auto'
 				}
 			},
 			x: '0%',
@@ -92,6 +107,7 @@ export const PanelFrame = ( { children } ) => {
 	}
 
 	const key = Date.now() // make sure PanelBox re-renders when frame does
+	console.log('new key', key )
 
 	return (
 		<PanelBox
