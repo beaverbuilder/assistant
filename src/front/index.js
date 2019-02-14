@@ -15,7 +15,6 @@ const App = () => {
 	const { currentPageView } = useConfig()
 	const { isShowingUI, activeApp, panelPosition } = useStore()
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
-
 	const { appFrame, setAppFrameSize } = useAppFrame()
 
 	// Setup top-level modal handling
@@ -39,8 +38,6 @@ const App = () => {
 		panelPosition,
 		togglePanelPosition,
 		setPanelPosition,
-
-		goToURL,
 		presentModal,
 		dismissModal,
 		renderModals,

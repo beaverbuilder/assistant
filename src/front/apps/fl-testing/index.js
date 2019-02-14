@@ -1,13 +1,13 @@
 import React, { Fragment, useContext, useState } from 'react'
 import posed from 'react-pose'
-import { ScreenHeader, ExpandedContents, Button, Icon, UIContext, StackContext } from 'components'
+import { redirect } from 'utils/location'
+import { ScreenHeader, ExpandedContents, Button, Icon, StackContext } from 'components'
 import { useDispatch } from 'store'
 const { registerApp } = useDispatch()
 import './style.scss'
 
 const TestingApp = () => {
 	const { pushView } = useContext( StackContext )
-	const { goToURL } = useContext( UIContext )
 
 	return (
 		<Fragment>
@@ -17,31 +17,31 @@ const TestingApp = () => {
 				<ListItemA
 					title="Sed posuere consectetur est at lobortis est at lobortis"
 					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => goToURL( 'https://www.amazon.com' )}
+					onClick={ () => redirect( 'https://www.amazon.com' )}
 					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
 				/>
 				<ListItemA
 					title="Sed posuere est at lobortis consectetur est at lobortis"
 					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => goToURL( 'https://www.amazon.com' )}
+					onClick={ () => redirect( 'https://www.amazon.com' )}
 					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
 				/>
 				<ListItemA
 					title="Sed posuere consectetur est at lobortis est at lobortis"
 					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => goToURL( 'https://www.amazon.com' )}
+					onClick={ () => redirect( 'https://www.amazon.com' )}
 					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
 				/>
 				<ListItemA
 					title="Sed posuere consectetur est at lobortis"
 					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => goToURL( 'https://www.amazon.com' )}
+					onClick={ () => redirect( 'https://www.amazon.com' )}
 					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
 				/>
 				<ListItemA
 					title="Sed posuere consectetur est at lobortis"
 					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => goToURL( 'https://www.amazon.com' )}
+					onClick={ () => redirect( 'https://www.amazon.com' )}
 					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
 				/>
 			</div>

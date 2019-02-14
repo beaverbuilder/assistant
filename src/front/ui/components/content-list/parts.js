@@ -1,16 +1,6 @@
-import React, { useContext } from 'react'
-import Clipboard from 'react-clipboard.js'
+import React from 'react'
 import classname from 'classnames'
-import {
-	EmptyMessage,
-	Padding,
-	ScreenHeader,
-	StackContext,
-	Button,
-	Icon,
-	TagGroup,
-	Tag,
-} from 'components'
+import { EmptyMessage } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
@@ -29,24 +19,14 @@ export const ContentListGroupLabel = ( { label } ) => {
 }
 
 export const ContentListItem = props => {
-	const { className, children, data, onClick, onAccessoryClick } = props
+	const { className, children, data, onClick } = props
 	const { meta, thumbnail, title } = data
-	const { pushView } = useContext( StackContext )
-
+	const classes = classname( className, 'fl-asst-list-item' )
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
 	}
-
-	const handleClick = () => {
-		if ( onClick ) {
-			onClick( data )
-		} else {
-			pushView( <ContentListDetail data={ data } /> )
-		}
-	}
-
 	return (
-		<div className={ classname( className, 'fl-asst-list-item' ) } onClick={ e => handleClick( props, e ) }>
+		<div className={ classes } onClick={ () => onClick && onClick( data ) }>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
@@ -55,11 +35,6 @@ export const ContentListItem = props => {
 				<div className="fl-asst-list-item-meta">
 					{ meta }
 				</div>
-			</div>
-			<div className="fl-asst-list-item-accessory">
-				{ onAccessoryClick && <Button appearance="icon" onClick={ e => onAccessoryClick( props, e ) }>
-					<Icon name="forward" />
-				</Button> }
 			</div>
 			{children}
 		</div>
@@ -79,25 +54,14 @@ export const ContentListItemLoading = ( { className } ) => {
 	)
 }
 
-export const ContentListEmptyMessage = () => {
-	return <EmptyMessage>No Results Found</EmptyMessage>
-}
-
-export const ContentListDetail = ( { className, data } ) => {
-	const { meta, title, url, edit_url } = data
-
+export const ContentListDetail = ( { className, children } ) => {
 	return (
 		<div className={ classname( className, 'fl-asst-list-detail' ) }>
-			<ScreenHeader title={title}>
-				<TagGroup>
-					<Tag href={url}>View</Tag>
-					<Tag href={edit_url}>Edit</Tag>
-				</TagGroup>
-			</ScreenHeader>
-			<Padding>
-				<div>By { meta }</div>
-				<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
-			</Padding>
+			{ children }
 		</div>
 	)
+}
+
+export const ContentListEmptyMessage = () => {
+	return <EmptyMessage>No Results Found</EmptyMessage>
 }

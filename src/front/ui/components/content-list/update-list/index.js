@@ -1,7 +1,7 @@
 import { updater } from 'utils/wordpress'
 import './style.scss'
 
-export { UpdatesFilter } from './filter'
-export { UpdatesList } from './list'
+export { UpdateListFilter } from './filter'
+export { UpdateList } from './list'
 
 updater.init()
