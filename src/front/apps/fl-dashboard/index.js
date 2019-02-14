@@ -12,7 +12,7 @@ import {
 
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
-import { useStore } from 'store'
+import { useConfig } from 'store'
 import './style.scss'
 
 const DetailView = () => {
@@ -27,7 +27,7 @@ const DetailView = () => {
 }
 
 export const DashboardTab = () => {
-	const { currentUser, dashboardApp } = useStore()
+	const { currentUser, dashboardApp } = useConfig()
 	const { togglePanelPosition, presentModal, presentNotification, setActiveApp } = useContext( UIContext )
 	const { pushView } = useContext( StackContext )
 

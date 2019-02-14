@@ -1,11 +1,11 @@
-import store from 'store'
+import { useConfig } from 'store'
 import { clearCache, getRequest, postRequest } from 'utils/request'
 
 /**
  * Fetch request for WordPress admin AJAX.
  */
 export const adminAjaxRequest = ( { method = 'GET', ...args } ) => {
-	const { ajaxUrl } = store.getState()
+	const { ajaxUrl } = useConfig()
 	const ajaxArgs = {
 		root: ajaxUrl,
 		...args,
@@ -17,7 +17,7 @@ export const adminAjaxRequest = ( { method = 'GET', ...args } ) => {
  * Updates a single plugin.
  */
 export const updatePlugin = ( plugin, onSuccess, onError ) => {
-	const { updateNonce } = store.getState()
+	const { updateNonce } = useConfig()
 	clearCache( 'updates' )
 	return adminAjaxRequest( {
 		onSuccess,
@@ -36,7 +36,7 @@ export const updatePlugin = ( plugin, onSuccess, onError ) => {
  * Updates a single theme.
  */
 export const updateTheme = ( theme, onSuccess, onError ) => {
-	const { updateNonce } = store.getState()
+	const { updateNonce } = useConfig()
 	clearCache( 'updates' )
 	return adminAjaxRequest( {
 		onSuccess,

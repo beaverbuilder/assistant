@@ -1,6 +1,6 @@
-import store from 'store'
+import { useConfig } from 'store'
 
 export const currentUserCan = ( cap ) => {
-	const { capabilities } = store.getState().currentUser
-	return capabilities[ cap ] ? true : false
+	const { currentUser } = useConfig()
+	return currentUser.capabilities[ cap ] ? true : false
 }
