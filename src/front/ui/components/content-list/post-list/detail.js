@@ -1,21 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Clipboard from 'react-clipboard.js'
 import {
 	ContentListDetail,
 	Padding,
 	ScreenHeader,
 	TagGroup,
-	Tag
+	Tag,
+	ViewContext,
 } from 'components'
 
-export const PostListDetail = ( { data } ) => {
-	const { meta, title, url, edit_url } = data
+export const PostListDetail = () => {
+	const { meta, title, url, editUrl } = useContext( ViewContext )
 	return (
 		<ContentListDetail>
 			<ScreenHeader title={title}>
 				<TagGroup>
 					<Tag href={url}>View</Tag>
-					<Tag href={edit_url}>Edit</Tag>
+					<Tag href={editUrl}>Edit</Tag>
 				</TagGroup>
 			</ScreenHeader>
 			<Padding>

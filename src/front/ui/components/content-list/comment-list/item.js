@@ -1,14 +1,17 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
-import { truncate } from 'utils/text'
-import { ContentListItem, Icon, StackContext } from 'components'
-import { CommentListDetail } from './detail'
+import { CommentDetail } from './detail'
+import {
+	ContentListItem,
+	Icon,
+	ItemContext,
+	StackContext
+} from 'components'
 
-export const CommentListItem = ( { className, data, ...props } ) => {
+export const CommentListItem = ( { className, ...props } ) => {
+	const context = useContext( ItemContext )
+	const { approved } = context
 	const { pushView } = useContext( StackContext )
-	const { approved } = data
-	const title = truncate( data.title, 6 )
-	const newData = Object.assign( {}, data, { title } )
 
 	const classes = classname( className, {
 		'fl-asst-comment-pending': ! approved,
@@ -17,8 +20,7 @@ export const CommentListItem = ( { className, data, ...props } ) => {
 	return (
 		<ContentListItem
 			className={ classes }
-			data={ newData }
-			onClick={ () => pushView( <CommentListDetail data={ data } /> ) }
+			onClick={ () => pushView( <CommentDetail />, { context } ) }
 			{ ...props }
 		>
 			{ ! approved &&

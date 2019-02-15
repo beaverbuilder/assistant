@@ -59,15 +59,18 @@ final class FL_Assistant_REST_Comments {
 	 * @return array
 	 */
 	static public function get_comment_response_data( $comment ) {
+		$post = get_post( $comment->comment_post_ID );
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		return array(
 			'approved'  => ! ! $comment->comment_approved,
 			'author'    => $comment->comment_author,
 			'content'   => $comment->comment_content,
 			'date'      => $date,
-			'edit_url'  => get_edit_comment_link( $comment ),
+			'editUrl'   => admin_url( 'comment.php?action=editcomment&c=' ) . $comment->comment_ID,
 			'id'        => $comment->comment_ID,
 			'meta'      => $comment->comment_author . ' - ' . $date,
+			'postTitle' => $post->post_title,
+			'spam'      => 'spam' === $comment->comment_approved,
 			'thumbnail' => get_avatar_url( $comment->comment_author_email ),
 			'title'     => strip_tags( $comment->comment_content ),
 			'url'       => get_comment_link( $comment ),

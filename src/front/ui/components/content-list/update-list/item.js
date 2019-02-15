@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import classname from 'classnames'
 import { updater } from 'utils/wordpress'
-import { Button, ContentListItem, Icon } from 'components'
+import { Button, ContentListItem, Icon, ItemContext } from 'components'
 
 export const UpdateListItem = props => {
-	const { className, data, updateItem } = props
-	const { key, type, meta_updated } = data
+	const { className } = props
+	const { key, type, metaUpdated, updateItem } = useContext( ItemContext )
 	const [ error, setError ] = useState( false )
 	const [ updated, setUpdated ] = useState( false )
 	const [ updating, setUpdating ] = useState( updater.isQueued( type, key ) )
@@ -14,7 +14,7 @@ export const UpdateListItem = props => {
 		updater.subscribe( type, key, response => {
 			setUpdating( false )
 			if ( response.success ) {
-				updateItem( { meta: meta_updated } )
+				updateItem( { meta: metaUpdated } )
 				setUpdated( true )
 			} else {
 				setError( true )

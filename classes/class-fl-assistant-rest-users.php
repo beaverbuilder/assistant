@@ -62,7 +62,7 @@ final class FL_Assistant_REST_Users {
 		return array(
 			'content'   => get_the_author_meta( 'description', $user->ID ),
 			'date'      => $user->user_registered,
-			'edit_url'  => get_edit_user_link( $user->ID, '' ),
+			'editUrl'   => get_edit_user_link( $user->ID, '' ),
 			'thumbnail' => get_avatar_url( $user->ID ),
 			'title'     => $user->display_name,
 			'url'       => get_author_posts_url( $user->ID ),

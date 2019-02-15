@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import classname from 'classnames'
-import { EmptyMessage } from 'components'
+import { truncate } from 'utils/text'
+import { EmptyMessage, ItemContext } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
@@ -19,19 +20,19 @@ export const ContentListGroupLabel = ( { label } ) => {
 }
 
 export const ContentListItem = props => {
-	const { className, children, data, onClick } = props
-	const { meta, thumbnail, title } = data
+	const { meta, thumbnail, title } = useContext( ItemContext ) || {}
+	const { className, children, onClick } = props
 	const classes = classname( className, 'fl-asst-list-item' )
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
 	}
 	return (
-		<div className={ classes } onClick={ () => onClick && onClick( data ) }>
+		<div className={ classes } onClick={ onClick }>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
 			<div className="fl-asst-list-item-content">
-				<div className="fl-asst-list-item-title">{ title }</div>
+				<div className="fl-asst-list-item-title">{ truncate( title, 6 ) }</div>
 				<div className="fl-asst-list-item-meta">
 					{ meta }
 				</div>
@@ -42,15 +43,15 @@ export const ContentListItem = props => {
 }
 
 export const ContentListItemLoading = ( { className } ) => {
-	const data = {
+	const context = {
 		meta: 'Loading...',
 		title: 'Loading...',
 	}
+	const classes = classname( className, 'fl-asst-list-item-loading' )
 	return (
-		<ContentListItem
-			className={ classname( className, 'fl-asst-list-item-loading' ) }
-			data={ data }
-		/>
+		<ItemContext.Provider value={ context }>
+			<ContentListItem className={ classes } />
+		</ItemContext.Provider>
 	)
 }
 

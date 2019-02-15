@@ -16,6 +16,10 @@ export const CommentListFilter = ( { onChange } ) => {
 		{
 			label: 'Approved',
 			value: 'approve',
+		},
+		{
+			label: 'Spam',
+			value: 'spam',
 		}
 	]
 

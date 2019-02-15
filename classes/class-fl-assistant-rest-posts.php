@@ -53,7 +53,7 @@ final class FL_Assistant_REST_Posts {
 			'author'    => $author,
 			'content'   => $post->post_content,
 			'date'      => $date,
-			'edit_url'  => get_edit_post_link( $post->ID, '' ),
+			'editUrl'   => get_edit_post_link( $post->ID, '' ),
 			'meta'      => $author . ' - ' . $date,
 			'thumbnail' => get_the_post_thumbnail_url( $post, 'thumbnail' ),
 			'title'     => empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
