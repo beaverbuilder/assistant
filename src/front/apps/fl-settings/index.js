@@ -3,11 +3,11 @@ import { useDispatch } from 'store'
 const { registerApp } = useDispatch()
 
 const SettingsApp = () => {
-    return (
-        <Fragment>
+	return (
+		<Fragment>
             Yo.
-        </Fragment>
-    )
+		</Fragment>
+	)
 }
 
 registerApp( 'fl-settings', {

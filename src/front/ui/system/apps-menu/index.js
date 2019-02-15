@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { useStore, useDispatch } from 'store'
-import { Heading, Icon, Button, Padding, UIContext } from 'components'
+import { Heading, Icon, UIContext } from 'components'
 import './style.scss'
 
 export const AppsMenu = () => {
@@ -11,6 +11,7 @@ export const AppsMenu = () => {
 
 	const clickItem = key => {
 		setActiveApp( key )
+
 		// dismiss the menu???
 	}
 	return (
@@ -18,8 +19,10 @@ export const AppsMenu = () => {
 			<Heading className="fl-asst-manage-apps-title">Manage Apps</Heading>
 			<div className="fl-asst-app-list">
 				{ Object.keys( apps ).map( key => {
-					
-					if ( excludedApps.includes( key ) ) return null
+
+					if ( excludedApps.includes( key ) ) {
+						return null
+					}
 
 					const app = apps[key]
 

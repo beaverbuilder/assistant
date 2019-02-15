@@ -28,7 +28,7 @@ export const UI = () => {
 
 	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
-	const excludedApps = ['fl-notifications']
+	const excludedApps = [ 'fl-notifications' ]
 	const maxTabCount = 3
 	let count = 0
 
@@ -45,9 +45,13 @@ export const UI = () => {
 						<div className="fl-asst-app-tabs-area">
 							{ Object.keys( apps ).map( key => {
 
-								if ( excludedApps.includes( key ) ) return null
+								if ( excludedApps.includes( key ) ) {
+									return null
+								}
 
-								if ( count >= maxTabCount ) return null 
+								if ( count >= maxTabCount ) {
+									return null
+								}
 								count++
 
 								const tab = apps[key]

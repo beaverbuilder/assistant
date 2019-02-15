@@ -15,7 +15,7 @@ export const NotificationsIcon = ( { count = 0 } ) => {
 	)
 }
 
-export const NotificationsTabButton = ({ isShowingAppsMenu }) => {
+export const NotificationsTabButton = ( { isShowingAppsMenu } ) => {
 	const [ count, setCount ] = useState( null )
 	const { apps, activeApp } = useStore()
 	const { setActiveApp, setAppState } = useDispatch()
