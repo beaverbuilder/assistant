@@ -70,7 +70,7 @@ final class FL_Assistant_REST_Comments {
 			'id'        => $comment->comment_ID,
 			'meta'      => $comment->comment_author . ' - ' . $date,
 			'postTitle' => $post->post_title,
-			'spam'		=> 'spam' === $comment->comment_approved,
+			'spam'      => 'spam' === $comment->comment_approved,
 			'thumbnail' => get_avatar_url( $comment->comment_author_email ),
 			'title'     => strip_tags( $comment->comment_content ),
 			'url'       => get_comment_link( $comment ),
