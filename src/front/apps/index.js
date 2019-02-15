@@ -7,13 +7,14 @@ import { DashboardTab, DashboardIcon } from './fl-dashboard'
 import { FindTab, FindIcon } from './fl-find'
 import { NotificationsTab, NotificationsIcon } from './fl-notifications'
 import { MediaTab, MediaIcon } from './fl-media'
+import './fl-testing'
+import './fl-settings'
 
 const config = {
 	'fl-notifications': {
 		label: 'Notifications',
 		content: props => <NotificationsTab {...props} />,
 		icon: props => <NotificationsIcon {...props} />,
-		showTabIcon: false,
 		enabled: (
 			currentUserCan( 'update_plugins' ) ||
 			currentUserCan( 'update_themes' ) ||

@@ -7,6 +7,8 @@ export const AppsMenu = () => {
 	const { apps } = useStore()
 	const { setActiveApp } = useDispatch()
 
+	const excludedApps = [ 'fl-notifications' ]
+
 	const clickItem = key => {
 		setActiveApp( key )
 		// dismiss the menu???
@@ -16,12 +18,15 @@ export const AppsMenu = () => {
 			<Heading className="fl-asst-manage-apps-title">Manage Apps</Heading>
 			<div className="fl-asst-app-list">
 				{ Object.keys( apps ).map( key => {
-
-					if ( 'fl-notifications' === key ) {
-						return null
-					}
+					
+					if ( excludedApps.includes( key ) ) return null
 
 					const app = apps[key]
+
+					if ( 'function' !== typeof app.icon ) {
+						app.icon = props => <Icon name="default-app" {...props} />
+					}
+
 					return (
 						<div className="fl-asst-app-list-item" key={key} onClick={ () => clickItem( key ) }>
 							{ app.icon() }
