@@ -12,6 +12,7 @@ import {
 
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
+import { RecentCommentsWidget } from './recent-comments'
 import { AppFrameTestingWidget } from './ui-testing'
 import { useConfig } from 'store'
 import './style.scss'
@@ -50,6 +51,9 @@ export const DashboardTab = () => {
 			</ScreenHeader>
 
 			<RecentlyEditedWidget />
+			<Separator />
+
+			<RecentCommentsWidget />
 			<Separator />
 
 			<Widget title="Admin Links">
