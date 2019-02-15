@@ -1,6 +1,6 @@
 import React, { Fragment, cloneElement, useContext, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
-import { EmptyMessage, StackContext } from 'components'
+import { EmptyMessage, ItemContext, StackContext } from 'components'
 import {
 	ContentListContainer,
 	ContentListEmptyMessage,
@@ -25,7 +25,7 @@ export const ContentList = ( {
 	placeholderItemCount = 10
 } ) => {
 	const [ requests ] = useState( [] )
-	const stackContext = useContext( StackContext )
+	const { ref, updateCurrentView } = useContext( StackContext )
 
 	useEffect( () => {
 		return () => requests.length && requests.pop().cancel()
@@ -68,8 +68,10 @@ export const ContentList = ( {
 		const itemData = null === groupKey ? data[ itemKey ] : data[ groupKey ].items[ itemKey ]
 		if ( null === groupKey ) {
 			data[ itemKey ] = { ...itemData, ...newData }
+			updateCurrentView( data[ itemKey ] )
 		} else {
 			data[ groupKey ].items[ itemKey ] = { ...itemData, ...newData }
+			updateCurrentView( data[ groupKey ].items[ itemKey ] )
 		}
 		dataSetter( data.slice( 0 ) )
 	}
@@ -90,13 +92,16 @@ export const ContentList = ( {
 	 * Renders a single item.
 	 */
 	const renderItem = ( itemData, itemKey, groupKey = null ) => {
-		return cloneElement( item, {
-			data: itemData,
-			key: itemKey,
+		const context = {
 			removeItem: () => removeItem( itemKey, groupKey ),
 			updateItem: newData => updateItem( itemKey, groupKey, newData ),
-			...itemProps
-		} )
+			...itemData,
+		}
+		return (
+			<ItemContext.Provider key={ itemKey } value={ context }>
+				{ cloneElement( item, itemProps ) }
+			</ItemContext.Provider>
+		)
 	}
 
 	/**
@@ -143,7 +148,7 @@ export const ContentList = ( {
 	 */
 	return (
 		<InfiniteScroll
-			getScrollParent={ () => stackContext.ref.current }
+			getScrollParent={ () => ref.current }
 			hasMore={ dataHasMore }
 			loadMore={ loadItems }
 			loader={ renderPlaceholderItems() }

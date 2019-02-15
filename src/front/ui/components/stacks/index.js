@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createRef } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { StackContext } from 'components'
+import { StackContext, ViewContext } from 'components'
 import './style.scss'
 
 const handleTransition = () => {
@@ -81,7 +81,10 @@ export const Stack = ( { children, className } ) => {
 			key: Date.now(),
 			pose: 'present',
 			children,
-			config: { shouldAnimate: true },
+			config: {
+				shouldAnimate: true,
+				context: {}
+			},
 		}
 	] )
 	const [ action, setAction ] = useState()
@@ -129,7 +132,7 @@ export const Stack = ( { children, className } ) => {
 		isCurrentView: false,
 		viewCount: views.length,
 
-		pushView: ( children, config = { shouldAnimate: true } ) => {
+		pushView: ( children, config = { shouldAnimate: true, context: {} } ) => {
 			const newViews = views
 			newViews.push( {
 				key: Date.now(),
@@ -163,6 +166,17 @@ export const Stack = ( { children, className } ) => {
 			setViews( [ root, current ] )
 			setAction( 'root' )
 		},
+		updateCurrentView: ( data ) => {
+			const index = views.length - 1
+			const { context } = views[ index ].config
+
+			views[ index ].config.context = {
+				...context,
+				...data,
+			}
+
+			setViews( Array.from( views ) )
+		},
 	}
 
 	const classes = classname( {
@@ -172,7 +186,7 @@ export const Stack = ( { children, className } ) => {
 	return (
 		<div className={classes}>
 			{ views.map( ( view, i ) => {
-				const { key, pose } = view
+				const { config, key, pose } = view
 				const checks = {
 					isRootView: 0 === i,
 					isCurrentView: 'present' === pose ? true : false,
@@ -184,7 +198,9 @@ export const Stack = ( { children, className } ) => {
 
 				return (
 					<StackContext.Provider key={i} value={context}>
-						<StackView key={key} onPoseComplete={poseComplete} {...props} />
+						<ViewContext.Provider value={config.context}>
+							<StackView key={key} onPoseComplete={poseComplete} {...props} />
+						</ViewContext.Provider>
 					</StackContext.Provider>
 				)
 			} ) }

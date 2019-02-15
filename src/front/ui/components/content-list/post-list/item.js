@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
 import { redirect } from 'utils/location'
-import { Button, ContentListItem, Icon, StackContext } from 'components'
+import { Button, ContentListItem, Icon, ItemContext, StackContext } from 'components'
 import { PostListDetail } from './detail'
 
 export const PostListItem = props => {
+	const context = useContext( ItemContext )
+	const { url } = context
 	const { pushView } = useContext( StackContext )
-	const { data } = props
-	const { url } = data
 
 	const onClick = () => {
-		pushView( <PostListDetail data={ data } /> )
+		pushView( <PostListDetail />, { context } )
 	}
 
 	const onAccessoryClick = e => {

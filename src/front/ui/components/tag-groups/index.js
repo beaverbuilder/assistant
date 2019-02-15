@@ -18,12 +18,13 @@ export const TagGroup = ( { title, children, appearance, isDisabled } ) => {
 	)
 }
 
-export const Tag = ( { children, onClick = () => {}, count, isSelected, isDisabled, href, target } ) => {
+export const Tag = ( { appearance, children, onClick = () => {}, count, isSelected, isDisabled, href, target } ) => {
 	const classes = classname( {
 		'fl-asst-button': true,
 		'fl-asst-tag': true,
 		'is-selected': isSelected,
 		'is-disabled': isDisabled,
+		'is-warning': 'warning' === appearance,
 	} )
 	if ( href ) {
 		return (
