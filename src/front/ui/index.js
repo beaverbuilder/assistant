@@ -11,16 +11,22 @@ import {
 	UIContext,
 } from 'components'
 import { NotificationsTabButton } from 'apps/fl-notifications'
-import { useStore, useDispatch } from 'store'
+import { useAppsMenu } from 'system'
 import './style.scss'
 
 /**
  * Main UI Controller
  */
 export const UI = () => {
-	const { apps, activeApp } = useStore()
-	const { setActiveApp } = useDispatch()
-	const { toggleIsShowingUI, renderModals } = useContext( UIContext )
+	const {
+		apps,
+		activeApp,
+		setActiveApp,
+		toggleIsShowingUI,
+		renderModals,
+	} = useContext( UIContext )
+
+	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
 	return (
 		<PanelFrame>
@@ -29,13 +35,13 @@ export const UI = () => {
 				{ /* Toolbar */ }
 				<div className="fl-asst-panel-chrome">
 					<div className="fl-asst-panel-chrome-area">
-						<NotificationsTabButton />
+						<NotificationsTabButton isShowingAppsMenu={isShowingAppsMenu} />
 					</div>
 					<div className="fl-asst-app-tabs-wrap">
 						<div className="fl-asst-app-tabs-area">
 							{ Object.keys( apps ).map( key => {
 								const tab = apps[key]
-								const isSelected = ( key === activeApp ) ? true : false
+								const isSelected = ( key === activeApp && ! isShowingAppsMenu ) ? true : false
 
 								if ( false === tab.enabled || false === tab.showTabIcon ) {
 									return null
@@ -51,6 +57,10 @@ export const UI = () => {
 									</AppTabButton>
 								)
 							} ) }
+
+							<AppTabButton appearance="icon" isSelected={isShowingAppsMenu} onClick={toggleIsShowingAppsMenu}>
+								<Icon name="apps-app" />
+							</AppTabButton>
 						</div>
 					</div>
 					<div className="fl-asst-panel-chrome-area">

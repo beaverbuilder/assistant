@@ -61,3 +61,19 @@
     display: flex;
     flex-direction: column;
 }
+
+.fl-asst-screen-menu-frame {
+    position: absolute;
+    top:47px;
+    left:0;
+    right:0;
+    bottom:0;
+    background: var(--fl-asst-overlay-background-color);
+
+    .fl-asst-screen-menu-contents {
+        background: var(--fl-background-color);
+        min-width: 440px;
+        margin: 0 auto;
+        flex: 0 0 auto;
+    }
+}

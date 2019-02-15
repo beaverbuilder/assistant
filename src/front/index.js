@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
 import { UIContext, PageViewContext, useModals, useAppFrame } from 'components'
+import { useAppsMenu } from 'system'
 import store, { useConfig, useStore, useDispatch } from 'store'
 import { goToURL } from 'utils/url'
 import './api'
@@ -13,12 +14,10 @@ import './apps'
  */
 const App = () => {
 	const { currentPageView } = useConfig()
-	const { isShowingUI, activeApp, panelPosition } = useStore()
+	const { isShowingUI, apps, activeApp, panelPosition } = useStore()
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
 	const { appFrame, setAppFrameSize } = useAppFrame()
-
-	// Setup top-level modal handling
-	const { renderModals, presentModal, dismissModal, presentNotification } = useModals()
+	const { renderModals, presentModal, dismissModal, presentNotification, modalExists } = useModals()
 
 	// Create a toggle function to show/hide the panel
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
@@ -29,6 +28,7 @@ const App = () => {
 		setIsShowingUI,
 		toggleIsShowingUI,
 
+		apps,
 		activeApp,
 		setActiveApp,
 
@@ -38,9 +38,11 @@ const App = () => {
 		panelPosition,
 		togglePanelPosition,
 		setPanelPosition,
+
 		presentModal,
 		dismissModal,
 		renderModals,
+		modalExists,
 		presentNotification,
 
 		goToURL,

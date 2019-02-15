@@ -30,7 +30,6 @@ const DetailView = () => {
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useConfig()
 	const { togglePanelPosition, presentModal, presentNotification, setActiveApp } = useContext( UIContext )
-	const { setAppFrameSize } = useContext( UIContext )
 
 	// @TODO: Rename dashboardApp and move into app state
 	const { adminActions } = dashboardApp
@@ -65,7 +64,6 @@ export const DashboardTab = () => {
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
 				<Button onClick={ () => {
 					presentModal( <TestModal /> )
-					setAppFrameSize( 'wide' )
 				} }>Present Modal View</Button>
 				<Button onClick={ showBasicNotification }>Present Notification</Button>
 				<Button onClick={ () => presentNotification( 'This is your first warning', { appearance: 'warning' } ) }>Present Warning</Button>
