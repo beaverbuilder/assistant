@@ -20,7 +20,6 @@ export {
 } from './tag-groups'
 
 export {
-	PanelChrome,
 	PanelFrame,
 	ScreenHeader,
 	ScreenFooter,

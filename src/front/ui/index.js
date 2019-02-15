@@ -5,12 +5,12 @@ import {
 	Separator,
 	Tab,
 	PanelFrame,
-	PanelChrome,
 	Stack,
 	AppContext,
+	AppTabButton,
 	UIContext,
 } from 'components'
-
+import { NotificationsTabButton } from 'apps/fl-notifications'
 import { useStore, useDispatch } from 'store'
 import './style.scss'
 
@@ -25,14 +25,44 @@ export const UI = () => {
 	return (
 		<PanelFrame>
 			<div className="fl-asst-panel-wrap">
-				<PanelChrome
-					tabs={apps}
-					onTabClick={setActiveApp}
-					activeTabName={activeApp}
-					onClose={toggleIsShowingUI}
-				/>
+
+				{ /* Toolbar */ }
+				<div className="fl-asst-panel-chrome">
+					<div className="fl-asst-panel-chrome-area">
+						<NotificationsTabButton />
+					</div>
+					<div className="fl-asst-app-tabs-wrap">
+						<div className="fl-asst-app-tabs-area">
+							{ Object.keys( apps ).map( key => {
+								const tab = apps[key]
+								const isSelected = ( key === activeApp ) ? true : false
+
+								if ( false === tab.enabled || false === tab.showTabIcon ) {
+									return null
+								}
+
+								if ( 'function' !== typeof tab.icon ) {
+									tab.icon = props => <Icon name="default-app" {...props} />
+								}
+
+								return (
+									<AppTabButton key={key} isSelected={isSelected} onClick={() => setActiveApp( key )} tooltip={tab.label}>
+										{tab.icon( { key, isSelected } )}
+									</AppTabButton>
+								)
+							} ) }
+						</div>
+					</div>
+					<div className="fl-asst-panel-chrome-area">
+						<Button onClick={toggleIsShowingUI} appearance="icon">
+							<Icon name="close" />
+						</Button>
+					</div>
+				</div>
+
 				<Separator isSlim={true} />
 
+				{ /* Screens */ }
 				<div className="fl-asst-panel-contents">
 					{Object.keys( apps ).map( key => {
 						const app = Object.assign( {}, apps[ key ] )

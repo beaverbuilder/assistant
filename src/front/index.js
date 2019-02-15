@@ -42,6 +42,8 @@ const App = () => {
 		dismissModal,
 		renderModals,
 		presentNotification,
+
+		goToURL,
 	}
 
 	return (
