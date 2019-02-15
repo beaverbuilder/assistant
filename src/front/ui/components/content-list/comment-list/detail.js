@@ -16,6 +16,7 @@ export const CommentDetail = () => {
 		content,
 		editUrl,
 		url,
+		spam,
 		updateItem,
 		removeItem
 	} = useContext( ViewContext )
@@ -40,14 +41,14 @@ export const CommentDetail = () => {
 		<ContentListDetail className='fl-asst-comment-detail'>
 			<ScreenHeader title={ <CommentDetailTitle /> }>
 				<TagGroup appearance='muted'>
-					{ 'spam' !== approved &&
+					{ ! spam &&
 						<Fragment>
 							<Tag href={url}>View</Tag>
 							<Tag href={editUrl}>Edit</Tag>
 							<Tag onClick={ approveClicked }>{ approved ? 'Unapprove' : 'Approve' }</Tag>
 						</Fragment>
 					}
-					<Tag onClick={ spamClicked }>{ 'spam' === approved ? 'Not Spam' : 'Spam' }</Tag>
+					<Tag onClick={ spamClicked }>{ spam ? 'Not Spam' : 'Spam' }</Tag>
 					<Tag onClick={ deleteClicked } appearance='warning'>Trash</Tag>
 				</TagGroup>
 			</ScreenHeader>
