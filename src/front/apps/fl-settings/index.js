@@ -6,7 +6,7 @@ const { registerApp } = useDispatch()
 const SettingsApp = () => {
 	return (
 		<Fragment>
-            <ScreenHeader />
+			<ScreenHeader />
 			Settings go here.
 		</Fragment>
 	)

@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { useStore, useDispatch } from 'store'
-import { Heading, Button, Icon, UIContext, StackContext, ScreenHeader, Separator } from 'components'
+import { Heading, Button, Icon, UIContext, StackContext, Separator } from 'components'
 import './style.scss'
 
 export const AppsMenu = () => {
@@ -56,7 +56,7 @@ export const AppsMenu = () => {
 	)
 }
 
-const AppDetailView = ({ label, settings }) => {
+const AppDetailView = ( { label, settings } ) => {
 	const { popView } = useContext( StackContext )
 	return (
 		<div>
