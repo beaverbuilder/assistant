@@ -260,13 +260,16 @@ const NotificationBox = posed.div( {
 } )
 
 const MenuBox = posed.div( {
+	init: {
+		transformOrigin: 'top',
+	},
 	onscreen: {
-		y: '0%',
+		scale: 1,
 		opacity: 1,
 		transition: notificationTransition,
 	},
 	offscreen: {
-		y: '10%',
+		scale: .9,
 		opacity: 0,
 		transition: notificationTransition,
 	},
