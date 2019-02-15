@@ -72,6 +72,7 @@
     overflow: hidden;
 
     .fl-asst-screen-menu-contents {
+        position: relative;
         background: var(--fl-background-color);
         min-width: 440px;
         margin: 0 auto;

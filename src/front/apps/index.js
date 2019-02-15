@@ -35,6 +35,7 @@ const config = {
 		label: 'Dashboard',
 		content: props => <DashboardTab {...props} />,
 		icon: props => <DashboardIcon {...props} />,
+		settings: () => <div>Dashboard Settings here</div>,
 	},
 }
 

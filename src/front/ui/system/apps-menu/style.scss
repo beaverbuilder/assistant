@@ -18,8 +18,12 @@
     padding: 30px 30px 0;
 }
 .fl-asst-app-list-item-title {
+    flex: 1 1 auto;
     font-size: 16px;
     font-weight: 500;
     margin-left: 16px;
     line-height: 1.4;
+}
+.fl-asst-app-list-item-accessory {
+    flex: 0 0 auto;
 }

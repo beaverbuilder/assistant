@@ -300,7 +300,9 @@ const MenuModal = ( { children, modalID, pose, initialPose, onPoseComplete, onDi
 				onPoseComplete={complete}
 				onClick={preventPropagation}
 			>
-				{children}
+				<Stack>
+					{children}
+				</Stack>
 			</MenuBox>
 		</div>
 	)

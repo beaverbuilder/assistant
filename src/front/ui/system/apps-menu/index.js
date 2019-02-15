@@ -1,11 +1,12 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { useStore, useDispatch } from 'store'
-import { Heading, Icon, UIContext } from 'components'
+import { Heading, Button, Icon, UIContext, StackContext, ScreenHeader, Separator } from 'components'
 import './style.scss'
 
 export const AppsMenu = () => {
 	const { apps } = useStore()
 	const { setActiveApp } = useDispatch()
+	const { pushView } = useContext( StackContext )
 
 	const excludedApps = [ 'fl-notifications' ]
 
@@ -26,19 +27,49 @@ export const AppsMenu = () => {
 
 					const app = apps[key]
 
+					const pushDetailView = app => {
+						pushView( <AppDetailView {...app}/> )
+					}
+
 					if ( 'function' !== typeof app.icon ) {
 						app.icon = props => <Icon name="default-app" {...props} />
+					}
+
+					if ( 'function' !== typeof app.settings ) {
+						app.settings = () => null
 					}
 
 					return (
 						<div className="fl-asst-app-list-item" key={key} onClick={ () => clickItem( key ) }>
 							{ app.icon() }
 							<div className="fl-asst-app-list-item-title">{app.label}</div>
+							<div className="fl-asst-app-list-item-accessory">
+								<Button appearance="icon" onClick={ e => pushDetailView( app, e )}>
+									<Icon name="forward" />
+								</Button>
+							</div>
 						</div>
 					)
 				} )}
 			</div>
 		</Fragment>
+	)
+}
+
+const AppDetailView = ({ label, settings }) => {
+	const { popView } = useContext( StackContext )
+	return (
+		<div>
+			<Heading>
+				<Button onClick={popView} appearance="icon">
+					<Icon name="back" />
+				</Button>
+				{label}
+			</Heading>
+
+			<Separator />
+			{settings()}
+		</div>
 	)
 }
 
