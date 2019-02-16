@@ -25,6 +25,7 @@ const config = {
 		label: 'Media',
 		content: props => <MediaTab {...props} />,
 		icon: props => <MediaIcon {...props} />,
+		size: 'wide',
 	},
 	'fl-find': {
 		label: 'Find',

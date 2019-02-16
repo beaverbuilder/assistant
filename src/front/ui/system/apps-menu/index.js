@@ -103,3 +103,13 @@ export const useAppsMenu = () => {
 		toggleIsShowingAppsMenu,
 	}
 }
+
+
+
+/// TRYING SOME STUFF
+
+export const NewModal = ({ children }) => {
+	return (
+		<div>{children}</div>
+	)
+}

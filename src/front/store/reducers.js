@@ -17,7 +17,7 @@ export const apps = ( state = {}, action ) => {
 				enabled: true,
 				icon: null,
 				label: 'Untitled App',
-				showTabIcon: true,
+				size: 'normal',
 				...action.config,
 			},
 			...state,
