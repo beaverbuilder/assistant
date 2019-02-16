@@ -19,7 +19,7 @@ export const NotificationsTabButton = ( { isShowingAppsMenu } ) => {
 	const [ count, setCount ] = useState( null )
 	const { apps, activeApp } = useStore()
 	const { setActiveApp, setAppState } = useDispatch()
-	const { presentNotification } = useContext( UIContext )
+	const { presentNotification, setAppFrameSize } = useContext( UIContext )
 	const notifications = apps[ 'fl-notifications' ] ? apps[ 'fl-notifications' ] : null
 	const active = 'fl-notifications' === activeApp && ! isShowingAppsMenu
 
@@ -44,9 +44,14 @@ export const NotificationsTabButton = ( { isShowingAppsMenu } ) => {
 		setCount( data )
 	} )
 
+	const activate = ( key, size ) => {
+		setActiveApp( key )
+		setAppFrameSize( size )
+	}
+
 	return (
 		<AppTabButton
-			onClick={ () => setActiveApp( 'fl-notifications' ) }
+			onClick={ () => activate( 'fl-notifications', notifications.size ) }
 			isSelected={ active }
 			tooltip={ notifications.label }
 		>

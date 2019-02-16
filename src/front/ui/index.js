@@ -101,9 +101,7 @@ export const UI = () => {
 						return ! app.enabled ? null : (
 							<AppContext.Provider key={key} value={app}>
 								<Tab name={key} isSelected={app.app === activeApp}>
-									<Stack>
-										{ app.content() }
-									</Stack>
+									<Stack>{ app.content() }</Stack>
 								</Tab>
 							</AppContext.Provider>
 						)
