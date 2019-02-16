@@ -165,21 +165,23 @@ final class FL_Assistant_REST_Comments {
 			case 'unspam':
 				wp_unspam_comment( $comment );
 				break;
-			case 'trash' :
+			case 'trash':
 				if ( ! EMPTY_TRASH_DAYS ) {
 					wp_delete_comment( $comment );
 				} else {
 					wp_trash_comment( $comment );
 				}
 				break;
-			case 'untrash' :
+			case 'untrash':
 				wp_untrash_comment( $comment );
 				break;
 		}
 
-		return rest_ensure_response( array(
-			'success' => true,
-		) );
+		return rest_ensure_response(
+			array(
+				'success' => true,
+			)
+		);
 	}
 }
 
