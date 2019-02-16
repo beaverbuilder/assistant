@@ -12,8 +12,7 @@ export const AppsMenu = () => {
 
 	const clickItem = key => {
 		setActiveApp( key )
-
-		// dismiss the menu???
+		// @TODO: dismiss the menu
 	}
 	return (
 		<Fragment>
@@ -102,14 +101,4 @@ export const useAppsMenu = () => {
 		hideAppsMenu,
 		toggleIsShowingAppsMenu,
 	}
-}
-
-
-
-/// TRYING SOME STUFF
-
-export const NewModal = ({ children }) => {
-	return (
-		<div>{children}</div>
-	)
 }

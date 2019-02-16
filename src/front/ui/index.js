@@ -14,8 +14,6 @@ import { NotificationsTabButton } from 'apps/fl-notifications'
 import { useAppsMenu } from 'system'
 import './style.scss'
 
-import { NewModal } from 'system/apps-menu'
-
 /**
  * Main UI Controller
  */
@@ -29,7 +27,7 @@ export const UI = () => {
 		setAppFrameSize,
 	} = useContext( UIContext )
 
-	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
+	const { isShowingAppsMenu, toggleIsShowingAppsMenu, hideAppsMenu } = useAppsMenu()
 
 	const excludedApps = [ 'fl-notifications' ]
 	const maxTabCount = 3
@@ -38,6 +36,7 @@ export const UI = () => {
 	const activate = ( key, size ) => {
 		setActiveApp( key )
 		setAppFrameSize( size )
+		hideAppsMenu()
 	}
 
 	return (
@@ -110,8 +109,6 @@ export const UI = () => {
 			</div>
 
 			{ renderModals() }
-
-			<NewModal />
 		</PanelFrame>
 	)
 }

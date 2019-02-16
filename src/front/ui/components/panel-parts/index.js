@@ -4,7 +4,7 @@ import posed from 'react-pose'
 import { Button, Icon, AppContext, StackContext, UIContext } from 'components'
 import './style.scss'
 
-const PanelBox = posed.div( () => {
+const Frame = posed.div( () => {
 
 	const transition = () => {
 		return {
@@ -97,7 +97,8 @@ const PanelBox = posed.div( () => {
 	}
 } )
 
-export const PanelFrame = ( { children } ) => {
+export const PanelFrame = props => {
+	const { children } = props
 	const { isShowingUI, appFrame } = useContext( UIContext )
 
 	const styles = {
@@ -105,18 +106,19 @@ export const PanelFrame = ( { children } ) => {
 		height: appFrame.height,
 	}
 
-	const key = Date.now() // make sure PanelBox re-renders when frame does
-
 	return (
-		<PanelBox
+		<Frame
 			pose={ isShowingUI ? 'normal' : 'hidden' }
-			poseKey={key}
 			style={styles}
 			frameSize={appFrame.size}
 			alignment={appFrame.alignment}
-		>{children}</PanelBox>
+		>{children}</Frame>
 	)
 }
+
+
+
+
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const tab = useContext( AppContext )
