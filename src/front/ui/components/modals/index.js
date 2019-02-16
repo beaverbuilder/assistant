@@ -259,6 +259,25 @@ const NotificationBox = posed.div( {
 	},
 } )
 
+
+const menuBoxTransition = () => {
+	return {
+		type: 'spring',
+		mass: .2
+	}
+}
+
+const OverlayBox = posed.div({
+	onscreen: {
+		opacity: 1,
+		transition: menuBoxTransition,
+	},
+	offscreen: {
+		opacity: 0,
+		transition: menuBoxTransition,
+	}
+})
+
 const MenuBox = posed.div( {
 	init: {
 		transformOrigin: 'top',
@@ -266,12 +285,12 @@ const MenuBox = posed.div( {
 	onscreen: {
 		scale: 1,
 		opacity: 1,
-		transition: notificationTransition,
+		transition: menuBoxTransition,
 	},
 	offscreen: {
 		scale: .9,
 		opacity: 0,
-		transition: notificationTransition,
+		transition: menuBoxTransition,
 	},
 } )
 
@@ -292,18 +311,22 @@ const MenuModal = ( { children, modalID, pose, initialPose, onPoseComplete, onDi
 	const preventPropagation = e => e.stopPropagation()
 
 	return (
-		<div className="fl-asst-modal-screen fl-asst-screen-menu-frame" onClick={dismiss}>
+		<OverlayBox
+			className="fl-asst-modal-screen fl-asst-screen-menu-frame"
+			onClick={dismiss}
+			pose={pose}
+			initialPose={initialPose}
+			onPoseComplete={complete}
+		>
 			<MenuBox
 				className="fl-asst-screen-menu-contents"
-				pose={pose}
 				initialPose={initialPose}
-				onPoseComplete={complete}
 				onClick={preventPropagation}
 			>
 				<Stack>
 					{children}
 				</Stack>
 			</MenuBox>
-		</div>
+		</OverlayBox>
 	)
 }
