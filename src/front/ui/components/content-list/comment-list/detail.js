@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react'
+import { updateComment } from 'utils/wordpress'
 import {
 	ContentListDetail,
 	ScreenHeader,
@@ -15,24 +16,35 @@ export const CommentDetail = () => {
 		approved,
 		content,
 		editUrl,
+		id,
 		url,
 		spam,
+		trash,
 		updateItem,
 		removeItem
 	} = useContext( ViewContext )
 
 	const approveClicked = () => {
+		updateComment( id, approved ? 'unapprove' : 'approve' )
 		updateItem( {
 			approved: ! approved
 		} )
 	}
 
 	const spamClicked = () => {
+		updateComment( id, spam ? 'unspam' : 'spam' )
 		removeItem()
 		popView()
 	}
 
-	const deleteClicked = () => {
+	const trashClicked = () => {
+		updateComment( id, 'trash' )
+		removeItem()
+		popView()
+	}
+
+	const restoreClicked = () => {
+		updateComment( id, 'untrash' )
 		removeItem()
 		popView()
 	}
@@ -41,7 +53,7 @@ export const CommentDetail = () => {
 		<ContentListDetail className='fl-asst-comment-detail'>
 			<ScreenHeader title={ <CommentDetailTitle /> }>
 				<TagGroup appearance='muted'>
-					{ ! spam &&
+					{ ! spam && ! trash &&
 						<Fragment>
 							<Tag href={url}>View</Tag>
 							<Tag href={editUrl}>Edit</Tag>
@@ -49,7 +61,8 @@ export const CommentDetail = () => {
 						</Fragment>
 					}
 					<Tag onClick={ spamClicked }>{ spam ? 'Not Spam' : 'Spam' }</Tag>
-					<Tag onClick={ deleteClicked } appearance='warning'>Trash</Tag>
+					{ ! trash && <Tag onClick={ trashClicked } appearance='warning'>Trash</Tag> }
+					{ trash && <Tag onClick={ restoreClicked }>Restore</Tag> }
 				</TagGroup>
 			</ScreenHeader>
 			<Widget title='Comment'>
