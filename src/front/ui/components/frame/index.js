@@ -30,9 +30,11 @@ export const useWindowSize = () => {
 }
 
 export const useAppFrame = () => {
+	const { panelPosition, apps, activeApp } = useStore()
 	const { width: windowWidth, height: windowHeight } = useWindowSize()
-	const [ sizeName, setSizeName ] = useState( 'normal' )
-	const { panelPosition } = useStore()
+	const app = apps[ activeApp ]
+	const initialSize = 'undefined' !== typeof app.size ? app.size : 'normal'
+	const [ sizeName, setSizeName ] = useState( initialSize )
 
 	const sizes = [ 'normal', 'wide', 'full' ]
 
