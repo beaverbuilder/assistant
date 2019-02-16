@@ -26,6 +26,7 @@
         &:hover {
             top:0;
             color: black;
+			text-decoration: none;
         }
 
         &:focus {
@@ -47,6 +48,13 @@
                 background-color: #008DC3;
             }
         }
+
+		&.is-warning {
+			background-color: var(--fl-error-color);
+			&:hover {
+				background-color: var(--fl-error-hover-color);
+			}
+		}
     }
     .fl-asst-tag-count {
         opacity: .75;

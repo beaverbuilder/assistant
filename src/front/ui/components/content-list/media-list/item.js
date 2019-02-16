@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import classname from 'classnames'
-import { AspectBox } from 'components'
+import { AspectBox, ItemContext } from 'components'
 
-export const MediaListItem = ( { className, data } ) => {
-	const { url, urls } = data
+export const MediaListItem = ( { className } ) => {
+	const { url, urls } = useContext( ItemContext )
 	const classes = classname( className, 'fl-asst-grid-item' )
 	const styles = {
 		backgroundImage: `url(${urls.medium})`

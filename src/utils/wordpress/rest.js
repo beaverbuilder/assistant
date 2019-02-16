@@ -1,5 +1,5 @@
 import { useConfig } from 'store'
-import { getRequest, postRequest } from 'utils/request'
+import { clearCache, getRequest, postRequest } from 'utils/request'
 import { addQueryArgs } from 'utils/url'
 
 /**
@@ -173,6 +173,24 @@ export const getComment = ( id, onSuccess, onError ) => {
 		cacheKey: 'comments',
 		onSuccess,
 		onError,
+	} )
+}
+
+/**
+ * Updates a single comment. See the update_comment
+ * REST method for a list of supported actions.
+ *
+ * @param {Object}
+ * @return {Object}
+ */
+export const updateComment = ( id, action ) => {
+	clearCache( 'comments' )
+	return restRequest( {
+		method: 'POST',
+		route: `fl-assistant/v1/comment/${ id }`,
+		args: {
+			action,
+		}
 	} )
 }
 

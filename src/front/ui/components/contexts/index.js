@@ -11,3 +11,9 @@ StackContext.displayName = 'StackContext'
 
 export const PageViewContext = createContext()
 PageViewContext.displayName = 'PageViewContext'
+
+export const ViewContext = createContext()
+ViewContext.displayName = 'ViewContext'
+
+export const ItemContext = createContext()
+ItemContext.displayName = 'ItemContext'

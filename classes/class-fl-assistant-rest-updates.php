@@ -59,16 +59,16 @@ final class FL_Assistant_REST_Updates {
 		}
 
 		return array(
-			'author'       => $plugin['AuthorName'],
-			'content'      => $plugin['Description'],
-			'key'          => $update->plugin,
-			'meta'         => $plugin['Version'] . ' by ' . $plugin['AuthorName'],
-			'meta_updated' => $update->new_version . ' by ' . $plugin['AuthorName'],
-			'plugin'       => $update->plugin,
-			'thumbnail'    => $thumbnail,
-			'title'        => $plugin['Name'],
-			'type'         => 'plugin',
-			'version'      => $plugin['Version'],
+			'author'      => $plugin['AuthorName'],
+			'content'     => $plugin['Description'],
+			'key'         => $update->plugin,
+			'meta'        => $plugin['Version'] . ' by ' . $plugin['AuthorName'],
+			'metaUpdated' => $update->new_version . ' by ' . $plugin['AuthorName'],
+			'plugin'      => $update->plugin,
+			'thumbnail'   => $thumbnail,
+			'title'       => $plugin['Name'],
+			'type'        => 'plugin',
+			'version'     => $plugin['Version'],
 		);
 	}
 

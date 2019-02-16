@@ -1,3 +1,4 @@
+/* Pending List Item */
 .fl-asst-list-item.fl-asst-comment-pending {
 	background: var(--fl-utility-background-color);
 }
@@ -8,4 +9,36 @@
 	left: 7px;
 	height: 100%;
 	width: 5px;
+}
+
+/* Detail View */
+.fl-asst-comment-detail {
+	.fl-asst-comment-title {
+		display: flex;
+		align-items: center;
+		.fl-asst-comment-title-visual {
+			flex: 0 0;
+			.fl-asst-comment-title-visual-box {
+				width: 50px;
+				padding-top: 100%;
+				background: var(--fl-utility-element-color);
+				background-size: cover;
+				border-radius: 2px;
+			}
+		}
+		.fl-asst-comment-title-meta {
+			font-size: var(--fl-asst-base-text-size);
+			font-weight: normal;
+		    padding-left: 20px;
+			strong {
+				font-style: italic;
+			}
+		}
+		.fl-asst-comment-title-author {
+			padding-bottom: 8px;
+		}
+	}
+	.fl-asst-screen-header-contents {
+		padding-top: 20px;
+	}
 }
