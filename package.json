@@ -15,7 +15,9 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
+    "@wordpress/hooks": "^2.0.5",
     "classnames": "^2.2.6",
+    "lodash-es": "^4.17.11",
     "md5": "^2.2.1",
     "react": "^16.8.0",
     "react-clipboard.js": "^2.0.3",
@@ -23,6 +25,8 @@
     "react-infinite-scroller": "^1.2.4",
     "react-pose": "^4.0.7",
     "react-redux": "^6.0.0",
+    "react-spring": "^8.0.7",
+    "react-with-gesture": "^4.0.4",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4"
   },

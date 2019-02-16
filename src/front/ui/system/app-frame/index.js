@@ -1,40 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useStore } from 'store'
-
-export const useWindowSize = () => {
-	const isClient = 'object' === typeof window
-
-	const getSize = () => {
-		return {
-			width: isClient ? window.innerWidth : undefined,
-			height: isClient ? window.innerHeight : undefined,
-		}
-	}
-
-	const [ windowSize, setWindowSize ] = useState( getSize() )
-
-	function handleResize() {
-		setWindowSize( getSize() )
-	}
-
-	useEffect( () => {
-		if ( ! isClient ) {
-			return false
-		}
-
-		window.addEventListener( 'resize', handleResize )
-		return () => window.removeEventListener( 'resize', handleResize )
-	}, [] )
-
-	return windowSize
-}
+import { useWindowSize } from 'utils/window'
 
 export const useAppFrame = () => {
 	const { panelPosition, apps, activeApp } = useStore()
 	const { width: windowWidth, height: windowHeight } = useWindowSize()
 	const app = apps[ activeApp ]
-	const initialSize = 'undefined' !== typeof app.size ? app.size : 'normal'
-	const [ sizeName, setSizeName ] = useState( initialSize )
+	const [ sizeName, setSizeName ] = useState( app.size )
 
 	const sizes = [ 'normal', 'wide', 'full' ]
 
@@ -49,7 +21,7 @@ export const useAppFrame = () => {
 	const getSize = name => {
 		let width = 440
 		let height = windowHeight
-		let size = sizeName
+		let size = name
 
 		switch ( name ) {
 		case 'wide':
@@ -75,13 +47,17 @@ export const useAppFrame = () => {
 		return { width, height, size }
 	}
 
+	console.log( 'before', sizeName )
 	const { width, height, size  } = getSize( sizeName )
+	console.log( 'after', sizeName, size )
+
+	//console.trace()
 
 	return {
 		appFrame: {
 			width,
 			height,
-			size,
+			sizeName,
 			alignment: panelPosition,
 		},
 		setAppFrameSize,

@@ -13,31 +13,27 @@ import {
 import { NotificationsTabButton } from 'apps/fl-notifications'
 import { useAppsMenu } from 'system'
 import './style.scss'
+import { useLogger } from 'utils/console'
 
 /**
  * Main UI Controller
  */
 export const UI = () => {
+	console.log( 'ui start' )
+	useLogger( 'UI' )
 	const {
 		apps,
-		activeApp,
+		activeAppName,
 		setActiveApp,
 		toggleIsShowingUI,
 		renderModals,
-		setAppFrameSize,
 	} = useContext( UIContext )
 
-	const { isShowingAppsMenu, toggleIsShowingAppsMenu, hideAppsMenu } = useAppsMenu()
+	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
 	const excludedApps = [ 'fl-notifications' ]
 	const maxTabCount = 3
 	let count = 0
-
-	const activate = ( key, size ) => {
-		setActiveApp( key )
-		setAppFrameSize( size )
-		hideAppsMenu()
-	}
 
 	return (
 		<PanelFrame>
@@ -62,7 +58,7 @@ export const UI = () => {
 								count++
 
 								const tab = apps[key]
-								const isSelected = ( key === activeApp && ! isShowingAppsMenu ) ? true : false
+								const isSelected = ( key === activeAppName && ! isShowingAppsMenu ) ? true : false
 
 								if ( false === tab.enabled ) {
 									return null
@@ -73,7 +69,7 @@ export const UI = () => {
 								}
 
 								return (
-									<AppTabButton key={key} isSelected={isSelected} onClick={() => activate( key, tab.size )} tooltip={tab.label}>
+									<AppTabButton key={key} isSelected={isSelected} onClick={() => setActiveApp( key )} tooltip={tab.label}>
 										{tab.icon( { key, isSelected } )}
 									</AppTabButton>
 								)
@@ -99,7 +95,7 @@ export const UI = () => {
 						const app = Object.assign( {}, apps[ key ] )
 						return ! app.enabled ? null : (
 							<AppContext.Provider key={key} value={app}>
-								<Tab name={key} isSelected={app.app === activeApp}>
+								<Tab name={key} isSelected={app.app === activeAppName}>
 									<Stack>{ app.content() }</Stack>
 								</Tab>
 							</AppContext.Provider>

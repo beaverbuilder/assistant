@@ -35,7 +35,3 @@ export const addQueryArgs = ( route, args ) => {
 export const addLeadingSlash = ( route ) => {
 	return 0 === route.indexOf( '/' ) ? route : `/${ route }`
 }
-
-export const goToURL = url => {
-	window.location = url
-}

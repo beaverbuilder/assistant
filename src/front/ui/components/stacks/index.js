@@ -91,9 +91,11 @@ export const Stack = ( { children, className } ) => {
 	const [ height, setHeight ] = useState()
 
 	const getPresentView = () => {
-		for( i in views ) {
+		for ( i in views ) {
 			const view = views[i]
-			if ( 'present' === view.pose ) return view
+			if ( 'present' === view.pose ) {
+				return view
+			}
 		}
 	}
 
@@ -152,7 +154,7 @@ export const Stack = ( { children, className } ) => {
 				key: Date.now(),
 				pose: 'future',
 				children,
-				config: Object.assign({}, defaults, config ),
+				config: Object.assign( {}, defaults, config ),
 			} )
 			setViews( Array.from( newViews ) )
 			setAction( 'push' )

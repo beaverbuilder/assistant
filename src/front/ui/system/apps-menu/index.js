@@ -1,17 +1,18 @@
 import React, { Fragment, useState, useContext } from 'react'
-import { useStore, useDispatch } from 'store'
+import { useStore } from 'store'
 import { Heading, Button, Icon, UIContext, StackContext, Separator } from 'components'
 import './style.scss'
 
-export const AppsMenu = () => {
+const AppsMenu = () => {
 	const { apps } = useStore()
-	const { setActiveApp } = useDispatch()
+	const { setActiveApp } = useContext( UIContext )
 	const { pushView } = useContext( StackContext )
 
 	const excludedApps = [ 'fl-notifications' ]
 
 	const clickItem = key => {
 		setActiveApp( key )
+
 		// @TODO: dismiss the menu
 	}
 	return (

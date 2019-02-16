@@ -117,9 +117,6 @@ export const PanelFrame = props => {
 }
 
 
-
-
-
 export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const tab = useContext( AppContext )
 	const { isRootView, popView } = useContext( StackContext )

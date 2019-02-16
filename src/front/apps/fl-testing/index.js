@@ -1,108 +1,37 @@
 import React, { Fragment, useContext, useState } from 'react'
-import posed from 'react-pose'
-import { redirect } from 'utils/location'
-import { ScreenHeader, ExpandedContents, Button, Icon, StackContext } from 'components'
 import { useDispatch } from 'store'
 const { registerApp } = useDispatch()
 import './style.scss'
 
+const shuffleArray = array => {
+	let currentIndex = array.length
+	let temporaryValue
+	let randomIndex = 0
+
+	// While there remain elements to shuffle...
+	while ( 0 !== currentIndex ) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor( Math.random() * currentIndex )
+		currentIndex -= 1
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex]
+		array[currentIndex] = array[randomIndex]
+		array[randomIndex] = temporaryValue
+	}
+	return array
+}
+
 const TestingApp = () => {
-	const { pushView } = useContext( StackContext )
 
 	return (
 		<Fragment>
-			<ScreenHeader />
-
-			<div className="fl-asst-list fl-asst-list-test">
-				<ListItemA
-					title="Sed posuere consectetur est at lobortis est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-				<ListItemA
-					title="Sed posuere est at lobortis consectetur est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-				<ListItemA
-					title="Sed posuere consectetur est at lobortis est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-				<ListItemA
-					title="Sed posuere consectetur est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-				<ListItemA
-					title="Sed posuere consectetur est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-			</div>
+            test.
 		</Fragment>
 	)
 }
 
-const ListItemBox = posed.div( {
-	normal: {
-		x: '0%',
-		height: 'auto',
-		background: 'transparent'
-	},
-	deleted: {
-		x: '100%',
-		height: '0px',
-		background: 'red',
-		applyAtEnd: {
-			display: 'none'
-		}
-	}
-} )
-
-const onPoseComplete = () => {
-
-	//console.log( 'after complete, delete from data' )
-}
-
-const ListItemA = ( { title, meta, onAccessoryClick } ) => {
-	const [ isDeleted, setIsDeleted ] = useState( false )
-	const imgStyles = {
-		backgroundImage: 'url(https://place-hold.it/100x100/red/white&text=Test)'
-	}
-	return (
-		<ListItemBox pose={ isDeleted ? 'deleted' : 'normal' } onPoseComplete={onPoseComplete} className="fl-asst-list-item">
-			<div className="fl-asst-list-item-wrap">
-				<div className="fl-asst-list-item-visual">
-					<div className="fl-asst-list-item-image-box" style={imgStyles}></div>
-				</div>
-				<div className="fl-asst-list-item-content">
-					<div className="fl-asst-list-item-title">{title}</div>
-					<div className="fl-asst-list-item-meta">{meta}</div>
-				</div>
-				<div className="fl-asst-list-item-accessory">
-					<Button appearance="icon" onClick={onAccessoryClick}><Icon /></Button>
-				</div>
-			</div>
-			<ExpandedContents>
-				<Button onClick={() => setIsDeleted( true )}>Delete</Button>
-			</ExpandedContents>
-		</ListItemBox>
-	)
-}
-
-const DetailView1 = () => {
-	return (
-		<Fragment>
-			<ScreenHeader title="Detail View 1" />
-		</Fragment>
-	)
-}
 
 registerApp( 'fl-testing', {
 	label: 'Testing Lists',

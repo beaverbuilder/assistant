@@ -267,7 +267,7 @@ const menuBoxTransition = () => {
 	}
 }
 
-const OverlayBox = posed.div({
+const OverlayBox = posed.div( {
 	onscreen: {
 		opacity: 1,
 		transition: menuBoxTransition,
@@ -276,7 +276,7 @@ const OverlayBox = posed.div({
 		opacity: 0,
 		transition: menuBoxTransition,
 	}
-})
+} )
 
 const MenuBox = posed.div( {
 	init: {

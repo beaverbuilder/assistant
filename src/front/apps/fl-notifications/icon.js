@@ -17,11 +17,11 @@ export const NotificationsIcon = ( { count = 0 } ) => {
 
 export const NotificationsTabButton = ( { isShowingAppsMenu } ) => {
 	const [ count, setCount ] = useState( null )
-	const { apps, activeApp } = useStore()
-	const { setActiveApp, setAppState } = useDispatch()
-	const { presentNotification, setAppFrameSize } = useContext( UIContext )
+	const { apps } = useStore()
+	const { setAppState } = useDispatch()
+	const { presentNotification, setActiveApp, activeAppName } = useContext( UIContext )
 	const notifications = apps[ 'fl-notifications' ] ? apps[ 'fl-notifications' ] : null
-	const active = 'fl-notifications' === activeApp && ! isShowingAppsMenu
+	const active = 'fl-notifications' === activeAppName && ! isShowingAppsMenu
 
 	if ( ! notifications || ! notifications.enabled ) {
 		return null
@@ -44,9 +44,8 @@ export const NotificationsTabButton = ( { isShowingAppsMenu } ) => {
 		setCount( data )
 	} )
 
-	const activate = ( key, size ) => {
+	const activate = ( key ) => {
 		setActiveApp( key )
-		setAppFrameSize( size )
 	}
 
 	return (
