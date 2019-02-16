@@ -11,7 +11,7 @@ import './apps'
 /**
  * The Root Component
  */
-const App = () => {
+const Assistant = () => {
 	const { currentPageView } = useConfig()
 	const { isShowingUI, apps, activeApp, panelPosition } = useStore()
 	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
@@ -66,4 +66,4 @@ const root = document.createElement( 'div' )
 root.classList.add( 'fl-asst' )
 document.body.appendChild( root )
 
-render( <App />, root )
+render( <Assistant />, root )

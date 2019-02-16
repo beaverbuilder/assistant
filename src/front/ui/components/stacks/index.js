@@ -81,10 +81,18 @@ export const Stack = ( { children, className } ) => {
 			key: Date.now(),
 			pose: 'present',
 			children,
-			config: { shouldAnimate: true },
+			config: {},
 		}
 	] )
 	const [ action, setAction ] = useState()
+	const [ height, setHeight ] = useState()
+
+	const getPresentView = () => {
+		for( i in views ) {
+			const view = views[i]
+			if ( 'present' === view.pose ) return view
+		}
+	}
 
 	// After DOM is mounted, "push" new view on.
 	useEffect( () => {
@@ -94,6 +102,7 @@ export const Stack = ( { children, className } ) => {
 					switch ( view.pose ) {
 					case 'future':
 						view.pose = 'present'
+						'undefined' !== typeof view.height ? setHeight( view.height ) : null
 						break
 					case 'present':
 						view.pose = 'past'
@@ -129,13 +138,17 @@ export const Stack = ( { children, className } ) => {
 		isCurrentView: false,
 		viewCount: views.length,
 
-		pushView: ( children, config = { shouldAnimate: true } ) => {
+		pushView: ( children, config = {} ) => {
+			const defaults = {
+				shouldAnimate: true,
+				height: null,
+			}
 			const newViews = views
 			newViews.push( {
 				key: Date.now(),
 				pose: 'future',
 				children,
-				config,
+				config: Object.assign({}, defaults, config ),
 			} )
 			setViews( Array.from( newViews ) )
 			setAction( 'push' )
@@ -169,8 +182,12 @@ export const Stack = ( { children, className } ) => {
 		'fl-asst-stack': true,
 	}, className )
 
+	const styles = {
+		height,
+	}
+
 	return (
-		<div className={classes}>
+		<div className={classes} style={styles}>
 			{ views.map( ( view, i ) => {
 				const { key, pose } = view
 				const checks = {
