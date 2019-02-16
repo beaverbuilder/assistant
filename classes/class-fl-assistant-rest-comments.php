@@ -47,6 +47,13 @@ final class FL_Assistant_REST_Comments {
 						return current_user_can( 'moderate_comments' );
 					},
 				),
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => __CLASS__ . '::update_comment',
+					'permission_callback' => function() {
+						return current_user_can( 'moderate_comments' );
+					},
+				),
 			)
 		);
 	}
@@ -62,7 +69,7 @@ final class FL_Assistant_REST_Comments {
 		$post = get_post( $comment->comment_post_ID );
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		return array(
-			'approved'  => ! ! $comment->comment_approved,
+			'approved'  => $comment->comment_approved ? true : false,
 			'author'    => $comment->comment_author,
 			'content'   => $comment->comment_content,
 			'date'      => $date,
@@ -73,6 +80,7 @@ final class FL_Assistant_REST_Comments {
 			'spam'      => 'spam' === $comment->comment_approved,
 			'thumbnail' => get_avatar_url( $comment->comment_author_email ),
 			'title'     => strip_tags( $comment->comment_content ),
+			'trash'     => 'trash' === $comment->comment_approved,
 			'url'       => get_comment_link( $comment ),
 		);
 	}
@@ -130,6 +138,50 @@ final class FL_Assistant_REST_Comments {
 		$response = self::get_comment_response_data( $comment );
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Updates data for a single comment.
+	 *
+	 * @since  0.1
+	 * @param object $request
+	 * @return array
+	 */
+	static public function update_comment( $request ) {
+		$id       = $request->get_param( 'id' );
+		$action   = $request->get_param( 'action' );
+		$comment  = get_comment( $id );
+
+		switch ( $action ) {
+			case 'approve':
+				wp_set_comment_status( $comment, 'approve' );
+				break;
+			case 'unapprove':
+				wp_set_comment_status( $comment, 'hold' );
+				break;
+			case 'spam':
+				wp_spam_comment( $comment );
+				break;
+			case 'unspam':
+				wp_unspam_comment( $comment );
+				break;
+			case 'trash':
+				if ( ! EMPTY_TRASH_DAYS ) {
+					wp_delete_comment( $comment );
+				} else {
+					wp_trash_comment( $comment );
+				}
+				break;
+			case 'untrash':
+				wp_untrash_comment( $comment );
+				break;
+		}
+
+		return rest_ensure_response(
+			array(
+				'success' => true,
+			)
+		);
 	}
 }
 
