@@ -30,8 +30,8 @@ const Assistant = () => {
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
 
 	const activateApp = name => {
-		setActiveApp(name)
-		dismissModal('fl-apps')
+		setActiveApp( name )
+		dismissModal( 'fl-apps' )
 		setIsShowingAppsMenu( false )
 	}
 
