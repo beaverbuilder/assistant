@@ -16,10 +16,12 @@ export const useAppFrame = () => {
 	if ( 'wide' === appFrameSize ) {
 		frameWidth = 768 > windowWidth ? windowWidth : widePreferredWidth
 	} else if ( 'full' === appFrameSize ) {
-		frameWidth = '100vw'
+		frameWidth = windowWidth
 	} else {
 		frameWidth = normalPreferredWidth > ( windowWidth * .6 ) ? windowWidth : normalPreferredWidth
 	}
+
+	console.log( frameWidth )
 
 	return {
 		appFrame: {
