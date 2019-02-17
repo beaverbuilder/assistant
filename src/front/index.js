@@ -9,7 +9,6 @@ import { redirect } from 'utils/location'
 import './api'
 import './apps'
 
-
 /**
  * The Root Component
  */
@@ -18,11 +17,7 @@ const Assistant = () => {
 	const { currentPageView } = useConfig()
 	const { isShowingUI, apps, panelPosition } = useStore()
 	const { setIsShowingUI, togglePanelPosition, setPanelPosition } = useDispatch()
-
-	console.log( 'BEFORE hooks' )
 	const { activeApp, activeAppName, setActiveApp } = useActiveApp()
-	const { appFrame, setAppFrameSize } = useAppFrame()
-	console.log( 'AFTER HOOKS' )
 
 	const { renderModals, presentModal, dismissModal, presentNotification, modalExists } = useModals()
 
@@ -40,9 +35,6 @@ const Assistant = () => {
 		activeApp,
 		activeAppName,
 		setActiveApp,
-
-		appFrame,
-		setAppFrameSize,
 
 		panelPosition,
 		togglePanelPosition,

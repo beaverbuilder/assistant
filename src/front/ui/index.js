@@ -11,21 +11,18 @@ import {
 	UIContext,
 } from 'components'
 import { NotificationsTabButton } from 'apps/fl-notifications'
-import { useAppsMenu } from 'system'
+import { useAppsMenu, AppFrame } from 'system'
 import './style.scss'
-import { useLogger } from 'utils/console'
 
 /**
  * Main UI Controller
  */
 export const UI = () => {
-	console.log( 'ui start' )
-	useLogger( 'UI' )
 	const {
 		apps,
 		activeAppName,
 		setActiveApp,
-		toggleIsShowingUI,
+		setIsShowingUI,
 		renderModals,
 	} = useContext( UIContext )
 
@@ -36,7 +33,7 @@ export const UI = () => {
 	let count = 0
 
 	return (
-		<PanelFrame>
+		<AppFrame>
 			<div className="fl-asst-panel-wrap">
 
 				{ /* Toolbar */ }
@@ -81,7 +78,7 @@ export const UI = () => {
 						</div>
 					</div>
 					<div className="fl-asst-panel-chrome-area">
-						<Button onClick={toggleIsShowingUI} appearance="icon">
+						<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
 							<Icon name="close" />
 						</Button>
 					</div>
@@ -105,7 +102,7 @@ export const UI = () => {
 			</div>
 
 			{ renderModals() }
-		</PanelFrame>
+		</AppFrame>
 	)
 }
 
@@ -113,7 +110,7 @@ export const UI = () => {
  * Button To Show/Hide The UI
  */
 export const ShowUITrigger = () => {
-	const { toggleIsShowingUI } = useContext( UIContext )
+	const { setIsShowingUI } = useContext( UIContext )
 
 	const styles = {
 		position: 'fixed',
@@ -127,7 +124,7 @@ export const ShowUITrigger = () => {
 	}
 	return (
 		<div style={styles}>
-			<Button className="fl-asst-outline-button" onClick={toggleIsShowingUI} style={buttonStyles} isSelected={true}>
+			<Button className="fl-asst-outline-button" onClick={ () => setIsShowingUI( true) } style={buttonStyles} isSelected={true}>
 				<Icon name="trigger-button"/>
 			</Button>
 		</div>
