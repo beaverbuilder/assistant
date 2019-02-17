@@ -90,15 +90,6 @@ export const Stack = ( { children, className } ) => {
 	const [ action, setAction ] = useState()
 	const [ height, setHeight ] = useState()
 
-	const getPresentView = () => {
-		for ( i in views ) {
-			const view = views[i]
-			if ( 'present' === view.pose ) {
-				return view
-			}
-		}
-	}
-
 	// After DOM is mounted, "push" new view on.
 	useEffect( () => {
 		if ( action ) {

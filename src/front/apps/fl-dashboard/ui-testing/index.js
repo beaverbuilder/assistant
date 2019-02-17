@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { Widget, TagGroup, Tag, UIContext } from 'components'
+import React from 'react'
+import { Widget, TagGroup, Tag } from 'components'
 import { useAppFrame } from 'system'
 
 export const AppFrameTestingWidget = () => {

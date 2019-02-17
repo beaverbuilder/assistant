@@ -4,7 +4,6 @@ import {
 	Icon,
 	Separator,
 	Tab,
-	PanelFrame,
 	Stack,
 	AppContext,
 	AppTabButton,
@@ -124,7 +123,7 @@ export const ShowUITrigger = () => {
 	}
 	return (
 		<div style={styles}>
-			<Button className="fl-asst-outline-button" onClick={ () => setIsShowingUI( true) } style={buttonStyles} isSelected={true}>
+			<Button className="fl-asst-outline-button" onClick={ () => setIsShowingUI( true ) } style={buttonStyles} isSelected={true}>
 				<Icon name="trigger-button"/>
 			</Button>
 		</div>

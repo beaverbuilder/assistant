@@ -82,10 +82,10 @@ export const panelPosition = ( state = 'end', action ) => {
 }
 
 export const appFrameSize = ( state = 'normal', action ) => {
-	switch( action.type ) {
-		case "SET_APP_FRAME_SIZE":
-			return action.size
-		default:
-			return state
+	switch ( action.type ) {
+	case 'SET_APP_FRAME_SIZE':
+		return action.size
+	default:
+		return state
 	}
 }

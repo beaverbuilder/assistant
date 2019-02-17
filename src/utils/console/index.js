@@ -29,10 +29,10 @@ const useLifecycles = ( mount, unmount ) => {
 
 export const useLogger = ( name, props ) => {
 	useLifecycles(
-		() => console.log( `${name} mounted` ),
-		() => console.log( `${name} un-mounted` )
+		() => console.log( `${name} mounted` ), // eslint-disable-line no-console
+		() => console.log( `${name} un-mounted` ) // eslint-disable-line no-console
 	)
 	useEffect( () => {
-		console.log( `${name} props updated`, props )
+		console.log( `${name} props updated`, props ) // eslint-disable-line no-console
 	} )
 }

@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSpring, animated } from 'react-spring'
 import { useStore, useDispatch } from 'store'
 import { useWindowSize } from 'utils/window'
 
 export const useAppFrame = () => {
-	const { panelPosition, apps, activeApp, appFrameSize } = useStore()
+	const { panelPosition, appFrameSize } = useStore()
 	const { setAppFrameSize } = useDispatch()
-	const { width: windowWidth, height: windowHeight } = useWindowSize()
-	const app = apps[ activeApp ]
+	const { width: windowWidth } = useWindowSize()
 
 	const normalPreferredWidth = 440
 	const widePreferredWidth = 720
@@ -33,10 +32,10 @@ export const useAppFrame = () => {
 	}
 }
 
-export const AppFrame = ({ children }) => {
+export const AppFrame = ( { children } ) => {
 	const { isShowingUI } = useStore()
 	const { appFrame: { width, height, alignment } } = useAppFrame()
-	const { width: windowWidth, height: windowHeight } = useWindowSize()
+	const { width: windowWidth } = useWindowSize()
 
 	const [ springProps, set ] = useSpring( () => {
 
@@ -48,7 +47,7 @@ export const AppFrame = ({ children }) => {
 			right: 'end' === alignment ? 0 : windowWidth - width,
 		}
 		return values
-	})
+	} )
 
 	const transform = () => {
 		if ( isShowingUI ) {
