@@ -20,6 +20,7 @@ const Assistant = () => {
 		setIsShowingUI,
 		togglePanelPosition,
 		setPanelPosition,
+		setIsShowingAppsMenu,
 	} = useDispatch()
 	const { activeApp, activeAppName, setActiveApp } = useActiveApp()
 
@@ -27,6 +28,12 @@ const Assistant = () => {
 
 	// Create a toggle function to show/hide the panel
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
+
+	const activateApp = name => {
+		setActiveApp(name)
+		dismissModal('fl-apps')
+		setIsShowingAppsMenu( false )
+	}
 
 	// Create a store-bound value object for UIContext.Provider
 	const ui = {
@@ -38,7 +45,7 @@ const Assistant = () => {
 
 		activeApp,
 		activeAppName,
-		setActiveApp,
+		setActiveApp: activateApp,
 
 		panelPosition,
 		togglePanelPosition,

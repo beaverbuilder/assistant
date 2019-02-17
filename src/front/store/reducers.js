@@ -98,3 +98,12 @@ export const shouldReduceMotion = ( state = false, action ) => {
 		return state
 	}
 }
+
+export const isShowingAppsMenu = ( state = false, action ) => {
+	switch ( action.type ) {
+	case 'SET_IS_SHOWING_APPS_MENU':
+		return action.isShowing
+	default:
+		return state
+	}
+}

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext } from 'react'
-import { useStore } from 'store'
+import { useStore, useDispatch } from 'store'
 import { Heading, Button, Icon, UIContext, StackContext, Separator } from 'components'
 import './style.scss'
 
@@ -74,7 +74,8 @@ const AppDetailView = ( { label, settings } ) => {
 }
 
 export const useAppsMenu = () => {
-	const [ isShowing, setIsShowing ] = useState( false )
+	const { isShowingAppsMenu } = useStore()
+	const { setIsShowingAppsMenu } = useDispatch()
 	const { presentModal, dismissModal } = useContext( UIContext )
 	const modalID = 'fl-apps'
 
@@ -83,21 +84,27 @@ export const useAppsMenu = () => {
 			id: modalID,
 			appearance: 'menu',
 			onDismiss: () => {
-				setIsShowing( false )
+				setIsShowingAppsMenu( false )
 			}
 		} )
-		setIsShowing( true )
+		setIsShowingAppsMenu( true )
 	}
 
 	const hideAppsMenu = () => {
 		dismissModal( modalID )
-		setIsShowing( false )
+		setIsShowingAppsMenu( false )
 	}
 
-	const toggleIsShowingAppsMenu = () => isShowing ? hideAppsMenu() : showAppsMenu()
+	const toggleIsShowingAppsMenu = () => {
+		if ( ! isShowingAppsMenu ) {
+			showAppsMenu()
+		} else {
+			hideAppsMenu()
+		}
+	}
 
 	return {
-		isShowingAppsMenu: isShowing,
+		isShowingAppsMenu,
 		showAppsMenu,
 		hideAppsMenu,
 		toggleIsShowingAppsMenu,

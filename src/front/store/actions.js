@@ -63,3 +63,17 @@ export const setShouldReduceMotion = shouldReduce => {
 		shouldReduce,
 	}
 }
+
+export const setIsShowingAppsMenu = isShowing => {
+	return {
+		type: 'SET_IS_SHOWING_APPS_MENU',
+		isShowing,
+	}
+}
+
+export const hideAppsMenu = () => {
+	return {
+		type: 'SET_IS_SHOWING_APPS_MENU',
+		isShowing: false
+	}
+}
