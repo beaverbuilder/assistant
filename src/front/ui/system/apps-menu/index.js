@@ -12,9 +12,8 @@ const AppsMenu = () => {
 
 	const clickItem = key => {
 		setActiveApp( key )
-
-		// @TODO: dismiss the menu
 	}
+
 	return (
 		<Fragment>
 			<Heading className="fl-asst-manage-apps-title">Manage Apps</Heading>
@@ -31,6 +30,11 @@ const AppsMenu = () => {
 						pushView( <AppDetailView {...app}/> )
 					}
 
+					const showAppSettings = ( app, e ) => {
+						pushDetailView( app )
+						e.stopPropagation()
+					}
+
 					if ( 'function' !== typeof app.icon ) {
 						app.icon = props => <Icon name="default-app" {...props} />
 					}
@@ -44,7 +48,7 @@ const AppsMenu = () => {
 							{ app.icon() }
 							<div className="fl-asst-app-list-item-title">{app.label}</div>
 							<div className="fl-asst-app-list-item-accessory">
-								<Button appearance="icon" onClick={ e => pushDetailView( app, e )}>
+								<Button appearance="icon" onClick={ e => showAppSettings( app, e )}>
 									<Icon name="forward" />
 								</Button>
 							</div>
