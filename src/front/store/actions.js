@@ -59,7 +59,7 @@ export const setAppFrameSize = size => {
 
 export const setShouldReduceMotion = shouldReduce => {
 	return {
-		type: 'SET_REDUCE_MOTION',
+		type: 'SET_SHOULD_REDUCE_MOTION',
 		shouldReduce,
 	}
 }

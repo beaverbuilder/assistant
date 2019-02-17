@@ -17,6 +17,7 @@ class FL_Assistant_Data {
 		'activeApp'     => 'fl-dashboard',
 		'isShowingUI'   => false,
 		'panelPosition' => 'end',
+		'shouldReduceMotion' => false,
 	);
 
 	/**
@@ -60,6 +61,7 @@ class FL_Assistant_Data {
 			'activeApp'     => $user_state['activeApp'],
 			'isShowingUI'   => $user_state['isShowingUI'],
 			'panelPosition' => $user_state['panelPosition'],
+			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
 		);
 
 		return array(

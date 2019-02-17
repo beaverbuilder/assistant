@@ -30,10 +30,7 @@ const DetailView = () => {
 
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useConfig()
-	const { togglePanelPosition, presentModal, presentNotification, setActiveApp } = useContext( UIContext )
-
-	const { shouldReduceMotion } = useStore()
-	const { setShouldReduceMotion } = useDispatch()
+	const { presentModal, presentNotification, setActiveApp } = useContext( UIContext )
 
 
 	// @TODO: Rename dashboardApp and move into app state
@@ -69,8 +66,6 @@ export const DashboardTab = () => {
 			<Separator />
 
 			<Widget title="Just Testing" className="fl-asst-testing-widget">
-				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
-
 				<Button onClick={ () => {
 					presentModal( <TestModal /> )
 				} }>Present Modal View</Button>

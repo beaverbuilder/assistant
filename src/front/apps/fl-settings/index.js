@@ -19,12 +19,12 @@ const SettingsApp = () => {
 					<label>Reduce Motion</label>
 					<div className="fl-asst-settings-item-control">
 						<Button onClick={ () => setShouldReduceMotion( ! shouldReduceMotion )}>
-							{ shouldReduceMotion ? 'Disabled' : 'Enabled' }
+							{ shouldReduceMotion ? 'Enabled' : 'Disabled' }
 						</Button>
 					</div>
 				</div>
 				<div className="fl-asst-settings-item">
-					<label>Position</label>
+					<label>Panel Position</label>
 					<div className="fl-asst-settings-item-control">
 						<Button onClick={ () => setPanelPosition(nextPanelPosition)}>
 							{ 'start' === panelPosition ? 'Left Edge' : 'Right Edge' }
