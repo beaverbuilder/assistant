@@ -21,8 +21,6 @@ export const useAppFrame = () => {
 		frameWidth = normalPreferredWidth > ( windowWidth * .6 ) ? windowWidth : normalPreferredWidth
 	}
 
-	console.log( frameWidth )
-
 	return {
 		appFrame: {
 			width: frameWidth,
