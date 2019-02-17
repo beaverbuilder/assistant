@@ -93,7 +93,7 @@ export const appFrameSize = ( state = 'normal', action ) => {
 export const shouldReduceMotion = ( state = false, action ) => {
 	switch ( action.type ) {
 	case 'SET_REDUCE_MOTION':
-		return action.shouldReduce 
+		return action.shouldReduce
 	default:
 		return state
 	}
