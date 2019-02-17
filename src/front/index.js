@@ -16,7 +16,11 @@ const Assistant = () => {
 
 	const { currentPageView } = useConfig()
 	const { isShowingUI, apps, panelPosition } = useStore()
-	const { setIsShowingUI, togglePanelPosition, setPanelPosition } = useDispatch()
+	const {
+		setIsShowingUI,
+		togglePanelPosition,
+		setPanelPosition,
+	} = useDispatch()
 	const { activeApp, activeAppName, setActiveApp } = useActiveApp()
 
 	const { renderModals, presentModal, dismissModal, presentNotification, modalExists } = useModals()

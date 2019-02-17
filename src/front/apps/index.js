@@ -1,5 +1,5 @@
 import React from 'react'
-import { useConfig, useDispatch } from 'store'
+import store, { useConfig, useDispatch } from 'store'
 import { currentUserCan } from 'utils/wordpress/user'
 
 // Import tab views and their icons
@@ -48,7 +48,7 @@ const config = {
  * TODO: In the future we should look at better ways to
  * register apps based on where assistant is loaded.
  */
-const { registerApp } = useDispatch()
+const { registerApp, setAppFrameSize } = useDispatch()
 const { cms } = useConfig()
 
 if ( 'wordpress' === cms ) {
@@ -56,3 +56,8 @@ if ( 'wordpress' === cms ) {
 		registerApp( key, config[ key ] )
 	} )
 }
+
+// After apps get registered - store setup
+const { apps, activeApp } = store.getState()
+const active = apps[ activeApp ]
+setAppFrameSize( active.size )
