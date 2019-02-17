@@ -26,7 +26,7 @@ const SettingsApp = () => {
 				<div className="fl-asst-settings-item">
 					<label>Panel Position</label>
 					<div className="fl-asst-settings-item-control">
-						<Button onClick={ () => setPanelPosition(nextPanelPosition)}>
+						<Button onClick={ () => setPanelPosition( nextPanelPosition )}>
 							{ 'start' === panelPosition ? 'Left Edge' : 'Right Edge' }
 						</Button>
 					</div>

@@ -14,7 +14,7 @@ import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
 import { AppFrameTestingWidget } from './ui-testing'
-import { useConfig, useDispatch, useStore } from 'store'
+import { useConfig } from 'store'
 import './style.scss'
 
 const DetailView = () => {
