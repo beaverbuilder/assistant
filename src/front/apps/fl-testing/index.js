@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import { useSpring, animated } from 'react-spring'
 import { useDispatch } from 'store'
 import { Padding, Button, SortableList } from 'components'
 import { useAppFrame } from 'system'
@@ -9,22 +8,6 @@ const { registerApp } = useDispatch()
 
 const TestingApp = () => {
 	const { setAppFrameSize } = useAppFrame()
-
-	const styles = useSpring( {
-		background: 'green',
-		color: 'white',
-		width: 400,
-		height: 300,
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 20,
-
-		from: {
-			background: 'blue'
-		},
-	} )
 
 	return (
 		<Fragment>
