@@ -1,16 +1,15 @@
 import { useStore, useDispatch, } from 'store'
-import { useAppFrame } from 'system'
 
 export const useActiveApp = () => {
 	const { apps, activeApp: name } = useStore()
-	const { setActiveApp } = useDispatch()
-	const { setAppFrameSize } = useAppFrame()
+	const { setActiveApp, setAppFrameSize } = useDispatch()
 
 	const get = name => apps[ name ]
 
 	const set = name => {
 		const app = get( name )
 		setActiveApp( name )
+		setAppFrameSize( app.size )
 		return app
 	}
 

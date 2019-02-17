@@ -49,3 +49,10 @@ export const togglePanelPosition = () => {
 		type: 'TOGGLE_PANEL_POSITION'
 	}
 }
+
+export const setAppFrameSize = size => {
+	return {
+		type: 'SET_APP_FRAME_SIZE',
+		size
+	}
+}

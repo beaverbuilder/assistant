@@ -1,26 +1,22 @@
 import React, { useState } from 'react'
 import { useSpring, animated } from 'react-spring'
-import { useStore } from 'store'
+import { useStore, useDispatch } from 'store'
 import { useWindowSize } from 'utils/window'
 
 export const useAppFrame = () => {
-	const { panelPosition, apps, activeApp } = useStore()
+	const { panelPosition, apps, activeApp, appFrameSize } = useStore()
+	const { setAppFrameSize } = useDispatch()
 	const { width: windowWidth, height: windowHeight } = useWindowSize()
 	const app = apps[ activeApp ]
-	const [ sizeName, setSizeName ] = useState( 'undefined' !== typeof app ? app.size : 'TEST' )
-
-	const setAppFrameSize = name => {
-		setSizeName( name )
-	}
 
 	const normalPreferredWidth = 440
 	const widePreferredWidth = 720
 	let frameWidth = 0
 	let frameHeight = '100vh'
 
-	if ( 'wide' === sizeName ) {
-		frameWidth = widePreferredWidth > ( windowWidth * .8 ) ? windowWidth : widePreferredWidth
-	} else if ( 'full' === sizeName ) {
+	if ( 'wide' === appFrameSize ) {
+		frameWidth = 768 > windowWidth ? windowWidth : widePreferredWidth
+	} else if ( 'full' === appFrameSize ) {
 		frameWidth = '100vw'
 	} else {
 		frameWidth = normalPreferredWidth > ( windowWidth * .6 ) ? windowWidth : normalPreferredWidth
@@ -30,7 +26,7 @@ export const useAppFrame = () => {
 		appFrame: {
 			width: frameWidth,
 			height: frameHeight,
-			sizeName,
+			sizeName: appFrameSize,
 			alignment: panelPosition,
 		},
 		setAppFrameSize,
@@ -39,8 +35,7 @@ export const useAppFrame = () => {
 
 export const AppFrame = ({ children }) => {
 	const { isShowingUI } = useStore()
-	const { appFrame } = useAppFrame()
-	const { width, height, alignment } = appFrame
+	const { appFrame: { width, height, alignment } } = useAppFrame()
 	const { width: windowWidth, height: windowHeight } = useWindowSize()
 
 	const [ springProps, set ] = useSpring( () => {
@@ -50,7 +45,7 @@ export const AppFrame = ({ children }) => {
 			height,
 			borderLeft: '1px solid var(--fl-line-color)',
 			transform: 'translateX( 0% )',
-			right:0,
+			right: 'end' === alignment ? 0 : windowWidth - width,
 		}
 		return values
 	})
