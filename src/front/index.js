@@ -1,26 +1,39 @@
-import React, { StrictMode } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
-import { UIContext, PageViewContext, useModals, useAppFrame } from 'components'
+import { UIContext, PageViewContext, useModals } from 'components'
+import { useActiveApp, hooks, HooksContext } from 'system'
 import store, { useConfig, useStore, useDispatch } from 'store'
+import { redirect } from 'utils/location'
 import './api'
 import './apps'
 
 /**
  * The Root Component
  */
-const App = () => {
-	const { currentPageView } = useConfig()
-	const { isShowingUI, activeApp, panelPosition } = useStore()
-	const { setIsShowingUI, setActiveApp, togglePanelPosition, setPanelPosition } = useDispatch()
-	const { appFrame, setAppFrameSize } = useAppFrame()
+const Assistant = () => {
 
-	// Setup top-level modal handling
-	const { renderModals, presentModal, dismissModal, presentNotification } = useModals()
+	const { currentPageView } = useConfig()
+	const { isShowingUI, apps, panelPosition } = useStore()
+	const {
+		setIsShowingUI,
+		togglePanelPosition,
+		setPanelPosition,
+		setIsShowingAppsMenu,
+	} = useDispatch()
+	const { activeApp, activeAppName, setActiveApp } = useActiveApp()
+
+	const { renderModals, presentModal, dismissModal, presentNotification, modalExists } = useModals()
 
 	// Create a toggle function to show/hide the panel
 	const toggleIsShowingUI = () => isShowingUI ? setIsShowingUI( false ) : setIsShowingUI( true )
+
+	const activateApp = name => {
+		setActiveApp( name )
+		dismissModal( 'fl-apps' )
+		setIsShowingAppsMenu( false )
+	}
 
 	// Create a store-bound value object for UIContext.Provider
 	const ui = {
@@ -28,32 +41,34 @@ const App = () => {
 		setIsShowingUI,
 		toggleIsShowingUI,
 
-		activeApp,
-		setActiveApp,
+		apps,
 
-		appFrame,
-		setAppFrameSize,
+		activeApp,
+		activeAppName,
+		setActiveApp: activateApp,
 
 		panelPosition,
 		togglePanelPosition,
 		setPanelPosition,
+
 		presentModal,
 		dismissModal,
 		renderModals,
+		modalExists,
 		presentNotification,
+
+		goToURL: redirect,
 	}
 
 	return (
-		<StrictMode>
-			<Provider store={store}>
-				<UIContext.Provider value={ui}>
-					<PageViewContext.Provider value={currentPageView}>
-						{ ! isShowingUI && <ShowUITrigger /> }
-						<UI />
-					</PageViewContext.Provider>
-				</UIContext.Provider>
-			</Provider>
-		</StrictMode>
+		<Provider store={store}>
+			<UIContext.Provider value={ui}>
+				<PageViewContext.Provider value={currentPageView}>
+					{ ! isShowingUI && <ShowUITrigger /> }
+					<UI />
+				</PageViewContext.Provider>
+			</UIContext.Provider>
+		</Provider>
 	)
 }
 
@@ -62,4 +77,8 @@ const root = document.createElement( 'div' )
 root.classList.add( 'fl-asst' )
 document.body.appendChild( root )
 
-render( <App />, root )
+render(
+	<HooksContext.Provider value={hooks}>
+		<Assistant />
+	</HooksContext.Provider>
+	, root )

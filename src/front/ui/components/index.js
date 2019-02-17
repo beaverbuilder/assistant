@@ -20,7 +20,6 @@ export {
 } from './tag-groups'
 
 export {
-	PanelChrome,
 	PanelFrame,
 	ScreenHeader,
 	ScreenFooter,
@@ -58,4 +57,3 @@ export { Widget } from './widgets'
 export { Stack } from './stacks'
 export { Tab } from './tabs'
 export { useModals } from './modals'
-export { useAppFrame, useWindowSize } from './frame'

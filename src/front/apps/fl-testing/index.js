@@ -1,108 +1,46 @@
-import React, { Fragment, useContext, useState } from 'react'
-import posed from 'react-pose'
-import { redirect } from 'utils/location'
-import { ScreenHeader, ExpandedContents, Button, Icon, StackContext } from 'components'
+import React, { Fragment } from 'react'
+import { useSpring, animated } from 'react-spring'
 import { useDispatch } from 'store'
-const { registerApp } = useDispatch()
+import { Padding, Button } from 'components'
+import { useAppFrame } from 'system'
 import './style.scss'
 
+const { registerApp } = useDispatch()
+
+const Box = animated.div
+
 const TestingApp = () => {
-	const { pushView } = useContext( StackContext )
+	const { setAppFrameSize } = useAppFrame()
+
+	const styles = useSpring( {
+		background: 'green',
+		color: 'white',
+		width: 400,
+		height: 300,
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 20,
+
+		from: {
+			background: 'blue'
+		},
+	} )
 
 	return (
 		<Fragment>
-			<ScreenHeader />
+			<Padding>
+				<Box style={styles}>
+					I am an animated box.
+				</Box>
+			</Padding>
 
-			<div className="fl-asst-list fl-asst-list-test">
-				<ListItemA
-					title="Sed posuere consectetur est at lobortis est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-				<ListItemA
-					title="Sed posuere est at lobortis consectetur est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-				<ListItemA
-					title="Sed posuere consectetur est at lobortis est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-				<ListItemA
-					title="Sed posuere consectetur est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-				<ListItemA
-					title="Sed posuere consectetur est at lobortis"
-					meta="The Meta - Line - Contains - Whatever - Meta - You Want - To Include"
-					onClick={ () => redirect( 'https://www.amazon.com' )}
-					onAccessoryClick={ () => pushView( <DetailView1 /> ) }
-				/>
-			</div>
+			<Button onClick={ () => setAppFrameSize( 'wide' ) }>Go Wide</Button>
 		</Fragment>
 	)
 }
 
-const ListItemBox = posed.div( {
-	normal: {
-		x: '0%',
-		height: 'auto',
-		background: 'transparent'
-	},
-	deleted: {
-		x: '100%',
-		height: '0px',
-		background: 'red',
-		applyAtEnd: {
-			display: 'none'
-		}
-	}
-} )
-
-const onPoseComplete = () => {
-
-	//console.log( 'after complete, delete from data' )
-}
-
-const ListItemA = ( { title, meta, onAccessoryClick } ) => {
-	const [ isDeleted, setIsDeleted ] = useState( false )
-	const imgStyles = {
-		backgroundImage: 'url(https://place-hold.it/100x100/red/white&text=Test)'
-	}
-	return (
-		<ListItemBox pose={ isDeleted ? 'deleted' : 'normal' } onPoseComplete={onPoseComplete} className="fl-asst-list-item">
-			<div className="fl-asst-list-item-wrap">
-				<div className="fl-asst-list-item-visual">
-					<div className="fl-asst-list-item-image-box" style={imgStyles}></div>
-				</div>
-				<div className="fl-asst-list-item-content">
-					<div className="fl-asst-list-item-title">{title}</div>
-					<div className="fl-asst-list-item-meta">{meta}</div>
-				</div>
-				<div className="fl-asst-list-item-accessory">
-					<Button appearance="icon" onClick={onAccessoryClick}><Icon /></Button>
-				</div>
-			</div>
-			<ExpandedContents>
-				<Button onClick={() => setIsDeleted( true )}>Delete</Button>
-			</ExpandedContents>
-		</ListItemBox>
-	)
-}
-
-const DetailView1 = () => {
-	return (
-		<Fragment>
-			<ScreenHeader title="Detail View 1" />
-		</Fragment>
-	)
-}
 
 registerApp( 'fl-testing', {
 	label: 'Testing Lists',

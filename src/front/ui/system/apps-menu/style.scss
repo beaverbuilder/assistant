@@ -1,0 +1,31 @@
+.fl-asst-app-list {
+    display: grid;
+    padding: 18px 0;
+}
+.fl-asst-app-list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px;
+    padding-left: 30px;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--fl-utility-background-color);
+    }
+}
+.fl-asst-manage-apps-title {
+    margin:0;
+    padding: 30px 30px 0;
+}
+.fl-asst-app-list-item-title {
+    flex: 1 1 auto;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 16px;
+    line-height: 1.4;
+}
+.fl-asst-app-list-item-accessory {
+    flex: 0 0 auto;
+}

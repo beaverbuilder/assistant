@@ -9,11 +9,11 @@ export const useModals = () => {
 
 	// Render all the current modals - This gets called inside <UI />
 	const renderModals = () => {
-
 		return modals.map( ( modal ) => {
 			const { type, children, key, pose, initialPose, config } = modal
 
-			if ( 'notification' === type ) {
+			switch ( type ) {
+			case 'notification':
 				return (
 					<Notification
 						key={key}
@@ -28,36 +28,58 @@ export const useModals = () => {
 						{children}
 					</Notification>
 				)
+			case 'menu':
+				return (
+					<MenuModal
+						key={key}
+						modalID={key}
+						pose={pose}
+						initialPose={initialPose}
+						onPoseComplete={onModalComplete}
+						onDismiss={config.onDismiss}
+					>{children}</MenuModal>
+				)
+			default:
+				return (
+					<Modal
+						key={key}
+						modalID={key}
+						pose={pose}
+						initialPose={initialPose}
+						onPoseComplete={onModalComplete}
+						config={config}
+					>{children}</Modal>
+				)
 			}
-
-			return (
-				<Modal
-					key={key}
-					modalID={key}
-					pose={pose}
-					initialPose={initialPose}
-					onPoseComplete={onModalComplete}
-				>{children}</Modal>
-			)
 		} )
 	}
 
 	const presentModal = ( children, config = {} ) => {
-		modals.push( {
-			type: 'modal',
-			key: Date.now(),
+		const { appearance, id } = config
+		const modal = {
+			type: 'undefined' !== typeof appearance ? appearance : 'modal',
+			key: 'undefined' !== typeof id ? id : Date.now(),
 			initialPose: 'offscreen',
 			pose: 'onscreen',
 			children,
 			config,
-		} )
+		}
+
+		const idExists = modalExists( id )
+
+		if ( 'undefined' !== typeof id && idExists ) {
+			modals[idExists] = modal
+		} else {
+			modals.push( modal )
+		}
 		setModals( Array.from( modals ) )
 	}
 
 	const presentNotification = ( message = '', config = {} ) => {
+		const { id } = config
 		modals.push( {
 			type: 'notification',
-			key: Date.now(),
+			key: 'undefined' !== typeof id ? id : Date.now(),
 			initialPose: 'offscreen',
 			pose: 'onscreen',
 			children: message,
@@ -67,9 +89,7 @@ export const useModals = () => {
 	}
 
 	const dismissModal = ( id ) => {
-
-		if ( Number.isInteger( id ) ) {
-
+		if ( 'undefined' !== typeof id ) {
 			modals.map( ( modal, i ) => {
 
 				if ( modal.key === id ) {
@@ -83,8 +103,18 @@ export const useModals = () => {
 		setModals( Array.from( modals ) )
 	}
 
-	const onModalComplete = ( pose, modalID ) => {
+	const modalExists = id => {
+		let exists = false
 
+		modals.map( modal => {
+			if ( modal.key === id ) {
+				exists = modal.key
+			}
+		} )
+		return exists
+	}
+
+	const onModalComplete = ( pose, modalID ) => {
 		if ( 'offscreen' === pose ) {
 			modals.map( ( modal, i ) => {
 				if ( modal.key === modalID ) {
@@ -99,19 +129,25 @@ export const useModals = () => {
 		renderModals,
 		presentModal,
 		dismissModal,
+		modalExists,
 		presentNotification,
 	}
 }
 
-export const Modal = ( { children, pose, initialPose, onPoseComplete, modalID } ) => {
+export const Modal = ( { children, pose, initialPose, onPoseComplete, modalID, config } ) => {
 	const { dismissModal } = useContext( UIContext )
 
 	const complete = pose => {
 		onPoseComplete( pose, modalID )
 	}
 
+	const styles = {}
+	if ( false === config.coverToolbar ) {
+		styles.top = 47
+	}
+
 	return (
-		<ModalBox className="fl-asst-modal-screen" pose={pose} initialPose={initialPose} onPoseComplete={complete}>
+		<ModalBox className="fl-asst-modal-screen" pose={pose} initialPose={initialPose} onPoseComplete={complete} style={styles}>
 			<Toolbar>
 				<div className="fl-asst-toolbar-spacer" />
 				<Button onClick={ () => dismissModal( modalID )} appearance="icon">
@@ -222,3 +258,75 @@ const NotificationBox = posed.div( {
 		transition: notificationTransition,
 	},
 } )
+
+
+const menuBoxTransition = () => {
+	return {
+		type: 'spring',
+		mass: .2
+	}
+}
+
+const OverlayBox = posed.div( {
+	onscreen: {
+		opacity: 1,
+		transition: menuBoxTransition,
+	},
+	offscreen: {
+		opacity: 0,
+		transition: menuBoxTransition,
+	}
+} )
+
+const MenuBox = posed.div( {
+	init: {
+		transformOrigin: 'top',
+	},
+	onscreen: {
+		scale: 1,
+		opacity: 1,
+		transition: menuBoxTransition,
+	},
+	offscreen: {
+		scale: .9,
+		opacity: 0,
+		transition: menuBoxTransition,
+	},
+} )
+
+const MenuModal = ( { children, modalID, pose, initialPose, onPoseComplete, onDismiss } ) => {
+	const { dismissModal } = useContext( UIContext )
+
+	const dismiss = () => {
+		dismissModal( modalID )
+		if ( 'undefined' !== typeof onDismiss ) {
+			onDismiss()
+		}
+	}
+
+	const complete = pose => {
+		onPoseComplete( pose, modalID )
+	}
+
+	const preventPropagation = e => e.stopPropagation()
+
+	return (
+		<OverlayBox
+			className="fl-asst-modal-screen fl-asst-screen-menu-frame"
+			onClick={dismiss}
+			pose={pose}
+			initialPose={initialPose}
+			onPoseComplete={complete}
+		>
+			<MenuBox
+				className="fl-asst-screen-menu-contents"
+				initialPose={initialPose}
+				onClick={preventPropagation}
+			>
+				<Stack>
+					{children}
+				</Stack>
+			</MenuBox>
+		</OverlayBox>
+	)
+}

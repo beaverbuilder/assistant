@@ -52,11 +52,24 @@ export const Icon = ( { name } ) => {
 	case 'default-app':
 		return (
 			<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
-				<g transform="translate(-103, -212)" fill="transparent" fillRule="nonzero" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-					<path d="M119,213 L128,213 C129.104569,213 130,213.895431 130,215 L130,232 C130,233.104569 129.104569,234 128,234 C124.888889,234 122.555556,234 121,234 M116.011108,234 C114.168714,234 110.831678,234 106,234 C104.895431,234 104,233.104569 104,232 L104,215 C104,213.895431 104.895431,213 106,213 L114,213" ></path>
-					<polyline points="121 234 110 223 114 219"></polyline>
-					<polyline transform="translate(119.000000, 220.000000) rotate(-180.000000) translate(-119.000000, -220.000000) " points="124 227 114 217 118 213"></polyline>
-					<circle cx="117" cy="223" r="1"></circle>
+				<g stroke="currentColor" strokeWidth="2" fill="transparent" fillRule="evenodd" strokeLinecap="round">
+					<rect x="1" y="1" width="26" height="21" rx="2" stroke="currentColor" strokeWidth="2"></rect>
+					<path d="M2,21 L26,2"></path>
+					<path d="M1,21 L25,2" transform="translate(13.500000, 12.000000) scale(-1, 1) translate(-13.500000, -12.000000) "></path>
+				</g>
+			</svg>
+		)
+	case 'apps-app':
+		return (
+			<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+					<path d="M18,22 L3,22 C1.8954305,22 1,21.1045695 1,20 L1,3 C1,1.8954305 1.8954305,1 3,1 C3.88888889,1 4.55555556,1 5,1 M10,1 C12.5336712,1 17.7158001,1 25,1 C26.1045695,1 27,1.8954305 27,3 L27,20 C27,21.1045695 26.1045695,22 25,22 L23,22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"></path>
+					<path d="M21,13 C19.895,13 19,13.895 19,15 C19,16.105 19.895,17 21,17 C22.105,17 23,16.105 23,15 C23,13.895 22.105,13 21,13 Z" fill="currentColor" transform="translate(21.000000, 15.000000) rotate(-90.000000) translate(-21.000000, -15.000000) "></path>
+					<path d="M7,13 C5.895,13 5,13.895 5,15 C5,16.105 5.895,17 7,17 C8.105,17 9,16.105 9,15 C9,13.895 8.105,13 7,13 Z" fill="currentColor" transform="translate(7.000000, 15.000000) rotate(-90.000000) translate(-7.000000, -15.000000) "></path>
+					<path d="M14,13 C12.895,13 12,13.895 12,15 C12,16.105 12.895,17 14,17 C15.105,17 16,16.105 16,15 C16,13.895 15.105,13 14,13 Z" fill="currentColor" transform="translate(14.000000, 15.000000) rotate(-90.000000) translate(-14.000000, -15.000000) "></path>
+					<path d="M21,6 C19.895,6 19,6.895 19,8 C19,9.105 19.895,10 21,10 C22.105,10 23,9.105 23,8 C23,6.895 22.105,6 21,6 Z" fill="currentColor" transform="translate(21.000000, 8.000000) rotate(-90.000000) translate(-21.000000, -8.000000) "></path>
+					<path d="M7,6 C5.895,6 5,6.895 5,8 C5,9.105 5.895,10 7,10 C8.105,10 9,9.105 9,8 C9,6.895 8.105,6 7,6 Z" fill="currentColor" transform="translate(7.000000, 8.000000) rotate(-90.000000) translate(-7.000000, -8.000000) "></path>
+					<path d="M14,6 C12.895,6 12,6.895 12,8 C12,9.105 12.895,10 14,10 C15.105,10 16,9.105 16,8 C16,6.895 15.105,6 14,6 Z" fill="currentColor" transform="translate(14.000000, 8.000000) rotate(-90.000000) translate(-14.000000, -8.000000) "></path>
 				</g>
 			</svg>
 		)

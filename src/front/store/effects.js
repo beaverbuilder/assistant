@@ -30,4 +30,9 @@ export default {
 		const { panelPosition } = store.getState()
 		updateUserState( { panelPosition } )
 	},
+
+	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
+		const { shouldReduceMotion } = store.getState()
+		updateUserState( { shouldReduceMotion } )
+	}
 }

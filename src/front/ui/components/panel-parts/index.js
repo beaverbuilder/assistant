@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { Button, AppTabButton, Icon, AppContext, StackContext, UIContext } from 'components'
-import { NotificationsTabButton } from 'apps/fl-notifications'
+import { Button, Icon, AppContext, StackContext, UIContext } from 'components'
 import './style.scss'
 
-const PanelBox = posed.div( () => {
+const Frame = posed.div( () => {
 
 	const transition = () => {
 		return {
@@ -19,6 +18,7 @@ const PanelBox = posed.div( () => {
 		position: 'fixed',
 		top: 0,
 		right: 0,
+		left: 'auto',
 		zIndex: 999999,
 		width: ( { style } ) => style.width,
 		height: ( { style } ) => style.height,
@@ -27,11 +27,18 @@ const PanelBox = posed.div( () => {
 	}
 
 	const hidden = {
-		right: ( { alignment, style } ) => {
-			if ( 'end' === alignment ) {
+		right: ( { frameSize, alignment } ) => {
+			if ( 'end' === alignment || 'full' === frameSize ) {
 				return 0
 			} else {
-				return `calc( 100vw - ${style.width}px )`
+				return 'auto'
+			}
+		},
+		left: ( { alignment } ) => {
+			if ( 'start' === alignment ) {
+				return 0
+			} else {
+				return 'auto'
 			}
 		},
 		x: ( { alignment, frameSize } ) => {
@@ -62,11 +69,18 @@ const PanelBox = posed.div( () => {
 		init,
 		hidden,
 		normal: {
-			right: ( { frameSize, alignment, style } ) => {
+			right: ( { frameSize, alignment } ) => {
 				if ( 'end' === alignment || 'full' === frameSize ) {
 					return 0
 				} else {
-					return `calc( 100vw - ${style.width}px )`
+					return 'auto'
+				}
+			},
+			left: ( { alignment } ) => {
+				if ( 'start' === alignment ) {
+					return 0
+				} else {
+					return 'auto'
 				}
 			},
 			x: '0%',
@@ -83,7 +97,8 @@ const PanelBox = posed.div( () => {
 	}
 } )
 
-export const PanelFrame = ( { children } ) => {
+export const PanelFrame = props => {
+	const { children } = props
 	const { isShowingUI, appFrame } = useContext( UIContext )
 
 	const styles = {
@@ -91,58 +106,16 @@ export const PanelFrame = ( { children } ) => {
 		height: appFrame.height,
 	}
 
-	const key = Date.now() // make sure PanelBox re-renders when frame does
-
 	return (
-		<PanelBox
+		<Frame
 			pose={ isShowingUI ? 'normal' : 'hidden' }
-			poseKey={key}
 			style={styles}
 			frameSize={appFrame.size}
 			alignment={appFrame.alignment}
-		>{children}</PanelBox>
+		>{children}</Frame>
 	)
 }
 
-export const PanelChrome = ( { tabs, activeTabName, onTabClick, onClose } ) => {
-	return (
-		<div className="fl-asst-panel-chrome">
-
-			<div className="fl-asst-panel-chrome-area">
-				<NotificationsTabButton />
-			</div>
-
-			<div className="fl-asst-app-tabs-wrap">
-				<div className="fl-asst-app-tabs-area">
-					{ Object.keys( tabs ).map( key => {
-						const tab = tabs[key]
-						const isSelected = ( key === activeTabName ) ? true : false
-
-						if ( false === tab.enabled || false === tab.showTabIcon ) {
-							return null
-						}
-
-						if ( 'function' !== typeof tab.icon ) {
-							tab.icon = props => <Icon name="default-app" {...props} />
-						}
-
-						return (
-							<AppTabButton key={key} isSelected={isSelected} onClick={() => onTabClick( key )} tooltip={tab.label}>
-								{tab.icon( { key, isSelected } )}
-							</AppTabButton>
-						)
-					} ) }
-				</div>
-			</div>
-
-			<div className="fl-asst-panel-chrome-area">
-				<Button onClick={onClose} appearance="icon">
-					<Icon name="close" />
-				</Button>
-			</div>
-		</div>
-	)
-}
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const tab = useContext( AppContext )
@@ -179,6 +152,7 @@ export const ScreenFooter = ( { children } ) => {
 const MoreButton = posed.button( {
 	hoverable: true,
 	focusable: true,
+	pressable: true,
 	init: {
 		opacity: .5,
 	},
@@ -194,6 +168,9 @@ const MoreButtonPath = posed.polyline( {
 		points: '2,4 25,4 48,4',
 	},
 	hover: {
+		points: ( { isExpanded } ) => isExpanded ? '5,6 25,2 45,6' : '5,2 25,6 45,2',
+	},
+	press: {
 		points: ( { isExpanded } ) => isExpanded ? '5,6 25,2 45,6' : '5,2 25,6 45,2',
 	},
 } )

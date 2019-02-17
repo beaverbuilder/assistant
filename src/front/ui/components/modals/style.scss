@@ -61,3 +61,22 @@
     display: flex;
     flex-direction: column;
 }
+
+.fl-asst-screen-menu-frame {
+    position: absolute;
+    top:47px;
+    left:0;
+    right:0;
+    bottom:0;
+    background: var(--fl-asst-overlay-background-color);
+    overflow: hidden;
+
+    .fl-asst-screen-menu-contents {
+        position: relative;
+        background: var(--fl-background-color);
+        min-width: 440px;
+        margin: 0 auto;
+        flex: 0 0 auto;
+        box-shadow: 0 12px 24px 0 rgba(0,0,0,0.17);
+    }
+}

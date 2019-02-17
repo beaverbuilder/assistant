@@ -17,7 +17,7 @@ export const apps = ( state = {}, action ) => {
 				enabled: true,
 				icon: null,
 				label: 'Untitled App',
-				showTabIcon: true,
+				size: 'normal',
 				...action.config,
 			},
 			...state,
@@ -76,6 +76,33 @@ export const panelPosition = ( state = 'end', action ) => {
 		return 'start' === state ? 'end' : 'start'
 	case 'SET_PANEL_POSITION':
 		return action.position
+	default:
+		return state
+	}
+}
+
+export const appFrameSize = ( state = 'normal', action ) => {
+	switch ( action.type ) {
+	case 'SET_APP_FRAME_SIZE':
+		return action.size
+	default:
+		return state
+	}
+}
+
+export const shouldReduceMotion = ( state = false, action ) => {
+	switch ( action.type ) {
+	case 'SET_SHOULD_REDUCE_MOTION':
+		return action.shouldReduce
+	default:
+		return state
+	}
+}
+
+export const isShowingAppsMenu = ( state = false, action ) => {
+	switch ( action.type ) {
+	case 'SET_IS_SHOWING_APPS_MENU':
+		return action.isShowing
 	default:
 		return state
 	}

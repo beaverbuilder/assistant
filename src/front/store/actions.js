@@ -49,3 +49,31 @@ export const togglePanelPosition = () => {
 		type: 'TOGGLE_PANEL_POSITION'
 	}
 }
+
+export const setAppFrameSize = size => {
+	return {
+		type: 'SET_APP_FRAME_SIZE',
+		size
+	}
+}
+
+export const setShouldReduceMotion = shouldReduce => {
+	return {
+		type: 'SET_SHOULD_REDUCE_MOTION',
+		shouldReduce,
+	}
+}
+
+export const setIsShowingAppsMenu = isShowing => {
+	return {
+		type: 'SET_IS_SHOWING_APPS_MENU',
+		isShowing,
+	}
+}
+
+export const hideAppsMenu = () => {
+	return {
+		type: 'SET_IS_SHOWING_APPS_MENU',
+		isShowing: false
+	}
+}
