@@ -14,7 +14,7 @@ import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
 import { AppFrameTestingWidget } from './ui-testing'
-import { useConfig } from 'store'
+import { useConfig, useDispatch, useStore } from 'store'
 import './style.scss'
 
 const DetailView = () => {
@@ -31,6 +31,10 @@ const DetailView = () => {
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useConfig()
 	const { togglePanelPosition, presentModal, presentNotification, setActiveApp } = useContext( UIContext )
+
+	const { shouldReduceMotion } = useStore()
+	const { setShouldReduceMotion } = useDispatch()
+
 
 	// @TODO: Rename dashboardApp and move into app state
 	const { adminActions } = dashboardApp
@@ -66,6 +70,10 @@ export const DashboardTab = () => {
 
 			<Widget title="Just Testing" className="fl-asst-testing-widget">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
+				<Button onClick={ () => setShouldReduceMotion( ! shouldReduceMotion )}>
+					{ shouldReduceMotion ? 'Enable Motion' : 'Reduce Motion' }
+				</Button>
+
 				<Button onClick={ () => {
 					presentModal( <TestModal /> )
 				} }>Present Modal View</Button>

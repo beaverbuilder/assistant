@@ -33,7 +33,7 @@ export const useAppFrame = () => {
 }
 
 export const AppFrame = ( { children } ) => {
-	const { isShowingUI } = useStore()
+	const { isShowingUI, shouldReduceMotion } = useStore()
 	const { appFrame: { width, height, alignment } } = useAppFrame()
 	const { width: windowWidth } = useWindowSize()
 
@@ -49,25 +49,27 @@ export const AppFrame = ( { children } ) => {
 		}
 	}
 
-	const [ springProps, set ] = useSpring( () => {
-		const values = {
-			width,
-			height,
-			borderLeft: '1px solid var(--fl-line-color)',
-			transform: transform(),
-			right: 'end' === alignment ? 0 : windowWidth - width,
-		}
-		return values
-	} )
-
 	const springState = () => {
 		return {
 			width,
 			height,
+			borderLeft: '1px solid var(--fl-line-color)',
 			right: 'end' === alignment ? 0 : windowWidth - width,
-			transform: transform()
+			transform: transform(),
+			immediate: shouldReduceMotion
 		}
 	}
+
+	const [ springProps, set ] = useSpring( () => {
+		const values = {
+			width,
+			height,
+			transform: transform(),
+			right: 'end' === alignment ? 0 : windowWidth - width,
+			immediate: shouldReduceMotion
+		}
+		return values
+	} )
 
 	set( springState() )
 
