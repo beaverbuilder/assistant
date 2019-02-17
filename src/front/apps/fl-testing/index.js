@@ -1,13 +1,11 @@
 import React, { Fragment } from 'react'
 import { useSpring, animated } from 'react-spring'
 import { useDispatch } from 'store'
-import { Padding, Button } from 'components'
+import { Padding, Button, SortableList } from 'components'
 import { useAppFrame } from 'system'
 import './style.scss'
 
 const { registerApp } = useDispatch()
-
-const Box = animated.div
 
 const TestingApp = () => {
 	const { setAppFrameSize } = useAppFrame()
@@ -31,12 +29,16 @@ const TestingApp = () => {
 	return (
 		<Fragment>
 			<Padding>
-				<Box style={styles}>
-					I am an animated box.
-				</Box>
-			</Padding>
 
-			<Button onClick={ () => setAppFrameSize( 'wide' ) }>Go Wide</Button>
+				<SortableList>
+					<div className="inner-item">Item 1</div>
+					<div className="inner-item">Item 2</div>
+					<div className="inner-item">Item 3</div>
+					<div className="inner-item">Item 4</div>
+				</SortableList>
+
+				<Button onClick={ () => setAppFrameSize( 'wide' ) }>Go Wide</Button>
+			</Padding>
 		</Fragment>
 	)
 }
