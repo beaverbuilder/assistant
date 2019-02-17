@@ -37,18 +37,6 @@ export const AppFrame = ( { children } ) => {
 	const { appFrame: { width, height, alignment } } = useAppFrame()
 	const { width: windowWidth } = useWindowSize()
 
-	const [ springProps, set ] = useSpring( () => {
-
-		const values = {
-			width,
-			height,
-			borderLeft: '1px solid var(--fl-line-color)',
-			transform: 'translateX( 0% )',
-			right: 'end' === alignment ? 0 : windowWidth - width,
-		}
-		return values
-	} )
-
 	const transform = () => {
 		if ( isShowingUI ) {
 			return 'translateX( 0% )'
@@ -60,6 +48,17 @@ export const AppFrame = ( { children } ) => {
 			}
 		}
 	}
+
+	const [ springProps, set ] = useSpring( () => {
+		const values = {
+			width,
+			height,
+			borderLeft: '1px solid var(--fl-line-color)',
+			transform: transform(),
+			right: 'end' === alignment ? 0 : windowWidth - width,
+		}
+		return values
+	} )
 
 	const springState = () => {
 		return {
