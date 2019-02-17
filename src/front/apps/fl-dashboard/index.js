@@ -70,9 +70,6 @@ export const DashboardTab = () => {
 
 			<Widget title="Just Testing" className="fl-asst-testing-widget">
 				<Button onClick={togglePanelPosition}>Toggle Panel Position</Button>
-				<Button onClick={ () => setShouldReduceMotion( ! shouldReduceMotion )}>
-					{ shouldReduceMotion ? 'Enable Motion' : 'Reduce Motion' }
-				</Button>
 
 				<Button onClick={ () => {
 					presentModal( <TestModal /> )
