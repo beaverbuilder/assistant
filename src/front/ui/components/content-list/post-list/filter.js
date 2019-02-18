@@ -85,6 +85,10 @@ export const PostListFilter = ( { onChange } ) => {
 			label: 'Private',
 			value: 'private',
 		},
+		{
+			label: 'Trash',
+			value: 'trash',
+		},
 	]
 
 	// Setup the query

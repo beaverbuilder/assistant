@@ -14,9 +14,9 @@ class FL_Assistant_Data {
 	 * @var string $default_user_state
 	 */
 	static public $default_user_state = array(
-		'activeApp'     => 'fl-dashboard',
-		'isShowingUI'   => false,
-		'panelPosition' => 'end',
+		'activeApp'          => 'fl-dashboard',
+		'isShowingUI'        => false,
+		'panelPosition'      => 'end',
 		'shouldReduceMotion' => false,
 	);
 
@@ -58,9 +58,9 @@ class FL_Assistant_Data {
 		 * adding it to the config.
 		 */
 		$state = array(
-			'activeApp'     => $user_state['activeApp'],
-			'isShowingUI'   => $user_state['isShowingUI'],
-			'panelPosition' => $user_state['panelPosition'],
+			'activeApp'          => $user_state['activeApp'],
+			'isShowingUI'        => $user_state['isShowingUI'],
+			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
 		);
 
