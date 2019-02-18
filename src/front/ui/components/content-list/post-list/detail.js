@@ -1,22 +1,54 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Clipboard from 'react-clipboard.js'
+import { updatePost } from 'utils/wordpress'
 import {
 	ContentListDetail,
 	Padding,
 	ScreenHeader,
 	TagGroup,
 	Tag,
+	StackContext,
 	ViewContext,
 } from 'components'
 
 export const PostListDetail = () => {
-	const { meta, title, url, editUrl } = useContext( ViewContext )
+	const { popView } = useContext( StackContext )
+	const {
+		editUrl,
+		id,
+		meta,
+		status,
+		title,
+		url,
+		removeItem
+	} = useContext( ViewContext )
+
+	const trashClicked = () => {
+		updatePost( id, 'trash' )
+		removeItem()
+		popView()
+	}
+
+	const restoreClicked = () => {
+		updatePost( id, 'untrash' )
+		removeItem()
+		popView()
+	}
+
 	return (
 		<ContentListDetail>
 			<ScreenHeader title={title}>
-				<TagGroup>
-					<Tag href={url}>View</Tag>
-					<Tag href={editUrl}>Edit</Tag>
+				<TagGroup appearance='muted'>
+					{ 'trash' !== status &&
+						<Fragment>
+							<Tag href={url}>View</Tag>
+							<Tag href={editUrl}>Edit</Tag>
+							<Tag onClick={trashClicked} appearance='warning'>Trash</Tag>
+						</Fragment>
+					}
+					{ 'trash' === status &&
+						<Tag onClick={restoreClicked}>Restore</Tag>
+					}
 				</TagGroup>
 			</ScreenHeader>
 			<Padding>

@@ -109,6 +109,24 @@ export const getPost = ( id, onSuccess, onError ) => {
 }
 
 /**
+ * Updates a single post. See the update_post
+ * REST method for a list of supported actions.
+ *
+ * @param {Object}
+ * @return {Object}
+ */
+export const updatePost = ( id, action ) => {
+	clearCache( 'posts' )
+	return restRequest( {
+		method: 'POST',
+		route: `fl-assistant/v1/post/${ id }`,
+		args: {
+			action,
+		}
+	} )
+}
+
+/**
  * Returns any array of post terms.
  *
  * @param {Object}
