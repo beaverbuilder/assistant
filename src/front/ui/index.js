@@ -19,6 +19,7 @@ import './style.scss'
 export const UI = () => {
 	const {
 		apps,
+		activeApp,
 		activeAppName,
 		setActiveApp,
 		setIsShowingUI,
@@ -87,16 +88,11 @@ export const UI = () => {
 
 				{ /* Screens */ }
 				<div className="fl-asst-panel-contents">
-					{Object.keys( apps ).map( key => {
-						const app = Object.assign( {}, apps[ key ] )
-						return ! app.enabled ? null : (
-							<AppContext.Provider key={key} value={app}>
-								<Tab name={key} isSelected={app.app === activeAppName}>
-									<Stack>{ app.content() }</Stack>
-								</Tab>
-							</AppContext.Provider>
-						)
-					} )}
+					<AppContext.Provider key={activeAppName} value={activeApp}>
+						<Tab name={activeAppName} isSelected>
+							<Stack>{ activeApp.content() }</Stack>
+						</Tab>
+					</AppContext.Provider>
 				</div>
 			</div>
 
