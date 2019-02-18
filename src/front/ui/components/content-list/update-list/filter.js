@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { ExpandedContents, TagGroupControl } from 'components'
-import { updatesQuery } from './queries'
 
 export const UpdateListFilter = ( { onChange } ) => {
 	const [ activeTag, setActiveTag ] = useState( 'all' )
@@ -20,7 +19,9 @@ export const UpdateListFilter = ( { onChange } ) => {
 	]
 
 	useEffect( () => {
-		onChange( updatesQuery( activeTag ) )
+		onChange( {
+			type: activeTag,
+		} )
 	}, [ activeTag ] )
 
 	return (

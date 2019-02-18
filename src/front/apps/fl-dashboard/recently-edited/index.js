@@ -6,7 +6,6 @@ import {
 	PostList,
 } from 'components'
 import { useAppState } from 'store'
-import { recentQuery } from './queries'
 
 export const RecentlyEditedWidget = () => {
 	const [ postType, setPostType ] = useAppState( 'recentPostType', 'any' )
@@ -22,7 +21,10 @@ export const RecentlyEditedWidget = () => {
 				</TagGroup>
 			</div>
 			<PostList
-				query={recentQuery( postType )}
+				query={{
+					posts_per_page: 5,
+					post_type: postType,
+				}}
 				placeholderItemCount={5}
 			/>
 		</Widget>

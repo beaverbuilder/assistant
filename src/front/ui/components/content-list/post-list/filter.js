@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { TagGroupControl, ExpandedContents } from 'components'
 import { useConfig } from 'store'
 import { getWeek } from 'utils/datetime'
-import { postQuery, termQuery } from './queries'
 
 export const PostListFilter = ( { onChange } ) => {
 	const [ type, setType ] = useState( 'posts' )
@@ -99,7 +98,14 @@ export const PostListFilter = ( { onChange } ) => {
 
 	// Handle post queries
 	case 'posts':
-		query = postQuery( subType, status )
+		query = {
+			post_type: subType,
+			posts_per_page: 20,
+			orderby: 'title',
+			order: 'ASC',
+			s: '',
+			post_status: 'attachment' === subType ? 'any' : status,
+		}
 		switch ( date ) {
 		case 'today':
 			query.year = now.getFullYear()
@@ -122,7 +128,10 @@ export const PostListFilter = ( { onChange } ) => {
 
 	// Handle taxonomy queries
 	case 'terms':
-		query = termQuery( subType )
+		query = {
+			taxonomy: subType,
+			hide_empty: 0
+		}
 		typeTagValue = [ type, subType ]
 		break
 	}
