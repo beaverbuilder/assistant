@@ -205,12 +205,16 @@ export const Stack = ( { children, className } ) => {
 				const ref = createRef()
 				const context = Object.assign( { ref }, api, checks )
 				const props = Object.assign( { ref }, view )
-				view.className = 'fl-asst-stack-view'
 
 				return (
 					<StackContext.Provider key={i} value={context}>
 						<ViewContext.Provider value={config.context}>
-							<StackView key={key} onPoseComplete={poseComplete} {...props} />
+							<StackView
+								key={key}
+								onPoseComplete={poseComplete}
+								className='fl-asst-stack-view'
+								{...props}
+							/>
 						</ViewContext.Provider>
 					</StackContext.Provider>
 				)
