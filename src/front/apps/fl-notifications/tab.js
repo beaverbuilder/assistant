@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useAppState, useDispatch } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import {
@@ -10,14 +10,14 @@ import {
 	UpdateList
 } from 'components'
 
-const { registerApp } = useDispatch()
+const { registerApp, setAppState } = useDispatch()
 
 export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )
 	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
 	const defaultTag = canModerateComments ? 'comments' : 'updates'
 	const [ activeTag, setActiveTag ] = useAppState( 'active-tag', defaultTag )
-	const [ query, setQuery ] = useState( 'query', null )
+	const [ query, setQuery ] = useAppState( 'query', null )
 	const tabs = []
 	const filters = {}
 	const content = {}
@@ -39,7 +39,6 @@ export const NotificationsTab = () => {
 		)
 		content.comments = (
 			<CommentList
-				appStateKey='comment-list'
 				query={ query }
 				pagination={ true }
 			/>
@@ -59,7 +58,6 @@ export const NotificationsTab = () => {
 		)
 		content.updates = (
 			<UpdateList
-				appStateKey='update-list'
 				query={ query }
 			/>
 		)

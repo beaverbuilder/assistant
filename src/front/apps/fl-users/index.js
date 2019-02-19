@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react'
-import { useDispatch } from 'store'
+import React, { Fragment } from 'react'
+import { useAppState, useDispatch } from 'store'
 import { UserList, UserListFilter, ScreenHeader } from 'components'
 
 const { registerApp } = useDispatch()
 
 export const UsersTab = () => {
-	const [ query, setQuery ] = useState( 'query', null )
+	const [ query, setQuery ] = useAppState( 'query', null )
 	return (
 		<Fragment>
 			<ScreenHeader>
@@ -15,7 +15,6 @@ export const UsersTab = () => {
 				/>
 			</ScreenHeader>
 			<UserList
-				appStateKey='user-list'
 				query={ query }
 				pagination={ true }
 			/>

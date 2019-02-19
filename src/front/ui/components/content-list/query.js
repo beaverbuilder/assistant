@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { maybeUseAppState } from 'store'
 import { useComponentUpdate } from 'utils/hooks'
 import { getPagedContent } from 'utils/wordpress'
 import { ContentList } from 'components'
@@ -10,8 +9,8 @@ export const ContentQuery = ( {
 	query,
 	...props
 } ) => {
-	const [ results, setResults ] = maybeUseAppState( props, 'results', [] )
-	const [ hasMore, setHasMore ] = maybeUseAppState( props, 'has-more', true )
+	const [ results, setResults ] = useState( [] )
+	const [ hasMore, setHasMore ] = useState( true )
 
 	const dataLoader = ( offset ) => {
 		return getPagedContent( type, query, offset, ( data, more ) => {

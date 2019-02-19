@@ -14,7 +14,7 @@ export const getCache = ( type, key ) => {
 	if ( item ) {
 		const parsed = JSON.parse( item )
 		const now = new Date().getTime()
-		if ( now - parsed.expires < CACHE_EXPIRES ) {
+		if ( ! parsed.expires || parsed.expires > now ) {
 			return parsed.data
 		}
 	}
@@ -25,9 +25,10 @@ export const getCache = ( type, key ) => {
 /**
  * Saves a cached response to local storage.
  */
-export const setCache = ( type, key, response ) => {
+export const setCache = ( type, key, response, expires = CACHE_EXPIRES ) => {
+	const now = new Date().getTime()
 	const item = JSON.stringify( {
-		expires: new Date().getTime(),
+		expires: expires ? now + expires : false,
 		data: response,
 	} )
 

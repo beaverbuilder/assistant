@@ -138,7 +138,7 @@ export const PostListFilter = ( { onChange, ...props } ) => {
 
 	useEffect( () => {
 		onChange( { type, query } )
-	}, [ type, subType, date, status ] )
+	}, [ type, JSON.stringify( query ) ] )
 
 	return (
 		<Fragment>

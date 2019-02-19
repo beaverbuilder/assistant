@@ -1,5 +1,5 @@
 import { hydrateAppState, clearAppState } from 'store/actions'
-import { getCache, setCache } from 'utils/cache'
+import { clearCache, getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
 
 export default {
@@ -10,6 +10,7 @@ export default {
 	before: {
 		SET_ACTIVE_APP: ( action, store ) => {
 			const { activeApp } = store.getState()
+			clearCache( 'app-state' )
 			store.dispatch( clearAppState( activeApp ) )
 		},
 	},
@@ -31,7 +32,7 @@ export default {
 
 		SET_APP_STATE: ( action, store ) => {
 			const { appState } = store.getState()
-			setCache( 'app-state', action.app, JSON.stringify( appState[ action.app ] ) )
+			setCache( 'app-state', action.app, JSON.stringify( appState[ action.app ] ), false )
 		},
 
 		SET_SHOW_UI: action => {
