@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from 'react'
+import { useDispatch } from 'store'
 import { ScreenHeader, MediaList, MediaListFilter } from 'components'
+
+const { registerApp } = useDispatch()
 
 export const MediaTab = () => {
 	const [ query, setQuery ] = useState( [] )
@@ -26,3 +29,10 @@ export const MediaIcon = () => {
 		</svg>
 	)
 }
+
+registerApp( 'fl-media', {
+	label: 'Media',
+	content: props => <MediaTab {...props} />,
+	icon: props => <MediaIcon {...props} />,
+	size: 'wide',
+} )

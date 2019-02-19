@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useAppState } from 'store'
+import { useAppState, useDispatch } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import {
 	CommentList,
@@ -9,6 +9,8 @@ import {
 	UpdateListFilter,
 	UpdateList
 } from 'components'
+
+const { registerApp } = useDispatch()
 
 export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )
@@ -57,3 +59,14 @@ export const NotificationsTab = () => {
 		</Fragment>
 	)
 }
+
+registerApp( 'fl-notifications', {
+	label: 'Notifications',
+	content: props => <NotificationsTab {...props} />,
+	icon: props => <NotificationsIcon {...props} />,
+	enabled: (
+		currentUserCan( 'update_plugins' ) ||
+		currentUserCan( 'update_themes' ) ||
+		currentUserCan( 'moderate_comments' )
+	)
+} )
