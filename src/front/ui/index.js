@@ -89,9 +89,7 @@ export const UI = () => {
 				{ /* Screens */ }
 				<div className="fl-asst-panel-contents">
 					<AppContext.Provider key={activeAppName} value={Object.assign( {}, activeApp )}>
-						<Tab name={activeAppName} isSelected>
-							<Stack>{ activeApp.content ? activeApp.content() : '' }</Stack>
-						</Tab>
+						<Stack>{ activeApp.content ? activeApp.content() : '' }</Stack>
 					</AppContext.Provider>
 				</div>
 			</div>

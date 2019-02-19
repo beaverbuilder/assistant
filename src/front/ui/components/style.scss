@@ -61,17 +61,6 @@
     }
 }
 
-
-.fl-asst-tab {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-
-    &[hidden] {
-        display: none;
-    }
-}
-
 .fl-asst-button {
     &.fl-asst-app-tab-button {
         border-radius: 0;

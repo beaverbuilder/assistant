@@ -56,5 +56,4 @@ export {
 
 export { Widget } from './widgets'
 export { Stack } from './stacks'
-export { Tab } from './tabs'
 export { useModals } from './modals'
