@@ -1,15 +1,22 @@
-import { hydrateAppState } from 'store/actions'
+import { hydrateAppState, setAppFrameSize } from 'store/actions'
 import { updateUserState } from 'utils/wordpress'
 
 export default {
-	REGISTER_APP: ( { key }, { dispatch } ) => {
-		let storage = localStorage.getItem( `fl-assistant-app-${ key }` )
+	REGISTER_APP: ( action, store ) => {
+		const { apps, activeApp } = store.getState()
+		const storage = localStorage.getItem( `fl-assistant-app-${ action.key }` )
+
 		if ( storage ) {
-			dispatch( hydrateAppState( key, JSON.parse( storage ) ) )
+			store.dispatch( hydrateAppState( action.key, JSON.parse( storage ) ) )
+		}
+		if ( action.key === activeApp ) {
+			store.dispatch( setAppFrameSize( apps[ activeApp ].size ) )
 		}
 	},
 
-	SET_ACTIVE_APP: action => {
+	SET_ACTIVE_APP: ( action, store ) => {
+		const { apps, activeApp } = store.getState()
+		store.dispatch( setAppFrameSize( apps[ activeApp ].size ) )
 		updateUserState( { activeApp: action.key } )
 	},
 

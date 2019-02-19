@@ -6,17 +6,10 @@ export const useActiveApp = () => {
 
 	const get = name => apps[ name ]
 
-	const set = name => {
-		const app = get( name )
-		setActiveApp( name )
-		setAppFrameSize( app.size )
-		return app
-	}
-
 	return {
 		key: name,
 		app: get( name ),
-		setActiveApp: set,
+		setActiveApp,
 
 		activeAppName: name,
 		activeApp: get( name ),
