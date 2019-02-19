@@ -51,6 +51,8 @@ export {
 	PostListFilter,
 	UpdateList,
 	UpdateListFilter,
+	UserList,
+	UserListFilter,
 } from './content-list'
 
 export { Widget } from './widgets'

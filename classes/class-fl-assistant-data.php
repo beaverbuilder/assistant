@@ -50,6 +50,7 @@ class FL_Assistant_Data {
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'taxonomies'      => self::get_taxonomies(),
 			'updateNonce'     => wp_create_nonce( 'updates' ),
+			'userRoles'		  => self::get_user_roles(),
 		);
 
 		/**
@@ -393,5 +394,29 @@ class FL_Assistant_Data {
 			'name'         => $user->display_name,
 			'capabilities' => $user->allcaps,
 		);
+	}
+
+	/**
+	 * Get all user roles for the site.
+	 *
+	 * @since 0.1
+	 * @return array
+	 */
+	static public function get_user_roles() {
+		if ( ! function_exists( 'get_editable_roles' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/user.php' );
+		}
+
+		$data  = [];
+		$roles = get_editable_roles();
+
+		foreach ( $roles as $key => $role ) {
+			$data[] = [
+				'key' => $key,
+				'name' => $role['name'],
+			];
+		}
+
+		return $data;
 	}
 }

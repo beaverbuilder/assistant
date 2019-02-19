@@ -15,13 +15,13 @@ export const NotificationsTab = () => {
 	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
 	const defaultTag = canModerateComments ? 'comments' : 'updates'
 	const [ activeTag, setActiveTag ] = useAppState( 'activeTag', defaultTag )
-	const [ query, setQuery ] = useState( [] )
+	const [ query, setQuery ] = useState( {} )
 	const tabs = []
 	const filters = {}
 	const content = {}
 
 	useEffect( () => {
-		setQuery( [] )
+		setQuery( {} )
 	}, [ activeTag ] )
 
 	if ( canModerateComments ) {
