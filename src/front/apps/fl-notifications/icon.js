@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useDispatch, useStore } from 'store'
-import { clearCache } from 'utils/request'
+import { clearCache } from 'utils/cache'
 import { useHeartbeat } from 'utils/wordpress'
 import { AppTabButton, UIContext } from 'components'
 

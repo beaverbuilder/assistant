@@ -1,11 +1,12 @@
 import { hydrateAppState } from 'store/actions'
+import { getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
 
 export default {
 	REGISTER_APP: ( { key }, { dispatch } ) => {
-		let storage = localStorage.getItem( `fl-assistant-app-${ key }` )
-		if ( storage ) {
-			dispatch( hydrateAppState( key, JSON.parse( storage ) ) )
+		const cache = getCache( 'app-state', key )
+		if ( cache ) {
+			dispatch( hydrateAppState( key, JSON.parse( cache ) ) )
 		}
 	},
 
@@ -15,7 +16,7 @@ export default {
 
 	SET_APP_STATE: ( action, store ) => {
 		const { appState } = store.getState()
-		localStorage.setItem( `fl-assistant-app-${ action.app }`, JSON.stringify( appState[ action.app ] ) )
+		setCache( 'app-state', action.app, JSON.stringify( appState[ action.app ] ) )
 	},
 
 	SET_SHOW_UI: action => {
