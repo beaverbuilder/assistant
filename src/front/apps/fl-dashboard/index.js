@@ -13,7 +13,6 @@ import {
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
-import { AppFrameTestingWidget } from './ui-testing'
 import { useConfig } from 'store'
 import './style.scss'
 
@@ -53,22 +52,13 @@ export const DashboardTab = () => {
 			<RecentlyEditedWidget />
 			<Separator />
 
-			<RecentCommentsWidget />
-			<Separator />
-
 			<Widget title="Admin Links">
 				<ActionGroup actions={adminActions} appearance="" />
 			</Widget>
 			<Separator />
 
-			<AppFrameTestingWidget />
+			<RecentCommentsWidget />
 			<Separator />
-
-			<Widget title="Just Testing" className="fl-asst-testing-widget">
-				<Button onClick={ showBasicNotification }>Present Notification</Button>
-				<Button onClick={ () => presentNotification( 'This is your first warning', { appearance: 'warning' } ) }>Present Warning</Button>
-				<Button onClick={ () => presentNotification( 'Something went terribly wrong', { appearance: 'error' } ) }>Present Error</Button>
-			</Widget>
 		</Fragment>
 	)
 }
