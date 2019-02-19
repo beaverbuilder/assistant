@@ -82,7 +82,6 @@ export const NotificationsTab = () => {
 registerApp( 'fl-notifications', {
 	label: 'Notifications',
 	content: props => <NotificationsTab {...props} />,
-	icon: props => <NotificationsIcon {...props} />,
 	enabled: (
 		currentUserCan( 'update_plugins' ) ||
 		currentUserCan( 'update_themes' ) ||

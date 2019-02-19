@@ -1,4 +1,4 @@
-import { hydrateAppState, clearAppState } from 'store/actions'
+import { hydrateAppState, clearAppState, setAppFrameSize } from 'store/actions'
 import { clearCache, getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
 
@@ -19,14 +19,21 @@ export default {
 	 * Effects that fire after an action.
 	 */
 	after: {
-		REGISTER_APP: ( { key }, { dispatch } ) => {
-			const cache = getCache( 'app-state', key )
+		REGISTER_APP: ( action, store ) => {
+			const { apps, activeApp } = store.getState()
+			const cache = getCache( 'app-state', action.key )
+
 			if ( cache ) {
-				dispatch( hydrateAppState( key, JSON.parse( cache ) ) )
+				store.dispatch( hydrateAppState( action.key, JSON.parse( cache ) ) )
+			}
+			if ( action.key === activeApp ) {
+				store.dispatch( setAppFrameSize( apps[ activeApp ].size ) )
 			}
 		},
 
-		SET_ACTIVE_APP: ( action ) => {
+		SET_ACTIVE_APP: ( action, store ) => {
+			const { apps, activeApp } = store.getState()
+			store.dispatch( setAppFrameSize( apps[ activeApp ].size ) )
 			updateUserState( { activeApp: action.key } )
 		},
 
