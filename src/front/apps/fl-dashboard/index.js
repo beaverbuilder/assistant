@@ -32,7 +32,7 @@ const DetailView = () => {
 
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useConfig()
-	const { presentModal, presentNotification, setActiveApp } = useContext( UIContext )
+	const { presentNotification, setActiveApp } = useContext( UIContext )
 	const { adminActions } = dashboardApp
 
 	const showBasicNotification = () => {
