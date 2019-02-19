@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { TagGroupControl, ExpandedContents } from 'components'
-import { useConfig } from 'store'
+import { maybeUseAppState, useConfig } from 'store'
 import { getWeek } from 'utils/datetime'
 
-export const PostListFilter = ( { onChange } ) => {
-	const [ type, setType ] = useState( 'posts' )
-	const [ subType, setSubType ] = useState( 'page' )
-	const [ date, setDate ] = useState( '' )
-	const [ status, setStatus ] = useState( 'publish' )
+export const PostListFilter = ( { onChange, ...props } ) => {
+	const [ type, setType ] = maybeUseAppState( props, 'type', 'posts' )
+	const [ subType, setSubType ] = maybeUseAppState( props, 'sub-type', 'page' )
+	const [ date, setDate ] = maybeUseAppState( props, 'date-type', '' )
+	const [ status, setStatus ] = maybeUseAppState( props, 'status-type', 'publish' )
 	const { contentTypes, taxonomies } = useConfig()
 	const now = new Date()
 	const typeTags = []
@@ -138,7 +138,7 @@ export const PostListFilter = ( { onChange } ) => {
 
 	useEffect( () => {
 		onChange( { type, query } )
-	}, [ type, subType, date, status ] )
+	}, [ type, JSON.stringify( query ) ] )
 
 	return (
 		<Fragment>

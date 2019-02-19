@@ -17,8 +17,11 @@ const store = createStore( combineReducers( reducers ), {
  */
 export const useStore = () => {
 	const [ state, setState ] = useState( store.getState() )
-	const unsubscribe = store.subscribe( () => setState( store.getState() ) )
-	useEffect( () => () => unsubscribe() )
+	useEffect( () => {
+		setState( store.getState() )
+		const unsubscribe = store.subscribe( () => setState( store.getState() ) )
+		return () => unsubscribe()
+	}, [] )
 	return { ...state }
 }
 
@@ -43,6 +46,18 @@ export const useAppState = ( key, value ) => {
 		undefined !== state[ key ] ? state[ key ] : value,
 		newState => store.dispatch( actions.setAppState( app, key, newState ) )
 	]
+}
+
+/**
+ * Custom hook that will fallback to useState if
+ * appStateKey is not found on a component's props.
+ */
+export const maybeUseAppState = ( props, suffix, value ) => {
+	const key = props.appStateKey
+	if ( ! key ) {
+		return useState( value )
+	}
+	return useAppState( suffix ? `${ key }-${ suffix }` : key, value )
 }
 
 /**

@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
 	Widget,
 	Tag,
 	TagGroup,
 	PostList,
 } from 'components'
-import { useAppState } from 'store'
 
 export const RecentlyEditedWidget = () => {
-	const [ postType, setPostType ] = useAppState( 'recentPostType', 'any' )
+	const [ postType, setPostType ] = useState( 'any' )
 	const isTagSelected = value => postType === value
 
 	return (

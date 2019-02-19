@@ -1,5 +1,6 @@
 import { useConfig } from 'store'
-import { clearCache, getRequest, postRequest } from 'utils/request'
+import { clearCache } from 'utils/cache'
+import { getRequest, postRequest } from 'utils/request'
 import { addQueryArgs } from 'utils/url'
 
 /**

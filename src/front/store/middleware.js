@@ -2,10 +2,14 @@ import { compose } from 'redux'
 import effects from './effects'
 
 export const applyEffects = store => {
+	const { before, after } = effects
 	return next => action => {
+		if ( before[ action.type ] ) {
+			before[ action.type ]( action, store )
+		}
 		const result = next( action )
-		if ( effects[ action.type ] ) {
-			effects[ action.type ]( action, store )
+		if ( after[ action.type ] ) {
+			after[ action.type ]( action, store )
 		}
 		return result
 	}

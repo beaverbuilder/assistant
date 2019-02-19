@@ -6,18 +6,20 @@ const { registerApp } = useDispatch()
 
 export const FindTab = () => {
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
+	const { type, query } = data
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<PostListFilter onChange={ setData } />
-			</ScreenHeader>
-			{ data.query &&
-				<PostList
-					type={ data.type }
-					query={ data.query }
-					pagination={ true }
+				<PostListFilter
+					appStateKey='post-filter'
+					onChange={ setData }
 				/>
-			}
+			</ScreenHeader>
+			<PostList
+				type={ type }
+				query={ query }
+				pagination={ true }
+			/>
 		</Fragment>
 	)
 }

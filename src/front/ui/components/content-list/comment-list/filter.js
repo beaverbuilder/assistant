@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { maybeUseAppState } from 'store'
 import { ExpandedContents, TagGroupControl } from 'components'
 
-export const CommentListFilter = ( { onChange } ) => {
-	const [ activeTag, setActiveTag ] = useState( 'all' )
+export const CommentListFilter = ( { onChange, ...props } ) => {
+	const [ activeTag, setActiveTag ] = maybeUseAppState( props, 'status', 'all' )
 	const tags = [
 		{
 			label: 'All',

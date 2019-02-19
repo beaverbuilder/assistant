@@ -39,6 +39,11 @@ export const appState = ( state = {}, action ) => {
 			...state,
 			[ action.app ]: action.state,
 		}
+	case 'CLEAR_APP_STATE':
+		return {
+			...state,
+			[ action.app ]: {},
+		}
 	case 'SET_APP_STATE':
 		if ( 'object' === typeof action.key ) {
 			return {

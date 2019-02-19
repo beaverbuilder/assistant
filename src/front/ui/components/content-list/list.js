@@ -1,4 +1,4 @@
-import React, { Fragment, cloneElement, useContext, useEffect, useState } from 'react'
+import React, { Fragment, cloneElement, useContext, useEffect, useRef } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { EmptyMessage, ItemContext, StackContext } from 'components'
 import {
@@ -24,11 +24,11 @@ export const ContentList = ( {
 	placeholderItem = <ContentListItemLoading />,
 	placeholderItemCount = 10
 } ) => {
-	const [ requests ] = useState( [] )
+	const request = useRef()
 	const { ref, updateCurrentView } = useContext( StackContext )
 
 	useEffect( () => {
-		return () => requests.length && requests.pop().cancel()
+		return () => request.current && request.current.cancel()
 	}, [] )
 
 	/**
@@ -36,10 +36,10 @@ export const ContentList = ( {
 	 * Passed to the InfiniteScroll component.
 	 */
 	const loadItems = () => {
-		if ( requests.length ) {
-			requests.pop().cancel()
+		if ( request.current ) {
+			request.current.cancel()
 		}
-		requests.push( dataLoader( data.length ) )
+		request.current = dataLoader( data.length )
 	}
 
 	/**
