@@ -36,7 +36,7 @@ export const FindIcon = () => {
 }
 
 registerApp( 'fl-find', {
-	label: 'Find',
+	label: 'Content',
 	content: props => <FindTab {...props} />,
 	icon: props => <FindIcon {...props} />,
 } )
