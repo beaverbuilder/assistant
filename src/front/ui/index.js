@@ -10,7 +10,7 @@ import {
 	UIContext,
 } from 'components'
 import { NotificationsTabButton } from 'apps/fl-notifications'
-import { useAppsMenu, AppFrame } from 'system'
+import { App, useAppsMenu, AppFrame } from 'system'
 import './style.scss'
 
 /**
@@ -86,11 +86,8 @@ export const UI = () => {
 
 				<Separator isSlim={true} />
 
-				{ /* Screens */ }
 				<div className="fl-asst-panel-contents">
-					<AppContext.Provider key={activeAppName} value={Object.assign( {}, activeApp )}>
-						<Stack>{ activeApp.content ? activeApp.content() : '' }</Stack>
-					</AppContext.Provider>
+					<App key={activeAppName} {...activeApp} />
 				</div>
 			</div>
 
