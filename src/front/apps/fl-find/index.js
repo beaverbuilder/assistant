@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
-import { useAppState } from 'store'
+import { useAppState, useDispatch } from 'store'
 import { PostList, PostListFilter, ScreenHeader } from 'components'
+
+const { registerApp } = useDispatch()
 
 export const FindTab = () => {
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
@@ -30,3 +32,9 @@ export const FindIcon = () => {
 		</svg>
 	)
 }
+
+registerApp( 'fl-find', {
+	label: 'Find',
+	content: props => <FindTab {...props} />,
+	icon: props => <FindIcon {...props} />,
+} )

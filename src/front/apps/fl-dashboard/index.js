@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react'
+import { useDispatch } from 'store'
 import posed from 'react-pose'
 import {
 	Button,
@@ -16,6 +17,8 @@ import { RecentCommentsWidget } from './recent-comments'
 import { AppFrameTestingWidget } from './ui-testing'
 import { useConfig } from 'store'
 import './style.scss'
+
+const { registerApp } = useDispatch()
 
 const DetailView = () => {
 	const { pushView } = useContext( StackContext )
@@ -110,3 +113,10 @@ export const DashboardIcon = () => {
 		</svg>
 	)
 }
+
+registerApp( 'fl-dashboard', {
+	label: 'Dashboard',
+	content: props => <DashboardTab {...props} />,
+	icon: props => <DashboardIcon {...props} />,
+	settings: () => <div>Dashboard Settings here</div>,
+} )

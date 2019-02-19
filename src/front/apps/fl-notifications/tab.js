@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useAppState } from 'store'
+import { useAppState, useDispatch } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import {
 	CommentList,
@@ -10,18 +10,20 @@ import {
 	UpdateList
 } from 'components'
 
+const { registerApp } = useDispatch()
+
 export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )
 	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
 	const defaultTag = canModerateComments ? 'comments' : 'updates'
 	const [ activeTag, setActiveTag ] = useAppState( 'activeTag', defaultTag )
-	const [ query, setQuery ] = useState( [] )
+	const [ query, setQuery ] = useState( {} )
 	const tabs = []
 	const filters = {}
 	const content = {}
 
 	useEffect( () => {
-		setQuery( [] )
+		setQuery( {} )
 	}, [ activeTag ] )
 
 	if ( canModerateComments ) {
@@ -57,3 +59,14 @@ export const NotificationsTab = () => {
 		</Fragment>
 	)
 }
+
+registerApp( 'fl-notifications', {
+	label: 'Notifications',
+	content: props => <NotificationsTab {...props} />,
+	icon: props => <NotificationsIcon {...props} />,
+	enabled: (
+		currentUserCan( 'update_plugins' ) ||
+		currentUserCan( 'update_themes' ) ||
+		currentUserCan( 'moderate_comments' )
+	)
+} )
