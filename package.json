@@ -15,7 +15,6 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
-    "@wordpress/hooks": "^2.0.5",
     "classnames": "^2.2.6",
     "lodash-es": "^4.17.11",
     "md5": "^2.2.1",
