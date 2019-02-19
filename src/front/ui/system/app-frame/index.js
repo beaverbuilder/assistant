@@ -50,10 +50,10 @@ export const AppFrame = ( { children } ) => {
 	}
 
 	const springState = () => {
+
 		return {
 			width,
 			height,
-			borderLeft: '1px solid var(--fl-line-color)',
 			right: 'end' === alignment ? 0 : windowWidth - width,
 			transform: transform(),
 			immediate: shouldReduceMotion
@@ -61,6 +61,7 @@ export const AppFrame = ( { children } ) => {
 	}
 
 	const [ springProps, set ] = useSpring( () => {
+
 		const values = {
 			width,
 			height,
@@ -73,11 +74,19 @@ export const AppFrame = ( { children } ) => {
 
 	set( springState() )
 
+	const insideBorder = '1px solid var(--fl-line-color)'
+	const insideEdge = 'end' === alignment ? 'borderLeft' : 'borderRight'
+	const outsideBorder = 'none'
+	const outsideEdge = 'end' === alignment ? 'borderRight' : 'borderLeft'
+
 	const styles = {
+		boxSizing: 'border-box',
 		position: 'fixed',
 		top: 0,
 		zIndex: 999999,
 		boxShadow: '0px 0px 40px rgba(0, 0, 0, 0.1)',
+		[insideEdge]: insideBorder,
+		[outsideEdge]: outsideBorder,
 		...springProps
 	}
 
