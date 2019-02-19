@@ -3,14 +3,22 @@ import posed from 'react-pose'
 import classname from 'classnames'
 
 export const Button = forwardRef( ( props, ref ) => {
-	const { children, isSelected, onClick, className, style, appearance } = props
+	const { children, isSelected, className, appearance } = props
 	const classes = classname( {
 		'fl-asst-button': true,
 		'fl-asst-button-is-selected': isSelected,
 		'fl-asst-button-transparent': 'icon' === appearance || 'transparent' === appearance
 	}, className )
+
+	const filteredProps = Object.assign( {}, props, {
+		ref,
+		className: classes,
+		type: 'button',
+		appearance: null
+	} )
+
 	return (
-		<button type="button" className={classes} ref={ref} onClick={onClick} style={style}>{children}</button>
+		<button {...filteredProps}>{children}</button>
 	)
 } )
 
