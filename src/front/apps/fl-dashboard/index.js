@@ -33,9 +33,6 @@ const DetailView = () => {
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useConfig()
 	const { presentModal, presentNotification, setActiveApp } = useContext( UIContext )
-
-
-	// @TODO: Rename dashboardApp and move into app state
 	const { adminActions } = dashboardApp
 
 	const showBasicNotification = () => {

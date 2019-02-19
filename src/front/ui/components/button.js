@@ -9,8 +9,16 @@ export const Button = forwardRef( ( props, ref ) => {
 		'fl-asst-button-is-selected': isSelected,
 		'fl-asst-button-transparent': 'icon' === appearance || 'transparent' === appearance
 	}, className )
+
+	const filteredProps = Object.assign({}, props, {
+		ref,
+		className: classes,
+		type: 'button',
+		appearance: null
+	})
+
 	return (
-		<button type="button" className={classes} ref={ref} onClick={onClick} style={style}>{children}</button>
+		<button {...filteredProps}>{children}</button>
 	)
 } )
 
