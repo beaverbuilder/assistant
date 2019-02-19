@@ -6,7 +6,6 @@ import {
 	Widget,
 	ActionGroup,
 	ScreenHeader,
-	UIContext,
 	StackContext,
 } from 'components'
 
@@ -31,17 +30,7 @@ const DetailView = () => {
 
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = useConfig()
-	const { presentNotification, setActiveApp } = useContext( UIContext )
 	const { adminActions } = dashboardApp
-
-	const showBasicNotification = () => {
-		presentNotification( 'You have a new notification', {
-			onClick: dismiss => {
-				setActiveApp( 'fl-notifications' )
-				dismiss()
-			}
-		} )
-	}
 
 	return (
 		<Fragment>
