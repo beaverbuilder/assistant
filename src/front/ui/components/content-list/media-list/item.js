@@ -5,8 +5,9 @@ import { AspectBox, ItemContext } from 'components'
 export const MediaListItem = ( { className } ) => {
 	const { url, urls } = useContext( ItemContext )
 	const classes = classname( className, 'fl-asst-grid-item' )
-	const styles = {
-		backgroundImage: `url(${urls.medium})`
+	const styles = {}
+	if ( 'undefined' !== typeof urls && urls.medium ) {
+		styles.backgroundImage = `url(${urls.medium})`
 	}
 	return (
 		<div className={classes}>

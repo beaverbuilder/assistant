@@ -2,7 +2,7 @@ import { useStore, useDispatch, } from 'store'
 
 export const useActiveApp = () => {
 	const { apps, activeApp: name } = useStore()
-	const { setActiveApp, setAppFrameSize } = useDispatch()
+	const { setActiveApp } = useDispatch()
 
 	const get = name => apps[ name ]
 
