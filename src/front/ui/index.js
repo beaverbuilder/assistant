@@ -29,7 +29,7 @@ export const UI = () => {
 	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
 	const excludedApps = [ 'fl-notifications' ]
-	const maxTabCount = 3
+	const maxTabCount = 4
 	let count = 0
 
 	return (
