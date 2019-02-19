@@ -9,9 +9,13 @@ export const MediaTab = () => {
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<MediaListFilter onChange={ setQuery } />
+				<MediaListFilter
+					appStateKey='media-filter'
+					onChange={ setQuery }
+				/>
 			</ScreenHeader>
 			<MediaList
+				appStateKey='media-list'
 				query={ query }
 				pagination={ true }
 			/>

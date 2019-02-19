@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { maybeUseAppState } from 'store'
 import { TagGroupControl } from 'components'
 
-export const MediaListFilter = ( { onChange } ) => {
-	const [ activeTag, setActiveTag ] = useState( 'image' )
+export const MediaListFilter = ( { onChange, ...props } ) => {
+	const [ activeTag, setActiveTag ] = maybeUseAppState( props, 'type', 'image' )
 	const tags = [
 		{
 			label: 'Images',

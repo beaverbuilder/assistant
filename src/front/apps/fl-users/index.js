@@ -9,9 +9,13 @@ export const UsersTab = () => {
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<UserListFilter onChange={ setQuery } />
+				<UserListFilter
+					appStateKey='user-filter'
+					onChange={ setQuery }
+				/>
 			</ScreenHeader>
 			<UserList
+				appStateKey='user-list'
 				query={ query }
 				pagination={ true }
 			/>

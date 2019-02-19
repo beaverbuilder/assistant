@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useConfig } from 'store'
+import { maybeUseAppState, useConfig } from 'store'
 import { TagGroupControl } from 'components'
 
-export const UserListFilter = ( { onChange } ) => {
+export const UserListFilter = ( { onChange, ...props } ) => {
 	const { userRoles } = useConfig()
-	const [ role, setRole ] = useState( 'all' )
+	const [ role, setRole ] = maybeUseAppState( props, 'role', 'all' )
 
 	const tags = [
 		{

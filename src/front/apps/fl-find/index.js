@@ -9,10 +9,14 @@ export const FindTab = () => {
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<PostListFilter onChange={ setData } />
+				<PostListFilter
+					appStateKey='post-filter'
+					onChange={ setData }
+				/>
 			</ScreenHeader>
 			{ data.query &&
 				<PostList
+					appStateKey='post-list'
 					type={ data.type }
 					query={ data.query }
 					pagination={ true }

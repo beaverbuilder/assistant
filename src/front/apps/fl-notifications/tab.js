@@ -16,7 +16,7 @@ export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )
 	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
 	const defaultTag = canModerateComments ? 'comments' : 'updates'
-	const [ activeTag, setActiveTag ] = useAppState( 'activeTag', defaultTag )
+	const [ activeTag, setActiveTag ] = useAppState( 'active-tag', defaultTag )
 	const [ query, setQuery ] = useState( {} )
 	const tabs = []
 	const filters = {}
@@ -31,8 +31,19 @@ export const NotificationsTab = () => {
 			label: 'Comments',
 			value: 'comments',
 		} )
-		filters.comments = <CommentListFilter onChange={ setQuery } />
-		content.comments = <CommentList query={ query } pagination={ true } />
+		filters.comments = (
+			<CommentListFilter
+				appStateKey='comment-filter'
+				onChange={ setQuery }
+			/>
+		)
+		content.comments = (
+			<CommentList
+				appStateKey='comment-list'
+				query={ query }
+				pagination={ true }
+			/>
+		)
 	}
 
 	if ( canUpdate ) {
@@ -40,8 +51,18 @@ export const NotificationsTab = () => {
 			label: 'Updates',
 			value: 'updates',
 		} )
-		filters.updates = <UpdateListFilter onChange={ setQuery } />
-		content.updates = <UpdateList query={ query } />
+		filters.updates = (
+			<UpdateListFilter
+				appStateKey='update-filter'
+				onChange={ setQuery }
+			/>
+		)
+		content.updates = (
+			<UpdateList
+				appStateKey='update-list'
+				query={ query }
+			/>
+		)
 	}
 
 	return (
