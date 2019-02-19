@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { maybeUseAppState, useConfig } from 'store'
 import { TagGroupControl } from 'components'
 

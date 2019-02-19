@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useComponentUpdate } from 'utils/hooks'
 import { getPagedContent } from 'utils/wordpress'
 import { ContentList } from 'components'

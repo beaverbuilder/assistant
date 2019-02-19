@@ -10,7 +10,7 @@ import {
 	UpdateList
 } from 'components'
 
-const { registerApp, setAppState } = useDispatch()
+const { registerApp } = useDispatch()
 
 export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )
