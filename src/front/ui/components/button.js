@@ -14,8 +14,10 @@ export const Button = forwardRef( ( props, ref ) => {
 		ref,
 		className: classes,
 		type: 'button',
-		appearance: null
+		appearance: undefined,
 	} )
+	delete filteredProps.appearance
+	delete filteredProps.isSelected
 
 	return (
 		<button {...filteredProps}>{children}</button>
