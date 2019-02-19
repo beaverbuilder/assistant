@@ -26,7 +26,7 @@ export const UserListFilter = ( { onChange, ...props } ) => {
 			tags={ tags }
 			value={ role }
 			onChange={ setRole }
-			appearance="vibrant"
+			appearance="muted"
 		/>
 	)
 }

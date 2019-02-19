@@ -17,7 +17,7 @@ export {
 	Tag,
 	TagGroupControl,
 	ActionGroup
-} from './tag-groups'
+} from './tags'
 
 export {
 	ScreenHeader,
