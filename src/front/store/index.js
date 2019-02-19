@@ -19,7 +19,7 @@ export const useStore = () => {
 	const [ state, setState ] = useState( store.getState() )
 	const unsubscribe = store.subscribe( () => setState( store.getState() ) )
 	useEffect( () => () => unsubscribe() )
-	return state
+	return { ...state }
 }
 
 /**
@@ -40,7 +40,7 @@ export const useAppState = ( key, value ) => {
 	const { app } = useContext( AppContext )
 	const state = appState[ app ]
 	return [
-		state && undefined !== state[ key ] ? state[ key ] : value,
+		undefined !== state[ key ] ? state[ key ] : value,
 		newState => store.dispatch( actions.setAppState( app, key, newState ) )
 	]
 }

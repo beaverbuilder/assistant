@@ -50,7 +50,7 @@ class FL_Assistant_Data {
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'taxonomies'      => self::get_taxonomies(),
 			'updateNonce'     => wp_create_nonce( 'updates' ),
-			'userRoles'		  => self::get_user_roles(),
+			'userRoles'       => self::get_user_roles(),
 		);
 
 		/**
@@ -412,7 +412,7 @@ class FL_Assistant_Data {
 
 		foreach ( $roles as $key => $role ) {
 			$data[] = [
-				'key' => $key,
+				'key'  => $key,
 				'name' => $role['name'],
 			];
 		}

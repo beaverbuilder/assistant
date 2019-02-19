@@ -9,12 +9,11 @@ import {
 
 export const UserListItem = ( { className, ...props } ) => {
 	const context = useContext( ItemContext )
-	const { approved } = context
 	const { pushView } = useContext( StackContext )
 	const classes = classname( className )
 
 	return (
-		<UserListItem
+		<ContentListItem
 			className={ classes }
 			onClick={ () => pushView( <UserDetail />, { context } ) }
 			{ ...props }

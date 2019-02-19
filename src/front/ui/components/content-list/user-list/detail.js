@@ -12,7 +12,6 @@ export const UserDetail = () => {
 	const {
 		content,
 		editUrl,
-		id,
 		url,
 		title,
 	} = useContext( ViewContext )

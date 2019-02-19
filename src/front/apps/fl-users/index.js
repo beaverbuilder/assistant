@@ -11,12 +11,10 @@ export const UsersTab = () => {
 			<ScreenHeader>
 				<UserListFilter onChange={ setQuery } />
 			</ScreenHeader>
-			{ data.query &&
-				<UserList
-					query={ query }
-					pagination={ true }
-				/>
-			}
+			<UserList
+				query={ query }
+				pagination={ true }
+			/>
 		</Fragment>
 	)
 }

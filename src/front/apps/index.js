@@ -9,6 +9,7 @@ import { NotificationsTab, NotificationsIcon } from './fl-notifications'
 import { MediaTab, MediaIcon } from './fl-media'
 import './fl-testing'
 import './fl-settings'
+import './fl-users'
 
 const config = {
 	'fl-notifications': {

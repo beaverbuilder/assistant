@@ -18,17 +18,15 @@ export const UserListFilter = ( { onChange } ) => {
 	]
 
 	useEffect( () => {
-		onChange( { role } )
+		onChange( 'all' === role ? {} : { role } )
 	}, [ role ] )
 
 	return (
-		<ExpandedContents>
-			<TagGroupControl
-				tags={ tags }
-				value={ role }
-				onChange={ setRole }
-				appearance="vibrant"
-			/>
-		</ExpandedContents>
+		<TagGroupControl
+			tags={ tags }
+			value={ role }
+			onChange={ setRole }
+			appearance="vibrant"
+		/>
 	)
 }
