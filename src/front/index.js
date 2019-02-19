@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
 import { UIContext, PageViewContext, useModals } from 'components'
-import { useActiveApp, hooks, HooksContext } from 'system'
+import { useActiveApp } from 'system'
 import store, { useConfig, useStore, useDispatch } from 'store'
 import { redirect } from 'utils/location'
 import './api'
@@ -77,8 +77,4 @@ const root = document.createElement( 'div' )
 root.classList.add( 'fl-asst' )
 document.body.appendChild( root )
 
-render(
-	<HooksContext.Provider value={hooks}>
-		<Assistant />
-	</HooksContext.Provider>
-	, root )
+render( <Assistant />, root )
