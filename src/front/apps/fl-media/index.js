@@ -5,7 +5,7 @@ import { ScreenHeader, MediaList, MediaListFilter } from 'components'
 const { registerApp } = useDispatch()
 
 export const MediaTab = () => {
-	const [ query, setQuery ] = useState( [] )
+	const [ query, setQuery ] = useState( 'query', null )
 	return (
 		<Fragment>
 			<ScreenHeader>

@@ -17,8 +17,10 @@ const store = createStore( combineReducers( reducers ), {
  */
 export const useStore = () => {
 	const [ state, setState ] = useState( store.getState() )
-	const unsubscribe = store.subscribe( () => setState( store.getState() ) )
-	useEffect( () => () => unsubscribe() )
+	useEffect( () => {
+		const unsubscribe = store.subscribe( () => setState( store.getState() ) )
+		return () => unsubscribe()
+	} )
 	return { ...state }
 }
 

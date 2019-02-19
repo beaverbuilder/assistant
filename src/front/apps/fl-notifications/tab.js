@@ -17,7 +17,7 @@ export const NotificationsTab = () => {
 	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
 	const defaultTag = canModerateComments ? 'comments' : 'updates'
 	const [ activeTag, setActiveTag ] = useAppState( 'active-tag', defaultTag )
-	const [ query, setQuery ] = useState( {} )
+	const [ query, setQuery ] = useState( 'query', null )
 	const tabs = []
 	const filters = {}
 	const content = {}

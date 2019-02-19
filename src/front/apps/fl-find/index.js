@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react'
-import { useAppState, useDispatch } from 'store'
+import React, { Fragment, useState } from 'react'
+import { useDispatch } from 'store'
 import { PostList, PostListFilter, ScreenHeader } from 'components'
 
 const { registerApp } = useDispatch()
 
 export const FindTab = () => {
-	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
+	const [ data, setData ] = useState( 'data', { type: 'posts', query: null } )
+	const { type, query } = data
 	return (
 		<Fragment>
 			<ScreenHeader>
@@ -14,14 +15,12 @@ export const FindTab = () => {
 					onChange={ setData }
 				/>
 			</ScreenHeader>
-			{ data.query &&
-				<PostList
-					appStateKey='post-list'
-					type={ data.type }
-					query={ data.query }
-					pagination={ true }
-				/>
-			}
+			<PostList
+				appStateKey='post-list'
+				type={ type }
+				query={ query }
+				pagination={ true }
+			/>
 		</Fragment>
 	)
 }

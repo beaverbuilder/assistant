@@ -5,7 +5,7 @@ import { UserList, UserListFilter, ScreenHeader } from 'components'
 const { registerApp } = useDispatch()
 
 export const UsersTab = () => {
-	const [ query, setQuery ] = useState( { role: 'all' } )
+	const [ query, setQuery ] = useState( 'query', null )
 	return (
 		<Fragment>
 			<ScreenHeader>

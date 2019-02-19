@@ -7,16 +7,11 @@ import { ContentList } from 'components'
 export const ContentQuery = ( {
 	type = 'posts',
 	pagination = false,
-	query = {},
+	query,
 	...props
 } ) => {
 	const [ results, setResults ] = maybeUseAppState( props, 'results', [] )
 	const [ hasMore, setHasMore ] = maybeUseAppState( props, 'has-more', true )
-
-	useComponentUpdate( () => {
-		setHasMore( true )
-		setResults( [] )
-	}, [ type, JSON.stringify( query ) ] )
 
 	const dataLoader = ( offset ) => {
 		return getPagedContent( type, query, offset, ( data, more ) => {
@@ -28,7 +23,12 @@ export const ContentQuery = ( {
 		} )
 	}
 
-	return (
+	useComponentUpdate( () => {
+		setHasMore( true )
+		setResults( [] )
+	}, [ type, JSON.stringify( query ) ] )
+
+	return ( ! query ? null :
 		<ContentList
 			data={ results }
 			dataHasMore={ hasMore }
