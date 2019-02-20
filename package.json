@@ -24,7 +24,6 @@
     "react-infinite-scroller": "^1.2.4",
     "react-pose": "^4.0.7",
     "react-redux": "^6.0.0",
-    "react-slot-fill": "^2.0.1",
     "react-spring": "^8.0.7",
     "react-tunnels": "^1.1.0",
     "react-with-gesture": "^4.0.5",
