@@ -10,8 +10,10 @@ export default {
 	before: {
 		SET_ACTIVE_APP: ( action, store ) => {
 			const { activeApp } = store.getState()
-			clearCache( 'app-state' )
-			store.dispatch( clearAppState( activeApp ) )
+			if ( activeApp !== action.key ) {
+				clearCache( 'app-state' )
+				store.dispatch( clearAppState( activeApp ) )
+			}
 		},
 	},
 
