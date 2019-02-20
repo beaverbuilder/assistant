@@ -24,8 +24,8 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
 
 				<TunnelPlaceholder id="app-menu" multiple>
-					{ ({ items }) => {
-						if ( items && items.length > 0 ) {
+					{ ( { items } ) => {
+						if ( items && 0 < items.length ) {
 							return (
 								<Button onClick={toggleAppMenu}>Menu</Button>
 							)

@@ -63,8 +63,6 @@ const Menu = ({ title, children, displayBeside = 'full' }) => {
         shouldDisplayBesideContent = true
     }
 
-    console.log(shouldDisplayBesideContent, displayBeside, appFrameSize)
-
     const classes = classname({
         'fl-asst-app-menu' : true,
         'fl-asst-app-menu-inline' : shouldDisplayBesideContent
@@ -102,7 +100,6 @@ const Menu = ({ title, children, displayBeside = 'full' }) => {
 }
 
 export const AppMenu = props => {
-    console.log('app menu props', props )
     return (
         <Tunnel id="app-menu" {...props} />
     )
