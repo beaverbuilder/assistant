@@ -3,14 +3,11 @@ import {
 	Button,
 	Icon,
 	Separator,
-	Tab,
-	Stack,
-	AppContext,
 	AppTabButton,
 	UIContext,
 } from 'components'
 import { NotificationsTabButton } from 'apps/fl-notifications'
-import { useAppsMenu, AppFrame } from 'system'
+import { App, useAppsMenu, AppFrame } from 'system'
 import './style.scss'
 
 /**
@@ -29,7 +26,7 @@ export const UI = () => {
 	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
 	const excludedApps = [ 'fl-notifications' ]
-	const maxTabCount = 3
+	const maxTabCount = 4
 	let count = 0
 
 	return (
@@ -86,13 +83,8 @@ export const UI = () => {
 
 				<Separator isSlim={true} />
 
-				{ /* Screens */ }
 				<div className="fl-asst-panel-contents">
-					<AppContext.Provider key={activeAppName} value={Object.assign( {}, activeApp )}>
-						<Tab name={activeAppName} isSelected>
-							<Stack>{ activeApp.content ? activeApp.content() : '' }</Stack>
-						</Tab>
-					</AppContext.Provider>
+					<App key={activeAppName} {...activeApp} />
 				</div>
 			</div>
 

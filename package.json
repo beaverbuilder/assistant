@@ -25,6 +25,7 @@
     "react-pose": "^4.0.7",
     "react-redux": "^6.0.0",
     "react-spring": "^8.0.7",
+    "react-tunnels": "^1.1.0",
     "react-with-gesture": "^4.0.5",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4"

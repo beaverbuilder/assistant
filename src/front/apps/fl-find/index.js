@@ -1,13 +1,26 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { useAppState, getDispatch } from 'store'
-import { PostList, ScreenHeader } from 'components'
 import { PostListFilter } from './filter'
+import { PostList, ScreenHeader, Button, AppContext, StackContext } from 'components'
+import { AppMenu } from 'system'
 
 const { registerApp } = getDispatch()
 
 export const FindTab = () => {
+	const { popToRoot } = useContext( StackContext )
+	const { hideAppMenu } = useContext( AppContext )
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
 	const { type, query } = data
+
+	const testSetDataFromSidebar = () => {
+		hideAppMenu()
+		popToRoot()
+		setData( {
+			type,
+			query: Object.assign( {}, query, { post_type: 'page' } )
+		} )
+	}
+
 	return (
 		<Fragment>
 			<ScreenHeader>
@@ -18,6 +31,13 @@ export const FindTab = () => {
 				query={ query }
 				pagination={ true }
 			/>
+
+			<AppMenu title="Filter Content">
+				<div style={{ padding: 30, paddingTop: 0}}>
+					<div><Button onClick={testSetDataFromSidebar}>Show Pages</Button></div>
+				</div>
+			</AppMenu>
+
 		</Fragment>
 	)
 }
@@ -34,7 +54,7 @@ export const FindIcon = () => {
 }
 
 registerApp( 'fl-find', {
-	label: 'Find',
+	label: 'Content',
 	content: props => <FindTab {...props} />,
 	icon: props => <FindIcon {...props} />,
 } )

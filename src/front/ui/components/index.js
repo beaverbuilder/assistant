@@ -17,7 +17,7 @@ export {
 	Tag,
 	TagGroupControl,
 	ActionGroup
-} from './tag-groups'
+} from './tags'
 
 export {
 	ScreenHeader,
@@ -51,5 +51,4 @@ export {
 
 export { Widget } from './widgets'
 export { Stack } from './stacks'
-export { Tab } from './tabs'
 export { useModals } from './modals'

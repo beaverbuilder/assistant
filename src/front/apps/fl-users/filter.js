@@ -29,7 +29,7 @@ export const UserListFilter = ( { onChange } ) => {
 			tags={ tags }
 			value={ role }
 			onChange={ setRole }
-			appearance="vibrant"
+			appearance="muted"
 		/>
 	)
 }

@@ -15,12 +15,13 @@ import './apps'
 const Assistant = () => {
 
 	const { currentPageView } = getConfig()
-	const { isShowingUI, apps, panelPosition } = useStore()
+	const { isShowingUI, apps, panelPosition, appFrameSize, } = useStore()
 	const {
 		setIsShowingUI,
 		togglePanelPosition,
 		setPanelPosition,
 		setIsShowingAppsMenu,
+		setAppFrameSize,
 	} = getDispatch()
 	const { activeApp, activeAppName, setActiveApp } = useActiveApp()
 
@@ -46,6 +47,9 @@ const Assistant = () => {
 		activeApp,
 		activeAppName,
 		setActiveApp: activateApp,
+
+		appFrameSize,
+		setAppFrameSize,
 
 		panelPosition,
 		togglePanelPosition,

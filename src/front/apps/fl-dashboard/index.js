@@ -6,14 +6,12 @@ import {
 	Widget,
 	ActionGroup,
 	ScreenHeader,
-	UIContext,
 	StackContext,
 } from 'components'
 
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
-import { AppFrameTestingWidget } from './ui-testing'
 import { getConfig } from 'store'
 import './style.scss'
 
@@ -32,17 +30,7 @@ const DetailView = () => {
 
 export const DashboardTab = () => {
 	const { currentUser, dashboardApp } = getConfig()
-	const { presentNotification, setActiveApp } = useContext( UIContext )
 	const { adminActions } = dashboardApp
-
-	const showBasicNotification = () => {
-		presentNotification( 'You have a new notification', {
-			onClick: dismiss => {
-				setActiveApp( 'fl-notifications' )
-				dismiss()
-			}
-		} )
-	}
 
 	return (
 		<Fragment>
@@ -53,22 +41,13 @@ export const DashboardTab = () => {
 			<RecentlyEditedWidget />
 			<Separator />
 
-			<RecentCommentsWidget />
-			<Separator />
-
 			<Widget title="Admin Links">
 				<ActionGroup actions={adminActions} appearance="" />
 			</Widget>
 			<Separator />
 
-			<AppFrameTestingWidget />
+			<RecentCommentsWidget />
 			<Separator />
-
-			<Widget title="Just Testing" className="fl-asst-testing-widget">
-				<Button onClick={ showBasicNotification }>Present Notification</Button>
-				<Button onClick={ () => presentNotification( 'This is your first warning', { appearance: 'warning' } ) }>Present Warning</Button>
-				<Button onClick={ () => presentNotification( 'Something went terribly wrong', { appearance: 'error' } ) }>Present Error</Button>
-			</Widget>
 		</Fragment>
 	)
 }
