@@ -1,5 +1,5 @@
-import { hydrateAppState, clearAppState, setAppFrameSize } from 'store/actions'
-import { clearCache, getCache, setCache } from 'utils/cache'
+import { hydrateAppState, setAppFrameSize } from 'store/actions'
+import { getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
 
 export default {
