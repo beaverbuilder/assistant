@@ -22,12 +22,6 @@ export const restRequest = ( { method = 'GET', ...args } ) => {
 /**
  * Returns any array of content for the given type
  * such as posts or terms.
- *
- * @param {String}
- * @param {Object}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getContent = ( type, query, onSuccess, onError ) => {
 	switch ( type ) {
@@ -46,13 +40,6 @@ export const getContent = ( type, query, onSuccess, onError ) => {
 
 /**
  * Returns any array of paginated content.
- *
- * @param {String}
- * @param {Object}
- * @param {Number}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getPagedContent = ( type, query, offset = 0, onSuccess, onError ) => {
 	let paged = Object.assign( { offset }, query )
@@ -77,11 +64,6 @@ export const getPagedContent = ( type, query, offset = 0, onSuccess, onError ) =
 
 /**
  * Returns any array of posts.
- *
- * @param {Object}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getPosts = ( query, onSuccess, onError ) => {
 	return restRequest( {
@@ -94,11 +76,6 @@ export const getPosts = ( query, onSuccess, onError ) => {
 
 /**
  * Returns data for a single post.
- *
- * @param {Number}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getPost = ( id, onSuccess, onError ) => {
 	return restRequest( {
@@ -112,9 +89,6 @@ export const getPost = ( id, onSuccess, onError ) => {
 /**
  * Updates a single post. See the update_post
  * REST method for a list of supported actions.
- *
- * @param {Object}
- * @return {Object}
  */
 export const updatePost = ( id, action ) => {
 	clearCache( 'posts' )
@@ -129,11 +103,6 @@ export const updatePost = ( id, action ) => {
 
 /**
  * Returns any array of post terms.
- *
- * @param {Object}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getTerms = ( query, onSuccess, onError ) => {
 	return restRequest( {
@@ -146,11 +115,6 @@ export const getTerms = ( query, onSuccess, onError ) => {
 
 /**
  * Returns data for a single term.
- *
- * @param {Number}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getTerm = ( id, onSuccess, onError ) => {
 	return restRequest( {
@@ -163,11 +127,6 @@ export const getTerm = ( id, onSuccess, onError ) => {
 
 /**
  * Returns any array of comments.
- *
- * @param {Object}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getComments = ( query, onSuccess, onError ) => {
 	return restRequest( {
@@ -180,11 +139,6 @@ export const getComments = ( query, onSuccess, onError ) => {
 
 /**
  * Returns data for a single comment.
- *
- * @param {Number}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getComment = ( id, onSuccess, onError ) => {
 	return restRequest( {
@@ -198,9 +152,6 @@ export const getComment = ( id, onSuccess, onError ) => {
 /**
  * Updates a single comment. See the update_comment
  * REST method for a list of supported actions.
- *
- * @param {Object}
- * @return {Object}
  */
 export const updateComment = ( id, action ) => {
 	clearCache( 'comments' )
@@ -215,11 +166,6 @@ export const updateComment = ( id, action ) => {
 
 /**
  * Returns any array of users.
- *
- * @param {Object}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getUsers = ( query, onSuccess, onError ) => {
 	return restRequest( {
@@ -232,11 +178,6 @@ export const getUsers = ( query, onSuccess, onError ) => {
 
 /**
  * Returns data for a single user.
- *
- * @param {Number}
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getUser = ( id, onSuccess, onError ) => {
 	return restRequest( {
@@ -249,9 +190,6 @@ export const getUser = ( id, onSuccess, onError ) => {
 
 /**
  * Updates the saved state for the current user.
- *
- * @param {Object}
- * @return {Object}
  */
 export const updateUserState = ( state ) => {
 	return restRequest( {
@@ -265,10 +203,6 @@ export const updateUserState = ( state ) => {
 
 /**
  * Returns any array of updates.
- *
- * @param {Function}
- * @param {Function}
- * @return {Object}
  */
 export const getUpdates = ( query, onSuccess, onError ) => {
 	return restRequest( {

@@ -2,16 +2,11 @@
 
 /**
  * REST API logic for comments.
- *
- * @since 0.1
  */
 final class FL_Assistant_REST_Comments {
 
 	/**
 	 * Register routes.
-	 *
-	 * @since  0.1
-	 * @return void
 	 */
 	static public function register_routes() {
 		register_rest_route(
@@ -60,10 +55,6 @@ final class FL_Assistant_REST_Comments {
 
 	/**
 	 * Returns an array of response data for a single comment.
-	 *
-	 * @since  0.1
-	 * @param object $comment
-	 * @return array
 	 */
 	static public function get_comment_response_data( $comment ) {
 		$post = get_post( $comment->comment_post_ID );
@@ -87,10 +78,6 @@ final class FL_Assistant_REST_Comments {
 
 	/**
 	 * Returns an array of comments and related data.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function comments( $request ) {
 		$response   = array();
@@ -108,10 +95,6 @@ final class FL_Assistant_REST_Comments {
 	/**
 	 * Returns the number of comments found given
 	 * the current args.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function comments_count( $request ) {
 		$counts = wp_count_comments();
@@ -128,10 +111,6 @@ final class FL_Assistant_REST_Comments {
 
 	/**
 	 * Returns data for a single comment.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function comment( $request ) {
 		$id       = $request->get_param( 'id' );
@@ -143,10 +122,6 @@ final class FL_Assistant_REST_Comments {
 
 	/**
 	 * Updates data for a single comment.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function update_comment( $request ) {
 		$id       = $request->get_param( 'id' );

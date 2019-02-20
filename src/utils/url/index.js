@@ -1,9 +1,5 @@
 /**
  * Adds query args to a route.
- *
- * @param {String}
- * @param {Object}
- * @return {Object}
  */
 export const addQueryArgs = ( route, args ) => {
 	if ( ! args ) {
@@ -28,9 +24,6 @@ export const addQueryArgs = ( route, args ) => {
 
 /**
  * Adds a leading slash to a route.
- *
- * @param {String}
- * @return {Object}
  */
 export const addLeadingSlash = ( route ) => {
 	return 0 === route.indexOf( '/' ) ? route : `/${ route }`

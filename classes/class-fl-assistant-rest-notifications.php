@@ -2,16 +2,11 @@
 
 /**
  * REST API logic for notifications.
- *
- * @since 0.1
  */
 final class FL_Assistant_REST_Notifications {
 
 	/**
 	 * Register routes.
-	 *
-	 * @since  0.1
-	 * @return void
 	 */
 	static public function register_routes() {
 		register_rest_route(
@@ -29,9 +24,6 @@ final class FL_Assistant_REST_Notifications {
 
 	/**
 	 * Returns the notification count for the current user.
-	 *
-	 * @param object $request
-	 * @return array
 	 */
 	static public function count( $request ) {
 		$result = array(

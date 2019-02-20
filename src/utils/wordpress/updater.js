@@ -2,31 +2,23 @@ import { updatePlugin, updateTheme } from 'utils/wordpress'
 
 /**
  * Cached queue array retrieved from local storage.
- *
- * @type {Array}
  */
 const cache = localStorage.getItem( 'fl-assistant-updater-queue' )
 
 /**
  * An array of updates waiting to be processed
  * once the current update finishes.
- *
- * @type {Array}
  */
 const queue = cache ? JSON.parse( cache ) : []
 
 /**
  * Callback functions that are called when an
  * update matching the type and key completes.
- *
- * @type {Object}
  */
 const subscriptions = {}
 
 /**
  * Data for the current update.
- *
- * @type {Object}
  */
 let current = null
 
@@ -39,9 +31,6 @@ const cacheQueue = () => {
 
 /**
  * Adds an update to the queue.
- *
- * @param {String}
- * @param {String}
  */
 const queueUpdate = ( type, key ) => {
 	if ( ! isUpdateQueued( type, key ) ) {
@@ -53,10 +42,6 @@ const queueUpdate = ( type, key ) => {
 
 /**
  * Checks if an update has been queued.
- *
- * @param {String}
- * @param {String}
- * @return {Boolean}
  */
 const isUpdateQueued = ( type, key ) => {
 	const filtered = queue.filter( item => {
@@ -67,10 +52,6 @@ const isUpdateQueued = ( type, key ) => {
 
 /**
  * Checks if an update is currently updating.
- *
- * @param {String}
- * @param {String}
- * @return {Boolean}
  */
 const isUpdateUpdating = ( type, key ) => {
 	if ( ! current ) {
@@ -98,8 +79,6 @@ const requestUpdate = () => {
 
 /**
  * Callback for when an update completes.
- *
- * @param {Object}
  */
 const requestUpdateComplete = response => {
 	const { type, key } = queue.shift()
@@ -111,8 +90,6 @@ const requestUpdateComplete = response => {
 
 /**
  * Callback for update request errors.
- *
- * @param {Object}
  */
 const requestUpdateError = () => {
 	requestUpdateComplete( { success: false } )
@@ -124,10 +101,6 @@ const requestUpdateError = () => {
  * useful in useEffect when you want updates to run
  * but don't want to set state if the component has
  * already unmounted.
- *
- * @param {String}
- * @param {String}
- * @param {Function}
  */
 const subscribeToUpdate = ( type, key, callback ) => {
 	if ( ! subscriptions[ `${ type }-${ key }` ] ) {
@@ -137,9 +110,6 @@ const subscribeToUpdate = ( type, key, callback ) => {
 
 /**
  * Unsubscribes a custom callback for an update.
- *
- * @param {String}
- * @param {String}
  */
 const unsubscribeToUpdate = ( type, key ) => {
 	subscriptions[ `${ type }-${ key }` ] = null
@@ -149,9 +119,6 @@ const unsubscribeToUpdate = ( type, key ) => {
 /**
  * Resolves a custom callback subscription when a
  * update has completed.
- *
- * @param {String}
- * @param {String}
  */
 const resolveSubscription = ( type, key, response ) => {
 	if ( subscriptions[ `${ type }-${ key }` ] ) {
@@ -162,8 +129,6 @@ const resolveSubscription = ( type, key, response ) => {
 
 /**
  * The public updater.
- *
- * @type {Object}
  */
 export const updater = {
 	init: requestUpdate,

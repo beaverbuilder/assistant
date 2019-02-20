@@ -2,16 +2,11 @@
 
 /**
  * REST API logic for users.
- *
- * @since 0.1
  */
 final class FL_Assistant_REST_Users {
 
 	/**
 	 * Register routes.
-	 *
-	 * @since  0.1
-	 * @return void
 	 */
 	static public function register_routes() {
 		register_rest_route(
@@ -65,10 +60,6 @@ final class FL_Assistant_REST_Users {
 
 	/**
 	 * Returns an array of response data for a single user.
-	 *
-	 * @since  0.1
-	 * @param object $user
-	 * @return array
 	 */
 	static public function get_user_response_data( $user ) {
 		return array(
@@ -83,10 +74,6 @@ final class FL_Assistant_REST_Users {
 
 	/**
 	 * Returns an array of users and related data.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function users( $request ) {
 		$response = array();
@@ -118,10 +105,6 @@ final class FL_Assistant_REST_Users {
 
 	/**
 	 * Returns data for a single user.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function user( $request ) {
 		$id       = $request->get_param( 'id' );
@@ -133,10 +116,6 @@ final class FL_Assistant_REST_Users {
 
 	/**
 	 * Updates the saved state for a user.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return void
 	 */
 	static public function update_user_state( $request ) {
 		$id    = wp_get_current_user()->ID;

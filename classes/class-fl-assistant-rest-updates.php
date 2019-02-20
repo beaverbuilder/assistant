@@ -2,16 +2,11 @@
 
 /**
  * REST API logic for updates.
- *
- * @since 0.1
  */
 final class FL_Assistant_REST_Updates {
 
 	/**
 	 * Register routes.
-	 *
-	 * @since  0.1
-	 * @return void
 	 */
 	static public function register_routes() {
 		register_rest_route(
@@ -41,11 +36,6 @@ final class FL_Assistant_REST_Updates {
 
 	/**
 	 * Returns an array of response data for a single plugin.
-	 *
-	 * @since  0.1
-	 * @param object $update
-	 * @param array $plugin
-	 * @return array
 	 */
 	static public function get_plugin_response_data( $update, $plugin ) {
 		$thumbnail = null;
@@ -74,11 +64,6 @@ final class FL_Assistant_REST_Updates {
 
 	/**
 	 * Returns an array of response data for a single theme.
-	 *
-	 * @since  0.1
-	 * @param object $update
-	 * @param object $theme
-	 * @return array
 	 */
 	static public function get_theme_response_data( $update, $theme ) {
 		$thumbnail = null;
@@ -107,10 +92,6 @@ final class FL_Assistant_REST_Updates {
 
 	/**
 	 * Returns an array of updates and related data.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function updates( $request ) {
 		$response       = array();
@@ -157,10 +138,6 @@ final class FL_Assistant_REST_Updates {
 
 	/**
 	 * Returns the number of updates found.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function updates_count( $request ) {
 		$count          = 0;
