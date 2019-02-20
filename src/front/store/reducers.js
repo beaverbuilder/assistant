@@ -112,3 +112,17 @@ export const isShowingAppsMenu = ( state = false, action ) => {
 		return state
 	}
 }
+
+export const counts = ( state = {}, action ) => {
+	switch ( action.type ) {
+	case 'SET_COUNTS':
+		return { ...state, ...action.counts }
+	case 'SET_COUNT':
+		return {
+			...state,
+			[ action.key ]: action.count
+		}
+	default:
+		return state
+	}
+}

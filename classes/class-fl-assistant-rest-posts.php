@@ -27,6 +27,18 @@ final class FL_Assistant_REST_Posts {
 		);
 
 		register_rest_route(
+			FL_Assistant_REST::$namespace, '/posts/count', array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::posts_count',
+					'permission_callback' => function() {
+						return current_user_can( 'edit_published_posts' );
+					},
+				),
+			)
+		);
+
+		register_rest_route(
 			FL_Assistant_REST::$namespace, '/post/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -100,6 +112,22 @@ final class FL_Assistant_REST_Posts {
 
 		foreach ( $posts as $post ) {
 			$response[] = self::get_post_response_data( $post );
+		}
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of counts by post type.
+	 */
+	static public function posts_count( $request ) {
+		$post_types = FL_Assistant_Data::get_post_types();
+		$response = array();
+
+		foreach ( $post_types as $slug => $label ) {
+			$counts = wp_count_posts( $slug );
+			$counts->total = $counts->publish + $counts->draft + $counts->pending;
+			$response[ $slug ] = $counts;
 		}
 
 		return rest_ensure_response( $response );

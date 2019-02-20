@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { useAppState, useDispatch } from 'store'
+import { useAppState, useDispatch, useStore } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import {
 	CommentList,
@@ -18,6 +18,7 @@ export const NotificationsTab = () => {
 	const defaultTag = canModerateComments ? 'comments' : 'updates'
 	const [ activeTag, setActiveTag ] = useAppState( 'active-tag', defaultTag )
 	const [ query, setQuery ] = useAppState( 'query', null )
+	const { counts } = useStore()
 	const tabs = []
 	const filters = {}
 	const content = {}
@@ -30,6 +31,7 @@ export const NotificationsTab = () => {
 		tabs.push( {
 			label: 'Comments',
 			value: 'comments',
+			count: counts[ 'notifications/comments' ],
 		} )
 		filters.comments = (
 			<CommentListFilter
@@ -49,6 +51,7 @@ export const NotificationsTab = () => {
 		tabs.push( {
 			label: 'Updates',
 			value: 'updates',
+			count: counts[ 'notifications/updates' ],
 		} )
 		filters.updates = (
 			<UpdateListFilter

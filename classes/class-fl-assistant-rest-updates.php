@@ -164,20 +164,26 @@ final class FL_Assistant_REST_Updates {
 	 */
 	static public function updates_count( $request ) {
 		$count          = 0;
+		$plugins        = 0;
+		$themes         = 0;
 		$update_plugins = get_site_transient( 'update_plugins' );
 		$update_themes  = get_site_transient( 'update_themes' );
 
 		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
-			$count += count( $update_plugins->response );
+			$plugins = count( $update_plugins->response );
+			$count += $plugins;
 		}
 
 		if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
-			$count += count( $update_themes->response );
+			$themes = count( $update_themes->response );
+			$count += $themes;
 		}
 
 		return rest_ensure_response(
 			array(
-				'total' => $count,
+				'plugins' => $plugins,
+				'themes'  => $themes,
+				'total'   => $count,
 			)
 		);
 	}

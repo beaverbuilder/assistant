@@ -114,13 +114,14 @@ final class FL_Assistant_REST_Comments {
 	 * @return array
 	 */
 	static public function comments_count( $request ) {
-		$params     = $request->get_params();
-		$post_types = array_keys( get_post_types() );
-		$comments   = get_comments( array_merge( array( 'post_type' => $post_types ), $params ) );
-
+		$counts = wp_count_comments();
 		return rest_ensure_response(
 			array(
-				'total' => count( $comments ),
+				'approved' => $counts->approved,
+				'pending'  => $counts->moderated,
+				'spam'     => $counts->spam,
+				'trash'    => $counts->trash,
+				'total'    => $counts->total_comments,
 			)
 		);
 	}
