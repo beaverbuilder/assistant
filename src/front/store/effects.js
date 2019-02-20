@@ -7,15 +7,7 @@ export default {
 	/**
 	 * Effects that fire before an action.
 	 */
-	before: {
-		SET_ACTIVE_APP: ( action, store ) => {
-			const { activeApp } = store.getState()
-			if ( activeApp !== action.key ) {
-				clearCache( 'app-state' )
-				store.dispatch( clearAppState( activeApp ) )
-			}
-		},
-	},
+	before: {},
 
 	/**
 	 * Effects that fire after an action.
