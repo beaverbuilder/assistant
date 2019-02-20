@@ -1,12 +1,25 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { useAppState, useDispatch } from 'store'
-import { PostList, PostListFilter, ScreenHeader } from 'components'
+import { PostList, PostListFilter, ScreenHeader, Padding, Button, AppContext, StackContext } from 'components'
+import { AppMenu } from 'system'
 
 const { registerApp } = useDispatch()
 
 export const FindTab = () => {
+	const { popToRoot } = useContext( StackContext )
+	const { hideAppMenu } = useContext( AppContext )
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
 	const { type, query } = data
+
+	const testSetDataFromSidebar = () => {
+		hideAppMenu()
+		popToRoot()
+		setData({
+			type,
+			query: Object.assign({}, query, { post_type: 'page' })
+		})
+	}
+
 	return (
 		<Fragment>
 			<ScreenHeader>
@@ -20,6 +33,12 @@ export const FindTab = () => {
 				query={ query }
 				pagination={ true }
 			/>
+
+			<AppMenu title="Filter Content">
+				<div style={{ padding: 30, paddingTop: 0}}>
+					<div><Button onClick={testSetDataFromSidebar}>Show Pages</Button></div>
+				</div>
+			</AppMenu>
 		</Fragment>
 	)
 }

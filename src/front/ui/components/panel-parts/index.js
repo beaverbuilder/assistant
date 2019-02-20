@@ -6,9 +6,10 @@ import './style.scss'
 
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
-	const tab = useContext( AppContext )
+	const { label, showAppMenu, hasMenuContent } = useContext( AppContext )
 	const { isRootView, popView } = useContext( StackContext )
-	const screenTitle = title ? title : tab.label
+	const screenTitle = title ? title : label
+
 	const titleClasses = classname( {
 		'fl-asst-screen-title': true,
 		'has-back-button': ! isRootView
@@ -20,6 +21,7 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 					<Icon name="back" />
 				</Button> }
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
+				{ hasMenuContent && <Button onClick={showAppMenu}>Menu</Button> }
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>
 		</div>

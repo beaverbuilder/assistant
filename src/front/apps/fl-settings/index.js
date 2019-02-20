@@ -7,7 +7,6 @@ import './style.scss'
 const SettingsApp = () => {
 	const { shouldReduceMotion, panelPosition } = useStore()
 	const { setShouldReduceMotion, setPanelPosition } = useDispatch()
-
 	const nextPanelPosition = ( 'start' === panelPosition ) ? 'end' : 'start'
 
 	return (
