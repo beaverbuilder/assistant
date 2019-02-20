@@ -1,4 +1,14 @@
+import React from 'react'
+import { ContentQuery } from 'components'
+import { CommentListItem } from './item'
 import './style.scss'
 
-export { CommentList } from './list'
-export { CommentListFilter } from './filter'
+export const CommentList = ( { item, ...props } ) => {
+	return (
+		<ContentQuery
+			type={ 'comments' }
+			item={ item ? item : <CommentListItem /> }
+			{ ...props }
+		/>
+	)
+}

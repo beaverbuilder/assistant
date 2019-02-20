@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { useAppState, useDispatch } from 'store'
-import { PostList, PostListFilter, ScreenHeader } from 'components'
+import { PostList, ScreenHeader } from 'components'
+import { PostListFilter } from './filter'
 
 const { registerApp } = useDispatch()
 
@@ -10,10 +11,7 @@ export const FindTab = () => {
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<PostListFilter
-					appStateKey='post-filter'
-					onChange={ setData }
-				/>
+				<PostListFilter onChange={ setData } />
 			</ScreenHeader>
 			<PostList
 				type={ type }

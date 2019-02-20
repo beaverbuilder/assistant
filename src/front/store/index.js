@@ -47,18 +47,6 @@ export const useAppState = ( key, value ) => {
 }
 
 /**
- * Custom hook that will fallback to useState if
- * appStateKey is not found on a component's props.
- */
-export const maybeUseAppState = ( props, suffix, value ) => {
-	const key = props.appStateKey
-	if ( ! key ) {
-		return useState( value )
-	}
-	return useAppState( suffix ? `${ key }-${ suffix }` : key, value )
-}
-
-/**
  * Custom hook for accessing the global config object.
  */
 export const useConfig = () => {

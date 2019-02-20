@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { useAppState, useDispatch } from 'store'
-import { ScreenHeader, MediaList, MediaListFilter } from 'components'
+import { ScreenHeader, MediaList } from 'components'
+import { MediaListFilter } from './filter'
 
 const { registerApp } = useDispatch()
 
@@ -9,10 +10,7 @@ export const MediaTab = () => {
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<MediaListFilter
-					appStateKey='media-filter'
-					onChange={ setQuery }
-				/>
+				<MediaListFilter onChange={ setQuery } />
 			</ScreenHeader>
 			<MediaList
 				query={ query }
