@@ -6,8 +6,6 @@ import * as actions from './actions'
 import { AppContext } from 'components'
 
 const store = createStore( combineReducers( reducers ), {
-	apps: {},
-	appState: {},
 	...( 'undefined' === typeof FL_ASSISTANT_INITIAL_STATE ? {} : FL_ASSISTANT_INITIAL_STATE ),
 }, composeEnhancers( applyMiddleware( applyEffects ) ) )
 

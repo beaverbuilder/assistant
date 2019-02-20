@@ -84,3 +84,18 @@ export const hideAppsMenu = () => {
 		isShowing: false
 	}
 }
+
+export const setCounts = ( counts ) => {
+	return {
+		type: 'SET_COUNTS',
+		counts,
+	}
+}
+
+export const setCount = ( key, count ) => {
+	return {
+		type: 'SET_COUNT',
+		key,
+		count,
+	}
+}

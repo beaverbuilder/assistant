@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import { maybeUseAppState, useConfig } from 'store'
+import { maybeUseAppState, useConfig, useStore } from 'store'
 import { TagGroupControl } from 'components'
 
 export const UserListFilter = ( { onChange, ...props } ) => {
+	const { counts } = useStore()
 	const { userRoles } = useConfig()
 	const [ role, setRole ] = maybeUseAppState( props, 'role', 'all' )
 
@@ -10,10 +11,12 @@ export const UserListFilter = ( { onChange, ...props } ) => {
 		{
 			label: 'All',
 			value: 'all',
+			count: counts[ 'role/total' ],
 		},
 		...userRoles.map( ( { key, name } ) => ( {
 			label: name,
 			value: key,
+			count: counts[ `role/${ key }` ] || '0',
 		} ) )
 	]
 

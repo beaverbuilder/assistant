@@ -38,9 +38,8 @@ final class FL_Assistant_REST_Notifications {
 			'total' => 0,
 		);
 
-		// Pending comments count
+		// Comments count
 		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/comments/count' );
-		$request->set_query_params( array( 'status' => 'hold' ) );
 		$response = rest_do_request( $request );
 		$data = $response->get_data();
 		$result['comments'] = $data['total'];
