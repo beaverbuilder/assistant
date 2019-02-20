@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
 import { UIContext, PageViewContext, useModals } from 'components'
 import { useActiveApp } from 'system'
-import store, { getConfig, useStore, getDispatch } from 'store'
+import { getConfig, useStore, getStore, getDispatch } from 'store'
 import { redirect } from 'utils/location'
 import './api'
 import './apps'
@@ -61,7 +61,7 @@ const Assistant = () => {
 	}
 
 	return (
-		<Provider store={store}>
+		<Provider store={getStore()}>
 			<UIContext.Provider value={ui}>
 				<PageViewContext.Provider value={currentPageView}>
 					{ ! isShowingUI && <ShowUITrigger /> }

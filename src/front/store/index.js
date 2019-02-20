@@ -39,6 +39,13 @@ export const useAppState = ( key, value ) => {
 }
 
 /**
+ * Returns the main store object.
+ */
+export const getStore = () => {
+	return store
+}
+
+/**
  * Returns an object with all actions bound to dispatch.
  */
 export const getDispatch = () => {
@@ -51,5 +58,3 @@ export const getDispatch = () => {
 export const getConfig = () => {
 	return { ...FL_ASSISTANT_CONFIG }
 }
-
-export default store
