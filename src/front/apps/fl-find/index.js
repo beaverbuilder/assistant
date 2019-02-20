@@ -34,7 +34,7 @@ export const FindTab = () => {
 				pagination={ true }
 			/>
 
-			<AppMenu title="Filter Content">
+			<AppMenu title="Filter Content" displayBeside="wide">
 				<div style={{ padding: 30, paddingTop: 0}}>
 					<div><Button onClick={testSetDataFromSidebar}>Show Pages</Button></div>
 				</div>

@@ -30,10 +30,21 @@
             background: var(--fl-background-color);
             box-shadow: 0 12px 24px 0 rgba(0,0,0,0.17);
             pointer-events: auto;
+            display: flex;
+            flex-direction: column;
 
             .fl-asst-app-menu-title {
                 font-size: 20px;
                 font-weight: 600;
+            }
+        }
+
+        &.fl-asst-app-menu-inline {
+            position: static;
+
+            .fl-asst-app-menu-contents {
+                position: static;
+                border-right: 1px solid var(--fl-line-color);
             }
         }
     }

@@ -7,7 +7,7 @@ import './style.scss'
 
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
-	const { label, showAppMenu, hasMenuContent } = useContext( AppContext )
+	const { label, toggleAppMenu } = useContext( AppContext )
 	const { isRootView, popView } = useContext( StackContext )
 	const screenTitle = title ? title : label
 
@@ -27,7 +27,7 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 					{ ({ items }) => {
 						if ( items && items.length > 0 ) {
 							return (
-								<Button onClick={showAppMenu}>Menu</Button>
+								<Button onClick={toggleAppMenu}>Menu</Button>
 							)
 						}
 						return null
