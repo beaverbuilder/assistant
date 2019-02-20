@@ -1,18 +1,16 @@
 import React, { Fragment } from 'react'
-import { useAppState, useDispatch } from 'store'
-import { ScreenHeader, MediaList, MediaListFilter } from 'components'
+import { useAppState, getDispatch } from 'store'
+import { ScreenHeader, MediaList } from 'components'
+import { MediaListFilter } from './filter'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 export const MediaTab = () => {
 	const [ query, setQuery ] = useAppState( 'query', null )
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<MediaListFilter
-					appStateKey='media-filter'
-					onChange={ setQuery }
-				/>
+				<MediaListFilter onChange={ setQuery } />
 			</ScreenHeader>
 			<MediaList
 				query={ query }

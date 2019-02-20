@@ -2,16 +2,11 @@
 
 /**
  * Handles working with backend assistant data.
- *
- * @since 0.1
  */
 class FL_Assistant_Data {
 
 	/**
 	 * Default state for the current user.
-	 *
-	 * @since 0.1
-	 * @var string $default_user_state
 	 */
 	static public $default_user_state = array(
 		'activeApp'          => 'fl-dashboard',
@@ -24,9 +19,6 @@ class FL_Assistant_Data {
 	 * Returns an array of all assistant data.
 	 *
 	 * NOTE: Kept in alphabetical order.
-	 *
-	 * @since 0.1
-	 * @return array
 	 */
 	static public function get_all() {
 		$user_state = self::get_current_user_state();
@@ -74,9 +66,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get post type slugs and names.
-	 *
-	 * @since 0.1
-	 * @return array
 	 */
 	static public function get_post_types() {
 		$data  = [];
@@ -101,9 +90,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get taxonomy slugs and names.
-	 *
-	 * @since 0.1
-	 * @return array
 	 */
 	static public function get_taxonomies() {
 		$data  = [];
@@ -124,9 +110,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get info about the current page view.
-	 *
-	 * @since 0.1
-	 * @return array
 	 */
 	static public function get_current_view() {
 		$data    = [];
@@ -224,10 +207,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Filter an array of actions by their capability
-	 *
-	 * @since 0.1
-	 * @param Array $actions
-	 * @return array
 	 */
 	static public function filter_actions_by_capability( $actions = [], $exclude_unset = true ) {
 
@@ -263,9 +242,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get an action set for allowed admin links.
-	 *
-	 * @since 0.1
-	 * @return array
 	 */
 	static public function get_admin_actions() {
 		$actions = [];
@@ -307,9 +283,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get customize url
-	 *
-	 * @since 0.1
-	 * @return string
 	 */
 	static public function get_customize_url() {
 		global $wp_customize;
@@ -338,10 +311,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get the saved state for a user.
-	 *
-	 * @since 0.1
-	 * @param int $id
-	 * @return array
 	 */
 	static public function get_user_state( $id ) {
 		$saved = get_user_meta( $id, 'fl_assistant_state', true );
@@ -354,11 +323,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Update the saved state for a user.
-	 *
-	 * @since 0.1
-	 * @param int $id
-	 * @param array $state
-	 * @return void
 	 */
 	static public function update_user_state( $id, $state ) {
 		$saved = self::get_user_state( $id );
@@ -373,9 +337,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get the saved state for the current user.
-	 *
-	 * @since 0.1
-	 * @return array
 	 */
 	static public function get_current_user_state() {
 		return self::get_user_state( wp_get_current_user()->ID );
@@ -383,9 +344,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get info about the current user.
-	 *
-	 * @since 0.1
-	 * @return array
 	 */
 	static public function get_current_user_data() {
 		$user = wp_get_current_user();
@@ -399,9 +357,6 @@ class FL_Assistant_Data {
 
 	/**
 	 * Get all user roles for the site.
-	 *
-	 * @since 0.1
-	 * @return array
 	 */
 	static public function get_user_roles() {
 		if ( ! function_exists( 'get_editable_roles' ) ) {

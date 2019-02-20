@@ -1,18 +1,16 @@
 import React, { Fragment } from 'react'
-import { useAppState, useDispatch } from 'store'
-import { UserList, UserListFilter, ScreenHeader } from 'components'
+import { useAppState, getDispatch } from 'store'
+import { UserList, ScreenHeader } from 'components'
+import { UserListFilter } from './filter'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 export const UsersTab = () => {
 	const [ query, setQuery ] = useAppState( 'query', null )
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<UserListFilter
-					appStateKey='user-filter'
-					onChange={ setQuery }
-				/>
+				<UserListFilter onChange={ setQuery } />
 			</ScreenHeader>
 			<UserList
 				query={ query }

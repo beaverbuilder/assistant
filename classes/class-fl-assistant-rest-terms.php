@@ -2,16 +2,11 @@
 
 /**
  * REST API logic for terms.
- *
- * @since 0.1
  */
 final class FL_Assistant_REST_Terms {
 
 	/**
 	 * Register routes.
-	 *
-	 * @since  0.1
-	 * @return void
 	 */
 	static public function register_routes() {
 		register_rest_route(
@@ -53,10 +48,6 @@ final class FL_Assistant_REST_Terms {
 
 	/**
 	 * Returns an array of response data for a single term.
-	 *
-	 * @since  0.1
-	 * @param object $term
-	 * @return array
 	 */
 	static public function get_term_response_data( $term ) {
 		return array(
@@ -67,10 +58,6 @@ final class FL_Assistant_REST_Terms {
 
 	/**
 	 * Returns an array of terms and related data.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function terms( $request ) {
 		$response = array();
@@ -101,10 +88,6 @@ final class FL_Assistant_REST_Terms {
 
 	/**
 	 * Returns data for a single term.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function term( $request ) {
 		$id       = $request->get_param( 'id' );

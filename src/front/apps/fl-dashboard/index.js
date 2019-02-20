@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { useDispatch } from 'store'
+import { getDispatch } from 'store'
 import {
 	Button,
 	Separator,
@@ -14,10 +14,10 @@ import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
 import { AppFrameTestingWidget } from './ui-testing'
-import { useConfig } from 'store'
+import { getConfig } from 'store'
 import './style.scss'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 const DetailView = () => {
 	const { pushView } = useContext( StackContext )
@@ -31,7 +31,7 @@ const DetailView = () => {
 }
 
 export const DashboardTab = () => {
-	const { currentUser, dashboardApp } = useConfig()
+	const { currentUser, dashboardApp } = getConfig()
 	const { presentNotification, setActiveApp } = useContext( UIContext )
 	const { adminActions } = dashboardApp
 

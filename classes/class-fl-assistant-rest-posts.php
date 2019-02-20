@@ -2,16 +2,11 @@
 
 /**
  * REST API logic for posts.
- *
- * @since 0.1
  */
 final class FL_Assistant_REST_Posts {
 
 	/**
 	 * Register routes.
-	 *
-	 * @since  0.1
-	 * @return void
 	 */
 	static public function register_routes() {
 		register_rest_route(
@@ -60,10 +55,6 @@ final class FL_Assistant_REST_Posts {
 
 	/**
 	 * Returns an array of response data for a single post.
-	 *
-	 * @since  0.1
-	 * @param object $post
-	 * @return array
 	 */
 	static public function get_post_response_data( $post ) {
 		$author = get_the_author_meta( 'display_name', $post->post_author );
@@ -95,10 +86,6 @@ final class FL_Assistant_REST_Posts {
 
 	/**
 	 * Returns an array of posts and related data.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function posts( $request ) {
 		$response = array();
@@ -136,10 +123,6 @@ final class FL_Assistant_REST_Posts {
 
 	/**
 	 * Returns data for a single post.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function post( $request ) {
 		$id       = $request->get_param( 'id' );
@@ -151,10 +134,6 @@ final class FL_Assistant_REST_Posts {
 
 	/**
 	 * Updates data for a single post.
-	 *
-	 * @since  0.1
-	 * @param object $request
-	 * @return array
 	 */
 	static public function update_post( $request ) {
 		$id       = $request->get_param( 'id' );
