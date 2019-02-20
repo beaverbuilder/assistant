@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
+import { TunnelPlaceholder } from 'react-tunnels'
 import { Button, Icon, AppContext, StackContext } from 'components'
 import './style.scss'
 
@@ -21,7 +22,17 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 					<Icon name="back" />
 				</Button> }
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
-				{ hasMenuContent && <Button onClick={showAppMenu}>Menu</Button> }
+
+				<TunnelPlaceholder id="app-menu" multiple>
+					{ ({ items }) => {
+						if ( items && items.length > 0 ) {
+							return (
+								<Button onClick={showAppMenu}>Menu</Button>
+							)
+						}
+						return null
+					} }
+				</TunnelPlaceholder>
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>
 		</div>
