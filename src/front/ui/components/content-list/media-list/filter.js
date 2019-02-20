@@ -9,22 +9,22 @@ export const MediaListFilter = ( { onChange, ...props } ) => {
 		{
 			label: 'Images',
 			value: 'image',
-			count: counts[ 'media/images' ] || 0,
+			count: counts[ 'media/images' ] || '0',
 		},
 		{
 			label: 'Videos',
 			value: 'video',
-			count: counts[ 'media/video' ] || 0,
+			count: counts[ 'media/video' ] || '0',
 		},
 		{
 			label: 'Audio',
 			value: 'audio',
-			count: counts[ 'media/audio' ] || 0,
+			count: counts[ 'media/audio' ] || '0',
 		},
 		{
 			label: 'Documents',
 			value: 'application',
-			count: counts[ 'media/documents' ] || 0,
+			count: counts[ 'media/documents' ] || '0',
 		}
 	]
 

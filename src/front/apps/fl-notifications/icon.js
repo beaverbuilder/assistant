@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { useDispatch, useStore } from 'store'
 import { clearCache } from 'utils/cache'
 import { useHeartbeat } from 'utils/wordpress'
@@ -16,9 +16,8 @@ export const NotificationsIcon = ( { count = 0 } ) => {
 }
 
 export const NotificationsTabButton = ( { isShowingAppsMenu } ) => {
-	const [ count, setCount ] = useState( null )
-	const { apps } = useStore()
-	const { setAppState } = useDispatch()
+	const { apps, counts } = useStore()
+	const { setAppState, setCounts } = useDispatch()
 	const { presentNotification, setActiveApp, activeAppName } = useContext( UIContext )
 	const notifications = apps[ 'fl-notifications' ] ? apps[ 'fl-notifications' ] : null
 	const active = 'fl-notifications' === activeAppName && ! isShowingAppsMenu
@@ -27,34 +26,27 @@ export const NotificationsTabButton = ( { isShowingAppsMenu } ) => {
 		return null
 	}
 
-	useHeartbeat( 'fl-assistant/v1/notifications/count', data => {
-		if ( count && data.comments > count.comments ) {
+	useHeartbeat( 'fl-assistant/v1/counts', response => {
+		if ( response['notifications/comments'] > counts['notifications/comments'] ) {
 			clearCache( 'comments' )
 			presentNotification( 'You have a new comment!', {
 				onClick: dismiss => {
 					setActiveApp( 'fl-notifications' )
-					setAppState( 'fl-notifications', 'activeTag', 'comments' )
+					setAppState( 'fl-notifications', 'active-tag', 'comments' )
 					dismiss()
 				}
 			} )
 		}
-		if ( count && data.updates > count.updates ) {
-			clearCache( 'updates' )
-		}
-		setCount( data )
+		setCounts( response )
 	} )
-
-	const activate = ( key ) => {
-		setActiveApp( key )
-	}
 
 	return (
 		<AppTabButton
-			onClick={ () => activate( 'fl-notifications', notifications.size ) }
+			onClick={ () => setActiveApp( 'fl-notifications' ) }
 			isSelected={ active }
 			tooltip={ notifications.label }
 		>
-			<NotificationsIcon count={ count ? count.total : 0 } />
+			<NotificationsIcon count={ counts['notifications/total'] || 0 } />
 		</AppTabButton>
 	)
 }

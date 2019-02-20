@@ -99,3 +99,17 @@ export const setCount = ( key, count ) => {
 		count,
 	}
 }
+
+export const incrementCount = ( key ) => {
+	return {
+		type: 'INCREMENT_COUNT',
+		key,
+	}
+}
+
+export const decrementCount = ( key ) => {
+	return {
+		type: 'DECREMENT_COUNT',
+		key,
+	}
+}
