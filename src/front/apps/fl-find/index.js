@@ -39,6 +39,7 @@ export const FindTab = () => {
 					<div><Button onClick={testSetDataFromSidebar}>Show Pages</Button></div>
 				</div>
 			</AppMenu>
+
 		</Fragment>
 	)
 }
