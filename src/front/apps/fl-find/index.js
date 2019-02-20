@@ -1,9 +1,10 @@
 import React, { Fragment, useContext } from 'react'
-import { useAppState, useDispatch } from 'store'
-import { PostList, PostListFilter, ScreenHeader, Button, AppContext, StackContext } from 'components'
+import { useAppState, getDispatch } from 'store'
+import { PostListFilter } from './filter'
+import { PostList, ScreenHeader, Button, AppContext, StackContext } from 'components'
 import { AppMenu } from 'system'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 export const FindTab = () => {
 	const { popToRoot } = useContext( StackContext )
@@ -23,10 +24,7 @@ export const FindTab = () => {
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<PostListFilter
-					appStateKey='post-filter'
-					onChange={ setData }
-				/>
+				<PostListFilter onChange={ setData } />
 			</ScreenHeader>
 			<PostList
 				type={ type }

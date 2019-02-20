@@ -5,16 +5,11 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 	/**
 	 * Sets up plugin constants and loads the necessary PHP files.
 	 * If the plugin can't be loaded, an admin notice is shown.
-	 *
-	 * @since 0.1
 	 */
 	final class FL_Assistant_Plugin_Loader {
 
 		/**
 		 * Initialize the plugin.
-		 *
-		 * @since  0.1
-		 * @return void
 		 */
 		static public function init() {
 			if ( self::get_loading_error() ) {
@@ -30,9 +25,6 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 
 		/**
 		 * Define plugin constants.
-		 *
-		 * @since  0.1
-		 * @return void
 		 */
 		static private function define_constants() {
 			define( 'FL_ASSISTANT_VERSION', '0.1' );
@@ -43,9 +35,6 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 
 		/**
 		 * Runs on plugin activation.
-		 *
-		 * @since 0.1
-		 * @return void
 		 */
 		static public function activate() {
 			do_action( 'fl_assistant_activate' );
@@ -53,9 +42,6 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 
 		/**
 		 * Load plugin files.
-		 *
-		 * @since  0.1
-		 * @return void
 		 */
 		static public function load_files() {
 			require_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-asset-loader.php';
@@ -68,10 +54,6 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 
 		/**
 		 * Initializes actions for the admin notice if the plugin can't load.
-		 *
-		 * @since  0.1
-		 * @access private
-		 * @return void
 		 */
 		static private function admin_notice_hooks() {
 			global $pagenow;
@@ -84,9 +66,6 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 
 		/**
 		 * Shows an admin notice if the plugin can't load.
-		 *
-		 * @since  0.1
-		 * @return void
 		 */
 		static public function admin_notice() {
 			if ( ! is_admin() ) {
@@ -108,9 +87,6 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 
 		/**
 		 * Returns a plugin loading error if there is one.
-		 *
-		 * @since  0.1
-		 * @return bool|string
 		 */
 		static private function get_loading_error() {
 			$error = false;

@@ -2,22 +2,16 @@
 
 /**
  * Handles loading REST API related classes.
- *
- * @since 0.1
  */
 final class FL_Assistant_REST {
 
 	/**
 	 * REST API namespace
-	 *
-	 * @since 0.1
-	 * @var string $namespace
 	 */
 	static public $namespace = 'fl-assistant/v1';
 
 	/**
-	 * @since  0.1
-	 * @return void
+	 * Initialize REST classes.
 	 */
 	static public function init() {
 		if ( ! is_user_logged_in() ) {
@@ -25,6 +19,7 @@ final class FL_Assistant_REST {
 		}
 
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-comments.php';
+		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-counts.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-notifications.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-posts.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-terms.php';

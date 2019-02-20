@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
-import { maybeUseAppState, useConfig, useStore } from 'store'
+import { useAppState, getConfig, useStore } from 'store'
 import { TagGroupControl } from 'components'
 
-export const UserListFilter = ( { onChange, ...props } ) => {
+export const UserListFilter = ( { onChange } ) => {
 	const { counts } = useStore()
-	const { userRoles } = useConfig()
-	const [ role, setRole ] = maybeUseAppState( props, 'role', 'all' )
+	const { userRoles } = getConfig()
+	const [ role, setRole ] = useAppState( 'user-filter-role', 'all' )
 
 	const tags = [
 		{
 			label: 'All',
 			value: 'all',
-			count: counts[ 'role/total' ],
+			count: counts[ 'role/total' ] || '0',
 		},
 		...userRoles.map( ( { key, name } ) => ( {
 			label: name,

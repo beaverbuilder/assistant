@@ -1,11 +1,11 @@
-import { useDispatch } from 'store'
+import { getDispatch } from 'store'
 import { Icon } from 'components'
 import { ScreenHeader } from 'components/panel-parts'
 
 const {
 	registerApp,
 	setActiveApp,
-} = useDispatch()
+} = getDispatch()
 
 window.FLAssistant = {
 	apps: {

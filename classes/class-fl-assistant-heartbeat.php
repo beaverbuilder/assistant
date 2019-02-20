@@ -7,7 +7,7 @@
 class FL_Assistant_Heartbeat {
 
 	/**
-	 * @return void
+	 * Initialize the heartbeat hook.
 	 */
 	static public function init() {
 		add_filter( 'heartbeat_received', __CLASS__ . '::received', 11, 2 );
@@ -15,10 +15,6 @@ class FL_Assistant_Heartbeat {
 
 	/**
 	 * Called on the heartbeat_received action.
-	 *
-	 * @param array $response
-	 * @param array $data
-	 * @return array
 	 */
 	static public function received( $response, $data ) {
 		FL_Assistant_REST::init();

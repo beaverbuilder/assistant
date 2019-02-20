@@ -43,15 +43,10 @@ export {
 	ContentListItem,
 	ContentQuery,
 	CommentList,
-	CommentListFilter,
 	MediaList,
-	MediaListFilter,
 	PostList,
-	PostListFilter,
 	UpdateList,
-	UpdateListFilter,
 	UserList,
-	UserListFilter,
 } from './content-list'
 
 export { Widget } from './widgets'

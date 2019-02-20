@@ -1,16 +1,10 @@
 import React, { Fragment, useEffect } from 'react'
-import { useAppState, useDispatch, useStore } from 'store'
+import { useAppState, getDispatch, useStore } from 'store'
 import { currentUserCan } from 'utils/wordpress'
-import {
-	CommentList,
-	CommentListFilter,
-	ScreenHeader,
-	TagGroupControl,
-	UpdateListFilter,
-	UpdateList
-} from 'components'
+import { CommentList, ScreenHeader, TagGroupControl, UpdateList } from 'components'
+import { CommentListFilter, UpdateListFilter } from './filters'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )
@@ -31,39 +25,20 @@ export const NotificationsTab = () => {
 		tabs.push( {
 			label: 'Comments',
 			value: 'comments',
-			count: counts[ 'notifications/comments' ],
+			count: counts[ 'notifications/comments' ] || '0',
 		} )
-		filters.comments = (
-			<CommentListFilter
-				appStateKey='comment-filter'
-				onChange={ setQuery }
-			/>
-		)
-		content.comments = (
-			<CommentList
-				query={ query }
-				pagination={ true }
-			/>
-		)
+		filters.comments = <CommentListFilter onChange={ setQuery } />
+		content.comments = <CommentList query={ query } pagination={ true } />
 	}
 
 	if ( canUpdate ) {
 		tabs.push( {
 			label: 'Updates',
 			value: 'updates',
-			count: counts[ 'notifications/updates' ],
+			count: counts[ 'notifications/updates' ] || '0',
 		} )
-		filters.updates = (
-			<UpdateListFilter
-				appStateKey='update-filter'
-				onChange={ setQuery }
-			/>
-		)
-		content.updates = (
-			<UpdateList
-				query={ query }
-			/>
-		)
+		filters.updates = <UpdateListFilter onChange={ setQuery } />
+		content.updates = <UpdateList query={ query } />
 	}
 
 	return (

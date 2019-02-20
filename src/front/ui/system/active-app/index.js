@@ -1,8 +1,8 @@
-import { useStore, useDispatch, } from 'store'
+import { useStore, getDispatch, } from 'store'
 
 export const useActiveApp = () => {
 	const { apps, activeApp: name } = useStore()
-	const { setActiveApp } = useDispatch()
+	const { setActiveApp } = getDispatch()
 
 	const get = name => apps[ name ]
 

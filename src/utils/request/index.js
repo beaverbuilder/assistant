@@ -6,16 +6,11 @@ import { clearCache, getCache, setCache } from 'utils/cache'
  * Used to prevent two of the same request firing at the
  * same time. When one is already running, the others will
  * resolve when that has finished.
- *
- * @type {Array}
  */
 const requests = []
 
 /**
  * Makes a GET request with caching.
- *
- * @param {Object}
- * @return {Object}
  */
 export const getRequest = ( {
 	root,
@@ -65,12 +60,6 @@ export const getRequest = ( {
 
 /**
  * Returns a promise that resolves if cached.
- *
- * @param {String}
- * @param {String}
- * @param {Function}
- * @param {Function}
- * @return {Object|Boolean}
  */
 export const getCachedRequest = ( key, route, onSuccess, onError ) => {
 	const cache = getCache( key, route )
@@ -91,9 +80,6 @@ export const getCachedRequest = ( key, route, onSuccess, onError ) => {
 
 /**
  * Makes a POST request.
- *
- * @param {Object}
- * @return {Object}
  */
 export const postRequest = ( {
 	root,
@@ -124,9 +110,6 @@ export const postRequest = ( {
 
 /**
  * Fetch with cancel.
- *
- * @param {Object}
- * @return {Object}
  */
 export const request = ( {
 	method,

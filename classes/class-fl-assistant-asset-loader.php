@@ -3,16 +3,11 @@
 /**
  * Handles enqueuing css and js assets for the UI
  * in addition to setup of the initial frontend data.
- *
- * @since 0.1
  */
 class FL_Assistant_Asset_Loader {
 
 	/**
 	 * Initialize the backend application.
-	 *
-	 * @since 0.1
-	 * @return void
 	 */
 	static public function init() {
 		add_action( 'wp_enqueue_scripts', __CLASS__ . '::enqueue' );
@@ -20,9 +15,6 @@ class FL_Assistant_Asset_Loader {
 
 	/**
 	 * Enqueue frontend resources - fired on wp_enqueue_scripts action.
-	 *
-	 * @since 0.1
-	 * @return void
 	 */
 	static public function enqueue() {
 		$url = FL_ASSISTANT_URL;
@@ -40,9 +32,6 @@ class FL_Assistant_Asset_Loader {
 
 	/**
 	 * Check if the frontend scripts/styles should be enqueued
-	 *
-	 * @since 0.1
-	 * @return Bool
 	 */
 	static public function should_enqueue() {
 

@@ -122,6 +122,16 @@ export const counts = ( state = {}, action ) => {
 			...state,
 			[ action.key ]: action.count
 		}
+	case 'INCREMENT_COUNT':
+		return {
+			...state,
+			[ action.key ]: state[ action.key ] + 1
+		}
+	case 'DECREMENT_COUNT':
+		return {
+			...state,
+			[ action.key ]: state[ action.key ] - 1
+		}
 	default:
 		return state
 	}
