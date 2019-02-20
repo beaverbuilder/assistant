@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import { TagGroupControl, ExpandedContents } from 'components'
-import { useAppState, useConfig, useStore } from 'store'
+import { useAppState, getConfig, useStore } from 'store'
 import { getWeek } from 'utils/datetime'
 
 export const PostListFilter = ( { onChange } ) => {
@@ -9,7 +9,7 @@ export const PostListFilter = ( { onChange } ) => {
 	const [ date, setDate ] = useAppState( 'post-filter-date-type', '' )
 	const [ status, setStatus ] = useAppState( 'post-filter-status-type', 'publish' )
 	const { counts } = useStore()
-	const { contentTypes, taxonomies } = useConfig()
+	const { contentTypes, taxonomies } = getConfig()
 	const now = new Date()
 	const typeTags = []
 

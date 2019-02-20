@@ -1,4 +1,4 @@
-import { useConfig } from 'store'
+import { getConfig } from 'store'
 import { clearCache } from 'utils/cache'
 import { getRequest, postRequest } from 'utils/request'
 import { addQueryArgs } from 'utils/url'
@@ -7,7 +7,7 @@ import { addQueryArgs } from 'utils/url'
  * Fetch request for the WordPress REST API.
  */
 export const restRequest = ( { method = 'GET', ...args } ) => {
-	const { apiNonce, apiRoot } = useConfig()
+	const { apiNonce, apiRoot } = getConfig()
 	const wpArgs = {
 		root: apiRoot,
 		credentials: 'same-origin',

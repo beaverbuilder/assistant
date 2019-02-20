@@ -1,9 +1,9 @@
 import React from 'react'
-import { useDispatch } from 'store'
+import { getDispatch } from 'store'
 import { Padding } from 'components'
 import './style.scss'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 const TestingApp = () => {
 	return (

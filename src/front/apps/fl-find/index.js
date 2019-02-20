@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
-import { useAppState, useDispatch } from 'store'
+import { useAppState, getDispatch } from 'store'
 import { PostList, ScreenHeader } from 'components'
 import { PostListFilter } from './filter'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 export const FindTab = () => {
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )

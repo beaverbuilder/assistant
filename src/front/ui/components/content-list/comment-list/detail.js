@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { useDispatch } from 'store'
+import { getDispatch } from 'store'
 import { updateComment } from 'utils/wordpress'
 import {
 	ContentListDetail,
@@ -12,7 +12,7 @@ import {
 } from 'components'
 
 export const CommentDetail = () => {
-	const { incrementCount, decrementCount } = useDispatch()
+	const { incrementCount, decrementCount } = getDispatch()
 	const { popView } = useContext( StackContext )
 	const {
 		approved,

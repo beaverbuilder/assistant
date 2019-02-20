@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
-import { useAppState, useDispatch } from 'store'
+import { useAppState, getDispatch } from 'store'
 import { UserList, ScreenHeader } from 'components'
 import { UserListFilter } from './filter'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 export const UsersTab = () => {
 	const [ query, setQuery ] = useAppState( 'query', null )

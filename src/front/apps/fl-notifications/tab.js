@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect } from 'react'
-import { useAppState, useDispatch, useStore } from 'store'
+import { useAppState, getDispatch, useStore } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import { CommentList, ScreenHeader, TagGroupControl, UpdateList } from 'components'
 import { CommentListFilter, UpdateListFilter } from './filters'
 
-const { registerApp } = useDispatch()
+const { registerApp } = getDispatch()
 
 export const NotificationsTab = () => {
 	const canModerateComments = currentUserCan( 'moderate_comments' )

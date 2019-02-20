@@ -24,14 +24,6 @@ export const useStore = () => {
 }
 
 /**
- * Custom hook for dispatching actions to the store.
- * Returns an object with all actions bound to dispatch.
- */
-export const useDispatch = () => {
-	return bindActionCreators( actions, store.dispatch )
-}
-
-/**
  * Custom hook for storing local app state values in the
  * store. This allows these values to persist between page
  * views as the app state is cached to local storage.
@@ -47,9 +39,16 @@ export const useAppState = ( key, value ) => {
 }
 
 /**
- * Custom hook for accessing the global config object.
+ * Returns an object with all actions bound to dispatch.
  */
-export const useConfig = () => {
+export const getDispatch = () => {
+	return bindActionCreators( actions, store.dispatch )
+}
+
+/**
+ * Returns the global config object.
+ */
+export const getConfig = () => {
 	return { ...FL_ASSISTANT_CONFIG }
 }
 

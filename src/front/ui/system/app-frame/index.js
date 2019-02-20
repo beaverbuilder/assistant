@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSpring, animated } from 'react-spring'
-import { useStore, useDispatch } from 'store'
+import { useStore, getDispatch } from 'store'
 import { useWindowSize } from 'utils/window'
 
 export const useAppFrame = () => {
 	const { panelPosition, appFrameSize } = useStore()
-	const { setAppFrameSize } = useDispatch()
+	const { setAppFrameSize } = getDispatch()
 	const { width: windowWidth } = useWindowSize()
 
 	const normalPreferredWidth = 440
