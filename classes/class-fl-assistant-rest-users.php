@@ -27,6 +27,18 @@ final class FL_Assistant_REST_Users {
 		);
 
 		register_rest_route(
+			FL_Assistant_REST::$namespace, '/users/count', array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::users_count',
+					'permission_callback' => function() {
+						return current_user_can( 'edit_users' );
+					},
+				),
+			)
+		);
+
+		register_rest_route(
 			FL_Assistant_REST::$namespace, '/user/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -83,6 +95,22 @@ final class FL_Assistant_REST_Users {
 
 		foreach ( $users as $user ) {
 			$response[] = self::get_user_response_data( $user );
+		}
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of counts by user role.
+	 */
+	static public function users_count( $request ) {
+		$counts = count_users();
+		$response = array(
+			'total' => $counts['total_users'],
+		);
+
+		foreach ( $counts['avail_roles'] as $role => $count ) {
+			$response[ $role ] = $count;
 		}
 
 		return rest_ensure_response( $response );

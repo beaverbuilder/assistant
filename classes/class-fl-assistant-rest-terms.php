@@ -27,6 +27,18 @@ final class FL_Assistant_REST_Terms {
 		);
 
 		register_rest_route(
+			FL_Assistant_REST::$namespace, '/terms/count', array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::terms_count',
+					'permission_callback' => function() {
+						return current_user_can( 'moderate_comments' );
+					},
+				),
+			)
+		);
+
+		register_rest_route(
 			FL_Assistant_REST::$namespace, '/term/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -67,6 +79,21 @@ final class FL_Assistant_REST_Terms {
 
 		foreach ( $terms as $term ) {
 			$response[] = self::get_term_response_data( $term );
+		}
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of counts by taxonomy type.
+	 */
+	static public function terms_count( $request ) {
+		$taxonomies = FL_Assistant_Data::get_taxonomies();
+		$response = array();
+
+		foreach ( $taxonomies as $slug => $label ) {
+			$count = wp_count_terms( $slug );
+			$response[ $slug ] = $count;
 		}
 
 		return rest_ensure_response( $response );
