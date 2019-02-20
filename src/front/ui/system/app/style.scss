@@ -30,6 +30,11 @@
             background: var(--fl-background-color);
             box-shadow: 0 12px 24px 0 rgba(0,0,0,0.17);
             pointer-events: auto;
+
+            .fl-asst-app-menu-title {
+                font-size: 20px;
+                font-weight: 600;
+            }
         }
     }
 }

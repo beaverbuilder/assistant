@@ -3,9 +3,6 @@ import {
 	Button,
 	Icon,
 	Separator,
-	Tab,
-	Stack,
-	AppContext,
 	AppTabButton,
 	UIContext,
 } from 'components'

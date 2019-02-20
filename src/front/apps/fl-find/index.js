@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState, useDispatch } from 'store'
-import { PostList, PostListFilter, ScreenHeader, Padding, Button, AppContext, StackContext } from 'components'
+import { PostList, PostListFilter, ScreenHeader, Button, AppContext, StackContext } from 'components'
 import { AppMenu } from 'system'
 
 const { registerApp } = useDispatch()
@@ -14,10 +14,10 @@ export const FindTab = () => {
 	const testSetDataFromSidebar = () => {
 		hideAppMenu()
 		popToRoot()
-		setData({
+		setData( {
 			type,
-			query: Object.assign({}, query, { post_type: 'page' })
-		})
+			query: Object.assign( {}, query, { post_type: 'page' } )
+		} )
 	}
 
 	return (
