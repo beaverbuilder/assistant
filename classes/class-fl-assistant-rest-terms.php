@@ -93,7 +93,7 @@ final class FL_Assistant_REST_Terms {
 
 		foreach ( $taxonomies as $slug => $label ) {
 			$count = wp_count_terms( $slug );
-			$response[ $slug ] = $count;
+			$response[ $slug ] = (int) $count;
 		}
 
 		return rest_ensure_response( $response );

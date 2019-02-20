@@ -425,47 +425,8 @@ class FL_Assistant_Data {
 	 * Returns an array of all counts to hydrate the store.
 	 */
 	static public function get_counts() {
-		$routes = array(
-			'/fl-assistant/v1/comments/count' => function( $response ) {
-				return array(
-					'notifications/comments' => $response['total'],
-				);
-			},
-			'/fl-assistant/v1/updates/count'  => function( $response ) {
-				return array(
-					'notifications/updates' => $response['total'],
-				);
-			},
-			'/fl-assistant/v1/posts/count'    => function( $response ) {
-				$return = array();
-				foreach ( $response as $post_type => $data ) {
-					$return[ 'content/' . $post_type ] = $data->total;
-				}
-				return $return;
-			},
-			'/fl-assistant/v1/terms/count'    => function( $response ) {
-				$return = array();
-				foreach ( $response as $taxonomy => $count ) {
-					$return[ 'taxonomy/' . $taxonomy ] = $count;
-				}
-				return $return;
-			},
-			'/fl-assistant/v1/users/count'    => function( $response ) {
-				$return = array();
-				foreach ( $response as $role => $count ) {
-					$return[ 'role/' . $role ] = $count;
-				}
-				return $return;
-			},
-		);
-
-		$requests = array_reduce( array_keys( $routes ), 'rest_preload_api_request', array() );
-		$counts  = [];
-
-		foreach ( $requests as $route => $request ) {
-			$counts = array_merge( $counts, $routes[ $route ]( $request['body'] ) );
-		}
-
-		return $counts;
+		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/counts' );
+		$response = rest_do_request( $request );
+		return $response->get_data();
 	}
 }

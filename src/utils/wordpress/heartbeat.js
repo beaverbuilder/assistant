@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { addLeadingSlash } from 'utils/url'
-import { restRequest } from 'utils/wordpress'
 
 /**
  * Adds a new REST route to be batched via the heartbeat API.
@@ -26,21 +25,9 @@ export const createHeartbeat = ( route, onTick ) => {
  * when the component unmounts.
  */
 export const useHeartbeat = ( route, onTick ) => {
-
-	// Initial request on mount
-	useEffect( () => {
-		const req = restRequest( {
-			route,
-			cached: false,
-			onSuccess: onTick,
-		} )
-		return () => req.cancel()
-	}, [] )
-
-	// Heartbeat requests
 	useEffect( () => {
 		const heartbeat = createHeartbeat( route, onTick )
 		heartbeat.start()
-		return heartbeat.stop()
+		return () => heartbeat.stop()
 	} )
 }
