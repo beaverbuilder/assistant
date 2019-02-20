@@ -11,7 +11,7 @@ export const UserListFilter = ( { onChange, ...props } ) => {
 		{
 			label: 'All',
 			value: 'all',
-			count: counts[ 'role/total' ],
+			count: counts[ 'role/total' ] || '0',
 		},
 		...userRoles.map( ( { key, name } ) => ( {
 			label: name,

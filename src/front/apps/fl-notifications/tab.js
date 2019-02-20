@@ -31,7 +31,7 @@ export const NotificationsTab = () => {
 		tabs.push( {
 			label: 'Comments',
 			value: 'comments',
-			count: counts[ 'notifications/comments' ],
+			count: counts[ 'notifications/comments' ] || '0',
 		} )
 		filters.comments = (
 			<CommentListFilter
@@ -51,7 +51,7 @@ export const NotificationsTab = () => {
 		tabs.push( {
 			label: 'Updates',
 			value: 'updates',
-			count: counts[ 'notifications/updates' ],
+			count: counts[ 'notifications/updates' ] || '0',
 		} )
 		filters.updates = (
 			<UpdateListFilter
