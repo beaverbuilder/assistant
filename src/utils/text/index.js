@@ -1,8 +1,18 @@
+/**
+ * Truncate text to the specified length while
+ * respecting punctuation.
+ */
+export function truncate( string = '', length = 40, ellipses = '...' ) {
+	const part = string.substring( 0, length )
+	const last = part[ part.length - 1 ]
+	const punctuation = [ '.', '!', '?' ]
 
-export function truncate( string, words = 5 ) {
-	if ( ! string || ! words ) {
-		return
+	if ( string.length <= length || punctuation.includes( last ) ) {
+		return part
+	}
+	if ( ! last.match( /[a-zA-z]/ ) ) {
+		return part.substring( 0, part.length - 1 ) + ellipses
 	}
 
-	return string.split( ' ' ).slice( 0, words ).join( ' ' ) + String.fromCharCode( 8230 )
+	return part + ellipses
 }

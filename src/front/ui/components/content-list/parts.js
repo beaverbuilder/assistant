@@ -32,7 +32,7 @@ export const ContentListItem = props => {
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
 			<div className="fl-asst-list-item-content">
-				<div className="fl-asst-list-item-title">{ truncate( title, 6 ) }</div>
+				<div className="fl-asst-list-item-title">{ truncate( title ) }</div>
 				<div className="fl-asst-list-item-meta">
 					{ meta }
 				</div>
