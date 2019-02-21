@@ -2,7 +2,7 @@ import React, { Fragment, useContext } from 'react'
 import { getConfig, useStore } from 'store'
 import { OptionGroup, OptionGroupItem, Separator, AppContext } from 'components'
 
-export const MenuContent = ({ appStackContext }) => {
+export const MenuContent = ( { appStackContext } ) => {
 	const { contentTypes, taxonomies } = getConfig()
 	const { counts } = useStore()
 	const { hideAppMenu } = useContext( AppContext )
@@ -28,8 +28,8 @@ export const MenuContent = ({ appStackContext }) => {
 	const setType = value => {
 		hideAppMenu()
 		popToRoot()
+
 		// @TODO: hookup filter here
-		console.log('selected', value )
 	}
 
 	return (
