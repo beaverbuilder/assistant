@@ -2,12 +2,27 @@ import React, { useEffect } from 'react'
 import { useAppState, getConfig, useStore } from 'store'
 import { TagGroupControl } from 'components'
 
-export const UserListFilter = ( { onChange } ) => {
+export const UserListFilter = () => {
+	const { roleTags, setRole, role } = getFilterData()
+
+	return (
+		<TagGroupControl
+			tags={ roleTags }
+			value={ role }
+			onChange={ setRole }
+			appearance="muted"
+		/>
+	)
+}
+
+export const getFilterData = () => {
+	const [ query, setQuery ] = useAppState( 'query' )
+	const [ filter, setFilter ] = useAppState( 'filter' )
 	const { counts } = useStore()
 	const { userRoles } = getConfig()
-	const [ role, setRole ] = useAppState( 'user-filter-role', 'all' )
+	const { role } = filter
 
-	const tags = [
+	const roleTags = [
 		{
 			label: 'All',
 			value: 'all',
@@ -20,16 +35,13 @@ export const UserListFilter = ( { onChange } ) => {
 		} ) )
 	]
 
+	const setRole = role => {
+		setFilter( { ...filter, role } )
+	}
+
 	useEffect( () => {
-		onChange( 'all' === role ? {} : { role } )
+		setQuery( 'all' === role ? {} : { role } )
 	}, [ role ] )
 
-	return (
-		<TagGroupControl
-			tags={ tags }
-			value={ role }
-			onChange={ setRole }
-			appearance="muted"
-		/>
-	)
+	return { roleTags, setRole, role }
 }

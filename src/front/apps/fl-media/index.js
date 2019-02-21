@@ -6,11 +6,11 @@ import { MediaListFilter } from './filter'
 const { registerApp } = getDispatch()
 
 export const MediaTab = () => {
-	const [ query, setQuery ] = useAppState( 'query', null )
+	const [ query ] = useAppState( 'query' )
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<MediaListFilter onChange={ setQuery } />
+				<MediaListFilter />
 			</ScreenHeader>
 			<MediaList
 				query={ query }
@@ -36,4 +36,10 @@ registerApp( 'fl-media', {
 	content: props => <MediaTab {...props} />,
 	icon: props => <MediaIcon {...props} />,
 	size: 'wide',
+	state: {
+		query: null,
+		filter: {
+			type: 'image',
+		},
+	},
 } )
