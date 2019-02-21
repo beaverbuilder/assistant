@@ -23,6 +23,9 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 				</Button> }
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
 
+				<Button appearance="icon">
+					<Icon />
+				</Button>
 				<AppMenuButton />
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>

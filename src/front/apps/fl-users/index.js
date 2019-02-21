@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { useAppState, getDispatch } from 'store'
 import { UserList, ScreenHeader } from 'components'
+import { AppMenu } from 'system'
 import { UserListFilter } from './filter'
 
 const { registerApp } = getDispatch()
@@ -12,10 +13,13 @@ export const UsersTab = () => {
 			<ScreenHeader>
 				<UserListFilter onChange={ setQuery } />
 			</ScreenHeader>
+
 			<UserList
 				query={ query }
 				pagination={ true }
 			/>
+
+			<AppMenu displayBeside="wide" />
 		</Fragment>
 	)
 }

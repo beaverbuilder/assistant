@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import classname from 'classnames'
 import { animated, useSpring } from 'react-spring'
 import { useStore } from 'store'
@@ -23,7 +23,6 @@ export const App = props => {
 		<AppContext.Provider value={appContext}>
 			<TunnelProvider>
 				<div className="fl-asst-app">
-
 					<TunnelPlaceholder id="app-menu" multiple>
 						{ ( { items } ) => {
 							if ( 'undefined' !== items && 0 < items.length ) {
@@ -35,12 +34,22 @@ export const App = props => {
 							return null
 						} }
 					</TunnelPlaceholder>
-
 					<Stack>{ content ? content() : null }</Stack>
 				</div>
 			</TunnelProvider>
 		</AppContext.Provider>
 	)
+}
+
+const shouldMenuDisplayBeside = ( displayBeside, appFrameSize ) => {
+	if ( 'boolean' === typeof displayBeside ) {
+		return displayBeside
+	} else if ( 'full' === displayBeside && 'full' === appFrameSize ) {
+		return true
+	} else if ( 'wide' === displayBeside && [ 'wide', 'full' ].includes( appFrameSize ) ) {
+		return true
+	}
+	return false
 }
 
 const Menu = ( { title, children, displayBeside = 'full' } ) => {
@@ -54,14 +63,7 @@ const Menu = ( { title, children, displayBeside = 'full' } ) => {
 		setAppFrameSize( newSize )
 	}
 
-	let shouldDisplayBesideContent = false
-	if ( 'boolean' === typeof displayBeside ) {
-		shouldDisplayBesideContent = displayBeside
-	} else if ( 'full' === displayBeside && 'full' === appFrameSize ) {
-		shouldDisplayBesideContent = true
-	} else if ( 'wide' === displayBeside && [ 'wide', 'full' ].includes( appFrameSize ) ) {
-		shouldDisplayBesideContent = true
-	}
+	let shouldDisplayBesideContent = shouldMenuDisplayBeside( displayBeside, appFrameSize )
 
 	const classes = classname( {
 		'fl-asst-app-menu': true,
@@ -69,9 +71,9 @@ const Menu = ( { title, children, displayBeside = 'full' } ) => {
 	} )
 
 	const overlayProps = useSpring( {
-		immediate: shouldReduceMotion,
 		pointerEvents: isShowingAppMenu ? 'auto' : 'none',
-		opacity: isShowingAppMenu ? 1 : 0
+		opacity: isShowingAppMenu ? 1 : 0,
+		immediate: shouldReduceMotion,
 	} )
 	const viewProps = useSpring( {
 		width: 300,
@@ -86,16 +88,26 @@ const Menu = ( { title, children, displayBeside = 'full' } ) => {
                 <animated.div className="fl-asst-app-menu-overlay" style={overlayProps} onClick={hideAppMenu} />
 			}
 			<animated.div className="fl-asst-app-menu-contents" style={viewProps} onClick={preventClickThrough}>
-				<Padding>
-					<Heading className="fl-asst-app-menu-title">{ title ? title : label }</Heading>
-				</Padding>
-				{children}
+				<Stack>
+					<AppMenuHeader title={ title ? title : label } />
+					{children}
 
-				<div>
-					<Button onClick={toggleSize}>Change Size</Button>
-				</div>
+					<div>
+						<Button onClick={toggleSize}>Change Size</Button>
+					</div>
+				</Stack>
 			</animated.div>
 		</div>
+	)
+}
+
+const AppMenuHeader = ({ title }) => {
+	return (
+		<Fragment>
+			<Padding>
+				<Heading className="fl-asst-app-menu-title">{title}</Heading>
+			</Padding>
+		</Fragment>
 	)
 }
 
@@ -107,13 +119,24 @@ export const AppMenu = props => {
 
 export const AppMenuButton = () => {
 	const { toggleAppMenu } = useContext( AppContext )
+	const { appFrameSize } = useContext( UIContext )
 	return (
 		<TunnelPlaceholder id="app-menu" multiple>
 			{ ( { items } ) => {
 				if ( items && 0 < items.length ) {
+					const { displayBeside = 'full', children } = items[0]
+
+					if ( ! children ) {
+						return null
+					}
+
+					if ( shouldMenuDisplayBeside( displayBeside, appFrameSize) ) {
+						return null
+					}
+
 					return (
 						<Button onClick={toggleAppMenu} appearance="icon">
-							<Icon />
+							<Icon name="menu" />
 						</Button>
 					)
 				}

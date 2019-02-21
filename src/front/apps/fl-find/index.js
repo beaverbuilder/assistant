@@ -6,7 +6,7 @@ import { AppMenu } from 'system'
 
 const { registerApp } = getDispatch()
 
-export const FindTab = () => {
+export const App = () => {
 	const { popToRoot } = useContext( StackContext )
 	const { hideAppMenu } = useContext( AppContext )
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
@@ -33,21 +33,41 @@ export const FindTab = () => {
 			/>
 
 			<AppMenu title="Filter Content">
-				<div style={{ padding: '0 0 30px' }}>
-					<div><Button onClick={testSetDataFromSidebar}>Show Pages</Button></div>
-				</div>
-				<Separator />
-				<div style={{ padding: '30px 0' }}>
-					List here.
-				</div>
-				<Separator />
+				<AppMenuContent onSelect={testSetDataFromSidebar} />
 			</AppMenu>
 
 		</Fragment>
 	)
 }
 
-export const FindIcon = () => {
+const AppMenuContent = ({ onSelect }) => {
+	const { pushView, popView } = useContext( StackContext )
+
+	const pushMenuDetail = () => {
+		pushView(
+			<Fragment>
+				Test!.
+				<Button onClick={popView}>Back</Button>
+			</Fragment>
+		)
+	}
+
+	return (
+		<Fragment>
+			<div style={{ padding: '0 0 30px' }}>
+				<div><Button onClick={onSelect}>Show Pages</Button></div>
+				<div><Button onClick={pushMenuDetail}>Push Menu View</Button></div>
+			</div>
+			<Separator />
+			<div style={{ padding: '30px 0' }}>
+				List here.
+			</div>
+			<Separator />
+		</Fragment>
+	)
+}
+
+export const AppIcon = () => {
 	return (
 		<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g fill="transparent" transform="translate(-145.000000, -145.000000)" fillRule="nonzero" strokeWidth="2" stroke="currentColor">
@@ -60,6 +80,6 @@ export const FindIcon = () => {
 
 registerApp( 'fl-find', {
 	label: 'Content',
-	content: props => <FindTab {...props} />,
-	icon: props => <FindIcon {...props} />,
+	content: props => <App {...props} />,
+	icon: props => <AppIcon {...props} />,
 } )

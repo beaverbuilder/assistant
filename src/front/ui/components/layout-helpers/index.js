@@ -20,12 +20,12 @@ export const VerticalGroup = ( { className, children } ) => {
 	)
 }
 
-export const Padding = ( { className, children } ) => {
+export const Padding = ( { className, children, style } ) => {
 	const classes = classname( {
 		'fl-asst-padding-normal': true
 	}, className )
 	return (
-		<div className={classes}>{children}</div>
+		<div className={classes} style={style}>{children}</div>
 	)
 }
 
