@@ -1,8 +1,10 @@
 import React, { Fragment, useContext } from 'react'
-import { getConfig, useStore } from 'store'
+import { getConfig, useStore, useAppState } from 'store'
 import { OptionGroup, OptionGroupItem, Separator, AppContext } from 'components'
 
 export const MenuContent = ( { appStackContext } ) => {
+	const [ type, setType ] = useAppState( 'post-filter-type', 'posts' )
+	const [ subType, setSubType ] = useAppState( 'post-filter-sub-type', 'page' )
 	const { contentTypes, taxonomies } = getConfig()
 	const { counts } = useStore()
 	const { hideAppMenu } = useContext( AppContext )
@@ -25,11 +27,11 @@ export const MenuContent = ( { appStackContext } ) => {
 		} )
 	} )
 
-	const setType = value => {
+	const onTypeClick = value => {
 		hideAppMenu()
 		popToRoot()
-
-		// @TODO: hookup filter here
+		setType( value[0] )
+		setSubType( value[1] )
 	}
 
 	return (
@@ -43,7 +45,7 @@ export const MenuContent = ( { appStackContext } ) => {
 							key={i}
 							count={count}
 							isSelected={isSelected}
-							onClick={ () => setType( value )}
+							onClick={ () => onTypeClick( value )}
 						>{label}</OptionGroupItem>
 					)
 				} )}
