@@ -1,7 +1,13 @@
 import React, { Fragment, useContext } from 'react'
-import { useAppState, getDispatch } from 'store'
+import { useAppState, getDispatch, getConfig } from 'store'
 import { PostListFilter } from './filter'
-import { PostList, ScreenHeader, Button, AppContext, StackContext, Separator } from 'components'
+import { MenuContent } from './menu'
+import {
+	PostList,
+	ScreenHeader,
+	AppContext,
+	StackContext,
+} from 'components'
 import { AppMenu } from 'system'
 
 const { registerApp } = getDispatch()
@@ -11,15 +17,6 @@ export const App = () => {
 	const { hideAppMenu } = useContext( AppContext )
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
 	const { type, query } = data
-
-	const testSetDataFromSidebar = () => {
-		hideAppMenu()
-		popToRoot()
-		setData( {
-			type,
-			query: Object.assign( {}, query, { post_type: 'page' } )
-		} )
-	}
 
 	return (
 		<Fragment>
@@ -32,37 +29,10 @@ export const App = () => {
 				pagination={ true }
 			/>
 
-			<AppMenu title="Filter Content" width="200px" displayBeside="wide">
-				<AppMenuContent onSelect={testSetDataFromSidebar} />
+			<AppMenu title="Filter Content">
+				<MenuContent />
 			</AppMenu>
 
-		</Fragment>
-	)
-}
-
-const AppMenuContent = ({ onSelect }) => {
-	const { pushView, popView } = useContext( StackContext )
-
-	const pushMenuDetail = () => {
-		pushView(
-			<Fragment>
-				Test!.
-				<Button onClick={popView}>Back</Button>
-			</Fragment>
-		)
-	}
-
-	return (
-		<Fragment>
-			<div style={{ padding: '0 0 30px' }}>
-				<div><Button onClick={onSelect}>Show Pages</Button></div>
-				<div><Button onClick={pushMenuDetail}>Push Menu View</Button></div>
-			</div>
-			<Separator />
-			<div style={{ padding: '30px 0' }}>
-				List here.
-			</div>
-			<Separator />
 		</Fragment>
 	)
 }

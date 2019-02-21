@@ -87,10 +87,10 @@ const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
 			{ ! shouldDisplayBesideContent &&
                 <animated.div className="fl-asst-app-menu-overlay" style={overlayProps} onClick={hideAppMenu} />
 			}
-			<animated.div className="fl-asst-app-menu-contents" style={viewProps} onClick={preventClickThrough}>
+			<animated.div className="fl-asst-app-menu-panel" style={viewProps} onClick={preventClickThrough}>
 				<Stack>
 					{ false !== title && <AppMenuHeader title={ title ? title : label } /> }
-					{children}
+					<div className="fl-asst-app-menu-contents">{children}</div>
 
 					<div>
 						<Button onClick={toggleSize}>Change Size</Button>

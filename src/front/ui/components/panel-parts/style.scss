@@ -39,7 +39,7 @@
 }
 .fl-asst-screen-header {
     background: var(--fl-utility-background-color);
-    padding: 10px 0 20px;
+    padding: 25px 0 20px;
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
@@ -53,7 +53,7 @@
         font-size: 20px;
         font-weight: 600;
         margin-bottom: 10px;
-        padding: 0 20px;
+        padding: 0 var(--fl-asst-base-padding);
         line-height: 1;
         color: var(--fl-title-color);
         display: flex;
@@ -83,7 +83,7 @@
     }
 
     .fl-asst-screen-header-contents {
-        padding: 0 20px;
+        padding: 0 var(--fl-asst-base-padding);
     }
 
     .fl-asst-expanded-contents-wrap {
@@ -120,7 +120,7 @@
         flex: 0 0 44px;
         display: flex;
         flex-direction: row;
-        padding: 0 20px;
+        padding: 0 var(--fl-asst-base-padding);
         align-items: center;
         pointer-events: auto;
     }
