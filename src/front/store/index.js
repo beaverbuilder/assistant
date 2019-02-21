@@ -31,12 +31,11 @@ export const useStore = () => {
 export const useAppState = ( key ) => {
 	const { appState } = useStore()
 	const { app } = useContext( AppContext )
-	const state = appState[ app ]
-	// if ( undefined === state[ key ] ) {
-	// 	throw new Error( `Key '${ key }' not found on '${ app }' app state.` )
-	// }
+	if ( undefined === appState[ app ][ key ] ) {
+		throw new Error( `Key '${ key }' not found on '${ app }' app state.` )
+	}
 	return [
-		state[ key ],
+		appState[ app ][ key ],
 		newState => store.dispatch( actions.setAppState( app, key, newState ) )
 	]
 }

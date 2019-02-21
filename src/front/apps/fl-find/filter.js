@@ -3,9 +3,8 @@ import { TagGroupControl, ExpandedContents } from 'components'
 import { useAppState, getConfig, useStore } from 'store'
 import { getWeek } from 'utils/datetime'
 
-export const PostListFilter = ( { onChange } ) => {
+export const getFilterConfig = () => {
 	const [ filter, setFilter ] = useAppState( 'filter' )
-	const { type, subType, date, status } = filter
 	const { counts } = useStore()
 	const { contentTypes, taxonomies } = getConfig()
 	const now = new Date()
@@ -81,27 +80,42 @@ export const PostListFilter = ( { onChange } ) => {
 		},
 	]
 
-	const onTypeChange = value => {
+	const setType = value => {
 		const [ type, subType ] = value
 		setFilter( { ...filter, type, subType } )
 	}
 
-	const onDateChange = date => {
+	const setDate = date => {
 		setFilter( { ...filter, date } )
 	}
 
-	const onStatusChange = status => {
+	const setStatus = status => {
 		setFilter( { ...filter, status } )
 	}
 
+	return { typeTags, dateTags, statusTags, setType, setDate, setStatus }
+}
+
+export const PostListFilter = () => {
+	const [ filter, setFilter ] = useAppState( 'filter' )
+	const { type, subType, date, status } = filter
+	const {
+		typeTags,
+		dateTags,
+		statusTags,
+		setType,
+		setDate,
+		setStatus
+	} = getFilterConfig()
+
 	return (
 		<Fragment>
-			<TagGroupControl tags={typeTags} value={[ type, subType ]} onChange={onTypeChange} appearance="vibrant" />
+			<TagGroupControl tags={typeTags} value={[ type, subType ]} onChange={setType} appearance="vibrant" />
 			{ 'posts' === type &&
 				<ExpandedContents>
-					<TagGroupControl tags={dateTags} value={date} title="Created" onChange={onDateChange} />
+					<TagGroupControl tags={dateTags} value={date} title="Created" onChange={setDate} />
 					{ 'attachment' !== subType &&
-						<TagGroupControl tags={statusTags} value={status} title="Status" onChange={onStatusChange} />
+						<TagGroupControl tags={statusTags} value={status} title="Status" onChange={setStatus} />
 					}
 				</ExpandedContents>
 			}

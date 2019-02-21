@@ -1,97 +1,29 @@
 import React, { Fragment, useContext } from 'react'
 import { getConfig, useStore, useAppState } from 'store'
 import { OptionGroup, OptionGroupItem, Separator, AppContext } from 'components'
+import { getFilterConfig } from './filter'
 
 export const MenuContent = ( { appStackContext } ) => {
-	const [ type, setType ] = useAppState( 'post-filter-type', 'posts' )
-	const [ subType, setSubType ] = useAppState( 'post-filter-sub-type', 'page' )
-	const [ date, setDate ] = useAppState( 'post-filter-date-type', '' )
-	const [ status, setStatus ] = useAppState( 'post-filter-status-type', 'publish' )
-	const { contentTypes, taxonomies } = getConfig()
-	const { counts } = useStore()
+	const [ filter, setFilter ] = useAppState( 'filter' )
+	const { type, subType, date, status } = filter
 	const { hideAppMenu } = useContext( AppContext )
 	const { popToRoot } = appStackContext
-	const typeTags = []
-	const now = new Date()
-
-	Object.keys( contentTypes ).map( type => {
-		typeTags.push( {
-			label: contentTypes[ type ],
-			value: [ 'posts', type ],
-			count: counts[ `content/${ type }` ] || '0'
-		} )
-	} )
-
-	Object.keys( taxonomies ).map( type => {
-		typeTags.push( {
-			label: taxonomies[ type ],
-			value: [ 'terms', type ],
-			count: counts[ `taxonomy/${ type }` ] || '0'
-		} )
-	} )
+	const {
+		typeTags,
+		dateTags,
+		statusTags,
+		setType,
+		setDate,
+		setStatus
+	} = getFilterConfig()
 
 	const onTypeClick = value => {
 		hideAppMenu()
 		popToRoot()
-		setType( value[0] )
-		setSubType( value[1] )
+		setType( value )
 	}
 
 	const currentContentType = [ type, subType ]
-
-	const dateTags = [
-		{
-			label: 'Any',
-			value: '',
-		},
-		{
-			label: 'Today',
-			value: 'today',
-		},
-		{
-			label: 'This Week',
-			value: 'week',
-		},
-		{
-			label: 'This Month',
-			value: 'month',
-		},
-		{
-			label: now.getFullYear(),
-			value: 'year'
-		}
-	]
-
-	const statusTags = [
-		{
-			label: 'Any',
-			value: 'any',
-		},
-		{
-			label: 'Published',
-			value: 'publish',
-		},
-		{
-			label: 'Draft',
-			value: 'draft',
-		},
-		{
-			label: 'Pending',
-			value: 'pending',
-		},
-		{
-			label: 'Scheduled',
-			value: 'future',
-		},
-		{
-			label: 'Private',
-			value: 'private',
-		},
-		{
-			label: 'Trash',
-			value: 'trash',
-		},
-	]
 
 	return (
 		<Fragment>
@@ -125,9 +57,9 @@ export const MenuContent = ( { appStackContext } ) => {
 								key={i}
 								isSelected={isSelected}
 								onClick={ () => {
-									setDate( value )
 									hideAppMenu()
 									popToRoot()
+									setDate( value )
 								}}
 							>{label}</OptionGroupItem>
 						)
@@ -144,9 +76,9 @@ export const MenuContent = ( { appStackContext } ) => {
 								key={i}
 								isSelected={isSelected}
 								onClick={ () => {
-									setStatus( value )
 									hideAppMenu()
 									popToRoot()
+									setStatus( value )
 								}}
 							>{label}</OptionGroupItem>
 						)

@@ -1,4 +1,10 @@
-export const query = ( type, subType, date, status ) => {
+import { useAppState } from 'store'
+
+export const getQuery = () => {
+	const [ filter ] = useAppState( 'filter' )
+	const { type, subType, date, status } = filter
+	const query = {}
+
 	switch ( type ) {
 	case 'posts':
 		query.post_type = subType
