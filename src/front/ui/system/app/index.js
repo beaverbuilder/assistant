@@ -101,7 +101,7 @@ const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
 	)
 }
 
-const AppMenuHeader = ({ title }) => {
+const AppMenuHeader = ( { title } ) => {
 	return (
 		<Fragment>
 			<Padding>
@@ -130,7 +130,7 @@ export const AppMenuButton = () => {
 						return null
 					}
 
-					if ( shouldMenuDisplayBeside( displayBeside, appFrameSize) ) {
+					if ( shouldMenuDisplayBeside( displayBeside, appFrameSize ) ) {
 						return null
 					}
 

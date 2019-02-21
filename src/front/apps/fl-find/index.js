@@ -1,20 +1,16 @@
-import React, { Fragment, useContext } from 'react'
-import { useAppState, getDispatch, getConfig } from 'store'
+import React, { Fragment } from 'react'
+import { useAppState, getDispatch } from 'store'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
 import {
 	PostList,
 	ScreenHeader,
-	AppContext,
-	StackContext,
 } from 'components'
 import { AppMenu } from 'system'
 
 const { registerApp } = getDispatch()
 
 export const App = () => {
-	const { popToRoot } = useContext( StackContext )
-	const { hideAppMenu } = useContext( AppContext )
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
 	const { type, query } = data
 

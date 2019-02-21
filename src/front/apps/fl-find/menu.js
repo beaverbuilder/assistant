@@ -4,8 +4,8 @@ import { OptionGroup, OptionGroupItem, Separator } from 'components'
 
 export const MenuContent = () => {
 	const { contentTypes, taxonomies } = getConfig()
-    const { counts } = useStore()
-    const typeTags = []
+	const { counts } = useStore()
+	const typeTags = []
 
 	Object.keys( contentTypes ).map( type => {
 		typeTags.push( {
@@ -26,12 +26,12 @@ export const MenuContent = () => {
 	return (
 		<Fragment>
 			<OptionGroup title="Content Types">
-            { typeTags.map( ( type, i ) => {
-                const { label } = type
-                return (
-                    <OptionGroupItem key={i}>{label}</OptionGroupItem>
-                )
-            })}
+				{ typeTags.map( ( type, i ) => {
+					const { label } = type
+					return (
+						<OptionGroupItem key={i}>{label}</OptionGroupItem>
+					)
+				} )}
 			</OptionGroup>
 			<Separator />
 

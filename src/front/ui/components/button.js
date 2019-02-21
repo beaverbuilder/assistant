@@ -1,5 +1,4 @@
 import React, { forwardRef, useContext } from 'react'
-import posed from 'react-pose'
 import { animated, useSpring } from 'react-spring'
 import classname from 'classnames'
 import { useStore } from 'store'
@@ -11,7 +10,7 @@ export const Button = forwardRef( ( props, ref ) => {
 		'fl-asst-button': true,
 		'fl-asst-button-is-selected': isSelected,
 		'fl-asst-button-transparent': 'icon' === appearance || 'transparent' === appearance,
-		'fl-asst-button-icon' : 'icon' === appearance
+		'fl-asst-button-icon': 'icon' === appearance
 	}, className )
 
 	const filteredProps = Object.assign( {}, props, {
@@ -39,13 +38,13 @@ export const AppTabButton = forwardRef( ( props, ref ) => {
 		'fl-asst-button-is-selected': isSelected
 	}, className )
 
-	const isFrameExpanded = ['full', 'wide'].includes( appFrameSize )
+	const isFrameExpanded = [ 'full', 'wide' ].includes( appFrameSize )
 
-	const springProps = useSpring({
+	const springProps = useSpring( {
 		paddingLeft: isFrameExpanded ? 20 : 10,
 		paddingRight: isFrameExpanded ? 20 : 10,
 		immediate: shouldReduceMotion,
-	})
+	} )
 
 	const merged = {
 		ref,

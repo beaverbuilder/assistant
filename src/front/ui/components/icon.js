@@ -88,11 +88,11 @@ export const Icon = ( { name } ) => {
 	case 'menu':
 		return (
 			<svg width="20px" height="14px" viewBox="0 0 20 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			    <g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round">
+				<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round">
 					<path d="M1,1 L19,1" ></path>
 					<path d="M1,7 L19,7" ></path>
 					<path d="M1,13 L19,13" ></path>
-			    </g>
+				</g>
 			</svg>
 		)
 	default:
