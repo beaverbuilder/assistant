@@ -37,7 +37,7 @@ export const MenuContent = ( { appStackContext } ) => {
 		setSubType( value[1] )
 	}
 
-	const currentContentType = [type, subType]
+	const currentContentType = [ type, subType ]
 
 	const dateTags = [
 		{
@@ -115,40 +115,40 @@ export const MenuContent = ( { appStackContext } ) => {
 			<Separator />
 
 			<OptionGroup title="Created">
-			{ dateTags.map( ( item, i ) => {
-				const { label, value } = item
-				let isSelected = date === value ? true : false
-				return (
-					<OptionGroupItem
-						key={i}
-						isSelected={isSelected}
-						onClick={ () => {
-							setDate( value )
-							hideAppMenu()
-							popToRoot()
-						}}
-					>{label}</OptionGroupItem>
-				)
-			})}
+				{ dateTags.map( ( item, i ) => {
+					const { label, value } = item
+					let isSelected = date === value ? true : false
+					return (
+						<OptionGroupItem
+							key={i}
+							isSelected={isSelected}
+							onClick={ () => {
+								setDate( value )
+								hideAppMenu()
+								popToRoot()
+							}}
+						>{label}</OptionGroupItem>
+					)
+				} )}
 			</OptionGroup>
 			<Separator />
 
 			<OptionGroup title="Status">
-			{ statusTags.map( ( item, i ) => {
-				const { label, value } = item
-				let isSelected = status === value ? true : false
-				return (
-					<OptionGroupItem
-						key={i}
-						isSelected={isSelected}
-						onClick={ () => {
-							setStatus( value )
-							hideAppMenu()
-							popToRoot()
-						}}
-					>{label}</OptionGroupItem>
-				)
-			})}
+				{ statusTags.map( ( item, i ) => {
+					const { label, value } = item
+					let isSelected = status === value ? true : false
+					return (
+						<OptionGroupItem
+							key={i}
+							isSelected={isSelected}
+							onClick={ () => {
+								setStatus( value )
+								hideAppMenu()
+								popToRoot()
+							}}
+						>{label}</OptionGroupItem>
+					)
+				} )}
 			</OptionGroup>
 			<Separator />
 		</Fragment>
