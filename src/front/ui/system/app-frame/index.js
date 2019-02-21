@@ -8,8 +8,8 @@ export const useAppFrame = () => {
 	const { setAppFrameSize } = getDispatch()
 	const { width: windowWidth } = useWindowSize()
 
-	const normalPreferredWidth = 461 /* 1px extra for inside edge border */
-	const widePreferredWidth = 769
+	const normalPreferredWidth = 460
+	const widePreferredWidth = 768
 	const threshold = .8
 	let frameWidth = 0
 	let frameHeight = '100vh'
@@ -64,7 +64,7 @@ export const AppFrame = ( { children } ) => {
 	}
 
 	const springProps = useSpring( {
-		width,
+		width: width + 1 /* account for inside edge border */, 
 		height,
 		right: 'end' === alignment ? 0 : windowWidth - width,
 		transform: transform(),
@@ -77,7 +77,6 @@ export const AppFrame = ( { children } ) => {
 	const outsideEdge = 'end' === alignment ? 'borderRight' : 'borderLeft'
 
 	const styles = {
-		boxSizing: 'border-box',
 		position: 'fixed',
 		top: 0,
 		zIndex: 999999,

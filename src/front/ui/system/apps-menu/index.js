@@ -15,7 +15,7 @@ const AppsMenu = () => {
 
 	return (
 		<Fragment>
-			<Heading className="fl-asst-manage-apps-title">Manage Apps</Heading>
+			<Heading className="fl-asst-manage-apps-title">Apps</Heading>
 			<div className="fl-asst-app-list">
 				{ Object.keys( apps ).map( key => {
 

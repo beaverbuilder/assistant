@@ -62,9 +62,12 @@
         flex: 0 0;
         padding: calc( var(--fl-asst-base-padding) / 2 ) 0;
         padding-right:0;
+        transform: scale(1);
+        transition-property: transform;
+        transition-duration: .25s;
 
         .fl-asst-list-item-image-box {
-            width: 50px;
+            width: calc( var(--fl-asst-base-padding) * 2 );
             padding-top:100%;
             background: var(--fl-utility-background-color);
 			background-size: cover;
@@ -73,6 +76,12 @@
         .fl-asst-list-item-image-box:before {
             content: "";
             display: block;
+        }
+    }
+
+    &:hover {
+        .fl-asst-list-item-visual {
+            transform: scale(1.15)
         }
     }
 
