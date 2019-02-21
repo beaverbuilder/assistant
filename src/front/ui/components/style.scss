@@ -45,6 +45,12 @@
         background: transparent;
     }
 
+    &.fl-asst-button-icon {
+        margin:0;
+        padding: 7px;
+        min-width: 40px;
+    }
+
     &.fl-asst-outline-button {
         background:white;
         color: var(--fl-accent-color);

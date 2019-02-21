@@ -8,7 +8,7 @@ export const useAppFrame = () => {
 	const { setAppFrameSize } = getDispatch()
 	const { width: windowWidth } = useWindowSize()
 
-	const normalPreferredWidth = 440
+	const normalPreferredWidth = 441
 	const widePreferredWidth = 720
 	let frameWidth = 0
 	let frameHeight = '100vh'

@@ -21,7 +21,7 @@
             pointer-events: none;
         }
 
-        .fl-asst-app-menu-contents {
+        .fl-asst-app-menu-panel {
             position: absolute;
             top:0;
             left:0;
@@ -36,13 +36,16 @@
             .fl-asst-app-menu-title {
                 font-size: 20px;
                 font-weight: 600;
+                color: var(--fl-title-color);
             }
+
+            .fl-asst-app-menu-contents {}
         }
 
         &.fl-asst-app-menu-inline {
             position: static;
 
-            .fl-asst-app-menu-contents {
+            .fl-asst-app-menu-panel {
                 position: static;
                 border-right: 1px solid var(--fl-line-color);
             }

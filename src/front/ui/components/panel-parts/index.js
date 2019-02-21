@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { TunnelPlaceholder } from 'react-tunnels'
 import { Button, Icon, AppContext, StackContext } from 'components'
+import { AppMenuButton } from 'system'
 import './style.scss'
 
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
-	const { label, toggleAppMenu } = useContext( AppContext )
+	const { label } = useContext( AppContext )
 	const { isRootView, popView } = useContext( StackContext )
 	const screenTitle = title ? title : label
 
@@ -22,17 +22,7 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 					<Icon name="back" />
 				</Button> }
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
-
-				<TunnelPlaceholder id="app-menu" multiple>
-					{ ( { items } ) => {
-						if ( items && 0 < items.length ) {
-							return (
-								<Button onClick={toggleAppMenu}>Menu</Button>
-							)
-						}
-						return null
-					} }
-				</TunnelPlaceholder>
+				<AppMenuButton />
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>
 		</div>

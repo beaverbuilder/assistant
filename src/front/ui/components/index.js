@@ -49,6 +49,8 @@ export {
 	UserList,
 } from './content-list'
 
+export { OptionGroup, OptionGroupItem } from './option-group'
+
 export { Widget } from './widgets'
 export { Stack } from './stacks'
 export { useModals } from './modals'

@@ -1,25 +1,20 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState, getDispatch } from 'store'
+import { StackContext } from 'components'
 import { PostListFilter } from './filter'
-import { PostList, ScreenHeader, Button, AppContext, StackContext } from 'components'
+import { MenuContent } from './menu'
+import {
+	PostList,
+	ScreenHeader,
+} from 'components'
 import { AppMenu } from 'system'
 
 const { registerApp } = getDispatch()
 
-export const FindTab = () => {
-	const { popToRoot } = useContext( StackContext )
-	const { hideAppMenu } = useContext( AppContext )
+export const App = () => {
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
+	const stack = useContext( StackContext )
 	const { type, query } = data
-
-	const testSetDataFromSidebar = () => {
-		hideAppMenu()
-		popToRoot()
-		setData( {
-			type,
-			query: Object.assign( {}, query, { post_type: 'page' } )
-		} )
-	}
 
 	return (
 		<Fragment>
@@ -33,16 +28,14 @@ export const FindTab = () => {
 			/>
 
 			<AppMenu title="Filter Content">
-				<div style={{ padding: 30, paddingTop: 0}}>
-					<div><Button onClick={testSetDataFromSidebar}>Show Pages</Button></div>
-				</div>
+				<MenuContent appStackContext={stack} />
 			</AppMenu>
 
 		</Fragment>
 	)
 }
 
-export const FindIcon = () => {
+export const AppIcon = () => {
 	return (
 		<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g fill="transparent" transform="translate(-145.000000, -145.000000)" fillRule="nonzero" strokeWidth="2" stroke="currentColor">
@@ -55,6 +48,6 @@ export const FindIcon = () => {
 
 registerApp( 'fl-find', {
 	label: 'Content',
-	content: props => <FindTab {...props} />,
-	icon: props => <FindIcon {...props} />,
+	content: props => <App {...props} />,
+	icon: props => <AppIcon {...props} />,
 } )
