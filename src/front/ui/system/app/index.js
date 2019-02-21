@@ -52,7 +52,7 @@ const shouldMenuDisplayBeside = ( displayBeside, appFrameSize ) => {
 	return false
 }
 
-const Menu = ( { title, children, displayBeside = 'full' } ) => {
+const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
 	const { shouldReduceMotion } = useStore()
 	const { hideAppMenu, isShowingAppMenu, label } = useContext( AppContext )
 	const { appFrameSize, setAppFrameSize } = useContext( UIContext )
@@ -76,7 +76,7 @@ const Menu = ( { title, children, displayBeside = 'full' } ) => {
 		immediate: shouldReduceMotion,
 	} )
 	const viewProps = useSpring( {
-		width: 300,
+		width,
 		transform: isShowingAppMenu || shouldDisplayBesideContent ? 'translateX(0%)' : 'translateX(-100%)',
 		immediate: shouldReduceMotion,
 	} )
@@ -89,7 +89,7 @@ const Menu = ( { title, children, displayBeside = 'full' } ) => {
 			}
 			<animated.div className="fl-asst-app-menu-contents" style={viewProps} onClick={preventClickThrough}>
 				<Stack>
-					<AppMenuHeader title={ title ? title : label } />
+					{ false !== title && <AppMenuHeader title={ title ? title : label } /> }
 					{children}
 
 					<div>

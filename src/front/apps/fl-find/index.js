@@ -32,7 +32,7 @@ export const App = () => {
 				pagination={ true }
 			/>
 
-			<AppMenu title="Filter Content">
+			<AppMenu title="Filter Content" width="200px" displayBeside="wide">
 				<AppMenuContent onSelect={testSetDataFromSidebar} />
 			</AppMenu>
 
