@@ -49,6 +49,10 @@
         margin:0;
         padding: 7px;
         min-width: 40px;
+
+        &:hover svg {
+            color: var(--fl-accent-color);
+        }
     }
 
     &.fl-asst-outline-button {
