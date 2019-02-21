@@ -132,6 +132,25 @@ export const MenuContent = ( { appStackContext } ) => {
 			})}
 			</OptionGroup>
 			<Separator />
+
+			<OptionGroup title="Status">
+			{ statusTags.map( ( item, i ) => {
+				const { label, value } = item
+				let isSelected = status === value ? true : false
+				return (
+					<OptionGroupItem
+						key={i}
+						isSelected={isSelected}
+						onClick={ () => {
+							setStatus( value )
+							hideAppMenu()
+							popToRoot()
+						}}
+					>{label}</OptionGroupItem>
+				)
+			})}
+			</OptionGroup>
+			<Separator />
 		</Fragment>
 	)
 }
