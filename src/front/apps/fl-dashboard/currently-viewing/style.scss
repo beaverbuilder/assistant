@@ -1,14 +1,15 @@
 .fl-asst-pretitle {
-    font-size: 12px;
+    font-weight: 500;
     color: var(--fl-asst-muted-text-color);
     line-height: 1.2;
-    margin-bottom: 2px;
+    margin-bottom: 7px;
 }
 .fl-asst-title {
     font-size: 16px;
     font-weight: 500;
     line-height: 1.2;
     margin-bottom: 10px;
+    color: var(--fl-title-color);
 }
 
 .fl-asst-theme-item {
@@ -16,10 +17,6 @@
 
     .fl-asst-theme-item-details {
         flex: 1 1 auto;
-
-        .fl-asst-current-theme-pretitle {
-            margin-bottom:7px;
-        }
 
         .fl-asst-title {
             margin-bottom:4px;
