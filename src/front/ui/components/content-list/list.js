@@ -27,8 +27,6 @@ export const ContentList = ( {
 	const request = useRef()
 	const { ref, updateCurrentView } = useContext( StackContext )
 
-	console.log('stack ref', ref )
-
 	useEffect( () => {
 		return () => request.current && request.current.cancel()
 	}, [] )
