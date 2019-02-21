@@ -5,11 +5,14 @@ import { OptionGroup, OptionGroupItem, Separator, AppContext } from 'components'
 export const MenuContent = ( { appStackContext } ) => {
 	const [ type, setType ] = useAppState( 'post-filter-type', 'posts' )
 	const [ subType, setSubType ] = useAppState( 'post-filter-sub-type', 'page' )
+	const [ date, setDate ] = useAppState( 'post-filter-date-type', '' )
+	const [ status, setStatus ] = useAppState( 'post-filter-status-type', 'publish' )
 	const { contentTypes, taxonomies } = getConfig()
 	const { counts } = useStore()
 	const { hideAppMenu } = useContext( AppContext )
 	const { popToRoot } = appStackContext
 	const typeTags = []
+	const now = new Date()
 
 	Object.keys( contentTypes ).map( type => {
 		typeTags.push( {
@@ -36,6 +39,60 @@ export const MenuContent = ( { appStackContext } ) => {
 
 	const currentContentType = [type, subType]
 
+	const dateTags = [
+		{
+			label: 'Any',
+			value: '',
+		},
+		{
+			label: 'Today',
+			value: 'today',
+		},
+		{
+			label: 'This Week',
+			value: 'week',
+		},
+		{
+			label: 'This Month',
+			value: 'month',
+		},
+		{
+			label: now.getFullYear(),
+			value: 'year'
+		}
+	]
+
+	const statusTags = [
+		{
+			label: 'Any',
+			value: 'any',
+		},
+		{
+			label: 'Published',
+			value: 'publish',
+		},
+		{
+			label: 'Draft',
+			value: 'draft',
+		},
+		{
+			label: 'Pending',
+			value: 'pending',
+		},
+		{
+			label: 'Scheduled',
+			value: 'future',
+		},
+		{
+			label: 'Private',
+			value: 'private',
+		},
+		{
+			label: 'Trash',
+			value: 'trash',
+		},
+	]
+
 	return (
 		<Fragment>
 			<OptionGroup title="Content Types">
@@ -58,10 +115,21 @@ export const MenuContent = ( { appStackContext } ) => {
 			<Separator />
 
 			<OptionGroup title="Created">
-				<OptionGroupItem>Today</OptionGroupItem>
-				<OptionGroupItem isSelected={true}>This Week</OptionGroupItem>
-				<OptionGroupItem>This Month</OptionGroupItem>
-				<OptionGroupItem>2019</OptionGroupItem>
+			{ dateTags.map( ( item, i ) => {
+				const { label, value } = item
+				let isSelected = date === value ? true : false
+				return (
+					<OptionGroupItem
+						key={i}
+						isSelected={isSelected}
+						onClick={ () => {
+							setDate( value )
+							hideAppMenu()
+							popToRoot()
+						}}
+					>{label}</OptionGroupItem>
+				)
+			})}
 			</OptionGroup>
 			<Separator />
 		</Fragment>
