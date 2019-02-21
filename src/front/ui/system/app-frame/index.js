@@ -10,15 +10,28 @@ export const useAppFrame = () => {
 
 	const normalPreferredWidth = 461 /* 1px extra for inside edge border */
 	const widePreferredWidth = 769
+	const threshold = .8
 	let frameWidth = 0
 	let frameHeight = '100vh'
+	let isDisplayingFullscreen = false
 
 	if ( 'wide' === appFrameSize ) {
-		frameWidth = widePreferredWidth > ( windowWidth * .8 ) ? windowWidth : widePreferredWidth
+		if ( widePreferredWidth > ( windowWidth * threshold ) ) {
+			frameWidth = windowWidth
+			isDisplayingFullscreen = true
+		} else {
+			frameWidth = widePreferredWidth
+		}
 	} else if ( 'full' === appFrameSize ) {
 		frameWidth = windowWidth
+		isDisplayinFullscreen = true
 	} else {
-		frameWidth = normalPreferredWidth > ( windowWidth * .8 ) ? windowWidth : normalPreferredWidth
+		if ( normalPreferredWidth > ( windowWidth * threshold ) ) {
+			frameWidth = windowWidth
+			isDisplayingFullscreen = true
+		} else {
+			frameWidth = normalPreferredWidth
+		}
 	}
 
 	return {
@@ -27,6 +40,7 @@ export const useAppFrame = () => {
 			height: frameHeight,
 			sizeName: appFrameSize,
 			alignment: panelPosition,
+			isDisplayingFullscreen,
 		},
 		setAppFrameSize,
 	}
@@ -49,30 +63,13 @@ export const AppFrame = ( { children } ) => {
 		}
 	}
 
-	const springState = () => {
-
-		return {
-			width,
-			height,
-			right: 'end' === alignment ? 0 : windowWidth - width,
-			transform: transform(),
-			immediate: shouldReduceMotion
-		}
-	}
-
-	const [ springProps, set ] = useSpring( () => {
-
-		const values = {
-			width,
-			height,
-			transform: transform(),
-			right: 'end' === alignment ? 0 : windowWidth - width,
-			immediate: shouldReduceMotion
-		}
-		return values
-	} )
-
-	set( springState() )
+	const springProps = useSpring({
+		width,
+		height,
+		right: 'end' === alignment ? 0 : windowWidth - width,
+		transform: transform(),
+		immediate: shouldReduceMotion,
+	})
 
 	const insideBorder = '1px solid var(--fl-line-color)'
 	const insideEdge = 'end' === alignment ? 'borderLeft' : 'borderRight'
