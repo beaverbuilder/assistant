@@ -1,8 +1,12 @@
 .fl-asst-widget {
     padding: var(--fl-asst-base-padding);
 
+    .fl-asst-widget-title {
+        margin-bottom: calc( var(--fl-asst-base-padding) / 2 );
+    }
+
     &.fl-asst-widget-no-padding {
-        padding:0 0 var(--fl-asst-base-padding);
+        padding:0;
 
         .fl-asst-widget-title {
             padding: var(--fl-asst-base-padding) var(--fl-asst-base-padding) 0;

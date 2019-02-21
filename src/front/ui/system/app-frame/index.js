@@ -8,17 +8,17 @@ export const useAppFrame = () => {
 	const { setAppFrameSize } = getDispatch()
 	const { width: windowWidth } = useWindowSize()
 
-	const normalPreferredWidth = 441
-	const widePreferredWidth = 720
+	const normalPreferredWidth = 461 /* 1px extra for inside edge border */
+	const widePreferredWidth = 769
 	let frameWidth = 0
 	let frameHeight = '100vh'
 
 	if ( 'wide' === appFrameSize ) {
-		frameWidth = 768 > windowWidth ? windowWidth : widePreferredWidth
+		frameWidth = widePreferredWidth > ( windowWidth * .8 ) ? windowWidth : widePreferredWidth
 	} else if ( 'full' === appFrameSize ) {
 		frameWidth = windowWidth
 	} else {
-		frameWidth = normalPreferredWidth > ( windowWidth * .6 ) ? windowWidth : normalPreferredWidth
+		frameWidth = normalPreferredWidth > ( windowWidth * .8 ) ? windowWidth : normalPreferredWidth
 	}
 
 	return {
