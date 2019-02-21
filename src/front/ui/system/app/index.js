@@ -55,13 +55,7 @@ const shouldMenuDisplayBeside = ( displayBeside, appFrameSize ) => {
 const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
 	const { shouldReduceMotion } = useStore()
 	const { hideAppMenu, isShowingAppMenu, label } = useContext( AppContext )
-	const { appFrameSize, setAppFrameSize } = useContext( UIContext )
-
-	const toggleSize = () => {
-		const sizes = [ 'normal', 'wide', 'full' ]
-		const newSize = sizes[ ( sizes.indexOf( appFrameSize ) + 1 ) % sizes.length ]
-		setAppFrameSize( newSize )
-	}
+	const { appFrameSize } = useContext( UIContext )
 
 	let shouldDisplayBesideContent = shouldMenuDisplayBeside( displayBeside, appFrameSize )
 
@@ -91,10 +85,6 @@ const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
 				<Stack>
 					{ false !== title && <AppMenuHeader title={ title ? title : label } /> }
 					<div className="fl-asst-app-menu-contents">{children}</div>
-
-					<div>
-						<Button onClick={toggleSize}>Change Size</Button>
-					</div>
 				</Stack>
 			</animated.div>
 		</div>
