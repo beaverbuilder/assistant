@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { getConfig, useStore } from 'store'
-import { OptionGroup, OptionGroupItem, Separator } from 'components'
+import { OptionGroup, OptionGroupItem, Separator, AppContext } from 'components'
 
-export const MenuContent = () => {
+export const MenuContent = ({ appStackContext }) => {
 	const { contentTypes, taxonomies } = getConfig()
 	const { counts } = useStore()
+	const { hideAppMenu } = useContext( AppContext )
+	const { popToRoot } = appStackContext
 	const typeTags = []
 
 	Object.keys( contentTypes ).map( type => {
@@ -23,19 +25,32 @@ export const MenuContent = () => {
 		} )
 	} )
 
+	const setType = value => {
+		hideAppMenu()
+		popToRoot()
+		// @TODO: hookup filter here
+		console.log('selected', value )
+	}
+
 	return (
 		<Fragment>
 			<OptionGroup title="Content Types">
 				{ typeTags.map( ( type, i ) => {
-					const { label } = type
+					const { label, count, value } = type
+					const isSelected = false // @TODO - Connect is selected
 					return (
-						<OptionGroupItem key={i}>{label}</OptionGroupItem>
+						<OptionGroupItem
+							key={i}
+							count={count}
+							isSelected={isSelected}
+							onClick={ () => setType( value )}
+						>{label}</OptionGroupItem>
 					)
 				} )}
 			</OptionGroup>
 			<Separator />
 
-			<OptionGroup title="Last Edited">
+			<OptionGroup title="Created">
 				<OptionGroupItem>Today</OptionGroupItem>
 				<OptionGroupItem isSelected={true}>This Week</OptionGroupItem>
 				<OptionGroupItem>This Month</OptionGroupItem>

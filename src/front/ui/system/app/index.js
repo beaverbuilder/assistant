@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext } from 'react'
 import classname from 'classnames'
-import { animated, useSpring } from 'react-spring'
+import { animated, useSpring, config } from 'react-spring'
 import { useStore } from 'store'
 import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon } from 'components'
 import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
@@ -64,15 +64,19 @@ const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
 		'fl-asst-app-menu-inline': shouldDisplayBesideContent
 	} )
 
+	const springConfig = { ...config.default, tension: 400, friction: 33 }
+
 	const overlayProps = useSpring( {
 		pointerEvents: isShowingAppMenu ? 'auto' : 'none',
 		opacity: isShowingAppMenu ? 1 : 0,
 		immediate: shouldReduceMotion,
+		config: springConfig,
 	} )
 	const viewProps = useSpring( {
 		width,
 		transform: isShowingAppMenu || shouldDisplayBesideContent ? 'translateX(0%)' : 'translateX(-100%)',
 		immediate: shouldReduceMotion,
+		config: springConfig,
 	} )
 	const preventClickThrough = e => e.stopPropagation()
 

@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { useAppState, getDispatch } from 'store'
+import { StackContext } from 'components'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
 import {
@@ -12,6 +13,7 @@ const { registerApp } = getDispatch()
 
 export const App = () => {
 	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
+	const stack = useContext( StackContext )
 	const { type, query } = data
 
 	return (
@@ -26,7 +28,7 @@ export const App = () => {
 			/>
 
 			<AppMenu title="Filter Content">
-				<MenuContent />
+				<MenuContent appStackContext={stack} />
 			</AppMenu>
 
 		</Fragment>

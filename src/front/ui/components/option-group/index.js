@@ -17,7 +17,7 @@ export const OptionGroup = props => {
 }
 
 export const OptionGroupItem = props => {
-	const { className, onClick, children, isSelected } = props
+	const { className, onClick, children, isSelected, count } = props
 	const classes = classname( {
 		'fl-asst-option-group-item': true
 	}, className )
@@ -28,7 +28,10 @@ export const OptionGroupItem = props => {
 	delete mergedProps.isSelected
 	return (
 		<li {...mergedProps}>
-			<Button onClick={onClick} appearance="transparent" isSelected={isSelected}>{children}</Button>
+			<Button onClick={onClick} appearance="transparent" isSelected={isSelected}>
+				{children}
+				{ count && <span className="fl-asst-option-group-item-count">{count}</span> }
+			</Button>
 		</li>
 	)
 }
