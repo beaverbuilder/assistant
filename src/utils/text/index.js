@@ -10,7 +10,7 @@ export function truncate( string = '', length = 40, ellipses = '...' ) {
 	if ( string.length <= length || punctuation.includes( last ) ) {
 		return part
 	}
-	if ( ! last.match( /[a-zA-z]/ ) ) {
+	if ( ! last.match( /[a-zA-Z]/ ) ) {
 		return part.substring( 0, part.length - 1 ) + ellipses
 	}
 
