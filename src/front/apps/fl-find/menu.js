@@ -34,12 +34,17 @@ export const MenuContent = ( { appStackContext } ) => {
 		setSubType( value[1] )
 	}
 
+	const currentContentType = [type, subType]
+
 	return (
 		<Fragment>
 			<OptionGroup title="Content Types">
 				{ typeTags.map( ( type, i ) => {
 					const { label, count, value } = type
-					const isSelected = false // @TODO - Connect is selected
+					let isSelected = value == currentContentType
+					if ( Array.isArray( value ) ) {
+						isSelected = JSON.stringify( value ) === JSON.stringify( currentContentType )
+					}
 					return (
 						<OptionGroupItem
 							key={i}
