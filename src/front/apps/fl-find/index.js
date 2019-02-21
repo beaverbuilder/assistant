@@ -3,6 +3,7 @@ import { useAppState, getDispatch } from 'store'
 import { StackContext } from 'components'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
+import { query } from './query'
 import {
 	PostList,
 	ScreenHeader,
@@ -12,9 +13,9 @@ import { AppMenu } from 'system'
 const { registerApp } = getDispatch()
 
 export const App = () => {
-	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
+	const [ filter ] = useAppState( 'filter' )
+	const { type, subType, date, status } = filter
 	const stack = useContext( StackContext )
-	const { type, query } = data
 
 	return (
 		<Fragment>
@@ -50,4 +51,13 @@ registerApp( 'fl-find', {
 	label: 'Content',
 	content: props => <App {...props} />,
 	icon: props => <AppIcon {...props} />,
+	state: {
+		filter: {
+			type: 'posts',
+			subType: 'page',
+			date: '',
+			status: 'publish',
+		},
+		query: null,
+	},
 } )

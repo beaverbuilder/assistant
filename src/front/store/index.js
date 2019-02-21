@@ -24,16 +24,19 @@ export const useStore = () => {
 }
 
 /**
- * Custom hook for storing local app state values in the
- * store. This allows these values to persist between page
+ * Custom hook for accessing and updating state values defined
+ * when an app is registered. These values persist between page
  * views as the app state is cached to local storage.
  */
-export const useAppState = ( key, value ) => {
+export const useAppState = ( key ) => {
 	const { appState } = useStore()
 	const { app } = useContext( AppContext )
 	const state = appState[ app ]
+	// if ( undefined === state[ key ] ) {
+	// 	throw new Error( `Key '${ key }' not found on '${ app }' app state.` )
+	// }
 	return [
-		undefined !== state[ key ] ? state[ key ] : value,
+		state[ key ],
 		newState => store.dispatch( actions.setAppState( app, key, newState ) )
 	]
 }

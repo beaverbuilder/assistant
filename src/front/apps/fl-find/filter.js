@@ -4,10 +4,8 @@ import { useAppState, getConfig, useStore } from 'store'
 import { getWeek } from 'utils/datetime'
 
 export const PostListFilter = ( { onChange } ) => {
-	const [ type, setType ] = useAppState( 'post-filter-type', 'posts' )
-	const [ subType, setSubType ] = useAppState( 'post-filter-sub-type', 'page' )
-	const [ date, setDate ] = useAppState( 'post-filter-date-type', '' )
-	const [ status, setStatus ] = useAppState( 'post-filter-status-type', 'publish' )
+	const [ filter, setFilter ] = useAppState( 'filter' )
+	const { type, subType, date, status } = filter
 	const { counts } = useStore()
 	const { contentTypes, taxonomies } = getConfig()
 	const now = new Date()
@@ -28,16 +26,6 @@ export const PostListFilter = ( { onChange } ) => {
 			count: counts[ `taxonomy/${ type }` ] || '0'
 		} )
 	} )
-
-	const changeType = value => {
-		if ( Array.isArray( value ) ) {
-			const [ type, subType ] = value
-			setType( type )
-			setSubType( subType )
-		} else {
-			setType( value )
-		}
-	}
 
 	const dateTags = [
 		{
@@ -93,64 +81,27 @@ export const PostListFilter = ( { onChange } ) => {
 		},
 	]
 
-	// Setup the query
-	let query = {}
-	let typeTagValue = [ type, subType ] // Value to pass to the 'type' tag group
-
-	switch ( type ) {
-
-	// Handle post queries
-	case 'posts':
-		query = {
-			post_type: subType,
-			posts_per_page: 20,
-			orderby: 'title',
-			order: 'ASC',
-			s: '',
-			post_status: 'attachment' === subType ? 'any' : status,
-		}
-		switch ( date ) {
-		case 'today':
-			query.year = now.getFullYear()
-			query.month = now.getMonth() + 1
-			query.day = now.getDate()
-			break
-		case 'week':
-			query.year = now.getFullYear()
-			query.w = getWeek( now )
-			break
-		case 'month':
-			query.year = now.getFullYear()
-			query.month = now.getMonth() + 1
-			break
-		case 'year':
-			query.year = now.getFullYear()
-			break
-		}
-		break
-
-	// Handle taxonomy queries
-	case 'terms':
-		query = {
-			taxonomy: subType,
-			hide_empty: 0
-		}
-		typeTagValue = [ type, subType ]
-		break
+	const onTypeChange = value => {
+		const [ type, subType ] = value
+		setFilter( { ...filter, type, subType } )
 	}
 
-	useEffect( () => {
-		onChange( { type, query } )
-	}, [ type, JSON.stringify( query ) ] )
+	const onDateChange = date => {
+		setFilter( { ...filter, date } )
+	}
+
+	const onStatusChange = status => {
+		setFilter( { ...filter, status } )
+	}
 
 	return (
 		<Fragment>
-			<TagGroupControl tags={typeTags} value={typeTagValue} onChange={changeType} appearance="vibrant" />
+			<TagGroupControl tags={typeTags} value={[ type, subType ]} onChange={onTypeChange} appearance="vibrant" />
 			{ 'posts' === type &&
 				<ExpandedContents>
-					<TagGroupControl tags={dateTags} value={date} title="Created" onChange={setDate} />
+					<TagGroupControl tags={dateTags} value={date} title="Created" onChange={onDateChange} />
 					{ 'attachment' !== subType &&
-						<TagGroupControl tags={statusTags} value={status} title="Status" onChange={setStatus} />
+						<TagGroupControl tags={statusTags} value={status} title="Status" onChange={onStatusChange} />
 					}
 				</ExpandedContents>
 			}

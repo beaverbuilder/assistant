@@ -18,6 +18,7 @@ export const apps = ( state = {}, action ) => {
 				icon: null,
 				label: 'Untitled App',
 				size: 'normal',
+				state: {},
 				...action.config,
 			},
 			...state,
