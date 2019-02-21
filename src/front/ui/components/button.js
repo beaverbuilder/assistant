@@ -1,9 +1,8 @@
-import React, { forwardRef, useContext } from 'react'
+import React, { forwardRef } from 'react'
 import { animated, useSpring } from 'react-spring'
 import classname from 'classnames'
 import { useStore } from 'store'
 import { useAppFrame } from 'system'
-import { UIContext } from 'components'
 
 export const Button = forwardRef( ( props, ref ) => {
 	const { children, isSelected, className, appearance } = props

@@ -24,7 +24,7 @@ export const useAppFrame = () => {
 		}
 	} else if ( 'full' === appFrameSize ) {
 		frameWidth = windowWidth
-		isDisplayinFullscreen = true
+		isDisplayingFullscreen = true
 	} else {
 		if ( normalPreferredWidth > ( windowWidth * threshold ) ) {
 			frameWidth = windowWidth
@@ -63,13 +63,13 @@ export const AppFrame = ( { children } ) => {
 		}
 	}
 
-	const springProps = useSpring({
+	const springProps = useSpring( {
 		width,
 		height,
 		right: 'end' === alignment ? 0 : windowWidth - width,
 		transform: transform(),
 		immediate: shouldReduceMotion,
-	})
+	} )
 
 	const insideBorder = '1px solid var(--fl-line-color)'
 	const insideEdge = 'end' === alignment ? 'borderLeft' : 'borderRight'

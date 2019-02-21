@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import classname from 'classnames'
 import Truncate from 'react-truncate'
 import useMeasure from 'use-measure'
-import { useStore } from 'store'
 import { useAppFrame } from 'system'
 import { EmptyMessage, ItemContext } from 'components'
 
@@ -24,7 +23,7 @@ export const ContentListGroupLabel = ( { label } ) => {
 
 export const ContentListItem = props => {
 	const { meta, thumbnail, title } = useContext( ItemContext ) || {}
-	const [ref, bounds] = useMeasure()
+	const [ ref, bounds ] = useMeasure()
 	const { appFrame } = useAppFrame()
 	const { className, children, onClick } = props
 	const classes = classname( className, 'fl-asst-list-item' )
