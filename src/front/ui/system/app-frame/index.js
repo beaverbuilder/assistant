@@ -64,7 +64,7 @@ export const AppFrame = ( { children } ) => {
 	}
 
 	const springProps = useSpring( {
-		width: width + 1 /* account for inside edge border */, 
+		width: width + 1/* account for inside edge border */,
 		height,
 		right: 'end' === alignment ? 0 : windowWidth - width,
 		transform: transform(),
