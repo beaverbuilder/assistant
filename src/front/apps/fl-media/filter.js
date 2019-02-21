@@ -16,7 +16,7 @@ export const MediaListFilter = () => {
 }
 
 export const getFilterData = () => {
-	const [ query, setQuery ] = useAppState( 'query' )
+	const [ query, setQuery ] = useAppState( 'query' ) // eslint-disable-line no-unused-vars
 	const [ filter, setFilter ] = useAppState( 'filter' )
 	const { type } = filter
 	const { counts } = useStore()

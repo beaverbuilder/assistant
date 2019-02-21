@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { useAppState, getDispatch } from 'store'
 import { currentUserCan } from 'utils/wordpress'
-import { ScreenHeader, TagGroupControl, CommentList, UpdateList } from 'components'
+import { ScreenHeader, CommentList, UpdateList } from 'components'
 import { NotificationsFilter } from './filter'
 
 const { registerApp } = getDispatch()

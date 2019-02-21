@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from 'react'
-import { getConfig, useStore, useAppState } from 'store'
 import { OptionGroup, OptionGroupItem, Separator, AppContext } from 'components'
 import { getFilterData } from './filter'
 

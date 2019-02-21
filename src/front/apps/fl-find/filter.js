@@ -33,7 +33,7 @@ export const PostListFilter = () => {
 }
 
 export const getFilterData = () => {
-	const [ query, setQuery ] = useAppState( 'query' )
+	const [ query, setQuery ] = useAppState( 'query' ) // eslint-disable-line no-unused-vars
 	const [ filter, setFilter ] = useAppState( 'filter' )
 	const { type, subType, date, status } = filter
 	const { counts } = useStore()
