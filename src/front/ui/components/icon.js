@@ -95,6 +95,28 @@ export const Icon = ( { name } ) => {
 				</g>
 			</svg>
 		)
+	case 'go':
+		return (
+			<svg width="19px" height="20px" viewBox="0 0 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round">
+					<path d="M17.4994005,5.02240578 C15.8869343,2.5978679 13.1300682,1 10,1 C5.02943725,1 1,5.02943725 1,10 C1,14.9705627 5.02943725,19 10,19 L10,19 C13.0977138,19 15.829901,17.4349946 17.4490321,15.0525131"></path>
+					<path d="M16.5,10 L5,10"></path>
+					<path d="M16.5,10 L11.989624,6"></path>
+					<path d="M16.5,10 L12,14"></path>
+				</g>
+			</svg>
+		)
+	case 'go-diagonal':
+		return (
+			<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none">
+					<path d="M17.7191582,5.55294782 C16.106692,3.12840994 13.3498259,1.53054204 10.2197577,1.53054204 C5.24919496,1.53054204 1.21975771,5.55997929 1.21975771,10.530542 C1.21975771,15.5011048 5.24919496,19.530542 10.2197577,19.530542 L10.2197577,19.530542 C13.3174715,19.530542 16.0496587,17.9655366 17.6687898,15.5830552" id="Path-Copy-5" transform="translate(9.469458, 10.530542) rotate(-45.000000) translate(-9.469458, -10.530542) "></path>
+					<path d="M16.2071068,9.29289322 L4.70710678,9.29289322" transform="translate(10.707107, 9.292893) rotate(-45.000000) translate(-10.707107, -9.292893) "></path>
+					<path d="M13.5606602,7.90380592 L9.0502842,3.90380592" transform="translate(11.060660, 5.403806) rotate(-45.000000) translate(-11.060660, -5.403806) "></path>
+					<path d="M16.3890873,6.73223305 L11.8890873,10.732233" transform="translate(13.889087, 8.232233) rotate(-45.000000) translate(-13.889087, -8.232233) "></path>
+				</g>
+			</svg>
+		)
 	default:
 		return (
 			<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg">

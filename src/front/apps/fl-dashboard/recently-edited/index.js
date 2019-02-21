@@ -12,7 +12,7 @@ export const RecentlyEditedWidget = () => {
 
 	return (
 		<Widget title="Recently Edited" isPadded={false}>
-			<div style={{ padding: '0 20px'}}>
+			<div style={{ padding: '0 var(--fl-asst-base-padding)'}}>
 				<TagGroup appearance="vibrant">
 					<Tag onClick={ () => setPostType( 'any' )} isSelected={isTagSelected( 'any' )}>Any Type</Tag>
 					<Tag onClick={ () => setPostType( 'post' )} isSelected={isTagSelected( 'post' )}>Posts</Tag>

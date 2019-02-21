@@ -25,10 +25,12 @@
     "react-pose": "^4.0.7",
     "react-redux": "^6.0.0",
     "react-spring": "^8.0.7",
+    "react-truncate": "^2.4.0",
     "react-tunnels": "^1.1.0",
     "react-with-gesture": "^4.0.5",
     "redux": "^4.0.1",
-    "redux-actions": "^2.6.4"
+    "redux-actions": "^2.6.4",
+    "use-measure": "^0.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
