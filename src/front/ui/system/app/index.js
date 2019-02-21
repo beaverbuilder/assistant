@@ -74,7 +74,8 @@ const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
 	} )
 	const viewProps = useSpring( {
 		width,
-		transform: isShowingAppMenu || shouldDisplayBesideContent ? 'translateX(0%)' : 'translateX(-105%)', /* hack to hide box shadow */
+		transform: isShowingAppMenu || shouldDisplayBesideContent ? 'translateX(0%)' : 'translateX(-100%)',
+		boxShadow: ! isShowingAppMenu ? 'none' : '',
 		immediate: shouldReduceMotion,
 		config: springConfig,
 	} )
