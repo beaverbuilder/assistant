@@ -2,10 +2,26 @@ import React, { useEffect } from 'react'
 import { useAppState, useStore } from 'store'
 import { TagGroupControl } from 'components'
 
-export const MediaListFilter = ( { onChange } ) => {
-	const [ activeTag, setActiveTag ] = useAppState( 'media-list-type', 'image' )
+export const MediaListFilter = () => {
+	const { typeTags, setType, type } = getFilterData()
+
+	return (
+		<TagGroupControl
+			appearance="vibrant"
+			tags={ typeTags }
+			value={ type }
+			onChange={ setType }
+		/>
+	)
+}
+
+export const getFilterData = () => {
+	const [ query, setQuery ] = useAppState( 'query' ) // eslint-disable-line no-unused-vars
+	const [ filter, setFilter ] = useAppState( 'filter' )
+	const { type } = filter
 	const { counts } = useStore()
-	const tags = [
+
+	const typeTags = [
 		{
 			label: 'Images',
 			value: 'image',
@@ -28,20 +44,17 @@ export const MediaListFilter = ( { onChange } ) => {
 		}
 	]
 
+	const setType = type => {
+		setFilter( { ...filter, type } )
+	}
+
 	useEffect( () => {
-		onChange( {
+		setQuery( {
 			posts_per_page: 20,
 			post_type: 'attachment',
-			post_mime_type: activeTag,
+			post_mime_type: type,
 		} )
-	}, [ activeTag ] )
+	}, [ type ] )
 
-	return (
-		<TagGroupControl
-			appearance="vibrant"
-			tags={ tags }
-			value={ activeTag }
-			onChange={ setActiveTag }
-		/>
-	)
+	return { typeTags, setType, type }
 }

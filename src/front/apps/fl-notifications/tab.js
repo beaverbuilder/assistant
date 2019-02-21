@@ -1,58 +1,23 @@
-import React, { Fragment, useEffect } from 'react'
-import { useAppState, getDispatch, useStore } from 'store'
+import React, { Fragment } from 'react'
+import { useAppState, getDispatch } from 'store'
 import { currentUserCan } from 'utils/wordpress'
-import { CommentList, ScreenHeader, TagGroupControl, UpdateList } from 'components'
-import { CommentListFilter, UpdateListFilter } from './filters'
+import { ScreenHeader, CommentList, UpdateList } from 'components'
+import { NotificationsFilter } from './filter'
 
 const { registerApp } = getDispatch()
 
 export const NotificationsTab = () => {
-	const canModerateComments = currentUserCan( 'moderate_comments' )
-	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
-	const defaultTag = canModerateComments ? 'comments' : 'updates'
-	const [ activeTag, setActiveTag ] = useAppState( 'active-tag', defaultTag )
-	const [ query, setQuery ] = useAppState( 'query', null )
-	const { counts } = useStore()
-	const tabs = []
-	const filters = {}
-	const content = {}
-
-	useEffect( () => {
-		setQuery( {} )
-	}, [ activeTag ] )
-
-	if ( canModerateComments ) {
-		tabs.push( {
-			label: 'Comments',
-			value: 'comments',
-			count: counts[ 'notifications/comments' ] || '0',
-		} )
-		filters.comments = <CommentListFilter onChange={ setQuery } />
-		content.comments = <CommentList query={ query } pagination={ true } />
-	}
-
-	if ( canUpdate ) {
-		tabs.push( {
-			label: 'Updates',
-			value: 'updates',
-			count: counts[ 'notifications/updates' ] || '0',
-		} )
-		filters.updates = <UpdateListFilter onChange={ setQuery } />
-		content.updates = <UpdateList query={ query } />
-	}
+	const [ query ] = useAppState( 'query' )
+	const [ filter ] = useAppState( 'filter' )
+	const { type } = filter
 
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<TagGroupControl
-					tags={ tabs }
-					value={ activeTag }
-					onChange={ value => setActiveTag( value ) }
-					appearance="vibrant"
-				/>
-				{ filters[ activeTag ] ? filters[ activeTag ] : null }
+				<NotificationsFilter />
 			</ScreenHeader>
-			{ content[ activeTag ] ? content[ activeTag ] : null }
+			{ 'comments' === type && <CommentList query={ query } pagination={ true } /> }
+			{ 'updates' === type && <UpdateList query={ query } /> }
 		</Fragment>
 	)
 }
@@ -64,5 +29,13 @@ registerApp( 'fl-notifications', {
 		currentUserCan( 'update_plugins' ) ||
 		currentUserCan( 'update_themes' ) ||
 		currentUserCan( 'moderate_comments' )
-	)
+	),
+	state: {
+		query: null,
+		filter: {
+			type: currentUserCan( 'moderate_comments' ) ? 'comments' : 'updates',
+			commentStatus: 'all',
+			updateType: 'all',
+		},
+	},
 } )

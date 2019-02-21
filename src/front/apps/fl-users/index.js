@@ -7,18 +7,16 @@ import { UserListFilter } from './filter'
 const { registerApp } = getDispatch()
 
 export const UsersTab = () => {
-	const [ query, setQuery ] = useAppState( 'query', null )
+	const [ query ] = useAppState( 'query' )
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<UserListFilter onChange={ setQuery } />
+				<UserListFilter />
 			</ScreenHeader>
-
 			<UserList
 				query={ query }
 				pagination={ true }
 			/>
-
 			<AppMenu displayBeside="wide" />
 		</Fragment>
 	)
@@ -40,4 +38,10 @@ registerApp( 'fl-users', {
 	label: 'Users',
 	content: () => <UsersTab />,
 	icon: () => <UsersIcon />,
+	state: {
+		query: null,
+		filter: {
+			role: 'all',
+		},
+	},
 } )

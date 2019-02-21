@@ -1,36 +1,30 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState, getDispatch } from 'store'
-import { StackContext } from 'components'
+import { PostList, ScreenHeader, StackContext } from 'components'
+import { AppMenu } from 'system'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
-import {
-	PostList,
-	ScreenHeader,
-} from 'components'
-import { AppMenu } from 'system'
 
 const { registerApp } = getDispatch()
 
 export const App = () => {
-	const [ data, setData ] = useAppState( 'data', { type: 'posts', query: null } )
+	const [ filter ] = useAppState( 'filter' )
+	const [ query ] = useAppState( 'query' )
 	const stack = useContext( StackContext )
-	const { type, query } = data
 
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<PostListFilter onChange={ setData } />
+				<PostListFilter />
 			</ScreenHeader>
 			<PostList
-				type={ type }
+				type={ filter.type }
 				query={ query }
 				pagination={ true }
 			/>
-
 			<AppMenu title="Filter Content">
 				<MenuContent appStackContext={stack} />
 			</AppMenu>
-
 		</Fragment>
 	)
 }
@@ -50,4 +44,13 @@ registerApp( 'fl-find', {
 	label: 'Content',
 	content: props => <App {...props} />,
 	icon: props => <AppIcon {...props} />,
+	state: {
+		query: null,
+		filter: {
+			type: 'posts',
+			subType: 'page',
+			date: '',
+			status: 'publish',
+		},
+	},
 } )
