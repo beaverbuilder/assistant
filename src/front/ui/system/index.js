@@ -1,4 +1,4 @@
-export { App, AppMenu } from './app'
+export { App, AppMenu, AppMenuButton } from './app'
 export { useAppFrame, AppFrame } from './app-frame'
 export { useAppsMenu } from './apps-menu'
 export { useActiveApp } from './active-app'

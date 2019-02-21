@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState, getDispatch } from 'store'
 import { PostListFilter } from './filter'
-import { PostList, ScreenHeader, Button, AppContext, StackContext } from 'components'
+import { PostList, ScreenHeader, Button, AppContext, StackContext, Separator } from 'components'
 import { AppMenu } from 'system'
 
 const { registerApp } = getDispatch()
@@ -33,9 +33,14 @@ export const FindTab = () => {
 			/>
 
 			<AppMenu title="Filter Content">
-				<div style={{ padding: 30, paddingTop: 0}}>
+				<div style={{ padding: '0 0 30px' }}>
 					<div><Button onClick={testSetDataFromSidebar}>Show Pages</Button></div>
 				</div>
+				<Separator />
+				<div style={{ padding: '30px 0' }}>
+					List here.
+				</div>
+				<Separator />
 			</AppMenu>
 
 		</Fragment>

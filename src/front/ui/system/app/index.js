@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import classname from 'classnames'
 import { animated, useSpring } from 'react-spring'
 import { useStore } from 'store'
-import { UIContext, Stack, AppContext, Heading, Padding, Button } from 'components'
+import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon } from 'components'
 import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
@@ -13,14 +13,14 @@ export const App = props => {
 	const hideAppMenu = () => setIsShowingAppMenu( false )
 	const toggleAppMenu = () => isShowingAppMenu ? hideAppMenu() : showAppMenu()
 
-	const context = Object.assign( {}, props, {
+	const appContext = Object.assign( {}, props, {
 		isShowingAppMenu,
 		showAppMenu,
 		hideAppMenu,
 		toggleAppMenu,
 	} )
 	return (
-		<AppContext.Provider value={context}>
+		<AppContext.Provider value={appContext}>
 			<TunnelProvider>
 				<div className="fl-asst-app">
 
@@ -102,5 +102,23 @@ const Menu = ( { title, children, displayBeside = 'full' } ) => {
 export const AppMenu = props => {
 	return (
 		<Tunnel id="app-menu" {...props} />
+	)
+}
+
+export const AppMenuButton = () => {
+	const { toggleAppMenu } = useContext( AppContext )
+	return (
+		<TunnelPlaceholder id="app-menu" multiple>
+			{ ( { items } ) => {
+				if ( items && 0 < items.length ) {
+					return (
+						<Button onClick={toggleAppMenu} appearance="icon">
+							<Icon />
+						</Button>
+					)
+				}
+				return null
+			} }
+		</TunnelPlaceholder>
 	)
 }
