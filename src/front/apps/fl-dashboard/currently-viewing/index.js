@@ -6,6 +6,7 @@ import {
 	ExpandedContents,
 	PageViewContext
 } from 'components'
+import Truncate from 'react-truncate'
 
 import './style.scss'
 
@@ -17,7 +18,9 @@ export const CurrentlyViewing = () => {
 
 			<VerticalGroup>
 				<div className="fl-asst-pretitle">{intro}</div>
-				<div className="fl-asst-title">{name}</div>
+				<div className="fl-asst-title">
+					<Truncate lines={2}>{name}</Truncate>
+				</div>
 				{ actions && <ActionGroup actions={actions} appearance="muted" /> }
 			</VerticalGroup>
 

@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
-import { truncate } from 'utils/text'
+import Truncate from 'react-truncate'
+import useMeasure from 'use-measure'
+import { useAppFrame } from 'system'
 import { EmptyMessage, ItemContext } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
@@ -21,18 +23,25 @@ export const ContentListGroupLabel = ( { label } ) => {
 
 export const ContentListItem = props => {
 	const { meta, thumbnail, title } = useContext( ItemContext ) || {}
+	const [ ref, bounds ] = useMeasure()
+	const { appFrame } = useAppFrame()
 	const { className, children, onClick } = props
 	const classes = classname( className, 'fl-asst-list-item' )
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
 	}
+
+	const contentLineCount = 2
+
 	return (
-		<div className={ classes } onClick={ onClick }>
+		<div className={ classes } onClick={ onClick } style={{ width: appFrame.width }}>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
-			<div className="fl-asst-list-item-content">
-				<div className="fl-asst-list-item-title">{ truncate( title ) }</div>
+			<div className="fl-asst-list-item-content" ref={ref}>
+				<div className="fl-asst-list-item-title">
+					<Truncate lines={contentLineCount} width={bounds.width}>{title}</Truncate>
+				</div>
 				<div className="fl-asst-list-item-meta">
 					{ meta }
 				</div>

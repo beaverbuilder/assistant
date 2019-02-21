@@ -1,8 +1,8 @@
-import React, { forwardRef, useContext } from 'react'
+import React, { forwardRef } from 'react'
 import { animated, useSpring } from 'react-spring'
 import classname from 'classnames'
 import { useStore } from 'store'
-import { UIContext } from 'components'
+import { useAppFrame } from 'system'
 
 export const Button = forwardRef( ( props, ref ) => {
 	const { children, isSelected, className, appearance } = props
@@ -30,7 +30,7 @@ export const Button = forwardRef( ( props, ref ) => {
 
 export const AppTabButton = forwardRef( ( props, ref ) => {
 	const { shouldReduceMotion } = useStore()
-	const { appFrameSize } = useContext( UIContext )
+	const { appFrame: { sizeName, isDisplayingFullscreen } } = useAppFrame()
 	const { children, isSelected, onClick, className, tooltip } = props
 	const classes = classname( {
 		'fl-asst-button': true,
@@ -38,7 +38,7 @@ export const AppTabButton = forwardRef( ( props, ref ) => {
 		'fl-asst-button-is-selected': isSelected
 	}, className )
 
-	const isFrameExpanded = [ 'full', 'wide' ].includes( appFrameSize )
+	const isFrameExpanded = [ 'full', 'wide' ].includes( sizeName ) && ! isDisplayingFullscreen
 
 	const springProps = useSpring( {
 		paddingLeft: isFrameExpanded ? 20 : 10,

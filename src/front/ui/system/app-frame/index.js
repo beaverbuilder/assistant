@@ -8,17 +8,30 @@ export const useAppFrame = () => {
 	const { setAppFrameSize } = getDispatch()
 	const { width: windowWidth } = useWindowSize()
 
-	const normalPreferredWidth = 441
-	const widePreferredWidth = 720
+	const normalPreferredWidth = 460
+	const widePreferredWidth = 768
+	const threshold = .8
 	let frameWidth = 0
 	let frameHeight = '100vh'
+	let isDisplayingFullscreen = false
 
 	if ( 'wide' === appFrameSize ) {
-		frameWidth = 768 > windowWidth ? windowWidth : widePreferredWidth
+		if ( widePreferredWidth > ( windowWidth * threshold ) ) {
+			frameWidth = windowWidth
+			isDisplayingFullscreen = true
+		} else {
+			frameWidth = widePreferredWidth
+		}
 	} else if ( 'full' === appFrameSize ) {
 		frameWidth = windowWidth
+		isDisplayingFullscreen = true
 	} else {
-		frameWidth = normalPreferredWidth > ( windowWidth * .6 ) ? windowWidth : normalPreferredWidth
+		if ( normalPreferredWidth > ( windowWidth * threshold ) ) {
+			frameWidth = windowWidth
+			isDisplayingFullscreen = true
+		} else {
+			frameWidth = normalPreferredWidth
+		}
 	}
 
 	return {
@@ -27,6 +40,7 @@ export const useAppFrame = () => {
 			height: frameHeight,
 			sizeName: appFrameSize,
 			alignment: panelPosition,
+			isDisplayingFullscreen,
 		},
 		setAppFrameSize,
 	}
@@ -49,30 +63,13 @@ export const AppFrame = ( { children } ) => {
 		}
 	}
 
-	const springState = () => {
-
-		return {
-			width,
-			height,
-			right: 'end' === alignment ? 0 : windowWidth - width,
-			transform: transform(),
-			immediate: shouldReduceMotion
-		}
-	}
-
-	const [ springProps, set ] = useSpring( () => {
-
-		const values = {
-			width,
-			height,
-			transform: transform(),
-			right: 'end' === alignment ? 0 : windowWidth - width,
-			immediate: shouldReduceMotion
-		}
-		return values
+	const springProps = useSpring( {
+		width: width + 1/* account for inside edge border */,
+		height,
+		right: 'end' === alignment ? 0 : windowWidth - width,
+		transform: transform(),
+		immediate: shouldReduceMotion,
 	} )
-
-	set( springState() )
 
 	const insideBorder = '1px solid var(--fl-line-color)'
 	const insideEdge = 'end' === alignment ? 'borderLeft' : 'borderRight'
@@ -80,7 +77,6 @@ export const AppFrame = ( { children } ) => {
 	const outsideEdge = 'end' === alignment ? 'borderRight' : 'borderLeft'
 
 	const styles = {
-		boxSizing: 'border-box',
 		position: 'fixed',
 		top: 0,
 		zIndex: 999999,

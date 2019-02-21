@@ -194,8 +194,6 @@ export const Stack = ( { children, className } ) => {
 		height,
 	}
 
-	const onScroll = e => e.stopPropagation()
-
 	return (
 		<div className={classes} style={styles}>
 			{ views.map( ( view, i ) => {
@@ -213,9 +211,9 @@ export const Stack = ( { children, className } ) => {
 						<ViewContext.Provider value={config.context}>
 							<StackView
 								key={key}
+								ref={ref}
 								onPoseComplete={poseComplete}
 								className='fl-asst-stack-view'
-								onScroll={onScroll}
 								{...props}
 							/>
 						</ViewContext.Provider>
