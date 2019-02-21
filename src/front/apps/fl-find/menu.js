@@ -1,11 +1,9 @@
 import React, { Fragment, useContext } from 'react'
 import { getConfig, useStore, useAppState } from 'store'
 import { OptionGroup, OptionGroupItem, Separator, AppContext } from 'components'
-import { getFilterConfig } from './filter'
+import { getFilterData } from './filter'
 
 export const MenuContent = ( { appStackContext } ) => {
-	const [ filter, setFilter ] = useAppState( 'filter' )
-	const { type, subType, date, status } = filter
 	const { hideAppMenu } = useContext( AppContext )
 	const { popToRoot } = appStackContext
 	const {
@@ -14,8 +12,12 @@ export const MenuContent = ( { appStackContext } ) => {
 		statusTags,
 		setType,
 		setDate,
-		setStatus
-	} = getFilterConfig()
+		setStatus,
+		type,
+		subType,
+		date,
+		status
+	} = getFilterData()
 
 	const onTypeClick = value => {
 		hideAppMenu()

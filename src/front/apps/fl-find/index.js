@@ -4,12 +4,12 @@ import { PostList, ScreenHeader, StackContext } from 'components'
 import { AppMenu } from 'system'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
-import { getQuery } from './query'
 
 const { registerApp } = getDispatch()
 
 export const App = () => {
 	const [ filter ] = useAppState( 'filter' )
+	const [ query ] = useAppState( 'query' )
 	const stack = useContext( StackContext )
 
 	return (
@@ -19,7 +19,7 @@ export const App = () => {
 			</ScreenHeader>
 			<PostList
 				type={ filter.type }
-				query={ getQuery() }
+				query={ query }
 				pagination={ true }
 			/>
 			<AppMenu title="Filter Content">
@@ -45,6 +45,7 @@ registerApp( 'fl-find', {
 	content: props => <App {...props} />,
 	icon: props => <AppIcon {...props} />,
 	state: {
+		query: null,
 		filter: {
 			type: 'posts',
 			subType: 'page',
