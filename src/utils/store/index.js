@@ -51,10 +51,7 @@ export const registerStore = ( {
 export const createAction = ( key, value ) => {
 	const type = `SET_${ key.toUpperCase() }`
 	const actionKey = camelCase( `set_${ key }` )
-
-	const action = ( value ) => {
-		return { type, value }
-	}
+	const action = value => ( { type, value } )
 
 	const reducer = ( state = value, action ) => {
 		switch ( action.type ) {
