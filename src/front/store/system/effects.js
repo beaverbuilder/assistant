@@ -1,4 +1,4 @@
-import { setAppState } from 'store/actions'
+import { setAppState } from 'store/system/actions'
 import { getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
 

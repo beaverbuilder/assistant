@@ -6,7 +6,7 @@ import camelCase from 'camelcase'
  */
 export const createActions = ( actions, reducers, state ) => {
 
-	Object.entries( state ).map( ( [ key, value ] ) => {
+	Object.entries( state ).map( ( [ key ] ) => {
 		if ( ! reducers[ key ] ) {
 			const type = `SET_${ key.toUpperCase() }`
 			const action = camelCase( `set_${ key }` )
