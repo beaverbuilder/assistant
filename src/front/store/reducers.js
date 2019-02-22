@@ -32,9 +32,7 @@ export const appState = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'REGISTER_APP':
 		return {
-			[ action.key ]: {
-				size: 'normal',
-			},
+			[ action.key ]: {},
 			...state,
 		}
 	case 'SET_APP_STATE':

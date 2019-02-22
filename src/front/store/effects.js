@@ -30,7 +30,6 @@ export default {
 		},
 
 		SET_ACTIVE_APP: ( action, store ) => {
-			const { activeApp, appState } = store.getState()
 			updateUserState( { activeApp: action.key } )
 		},
 
