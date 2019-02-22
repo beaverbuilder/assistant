@@ -38,7 +38,7 @@ registerApp( 'fl-users', {
 	label: 'Users',
 	content: () => <App />,
 	icon: () => <AppIcon />,
-	supportsSizes: ['normal', 'wide'],
+	supportsSizes: [ 'normal', 'wide' ],
 	state: {
 		query: null,
 		filter: {

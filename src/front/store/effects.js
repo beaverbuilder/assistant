@@ -14,7 +14,7 @@ export default {
 	 */
 	after: {
 		REGISTER_APP: ( action, store ) => {
-			const { apps, activeApp, appState } = store.getState()
+			const { apps, activeApp } = store.getState()
 			const cache = getCache( 'app-state', action.key )
 			const state = cache ? JSON.parse( cache ) : apps[ action.key ].state
 

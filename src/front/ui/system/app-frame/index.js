@@ -102,11 +102,11 @@ export const AppFrame = ( { children } ) => {
 
 export const FrameSizeButton = () => {
 	const { appFrameSize, apps, activeApp: handle } = useStore()
-	const [size, setSize] = useAppState('size')
+	const [ size, setSize ] = useAppState( 'size' )
 	const { setAppFrameSize } = getDispatch()
 	const app = apps[handle]
 
-	if ( app.supportsSizes.length < 2 ) {
+	if ( 2 > app.supportsSizes.length ) {
 		return null
 	}
 

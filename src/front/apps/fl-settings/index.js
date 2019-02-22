@@ -54,5 +54,5 @@ registerApp( 'fl-settings', {
 	label: 'Preferences',
 	content: () => <App />,
 	icon: () => <AppIcon />,
-	supportsSizes: ['normal'],
+	supportsSizes: [ 'normal' ],
 } )

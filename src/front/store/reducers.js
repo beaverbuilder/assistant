@@ -17,7 +17,7 @@ export const apps = ( state = {}, action ) => {
 				enabled: true,
 				icon: null,
 				label: 'Untitled App',
-				supportsSizes: ['normal', 'wide', 'full'],
+				supportsSizes: [ 'normal', 'wide', 'full' ],
 				...action.config,
 			},
 			...state,

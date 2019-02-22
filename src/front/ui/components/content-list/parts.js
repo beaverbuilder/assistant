@@ -39,18 +39,18 @@ export const ContentListItem = props => {
 				const { contentRect: { width } } = entries[0]
 				id = requestAnimationFrame( () => {
 					setTruncateWidth( width )
-				})
+				} )
 			}
 
-			const observer = new ResizeObserver(measure)
-			observer.observe(ref.current)
+			const observer = new ResizeObserver( measure )
+			observer.observe( ref.current )
 
 			return () => {
 				cancelAnimationFrame( id )
 				observer.disconnect()
 			}
 		}
-	}, [])
+	}, [] )
 
 	return (
 		<div className={ classes } onClick={ onClick }>

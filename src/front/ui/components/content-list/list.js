@@ -26,7 +26,7 @@ export const ContentList = ( {
 } ) => {
 	const request = useRef()
 	const { ref, updateCurrentView } = useContext( StackContext )
-	const [truncateWidth, setTruncateWidth] = useState(null)
+	const [ truncateWidth, setTruncateWidth ] = useState( null )
 
 	useEffect( () => {
 		return () => request.current && request.current.cancel()
@@ -120,7 +120,7 @@ export const ContentList = ( {
 					</Fragment>
 				)
 			} else if ( itemData && ! itemData.items ) {
-				const isFirstItem = itemKey === 0
+				const isFirstItem = 0 === itemKey
 				return renderItem( { ...itemData, isFirstItem }, itemKey, groupKey )
 			}
 			return null
