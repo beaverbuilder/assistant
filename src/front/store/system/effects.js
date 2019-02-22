@@ -1,4 +1,4 @@
-import { setAppState, setAppFrameSize } from 'store/actions'
+import { setAppState, setAppFrameSize } from 'store/system/actions'
 import { getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
 

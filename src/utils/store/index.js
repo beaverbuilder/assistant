@@ -39,6 +39,8 @@ export const registerStore = ( {
 			createEnhancers( key, effects )
 		)
 	}
+
+	return registry[ key ]
 }
 
 /**
