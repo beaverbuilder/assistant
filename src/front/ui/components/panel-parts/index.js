@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
 import { Button, Icon, AppContext, StackContext } from 'components'
-import { AppMenuButton, FrameSizeButton } from 'system'
+import { AppMenuButton } from 'system'
 import './style.scss'
 
 
@@ -23,7 +23,6 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 				</Button> }
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
 
-				<FrameSizeButton />
 				<AppMenuButton />
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>
