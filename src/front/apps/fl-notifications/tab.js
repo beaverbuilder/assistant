@@ -30,7 +30,7 @@ registerApp( 'fl-notifications', {
 		currentUserCan( 'update_themes' ) ||
 		currentUserCan( 'moderate_comments' )
 	),
-	supportsSizes: ['normal'],
+	supportsSizes: ['normal', 'wide', 'full'],
 	state: {
 		query: null,
 		filter: {

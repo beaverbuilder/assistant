@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useLayoutEffect, createRef } from 'react'
 import classname from 'classnames'
 import Truncate from 'react-truncate'
-import useMeasure from 'use-measure'
-import { useAppFrame } from 'system'
+import ResizeObserver from 'resize-observer-polyfill'
 import { EmptyMessage, ItemContext } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
@@ -22,10 +21,9 @@ export const ContentListGroupLabel = ( { label } ) => {
 }
 
 export const ContentListItem = props => {
-	const { meta, thumbnail, title } = useContext( ItemContext ) || {}
-	const [ ref, bounds ] = useMeasure()
-	const { appFrame } = useAppFrame()
+	const { meta, thumbnail, title, isFirstItem, truncateWidth, setTruncateWidth } = useContext( ItemContext ) || {}
 	const { className, children, onClick } = props
+	const ref = createRef()
 	const classes = classname( className, 'fl-asst-list-item' )
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
@@ -33,14 +31,35 @@ export const ContentListItem = props => {
 
 	const contentLineCount = 2
 
+	useLayoutEffect( () => {
+		if ( isFirstItem && 'undefined' !== typeof ref.current ) {
+
+			let id = null
+			const measure = entries => {
+				const { contentRect: { width } } = entries[0]
+				id = requestAnimationFrame( () => {
+					setTruncateWidth( width )
+				})
+			}
+
+			const observer = new ResizeObserver(measure)
+			observer.observe(ref.current)
+
+			return () => {
+				cancelAnimationFrame( id )
+				observer.disconnect()
+			}
+		}
+	}, [])
+
 	return (
-		<div className={ classes } onClick={ onClick } style={{ width: appFrame.width }}>
+		<div className={ classes } onClick={ onClick }>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
 			<div className="fl-asst-list-item-content" ref={ref}>
 				<div className="fl-asst-list-item-title">
-					<Truncate lines={contentLineCount} width={bounds.width}>{title}</Truncate>
+					<Truncate lines={contentLineCount} width={truncateWidth}>{title}</Truncate>
 				</div>
 				<div className="fl-asst-list-item-meta">
 					{ meta }
