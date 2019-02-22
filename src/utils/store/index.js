@@ -1,7 +1,12 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux'
-import camelCase from 'camelcase'
-import { composeEnhancers, applyEffects } from './middleware'
+import { createStore } from 'redux'
+import { createActions } from './actions'
+import { createReducers } from './reducers'
+import { createEnhancers } from './middleware'
 
+/**
+ * The main registry object. Holds all stores and actions
+ * that have been registered.
+ */
 const registry = {}
 
  /**
@@ -26,50 +31,14 @@ export const registerStore = ( {
 		throw new Error( `A store with the key '${ key }' already exists.` )
 	}
 
-	Object.entries( state ).map( ( [ key, value ] ) => {
-		if ( ! reducers[ key ] ) {
-			const { actionKey, action, reducer } = createAction( key, value )
-			actions[ actionKey ] = action
-			reducers[ key ] = reducer
-		}
-	} )
-
 	registry[ key ] = {
-		actions,
+		actions: createActions( actions, reducers, state ),
 		store: createStore(
-			combineReducers( reducers ),
-			hydrateStateFromStorage( state, reducers, storage ),
-			composeEnhancers( key, applyMiddleware( applyEffects( effects ) ) )
+			createReducers( reducers, state ),
+			state,
+			createEnhancers( key, effects )
 		)
 	}
-}
-
-/**
- * Creates a default setter action and reducer for
- * a key/value pair.
- */
-export const createAction = ( key, value ) => {
-	const type = `SET_${ key.toUpperCase() }`
-	const actionKey = camelCase( `set_${ key }` )
-	const action = value => ( { type, value } )
-
-	const reducer = ( state = value, action ) => {
-		switch ( action.type ) {
-		case type:
-			return action.value
-		default:
-			return state
-		}
-	}
-
-	return { actionKey, action, reducer }
-}
-
-/**
- * Hydrates initial state from storage.
- */
-export const hydrateStateFromStorage = ( state, reducers, config ) => {
-	return state
 }
 
 /**

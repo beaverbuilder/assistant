@@ -1,12 +1,12 @@
-import { compose } from 'redux'
-
+import { applyMiddleware, compose } from 'redux'
 /**
- * Enhanced compose for when dev tools is available.
+ * Creates all enhancers for a new store with support
+ * for redux dev tools.
  */
-export const composeEnhancers = ( name, enhancers ) => {
+export const createEnhancers = ( name, effects ) => {
 	const devToolsCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 	const composeEnhancers = devToolsCompose ? devToolsCompose( { name } ) : compose
-	return composeEnhancers( enhancers )
+	return composeEnhancers( applyMiddleware( applyEffects( effects ) ) )
 }
 
 /**
