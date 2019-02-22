@@ -4,6 +4,7 @@ import { applyEffects, composeEnhancers } from './middleware'
 import * as reducers from './reducers'
 import * as actions from './actions'
 import { AppContext } from 'components'
+import './testing'
 
 const store = createStore( combineReducers( reducers ), {
 	...( 'undefined' === typeof FL_ASSISTANT_INITIAL_STATE ? {} : FL_ASSISTANT_INITIAL_STATE ),
