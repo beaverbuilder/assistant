@@ -7,7 +7,7 @@ import {
 	UIContext,
 } from 'components'
 import { NotificationsTabButton } from 'apps/fl-notifications'
-import { App, useAppsMenu, AppFrame } from 'system'
+import { App, useAppsMenu, AppFrame, FrameSizeButton } from 'system'
 import './style.scss'
 
 /**
@@ -75,6 +75,7 @@ export const UI = () => {
 						</div>
 					</div>
 					<div className="fl-asst-panel-chrome-area">
+						<FrameSizeButton />
 						<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
 							<Icon name="close" />
 						</Button>

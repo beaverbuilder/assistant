@@ -24,7 +24,6 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
 
 				<AppMenuButton />
-				<FrameSizeButton />
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>
 		</div>

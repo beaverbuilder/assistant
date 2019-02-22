@@ -101,20 +101,13 @@ export const AppFrame = ( { children } ) => {
 }
 
 export const FrameSizeButton = () => {
-	const { appFrameSize, apps, activeApp: handle } = useStore()
-	const [ size, setSize ] = useAppState( 'size' )
+	const { appFrameSize } = useStore()
 	const { setAppFrameSize } = getDispatch()
-	const app = apps[handle]
-
-	if ( 2 > app.supportsSizes.length ) {
-		return null
-	}
 
 	const toggleSize = () => {
-		const sizes = app.supportsSizes
+		const sizes = ['normal', 'wide', 'full']
 		const nextSize = sizes[ ( sizes.indexOf( appFrameSize ) + 1 ) % sizes.length ]
 		setAppFrameSize( nextSize )
-		setSize( nextSize )
 	}
 
 	return (

@@ -30,7 +30,6 @@ export default {
 
 		SET_ACTIVE_APP: ( action, store ) => {
 			const { activeApp, appState } = store.getState()
-			store.dispatch( setAppFrameSize( appState[ activeApp ].size ) )
 			updateUserState( { activeApp: action.key } )
 		},
 
