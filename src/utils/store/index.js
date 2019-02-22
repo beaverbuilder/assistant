@@ -1,4 +1,5 @@
-import { createStore } from 'redux'
+import { useEffect, useState } from 'react'
+import { createStore, bindActionCreators } from 'redux'
 import { createActions } from './actions'
 import { createReducers } from './reducers'
 import { createEnhancers } from './middleware'
@@ -9,7 +10,7 @@ import { createEnhancers } from './middleware'
  */
 const registry = {}
 
- /**
+/**
   * Addes a new store to the registry.
   *
   * Actions and reducers are optional! If you do not provide
@@ -22,7 +23,6 @@ export const registerStore = ( {
 	actions = {},
 	reducers = {},
 	effects = {},
-	storage = {},
 } ) => {
 
 	if ( ! key ) {
