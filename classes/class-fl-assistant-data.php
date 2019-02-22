@@ -13,6 +13,7 @@ class FL_Assistant_Data {
 		'isShowingUI'        => false,
 		'panelPosition'      => 'end',
 		'shouldReduceMotion' => false,
+		'appFrameSize'		 => 'normal',
 	);
 
 	/**
@@ -56,6 +57,7 @@ class FL_Assistant_Data {
 			'isShowingUI'        => $user_state['isShowingUI'],
 			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
+			'appFrameSize' 		 => $user_state['appFrameSize'],
 		);
 
 		return array(

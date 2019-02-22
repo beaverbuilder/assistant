@@ -1,4 +1,4 @@
-import { setAppState, setAppFrameSize } from 'store/system/actions'
+import { setAppState } from 'store/system/actions'
 import { getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
 
@@ -14,7 +14,7 @@ export default {
 	 */
 	after: {
 		REGISTER_APP: ( action, store ) => {
-			const { apps, activeApp } = store.getState()
+			const { apps } = store.getState()
 			const cache = getCache( 'app-state', action.key )
 			const cacheState = cache ? JSON.parse( cache ) : {}
 			const initialState = apps[ action.key ].state
@@ -22,16 +22,9 @@ export default {
 
 			// Hydrate initial app state from cache and config.
 			store.dispatch( setAppState( action.key, appState ) )
-
-			// Set the app frame size.
-			if ( action.key === activeApp ) {
-				store.dispatch( setAppFrameSize( appState.size ) )
-			}
 		},
 
-		SET_ACTIVE_APP: ( action, store ) => {
-			const { activeApp, appState } = store.getState()
-			store.dispatch( setAppFrameSize( appState[ activeApp ].size ) )
+		SET_ACTIVE_APP: ( action ) => {
 			updateUserState( { activeApp: action.key } )
 		},
 
@@ -56,6 +49,11 @@ export default {
 		SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
 			const { shouldReduceMotion } = store.getState()
 			updateUserState( { shouldReduceMotion } )
+		},
+
+		SET_APP_FRAME_SIZE: ( action, store ) => {
+			const { appFrameSize } = store.getState()
+			updateUserState( { appFrameSize } )
 		}
 	}
 
