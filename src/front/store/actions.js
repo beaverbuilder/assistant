@@ -13,21 +13,6 @@ export const setActiveApp = ( key ) => {
 	}
 }
 
-export const hydrateAppState = ( app, state ) => {
-	return {
-		type: 'HYDRATE_APP_STATE',
-		app,
-		state,
-	}
-}
-
-export const clearAppState = ( app ) => {
-	return {
-		type: 'CLEAR_APP_STATE',
-		app,
-	}
-}
-
 export const setAppState = ( app, key, value ) => {
 	return {
 		type: 'SET_APP_STATE',

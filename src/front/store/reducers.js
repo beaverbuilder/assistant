@@ -17,7 +17,7 @@ export const apps = ( state = {}, action ) => {
 				enabled: true,
 				icon: null,
 				label: 'Untitled App',
-				size: 'normal',
+				supportsSizes: [ 'normal', 'wide', 'full' ],
 				state: {},
 				...action.config,
 			},
@@ -32,18 +32,10 @@ export const appState = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'REGISTER_APP':
 		return {
-			[ action.key ]: {},
+			[ action.key ]: {
+				size: 'normal',
+			},
 			...state,
-		}
-	case 'HYDRATE_APP_STATE':
-		return {
-			...state,
-			[ action.app ]: action.state,
-		}
-	case 'CLEAR_APP_STATE':
-		return {
-			...state,
-			[ action.app ]: {},
 		}
 	case 'SET_APP_STATE':
 		if ( 'object' === typeof action.key ) {

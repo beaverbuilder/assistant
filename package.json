@@ -30,6 +30,7 @@
     "react-with-gesture": "^4.0.5",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
+    "resize-observer-polyfill": "^1.5.1",
     "use-measure": "^0.1.2"
   },
   "devDependencies": {
