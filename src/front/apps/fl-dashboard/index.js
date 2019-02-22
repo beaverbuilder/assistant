@@ -69,5 +69,4 @@ registerApp( 'fl-dashboard', {
 	label: 'Dashboard',
 	content: props => <App {...props} />,
 	icon: props => <AppIcon {...props} />,
-	supportsSizes: [ 'normal' ]
 } )
