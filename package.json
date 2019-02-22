@@ -15,6 +15,7 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
+    "camelcase": "^5.0.0",
     "classnames": "^2.2.6",
     "lodash-es": "^4.17.11",
     "md5": "^2.2.1",
