@@ -16,10 +16,12 @@ export default {
 		REGISTER_APP: ( action, store ) => {
 			const { apps, activeApp } = store.getState()
 			const cache = getCache( 'app-state', action.key )
-			const state = cache ? JSON.parse( cache ) : apps[ action.key ].state
+			const cacheState = cache ? JSON.parse( cache ) : {}
+			const initialState = apps[ action.key ].state
+			const appState = { ...initialState, ...cacheState }
 
-			// Hydrate initial app state from cache or config.
-			store.dispatch( hydrateAppState( action.key, state ) )
+			// Hydrate initial app state from cache and config.
+			store.dispatch( hydrateAppState( action.key, appState ) )
 
 			// Set the app frame size.
 			if ( action.key === activeApp ) {
