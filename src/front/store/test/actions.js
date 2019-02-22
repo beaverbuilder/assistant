@@ -20,16 +20,6 @@ describe( 'actions', () => {
 		} )
 	} )
 
-	describe( 'hydrateAppState', () => {
-		it( 'should return the HYDRATE_APP_STATE action', () => {
-			expect( actions.hydrateAppState( 'test', {} ) ).toEqual( {
-				type: 'HYDRATE_APP_STATE',
-				app: 'test',
-				state: {},
-			} )
-		} )
-	} )
-
 	describe( 'setAppState', () => {
 		it( 'should return the SET_APP_STATE action', () => {
 			expect( actions.setAppState( 'test', 'foo', 'bar' ) ).toEqual( {

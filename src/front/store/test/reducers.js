@@ -44,21 +44,6 @@ describe( 'reducers', () => {
 			} )
 		} )
 
-		it( 'should hydrate an app state', () => {
-			const state = {
-				foo: { test: true },
-			}
-			const action = {
-				type: 'HYDRATE_APP_STATE',
-				app: 'bar',
-				state: { test: true }
-			}
-			expect( reducers.appState( state, action ) ).toEqual( {
-				foo: { test: true },
-				bar: { test: true },
-			} )
-		} )
-
 		it( 'should set the value of a key on an app state', () => {
 			const state = {
 				foo: { test: true },
