@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSpring, animated, config } from 'react-spring'
-import { useStore, getDispatch, useAppState } from 'store'
+import { useStore, getDispatch } from 'store'
 import { useWindowSize } from 'utils/window'
 import { Button, Icon } from 'components'
 
@@ -105,7 +105,7 @@ export const FrameSizeButton = () => {
 	const { setAppFrameSize } = getDispatch()
 
 	const toggleSize = () => {
-		const sizes = ['normal', 'wide', 'full']
+		const sizes = [ 'normal', 'wide', 'full' ]
 		const nextSize = sizes[ ( sizes.indexOf( appFrameSize ) + 1 ) % sizes.length ]
 		setAppFrameSize( nextSize )
 	}

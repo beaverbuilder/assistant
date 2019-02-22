@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
 import { Button, Icon, AppContext, StackContext } from 'components'
-import { AppMenuButton, FrameSizeButton } from 'system'
+import { AppMenuButton } from 'system'
 import './style.scss'
 
 

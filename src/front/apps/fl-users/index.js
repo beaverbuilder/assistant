@@ -17,7 +17,7 @@ export const App = () => {
 				query={ query }
 				pagination={ true }
 			/>
-			{ /*<AppMenu title={false} displayBeside="wide">User List Over Here.</AppMenu>*/ }
+			<AppMenu title={false} displayBeside="wide">User List Over Here.</AppMenu>
 		</Fragment>
 	)
 }
@@ -38,7 +38,6 @@ registerApp( 'fl-users', {
 	label: 'Users',
 	content: () => <App />,
 	icon: () => <AppIcon />,
-	supportsSizes: [ 'normal', 'wide' ],
 	state: {
 		query: null,
 		filter: {

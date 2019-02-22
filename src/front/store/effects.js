@@ -29,7 +29,7 @@ export default {
 			}
 		},
 
-		SET_ACTIVE_APP: ( action, store ) => {
+		SET_ACTIVE_APP: ( action ) => {
 			updateUserState( { activeApp: action.key } )
 		},
 
