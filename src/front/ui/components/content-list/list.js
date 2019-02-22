@@ -1,4 +1,4 @@
-import React, { Fragment, cloneElement, useContext, useEffect, useRef } from 'react'
+import React, { Fragment, cloneElement, useState, useContext, useEffect, useRef } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { EmptyMessage, ItemContext, StackContext } from 'components'
 import {
@@ -26,6 +26,7 @@ export const ContentList = ( {
 } ) => {
 	const request = useRef()
 	const { ref, updateCurrentView } = useContext( StackContext )
+	const [ truncateWidth, setTruncateWidth ] = useState( null )
 
 	useEffect( () => {
 		return () => request.current && request.current.cancel()
@@ -95,6 +96,8 @@ export const ContentList = ( {
 		const context = {
 			removeItem: () => removeItem( itemKey, groupKey ),
 			updateItem: newData => updateItem( itemKey, groupKey, newData ),
+			truncateWidth,
+			setTruncateWidth,
 			...itemData,
 		}
 		return (
@@ -117,7 +120,8 @@ export const ContentList = ( {
 					</Fragment>
 				)
 			} else if ( itemData && ! itemData.items ) {
-				return renderItem( itemData, itemKey, groupKey )
+				const isFirstItem = 0 === itemKey
+				return renderItem( { ...itemData, isFirstItem }, itemKey, groupKey )
 			}
 			return null
 		} )

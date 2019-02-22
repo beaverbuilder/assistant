@@ -1,7 +1,8 @@
 import React from 'react'
-import { useSpring, animated } from 'react-spring'
-import { useStore, getDispatch } from 'store'
+import { useSpring, animated, config } from 'react-spring'
+import { useStore, getDispatch, useAppState } from 'store'
 import { useWindowSize } from 'utils/window'
+import { Button, Icon } from 'components'
 
 export const useAppFrame = () => {
 	const { panelPosition, appFrameSize } = useStore()
@@ -63,12 +64,20 @@ export const AppFrame = ( { children } ) => {
 		}
 	}
 
+	const springConfig = {
+		...config.default,
+		tension: 400,
+		friction: 33,
+		clamp: true,
+	}
+
 	const springProps = useSpring( {
 		width: width + 1/* account for inside edge border */,
 		height,
 		right: 'end' === alignment ? 0 : windowWidth - width,
 		transform: transform(),
 		immediate: shouldReduceMotion,
+		config: springConfig,
 	} )
 
 	const insideBorder = '1px solid var(--fl-line-color)'
@@ -88,5 +97,29 @@ export const AppFrame = ( { children } ) => {
 
 	return (
 		<animated.div style={styles}>{children}</animated.div>
+	)
+}
+
+export const FrameSizeButton = () => {
+	const { appFrameSize, apps, activeApp: handle } = useStore()
+	const [ size, setSize ] = useAppState( 'size' )
+	const { setAppFrameSize } = getDispatch()
+	const app = apps[handle]
+
+	if ( 2 > app.supportsSizes.length ) {
+		return null
+	}
+
+	const toggleSize = () => {
+		const sizes = app.supportsSizes
+		const nextSize = sizes[ ( sizes.indexOf( appFrameSize ) + 1 ) % sizes.length ]
+		setAppFrameSize( nextSize )
+		setSize( nextSize )
+	}
+
+	return (
+		<Button appearance="icon" onClick={toggleSize}>
+			<Icon />
+		</Button>
 	)
 }

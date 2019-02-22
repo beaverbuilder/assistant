@@ -35,8 +35,8 @@ registerApp( 'fl-media', {
 	label: 'Media',
 	content: props => <MediaTab {...props} />,
 	icon: props => <MediaIcon {...props} />,
-	size: 'wide',
 	state: {
+		size: 'wide',
 		query: null,
 		filter: {
 			type: 'image',
