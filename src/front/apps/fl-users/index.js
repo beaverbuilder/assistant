@@ -17,7 +17,7 @@ export const App = () => {
 				query={ query }
 				pagination={ true }
 			/>
-			<AppMenu displayBeside="wide" />
+			{ /*<AppMenu title={false} displayBeside="wide">User List Over Here.</AppMenu>*/ }
 		</Fragment>
 	)
 }
