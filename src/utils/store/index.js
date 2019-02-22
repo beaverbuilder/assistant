@@ -21,7 +21,7 @@ export const registerStore = ( {
 } ) => {
 
 	if ( ! key ) {
-		throw new Error( 'Missing key required for story factory.' )
+		throw new Error( 'Missing key required for registerStore.' )
 	} else if ( registry[ key ] ) {
 		throw new Error( `A store with the key '${ key }' already exists.` )
 	}
