@@ -6,7 +6,7 @@ import { UserListFilter } from './filter'
 
 const { registerApp } = getDispatch()
 
-export const UsersTab = () => {
+export const App = () => {
 	const [ query ] = useAppState( 'query' )
 	return (
 		<Fragment>
@@ -22,7 +22,7 @@ export const UsersTab = () => {
 	)
 }
 
-const UsersIcon = () => {
+const AppIcon = () => {
 	return (
 		<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g stroke="currentColor" strokeWidth="2" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
@@ -36,8 +36,9 @@ const UsersIcon = () => {
 
 registerApp( 'fl-users', {
 	label: 'Users',
-	content: () => <UsersTab />,
-	icon: () => <UsersIcon />,
+	content: () => <App />,
+	icon: () => <AppIcon />,
+	supportsSizes: ['normal', 'wide'],
 	state: {
 		query: null,
 		filter: {

@@ -2,6 +2,7 @@ import React from 'react'
 import { useSpring, animated } from 'react-spring'
 import { useStore, getDispatch } from 'store'
 import { useWindowSize } from 'utils/window'
+import { Button, Icon } from 'components'
 
 export const useAppFrame = () => {
 	const { panelPosition, appFrameSize } = useStore()
@@ -88,5 +89,27 @@ export const AppFrame = ( { children } ) => {
 
 	return (
 		<animated.div style={styles}>{children}</animated.div>
+	)
+}
+
+export const FrameSizeButton = () => {
+	const { appFrameSize, apps, activeApp: handle } = useStore()
+	const { setAppFrameSize } = getDispatch()
+	const app = apps[handle]
+
+	if ( app.supportsSizes.length < 2 ) {
+		return null
+	}
+
+	const toggleSize = () => {
+		const sizes = app.supportsSizes
+		const nextSize = sizes[ ( sizes.indexOf( appFrameSize ) + 1 ) % sizes.length ]
+		setAppFrameSize( nextSize )
+	}
+
+	return (
+		<Button appearance="icon" onClick={toggleSize}>
+			<Icon />
+		</Button>
 	)
 }

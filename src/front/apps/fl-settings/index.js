@@ -4,7 +4,7 @@ import { ScreenHeader, Button } from 'components'
 const { registerApp } = getDispatch()
 import './style.scss'
 
-const SettingsApp = () => {
+const App = () => {
 	const { shouldReduceMotion, panelPosition } = useStore()
 	const { setShouldReduceMotion, setPanelPosition } = getDispatch()
 
@@ -36,7 +36,7 @@ const SettingsApp = () => {
 	)
 }
 
-const SettingsIcon = () => {
+const AppIcon = () => {
 	return (
 		<svg width="28px" height="23px" viewBox="0 0 28 23" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" fillRule="evenodd">
@@ -52,6 +52,7 @@ const SettingsIcon = () => {
 
 registerApp( 'fl-settings', {
 	label: 'Preferences',
-	content: () => <SettingsApp />,
-	icon: () => <SettingsIcon />,
+	content: () => <App />,
+	icon: () => <AppIcon />,
+	supportsSizes: ['normal'],
 } )

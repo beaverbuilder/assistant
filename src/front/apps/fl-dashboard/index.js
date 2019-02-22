@@ -28,7 +28,7 @@ const DetailView = () => {
 	)
 }
 
-export const DashboardTab = () => {
+export const App = () => {
 	const { currentUser, dashboardApp } = getConfig()
 	const { adminActions } = dashboardApp
 
@@ -52,7 +52,7 @@ export const DashboardTab = () => {
 	)
 }
 
-export const DashboardIcon = () => {
+export const AppIcon = () => {
 	return (
 		<svg width="30px" height="24px" viewBox="0 0 30 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g transform="translate(-102.000000, -145.000000)" fill="transparent" fillRule="nonzero" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -67,7 +67,7 @@ export const DashboardIcon = () => {
 
 registerApp( 'fl-dashboard', {
 	label: 'Dashboard',
-	content: props => <DashboardTab {...props} />,
-	icon: props => <DashboardIcon {...props} />,
-	settings: () => <div>Dashboard Settings here</div>,
+	content: props => <App {...props} />,
+	icon: props => <AppIcon {...props} />,
+	supportsSizes: ['normal']
 } )
