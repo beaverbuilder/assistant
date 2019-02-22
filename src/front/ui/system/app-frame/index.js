@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSpring, animated } from 'react-spring'
+import { useSpring, animated, config } from 'react-spring'
 import { useStore, getDispatch, useAppState } from 'store'
 import { useWindowSize } from 'utils/window'
 import { Button, Icon } from 'components'
@@ -64,12 +64,20 @@ export const AppFrame = ( { children } ) => {
 		}
 	}
 
+	const springConfig = {
+		...config.default,
+		tension: 400,
+		friction: 33,
+		clamp: true,
+	}
+
 	const springProps = useSpring( {
 		width: width + 1/* account for inside edge border */,
 		height,
 		right: 'end' === alignment ? 0 : windowWidth - width,
 		transform: transform(),
 		immediate: shouldReduceMotion,
+		config: springConfig,
 	} )
 
 	const insideBorder = '1px solid var(--fl-line-color)'
