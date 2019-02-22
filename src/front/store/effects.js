@@ -14,22 +14,23 @@ export default {
 	 */
 	after: {
 		REGISTER_APP: ( action, store ) => {
-			const { apps, activeApp } = store.getState()
+			const { apps, activeApp, appState } = store.getState()
 			const cache = getCache( 'app-state', action.key )
 			const state = cache ? JSON.parse( cache ) : apps[ action.key ].state
 
 			// Hydrate initial app state from cache or config.
-			store.dispatch( hydrateAppState( action.key, state ) )
+			const newState = Object.assign( { size: 'normal' }, state )
+			store.dispatch( hydrateAppState( action.key, newState ) )
 
 			// Set the app frame size.
 			if ( action.key === activeApp ) {
-				store.dispatch( setAppFrameSize( apps[ activeApp ].size ) )
+				store.dispatch( setAppFrameSize( newState.size ) )
 			}
 		},
 
 		SET_ACTIVE_APP: ( action, store ) => {
-			const { apps, activeApp } = store.getState()
-			store.dispatch( setAppFrameSize( apps[ activeApp ].size ) )
+			const { activeApp, appState } = store.getState()
+			store.dispatch( setAppFrameSize( appState[ activeApp ].size ) )
 			updateUserState( { activeApp: action.key } )
 		},
 

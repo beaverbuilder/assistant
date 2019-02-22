@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSpring, animated } from 'react-spring'
-import { useStore, getDispatch } from 'store'
+import { useStore, getDispatch, useAppState } from 'store'
 import { useWindowSize } from 'utils/window'
 import { Button, Icon } from 'components'
 
@@ -94,6 +94,7 @@ export const AppFrame = ( { children } ) => {
 
 export const FrameSizeButton = () => {
 	const { appFrameSize, apps, activeApp: handle } = useStore()
+	const [size, setSize] = useAppState('size')
 	const { setAppFrameSize } = getDispatch()
 	const app = apps[handle]
 
@@ -105,6 +106,7 @@ export const FrameSizeButton = () => {
 		const sizes = app.supportsSizes
 		const nextSize = sizes[ ( sizes.indexOf( appFrameSize ) + 1 ) % sizes.length ]
 		setAppFrameSize( nextSize )
+		setSize( nextSize )
 	}
 
 	return (
