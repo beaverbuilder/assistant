@@ -87,16 +87,16 @@ export const Frame = props => {
 export const ContentFrame = props => {
 	const { className, padded = false, align } = props
 
-	const classes = classname({
-		'fl-asst-content-frame' : true,
-		'fl-asst-content-frame-align-center' : 'center' === align,
+	const classes = classname( {
+		'fl-asst-content-frame': true,
+		'fl-asst-content-frame-align-center': 'center' === align,
 	}, className )
 
-	const mergedProps = Object.assign({}, props, {
+	const mergedProps = Object.assign( {}, props, {
 		className: classes,
-	})
+	} )
 	delete mergedProps.align
-	
+
 	return (
 		<Fragment>
 			{ padded && <Padding>
