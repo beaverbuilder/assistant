@@ -29,55 +29,6 @@ describe( 'reducers', () => {
 		} )
 	} )
 
-	describe( 'appState', () => {
-		it( 'should register a new app state', () => {
-			const state = {
-				foo: {},
-			}
-			const action = {
-				type: 'REGISTER_APP',
-				key: 'bar',
-			}
-			expect( reducers.appState( state, action ) ).toEqual( {
-				foo: {},
-				bar: {},
-			} )
-		} )
-
-		it( 'should set the value of a key on an app state', () => {
-			const state = {
-				foo: { test: true },
-				bar: { test: true },
-			}
-			const action = {
-				type: 'SET_APP_STATE',
-				app: 'foo',
-				key: 'test',
-				value: false,
-			}
-			expect( reducers.appState( state, action ) ).toEqual( {
-				foo: { test: false },
-				bar: { test: true },
-			} )
-		} )
-
-		it( 'should set the value of multiple keys on an app state', () => {
-			const state = {
-				foo: { test: 'a', something: 'b' },
-				bar: { test: 1, something: 2  },
-			}
-			const action = {
-				type: 'SET_APP_STATE',
-				app: 'foo',
-				key: { test: 'c', something: 'd' },
-			}
-			expect( reducers.appState( state, action ) ).toEqual( {
-				foo: { test: 'c', something: 'd' },
-				bar: { test: 1, something: 2  },
-			} )
-		} )
-	} )
-
 	describe( 'isShowingUI', () => {
 		it( 'should show the UI', () => {
 			const state = false

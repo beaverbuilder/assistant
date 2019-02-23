@@ -20,17 +20,6 @@ describe( 'actions', () => {
 		} )
 	} )
 
-	describe( 'setAppState', () => {
-		it( 'should return the SET_APP_STATE action', () => {
-			expect( actions.setAppState( 'test', 'foo', 'bar' ) ).toEqual( {
-				type: 'SET_APP_STATE',
-				app: 'test',
-				key: 'foo',
-				value: 'bar',
-			} )
-		} )
-	} )
-
 	describe( 'setIsShowingUI', () => {
 		it( 'should return the SET_SHOW_UI action', () => {
 			expect( actions.setIsShowingUI( true ) ).toEqual( {
