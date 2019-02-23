@@ -21,12 +21,12 @@ export const registerAppStore = args => {
 	} )
 }
 
-export const useAppState = () => {
-	const { app } = useContext( AppContext )
+export const useAppState = ( key ) => {
+	const app = key ? key : useContext( AppContext ).app
 	return useStore( `${ app }/state` )
 }
 
-export const getAppDispatch = () => {
-	const { app } = useContext( AppContext )
-	return getDispatch( `${ app }/state` )
+export const getAppDispatch = ( key ) => {
+	const app = key ? key : useContext( AppContext ).app
+	return getDispatch( `${ key ? key : app }/state` )
 }
