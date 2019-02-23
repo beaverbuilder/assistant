@@ -323,9 +323,7 @@ const MenuModal = ( { children, modalID, pose, initialPose, onPoseComplete, onDi
 				initialPose={initialPose}
 				onClick={preventPropagation}
 			>
-				<Stack>
-					{children}
-				</Stack>
+				{children}
 			</MenuBox>
 		</OverlayBox>
 	)
