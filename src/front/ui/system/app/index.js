@@ -52,7 +52,7 @@ const shouldMenuDisplayBeside = ( displayBeside, appFrameSize ) => {
 	return false
 }
 
-const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
+const Menu = ( { title, children, displayBeside = 'full', width = 260 } ) => {
 	const { shouldReduceMotion } = useStore()
 	const { hideAppMenu, isShowingAppMenu, label } = useContext( AppContext )
 	const { appFrameSize } = useContext( UIContext )

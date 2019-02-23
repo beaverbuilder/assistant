@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState, getDispatch } from 'store'
-import { PostList, ScreenHeader, StackContext } from 'components'
+import { PostList, ScreenHeader, StackContext, FrameContext } from 'components'
 import { AppMenu } from 'system'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
@@ -11,11 +11,12 @@ export const App = () => {
 	const [ filter ] = useAppState( 'filter' )
 	const [ query ] = useAppState( 'query' )
 	const stack = useContext( StackContext )
+	const { width } = useContext( FrameContext )
 
 	return (
 		<Fragment>
 			<ScreenHeader>
-				<PostListFilter />
+				{ width < 500 && <PostListFilter /> }
 			</ScreenHeader>
 			<PostList
 				type={ filter.type }

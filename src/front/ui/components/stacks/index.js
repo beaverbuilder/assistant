@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createRef } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { StackContext, ViewContext } from 'components'
+import { StackContext, ViewContext, Frame } from 'components'
 import './style.scss'
 
 const handleTransition = () => {
@@ -215,7 +215,9 @@ export const Stack = ( { children, className } ) => {
 								onPoseComplete={poseComplete}
 								className='fl-asst-stack-view'
 								{...props}
-							/>
+								>
+								<Frame>{props.children}</Frame>
+							</StackView>
 						</ViewContext.Provider>
 					</StackContext.Provider>
 				)
