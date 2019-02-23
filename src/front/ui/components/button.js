@@ -3,6 +3,7 @@ import { animated, useSpring } from 'react-spring'
 import classname from 'classnames'
 import { useStore } from 'store'
 import { useAppFrame } from 'system'
+import { useWindowSize } from 'utils/window'
 
 export const Button = forwardRef( ( props, ref ) => {
 	const { children, isSelected, className, appearance } = props
@@ -30,7 +31,8 @@ export const Button = forwardRef( ( props, ref ) => {
 
 export const AppTabButton = forwardRef( ( props, ref ) => {
 	const { shouldReduceMotion } = useStore()
-	const { appFrame: { sizeName, isDisplayingFullscreen } } = useAppFrame()
+	const { appFrame: { sizeName } } = useAppFrame()
+	const { width } = useWindowSize()
 	const { children, isSelected, onClick, className, tooltip } = props
 	const classes = classname( {
 		'fl-asst-button': true,
@@ -38,7 +40,8 @@ export const AppTabButton = forwardRef( ( props, ref ) => {
 		'fl-asst-button-is-selected': isSelected
 	}, className )
 
-	const isFrameExpanded = [ 'full', 'wide' ].includes( sizeName ) && ! isDisplayingFullscreen
+
+	const isFrameExpanded = [ 'full', 'wide' ].includes( sizeName ) && 600 < width
 
 	const springProps = useSpring( {
 		paddingLeft: isFrameExpanded ? 20 : 10,

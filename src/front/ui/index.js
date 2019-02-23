@@ -8,6 +8,7 @@ import {
 } from 'components'
 import { NotificationsTabButton } from 'apps/fl-notifications'
 import { App, useAppsMenu, AppFrame, FrameSizeButton } from 'system'
+import { useWindowSize } from 'utils/window'
 import './style.scss'
 
 /**
@@ -22,11 +23,12 @@ export const UI = () => {
 		setIsShowingUI,
 		renderModals,
 	} = useContext( UIContext )
+	const { width } = useWindowSize()
 
 	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
 	const excludedApps = [ 'fl-notifications' ]
-	const maxTabCount = 4
+	const maxTabCount = 400 < width ? 4 : 2
 	let count = 0
 
 	return (

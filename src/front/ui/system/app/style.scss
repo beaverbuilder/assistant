@@ -46,6 +46,7 @@
             position: static;
 
             .fl-asst-app-menu-panel {
+                flex: 0 0 auto;
                 position: static;
                 border-right: 1px solid var(--fl-line-color);
             }
