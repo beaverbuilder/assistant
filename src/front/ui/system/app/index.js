@@ -2,12 +2,14 @@ import React, { Fragment, useState, useContext } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
 import { useStore } from 'store'
+import { useAppFrame } from 'system'
 import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon } from 'components'
 import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
 export const App = props => {
 	const { content } = props
+	const { appFrame: { width } } = useAppFrame()
 	const [ isShowingAppMenu, setIsShowingAppMenu ] = useState( false )
 	const showAppMenu = () => setIsShowingAppMenu( true )
 	const hideAppMenu = () => setIsShowingAppMenu( false )
@@ -19,10 +21,15 @@ export const App = props => {
 		hideAppMenu,
 		toggleAppMenu,
 	} )
+
+	const styles = {
+		width,
+	}
+
 	return (
 		<AppContext.Provider value={appContext}>
 			<TunnelProvider>
-				<div className="fl-asst-app">
+				<div className="fl-asst-app" style={styles}>
 					<TunnelPlaceholder id="app-menu" multiple>
 						{ ( { items } ) => {
 							if ( 'undefined' !== items && 0 < items.length ) {
