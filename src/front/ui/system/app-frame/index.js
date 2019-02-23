@@ -112,7 +112,7 @@ export const FrameSizeButton = () => {
 
 	return (
 		<Button appearance="icon" onClick={toggleSize}>
-			<Icon />
+			<Icon name={`expand-${appFrameSize}`} />
 		</Button>
 	)
 }

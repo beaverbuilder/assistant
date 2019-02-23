@@ -50,7 +50,7 @@ export {
 } from './content-list'
 
 export { OptionGroup, OptionGroupItem } from './option-group'
-
+export { Frame, FrameContext } from './frame'
 export { Widget } from './widgets'
 export { Stack } from './stacks'
 export { useModals } from './modals'
