@@ -6,6 +6,14 @@ import { combineReducers } from 'redux'
  */
 export const createReducers = ( reducers, state ) => {
 
+	/**
+	 * Return a simple reducer if we don't have reducers and state.
+	 * If this isn't done, Redux will throw an error.
+	 */
+	if ( ! Object.keys( reducers ).length && ! Object.keys( state ).length ) {
+		return state => state
+	}
+
 	Object.entries( state ).map( ( [ key, value ] ) => {
 		if ( ! reducers[ key ] ) {
 			reducers[ key ] = ( state = value, action ) => {

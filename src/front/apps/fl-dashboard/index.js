@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { getDispatch } from 'store'
+import { getSystemActions } from 'store'
 import {
 	Button,
 	Separator,
@@ -12,10 +12,10 @@ import {
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
-import { getConfig } from 'store'
+import { getSystemConfig } from 'store'
 import './style.scss'
 
-const { registerApp } = getDispatch()
+const { registerApp } = getSystemActions()
 
 const DetailView = () => {
 	const { pushView } = useContext( StackContext )
@@ -29,7 +29,7 @@ const DetailView = () => {
 }
 
 export const App = () => {
-	const { currentUser, dashboardApp } = getConfig()
+	const { currentUser, dashboardApp } = getSystemConfig()
 	const { adminActions } = dashboardApp
 
 	return (

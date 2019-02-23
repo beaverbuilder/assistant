@@ -1,8 +1,8 @@
 import React, { Fragment, useContext } from 'react'
-import { getDispatch } from 'store'
+import { getSystemActions } from 'store'
 import { FrameContext, EmptyMessage } from 'components'
 
-const { registerApp } = getDispatch()
+const { registerApp } = getSystemActions()
 
 const App = () => {
 	return (

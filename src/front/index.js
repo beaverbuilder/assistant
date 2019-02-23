@@ -4,9 +4,8 @@ import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
 import { UIContext, PageViewContext, useModals } from 'components'
 import { useActiveApp } from 'system'
-import { getConfig, useStore, getStore, getDispatch } from 'store'
+import { getSystemConfig, getSystemStore, getSystemActions, useSystemState } from 'store'
 import { redirect } from 'utils/location'
-import './api'
 import './apps'
 
 /**
@@ -14,15 +13,15 @@ import './apps'
  */
 const Assistant = () => {
 
-	const { currentPageView } = getConfig()
-	const { isShowingUI, apps, panelPosition, appFrameSize, } = useStore()
+	const { currentPageView } = getSystemConfig()
+	const { isShowingUI, apps, panelPosition, appFrameSize, } = useSystemState()
 	const {
 		setIsShowingUI,
 		togglePanelPosition,
 		setPanelPosition,
 		setIsShowingAppsMenu,
 		setAppFrameSize,
-	} = getDispatch()
+	} = getSystemActions()
 	const { activeApp, activeAppName, setActiveApp } = useActiveApp()
 
 	const { renderModals, presentModal, dismissModal, presentNotification, modalExists } = useModals()
@@ -65,7 +64,7 @@ const Assistant = () => {
 	}
 
 	return (
-		<Provider store={getStore()}>
+		<Provider store={getSystemStore()}>
 			<UIContext.Provider value={ui}>
 				<PageViewContext.Provider value={currentPageView}>
 					{ ! isShowingUI && <ShowUITrigger /> }

@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react'
-import { useAppState, getDispatch } from 'store'
+import { useAppState, getSystemActions } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import { ScreenHeader, CommentList, UpdateList } from 'components'
 import { NotificationsFilter } from './filter'
 
-const { registerApp } = getDispatch()
+const { registerApp } = getSystemActions()
 
-export const App = () => {
-	const [ query ] = useAppState( 'query' )
-	const [ filter ] = useAppState( 'filter' )
+export const NotificationsTab = () => {
+	const { query, filter } = useAppState()
 	const { type } = filter
 
 	return (

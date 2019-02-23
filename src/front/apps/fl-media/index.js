@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
-import { useAppState, getDispatch } from 'store'
+import { useAppState, getSystemActions } from 'store'
 import { ScreenHeader, MediaList } from 'components'
 import { MediaListFilter } from './filter'
 
-const { registerApp } = getDispatch()
+const { registerApp } = getSystemActions()
 
 export const MediaTab = () => {
-	const [ query ] = useAppState( 'query' )
+	const { query } = useAppState()
 	return (
 		<Fragment>
 			<ScreenHeader>

@@ -1,60 +1,47 @@
-import { setAppState } from 'store/system/actions'
-import { getCache, setCache } from 'utils/cache'
+import { registerAppStore } from 'store'
 import { updateUserState } from 'utils/wordpress'
 
-export default {
+/**
+ * Effects that fire before an action.
+ */
+export const before = {}
 
-	/**
-	 * Effects that fire before an action.
-	 */
-	before: {},
+/**
+ * Effects that fire after an action.
+ */
+export const after = {
 
-	/**
-	 * Effects that fire after an action.
-	 */
-	after: {
-		REGISTER_APP: ( action, store ) => {
-			const { apps } = store.getState()
-			const cache = getCache( 'app-state', action.key )
-			const cacheState = cache ? JSON.parse( cache ) : {}
-			const initialState = apps[ action.key ].state
-			const appState = { ...initialState, ...cacheState }
+	REGISTER_APP: ( action ) => {
+		registerAppStore( {
+			key: action.key,
+			...action.config,
+		} )
+	},
 
-			// Hydrate initial app state from cache and config.
-			store.dispatch( setAppState( action.key, appState ) )
-		},
+	SET_ACTIVE_APP: ( action ) => {
+		updateUserState( { activeApp: action.key } )
+	},
 
-		SET_ACTIVE_APP: ( action ) => {
-			updateUserState( { activeApp: action.key } )
-		},
+	SET_SHOW_UI: action => {
+		updateUserState( { isShowingUI: action.show } )
+	},
 
-		SET_APP_STATE: ( action, store ) => {
-			const { appState } = store.getState()
-			setCache( 'app-state', action.app, JSON.stringify( appState[ action.app ] ), false )
-		},
+	SET_PANEL_POSITION: ( action ) => {
+		updateUserState( { panelPosition: action.position } )
+	},
 
-		SET_SHOW_UI: action => {
-			updateUserState( { isShowingUI: action.show } )
-		},
+	TOGGLE_PANEL_POSITION: ( action, store ) => {
+		const { panelPosition } = store.getState()
+		updateUserState( { panelPosition } )
+	},
 
-		SET_PANEL_POSITION: ( action ) => {
-			updateUserState( { panelPosition: action.position } )
-		},
+	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
+		const { shouldReduceMotion } = store.getState()
+		updateUserState( { shouldReduceMotion } )
+	},
 
-		TOGGLE_PANEL_POSITION: ( action, store ) => {
-			const { panelPosition } = store.getState()
-			updateUserState( { panelPosition } )
-		},
-
-		SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
-			const { shouldReduceMotion } = store.getState()
-			updateUserState( { shouldReduceMotion } )
-		},
-
-		SET_APP_FRAME_SIZE: ( action, store ) => {
-			const { appFrameSize } = store.getState()
-			updateUserState( { appFrameSize } )
-		}
-	}
-
+	SET_APP_FRAME_SIZE: ( action, store ) => {
+		const { appFrameSize } = store.getState()
+		updateUserState( { appFrameSize } )
+	},
 }
