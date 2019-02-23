@@ -28,16 +28,3 @@ export const getSystemDispatch = () => {
 export const getSystemConfig = () => {
 	return { ...FL_ASSISTANT_CONFIG }
 }
-
-export const useAppState = ( key ) => {
-	const store = getSystemStore()
-	const { appState } = useSystemState()
-	const { app } = useContext( AppContext )
-	if ( undefined === appState[ app ][ key ] ) {
-		throw new Error( `Key '${ key }' not found on '${ app }' app state.` )
-	}
-	return [
-		appState[ app ][ key ],
-		newState => store.dispatch( actions.setAppState( app, key, newState ) )
-	]
-}

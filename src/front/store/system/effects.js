@@ -1,3 +1,4 @@
+import { registerAppStore } from 'store'
 import { setAppState } from 'store/system/actions'
 import { getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
@@ -15,12 +16,17 @@ export const after = {
 	REGISTER_APP: ( action, store ) => {
 		const { apps } = store.getState()
 		const cache = getCache( 'app-state', action.key )
-		const cacheState = cache ? JSON.parse( cache ) : {}
+		const cacheState = cache ? cache : {}
 		const initialState = apps[ action.key ].state
 		const appState = { ...initialState, ...cacheState }
 
 		// Hydrate initial app state from cache and config.
 		store.dispatch( setAppState( action.key, appState ) )
+
+		registerAppStore( {
+			key: action.key,
+			...action.config,
+		} )
 	},
 
 	SET_ACTIVE_APP: ( action ) => {
@@ -29,7 +35,7 @@ export const after = {
 
 	SET_APP_STATE: ( action, store ) => {
 		const { appState } = store.getState()
-		setCache( 'app-state', action.app, JSON.stringify( appState[ action.app ] ), false )
+		setCache( 'app-state', action.app, appState[ action.app ], false )
 	},
 
 	SET_SHOW_UI: action => {

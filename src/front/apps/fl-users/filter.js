@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useAppState, getSystemConfig, useSystemState } from 'store'
+import { useAppState, getAppDispatch, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl } from 'components'
 
 export const UserListFilter = () => {
@@ -16,8 +16,8 @@ export const UserListFilter = () => {
 }
 
 export const getFilterData = () => {
-	const [ query, setQuery ] = useAppState( 'query' ) // eslint-disable-line no-unused-vars
-	const [ filter, setFilter ] = useAppState( 'filter' )
+	const { filter } = useAppState()
+	const { setFilter, setQuery } = getAppDispatch()
 	const { counts } = useSystemState()
 	const { userRoles } = getSystemConfig()
 	const { role } = filter

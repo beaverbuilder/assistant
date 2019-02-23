@@ -6,7 +6,7 @@ import { MediaListFilter } from './filter'
 const { registerApp } = getSystemDispatch()
 
 export const MediaTab = () => {
-	const [ query ] = useAppState( 'query' )
+	const { query } = useAppState()
 	return (
 		<Fragment>
 			<ScreenHeader>

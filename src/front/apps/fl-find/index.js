@@ -8,8 +8,7 @@ import { MenuContent } from './menu'
 const { registerApp } = getSystemDispatch()
 
 export const App = () => {
-	const [ filter ] = useAppState( 'filter' )
-	const [ query ] = useAppState( 'query' )
+	const { filter, query } = useAppState()
 	const stack = useContext( StackContext )
 
 	return (
