@@ -1,9 +1,7 @@
-import { useContext } from 'react'
 import { registerStore, useStore, getStore, getDispatch } from 'utils/store'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
-import { AppContext } from 'components'
 
 registerStore( {
 	key: 'fl-assistant/system',
