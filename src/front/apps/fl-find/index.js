@@ -1,10 +1,10 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState, getSystemActions } from 'store'
 import { PostList, ScreenHeader, StackContext, FrameContext } from 'components'
-
 import { AppMenu } from 'system'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
+import { state, actions, reducers } from './store'
 
 const { registerApp } = getSystemActions()
 
@@ -45,13 +45,7 @@ registerApp( 'fl-find', {
 	label: 'Content',
 	content: props => <App {...props} />,
 	icon: props => <AppIcon {...props} />,
-	state: {
-		query: null,
-		filter: {
-			type: 'posts',
-			subType: 'page',
-			date: '',
-			status: 'publish',
-		},
-	},
+	state,
+	actions,
+	reducers,
 } )
