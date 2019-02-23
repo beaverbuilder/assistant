@@ -6,7 +6,7 @@ import { NotificationsFilter } from './filter'
 
 const { registerApp } = getSystemActions()
 
-export const NotificationsTab = () => {
+export const App = () => {
 	const { query, filter } = useAppState()
 	const { type } = filter
 
