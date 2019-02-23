@@ -1,8 +1,0 @@
-.fl-asst-frame {
-    flex: 1 1 auto;
-    overflow-y: scroll; /* has to be scroll, not auto */
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    display: flex;
-    flex-direction: column;
-}
