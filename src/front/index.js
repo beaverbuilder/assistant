@@ -6,7 +6,6 @@ import { UIContext, PageViewContext, useModals } from 'components'
 import { useActiveApp } from 'system'
 import { getSystemConfig, getSystemStore, getSystemDispatch, useSystemState } from 'store'
 import { redirect } from 'utils/location'
-import './api'
 import './apps'
 
 /**
