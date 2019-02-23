@@ -144,13 +144,13 @@ export const Icon = ( { name } ) => {
 	case 'expand-full':
 		return (
 			<svg width="32px" height="16px" viewBox="0 0 32 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			    <g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round">
-		            <path d="M26.5,8 L21.989624,4" transform="translate(24.000000, 5.500000) scale(-1, 1) translate(-24.000000, -5.500000) "></path>
-		            <path d="M10.5,8 L5.98962402,4"></path>
-		            <path d="M26.5,8 L22,12" transform="translate(24.000000, 9.500000) scale(-1, 1) translate(-24.000000, -9.500000) "></path>
-		            <path d="M10.5,8 L6,12"></path>
-		            <rect x="1" y="1" width="30" height="14" rx="2"></rect>
-			    </g>
+				<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round">
+					<path d="M26.5,8 L21.989624,4" transform="translate(24.000000, 5.500000) scale(-1, 1) translate(-24.000000, -5.500000) "></path>
+					<path d="M10.5,8 L5.98962402,4"></path>
+					<path d="M26.5,8 L22,12" transform="translate(24.000000, 9.500000) scale(-1, 1) translate(-24.000000, -9.500000) "></path>
+					<path d="M10.5,8 L6,12"></path>
+					<rect x="1" y="1" width="30" height="14" rx="2"></rect>
+				</g>
 			</svg>
 		)
 	default:

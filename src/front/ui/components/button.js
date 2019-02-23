@@ -41,8 +41,7 @@ export const AppTabButton = forwardRef( ( props, ref ) => {
 	}, className )
 
 
-
-	const isFrameExpanded = [ 'full', 'wide' ].includes( sizeName ) && width > 600 
+	const isFrameExpanded = [ 'full', 'wide' ].includes( sizeName ) && 600 < width
 
 	const springProps = useSpring( {
 		paddingLeft: isFrameExpanded ? 20 : 10,
