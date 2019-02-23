@@ -1,5 +1,4 @@
 import { registerAppStore } from 'store'
-import { getCache, setCache } from 'utils/cache'
 import { updateUserState } from 'utils/wordpress'
 
 /**
@@ -12,7 +11,7 @@ export const before = {}
  */
 export const after = {
 
-	REGISTER_APP: ( action, store ) => {
+	REGISTER_APP: ( action ) => {
 		registerAppStore( {
 			key: action.key,
 			...action.config,

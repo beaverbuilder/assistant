@@ -16,7 +16,7 @@ export const MediaListFilter = () => {
 }
 
 export const getFilterData = () => {
-	const { query, filter } = useAppState()
+	const { filter } = useAppState()
 	const { setQuery, setFilter } = getAppActions()
 	const { type } = filter
 	const { counts } = useSystemState()

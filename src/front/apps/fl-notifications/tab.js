@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { useAppState, getAppActions, getSystemActions } from 'store'
+import { useAppState, getSystemActions } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import { ScreenHeader, CommentList, UpdateList } from 'components'
 import { NotificationsFilter } from './filter'
