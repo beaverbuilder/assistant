@@ -1,0 +1,21 @@
+.fl-asst-button.fl-asst-control-toggle {
+    width: calc( var(--fl-asst-base-padding) * 2 );
+    height: var(--fl-asst-base-padding);
+    border-radius: var(--fl-asst-base-padding);
+    border: 2px solid var(--fl-line-color);
+    background: transparent;
+    margin:0px;
+    padding: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .fl-asst-control-thumb {
+        width: calc( var(--fl-asst-base-padding) - 8px );
+        height: calc( var(--fl-asst-base-padding) - 8px );
+        background: transparent;
+        border: 2px solid var(--fl-asst-base-art-color);
+        border-radius: var(--fl-asst-base-padding);
+        flex: 0 0 auto;
+    }
+}

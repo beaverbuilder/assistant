@@ -94,6 +94,8 @@
         align-items: flex-start;
         justify-content: center;
         padding-left: calc( var(--fl-asst-base-padding) / 2 );
+        max-width: 60ch; // Make sure text doesn't get too long
+        margin-right: auto; // but keep accessories pushed the the right
 
         .fl-asst-list-item-title {
             color: var(--fl-title-color);
