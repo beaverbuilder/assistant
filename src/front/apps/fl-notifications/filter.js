@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { useAppState, useStore } from 'store'
+import { useAppState, useSystemState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import { ExpandedContents, TagGroupControl } from 'components'
 
@@ -48,7 +48,7 @@ export const getFilterData = () => {
 	const [ query, setQuery ] = useAppState( 'query' ) // eslint-disable-line no-unused-vars
 	const [ filter, setFilter ] = useAppState( 'filter' )
 	const { type, commentStatus, updateType } = filter
-	const { counts } = useStore()
+	const { counts } = useSystemState()
 	const canModerateComments = currentUserCan( 'moderate_comments' )
 	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
 	const typeTags = []

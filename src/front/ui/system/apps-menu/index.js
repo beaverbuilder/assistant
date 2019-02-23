@@ -1,10 +1,10 @@
 import React, { Fragment, useContext } from 'react'
-import { useStore, getDispatch } from 'store'
+import { useSystemState, getSystemDispatch } from 'store'
 import { Heading, Icon, UIContext } from 'components'
 import './style.scss'
 
 const AppsMenu = () => {
-	const { apps } = useStore()
+	const { apps } = useSystemState()
 	const { setActiveApp } = useContext( UIContext )
 
 	const excludedApps = [ 'fl-notifications' ]
@@ -46,8 +46,8 @@ const AppsMenu = () => {
 }
 
 export const useAppsMenu = () => {
-	const { isShowingAppsMenu } = useStore()
-	const { setIsShowingAppsMenu } = getDispatch()
+	const { isShowingAppsMenu } = useSystemState()
+	const { setIsShowingAppsMenu } = getSystemDispatch()
 	const { presentModal, dismissModal } = useContext( UIContext )
 	const modalID = 'fl-apps'
 

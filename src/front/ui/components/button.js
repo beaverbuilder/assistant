@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import { animated, useSpring } from 'react-spring'
 import classname from 'classnames'
-import { useStore } from 'store'
+import { useSystemState } from 'store'
 import { useAppFrame } from 'system'
 
 export const Button = forwardRef( ( props, ref ) => {
@@ -29,7 +29,7 @@ export const Button = forwardRef( ( props, ref ) => {
 
 
 export const AppTabButton = forwardRef( ( props, ref ) => {
-	const { shouldReduceMotion } = useStore()
+	const { shouldReduceMotion } = useSystemState()
 	const { appFrame: { sizeName, isDisplayingFullscreen } } = useAppFrame()
 	const { children, isSelected, onClick, className, tooltip } = props
 	const classes = classname( {

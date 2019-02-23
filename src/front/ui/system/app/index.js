@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
-import { useStore } from 'store'
+import { useSystemState } from 'store'
 import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon } from 'components'
 import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
@@ -53,7 +53,7 @@ const shouldMenuDisplayBeside = ( displayBeside, appFrameSize ) => {
 }
 
 const Menu = ( { title, children, displayBeside = 'full', width = 300 } ) => {
-	const { shouldReduceMotion } = useStore()
+	const { shouldReduceMotion } = useSystemState()
 	const { hideAppMenu, isShowingAppMenu, label } = useContext( AppContext )
 	const { appFrameSize } = useContext( UIContext )
 

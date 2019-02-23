@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
-import { useStore, getDispatch } from 'store'
+import { useSystemState, getSystemDispatch } from 'store'
 import { ScreenHeader, Button } from 'components'
-const { registerApp } = getDispatch()
+const { registerApp } = getSystemDispatch()
 import './style.scss'
 
 const App = () => {
-	const { shouldReduceMotion, panelPosition } = useStore()
-	const { setShouldReduceMotion, setPanelPosition } = getDispatch()
+	const { shouldReduceMotion, panelPosition } = useSystemState()
+	const { setShouldReduceMotion, setPanelPosition } = getSystemDispatch()
 
 	const nextPanelPosition = ( 'start' === panelPosition ) ? 'end' : 'start'
 

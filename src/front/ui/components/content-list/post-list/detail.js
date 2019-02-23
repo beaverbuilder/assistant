@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import Clipboard from 'react-clipboard.js'
-import { getDispatch } from 'store'
+import { getSystemDispatch } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
 	ContentListDetail,
@@ -13,7 +13,7 @@ import {
 } from 'components'
 
 export const PostListDetail = () => {
-	const { incrementCount, decrementCount } = getDispatch()
+	const { incrementCount, decrementCount } = getSystemDispatch()
 	const { popView } = useContext( StackContext )
 	const {
 		editUrl,

@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
-import { useAppState, getDispatch } from 'store'
+import { useAppState, getSystemDispatch } from 'store'
 import { UserList, ScreenHeader } from 'components'
 import { AppMenu } from 'system'
 import { UserListFilter } from './filter'
 
-const { registerApp } = getDispatch()
+const { registerApp } = getSystemDispatch()
 
 export const App = () => {
 	const [ query ] = useAppState( 'query' )

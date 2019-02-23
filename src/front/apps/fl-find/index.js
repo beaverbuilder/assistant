@@ -1,11 +1,11 @@
 import React, { Fragment, useContext } from 'react'
-import { useAppState, getDispatch } from 'store'
+import { useAppState, getSystemDispatch } from 'store'
 import { PostList, ScreenHeader, StackContext } from 'components'
 import { AppMenu } from 'system'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
 
-const { registerApp } = getDispatch()
+const { registerApp } = getSystemDispatch()
 
 export const App = () => {
 	const [ filter ] = useAppState( 'filter' )
