@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { useAppState, getAppDispatch, useSystemState } from 'store'
+import { useAppState, getAppActions, useSystemState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import { ExpandedContents, TagGroupControl } from 'components'
 
@@ -46,7 +46,7 @@ export const NotificationsFilter = () => {
 
 export const getFilterData = () => {
 	const { filter } = useAppState()
-	const { setFilter, setQuery } = getAppDispatch()
+	const { setFilter, setQuery } = getAppActions()
 	const { type, commentStatus, updateType } = filter
 	const { counts } = useSystemState()
 	const canModerateComments = currentUserCan( 'moderate_comments' )

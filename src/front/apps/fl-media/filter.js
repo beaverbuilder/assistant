@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useAppState, getAppDispatch, useSystemState } from 'store'
+import { useAppState, getAppActions, useSystemState } from 'store'
 import { TagGroupControl } from 'components'
 
 export const MediaListFilter = () => {
@@ -16,8 +16,8 @@ export const MediaListFilter = () => {
 }
 
 export const getFilterData = () => {
-	const { query, filter } = useAppState( 'query' )
-	const { setQuery, setFilter } = getAppDispatch()
+	const { query, filter } = useAppState()
+	const { setQuery, setFilter } = getAppActions()
 	const { type } = filter
 	const { counts } = useSystemState()
 

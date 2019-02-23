@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { useSystemState, getSystemDispatch } from 'store'
+import { useSystemState, getSystemActions } from 'store'
 import { Heading, Icon, UIContext } from 'components'
 import './style.scss'
 
@@ -47,7 +47,7 @@ const AppsMenu = () => {
 
 export const useAppsMenu = () => {
 	const { isShowingAppsMenu } = useSystemState()
-	const { setIsShowingAppsMenu } = getSystemDispatch()
+	const { setIsShowingAppsMenu } = getSystemActions()
 	const { presentModal, dismissModal } = useContext( UIContext )
 	const modalID = 'fl-apps'
 

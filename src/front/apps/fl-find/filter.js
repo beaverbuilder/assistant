@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { useAppState, getAppDispatch, getSystemConfig, useSystemState } from 'store'
+import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl, ExpandedContents } from 'components'
 import { getWeek } from 'utils/datetime'
 
@@ -34,7 +34,7 @@ export const PostListFilter = () => {
 
 export const getFilterData = () => {
 	const { filter } = useAppState()
-	const { setFilter, setQuery } = getAppDispatch()
+	const { setFilter, setQuery } = getAppActions()
 	const { type, subType, date, status } = filter
 	const { counts } = useSystemState()
 	const { contentTypes, taxonomies } = getSystemConfig()

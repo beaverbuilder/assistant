@@ -1,12 +1,12 @@
 import React from 'react'
 import { useSpring, animated, config } from 'react-spring'
-import { useSystemState, getSystemDispatch } from 'store'
+import { useSystemState, getSystemActions } from 'store'
 import { useWindowSize } from 'utils/window'
 import { Button, Icon } from 'components'
 
 export const useAppFrame = () => {
 	const { panelPosition, appFrameSize } = useSystemState()
-	const { setAppFrameSize } = getSystemDispatch()
+	const { setAppFrameSize } = getSystemActions()
 	const { width: windowWidth } = useWindowSize()
 
 	const normalPreferredWidth = 460
@@ -102,7 +102,7 @@ export const AppFrame = ( { children } ) => {
 
 export const FrameSizeButton = () => {
 	const { appFrameSize } = useSystemState()
-	const { setAppFrameSize } = getSystemDispatch()
+	const { setAppFrameSize } = getSystemActions()
 
 	const toggleSize = () => {
 		const sizes = [ 'normal', 'wide', 'full' ]

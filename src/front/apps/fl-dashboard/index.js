@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { getSystemDispatch } from 'store'
+import { getSystemActions } from 'store'
 import {
 	Button,
 	Separator,
@@ -15,7 +15,7 @@ import { RecentCommentsWidget } from './recent-comments'
 import { getSystemConfig } from 'store'
 import './style.scss'
 
-const { registerApp } = getSystemDispatch()
+const { registerApp } = getSystemActions()
 
 const DetailView = () => {
 	const { pushView } = useContext( StackContext )

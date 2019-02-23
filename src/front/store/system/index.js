@@ -19,7 +19,7 @@ export const getSystemStore = () => {
 	return getStore( 'fl-assistant/system' )
 }
 
-export const getSystemDispatch = () => {
+export const getSystemActions = () => {
 	return getDispatch( 'fl-assistant/system' )
 }
 

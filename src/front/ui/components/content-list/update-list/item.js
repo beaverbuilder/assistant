@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import classname from 'classnames'
 import { updater } from 'utils/wordpress'
-import { getSystemDispatch } from 'store'
+import { getSystemActions } from 'store'
 import { Button, ContentListItem, Icon, ItemContext } from 'components'
 
 export const UpdateListItem = props => {
 	const { className } = props
-	const { decrementCount } = getSystemDispatch()
+	const { decrementCount } = getSystemActions()
 	const { key, type, metaUpdated, updateItem } = useContext( ItemContext )
 	const [ error, setError ] = useState( false )
 	const [ updated, setUpdated ] = useState( false )

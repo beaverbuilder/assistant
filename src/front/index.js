@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { UI, ShowUITrigger } from './ui'
 import { UIContext, PageViewContext, useModals } from 'components'
 import { useActiveApp } from 'system'
-import { getSystemConfig, getSystemStore, getSystemDispatch, useSystemState } from 'store'
+import { getSystemConfig, getSystemStore, getSystemActions, useSystemState } from 'store'
 import { redirect } from 'utils/location'
 import './apps'
 
@@ -21,7 +21,7 @@ const Assistant = () => {
 		setPanelPosition,
 		setIsShowingAppsMenu,
 		setAppFrameSize,
-	} = getSystemDispatch()
+	} = getSystemActions()
 	const { activeApp, activeAppName, setActiveApp } = useActiveApp()
 
 	const { renderModals, presentModal, dismissModal, presentNotification, modalExists } = useModals()

@@ -26,7 +26,7 @@ export const useAppState = ( key ) => {
 	return useStore( `${ app }/state` )
 }
 
-export const getAppDispatch = ( key ) => {
+export const getAppActions = ( key ) => {
 	const app = key ? key : useContext( AppContext ).app
 	return getDispatch( `${ key ? key : app }/state` )
 }

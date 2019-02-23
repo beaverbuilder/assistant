@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useAppState, getAppDispatch, getSystemDispatch, useSystemState } from 'store'
+import { useAppState, getAppActions, getSystemActions, useSystemState } from 'store'
 import { clearCache } from 'utils/cache'
 import { useHeartbeat } from 'utils/wordpress'
 import { AppTabButton, UIContext } from 'components'
@@ -17,9 +17,9 @@ export const NotificationsIcon = ( { count = 0 } ) => {
 
 export const NotificationsTabButton = ( { isShowingAppsMenu } ) => {
 	const { apps, counts } = useSystemState()
-	const { setCounts } = getSystemDispatch()
+	const { setCounts } = getSystemActions()
 	const { filter } = useAppState( 'fl-notifications' )
-	const { setFilter } = getAppDispatch( 'fl-notifications' )
+	const { setFilter } = getAppActions( 'fl-notifications' )
 	const { presentNotification, setActiveApp, activeAppName } = useContext( UIContext )
 	const notifications = apps[ 'fl-notifications' ] ? apps[ 'fl-notifications' ] : null
 	const active = 'fl-notifications' === activeAppName && ! isShowingAppsMenu

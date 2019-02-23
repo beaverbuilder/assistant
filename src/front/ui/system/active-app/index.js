@@ -1,8 +1,8 @@
-import { useSystemState, getSystemDispatch, } from 'store'
+import { useSystemState, getSystemActions, } from 'store'
 
 export const useActiveApp = () => {
 	const { apps, activeApp: name } = useSystemState()
-	const { setActiveApp } = getSystemDispatch()
+	const { setActiveApp } = getSystemActions()
 
 	const get = name => apps[ name ]
 

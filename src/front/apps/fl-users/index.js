@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { useAppState, getSystemDispatch } from 'store'
+import { useAppState, getSystemActions } from 'store'
 import { UserList, ScreenHeader } from 'components'
 import { AppMenu } from 'system'
 import { UserListFilter } from './filter'
@@ -32,7 +32,7 @@ const AppIcon = () => {
 	)
 }
 
-const { registerApp } = getSystemDispatch()
+const { registerApp } = getSystemActions()
 
 registerApp( 'fl-users', {
 	label: 'Users',
