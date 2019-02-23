@@ -13,15 +13,6 @@ export const setActiveApp = ( key ) => {
 	}
 }
 
-export const setAppState = ( app, key, value ) => {
-	return {
-		type: 'SET_APP_STATE',
-		app,
-		key,
-		value,
-	}
-}
-
 export const setIsShowingUI = ( show ) => {
 	return {
 		type: 'SET_SHOW_UI',
