@@ -9,6 +9,7 @@ import {
 	Widget,
 	StackContext,
 	ViewContext,
+	ContentFrame,
 } from 'components'
 
 export const CommentDetail = () => {
@@ -70,7 +71,7 @@ export const CommentDetail = () => {
 				</TagGroup>
 			</ScreenHeader>
 			<Widget title='Comment'>
-				<div dangerouslySetInnerHTML={ { __html: content } } />
+				<ContentFrame dangerouslySetInnerHTML={ { __html: content } } />
 			</Widget>
 		</ContentListDetail>
 	)

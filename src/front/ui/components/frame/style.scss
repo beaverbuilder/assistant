@@ -6,3 +6,11 @@
     display: flex;
     flex-direction: column;
 }
+
+.fl-asst-content-frame {
+    max-width: 80ch;
+
+    &.fl-asst-content-frame-align-center {
+        margin: 0 auto;
+    }
+}

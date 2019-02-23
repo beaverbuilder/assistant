@@ -24,6 +24,7 @@ export const App = props => {
 
 	const styles = {
 		width,
+		alignSelf: 'center'
 	}
 
 	return (

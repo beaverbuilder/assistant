@@ -6,7 +6,7 @@ import { NotificationsFilter } from './filter'
 
 const { registerApp } = getSystemActions()
 
-export const NotificationsTab = () => {
+export const App = () => {
 	const { query, filter } = useAppState()
 	const { type } = filter
 
@@ -23,7 +23,7 @@ export const NotificationsTab = () => {
 
 registerApp( 'fl-notifications', {
 	label: 'Notifications',
-	content: props => <NotificationsTab {...props} />,
+	content: props => <App {...props} />,
 	enabled: (
 		currentUserCan( 'update_plugins' ) ||
 		currentUserCan( 'update_themes' ) ||
