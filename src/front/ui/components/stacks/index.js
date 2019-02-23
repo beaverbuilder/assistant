@@ -215,7 +215,7 @@ export const Stack = ( { children, className } ) => {
 								onPoseComplete={poseComplete}
 								className='fl-asst-stack-view'
 								{...props}
-								>
+							>
 								<Frame>{props.children}</Frame>
 							</StackView>
 						</ViewContext.Provider>

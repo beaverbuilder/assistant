@@ -16,7 +16,7 @@ export const App = () => {
 	return (
 		<Fragment>
 			<ScreenHeader>
-				{ width < 500 && <PostListFilter /> }
+				{ 500 > width && <PostListFilter /> }
 			</ScreenHeader>
 			<PostList
 				type={ filter.type }
