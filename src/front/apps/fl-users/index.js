@@ -1,13 +1,11 @@
 import React, { Fragment } from 'react'
-import { useAppState, getDispatch } from 'store'
+import { useAppState, getSystemActions } from 'store'
 import { UserList, ScreenHeader } from 'components'
 import { AppMenu } from 'system'
 import { UserListFilter } from './filter'
 
-const { registerApp } = getDispatch()
-
 export const App = () => {
-	const [ query ] = useAppState( 'query' )
+	const { query } = useAppState()
 	return (
 		<Fragment>
 			<ScreenHeader>
@@ -33,6 +31,8 @@ const AppIcon = () => {
 		</svg>
 	)
 }
+
+const { registerApp } = getSystemActions()
 
 registerApp( 'fl-users', {
 	label: 'Users',

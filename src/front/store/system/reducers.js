@@ -17,40 +17,13 @@ export const apps = ( state = {}, action ) => {
 				enabled: true,
 				icon: null,
 				label: 'Untitled App',
-				supportsSizes: [ 'normal', 'wide', 'full' ],
 				state: {},
+				actions: {},
+				reducers: {},
+				effects: {},
 				...action.config,
 			},
 			...state,
-		}
-	default:
-		return state
-	}
-}
-
-export const appState = ( state = {}, action ) => {
-	switch ( action.type ) {
-	case 'REGISTER_APP':
-		return {
-			[ action.key ]: {},
-			...state,
-		}
-	case 'SET_APP_STATE':
-		if ( 'object' === typeof action.key ) {
-			return {
-				...state,
-				[ action.app ]: {
-					...state[ action.app ],
-					...action.key,
-				},
-			}
-		}
-		return {
-			...state,
-			[ action.app ]: {
-				...state[ action.app ],
-				[ action.key ]: action.value,
-			},
 		}
 	default:
 		return state

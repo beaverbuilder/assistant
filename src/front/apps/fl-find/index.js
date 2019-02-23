@@ -1,15 +1,15 @@
 import React, { Fragment, useContext } from 'react'
-import { useAppState, getDispatch } from 'store'
+import { useAppState, getSystemActions } from 'store'
 import { PostList, ScreenHeader, StackContext, FrameContext } from 'components'
+
 import { AppMenu } from 'system'
 import { PostListFilter } from './filter'
 import { MenuContent } from './menu'
 
-const { registerApp } = getDispatch()
+const { registerApp } = getSystemActions()
 
 export const App = () => {
-	const [ filter ] = useAppState( 'filter' )
-	const [ query ] = useAppState( 'query' )
+	const { filter, query } = useAppState()
 	const stack = useContext( StackContext )
 	const { width } = useContext( FrameContext )
 

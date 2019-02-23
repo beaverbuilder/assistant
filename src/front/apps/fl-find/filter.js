@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { useAppState, getConfig, useStore } from 'store'
+import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl, ExpandedContents } from 'components'
 import { getWeek } from 'utils/datetime'
 
@@ -33,11 +33,11 @@ export const PostListFilter = () => {
 }
 
 export const getFilterData = () => {
-	const [ query, setQuery ] = useAppState( 'query' ) // eslint-disable-line no-unused-vars
-	const [ filter, setFilter ] = useAppState( 'filter' )
+	const { filter } = useAppState()
+	const { setFilter, setQuery } = getAppActions()
 	const { type, subType, date, status } = filter
-	const { counts } = useStore()
-	const { contentTypes, taxonomies } = getConfig()
+	const { counts } = useSystemState()
+	const { contentTypes, taxonomies } = getSystemConfig()
 	const now = new Date()
 	const typeTags = []
 
