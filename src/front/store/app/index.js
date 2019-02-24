@@ -8,8 +8,7 @@ export const registerAppStore = args => {
 	const storeKey = `${ key }/state`
 	const cache = getCache( 'app-state', key )
 
-	registerStore( {
-		key: storeKey,
+	registerStore( storeKey, {
 		state: cache ? { ...state, ...cache } : state,
 		actions,
 		reducers,

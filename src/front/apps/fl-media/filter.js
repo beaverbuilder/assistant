@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useAppState, getAppActions, useSystemState } from 'store'
 import { TagGroupControl } from 'components'
 
 export const MediaListFilter = () => {
-	const { typeTags, setType, type } = getFilterData()
+	const { filter } = useAppState()
+	const { setType } = getAppActions()
+	const { typeTags } = getFilterTags()
+	const { type } = filter
 
 	return (
 		<TagGroupControl
@@ -15,10 +18,7 @@ export const MediaListFilter = () => {
 	)
 }
 
-export const getFilterData = () => {
-	const { filter } = useAppState()
-	const { setQuery, setFilter } = getAppActions()
-	const { type } = filter
+export const getFilterTags = () => {
 	const { counts } = useSystemState()
 
 	const typeTags = [
@@ -44,17 +44,5 @@ export const getFilterData = () => {
 		}
 	]
 
-	const setType = type => {
-		setFilter( { ...filter, type } )
-	}
-
-	useEffect( () => {
-		setQuery( {
-			posts_per_page: 20,
-			post_type: 'attachment',
-			post_mime_type: type,
-		} )
-	}, [ type ] )
-
-	return { typeTags, setType, type }
+	return { typeTags }
 }

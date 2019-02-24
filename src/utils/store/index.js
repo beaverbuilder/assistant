@@ -17,8 +17,7 @@ const registry = {}
   * an action or reducer for a state key, a setter will be
   * generated for you.
   */
-export const registerStore = ( {
-	key,
+export const registerStore = ( key, {
 	state = {},
 	actions = {},
 	reducers = {},

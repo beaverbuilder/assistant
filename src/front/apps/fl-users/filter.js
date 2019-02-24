@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl } from 'components'
 
 export const UserListFilter = () => {
-	const { roleTags, setRole, role } = getFilterData()
+	const { filter } = useAppState()
+	const { setRole } = getAppActions()
+	const { roleTags } = getFilterTags()
+	const { role } = filter
 
 	return (
 		<TagGroupControl
@@ -15,12 +18,9 @@ export const UserListFilter = () => {
 	)
 }
 
-export const getFilterData = () => {
-	const { filter } = useAppState()
-	const { setFilter, setQuery } = getAppActions()
+export const getFilterTags = () => {
 	const { counts } = useSystemState()
 	const { userRoles } = getSystemConfig()
-	const { role } = filter
 
 	const roleTags = [
 		{
@@ -35,13 +35,5 @@ export const getFilterData = () => {
 		} ) )
 	]
 
-	const setRole = role => {
-		setFilter( { ...filter, role } )
-	}
-
-	useEffect( () => {
-		setQuery( 'all' === role ? {} : { role } )
-	}, [ role ] )
-
-	return { roleTags, setRole, role }
+	return { roleTags }
 }
