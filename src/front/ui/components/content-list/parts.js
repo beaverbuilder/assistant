@@ -6,7 +6,7 @@ import { EmptyMessage, ItemContext } from 'components'
 
 export const ContentListContainer = ( { className, children } ) => {
 	return (
-		<div className={ classname( className, 'fl-asst-list' ) }>
+		<div className={ classname( className, 'fl-asst-list-items' ) }>
 			{ children }
 		</div>
 	)

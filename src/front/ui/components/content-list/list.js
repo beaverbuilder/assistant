@@ -151,15 +151,17 @@ export const ContentList = ( {
 	 * Render the InfiniteScroll component and child items.
 	 */
 	return (
-		<InfiniteScroll
-			getScrollParent={ () => ref.current }
-			hasMore={ dataHasMore }
-			loadMore={ loadItems }
-			loader={ renderPlaceholderItems() }
-			threshold={ 500 }
-			useWindow={ false }
-		>
-			{ cloneElement( container, { className }, renderItems( data ) ) }
-		</InfiniteScroll>
+		<div className='fl-asst-list'>
+			<InfiniteScroll
+				getScrollParent={ () => ref.current }
+				hasMore={ dataHasMore }
+				loadMore={ loadItems }
+				loader={ renderPlaceholderItems() }
+				threshold={ 500 }
+				useWindow={ false }
+			>
+				{ cloneElement( container, { className }, renderItems( data ) ) }
+			</InfiniteScroll>
+		</div>
 	)
 }
