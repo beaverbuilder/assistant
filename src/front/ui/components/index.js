@@ -49,8 +49,12 @@ export {
 	UserList,
 } from './content-list'
 
+export {
+	ToggleControl,
+} from './controls'
+
 export { OptionGroup, OptionGroupItem } from './option-group'
-export { Frame, FrameContext } from './frame'
+export { Frame, FrameContext, ContentFrame } from './frame'
 export { Widget } from './widgets'
 export { Stack } from './stacks'
 export { useModals } from './modals'

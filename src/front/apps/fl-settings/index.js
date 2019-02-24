@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useSystemState, getSystemActions } from 'store'
-import { ScreenHeader, Button } from 'components'
+import { ScreenHeader, Button, ToggleControl } from 'components'
 const { registerApp } = getSystemActions()
 import './style.scss'
 
@@ -18,9 +18,10 @@ const App = () => {
 				<div className="fl-asst-settings-item">
 					<label>Reduce Motion</label>
 					<div className="fl-asst-settings-item-control">
-						<Button onClick={ () => setShouldReduceMotion( ! shouldReduceMotion )}>
-							{ shouldReduceMotion ? 'Enabled' : 'Disabled' }
-						</Button>
+						<ToggleControl
+							value={shouldReduceMotion}
+							onChange={ value => setShouldReduceMotion( value ) }
+						/>
 					</div>
 				</div>
 				<div className="fl-asst-settings-item">

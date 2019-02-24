@@ -7,12 +7,12 @@ import { MenuContent } from './menu'
 
 export const App = () => {
 	const { filter, query } = useAppState()
-	const { width } = useContext( FrameContext )
+	const { size } = useContext( FrameContext )
 
 	return (
 		<Fragment>
 			<ScreenHeader>
-				{ 500 > width && <PostListFilter /> }
+				{ 'normal' === size && <PostListFilter /> }
 			</ScreenHeader>
 			<PostList
 				type={ filter.type }
