@@ -1,7 +1,7 @@
 import React, { Fragment, createRef, createContext, useLayoutEffect, useState } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
 import classname from 'classnames'
-import { Padding } from 'components'
+import { Padding, Heading } from 'components'
 import './style.scss'
 
 const defaults = {
@@ -21,7 +21,7 @@ export const FrameContext = createContext( defaults )
 FrameContext.displayName = 'FrameContext'
 
 export const Frame = props => {
-	const { className } = props
+	const { className, title, children } = props
 	const [ rect, setRect ] = useState( defaults )
 	const ref = createRef()
 
@@ -79,7 +79,13 @@ export const Frame = props => {
 
 	return (
 		<FrameContext.Provider value={context}>
-			<div {...mergedProps} />
+			<div {...mergedProps}>
+				{ title &&
+				<Padding className="fl-asst-frame-title">
+					<Heading>{title}</Heading>
+				</Padding> }
+				{children}
+			</div>
 		</FrameContext.Provider>
 	)
 }
