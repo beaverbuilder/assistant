@@ -17,7 +17,7 @@ export const getAverageColor = img => {
 	let g = 0
 	let b = 0
 
-	for ( var i = 0, l = data.length; i < l; i += 4 ) {
+	for ( let i = 0, l = data.length; i < l; i += 4 ) {
 		r += data[i]
 		g += data[i + 1]
 		b += data[i + 2]

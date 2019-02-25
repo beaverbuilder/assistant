@@ -20,14 +20,14 @@ export const MediaDetail = () => {
 		alt,
 		description,
 	} = data
-	const [color, setColor] = useState()
+	const [ color, setColor ] = useState()
 
 	const url = sizes.medium_large.url
 	const img = new Image()
 	img.src = url
 	img.onload = () => {
 		const { rgb } = getAverageColor( img )
-		setColor(rgb)
+		setColor( rgb )
 	}
 
 	const toolbarStyles = {
