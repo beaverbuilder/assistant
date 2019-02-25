@@ -2,6 +2,18 @@
     list-style: none;
     padding: 15px 0;
     margin:0;
+
+	&.fl-asst-list-has-groups {
+		padding: 0;
+
+		.fl-asst-list-item-is-first {
+			margin-top: 15px;
+		}
+
+		.fl-asst-list-item-is-last {
+			margin-bottom: 15px;
+		}
+	}
 }
 
 .fl-asst-list-group-heading {
@@ -19,11 +31,13 @@
 			display: block;
 			padding: 3px;
 			position: absolute;
+			top: 5px;
 			right: 0;
 			left: 0;
-			background-image: linear-gradient(to right, #EDF2F4, #C6CFD2, #EDF2F4);
+			background-color: var(--fl-utility-background-color);
 			background-size: 200% 100%;
 			background-position: 100%;
+			border-radius: 5px;
 		}
 	}
 	.fl-asst-list-item-title {

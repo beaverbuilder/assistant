@@ -1,20 +1,13 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { useAppState, getAppActions, useSystemState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import { ExpandedContents, TagGroupControl } from 'components'
 
 export const NotificationsFilter = () => {
-	const {
-		typeTags,
-		commentStatusTags,
-		updateTypeTags,
-		setType,
-		setCommentStatus,
-		setUpdateType,
-		type,
-		commentStatus,
-		updateType,
-	} = getFilterData()
+	const { filter } = useAppState()
+	const { setType, setCommentStatus, setUpdateType } = getAppActions()
+	const { typeTags, commentStatusTags, updateTypeTags } = getFilterTags()
+	const { type, commentStatus, updateType } = filter
 
 	return (
 		<Fragment>
@@ -44,10 +37,7 @@ export const NotificationsFilter = () => {
 	)
 }
 
-export const getFilterData = () => {
-	const { filter } = useAppState()
-	const { setFilter, setQuery } = getAppActions()
-	const { type, commentStatus, updateType } = filter
+export const getFilterTags = () => {
 	const { counts } = useSystemState()
 	const canModerateComments = currentUserCan( 'moderate_comments' )
 	const canUpdate = currentUserCan( 'update_plugins' ) || currentUserCan( 'update_themes' )
@@ -107,35 +97,9 @@ export const getFilterData = () => {
 		}
 	]
 
-	const setType = type => {
-		setFilter( { ...filter, type } )
-	}
-
-	const setCommentStatus = commentStatus => {
-		setFilter( { ...filter, commentStatus } )
-	}
-
-	const setUpdateType = updateType => {
-		setFilter( { ...filter, updateType } )
-	}
-
-	useEffect( () => {
-		if ( 'comments' === type ) {
-			setQuery( { status: commentStatus } )
-		} else {
-			setQuery( { type: updateType } )
-		}
-	}, [ type, commentStatus, updateType ] )
-
 	return {
 		typeTags,
 		commentStatusTags,
 		updateTypeTags,
-		setType,
-		setCommentStatus,
-		setUpdateType,
-		type,
-		commentStatus,
-		updateType,
 	}
 }

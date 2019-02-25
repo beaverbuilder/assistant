@@ -3,8 +3,7 @@ import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 
-registerStore( {
-	key: 'fl-assistant/system',
+registerStore( 'fl-assistant/system', {
 	state: FL_ASSISTANT_INITIAL_STATE,
 	actions,
 	reducers,

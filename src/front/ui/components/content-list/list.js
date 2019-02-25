@@ -1,8 +1,8 @@
 import React, { Fragment, cloneElement, useState, useContext, useEffect, useRef } from 'react'
+import classname from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
 import { EmptyMessage, ItemContext, StackContext } from 'components'
 import {
-	ContentListContainer,
 	ContentListEmptyMessage,
 	ContentListGroupLabel,
 	ContentListItem,
@@ -16,7 +16,6 @@ export const ContentList = ( {
 	dataHasMore = false,
 	dataLoader = () => {},
 	dataSetter = () => {},
-	container = <ContentListContainer />,
 	emptyMessage = <ContentListEmptyMessage />,
 	group = <ContentListGroupLabel />,
 	item = <ContentListItem />,
@@ -25,9 +24,25 @@ export const ContentList = ( {
 	placeholderItemCount = 10
 } ) => {
 	const request = useRef()
+	const scrollParent = useRef()
 	const { ref, updateCurrentView } = useContext( StackContext )
 	const [ truncateWidth, setTruncateWidth ] = useState( null )
 
+	/**
+	 * Store a reference to the scroll parent. There's a bug with
+	 * StackContext that causes ref.current to be undefined sometimes.
+	 * When this happens, the scroller tries to load more items when
+	 * it shouldn't.
+	 *
+	 * TODO: Remove this when that's fixed.
+	 */
+	if ( ref.current ) {
+		scrollParent.current = ref.current
+	}
+
+	/**
+	 * Cancel a request when the component unmounts.
+	 */
 	useEffect( () => {
 		return () => request.current && request.current.cancel()
 	}, [] )
@@ -40,7 +55,21 @@ export const ContentList = ( {
 		if ( request.current ) {
 			request.current.cancel()
 		}
+		console.log( 'List loading offset: ' + data.length )
 		request.current = dataLoader( data.length )
+	}
+
+	/**
+	 * Checks an array to see if it has item groups.
+	 */
+	const hasGroups = ( items ) => {
+		let groupFound = false
+		items.map( ( itemData ) => {
+			if ( itemData && itemData.items ) {
+				groupFound = true
+			}
+		} )
+		return groupFound
 	}
 
 	/**
@@ -121,7 +150,8 @@ export const ContentList = ( {
 				)
 			} else if ( itemData && ! itemData.items ) {
 				const isFirstItem = 0 === itemKey
-				return renderItem( { ...itemData, isFirstItem }, itemKey, groupKey )
+				const isLastItem = items.length -1 === itemKey
+				return renderItem( { ...itemData, isFirstItem, isLastItem }, itemKey, groupKey )
 			}
 			return null
 		} )
@@ -150,16 +180,23 @@ export const ContentList = ( {
 	/**
 	 * Render the InfiniteScroll component and child items.
 	 */
+	const classes = classname( className, {
+ 		'fl-asst-list': true,
+ 		'fl-asst-list-has-groups': hasGroups( data ),
+ 	} )
+
 	return (
-		<InfiniteScroll
-			getScrollParent={ () => ref.current }
-			hasMore={ dataHasMore }
-			loadMore={ loadItems }
-			loader={ renderPlaceholderItems() }
-			threshold={ 500 }
-			useWindow={ false }
-		>
-			{ cloneElement( container, { className }, renderItems( data ) ) }
-		</InfiniteScroll>
+		<div className={ classes }>
+			<InfiniteScroll
+				getScrollParent={ () => scrollParent.current }
+				hasMore={ dataHasMore }
+				loadMore={ loadItems }
+				loader={ renderPlaceholderItems() }
+				threshold={ 500 }
+				useWindow={ false }
+			>
+				{ renderItems( data ) }
+			</InfiniteScroll>
+		</div>
 	)
 }

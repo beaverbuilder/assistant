@@ -1,21 +1,12 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl, ExpandedContents } from 'components'
-import { getWeek } from 'utils/datetime'
 
 export const PostListFilter = () => {
-	const {
-		typeTags,
-		dateTags,
-		statusTags,
-		setType,
-		setDate,
-		setStatus,
-		type,
-		subType,
-		date,
-		status
-	} = getFilterData()
+	const { filter } = useAppState()
+	const { setType, setDate, setStatus } = getAppActions()
+	const { typeTags, dateTags, statusTags } = getFilterTags()
+	const { type, subType, date, status } = filter
 
 	return (
 		<Fragment>
@@ -32,10 +23,7 @@ export const PostListFilter = () => {
 	)
 }
 
-export const getFilterData = () => {
-	const { filter } = useAppState()
-	const { setFilter, setQuery } = getAppActions()
-	const { type, subType, date, status } = filter
+export const getFilterTags = () => {
 	const { counts } = useSystemState()
 	const { contentTypes, taxonomies } = getSystemConfig()
 	const now = new Date()
@@ -111,67 +99,9 @@ export const getFilterData = () => {
 		},
 	]
 
-	const setType = value => {
-		const [ type, subType ] = value
-		setFilter( { ...filter, type, subType } )
-	}
-
-	const setDate = date => {
-		setFilter( { ...filter, date } )
-	}
-
-	const setStatus = status => {
-		setFilter( { ...filter, status } )
-	}
-
-	useEffect( () => {
-		const query = {}
-		switch ( type ) {
-		case 'posts':
-			query.post_type = subType
-			query.posts_per_page = 20
-			query.orderby = 'title'
-			query.order = 'ASC'
-			query.s = ''
-			query.post_status = 'attachment' === subType ? 'any' : status
-			switch ( date ) {
-			case 'today':
-				query.year = now.getFullYear()
-				query.month = now.getMonth() + 1
-				query.day = now.getDate()
-				break
-			case 'week':
-				query.year = now.getFullYear()
-				query.w = getWeek( now )
-				break
-			case 'month':
-				query.year = now.getFullYear()
-				query.month = now.getMonth() + 1
-				break
-			case 'year':
-				query.year = now.getFullYear()
-				break
-			}
-			break
-		case 'terms':
-			query.taxonomy = subType
-			query.hide_empty = 0
-			break
-		}
-
-		setQuery( query )
-	}, [ type, subType, date, status ] )
-
 	return {
 		typeTags,
 		dateTags,
 		statusTags,
-		setType,
-		setDate,
-		setStatus,
-		type,
-		subType,
-		date,
-		status
 	}
 }

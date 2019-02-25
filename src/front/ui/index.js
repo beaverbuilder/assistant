@@ -6,7 +6,7 @@ import {
 	AppTabButton,
 	UIContext,
 } from 'components'
-import { NotificationsTabButton } from 'apps/fl-notifications'
+import { NotificationsAppButton } from 'apps/fl-notifications/button'
 import { App, useAppsMenu, AppFrame, FrameSizeButton } from 'system'
 import { useWindowSize } from 'utils/window'
 import './style.scss'
@@ -38,7 +38,7 @@ export const UI = () => {
 				{ /* Toolbar */ }
 				<div className="fl-asst-panel-chrome">
 					<div className="fl-asst-panel-chrome-area">
-						<NotificationsTabButton isShowingAppsMenu={isShowingAppsMenu} />
+						<NotificationsAppButton isShowingAppsMenu={isShowingAppsMenu} />
 					</div>
 					<div className="fl-asst-app-tabs-wrap">
 						<div className="fl-asst-app-tabs-area">
