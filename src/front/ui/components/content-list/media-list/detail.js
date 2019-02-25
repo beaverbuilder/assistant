@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import {
 	ViewContext,
 	BackButton,
@@ -22,13 +22,16 @@ export const MediaDetail = () => {
 		alt,
 		description,
 	} = data
+	const [color, setColor] = useState()
 
 	const url = sizes.medium_large.url
-	/*
 	const img = new Image()
 	img.src = url
-	const { rgb } = getAverageColor( img )
-	*/
+	img.onload = () => {
+		const { rgb } = getAverageColor( img )
+		setColor(rgb)
+		console.log('loaded', rgb )
+	}
 
 	const toolbarStyles = {
 		position: 'absolute',
@@ -41,6 +44,7 @@ export const MediaDetail = () => {
 
 	const imgStyles = {
 		maxHeight: '50vh',
+		background: color,
 	}
 
 	return (
