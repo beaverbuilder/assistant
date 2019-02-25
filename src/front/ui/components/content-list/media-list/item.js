@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
-import { AspectBox, ItemContext, ViewContext, FrameContext, StackContext, BackButton } from 'components'
+import { AspectBox, ItemContext, ViewContext, FrameContext, StackContext } from 'components'
+import { MediaDetail } from './detail'
 
 export const MediaListItem = ( { className } ) => {
 	const { url, urls } = useContext( ItemContext )
@@ -30,16 +31,6 @@ export const MediaListItem = ( { className } ) => {
 			<div className="fl-asst-grid-item-anchor">
 				<AspectBox style={boxStyles} />
 			</div>
-		</div>
-	)
-}
-
-const MediaDetail = () => {
-	const view = useContext( ViewContext )
-	const { urls } = view
-	return (
-		<div>
-			<BackButton />
 		</div>
 	)
 }
