@@ -38,7 +38,6 @@ export {
 
 export {
 	ContentList,
-	ContentListContainer,
 	ContentListDetail,
 	ContentListItem,
 	ContentQuery,

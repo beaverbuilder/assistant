@@ -2,7 +2,6 @@ export { ContentList } from './list'
 export { ContentQuery } from './query'
 
 export {
-	ContentListContainer,
 	ContentListDetail,
 	ContentListItem,
 } from './parts'

@@ -2,6 +2,18 @@
     list-style: none;
     padding: 15px 0;
     margin:0;
+
+	&.fl-asst-list-has-groups {
+		padding: 0;
+
+		.fl-asst-list-item-is-first {
+			margin-top: 15px;
+		}
+
+		.fl-asst-list-item-is-last {
+			margin-bottom: 15px;
+		}
+	}
 }
 
 .fl-asst-list-group-heading {

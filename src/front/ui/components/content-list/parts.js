@@ -4,14 +4,6 @@ import Truncate from 'react-truncate'
 import ResizeObserver from 'resize-observer-polyfill'
 import { EmptyMessage, ItemContext } from 'components'
 
-export const ContentListContainer = ( { className, children } ) => {
-	return (
-		<div className={ classname( className, 'fl-asst-list-items' ) }>
-			{ children }
-		</div>
-	)
-}
-
 export const ContentListGroupLabel = ( { label } ) => {
 	return (
 		<div className='fl-asst-list-group-heading'>
@@ -20,16 +12,29 @@ export const ContentListGroupLabel = ( { label } ) => {
 	)
 }
 
-export const ContentListItem = props => {
-	const { meta, thumbnail, title, isFirstItem, truncateWidth, setTruncateWidth } = useContext( ItemContext ) || {}
-	const { className, children, onClick } = props
+export const ContentListItem = ( { className, children, onClick } ) => {
 	const ref = createRef()
-	const classes = classname( className, 'fl-asst-list-item' )
+	const contentLineCount = 2
+
+	const {
+		meta,
+		thumbnail,
+		title,
+		isFirstItem,
+		isLastItem,
+		truncateWidth,
+		setTruncateWidth
+	} = useContext( ItemContext )
+
+	const classes = classname( className, {
+		'fl-asst-list-item': true,
+		'fl-asst-list-item-is-first': isFirstItem,
+		'fl-asst-list-item-is-last': isLastItem,
+	} )
+
 	const thumbStyles = {
 		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
 	}
-
-	const contentLineCount = 2
 
 	useLayoutEffect( () => {
 		if ( isFirstItem && 'undefined' !== typeof ref.current ) {
