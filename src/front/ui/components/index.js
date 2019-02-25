@@ -49,6 +49,7 @@ export {
 } from './content-list'
 
 export {
+	FormField,
 	ToggleControl,
 } from './controls'
 

@@ -4,6 +4,7 @@ import { getSystemActions } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
 	ContentListDetail,
+	FormField,
 	Padding,
 	ScreenHeader,
 	TagGroup,
@@ -20,6 +21,7 @@ export const PostListDetail = () => {
 		id,
 		meta,
 		status,
+		slug,
 		title,
 		type,
 		url,
@@ -57,8 +59,13 @@ export const PostListDetail = () => {
 				</TagGroup>
 			</ScreenHeader>
 			<Padding>
-				<div>By { meta }</div>
-				<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
+				<FormField label='Title'>
+					<input type='text' value={ title } />
+				</FormField>
+				<FormField label='Slug'>
+					<input type='text' value={ slug } />
+					<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
+				</FormField>
 			</Padding>
 		</ContentListDetail>
 	)
