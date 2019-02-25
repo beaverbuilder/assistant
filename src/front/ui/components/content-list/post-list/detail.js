@@ -3,12 +3,10 @@ import Clipboard from 'react-clipboard.js'
 import { getSystemActions } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
-	Button,
 	ContentListDetail,
 	FormField,
 	FormSection,
 	ScreenHeader,
-	Separator,
 	TagGroup,
 	Tag,
 	ToggleControl,
@@ -25,7 +23,6 @@ export const PostListDetail = () => {
 		commentsAllowed = true,
 		editUrl,
 		id,
-		meta,
 		status,
 		slug,
 		title,

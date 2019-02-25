@@ -7,7 +7,7 @@ export const FormSection = ( {
 	children,
 	className,
 	label = ''
- } ) => {
+} ) => {
 
 	const classes = classname( className, 'fl-asst-form-section' )
 
@@ -30,7 +30,7 @@ export const FormField = ( {
 	className,
 	label = '',
 	labelPosition = 'above'
- } ) => {
+} ) => {
 
 	const classes = classname( className, {
 		'fl-asst-field': true,

@@ -60,19 +60,19 @@ final class FL_Assistant_REST_Posts {
 		$author = get_the_author_meta( 'display_name', $post->post_author );
 		$date = get_the_date( '', $post );
 		$response = array(
-			'author'    => $author,
+			'author'          => $author,
 			'commentsAllowed' => 'open' === $post->comment_status ? true : false,
-			'content'   => $post->post_content,
-			'date'      => $date,
-			'editUrl'   => get_edit_post_link( $post->ID, '' ),
-			'id'        => $post->ID,
-			'meta'      => $author . ' - ' . $date,
-			'slug'		=> $post->post_name,
-			'status'    => $post->post_status,
-			'thumbnail' => get_the_post_thumbnail_url( $post, 'thumbnail' ),
-			'title'     => empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
-			'type'      => $post->post_type,
-			'url'       => get_permalink( $post ),
+			'content'         => $post->post_content,
+			'date'            => $date,
+			'editUrl'         => get_edit_post_link( $post->ID, '' ),
+			'id'              => $post->ID,
+			'meta'            => $author . ' - ' . $date,
+			'slug'            => $post->post_name,
+			'status'          => $post->post_status,
+			'thumbnail'       => get_the_post_thumbnail_url( $post, 'thumbnail' ),
+			'title'           => empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
+			'type'            => $post->post_type,
+			'url'             => get_permalink( $post ),
 		);
 
 		if ( 'attachment' === $post->post_type ) {
