@@ -2,8 +2,6 @@ import React, { Fragment, useContext, useState } from 'react'
 import {
 	ViewContext,
 	BackButton,
-	Padding,
-	Heading,
 	Photo,
 	Separator,
 	getAverageColor,
@@ -50,9 +48,6 @@ export const MediaDetail = () => {
 		<Fragment>
 			<div style={toolbarStyles}><BackButton /></div>
 			<Photo src={url} style={imgStyles} />
-			<Padding>
-				<Heading>Name</Heading>
-			</Padding>
 			<div>
 				<div className="fl-asst-settings-item">
 					<label>Filesize</label>
