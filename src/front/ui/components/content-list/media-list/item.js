@@ -4,7 +4,7 @@ import { AspectBox, ItemContext, ViewContext, FrameContext, StackContext } from 
 import { MediaDetail } from './detail'
 
 export const MediaListItem = ( { className } ) => {
-	const { url, urls } = useContext( ItemContext )
+	const { urls } = useContext( ItemContext )
 	const { size } = useContext( FrameContext )
 	const { pushView } = useContext( StackContext )
 	const classes = classname( className, 'fl-asst-grid-item' )

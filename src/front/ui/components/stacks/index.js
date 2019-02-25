@@ -236,7 +236,7 @@ export const BackButton = props => {
 	const onClick = e => {
 		popView()
 		if ( 'function' === typeof props.onClick ) {
-			props.onClick(e)
+			props.onClick( e )
 		}
 	}
 
