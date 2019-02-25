@@ -1,5 +1,13 @@
 import React, { Fragment, useContext } from 'react'
-import { ViewContext, BackButton, Padding, Heading, Photo, Separator } from 'components'
+import {
+	ViewContext,
+	BackButton,
+	Padding,
+	Heading,
+	Photo,
+	Separator,
+	getAverageColor,
+} from 'components'
 
 export const MediaDetail = () => {
 	const view = useContext( ViewContext )
@@ -14,12 +22,13 @@ export const MediaDetail = () => {
 		alt,
 		description,
 	} = data
+
 	const url = sizes.medium_large.url
-
-	console.log(view)
-
-	//const image = useImage( url )
-    //const { color: { r, g, b } } = image
+	/*
+	const img = new Image()
+	img.src = url
+	const { rgb } = getAverageColor( img )
+	*/
 
 	const toolbarStyles = {
 		position: 'absolute',
