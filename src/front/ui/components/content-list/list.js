@@ -25,9 +25,25 @@ export const ContentList = ( {
 	placeholderItemCount = 10
 } ) => {
 	const request = useRef()
+	const scrollParent = useRef()
 	const { ref, updateCurrentView } = useContext( StackContext )
 	const [ truncateWidth, setTruncateWidth ] = useState( null )
 
+	/**
+	 * Store a reference to the scroll parent. There's a bug with
+	 * StackContext that causes ref.current to be undefined sometimes.
+	 * When this happens, the scroller tries to load more items when
+	 * it shouldn't.
+	 *
+	 * TODO: Remove this when that's fixed.
+	 */
+	if ( ref.current ) {
+		scrollParent.current = ref.current
+	}
+
+	/**
+	 * Cancel a request when the component unmounts.
+	 */
 	useEffect( () => {
 		return () => request.current && request.current.cancel()
 	}, [] )
@@ -40,6 +56,7 @@ export const ContentList = ( {
 		if ( request.current ) {
 			request.current.cancel()
 		}
+		console.log( 'List loading offset: ' + data.length )
 		request.current = dataLoader( data.length )
 	}
 
@@ -153,7 +170,7 @@ export const ContentList = ( {
 	return (
 		<div className='fl-asst-list'>
 			<InfiniteScroll
-				getScrollParent={ () => ref.current }
+				getScrollParent={ () => scrollParent.current }
 				hasMore={ dataHasMore }
 				loadMore={ loadItems }
 				loader={ renderPlaceholderItems() }
