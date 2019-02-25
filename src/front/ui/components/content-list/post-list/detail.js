@@ -1,13 +1,15 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import Clipboard from 'react-clipboard.js'
 import { getSystemActions } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
 	ContentListDetail,
-	Padding,
+	FormField,
+	FormSection,
 	ScreenHeader,
 	TagGroup,
 	Tag,
+	ToggleControl,
 	StackContext,
 	ViewContext,
 } from 'components'
@@ -15,16 +17,19 @@ import {
 export const PostListDetail = () => {
 	const { incrementCount, decrementCount } = getSystemActions()
 	const { popView } = useContext( StackContext )
+	const viewContext = useContext( ViewContext )
+	const [ post, setPost ] = useState( viewContext )
 	const {
+		commentsAllowed = true,
 		editUrl,
 		id,
-		meta,
 		status,
+		slug,
 		title,
 		type,
 		url,
 		removeItem
-	} = useContext( ViewContext )
+	} = post
 
 	const trashClicked = () => {
 		updatePost( id, 'trash' )
@@ -38,6 +43,11 @@ export const PostListDetail = () => {
 		incrementCount( `content/${ type }` )
 		removeItem()
 		popView()
+	}
+
+	const onChange = e => {
+		const { name, value } = e.target
+		setPost( { ...post, [ name ]: value } )
 	}
 
 	return (
@@ -56,10 +66,27 @@ export const PostListDetail = () => {
 					}
 				</TagGroup>
 			</ScreenHeader>
-			<Padding>
-				<div>By { meta }</div>
-				<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
-			</Padding>
+
+			<FormSection label='Basic Info'>
+				<FormField label='Title'>
+					<input type='text' name='title' value={ title } onChange={ onChange } />
+				</FormField>
+				<FormField label='Slug'>
+					<input type='text' name='slug' value={ slug } onChange={ onChange } />
+					<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
+				</FormField>
+			</FormSection>
+
+			<FormSection label='Discussion'>
+				<FormField label='Comments' labelPosition='beside'>
+					<ToggleControl
+						name='commentsAllowed'
+						value={ commentsAllowed }
+						onChange={ ( value, e ) => onChange( e ) }
+					/>
+				</FormField>
+			</FormSection>
+
 		</ContentListDetail>
 	)
 }
