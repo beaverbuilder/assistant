@@ -34,9 +34,10 @@
 			top: 5px;
 			right: 0;
 			left: 0;
-			background-image: linear-gradient(to right, #EDF2F4, #C6CFD2, #EDF2F4);
+			background-color: var(--fl-utility-background-color);
 			background-size: 200% 100%;
 			background-position: 100%;
+			border-radius: 5px;
 		}
 	}
 	.fl-asst-list-item-title {
