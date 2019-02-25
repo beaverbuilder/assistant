@@ -30,7 +30,6 @@ export const MediaDetail = () => {
 	img.onload = () => {
 		const { rgb } = getAverageColor( img )
 		setColor(rgb)
-		console.log('loaded', rgb )
 	}
 
 	const toolbarStyles = {
