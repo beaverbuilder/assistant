@@ -61,6 +61,7 @@ final class FL_Assistant_REST_Posts {
 		$date = get_the_date( '', $post );
 		$response = array(
 			'author'    => $author,
+			'commentsAllowed' => 'open' === $post->comment_status ? true : false,
 			'content'   => $post->post_content,
 			'date'      => $date,
 			'editUrl'   => get_edit_post_link( $post->ID, '' ),

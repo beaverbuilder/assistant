@@ -50,6 +50,7 @@ export {
 
 export {
 	FormField,
+	FormSection,
 	ToggleControl,
 } from './controls'
 

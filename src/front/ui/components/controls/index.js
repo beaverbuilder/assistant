@@ -1,2 +1,2 @@
-export { FormField } from './form-field'
+export { FormSection, FormField } from './form'
 export { ToggleControl } from './toggle'
