@@ -55,7 +55,6 @@ export const ContentList = ( {
 		if ( request.current ) {
 			request.current.cancel()
 		}
-		console.log( 'List loading offset: ' + data.length )
 		request.current = dataLoader( data.length )
 	}
 
@@ -150,7 +149,7 @@ export const ContentList = ( {
 				)
 			} else if ( itemData && ! itemData.items ) {
 				const isFirstItem = 0 === itemKey
-				const isLastItem = items.length -1 === itemKey
+				const isLastItem = items.length - 1 === itemKey
 				return renderItem( { ...itemData, isFirstItem, isLastItem }, itemKey, groupKey )
 			}
 			return null
@@ -181,9 +180,9 @@ export const ContentList = ( {
 	 * Render the InfiniteScroll component and child items.
 	 */
 	const classes = classname( className, {
- 		'fl-asst-list': true,
- 		'fl-asst-list-has-groups': hasGroups( data ),
- 	} )
+		'fl-asst-list': true,
+		'fl-asst-list-has-groups': hasGroups( data ),
+	} )
 
 	return (
 		<div className={ classes }>
