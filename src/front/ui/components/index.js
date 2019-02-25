@@ -55,6 +55,5 @@ export {
 export { OptionGroup, OptionGroupItem } from './option-group'
 export { Frame, FrameContext, ContentFrame } from './frame'
 export { Widget } from './widgets'
-export { Stack } from './stacks'
+export { Stack, BackButton } from './stacks'
 export { useModals } from './modals'
-export { SplitView } from './split-view'
