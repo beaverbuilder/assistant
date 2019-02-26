@@ -14,6 +14,7 @@ export const MediaDetail = () => {
 		sizes,
 		date,
 		data,
+		thumbnail,
 	} = view
 	const {
 		title,
@@ -23,13 +24,21 @@ export const MediaDetail = () => {
 	const defaultColor = {
 		r: 0, g: 0, b: 0,
 		isDark: false,
+		topLeft: {
+			color: { r:0, g:0, b:0, rgb: null },
+			isDark: false,
+		}
 	}
 	const [ color, setColor ] = useState( defaultColor )
-	const { isDark } = color
+	const { isDark, topLeft } = color
 
-	let url = sizes.medium.url
+	let url = thumbnail
 	if ( 'undefined' !== typeof sizes.medium_large ) {
 		url = sizes.medium_large.url
+	} else if ( 'undefined' !== typeof sizes.medium ) {
+		url = sizes.medium.url
+	} else if ( 'undefined' !== typeof sizes.large ) {
+		url = sizes.large.url
 	}
 
 	useEffect( () => {
@@ -61,8 +70,8 @@ export const MediaDetail = () => {
 	}
 
 	const btnStyles = {
-		background: background,
-		color: isDark ? 'white' : '',
+		background: topLeft.color.rgb,
+		color: topLeft.isDark ? 'white' : '',
 		margin: 10,
 	}
 
