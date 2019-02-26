@@ -4,23 +4,38 @@ import {
 	BackButton,
 	Photo,
 	Separator,
+	Tag,
+	TagGroup,
+	Padding,
+	StackContext,
 	getColorData,
 } from 'components'
+import { updatePost } from 'utils/wordpress'
+import { getSystemActions } from 'store'
 
 export const MediaDetail = () => {
+	const { popView } = useContext( StackContext )
+	const { incrementCount, decrementCount } = getSystemActions()
 	const view = useContext( ViewContext )
 	const {
+		id,
+		type,
 		filesize,
 		sizes,
 		date,
 		data,
 		thumbnail,
+		editUrl,
+		url: pageURL,
+		removeItem,
 	} = view
+
 	const {
 		title,
 		alt,
 		description,
 	} = data
+
 	const defaultColor = {
 		r: 0, g: 0, b: 0,
 		isDark: false,
@@ -30,7 +45,7 @@ export const MediaDetail = () => {
 		}
 	}
 	const [ color, setColor ] = useState( defaultColor )
-	const { isDark, topLeft } = color
+	const { topLeft } = color
 
 	let url = thumbnail
 	if ( 'undefined' !== typeof sizes.medium_large ) {
@@ -75,10 +90,26 @@ export const MediaDetail = () => {
 		margin: 10,
 	}
 
+	const trashClicked = () => {
+		updatePost( id, 'trash' )
+		decrementCount( `content/${ type }` )
+		removeItem()
+		popView()
+	}
+
 	return (
 		<Fragment>
 			<div style={toolbarStyles}><BackButton style={btnStyles} /></div>
 			<Photo src={url} style={imgStyles} />
+
+			<Padding>
+				<TagGroup appearance='muted'>
+					<Tag href={pageURL}>View</Tag>
+					<Tag href={editUrl}>Edit</Tag>
+					<Tag onClick={trashClicked} appearance='warning'>Trash</Tag>
+				</TagGroup>
+			</Padding>
+
 			<div>
 				<div className="fl-asst-settings-item">
 					<label>Filesize</label>
