@@ -60,19 +60,22 @@ final class FL_Assistant_REST_Comments {
 		$post = get_post( $comment->comment_post_ID );
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		return array(
-			'approved'  => $comment->comment_approved ? true : false,
-			'author'    => $comment->comment_author,
-			'content'   => $comment->comment_content,
-			'date'      => $date,
-			'editUrl'   => admin_url( 'comment.php?action=editcomment&c=' ) . $comment->comment_ID,
-			'id'        => $comment->comment_ID,
-			'meta'      => $comment->comment_author . ' - ' . $date,
-			'postTitle' => $post->post_title,
-			'spam'      => 'spam' === $comment->comment_approved,
-			'thumbnail' => get_avatar_url( $comment->comment_author_email ),
-			'title'     => strip_tags( $comment->comment_content ),
-			'trash'     => 'trash' === $comment->comment_approved,
-			'url'       => get_comment_link( $comment ),
+			'approved'    => $comment->comment_approved ? true : false,
+			'author'      => $comment->comment_author,
+			'authorEmail' => $comment->comment_author_email,
+			'authorIP'    => $comment->comment_author_IP,
+			'content'     => $comment->comment_content,
+			'date'        => $date,
+			'editUrl'     => admin_url( 'comment.php?action=editcomment&c=' ) . $comment->comment_ID,
+			'id'          => $comment->comment_ID,
+			'meta'        => $comment->comment_author . ' - ' . $date,
+			'postId'      => $post->ID,
+			'postTitle'   => $post->post_title,
+			'spam'        => 'spam' === $comment->comment_approved,
+			'thumbnail'   => get_avatar_url( $comment->comment_author_email ),
+			'title'       => strip_tags( $comment->comment_content ),
+			'trash'       => 'trash' === $comment->comment_approved,
+			'url'         => get_comment_link( $comment ),
 		);
 	}
 
@@ -150,6 +153,14 @@ final class FL_Assistant_REST_Comments {
 				break;
 			case 'untrash':
 				wp_untrash_comment( $comment );
+				break;
+			case 'content':
+				wp_update_comment(
+					array(
+						'comment_ID'      => $id,
+						'comment_content' => $request->get_param( 'content' ),
+					)
+				);
 				break;
 		}
 

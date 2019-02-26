@@ -3,6 +3,10 @@
 	padding: 5px 20px;
 }
 
+.fl-asst-screen-header .fl-asst-field {
+	margin-bottom: 10px;
+}
+
 .fl-asst-field {
 	margin-bottom: 20px;
 
@@ -17,10 +21,16 @@
 
 .fl-asst-field-label {
 	width: 100%;
+
+	label {
+		margin: 0;
+		padding: 0;
+	}
 }
 
 .fl-asst-field-input {
 	display: flex;
+    white-space: nowrap;
 
 	button {
 		white-space: nowrap;

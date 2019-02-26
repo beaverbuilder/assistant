@@ -3,8 +3,8 @@ import classname from 'classnames'
 import { Button } from 'components'
 import './style.scss'
 
-export const TagGroup = ( { title, children, appearance, isDisabled } ) => {
-	const classes = classname( {
+export const TagGroup = ( { title, children, className, appearance, isDisabled } ) => {
+	const classes = classname( className, {
 		'fl-asst-tag-group': true,
 		'fl-asst-tag-group-appearance-vibrant': 'vibrant' == appearance ? true : false,
 		'fl-asst-tag-group-appearance-muted': 'muted' == appearance ? true : false,

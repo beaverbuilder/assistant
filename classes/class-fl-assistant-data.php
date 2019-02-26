@@ -31,18 +31,22 @@ class FL_Assistant_Data {
 		 */
 		$config = array(
 			'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
-			'apiNonce'        => wp_create_nonce( 'wp_rest' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'cms'             => 'wordpress',
 			'contentTypes'    => self::get_post_types(),
 			'currentPageView' => self::get_current_view(),
 			'currentUser'     => self::get_current_user_data(),
-			'dashboardApp'    => [
+			'dashboardApp'    => array(
 				'adminActions' => self::get_admin_actions(),
-			],
+			),
+			'nonce'           => array(
+				'api'             => wp_create_nonce( 'wp_rest' ),
+				'reply'           => wp_create_nonce( 'replyto-comment' ),
+				'replyUnfiltered' => wp_create_nonce( 'unfiltered-html-comment' ),
+				'updates'         => wp_create_nonce( 'updates' ),
+			),
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'taxonomies'      => self::get_taxonomies(),
-			'updateNonce'     => wp_create_nonce( 'updates' ),
 			'userRoles'       => self::get_user_roles(),
 		);
 
@@ -53,11 +57,11 @@ class FL_Assistant_Data {
 		 */
 		$state = array(
 			'activeApp'          => $user_state['activeApp'],
+			'appFrameSize'       => $user_state['appFrameSize'],
 			'counts'             => self::get_counts(),
 			'isShowingUI'        => $user_state['isShowingUI'],
 			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
-			'appFrameSize'       => $user_state['appFrameSize'],
 		);
 
 		return array(

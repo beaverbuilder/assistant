@@ -127,13 +127,18 @@ export const request = ( {
 		credentials,
 		headers,
 	} ).then( response => {
+		const type = response.headers.get( 'content-type' )
 		if ( ! response.ok ) {
 			throw Error( response.statusText )
+		} else if ( type.includes( 'text/xml' ) ) {
+			return response.text()
+		} else if ( type.includes( 'text/html' ) ) {
+			return response.text()
 		}
 		return response.json()
-	} ).then( json => {
+	} ).then( data => {
 		if ( ! promise.cancelled ) {
-			onSuccess( json )
+			onSuccess( data )
 		}
 	} ).catch( error => {
 		if ( ! promise.cancelled ) {
