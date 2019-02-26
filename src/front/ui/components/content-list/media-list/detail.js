@@ -1,10 +1,10 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { Fragment, useContext, useState, useEffect } from 'react'
 import {
 	ViewContext,
 	BackButton,
 	Photo,
 	Separator,
-	getAverageColor,
+	getColorData,
 } from 'components'
 
 export const MediaDetail = () => {
@@ -20,15 +20,23 @@ export const MediaDetail = () => {
 		alt,
 		description,
 	} = data
-	const [ color, setColor ] = useState()
+	const defaultColor = {
+		r: 0, g: 0, b: 0,
+		isDark: false,
+	}
+	const [ color, setColor ] = useState( defaultColor )
+	const { isDark } = color
 
 	const url = sizes.medium_large.url
-	const img = new Image()
-	img.src = url
-	img.onload = () => {
-		const { rgb } = getAverageColor( img )
-		setColor( rgb )
-	}
+
+	useEffect( () => {
+		const img = new Image()
+		img.src = url
+		img.onload = () => {
+			const data = getColorData( img )
+			setColor( data )
+		}
+	}, [])
 
 	const toolbarStyles = {
 		position: 'absolute',
@@ -39,14 +47,25 @@ export const MediaDetail = () => {
 		flexDirection: 'row',
 	}
 
+	let background = null
+	if ( 'undefined' !== typeof color ) {
+		background = color.rgb
+	}
+
 	const imgStyles = {
 		maxHeight: '50vh',
-		background: color,
+		background,
+	}
+
+	const btnStyles = {
+		background: isDark ? background : '',
+		color: isDark ? 'white' : '',
+		margin: 10,
 	}
 
 	return (
 		<Fragment>
-			<div style={toolbarStyles}><BackButton /></div>
+			<div style={toolbarStyles}><BackButton style={btnStyles} /></div>
 			<Photo src={url} style={imgStyles} />
 			<div>
 				<div className="fl-asst-settings-item">
