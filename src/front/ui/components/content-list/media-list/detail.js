@@ -15,7 +15,7 @@ import { getSystemActions } from 'store'
 
 export const MediaDetail = () => {
 	const { popView } = useContext( StackContext )
-	const { incrementCount, decrementCount } = getSystemActions()
+	const { decrementCount } = getSystemActions()
 	const view = useContext( ViewContext )
 	const {
 		id,
@@ -40,7 +40,7 @@ export const MediaDetail = () => {
 		r: 0, g: 0, b: 0,
 		isDark: false,
 		topLeft: {
-			color: { r:0, g:0, b:0, rgb: null },
+			color: { r: 0, g: 0, b: 0, rgb: null },
 			isDark: false,
 		}
 	}
