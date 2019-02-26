@@ -27,9 +27,9 @@ export const getColorData = img => {
 	b = Math.floor( b / ( data.length / 4 ) )
 
 	brightness = Math.sqrt(
-		0.299 * (r * r) +
-		0.587 * (g * g) +
-		0.114 * (b * b)
+		0.299 * ( r * r ) +
+		0.587 * ( g * g ) +
+		0.114 * ( b * b )
 	)
 
 	return {
@@ -38,7 +38,7 @@ export const getColorData = img => {
 		b,
 		rgb: `rgb(${r},${g},${b})`,
 		brightness,
-		isDark: brightness < 127.5 ? true : false
+		isDark: 127.5 > brightness ? true : false
 	}
 }
 
@@ -46,7 +46,7 @@ export const useImage = url => {
 
 	const img = new Image()
 	img.src = url
-	const color = getAverageColor( img )
+	const color = getColorData( img )
 
 	return {
 		img,

@@ -36,7 +36,7 @@ export const MediaDetail = () => {
 			const data = getColorData( img )
 			setColor( data )
 		}
-	}, [])
+	}, [] )
 
 	const toolbarStyles = {
 		position: 'absolute',
