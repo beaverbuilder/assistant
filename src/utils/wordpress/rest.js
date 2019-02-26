@@ -7,12 +7,12 @@ import { addQueryArgs } from 'utils/url'
  * Fetch request for the WordPress REST API.
  */
 export const restRequest = ( { method = 'GET', ...args } ) => {
-	const { apiNonce, apiRoot } = getSystemConfig()
+	const { nonce, apiRoot } = getSystemConfig()
 	const wpArgs = {
 		root: apiRoot,
 		credentials: 'same-origin',
 		headers: {
-			'X-WP-Nonce': apiNonce,
+			'X-WP-Nonce': nonce.api,
 		},
 		...args,
 	}
@@ -153,13 +153,14 @@ export const getComment = ( id, onSuccess, onError ) => {
  * Updates a single comment. See the update_comment
  * REST method for a list of supported actions.
  */
-export const updateComment = ( id, action ) => {
+export const updateComment = ( id, action, args = {} ) => {
 	clearCache( 'comments' )
 	return restRequest( {
 		method: 'POST',
 		route: `fl-assistant/v1/comment/${ id }`,
 		args: {
 			action,
+			...args,
 		}
 	} )
 }

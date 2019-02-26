@@ -20,13 +20,6 @@ export const NotificationsAppButton = ( { isShowingAppsMenu } ) => {
 	useHeartbeat( 'fl-assistant/v1/counts', response => {
 		if ( response['notifications/comments'] > counts['notifications/comments'] ) {
 			clearCache( 'comments' )
-			presentNotification( 'You have a new comment!', {
-				onClick: dismiss => {
-					setActiveApp( 'fl-notifications' )
-					setType( 'comments' )
-					dismiss()
-				}
-			} )
 		}
 		setCounts( response )
 	} )

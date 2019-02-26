@@ -15,10 +15,37 @@ export const adminAjaxRequest = ( { method = 'GET', ...args } ) => {
 }
 
 /**
+ * Reply to a comment.
+ */
+export const replyToComment = ( id, postId, content, onSuccess, onError ) => {
+	const { nonce } = getSystemConfig()
+	clearCache( 'comments' )
+	return adminAjaxRequest( {
+		method: 'POST',
+		onSuccess: response => {
+			if ( response.includes( '<wp_ajax>' ) ) {
+				onSuccess( response )
+			} else {
+				onError( response )
+			}
+		},
+		args: {
+			action: 'replyto-comment',
+			_wpnonce: nonce.reply,
+			_wp_unfiltered_html_comment: nonce.replyUnfiltered,
+			approve_parent: 1,
+			comment_ID: id,
+			comment_post_ID: postId,
+			content,
+		},
+	} )
+}
+
+/**
  * Updates a single plugin.
  */
 export const updatePlugin = ( plugin, onSuccess, onError ) => {
-	const { updateNonce } = getSystemConfig()
+	const { nonce } = getSystemConfig()
 	clearCache( 'updates' )
 	return adminAjaxRequest( {
 		onSuccess,
@@ -28,7 +55,7 @@ export const updatePlugin = ( plugin, onSuccess, onError ) => {
 			plugin,
 			action: 'update-plugin',
 			slug: plugin.split( '/' ).pop(),
-			_wpnonce: updateNonce,
+			_wpnonce: nonce.updates,
 		},
 	} )
 }
@@ -37,7 +64,7 @@ export const updatePlugin = ( plugin, onSuccess, onError ) => {
  * Updates a single theme.
  */
 export const updateTheme = ( theme, onSuccess, onError ) => {
-	const { updateNonce } = getSystemConfig()
+	const { nonce } = getSystemConfig()
 	clearCache( 'updates' )
 	return adminAjaxRequest( {
 		onSuccess,
@@ -46,7 +73,7 @@ export const updateTheme = ( theme, onSuccess, onError ) => {
 		args: {
 			action: 'update-theme',
 			slug: theme,
-			_wpnonce: updateNonce,
+			_wpnonce: nonce.updates,
 		},
 	} )
 }
