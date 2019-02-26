@@ -50,6 +50,7 @@
         padding: 0;
         min-width: 38px;
         min-height: 38px;
+        color: var(--fl-asst-base-art-color);
 
         &:hover svg {
             color: var(--fl-accent-color);
@@ -76,11 +77,13 @@
         border-top: 2px solid transparent;
         border-bottom: 2px solid transparent;
         padding: 7px 10px;
+        color: var(--fl-asst-base-art-color);
 
         &:hover {
             border: none;
             border-top: 2px solid transparent;
             border-bottom: 2px solid transparent;
+            background: var(--fl-utility-background-color);
         }
 
         &:focus {
