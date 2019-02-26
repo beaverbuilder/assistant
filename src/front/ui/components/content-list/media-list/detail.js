@@ -27,7 +27,10 @@ export const MediaDetail = () => {
 	const [ color, setColor ] = useState( defaultColor )
 	const { isDark } = color
 
-	const url = sizes.medium_large.url
+	let url = sizes.medium.url
+	if ( 'undefined' !== typeof sizes.medium_large ) {
+		url = sizes.medium_large.url
+	}
 
 	useEffect( () => {
 		const img = new Image()
@@ -58,7 +61,7 @@ export const MediaDetail = () => {
 	}
 
 	const btnStyles = {
-		background: isDark ? background : '',
+		background: background,
 		color: isDark ? 'white' : '',
 		margin: 10,
 	}
