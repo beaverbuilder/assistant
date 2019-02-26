@@ -87,19 +87,19 @@ export const MediaDetail = () => {
 				<div className="fl-asst-settings-item">
 					<label>Title</label>
 					<div className="fl-asst-settings-item-control">
-						{title}
+						<input type="text" value={title} readOnly={true} />
 					</div>
 				</div>
 				<div className="fl-asst-settings-item">
 					<label>Alt Text</label>
 					<div className="fl-asst-settings-item-control">
-						{alt}
+						<input type="text" value={alt} readOnly={true} />
 					</div>
 				</div>
 				<div className="fl-asst-settings-item">
 					<label>Description</label>
 					<div className="fl-asst-settings-item-control">
-						{description}
+						<textarea readOnly={true} value={description} />
 					</div>
 				</div>
 			</div>
