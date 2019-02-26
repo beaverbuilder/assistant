@@ -2,6 +2,7 @@ import './style.scss'
 
 export { Icon } from './icon'
 export { Button, AppTabButton } from './button'
+export { Photo, useImage, getColorData } from './image'
 
 export {
 	HorizontalGroup,
@@ -57,5 +58,5 @@ export {
 export { OptionGroup, OptionGroupItem } from './option-group'
 export { Frame, FrameContext, ContentFrame } from './frame'
 export { Widget } from './widgets'
-export { Stack } from './stacks'
+export { Stack, BackButton } from './stacks'
 export { useModals } from './modals'

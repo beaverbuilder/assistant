@@ -1,7 +1,7 @@
-import React, { useState, useEffect, createRef } from 'react'
+import React, { useState, useEffect, useContext, createRef } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { StackContext, ViewContext, Frame } from 'components'
+import { StackContext, ViewContext, Frame, Button, Icon } from 'components'
 import './style.scss'
 
 const handleTransition = () => {
@@ -223,5 +223,26 @@ export const Stack = ( { children, className } ) => {
 				)
 			} ) }
 		</div>
+	)
+}
+
+export const BackButton = props => {
+	const { isRootView, popView } = useContext( StackContext )
+
+	if ( isRootView ) {
+		return null
+	}
+
+	const onClick = e => {
+		popView()
+		if ( 'function' === typeof props.onClick ) {
+			props.onClick( e )
+		}
+	}
+
+	return (
+		<Button appearance="icon" {...props} onClick={onClick}>
+			<Icon name="back" />
+		</Button>
 	)
 }

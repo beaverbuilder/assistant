@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { Button, Icon, AppContext, StackContext } from 'components'
+import { AppContext, StackContext, BackButton } from 'components'
 import { AppMenuButton } from 'system'
 import './style.scss'
 
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const { label } = useContext( AppContext )
-	const { isRootView, popView } = useContext( StackContext )
+	const { isRootView } = useContext( StackContext )
 	const screenTitle = title ? title : label
 
 	const titleClasses = classname( {
@@ -18,9 +18,8 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 	return (
 		<div className="fl-asst-screen-header">
 			{ false !== showTitle && <div className={titleClasses}>
-				{ ! isRootView && <Button onClick={popView} appearance="icon" className="fl-asst-button-back">
-					<Icon name="back" />
-				</Button> }
+				<BackButton />
+
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
 
 				<AppMenuButton />

@@ -2,6 +2,16 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+
+    .fl-asst-frame-title {
+        padding-bottom:0;
+
+        .fl-asst-heading {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--fl-title-color);
+        }
+    }
 }
 
 .fl-asst-content-frame {
