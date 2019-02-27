@@ -61,6 +61,10 @@ final class FL_Assistant_REST_Posts {
 		$date = get_the_date( '', $post );
 		$response = array(
 			'author'          => $author,
+			'bbCanEdit' 	  => FL_Assistant_Data::bb_can_edit_post( $post->ID ),
+			'bbIsEnabled' 	  => FLBuilderModel::is_builder_enabled( $post->ID ),
+			'bbBranding'	  => FLBuilderModel::get_branding(),
+			'bbEditUrl'		  => FLBuilderModel::get_edit_url( $post->ID ),
 			'commentsAllowed' => 'open' === $post->comment_status ? true : false,
 			'content'         => $post->post_content,
 			'date'            => $date,

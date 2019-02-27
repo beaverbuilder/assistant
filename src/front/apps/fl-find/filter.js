@@ -10,7 +10,7 @@ export const PostListFilter = () => {
 
 	return (
 		<Fragment>
-			<TagGroupControl tags={typeTags} value={[ type, subType ]} onChange={setType} appearance="vibrant" />
+			<TagGroupControl limit={ 6 } tags={typeTags} value={[ type, subType ]} onChange={setType} appearance="vibrant" />
 			{ 'posts' === type &&
 				<ExpandedContents>
 					<TagGroupControl tags={dateTags} value={date} title="Created" onChange={setDate} />
