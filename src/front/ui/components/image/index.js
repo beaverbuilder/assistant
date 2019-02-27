@@ -63,7 +63,7 @@ const getColorDataForImage = img => {
 		'bottomRight': [ width * .8, width * .8, width * .2, width * .2 ],
 
 		'top': [ 0, 0, width, width * .2 ],
-		'bottom': [0, width * .8, width, width * .2 ],
+		'bottom': [ 0, width * .8, width, width * .2 ],
 		'center': [ width * .4, width * .4, width * .2, width * .2 ],
 	}
 
