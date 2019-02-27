@@ -7,6 +7,8 @@ import {
 	Tag,
 	TagGroup,
 	Padding,
+	SettingsGroup,
+	SettingsItem,
 	StackContext,
 	useImageData,
 } from 'components'
@@ -92,39 +94,28 @@ export const MediaDetail = () => {
 				</TagGroup>
 			</Padding>
 
-			<div>
-				<div className="fl-asst-settings-item">
-					<label>Filesize</label>
-					<div className="fl-asst-settings-item-control">
-						{filesize}
-					</div>
-				</div>
-				<div className="fl-asst-settings-item">
-					<label>Uploaded</label>
-					<div className="fl-asst-settings-item-control">
-						{date}
-					</div>
-				</div>
-				<Separator />
-				<div className="fl-asst-settings-item">
-					<label>Title</label>
-					<div className="fl-asst-settings-item-control">
-						<input type="text" value={title} readOnly={true} />
-					</div>
-				</div>
-				<div className="fl-asst-settings-item">
-					<label>Alt Text</label>
-					<div className="fl-asst-settings-item-control">
-						<input type="text" value={alt} readOnly={true} />
-					</div>
-				</div>
-				<div className="fl-asst-settings-item">
-					<label>Description</label>
-					<div className="fl-asst-settings-item-control">
-						<textarea readOnly={true} value={description} />
-					</div>
-				</div>
-			</div>
+			<SettingsGroup>
+				<SettingsItem label='Filesize'>
+					{filesize}
+				</SettingsItem>
+				<SettingsItem label='Uploaded'>
+					{date}
+				</SettingsItem>
+			</SettingsGroup>
+
+			<Separator />
+
+			<SettingsGroup>
+				<SettingsItem label='Title'>
+					<input type="text" value={title} readOnly={true} />
+				</SettingsItem>
+				<SettingsItem label='Alt Text'>
+					<input type="text" value={alt} readOnly={true} />
+				</SettingsItem>
+				<SettingsItem label='Description'>
+					<textarea value={description} readOnly={true} />
+				</SettingsItem>
+			</SettingsGroup>
 		</Fragment>
 	)
 }

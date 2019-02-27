@@ -1,0 +1,30 @@
+.fl-asst-content-item {
+	display: flex;
+	align-items: center;
+}
+
+.fl-asst-content-item-visual {
+	flex: 0 0;
+
+	.fl-asst-content-item-visual-box {
+		width: 50px;
+		padding-top: 100%;
+		background: var(--fl-utility-element-color);
+		background-size: cover;
+		border-radius: 2px;
+	}
+}
+
+.fl-asst-content-item-text {
+	font-size: var(--fl-asst-base-text-size);
+	font-weight: normal;
+	padding-left: 20px;
+
+	strong {
+		font-style: italic;
+	}
+}
+
+.fl-asst-content-item-title {
+	padding-bottom: 8px;
+}

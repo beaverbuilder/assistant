@@ -3,8 +3,8 @@ import classname from 'classnames'
 import { Button } from 'components'
 import './style.scss'
 
-export const TagGroup = ( { title, children, appearance, isDisabled } ) => {
-	const classes = classname( {
+export const TagGroup = ( { title, children, className, appearance, isDisabled } ) => {
+	const classes = classname( className, {
 		'fl-asst-tag-group': true,
 		'fl-asst-tag-group-appearance-vibrant': 'vibrant' == appearance ? true : false,
 		'fl-asst-tag-group-appearance-muted': 'muted' == appearance ? true : false,
@@ -43,9 +43,9 @@ export const Tag = ( { appearance, children, onClick = () => {}, count, isSelect
 	}
 }
 
-export const TagGroupControl = ( { title, tags, value, appearance, onChange, isDisabled, limit = 8 } ) => {
+export const TagGroupControl = ( { title, tags, value, appearance, onChange, isDisabled, limit } ) => {
 	const [ moreShowing, setMoreShowing ] = useState( false )
-	const renderMoreTag = tags.length > limit
+	const renderMoreTag = limit && tags.length > limit
 	let items = tags
 
 	if ( renderMoreTag && ! moreShowing ) {
@@ -73,6 +73,7 @@ export const TagGroupControl = ( { title, tags, value, appearance, onChange, isD
 			} )}
 			{ renderMoreTag &&
 				<Button
+					className='fl-asst-tag'
 					onClick={() => setMoreShowing( ! moreShowing )}
 				>{ moreShowing ? 'Less...' : 'More...' }</Button>
 			}

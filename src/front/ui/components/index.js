@@ -38,6 +38,10 @@ export {
 } from './contexts'
 
 export {
+	ContentItem
+} from './content-item'
+
+export {
 	ContentList,
 	ContentListDetail,
 	ContentListItem,
@@ -50,10 +54,13 @@ export {
 } from './content-list'
 
 export {
-	FormField,
-	FormSection,
 	ToggleControl,
 } from './controls'
+
+export {
+	SettingsItem,
+	SettingsGroup,
+} from './settings'
 
 export { OptionGroup, OptionGroupItem } from './option-group'
 export { Frame, FrameContext, ContentFrame } from './frame'
