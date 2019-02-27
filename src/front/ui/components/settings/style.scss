@@ -1,0 +1,56 @@
+.fl-asst-settings-group-label {
+	background: var(--fl-utility-background-color);
+	padding: 5px 20px;
+}
+
+.fl-asst-settings-item {
+	margin-bottom: 30px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&.fl-asst-settings-item-label-beside {
+		display: flex;
+	}
+}
+
+.fl-asst-settings-item-label {
+	width: 100%;
+
+	label {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+.fl-asst-settings-item-control {
+	display: flex;
+    white-space: nowrap;
+
+	button {
+		white-space: nowrap;
+
+		&:first-child {
+			margin-left: 0;
+		}
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+}
+
+.fl-asst-screen-header {
+
+	.fl-asst-settings-group {
+		padding: 0 0 20px;
+	}
+
+	.fl-asst-settings-item {
+		margin-bottom: 10px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

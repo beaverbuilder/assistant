@@ -45,12 +45,6 @@ class FL_Assistant_Asset_Loader {
 			return false;
 		}
 
-		// If Beaver Builder is active, don't enqueue.
-		if ( class_exists( 'FLBuilderModel' ) ) {
-			if ( FLBuilderModel::is_builder_active() || FLBuilderModel::is_builder_draft_preview() ) {
-				return false;
-			}
-		}
 		return true;
 	}
 }

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useSystemState, getSystemActions } from 'store'
-import { ScreenHeader, Button, ToggleControl } from 'components'
+import { ScreenHeader, SettingsItem, SettingsGroup, Button, ToggleControl } from 'components'
 const { registerApp } = getSystemActions()
 import './style.scss'
 
@@ -14,25 +14,19 @@ const App = () => {
 		<Fragment>
 			<ScreenHeader />
 
-			<div>
-				<div className="fl-asst-settings-item">
-					<label>Reduce Motion</label>
-					<div className="fl-asst-settings-item-control">
-						<ToggleControl
-							value={shouldReduceMotion}
-							onChange={ value => setShouldReduceMotion( value ) }
-						/>
-					</div>
-				</div>
-				<div className="fl-asst-settings-item">
-					<label>Panel Position</label>
-					<div className="fl-asst-settings-item-control">
-						<Button onClick={ () => setPanelPosition( nextPanelPosition )}>
-							{ 'start' === panelPosition ? 'Left Edge' : 'Right Edge' }
-						</Button>
-					</div>
-				</div>
-			</div>
+			<SettingsGroup>
+				<SettingsItem label='Reduce Motion'>
+					<ToggleControl
+						value={shouldReduceMotion}
+						onChange={ value => setShouldReduceMotion( value ) }
+					/>
+				</SettingsItem>
+				<SettingsItem label='Panel Position'>
+					<Button onClick={ () => setPanelPosition( nextPanelPosition )}>
+						{ 'start' === panelPosition ? 'Left Edge' : 'Right Edge' }
+					</Button>
+				</SettingsItem>
+			</SettingsGroup>
 		</Fragment>
 	)
 }

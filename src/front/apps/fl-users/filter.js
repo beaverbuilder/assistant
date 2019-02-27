@@ -10,6 +10,7 @@ export const UserListFilter = () => {
 
 	return (
 		<TagGroupControl
+			limit={ 6 }
 			tags={ roleTags }
 			value={ role }
 			onChange={ setRole }

@@ -5,11 +5,13 @@ import { updateComment, replyToComment } from 'utils/wordpress'
 import {
 	Button,
 	ContentFrame,
+	ContentItem,
 	ContentListDetail,
-	FormField,
 	Icon,
 	ScreenHeader,
 	Separator,
+	SettingsGroup,
+	SettingsItem,
 	TagGroup,
 	Tag,
 	Widget,
@@ -116,17 +118,17 @@ export const CommentDetail = () => {
 
 			<ScreenHeader title={ detailTitle }>
 
-				<div className='fl-asst-comment-meta'>
-					<FormField label='Email' labelPosition='beside'>
+				<SettingsGroup>
+					<SettingsItem label='Email'>
 						{ authorEmail }
-					</FormField>
-					<FormField label='IP Address' labelPosition='beside'>
+					</SettingsItem>
+					<SettingsItem label='IP Address'>
 						{ authorIP }
-					</FormField>
-					<FormField label='Submitted On' labelPosition='beside'>
+					</SettingsItem>
+					<SettingsItem label='Submitted On'>
 						{ date }
-					</FormField>
-				</div>
+					</SettingsItem>
+				</SettingsGroup>
 
 				<TagGroup appearance='muted' className='fl-asst-comment-actions'>
 					{ ! spam && ! trash &&
@@ -172,23 +174,25 @@ export const CommentDetail = () => {
 
 const CommentDetailTitle = () => {
 	const { author, postTitle, thumbnail } = useContext( ViewContext )
-	const thumbStyles = {
-		backgroundImage: thumbnail ? `url(${ thumbnail })` : '',
-	}
+
+	const title = (
+		<Fragment>
+			<strong>{ author }</strong> commented
+		</Fragment>
+	)
+
+	const meta = (
+		<Fragment>
+			In response to <strong>{ postTitle }</strong>
+		</Fragment>
+	)
+
 	return (
-		<div className='fl-asst-comment-title'>
-			<div className='fl-asst-comment-title-visual'>
-				<div className='fl-asst-comment-title-visual-box' style={ thumbStyles }></div>
-			</div>
-			<div className='fl-asst-comment-title-meta'>
-				<div className='fl-asst-comment-title-author'>
-					<strong>{ author }</strong> commented
-				</div>
-				<div className='fl-asst-comment-title-post'>
-					In response to <strong>{ postTitle }</strong>
-				</div>
-			</div>
-		</div>
+		<ContentItem
+			thumbnail={ thumbnail }
+			title={ title }
+			meta={ meta }
+		/>
 	)
 }
 
