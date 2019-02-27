@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react'
+import React, { Fragment, useContext } from 'react'
 import {
 	ViewContext,
 	BackButton,
@@ -8,7 +8,7 @@ import {
 	TagGroup,
 	Padding,
 	StackContext,
-	getColorData,
+	useImageData,
 } from 'components'
 import { updatePost } from 'utils/wordpress'
 import { getSystemActions } from 'store'
@@ -36,17 +36,6 @@ export const MediaDetail = () => {
 		description,
 	} = data
 
-	const defaultColor = {
-		r: 0, g: 0, b: 0,
-		isDark: false,
-		topLeft: {
-			color: { r: 0, g: 0, b: 0, rgb: null },
-			isDark: false,
-		}
-	}
-	const [ color, setColor ] = useState( defaultColor )
-	const { topLeft } = color
-
 	let url = thumbnail
 	if ( 'undefined' !== typeof sizes.medium_large ) {
 		url = sizes.medium_large.url
@@ -56,14 +45,9 @@ export const MediaDetail = () => {
 		url = sizes.large.url
 	}
 
-	useEffect( () => {
-		const img = new Image()
-		img.src = url
-		img.onload = () => {
-			const data = getColorData( img )
-			setColor( data )
-		}
-	}, [] )
+	const imgData = useImageData( url )
+	const { colors } = imgData
+	const { whole, topLeft } = colors
 
 	const toolbarStyles = {
 		position: 'absolute',
@@ -74,10 +58,7 @@ export const MediaDetail = () => {
 		flexDirection: 'row',
 	}
 
-	let background = null
-	if ( 'undefined' !== typeof color ) {
-		background = color.rgb
-	}
+	let background = whole.hex
 
 	const imgStyles = {
 		maxHeight: '50vh',
@@ -85,9 +66,10 @@ export const MediaDetail = () => {
 	}
 
 	const btnStyles = {
-		background: topLeft.color.rgb,
+		background: topLeft.hex,
 		color: topLeft.isDark ? 'white' : '',
 		margin: 10,
+		boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'
 	}
 
 	const trashClicked = () => {
