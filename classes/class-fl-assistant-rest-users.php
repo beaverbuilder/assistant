@@ -67,6 +67,7 @@ final class FL_Assistant_REST_Users {
 			'date'      => $user->user_registered,
 			'editUrl'   => get_edit_user_link( $user->ID, '' ),
 			'email'		=> $user->user_email,
+			'meta'		=> $user->user_email,
 			'thumbnail' => get_avatar_url( $user->ID ),
 			'title'     => $user->display_name,
 			'url'       => get_author_posts_url( $user->ID ),
