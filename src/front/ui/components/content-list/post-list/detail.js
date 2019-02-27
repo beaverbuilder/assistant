@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
 import Clipboard from 'react-clipboard.js'
-import { getSystemActions, getSystemConfig } from 'store'
+import { getSystemActions } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
 	Button,
@@ -19,14 +19,12 @@ import './style.scss'
 
 export const PostListDetail = () => {
 	const { incrementCount, decrementCount } = getSystemActions()
-	const { bbConfig } = getSystemConfig()
 	const { popView } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
 	const [ post, setPost ] = useState( viewContext )
 	const {
 		author,
 		bbCanEdit,
-		bbIsEnabled,
 		bbBranding,
 		bbEditUrl,
 		commentsAllowed,

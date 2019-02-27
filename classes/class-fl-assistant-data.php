@@ -99,7 +99,7 @@ class FL_Assistant_Data {
 	 * to edit a post.
 	 */
 	static public function bb_can_edit_post( $post_id ) {
-		$editable 	 = false;
+		$editable    = false;
 		$post        = get_post( $post_id );
 		$post_types  = FLBuilderModel::get_post_types();
 		$user_can    = current_user_can( 'edit_post', $post->ID );
