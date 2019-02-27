@@ -17,6 +17,7 @@
   "dependencies": {
     "camelcase": "^5.0.0",
     "classnames": "^2.2.6",
+    "color": "^3.1.0",
     "lodash-es": "^4.17.11",
     "md5": "^2.2.1",
     "react": "^16.8.3",
