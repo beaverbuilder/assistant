@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from 'react'
-import { getSystemActions } from 'store'
+import { getSystemActions, getSystemConfig } from 'store'
+import { currentUserCan } from 'utils/wordpress'
 import {
 	Button,
 	Separator,
@@ -12,7 +13,6 @@ import {
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
-import { getSystemConfig } from 'store'
 import './style.scss'
 
 const { registerApp } = getSystemActions()
@@ -46,8 +46,12 @@ export const App = () => {
 			</Widget>
 			<Separator />
 
-			<RecentCommentsWidget />
-			<Separator />
+			{ currentUserCan( 'moderate_comments' ) &&
+				<Fragment>
+					<RecentCommentsWidget />
+					<Separator />
+				</Fragment>
+			}
 		</Fragment>
 	)
 }
