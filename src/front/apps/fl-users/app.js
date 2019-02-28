@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import { useAppState } from 'store'
 import { UserList, ScreenHeader } from 'components'
-import { AppMenu } from 'system'
 import { UserListFilter } from './filter'
 
 export const App = () => {
