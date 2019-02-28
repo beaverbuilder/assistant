@@ -147,7 +147,7 @@ final class FL_Assistant_REST_Posts {
 
 		foreach ( $post_types as $slug => $label ) {
 			$counts = wp_count_posts( $slug );
-			$counts->total = $counts->publish + $counts->draft + $counts->pending;
+			$counts->total = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
 			$response[ $slug ] = $counts;
 		}
 
