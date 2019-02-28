@@ -2,7 +2,7 @@ import './style.scss'
 
 export { Icon } from './icon'
 export { Button, AppTabButton } from './button'
-export { Photo, useImage, getColorData } from './image'
+export { Photo, useImageData } from './image'
 
 export {
 	HorizontalGroup,

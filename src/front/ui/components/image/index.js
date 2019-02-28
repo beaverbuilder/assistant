@@ -1,39 +1,115 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Color from 'color'
 import Img from 'react-image'
 import classname from 'classnames'
 import './style.scss'
 
-export const getColorData = img => {
+export const useImageData = url => {
+	const defaults = {
+		element: null,
+		isLoaded: false,
+		didFail: false,
+		url,
+		height: null,
+		width: null,
+		colors: getColorDataForImage()
+	}
+	const [ data, setData ] = useState( defaults )
+
+	// When the component mounts, load the image
+	useEffect( () => {
+		const img = new Image()
+		img.src = url
+		img.onload = () => {
+			const colors = getColorDataForImage( img )
+			setData( {
+				...defaults,
+				element: img,
+				isLoaded: true,
+				height: img.naturalHeight,
+				width: img.naturalWidth,
+				colors,
+			} )
+		}
+		img.onerror = () => {
+			setData( {
+				...defaults,
+				didFail: true,
+			} )
+		}
+	}, [] )
+
+	return data
+}
+
+const getColorDataForImage = img => {
 	const canvas = document.createElement( 'canvas' )
 	const ctx = canvas.getContext( '2d' )
+
+	if ( 'undefined' === typeof img ) {
+		img = new Image()
+	}
+
 	const width = canvas.width = img.naturalWidth
 	const height = canvas.height = img.naturalHeight
 	ctx.drawImage( img, 0, 0 )
 
-	// Whole image
-	const { data } = ctx.getImageData( 0, 0, width, height )
-	const avg = getAvgColor( data )
-	const brightness = getBrightness( avg.r, avg.g, avg.b )
+	const colors = {}
+	const areas = {
+		'whole': [ 0, 0, width, height ],
+		'topLeft': [ 0, 0, width * .2, width * .2 ],
+		'topRight': [ width * .8, 0, width * .2, width * .2 ],
+		'bottomLeft': [ 0, width * .8, width * .2, width * .2 ],
+		'bottomRight': [ width * .8, width * .8, width * .2, width * .2 ],
 
-	// Top left 60x60px
-	const topLeftData = ctx.getImageData( 0, 0, 60, 60 )
-	const tlAvg = getAvgColor( topLeftData.data )
-	const tlBrightness = getBrightness( tlAvg.r, tlAvg.g, tlAvg.b )
-
-	return {
-		r: avg.r,
-		g: avg.g,
-		b: avg.b,
-		rgb: avg.rgb,
-		brightness,
-		isDark: isDark( brightness ),
-		topLeft: {
-			color: tlAvg,
-			isDark: isDark( tlBrightness )
-		}
+		'top': [ 0, 0, width, width * .2 ],
+		'bottom': [ 0, width * .8, width, width * .2 ],
+		'center': [ width * .4, width * .4, width * .2, width * .2 ],
 	}
+
+	const getColors = data => {
+		const defaults = {
+			r: null,
+			g: null,
+			b: null,
+			hex: null,
+			isDark: null,
+			isLight: null,
+			brightness: null,
+		}
+
+		if ( ! data ) {
+			return defaults
+		}
+
+		const color = Color( getAvgColor( data ) )
+
+		const props = {
+			...defaults,
+			...color.object(),
+			hex: color.hex(),
+			hsl: color.hsl().string(),
+			isDark: color.isDark(),
+			isLight: color.isLight(),
+			brightness: color.luminosity(),
+		}
+		return props
+	}
+
+	Object.keys( areas ).map( key => {
+		const [ x, y, width, height ] = areas[key]
+		let data = null
+		if ( 0 !== width && 0 !== height ) {
+			const imgData = ctx.getImageData( x, y, width, height )
+			data = imgData.data
+		}
+		colors[key] = getColors( data )
+	} )
+
+	return colors
 }
 
+// Get the average color value from the pixel data provided by a 2d canvas ( getImageDate() )
 const getAvgColor = data => {
 	let r = 0,
 		g = 0,
@@ -49,40 +125,9 @@ const getAvgColor = data => {
 	g = Math.floor( g / ( data.length / 4 ) )
 	b = Math.floor( b / ( data.length / 4 ) )
 
-	return {
-		r,
-		g,
-		b,
-		rgb: `rgb(${r},${g},${b})`
-	}
+	return [ r, g, b ]
 }
 
-const getBrightness = ( r, g, b ) => {
-	return Math.sqrt(
-		0.299 * ( r * r ) +
-		0.587 * ( g * g ) +
-		0.114 * ( b * b )
-	)
-}
-
-const isDark = brightness => {
-	return 127.5 > brightness
-}
-
-export const useImage = url => {
-
-	const img = new Image()
-	img.src = url
-	const color = getColorData( img )
-
-	return {
-		img,
-		url,
-		height: img.naturalHeight,
-		width: img.naturalWidth,
-		color,
-	}
-}
 
 export const Photo = props => {
 	const { className } = props
