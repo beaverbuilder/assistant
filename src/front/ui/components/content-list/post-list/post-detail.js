@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
 import Clipboard from 'react-clipboard.js'
-import { getSystemActions } from 'store'
+import { getSystemActions, getSystemConfig } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
 	Button,
@@ -19,6 +19,7 @@ import './style.scss'
 
 export const PostListDetail = () => {
 	const { incrementCount, decrementCount } = getSystemActions()
+	const { contentStatus } = getSystemConfig()
 	const { popView } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
 	const [ post, setPost ] = useState( viewContext )
@@ -37,6 +38,7 @@ export const PostListDetail = () => {
 		title,
 		type,
 		url,
+		visibility,
 		removeItem
 	} = post
 
@@ -74,10 +76,10 @@ export const PostListDetail = () => {
 
 				<SettingsGroup>
 					<SettingsItem label='Visibility'>
-						Public
+						{ visibility }
 					</SettingsItem>
 					<SettingsItem label='Status'>
-						{ status }
+						{ contentStatus[ status ] ? contentStatus[ status ] : status }
 					</SettingsItem>
 					<SettingsItem label='Publish Date'>
 						{ date }

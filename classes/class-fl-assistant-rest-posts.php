@@ -73,24 +73,38 @@ final class FL_Assistant_REST_Posts {
 			'title'           => empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
 			'type'            => $post->post_type,
 			'url'             => get_permalink( $post ),
+			'visibility'      => __( 'Public', 'fl-assistant' ),
 		);
 
-		if ( 'attachment' === $post->post_type ) {
-			$size = wp_get_attachment_image_src( $post->ID, 'medium' );
-			$response['urls'] = array(
-				'medium' => $size[0],
-			);
-			$response['thumbnail'] = wp_get_attachment_image_src( $post->ID, 'thumbnail' )[0];
-
-			$meta = wp_prepare_attachment_for_js( $post->ID );
-			$response['sizes'] = $meta['sizes'];
-			$response['filesize'] = $meta['filesizeHumanReadable'];
-			$response['mediaType'] = $meta['type'];
-			$response['mediaSubtype'] = $meta['subtype'];
-
-			$response['data'] = $meta;
+		// Post visibility.
+		if ( 'private' == $post->post_status ) {
+			$response['visibility'] = __( 'Private', 'fl-assistant' );
+		} elseif ( ! empty( $post->post_password ) ) {
+			$response['visibility'] = __( 'Password Protected', 'fl-assistant' );
 		}
 
+		// Attachment data.
+		if ( 'attachment' === $post->post_type ) {
+			$size = wp_get_attachment_image_src( $post->ID, 'medium' );
+			$meta = wp_prepare_attachment_for_js( $post->ID );
+			$thumb = wp_get_attachment_image_src( $post->ID, 'thumbnail' )[0];
+
+			$response['attachment'] = array(
+				'title'       => $meta['title'],
+				'alt'         => $meta['title'],
+				'description' => $meta['description'],
+				'filesize'    => $meta['filesizeHumanReadable'],
+				'sizes'       => $meta['sizes'],
+				'type'        => $meta['type'],
+				'subtype'     => $meta['subtype'],
+				'thumbnail'   => $thumb,
+				'urls'        => array(
+					'medium' => $size[0],
+				),
+			);
+		}
+
+		// Beaver Builder data.
 		if ( class_exists( 'FLBuilderModel' ) ) {
 			$response['bbCanEdit']   = FL_Assistant_Data::bb_can_edit_post( $post->ID );
 			$response['bbIsEnabled'] = FLBuilderModel::is_builder_enabled( $post->ID );
@@ -133,7 +147,7 @@ final class FL_Assistant_REST_Posts {
 
 		foreach ( $post_types as $slug => $label ) {
 			$counts = wp_count_posts( $slug );
-			$counts->total = $counts->publish + $counts->draft + $counts->pending;
+			$counts->total = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
 			$response[ $slug ] = $counts;
 		}
 

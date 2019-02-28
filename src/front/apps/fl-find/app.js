@@ -1,9 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState } from 'store'
 import { PostList, ScreenHeader, FrameContext } from 'components'
-import { AppMenu } from 'system'
 import { PostListFilter } from './filter'
-import { MenuContent } from './menu'
 
 export const App = () => {
 	const { filter, query } = useAppState()
@@ -19,9 +17,6 @@ export const App = () => {
 				query={ query }
 				pagination={ true }
 			/>
-			<AppMenu title="Filter Content">
-				<MenuContent />
-			</AppMenu>
 		</Fragment>
 	)
 }

@@ -51,8 +51,11 @@ final class FL_Assistant_REST_Terms {
 	 */
 	static public function get_term_response_data( $term ) {
 		return array(
-			'title' => $term->name,
-			'url'   => get_term_link( $term ),
+			'description' => $term->description,
+			'editUrl'     => get_edit_term_link( $term->term_id, $term->taxonomy ),
+			'slug'        => $term->slug,
+			'title'       => $term->name,
+			'url'         => get_term_link( $term ),
 		);
 	}
 
