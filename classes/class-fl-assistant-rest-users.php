@@ -62,15 +62,21 @@ final class FL_Assistant_REST_Users {
 	 * Returns an array of response data for a single user.
 	 */
 	static public function get_user_response_data( $user ) {
+		$date = mysql2date( get_option( 'date_format' ), $user->user_registered );
 		return array(
-			'content'   => get_the_author_meta( 'description', $user->ID ),
-			'date'      => $user->user_registered,
-			'editUrl'   => get_edit_user_link( $user->ID, '' ),
-			'email'     => $user->user_email,
-			'meta'      => $user->user_email,
-			'thumbnail' => get_avatar_url( $user->ID ),
-			'title'     => $user->display_name,
-			'url'       => get_author_posts_url( $user->ID ),
+			'id'          => $user->ID,
+			'content'     => get_the_author_meta( 'description', $user->ID ),
+			'date'        => $date,
+			'displayName' => $user->display_name,
+			'editUrl'     => get_edit_user_link( $user->ID, '' ),
+			'email'       => $user->user_email,
+			'meta'        => $user->user_email,
+			'nicename'    => $user->user_nicename,
+			'thumbnail'   => get_avatar_url( $user->ID ),
+			'title'       => $user->display_name,
+			'url'         => get_author_posts_url( $user->ID ),
+			'username'    => $user->user_login,
+			'website'     => $user->user_url,
 		);
 	}
 

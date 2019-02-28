@@ -116,7 +116,9 @@ final class FL_Assistant_REST_Posts {
 		);
 
 		foreach ( $posts as $post ) {
-			$response[] = self::get_post_response_data( $post );
+			if ( current_user_can( 'edit_post', $post->ID ) ) {
+				$response[] = self::get_post_response_data( $post );
+			}
 		}
 
 		return rest_ensure_response( $response );
@@ -142,11 +144,14 @@ final class FL_Assistant_REST_Posts {
 	 * Returns data for a single post.
 	 */
 	static public function post( $request ) {
-		$id       = $request->get_param( 'id' );
-		$post     = get_post( $id );
-		$response = self::get_post_response_data( $post );
+		$id = $request->get_param( 'id' );
 
-		return rest_ensure_response( $response );
+		if ( current_user_can( 'edit_post', $id ) ) {
+			$post = get_post( $id );
+			return self::get_post_response_data( $post );
+		}
+
+		return array();
 	}
 
 	/**
@@ -155,6 +160,14 @@ final class FL_Assistant_REST_Posts {
 	static public function update_post( $request ) {
 		$id       = $request->get_param( 'id' );
 		$action   = $request->get_param( 'action' );
+
+		if ( ! current_user_can( 'edit_post', $id ) ) {
+			return rest_ensure_response(
+				array(
+					'error' => true,
+				)
+			);
+		}
 
 		switch ( $action ) {
 			case 'trash':
