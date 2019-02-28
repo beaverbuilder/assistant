@@ -38,6 +38,7 @@ export const PostListDetail = () => {
 		title,
 		type,
 		url,
+		visibility,
 		removeItem
 	} = post
 
@@ -75,7 +76,7 @@ export const PostListDetail = () => {
 
 				<SettingsGroup>
 					<SettingsItem label='Visibility'>
-						Public
+						{ visibility }
 					</SettingsItem>
 					<SettingsItem label='Status'>
 						{ contentStatus[ status ] ? contentStatus[ status ] : status }
