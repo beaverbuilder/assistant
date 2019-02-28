@@ -25,6 +25,10 @@ const AppsMenu = () => {
 
 					const app = apps[key]
 
+					if ( false === app.enabled ) {
+						return null
+					}
+
 					if ( 'function' !== typeof app.icon ) {
 						app.icon = props => <Icon name="default-app" {...props} />
 					}

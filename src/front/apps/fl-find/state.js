@@ -5,14 +5,14 @@ const { contentTypes } = getSystemConfig()
 
 export const initialState = {
 	query: {
-		post_type: contentTypes['page'] ? 'page' : 'post',
+		post_type: contentTypes.page ? 'page' : 'post',
 		orderby: 'title',
 		order: 'ASC',
 		post_status: 'any',
 	},
 	filter: {
 		type: 'posts',
-		subType: contentTypes['page'] ? 'page' : 'post',
+		subType: contentTypes.page ? 'page' : 'post',
 		date: '',
 		status: 'any',
 	},
