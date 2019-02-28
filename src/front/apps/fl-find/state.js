@@ -1,15 +1,18 @@
+import { getSystemConfig } from 'store'
 import { getWeek } from 'utils/datetime'
+
+const { contentTypes } = getSystemConfig()
 
 export const initialState = {
 	query: {
-		post_type: 'page',
+		post_type: contentTypes['page'] ? 'page' : 'post',
 		orderby: 'title',
 		order: 'ASC',
 		post_status: 'any',
 	},
 	filter: {
 		type: 'posts',
-		subType: 'page',
+		subType: contentTypes['page'] ? 'page' : 'post',
 		date: '',
 		status: 'any',
 	},
