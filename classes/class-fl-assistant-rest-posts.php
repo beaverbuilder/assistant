@@ -90,15 +90,15 @@ final class FL_Assistant_REST_Posts {
 			$thumb = wp_get_attachment_image_src( $post->ID, 'thumbnail' )[0];
 
 			$response['attachment'] = array(
-				'title' => $meta['title'],
-				'alt' => $meta['title'],
+				'title'       => $meta['title'],
+				'alt'         => $meta['title'],
 				'description' => $meta['description'],
-				'filesize' => $meta['filesizeHumanReadable'],
-				'sizes' => $meta['sizes'],
-				'type' => $meta['type'],
-				'subtype' => $meta['subtype'],
-				'thumbnail' => $thumb,
-				'urls' => array(
+				'filesize'    => $meta['filesizeHumanReadable'],
+				'sizes'       => $meta['sizes'],
+				'type'        => $meta['type'],
+				'subtype'     => $meta['subtype'],
+				'thumbnail'   => $thumb,
+				'urls'        => array(
 					'medium' => $size[0],
 				),
 			);

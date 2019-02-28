@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { redirect } from 'utils/location'
 import { Button, ContentListItem, Icon, ItemContext, StackContext } from 'components'
-import { PostListDetail } from './detail'
+import { PostListDetail } from './post-detail'
+import { TermListDetail } from './term-detail'
 
 export const PostListItem = props => {
 	const context = useContext( ItemContext )
@@ -9,7 +10,13 @@ export const PostListItem = props => {
 	const { pushView } = useContext( StackContext )
 
 	const onClick = () => {
-		pushView( <PostListDetail />, { context } )
+
+		// Terms don't have a status.
+		if ( context.status ) {
+			pushView( <PostListDetail />, { context } )
+		} else {
+			pushView( <TermListDetail />, { context } )
+		}
 	}
 
 	const onAccessoryClick = e => {
