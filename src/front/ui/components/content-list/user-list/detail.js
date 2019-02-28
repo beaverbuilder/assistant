@@ -3,20 +3,24 @@ import {
 	ContentItem,
 	ContentListDetail,
 	ScreenHeader,
+	SettingsGroup,
+	SettingsItem,
 	TagGroup,
 	Tag,
-	Widget,
 	ViewContext,
 } from 'components'
 
 export const UserDetail = () => {
 	const {
-		content,
+		date,
+		displayName,
 		editUrl,
 		email,
 		url,
+		username,
 		title,
 		thumbnail,
+		website,
 	} = useContext( ViewContext )
 
 	const headerTitle = (
@@ -29,15 +33,31 @@ export const UserDetail = () => {
 
 	return (
 		<ContentListDetail className='fl-asst-user-detail'>
+
 			<ScreenHeader title={ headerTitle }>
 				<TagGroup appearance='muted'>
 					<Tag href={url}>View</Tag>
 					<Tag href={editUrl}>Edit</Tag>
 				</TagGroup>
 			</ScreenHeader>
-			<Widget title='Bio'>
-				<div dangerouslySetInnerHTML={ { __html: content } } />
-			</Widget>
+
+			<SettingsGroup>
+				<SettingsItem label='Display Name'>
+					{ displayName }
+				</SettingsItem>
+				<SettingsItem label='Username'>
+					{ username }
+				</SettingsItem>
+				<SettingsItem label='Signup Date'>
+					{ date }
+				</SettingsItem>
+				{ website &&
+					<SettingsItem label='Website'>
+						<a href={ website }>Visit Website</a>
+					</SettingsItem>
+				}
+			</SettingsGroup>
+
 		</ContentListDetail>
 	)
 }
