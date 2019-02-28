@@ -34,6 +34,7 @@ class FL_Assistant_Data {
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
 			'cms'             => 'wordpress',
 			'contentTypes'    => self::get_post_types(),
+			'contentStatus'   => self::get_post_stati(),
 			'currentPageView' => self::get_current_view(),
 			'currentUser'     => self::get_current_user_data(),
 			'dashboardApp'    => array(
@@ -89,6 +90,20 @@ class FL_Assistant_Data {
 				continue;
 			}
 			$data[ $slug ] = esc_html( $type->labels->name );
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Get post status slugs and names.
+	 */
+	static public function get_post_stati() {
+		$data  = [];
+		$stati = get_post_stati( array(), 'objects' );
+
+		foreach ( $stati as $slug => $status ) {
+			$data[ $slug ] = esc_html( $status->label );
 		}
 
 		return $data;
