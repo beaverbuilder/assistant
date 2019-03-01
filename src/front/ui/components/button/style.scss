@@ -1,0 +1,10 @@
+.fl-asst-tooltip {
+    position: absolute;
+    top:0;
+    left:0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--fl-asst-base-art-color);
+    color: white;
+    z-index: 9;
+}

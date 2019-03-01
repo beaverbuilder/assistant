@@ -71,7 +71,10 @@ export const UI = () => {
 								)
 							} ) }
 
-							<AppTabButton appearance="icon" isSelected={isShowingAppsMenu} onClick={toggleIsShowingAppsMenu}>
+							<AppTabButton
+								appearance="icon" isSelected={isShowingAppsMenu} onClick={toggleIsShowingAppsMenu}
+								tooltip="Apps"
+							>
 								<Icon name="apps-app" />
 							</AppTabButton>
 						</div>
