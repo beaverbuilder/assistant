@@ -4,7 +4,7 @@ import classname from 'classnames'
 import { useSystemState } from 'store'
 import { useAppFrame } from 'system'
 import { useWindowSize } from 'utils/window'
-import { useHover, useFocus } from 'use-events'
+import { useHover } from 'use-events'
 import './style.scss'
 
 export const Button = forwardRef( ( props, ref ) => {
@@ -33,12 +33,11 @@ export const Button = forwardRef( ( props, ref ) => {
 
 export const AppTabButton = props => {
 	const ref = createRef()
-	const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0, width: 0 })
+	const [ tooltipPos, setTooltipPos ] = useState( { x: 0, y: 0, width: 0 } )
 	const { shouldReduceMotion } = useSystemState()
 	const { appFrame: { sizeName } } = useAppFrame()
 	const { width } = useWindowSize()
-	const [isHovering, hoverEvents] = useHover()
-	const [isFocused, focusEvents] = useFocus()
+	const [ isHovering, hoverEvents ] = useHover()
 	const {
 		children,
 		isSelected,
@@ -70,20 +69,19 @@ export const AppTabButton = props => {
 		title: tooltip,
 		style: springProps,
 		...hoverEvents,
-		...focusEvents,
 		ref,
 	}
 
 	useEffect( () => {
 		if ( ref.current ) {
 			const el = ref.current
-			setTooltipPos({
+			setTooltipPos( {
 				x: el.offsetLeft + ( el.offsetWidth / 2 ),
 				y: el.offsetTop + el.offsetHeight,
 				width: el.offsetWidth,
-			})
+			} )
 		}
-	}, [])
+	}, [] )
 
 	return (
 		<Fragment>
@@ -103,20 +101,20 @@ const AppTooltip = props => {
 		isShowing
 	} = props
 	const ref = createRef()
-	const [width, setWidth] = useState(0)
+	const [ width, setWidth ] = useState( 0 )
 
 	useEffect( () => {
 		if ( ref.current ) {
 			setWidth( ref.current.offsetWidth )
 		}
-	}, [])
+	}, [] )
 
-	const classes = classname({
-		'fl-asst-tooltip' : true
-	})
+	const classes = classname( {
+		'fl-asst-tooltip': true
+	} )
 
 	let left = x - ( width / 2 )
-	if ( left < 0 ) {
+	if ( 0 > left ) {
 		left = x - ( btnWidth / 2 )
 	}
 
