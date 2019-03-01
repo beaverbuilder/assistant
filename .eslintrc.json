@@ -18,7 +18,8 @@
         "wordpress"
     ],
     "plugins": [
-        "react"
+        "react",
+        "jsx-a11y"
     ],
     "settings": {
       "react": {

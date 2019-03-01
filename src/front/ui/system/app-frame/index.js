@@ -96,7 +96,11 @@ export const AppFrame = ( { children } ) => {
 	}
 
 	return (
-		<animated.div style={styles}>{children}</animated.div>
+		<animated.nav
+			style={styles}
+			role="navigation"
+			aria-hidden={ ! isShowingUI ? 'true' : 'false' }
+		>{children}</animated.nav>
 	)
 }
 
