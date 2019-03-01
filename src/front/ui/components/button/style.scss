@@ -8,4 +8,8 @@
     color: white;
     z-index: 9;
     font-size: 13px;
+
+    &.fl-asst-tooltip-highlighted {
+        background: var(--fl-accent-color);
+    }
 }

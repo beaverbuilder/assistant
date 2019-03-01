@@ -87,6 +87,7 @@ export const AppTabButton = props => {
 			<animated.button {...merged} />
 			<AppTooltip
 				position={tooltipPos}
+				isAppSelected={isSelected}
 				isShowing={isHovering}
 			>{tooltip}</AppTooltip>
 		</Fragment>
@@ -97,7 +98,8 @@ const AppTooltip = props => {
 	const {
 		children,
 		position: { x, y, width: btnWidth },
-		isShowing
+		isShowing,
+		isAppSelected,
 	} = props
 	const ref = createRef()
 	const [ width, setWidth ] = useState( 0 )
@@ -109,7 +111,8 @@ const AppTooltip = props => {
 	}, [] )
 
 	const classes = classname( {
-		'fl-asst-tooltip': true
+		'fl-asst-tooltip': true,
+		'fl-asst-tooltip-highlighted' : isAppSelected,
 	} )
 
 	let left = x - ( width / 2 )
