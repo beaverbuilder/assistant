@@ -7,7 +7,7 @@ import {
 	UIContext,
 } from 'components'
 import { NotificationsAppButton } from 'apps/fl-notifications/button'
-import { App, useAppsMenu, AppFrame, FrameSizeButton } from 'system'
+import { App, useAppsMenu, AppFrame } from 'system'
 import { useWindowSize } from 'utils/window'
 import './style.scss'
 
@@ -77,7 +77,6 @@ export const UI = () => {
 						</div>
 					</div>
 					<div className="fl-asst-panel-chrome-area">
-						<FrameSizeButton />
 						<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
 							<Icon name="close" />
 						</Button>
@@ -100,7 +99,7 @@ export const UI = () => {
  * Button To Show/Hide The UI
  */
 export const ShowUITrigger = () => {
-	const { setIsShowingUI } = useContext( UIContext )
+	const { isShowingUI, setIsShowingUI } = useContext( UIContext )
 
 	const styles = {
 		position: 'fixed',
@@ -114,7 +113,13 @@ export const ShowUITrigger = () => {
 	}
 	return (
 		<div style={styles}>
-			<Button className="fl-asst-outline-button" onClick={ () => setIsShowingUI( true ) } style={buttonStyles} isSelected={true}>
+			<Button
+				id="fl-asst-trigger"
+				onClick={ () => setIsShowingUI( true ) } style={buttonStyles} isSelected={true}
+
+				aria-label="Assistant Panel"
+				aria-expanded={ isShowingUI ? 'false' : 'true' }
+			>
 				<Icon name="trigger-button"/>
 			</Button>
 		</div>
