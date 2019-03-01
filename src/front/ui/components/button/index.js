@@ -112,7 +112,7 @@ const AppTooltip = props => {
 
 	const classes = classname( {
 		'fl-asst-tooltip': true,
-		'fl-asst-tooltip-highlighted' : isAppSelected,
+		'fl-asst-tooltip-highlighted': isAppSelected,
 	} )
 
 	let left = x - ( width / 2 )

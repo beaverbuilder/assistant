@@ -4,7 +4,8 @@ import { AspectBox, ItemContext, ViewContext, FrameContext, StackContext } from 
 import { MediaDetail } from './detail'
 
 export const MediaListItem = ( { className } ) => {
-	const { urls } = useContext( ItemContext )
+	const item = useContext( ItemContext )
+	const { attachment: { urls } } = item
 	const { size } = useContext( FrameContext )
 	const { pushView } = useContext( StackContext )
 	const classes = classname( className, 'fl-asst-grid-item' )
@@ -16,7 +17,6 @@ export const MediaListItem = ( { className } ) => {
 		boxStyles.backgroundImage = `url(${urls.medium})`
 	}
 
-	const item = useContext( ItemContext )
 	const onClick = () => {
 		const context = { ...item }
 		pushView(
