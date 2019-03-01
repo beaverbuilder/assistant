@@ -66,7 +66,6 @@ export const AppTabButton = props => {
 		children,
 		className: classes,
 		type: 'button',
-		title: tooltip,
 		style: springProps,
 		...hoverEvents,
 		ref,
