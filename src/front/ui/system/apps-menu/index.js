@@ -54,7 +54,7 @@ const AppsMenu = () => {
 								{app.label}
 
 								<div style={{ marginLeft: 'auto' }}>
-									{ position > 0 && <Button onClick={moveUp}>Up</Button> }
+									{ 0 < position && <Button onClick={moveUp}>Up</Button> }
 									{ position < order.length && <Button onClick={moveDown}>down</Button> }
 								</div>
 							</div>

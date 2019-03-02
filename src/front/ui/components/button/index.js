@@ -4,7 +4,6 @@ import classname from 'classnames'
 import { useSystemState } from 'store'
 import { useAppFrame } from 'system'
 import { useWindowSize } from 'utils/window'
-import { useHover } from 'use-events'
 import './style.scss'
 
 export const Button = forwardRef( ( props, ref ) => {
@@ -32,18 +31,14 @@ export const Button = forwardRef( ( props, ref ) => {
 
 
 export const AppTabButton = props => {
-	const ref = createRef()
-	const [ tooltipPos, setTooltipPos ] = useState( { x: 0, y: 0, width: 0 } )
 	const { shouldReduceMotion } = useSystemState()
 	const { appFrame: { sizeName } } = useAppFrame()
 	const { width } = useWindowSize()
-	const [ isHovering, hoverEvents ] = useHover()
 	const {
 		children,
 		isSelected,
 		onClick,
 		className,
-		tooltip,
 	} = props
 
 	const classes = classname( {
@@ -67,22 +62,7 @@ export const AppTabButton = props => {
 		className: classes,
 		type: 'button',
 		style: springProps,
-		...hoverEvents,
-		ref,
 	}
-
-	/*
-	useEffect( () => {
-		if ( ref.current ) {
-			const el = ref.current
-			setTooltipPos( {
-				x: el.offsetLeft + ( el.offsetWidth / 2 ),
-				y: el.offsetTop + el.offsetHeight,
-				width: el.offsetWidth,
-			} )
-		}
-	}, [] )
-	*/
 
 	return (
 		<Fragment>
@@ -91,7 +71,7 @@ export const AppTabButton = props => {
 	)
 }
 
-const AppTooltip = props => {
+export const AppTooltip = props => {
 	const {
 		children,
 		position: { x, y, width: btnWidth },

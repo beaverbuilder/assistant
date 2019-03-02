@@ -118,12 +118,12 @@ export const order = ( state = [], action ) => {
 			const from = state.indexOf( app )
 			const to = position
 
-			Array.prototype.move = function (from, to) {
-				this.splice(to, 0, this.splice(from, 1)[0])
+			Array.prototype.move = function( from, to ) {
+				this.splice( to, 0, this.splice( from, 1 )[0] )
 				return this
 			}
 
-			const newState = Array.from( state.move(from, to) )
+			const newState = Array.from( state.move( from, to ) )
 
 			return newState
 		}
