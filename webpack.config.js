@@ -15,9 +15,13 @@ const alias = {
 
 const externals = {
     '@assistant' : 'FLAssistant',
-    '@assistant/react' : 'FLAssistant.React',
     '@assistant/store' : 'FLAssistant.store',
     '@assistant/components' : 'FLAssistant.components',
+
+    /* Vendor Shortcuts */
+    '@assistant/react' : 'FLAssistant.vendor.React',
+    '@assistant/react-dom' : 'FLAssistant.vendor.ReactDOM',
+    '@assistant/classnames' : 'FLAssistant.vendor.classnames',
 }
 
 const entry = {
