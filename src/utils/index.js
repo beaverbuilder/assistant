@@ -11,15 +11,15 @@ import * as window from './window'
 import * as wordpress from './wordpress'
 
 export {
-    cache,
-    console,
-    datetime,
-    hooks,
-    location,
-    request,
-    store,
-    text,
-    url,
-    window,
-    wordpress,
+	cache,
+	console,
+	datetime,
+	hooks,
+	location,
+	request,
+	store,
+	text,
+	url,
+	window,
+	wordpress,
 }

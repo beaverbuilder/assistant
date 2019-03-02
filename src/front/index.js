@@ -6,29 +6,8 @@ import { UIContext, PageViewContext, useModals } from 'components'
 import { useActiveApp } from 'system'
 import { getSystemConfig, getSystemStore, getSystemActions, useSystemState } from 'store'
 import { redirect } from 'utils/location'
-import './apps'
 import './api'
-
-/**
- * Make sure there is always a valid active app.
- */
-const defaultAppKey = 'fl-dashboard'
-const ensureActiveApp = () => {
-	const store = getSystemStore()
-	const { apps, activeApp } = store.getState()
-	const appKeys = Object.keys( apps )
-
-	if ( ! appKeys.includes( activeApp ) ) {
-		const { setActiveApp } = getSystemActions()
-
-		if ( appKeys.includes( defaultAppKey ) ) {
-			setActiveApp( defaultAppKey )
-		} else {
-			const key = appKeys[0]
-			setActiveApp( key )
-		}
-	}
-}
+import './apps'
 
 /**
  * The Root Component
@@ -36,7 +15,7 @@ const ensureActiveApp = () => {
 const Assistant = () => {
 
 	const { currentPageView } = getSystemConfig()
-	const { isShowingUI, panelPosition, appFrameSize, apps } = useSystemState()
+	const { isShowingUI, panelPosition, appFrameSize } = useSystemState()
 	const {
 		setIsShowingUI,
 		togglePanelPosition,

@@ -4,7 +4,14 @@ import { updateUserState } from 'utils/wordpress'
 /**
  * Effects that fire before an action.
  */
-export const before = {}
+export const before = {
+	REGISTER_APP: ( action ) => {
+		registerAppStore( {
+			key: action.key,
+			...action.config,
+		} )
+	},
+}
 
 /**
  * Effects that fire after an action.
@@ -13,12 +20,6 @@ export const after = {
 
 	REGISTER_APP: ( action ) => {
 		const { setAppPosition } = getSystemActions()
-
-		registerAppStore( {
-			key: action.key,
-			...action.config,
-		} )
-
 		setAppPosition( action.key, null )
 	},
 
