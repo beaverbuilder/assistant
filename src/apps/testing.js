@@ -1,14 +1,22 @@
 import React, { Fragment } from '@assistant/react'
 import { getSystemActions } from '@assistant/store'
-import { ScreenHeader } from '@assistant/components'
+import { ScreenHeader, Padding, Branding } from '@assistant/components'
 const { registerApp } = getSystemActions()
 
-registerApp( 'different-test', {
-	label: 'Testing Screen',
+registerApp( 'branding-test', {
+	label: 'Branding Tests',
 	content: () => (
-        <Fragment>
-            <ScreenHeader />
-            Howdy!
-        </Fragment>
-    ),
+		<Fragment>
+			<ScreenHeader />
+			<Padding>
+				<Branding />
+			</Padding>
+			<Padding>
+				<Branding name="outline" />
+			</Padding>
+			<Padding style={{ color: 'var(--fl-accent-color)' }}>
+				<Branding name="outline" />
+			</Padding>
+		</Fragment>
+	),
 } )

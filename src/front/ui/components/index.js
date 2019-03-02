@@ -3,6 +3,7 @@ import './style.scss'
 export { Icon } from './icon'
 export { Button, AppTabButton } from './button'
 export { Photo, useImageData } from './image'
+export { Branding } from './branding'
 
 export {
 	HorizontalGroup,

@@ -1,5 +1,3 @@
-import { getSystemStore } from 'store'
-
 export const activeApp = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_ACTIVE_APP':
@@ -123,7 +121,7 @@ export const order = ( state = [], action ) => {
 			if ( index ) {
 				const newState = Array.from( state )
 				delete newState[ index ]
-				return newState 
+				return newState
 			}
 
 		} else {
@@ -138,6 +136,7 @@ export const order = ( state = [], action ) => {
 			const newState = Array.from( move( state, from, to ) )
 			return newState
 		}
+		break
 	}
 	default:
 		return state

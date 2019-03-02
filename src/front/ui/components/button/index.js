@@ -47,7 +47,6 @@ export const AppTabButton = props => {
 		'fl-asst-button-is-selected': isSelected
 	}, className )
 
-
 	const isFrameExpanded = [ 'full', 'wide' ].includes( sizeName ) && 600 < width
 
 	const springProps = useSpring( {
