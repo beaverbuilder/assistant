@@ -110,11 +110,21 @@ export const order = ( state = [], action ) => {
 
 		if ( ! position ) {
 			const newState = Array.from( state )
-			newState.push( app )
+			if ( -1 === newState.indexOf( app ) ) {
+				newState.push( app )
+			}
 			return newState
 		} else {
-			const newState = Array.from( state )
-			newState.splice( position, 0, app )
+			const from = state.indexOf( app )
+			const to = position
+
+			Array.prototype.move = function (from, to) {
+				this.splice(to, 0, this.splice(from, 1)[0])
+				return this
+			}
+
+			const newState = Array.from( state.move(from, to) )
+
 			return newState
 		}
 	}

@@ -71,6 +71,7 @@ export const AppTabButton = props => {
 		ref,
 	}
 
+	/*
 	useEffect( () => {
 		if ( ref.current ) {
 			const el = ref.current
@@ -81,15 +82,11 @@ export const AppTabButton = props => {
 			} )
 		}
 	}, [] )
+	*/
 
 	return (
 		<Fragment>
 			<animated.button {...merged} />
-			<AppTooltip
-				position={tooltipPos}
-				isAppSelected={isSelected}
-				isShowing={isHovering}
-			>{tooltip}</AppTooltip>
 		</Fragment>
 	)
 }

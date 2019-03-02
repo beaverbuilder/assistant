@@ -44,6 +44,11 @@ export const UI = () => {
 					<div className="fl-asst-app-tabs-wrap">
 						<div className="fl-asst-app-tabs-area">
 							{ order.map( key => {
+								const app = apps[key]
+
+								if ( 'undefined' === typeof app ) {
+									return null
+								}
 
 								if ( excludedApps.includes( key ) ) {
 									return null
@@ -54,7 +59,6 @@ export const UI = () => {
 								}
 								count++
 
-								const app = apps[key]
 								const isSelected = ( key === activeAppName && ! isShowingAppsMenu ) ? true : false
 
 								if ( false === app.enabled ) {

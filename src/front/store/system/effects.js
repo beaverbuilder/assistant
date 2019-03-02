@@ -49,4 +49,9 @@ export const after = {
 		const { appFrameSize } = store.getState()
 		updateUserState( { appFrameSize } )
 	},
+
+	SET_APP_POSITION: ( action, store ) => {
+		const { order } = store.getState()
+		updateUserState( { order } )
+	}
 }
