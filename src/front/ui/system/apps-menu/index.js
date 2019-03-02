@@ -26,7 +26,7 @@ const AppsMenu = () => {
 
 					const app = apps[key]
 
-					if ( false === app.enabled ) {
+					if ( 'undefined' === typeof app || false === app.enabled ) {
 						return null
 					}
 
