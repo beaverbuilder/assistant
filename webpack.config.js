@@ -13,13 +13,26 @@ const alias = {
 	store: path.resolve( __dirname, './src/front/store/' ),
 }
 
+const externals = {
+    '@assistant' : 'FLAssistant',
+    '@assistant/react' : 'FLAssistant.React',
+    '@assistant/store' : 'FLAssistant.store',
+    '@assistant/components' : 'FLAssistant.components',
+}
+
+const entry = {
+    'fl-asst-system' : './src/front',
+    'fl-asst-apps' : './src/apps',
+}
+
 const config = {
-	entry: './src/index.js',
+	entry,
+    externals,
 	mode: 'development',
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
-        filename: `bundle.js`,
+        filename: `[name].bundle.js`,
     },
     resolve: {
         alias,
@@ -39,7 +52,7 @@ const config = {
     },
     plugins: [
         new MiniCssExtractPlugin( {
-            filename: `bundle.css`,
+            filename: `[name].bundle.css`,
         } ),
     ]
 }

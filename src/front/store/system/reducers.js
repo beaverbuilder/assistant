@@ -100,3 +100,23 @@ export const counts = ( state = {}, action ) => {
 		return state
 	}
 }
+
+export const order = ( state = [], action ) => {
+
+	switch ( action.type ) {
+	case 'SET_APP_POSITION':
+		const { app, position } = action
+
+		if ( ! position ) {
+			const newState = Array.from( state )
+			newState.push( app )
+			return newState
+		} else {
+			const newState = Array.from( state )
+			newState.splice( position, 0, app )
+			return newState
+		}
+	default:
+		return state
+	}
+}

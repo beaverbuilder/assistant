@@ -1,4 +1,4 @@
-import { registerAppStore } from 'store'
+import { registerAppStore, getSystemActions } from 'store'
 import { updateUserState } from 'utils/wordpress'
 
 /**
@@ -12,10 +12,14 @@ export const before = {}
 export const after = {
 
 	REGISTER_APP: ( action ) => {
+		const { setAppPosition } = getSystemActions()
+
 		registerAppStore( {
 			key: action.key,
 			...action.config,
 		} )
+
+		setAppPosition( action.key, null )
 	},
 
 	SET_ACTIVE_APP: ( action ) => {

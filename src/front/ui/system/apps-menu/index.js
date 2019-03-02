@@ -4,7 +4,7 @@ import { Heading, Icon, UIContext } from 'components'
 import './style.scss'
 
 const AppsMenu = () => {
-	const { apps } = useSystemState()
+	const { apps, order } = useSystemState()
 	const { setActiveApp } = useContext( UIContext )
 
 	const excludedApps = [ 'fl-notifications' ]
@@ -17,7 +17,7 @@ const AppsMenu = () => {
 		<Fragment>
 			<Heading className="fl-asst-manage-apps-title">Apps</Heading>
 			<div className="fl-asst-app-list">
-				{ Object.keys( apps ).map( key => {
+				{ order.map( key => {
 
 					if ( excludedApps.includes( key ) ) {
 						return null

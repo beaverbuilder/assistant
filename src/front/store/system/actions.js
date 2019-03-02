@@ -89,3 +89,11 @@ export const decrementCount = ( key ) => {
 		key,
 	}
 }
+
+export const setAppPosition = ( app, position ) => {
+	return {
+		type: 'SET_APP_POSITION',
+		app,
+		position,
+	}
+}
