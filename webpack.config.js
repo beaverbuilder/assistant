@@ -5,7 +5,6 @@ const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const production = 'production' === process.env.NODE_ENV
 
 const alias = {
-    ui: path.resolve( __dirname, './src/front/ui/' ),
     components: path.resolve( __dirname, './src/front/ui/components' ),
     system: path.resolve( __dirname, './src/front/ui/system' ),
     apps: path.resolve( __dirname, './src/front/apps' ),
@@ -17,6 +16,7 @@ const externals = {
     '@assistant' : 'FLAssistant',
     '@assistant/store' : 'FLAssistant.store',
     '@assistant/components' : 'FLAssistant.components',
+    '@assistant/utils' : 'FLAssistant.utils',
 
     /* Vendor Shortcuts */
     '@assistant/react' : 'FLAssistant.vendor.React',
