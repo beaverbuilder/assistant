@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react'
+import { __ } from '@wordpress/i18n'
 import {
 	ViewContext,
 	BackButton,
@@ -75,10 +76,13 @@ export const MediaDetail = () => {
 	}
 
 	const trashClicked = () => {
-		updatePost( id, 'trash' )
-		decrementCount( `content/${ type }` )
-		removeItem()
-		popView()
+		const message = __( 'Do you really want to delete this item?' )
+		if ( confirm( message ) ) {
+			updatePost( id, 'trash' )
+			decrementCount( `content/${ type }` )
+			removeItem()
+			popView()
+		}
 	}
 
 	return (
@@ -90,7 +94,7 @@ export const MediaDetail = () => {
 				<TagGroup appearance='muted'>
 					<Tag href={pageURL}>View</Tag>
 					<Tag href={editUrl}>Edit</Tag>
-					<Tag onClick={trashClicked} appearance='warning'>Trash</Tag>
+					<Tag onClick={trashClicked} appearance='warning'>Delete</Tag>
 				</TagGroup>
 			</Padding>
 

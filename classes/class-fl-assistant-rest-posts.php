@@ -38,6 +38,12 @@ final class FL_Assistant_REST_Posts {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::post',
+					'args'                => array(
+						'id' => array(
+							'required' => true,
+							'type'     => 'number',
+						),
+					),
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -45,6 +51,16 @@ final class FL_Assistant_REST_Posts {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::update_post',
+					'args'                => array(
+						'id'     => array(
+							'required' => true,
+							'type'     => 'number',
+						),
+						'action' => array(
+							'required' => true,
+							'type'     => 'string',
+						),
+					),
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -169,11 +185,11 @@ final class FL_Assistant_REST_Posts {
 	}
 
 	/**
-	 * Updates data for a single post.
+	 * Updates a single post based on the specified action.
 	 */
 	static public function update_post( $request ) {
-		$id       = $request->get_param( 'id' );
-		$action   = $request->get_param( 'action' );
+		$id     = $request->get_param( 'id' );
+		$action = $request->get_param( 'action' );
 
 		if ( ! current_user_can( 'edit_post', $id ) ) {
 			return rest_ensure_response(
@@ -184,6 +200,16 @@ final class FL_Assistant_REST_Posts {
 		}
 
 		switch ( $action ) {
+			case 'data':
+				$data = (array) json_decode( $request->get_param( 'data' ) );
+				wp_update_post(
+					array_merge(
+						$data, array(
+							'ID' => $id,
+						)
+					)
+				);
+				break;
 			case 'trash':
 				if ( ! EMPTY_TRASH_DAYS ) {
 					wp_delete_post( $id );

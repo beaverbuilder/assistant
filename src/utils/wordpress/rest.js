@@ -90,14 +90,17 @@ export const getPost = ( id, onSuccess, onError ) => {
  * Updates a single post. See the update_post
  * REST method for a list of supported actions.
  */
-export const updatePost = ( id, action ) => {
+export const updatePost = ( id, action, data = {}, onSuccess, onError ) => {
 	clearCache( 'posts' )
 	return restRequest( {
 		method: 'POST',
 		route: `fl-assistant/v1/post/${ id }`,
 		args: {
 			action,
-		}
+			data,
+		},
+		onSuccess,
+		onError,
 	} )
 }
 
@@ -153,7 +156,7 @@ export const getComment = ( id, onSuccess, onError ) => {
  * Updates a single comment. See the update_comment
  * REST method for a list of supported actions.
  */
-export const updateComment = ( id, action, args = {} ) => {
+export const updateComment = ( id, action, args = {}, onSuccess, onError ) => {
 	clearCache( 'comments' )
 	return restRequest( {
 		method: 'POST',
@@ -161,7 +164,9 @@ export const updateComment = ( id, action, args = {} ) => {
 		args: {
 			action,
 			...args,
-		}
+		},
+		onSuccess,
+		onError,
 	} )
 }
 
@@ -192,13 +197,15 @@ export const getUser = ( id, onSuccess, onError ) => {
 /**
  * Updates the saved state for the current user.
  */
-export const updateUserState = ( state ) => {
+export const updateUserState = ( state, onSuccess, onError ) => {
 	return restRequest( {
 		method: 'POST',
 		route: 'fl-assistant/v1/current-user/state',
 		args: {
-			state: JSON.stringify( state ),
-		}
+			state,
+		},
+		onSuccess,
+		onError,
 	} )
 }
 

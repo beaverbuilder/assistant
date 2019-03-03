@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
-import Clipboard from 'react-clipboard.js'
+import { __ } from '@wordpress/i18n'
 import {
 	Button,
+	CopyButton,
 	ContentListDetail,
 	ScreenHeader,
 	SettingsItem,
@@ -27,10 +28,13 @@ export const TermListDetail = () => {
 	} = term
 
 	const trashClicked = () => {
+		const message = __( 'Do you really want to delete this item?' )
+		if ( confirm( message ) ) {
 
-		// 'TODO: Trash terms'
-		removeItem()
-		popView()
+			// 'TODO: Trash terms'
+			removeItem()
+			popView()
+		}
 	}
 
 	const onChange = e => {
@@ -55,7 +59,7 @@ export const TermListDetail = () => {
 				</SettingsItem>
 				<SettingsItem label='Slug' labelPosition='above'>
 					<input type='text' name='slug' value={ slug } onChange={ onChange } />
-					<Clipboard data-clipboard-text={ url } button-className="fl-asst-button">Copy URL</Clipboard>
+					<CopyButton label='Copy URL' text={ url } />
 				</SettingsItem>
 				<SettingsItem label='Description' labelPosition='above'>
 					<textarea name='description' value={ description } onChange={ onChange } />
