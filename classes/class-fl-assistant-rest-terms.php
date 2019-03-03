@@ -38,6 +38,29 @@ final class FL_Assistant_REST_Terms {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::term',
+					'args'                => array(
+						'id' => array(
+							'required' => true,
+							'type'     => 'number',
+						),
+					),
+					'permission_callback' => function() {
+						return current_user_can( 'edit_published_posts' );
+					},
+				),
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => __CLASS__ . '::update_term',
+					'args'                => array(
+						'id'     => array(
+							'required' => true,
+							'type'     => 'number',
+						),
+						'action' => array(
+							'required' => true,
+							'type'     => 'string',
+						),
+					),
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -50,13 +73,18 @@ final class FL_Assistant_REST_Terms {
 	 * Returns an array of response data for a single term.
 	 */
 	static public function get_term_response_data( $term ) {
-		return array(
-			'description' => $term->description,
-			'editUrl'     => get_edit_term_link( $term->term_id, $term->taxonomy ),
-			'slug'        => $term->slug,
-			'title'       => $term->name,
-			'url'         => get_term_link( $term ),
+		$response = array(
+			'description'    => $term->description,
+			'editUrl'        => get_edit_term_link( $term->term_id, $term->taxonomy ),
+			'id'             => $term->term_id,
+			'isHierarchical' => is_taxonomy_hierarchical( $term->taxonomy ),
+			'parent'         => $term->parent,
+			'slug'           => $term->slug,
+			'taxonomy'       => $term->taxonomy,
+			'title'          => $term->name,
+			'url'            => get_term_link( $term ),
 		);
+		return $response;
 	}
 
 	/**
@@ -98,6 +126,39 @@ final class FL_Assistant_REST_Terms {
 		$response = self::get_term_response_data( $term );
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Updates a single term based on the specified action.
+	 */
+	static public function update_term( $request ) {
+		$id     = $request->get_param( 'id' );
+		$action = $request->get_param( 'action' );
+		$term   = get_term( $id );
+
+		if ( ! current_user_can( 'edit_term', $id ) ) {
+			return rest_ensure_response(
+				array(
+					'error' => true,
+				)
+			);
+		}
+
+		switch ( $action ) {
+			case 'data':
+				$data = (array) json_decode( $request->get_param( 'data' ) );
+				wp_update_term( $id, $term->taxonomy, $data );
+				break;
+			case 'trash':
+				wp_delete_term( $id, $term->taxonomy );
+				break;
+		}
+
+		return rest_ensure_response(
+			array(
+				'success' => true,
+			)
+		);
 	}
 }
 
