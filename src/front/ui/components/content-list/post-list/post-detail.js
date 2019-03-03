@@ -7,12 +7,14 @@ import {
 	CopyButton,
 	ContentItem,
 	ContentListDetail,
+	Icon,
 	ScreenHeader,
 	SettingsItem,
 	SettingsGroup,
 	TagGroup,
 	Tag,
 	ToggleControl,
+	UIContext,
 	StackContext,
 	ViewContext,
 } from 'components'
@@ -21,8 +23,10 @@ import './style.scss'
 export const PostListDetail = () => {
 	const { incrementCount, decrementCount } = getSystemActions()
 	const { contentStatus } = getSystemConfig()
+	const { presentNotification } = useContext( UIContext )
 	const { popView } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
+	const [ publishing, setPublishing ] = useState( false )
 	const [ post, setPost ] = useState( viewContext )
 	const {
 		author,
@@ -58,6 +62,21 @@ export const PostListDetail = () => {
 		incrementCount( `content/${ type }` )
 		removeItem()
 		popView()
+	}
+
+	const publishClicked = () => {
+		setPublishing( true )
+
+		setTimeout( () => {
+			setPublishing( false )
+			presentNotification( 'Changes published!' )
+		}, 1500 )
+
+		// updatePost( id, {
+		// 	commentsAllowed,
+		// 	slug,
+		// 	title,
+		// } )
 	}
 
 	const onChange = e => {
@@ -124,7 +143,12 @@ export const PostListDetail = () => {
 					/>
 				</SettingsItem>
 				<SettingsItem>
-					<Button>Publish Changes</Button>
+					{ publishing &&
+						<Button>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
+					}
+					{ ! publishing &&
+						<Button onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
+					}
 				</SettingsItem>
 			</SettingsGroup>
 
