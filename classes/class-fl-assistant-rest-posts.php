@@ -38,10 +38,10 @@ final class FL_Assistant_REST_Posts {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::post',
-					'args'				  => array(
-						'id'					=> array(
-							'required' 				=> true,
-							'type' 					=> 'number',
+					'args'                => array(
+						'id' => array(
+							'required' => true,
+							'type'     => 'number',
 						),
 					),
 					'permission_callback' => function() {
@@ -51,14 +51,14 @@ final class FL_Assistant_REST_Posts {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::update_post',
-					'args'				  => array(
-						'id'					=> array(
-							'required' 				=> true,
-							'type' 					=> 'number',
+					'args'                => array(
+						'id'     => array(
+							'required' => true,
+							'type'     => 'number',
 						),
-						'action'				=> array(
-							'required' 				=> true,
-							'type' 					=> 'string',
+						'action' => array(
+							'required' => true,
+							'type'     => 'string',
 						),
 					),
 					'permission_callback' => function() {
@@ -202,9 +202,13 @@ final class FL_Assistant_REST_Posts {
 		switch ( $action ) {
 			case 'data':
 				$data = (array) json_decode( $request->get_param( 'data' ) );
-				wp_update_post( array_merge( $data, array(
-					'ID' => $id,
-				) ) );
+				wp_update_post(
+					array_merge(
+						$data, array(
+							'ID' => $id,
+						)
+					)
+				);
 				break;
 			case 'trash':
 				if ( ! EMPTY_TRASH_DAYS ) {

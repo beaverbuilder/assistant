@@ -30,6 +30,7 @@ export const TermListDetail = () => {
 	const trashClicked = () => {
 		const message = __( 'Do you really want to delete this item?' )
 		if ( confirm( message ) ) {
+
 			// 'TODO: Trash terms'
 			removeItem()
 			popView()

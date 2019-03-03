@@ -6,7 +6,6 @@ export const CopyButton = ( {
 	label = 'Copy',
 	text,
 	className,
-	...props
 } ) => {
 	const [ buttonLabel, setbuttonLabel ] = useState( label )
 	const classes = classname( className, 'fl-asst-button' )
