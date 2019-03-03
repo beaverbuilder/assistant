@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getTerms, updateTerm } from 'utils/wordpress'
 import { getSystemActions } from 'store'
@@ -6,22 +6,27 @@ import {
 	Button,
 	CopyButton,
 	ContentListDetail,
+	Icon,
 	ScreenHeader,
 	SettingsItem,
 	SettingsGroup,
 	TagGroup,
 	Tag,
+	UIContext,
 	StackContext,
 	ViewContext,
 } from 'components'
 import './style.scss'
 
 export const TermListDetail = () => {
+	const mounted = useRef( false )
 	const { decrementCount } = getSystemActions()
+	const { presentNotification } = useContext( UIContext )
 	const { popView } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
 	const [ term, setTerm ] = useState( viewContext )
 	const [ terms, setTerms ] = useState( null )
+	const [ publishing, setPublishing ] = useState( false )
 	const {
 		description,
 		editUrl,
@@ -33,7 +38,13 @@ export const TermListDetail = () => {
 		title,
 		url,
 		removeItem,
+		updateItem,
 	} = term
+
+	useEffect( () => {
+		mounted.current = true
+		return () => mounted.current = false
+	} )
 
 	useEffect( () => {
 		if ( isHierarchical ) {
@@ -74,6 +85,28 @@ export const TermListDetail = () => {
 		}
 	}
 
+	const publishClicked = () => {
+		setPublishing( true )
+
+		updateTerm( id, 'data', {
+			name: title,
+			description,
+			parent,
+			slug,
+		}, () => {
+			updateItem( { description, parent, slug, title } )
+			presentNotification( 'Changes published!' )
+			if ( mounted.current ) {
+				setPublishing( false )
+			}
+		}, () => {
+			presentNotification( 'Error! Changes not published.', { appearance: 'error' } )
+			if ( mounted.current ) {
+				setPublishing( false )
+			}
+		} )
+	}
+
 	const onChange = e => {
 		const { name, value } = e.target
 		setTerm( { ...term, [ name ]: value } )
@@ -109,7 +142,12 @@ export const TermListDetail = () => {
 					<textarea name='description' value={ description } onChange={ onChange } />
 				</SettingsItem>
 				<SettingsItem>
-					<Button>Publish Changes</Button>
+					{ publishing &&
+						<Button>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
+					}
+					{ ! publishing &&
+						<Button onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
+					}
 				</SettingsItem>
 			</SettingsGroup>
 

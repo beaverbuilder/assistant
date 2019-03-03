@@ -145,6 +145,10 @@ final class FL_Assistant_REST_Terms {
 		}
 
 		switch ( $action ) {
+			case 'data':
+				$data = (array) json_decode( $request->get_param( 'data' ) );
+				wp_update_term( $id, $term->taxonomy, $data );
+				break;
 			case 'trash':
 				wp_delete_term( $id, $term->taxonomy );
 				break;
