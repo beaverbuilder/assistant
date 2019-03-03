@@ -93,7 +93,7 @@ export const postRequest = ( {
 	const body = new FormData()
 
 	Object.entries( args ).map( ( [ key, value ] ) => {
-		body.append( key, value )
+		body.append( key, 'object' === typeof value ? JSON.stringify( value ) : value )
 	} )
 
 	return request( {

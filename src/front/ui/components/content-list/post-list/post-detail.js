@@ -44,7 +44,8 @@ export const PostListDetail = () => {
 		type,
 		url,
 		visibility,
-		removeItem
+		removeItem,
+		updateItem,
 	} = post
 
 	const trashClicked = () => {
@@ -67,20 +68,23 @@ export const PostListDetail = () => {
 	const publishClicked = () => {
 		setPublishing( true )
 
-		setTimeout( () => {
+		updatePost( id, 'data', {
+			comment_status: commentsAllowed ? 'open' : 'closed',
+			ping_status: commentsAllowed ? 'open' : 'closed',
+			post_name: slug,
+			post_title: title,
+		}, () => {
+			updateItem( { title, slug, commentsAllowed } )
 			setPublishing( false )
 			presentNotification( 'Changes published!' )
-		}, 1500 )
-
-		// updatePost( id, {
-		// 	commentsAllowed,
-		// 	slug,
-		// 	title,
-		// } )
+		}, () => {
+			setPublishing( false )
+			presentNotification( 'Error! Changes not published.', { appearance: 'error' } )
+		} )
 	}
 
 	const onChange = e => {
-		const { name, value } = e.target
+		const { name, value } = e.currentTarget
 		setPost( { ...post, [ name ]: value } )
 	}
 
@@ -139,7 +143,7 @@ export const PostListDetail = () => {
 					<ToggleControl
 						name='commentsAllowed'
 						value={ commentsAllowed }
-						onChange={ ( value, e ) => onChange( e ) }
+						onChange={ ( value ) => setPost( { ...post, commentsAllowed: value } ) }
 					/>
 				</SettingsItem>
 				<SettingsItem>
