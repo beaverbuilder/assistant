@@ -73,15 +73,18 @@ final class FL_Assistant_REST_Terms {
 	 * Returns an array of response data for a single term.
 	 */
 	static public function get_term_response_data( $term ) {
-		return array(
-			'description' => $term->description,
-			'editUrl'     => get_edit_term_link( $term->term_id, $term->taxonomy ),
-			'id'		  => $term->term_id,
-			'slug'        => $term->slug,
-			'taxonomy'	  => $term->taxonomy,
-			'title'       => $term->name,
-			'url'         => get_term_link( $term ),
+		$response = array(
+			'description'    => $term->description,
+			'editUrl'        => get_edit_term_link( $term->term_id, $term->taxonomy ),
+			'id'             => $term->term_id,
+			'isHierarchical' => is_taxonomy_hierarchical( $term->taxonomy ),
+			'parent'         => $term->parent,
+			'slug'           => $term->slug,
+			'taxonomy'       => $term->taxonomy,
+			'title'          => $term->name,
+			'url'            => get_term_link( $term ),
 		);
+		return $response;
 	}
 
 	/**

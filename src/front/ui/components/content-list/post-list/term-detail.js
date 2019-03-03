@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { updateTerm } from 'utils/wordpress'
+import { getTerms, updateTerm } from 'utils/wordpress'
 import { getSystemActions } from 'store'
 import {
 	Button,
@@ -21,16 +21,48 @@ export const TermListDetail = () => {
 	const { popView } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
 	const [ term, setTerm ] = useState( viewContext )
+	const [ terms, setTerms ] = useState( null )
 	const {
 		description,
 		editUrl,
 		id,
+		isHierarchical,
+		parent,
 		slug,
 		taxonomy,
 		title,
 		url,
 		removeItem,
 	} = term
+
+	useEffect( () => {
+		if ( isHierarchical ) {
+			const request = getTerms( {
+				hide_empty: 0,
+				taxonomy,
+			}, response => {
+				setTerms( response )
+			} )
+			return () => request.cancel()
+		}
+	}, [] )
+
+	const renderParentOptions = () => {
+		if ( ! terms ) {
+			return <option value={ parent }>{ __( 'Loading...' ) }</option>
+		}
+		return (
+			<Fragment>
+				<option value='0'>{ __( 'None' ) }</option>
+				{ Object.entries( terms ).map( ( [ key, value ] ) => {
+					if ( value.id === id ) {
+						return null
+					}
+					return <option key={ key } value={ value.id }>{ value.title }</option>
+				} ) }
+			</Fragment>
+		)
+	}
 
 	const trashClicked = () => {
 		const message = __( 'Do you really want to delete this item?' )
@@ -66,6 +98,13 @@ export const TermListDetail = () => {
 					<input type='text' name='slug' value={ slug } onChange={ onChange } />
 					<CopyButton label='Copy URL' text={ url } />
 				</SettingsItem>
+				{ isHierarchical &&
+					<SettingsItem label='Parent' labelPosition='above'>
+						<select name='parent' value={ parent } onChange={ onChange }>
+							{ renderParentOptions() }
+						</select>
+					</SettingsItem>
+				}
 				<SettingsItem label='Description' labelPosition='above'>
 					<textarea name='description' value={ description } onChange={ onChange } />
 				</SettingsItem>
