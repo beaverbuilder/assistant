@@ -129,6 +129,24 @@ export const getTerm = ( id, onSuccess, onError ) => {
 }
 
 /**
+ * Updates a single term. See the update_term
+ * REST method for a list of supported actions.
+ */
+export const updateTerm = ( id, action, data = {}, onSuccess, onError ) => {
+	clearCache( 'terms' )
+	return restRequest( {
+		method: 'POST',
+		route: `fl-assistant/v1/term/${ id }`,
+		args: {
+			action,
+			data,
+		},
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
  * Returns any array of comments.
  */
 export const getComments = ( query, onSuccess, onError ) => {
