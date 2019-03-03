@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions, getSystemConfig } from 'store'
 import { updatePost } from 'utils/wordpress'
@@ -21,6 +21,7 @@ import {
 import './style.scss'
 
 export const PostListDetail = () => {
+	const mounted = useRef( false )
 	const { incrementCount, decrementCount } = getSystemActions()
 	const { contentStatus } = getSystemConfig()
 	const { presentNotification } = useContext( UIContext )
@@ -47,6 +48,11 @@ export const PostListDetail = () => {
 		removeItem,
 		updateItem,
 	} = post
+
+	useEffect( () => {
+		mounted.current = true
+		return () => mounted.current = false
+	} )
 
 	const trashClicked = () => {
 		const message = __( 'Do you really want to trash this item?' )
@@ -75,11 +81,15 @@ export const PostListDetail = () => {
 			post_title: title,
 		}, () => {
 			updateItem( { title, slug, commentsAllowed } )
-			setPublishing( false )
 			presentNotification( 'Changes published!' )
+			if ( mounted.current ) {
+				setPublishing( false )
+			}
 		}, () => {
-			setPublishing( false )
 			presentNotification( 'Error! Changes not published.', { appearance: 'error' } )
+			if ( mounted.current ) {
+				setPublishing( false )
+			}
 		} )
 	}
 
