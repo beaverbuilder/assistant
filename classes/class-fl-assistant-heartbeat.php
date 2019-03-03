@@ -17,7 +17,7 @@ class FL_Assistant_Heartbeat {
 	 * Called on the heartbeat_received action.
 	 */
 	static public function received( $response, $data ) {
-		FL_Assistant_REST::init();
+		do_action( 'rest_api_init' );
 
 		foreach ( $data as $key => $route ) {
 			if ( strstr( $key, 'fl-assistant-' ) ) {
