@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react'
+import { __ } from '@wordpress/i18n'
 import { getSystemActions, getSystemConfig } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
@@ -43,10 +44,13 @@ export const PostListDetail = () => {
 	} = post
 
 	const trashClicked = () => {
-		updatePost( id, 'trash' )
-		decrementCount( `content/${ type }` )
-		removeItem()
-		popView()
+		const message = __( 'Do you really want to trash this item?' )
+		if ( confirm( message ) ) {
+			updatePost( id, 'trash' )
+			decrementCount( `content/${ type }` )
+			removeItem()
+			popView()
+		}
 	}
 
 	const restoreClicked = () => {

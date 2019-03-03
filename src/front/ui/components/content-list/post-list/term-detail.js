@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { __ } from '@wordpress/i18n'
 import {
 	Button,
 	CopyButton,
@@ -27,10 +28,12 @@ export const TermListDetail = () => {
 	} = term
 
 	const trashClicked = () => {
-
-		// 'TODO: Trash terms'
-		removeItem()
-		popView()
+		const message = __( 'Do you really want to delete this item?' )
+		if ( confirm( message ) ) {
+			// 'TODO: Trash terms'
+			removeItem()
+			popView()
+		}
 	}
 
 	const onChange = e => {
