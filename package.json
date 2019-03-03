@@ -15,6 +15,7 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
+    "@wordpress/i18n": "^3.1.1",
     "camelcase": "^5.0.0",
     "classnames": "^2.2.6",
     "color": "^3.1.0",
