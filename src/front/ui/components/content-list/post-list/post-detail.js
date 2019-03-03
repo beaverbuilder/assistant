@@ -1,9 +1,9 @@
 import React, { Fragment, useContext, useState } from 'react'
-import Clipboard from 'react-clipboard.js'
 import { getSystemActions, getSystemConfig } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
 	Button,
+	CopyButton,
 	ContentItem,
 	ContentListDetail,
 	ScreenHeader,
@@ -110,7 +110,7 @@ export const PostListDetail = () => {
 				</SettingsItem>
 				<SettingsItem label='Slug' labelPosition='above'>
 					<input type='text' name='slug' value={ slug } onChange={ onChange } />
-					<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
+					<CopyButton label='Copy URL' text={ url } />
 				</SettingsItem>
 				<SettingsItem label='Comments'>
 					<ToggleControl
