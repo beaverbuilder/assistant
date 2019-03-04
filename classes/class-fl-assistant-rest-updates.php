@@ -14,6 +14,12 @@ final class FL_Assistant_REST_Updates {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::updates',
+					'args'                => array(
+						'type' => array(
+							'required' => false,
+							'type'     => 'string',
+						),
+					),
 					'permission_callback' => function() {
 						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
 					},

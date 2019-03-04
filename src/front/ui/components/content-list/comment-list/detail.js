@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import { __ } from '@wordpress/i18n'
 import striptags from 'striptags'
 import { getSystemActions } from 'store'
 import { updateComment, replyToComment } from 'utils/wordpress'
@@ -60,10 +61,13 @@ export const CommentDetail = () => {
 	}
 
 	const trashClicked = () => {
-		updateComment( id, 'trash' )
-		decrementCount( 'notifications/comments' )
-		removeItem()
-		popView()
+		const message = __( 'Do you really want to trash this item?' )
+		if ( confirm( message ) ) {
+			updateComment( id, 'trash' )
+			decrementCount( 'notifications/comments' )
+			removeItem()
+			popView()
+		}
 	}
 
 	const restoreClicked = () => {

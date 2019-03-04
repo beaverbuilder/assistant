@@ -1,27 +1,33 @@
-import React, { Fragment, useContext, useState } from 'react'
-import Clipboard from 'react-clipboard.js'
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import { __ } from '@wordpress/i18n'
 import { getSystemActions, getSystemConfig } from 'store'
 import { updatePost } from 'utils/wordpress'
 import {
 	Button,
+	CopyButton,
 	ContentItem,
 	ContentListDetail,
+	Icon,
 	ScreenHeader,
 	SettingsItem,
 	SettingsGroup,
 	TagGroup,
 	Tag,
 	ToggleControl,
+	UIContext,
 	StackContext,
 	ViewContext,
 } from 'components'
 import './style.scss'
 
 export const PostListDetail = () => {
+	const mounted = useRef( false )
 	const { incrementCount, decrementCount } = getSystemActions()
 	const { contentStatus } = getSystemConfig()
+	const { presentNotification } = useContext( UIContext )
 	const { popView } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
+	const [ publishing, setPublishing ] = useState( false )
 	const [ post, setPost ] = useState( viewContext )
 	const {
 		author,
@@ -39,14 +45,23 @@ export const PostListDetail = () => {
 		type,
 		url,
 		visibility,
-		removeItem
+		removeItem,
+		updateItem,
 	} = post
 
+	useEffect( () => {
+		mounted.current = true
+		return () => mounted.current = false
+	} )
+
 	const trashClicked = () => {
-		updatePost( id, 'trash' )
-		decrementCount( `content/${ type }` )
-		removeItem()
-		popView()
+		const message = __( 'Do you really want to trash this item?' )
+		if ( confirm( message ) ) {
+			updatePost( id, 'trash' )
+			decrementCount( `content/${ type }` )
+			removeItem()
+			popView()
+		}
 	}
 
 	const restoreClicked = () => {
@@ -56,8 +71,30 @@ export const PostListDetail = () => {
 		popView()
 	}
 
+	const publishClicked = () => {
+		setPublishing( true )
+
+		updatePost( id, 'data', {
+			comment_status: commentsAllowed ? 'open' : 'closed',
+			ping_status: commentsAllowed ? 'open' : 'closed',
+			post_name: slug,
+			post_title: title,
+		}, () => {
+			updateItem( { title, slug, commentsAllowed } )
+			presentNotification( 'Changes published!' )
+			if ( mounted.current ) {
+				setPublishing( false )
+			}
+		}, () => {
+			presentNotification( 'Error! Changes not published.', { appearance: 'error' } )
+			if ( mounted.current ) {
+				setPublishing( false )
+			}
+		} )
+	}
+
 	const onChange = e => {
-		const { name, value } = e.target
+		const { name, value } = e.currentTarget
 		setPost( { ...post, [ name ]: value } )
 	}
 
@@ -110,17 +147,22 @@ export const PostListDetail = () => {
 				</SettingsItem>
 				<SettingsItem label='Slug' labelPosition='above'>
 					<input type='text' name='slug' value={ slug } onChange={ onChange } />
-					<Clipboard data-clipboard-text={url} button-className="fl-asst-button">Copy URL</Clipboard>
+					<CopyButton label='Copy URL' text={ url } />
 				</SettingsItem>
 				<SettingsItem label='Comments'>
 					<ToggleControl
 						name='commentsAllowed'
 						value={ commentsAllowed }
-						onChange={ ( value, e ) => onChange( e ) }
+						onChange={ ( value ) => setPost( { ...post, commentsAllowed: value } ) }
 					/>
 				</SettingsItem>
 				<SettingsItem>
-					<Button>Publish Changes</Button>
+					{ publishing &&
+						<Button>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
+					}
+					{ ! publishing &&
+						<Button onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
+					}
 				</SettingsItem>
 			</SettingsGroup>
 

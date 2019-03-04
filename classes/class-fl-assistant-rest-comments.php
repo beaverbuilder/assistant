@@ -38,6 +38,12 @@ final class FL_Assistant_REST_Comments {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::comment',
+					'args'                => array(
+						'id' => array(
+							'required' => true,
+							'type'     => 'number',
+						),
+					),
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -45,6 +51,16 @@ final class FL_Assistant_REST_Comments {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::update_comment',
+					'args'                => array(
+						'id'     => array(
+							'required' => true,
+							'type'     => 'number',
+						),
+						'action' => array(
+							'required' => true,
+							'type'     => 'string',
+						),
+					),
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -124,7 +140,7 @@ final class FL_Assistant_REST_Comments {
 	}
 
 	/**
-	 * Updates data for a single comment.
+	 * Updates a single comment based on the specified action.
 	 */
 	static public function update_comment( $request ) {
 		$id       = $request->get_param( 'id' );
