@@ -38,6 +38,12 @@ final class FL_Assistant_REST_Users {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::user',
+					'args'                => array(
+						'id' => array(
+							'required' => true,
+							'type'     => 'number',
+						),
+					),
 					'permission_callback' => function() {
 						return current_user_can( 'edit_users' );
 					},
@@ -50,6 +56,12 @@ final class FL_Assistant_REST_Users {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::update_user_state',
+					'args'                => array(
+						'state' => array(
+							'required' => true,
+							'type'     => 'string',
+						),
+					),
 					'permission_callback' => function() {
 						return ! ! wp_get_current_user()->ID;
 					},
