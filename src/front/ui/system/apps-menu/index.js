@@ -1,13 +1,11 @@
 import React, { Fragment, useContext } from 'react'
 import { useSystemState, getSystemActions } from 'store'
-import { Heading, Icon, UIContext, Button } from 'components'
+import { Heading, Icon, UIContext } from 'components'
 import './style.scss'
 
 const AppsMenu = () => {
 	const { apps, order } = useSystemState()
-	const { setAppPosition } = getSystemActions()
 	const { setActiveApp } = useContext( UIContext )
-
 	const excludedApps = [ 'fl-notifications' ]
 
 	const clickItem = key => {
@@ -38,25 +36,11 @@ const AppsMenu = () => {
 						app.settings = () => null
 					}
 
-					const moveUp = e => {
-						setAppPosition( key, position - 1 )
-						e.stopPropagation()
-					}
-					const moveDown = e => {
-						setAppPosition( key, position + 1 )
-						e.stopPropagation()
-					}
-
 					return (
 						<div className="fl-asst-app-list-item" key={key} onClick={ () => clickItem( key ) }>
 							{ app.icon() }
 							<div className="fl-asst-app-list-item-title">
 								{app.label}
-
-								<div style={{ marginLeft: 'auto' }}>
-									{ 0 < position && <Button onClick={moveUp}>Up</Button> }
-									{ position < order.length && <Button onClick={moveDown}>down</Button> }
-								</div>
 							</div>
 						</div>
 					)
