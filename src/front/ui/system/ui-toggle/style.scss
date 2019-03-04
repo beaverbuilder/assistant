@@ -1,0 +1,11 @@
+#fl-asst-trigger {
+    background: white;
+    height: 60px;
+    width: 60px;
+    padding:0;
+
+    & > svg {
+        height: 50px;
+        width: 50px;
+    }
+}

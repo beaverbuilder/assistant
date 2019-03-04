@@ -37,7 +37,7 @@
         border-color: var(--fl-accent-color);
 
         & > svg {
-            color: var(--fl-accent-color);
+            color: inherit;
         }
     }
 
@@ -94,6 +94,7 @@
         }
 
         &.fl-asst-button-is-selected {
+            color: var(--fl-accent-color);
             border-bottom-color: var(--fl-accent-color);
         }
     }

@@ -1,7 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { UI, ShowUITrigger } from './ui'
+import { UI } from './ui'
+import { UIToggleButton } from 'system'
 import { UIContext, PageViewContext, useModals } from 'components'
 import { useActiveApp } from 'system'
 import { getSystemConfig, getSystemStore, getSystemActions, useSystemState } from 'store'
@@ -66,7 +67,7 @@ const Assistant = () => {
 		<Provider store={getSystemStore()}>
 			<UIContext.Provider value={ui}>
 				<PageViewContext.Provider value={currentPageView}>
-					{ ! isShowingUI && <ShowUITrigger /> }
+					<UIToggleButton />
 					<UI />
 				</PageViewContext.Provider>
 			</UIContext.Provider>

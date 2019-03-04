@@ -102,33 +102,3 @@ export const UI = () => {
 		</AppFrame>
 	)
 }
-
-/**
- * Button To Show/Hide The UI
- */
-export const ShowUITrigger = () => {
-	const { isShowingUI, setIsShowingUI } = useContext( UIContext )
-
-	const styles = {
-		position: 'fixed',
-		right: 0,
-		bottom: 0,
-		padding: 10,
-		zIndex: 999,
-	}
-	const buttonStyles = {
-		borderRadius: '8px'
-	}
-	return (
-		<div style={styles}>
-			<Button
-				id="fl-asst-trigger"
-				onClick={ () => setIsShowingUI( true ) } style={buttonStyles} isSelected={true}
-				aria-label="Assistant Panel"
-				aria-expanded={ isShowingUI ? 'false' : 'true' }
-			>
-				<Icon name="trigger-button"/>
-			</Button>
-		</div>
-	)
-}
