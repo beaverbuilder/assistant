@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { useSystemState, getSystemActions } from 'store'
-import { Heading, Icon, UIContext } from 'components'
+import { Heading, Icon, UIContext, Button } from 'components'
 import './style.scss'
 
 const AppsMenu = () => {
@@ -16,7 +16,7 @@ const AppsMenu = () => {
 		<Fragment>
 			<Heading className="fl-asst-manage-apps-title">Apps</Heading>
 			<div className="fl-asst-app-list">
-				{ order.map( ( key, position ) => {
+				{ order.map( ( key ) => {
 
 					if ( excludedApps.includes( key ) ) {
 						return null
@@ -32,17 +32,13 @@ const AppsMenu = () => {
 						app.icon = props => <Icon name="default-app" {...props} />
 					}
 
-					if ( 'function' !== typeof app.settings ) {
-						app.settings = () => null
-					}
-
 					return (
-						<div className="fl-asst-app-list-item" key={key} onClick={ () => clickItem( key ) }>
+						<Button className="fl-asst-app-list-item" key={key} appearance="transparent" onClick={ () => clickItem( key ) }>
 							{ app.icon() }
 							<div className="fl-asst-app-list-item-title">
 								{app.label}
 							</div>
-						</div>
+						</Button>
 					)
 				} )}
 			</div>
