@@ -1,13 +1,16 @@
 import React, { useContext } from 'react'
-import { Button, Branding, UIContext } from 'components'
 import { animated, useSpring } from 'react-spring'
+import { Button, Branding, UIContext } from 'components'
+import { useSystemState } from 'store'
 import './style.scss'
 
 export const UIToggleButton = () => {
 	const { isShowingUI, setIsShowingUI, panelPosition } = useContext( UIContext )
+	const { shouldReduceMotion } = useSystemState()
 
 	const divProps = useSpring( {
-		transform: isShowingUI ? 'scale(0)' : 'scale(1)'
+		transform: isShowingUI ? 'scale(0)' : 'scale(1)',
+		immediate: shouldReduceMotion,
 	} )
 
 	const styles = {
