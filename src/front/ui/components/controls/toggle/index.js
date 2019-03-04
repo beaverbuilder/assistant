@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { animated, useSpring, config } from 'react-spring'
 import classname from 'classnames'
+import { useSystemState } from 'store'
 import './style.scss'
 
 export const ToggleControl = props => {
@@ -10,6 +11,7 @@ export const ToggleControl = props => {
 		onChange = () => () => {},
 	} = props
 	const [ value, setValue ] = useState( initialValue )
+	const { shouldReduceMotion } = useSystemState()
 
 	const classes = classname( {
 		'fl-asst-button': true,
@@ -34,6 +36,7 @@ export const ToggleControl = props => {
 			tension: 700,
 			friction: 25,
 		},
+		immediate: shouldReduceMotion
 	} )
 
 	return (
