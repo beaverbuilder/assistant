@@ -20,16 +20,12 @@ export const UIToggleButton = () => {
 		transformOrigin: 'start' === panelPosition ? 'bottom left' : 'bottom right',
 		...divProps,
 	}
-	const buttonStyles = {
-		margin: 0,
-		borderRadius: '8px',
-		border: 'none',
-	}
 	return (
 		<animated.div style={styles}>
 			<Button
 				id="fl-asst-trigger"
-				onClick={ () => setIsShowingUI( true ) } style={buttonStyles} isSelected={true}
+				onClick={ () => setIsShowingUI( true ) }
+				isSelected={true}
 				aria-label="Assistant Panel"
 				aria-expanded={ isShowingUI ? 'false' : 'true' }
 			>
