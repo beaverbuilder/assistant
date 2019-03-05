@@ -41,17 +41,17 @@ export const Separator = props => {
 	let styles = {}
 	if ( ! isSlim ) {
 		switch ( appearance ) {
-			case 'dots':
-				styles.flexBasis = 18
-				break
-			case 'dots-compact':
-			case 'stripes':
-				styles.flexBasis = 14
-				break
-			case 'stripes-compact':
-				styles.flexBasis = 8
-				break
-			default:
+		case 'dots':
+			styles.flexBasis = 18
+			break
+		case 'dots-compact':
+		case 'stripes':
+			styles.flexBasis = 14
+			break
+		case 'stripes-compact':
+			styles.flexBasis = 8
+			break
+		default:
 		}
 	}
 

@@ -164,70 +164,70 @@ export const Icon = ( { name } ) => {
 	}
 }
 
-export const Pattern = ({ name }) => {
+export const Pattern = ( { name } ) => {
 	switch ( name ) {
-		case 'dots-compact':
-			return (
-				<svg width="100%" height="100%">
-					<defs>
-						<pattern id="fl-dots-compact" x="0" y="0" width="10" height="14" patternUnits="userSpaceOnUse">
-							<g fill="transparent" stroke="currentColor" strokeWidth="1">
-								<circle cx="2" cy="2" r="1" />
-								<circle cx="2" cy="12" r="1" />
-								<circle cx="7" cy="7" r="1" />
-							</g>
-						</pattern>
-					</defs>
-					<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-dots-compact)"></rect>
-				</svg>
-			)
-		case 'dots':
-			return (
-				<svg width="100%" height="100%">
-					<defs>
-						<pattern id="fl-dots" x="0" y="0" width="12" height="18" patternUnits="userSpaceOnUse">
-							<g fill="transparent" stroke="currentColor" strokeWidth="1">
-								<circle cx="3" cy="3" r="2" />
-								<circle cx="3" cy="15" r="2" />
-								<circle cx="9" cy="9" r="2" />
-							</g>
-						</pattern>
-					</defs>
-					<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-dots)"></rect>
-				</svg>
-			)
-		case 'stripes':
-			return (
-				<svg width="100%" height="100%">
-					<defs>
-						<pattern id="fl-stripes" x="0" y="0" width="12" height="14" patternUnits="userSpaceOnUse">
-							<g fill="transparent" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
-								<path d="M-1,9 3,13"></path>
-								<path d="M-1,3 9,13"></path>
-								<path d="M3,1 13,11"></path>
-								<path d="M9,1 13,5"></path>
-							</g>
-						</pattern>
-					</defs>
-					<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-stripes)"></rect>
-				</svg>
-			)
-		case 'stripes-compact':
-			return (
-				<svg width="100%" height="100%">
-					<defs>
-						<pattern id="fl-stripes-compact" x="0" y="0" width="10" height="8" patternUnits="userSpaceOnUse">
-							<g fill="transparent" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
-								<path d="M-1,4 2,7"></path>
-								<path d="M1,1 L7,7"></path>
-								<path d="M6,1 11,6"></path>
-							</g>
-						</pattern>
-					</defs>
-					<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-stripes-compact)"></rect>
-				</svg>
-			)
-		default:
-			return null
+	case 'dots-compact':
+		return (
+			<svg width="100%" height="100%">
+				<defs>
+					<pattern id="fl-dots-compact" x="0" y="0" width="10" height="14" patternUnits="userSpaceOnUse">
+						<g fill="transparent" stroke="currentColor" strokeWidth="1">
+							<circle cx="2" cy="2" r="1" />
+							<circle cx="2" cy="12" r="1" />
+							<circle cx="7" cy="7" r="1" />
+						</g>
+					</pattern>
+				</defs>
+				<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-dots-compact)"></rect>
+			</svg>
+		)
+	case 'dots':
+		return (
+			<svg width="100%" height="100%">
+				<defs>
+					<pattern id="fl-dots" x="0" y="0" width="12" height="18" patternUnits="userSpaceOnUse">
+						<g fill="transparent" stroke="currentColor" strokeWidth="1">
+							<circle cx="3" cy="3" r="2" />
+							<circle cx="3" cy="15" r="2" />
+							<circle cx="9" cy="9" r="2" />
+						</g>
+					</pattern>
+				</defs>
+				<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-dots)"></rect>
+			</svg>
+		)
+	case 'stripes':
+		return (
+			<svg width="100%" height="100%">
+				<defs>
+					<pattern id="fl-stripes" x="0" y="0" width="12" height="14" patternUnits="userSpaceOnUse">
+						<g fill="transparent" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
+							<path d="M-1,9 3,13"></path>
+							<path d="M-1,3 9,13"></path>
+							<path d="M3,1 13,11"></path>
+							<path d="M9,1 13,5"></path>
+						</g>
+					</pattern>
+				</defs>
+				<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-stripes)"></rect>
+			</svg>
+		)
+	case 'stripes-compact':
+		return (
+			<svg width="100%" height="100%">
+				<defs>
+					<pattern id="fl-stripes-compact" x="0" y="0" width="10" height="8" patternUnits="userSpaceOnUse">
+						<g fill="transparent" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
+							<path d="M-1,4 2,7"></path>
+							<path d="M1,1 L7,7"></path>
+							<path d="M6,1 11,6"></path>
+						</g>
+					</pattern>
+				</defs>
+				<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-stripes-compact)"></rect>
+			</svg>
+		)
+	default:
+		return null
 	}
 }
