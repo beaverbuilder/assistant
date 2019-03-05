@@ -27,7 +27,7 @@ export const Icon = ( { name } ) => {
 	case 'small-spinner':
 		return (
 			<svg width="16px"  height="16px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={ { background: 'none' } }>
-				<circle cx="50" cy="50" fill="none" ng-attr-stroke="{{config.color}}" ng-attr-stroke-width="{{config.width}}" ng-attr-r="{{config.radius}}" ng-attr-stroke-dasharray="{{config.dasharray}}" stroke="#8a8a8a" strokeWidth="10" r="35" strokeDasharray="164.93361431346415 56.97787143782138" transform="rotate(299.801 50 50)">
+				<circle cx="50" cy="50" fill="none" stroke="#8a8a8a" strokeWidth="10" r="35" strokeDasharray="164.93361431346415 56.97787143782138" transform="rotate(299.801 50 50)">
 					<animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform>
 				</circle>
 			</svg>
@@ -161,5 +161,73 @@ export const Icon = ( { name } ) => {
 				</g>
 			</svg>
 		)
+	}
+}
+
+export const Pattern = ({ name }) => {
+	switch ( name ) {
+		case 'dots-compact':
+			return (
+				<svg width="100%" height="100%">
+					<defs>
+						<pattern id="fl-dots-compact" x="0" y="0" width="10" height="14" patternUnits="userSpaceOnUse">
+							<g fill="transparent" stroke="currentColor" strokeWidth="1">
+								<circle cx="2" cy="2" r="1" />
+								<circle cx="2" cy="12" r="1" />
+								<circle cx="7" cy="7" r="1" />
+							</g>
+						</pattern>
+					</defs>
+					<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-dots-compact)"></rect>
+				</svg>
+			)
+		case 'dots':
+			return (
+				<svg width="100%" height="100%">
+					<defs>
+						<pattern id="fl-dots" x="0" y="0" width="12" height="18" patternUnits="userSpaceOnUse">
+							<g fill="transparent" stroke="currentColor" strokeWidth="1">
+								<circle cx="3" cy="3" r="2" />
+								<circle cx="3" cy="15" r="2" />
+								<circle cx="9" cy="9" r="2" />
+							</g>
+						</pattern>
+					</defs>
+					<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-dots)"></rect>
+				</svg>
+			)
+		case 'stripes':
+			return (
+				<svg width="100%" height="100%">
+					<defs>
+						<pattern id="fl-stripes" x="0" y="0" width="12" height="14" patternUnits="userSpaceOnUse">
+							<g fill="transparent" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
+								<path d="M-1,9 3,13"></path>
+								<path d="M-1,3 9,13"></path>
+								<path d="M3,1 13,11"></path>
+								<path d="M9,1 13,5"></path>
+							</g>
+						</pattern>
+					</defs>
+					<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-stripes)"></rect>
+				</svg>
+			)
+		case 'stripes-compact':
+			return (
+				<svg width="100%" height="100%">
+					<defs>
+						<pattern id="fl-stripes-compact" x="0" y="0" width="10" height="8" patternUnits="userSpaceOnUse">
+							<g fill="transparent" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
+								<path d="M-1,4 2,7"></path>
+								<path d="M1,1 L7,7"></path>
+								<path d="M6,1 11,6"></path>
+							</g>
+						</pattern>
+					</defs>
+					<rect x="0" y="0" width="100%" height="100%" fill="url(#fl-stripes-compact)"></rect>
+				</svg>
+			)
+		default:
+			return null
 	}
 }
