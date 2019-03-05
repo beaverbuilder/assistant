@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
-import { useSystemState } from 'store'
+import { useSystemState, getSystemActions, } from 'store'
 import { useAppFrame } from 'system'
 import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon } from 'components'
 import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
@@ -10,6 +10,8 @@ import './style.scss'
 export const App = props => {
 	const { content } = props
 	const { appFrame: { width } } = useAppFrame()
+
+	// App menu API
 	const [ isShowingAppMenu, setIsShowingAppMenu ] = useState( false )
 	const showAppMenu = () => setIsShowingAppMenu( true )
 	const hideAppMenu = () => setIsShowingAppMenu( false )
@@ -27,6 +29,11 @@ export const App = props => {
 		alignSelf: 'center'
 	}
 
+	// Abort if there's no content function
+	if ( 'function' !== typeof content ) {
+		return null
+	}
+
 	return (
 		<AppContext.Provider value={appContext}>
 			<TunnelProvider>
@@ -35,14 +42,12 @@ export const App = props => {
 						{ ( { items } ) => {
 							if ( 'undefined' !== items && 0 < items.length ) {
 								const props = items[0]
-								return (
-									<Menu {...props} />
-								)
+								return <Menu {...props} />
 							}
 							return null
 						} }
 					</TunnelPlaceholder>
-					<Stack>{ content ? content() : null }</Stack>
+					<Stack>{ content() }</Stack>
 				</div>
 			</TunnelProvider>
 		</AppContext.Provider>
@@ -147,4 +152,20 @@ export const AppMenuButton = () => {
 			} }
 		</TunnelPlaceholder>
 	)
+}
+
+export const useActiveApp = () => {
+	const { apps, activeApp: name } = useSystemState()
+	const { setActiveApp } = getSystemActions()
+
+	const get = name => apps[ name ]
+
+	return {
+		key: name,
+		app: get( name ),
+		setActiveApp,
+		apps,
+		activeAppName: name,
+		activeApp: get( name ),
+	}
 }

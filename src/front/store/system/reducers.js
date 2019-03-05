@@ -100,3 +100,45 @@ export const counts = ( state = {}, action ) => {
 		return state
 	}
 }
+
+export const order = ( state = [], action ) => {
+
+	switch ( action.type ) {
+
+	case 'SET_APP_POSITION': {
+		const { app, position = null } = action
+
+		if ( null === position ) {
+			const newState = Array.from( state )
+			if ( -1 === newState.indexOf( app ) ) {
+				newState.push( app )
+			}
+			return newState
+
+		} else if ( false === position ) {
+
+			const index = state.indexOf( app )
+			if ( index ) {
+				const newState = Array.from( state )
+				delete newState[ index ]
+				return newState
+			}
+
+		} else {
+			const from = state.indexOf( app )
+			const to = position
+
+			const move = function( arr, from, to ) {
+				arr.splice( to, 0, arr.splice( from, 1 )[0] )
+				return arr
+			}
+
+			const newState = Array.from( move( state, from, to ) )
+			return newState
+		}
+		break
+	}
+	default:
+		return state
+	}
+}

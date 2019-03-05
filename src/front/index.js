@@ -1,11 +1,13 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { UI, ShowUITrigger } from './ui'
+import { UI } from './ui'
+import { UIToggleButton } from 'system'
 import { UIContext, PageViewContext, useModals } from 'components'
 import { useActiveApp } from 'system'
 import { getSystemConfig, getSystemStore, getSystemActions, useSystemState } from 'store'
 import { redirect } from 'utils/location'
+import './api'
 import './apps'
 
 /**
@@ -14,7 +16,7 @@ import './apps'
 const Assistant = () => {
 
 	const { currentPageView } = getSystemConfig()
-	const { isShowingUI, apps, panelPosition, appFrameSize, } = useSystemState()
+	const { isShowingUI, panelPosition, appFrameSize } = useSystemState()
 	const {
 		setIsShowingUI,
 		togglePanelPosition,
@@ -41,8 +43,6 @@ const Assistant = () => {
 		setIsShowingUI,
 		toggleIsShowingUI,
 
-		apps,
-
 		activeApp,
 		activeAppName,
 		setActiveApp: activateApp,
@@ -67,7 +67,7 @@ const Assistant = () => {
 		<Provider store={getSystemStore()}>
 			<UIContext.Provider value={ui}>
 				<PageViewContext.Provider value={currentPageView}>
-					{ ! isShowingUI && <ShowUITrigger /> }
+					<UIToggleButton />
 					<UI />
 				</PageViewContext.Provider>
 			</UIContext.Provider>

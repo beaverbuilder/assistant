@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
-import { useAppState } from 'store'
-import { ScreenHeader, MediaList } from 'components'
+import React, { Fragment } from '@assistant/react'
+import { useAppState } from '@assistant/store'
+import { ScreenHeader, MediaList } from '@assistant/components'
 import { MediaListFilter } from './filter'
 
 export const App = () => {

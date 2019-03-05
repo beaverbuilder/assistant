@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
-import { useAppState } from 'store'
-import { UserList, ScreenHeader } from 'components'
+import React, { Fragment } from '@assistant/react'
+import { useAppState } from '@assistant/store'
+import { UserList, ScreenHeader } from '@assistant/components'
 import { UserListFilter } from './filter'
 
 export const App = () => {

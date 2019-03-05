@@ -1,10 +1,17 @@
-import { registerAppStore } from 'store'
+import { registerAppStore, getSystemActions } from 'store'
 import { updateUserState } from 'utils/wordpress'
 
 /**
  * Effects that fire before an action.
  */
-export const before = {}
+export const before = {
+	REGISTER_APP: ( action ) => {
+		registerAppStore( {
+			key: action.key,
+			...action.config,
+		} )
+	},
+}
 
 /**
  * Effects that fire after an action.
@@ -12,10 +19,8 @@ export const before = {}
 export const after = {
 
 	REGISTER_APP: ( action ) => {
-		registerAppStore( {
-			key: action.key,
-			...action.config,
-		} )
+		const { setAppPosition } = getSystemActions()
+		setAppPosition( action.key, null )
 	},
 
 	SET_ACTIVE_APP: ( action ) => {
@@ -44,4 +49,9 @@ export const after = {
 		const { appFrameSize } = store.getState()
 		updateUserState( { appFrameSize } )
 	},
+
+	SET_APP_POSITION: ( action, store ) => {
+		const { order } = store.getState()
+		updateUserState( { order } )
+	}
 }

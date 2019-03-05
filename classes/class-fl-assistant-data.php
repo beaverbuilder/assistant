@@ -14,6 +14,7 @@ class FL_Assistant_Data {
 		'panelPosition'      => 'end',
 		'shouldReduceMotion' => false,
 		'appFrameSize'       => 'normal',
+		'order'				 => [],
 	);
 
 	/**
@@ -63,6 +64,7 @@ class FL_Assistant_Data {
 			'isShowingUI'        => $user_state['isShowingUI'],
 			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
+			'order' 			 => $user_state['order'],
 		);
 
 		return array(

@@ -1,6 +1,6 @@
-import React from 'react'
-import { useAppState, getAppActions, useSystemState } from 'store'
-import { TagGroupControl } from 'components'
+import React from '@assistant/react'
+import { useAppState, getAppActions, useSystemState } from '@assistant/store'
+import { TagGroupControl } from '@assistant/components'
 
 export const MediaListFilter = () => {
 	const { filter } = useAppState()

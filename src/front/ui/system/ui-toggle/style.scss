@@ -1,0 +1,20 @@
+#fl-asst-trigger {
+    background: white;
+    height: 50px;
+    width: 50px;
+    margin:0;
+    padding:0;
+    border-color: transparent;
+    border-radius: 8px;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.3);
+
+    &:focus {
+        border-color: var(--fl-accent-color);
+    }
+
+    & > svg {
+        height: auto;
+        width: calc( 100% - 4px );
+        max-height: 100%;
+    }
+}

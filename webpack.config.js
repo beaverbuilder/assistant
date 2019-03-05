@@ -5,7 +5,6 @@ const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const production = 'production' === process.env.NODE_ENV
 
 const alias = {
-    ui: path.resolve( __dirname, './src/front/ui/' ),
     components: path.resolve( __dirname, './src/front/ui/components' ),
     system: path.resolve( __dirname, './src/front/ui/system' ),
     apps: path.resolve( __dirname, './src/front/apps' ),
@@ -13,13 +12,31 @@ const alias = {
 	store: path.resolve( __dirname, './src/front/store/' ),
 }
 
+const externals = {
+    '@assistant' : 'FLAssistant',
+    '@assistant/store' : 'FLAssistant.store',
+    '@assistant/components' : 'FLAssistant.components',
+    '@assistant/utils' : 'FLAssistant.utils',
+
+    /* Vendor Shortcuts */
+    '@assistant/react' : 'FLAssistant.vendor.React',
+    '@assistant/react-dom' : 'FLAssistant.vendor.ReactDOM',
+    '@assistant/classnames' : 'FLAssistant.vendor.classnames',
+}
+
+const entry = {
+    'fl-asst-system' : './src/front',
+    'fl-asst-pro' : './src/pro',
+}
+
 const config = {
-	entry: './src/index.js',
+	entry,
+    externals,
 	mode: 'development',
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
-        filename: `bundle.js`,
+        filename: `[name].bundle.js`,
     },
     resolve: {
         alias,
@@ -39,7 +56,7 @@ const config = {
     },
     plugins: [
         new MiniCssExtractPlugin( {
-            filename: `bundle.css`,
+            filename: `[name].bundle.css`,
         } ),
     ]
 }

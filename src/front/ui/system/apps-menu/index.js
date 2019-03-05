@@ -1,12 +1,11 @@
 import React, { Fragment, useContext } from 'react'
 import { useSystemState, getSystemActions } from 'store'
-import { Heading, Icon, UIContext } from 'components'
+import { Heading, Icon, UIContext, Button } from 'components'
 import './style.scss'
 
 const AppsMenu = () => {
-	const { apps } = useSystemState()
+	const { apps, order } = useSystemState()
 	const { setActiveApp } = useContext( UIContext )
-
 	const excludedApps = [ 'fl-notifications' ]
 
 	const clickItem = key => {
@@ -17,7 +16,7 @@ const AppsMenu = () => {
 		<Fragment>
 			<Heading className="fl-asst-manage-apps-title">Apps</Heading>
 			<div className="fl-asst-app-list">
-				{ Object.keys( apps ).map( key => {
+				{ order.map( ( key ) => {
 
 					if ( excludedApps.includes( key ) ) {
 						return null
@@ -25,7 +24,7 @@ const AppsMenu = () => {
 
 					const app = apps[key]
 
-					if ( false === app.enabled ) {
+					if ( 'undefined' === typeof app || false === app.enabled ) {
 						return null
 					}
 
@@ -33,15 +32,13 @@ const AppsMenu = () => {
 						app.icon = props => <Icon name="default-app" {...props} />
 					}
 
-					if ( 'function' !== typeof app.settings ) {
-						app.settings = () => null
-					}
-
 					return (
-						<div className="fl-asst-app-list-item" key={key} onClick={ () => clickItem( key ) }>
+						<Button className="fl-asst-app-list-item" key={key} appearance="transparent" onClick={ () => clickItem( key ) }>
 							{ app.icon() }
-							<div className="fl-asst-app-list-item-title">{app.label}</div>
-						</div>
+							<div className="fl-asst-app-list-item-title">
+								{app.label}
+							</div>
+						</Button>
 					)
 				} )}
 			</div>

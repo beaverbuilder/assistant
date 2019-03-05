@@ -2,6 +2,7 @@ import './style.scss'
 
 export { Icon } from './icon'
 export { Photo, useImageData } from './image'
+export { Branding } from './branding'
 
 export {
 	Button,

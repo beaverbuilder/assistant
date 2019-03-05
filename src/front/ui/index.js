@@ -9,14 +9,15 @@ import {
 import { NotificationsAppButton } from 'apps/fl-notifications/button'
 import { App, useAppsMenu, AppFrame } from 'system'
 import { useWindowSize } from 'utils/window'
+import { useSystemState } from 'store'
 import './style.scss'
 
 /**
  * Main UI Controller
  */
 export const UI = () => {
+	const { order, apps } = useSystemState()
 	const {
-		apps,
 		activeApp,
 		activeAppName,
 		setActiveApp,
@@ -27,7 +28,7 @@ export const UI = () => {
 
 	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
-	const excludedApps = [ 'fl-notifications' ]
+	const excludedApps = [ 'fl-notifications', 'fl-settings' ]
 	const maxTabCount = 400 < width ? 4 : 2
 	let count = 0
 
@@ -42,7 +43,12 @@ export const UI = () => {
 					</div>
 					<div className="fl-asst-app-tabs-wrap">
 						<div className="fl-asst-app-tabs-area">
-							{ Object.keys( apps ).map( key => {
+							{ order.map( key => {
+								const app = apps[key]
+
+								if ( 'undefined' === typeof app ) {
+									return null
+								}
 
 								if ( excludedApps.includes( key ) ) {
 									return null
@@ -53,20 +59,19 @@ export const UI = () => {
 								}
 								count++
 
-								const tab = apps[key]
 								const isSelected = ( key === activeAppName && ! isShowingAppsMenu ) ? true : false
 
-								if ( false === tab.enabled ) {
+								if ( false === app.enabled ) {
 									return null
 								}
 
-								if ( 'function' !== typeof tab.icon ) {
-									tab.icon = props => <Icon name="default-app" {...props} />
+								if ( 'function' !== typeof app.icon ) {
+									app.icon = props => <Icon name="default-app" {...props} />
 								}
 
 								return (
-									<AppTabButton key={key} isSelected={isSelected} onClick={() => setActiveApp( key )} tooltip={tab.label}>
-										{tab.icon( { key, isSelected } )}
+									<AppTabButton key={key} isSelected={isSelected} onClick={() => setActiveApp( key )} tooltip={app.label}>
+										{app.icon( { key, isSelected } )}
 									</AppTabButton>
 								)
 							} ) }
@@ -89,42 +94,11 @@ export const UI = () => {
 				<Separator isSlim={true} />
 
 				<div className="fl-asst-panel-contents">
-					<App key={activeAppName} {...activeApp} />
+					<App key={activeAppName} { ...activeApp } />
 				</div>
 			</div>
 
 			{ renderModals() }
 		</AppFrame>
-	)
-}
-
-/**
- * Button To Show/Hide The UI
- */
-export const ShowUITrigger = () => {
-	const { isShowingUI, setIsShowingUI } = useContext( UIContext )
-
-	const styles = {
-		position: 'fixed',
-		right: 0,
-		bottom: 0,
-		padding: 10,
-		zIndex: 999,
-	}
-	const buttonStyles = {
-		borderRadius: '8px'
-	}
-	return (
-		<div style={styles}>
-			<Button
-				id="fl-asst-trigger"
-				onClick={ () => setIsShowingUI( true ) } style={buttonStyles} isSelected={true}
-
-				aria-label="Assistant Panel"
-				aria-expanded={ isShowingUI ? 'false' : 'true' }
-			>
-				<Icon name="trigger-button"/>
-			</Button>
-		</div>
 	)
 }

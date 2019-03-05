@@ -1,9 +1,9 @@
-import React from 'react'
-import { getSystemActions } from 'store'
-import { currentUserCan } from 'utils/wordpress'
+import React from '@assistant/react'
+import { getSystemActions } from '@assistant/store'
+import { wordpress } from '@assistant/utils'
 import { App, AppIcon } from './app'
 import { initialState, actions, reducers, effects } from './state'
-
+const { currentUserCan } = wordpress
 const { registerApp } = getSystemActions()
 
 registerApp( 'fl-users', {
