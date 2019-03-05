@@ -47,6 +47,6 @@ const AppIcon = () => {
 
 registerApp( 'fl-settings', {
 	label: 'Preferences',
-	content: () => <App />,
+	content: <App />,
 	icon: () => <AppIcon />,
 } )

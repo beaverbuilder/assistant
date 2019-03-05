@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { Fragment, useState, useContext, isValidElement } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
 import { useSystemState, getSystemActions, } from 'store'
@@ -8,7 +8,7 @@ import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
 export const App = props => {
-	const { content } = props
+	const { content: funcOrLiteral } = props
 	const { appFrame: { width } } = useAppFrame()
 
 	// App menu API
@@ -29,8 +29,13 @@ export const App = props => {
 		alignSelf: 'center'
 	}
 
+	let content = funcOrLiteral
+	if ( 'function' === typeof funcOrLiteral ) {
+		content = funcOrLiteral()
+	}
+
 	// Abort if there's no content function
-	if ( 'function' !== typeof content ) {
+	if ( ! isValidElement( content ) ) {
 		return null
 	}
 
@@ -47,7 +52,7 @@ export const App = props => {
 							return null
 						} }
 					</TunnelPlaceholder>
-					<Stack>{ content() }</Stack>
+					<Stack>{ content }</Stack>
 				</div>
 			</TunnelProvider>
 		</AppContext.Provider>

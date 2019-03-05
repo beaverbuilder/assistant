@@ -8,7 +8,7 @@ const { registerApp } = getSystemActions()
 
 registerApp( 'fl-notifications', {
 	label: 'Notifications',
-	content: () => <App />,
+	content: <App />,
 	enabled: (
 		currentUserCan( 'update_plugins' ) ||
 		currentUserCan( 'update_themes' ) ||

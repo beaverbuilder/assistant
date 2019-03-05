@@ -7,7 +7,7 @@ const { registerApp } = getSystemActions()
 
 registerApp( 'fl-find', {
 	label: 'Content',
-	content: () => <App />,
+	content: <App />,
 	icon: () => <AppIcon />,
 	state: initialState,
 	actions,
