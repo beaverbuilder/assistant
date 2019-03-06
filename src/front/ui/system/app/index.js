@@ -9,7 +9,7 @@ import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
 export const App = props => {
-	const { content, app: appName } = props
+	const { content } = props
 	const { appFrame: { width } } = useAppFrame()
 
 	// App menu API
@@ -32,7 +32,9 @@ export const App = props => {
 
 	const output = render( content, props )
 
-	if ( ! output ) return null
+	if ( ! output ) {
+		return null
+	}
 
 	return (
 		<AppContext.Provider value={appContext}>
