@@ -1,16 +1,17 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { Fragment, useState, useContext, useEffect } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
 import { useSystemState, getSystemActions, } from 'store'
 import { useAppFrame } from 'system'
 import { render } from 'utils/react'
-import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon } from 'components'
+import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon, EmptyMessage, Branding } from 'components'
 import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
 export const App = props => {
 	const { content } = props
 	const { appFrame: { width } } = useAppFrame()
+	const { isDocumentLoaded } = useDocumentReadyState()
 
 	// App menu API
 	const [ isShowingAppMenu, setIsShowingAppMenu ] = useState( false )
@@ -33,7 +34,13 @@ export const App = props => {
 	const output = render( content, props )
 
 	if ( ! output ) {
-		return null
+		if ( isDocumentLoaded ) {
+			return (
+				<AppNotFoundScreen />
+			)
+		} else {
+			return null
+		}
 	}
 
 	return (
@@ -162,10 +169,20 @@ export const AppMenuButton = () => {
 	)
 }
 
+const AppNotFoundScreen = () => {
+	return (
+		<EmptyMessage>
+			<Padding>
+				<Branding name="outline" />
+			</Padding>
+			Oops, we could not find your app!
+		</EmptyMessage>
+	)
+}
+
 export const useActiveApp = () => {
 	const { apps, activeApp: name } = useSystemState()
 	const { setActiveApp } = getSystemActions()
-
 	const get = name => apps[ name ]
 
 	return {
@@ -175,5 +192,24 @@ export const useActiveApp = () => {
 		apps,
 		activeAppName: name,
 		activeApp: get( name ),
+	}
+}
+
+export const useDocumentReadyState = () => {
+	const [state, setState] = useState( document.readyState )
+
+	const eventChanged = e => {
+		setState( e.target.readyState )
+	}
+
+	useEffect( () => {
+		document.addEventListener('readystatechange', eventChanged )
+		return () => document.removeEventListener('readystatechange', eventChanged )
+	}, [])
+
+	return {
+		isDocumentLoaded: 'complete' === state,
+		isDocumentLoading: 'loaded' === state || 'interactive' === state,
+		state,
 	}
 }
