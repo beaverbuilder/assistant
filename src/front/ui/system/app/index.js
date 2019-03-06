@@ -1,15 +1,17 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { Fragment, useState, useContext, useEffect } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
-import { useSystemState, getSystemActions, } from 'store'
+import { useSystemState, getSystemActions, getSystemConfig } from 'store'
 import { useAppFrame } from 'system'
-import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon } from 'components'
+import { render } from 'utils/react'
+import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon, EmptyMessage, Branding } from 'components'
 import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
 export const App = props => {
 	const { content } = props
 	const { appFrame: { width } } = useAppFrame()
+	const { isDocumentLoaded } = useDocumentReadyState()
 
 	// App menu API
 	const [ isShowingAppMenu, setIsShowingAppMenu ] = useState( false )
@@ -29,25 +31,24 @@ export const App = props => {
 		alignSelf: 'center'
 	}
 
-	// Abort if there's no content function
-	if ( 'function' !== typeof content ) {
-		return null
+	const output = render( content, props )
+
+	if ( ! output ) {
+		if ( isDocumentLoaded ) {
+			return (
+				<AppNotFoundScreen />
+			)
+		} else {
+			return null
+		}
 	}
 
 	return (
 		<AppContext.Provider value={appContext}>
 			<TunnelProvider>
 				<div className="fl-asst-app" style={styles}>
-					<TunnelPlaceholder id="app-menu" multiple>
-						{ ( { items } ) => {
-							if ( 'undefined' !== items && 0 < items.length ) {
-								const props = items[0]
-								return <Menu {...props} />
-							}
-							return null
-						} }
-					</TunnelPlaceholder>
-					<Stack>{ content() }</Stack>
+					<AppMenuRenderer />
+					<Stack>{ output }</Stack>
 				</div>
 			</TunnelProvider>
 		</AppContext.Provider>
@@ -109,6 +110,20 @@ const Menu = ( { title, children, displayBeside = 'full', width = 260 } ) => {
 	)
 }
 
+const AppMenuRenderer = () => {
+	return (
+		<TunnelPlaceholder id="app-menu" multiple>
+			{ ( { items } ) => {
+				if ( 'undefined' !== items && 0 < items.length ) {
+					const props = items[0]
+					return <Menu {...props} />
+				}
+				return null
+			} }
+		</TunnelPlaceholder>
+	)
+}
+
 const AppMenuHeader = ( { title } ) => {
 	return (
 		<Fragment>
@@ -154,18 +169,56 @@ export const AppMenuButton = () => {
 	)
 }
 
+const AppNotFoundScreen = () => {
+	return (
+		<EmptyMessage>
+			<Padding>
+				<Branding name="outline" />
+			</Padding>
+			Oops, we could not find your app!
+		</EmptyMessage>
+	)
+}
+
 export const useActiveApp = () => {
-	const { apps, activeApp: name } = useSystemState()
+	const { apps, activeApp: name, order } = useSystemState()
+	const { defaultAppName } = getSystemConfig()
+	const { state, isDocumentLoaded } = useDocumentReadyState()
 	const { setActiveApp } = getSystemActions()
 
-	const get = name => apps[ name ]
+	useEffect( () => {
+		if ( isDocumentLoaded && 'undefined' === typeof apps[ name ] ) {
+			if ( Object.keys( apps ).includes( defaultAppName ) ) {
+				setActiveApp( defaultAppName )
+			} else {
+				const key = order[0]
+				setActiveApp( key )
+			}
+		}
+	}, [ state ] )
 
 	return {
 		key: name,
-		app: get( name ),
+		app: apps[ name ],
 		setActiveApp,
 		apps,
 		activeAppName: name,
-		activeApp: get( name ),
+		activeApp: apps[ name ],
+	}
+}
+
+export const useDocumentReadyState = () => {
+	const [ state, setState ] = useState( document.readyState )
+	const eventChanged = e => setState( e.target.readyState )
+
+	useEffect( () => {
+		document.addEventListener( 'readystatechange', eventChanged )
+		return () => document.removeEventListener( 'readystatechange', eventChanged )
+	} )
+
+	return {
+		isDocumentLoaded: 'complete' === state,
+		isDocumentLoading: 'loaded' === state || 'interactive' === state,
+		state,
 	}
 }

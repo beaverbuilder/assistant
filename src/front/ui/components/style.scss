@@ -98,4 +98,9 @@
             border-bottom-color: var(--fl-accent-color);
         }
     }
+
+    .fl-asst-app-tabs-area & {
+        padding: 7px 3px;
+        flex: 1 1 auto;
+    }
 }

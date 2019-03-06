@@ -9,6 +9,7 @@ import {
 import { NotificationsAppButton } from 'apps/fl-notifications/button'
 import { App, useAppsMenu, AppFrame } from 'system'
 import { useWindowSize } from 'utils/window'
+import { render } from 'utils/react'
 import { useSystemState } from 'store'
 import './style.scss'
 
@@ -48,36 +49,37 @@ export const UI = () => {
 
 								if ( 'undefined' === typeof app ) {
 									return null
-								}
-
-								if ( excludedApps.includes( key ) ) {
+								} else if ( excludedApps.includes( key ) ) {
 									return null
-								}
-
-								if ( count >= maxTabCount ) {
+								} else if ( count >= maxTabCount ) {
+									return null
+								} else if ( false === app.enabled ) {
 									return null
 								}
 								count++
 
-								const isSelected = ( key === activeAppName && ! isShowingAppsMenu ) ? true : false
+								const isSelected = ( key === activeAppName && ! isShowingAppsMenu )
 
-								if ( false === app.enabled ) {
-									return null
-								}
-
-								if ( 'function' !== typeof app.icon ) {
-									app.icon = props => <Icon name="default-app" {...props} />
+								// Render if it's a JSX literal or function (else null)
+								let icon = render( app.icon )
+								if ( ! icon ) {
+									icon = <Icon name="default-app" />
 								}
 
 								return (
-									<AppTabButton key={key} isSelected={isSelected} onClick={() => setActiveApp( key )} tooltip={app.label}>
-										{app.icon( { key, isSelected } )}
-									</AppTabButton>
+									<AppTabButton
+										key={key}
+										isSelected={isSelected}
+										onClick={ () => setActiveApp( key ) }
+										tooltip={app.label}
+									>{ icon }</AppTabButton>
 								)
 							} ) }
 
 							<AppTabButton
-								appearance="icon" isSelected={isShowingAppsMenu} onClick={toggleIsShowingAppsMenu}
+								appearance="icon"
+								isSelected={isShowingAppsMenu}
+								onClick={toggleIsShowingAppsMenu}
 								tooltip="Apps"
 							>
 								<Icon name="apps-app" />

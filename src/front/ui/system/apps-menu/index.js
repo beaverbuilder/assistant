@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import { useSystemState, getSystemActions } from 'store'
 import { Heading, Icon, UIContext, Button } from 'components'
+import { render } from 'utils/react'
 import './style.scss'
 
 const AppsMenu = () => {
@@ -28,13 +29,14 @@ const AppsMenu = () => {
 						return null
 					}
 
-					if ( 'function' !== typeof app.icon ) {
-						app.icon = props => <Icon name="default-app" {...props} />
+					let icon = render( app.icon )
+					if ( ! icon ) {
+						icon = <Icon name="default-app" />
 					}
 
 					return (
 						<Button className="fl-asst-app-list-item" key={key} appearance="transparent" onClick={ () => clickItem( key ) }>
-							{ app.icon() }
+							{ icon }
 							<div className="fl-asst-app-list-item-title">
 								{app.label}
 							</div>

@@ -50,6 +50,7 @@ class FL_Assistant_Data {
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'taxonomies'      => self::get_taxonomies(),
 			'userRoles'       => self::get_user_roles(),
+			'defaultAppName'  => 'fl-dashboard',
 		);
 
 		/**

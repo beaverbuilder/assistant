@@ -1,6 +1,6 @@
-import React from '@assistant/react'
-import { useAppState, getAppActions, getSystemConfig, useSystemState } from '@assistant/store'
-import { TagGroupControl } from '@assistant/components'
+import React from 'react'
+import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
+import { TagGroupControl } from 'components'
 
 export const UserListFilter = () => {
 	const { filter } = useAppState()

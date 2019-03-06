@@ -11,14 +11,17 @@
     padding: 30px;
 }
 .fl-asst-separator {
-    flex: 0 0 8px;
-    background-color: #E7EBEF;
+    display: flex;
+    flex: 0 0 18px;
     border-top:none;
-    height: 8px;
     margin:0;
+    padding:0;
+    color: var(--fl-line-color);
 
     &.fl-asst-separator-slim {
         flex: 0 0 3px;
+        height: 3px;
+        background-color: var(--fl-line-color);
     }
 }
 

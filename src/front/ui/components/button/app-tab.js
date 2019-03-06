@@ -1,15 +1,7 @@
-import React, { Fragment, createRef } from 'react'
-import { animated, useSpring } from 'react-spring'
+import React from 'react'
 import classname from 'classnames'
-import { useSystemState } from 'store'
-import { useAppFrame } from 'system'
-import { useWindowSize } from 'utils/window'
 
 export const AppTabButton = props => {
-	const ref = createRef()
-	const { shouldReduceMotion } = useSystemState()
-	const { appFrame: { sizeName } } = useAppFrame()
-	const { width } = useWindowSize()
 	const {
 		children,
 		isSelected,
@@ -24,28 +16,13 @@ export const AppTabButton = props => {
 		'fl-asst-button-is-selected': isSelected
 	}, className )
 
-
-	const isFrameExpanded = [ 'full', 'wide' ].includes( sizeName ) && 600 < width
-
-	const springProps = useSpring( {
-		paddingLeft: isFrameExpanded ? 20 : 10,
-		paddingRight: isFrameExpanded ? 20 : 10,
-		immediate: shouldReduceMotion,
-	} )
-
 	const merged = {
 		onClick,
 		children,
 		className: classes,
 		type: 'button',
-		style: springProps,
 		title: tooltip,
-		ref,
 	}
 
-	return (
-		<Fragment>
-			<animated.button {...merged} />
-		</Fragment>
-	)
+	return <button {...merged} />
 }

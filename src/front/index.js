@@ -14,7 +14,6 @@ import './apps'
  * The Root Component
  */
 const Assistant = () => {
-
 	const { currentPageView } = getSystemConfig()
 	const { isShowingUI, panelPosition, appFrameSize } = useSystemState()
 	const {

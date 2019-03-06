@@ -13,10 +13,10 @@ export const apps = ( state = {}, action ) => {
 		return {
 			[ action.key ]: {
 				app: action.key,
-				content: '',
+				content: null,
 				enabled: true,
 				icon: null,
-				label: 'Untitled App',
+				label: action.key,
 				state: {},
 				actions: {},
 				reducers: {},
