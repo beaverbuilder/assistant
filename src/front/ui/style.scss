@@ -21,6 +21,7 @@
 
     --fl-asst-base-padding: 30px;
     --fl-asst-normal-width: 460px;
+    --fl-asst-toolbar-height: 48px;
 }
 
 .fl-asst {
@@ -97,10 +98,9 @@
     }
 
     .fl-asst-panel-chrome {
-        flex: 0 0 44px;
+        flex: 0 0 var(--fl-asst-toolbar-height);
         display:flex;
         flex-direction: row;
-        padding: 0 8px;
         position: relative;
 
         .fl-asst-button {
@@ -131,7 +131,7 @@
     }
 
     .fl-asst-app-tabs-area {
-        flex: .3 .3 auto;
+        flex: .4 .4 auto;
         display: flex;
         flex-direction: row;
         justify-content: center;
