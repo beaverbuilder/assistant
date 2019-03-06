@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
-import { useSystemState, getSystemActions, } from 'store'
+import { useSystemState, getSystemActions, getSystemConfig } from 'store'
 import { useAppFrame } from 'system'
 import { render } from 'utils/react'
 import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon, EmptyMessage, Branding } from 'components'
@@ -182,9 +182,9 @@ const AppNotFoundScreen = () => {
 
 export const useActiveApp = () => {
 	const { apps, activeApp: name, order } = useSystemState()
+	const { defaultAppName } = getSystemConfig()
 	const { state, isDocumentLoaded } = useDocumentReadyState()
 	const { setActiveApp } = getSystemActions()
-	const defaultAppName = 'fl-dashboard'
 
 	useEffect( () => {
 		if ( isDocumentLoaded && 'undefined' === typeof apps[ name ] ) {
