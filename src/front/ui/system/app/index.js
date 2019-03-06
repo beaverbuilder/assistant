@@ -196,16 +196,16 @@ export const useActiveApp = () => {
 }
 
 export const useDocumentReadyState = () => {
-	const [state, setState] = useState( document.readyState )
+	const [ state, setState ] = useState( document.readyState )
 
 	const eventChanged = e => {
 		setState( e.target.readyState )
 	}
 
 	useEffect( () => {
-		document.addEventListener('readystatechange', eventChanged )
-		return () => document.removeEventListener('readystatechange', eventChanged )
-	}, [])
+		document.addEventListener( 'readystatechange', eventChanged )
+		return () => document.removeEventListener( 'readystatechange', eventChanged )
+	}, [] )
 
 	return {
 		isDocumentLoaded: 'complete' === state,
