@@ -9,7 +9,7 @@ const { registerApp } = getSystemActions()
 registerApp( 'fl-users', {
 	label: 'Users',
 	content: <App />,
-	icon: () => <AppIcon />,
+	icon: <AppIcon />,
 	enabled: currentUserCan( 'edit_users' ),
 	state: initialState,
 	actions,

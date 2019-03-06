@@ -72,5 +72,5 @@ export const AppIcon = () => {
 registerApp( 'fl-dashboard', {
 	label: 'Dashboard',
 	content: <App />,
-	icon: props => <AppIcon {...props} />,
+	icon: <AppIcon />,
 } )

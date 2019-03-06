@@ -1,14 +1,15 @@
-import React, { Fragment, useState, useContext, isValidElement } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
 import { useSystemState, getSystemActions, } from 'store'
 import { useAppFrame } from 'system'
+import { render } from 'utils/react'
 import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon } from 'components'
 import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
 export const App = props => {
-	const { content: funcOrLiteral } = props
+	const { content, app: appName } = props
 	const { appFrame: { width } } = useAppFrame()
 
 	// App menu API
@@ -29,30 +30,16 @@ export const App = props => {
 		alignSelf: 'center'
 	}
 
-	let content = funcOrLiteral
-	if ( 'function' === typeof funcOrLiteral ) {
-		content = funcOrLiteral()
-	}
+	const output = render( content, props )
 
-	// Abort if there's no content function
-	if ( ! isValidElement( content ) ) {
-		return null
-	}
+	if ( ! output ) return null
 
 	return (
 		<AppContext.Provider value={appContext}>
 			<TunnelProvider>
 				<div className="fl-asst-app" style={styles}>
-					<TunnelPlaceholder id="app-menu" multiple>
-						{ ( { items } ) => {
-							if ( 'undefined' !== items && 0 < items.length ) {
-								const props = items[0]
-								return <Menu {...props} />
-							}
-							return null
-						} }
-					</TunnelPlaceholder>
-					<Stack>{ content }</Stack>
+					<AppMenuRenderer />
+					<Stack>{ output }</Stack>
 				</div>
 			</TunnelProvider>
 		</AppContext.Provider>
@@ -111,6 +98,20 @@ const Menu = ( { title, children, displayBeside = 'full', width = 260 } ) => {
 				</Stack>
 			</animated.div>
 		</div>
+	)
+}
+
+const AppMenuRenderer = () => {
+	return (
+		<TunnelPlaceholder id="app-menu" multiple>
+			{ ( { items } ) => {
+				if ( 'undefined' !== items && 0 < items.length ) {
+					const props = items[0]
+					return <Menu {...props} />
+				}
+				return null
+			} }
+		</TunnelPlaceholder>
 	)
 }
 

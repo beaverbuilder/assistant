@@ -9,6 +9,7 @@ import * as text from './text'
 import * as url from './url'
 import * as window from './window'
 import * as wordpress from './wordpress'
+import * as react from './react'
 
 export {
 	cache,
@@ -22,4 +23,5 @@ export {
 	url,
 	window,
 	wordpress,
+	react,
 }
