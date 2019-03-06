@@ -64,7 +64,7 @@ export const MediaDetail = () => {
 	let background = whole.hex
 
 	const imgStyles = {
-		maxHeight: '50vh',
+		maxHeight: '75vh',
 		background,
 	}
 
