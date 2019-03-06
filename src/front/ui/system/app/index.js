@@ -181,17 +181,29 @@ const AppNotFoundScreen = () => {
 }
 
 export const useActiveApp = () => {
-	const { apps, activeApp: name } = useSystemState()
+	const { apps, activeApp: name, order } = useSystemState()
+	const { state, isDocumentLoaded } = useDocumentReadyState()
 	const { setActiveApp } = getSystemActions()
-	const get = name => apps[ name ]
+	const defaultAppName = 'fl-dashboard'
+
+	useEffect( () => {
+		if ( isDocumentLoaded && 'undefined' === typeof apps[ name ] ) {
+			if ( Object.keys( apps ).includes( defaultAppName ) ) {
+				setActiveApp( defaultAppName )
+			} else {
+				const key = order[0]
+				setActiveApp( key )
+			}
+		}
+	}, [state])
 
 	return {
 		key: name,
-		app: get( name ),
+		app: apps[ name ],
 		setActiveApp,
 		apps,
 		activeAppName: name,
-		activeApp: get( name ),
+		activeApp: apps[ name ],
 	}
 }
 
@@ -199,13 +211,14 @@ export const useDocumentReadyState = () => {
 	const [ state, setState ] = useState( document.readyState )
 
 	const eventChanged = e => {
+		console.log('state changed', e.target.readyState )
 		setState( e.target.readyState )
 	}
 
 	useEffect( () => {
 		document.addEventListener( 'readystatechange', eventChanged )
 		return () => document.removeEventListener( 'readystatechange', eventChanged )
-	}, [] )
+	})
 
 	return {
 		isDocumentLoaded: 'complete' === state,
