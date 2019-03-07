@@ -13,6 +13,9 @@
 .fl-asst-separator {
     display: flex;
     flex: 0 0 18px;
+    max-height: 18px;
+    overflow:hidden;
+    position: relative;
     border-top:none;
     margin:0;
     padding:0;
@@ -20,7 +23,7 @@
 
     &.fl-asst-separator-slim {
         flex: 0 0 3px;
-        height: 3px;
+        max-height: 3px;
         background-color: var(--fl-line-color);
     }
 }
