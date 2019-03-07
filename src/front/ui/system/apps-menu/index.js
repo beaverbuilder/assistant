@@ -6,7 +6,7 @@ import './style.scss'
 
 const AppsMenu = () => {
 	const { apps, order } = useSystemState()
-	const { setActiveApp } = useContext( UIContext )
+	const { activeAppName, setActiveApp } = useContext( UIContext )
 	const excludedApps = [ 'fl-notifications' ]
 
 	const clickItem = key => {
@@ -29,13 +29,21 @@ const AppsMenu = () => {
 						return null
 					}
 
+					const isSelected = key === activeAppName
+
 					let icon = render( app.icon )
 					if ( ! icon ) {
 						icon = <Icon name="default-app" />
 					}
 
 					return (
-						<Button className="fl-asst-app-list-item" key={key} appearance="transparent" onClick={ () => clickItem( key ) }>
+						<Button
+							className="fl-asst-app-list-item"
+							key={key}
+							appearance="transparent"
+							onClick={ () => clickItem( key ) }
+							isSelected={isSelected}
+						>
 							{ icon }
 							<div className="fl-asst-app-list-item-title">
 								{app.label}
