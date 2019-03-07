@@ -1,15 +1,5 @@
-import {
-	getAppActions,
-	registerAppStore,
-	useAppState,
-	getSystemActions,
-	useSystemState,
-} from 'store'
+import * as store from 'store'
 
 export default {
-	getAppActions,
-	registerAppStore,
-	useAppState,
-	getSystemActions,
-	useSystemState,
+	...store
 }

@@ -1,6 +1,6 @@
-import React, { Fragment } from '@assistant/react'
-import { useSystemState, getSystemActions } from '@assistant/store'
-import { ScreenHeader, SettingsItem, SettingsGroup, Button, ToggleControl } from '@assistant/components'
+import React, { Fragment } from 'react'
+import { useSystemState, getSystemActions } from 'store'
+import { ScreenHeader, SettingsItem, SettingsGroup, Button, ToggleControl } from 'components'
 const { registerApp } = getSystemActions()
 import './style.scss'
 

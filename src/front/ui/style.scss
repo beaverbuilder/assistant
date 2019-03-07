@@ -1,6 +1,6 @@
 :root {
     --fl-background-color: #ffffff;
-    --fl-line-color: #DAE1E8;
+    --fl-line-color: rgba(140, 155, 172, 0.25);
     --fl-text-color: #4B5A69;
     --fl-title-color: #000000;
     --fl-asst-muted-text-color: #52646c;
@@ -21,6 +21,7 @@
 
     --fl-asst-base-padding: 30px;
     --fl-asst-normal-width: 460px;
+    --fl-asst-toolbar-height: 48px;
 }
 
 .fl-asst {
@@ -97,10 +98,9 @@
     }
 
     .fl-asst-panel-chrome {
-        flex: 0 0 44px;
+        flex: 0 0 var(--fl-asst-toolbar-height);
         display:flex;
         flex-direction: row;
-        padding: 0 8px;
         position: relative;
 
         .fl-asst-button {
@@ -111,6 +111,11 @@
             flex: 1 1 50%;
             display: flex;
             flex-direction: row;
+            padding: 0 8px;
+
+            button {
+                min-width: 42px;
+            }
 
             &:last-child {
                 justify-content: flex-end;

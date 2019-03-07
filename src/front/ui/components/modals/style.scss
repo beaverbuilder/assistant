@@ -21,7 +21,7 @@
         background: var(--fl-accent-color);
         color: var(--fl-background-color);
         margin-left: -1px; // overlap the panel border
-        min-height: 44px;
+        min-height: var(--fl-asst-toolbar-height);
         pointer-events: auto;
 
         &.fl-asst-notification-warning {
@@ -49,7 +49,7 @@
 }
 
 .fl-asst-toolbar {
-    flex: 0 0 44px;
+    flex: 0 0 var(--fl-asst-toolbar-height);
     display:flex;
     flex-direction: row;
 
@@ -65,7 +65,7 @@
 
 .fl-asst-screen-menu-frame {
     position: absolute;
-    top:47px;
+    top: calc( var(--fl-asst-toolbar-height) + 3px ); // account for slim separator
     left:0;
     right:0;
     bottom:0;
