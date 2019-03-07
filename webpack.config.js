@@ -26,7 +26,6 @@ const externals = {
 
 const entry = {
     'fl-asst-system' : './src/front',
-    'fl-asst-pro' : './src/pro',
 }
 
 const config = {
