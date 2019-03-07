@@ -13,5 +13,11 @@
         overscroll-behavior: contain;
         display: flex;
         flex-direction: column;
+
+        overflow: -moz-scrollbars-none;
+        -ms-overflow-style: none;
+    }
+    .fl-asst-stack-view::-webkit-scrollbar {
+        display: none;
     }
 }
