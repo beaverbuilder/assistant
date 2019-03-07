@@ -1,48 +1,48 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const useFileDrop = ( handleDrop = () => {} ) => {
-    const [ isDragging, setIsDragging ] = useState( false )
+	const [ isDragging, setIsDragging ] = useState( false )
 
-    const onDragEnter = e => {
+	const onDragEnter = e => {
+		e.preventDefault()
+		e.stopPropagation()
 
-        if ( e.dataTransfer.items && e.dataTransfer.items.length > 0 ) {
-            setIsDragging( true )
-        }
-        e.preventDefault()
-        e.stopPropagation()
-    }
+		if ( e.dataTransfer.items && 0 < e.dataTransfer.items.length ) {
+			setIsDragging( true )
+		}
+	}
 
-    const onDragLeave = e => {
+	const onDragLeave = e => {
+		e.preventDefault()
+		e.stopPropagation()
+		setIsDragging( false )
+	}
 
-        setIsDragging( false )
-        e.preventDefault()
-        e.stopPropagation()
-    }
+	const onDragOver = e => {
 
-    const onDragOver = e => {
-        // Yea, it's necessary
-        e.preventDefault()
-        e.stopPropagation()
-    }
+		// Yea, it's necessary to prevent browser opening file
+		e.preventDefault()
+		e.stopPropagation()
+	}
 
-    const onDrop = e => {
-        setIsDragging( false )
+	const onDrop = e => {
+		e.preventDefault()
+		e.stopPropagation()
+		setIsDragging( false )
 
-        if ( e.dataTransfer.files && e.dataTransfer.files.length > 0 ) {
-            handleDrop( e.dataTransfer.files )
-            e.dataTransfer.clearData()
-        }
-        e.preventDefault()
-        e.stopPropagation()
-    }
+		if ( e.dataTransfer.files && 0 < e.dataTransfer.files.length ) {
+			handleDrop( e.dataTransfer.files )
+			e.dataTransfer.clearData()
+		}
+	}
 
-    return {
-        bind: {
-            onDragEnter,
-            onDragLeave,
-            onDragOver,
-            onDrop,
-        },
-        isDragging
-    }
+	return {
+		bind: {
+			onDragEnter,
+			onDragLeave,
+			onDragOver,
+			onDrop,
+		},
+		isDragging
+	}
 }

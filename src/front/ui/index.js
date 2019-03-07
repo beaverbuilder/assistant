@@ -7,7 +7,7 @@ import {
 	UIContext,
 } from 'components'
 import { NotificationsAppButton } from 'apps/fl-notifications/button'
-import { App, useAppsMenu, AppFrame, FrameSizeButton } from 'system'
+import { App, useAppsMenu, AppFrame } from 'system'
 import { useWindowSize } from 'utils/window'
 import { render } from 'utils/react'
 import { useSystemState } from 'store'
