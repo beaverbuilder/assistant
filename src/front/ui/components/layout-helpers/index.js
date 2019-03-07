@@ -43,13 +43,16 @@ export const Separator = props => {
 		switch ( appearance ) {
 		case 'dots':
 			styles.flexBasis = 18
+			styles.maxHeight = 18
 			break
 		case 'dots-compact':
 		case 'stripes':
 			styles.flexBasis = 14
+			styles.maxHeight = 14
 			break
 		case 'stripes-compact':
 			styles.flexBasis = 8
+			styles.maxHeight = 8
 			break
 		default:
 		}
