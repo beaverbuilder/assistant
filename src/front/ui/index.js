@@ -32,6 +32,7 @@ export const UI = () => {
 	const excludedApps = [ 'fl-notifications', 'fl-settings' ]
 	const maxTabCount = 400 < width ? 4 : 2
 	let count = 0
+	let activeAppIsBelowFold = false
 
 	return (
 		<AppFrame>
@@ -46,6 +47,10 @@ export const UI = () => {
 						<div className="fl-asst-app-tabs-area">
 							{ order.map( key => {
 								const app = apps[key]
+
+								if ( key === activeAppName && count >= maxTabCount ) {
+									activeAppIsBelowFold = true
+								}
 
 								if ( 'undefined' === typeof app ) {
 									return null
@@ -78,7 +83,7 @@ export const UI = () => {
 
 							<AppTabButton
 								appearance="icon"
-								isSelected={isShowingAppsMenu}
+								isSelected={ isShowingAppsMenu || activeAppIsBelowFold }
 								onClick={toggleIsShowingAppsMenu}
 								tooltip="Apps"
 							>
