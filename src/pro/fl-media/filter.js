@@ -10,7 +10,7 @@ export const MediaListFilter = () => {
 
 	return (
 		<TagGroupControl
-			appearance="vibrant"
+			appearance="muted"
 			tags={ typeTags }
 			value={ type }
 			onChange={ setType }
@@ -23,24 +23,28 @@ export const getFilterTags = () => {
 
 	const typeTags = [
 		{
+			label: 'All',
+			value: '',
+		},
+		{
 			label: 'Images',
 			value: 'image',
-			count: counts[ 'media/images' ] || '0',
+			count: counts[ 'media/images' ] || null,
 		},
 		{
 			label: 'Videos',
 			value: 'video',
-			count: counts[ 'media/video' ] || '0',
+			count: counts[ 'media/video' ] || null,
 		},
 		{
 			label: 'Audio',
 			value: 'audio',
-			count: counts[ 'media/audio' ] || '0',
+			count: counts[ 'media/audio' ] || null,
 		},
 		{
 			label: 'Documents',
 			value: 'application',
-			count: counts[ 'media/documents' ] || '0',
+			count: counts[ 'media/documents' ] || null,
 		}
 	]
 

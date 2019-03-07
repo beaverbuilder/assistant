@@ -13,7 +13,7 @@
     .fl-asst-screen-title {
         font-size: 20px;
         font-weight: 600;
-        margin-bottom: 20px;
+        margin-bottom: calc( var(--fl-asst-base-padding) / 2 );
         padding: 0 var(--fl-asst-base-padding);
         line-height: 1;
         color: var(--fl-title-color);
