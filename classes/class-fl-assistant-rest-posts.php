@@ -110,7 +110,7 @@ final class FL_Assistant_REST_Posts {
 				'alt'         => $meta['title'],
 				'description' => $meta['description'],
 				'filesize'    => $meta['filesizeHumanReadable'],
-				'sizes'       => $meta['sizes'],
+				'sizes'       => isset( $meta['sizes'] ) ? $meta['sizes'] : array(),
 				'type'        => $meta['type'],
 				'subtype'     => $meta['subtype'],
 				'thumbnail'   => $thumb,
