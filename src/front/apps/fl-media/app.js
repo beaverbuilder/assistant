@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppState } from 'store'
 import { restRequest } from 'utils/wordpress'
-import { ScreenHeader, MediaList, FileDropListener } from 'components'
+import { ScreenHeader, MediaList, FileDropListener, Heading, Padding } from 'components'
 import { MediaListFilter } from './filter'
 
 export const App = () => {
@@ -25,9 +25,13 @@ export const App = () => {
 
 	return (
 		<FileDropListener onDrop={onFilesDropped}>
-			<ScreenHeader>
+			<ScreenHeader showTitle={false}>
 				<MediaListFilter />
 			</ScreenHeader>
+
+			<Padding bottom={false}>
+				<Heading level={1}>Media</Heading>
+			</Padding>
 			<MediaList
 				query={ query }
 				pagination={ true }

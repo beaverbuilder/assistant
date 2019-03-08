@@ -1,15 +1,18 @@
 import React, { Fragment } from 'react'
 import { useAppState } from 'store'
-import { UserList, ScreenHeader } from 'components'
+import { UserList, ScreenHeader, Padding, Heading } from 'components'
 import { UserListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
 	return (
 		<Fragment>
-			<ScreenHeader>
+			<ScreenHeader showTitle={false}>
 				<UserListFilter />
 			</ScreenHeader>
+			<Padding bottom={false}>
+				<Heading level={1}>Users</Heading>
+			</Padding>
 			<UserList
 				query={ query }
 				pagination={ true }

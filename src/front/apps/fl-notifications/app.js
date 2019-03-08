@@ -1,17 +1,25 @@
 import React, { Fragment } from 'react'
 import { useAppState } from 'store'
-import { ScreenHeader, CommentList, UpdateList } from 'components'
+import { ScreenHeader, CommentList, UpdateList, Padding, Heading } from 'components'
 import { NotificationsFilter } from './filter'
 
 export const App = () => {
 	const { query, filter } = useAppState()
 	const { type } = filter
 
+	let title = "Comments"
+	if ( 'updates' === type ) {
+		title = "Updates"
+	}
+
 	return (
 		<Fragment>
-			<ScreenHeader>
+			<ScreenHeader showTitle={false}>
 				<NotificationsFilter />
 			</ScreenHeader>
+			<Padding bottom={ 'updates' !== type ? false : null }>
+				<Heading level={1}>{title}</Heading>
+			</Padding>
 			{ 'comments' === type && <CommentList query={ query } pagination={ true } /> }
 			{ 'updates' === type && <UpdateList query={ query } /> }
 		</Fragment>

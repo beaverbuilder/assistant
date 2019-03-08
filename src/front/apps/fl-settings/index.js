@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useSystemState, getSystemActions } from 'store'
-import { ScreenHeader, SettingsItem, SettingsGroup, Button, ToggleControl } from 'components'
+import { ScreenHeader, SettingsItem, SettingsGroup, Button, ToggleControl, Padding, Heading } from 'components'
 const { registerApp } = getSystemActions()
 import './style.scss'
 
@@ -12,7 +12,9 @@ const App = () => {
 
 	return (
 		<Fragment>
-			<ScreenHeader />
+			<Padding bottom={false}>
+				<Heading level={1}>Settings</Heading>
+			</Padding>
 
 			<SettingsGroup>
 				<SettingsItem label='Reduce Motion'>

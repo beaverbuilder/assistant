@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState } from 'store'
-import { PostList, ScreenHeader, FrameContext } from 'components'
+import { PostList, ScreenHeader, FrameContext, Padding, Heading } from 'components'
 import { PostListFilter } from './filter'
 
 export const App = () => {
@@ -9,9 +9,12 @@ export const App = () => {
 
 	return (
 		<Fragment>
-			<ScreenHeader>
+			<ScreenHeader showTitle={false}>
 				{ 'normal' === size && <PostListFilter /> }
 			</ScreenHeader>
+			<Padding bottom={false}>
+				<Heading level={1}>Content</Heading>
+			</Padding>
 			<PostList
 				type={ filter.type }
 				query={ query }
