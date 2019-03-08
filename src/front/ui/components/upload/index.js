@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
 import classname from 'classnames'
+import { clearCache } from 'utils/cache'
 import { restRequest } from 'utils/wordpress'
 import { EmptyMessage, Icon, Padding, Branding, UIContext } from 'components'
 import './style.scss'
@@ -120,6 +121,7 @@ export const FileDropUploader = ( { children, ...props } ) => {
 
 	const onFilesDropped = files => {
 		setUploading( true )
+		clearCache( 'posts' )
 
 		for ( let i = 0; i < files.length; i++ ) {
 			const file = files.item( i )
