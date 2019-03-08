@@ -95,7 +95,7 @@ export const updatePost = ( id, action, data = {}, onSuccess, onError ) => {
 	return restRequest( {
 		method: 'POST',
 		route: `fl-assistant/v1/post/${ id }`,
-		args: {
+		data: {
 			action,
 			data,
 		},
@@ -137,7 +137,7 @@ export const updateTerm = ( id, action, data = {}, onSuccess, onError ) => {
 	return restRequest( {
 		method: 'POST',
 		route: `fl-assistant/v1/term/${ id }`,
-		args: {
+		data: {
 			action,
 			data,
 		},
@@ -174,14 +174,14 @@ export const getComment = ( id, onSuccess, onError ) => {
  * Updates a single comment. See the update_comment
  * REST method for a list of supported actions.
  */
-export const updateComment = ( id, action, args = {}, onSuccess, onError ) => {
+export const updateComment = ( id, action, data = {}, onSuccess, onError ) => {
 	clearCache( 'comments' )
 	return restRequest( {
 		method: 'POST',
 		route: `fl-assistant/v1/comment/${ id }`,
-		args: {
+		data: {
 			action,
-			...args,
+			...data,
 		},
 		onSuccess,
 		onError,
@@ -219,7 +219,7 @@ export const updateUserState = ( state, onSuccess, onError ) => {
 	return restRequest( {
 		method: 'POST',
 		route: 'fl-assistant/v1/current-user/state',
-		args: {
+		data: {
 			state,
 		},
 		onSuccess,
