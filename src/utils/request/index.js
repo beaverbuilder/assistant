@@ -59,7 +59,7 @@ export const getRequest = ( {
 }
 
 /**
- * Returns a promise that resolves if cached.
+ * Returns a request that resolves if cached.
  */
 export const getCachedRequest = ( key, route, onSuccess, onError ) => {
 	const cache = getCache( key, route )
