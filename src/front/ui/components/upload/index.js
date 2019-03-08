@@ -105,7 +105,7 @@ export const FileDropListener = props => {
 	)
 }
 
-export const FileDropUploader = ( { children, ...props } ) => {
+export const FileDropUploader = ( { children } ) => {
 	const [ uploading, setUploading ] = useState( false )
 	const { presentNotification } = useContext( UIContext )
 
@@ -128,13 +128,13 @@ export const FileDropUploader = ( { children, ...props } ) => {
 			const data = new FormData()
 			data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
 
-	        restRequest( {
+			restRequest( {
 				method: 'POST',
 				route: 'wp/v2/media/',
 				data,
-	            onSuccess,
-	        	onError,
-	        } )
+				onSuccess,
+				onError,
+			} )
 		}
 	}
 
