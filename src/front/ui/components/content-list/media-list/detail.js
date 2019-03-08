@@ -69,14 +69,13 @@ export const MediaDetail = () => {
 		background,
 	}
 
-
 	let topLeftBg = null
 	if ( topLeft.hex ) {
 		let tlColor = Color( topLeft.hex )
 		if ( tlColor.isDark() ) {
-			topLeftBg = tlColor.darken(.2).hex()
+			topLeftBg = tlColor.darken( .2 ).hex()
 		} else {
-			topLeftBg = tlColor.lighten(.2).hex()
+			topLeftBg = tlColor.lighten( .2 ).hex()
 		}
 	}
 
