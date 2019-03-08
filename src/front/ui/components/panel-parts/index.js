@@ -104,9 +104,19 @@ export const ExpandedContents = ( { children } ) => {
 	)
 }
 
-export const EmptyMessage = ( { children } ) => {
+export const EmptyMessage = props => {
+	const { className } = props
+
+	const classes = classname( {
+		'fl-asst-empty-message': true,
+	}, className )
+
+	const merged = {
+		...props,
+		className: classes,
+	}
 	return (
-		<div className="fl-asst-empty-message">{children}</div>
+		<div {...merged} />
 	)
 }
 

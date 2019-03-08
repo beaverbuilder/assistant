@@ -29,8 +29,6 @@ class FL_Assistant_Asset_Loader {
 
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_CONFIG', $data['config'] );
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_INITIAL_STATE', $data['state'] );
-
-			wp_enqueue_script( 'fl-assistant-pro', $url . 'build/fl-asst-pro.bundle.js', array( 'fl-assistant' ), $ver, true );
 		}
 	}
 

@@ -1,5 +1,5 @@
-import React from '@assistant/react'
-import { getSystemActions } from '@assistant/store'
+import React from 'react'
+import { getSystemActions } from 'store'
 import { App, AppIcon } from './app'
 import { initialState, actions, reducers, effects } from './state'
 
