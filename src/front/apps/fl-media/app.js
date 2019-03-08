@@ -1,30 +1,13 @@
 import React from 'react'
 import { useAppState } from 'store'
-import { restRequest } from 'utils/wordpress'
-import { ScreenHeader, MediaList, FileDropListener, Heading, Padding } from 'components'
+import { ScreenHeader, MediaList, FileDropUploader, Heading, Padding } from 'components'
 import { MediaListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
 
-	const onFilesDropped = files => {
-		for ( let i = 0; i < files.length; i++ ) {
-			const file = files.item( i )
-			const data = new FormData()
-			data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
-
-	        restRequest({
-				data,
-	            method: 'POST',
-	            route: 'wp/v2/media/',
-	            onSuccess: data => console.log('success', data ),
-	        	onError: error => console.log('error', error ),
-	        })
-		}
-	}
-
 	return (
-		<FileDropListener onDrop={onFilesDropped}>
+		<FileDropUploader>
 			<ScreenHeader showTitle={false}>
 				<MediaListFilter />
 			</ScreenHeader>
@@ -36,7 +19,7 @@ export const App = () => {
 				query={ query }
 				pagination={ true }
 			/>
-		</FileDropListener>
+		</FileDropUploader>
 	)
 }
 

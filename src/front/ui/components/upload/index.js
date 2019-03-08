@@ -1,6 +1,8 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import classname from 'classnames'
-import { EmptyMessage, Padding, Branding } from 'components'
+import { clearCache } from 'utils/cache'
+import { restRequest } from 'utils/wordpress'
+import { EmptyMessage, Icon, Padding, Branding, UIContext } from 'components'
 import './style.scss'
 
 export const useFileDrop = ( handleDrop = () => {} ) => {
@@ -100,5 +102,53 @@ export const FileDropListener = props => {
 				<div className="fl-asst-file-drop-dragging-view">{draggingView}</div>
 			</div>
 		</Fragment>
+	)
+}
+
+export const FileDropUploader = ( { children } ) => {
+	const [ uploading, setUploading ] = useState( false )
+	const { presentNotification } = useContext( UIContext )
+
+	const onSuccess = () => {
+		setUploading( false )
+		presentNotification( 'File successfully uploaded.' )
+	}
+
+	const onError = () => {
+		setUploading( false )
+		presentNotification( 'Error! File not uploaded.', { appearance: 'error' } )
+	}
+
+	const onFilesDropped = files => {
+		setUploading( true )
+		clearCache( 'posts' )
+
+		for ( let i = 0; i < files.length; i++ ) {
+			const file = files.item( i )
+			const data = new FormData()
+			data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
+
+			restRequest( {
+				method: 'POST',
+				route: 'wp/v2/media/',
+				data,
+				onSuccess,
+				onError,
+			} )
+		}
+	}
+
+	if ( uploading ) {
+		return (
+			<div className='fl-asst-file-uploading'>
+				<Icon name='small-spinner' />
+			</div>
+		)
+	}
+
+	return (
+		<FileDropListener onDrop={ onFilesDropped }>
+			{ children}
+		</FileDropListener>
 	)
 }
