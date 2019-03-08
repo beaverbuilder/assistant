@@ -91,7 +91,7 @@ export const MediaDetail = () => {
 			<Photo src={url} style={imgStyles} />
 
 			<Padding>
-				<TagGroup appearance='muted'>
+				<TagGroup appearance='muted' id="fl-asst-media-actions">
 					<Tag href={pageURL}>View</Tag>
 					<Tag href={editUrl}>Edit</Tag>
 					<Tag onClick={trashClicked} appearance='warning'>Delete</Tag>

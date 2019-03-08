@@ -28,6 +28,7 @@ export const Padding = props => {
 		bottom = '',
 		left = '',
 		right = '',
+		style: initialStyles = {},
 	} = props
 
 	const classes = classname( {
@@ -35,6 +36,7 @@ export const Padding = props => {
 	}, className )
 
 	const style = {
+		...initialStyles,
 		paddingTop: false === top ? 0 : top,
 		paddingBottom: false === bottom ? 0 : bottom,
 		paddingLeft: false === left ? 0 : left,
