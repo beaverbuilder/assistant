@@ -100,12 +100,15 @@ final class FL_Assistant_REST_Updates {
 	 * Returns an array of updates and related data.
 	 */
 	static public function updates( $request ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		wp_update_plugins();
+		wp_update_themes();
+
 		$response       = array();
 		$update_plugins = get_site_transient( 'update_plugins' );
 		$update_themes  = get_site_transient( 'update_themes' );
 		$type           = $request->get_param( 'type' );
-
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 		if ( ! $type || 'all' === $type || 'plugins' === $type ) {
 			if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
@@ -146,6 +149,9 @@ final class FL_Assistant_REST_Updates {
 	 * Returns the number of updates found.
 	 */
 	static public function updates_count( $request ) {
+		wp_update_plugins();
+		wp_update_themes();
+
 		$count          = 0;
 		$plugins        = 0;
 		$themes         = 0;
