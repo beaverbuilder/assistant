@@ -29,7 +29,7 @@ export const replyToComment = ( id, postId, content, onSuccess, onError ) => {
 				onError( response )
 			}
 		},
-		args: {
+		data: {
 			action: 'replyto-comment',
 			_wpnonce: nonce.reply,
 			_wp_unfiltered_html_comment: nonce.replyUnfiltered,
@@ -51,7 +51,7 @@ export const updatePlugin = ( plugin, onSuccess, onError ) => {
 		onSuccess,
 		onError,
 		method: 'POST',
-		args: {
+		data: {
 			plugin,
 			action: 'update-plugin',
 			slug: plugin.split( '/' ).pop(),
@@ -70,7 +70,7 @@ export const updateTheme = ( theme, onSuccess, onError ) => {
 		onSuccess,
 		onError,
 		method: 'POST',
-		args: {
+		data: {
 			action: 'update-theme',
 			slug: theme,
 			_wpnonce: nonce.updates,
