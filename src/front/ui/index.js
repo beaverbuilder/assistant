@@ -34,6 +34,10 @@ export const UI = () => {
 	let count = 0
 	let activeAppIsBelowFold = false
 
+	const onClickApp = key => {
+		setActiveApp( key )
+	}
+
 	return (
 		<AppFrame>
 			<div className="fl-asst-panel-wrap">
@@ -75,7 +79,7 @@ export const UI = () => {
 									<AppTabButton
 										key={key}
 										isSelected={isSelected}
-										onClick={ () => setActiveApp( key ) }
+										onClick={ e => onClickApp( key, e ) }
 										tooltip={app.label}
 									>{ icon }</AppTabButton>
 								)

@@ -1,12 +1,33 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { useAppState } from 'store'
-import { ScreenHeader, MediaList } from 'components'
+import { ScreenHeader, MediaList, FileDropListener } from 'components'
 import { MediaListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
+
+	const onFilesDropped = files => {
+		for ( let i = 0; i < files.length; i++ ) {
+			const file = files.item( i )
+			const data = new FormData()
+			data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
+
+			/* Upload to the media lib
+	        restRequest({
+	            method: 'POST',
+	            route: 'wp/v2/media/',
+	            args: {
+	                data,
+	            },
+	            onSuccess: data => console.log('success', data ),
+	        	onError: error => console.log('error', error ),
+	        })
+			*/
+		}
+	}
+
 	return (
-		<Fragment>
+		<FileDropListener onDrop={onFilesDropped}>
 			<ScreenHeader>
 				<MediaListFilter />
 			</ScreenHeader>
@@ -14,7 +35,7 @@ export const App = () => {
 				query={ query }
 				pagination={ true }
 			/>
-		</Fragment>
+		</FileDropListener>
 	)
 }
 
