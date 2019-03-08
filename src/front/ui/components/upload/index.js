@@ -61,8 +61,8 @@ export const useFileDrop = ( handleDrop = () => {} ) => {
 const DraggingView = () => {
 	return (
 		<EmptyMessage>
-			<Padding style={{ paddingBottom: '150px' }}>
-				<Padding style={{ display: 'flex', justifyContent: 'center' }}>
+			<Padding bottom={150}>
+				<Padding top={false} style={{ display: 'flex', justifyContent: 'center' }}>
 					<Branding name="outline" />
 				</Padding>
 				<div>We can't upload stuff yet, but come back soon!</div>

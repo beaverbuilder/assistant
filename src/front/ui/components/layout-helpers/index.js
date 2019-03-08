@@ -21,12 +21,40 @@ export const VerticalGroup = ( { className, children } ) => {
 	)
 }
 
-export const Padding = ( { className, children, style } ) => {
+export const Padding = props => {
+	const {
+		className,
+		top = '',
+		bottom = '',
+		left = '',
+		right = '',
+		style: initialStyles = {},
+	} = props
+
 	const classes = classname( {
-		'fl-asst-padding-normal': true
+		'fl-asst-padding': true
 	}, className )
+
+	const style = {
+		...initialStyles,
+		paddingTop: false === top ? 0 : top,
+		paddingBottom: false === bottom ? 0 : bottom,
+		paddingLeft: false === left ? 0 : left,
+		paddingRight: false === right ? 0 : right,
+	}
+
+	const merged = {
+		...props,
+		className: classes,
+		style,
+		top: null,
+		bottom: null,
+		left: null,
+		right: null,
+	}
+
 	return (
-		<div className={classes} style={style}>{children}</div>
+		<div {...merged}/>
 	)
 }
 

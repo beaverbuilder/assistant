@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppState } from 'store'
-import { ScreenHeader, MediaList, FileDropUploader } from 'components'
+import { ScreenHeader, MediaList, FileDropUploader, Heading, Padding } from 'components'
 import { MediaListFilter } from './filter'
 
 export const App = () => {
@@ -8,9 +8,13 @@ export const App = () => {
 
 	return (
 		<FileDropUploader>
-			<ScreenHeader>
+			<ScreenHeader showTitle={false}>
 				<MediaListFilter />
 			</ScreenHeader>
+
+			<Padding bottom={false}>
+				<Heading level={1}>Media</Heading>
+			</Padding>
 			<MediaList
 				query={ query }
 				pagination={ true }

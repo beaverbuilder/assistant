@@ -1,5 +1,3 @@
-import './style.scss'
-
 export { Icon, Pattern } from './icon'
 export { Photo, useImageData } from './image'
 export { Branding } from './branding'

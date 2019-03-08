@@ -3,15 +3,26 @@ import classname from 'classnames'
 import { Button } from 'components'
 import './style.scss'
 
-export const TagGroup = ( { title, children, className, appearance, isDisabled } ) => {
-	const classes = classname( className, {
+export const TagGroup = props => {
+	const { title, children, className, appearance, isDisabled } = props
+
+	const classes = classname( {
 		'fl-asst-tag-group': true,
 		'fl-asst-tag-group-appearance-vibrant': 'vibrant' == appearance ? true : false,
 		'fl-asst-tag-group-appearance-muted': 'muted' == appearance ? true : false,
 		'fl-asst-tag-group-is-disabled': isDisabled,
-	} )
+	}, className )
+
+	const merged = {
+		...props,
+		className: classes,
+	}
+	delete merged.title
+	delete merged.appearance
+	delete merged.isDisabled
+
 	return (
-		<div className={classes}>
+		<div {...merged}>
 			{ title && <div className="fl-asst-tag-group-title">{title}</div> }
 			<div className="fl-asst-tag-group-content">{children}</div>
 		</div>

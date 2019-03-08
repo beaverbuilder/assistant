@@ -7,8 +7,8 @@
     display: flex;
     flex-direction: column;
 }
-.fl-asst-padding-normal {
-    padding: 30px;
+.fl-asst-padding {
+    padding: var(--fl-asst-base-padding);
 }
 .fl-asst-separator {
     display: flex;
@@ -37,6 +37,12 @@
     &:last-child {
         margin-bottom:0;
     }
+
+    &.fl-asst-heading-1 {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--fl-title-color);
+    }
 }
 
 .fl-asst-aspect-box {
@@ -62,5 +68,6 @@
     flex-direction: column;
     background: var(--fl-utility-background-color);
     background-size: cover;
+    background-position: center;
     border-radius: 2px;
 }
