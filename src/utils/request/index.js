@@ -86,15 +86,18 @@ export const postRequest = ( {
 	route,
 	credentials,
 	headers,
-	args = {},
+	data = {},
 	onSuccess = () => {},
 	onError = () => {},
 } ) => {
-	const body = new FormData()
+	let body = data
 
-	Object.entries( args ).map( ( [ key, value ] ) => {
-		body.append( key, 'object' === typeof value ? JSON.stringify( value ) : value )
-	} )
+	if ( ! ( data instanceof FormData ) ) {
+		body = new FormData()
+		Object.entries( data ).map( ( [ key, value ] ) => {
+			body.append( key, 'object' === typeof value ? JSON.stringify( value ) : value )
+		} )
+	}
 
 	return request( {
 		method: 'POST',

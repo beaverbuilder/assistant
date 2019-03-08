@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAppState } from 'store'
+import { restRequest } from 'utils/wordpress'
 import { ScreenHeader, MediaList, FileDropListener } from 'components'
 import { MediaListFilter } from './filter'
 
@@ -12,17 +13,13 @@ export const App = () => {
 			const data = new FormData()
 			data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
 
-			/* Upload to the media lib
 	        restRequest({
+				data,
 	            method: 'POST',
 	            route: 'wp/v2/media/',
-	            args: {
-	                data,
-	            },
 	            onSuccess: data => console.log('success', data ),
 	        	onError: error => console.log('error', error ),
 	        })
-			*/
 		}
 	}
 
