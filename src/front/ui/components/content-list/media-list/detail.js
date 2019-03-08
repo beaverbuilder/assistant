@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react'
+import Color from 'color'
 import { __ } from '@wordpress/i18n'
 import {
 	ViewContext,
@@ -68,9 +69,20 @@ export const MediaDetail = () => {
 		background,
 	}
 
+
+	let topLeftBg = null
+	if ( topLeft.hex ) {
+		let tlColor = Color( topLeft.hex )
+		if ( tlColor.isDark() ) {
+			topLeftBg = tlColor.darken(.2).hex()
+		} else {
+			topLeftBg = tlColor.lighten(.2).hex()
+		}
+	}
+
 	const btnStyles = {
-		background: topLeft.hex,
-		color: topLeft.isDark ? 'white' : '',
+		background: topLeftBg,
+		color: topLeft.isDark ? 'white' : 'var(--fl-title-color)',
 		margin: 10,
 		boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'
 	}

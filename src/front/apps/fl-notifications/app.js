@@ -7,9 +7,9 @@ export const App = () => {
 	const { query, filter } = useAppState()
 	const { type } = filter
 
-	let title = "Comments"
+	let title = 'Comments'
 	if ( 'updates' === type ) {
-		title = "Updates"
+		title = 'Updates'
 	}
 
 	return (
