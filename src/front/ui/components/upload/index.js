@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react'
 import classname from 'classnames'
 import { restRequest } from 'utils/wordpress'
-import { EmptyMessage, Padding, Branding, UIContext } from 'components'
+import { EmptyMessage, Icon, Padding, Branding, UIContext } from 'components'
 import './style.scss'
 
 export const useFileDrop = ( handleDrop = () => {} ) => {
@@ -105,17 +105,22 @@ export const FileDropListener = props => {
 }
 
 export const FileDropUploader = ( { children, ...props } ) => {
+	const [ uploading, setUploading ] = useState( false )
 	const { presentNotification } = useContext( UIContext )
 
 	const onSuccess = () => {
+		setUploading( false )
 		presentNotification( 'File successfully uploaded.' )
 	}
 
 	const onError = () => {
+		setUploading( false )
 		presentNotification( 'Error! File not uploaded.', { appearance: 'error' } )
 	}
 
 	const onFilesDropped = files => {
+		setUploading( true )
+
 		for ( let i = 0; i < files.length; i++ ) {
 			const file = files.item( i )
 			const data = new FormData()
@@ -131,9 +136,17 @@ export const FileDropUploader = ( { children, ...props } ) => {
 		}
 	}
 
+	if ( uploading ) {
+		return (
+			<div className='fl-asst-file-uploading'>
+				<Icon name='small-spinner' />
+			</div>
+		)
+	}
+
 	return (
 		<FileDropListener onDrop={ onFilesDropped }>
-			{ children }
+			{ children}
 		</FileDropListener>
 	)
 }

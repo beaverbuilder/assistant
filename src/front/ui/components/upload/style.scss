@@ -23,3 +23,18 @@
         pointer-events: none;
     }
 }
+
+.fl-asst-file-uploading {
+	display: flex;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    background: var(--fl-background-color);
+    pointer-events: none;
+
+	svg {
+		margin: auto;
+	}
+}
