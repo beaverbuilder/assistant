@@ -66,6 +66,8 @@ export {
 	SettingsGroup,
 } from './settings'
 
+export { NavBar } from './nav-bar'
+export { Tabs } from './tabs'
 export { OptionGroup, OptionGroupItem } from './option-group'
 export { Frame, FrameContext, ContentFrame } from './frame'
 export { Widget } from './widgets'
