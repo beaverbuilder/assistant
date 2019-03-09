@@ -11,61 +11,61 @@ import { render } from 'utils/react'
 import './style.scss'
 
 export const Help = () => {
-    const { currentUser } = getSystemConfig()
-    const { apps } = useSystemState()
-    const half = "calc( var(--fl-asst-base-padding) / 2 )"
+	const { currentUser } = getSystemConfig()
+	const { apps } = useSystemState()
+	const half = 'calc( var(--fl-asst-base-padding) / 2 )'
 
 	const tabs = [
-        {
-            label: "Dashboard",
+		{
+			label: 'Dashboard',
 			icon: render( apps['fl-dashboard'].icon ),
-            content: (
+			content: (
 				<Fragment>
 					<Heading>Dashboard</Heading>
-	                <div>The Dashboard app gives you a glance at what's happening in your website. Each section gives you a taste of one aspect of your site.</div>
+					<div>The Dashboard app gives you a glance at what's happening in your website. Each section gives you a taste of one aspect of your site.</div>
 				</Fragment>
-            ),
-        },
-        {
-            label: 'Content',
+			),
+		},
+		{
+			label: 'Content',
 			icon: render( apps['fl-find'].icon ),
-            content: 'Content Content',
-        },
-        {
-            label: 'Media',
+			content: 'Content Content',
+		},
+		{
+			label: 'Media',
 			icon: render( apps['fl-media'].icon ),
-            content: 'Media Content',
-        },
+			content: 'Media Content',
+		},
 		{
-            label: 'Users',
-            icon: render( apps['fl-users'].icon ),
-            content: 'Users Content',
-        },
+			label: 'Users',
+			icon: render( apps['fl-users'].icon ),
+			content: 'Users Content',
+		},
 		{
-            label: 'Apps',
-            icon: <Icon name="apps-app" />,
-            content: 'Apps Menu Content',
-        },
+			label: 'Apps',
+			icon: <Icon name="apps-app" />,
+			content: 'Apps Menu Content',
+		},
 		{
-            label: 'Notifications',
-            icon: <Icon name="default-app" />,
-            content: 'Notifications Content',
-        },
-    ]
+			label: 'Notifications',
+			icon: <Icon name="default-app" />,
+			content: 'Notifications Content',
+		},
+	]
 
-    return (
-        <Fragment>
+	return (
+		<Fragment>
 			<ToolbarLabels />
-            <Padding bottom={half}>
-                <BrandIcon />
-                <Heading level={1}>{`Welcome, ${currentUser.name}`}</Heading>
-                <p style={{margin:0}}>Assistant provides apps to help you navigate and manage your WordPress website. You can learn about these apps below.</p>
-            </Padding>
-            <Padding top={false} left={half} right={half}>
-                <Tabs tabs={tabs} />
-            </Padding>
-        </Fragment>
-    )
+			<Padding bottom={half}>
+				<BrandIcon />
+				<Heading level={1}>{`Welcome, ${currentUser.name}`}</Heading>
+				<p style={{margin: 0}}>Assistant provides apps to help you navigate and manage your WordPress website. You can learn about these apps below.</p>
+			</Padding>
+			<Padding top={false} left={half} right={half}>
+				<Tabs tabs={tabs} />
+			</Padding>
+		</Fragment>
+	)
 }
 
 const BrandIcon = () => {
@@ -113,8 +113,8 @@ const ToolbarLabels = () => {
 			<div className="fl-asst-toolbar-label-center">
 				<div className="fl-asst-toolbar-label-center-wrap">
 					<div className="fl-asst-toolbar-label-cell fl-asst-toolbar-label-cell-apps">
-							<span>Apps</span>
-						</div>
+						<span>Apps</span>
+					</div>
 					<div className="fl-asst-toolbar-label-cell" style={more}>More</div>
 				</div>
 			</div>

@@ -4,34 +4,25 @@ import {
 	VerticalGroup,
 	HorizontalGroup,
 	ExpandedContents,
-	PageViewContext
+	PageViewContext,
+	Padding,
 } from 'components'
 import Truncate from 'react-truncate'
-
 import './style.scss'
 
 export const CurrentlyViewing = () => {
 	const { intro, name, theme, actions } = useContext( PageViewContext )
-
 	return (
 		<div className="fl-asst-currently-viewing">
-
-			<VerticalGroup>
-				<div className="fl-asst-pretitle">{intro}</div>
-				<div className="fl-asst-title">
-					<Truncate lines={2}>{name}</Truncate>
-				</div>
-				{ actions && <ActionGroup actions={actions} appearance="muted" /> }
-			</VerticalGroup>
-
-			<ExpandedContents>
-				<ThemeItem
-					name={theme.name}
-					screenshot={theme.screenshot}
-					version={theme.version}
-					team={theme.team}
-				/>
-			</ExpandedContents>
+			<Padding>
+				<VerticalGroup>
+					<div className="fl-asst-pretitle">{intro}</div>
+					<div className="fl-asst-title">
+						<Truncate lines={2}>{name}</Truncate>
+					</div>
+					{ actions && <ActionGroup actions={actions} appearance="muted" /> }
+				</VerticalGroup>
+			</Padding>
 		</div>
 	)
 }

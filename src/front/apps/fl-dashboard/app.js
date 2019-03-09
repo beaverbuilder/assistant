@@ -38,7 +38,7 @@ export const App = () => {
 					<Help />
 				</NavBar.Expanded>
 				<NavBar.Collapsed>
-					Shortcuts
+					<CurrentlyViewing />
 				</NavBar.Collapsed>
 			</NavBar>
 

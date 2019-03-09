@@ -8,14 +8,13 @@ export const NavBar = props => {
 		children,
 		className,
 		isExpanded: initialExpanded = false,
-		style,
 		onChange = () => {},
 	} = props
 
 	const [ isExpanded, setIsExpanded ] = useState( initialExpanded )
 	const classes = classname( {
 		'fl-asst-nav-bar': true,
-		'fl-asst-nav-bar-is-expanded' : isExpanded,
+		'fl-asst-nav-bar-is-expanded': isExpanded,
 	}, className )
 
 	const merged = {
@@ -31,7 +30,7 @@ export const NavBar = props => {
 			return null
 		}
 		return item
-	})
+	} )
 
 	const toggle = () => {
 		setIsExpanded( ! isExpanded )
@@ -49,10 +48,10 @@ export const NavBar = props => {
 }
 
 const Expanded = props => {
-	const { children, className } = props
-	const classes = classname({
-		'fl-asst-nav-bar-content' : true,
-		'fl-asst-nav-bar-content-expanded' : true,
+	const { className } = props
+	const classes = classname( {
+		'fl-asst-nav-bar-content': true,
+		'fl-asst-nav-bar-content-expanded': true,
 	}, className )
 
 	const merged = {
@@ -66,10 +65,10 @@ const Expanded = props => {
 }
 
 const Collapsed = props => {
-	const { children, className } = props
-	const classes = classname({
-		'fl-asst-nav-bar-content' : true,
-		'fl-asst-nav-bar-content-collapsed' : true,
+	const { className } = props
+	const classes = classname( {
+		'fl-asst-nav-bar-content': true,
+		'fl-asst-nav-bar-content-collapsed': true,
 	}, className )
 
 	const merged = {
