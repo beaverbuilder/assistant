@@ -22,34 +22,59 @@ export const Help = () => {
 			content: (
 				<Fragment>
 					<Heading>Dashboard</Heading>
-					<div>The Dashboard app gives you a glance at what's happening in your website. Each section gives you a taste of one aspect of your site.</div>
+					<div>The Dashboard app gives you a glance at what's happening across your website.</div>
 				</Fragment>
 			),
 		},
 		{
 			label: 'Content',
 			icon: render( apps['fl-find'].icon ),
-			content: 'Content Content',
+			content: (
+				<Fragment>
+					<Heading>Content</Heading>
+					<div>The Content app helps you find and navigate between various types of pages.</div>
+				</Fragment>
+			),
 		},
 		{
 			label: 'Media',
 			icon: render( apps['fl-media'].icon ),
-			content: 'Media Content',
+			content: (
+				<Fragment>
+					<Heading>Media</Heading>
+					<div>In the Media app you can find items you've uploaded to the media library. Drop new items on the app to upload.</div>
+				</Fragment>
+			),
 		},
 		{
 			label: 'Users',
 			icon: render( apps['fl-users'].icon ),
-			content: 'Users Content',
+			content: (
+				<Fragment>
+					<Heading>Users</Heading>
+					<div>The Users app gives you access to your user profile as well as the other user accounts on your site.</div>
+				</Fragment>
+			),
 		},
 		{
 			label: 'Apps',
 			icon: <Icon name="apps-app" />,
-			content: 'Apps Menu Content',
+			content: (
+				<Fragment>
+					<Heading>Apps Menu</Heading>
+					<div>The Apps menu gives you access to any other apps you may have installed as well as user preferences.</div>
+				</Fragment>
+			),
 		},
 		{
 			label: 'Notifications',
 			icon: <Icon name="default-app" />,
-			content: 'Notifications Content',
+			content: (
+				<Fragment>
+					<Heading>Notifications</Heading>
+					<div>The Notifications App displays alerts that require your attention like comments and theme or plugin updates.</div>
+				</Fragment>
+			),
 		},
 	]
 
