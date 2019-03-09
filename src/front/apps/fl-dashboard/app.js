@@ -1,11 +1,7 @@
-import React, { Fragment, useContext } from 'react'
-import { getSystemConfig } from 'store'
+import React, { Fragment } from 'react'
 import { currentUserCan } from 'utils/wordpress'
 import {
-	Button,
 	Separator,
-	ScreenHeader,
-	StackContext,
 	NavBar,
 	Heading,
 	Padding,
@@ -16,19 +12,7 @@ import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
 import './style.scss'
 
-const DetailView = () => {
-	const { pushView } = useContext( StackContext )
-	return (
-		<Fragment>
-			<ScreenHeader title="Detail View 1" />
-
-			<Button onClick={ () => pushView( <DetailView /> )}>Next</Button>
-		</Fragment>
-	)
-}
-
 export const App = () => {
-	const { currentUser } = getSystemConfig()
 	const isFirstTime = true
 
 	return (

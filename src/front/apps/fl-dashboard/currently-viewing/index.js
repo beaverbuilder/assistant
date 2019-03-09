@@ -3,7 +3,6 @@ import {
 	ActionGroup,
 	VerticalGroup,
 	HorizontalGroup,
-	ExpandedContents,
 	PageViewContext,
 	Padding,
 } from 'components'
@@ -11,7 +10,7 @@ import Truncate from 'react-truncate'
 import './style.scss'
 
 export const CurrentlyViewing = () => {
-	const { intro, name, theme, actions } = useContext( PageViewContext )
+	const { intro, name, actions } = useContext( PageViewContext )
 	return (
 		<div className="fl-asst-currently-viewing">
 			<Padding>
