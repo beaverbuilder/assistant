@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from 'react'
 import { currentUserCan } from 'utils/wordpress'
+import classname from 'classnames'
 import {
 	Separator,
 	NavBar,
-	Heading,
-	Padding,
 } from 'components'
+import { useAppState, getAppActions } from 'store'
 import { Help } from './help'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
@@ -13,30 +13,34 @@ import { RecentCommentsWidget } from './recent-comments'
 import './style.scss'
 
 export const App = () => {
-	const [ isExpanded, setIsExpanded ] = useState( true )
-	const contentStyles = {
-		background: isExpanded ? 'var(--fl-utility-background-color)' : null
-	}
+	const { isFirstTime } = useAppState()
+	const { setIsFirstTime } = getAppActions()
+	const [ isExpanded, setIsExpanded ] = useState( isFirstTime )
+	const classes = classname( {
+		'fl-asst-main-app-content': true,
+		'fl-asst-main-app-content-is-dimmed': isExpanded,
+	} )
+
+	//useEffect( () => void setIsFirstTime( false ), [] )
 
 	return (
 		<Fragment>
 			<NavBar
 				isExpanded={ isExpanded }
-				onChange={ value => setIsExpanded( value )}
+				onChange={ () => {
+					setIsExpanded( ! isExpanded )
+					setIsFirstTime( false )
+				}}
 			>
 				<NavBar.Expanded>
-					<Help />
+					<Help collapse={ () => setIsExpanded( false ) } />
 				</NavBar.Expanded>
 				<NavBar.Collapsed>
 					<CurrentlyViewing />
 				</NavBar.Collapsed>
 			</NavBar>
 
-			<div style={contentStyles}>
-
-				<Padding bottom={false}>
-					<Heading level={1}>Dashboard</Heading>
-				</Padding>
+			<div className={classes}>
 
 				<RecentlyEditedWidget />
 				<Separator />

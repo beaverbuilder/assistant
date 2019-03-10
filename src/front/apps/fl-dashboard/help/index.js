@@ -12,18 +12,7 @@ import {
 import { render } from 'utils/react'
 import './style.scss'
 
-const GoToApp = ({ id, children }) => {
-	const { setActiveApp } = useContext( UIContext )
-	const click = () => setActiveApp( id )
-	return (
-		<Button
-			onClick={click}
-			style={{ marginTop: 10 }}
-		>{children}</Button>
-	)
-}
-
-export const Help = () => {
+export const Help = ( { collapse } ) => {
 	const { currentUser } = getSystemConfig()
 	const { apps } = useSystemState()
 	const half = 'calc( var(--fl-asst-base-padding) / 2 )'
@@ -36,6 +25,10 @@ export const Help = () => {
 				<Fragment>
 					<Heading>Dashboard</Heading>
 					<div>The Dashboard app gives you a glance at what's happening across your website.</div>
+					<Button
+						onClick={collapse}
+						style={{ margin: '15px 0 0' }}
+					>Show Dashboard</Button>
 				</Fragment>
 			),
 		},
@@ -84,7 +77,7 @@ export const Help = () => {
 		},
 		{
 			label: 'Notifications',
-			icon: <Icon name="default-app" />,
+			icon: render( apps['fl-notifications'].icon ),
 			content: (
 				<Fragment>
 					<Heading>Notifications</Heading>
@@ -107,6 +100,17 @@ export const Help = () => {
 				<Tabs tabs={tabs} />
 			</Padding>
 		</Fragment>
+	)
+}
+
+const GoToApp = ( { id, children } ) => {
+	const { setActiveApp } = useContext( UIContext )
+	const click = () => setActiveApp( id )
+	return (
+		<Button
+			onClick={click}
+			style={{ margin: '15px 0 0' }}
+		>{children}</Button>
 	)
 }
 

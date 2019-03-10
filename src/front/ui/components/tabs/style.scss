@@ -36,7 +36,7 @@
                     border-radius: 8px;
                     justify-content: flex-start;
                     padding: 2px calc( var(--fl-asst-base-padding) / 2 );
-                    min-height: 40px;
+                    min-height: 36px;
                     border: 1px solid transparent;
 
                     &:focus {
@@ -64,6 +64,7 @@
                         justify-content: center;
                         padding-top: 1px;
                         margin-right: 10px;
+                        width: 26px;
                     }
                 }
             }
