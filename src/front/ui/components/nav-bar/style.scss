@@ -34,6 +34,10 @@
             margin: 0;
             padding: 4px;
 
+            &:hover {
+                background: var(--fl-utility-background-color);
+            }
+
             &:focus {
                 border-color: transparent;
                 color: var(--fl-accent-color);

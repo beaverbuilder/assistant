@@ -41,7 +41,7 @@ export const NavBar = props => {
 		<div {...merged}>
 			{contents}
 			<div className="fl-asst-nav-bar-footer">
-				<MoreButton onClick={toggle} />
+				<MoreButton onClick={toggle} isExpanded={isExpanded} />
 			</div>
 		</div>
 	)
@@ -82,8 +82,15 @@ const Collapsed = props => {
 }
 
 const MoreButton = props => {
+	const { isExpanded } = props
+	const line = '2,4 25,4 48,4'
+	const up = '5,6 25,2 45,6'
+
+	const merged = { ...props}
+	delete merged.isExpanded
+
 	return (
-		<Button {...props} appearance="transparent">
+		<Button {...merged} appearance="transparent">
 			<svg className="fl-asst-icon" width="50px" height="8px" viewBox="0 0 50 8">
 				<g
 					fill="transparent"
@@ -92,7 +99,7 @@ const MoreButton = props => {
 					strokeWidth="4"
 					strokeLinecap="round"
 				>
-					<polyline points="2,4 25,4 48,4" />
+					<polyline points={ isExpanded ? up : line } />
 				</g>
 			</svg>
 		</Button>

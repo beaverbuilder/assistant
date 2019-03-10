@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { currentUserCan } from 'utils/wordpress'
 import {
 	Separator,
@@ -13,11 +13,17 @@ import { RecentCommentsWidget } from './recent-comments'
 import './style.scss'
 
 export const App = () => {
-	const isFirstTime = true
+	const [isExpanded, setIsExpanded] = useState( true )
+	const contentStyles = {
+		background: isExpanded ? 'var(--fl-utility-background-color)' : null
+	}
 
 	return (
 		<Fragment>
-			<NavBar isExpanded={isFirstTime}>
+			<NavBar
+				isExpanded={ isExpanded }
+				onChange={ value => setIsExpanded( value )}
+			>
 				<NavBar.Expanded>
 					<Help />
 				</NavBar.Expanded>
@@ -26,19 +32,23 @@ export const App = () => {
 				</NavBar.Collapsed>
 			</NavBar>
 
-			<Padding bottom={false}>
-				<Heading level={1}>Dashboard</Heading>
-			</Padding>
+			<div style={contentStyles}>
 
-			<RecentlyEditedWidget />
-			<Separator />
+				<Padding bottom={false}>
+					<Heading level={1}>Dashboard</Heading>
+				</Padding>
 
-			{ currentUserCan( 'moderate_comments' ) &&
-				<Fragment>
-					<RecentCommentsWidget />
-					<Separator />
-				</Fragment>
-			}
+				<RecentlyEditedWidget />
+				<Separator />
+
+				{ currentUserCan( 'moderate_comments' ) &&
+					<Fragment>
+						<RecentCommentsWidget />
+						<Separator />
+					</Fragment>
+				}
+
+			</div>
 		</Fragment>
 	)
 }
