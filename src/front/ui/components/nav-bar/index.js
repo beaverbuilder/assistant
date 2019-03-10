@@ -1,17 +1,21 @@
 import React, {
 	Children,
 	useState,
-	useEffect,
 	useLayoutEffect,
 	cloneElement,
 	forwardRef,
 	createRef
 } from 'react'
-import { animated, useSpring } from 'react-spring'
+import { animated, useSpring, config } from 'react-spring'
 import classname from 'classnames'
 import { Button } from 'components'
 import { useSystemState } from 'store'
 import './style.scss'
+
+const navConfig = {
+	tension: 450,
+	friction: 31,
+}
 
 export const NavBar = props => {
 	const {
@@ -24,19 +28,24 @@ export const NavBar = props => {
 
 	const expandedRef = createRef()
 	const collapsedRef = createRef()
-	const [shouldAnimate, setShouldAnimate] = useState( false )
-	const [expandedHeight, setExpandedHeight ] = useState( 0 )
-	const [collapsedHeight, setCollapsedHeight ] = useState( 0 )
-	const style = useSpring({
+	const [ shouldAnimate, setShouldAnimate ] = useState( false )
+	const [ expandedHeight, setExpandedHeight ] = useState( 0 )
+	const [ collapsedHeight, setCollapsedHeight ] = useState( 0 )
+	const style = useSpring( {
 		height: isExpanded ? expandedHeight : collapsedHeight,
 		immediate: ! shouldAnimate || shouldReduceMotion,
 		onRest: () => {
+
 			// Don't animate on initial render
 			if ( ! shouldAnimate ) {
 				setShouldAnimate( true )
 			}
+		},
+		config: {
+			...config,
+			...navConfig,
 		}
-	})
+	} )
 
 	// Measure child heights
 	useLayoutEffect( () => {
@@ -51,6 +60,7 @@ export const NavBar = props => {
 
 	const classes = classname( {
 		'fl-asst-nav-bar': true,
+		'fl-asst-scroller': true,
 		'fl-asst-nav-bar-is-expanded': isExpanded,
 	}, className )
 
@@ -101,6 +111,10 @@ const Expanded = forwardRef( ( props, ref ) => {
 		transform: isExpanded ? 'translateY(0px)' : 'translateY(145px)',
 		opacity: isExpanded ? 1 : 0,
 		immediate: shouldReduceMotion,
+		config: {
+			...config,
+			...navConfig,
+		}
 	} )
 
 	const merged = {
@@ -128,6 +142,10 @@ const Collapsed = forwardRef( ( props, ref ) => {
 		transform: isExpanded ? 'translateY(-100%)' : 'translateY(0%)',
 		opacity: isExpanded ? 0 : 1,
 		immediate: shouldReduceMotion,
+		config: {
+			...config,
+			...navConfig,
+		}
 	} )
 
 	const merged = {

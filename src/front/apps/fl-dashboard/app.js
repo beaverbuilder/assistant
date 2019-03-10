@@ -5,6 +5,7 @@ import {
 	Separator,
 	NavBar,
 } from 'components'
+import { useAppState, getAppActions } from 'store'
 import { Help } from './help'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
@@ -12,18 +13,24 @@ import { RecentCommentsWidget } from './recent-comments'
 import './style.scss'
 
 export const App = () => {
-	const [ isExpanded, setIsExpanded ] = useState( false )
-
+	const { isFirstTime } = useAppState()
+	const { setIsFirstTime } = getAppActions()
+	const [ isExpanded, setIsExpanded ] = useState( isFirstTime )
 	const classes = classname( {
 		'fl-asst-main-app-content': true,
 		'fl-asst-main-app-content-is-dimmed': isExpanded,
 	} )
 
+	//useEffect( () => void setIsFirstTime( false ), [] )
+
 	return (
 		<Fragment>
 			<NavBar
 				isExpanded={ isExpanded }
-				onChange={ () => setIsExpanded( ! isExpanded )}
+				onChange={ () => {
+					setIsExpanded( ! isExpanded )
+					setIsFirstTime( false )
+				}}
 			>
 				<NavBar.Expanded>
 					<Help collapse={ () => setIsExpanded( false ) } />
