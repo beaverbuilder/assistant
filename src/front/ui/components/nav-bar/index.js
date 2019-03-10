@@ -1,6 +1,8 @@
-import React, { Children, useState } from 'react'
+import React, { Children, useState, cloneElement } from 'react'
+import { animated, useSpring } from 'react-spring'
 import classname from 'classnames'
 import { Button } from 'components'
+import { useSystemState } from 'store'
 import './style.scss'
 
 export const NavBar = props => {
@@ -10,6 +12,7 @@ export const NavBar = props => {
 		isExpanded: initialExpanded = false,
 		onChange = () => {},
 	} = props
+	const { shouldReduceMotion } = useSystemState()
 
 	const [ isExpanded, setIsExpanded ] = useState( initialExpanded )
 	const classes = classname( {
@@ -17,67 +20,90 @@ export const NavBar = props => {
 		'fl-asst-nav-bar-is-expanded': isExpanded,
 	}, className )
 
+	const collapsedHeight = 145
+	const expandedHeight = 558
+	const style = useSpring({
+		height: isExpanded ? expandedHeight : collapsedHeight,
+		immediate: shouldReduceMotion,
+	})
+
 	const merged = {
 		...props,
 		className: classes,
+		style,
 	}
 	delete merged.isExpanded
-
-	const contents = Children.map( children, item => {
-		if ( item.type === Expanded && ! isExpanded ) {
-			return null
-		} else if ( item.type === Collapsed && isExpanded ) {
-			return null
-		}
-		return item
-	} )
 
 	const toggle = () => {
 		setIsExpanded( ! isExpanded )
 		onChange( ! isExpanded )
 	}
 
+	const contents = Children.map( children, ( item, i ) => {
+		if ( item.type === Expanded || item.type === Collapsed ) {
+			return cloneElement( item, { ...item.props, isExpanded } )
+		}
+	})
+
 	return (
-		<div {...merged}>
+		<animated.div {...merged}>
 			{contents}
 			<div className="fl-asst-nav-bar-footer">
 				<MoreButton onClick={toggle} isExpanded={isExpanded} />
 			</div>
-		</div>
+		</animated.div>
 	)
 }
 
 const Expanded = props => {
-	const { className } = props
+	const { className, isExpanded } = props
+	const { shouldReduceMotion } = useSystemState()
 	const classes = classname( {
 		'fl-asst-nav-bar-content': true,
 		'fl-asst-nav-bar-content-expanded': true,
 	}, className )
 
+	const style = useSpring({
+		transform: isExpanded ? 'translateY(0px)' : 'translateY(145px)',
+		opacity: isExpanded ? 1 : 0,
+		immediate: shouldReduceMotion,
+	})
+
 	const merged = {
 		...props,
 		className: classes,
+		style
 	}
+	delete merged.isExpanded
 
 	return (
-		<div {...merged} />
+		<animated.div {...merged} />
 	)
 }
 
 const Collapsed = props => {
-	const { className } = props
+	const { className, isExpanded } = props
+	const { shouldReduceMotion } = useSystemState()
 	const classes = classname( {
 		'fl-asst-nav-bar-content': true,
 		'fl-asst-nav-bar-content-collapsed': true,
 	}, className )
 
+	const style = useSpring({
+		transform: isExpanded ? 'translateY(-100%)' : 'translateY(0%)',
+		opacity: isExpanded ? 0 : 1,
+		immediate: shouldReduceMotion,
+	})
+
 	const merged = {
 		...props,
 		className: classes,
+		style,
 	}
+	delete merged.isExpanded
 
 	return (
-		<div {...merged} />
+		<animated.div {...merged} />
 	)
 }
 

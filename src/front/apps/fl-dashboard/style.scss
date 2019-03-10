@@ -9,3 +9,15 @@
         }
     }
 }
+
+
+.fl-asst-main-app-content {
+    transition-property: background-color;
+    transition-duration: .5s;
+
+    &.fl-asst-main-app-content-is-dimmed {
+        background-color: var(--fl-asst-overlay-background-color);
+        filter: contrast(90%);
+        pointer-events: none;
+    }
+}

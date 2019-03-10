@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { currentUserCan } from 'utils/wordpress'
+import classname from 'classnames'
 import {
 	Separator,
 	NavBar,
@@ -14,9 +15,11 @@ import './style.scss'
 
 export const App = () => {
 	const [ isExpanded, setIsExpanded ] = useState( true )
-	const contentStyles = {
-		background: isExpanded ? 'var(--fl-utility-background-color)' : null
-	}
+
+	const classes = classname({
+		'fl-asst-main-app-content' : true,
+		'fl-asst-main-app-content-is-dimmed' : isExpanded,
+	})
 
 	return (
 		<Fragment>
@@ -32,7 +35,7 @@ export const App = () => {
 				</NavBar.Collapsed>
 			</NavBar>
 
-			<div style={contentStyles}>
+			<div className={classes}>
 
 				<Padding bottom={false}>
 					<Heading level={1}>Dashboard</Heading>
