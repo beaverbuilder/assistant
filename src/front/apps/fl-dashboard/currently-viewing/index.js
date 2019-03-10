@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import {
 	ActionGroup,
 	VerticalGroup,
-	HorizontalGroup,
 	PageViewContext,
 	Padding,
 } from 'components'
@@ -26,6 +25,7 @@ export const CurrentlyViewing = () => {
 	)
 }
 
+/*
 const ThemeItem = ( { name, screenshot, version, team } ) => {
 	return (
 		<HorizontalGroup className="fl-asst-theme-item">
@@ -39,4 +39,4 @@ const ThemeItem = ( { name, screenshot, version, team } ) => {
 			</VerticalGroup>
 		</HorizontalGroup>
 	)
-}
+}*/

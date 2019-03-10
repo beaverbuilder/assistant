@@ -1,4 +1,12 @@
-import React, { Children, useState, useLayoutEffect, cloneElement, forwardRef, createRef } from 'react'
+import React, {
+	Children,
+	useState,
+	useEffect,
+	useLayoutEffect,
+	cloneElement,
+	forwardRef,
+	createRef
+} from 'react'
 import { animated, useSpring } from 'react-spring'
 import classname from 'classnames'
 import { Button } from 'components'
@@ -16,16 +24,23 @@ export const NavBar = props => {
 
 	const expandedRef = createRef()
 	const collapsedRef = createRef()
-	const [expandedHeight, setExpandedHeight] = useState( 0 )
-	const [collapsedHeight, setCollapsedHeight] = useState( 0 )
-
+	const [shouldAnimate, setShouldAnimate] = useState( false )
+	const [expandedHeight, setExpandedHeight ] = useState( 0 )
+	const [collapsedHeight, setCollapsedHeight ] = useState( 0 )
 	const style = useSpring({
 		height: isExpanded ? expandedHeight : collapsedHeight,
-		immediate: shouldReduceMotion,
+		immediate: ! shouldAnimate || shouldReduceMotion,
+		onRest: () => {
+			// Don't animate on initial render
+			if ( ! shouldAnimate ) {
+				setShouldAnimate( true )
+			}
+		}
 	})
 
 	// Measure child heights
 	useLayoutEffect( () => {
+
 		if ( expandedRef.current ) {
 			setExpandedHeight( expandedRef.current.offsetHeight )
 		}

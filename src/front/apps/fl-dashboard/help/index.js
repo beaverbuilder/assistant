@@ -12,7 +12,7 @@ import {
 import { render } from 'utils/react'
 import './style.scss'
 
-export const Help = ({ collapse }) => {
+export const Help = ( { collapse } ) => {
 	const { currentUser } = getSystemConfig()
 	const { apps } = useSystemState()
 	const half = 'calc( var(--fl-asst-base-padding) / 2 )'

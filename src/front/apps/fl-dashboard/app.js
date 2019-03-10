@@ -4,8 +4,6 @@ import classname from 'classnames'
 import {
 	Separator,
 	NavBar,
-	Heading,
-	Padding,
 } from 'components'
 import { Help } from './help'
 import { CurrentlyViewing } from './currently-viewing'
