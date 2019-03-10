@@ -28,7 +28,7 @@ export const PostListItem = props => {
 		<ContentListItem onClick={ onClick } { ...props }>
 			<div className="fl-asst-list-item-accessory">
 				<Button appearance="icon" onClick={ onAccessoryClick }>
-					<Icon name="go-diagonal" />
+					<Icon name="go" />
 				</Button>
 			</div>
 		</ContentListItem>
