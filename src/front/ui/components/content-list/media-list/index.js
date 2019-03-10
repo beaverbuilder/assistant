@@ -1,14 +1,16 @@
 import React from 'react'
 import { ContentQuery } from 'components'
-import { MediaListItem } from './item'
+import { MediaListItem, MediaListItemLoading } from './item'
 import './style.scss'
 
-export const MediaList = ( { item, ...props } ) => {
+export const MediaList = props => {
 	return (
 		<ContentQuery
 			className={ 'fl-asst-grid-list' }
 			type={ 'attachments' }
-			item={ item ? item : <MediaListItem /> }
+			item={ <MediaListItem /> }
+			placeholderItem={ <MediaListItemLoading /> }
+			placeholderItemCount={ 4 }
 			{ ...props }
 		/>
 	)

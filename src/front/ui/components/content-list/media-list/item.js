@@ -34,3 +34,18 @@ export const MediaListItem = ( { className } ) => {
 		</div>
 	)
 }
+
+export const MediaListItemLoading = ( { className } ) => {
+	const classes = classname( className, 'fl-asst-grid-item' )
+	const styles = {
+		flex: '1 1 50%'
+	}
+
+	return (
+		<div className={classes} style={styles}>
+			<div className="fl-asst-grid-item-anchor">
+				<AspectBox />
+			</div>
+		</div>
+	)
+}
