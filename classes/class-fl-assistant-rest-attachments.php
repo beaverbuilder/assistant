@@ -78,23 +78,23 @@ final class FL_Assistant_REST_Attachments {
 		$thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )[0];
 
 		$response = array(
-			'alt'         	  => $meta['title'],
+			'alt'             => $meta['title'],
 			'author'          => get_the_author_meta( 'display_name', $attachment->post_author ),
 			'commentsAllowed' => 'open' === $attachment->comment_status ? true : false,
 			'date'            => get_the_date( '', $attachment ),
-			'description' 	  => $meta['description'],
+			'description'     => $meta['description'],
 			'editUrl'         => get_edit_post_link( $attachment->ID, '' ),
-			'filesize'    	  => $meta['filesizeHumanReadable'],
+			'filesize'        => $meta['filesizeHumanReadable'],
 			'id'              => $attachment->ID,
-			'mime'			  => $meta['mime'],
-			'sizes'     	  => isset( $meta['sizes'] ) ? $meta['sizes'] : array(),
+			'mime'            => $meta['mime'],
+			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : array(),
 			'slug'            => $attachment->post_name,
-			'subtype'   	  => $meta['subtype'],
-			'thumbnail' 	  => $thumb,
-			'title'       	  => $meta['title'],
-			'type'        	  => $meta['type'],
+			'subtype'         => $meta['subtype'],
+			'thumbnail'       => $thumb,
+			'title'           => $meta['title'],
+			'type'            => $meta['type'],
 			'url'             => get_permalink( $attachment ),
-			'urls'        	  => array(
+			'urls'            => array(
 				'medium' => $size[0],
 			),
 		);
@@ -111,7 +111,7 @@ final class FL_Assistant_REST_Attachments {
 		$attachments = get_posts(
 			array_merge(
 				$params, array(
-					'perm' => 'editable',
+					'perm'      => 'editable',
 					'post_type' => 'attachment',
 				)
 			)
