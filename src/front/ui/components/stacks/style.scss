@@ -8,16 +8,19 @@
 
     .fl-asst-stack-view {
         flex: 1 1 auto;
-        overflow-y: scroll; /* has to be scroll, not auto */
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
         display: flex;
         flex-direction: column;
-
-        overflow: -moz-scrollbars-none;
-        -ms-overflow-style: none;
     }
-    .fl-asst-stack-view::-webkit-scrollbar {
+}
+
+.fl-asst-scroller {
+    overflow-y: scroll; /* has to be scroll, not auto */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
         display: none;
     }
 }

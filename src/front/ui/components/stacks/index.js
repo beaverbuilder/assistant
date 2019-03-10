@@ -213,7 +213,7 @@ export const Stack = ( { children, className } ) => {
 								key={key}
 								ref={ref}
 								onPoseComplete={poseComplete}
-								className='fl-asst-stack-view'
+								className='fl-asst-stack-view fl-asst-scroller'
 								{...props}
 							>
 								<Frame>{props.children}</Frame>
