@@ -13,7 +13,7 @@ import { RecentCommentsWidget } from './recent-comments'
 import './style.scss'
 
 export const App = () => {
-	const [isExpanded, setIsExpanded] = useState( true )
+	const [ isExpanded, setIsExpanded ] = useState( true )
 	const contentStyles = {
 		background: isExpanded ? 'var(--fl-utility-background-color)' : null
 	}
