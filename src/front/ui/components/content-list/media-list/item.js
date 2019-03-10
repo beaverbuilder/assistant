@@ -5,7 +5,7 @@ import { MediaDetail } from './detail'
 
 export const MediaListItem = ( { className } ) => {
 	const item = useContext( ItemContext )
-	const { attachment: { urls } } = item
+	const { urls } = item
 	const { size } = useContext( FrameContext )
 	const { pushView } = useContext( StackContext )
 	const classes = classname( className, 'fl-asst-grid-item' )
@@ -30,6 +30,21 @@ export const MediaListItem = ( { className } ) => {
 		<div className={classes} style={styles} onClick={onClick}>
 			<div className="fl-asst-grid-item-anchor">
 				<AspectBox style={boxStyles} />
+			</div>
+		</div>
+	)
+}
+
+export const MediaListItemLoading = ( { className } ) => {
+	const classes = classname( className, 'fl-asst-grid-item' )
+	const styles = {
+		flex: '1 1 50%'
+	}
+
+	return (
+		<div className={classes} style={styles}>
+			<div className="fl-asst-grid-item-anchor">
+				<AspectBox />
 			</div>
 		</div>
 	)

@@ -18,6 +18,7 @@ final class FL_Assistant_REST {
 			return;
 		}
 
+		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-attachments.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-comments.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-counts.php';
 		include_once FL_ASSISTANT_DIR . 'classes/class-fl-assistant-rest-notifications.php';

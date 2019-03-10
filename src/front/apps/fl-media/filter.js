@@ -29,22 +29,22 @@ export const getFilterTags = () => {
 		{
 			label: 'Images',
 			value: 'image',
-			count: counts[ 'media/images' ] || null,
+			count: counts[ 'attachment/image' ] || '0',
 		},
 		{
 			label: 'Videos',
 			value: 'video',
-			count: counts[ 'media/video' ] || null,
+			count: counts[ 'attachment/video' ] || '0',
 		},
 		{
 			label: 'Audio',
 			value: 'audio',
-			count: counts[ 'media/audio' ] || null,
+			count: counts[ 'attachment/audio' ] || '0',
 		},
 		{
 			label: 'Documents',
 			value: 'application',
-			count: counts[ 'media/documents' ] || null,
+			count: counts[ 'attachment/application' ] || '0',
 		}
 	]
 

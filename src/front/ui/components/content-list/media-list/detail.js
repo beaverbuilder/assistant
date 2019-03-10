@@ -22,23 +22,19 @@ export const MediaDetail = () => {
 	const { decrementCount } = getSystemActions()
 	const view = useContext( ViewContext )
 	const {
-		attachment,
-		id,
-		type,
-		date,
-		editUrl,
-		url: pageURL,
-		removeItem,
-	} = view
-
-	const {
-		title,
 		alt,
 		description,
 		filesize,
+		id,
+		mime,
+		date,
+		editUrl,
 		sizes,
 		thumbnail,
-	} = attachment
+		title,
+		url: pageURL,
+		removeItem,
+	} = view
 
 	let url = thumbnail
 	if ( 'undefined' !== typeof sizes.medium_large ) {
@@ -88,9 +84,10 @@ export const MediaDetail = () => {
 
 	const trashClicked = () => {
 		const message = __( 'Do you really want to delete this item?' )
+		const type = mime.split( '/' ).shift()
 		if ( confirm( message ) ) {
 			updatePost( id, 'trash' )
-			decrementCount( `content/${ type }` )
+			decrementCount( `attachment/${ type }` )
 			removeItem()
 			popView()
 		}

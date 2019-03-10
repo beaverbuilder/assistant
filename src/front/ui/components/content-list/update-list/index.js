@@ -6,11 +6,11 @@ import './style.scss'
 
 updater.init()
 
-export const UpdateList = ( { item, ...props } ) => {
+export const UpdateList = props => {
 	return (
 		<ContentQuery
 			type={ 'updates' }
-			item={ item ? item : <UpdateListItem /> }
+			item={ <UpdateListItem /> }
 			emptyMessage={ 'You\'re all up to date!' }
 			{ ...props }
 		/>
