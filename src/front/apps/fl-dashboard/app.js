@@ -16,10 +16,10 @@ import './style.scss'
 export const App = () => {
 	const [ isExpanded, setIsExpanded ] = useState( true )
 
-	const classes = classname({
-		'fl-asst-main-app-content' : true,
-		'fl-asst-main-app-content-is-dimmed' : isExpanded,
-	})
+	const classes = classname( {
+		'fl-asst-main-app-content': true,
+		'fl-asst-main-app-content-is-dimmed': isExpanded,
+	} )
 
 	return (
 		<Fragment>

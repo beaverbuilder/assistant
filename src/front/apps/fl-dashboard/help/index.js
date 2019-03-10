@@ -12,7 +12,7 @@ import {
 import { render } from 'utils/react'
 import './style.scss'
 
-const GoToApp = ({ id, children }) => {
+const GoToApp = ( { id, children } ) => {
 	const { setActiveApp } = useContext( UIContext )
 	const click = () => setActiveApp( id )
 	return (

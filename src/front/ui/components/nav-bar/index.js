@@ -22,10 +22,10 @@ export const NavBar = props => {
 
 	const collapsedHeight = 145
 	const expandedHeight = 558
-	const style = useSpring({
+	const style = useSpring( {
 		height: isExpanded ? expandedHeight : collapsedHeight,
 		immediate: shouldReduceMotion,
-	})
+	} )
 
 	const merged = {
 		...props,
@@ -39,11 +39,11 @@ export const NavBar = props => {
 		onChange( ! isExpanded )
 	}
 
-	const contents = Children.map( children, ( item, i ) => {
+	const contents = Children.map( children, item => {
 		if ( item.type === Expanded || item.type === Collapsed ) {
 			return cloneElement( item, { ...item.props, isExpanded } )
 		}
-	})
+	} )
 
 	return (
 		<animated.div {...merged}>
@@ -63,11 +63,11 @@ const Expanded = props => {
 		'fl-asst-nav-bar-content-expanded': true,
 	}, className )
 
-	const style = useSpring({
+	const style = useSpring( {
 		transform: isExpanded ? 'translateY(0px)' : 'translateY(145px)',
 		opacity: isExpanded ? 1 : 0,
 		immediate: shouldReduceMotion,
-	})
+	} )
 
 	const merged = {
 		...props,
@@ -89,11 +89,11 @@ const Collapsed = props => {
 		'fl-asst-nav-bar-content-collapsed': true,
 	}, className )
 
-	const style = useSpring({
+	const style = useSpring( {
 		transform: isExpanded ? 'translateY(-100%)' : 'translateY(0%)',
 		opacity: isExpanded ? 0 : 1,
 		immediate: shouldReduceMotion,
-	})
+	} )
 
 	const merged = {
 		...props,
