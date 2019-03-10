@@ -7,7 +7,7 @@ export const MediaList = ( { item, ...props } ) => {
 	return (
 		<ContentQuery
 			className={ 'fl-asst-grid-list' }
-			type={ 'posts' }
+			type={ 'attachments' }
 			item={ item ? item : <MediaListItem /> }
 			{ ...props }
 		/>

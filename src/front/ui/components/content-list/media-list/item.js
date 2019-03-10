@@ -5,7 +5,7 @@ import { MediaDetail } from './detail'
 
 export const MediaListItem = ( { className } ) => {
 	const item = useContext( ItemContext )
-	const { attachment: { urls } } = item
+	const { urls } = item
 	const { size } = useContext( FrameContext )
 	const { pushView } = useContext( StackContext )
 	const classes = classname( className, 'fl-asst-grid-item' )

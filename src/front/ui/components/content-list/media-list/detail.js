@@ -22,23 +22,19 @@ export const MediaDetail = () => {
 	const { decrementCount } = getSystemActions()
 	const view = useContext( ViewContext )
 	const {
-		attachment,
+		alt,
+		description,
+		filesize,
 		id,
 		type,
 		date,
 		editUrl,
+		sizes,
+		thumbnail,
+		title,
 		url: pageURL,
 		removeItem,
 	} = view
-
-	const {
-		title,
-		alt,
-		description,
-		filesize,
-		sizes,
-		thumbnail,
-	} = attachment
 
 	let url = thumbnail
 	if ( 'undefined' !== typeof sizes.medium_large ) {

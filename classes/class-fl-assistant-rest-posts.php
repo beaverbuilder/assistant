@@ -99,27 +99,6 @@ final class FL_Assistant_REST_Posts {
 			$response['visibility'] = __( 'Password Protected', 'fl-assistant' );
 		}
 
-		// Attachment data.
-		if ( 'attachment' === $post->post_type ) {
-			$size = wp_get_attachment_image_src( $post->ID, 'medium' );
-			$meta = wp_prepare_attachment_for_js( $post->ID );
-			$thumb = wp_get_attachment_image_src( $post->ID, 'thumbnail' )[0];
-
-			$response['attachment'] = array(
-				'title'       => $meta['title'],
-				'alt'         => $meta['title'],
-				'description' => $meta['description'],
-				'filesize'    => $meta['filesizeHumanReadable'],
-				'sizes'       => isset( $meta['sizes'] ) ? $meta['sizes'] : array(),
-				'type'        => $meta['type'],
-				'subtype'     => $meta['subtype'],
-				'thumbnail'   => $thumb,
-				'urls'        => array(
-					'medium' => $size[0],
-				),
-			);
-		}
-
 		// Beaver Builder data.
 		if ( class_exists( 'FLBuilderModel' ) ) {
 			$response['bbCanEdit']   = FL_Assistant_Data::bb_can_edit_post( $post->ID );

@@ -29,6 +29,8 @@ export const getContent = ( type, query, onSuccess, onError ) => {
 		return getPosts( query, onSuccess, onError )
 	case 'terms':
 		return getTerms( query, onSuccess, onError )
+	case 'attachments':
+		return getAttachments( query, onSuccess, onError )
 	case 'comments':
 		return getComments( query, onSuccess, onError )
 	case 'users':
@@ -47,6 +49,7 @@ export const getPagedContent = ( type, query, offset = 0, onSuccess, onError ) =
 
 	switch ( type ) {
 	case 'posts':
+	case 'attachments':
 		paged.posts_per_page = paged.posts_per_page ? paged.posts_per_page : perPage
 		perPage = paged.posts_per_page
 		break
@@ -137,6 +140,48 @@ export const updateTerm = ( id, action, data = {}, onSuccess, onError ) => {
 	return restRequest( {
 		method: 'POST',
 		route: `fl-assistant/v1/term/${ id }`,
+		data: {
+			action,
+			data,
+		},
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
+ * Returns any array of attachments.
+ */
+export const getAttachments = ( query, onSuccess, onError ) => {
+	return restRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/attachments', query ),
+		cacheKey: 'attachments',
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
+ * Returns data for a single attachment.
+ */
+export const getAttachment = ( id, onSuccess, onError ) => {
+	return restRequest( {
+		route: `fl-assistant/v1/attachment/${ id }`,
+		cacheKey: 'attachments',
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
+ * Updates a single attachment. See the update_attachment
+ * REST method for a list of supported actions.
+ */
+export const updateAttachment = ( id, action, data = {}, onSuccess, onError ) => {
+	clearCache( 'attachments' )
+	return restRequest( {
+		method: 'POST',
+		route: `fl-assistant/v1/attachment/${ id }`,
 		data: {
 			action,
 			data,

@@ -1,6 +1,5 @@
 export const initialState = {
 	query: {
-		post_type: 'attachment',
 		post_mime_type: 'image',
 	},
 	filter: {
@@ -45,7 +44,6 @@ export const reducers = {
 
 		switch ( action.type ) {
 		case 'SET_QUERY':
-			query.post_type = 'attachment'
 			query.post_mime_type = args.type
 			return query
 		default:
