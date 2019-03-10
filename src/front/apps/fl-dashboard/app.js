@@ -14,7 +14,7 @@ import { RecentCommentsWidget } from './recent-comments'
 import './style.scss'
 
 export const App = () => {
-	const [ isExpanded, setIsExpanded ] = useState( true )
+	const [ isExpanded, setIsExpanded ] = useState( false )
 
 	const classes = classname( {
 		'fl-asst-main-app-content': true,
@@ -25,10 +25,10 @@ export const App = () => {
 		<Fragment>
 			<NavBar
 				isExpanded={ isExpanded }
-				onChange={ value => setIsExpanded( value )}
+				onChange={ () => setIsExpanded( ! isExpanded )}
 			>
 				<NavBar.Expanded>
-					<Help />
+					<Help collapse={ () => setIsExpanded( false ) } />
 				</NavBar.Expanded>
 				<NavBar.Collapsed>
 					<CurrentlyViewing />
@@ -36,10 +36,6 @@ export const App = () => {
 			</NavBar>
 
 			<div className={classes}>
-
-				<Padding bottom={false}>
-					<Heading level={1}>Dashboard</Heading>
-				</Padding>
 
 				<RecentlyEditedWidget />
 				<Separator />

@@ -1,4 +1,4 @@
-import React, { Children, useState, cloneElement } from 'react'
+import React, { Children, useState, useLayoutEffect, cloneElement, forwardRef, createRef } from 'react'
 import { animated, useSpring } from 'react-spring'
 import classname from 'classnames'
 import { Button } from 'components'
@@ -9,23 +9,35 @@ export const NavBar = props => {
 	const {
 		children,
 		className,
-		isExpanded: initialExpanded = false,
+		isExpanded = false,
 		onChange = () => {},
 	} = props
 	const { shouldReduceMotion } = useSystemState()
 
-	const [ isExpanded, setIsExpanded ] = useState( initialExpanded )
+	const expandedRef = createRef()
+	const collapsedRef = createRef()
+	const [expandedHeight, setExpandedHeight] = useState( 0 )
+	const [collapsedHeight, setCollapsedHeight] = useState( 0 )
+
+	const style = useSpring({
+		height: isExpanded ? expandedHeight : collapsedHeight,
+		immediate: shouldReduceMotion,
+	})
+
+	// Measure child heights
+	useLayoutEffect( () => {
+		if ( expandedRef.current ) {
+			setExpandedHeight( expandedRef.current.offsetHeight )
+		}
+		if ( collapsedRef.current ) {
+			setCollapsedHeight( collapsedRef.current.offsetHeight )
+		}
+	}, [] )
+
 	const classes = classname( {
 		'fl-asst-nav-bar': true,
 		'fl-asst-nav-bar-is-expanded': isExpanded,
 	}, className )
-
-	const collapsedHeight = 145
-	const expandedHeight = 558
-	const style = useSpring( {
-		height: isExpanded ? expandedHeight : collapsedHeight,
-		immediate: shouldReduceMotion,
-	} )
 
 	const merged = {
 		...props,
@@ -34,14 +46,21 @@ export const NavBar = props => {
 	}
 	delete merged.isExpanded
 
-	const toggle = () => {
-		setIsExpanded( ! isExpanded )
-		onChange( ! isExpanded )
-	}
-
 	const contents = Children.map( children, item => {
 		if ( item.type === Expanded || item.type === Collapsed ) {
-			return cloneElement( item, { ...item.props, isExpanded } )
+
+			let ref = null
+			if ( item.type === Expanded ) {
+				ref = expandedRef
+			} else if ( item.type === Collapsed ) {
+				ref = collapsedRef
+			}
+
+			return cloneElement( item, {
+				...item.props,
+				isExpanded,
+				ref,
+			} )
 		}
 	} )
 
@@ -49,13 +68,13 @@ export const NavBar = props => {
 		<animated.div {...merged}>
 			{contents}
 			<div className="fl-asst-nav-bar-footer">
-				<MoreButton onClick={toggle} isExpanded={isExpanded} />
+				<MoreButton onClick={onChange} isExpanded={isExpanded} />
 			</div>
 		</animated.div>
 	)
 }
 
-const Expanded = props => {
+const Expanded = forwardRef( ( props, ref ) => {
 	const { className, isExpanded } = props
 	const { shouldReduceMotion } = useSystemState()
 	const classes = classname( {
@@ -72,16 +91,17 @@ const Expanded = props => {
 	const merged = {
 		...props,
 		className: classes,
-		style
+		style,
+		ref
 	}
 	delete merged.isExpanded
 
 	return (
 		<animated.div {...merged} />
 	)
-}
+} )
 
-const Collapsed = props => {
+const Collapsed = forwardRef( ( props, ref ) => {
 	const { className, isExpanded } = props
 	const { shouldReduceMotion } = useSystemState()
 	const classes = classname( {
@@ -99,13 +119,14 @@ const Collapsed = props => {
 		...props,
 		className: classes,
 		style,
+		ref,
 	}
 	delete merged.isExpanded
 
 	return (
 		<animated.div {...merged} />
 	)
-}
+} )
 
 const MoreButton = props => {
 	const { isExpanded } = props

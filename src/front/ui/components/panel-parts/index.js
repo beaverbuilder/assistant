@@ -44,15 +44,6 @@ const MoreButton = posed.button( {
 	hoverable: true,
 	focusable: true,
 	pressable: true,
-	init: {
-		opacity: .5,
-	},
-	hover: {
-		opacity: 1,
-	},
-	focus: {
-		opacity: 1,
-	}
 } )
 const MoreButtonPath = posed.polyline( {
 	init: {

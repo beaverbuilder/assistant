@@ -6,6 +6,7 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    z-index: 1;
     transition-property: background-color;
     transition-duration: .5s;
 
@@ -58,9 +59,10 @@
             flex: 1 1 auto;
             margin: 0;
             padding: 4px;
+            color: var(--fl-asst-base-art-color);
 
             &:hover {
-                background: var(--fl-utility-background-color);
+                background: rgba( 0,0,0,.05);
             }
 
             &:focus {
