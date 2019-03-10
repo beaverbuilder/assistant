@@ -99,8 +99,6 @@ final class FL_Assistant_REST_Attachments {
 			),
 		);
 
-		FLBuilder::log( $meta );
-
 		return $response;
 	}
 
