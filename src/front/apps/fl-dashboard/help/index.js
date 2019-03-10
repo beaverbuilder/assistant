@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { getSystemConfig, useSystemState } from 'store'
 import {
 	Padding,
@@ -6,9 +6,22 @@ import {
 	Branding,
 	Tabs,
 	Icon,
+	Button,
+	UIContext,
 } from 'components'
 import { render } from 'utils/react'
 import './style.scss'
+
+const GoToApp = ({ id, children }) => {
+	const { setActiveApp } = useContext( UIContext )
+	const click = () => setActiveApp( id )
+	return (
+		<Button
+			onClick={click}
+			style={{ marginTop: 10 }}
+		>{children}</Button>
+	)
+}
 
 export const Help = () => {
 	const { currentUser } = getSystemConfig()
@@ -33,6 +46,7 @@ export const Help = () => {
 				<Fragment>
 					<Heading>Content</Heading>
 					<div>The Content app helps you find and navigate between various types of pages.</div>
+					<GoToApp id="fl-find">Go To Content App</GoToApp>
 				</Fragment>
 			),
 		},
@@ -43,6 +57,7 @@ export const Help = () => {
 				<Fragment>
 					<Heading>Media</Heading>
 					<div>In the Media app you can find items you've uploaded to the media library. Drop new items on the app to upload.</div>
+					<GoToApp id="fl-media">Go To Media App</GoToApp>
 				</Fragment>
 			),
 		},
@@ -53,6 +68,7 @@ export const Help = () => {
 				<Fragment>
 					<Heading>Users</Heading>
 					<div>The Users app gives you access to your user profile as well as the other user accounts on your site.</div>
+					<GoToApp id="fl-users">Go To Users App</GoToApp>
 				</Fragment>
 			),
 		},
@@ -73,6 +89,7 @@ export const Help = () => {
 				<Fragment>
 					<Heading>Notifications</Heading>
 					<div>The Notifications App displays alerts that require your attention like comments and theme or plugin updates.</div>
+					<GoToApp id="fl-notifications">Go To Notifications</GoToApp>
 				</Fragment>
 			),
 		},
