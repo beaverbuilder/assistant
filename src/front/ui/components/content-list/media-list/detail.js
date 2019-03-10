@@ -26,7 +26,7 @@ export const MediaDetail = () => {
 		description,
 		filesize,
 		id,
-		type,
+		mime,
 		date,
 		editUrl,
 		sizes,
@@ -84,9 +84,10 @@ export const MediaDetail = () => {
 
 	const trashClicked = () => {
 		const message = __( 'Do you really want to delete this item?' )
+		const type = mime.split( '/' ).shift()
 		if ( confirm( message ) ) {
 			updatePost( id, 'trash' )
-			decrementCount( `content/${ type }` )
+			decrementCount( `attachment/${ type }` )
 			removeItem()
 			popView()
 		}

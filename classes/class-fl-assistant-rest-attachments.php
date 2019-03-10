@@ -86,6 +86,7 @@ final class FL_Assistant_REST_Attachments {
 			'editUrl'         => get_edit_post_link( $attachment->ID, '' ),
 			'filesize'    	  => $meta['filesizeHumanReadable'],
 			'id'              => $attachment->ID,
+			'mime'			  => $meta['mime'],
 			'sizes'     	  => isset( $meta['sizes'] ) ? $meta['sizes'] : array(),
 			'slug'            => $attachment->post_name,
 			'subtype'   	  => $meta['subtype'],
@@ -97,6 +98,8 @@ final class FL_Assistant_REST_Attachments {
 				'medium' => $size[0],
 			),
 		);
+
+		FLBuilder::log( $meta );
 
 		return $response;
 	}
@@ -129,7 +132,19 @@ final class FL_Assistant_REST_Attachments {
 	 * Returns an array of counts by attachment type.
 	 */
 	static public function attachments_count( $request ) {
+		$counts = wp_count_attachments();
 		$response = array();
+
+		foreach ( $counts as $type => $count ) {
+			$parts = explode( '/', $type );
+			$type = array_shift( $parts );
+
+			if ( isset( $response[ $type ] ) ) {
+				$response[ $type ] += $count;
+			} else {
+				$response[ $type ] = $count;
+			}
+		}
 
 		return rest_ensure_response( $response );
 	}

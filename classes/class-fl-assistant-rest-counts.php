@@ -48,6 +48,13 @@ final class FL_Assistant_REST_Counts {
 				}
 				return $return;
 			},
+			'/fl-assistant/v1/attachments/count'   => function( $response ) {
+				$return = array();
+				foreach ( $response as $type => $count ) {
+					$return[ 'attachment/' . $type ] = $count;
+				}
+				return $return;
+			},
 			'/fl-assistant/v1/users/count'         => function( $response ) {
 				$return = array();
 				foreach ( $response as $role => $count ) {
