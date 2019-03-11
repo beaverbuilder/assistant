@@ -94,7 +94,7 @@ export const counts = ( state = {}, action ) => {
 	case 'DECREMENT_COUNT':
 		return {
 			...state,
-			[ action.key ]: state[ action.key ] - 1
+			[ action.key ]: state[ action.key ] ? state[ action.key ] - 1 : 0
 		}
 	default:
 		return state
