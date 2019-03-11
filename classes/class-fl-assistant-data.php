@@ -163,8 +163,7 @@ class FL_Assistant_Data {
 		$data['queried_object'] = $obj;
 
 		if ( is_404() ) {
-
-			$name = __( 'Page Not Found', 'fl-assistant' );
+			$name = __( 'Page Not Found (404)', 'fl-assistant' );
 
 		} elseif ( is_search() ) {
 
@@ -230,6 +229,9 @@ class FL_Assistant_Data {
 			$intro = __( 'Currently Viewing Author', 'fl-assistant' );
 			$name  = wp_get_current_user()->display_name;
 
+		} elseif ( is_front_page() ) {
+			$intro = __('Currently Viewing Post Archive', 'fl-assistant');
+			$name = __( 'Latest Posts', 'fl-assistant' );
 		}
 
 		$data['intro']   = $intro;
