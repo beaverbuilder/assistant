@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Color from 'color'
 import { __ } from '@wordpress/i18n'
 import {

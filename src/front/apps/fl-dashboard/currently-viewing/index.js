@@ -19,7 +19,7 @@ export const CurrentlyViewing = () => {
 						<Truncate lines={2}>{name}</Truncate>
 					</div>
 					<div style={{ marginTop: 10 }}>
-					{ actions && <ActionGroup actions={actions} appearance="muted" /> }
+						{ actions && <ActionGroup actions={actions} appearance="muted" /> }
 					</div>
 				</VerticalGroup>
 			</Padding>
