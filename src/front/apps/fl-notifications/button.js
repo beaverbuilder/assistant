@@ -17,7 +17,7 @@ export const NotificationsAppButton = ( { isShowingAppsMenu } ) => {
 	}
 
 	useHeartbeat( 'fl-assistant/v1/counts', response => {
-		if ( response['notifications/comments'] > counts['notifications/comments'] ) {
+		if ( response['comment/pending'] > counts['comment/pending'] ) {
 			clearCache( 'comments' )
 		}
 		setCounts( response )
@@ -29,7 +29,7 @@ export const NotificationsAppButton = ( { isShowingAppsMenu } ) => {
 			isSelected={ active }
 			tooltip={ notifications.label }
 		>
-			<AppIcon count={ counts['notifications/total'] || 0 } />
+			<AppIcon count={ counts['notification/total'] || 0 } />
 		</AppTabButton>
 	)
 }

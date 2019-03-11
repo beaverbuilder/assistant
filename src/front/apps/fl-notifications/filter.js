@@ -47,7 +47,7 @@ export const getFilterTags = () => {
 		typeTags.push( {
 			label: 'Comments',
 			value: 'comments',
-			count: counts[ 'notifications/comments' ] || '0',
+			count: counts[ 'comment/total' ] || '0',
 		} )
 	}
 
@@ -55,7 +55,7 @@ export const getFilterTags = () => {
 		typeTags.push( {
 			label: 'Updates',
 			value: 'updates',
-			count: counts[ 'notifications/updates' ] || '0',
+			count: counts[ 'update/total' ] || '0',
 		} )
 	}
 

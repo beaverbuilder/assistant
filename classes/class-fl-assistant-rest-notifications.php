@@ -34,14 +34,12 @@ final class FL_Assistant_REST_Notifications {
 		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/comments/count' );
 		$response = rest_do_request( $request );
 		$data = $response->get_data();
-		$result['comments'] = isset( $data['total'] ) ? $data['total'] : 0;
-		$result['total'] += isset( $data['total'] ) ? $data['total'] : 0;
+		$result['total'] += isset( $data['pending'] ) ? $data['pending'] : 0;
 
 		// Updates count
 		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/updates/count' );
 		$response = rest_do_request( $request );
 		$data = $response->get_data();
-		$result['updates'] = isset( $data['total'] ) ? $data['total'] : 0;
 		$result['total'] += isset( $data['total'] ) ? $data['total'] : 0;
 
 		return $result;
