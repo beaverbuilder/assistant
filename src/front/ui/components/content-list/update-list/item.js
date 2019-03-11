@@ -17,7 +17,7 @@ export const UpdateListItem = props => {
 			setUpdating( false )
 			if ( response.success ) {
 				updateItem( { meta: metaUpdated } )
-				decrementCount( 'notifications/updates' )
+				decrementCount( 'update/total' )
 				setUpdated( true )
 			} else {
 				setError( true )

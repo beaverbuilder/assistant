@@ -27,24 +27,17 @@ final class FL_Assistant_REST_Counts {
 	 */
 	static public function all( $request ) {
 		$routes = array(
-			'/fl-assistant/v1/notifications/count' => function( $response ) {
-				return array(
-					'notifications/comments' => $response['comments'],
-					'notifications/updates'  => $response['updates'],
-					'notifications/total'    => $response['total'],
-				);
-			},
 			'/fl-assistant/v1/posts/count'         => function( $response ) {
 				$return = array();
-				foreach ( $response as $post_type => $data ) {
-					$return[ 'content/' . $post_type ] = $data->total;
+				foreach ( $response as $type => $data ) {
+					$return[ 'content/' . $type ] = $data->total;
 				}
 				return $return;
 			},
 			'/fl-assistant/v1/terms/count'         => function( $response ) {
 				$return = array();
-				foreach ( $response as $taxonomy => $count ) {
-					$return[ 'taxonomy/' . $taxonomy ] = $count;
+				foreach ( $response as $type => $count ) {
+					$return[ 'taxonomy/' . $type ] = $count;
 				}
 				return $return;
 			},
@@ -55,10 +48,31 @@ final class FL_Assistant_REST_Counts {
 				}
 				return $return;
 			},
+			'/fl-assistant/v1/comments/count'   => function( $response ) {
+				$return = array();
+				foreach ( $response as $type => $count ) {
+					$return[ 'comment/' . $type ] = $count;
+				}
+				return $return;
+			},
 			'/fl-assistant/v1/users/count'         => function( $response ) {
 				$return = array();
-				foreach ( $response as $role => $count ) {
-					$return[ 'role/' . $role ] = $count;
+				foreach ( $response as $type => $count ) {
+					$return[ 'role/' . $type ] = $count;
+				}
+				return $return;
+			},
+			'/fl-assistant/v1/updates/count'         => function( $response ) {
+				$return = array();
+				foreach ( $response as $type => $count ) {
+					$return[ 'update/' . $type ] = $count;
+				}
+				return $return;
+			},
+			'/fl-assistant/v1/notifications/count' => function( $response ) {
+				$return = array();
+				foreach ( $response as $type => $count ) {
+					$return[ 'notification/' . $type ] = $count;
 				}
 				return $return;
 			},

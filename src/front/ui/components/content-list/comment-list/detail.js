@@ -64,7 +64,7 @@ export const CommentDetail = () => {
 		const message = __( 'Do you really want to trash this item?' )
 		if ( confirm( message ) ) {
 			updateComment( id, 'trash' )
-			decrementCount( 'notifications/comments' )
+			decrementCount( 'comment/total' )
 			removeItem()
 			popView()
 		}
@@ -72,7 +72,7 @@ export const CommentDetail = () => {
 
 	const restoreClicked = () => {
 		updateComment( id, 'untrash' )
-		incrementCount( 'notifications/comments' )
+		incrementCount( 'comment/total' )
 		removeItem()
 		popView()
 	}
