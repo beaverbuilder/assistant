@@ -10,7 +10,7 @@ class FL_Assistant_Data {
 	 */
 	static public $default_user_state = array(
 		'activeApp'          => 'fl-dashboard',
-		'isShowingUI'        => false,
+		'isShowingUI'        => true,
 		'panelPosition'      => 'end',
 		'shouldReduceMotion' => false,
 		'appFrameSize'       => 'normal',
