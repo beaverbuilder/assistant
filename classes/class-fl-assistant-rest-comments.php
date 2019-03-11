@@ -89,7 +89,7 @@ final class FL_Assistant_REST_Comments {
 			'postId'      => $post->ID,
 			'postTitle'   => $post->post_title,
 			'spam'        => 'spam' === $comment->comment_approved,
-			'time'		  => $time,
+			'time'        => $time,
 			'thumbnail'   => get_avatar_url( $comment->comment_author_email ),
 			'title'       => strip_tags( $comment->comment_content ),
 			'trash'       => 'trash' === $comment->comment_approved,

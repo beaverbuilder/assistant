@@ -48,7 +48,7 @@ final class FL_Assistant_REST_Counts {
 				}
 				return $return;
 			},
-			'/fl-assistant/v1/comments/count'   => function( $response ) {
+			'/fl-assistant/v1/comments/count'      => function( $response ) {
 				$return = array();
 				foreach ( $response as $type => $count ) {
 					$return[ 'comment/' . $type ] = $count;
@@ -62,7 +62,7 @@ final class FL_Assistant_REST_Counts {
 				}
 				return $return;
 			},
-			'/fl-assistant/v1/updates/count'         => function( $response ) {
+			'/fl-assistant/v1/updates/count'       => function( $response ) {
 				$return = array();
 				foreach ( $response as $type => $count ) {
 					$return[ 'update/' . $type ] = $count;
