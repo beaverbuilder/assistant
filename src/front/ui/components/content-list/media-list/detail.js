@@ -1,9 +1,10 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import Color from 'color'
 import { __ } from '@wordpress/i18n'
 import {
 	ViewContext,
 	BackButton,
+	CopyButton,
 	Photo,
 	Separator,
 	Tag,
@@ -105,6 +106,12 @@ export const MediaDetail = () => {
 					<Tag onClick={trashClicked} appearance='warning'>Delete</Tag>
 				</TagGroup>
 			</Padding>
+
+			<SettingsGroup>
+				<SettingsItem label='Slug' labelPosition='above'>
+					<CopyButton label='Copy URL' text={ pageURL } />
+				</SettingsItem>
+			</SettingsGroup>
 
 			<SettingsGroup>
 				<SettingsItem label='Filesize'>

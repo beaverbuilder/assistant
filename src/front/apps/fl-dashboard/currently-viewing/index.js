@@ -18,7 +18,9 @@ export const CurrentlyViewing = () => {
 					<div className="fl-asst-title">
 						<Truncate lines={2}>{name}</Truncate>
 					</div>
+					<div style={{ marginTop: 10 }}>
 					{ actions && <ActionGroup actions={actions} appearance="muted" /> }
+					</div>
 				</VerticalGroup>
 			</Padding>
 		</div>
