@@ -125,7 +125,7 @@ export const CommentDetail = () => {
 
 				<SettingsGroup>
 					<SettingsItem label='Email'>
-						{ authorEmail }
+						<a href={ `mailto:${ authorEmail }` }>{ authorEmail }</a>
 					</SettingsItem>
 					<SettingsItem label='IP Address'>
 						{ authorIP }
