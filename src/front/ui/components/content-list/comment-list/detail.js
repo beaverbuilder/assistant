@@ -38,6 +38,7 @@ export const CommentDetail = () => {
 		id,
 		postId,
 		spam,
+		time,
 		trash,
 		url,
 		updateItem,
@@ -130,7 +131,7 @@ export const CommentDetail = () => {
 						{ authorIP }
 					</SettingsItem>
 					<SettingsItem label='Submitted On'>
-						{ date }
+						{ date } at { time }
 					</SettingsItem>
 				</SettingsGroup>
 
