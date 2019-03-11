@@ -121,7 +121,7 @@ export const FileDropUploader = ( { children } ) => {
 
 	const onFilesDropped = files => {
 		setUploading( true )
-		clearCache( 'posts' )
+		clearCache( 'attachments' )
 
 		for ( let i = 0; i < files.length; i++ ) {
 			const file = files.item( i )
