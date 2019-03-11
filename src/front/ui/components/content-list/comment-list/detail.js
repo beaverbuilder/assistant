@@ -38,6 +38,7 @@ export const CommentDetail = () => {
 		id,
 		postId,
 		spam,
+		time,
 		trash,
 		url,
 		updateItem,
@@ -64,7 +65,7 @@ export const CommentDetail = () => {
 		const message = __( 'Do you really want to trash this item?' )
 		if ( confirm( message ) ) {
 			updateComment( id, 'trash' )
-			decrementCount( 'notifications/comments' )
+			decrementCount( 'comment/total' )
 			removeItem()
 			popView()
 		}
@@ -72,7 +73,7 @@ export const CommentDetail = () => {
 
 	const restoreClicked = () => {
 		updateComment( id, 'untrash' )
-		incrementCount( 'notifications/comments' )
+		incrementCount( 'comment/total' )
 		removeItem()
 		popView()
 	}
@@ -124,13 +125,13 @@ export const CommentDetail = () => {
 
 				<SettingsGroup>
 					<SettingsItem label='Email'>
-						{ authorEmail }
+						<a href={ `mailto:${ authorEmail }` }>{ authorEmail }</a>
 					</SettingsItem>
 					<SettingsItem label='IP Address'>
 						{ authorIP }
 					</SettingsItem>
 					<SettingsItem label='Submitted On'>
-						{ date }
+						{ date } at { time }
 					</SettingsItem>
 				</SettingsGroup>
 

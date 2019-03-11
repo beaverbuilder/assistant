@@ -75,6 +75,7 @@ final class FL_Assistant_REST_Comments {
 	static public function get_comment_response_data( $comment ) {
 		$post = get_post( $comment->comment_post_ID );
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
+		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );
 		return array(
 			'approved'    => $comment->comment_approved ? true : false,
 			'author'      => $comment->comment_author,
@@ -88,6 +89,7 @@ final class FL_Assistant_REST_Comments {
 			'postId'      => $post->ID,
 			'postTitle'   => $post->post_title,
 			'spam'        => 'spam' === $comment->comment_approved,
+			'time'        => $time,
 			'thumbnail'   => get_avatar_url( $comment->comment_author_email ),
 			'title'       => strip_tags( $comment->comment_content ),
 			'trash'       => 'trash' === $comment->comment_approved,
