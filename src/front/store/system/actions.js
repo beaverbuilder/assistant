@@ -1,18 +1,3 @@
-export const registerApp = ( key, config ) => {
-	return {
-		type: 'REGISTER_APP',
-		key,
-		config,
-	}
-}
-
-export const setActiveApp = ( key ) => {
-	return {
-		type: 'SET_ACTIVE_APP',
-		key,
-	}
-}
-
 export const setIsShowingUI = ( show ) => {
 	return {
 		type: 'SET_SHOW_UI',
@@ -33,17 +18,40 @@ export const togglePanelPosition = () => {
 	}
 }
 
-export const setAppFrameSize = size => {
-	return {
-		type: 'SET_APP_FRAME_SIZE',
-		size
-	}
-}
-
 export const setShouldReduceMotion = shouldReduce => {
 	return {
 		type: 'SET_SHOULD_REDUCE_MOTION',
 		shouldReduce,
+	}
+}
+
+export const registerApp = ( key, config ) => {
+	return {
+		type: 'REGISTER_APP',
+		key,
+		config,
+	}
+}
+
+export const setActiveApp = ( key ) => {
+	return {
+		type: 'SET_ACTIVE_APP',
+		key,
+	}
+}
+
+export const setAppPosition = ( key, position ) => {
+	return {
+		type: 'SET_APP_POSITION',
+		key,
+		position,
+	}
+}
+
+export const setAppFrameSize = size => {
+	return {
+		type: 'SET_APP_FRAME_SIZE',
+		size
 	}
 }
 
@@ -87,13 +95,5 @@ export const decrementCount = ( key ) => {
 	return {
 		type: 'DECREMENT_COUNT',
 		key,
-	}
-}
-
-export const setAppPosition = ( app, position ) => {
-	return {
-		type: 'SET_APP_POSITION',
-		app,
-		position,
 	}
 }

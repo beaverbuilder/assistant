@@ -10,7 +10,7 @@ export const MediaList = props => {
 			type={ 'attachments' }
 			item={ <MediaListItem /> }
 			placeholderItem={ <MediaListItemLoading /> }
-			placeholderItemCount={ 4 }
+			placeholderItemCount={ 8 }
 			{ ...props }
 		/>
 	)

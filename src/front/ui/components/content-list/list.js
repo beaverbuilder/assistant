@@ -15,6 +15,7 @@ export const ContentList = ( {
 	data = [],
 	dataHasMore = false,
 	dataLoader = () => {},
+	dataLoading = false,
 	dataSetter = () => {},
 	emptyMessage = <ContentListEmptyMessage />,
 	group = <ContentListGroupLabel />,
@@ -160,7 +161,7 @@ export const ContentList = ( {
 	 * Renders the placeholder items for loading.
 	 */
 	const renderPlaceholderItems = () => {
-		const count = data.length ? 1 : placeholderItemCount
+		const count = placeholderItemCount
 		return Array( count ).fill().map( ( item, key ) => {
 			return cloneElement( placeholderItem, { key } )
 		} )
@@ -169,7 +170,7 @@ export const ContentList = ( {
 	/**
 	 * Nothing found! Show an empty message...
 	 */
-	if ( ! hasItems( data ) && ! dataHasMore ) {
+	if ( ! hasItems( data ) && ! dataHasMore && ! dataLoading ) {
 		if ( 'string' === typeof emptyMessage ) {
 			return <EmptyMessage>{ emptyMessage }</EmptyMessage>
 		}
@@ -190,11 +191,12 @@ export const ContentList = ( {
 				getScrollParent={ () => scrollParent.current }
 				hasMore={ dataHasMore }
 				loadMore={ loadItems }
-				loader={ renderPlaceholderItems() }
-				threshold={ 500 }
+				loader={ null }
+				threshold={ 250 }
 				useWindow={ false }
 			>
 				{ renderItems( data ) }
+				{ dataLoading && renderPlaceholderItems() }
 			</InfiniteScroll>
 		</div>
 	)

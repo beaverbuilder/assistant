@@ -105,19 +105,20 @@ export const order = ( state = [], action ) => {
 
 	switch ( action.type ) {
 
+	case 'REGISTER_APP':
 	case 'SET_APP_POSITION': {
-		const { app, position = null } = action
+		const { key, position = null } = action
 
 		if ( null === position ) {
 			const newState = Array.from( state )
-			if ( -1 === newState.indexOf( app ) ) {
-				newState.push( app )
+			if ( -1 === newState.indexOf( key ) ) {
+				newState.push( key )
 			}
 			return newState
 
 		} else if ( false === position ) {
 
-			const index = state.indexOf( app )
+			const index = state.indexOf( key )
 			if ( index ) {
 				const newState = Array.from( state )
 				delete newState[ index ]
@@ -125,7 +126,7 @@ export const order = ( state = [], action ) => {
 			}
 
 		} else {
-			const from = state.indexOf( app )
+			const from = state.indexOf( key )
 			const to = position
 
 			const move = function( arr, from, to ) {

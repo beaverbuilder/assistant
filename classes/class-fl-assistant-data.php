@@ -230,7 +230,7 @@ class FL_Assistant_Data {
 			$name  = wp_get_current_user()->display_name;
 
 		} elseif ( is_front_page() ) {
-			$intro = __('Currently Viewing Post Archive', 'fl-assistant');
+			$intro = __( 'Currently Viewing Post Archive', 'fl-assistant' );
 			$name = __( 'Latest Posts', 'fl-assistant' );
 		}
 
