@@ -5,6 +5,7 @@ import { updateUserState } from 'utils/wordpress'
  * Effects that fire before an action.
  */
 export const before = {
+
 	REGISTER_APP: ( action ) => {
 		registerAppStore( {
 			key: action.key,
@@ -17,15 +18,6 @@ export const before = {
  * Effects that fire after an action.
  */
 export const after = {
-
-	REGISTER_APP: ( action ) => {
-		const { setAppPosition } = getSystemActions()
-		setAppPosition( action.key, null )
-	},
-
-	SET_ACTIVE_APP: ( action ) => {
-		updateUserState( { activeApp: action.key } )
-	},
 
 	SET_SHOW_UI: action => {
 		updateUserState( { isShowingUI: action.show } )
@@ -43,6 +35,10 @@ export const after = {
 	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
 		const { shouldReduceMotion } = store.getState()
 		updateUserState( { shouldReduceMotion } )
+	},
+
+	SET_ACTIVE_APP: ( action ) => {
+		updateUserState( { activeApp: action.key } )
 	},
 
 	SET_APP_FRAME_SIZE: ( action, store ) => {
