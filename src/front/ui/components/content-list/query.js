@@ -9,14 +9,19 @@ export const ContentQuery = ( {
 	query,
 	...props
 } ) => {
-	const [ results, setResults ] = useState( [] )
+	const [ loading, setLoading ] = useState( false )
 	const [ hasMore, setHasMore ] = useState( true )
+	const [ results, setResults ] = useState( [] )
 
 	const dataLoader = ( offset ) => {
+		setLoading( true )
+		setHasMore( false )
 		return getPagedContent( type, query, offset, ( data, more ) => {
+			setLoading( false )
 			setHasMore( pagination && more ? true : false )
 			setResults( results.concat( data ) )
 		}, () => {
+			setLoading( false )
 			setHasMore( false )
 			setResults( [] )
 		} )
@@ -32,6 +37,7 @@ export const ContentQuery = ( {
 			data={ results }
 			dataHasMore={ hasMore }
 			dataLoader={ dataLoader }
+			dataLoading={ loading }
 			dataSetter={ setResults }
 			{ ...props }
 		/>
