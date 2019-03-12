@@ -17,6 +17,8 @@ Assistant is an every-day productivity tool that lets you navigate your WordPres
 *   Upload media to WordPress media library by dropping files on the Media app.
 *   The Notifications app shows your comments as well as available plugin and theme updates.
 
+[youtube https://youtu.be/lj6NPN-zQRo]
+
 == Installation ==
 
 1. Install Assistant via the WordPress plugin directory or by uploading the files to your server at wp-content/plugins.
@@ -26,3 +28,7 @@ Assistant is an every-day productivity tool that lets you navigate your WordPres
 3. Assistant will be open. You can dismiss it using the x icon in the top right corner.
 
 4. A small pencil icon will appear in the bottom right corner. Clicking it will show Assistant.
+
+== Changelog ==
+
+* 0.1.0 - Initial Build
