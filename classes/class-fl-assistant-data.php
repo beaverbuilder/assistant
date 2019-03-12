@@ -10,11 +10,11 @@ class FL_Assistant_Data {
 	 */
 	static public $default_user_state = array(
 		'activeApp'          => 'fl-dashboard',
+		'appFrameSize'       => 'normal',
+		'appOrder'           => [],
 		'isShowingUI'        => true,
 		'panelPosition'      => 'end',
 		'shouldReduceMotion' => false,
-		'appFrameSize'       => 'normal',
-		'order'              => [],
 	);
 
 	/**
@@ -33,7 +33,6 @@ class FL_Assistant_Data {
 		$config = array(
 			'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 			'apiRoot'         => esc_url_raw( get_rest_url() ),
-			'cms'             => 'wordpress',
 			'contentTypes'    => self::get_post_types(),
 			'contentStatus'   => self::get_post_stati(),
 			'currentPageView' => self::get_current_view(),
@@ -41,6 +40,7 @@ class FL_Assistant_Data {
 			'dashboardApp'    => array(
 				'adminActions' => self::get_admin_actions(),
 			),
+			'defaultAppName'  => 'fl-dashboard',
 			'nonce'           => array(
 				'api'             => wp_create_nonce( 'wp_rest' ),
 				'reply'           => wp_create_nonce( 'replyto-comment' ),
@@ -50,7 +50,6 @@ class FL_Assistant_Data {
 			'pluginURL'       => FL_ASSISTANT_URL,
 			'taxonomies'      => self::get_taxonomies(),
 			'userRoles'       => self::get_user_roles(),
-			'defaultAppName'  => 'fl-dashboard',
 		);
 
 		/**
@@ -61,11 +60,11 @@ class FL_Assistant_Data {
 		$state = array(
 			'activeApp'          => $user_state['activeApp'],
 			'appFrameSize'       => $user_state['appFrameSize'],
+			'appOrder'           => $user_state['appOrder'],
 			'counts'             => self::get_counts(),
 			'isShowingUI'        => $user_state['isShowingUI'],
 			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
-			'order'              => $user_state['order'],
 		);
 
 		return array(

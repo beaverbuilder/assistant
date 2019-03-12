@@ -47,7 +47,7 @@ export const after = {
 	},
 
 	SET_APP_POSITION: ( action, store ) => {
-		const { order } = store.getState()
-		updateUserState( { order } )
+		const { appOrder } = store.getState()
+		updateUserState( { appOrder } )
 	}
 }
