@@ -108,12 +108,6 @@ export const MediaDetail = () => {
 			</Padding>
 
 			<SettingsGroup>
-				<SettingsItem label='Slug' labelPosition='above'>
-					<CopyButton label='Copy URL' text={ pageURL } />
-				</SettingsItem>
-			</SettingsGroup>
-
-			<SettingsGroup>
 				<SettingsItem label='Filesize'>
 					{filesize}
 				</SettingsItem>
@@ -122,11 +116,14 @@ export const MediaDetail = () => {
 				</SettingsItem>
 			</SettingsGroup>
 
-			{ ( title || alt || description ) && <Separator /> }
+			<Separator />
 			<SettingsGroup>
 				{ title && <SettingsItem label='Title'>{title}</SettingsItem> }
 				{ alt && <SettingsItem label='Alt Text'>{alt}</SettingsItem> }
 				{ description && <SettingsItem label='Description'>{description}</SettingsItem> }
+				<SettingsItem labelPosition='above'>
+					<CopyButton label='Copy URL' text={ pageURL } />
+				</SettingsItem>
 			</SettingsGroup>
 		</Fragment>
 	)
