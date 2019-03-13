@@ -122,18 +122,11 @@ export const MediaDetail = () => {
 				</SettingsItem>
 			</SettingsGroup>
 
-			<Separator />
-
+			{ ( title || alt || description ) && <Separator /> }
 			<SettingsGroup>
-				<SettingsItem label='Title'>
-					<input type="text" value={title} readOnly={true} />
-				</SettingsItem>
-				<SettingsItem label='Alt Text'>
-					<input type="text" value={alt} readOnly={true} />
-				</SettingsItem>
-				<SettingsItem label='Description'>
-					<textarea value={description} readOnly={true} />
-				</SettingsItem>
+				{ title && <SettingsItem label='Title'>{title}</SettingsItem> }
+				{ alt && <SettingsItem label='Alt Text'>{alt}</SettingsItem> }
+				{ description && <SettingsItem label='Description'>{description}</SettingsItem> }
 			</SettingsGroup>
 		</Fragment>
 	)
