@@ -80,7 +80,7 @@ final class FL_Assistant_REST_Users {
 			'content'     => get_the_author_meta( 'description', $user->ID ),
 			'date'        => $date,
 			'displayName' => $user->display_name,
-			'editUrl'     => get_edit_user_link( $user->ID, '' ),
+			'editUrl'     => get_edit_user_link( $user->ID ),
 			'email'       => $user->user_email,
 			'meta'        => $user->user_email,
 			'nicename'    => $user->user_nicename,
