@@ -1,5 +1,10 @@
 <?php
-/*
+/**
+ * A tool for seeing what's happening inside WordPress.
+ *
+ * @package Assistant
+ *
+ * @wordpress-plugin
  * Plugin Name: Assistant
  * Author: The Beaver Builder Team
  * Author URI: https://www.wpbeaverbuilder.com/?utm_medium=assistant&utm_source=plugins-admin-page&utm_campaign=plugins-admin-author
@@ -9,7 +14,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: fl-assistant
  * Copyright: (c) 2019 Beaver Builder
-*/
+ */
 
 defined( 'ABSPATH' ) || die();
 
