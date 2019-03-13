@@ -4,7 +4,7 @@ import store from './store'
 import * as utils from 'utils'
 const { registerApp } = store.getSystemActions()
 
-window.FLAssistant = {
+window.UNSTABLE_FLAssistant = {
 	vendor,
 	components,
 	store,
