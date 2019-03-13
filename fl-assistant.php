@@ -1,8 +1,8 @@
 <?php
 /*
  * Plugin Name: Assistant
- * Plugin URI: TBD
  * Author: The Beaver Builder Team
+ * Author URI: https://www.wpbeaverbuilder.com/?utm_medium=assistant&utm_source=plugins-admin-page&utm_campaign=plugins-admin-author
  * Version: 0.1.0
  * Description: A tool for navigating a site and accomplishing quick tasks without needing the WordPress admin.
  * License: GNU General Public License v2.0

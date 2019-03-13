@@ -52,7 +52,7 @@ export const UI = () => {
 							{ appOrder.map( key => {
 								const app = apps[key]
 
-								if ( key === activeAppName && count >= maxTabCount ) {
+								if ( key === activeAppName && count >= maxTabCount && ! excludedApps.includes( key ) ) {
 									activeAppIsBelowFold = true
 								}
 

@@ -1,4 +1,4 @@
-# Assistant - Work In Progress
+# Assistant
 
 [![Master Build Status](https://travis-ci.org/beaverbuilder/assistant.svg?branch=master)](https://travis-ci.org/beaverbuilder/assistant)
 
