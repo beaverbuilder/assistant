@@ -17,7 +17,7 @@ import './style.scss'
  * Main UI Controller
  */
 export const UI = () => {
-	const { order, apps } = useSystemState()
+	const { appOrder, apps } = useSystemState()
 	const {
 		activeApp,
 		activeAppName,
@@ -49,7 +49,7 @@ export const UI = () => {
 					</div>
 					<div className="fl-asst-app-tabs-wrap">
 						<div className="fl-asst-app-tabs-area">
-							{ order.map( key => {
+							{ appOrder.map( key => {
 								const app = apps[key]
 
 								if ( key === activeAppName && count >= maxTabCount ) {

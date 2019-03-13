@@ -5,7 +5,7 @@ import { render } from 'utils/react'
 import './style.scss'
 
 const AppsMenu = () => {
-	const { apps, order } = useSystemState()
+	const { apps, appOrder } = useSystemState()
 	const { activeAppName, setActiveApp } = useContext( UIContext )
 	const excludedApps = [ 'fl-notifications' ]
 
@@ -17,7 +17,7 @@ const AppsMenu = () => {
 		<Fragment>
 			<Heading className="fl-asst-manage-apps-title">Apps</Heading>
 			<div className="fl-asst-app-list">
-				{ order.map( ( key ) => {
+				{ appOrder.map( ( key ) => {
 
 					if ( excludedApps.includes( key ) ) {
 						return null

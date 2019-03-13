@@ -181,7 +181,7 @@ const AppNotFoundScreen = () => {
 }
 
 export const useActiveApp = () => {
-	const { apps, activeApp: name, order } = useSystemState()
+	const { apps, activeApp: name, appOrder } = useSystemState()
 	const { defaultAppName } = getSystemConfig()
 	const { state, isDocumentLoaded } = useDocumentReadyState()
 	const { setActiveApp } = getSystemActions()
@@ -191,7 +191,7 @@ export const useActiveApp = () => {
 			if ( Object.keys( apps ).includes( defaultAppName ) ) {
 				setActiveApp( defaultAppName )
 			} else {
-				const key = order[0]
+				const key = appOrder[0]
 				setActiveApp( key )
 			}
 		}

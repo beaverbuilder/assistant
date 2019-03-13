@@ -1,3 +1,32 @@
+export const isShowingUI = ( state = true, action ) => {
+	switch ( action.type ) {
+	case 'SET_SHOW_UI':
+		return action.show ? true : false
+	default:
+		return state
+	}
+}
+
+export const panelPosition = ( state = 'end', action ) => {
+	switch ( action.type ) {
+	case 'TOGGLE_PANEL_POSITION':
+		return 'start' === state ? 'end' : 'start'
+	case 'SET_PANEL_POSITION':
+		return action.position
+	default:
+		return state
+	}
+}
+
+export const shouldReduceMotion = ( state = false, action ) => {
+	switch ( action.type ) {
+	case 'SET_SHOULD_REDUCE_MOTION':
+		return action.shouldReduce
+	default:
+		return state
+	}
+}
+
 export const activeApp = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_ACTIVE_APP':
@@ -30,39 +59,10 @@ export const apps = ( state = {}, action ) => {
 	}
 }
 
-export const isShowingUI = ( state = true, action ) => {
-	switch ( action.type ) {
-	case 'SET_SHOW_UI':
-		return action.show ? true : false
-	default:
-		return state
-	}
-}
-
-export const panelPosition = ( state = 'end', action ) => {
-	switch ( action.type ) {
-	case 'TOGGLE_PANEL_POSITION':
-		return 'start' === state ? 'end' : 'start'
-	case 'SET_PANEL_POSITION':
-		return action.position
-	default:
-		return state
-	}
-}
-
 export const appFrameSize = ( state = 'normal', action ) => {
 	switch ( action.type ) {
 	case 'SET_APP_FRAME_SIZE':
 		return action.size
-	default:
-		return state
-	}
-}
-
-export const shouldReduceMotion = ( state = false, action ) => {
-	switch ( action.type ) {
-	case 'SET_SHOULD_REDUCE_MOTION':
-		return action.shouldReduce
 	default:
 		return state
 	}
@@ -77,34 +77,8 @@ export const isShowingAppsMenu = ( state = false, action ) => {
 	}
 }
 
-export const counts = ( state = {}, action ) => {
+export const appOrder = ( state = [], action ) => {
 	switch ( action.type ) {
-	case 'SET_COUNTS':
-		return { ...state, ...action.counts }
-	case 'SET_COUNT':
-		return {
-			...state,
-			[ action.key ]: action.count
-		}
-	case 'INCREMENT_COUNT':
-		return {
-			...state,
-			[ action.key ]: state[ action.key ] + 1
-		}
-	case 'DECREMENT_COUNT':
-		return {
-			...state,
-			[ action.key ]: state[ action.key ] ? state[ action.key ] - 1 : 0
-		}
-	default:
-		return state
-	}
-}
-
-export const order = ( state = [], action ) => {
-
-	switch ( action.type ) {
-
 	case 'REGISTER_APP':
 	case 'SET_APP_POSITION': {
 		const { key, position = null } = action
@@ -139,6 +113,30 @@ export const order = ( state = [], action ) => {
 		}
 		break
 	}
+	default:
+		return state
+	}
+}
+
+export const counts = ( state = {}, action ) => {
+	switch ( action.type ) {
+	case 'SET_COUNTS':
+		return { ...state, ...action.counts }
+	case 'SET_COUNT':
+		return {
+			...state,
+			[ action.key ]: action.count
+		}
+	case 'INCREMENT_COUNT':
+		return {
+			...state,
+			[ action.key ]: state[ action.key ] + 1
+		}
+	case 'DECREMENT_COUNT':
+		return {
+			...state,
+			[ action.key ]: state[ action.key ] ? state[ action.key ] - 1 : 0
+		}
 	default:
 		return state
 	}
