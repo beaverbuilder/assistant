@@ -18,4 +18,8 @@
         border-radius: var(--fl-asst-base-padding);
         flex: 0 0 auto;
     }
+
+    &:focus {
+        border-color: var(--fl-accent-color);
+    }
 }

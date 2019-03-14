@@ -67,6 +67,13 @@
         cursor: pointer;
     }
 
+    &:focus {
+        outline-color: var(--fl-accent-color);
+        outline-width: 2px;
+        outline-style: solid;
+        outline-offset: -7px;
+    }
+
     & > * {
         flex: 1 1 auto;
         align-items: center;

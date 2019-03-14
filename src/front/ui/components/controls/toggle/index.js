@@ -9,6 +9,7 @@ export const ToggleControl = props => {
 		className,
 		value: initialValue = false,
 		onChange = () => () => {},
+		label = "",
 	} = props
 	const [ value, setValue ] = useState( initialValue )
 	const { shouldReduceMotion } = useSystemState()
@@ -25,7 +26,11 @@ export const ToggleControl = props => {
 			setValue( ! value )
 			onChange( ! value, e )
 		},
+		role: 'switch',
+		'aria-checked': value ? "true" : "false",
+		'aria-label': label
 	} )
+	delete mergedProps.value
 
 	const thumbProps = useSpring( {
 		transform: value ? 'translateX(30px)' : 'translateX(0px)',
