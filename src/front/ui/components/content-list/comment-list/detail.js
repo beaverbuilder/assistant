@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import { autop } from '@wordpress/autop'
 import { __ } from '@wordpress/i18n'
 import striptags from 'striptags'
 import { getSystemActions } from 'store'
@@ -170,7 +171,7 @@ export const CommentDetail = () => {
 
 			{ ! editing &&
 				<Widget title={ contentTitle } className='fl-asst-comment-content'>
-					<ContentFrame dangerouslySetInnerHTML={ { __html: content } } />
+					<ContentFrame dangerouslySetInnerHTML={ { __html: autop( content ) } } />
 				</Widget>
 			}
 		</ContentListDetail>
