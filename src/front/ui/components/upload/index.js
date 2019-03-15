@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import { clearCache } from 'utils/cache'
 import { restRequest } from 'utils/wordpress'
 import { EmptyMessage, Icon, Padding, Branding, UIContext } from 'components'
@@ -65,7 +66,7 @@ const DraggingView = () => {
 				<Padding top={false} style={{ display: 'flex', justifyContent: 'center' }}>
 					<Branding name="outline" />
 				</Padding>
-				<div>We can't upload stuff yet, but come back soon!</div>
+				<div>{ __( 'Drop files to begin uploading.' ) }</div>
 			</Padding>
 		</EmptyMessage>
 	)
@@ -141,7 +142,7 @@ export const FileDropUploader = ( { children } ) => {
 	if ( uploading ) {
 		return (
 			<div className='fl-asst-file-uploading'>
-				<Icon name='small-spinner' />
+				<Icon name='spinner' />
 			</div>
 		)
 	}
