@@ -1,7 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { __ } from '@wordpress/i18n'
+import React, { useContext } from 'react'
 import { clearCache } from 'utils/cache'
-import { useMountedState } from 'utils/hooks'
 import { restRequest } from 'utils/wordpress'
 import { registerStore, useStore, getStore, getDispatch } from 'utils/store'
 import {
