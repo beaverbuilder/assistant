@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { __ } from '@wordpress/i18n'
 import { useAppState } from 'store'
 import { UserList, ScreenHeader, Padding, Heading } from 'components'
 import { UserListFilter } from './filter'
@@ -11,7 +12,7 @@ export const App = () => {
 				<UserListFilter />
 			</ScreenHeader>
 			<Padding bottom={false}>
-				<Heading level={1}>Users</Heading>
+				<Heading level={1}>{__('People')}</Heading>
 			</Padding>
 			<UserList
 				query={ query }

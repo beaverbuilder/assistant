@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, useSystemState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import { ExpandedContents, TagGroupControl } from 'components'
@@ -20,14 +21,14 @@ export const NotificationsFilter = () => {
 			<ExpandedContents>
 				{ 'comments' === type &&
 					<TagGroupControl
-						title="Status"
+						title={__('Status')}
 						tags={ commentStatusTags }
 						value={ commentStatus }
 						onChange={ setCommentStatus } />
 				}
 				{ 'updates' === type &&
 					<TagGroupControl
-						title="Status"
+						title={__('Status')}
 						tags={ updateTypeTags }
 						value={ updateType }
 						onChange={ setUpdateType } />
@@ -45,7 +46,7 @@ export const getFilterTags = () => {
 
 	if ( canModerateComments ) {
 		typeTags.push( {
-			label: 'Comments',
+			label: __('Comments'),
 			value: 'comments',
 			count: counts[ 'comment/total' ] || '0',
 		} )
@@ -53,7 +54,7 @@ export const getFilterTags = () => {
 
 	if ( canUpdate ) {
 		typeTags.push( {
-			label: 'Updates',
+			label: __('Updates'),
 			value: 'updates',
 			count: counts[ 'update/total' ] || '0',
 		} )
@@ -61,38 +62,38 @@ export const getFilterTags = () => {
 
 	const commentStatusTags = [
 		{
-			label: 'All',
+			label: __('All'),
 			value: 'all',
 		},
 		{
-			label: 'Pending',
+			label: __('Pending'),
 			value: 'hold',
 		},
 		{
-			label: 'Approved',
+			label: __('Approved'),
 			value: 'approve',
 		},
 		{
-			label: 'Spam',
+			label: __('Spam'),
 			value: 'spam',
 		},
 		{
-			label: 'Trash',
+			label: __('Trash'),
 			value: 'trash',
 		}
 	]
 
 	const updateTypeTags = [
 		{
-			label: 'All',
+			label: __('All'),
 			value: 'all',
 		},
 		{
-			label: 'Plugins',
+			label: __('Plugins'),
 			value: 'plugins',
 		},
 		{
-			label: 'Themes',
+			label: __('Themes'),
 			value: 'themes',
 		}
 	]

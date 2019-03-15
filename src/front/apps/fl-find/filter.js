@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl, ExpandedContents } from 'components'
 
@@ -13,9 +14,9 @@ export const PostListFilter = () => {
 			<TagGroupControl limit={ 6 } tags={typeTags} value={[ type, subType ]} onChange={setType} appearance="muted" />
 			{ 'posts' === type &&
 				<ExpandedContents>
-					<TagGroupControl tags={dateTags} value={date} title="Created" onChange={setDate} />
+					<TagGroupControl tags={dateTags} value={date} title={__('Created')} onChange={setDate} />
 					{ 'attachment' !== subType &&
-						<TagGroupControl tags={statusTags} value={status} title="Status" onChange={setStatus} />
+						<TagGroupControl tags={statusTags} value={status} title={__('Status')} onChange={setStatus} />
 					}
 				</ExpandedContents>
 			}
@@ -47,19 +48,19 @@ export const getFilterTags = () => {
 
 	const dateTags = [
 		{
-			label: 'Any',
+			label: __('Any'),
 			value: '',
 		},
 		{
-			label: 'Today',
+			label: __('Today'),
 			value: 'today',
 		},
 		{
-			label: 'This Week',
+			label: __('This Week'),
 			value: 'week',
 		},
 		{
-			label: 'This Month',
+			label: __('This Month'),
 			value: 'month',
 		},
 		{
@@ -70,31 +71,31 @@ export const getFilterTags = () => {
 
 	const statusTags = [
 		{
-			label: 'Any',
+			label: __('Any'),
 			value: 'any',
 		},
 		{
-			label: 'Published',
+			label: __('Published'),
 			value: 'publish',
 		},
 		{
-			label: 'Draft',
+			label: __('Draft'),
 			value: 'draft',
 		},
 		{
-			label: 'Pending',
+			label: __('Pending'),
 			value: 'pending',
 		},
 		{
-			label: 'Scheduled',
+			label: __('Scheduled'),
 			value: 'future',
 		},
 		{
-			label: 'Private',
+			label: __('Private'),
 			value: 'private',
 		},
 		{
-			label: 'Trash',
+			label: __('Trash'),
 			value: 'trash',
 		},
 	]

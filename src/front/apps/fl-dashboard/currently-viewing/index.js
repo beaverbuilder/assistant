@@ -26,19 +26,3 @@ export const CurrentlyViewing = () => {
 		</div>
 	)
 }
-
-/*
-const ThemeItem = ( { name, screenshot, version, team } ) => {
-	return (
-		<HorizontalGroup className="fl-asst-theme-item">
-			<VerticalGroup className="fl-asst-theme-item-details">
-				<div className="fl-asst-pretitle fl-asst-current-theme-pretitle">Current Theme</div>
-				<div className="fl-asst-title">{name} {version && <span className="fl-asst-theme-item-version">v{version}</span>}</div>
-				{ team && <div className="fl-asst-pretitle">By {team}</div> }
-			</VerticalGroup>
-			<VerticalGroup className="fl-asst-theme-item-screenshot">
-				<img src={screenshot} />
-			</VerticalGroup>
-		</HorizontalGroup>
-	)
-}*/

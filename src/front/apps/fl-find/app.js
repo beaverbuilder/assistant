@@ -16,7 +16,6 @@ export const App = () => {
 
 	return (
 		<Fragment>
-			<Header>Hey</Header>
 			<ScreenHeader showTitle={false}>
 				{ 'normal' === size && <PostListFilter /> }
 			</ScreenHeader>

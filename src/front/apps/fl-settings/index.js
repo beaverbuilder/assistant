@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemActions } from 'store'
 import { SettingsItem, SettingsGroup, Button, ToggleControl, Padding, Heading } from 'components'
 const { registerApp } = getSystemActions()
@@ -13,19 +14,19 @@ const App = () => {
 	return (
 		<Fragment>
 			<Padding bottom={false}>
-				<Heading level={1}>Settings</Heading>
+				<Heading level={1}>{__('Preferences')}</Heading>
 			</Padding>
 
 			<SettingsGroup>
-				<SettingsItem label='Reduce Motion'>
+				<SettingsItem label={__('Reduce Motion')}>
 					<ToggleControl
 						value={shouldReduceMotion}
 						onChange={ value => setShouldReduceMotion( value ) }
 					/>
 				</SettingsItem>
-				<SettingsItem label='Panel Position'>
+				<SettingsItem label={__('Panel Position')}>
 					<Button onClick={ () => setPanelPosition( nextPanelPosition )}>
-						{ 'start' === panelPosition ? 'Left Edge' : 'Right Edge' }
+						{ 'start' === panelPosition ? __('Left Edge') : __('Right Edge') }
 					</Button>
 				</SettingsItem>
 			</SettingsGroup>
@@ -48,7 +49,7 @@ const AppIcon = () => {
 }
 
 registerApp( 'fl-settings', {
-	label: 'Preferences',
+	label: __('Preferences'),
 	content: <App />,
 	icon: <AppIcon />,
 } )

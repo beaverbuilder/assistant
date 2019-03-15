@@ -83,7 +83,6 @@ const ExpandedContent = props => {
         <TunnelPlaceholder id={`app-header-expanded-${appName}`} appName={appName} multiple>
 			{ ( { items } ) => {
 				if ( 'undefined' !== items && 0 < items.length ) {
-                    console.log( 'expanded items', items )
                     return (
                         <div {...merged}>
                             { items.map( item => item.children )}
