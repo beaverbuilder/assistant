@@ -1,14 +1,12 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { currentUserCan } from 'utils/wordpress'
 import classname from 'classnames'
 
 import {
 	Separator,
-	NavBar,
 	Header
 } from 'components'
 
-import { useAppState, getAppActions } from 'store'
 import { Help } from './help'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
@@ -16,35 +14,19 @@ import { RecentCommentsWidget } from './recent-comments'
 import './style.scss'
 
 export const App = () => {
-	const { isFirstTime } = useAppState()
-	const { setIsFirstTime } = getAppActions()
-	const [ isExpanded, setIsExpanded ] = useState( isFirstTime )
 	const classes = classname( {
 		'fl-asst-main-app-content': true,
-		'fl-asst-main-app-content-is-dimmed': isExpanded,
 	} )
 
 	return (
 		<Fragment>
-			<NavBar
-				isExpanded={ isExpanded }
-				onChange={ () => {
-					setIsExpanded( ! isExpanded )
-					setIsFirstTime( false )
-				}}
-			>
-				<NavBar.Expanded>
-					<Help collapse={ () => setIsExpanded( false ) } />
-				</NavBar.Expanded>
-				<NavBar.Collapsed>
-					<CurrentlyViewing />
-				</NavBar.Collapsed>
-			</NavBar>
+		
+			<CurrentlyViewing />
 
 			<div className={classes}>
 
 				<Header.Expanded>
-					<Help collapse={ () => setIsExpanded( false ) } />
+					<Help />
 				</Header.Expanded>
 
 				<RecentlyEditedWidget />
