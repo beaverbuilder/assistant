@@ -25,16 +25,13 @@
 }
 
 .fl-asst-file-uploading {
-	display: flex;
-    position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom: 0;
-    background: var(--fl-background-color);
-    pointer-events: none;
+	opacity: 1;
 
-	svg {
-		margin: auto;
+	.fl-asst-file-uploading-text {
+		svg {
+			position: relative;
+			margin: 0 2px 0 0;
+			top: 2px;
+		}
 	}
 }
