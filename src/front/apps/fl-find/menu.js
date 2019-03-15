@@ -1,6 +1,13 @@
 import React, { Fragment, useContext } from 'react'
+import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions } from 'store'
-import { OptionGroup, OptionGroupItem, Separator, AppContext, StackContext } from 'components'
+import {
+	OptionGroup,
+	OptionGroupItem,
+	Separator,
+	AppContext,
+	StackContext
+} from 'components'
 import { getFilterTags } from './filter'
 
 export const MenuContent = () => {
@@ -21,7 +28,7 @@ export const MenuContent = () => {
 
 	return (
 		<Fragment>
-			<OptionGroup title="Content Types">
+			<OptionGroup title={__( 'Content Types' )}>
 				{ typeTags.map( ( type, i ) => {
 					const { label, count, value } = type
 					let isSelected = value == currentContentType
@@ -42,7 +49,7 @@ export const MenuContent = () => {
 
 			{ 'posts' === type &&
 			<Fragment>
-				<OptionGroup title="Created">
+				<OptionGroup title={__( 'Created' )}>
 					{ dateTags.map( ( item, i ) => {
 						const { label, value } = item
 						let isSelected = date === value ? true : false
@@ -61,7 +68,7 @@ export const MenuContent = () => {
 				</OptionGroup>
 				<Separator />
 
-				<OptionGroup title="Status">
+				<OptionGroup title={__( 'Status' )}>
 					{ statusTags.map( ( item, i ) => {
 						const { label, value } = item
 						let isSelected = status === value ? true : false

@@ -1,6 +1,12 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState } from 'store'
-import { PostList, ScreenHeader, FrameContext, Padding, Heading } from 'components'
+import {
+	PostList,
+	ScreenHeader,
+	FrameContext,
+	Padding,
+	Heading,
+} from 'components'
 import { PostListFilter } from './filter'
 
 export const App = () => {

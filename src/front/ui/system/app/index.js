@@ -5,7 +5,7 @@ import { useSystemState, getSystemActions, getSystemConfig } from 'store'
 import { useAppFrame } from 'system'
 import { render } from 'utils/react'
 import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon, EmptyMessage, Branding } from 'components'
-import { TunnelProvider, TunnelPlaceholder, Tunnel } from 'react-tunnels'
+import { TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
 export const App = props => {
@@ -45,12 +45,10 @@ export const App = props => {
 
 	return (
 		<AppContext.Provider value={appContext}>
-			<TunnelProvider>
-				<div className="fl-asst-app" style={styles}>
-					<AppMenuRenderer />
-					<Stack>{ output }</Stack>
-				</div>
-			</TunnelProvider>
+			<div className="fl-asst-app" style={styles}>
+				<AppMenuRenderer />
+				<Stack>{ output }</Stack>
+			</div>
 		</AppContext.Provider>
 	)
 }

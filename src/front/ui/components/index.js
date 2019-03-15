@@ -1,6 +1,7 @@
 export { Icon, Pattern } from './icon'
 export { Photo, useImageData } from './image'
 export { Branding } from './branding'
+export { Header } from './header'
 
 export {
 	Button,

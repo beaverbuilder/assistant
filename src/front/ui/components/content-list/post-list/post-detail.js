@@ -143,7 +143,7 @@ export const PostListDetail = () => {
 
 			<SettingsGroup>
 				<SettingsItem label='Title' labelPosition='above'>
-					<input type='text' name='title' value={ title } onChange={ onChange } />
+					<input type='text' name='title' value={ title } onChange={ onChange } autoFocus />
 				</SettingsItem>
 				<SettingsItem label='Slug' labelPosition='above'>
 					<input type='text' name='slug' value={ slug } onChange={ onChange } />

@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react'
+import { __, sprintf } from '@wordpress/i18n'
 import { getSystemConfig, useSystemState } from 'store'
 import {
 	Padding,
@@ -19,82 +20,85 @@ export const Help = ( { collapse } ) => {
 
 	const tabs = [
 		{
-			label: 'Dashboard',
+			label: apps['fl-dashboard'].label,
 			icon: render( apps['fl-dashboard'].icon ),
 			content: (
 				<Fragment>
-					<Heading>Dashboard</Heading>
-					<div>The Dashboard app gives you a glance at what's happening across your website.</div>
+					<Heading>{apps['fl-dashboard'].label}</Heading>
+					<div>{__( 'The Dashboard app gives you a glance at what\'s happening across your website.' )}</div>
 					<Button
 						onClick={collapse}
 						style={{ margin: '15px 0 0' }}
-					>Show Dashboard</Button>
+					>{__( 'Show Dashboard' )}</Button>
 				</Fragment>
 			),
 		},
 		{
-			label: 'Content',
+			label: apps['fl-find'].label,
 			icon: render( apps['fl-find'].icon ),
 			content: (
 				<Fragment>
-					<Heading>Content</Heading>
-					<div>The Content app helps you find and navigate between various types of pages.</div>
-					<GoToApp id="fl-find">Go To Content App</GoToApp>
+					<Heading>{apps['fl-find'].label}</Heading>
+					<div>{__( 'The Content app helps you find and navigate between various types of pages.' )}</div>
+					<GoToApp id="fl-find">{__( 'Go To Content App' )}</GoToApp>
 				</Fragment>
 			),
 		},
 		{
-			label: 'Media',
+			label: apps['fl-media'].label,
 			icon: render( apps['fl-media'].icon ),
 			content: (
 				<Fragment>
-					<Heading>Media</Heading>
-					<div>In the Media app you can find items you've uploaded to the media library. Drop new items on the app to upload.</div>
-					<GoToApp id="fl-media">Go To Media App</GoToApp>
+					<Heading>{apps['fl-media'].label}</Heading>
+					<div>{__( 'In the Media app you can find items you\'ve uploaded to the media library. Drop new items on the app to upload.' )}</div>
+					<GoToApp id="fl-media">{__( 'Go To Media App' )}</GoToApp>
 				</Fragment>
 			),
 		},
 		{
-			label: 'Users',
+			label: apps['fl-users'].label,
 			icon: render( apps['fl-users'].icon ),
 			content: (
 				<Fragment>
-					<Heading>Users</Heading>
-					<div>The Users app gives you access to your user profile as well as the other user accounts on your site.</div>
-					<GoToApp id="fl-users">Go To Users App</GoToApp>
+					<Heading>{apps['fl-users'].label}</Heading>
+					<div>{__( 'The Users app gives you access to your user profile as well as the other user accounts on your site.' )}</div>
+					<GoToApp id="fl-users">{__( 'Go To Users App' )}</GoToApp>
 				</Fragment>
 			),
 		},
 		{
-			label: 'Apps',
+			label: __( 'Apps' ),
 			icon: <Icon name="apps-app" />,
 			content: (
 				<Fragment>
-					<Heading>Apps Menu</Heading>
-					<div>The Apps menu gives you access to any other apps you may have installed as well as user preferences.</div>
+					<Heading>{__( 'Apps Menu' )}</Heading>
+					<div>{__( 'The Apps menu gives you access to any other apps you may have installed as well as user preferences.' )}</div>
 				</Fragment>
 			),
 		},
 		{
-			label: 'Notifications',
+			label: apps['fl-notifications'].label,
 			icon: render( apps['fl-notifications'].icon ),
 			content: (
 				<Fragment>
-					<Heading>Notifications</Heading>
-					<div>The Notifications App displays alerts that require your attention like comments and theme or plugin updates.</div>
-					<GoToApp id="fl-notifications">Go To Notifications</GoToApp>
+					<Heading>{apps['fl-notifications'].label}</Heading>
+					<div>{__( 'The Notifications App displays alerts that require your attention like comments and theme or plugin updates.' )}</div>
+					<GoToApp id="fl-notifications">{__( 'Go To Notifications' )}</GoToApp>
 				</Fragment>
 			),
 		},
 	]
+
+	const welcome = sprintf( 'Welcome, %s', currentUser.name )
+	const intro = __( 'Assistant provides apps to help you navigate and manage your WordPress website. You can learn about these apps below.' )
 
 	return (
 		<Fragment>
 			<ToolbarLabels />
 			<Padding bottom={half}>
 				<BrandIcon />
-				<Heading level={1}>{`Welcome, ${currentUser.name}`}</Heading>
-				<p style={{margin: 0}}>Assistant provides apps to help you navigate and manage your WordPress website. You can learn about these apps below.</p>
+				<Heading level={1}>{welcome}</Heading>
+				<p style={{margin: 0}}>{intro}</p>
 			</Padding>
 			<Padding top={false} left={half} right={half}>
 				<Tabs tabs={tabs} />
@@ -154,18 +158,18 @@ const ToolbarLabels = () => {
 
 	return (
 		<div className="fl-asst-toolbar-labels">
-			<div className="fl-asst-toolbar-label-cell" style={noteStyles}>Notifications</div>
+			<div className="fl-asst-toolbar-label-cell" style={noteStyles}>{__( 'Notifications' )}</div>
 
 			<div className="fl-asst-toolbar-label-center">
 				<div className="fl-asst-toolbar-label-center-wrap">
 					<div className="fl-asst-toolbar-label-cell fl-asst-toolbar-label-cell-apps">
-						<span>Apps</span>
+						<span>{__( 'Apps' )}</span>
 					</div>
-					<div className="fl-asst-toolbar-label-cell" style={more}>More</div>
+					<div className="fl-asst-toolbar-label-cell" style={more}>{__( 'More' )}</div>
 				</div>
 			</div>
 
-			<div className="fl-asst-toolbar-label-cell" style={hideStyles}>Hide</div>
+			<div className="fl-asst-toolbar-label-cell" style={hideStyles}>{__( 'Hide' )}</div>
 		</div>
 	)
 }

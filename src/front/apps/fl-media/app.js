@@ -1,4 +1,5 @@
 import React from 'react'
+import { __ } from '@wordpress/i18n'
 import { useAppState } from 'store'
 import { ScreenHeader, MediaList, MediaDropUploader, Heading, Padding } from 'components'
 import { MediaListFilter } from './filter'
@@ -13,7 +14,7 @@ export const App = () => {
 			</ScreenHeader>
 
 			<Padding bottom={false}>
-				<Heading level={1}>Media</Heading>
+				<Heading level={1}>{__( 'Media' )}</Heading>
 			</Padding>
 			<MediaList
 				query={ query }

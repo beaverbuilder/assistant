@@ -22,6 +22,9 @@ const externals = {
     '@assistant/react' : 'FLAssistant.vendor.React',
     '@assistant/react-dom' : 'FLAssistant.vendor.ReactDOM',
     '@assistant/classnames' : 'FLAssistant.vendor.classnames',
+
+    "@wordpress/block-editor" : 'wp.blockEditor',
+    '@wordpress' : 'wp',
 }
 
 const entry = {
