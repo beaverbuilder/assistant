@@ -20,7 +20,7 @@ export const App = () => {
 
 	return (
 		<Fragment>
-		
+
 			<CurrentlyViewing />
 
 			<div className={classes}>
