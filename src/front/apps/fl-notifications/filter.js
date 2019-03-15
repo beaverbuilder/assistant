@@ -21,14 +21,14 @@ export const NotificationsFilter = () => {
 			<ExpandedContents>
 				{ 'comments' === type &&
 					<TagGroupControl
-						title={__('Status')}
+						title={__( 'Status' )}
 						tags={ commentStatusTags }
 						value={ commentStatus }
 						onChange={ setCommentStatus } />
 				}
 				{ 'updates' === type &&
 					<TagGroupControl
-						title={__('Status')}
+						title={__( 'Status' )}
 						tags={ updateTypeTags }
 						value={ updateType }
 						onChange={ setUpdateType } />
@@ -46,7 +46,7 @@ export const getFilterTags = () => {
 
 	if ( canModerateComments ) {
 		typeTags.push( {
-			label: __('Comments'),
+			label: __( 'Comments' ),
 			value: 'comments',
 			count: counts[ 'comment/total' ] || '0',
 		} )
@@ -54,7 +54,7 @@ export const getFilterTags = () => {
 
 	if ( canUpdate ) {
 		typeTags.push( {
-			label: __('Updates'),
+			label: __( 'Updates' ),
 			value: 'updates',
 			count: counts[ 'update/total' ] || '0',
 		} )
@@ -62,38 +62,38 @@ export const getFilterTags = () => {
 
 	const commentStatusTags = [
 		{
-			label: __('All'),
+			label: __( 'All' ),
 			value: 'all',
 		},
 		{
-			label: __('Pending'),
+			label: __( 'Pending' ),
 			value: 'hold',
 		},
 		{
-			label: __('Approved'),
+			label: __( 'Approved' ),
 			value: 'approve',
 		},
 		{
-			label: __('Spam'),
+			label: __( 'Spam' ),
 			value: 'spam',
 		},
 		{
-			label: __('Trash'),
+			label: __( 'Trash' ),
 			value: 'trash',
 		}
 	]
 
 	const updateTypeTags = [
 		{
-			label: __('All'),
+			label: __( 'All' ),
 			value: 'all',
 		},
 		{
-			label: __('Plugins'),
+			label: __( 'Plugins' ),
 			value: 'plugins',
 		},
 		{
-			label: __('Themes'),
+			label: __( 'Themes' ),
 			value: 'themes',
 		}
 	]

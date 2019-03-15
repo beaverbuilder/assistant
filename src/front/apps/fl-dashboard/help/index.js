@@ -25,11 +25,11 @@ export const Help = ( { collapse } ) => {
 			content: (
 				<Fragment>
 					<Heading>{apps['fl-dashboard'].label}</Heading>
-					<div>{__("The Dashboard app gives you a glance at what's happening across your website.")}</div>
+					<div>{__( 'The Dashboard app gives you a glance at what\'s happening across your website.' )}</div>
 					<Button
 						onClick={collapse}
 						style={{ margin: '15px 0 0' }}
-					>{__('Show Dashboard')}</Button>
+					>{__( 'Show Dashboard' )}</Button>
 				</Fragment>
 			),
 		},
@@ -39,8 +39,8 @@ export const Help = ( { collapse } ) => {
 			content: (
 				<Fragment>
 					<Heading>{apps['fl-find'].label}</Heading>
-					<div>{__("The Content app helps you find and navigate between various types of pages.")}</div>
-					<GoToApp id="fl-find">{__('Go To Content App')}</GoToApp>
+					<div>{__( 'The Content app helps you find and navigate between various types of pages.' )}</div>
+					<GoToApp id="fl-find">{__( 'Go To Content App' )}</GoToApp>
 				</Fragment>
 			),
 		},
@@ -50,8 +50,8 @@ export const Help = ( { collapse } ) => {
 			content: (
 				<Fragment>
 					<Heading>{apps['fl-media'].label}</Heading>
-					<div>{__("In the Media app you can find items you've uploaded to the media library. Drop new items on the app to upload.")}</div>
-					<GoToApp id="fl-media">{__('Go To Media App')}</GoToApp>
+					<div>{__( 'In the Media app you can find items you\'ve uploaded to the media library. Drop new items on the app to upload.' )}</div>
+					<GoToApp id="fl-media">{__( 'Go To Media App' )}</GoToApp>
 				</Fragment>
 			),
 		},
@@ -61,18 +61,18 @@ export const Help = ( { collapse } ) => {
 			content: (
 				<Fragment>
 					<Heading>{apps['fl-users'].label}</Heading>
-					<div>{__("The Users app gives you access to your user profile as well as the other user accounts on your site.")}</div>
-					<GoToApp id="fl-users">{__('Go To Users App')}</GoToApp>
+					<div>{__( 'The Users app gives you access to your user profile as well as the other user accounts on your site.' )}</div>
+					<GoToApp id="fl-users">{__( 'Go To Users App' )}</GoToApp>
 				</Fragment>
 			),
 		},
 		{
-			label: __('Apps'),
+			label: __( 'Apps' ),
 			icon: <Icon name="apps-app" />,
 			content: (
 				<Fragment>
-					<Heading>{__('Apps Menu')}</Heading>
-					<div>{__("The Apps menu gives you access to any other apps you may have installed as well as user preferences.")}</div>
+					<Heading>{__( 'Apps Menu' )}</Heading>
+					<div>{__( 'The Apps menu gives you access to any other apps you may have installed as well as user preferences.' )}</div>
 				</Fragment>
 			),
 		},
@@ -82,15 +82,15 @@ export const Help = ( { collapse } ) => {
 			content: (
 				<Fragment>
 					<Heading>{apps['fl-notifications'].label}</Heading>
-					<div>{__("The Notifications App displays alerts that require your attention like comments and theme or plugin updates.")}</div>
-					<GoToApp id="fl-notifications">{__('Go To Notifications')}</GoToApp>
+					<div>{__( 'The Notifications App displays alerts that require your attention like comments and theme or plugin updates.' )}</div>
+					<GoToApp id="fl-notifications">{__( 'Go To Notifications' )}</GoToApp>
 				</Fragment>
 			),
 		},
 	]
 
 	const welcome = sprintf( 'Welcome, %s', currentUser.name )
-	const intro = __("Assistant provides apps to help you navigate and manage your WordPress website. You can learn about these apps below.")
+	const intro = __( 'Assistant provides apps to help you navigate and manage your WordPress website. You can learn about these apps below.' )
 
 	return (
 		<Fragment>
@@ -158,18 +158,18 @@ const ToolbarLabels = () => {
 
 	return (
 		<div className="fl-asst-toolbar-labels">
-			<div className="fl-asst-toolbar-label-cell" style={noteStyles}>{__('Notifications')}</div>
+			<div className="fl-asst-toolbar-label-cell" style={noteStyles}>{__( 'Notifications' )}</div>
 
 			<div className="fl-asst-toolbar-label-center">
 				<div className="fl-asst-toolbar-label-center-wrap">
 					<div className="fl-asst-toolbar-label-cell fl-asst-toolbar-label-cell-apps">
-						<span>{__('Apps')}</span>
+						<span>{__( 'Apps' )}</span>
 					</div>
-					<div className="fl-asst-toolbar-label-cell" style={more}>{__('More')}</div>
+					<div className="fl-asst-toolbar-label-cell" style={more}>{__( 'More' )}</div>
 				</div>
 			</div>
 
-			<div className="fl-asst-toolbar-label-cell" style={hideStyles}>{__('Hide')}</div>
+			<div className="fl-asst-toolbar-label-cell" style={hideStyles}>{__( 'Hide' )}</div>
 		</div>
 	)
 }

@@ -6,7 +6,6 @@ import {
 	FrameContext,
 	Padding,
 	Heading,
-	Header,
 } from 'components'
 import { PostListFilter } from './filter'
 

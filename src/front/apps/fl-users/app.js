@@ -12,7 +12,7 @@ export const App = () => {
 				<UserListFilter />
 			</ScreenHeader>
 			<Padding bottom={false}>
-				<Heading level={1}>{__('People')}</Heading>
+				<Heading level={1}>{__( 'People' )}</Heading>
 			</Padding>
 			<UserList
 				query={ query }

@@ -1,15 +1,15 @@
 
 export const defaultState = {
-    isAppHeaderExpanded: false,
+	isAppHeaderExpanded: false,
 }
 
 export const defaultActions = {
-    setIsAppHeaderExpanded: value => {
-    	return {
-    		type: 'SET_IS_APP_HEADER_EXPANDED',
-    		value,
-    	}
-    }
+	setIsAppHeaderExpanded: value => {
+		return {
+			type: 'SET_IS_APP_HEADER_EXPANDED',
+			value,
+		}
+	}
 }
 
 export const defaultReducers = {}

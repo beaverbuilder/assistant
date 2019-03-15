@@ -8,7 +8,7 @@ const { currentUserCan } = wordpress
 const { registerApp } = getSystemActions()
 
 registerApp( 'fl-users', {
-	label: __('People'),
+	label: __( 'People' ),
 	content: <App />,
 	icon: <AppIcon />,
 	enabled: currentUserCan( 'edit_users' ),

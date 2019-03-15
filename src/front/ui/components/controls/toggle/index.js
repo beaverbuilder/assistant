@@ -9,7 +9,7 @@ export const ToggleControl = props => {
 		className,
 		value: initialValue = false,
 		onChange = () => () => {},
-		label = "",
+		label = '',
 	} = props
 	const [ value, setValue ] = useState( initialValue )
 	const { shouldReduceMotion } = useSystemState()
@@ -27,7 +27,7 @@ export const ToggleControl = props => {
 			onChange( ! value, e )
 		},
 		role: 'switch',
-		'aria-checked': value ? "true" : "false",
+		'aria-checked': value ? 'true' : 'false',
 		'aria-label': label
 	} )
 	delete mergedProps.value

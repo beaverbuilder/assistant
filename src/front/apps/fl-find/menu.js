@@ -28,7 +28,7 @@ export const MenuContent = () => {
 
 	return (
 		<Fragment>
-			<OptionGroup title={__('Content Types')}>
+			<OptionGroup title={__( 'Content Types' )}>
 				{ typeTags.map( ( type, i ) => {
 					const { label, count, value } = type
 					let isSelected = value == currentContentType
@@ -49,7 +49,7 @@ export const MenuContent = () => {
 
 			{ 'posts' === type &&
 			<Fragment>
-				<OptionGroup title={__('Created')}>
+				<OptionGroup title={__( 'Created' )}>
 					{ dateTags.map( ( item, i ) => {
 						const { label, value } = item
 						let isSelected = date === value ? true : false
@@ -68,7 +68,7 @@ export const MenuContent = () => {
 				</OptionGroup>
 				<Separator />
 
-				<OptionGroup title={__('Status')}>
+				<OptionGroup title={__( 'Status' )}>
 					{ statusTags.map( ( item, i ) => {
 						const { label, value } = item
 						let isSelected = status === value ? true : false

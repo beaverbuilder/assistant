@@ -24,26 +24,26 @@ export const getFilterTags = () => {
 
 	const typeTags = [
 		{
-			label: __('All'),
+			label: __( 'All' ),
 			value: '',
 		},
 		{
-			label: __('Images'),
+			label: __( 'Images' ),
 			value: 'image',
 			count: counts[ 'attachment/image' ] || '0',
 		},
 		{
-			label: __('Videos'),
+			label: __( 'Videos' ),
 			value: 'video',
 			count: counts[ 'attachment/video' ] || '0',
 		},
 		{
-			label: __('Audio'),
+			label: __( 'Audio' ),
 			value: 'audio',
 			count: counts[ 'attachment/audio' ] || '0',
 		},
 		{
-			label: __('Documents'),
+			label: __( 'Documents' ),
 			value: 'application',
 			count: counts[ 'attachment/application' ] || '0',
 		}

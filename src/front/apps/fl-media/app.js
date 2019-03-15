@@ -14,7 +14,7 @@ export const App = () => {
 			</ScreenHeader>
 
 			<Padding bottom={false}>
-				<Heading level={1}>{__('Media')}</Heading>
+				<Heading level={1}>{__( 'Media' )}</Heading>
 			</Padding>
 			<MediaList
 				query={ query }

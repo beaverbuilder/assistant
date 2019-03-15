@@ -12,12 +12,12 @@ export const RecentlyEditedWidget = () => {
 	const isTagSelected = value => postType === value
 
 	return (
-		<Widget title={__('Recently Edited')} isPadded={false}>
+		<Widget title={__( 'Recently Edited' )} isPadded={false}>
 			<div style={{ padding: '0 var(--fl-asst-base-padding)'}}>
 				<TagGroup appearance="vibrant">
-					<Tag onClick={ () => setPostType( 'any' )} isSelected={isTagSelected( 'any' )}>{__('Any Type')}</Tag>
-					<Tag onClick={ () => setPostType( 'post' )} isSelected={isTagSelected( 'post' )}>{__('Posts')}</Tag>
-					<Tag onClick={ () => setPostType( 'page' )} isSelected={isTagSelected( 'page' )}>{__('Pages')}</Tag>
+					<Tag onClick={ () => setPostType( 'any' )} isSelected={isTagSelected( 'any' )}>{__( 'Any Type' )}</Tag>
+					<Tag onClick={ () => setPostType( 'post' )} isSelected={isTagSelected( 'post' )}>{__( 'Posts' )}</Tag>
+					<Tag onClick={ () => setPostType( 'page' )} isSelected={isTagSelected( 'page' )}>{__( 'Pages' )}</Tag>
 				</TagGroup>
 			</div>
 			<PostList

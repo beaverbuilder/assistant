@@ -14,9 +14,9 @@ export const PostListFilter = () => {
 			<TagGroupControl limit={ 6 } tags={typeTags} value={[ type, subType ]} onChange={setType} appearance="muted" />
 			{ 'posts' === type &&
 				<ExpandedContents>
-					<TagGroupControl tags={dateTags} value={date} title={__('Created')} onChange={setDate} />
+					<TagGroupControl tags={dateTags} value={date} title={__( 'Created' )} onChange={setDate} />
 					{ 'attachment' !== subType &&
-						<TagGroupControl tags={statusTags} value={status} title={__('Status')} onChange={setStatus} />
+						<TagGroupControl tags={statusTags} value={status} title={__( 'Status' )} onChange={setStatus} />
 					}
 				</ExpandedContents>
 			}
@@ -48,19 +48,19 @@ export const getFilterTags = () => {
 
 	const dateTags = [
 		{
-			label: __('Any'),
+			label: __( 'Any' ),
 			value: '',
 		},
 		{
-			label: __('Today'),
+			label: __( 'Today' ),
 			value: 'today',
 		},
 		{
-			label: __('This Week'),
+			label: __( 'This Week' ),
 			value: 'week',
 		},
 		{
-			label: __('This Month'),
+			label: __( 'This Month' ),
 			value: 'month',
 		},
 		{
@@ -71,31 +71,31 @@ export const getFilterTags = () => {
 
 	const statusTags = [
 		{
-			label: __('Any'),
+			label: __( 'Any' ),
 			value: 'any',
 		},
 		{
-			label: __('Published'),
+			label: __( 'Published' ),
 			value: 'publish',
 		},
 		{
-			label: __('Draft'),
+			label: __( 'Draft' ),
 			value: 'draft',
 		},
 		{
-			label: __('Pending'),
+			label: __( 'Pending' ),
 			value: 'pending',
 		},
 		{
-			label: __('Scheduled'),
+			label: __( 'Scheduled' ),
 			value: 'future',
 		},
 		{
-			label: __('Private'),
+			label: __( 'Private' ),
 			value: 'private',
 		},
 		{
-			label: __('Trash'),
+			label: __( 'Trash' ),
 			value: 'trash',
 		},
 	]

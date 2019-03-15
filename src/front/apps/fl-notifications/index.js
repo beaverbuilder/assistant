@@ -8,7 +8,7 @@ import { initialState, actions, reducers, effects } from './state'
 const { registerApp } = getSystemActions()
 
 registerApp( 'fl-notifications', {
-	label: __('Notifications'),
+	label: __( 'Notifications' ),
 	content: <App />,
 	icon: <AppIcon />,
 	enabled: (

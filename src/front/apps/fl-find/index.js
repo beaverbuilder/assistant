@@ -7,7 +7,7 @@ import { initialState, actions, reducers, effects } from './state'
 const { registerApp } = getSystemActions()
 
 registerApp( 'fl-find', {
-	label: __('Content'),
+	label: __( 'Content' ),
 	content: <App />,
 	icon: <AppIcon />,
 	state: initialState,

@@ -7,7 +7,7 @@ import { initialState, actions, reducers, effects } from './state'
 const { registerApp } = getSystemActions()
 
 registerApp( 'fl-media', {
-	label: __('Media'),
+	label: __( 'Media' ),
 	content: <App />,
 	icon: <AppIcon />,
 	state: initialState,

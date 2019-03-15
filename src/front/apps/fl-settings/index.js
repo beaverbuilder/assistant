@@ -14,19 +14,19 @@ const App = () => {
 	return (
 		<Fragment>
 			<Padding bottom={false}>
-				<Heading level={1}>{__('Preferences')}</Heading>
+				<Heading level={1}>{__( 'Preferences' )}</Heading>
 			</Padding>
 
 			<SettingsGroup>
-				<SettingsItem label={__('Reduce Motion')}>
+				<SettingsItem label={__( 'Reduce Motion' )}>
 					<ToggleControl
 						value={shouldReduceMotion}
 						onChange={ value => setShouldReduceMotion( value ) }
 					/>
 				</SettingsItem>
-				<SettingsItem label={__('Panel Position')}>
+				<SettingsItem label={__( 'Panel Position' )}>
 					<Button onClick={ () => setPanelPosition( nextPanelPosition )}>
-						{ 'start' === panelPosition ? __('Left Edge') : __('Right Edge') }
+						{ 'start' === panelPosition ? __( 'Left Edge' ) : __( 'Right Edge' ) }
 					</Button>
 				</SettingsItem>
 			</SettingsGroup>
@@ -49,7 +49,7 @@ const AppIcon = () => {
 }
 
 registerApp( 'fl-settings', {
-	label: __('Preferences'),
+	label: __( 'Preferences' ),
 	content: <App />,
 	icon: <AppIcon />,
 } )
