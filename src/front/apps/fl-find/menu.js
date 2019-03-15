@@ -1,6 +1,12 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState, getAppActions } from 'store'
-import { OptionGroup, OptionGroupItem, Separator, AppContext, StackContext } from 'components'
+import {
+	OptionGroup,
+	OptionGroupItem,
+	Separator,
+	AppContext,
+	StackContext
+} from 'components'
 import { getFilterTags } from './filter'
 
 export const MenuContent = () => {

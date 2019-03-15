@@ -99,6 +99,7 @@
 
     .fl-asst-panel-chrome {
         flex: 0 0 var(--fl-asst-toolbar-height);
+        height: var(--fl-asst-toolbar-height);
         display:flex;
         flex-direction: row;
         position: relative;

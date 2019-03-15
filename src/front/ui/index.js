@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
+import { TunnelProvider } from 'react-tunnels'
 import {
 	Button,
 	Icon,
-	Separator,
 	AppTabButton,
 	UIContext,
 } from 'components'
 import { NotificationsAppButton } from 'apps/fl-notifications/button'
-import { App, useAppsMenu, AppFrame } from 'system'
+import { App, useAppsMenu, AppFrame, AppHeader } from 'system'
 import { useWindowSize } from 'utils/window'
 import { render } from 'utils/react'
 import { useSystemState } from 'store'
@@ -26,7 +26,6 @@ export const UI = () => {
 		renderModals,
 	} = useContext( UIContext )
 	const { width } = useWindowSize()
-
 	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
 	const excludedApps = [ 'fl-notifications', 'fl-settings' ]
@@ -39,77 +38,81 @@ export const UI = () => {
 	}
 
 	return (
-		<AppFrame>
-			<div className="fl-asst-panel-wrap">
+		<TunnelProvider>
+			<AppFrame>
+				<div className="fl-asst-panel-wrap">
 
-				{ /* Toolbar */ }
-				<div className="fl-asst-panel-chrome">
-					<div className="fl-asst-panel-chrome-area">
-						<NotificationsAppButton isShowingAppsMenu={isShowingAppsMenu} />
-					</div>
-					<div className="fl-asst-app-tabs-wrap">
-						<div className="fl-asst-app-tabs-area">
-							{ appOrder.map( key => {
-								const app = apps[key]
+					<div className="fl-asst-panel-header">
 
-								if ( key === activeAppName && count >= maxTabCount && ! excludedApps.includes( key ) ) {
-									activeAppIsBelowFold = true
-								}
+						<div className="fl-asst-panel-chrome">
+							<div className="fl-asst-panel-chrome-area">
+								<NotificationsAppButton isShowingAppsMenu={isShowingAppsMenu} />
+							</div>
+							<div className="fl-asst-app-tabs-wrap">
+								<div className="fl-asst-app-tabs-area">
+									{ appOrder.map( key => {
+										const app = apps[key]
 
-								if ( 'undefined' === typeof app ) {
-									return null
-								} else if ( excludedApps.includes( key ) ) {
-									return null
-								} else if ( count >= maxTabCount ) {
-									return null
-								} else if ( false === app.enabled ) {
-									return null
-								}
-								count++
+										if ( key === activeAppName && count >= maxTabCount && ! excludedApps.includes( key ) ) {
+											activeAppIsBelowFold = true
+										}
 
-								const isSelected = ( key === activeAppName && ! isShowingAppsMenu )
+										if ( 'undefined' === typeof app ) {
+											return null
+										} else if ( excludedApps.includes( key ) ) {
+											return null
+										} else if ( count >= maxTabCount ) {
+											return null
+										} else if ( false === app.enabled ) {
+											return null
+										}
+										count++
 
-								// Render if it's a JSX literal or function (else null)
-								let icon = render( app.icon )
-								if ( ! icon ) {
-									icon = <Icon name="default-app" />
-								}
+										const isSelected = ( key === activeAppName && ! isShowingAppsMenu )
 
-								return (
+										// Render if it's a JSX literal or function (else null)
+										let icon = render( app.icon )
+										if ( ! icon ) {
+											icon = <Icon name="default-app" />
+										}
+
+										return (
+											<AppTabButton
+												key={key}
+												isSelected={isSelected}
+												onClick={ e => onClickApp( key, e ) }
+												tooltip={app.label}
+											>{ icon }</AppTabButton>
+										)
+									} ) }
+
 									<AppTabButton
-										key={key}
-										isSelected={isSelected}
-										onClick={ e => onClickApp( key, e ) }
-										tooltip={app.label}
-									>{ icon }</AppTabButton>
-								)
-							} ) }
+										appearance="icon"
+										isSelected={ isShowingAppsMenu || activeAppIsBelowFold }
+										onClick={toggleIsShowingAppsMenu}
+										tooltip="Apps"
+									>
+										<Icon name="apps-app" />
+									</AppTabButton>
+								</div>
+							</div>
+							<div className="fl-asst-panel-chrome-area">
+								<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
+									<Icon name="close" />
+								</Button>
+							</div>
+						</div>{ /* chrome */ }
 
-							<AppTabButton
-								appearance="icon"
-								isSelected={ isShowingAppsMenu || activeAppIsBelowFold }
-								onClick={toggleIsShowingAppsMenu}
-								tooltip="Apps"
-							>
-								<Icon name="apps-app" />
-							</AppTabButton>
-						</div>
+						<AppHeader key={activeAppName} />
 					</div>
-					<div className="fl-asst-panel-chrome-area">
-						<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
-							<Icon name="close" />
-						</Button>
+
+					<div className="fl-asst-panel-contents">
+						<App key={activeAppName} { ...activeApp } />
 					</div>
 				</div>
 
-				<Separator isSlim={true} />
-
-				<div className="fl-asst-panel-contents">
-					<App key={activeAppName} { ...activeApp } />
-				</div>
-			</div>
-
-			{ renderModals() }
-		</AppFrame>
+				{ renderModals() }
+			</AppFrame>
+		</TunnelProvider>
 	)
 }

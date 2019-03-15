@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from 'react'
 import { currentUserCan } from 'utils/wordpress'
 import classname from 'classnames'
+
 import {
 	Separator,
 	NavBar,
+	Header
 } from 'components'
+
 import { useAppState, getAppActions } from 'store'
 import { Help } from './help'
 import { CurrentlyViewing } from './currently-viewing'
@@ -20,8 +23,6 @@ export const App = () => {
 		'fl-asst-main-app-content': true,
 		'fl-asst-main-app-content-is-dimmed': isExpanded,
 	} )
-
-	//useEffect( () => void setIsFirstTime( false ), [] )
 
 	return (
 		<Fragment>
@@ -41,6 +42,10 @@ export const App = () => {
 			</NavBar>
 
 			<div className={classes}>
+
+				<Header.Expanded>
+					<Help collapse={ () => setIsExpanded( false ) } />
+				</Header.Expanded>
 
 				<RecentlyEditedWidget />
 				<Separator />

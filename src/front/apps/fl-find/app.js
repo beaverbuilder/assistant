@@ -1,6 +1,13 @@
 import React, { Fragment, useContext } from 'react'
 import { useAppState } from 'store'
-import { PostList, ScreenHeader, FrameContext, Padding, Heading } from 'components'
+import {
+	PostList,
+	ScreenHeader,
+	FrameContext,
+	Padding,
+	Heading,
+	Header,
+} from 'components'
 import { PostListFilter } from './filter'
 
 export const App = () => {
@@ -9,6 +16,7 @@ export const App = () => {
 
 	return (
 		<Fragment>
+			<Header>Hey</Header>
 			<ScreenHeader showTitle={false}>
 				{ 'normal' === size && <PostListFilter /> }
 			</ScreenHeader>

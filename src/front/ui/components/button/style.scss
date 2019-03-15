@@ -74,28 +74,28 @@
         border-radius: 0;
         border: none;
         background: transparent;
-        border-top: 2px solid transparent;
+        border-top: 3px solid transparent;
         border-bottom: 2px solid transparent;
         padding: 7px 10px;
         color: var(--fl-asst-base-art-color);
 
         &:hover {
             border: none;
-            border-top: 2px solid transparent;
+            border-top: 3px solid transparent;
             border-bottom: 2px solid transparent;
             background: var(--fl-utility-background-color);
         }
 
         &:focus {
             border: none;
-            border-top: 2px solid transparent;
+            border-top: 3px solid transparent;
             border-bottom: 2px solid transparent;
             background: var(--fl-utility-background-color);
         }
 
         &.fl-asst-button-is-selected {
             color: var(--fl-accent-color);
-            border-bottom-color: var(--fl-accent-color);
+            border-top-color: var(--fl-accent-color);
         }
     }
 

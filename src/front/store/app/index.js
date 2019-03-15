@@ -2,17 +2,34 @@ import { useContext } from 'react'
 import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch } from 'utils/store'
 import { AppContext } from 'components'
+import {
+	defaultState,
+	defaultActions,
+	defaultReducers,
+	defaultEffects,
+} from './defaults'
 
 export const registerAppStore = args => {
-	const { key, state, actions, reducers, effects } = args
-	const storeKey = `${ key }/state`
-	const cache = getCache( 'app-state', key )
-
-	registerStore( storeKey, {
-		state: cache ? { ...state, ...cache } : state,
+	const {
+		key,
+		state: initialState,
 		actions,
 		reducers,
 		effects,
+	} = args
+
+	const storeKey = `${ key }/state`
+	const cache = getCache( 'app-state', key )
+	const state = {
+		...defaultState,
+		...initialState,
+	}
+
+	registerStore( storeKey, {
+		state: cache ? { ...state, ...cache } : state,
+		actions: { ...defaultActions, ...actions },
+		reducers: { ...defaultReducers, ...reducers },
+		effects: { ...defaultEffects, ...effects },
 	} )
 
 	getStore( storeKey ).subscribe( () => {
