@@ -28,7 +28,7 @@ export const UI = () => {
 	const { width } = useWindowSize()
 	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 
-	const excludedApps = [ 'fl-notifications', 'fl-settings' ]
+	const excludedApps = [ 'fl-notifications' ]
 	const maxTabCount = 400 < width ? 4 : 2
 	let count = 0
 	let activeAppIsBelowFold = false
@@ -103,7 +103,7 @@ export const UI = () => {
 							</div>
 						</div>{ /* chrome */ }
 
-						<AppHeader key={activeAppName} />
+						{ 'undefined' !== typeof activeApp && <AppHeader key={activeAppName} /> }
 					</div>
 
 					<div className="fl-asst-panel-contents">
