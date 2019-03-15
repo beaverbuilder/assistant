@@ -15,6 +15,7 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
+    "@wordpress/autop": "^2.1.0",
     "@wordpress/i18n": "^3.2.0",
     "camelcase": "^5.2.0",
     "classnames": "^2.2.6",
