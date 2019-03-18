@@ -123,7 +123,7 @@ export const Toolbar = ( { children } ) => {
 export const Title = props => {
 	const { children, className } = props
 
-	const classes = classname({
+	const classes = classname( {
 		'fl-asst-screen-title': true,
 	}, className )
 

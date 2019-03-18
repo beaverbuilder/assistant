@@ -8,7 +8,7 @@ export const MediaListFilter = () => {
 	const { setType } = getAppActions()
 	const { typeTags } = getFilterTags()
 	const { type } = filter
-	let title = __('Media')
+	let title = __( 'Media' )
 
 	const navItems = []
 	typeTags.map( tag => {
@@ -16,14 +16,14 @@ export const MediaListFilter = () => {
 		if ( type === tag.value ) {
 			title = tag.label
 		}
-		navItems.push({
+		navItems.push( {
 			children: tag.label,
 			onClick: () => setType( tag.value )
-		})
-	})
+		} )
+	} )
 
 	if ( '' === type ) {
-		title = __('Media')
+		title = __( 'Media' )
 	}
 
 	return (

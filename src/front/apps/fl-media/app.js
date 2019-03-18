@@ -1,11 +1,10 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
 import { useAppState } from 'store'
 import {
 	MediaList,
 	MediaDropUploader,
 } from 'components'
-import { MediaListFilter, getFilterTags } from './filter'
+import { MediaListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()

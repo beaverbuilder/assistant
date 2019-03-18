@@ -6,8 +6,6 @@ import {
 	ScreenHeader,
 	FrameContext,
 	Title,
-	Header,
-	NavBar,
 } from 'components'
 import { PostListFilter } from './filter'
 
@@ -22,7 +20,7 @@ export const App = () => {
 				{ 'normal' === size && <PostListFilter /> }
 			</ScreenHeader>
 
-			<Title>{__('Content')}</Title>
+			<Title>{__( 'Content' )}</Title>
 			<PostList
 				type={ filter.type }
 				query={ query }
