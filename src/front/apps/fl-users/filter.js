@@ -1,4 +1,5 @@
 import React from 'react'
+import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl } from 'components'
 
@@ -10,6 +11,7 @@ export const UserListFilter = () => {
 
 	return (
 		<TagGroupControl
+			title={__( 'User Role' )}
 			limit={ 6 }
 			tags={ roleTags }
 			value={ role }
