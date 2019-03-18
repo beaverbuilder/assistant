@@ -1,10 +1,27 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import classname from 'classnames'
 import { animated, useSpring, config } from 'react-spring'
-import { useSystemState, getSystemActions, getSystemConfig } from 'store'
+import {
+	useSystemState,
+	getSystemActions,
+	getSystemConfig,
+	useAppState,
+	getAppActions,
+} from 'store'
+
 import { useAppFrame } from 'system'
 import { render } from 'utils/react'
-import { UIContext, Stack, AppContext, Heading, Padding, Button, Icon, EmptyMessage, Branding } from 'components'
+import {
+	UIContext,
+	Stack,
+	AppContext,
+	Heading,
+	Padding,
+	Button,
+	Icon,
+	EmptyMessage,
+	Branding
+} from 'components'
 import { TunnelPlaceholder, Tunnel } from 'react-tunnels'
 import './style.scss'
 
@@ -46,8 +63,10 @@ export const App = props => {
 	return (
 		<AppContext.Provider value={appContext}>
 			<div className="fl-asst-app" style={styles}>
-				<AppMenuRenderer />
-				<Stack>{ output }</Stack>
+				<AppContentWrapper>
+					<AppMenuRenderer />
+					<Stack>{ output }</Stack>
+				</AppContentWrapper>
 			</div>
 		</AppContext.Provider>
 	)
@@ -175,6 +194,27 @@ const AppNotFoundScreen = () => {
 			</Padding>
 			Oops, we could not find your app!
 		</EmptyMessage>
+	)
+}
+
+const AppContentWrapper = ( { children } ) => {
+	const { isAppHeaderExpanded } = useAppState()
+	const { setIsAppHeaderExpanded } = getAppActions()
+
+	const classes = classname( {
+		'fl-asst-app-content': true,
+		'fl-asst-app-content-is-dimmed': isAppHeaderExpanded
+	} )
+
+	return (
+		<div
+			className={classes}
+			onClick={ () => {
+				if ( isAppHeaderExpanded ) {
+					setIsAppHeaderExpanded( false )
+				}
+			}}
+		>{children}</div>
 	)
 }
 

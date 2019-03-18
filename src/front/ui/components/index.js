@@ -2,7 +2,7 @@ export { Icon, Pattern } from './icon'
 export { Photo, useImageData } from './image'
 export { Branding } from './branding'
 export { Header } from './header'
-
+export { NavBar } from './navigation'
 export {
 	Button,
 	AppTabButton,
@@ -31,6 +31,7 @@ export {
 	ExpandedContents,
 	EmptyMessage,
 	Toolbar,
+	Title,
 } from './panel-parts'
 
 export {
@@ -67,7 +68,6 @@ export {
 	SettingsGroup,
 } from './settings'
 
-export { NavBar } from './nav-bar'
 export { Tabs } from './tabs'
 export { OptionGroup, OptionGroupItem } from './option-group'
 export { Frame, FrameContext, ContentFrame } from './frame'

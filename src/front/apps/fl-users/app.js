@@ -1,19 +1,25 @@
 import React, { Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState } from 'store'
-import { UserList, ScreenHeader, Padding, Heading } from 'components'
+import {
+	UserList,
+	Title,
+	Header,
+	Padding,
+} from 'components'
 import { UserListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
 	return (
 		<Fragment>
-			<ScreenHeader showTitle={false}>
-				<UserListFilter />
-			</ScreenHeader>
-			<Padding bottom={false}>
-				<Heading level={1}>{__( 'People' )}</Heading>
-			</Padding>
+			<Header.Expanded>
+				<Padding>
+					<UserListFilter />
+				</Padding>
+			</Header.Expanded>
+
+			<Title>{__( 'People' )}</Title>
 			<UserList
 				query={ query }
 				pagination={ true }

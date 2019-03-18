@@ -65,7 +65,7 @@
 
 .fl-asst-screen-menu-frame {
     position: absolute;
-    top: calc( var(--fl-asst-toolbar-height) + 3px ); // account for slim separator
+    top: var(--fl-asst-toolbar-height);
     left:0;
     right:0;
     bottom:0;

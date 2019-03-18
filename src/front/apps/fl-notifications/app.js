@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useAppState } from 'store'
-import { ScreenHeader, CommentList, UpdateList, Padding, Heading } from 'components'
+import { CommentList, UpdateList, Title, Padding } from 'components'
 import { NotificationsFilter } from './filter'
 
 export const App = () => {
@@ -14,12 +14,12 @@ export const App = () => {
 
 	return (
 		<Fragment>
-			<ScreenHeader showTitle={false}>
+			<Title>{title}</Title>
+
+			<Padding bottom={ 'updates' === type }>
 				<NotificationsFilter />
-			</ScreenHeader>
-			<Padding bottom={ 'updates' !== type ? false : null }>
-				<Heading level={1}>{title}</Heading>
 			</Padding>
+
 			{ 'comments' === type && <CommentList query={ query } pagination={ true } /> }
 			{ 'updates' === type && <UpdateList query={ query } /> }
 		</Fragment>

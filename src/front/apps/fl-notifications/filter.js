@@ -2,7 +2,11 @@ import React, { Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, useSystemState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
-import { ExpandedContents, TagGroupControl } from 'components'
+import {
+	TagGroupControl,
+	NavBar,
+	Header,
+} from 'components'
 
 export const NotificationsFilter = () => {
 	const { filter } = useAppState()
@@ -10,30 +14,38 @@ export const NotificationsFilter = () => {
 	const { typeTags, commentStatusTags, updateTypeTags } = getFilterTags()
 	const { type, commentStatus, updateType } = filter
 
+	const navItems = []
+	typeTags.map( item => {
+		navItems.push( {
+			children: item.label,
+			onClick: () => setType( item.value ),
+			isSelected: item.value === type
+		} )
+	} )
+
 	return (
 		<Fragment>
-			<TagGroupControl
-				tags={ typeTags }
-				value={ type }
-				onChange={ setType }
-				appearance="vibrant"
-			/>
-			<ExpandedContents>
-				{ 'comments' === type &&
-					<TagGroupControl
-						title={__( 'Status' )}
-						tags={ commentStatusTags }
-						value={ commentStatus }
-						onChange={ setCommentStatus } />
-				}
-				{ 'updates' === type &&
-					<TagGroupControl
-						title={__( 'Status' )}
-						tags={ updateTypeTags }
-						value={ updateType }
-						onChange={ setUpdateType } />
-				}
-			</ExpandedContents>
+
+			<Header>
+				<NavBar items={navItems} />
+			</Header>
+
+			{ 'comments' === type &&
+				<TagGroupControl
+					appearance="muted"
+					title={__( 'Status' )}
+					tags={ commentStatusTags }
+					value={ commentStatus }
+					onChange={ setCommentStatus } />
+			}
+			{ 'updates' === type &&
+				<TagGroupControl
+					appearance="muted"
+					title={__( 'Status' )}
+					tags={ updateTypeTags }
+					value={ updateType }
+					onChange={ setUpdateType } />
+			}
 		</Fragment>
 	)
 }

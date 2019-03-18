@@ -1,26 +1,21 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
+import { __ } from '@wordpress/i18n'
 import { useAppState } from 'store'
 import {
 	PostList,
-	ScreenHeader,
-	FrameContext,
-	Padding,
-	Heading,
+	Title,
 } from 'components'
 import { PostListFilter } from './filter'
 
 export const App = () => {
 	const { filter, query } = useAppState()
-	const { size } = useContext( FrameContext )
 
 	return (
 		<Fragment>
-			<ScreenHeader showTitle={false}>
-				{ 'normal' === size && <PostListFilter /> }
-			</ScreenHeader>
-			<Padding bottom={false}>
-				<Heading level={1}>Content</Heading>
-			</Padding>
+
+			<PostListFilter />
+
+			<Title>{__( 'Content' )}</Title>
 			<PostList
 				type={ filter.type }
 				query={ query }
