@@ -58,7 +58,7 @@ export const ContentListItem = ( { className, children, onClick } ) => {
 	}, [] )
 
 	return (
-		<div className={ classes } onClick={ onClick } tabIndex="0">
+		<div className={ classes } onClick={ onClick }>
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>

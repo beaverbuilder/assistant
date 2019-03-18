@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemActions } from 'store'
-import { SettingsItem, SettingsGroup, Button, ToggleControl, Padding, Heading } from 'components'
+import { SettingsItem, SettingsGroup, Button, ToggleControl, Title } from 'components'
 const { registerApp } = getSystemActions()
 import './style.scss'
 
@@ -13,9 +13,7 @@ const App = () => {
 
 	return (
 		<Fragment>
-			<Padding bottom={false}>
-				<Heading level={1}>{__( 'Preferences' )}</Heading>
-			</Padding>
+			<Title>{__( 'Preferences' )}</Title>
 
 			<SettingsGroup>
 				<SettingsItem label={__( 'Reduce Motion' )}>

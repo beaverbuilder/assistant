@@ -1,21 +1,18 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState } from 'store'
-import { ScreenHeader, MediaList, MediaDropUploader, Heading, Padding } from 'components'
-import { MediaListFilter } from './filter'
+import {
+	MediaList,
+	MediaDropUploader,
+} from 'components'
+import { MediaListFilter, getFilterTags } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
 
 	return (
 		<MediaDropUploader>
-			<ScreenHeader showTitle={false}>
-				<MediaListFilter />
-			</ScreenHeader>
-
-			<Padding bottom={false}>
-				<Heading level={1}>{__( 'Media' )}</Heading>
-			</Padding>
+			<MediaListFilter />
 			<MediaList
 				query={ query }
 				pagination={ true }

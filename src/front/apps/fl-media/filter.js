@@ -1,21 +1,38 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, useSystemState } from 'store'
-import { TagGroupControl } from 'components'
+import { Header, NavBar, Title } from 'components'
 
 export const MediaListFilter = () => {
 	const { filter } = useAppState()
 	const { setType } = getAppActions()
 	const { typeTags } = getFilterTags()
 	const { type } = filter
+	let title = __('Media')
+
+	const navItems = []
+	typeTags.map( tag => {
+
+		if ( type === tag.value ) {
+			title = tag.label
+		}
+		navItems.push({
+			children: tag.label,
+			onClick: () => setType( tag.value )
+		})
+	})
+
+	if ( '' === type ) {
+		title = __('Media')
+	}
 
 	return (
-		<TagGroupControl
-			appearance="muted"
-			tags={ typeTags }
-			value={ type }
-			onChange={ setType }
-		/>
+		<Fragment>
+			<Header>
+				<NavBar items={navItems} />
+			</Header>
+			<Title>{title}</Title>
+		</Fragment>
 	)
 }
 
