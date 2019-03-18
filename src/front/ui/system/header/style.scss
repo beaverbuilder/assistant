@@ -10,6 +10,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
+        padding-top:2px;
 
         .fl-asst-app-title {
             font-size: 16px;
@@ -24,10 +25,11 @@
             align-items: center;
             justify-content: center;
             min-height: 32px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .fl-asst-app-header-content {
-            padding: 1px 15px 0;
+            padding: 0 15px 0;
+            min-height: 36px;
         }
         .fl-asst-app-header-content-expanded {
             flex-direction: column;

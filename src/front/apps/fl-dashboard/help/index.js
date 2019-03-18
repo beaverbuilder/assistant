@@ -109,7 +109,10 @@ export const Help = ( { collapse } ) => {
 
 const GoToApp = ( { id, children } ) => {
 	const { setActiveApp } = useContext( UIContext )
-	const click = () => setActiveApp( id )
+
+	const click = () => {
+		setActiveApp( id )
+	}
 	return (
 		<Button
 			onClick={click}

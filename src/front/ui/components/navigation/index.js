@@ -4,7 +4,7 @@ import { Button, Icon } from 'components'
 import './style.scss'
 
 export const NavBar = props => {
-	const { className, items = [] } = props
+	const { className, items = [], maxItems = null } = props
 
 	const classes = classname( {
 		'fl-asst-nav-bar': true,
@@ -15,14 +15,13 @@ export const NavBar = props => {
 		className: classes,
 	}
 	delete merged.items
-
-	const maxItems = 5
+	delete merged.maxItems
 
 	return (
 		<nav {...merged}>
 			{ items.map( ( item, i ) => {
 
-				if ( i >= maxItems ) {
+				if ( maxItems && i >= maxItems ) {
 					return null
 				}
 

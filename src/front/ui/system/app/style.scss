@@ -50,4 +50,23 @@
             }
         }
     }
+
+    .fl-asst-app-content-is-dimmed {
+        background: var(--fl-utility-background-color);
+
+        & > * {
+            opacity: .4;
+            filter: grayscale(100%);
+            pointer-events: none;
+        }
+
+        .fl-asst-scroller {
+            overflow: hidden;
+        }
+    }
+
+    .fl-asst-app-content {
+        flex: 1 1 auto;
+        display: flex;
+    }
 }

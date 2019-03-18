@@ -1,25 +1,55 @@
 import React, { Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
-import { TagGroupControl, ExpandedContents } from 'components'
+import {
+	TagGroupControl,
+	Header,
+	NavBar,
+	Padding,
+} from 'components'
 
 export const PostListFilter = () => {
 	const { filter } = useAppState()
 	const { setType, setDate, setStatus } = getAppActions()
 	const { typeTags, dateTags, statusTags } = getFilterTags()
 	const { type, subType, date, status } = filter
+	let navItems = []
+
+	typeTags.map( item => {
+		navItems.push( {
+			children: item.label,
+			onClick: () => setType( item.value ),
+			isSelected: JSON.stringify( [ type, subType ] ) === JSON.stringify( item.value ),
+		} )
+	} )
 
 	return (
 		<Fragment>
-			<TagGroupControl limit={ 6 } tags={typeTags} value={[ type, subType ]} onChange={setType} appearance="muted" />
-			{ 'posts' === type &&
-				<ExpandedContents>
-					<TagGroupControl tags={dateTags} value={date} title={__( 'Created' )} onChange={setDate} />
-					{ 'attachment' !== subType &&
-						<TagGroupControl tags={statusTags} value={status} title={__( 'Status' )} onChange={setStatus} />
+
+			<Header>
+				<NavBar items={navItems} maxItems={5} />
+			</Header>
+
+			<Header.Expanded>
+				<Padding top={false}>
+					<TagGroupControl
+						title={__( 'Type' )}
+						tags={typeTags}
+						value={[ type, subType ]}
+						onChange={setType}
+					/>
+
+					{ 'posts' === type &&
+						<Fragment>
+							<TagGroupControl tags={dateTags} value={date} title={__( 'Created' )} onChange={setDate} />
+
+							{ 'attachment' !== subType &&
+								<TagGroupControl tags={statusTags} value={status} title={__( 'Status' )} onChange={setStatus} />
+							}
+						</Fragment>
 					}
-				</ExpandedContents>
-			}
+				</Padding>
+			</Header.Expanded>
 		</Fragment>
 	)
 }

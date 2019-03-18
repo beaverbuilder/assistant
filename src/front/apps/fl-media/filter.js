@@ -18,7 +18,8 @@ export const MediaListFilter = () => {
 		}
 		navItems.push( {
 			children: tag.label,
-			onClick: () => setType( tag.value )
+			onClick: () => setType( tag.value ),
+			isSelected: type === tag.value
 		} )
 	} )
 
@@ -41,7 +42,7 @@ export const getFilterTags = () => {
 
 	const typeTags = [
 		{
-			label: __( 'All' ),
+			label: __( 'All Media' ),
 			value: '',
 		},
 		{

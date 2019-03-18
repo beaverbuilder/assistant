@@ -64,8 +64,8 @@
 }
 .fl-asst-tag-group-appearance-muted {
     .fl-asst-tag {
-        color: white;
-        background-color: var(--fl-asst-base-art-color);
+        color: var(--fl-asst-light-color);
+        background-color: var(--fl-asst-dark-color);
         border-color: transparent;
         transition-property: background-color;
         transition-duration: .15s;

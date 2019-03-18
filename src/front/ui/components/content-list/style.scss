@@ -18,7 +18,7 @@
 
 .fl-asst-list-group-heading {
 	background: var(--fl-utility-background-color);
-	padding: 5px 20px;
+	padding: 5px var(--fl-asst-base-padding);
 }
 
 .fl-asst-list-item-loading {
@@ -104,6 +104,10 @@
         .fl-asst-list-item-visual {
             transform: scale(1.15)
         }
+
+        .fl-asst-list-item-accessory {
+            visibility: visible;
+        }
     }
 
     .fl-asst-list-item-content {
@@ -134,6 +138,7 @@
         flex: 0 0 auto;
         display: flex;
         justify-content: center;
+        visibility: hidden;
     }
 
     .fl-asst-list-item-actions {
