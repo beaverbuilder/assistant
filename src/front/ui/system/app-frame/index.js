@@ -51,6 +51,7 @@ export const AppFrame = ( { children } ) => {
 	const { isShowingUI, shouldReduceMotion } = useSystemState()
 	const { appFrame: { width, height, alignment } } = useAppFrame()
 	const { width: windowWidth } = useWindowSize()
+	const bodyWidth = document.body.clientWidth // accounts for scrollbar on windows
 
 	const transform = () => {
 		if ( isShowingUI ) {
@@ -74,7 +75,7 @@ export const AppFrame = ( { children } ) => {
 	const springProps = useSpring( {
 		width: width + 1/* account for inside edge border */,
 		height,
-		right: 'end' === alignment ? 0 : windowWidth - width,
+		right: 'end' === alignment ? 0 : bodyWidth - width,
 		transform: transform(),
 		immediate: shouldReduceMotion,
 		config: springConfig,

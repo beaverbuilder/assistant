@@ -209,9 +209,10 @@ const AppContentWrapper = ( { children } ) => {
 	return (
 		<div
 			className={classes}
-			onClick={ () => {
+			onClickCapture={ e => {
 				if ( isAppHeaderExpanded ) {
 					setIsAppHeaderExpanded( false )
+					e.stopPropagation()
 				}
 			}}
 		>{children}</div>

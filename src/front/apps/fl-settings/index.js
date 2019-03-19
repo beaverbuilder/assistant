@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemActions } from 'store'
-import { SettingsItem, SettingsGroup, Button, ToggleControl, Title } from 'components'
+import { SettingsItem, SettingsGroup, ToggleControl, Title, NavBar } from 'components'
 const { registerApp } = getSystemActions()
 import './style.scss'
 
@@ -9,7 +9,18 @@ const App = () => {
 	const { shouldReduceMotion, panelPosition } = useSystemState()
 	const { setShouldReduceMotion, setPanelPosition } = getSystemActions()
 
-	const nextPanelPosition = ( 'start' === panelPosition ) ? 'end' : 'start'
+	const edgeItems = [
+		{
+			children: __( 'Left' ),
+			onClick: () => setPanelPosition( 'start' ),
+			isSelected: 'start' === panelPosition
+		},
+		{
+			children: __( 'Right' ),
+			onClick: () => setPanelPosition( 'end' ),
+			isSelected: 'end' === panelPosition
+		}
+	]
 
 	return (
 		<Fragment>
@@ -23,9 +34,7 @@ const App = () => {
 					/>
 				</SettingsItem>
 				<SettingsItem label={__( 'Panel Position' )}>
-					<Button onClick={ () => setPanelPosition( nextPanelPosition )}>
-						{ 'start' === panelPosition ? __( 'Left Edge' ) : __( 'Right Edge' ) }
-					</Button>
+					<NavBar items={edgeItems} />
 				</SettingsItem>
 			</SettingsGroup>
 		</Fragment>
