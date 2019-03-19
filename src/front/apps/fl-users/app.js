@@ -6,6 +6,7 @@ import {
 	Title,
 	Header,
 	Padding,
+	Heading,
 } from 'components'
 import { UserListFilter } from './filter'
 
@@ -15,6 +16,7 @@ export const App = () => {
 		<Fragment>
 			<Header.Expanded>
 				<Padding>
+					<Heading>{__('Filters')}</Heading>
 					<UserListFilter />
 				</Padding>
 			</Header.Expanded>

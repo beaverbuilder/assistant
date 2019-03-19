@@ -6,6 +6,7 @@ import {
 	Header,
 	NavBar,
 	Padding,
+	Heading,
 } from 'components'
 
 export const PostListFilter = () => {
@@ -31,7 +32,8 @@ export const PostListFilter = () => {
 			</Header>
 
 			<Header.Expanded>
-				<Padding top={false}>
+				<Padding>
+					<Heading>{__('Filters')}</Heading>
 					<TagGroupControl
 						title={__( 'Type' )}
 						tags={typeTags}
