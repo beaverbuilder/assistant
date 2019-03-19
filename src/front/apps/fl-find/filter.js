@@ -33,7 +33,7 @@ export const PostListFilter = () => {
 
 			<Header.Expanded>
 				<Padding>
-					<Heading>{__('Filters')}</Heading>
+					<Heading>{__( 'Filters' )}</Heading>
 					<TagGroupControl
 						title={__( 'Type' )}
 						tags={typeTags}

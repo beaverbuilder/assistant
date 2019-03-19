@@ -15,13 +15,11 @@
         padding: 2px 7px;
 
         &:first-child {
-            padding-left: 15px;
             border-top-left-radius: 7px;
             border-bottom-left-radius: 7px;
         }
 
         &:last-child {
-            padding-right: 15px;
             border-top-right-radius: 7px;
             border-bottom-right-radius: 7px;
         }

@@ -16,7 +16,7 @@ export const App = () => {
 		<Fragment>
 			<Header.Expanded>
 				<Padding>
-					<Heading>{__('Filters')}</Heading>
+					<Heading>{__( 'Filters' )}</Heading>
 					<UserListFilter />
 				</Padding>
 			</Header.Expanded>
