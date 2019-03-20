@@ -19,6 +19,7 @@
 .fl-asst-list-group-heading {
 	background: var(--fl-utility-background-color);
 	padding: 5px var(--fl-asst-base-padding);
+    user-select: none;
 }
 
 .fl-asst-list-item-loading {

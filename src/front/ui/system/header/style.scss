@@ -2,6 +2,7 @@
     flex: 0 0 auto;
     box-shadow: 0px 2px 0px var(--fl-asst-overlay-background-color);
     z-index: 1;
+    user-select: none;
 
     .fl-asst-app-header {
         position: relative;
@@ -29,7 +30,7 @@
         }
         .fl-asst-app-header-content {
             padding: 0 15px 0;
-            min-height: 36px;
+            min-height: 32px;
         }
         .fl-asst-app-header-content-expanded {
             flex-direction: column;

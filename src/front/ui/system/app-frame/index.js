@@ -50,8 +50,7 @@ export const useAppFrame = () => {
 export const AppFrame = ( { children } ) => {
 	const { isShowingUI, shouldReduceMotion } = useSystemState()
 	const { appFrame: { width, height, alignment } } = useAppFrame()
-	const { width: windowWidth } = useWindowSize()
-	const bodyWidth = document.body.clientWidth // accounts for scrollbar on windows
+	const { clientWidth: bodyWidth } = useWindowSize()
 
 	const transform = () => {
 		if ( isShowingUI ) {

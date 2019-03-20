@@ -126,7 +126,7 @@ const BrandIcon = () => {
 		width: 68,
 		height: 63,
 		borderRadius: 10,
-		background: 'var(--fl-utility-background-color)',
+		background: '#F5E9DC',
 		boxShadow: '0px 1px 2px rgba( 0, 0, 0, .2 )',
 		display: 'flex',
 		alignItems: 'center',

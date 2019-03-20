@@ -5,8 +5,9 @@ export const useWindowSize = () => {
 
 	const getSize = () => {
 		return {
-			width: isClient ? window.innerWidth : undefined,
-			height: isClient ? window.innerHeight : undefined,
+			width: isClient ? window.innerWidth : null,
+			height: isClient ? window.innerHeight : null,
+			clientWidth: isClient ? document.body.clientWidth : null,
 		}
 	}
 

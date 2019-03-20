@@ -66,8 +66,8 @@ const Assistant = () => {
 		<Provider store={getSystemStore()}>
 			<UIContext.Provider value={ui}>
 				<PageViewContext.Provider value={currentPageView}>
-					<UIToggleButton />
-					<UI />
+					{ ! isShowingUI && <UIToggleButton /> }
+					{ isShowingUI && <UI /> }
 				</PageViewContext.Provider>
 			</UIContext.Provider>
 		</Provider>
