@@ -1,30 +1,50 @@
 :root {
-    --fl-background-color: #ffffff;
-    --fl-line-color: rgba(140, 155, 172, 0.25);
-    --fl-text-color: #4B5A69;
-    --fl-title-color: #000000;
-    --fl-asst-muted-text-color: #52646c;
-    --fl-asst-base-art-color: #7A8998; /* Icons and buttons at rest */
+    // Dimensions
+    --fl-asst-base-unit: 30px;
+    --fl-asst-half-unit: calc( var( --fl-asst-base-unit ) / 2 );
+    --fl-asst-base-padding: var(--fl-asst-base-unit);
+    --fl-asst-normal-width: 460px;
+    --fl-asst-toolbar-height: 48px;
 
-    --fl-asst-dark-color: #65727E;
-    --fl-asst-light-color: #ffffff;
-
-    --fl-utility-background-color: #EDF2F4; /* Utility containers like partials */
-	--fl-utility-button-color: #D3DFE4; /* Buttons with a utility background color */
-    --fl-utility-element-color: #D3DFE4; /* Elements on a utility background color */
-    --fl-asst-overlay-background-color: #edf2f4c4;
-
-    --fl-accent-color: #3AA4CC;
-    --fl-warning-color: #FF8911;
-    --fl-error-color: #E01041;
-	--fl-error-hover-color: #B00D33;
-
+    // Typograpy
     --fl-asst-base-text-size: 14px;
     --fl-asst-base-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
-    --fl-asst-base-padding: 30px;
-    --fl-asst-normal-width: 460px;
-    --fl-asst-toolbar-height: 48px;
+    // Colors
+    --fl-asst-dark-color: #65727E;
+    --fl-asst-light-color: #ffffff;
+    --fl-asst-background-color: var(--fl-asst-light-color);
+    --fl-asst-line-color: rgba(140, 155, 172, 0.25);
+
+    --fl-asst-text-color: #4B5A69;
+    --fl-asst-title-color: #000000;
+    --fl-asst-muted-text-color: #52646c;
+
+    --fl-asst-base-art-color: #7A8998; // Icons and buttons at rest
+
+    --fl-asst-utility-background-color: #EDF2F4; // Utility containers like partials
+    --fl-asst-utility-button-color: #D3DFE4; // Buttons with a utility background color
+    --fl-asst-utility-element-color: #D3DFE4; // Elements on a utility background color
+
+    --fl-asst-overlay-background-color: #edf2f4c4;
+
+    --fl-asst-accent-color: #2a9fcb;
+    --fl-asst-warning-color: #FF8911;
+    --fl-asst-error-color: #E01041;
+	--fl-asst-error-hover-color: #B00D33;
+
+    // Deprecated - These will be removed
+    --fl-background-color: var(--fl-asst-background-color);
+    --fl-line-color: var(--fl-asst-line-color);
+    --fl-text-color: var(--fl-asst-text-color);
+    --fl-title-color: var(--fl-asst-title-color);
+    --fl-utility-background-color: var(--fl-asst-utility-background-color); // Utility containers like partials
+    --fl-utility-button-color: var(--fl-asst-utility-button-color); // Buttons with a utility background color
+    --fl-utility-element-color: var(--fl-asst-utility-element-color); // Elements on a utility background color
+    --fl-accent-color: var(--fl-asst-accent-color);
+    --fl-warning-color: var(--fl-asst-warning-color);
+    --fl-error-color: var(--fl-asst-error-color);
+	--fl-error-hover-color: var(--fl-asst-error-hover-color);
 }
 
 .fl-asst {
