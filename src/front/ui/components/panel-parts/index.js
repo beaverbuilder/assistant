@@ -121,7 +121,7 @@ export const Toolbar = ( { children } ) => {
 }
 
 export const Title = props => {
-	const { children, className } = props
+	const { children, className, actions } = props
 
 	const classes = classname( {
 		'fl-asst-screen-title': true,
@@ -134,7 +134,8 @@ export const Title = props => {
 
 	return (
 		<div {...merged}>
-			<span>{children}</span>
+			<span className="fl-asst-screen-title-text">{children}</span>
+			{ actions && <span className="fl-asst-screen-title-actions">{actions}</span> }
 		</div>
 	)
 }

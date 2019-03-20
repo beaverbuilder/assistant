@@ -38,9 +38,7 @@ export const UI = () => {
 		setActiveApp( key )
 	}
 
-	const appContext = {
-		...activeApp
-	}
+	const appContext = { ...activeApp }
 
 	return (
 		<TunnelProvider>
@@ -49,7 +47,6 @@ export const UI = () => {
 					<div className="fl-asst-panel-wrap">
 
 						<div className="fl-asst-panel-header">
-
 							<div className="fl-asst-panel-chrome">
 								<div className="fl-asst-panel-chrome-area">
 									<NotificationsAppButton isShowingAppsMenu={isShowingAppsMenu} />

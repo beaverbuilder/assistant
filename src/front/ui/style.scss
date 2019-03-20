@@ -52,7 +52,7 @@
     font-family: var(--fl-asst-base-font-family);
     font-size: var(--fl-asst-base-text-size);
     line-height: 1.5;
-    color: var(--fl-text-color);
+    color: var(--fl-asst-text-color);
 
     input[type="text"],
     input[type="email"],
@@ -76,9 +76,9 @@
         text-transform: none;
         padding: 8px;
         margin:0;
-        background-color: var(--fl-background-color);
+        background-color: var(--fl-asst-background-color);
         background-image: none;
-        border: 1px solid var(--fl-line-color);
+        border: 1px solid var(--fl-asst-line-color);
         border-radius: 2px;
         box-shadow: none;
         max-width: none;
@@ -94,7 +94,6 @@
         justify-content: center;
         box-shadow: none;
         text-shadow: none;
-        border-radius: 2px;
     }
 
     hr {
@@ -107,16 +106,16 @@
         height:100%;
         display: flex;
         flex-direction: column;
-        background: var(--fl-background-color);
+        background: var(--fl-asst-background-color);
     }
 
     .fl-asst-panel-contents {
         flex: 1 1 auto;
-        color: var(--fl-text-color);
+        color: var(--fl-asst-text-color);
         display: flex;
         flex-direction: column;
         position: relative;
-        background: var(--fl-background-color);
+        background: var(--fl-asst-background-color);
         overflow: hidden;
     }
 
