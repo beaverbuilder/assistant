@@ -5,6 +5,8 @@ import { AppContext, StackContext, BackButton } from 'components'
 import { AppMenuButton } from 'system'
 import './style.scss'
 
+export { Scroller } from './scroller'
+
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const { label } = useContext( AppContext )
