@@ -33,6 +33,7 @@ export {
 	Toolbar,
 	Title,
 	Scroller,
+	ScrollContext,
 } from './panel-parts'
 
 export {
