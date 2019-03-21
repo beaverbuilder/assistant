@@ -1,5 +1,6 @@
-import React, { createContext, createRef } from 'react'
+import React, { createContext, createRef, useContext } from 'react'
 import classname from 'classnames'
+import { FrameContext } from 'components'
 import './style.scss'
 
 export const ScrollContext = createContext( {
@@ -7,10 +8,12 @@ export const ScrollContext = createContext( {
 } )
 
 export const Scroller = props => {
-	const { className } = props
+	const { className, style: stylesProp } = props
 	const classes = classname( {
 		'fl-asst-scroller': true,
 	}, className )
+
+	const { height } = useContext( FrameContext )
 
 	const ref = createRef()
 
@@ -18,10 +21,16 @@ export const Scroller = props => {
 		ref,
 	}
 
+	const style = {
+		height,
+		...stylesProp,
+	}
+
 	const merged = {
 		...props,
 		className: classes,
 		ref,
+		style,
 	}
 
 	return (

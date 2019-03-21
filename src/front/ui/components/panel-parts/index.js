@@ -5,7 +5,7 @@ import { AppContext, StackContext, BackButton } from 'components'
 import { AppMenuButton } from 'system'
 import './style.scss'
 
-export { Scroller } from './scroller'
+export { Scroller, ScrollContext } from './scroller'
 
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
@@ -133,6 +133,7 @@ export const Title = props => {
 		...props,
 		className: classes,
 	}
+	delete merged.actions
 
 	return (
 		<div {...merged}>

@@ -3,6 +3,7 @@ import { useAppState } from 'store'
 import {
 	MediaList,
 	MediaDropUploader,
+	Scroller,
 } from 'components'
 import { MediaListFilter } from './filter'
 
@@ -11,11 +12,13 @@ export const App = () => {
 
 	return (
 		<MediaDropUploader>
-			<MediaListFilter />
-			<MediaList
-				query={ query }
-				pagination={ true }
-			/>
+			<Scroller>
+				<MediaListFilter />
+				<MediaList
+					query={ query }
+					pagination={ true }
+				/>
+			</Scroller>
 		</MediaDropUploader>
 	)
 }
