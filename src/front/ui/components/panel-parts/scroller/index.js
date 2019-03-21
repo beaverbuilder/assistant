@@ -3,30 +3,30 @@ import classname from 'classnames'
 import './style.scss'
 
 export const ScrollContext = createContext( {
-    ref: null,
+	ref: null,
 } )
 
 export const Scroller = props => {
-	const { children, className } = props
-	const classes = classname({
-		'fl-asst-scroller' : true,
+	const { className } = props
+	const classes = classname( {
+		'fl-asst-scroller': true,
 	}, className )
 
-    const ref = createRef()
+	const ref = createRef()
 
-    const context = {
-        ref,
-    }
+	const context = {
+		ref,
+	}
 
-    const merged = {
-        ...props,
-        className: classes,
-        ref,
-    }
+	const merged = {
+		...props,
+		className: classes,
+		ref,
+	}
 
 	return (
-        <ScrollContext.Provider value={context}>
-            <div {...merged} />
-        </ScrollContext.Provider>
+		<ScrollContext.Provider value={context}>
+			<div {...merged} />
+		</ScrollContext.Provider>
 	)
 }
