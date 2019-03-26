@@ -126,7 +126,7 @@ export const Title = props => {
 	const { children, className, actions } = props
 
 	const classes = classname( {
-		'fl-asst-screen-title': true,
+		'fl-asst-screen-name': true,
 	}, className )
 
 	const merged = {
