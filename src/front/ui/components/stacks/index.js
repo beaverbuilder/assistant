@@ -52,26 +52,17 @@ export const StackView = posed.div( props => {
 			scale: .9,
 			opacity: 0,
 			transition: handleTransition,
-			applyAtStart: {
-				pointerEvents: 'none'
-			}
 		},
 		present: {
 			x: '0%',
 			scale: 1,
 			opacity: 1,
 			transition: handleTransition,
-			applyAtEnd: {
-				pointerEvents: 'auto'
-			}
 		},
 		future: {
 			x: '80%',
 			opacity: 0,
 			transition: handleTransition,
-			applyAtStart: {
-				pointerEvents: 'none'
-			}
 		},
 	}
 } )

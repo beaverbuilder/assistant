@@ -1,25 +1,20 @@
-import React, { createContext, createRef, useRef, useState, useLayoutEffect } from 'react'
+import React, { createContext, useRef, useState, useLayoutEffect } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
 import classname from 'classnames'
 import './style.scss'
 
 export const Scroller = props => {
 	const { className, style: stylesProp } = props
-	const [needsScrollbars, setNeedsScrollbars] = useState(false)
-
-	const classes = classname( {
-		'fl-asst-scroller': true,
-		'fl-asst-scroller-is-scrollable' : needsScrollbars,
-	}, className )
 
 	const ref = useRef( null )
-	const { height } = useResizeObserver( ref )
-
-	console.log( height )
 
 	const context = {
 		ref,
 	}
+
+	const classes = classname( {
+		'fl-asst-scroller': true,
+	}, className )
 
 	const style = {
 		...stylesProp,
@@ -55,6 +50,7 @@ export const useResizeObserver = ref => {
 		left: null,
 		bottom: null,
 		right: null,
+		canScroll: null,
 	}
 	const [ data, setData ] = useState( defaults )
 
@@ -62,7 +58,7 @@ export const useResizeObserver = ref => {
 		if ( 'undefined' !== typeof ref.current ) {
 			let id = null
 			const measure = entries => {
-				const { contentRect: rect } = entries[0]
+				const { contentRect: rect, target } = entries[0]
 				id = requestAnimationFrame( () => {
 
 					const data = {
@@ -74,7 +70,8 @@ export const useResizeObserver = ref => {
 						top: rect.top,
 						left: rect.left,
 						bottom: rect.bottom,
-						right: rect.bottom
+						right: rect.bottom,
+						canScroll: rect.height < target.scrollHeight
 					}
 					setData( data )
 				} )

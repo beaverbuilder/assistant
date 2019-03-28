@@ -10,9 +10,17 @@ import { MediaListFilter } from './filter'
 export const App = () => {
 	const { query } = useAppState()
 
+	const scroller = {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		bottom: 0,
+		right: 0,
+	}
+
 	return (
 		<MediaDropUploader>
-			<Scroller>
+			<Scroller style={scroller}>
 				<MediaListFilter />
 				<MediaList
 					query={ query }

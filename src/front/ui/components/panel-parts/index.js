@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { AppContext, StackContext, BackButton } from 'components'
+import { AppContext, StackContext, BackButton, Padding } from 'components'
 import { AppMenuButton } from 'system'
 import './style.scss'
 

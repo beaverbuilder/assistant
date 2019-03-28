@@ -24,7 +24,7 @@ import './apps'
 const Assistant = () => {
 	const { currentPageView } = getSystemConfig()
 	const { isShowingUI, panelPosition, appFrameSize } = useSystemState()
-	
+
 	const {
 		setIsShowingUI,
 		togglePanelPosition,
