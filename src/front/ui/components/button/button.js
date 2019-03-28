@@ -31,7 +31,7 @@ export const NewButton = forwardRef( ( props, ref ) => {
 	const { className } = props
 	return (
 		<Button {...props} appearance="round" ref={ref}>
-			<Icon />
+			<Icon name="plus"/>
 		</Button>
 	)
 } )

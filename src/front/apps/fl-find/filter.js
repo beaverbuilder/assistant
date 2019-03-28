@@ -39,14 +39,15 @@ export const PostListFilter = () => {
 						tags={typeTags}
 						value={[ type, subType ]}
 						onChange={setType}
+						appearance="muted"
 					/>
 
 					{ 'posts' === type &&
 						<Fragment>
-							<TagGroupControl tags={dateTags} value={date} title={__( 'Created' )} onChange={setDate} />
+							<TagGroupControl tags={dateTags} value={date} title={__( 'Created' )} onChange={setDate} appearance="muted" />
 
 							{ 'attachment' !== subType &&
-								<TagGroupControl tags={statusTags} value={status} title={__( 'Status' )} onChange={setStatus} />
+								<TagGroupControl tags={statusTags} value={status} title={__( 'Status' )} onChange={setStatus} appearance="muted" />
 							}
 						</Fragment>
 					}
