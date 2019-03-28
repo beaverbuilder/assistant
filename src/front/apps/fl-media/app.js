@@ -3,19 +3,30 @@ import { useAppState } from 'store'
 import {
 	MediaList,
 	MediaDropUploader,
+	Scroller,
 } from 'components'
 import { MediaListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
 
+	const scroller = {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		bottom: 0,
+		right: 0,
+	}
+
 	return (
 		<MediaDropUploader>
-			<MediaListFilter />
-			<MediaList
-				query={ query }
-				pagination={ true }
-			/>
+			<Scroller style={scroller}>
+				<MediaListFilter />
+				<MediaList
+					query={ query }
+					pagination={ true }
+				/>
+			</Scroller>
 		</MediaDropUploader>
 	)
 }

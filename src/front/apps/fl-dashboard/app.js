@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { currentUserCan } from 'utils/wordpress'
-import classname from 'classnames'
 
 import {
 	Separator,
@@ -14,32 +13,23 @@ import { RecentCommentsWidget } from './recent-comments'
 import './style.scss'
 
 export const App = () => {
-	const classes = classname( {
-		'fl-asst-main-app-content': true,
-	} )
 
 	return (
 		<Fragment>
-
 			<CurrentlyViewing />
+			<Header.Expanded>
+				<Help />
+			</Header.Expanded>
 
-			<div className={classes}>
+			<RecentlyEditedWidget />
+			<Separator />
 
-				<Header.Expanded>
-					<Help />
-				</Header.Expanded>
-
-				<RecentlyEditedWidget />
-				<Separator />
-
-				{ currentUserCan( 'moderate_comments' ) &&
-					<Fragment>
-						<RecentCommentsWidget />
-						<Separator />
-					</Fragment>
-				}
-
-			</div>
+			{ currentUserCan( 'moderate_comments' ) &&
+				<Fragment>
+					<RecentCommentsWidget />
+					<Separator />
+				</Fragment>
+			}
 		</Fragment>
 	)
 }

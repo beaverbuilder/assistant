@@ -48,13 +48,12 @@
 
         &.fl-asst-grid-item-landscape {
             grid-column-end: span 2;
-
         }
         &.fl-asst-grid-item-portrait {
             grid-column-end: span 1;
         }
         &.fl-asst-grid-item-pano {
-            grid-column: 1 / -1;
+            grid-column: span 4;
         }
     }
 

@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { AppContext, StackContext, BackButton } from 'components'
+import { AppContext, StackContext, BackButton, Padding } from 'components'
 import { AppMenuButton } from 'system'
 import './style.scss'
-
 
 export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const { label } = useContext( AppContext )
@@ -124,18 +123,42 @@ export const Title = props => {
 	const { children, className, actions } = props
 
 	const classes = classname( {
-		'fl-asst-screen-title': true,
+		'fl-asst-screen-name': true,
 	}, className )
 
 	const merged = {
 		...props,
 		className: classes,
 	}
+	delete merged.actions
 
 	return (
 		<div {...merged}>
 			<span className="fl-asst-screen-title-text">{children}</span>
 			{ actions && <span className="fl-asst-screen-title-actions">{actions}</span> }
 		</div>
+	)
+}
+
+export const ContentFrame = props => {
+	const { className, padded = false, align } = props
+
+	const classes = classname( {
+		'fl-asst-content-frame': true,
+		'fl-asst-content-frame-align-center': 'center' === align,
+	}, className )
+
+	const mergedProps = Object.assign( {}, props, {
+		className: classes,
+	} )
+	delete mergedProps.align
+
+	return (
+		<Fragment>
+			{ padded && <Padding>
+				<div {...mergedProps} />
+			</Padding> }
+			{ ! padded && <div {...mergedProps} /> }
+		</Fragment>
 	)
 }

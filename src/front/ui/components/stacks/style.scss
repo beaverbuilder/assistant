@@ -12,15 +12,3 @@
         flex-direction: column;
     }
 }
-
-.fl-asst-scroller {
-    overflow-y: scroll; /* has to be scroll, not auto */
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    overflow: -moz-scrollbars-none;
-    -ms-overflow-style: none;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-}

@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useContext, createRef } from 'react'
+import React, { useState, useEffect, useContext, createRef, createContext } from 'react'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { StackContext, ViewContext, Frame, Button, Icon } from 'components'
+import { ViewContext, Button, Icon, Scroller } from 'components'
 import './style.scss'
+
+export const StackContext = createContext()
+StackContext.displayName = 'StackContext'
 
 const handleTransition = () => {
 	return {
@@ -49,26 +52,17 @@ export const StackView = posed.div( props => {
 			scale: .9,
 			opacity: 0,
 			transition: handleTransition,
-			applyAtStart: {
-				pointerEvents: 'none'
-			}
 		},
 		present: {
 			x: '0%',
 			scale: 1,
 			opacity: 1,
 			transition: handleTransition,
-			applyAtEnd: {
-				pointerEvents: 'auto'
-			}
 		},
 		future: {
 			x: '80%',
 			opacity: 0,
 			transition: handleTransition,
-			applyAtStart: {
-				pointerEvents: 'none'
-			}
 		},
 	}
 } )
@@ -213,10 +207,10 @@ export const Stack = ( { children, className } ) => {
 								key={key}
 								ref={ref}
 								onPoseComplete={poseComplete}
-								className='fl-asst-stack-view fl-asst-scroller'
+								className='fl-asst-stack-view'
 								{...props}
 							>
-								<Frame>{props.children}</Frame>
+								<Scroller>{props.children}</Scroller>
 							</StackView>
 						</ViewContext.Provider>
 					</StackContext.Provider>
