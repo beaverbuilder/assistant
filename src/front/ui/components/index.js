@@ -18,6 +18,8 @@ export {
 	AspectBox,
 } from './layout-helpers'
 
+export { Scroller } from './scroller'
+
 export {
 	TagGroup,
 	Tag,
@@ -32,15 +34,13 @@ export {
 	EmptyMessage,
 	Toolbar,
 	Title,
-	Scroller,
-	ScrollContext,
+	ContentFrame,
 } from './panel-parts'
 
 export {
 	PageViewContext,
 	UIContext,
 	AppContext,
-	StackContext,
 	ViewContext,
 	ItemContext,
 } from './contexts'
@@ -72,8 +72,7 @@ export {
 
 export { Tabs } from './tabs'
 export { OptionGroup, OptionGroupItem } from './option-group'
-export { Frame, FrameContext, ContentFrame } from './frame'
 export { Widget } from './widgets'
-export { Stack, BackButton } from './stacks'
+export { Stack, StackContext, BackButton } from './stacks'
 export { useModals } from './modals'
 export { useFileDrop, FileDropListener, MediaDropUploader } from './upload'

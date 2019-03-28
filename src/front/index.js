@@ -2,10 +2,18 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { UI } from './ui'
-import { UIToggleButton } from 'system'
-import { UIContext, PageViewContext, useModals } from 'components'
-import { useActiveApp } from 'system'
-import { getSystemConfig, getSystemStore, getSystemActions, useSystemState } from 'store'
+import { UIToggleButton, useActiveApp } from 'system'
+import {
+	UIContext,
+	PageViewContext,
+	useModals
+} from 'components'
+import {
+	getSystemConfig,
+	getSystemStore,
+	getSystemActions,
+	useSystemState
+} from 'store'
 import { redirect } from 'utils/location'
 import './api'
 import './apps'
@@ -16,6 +24,7 @@ import './apps'
 const Assistant = () => {
 	const { currentPageView } = getSystemConfig()
 	const { isShowingUI, panelPosition, appFrameSize } = useSystemState()
+	
 	const {
 		setIsShowingUI,
 		togglePanelPosition,
@@ -23,6 +32,7 @@ const Assistant = () => {
 		setIsShowingAppsMenu,
 		setAppFrameSize,
 	} = getSystemActions()
+
 	const { activeApp, activeAppName, setActiveApp } = useActiveApp()
 
 	const { renderModals, presentModal, dismissModal, presentNotification, modalExists } = useModals()

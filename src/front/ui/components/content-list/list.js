@@ -1,7 +1,7 @@
 import React, { Fragment, cloneElement, useState, useContext, useEffect, useRef } from 'react'
 import classname from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
-import { EmptyMessage, ItemContext, StackContext, ScrollContext } from 'components'
+import { EmptyMessage, ItemContext, StackContext, Scroller } from 'components'
 import {
 	ContentListEmptyMessage,
 	ContentListGroupLabel,
@@ -29,7 +29,7 @@ export const ContentList = ( {
 	const { updateCurrentView } = useContext( StackContext )
 	const [ truncateWidth, setTruncateWidth ] = useState( null )
 
-	const { ref } = useContext( ScrollContext )
+	const { ref } = useContext( Scroller.Context )
 
 	/**
 	 * Store a reference to the scroll parent. There's a bug with

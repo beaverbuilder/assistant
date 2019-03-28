@@ -26,6 +26,7 @@ export const UI = () => {
 		setIsShowingUI,
 		renderModals,
 	} = useContext( UIContext )
+	
 	const { width } = useWindowSize()
 	const { isShowingAppsMenu, toggleIsShowingAppsMenu } = useAppsMenu()
 

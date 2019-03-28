@@ -149,3 +149,12 @@
         }
     }
 }
+
+.fl-asst-content-frame {
+    max-width: 80ch;
+    width: 100%;
+
+    &.fl-asst-content-frame-align-center {
+        margin: 0 auto;
+    }
+}

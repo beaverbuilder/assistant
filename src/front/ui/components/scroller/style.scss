@@ -1,0 +1,16 @@
+
+.fl-asst-scroller {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+
+    &.fl-asst-scroller-is-scrollable {
+        overflow-y: scroll; /* has to be scroll, not auto, to prevent chaining on the body element */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        overflow: -moz-scrollbars-none;
+        -ms-overflow-style: none;
+    }
+}

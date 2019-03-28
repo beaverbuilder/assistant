@@ -5,9 +5,6 @@ import { AppContext, StackContext, BackButton } from 'components'
 import { AppMenuButton } from 'system'
 import './style.scss'
 
-export { Scroller, ScrollContext } from './scroller'
-
-
 export const ScreenHeader = ( { children, showTitle, title } ) => {
 	const { label } = useContext( AppContext )
 	const { isRootView } = useContext( StackContext )
@@ -140,5 +137,28 @@ export const Title = props => {
 			<span className="fl-asst-screen-title-text">{children}</span>
 			{ actions && <span className="fl-asst-screen-title-actions">{actions}</span> }
 		</div>
+	)
+}
+
+export const ContentFrame = props => {
+	const { className, padded = false, align } = props
+
+	const classes = classname( {
+		'fl-asst-content-frame': true,
+		'fl-asst-content-frame-align-center': 'center' === align,
+	}, className )
+
+	const mergedProps = Object.assign( {}, props, {
+		className: classes,
+	} )
+	delete mergedProps.align
+
+	return (
+		<Fragment>
+			{ padded && <Padding>
+				<div {...mergedProps} />
+			</Padding> }
+			{ ! padded && <div {...mergedProps} /> }
+		</Fragment>
 	)
 }
