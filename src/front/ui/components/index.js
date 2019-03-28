@@ -5,6 +5,7 @@ export { Header } from './header'
 export { NavBar } from './navigation'
 export {
 	Button,
+	NewButton,
 	AppTabButton,
 	CopyButton,
 } from './button'

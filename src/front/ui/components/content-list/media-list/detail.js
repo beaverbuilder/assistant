@@ -13,6 +13,7 @@ import {
 	SettingsGroup,
 	SettingsItem,
 	StackContext,
+	Title,
 	useImageData,
 } from 'components'
 import { updatePost } from 'utils/wordpress'
@@ -50,15 +51,6 @@ export const MediaDetail = () => {
 	const { colors } = imgData
 	const { whole, topLeft } = colors
 
-	const toolbarStyles = {
-		position: 'absolute',
-		zIndex: 1,
-		height: 44,
-		width: '100%',
-		display: 'flex',
-		flexDirection: 'row',
-	}
-
 	let background = whole.hex
 
 	const imgStyles = {
@@ -75,14 +67,7 @@ export const MediaDetail = () => {
 			topLeftBg = tlColor.lighten( .2 ).hex()
 		}
 	}
-
-	const btnStyles = {
-		background: topLeftBg,
-		color: topLeft.isDark ? 'white' : 'var(--fl-title-color)',
-		margin: 10,
-		boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'
-	}
-
+	
 	const trashClicked = () => {
 		const message = __( 'Do you really want to delete this item?' )
 		const type = mime.split( '/' ).shift()
@@ -96,7 +81,7 @@ export const MediaDetail = () => {
 
 	return (
 		<Fragment>
-			<div style={toolbarStyles}><BackButton style={btnStyles} /></div>
+			<Title>{__('Edit Media')}</Title>
 			<Photo src={url} style={imgStyles} />
 
 			<Padding>

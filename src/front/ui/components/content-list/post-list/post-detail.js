@@ -14,6 +14,7 @@ import {
 	TagGroup,
 	Tag,
 	ToggleControl,
+	Title,
 	UIContext,
 	StackContext,
 	ViewContext,
@@ -109,6 +110,8 @@ export const PostListDetail = () => {
 	return (
 		<ContentListDetail>
 
+			<Title>{__('Edit Post')}</Title>
+
 			<ScreenHeader title={ headerTitle }>
 
 				<SettingsGroup>
@@ -126,16 +129,16 @@ export const PostListDetail = () => {
 				<TagGroup appearance='muted' className='fl-asst-post-actions'>
 					{ 'trash' !== status &&
 						<Fragment>
-							<Tag href={ url }>View</Tag>
-							<Tag href={ editUrl }>Edit</Tag>
+							<Tag href={ url }>{__('View')}</Tag>
+							<Tag href={ editUrl }>{__('Edit')}</Tag>
 							{ bbCanEdit &&
 								<Tag href={ bbEditUrl }>{ bbBranding }</Tag>
 							}
-							<Tag onClick={ trashClicked } appearance='warning'>Trash</Tag>
+							<Tag onClick={ trashClicked } appearance='warning'>{__('Trash')}</Tag>
 						</Fragment>
 					}
 					{ 'trash' === status &&
-						<Tag onClick={restoreClicked}>Restore</Tag>
+						<Tag onClick={restoreClicked}>{__('Restore')}</Tag>
 					}
 				</TagGroup>
 

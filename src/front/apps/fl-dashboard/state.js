@@ -1,27 +1,9 @@
 
-const initial = {
-	isFirstTime: true,
-}
+const initial = {}
 
-const actions = {
-	setIsFirstTime( value = false ) {
-		return {
-			type: 'SET_IS_FIRST_TIME',
-			value,
-		}
-	}
-}
+const actions = {}
 
-const reducers = {
-	isFirstTime( state = initial.isFirstTime, action ) {
-		switch ( action.type ) {
-		case 'SET_IS_FIRST_TIME':
-			return action.value
-		default:
-			return state
-		}
-	}
-}
+const reducers = {}
 
 export default {
 	state: initial,
