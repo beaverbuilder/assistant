@@ -1,11 +1,12 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { TunnelPlaceholder } from 'react-tunnels'
-import { UIContext } from 'components'
+import {
+	UIContext,
+	Icon,
+	Button,
+} from 'components'
 import { useAppState, getAppActions } from 'store'
 import classname from 'classnames'
-import {
-	Button
-} from 'components'
 import './style.scss'
 
 export const AppHeader = () => {
@@ -54,7 +55,7 @@ const CollapsedContent = props => {
 				// Default to app title
 				return (
 					<div {...merged}>
-						<div className="fl-asst-app-title">{children}</div>
+						<BreadcrumbTrail />
 					</div>
 				)
 			} }
@@ -147,6 +148,35 @@ const ExpanderButton = props => {
 				}
 				return null
 			} }
+		</TunnelPlaceholder>
+	)
+}
+
+const BreadcrumbTrail = () => {
+	return (
+		<TunnelPlaceholder id='app-breadcrumbs' multiple>
+		{ ( { items } ) => {
+			return items.map( ( item, i ) => {
+				const { children, onClick = () => {} } = item
+				const isFirst = i === 0
+				const isLast = i === items.length - 1
+				return (
+					<Fragment key={i}>
+						{ !isFirst &&
+							<span className="fl-asst-app-breadcrumb-separator">
+								<Icon name="forward" />
+							</span>
+						}
+						{ !isLast && <Button
+							appearance="transparent"
+							className="fl-asst-app-breadcrumb-item"
+							onClick={onClick}
+						>{children}</Button> }
+						{ isLast && <span className="fl-asst-app-breadcrumb-item">{children}</span> }
+					</Fragment>
+				)
+			})
+		}}
 		</TunnelPlaceholder>
 	)
 }
