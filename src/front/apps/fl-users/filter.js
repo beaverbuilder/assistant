@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl } from 'components'
 
-export const UserListFilter = ({ dismissAll }) => {
+export const UserListFilter = ( { dismissAll } ) => {
 	const { filter } = useAppState()
 	const { setRole } = getAppActions()
 	const { roleTags } = getFilterTags()
