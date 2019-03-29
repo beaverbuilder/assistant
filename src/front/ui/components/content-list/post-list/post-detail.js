@@ -82,12 +82,12 @@ export const PostListDetail = () => {
 			post_title: title,
 		}, () => {
 			updateItem( { title, slug, commentsAllowed } )
-			presentNotification( __('Changes published!') )
+			presentNotification( __( 'Changes published!' ) )
 			if ( mounted.current ) {
 				setPublishing( false )
 			}
 		}, () => {
-			presentNotification( __('Error! Changes not published.'), { appearance: 'error' } )
+			presentNotification( __( 'Error! Changes not published.' ), { appearance: 'error' } )
 			if ( mounted.current ) {
 				setPublishing( false )
 			}

@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from 'react'
-import Color from 'color'
 import { __ } from '@wordpress/i18n'
 import {
 	ViewContext,
@@ -48,7 +47,7 @@ export const MediaDetail = () => {
 
 	const imgData = useImageData( url )
 	const { colors } = imgData
-	const { whole, topLeft } = colors
+	const { whole } = colors
 
 	let background = whole.hex
 
@@ -76,28 +75,28 @@ export const MediaDetail = () => {
 
 			<Padding>
 				<TagGroup appearance='muted' id="fl-asst-media-actions">
-					<Tag href={pageURL}>{__('View')}</Tag>
-					<Tag href={editUrl}>{__('Edit')}</Tag>
-					<Tag onClick={trashClicked} appearance='warning'>{__('Delete')}</Tag>
+					<Tag href={pageURL}>{__( 'View' )}</Tag>
+					<Tag href={editUrl}>{__( 'Edit' )}</Tag>
+					<Tag onClick={trashClicked} appearance='warning'>{__( 'Delete' )}</Tag>
 				</TagGroup>
 			</Padding>
 
 			<SettingsGroup>
-				<SettingsItem label={__('Filesize')}>
+				<SettingsItem label={__( 'Filesize' )}>
 					{filesize}
 				</SettingsItem>
-				<SettingsItem label={__('Uploaded Date')}>
+				<SettingsItem label={__( 'Uploaded Date' )}>
 					{date}
 				</SettingsItem>
 			</SettingsGroup>
 
 			<Separator />
 			<SettingsGroup>
-				{ title && <SettingsItem label={__('Title')}>{title}</SettingsItem> }
-				{ alt && <SettingsItem label={__('Alternate Text')}>{alt}</SettingsItem> }
-				{ description && <SettingsItem label={__('Description')}>{description}</SettingsItem> }
+				{ title && <SettingsItem label={__( 'Title' )}>{title}</SettingsItem> }
+				{ alt && <SettingsItem label={__( 'Alternate Text' )}>{alt}</SettingsItem> }
+				{ description && <SettingsItem label={__( 'Description' )}>{description}</SettingsItem> }
 				<SettingsItem labelPosition='above'>
-					<CopyButton label={__('Copy URL')} text={ pageURL } />
+					<CopyButton label={__( 'Copy URL' )} text={ pageURL } />
 				</SettingsItem>
 			</SettingsGroup>
 		</Fragment>

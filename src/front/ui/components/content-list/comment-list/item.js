@@ -21,11 +21,11 @@ export const CommentListItem = ( { className, ...props } ) => {
 	return (
 		<ContentListItem
 			className={ classes }
-			onClick={ () => present({
-				label: __('Edit Comment'),
+			onClick={ () => present( {
+				label: __( 'Edit Comment' ),
 				content: <CommentDetail />,
 				context,
-			}) }
+			} ) }
 			{ ...props }
 		>
 			{ ! approved &&

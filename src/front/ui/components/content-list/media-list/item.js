@@ -40,14 +40,14 @@ export const MediaListItem = ( { className } ) => {
 
 	const onClick = () => {
 		const context = { ...item }
-		present({
-			label: __('Edit Media'),
+		present( {
+			label: __( 'Edit Media' ),
 			content: (
 				<ViewContext.Provider value={context}>
 					<MediaDetail />
 				</ViewContext.Provider>
 			)
-		})
+		} )
 	}
 
 	return (

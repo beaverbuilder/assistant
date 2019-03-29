@@ -13,7 +13,7 @@ export const MediaListFilter = () => {
 	const navItems = []
 	typeTags.map( tag => {
 
-		if ( tag.count < 1 ) {
+		if ( 1 > tag.count ) {
 			return
 		}
 

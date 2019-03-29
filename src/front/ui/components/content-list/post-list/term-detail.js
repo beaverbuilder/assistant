@@ -115,32 +115,32 @@ export const TermListDetail = () => {
 
 	return (
 		<ContentListDetail>
-			<Title>{__('Edit')}</Title>
+			<Title>{__( 'Edit' )}</Title>
 
 			<ScreenHeader title={ title }>
 				<TagGroup appearance='muted' className='fl-asst-post-actions'>
-					<Tag href={ url }>{__('View')}</Tag>
-					<Tag href={ editUrl }>{__('Edit')}</Tag>
-					<Tag onClick={ trashClicked } appearance='warning'>{__('Delete')}</Tag>
+					<Tag href={ url }>{__( 'View' )}</Tag>
+					<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
+					<Tag onClick={ trashClicked } appearance='warning'>{__( 'Delete' )}</Tag>
 				</TagGroup>
 			</ScreenHeader>
 
 			<SettingsGroup>
-				<SettingsItem label={__('Name')} labelPosition='above'>
+				<SettingsItem label={__( 'Name' )} labelPosition='above'>
 					<input type='text' name='title' value={ title } onChange={ onChange } />
 				</SettingsItem>
-				<SettingsItem label={__('Slug')} labelPosition='above'>
+				<SettingsItem label={__( 'Slug' )} labelPosition='above'>
 					<input type='text' name='slug' value={ slug } onChange={ onChange } />
 					<CopyButton label='Copy URL' text={ url } />
 				</SettingsItem>
 				{ isHierarchical &&
-					<SettingsItem label={__('Parent')} labelPosition='above'>
+					<SettingsItem label={__( 'Parent' )} labelPosition='above'>
 						<select name='parent' value={ parent } onChange={ onChange }>
 							{ renderParentOptions() }
 						</select>
 					</SettingsItem>
 				}
-				<SettingsItem label={__('Description')} labelPosition='above'>
+				<SettingsItem label={__( 'Description' )} labelPosition='above'>
 					<textarea name='description' value={ description } onChange={ onChange } />
 				</SettingsItem>
 				<SettingsItem>

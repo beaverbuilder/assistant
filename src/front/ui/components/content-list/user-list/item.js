@@ -16,11 +16,11 @@ export const UserListItem = ( { className, ...props } ) => {
 	return (
 		<ContentListItem
 			className={ classes }
-			onClick={ () => present({
-				label: __('Edit User'),
+			onClick={ () => present( {
+				label: __( 'Edit User' ),
 				content: <UserDetail />,
 				context,
-			}) }
+			} ) }
 			{ ...props }
 		/>
 	)

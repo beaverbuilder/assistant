@@ -18,7 +18,7 @@ export const PostListFilter = () => {
 
 	typeTags.map( item => {
 
-		if ( item.count < 1 ) {
+		if ( 1 > item.count ) {
 			return
 		}
 

@@ -178,12 +178,12 @@ export const Stack = ( { children, className } ) => {
 	// New API
 	const present = config => {
 		const defaults = {
-			label: __('Unnamed'),
+			label: __( 'Unnamed' ),
 			content: null,
 			appearance: 'normal',
 			onDismiss: () => {},
 		}
-		const view = Object.assign({}, defaults, config)
+		const view = Object.assign( {}, defaults, config )
 		pushView( view.content, view )
 	}
 

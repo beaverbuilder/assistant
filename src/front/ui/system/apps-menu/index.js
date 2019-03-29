@@ -16,7 +16,7 @@ const AppsMenu = () => {
 
 	return (
 		<Fragment>
-			<Title>{__('Apps')}</Title>
+			<Title>{__( 'Apps' )}</Title>
 			<div className="fl-asst-app-list">
 				{ appOrder.map( ( key ) => {
 

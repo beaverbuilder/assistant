@@ -14,17 +14,17 @@ export const PostListItem = props => {
 
 		// Terms don't have a status.
 		if ( context.status ) {
-			present({
-				label: __('Edit Post'),
+			present( {
+				label: __( 'Edit Post' ),
 				content: <PostListDetail />,
 				context,
-			})
+			} )
 		} else {
-			present({
-				label: __('Edit Term'),
+			present( {
+				label: __( 'Edit Term' ),
 				content: <TermListDetail />,
 				context,
-			})
+			} )
 		}
 	}
 
