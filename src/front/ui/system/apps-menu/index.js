@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react'
+import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemActions } from 'store'
-import { Heading, Icon, UIContext, Button } from 'components'
+import { Title, Icon, UIContext, Button } from 'components'
 import { render } from 'utils/react'
 import './style.scss'
 
@@ -15,7 +16,7 @@ const AppsMenu = () => {
 
 	return (
 		<Fragment>
-			<Heading className="fl-asst-manage-apps-title">Apps</Heading>
+			<Title>{__('Apps')}</Title>
 			<div className="fl-asst-app-list">
 				{ appOrder.map( ( key ) => {
 

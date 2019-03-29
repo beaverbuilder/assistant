@@ -110,7 +110,7 @@ export const PostListDetail = () => {
 	return (
 		<ContentListDetail>
 
-			<Title>{__('Edit Post')}</Title>
+			<Title>{__( 'Edit Post' )}</Title>
 
 			<ScreenHeader title={ headerTitle }>
 
@@ -129,16 +129,16 @@ export const PostListDetail = () => {
 				<TagGroup appearance='muted' className='fl-asst-post-actions'>
 					{ 'trash' !== status &&
 						<Fragment>
-							<Tag href={ url }>{__('View')}</Tag>
-							<Tag href={ editUrl }>{__('Edit')}</Tag>
+							<Tag href={ url }>{__( 'View' )}</Tag>
+							<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
 							{ bbCanEdit &&
 								<Tag href={ bbEditUrl }>{ bbBranding }</Tag>
 							}
-							<Tag onClick={ trashClicked } appearance='warning'>{__('Trash')}</Tag>
+							<Tag onClick={ trashClicked } appearance='warning'>{__( 'Trash' )}</Tag>
 						</Fragment>
 					}
 					{ 'trash' === status &&
-						<Tag onClick={restoreClicked}>{__('Restore')}</Tag>
+						<Tag onClick={restoreClicked}>{__( 'Restore' )}</Tag>
 					}
 				</TagGroup>
 

@@ -118,11 +118,16 @@ export const Toolbar = ( { children } ) => {
 
 export const Title = props => {
 	const { children, className, actions } = props
-	const { isRootView } = useContext( StackContext )
+	const stack = useContext( StackContext )
+	let isRootView = true
+
+	if ( 'undefined' !== typeof stack ) {
+		isRootView = stack.isRootView
+	}
 
 	const classes = classname( {
 		'fl-asst-screen-name': true,
-		'fl-asst-screen-name-has-back' : ! isRootView,
+		'fl-asst-screen-name-has-back': ! isRootView,
 	}, className )
 
 	const merged = {

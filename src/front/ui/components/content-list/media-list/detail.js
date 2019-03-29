@@ -3,7 +3,6 @@ import Color from 'color'
 import { __ } from '@wordpress/i18n'
 import {
 	ViewContext,
-	BackButton,
 	CopyButton,
 	Photo,
 	Separator,
@@ -54,20 +53,11 @@ export const MediaDetail = () => {
 	let background = whole.hex
 
 	const imgStyles = {
-		maxHeight: '75vh',
+		marginTop: 'var(--fl-asst-base-padding)',
+		maxHeight: '70vh',
 		background,
 	}
 
-	let topLeftBg = null
-	if ( topLeft.hex ) {
-		let tlColor = Color( topLeft.hex )
-		if ( tlColor.isDark() ) {
-			topLeftBg = tlColor.darken( .2 ).hex()
-		} else {
-			topLeftBg = tlColor.lighten( .2 ).hex()
-		}
-	}
-	
 	const trashClicked = () => {
 		const message = __( 'Do you really want to delete this item?' )
 		const type = mime.split( '/' ).shift()
@@ -81,33 +71,33 @@ export const MediaDetail = () => {
 
 	return (
 		<Fragment>
-			<Title>{__('Edit Media')}</Title>
+			<Title>{__( 'Edit Media' )}</Title>
 			<Photo src={url} style={imgStyles} />
 
 			<Padding>
 				<TagGroup appearance='muted' id="fl-asst-media-actions">
-					<Tag href={pageURL}>View</Tag>
-					<Tag href={editUrl}>Edit</Tag>
-					<Tag onClick={trashClicked} appearance='warning'>Delete</Tag>
+					<Tag href={pageURL}>{__('View')}</Tag>
+					<Tag href={editUrl}>{__('Edit')}</Tag>
+					<Tag onClick={trashClicked} appearance='warning'>{__('Delete')}</Tag>
 				</TagGroup>
 			</Padding>
 
 			<SettingsGroup>
-				<SettingsItem label='Filesize'>
+				<SettingsItem label={__('Filesize')}>
 					{filesize}
 				</SettingsItem>
-				<SettingsItem label='Uploaded'>
+				<SettingsItem label={__('Uploaded Date')}>
 					{date}
 				</SettingsItem>
 			</SettingsGroup>
 
 			<Separator />
 			<SettingsGroup>
-				{ title && <SettingsItem label='Title'>{title}</SettingsItem> }
-				{ alt && <SettingsItem label='Alt Text'>{alt}</SettingsItem> }
-				{ description && <SettingsItem label='Description'>{description}</SettingsItem> }
+				{ title && <SettingsItem label={__('Title')}>{title}</SettingsItem> }
+				{ alt && <SettingsItem label={__('Alternate Text')}>{alt}</SettingsItem> }
+				{ description && <SettingsItem label={__('Description')}>{description}</SettingsItem> }
 				<SettingsItem labelPosition='above'>
-					<CopyButton label='Copy URL' text={ pageURL } />
+					<CopyButton label={__('Copy URL')} text={ pageURL } />
 				</SettingsItem>
 			</SettingsGroup>
 		</Fragment>

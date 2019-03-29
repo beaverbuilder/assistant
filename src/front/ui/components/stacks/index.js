@@ -221,7 +221,12 @@ export const Stack = ( { children, className } ) => {
 }
 
 export const BackButton = props => {
-	const { isRootView, popView } = useContext( StackContext )
+	const stack = useContext( StackContext )
+
+	if ( 'undefined' === typeof stack ) {
+		return null
+	}
+	const { isRootView, popView } = stack
 
 	if ( isRootView ) {
 		return null

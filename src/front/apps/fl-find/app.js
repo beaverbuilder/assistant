@@ -4,7 +4,6 @@ import { useAppState } from 'store'
 import {
 	PostList,
 	Title,
-	Button,
 	NewButton,
 } from 'components'
 import { PostListFilter } from './filter'

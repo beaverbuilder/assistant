@@ -36,7 +36,7 @@ export const UserDetail = () => {
 	return (
 		<ContentListDetail className='fl-asst-user-detail'>
 
-			<Title>{__('Edit Profile')}</Title>
+			<Title>{__( 'Edit Profile' )}</Title>
 
 			<ScreenHeader title={ headerTitle }>
 				<TagGroup appearance='muted'>
