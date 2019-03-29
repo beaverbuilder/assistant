@@ -12,6 +12,7 @@ import {
 	SettingsGroup,
 	TagGroup,
 	Tag,
+	Title,
 	UIContext,
 	StackContext,
 	ViewContext,
@@ -22,7 +23,7 @@ export const TermListDetail = () => {
 	const mounted = useRef( false )
 	const { decrementCount } = getSystemActions()
 	const { presentNotification } = useContext( UIContext )
-	const { popView } = useContext( StackContext )
+	const { dismiss } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
 	const [ term, setTerm ] = useState( viewContext )
 	const [ terms, setTerms ] = useState( null )
@@ -81,7 +82,7 @@ export const TermListDetail = () => {
 			updateTerm( id, 'trash' )
 			decrementCount( `taxonomy/${ taxonomy }` )
 			removeItem()
-			popView()
+			dismiss()
 		}
 	}
 
@@ -114,31 +115,32 @@ export const TermListDetail = () => {
 
 	return (
 		<ContentListDetail>
+			<Title>{__( 'Edit' )}</Title>
 
 			<ScreenHeader title={ title }>
 				<TagGroup appearance='muted' className='fl-asst-post-actions'>
-					<Tag href={ url }>View</Tag>
-					<Tag href={ editUrl }>Edit</Tag>
-					<Tag onClick={ trashClicked } appearance='warning'>Delete</Tag>
+					<Tag href={ url }>{__( 'View' )}</Tag>
+					<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
+					<Tag onClick={ trashClicked } appearance='warning'>{__( 'Delete' )}</Tag>
 				</TagGroup>
 			</ScreenHeader>
 
 			<SettingsGroup>
-				<SettingsItem label='Name' labelPosition='above'>
+				<SettingsItem label={__( 'Name' )} labelPosition='above'>
 					<input type='text' name='title' value={ title } onChange={ onChange } />
 				</SettingsItem>
-				<SettingsItem label='Slug' labelPosition='above'>
+				<SettingsItem label={__( 'Slug' )} labelPosition='above'>
 					<input type='text' name='slug' value={ slug } onChange={ onChange } />
 					<CopyButton label='Copy URL' text={ url } />
 				</SettingsItem>
 				{ isHierarchical &&
-					<SettingsItem label='Parent' labelPosition='above'>
+					<SettingsItem label={__( 'Parent' )} labelPosition='above'>
 						<select name='parent' value={ parent } onChange={ onChange }>
 							{ renderParentOptions() }
 						</select>
 					</SettingsItem>
 				}
-				<SettingsItem label='Description' labelPosition='above'>
+				<SettingsItem label={__( 'Description' )} labelPosition='above'>
 					<textarea name='description' value={ description } onChange={ onChange } />
 				</SettingsItem>
 				<SettingsItem>

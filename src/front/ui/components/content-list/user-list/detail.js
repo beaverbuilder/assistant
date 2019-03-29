@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { __ } from '@wordpress/i18n'
 import {
 	ContentItem,
 	ContentListDetail,
@@ -7,6 +8,7 @@ import {
 	SettingsItem,
 	TagGroup,
 	Tag,
+	Title,
 	ViewContext,
 } from 'components'
 
@@ -33,6 +35,8 @@ export const UserDetail = () => {
 
 	return (
 		<ContentListDetail className='fl-asst-user-detail'>
+
+			<Title>{__( 'Edit Profile' )}</Title>
 
 			<ScreenHeader title={ headerTitle }>
 				<TagGroup appearance='muted'>

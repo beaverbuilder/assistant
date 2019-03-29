@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, createRef, createContext } from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import posed from 'react-pose'
 import { ViewContext, Button, Icon, Scroller } from 'components'
 import './style.scss'
@@ -10,7 +11,7 @@ StackContext.displayName = 'StackContext'
 const handleTransition = () => {
 	return {
 		type: 'tween',
-		duration: 220
+		duration: 0
 	}
 }
 
@@ -44,8 +45,6 @@ export const StackView = posed.div( props => {
 			left: 0,
 			right: 0,
 			bottom: 0,
-			backgroundColor: 'var(--fl-background-color)',
-			pointerEvents: 'auto'
 		},
 		past: {
 			x: '0%',
@@ -74,7 +73,8 @@ export const Stack = ( { children, className } ) => {
 		{
 			key: Date.now(),
 			pose: 'present',
-			children,
+			content: children,
+			appearance: 'normal',
 			config: {
 				shouldAnimate: true,
 				context: {}
@@ -123,61 +123,88 @@ export const Stack = ( { children, className } ) => {
 	}
 
 	// Setup the API that will be exposed with StackContext
+	const pushView = ( content, config = {} ) => {
+		const defaults = {
+			shouldAnimate: true,
+			height: null,
+			context: {},
+		}
+		const newViews = views
+
+		const obj = Object.assign( {}, defaults, config )
+
+		newViews.push( {
+			...obj,
+			key: Date.now(),
+			pose: 'future',
+			config: obj,
+		} )
+		setViews( Array.from( newViews ) )
+		setAction( 'push' )
+	}
+
+	const popView = () => {
+		if ( 2 > views.length ) {
+			return
+		}
+		const newViews = views
+		newViews[ newViews.length - 1 ].pose = 'future'
+		newViews[ newViews.length - 2 ].pose = 'present'
+		setViews( Array.from( newViews ) )
+		setAction( 'pop' )
+	}
+
+	const popToRoot = () => {
+		if ( 2 > views.length ) {
+			return
+		}
+		const current = views[ views.length - 1 ]
+		current.pose = 'future'
+		const root = views[0]
+		root.pose = 'present'
+		setViews( [ root, current ] )
+		setAction( 'root' )
+	}
+
+	const updateCurrentView = ( data ) => {
+		const index = views.length - 1
+		const { context } = views[ index ].config
+
+		views[ index ].config.context = {
+			...context,
+			...data,
+		}
+		setViews( Array.from( views ) )
+	}
+
+	// New API
+	const present = config => {
+		const defaults = {
+			label: __( 'Unnamed' ),
+			content: null,
+			appearance: 'normal',
+			onDismiss: () => {},
+		}
+		const view = Object.assign( {}, defaults, config )
+		pushView( view.content, view )
+	}
+
+	const dismiss = () => popView()
+
+	const dismissAll = () => popToRoot()
+
 	const api = {
 		isRootView: false,
 		isCurrentView: false,
 		viewCount: views.length,
 
-		pushView: ( children, config = {} ) => {
-			const defaults = {
-				shouldAnimate: true,
-				height: null,
-				context: {},
-			}
-			const newViews = views
-			newViews.push( {
-				key: Date.now(),
-				pose: 'future',
-				children,
-				config: Object.assign( {}, defaults, config ),
-			} )
-			setViews( Array.from( newViews ) )
-			setAction( 'push' )
-		},
-		popView: () => {
-			if ( 2 > views.length ) {
-				return
-			}
+		// Deprecated
+		updateCurrentView,
 
-			const newViews = views
-			newViews[ newViews.length - 1 ].pose = 'future'
-			newViews[ newViews.length - 2 ].pose = 'present'
-			setViews( Array.from( newViews ) )
-			setAction( 'pop' )
-		},
-		popToRoot: () => {
-			if ( 2 > views.length ) {
-				return
-			}
-
-			const current = views[ views.length - 1 ]
-			current.pose = 'future'
-			const root = views[0]
-			root.pose = 'present'
-			setViews( [ root, current ] )
-			setAction( 'root' )
-		},
-		updateCurrentView: ( data ) => {
-			const index = views.length - 1
-			const { context } = views[ index ].config
-
-			views[ index ].config.context = {
-				...context,
-				...data,
-			}
-
-			setViews( Array.from( views ) )
-		},
+		// New API
+		present,
+		dismiss,
+		dismissAll,
 	}
 
 	const classes = classname( {
@@ -191,7 +218,7 @@ export const Stack = ( { children, className } ) => {
 	return (
 		<div className={classes} style={styles}>
 			{ views.map( ( view, i ) => {
-				const { config, key, pose } = view
+				const { config, key, pose, content, appearance } = view
 				const checks = {
 					isRootView: 0 === i,
 					isCurrentView: 'present' === pose ? true : false,
@@ -199,6 +226,12 @@ export const Stack = ( { children, className } ) => {
 				const ref = createRef()
 				const context = Object.assign( { ref }, api, checks )
 				const props = Object.assign( { ref }, view )
+				delete props.onDismiss
+
+				const classes = classname( {
+					'fl-asst-stack-view': true,
+					[`fl-asst-appearance-${appearance}`]: appearance,
+				} )
 
 				return (
 					<StackContext.Provider key={i} value={context}>
@@ -207,10 +240,10 @@ export const Stack = ( { children, className } ) => {
 								key={key}
 								ref={ref}
 								onPoseComplete={poseComplete}
-								className='fl-asst-stack-view'
+								className={classes}
 								{...props}
 							>
-								<Scroller>{props.children}</Scroller>
+								<Scroller>{content}</Scroller>
 							</StackView>
 						</ViewContext.Provider>
 					</StackContext.Provider>
@@ -221,14 +254,19 @@ export const Stack = ( { children, className } ) => {
 }
 
 export const BackButton = props => {
-	const { isRootView, popView } = useContext( StackContext )
+	const stack = useContext( StackContext )
+
+	if ( 'undefined' === typeof stack ) {
+		return null
+	}
+	const { isRootView, dismiss } = stack
 
 	if ( isRootView ) {
 		return null
 	}
 
 	const onClick = e => {
-		popView()
+		dismiss()
 		if ( 'function' === typeof props.onClick ) {
 			props.onClick( e )
 		}

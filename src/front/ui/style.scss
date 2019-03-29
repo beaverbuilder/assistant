@@ -71,7 +71,7 @@
     textarea {
         font-family: var(--fl-asst-base-font-family);
         font-size: var(--fl-asst-base-text-size);
-        font-weight: normal;
+        font-weight: 500;
         line-height: 1.2;
         text-transform: none;
         padding: 8px;
@@ -85,12 +85,14 @@
         width: 100%;
     }
 
-    button {
+    button,
+    input[type="button"] {
         font-family: var(--fl-asst-base-font-family);
         font-size: var(--fl-asst-base-text-size);
-        font-weight: normal;
+        font-weight: 500;
         line-height: 1.2;
         text-transform: none;
+        text-decoration: none;
         justify-content: center;
         box-shadow: none;
         text-shadow: none;
@@ -98,6 +100,15 @@
 
     hr {
         background-image: none;
+    }
+
+    a {
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: underline;
+            color: var(--fl-asst-accent-color);
+        }
     }
 
     .fl-asst-panel-wrap {

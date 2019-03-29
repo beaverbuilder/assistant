@@ -4,6 +4,7 @@ import { useAppState } from 'store'
 import {
 	PostList,
 	Title,
+	NewButton,
 } from 'components'
 import { PostListFilter } from './filter'
 
@@ -12,15 +13,22 @@ export const App = () => {
 
 	return (
 		<Fragment>
-
 			<PostListFilter />
 
-			<Title>{__( 'Content' )}</Title>
+			<Title actions={<Actions />}>{__( 'Content' )}</Title>
 			<PostList
 				type={ filter.type }
 				query={ query }
 				pagination={ true }
 			/>
+		</Fragment>
+	)
+}
+
+const Actions = () => {
+	return (
+		<Fragment>
+			<NewButton />
 		</Fragment>
 	)
 }

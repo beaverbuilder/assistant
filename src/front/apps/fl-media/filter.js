@@ -13,6 +13,10 @@ export const MediaListFilter = () => {
 	const navItems = []
 	typeTags.map( tag => {
 
+		if ( 1 > tag.count ) {
+			return
+		}
+
 		if ( type === tag.value ) {
 			title = tag.label
 		}

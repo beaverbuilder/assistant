@@ -1,3 +1,3 @@
 export { AppTabButton } from './app-tab'
-export { Button } from './button'
+export { Button, NewButton } from './button'
 export { CopyButton } from './copy'

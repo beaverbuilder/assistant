@@ -17,10 +17,7 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 	return (
 		<div className="fl-asst-screen-header">
 			{ false !== showTitle && <div className={titleClasses}>
-				<BackButton />
-
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
-
 				<AppMenuButton />
 			</div> }
 			<div className="fl-asst-screen-header-contents">{children}</div>
@@ -121,9 +118,16 @@ export const Toolbar = ( { children } ) => {
 
 export const Title = props => {
 	const { children, className, actions } = props
+	const stack = useContext( StackContext )
+	let isRootView = true
+
+	if ( 'undefined' !== typeof stack ) {
+		isRootView = stack.isRootView
+	}
 
 	const classes = classname( {
 		'fl-asst-screen-name': true,
+		'fl-asst-screen-name-has-back': ! isRootView,
 	}, className )
 
 	const merged = {
@@ -134,7 +138,10 @@ export const Title = props => {
 
 	return (
 		<div {...merged}>
-			<span className="fl-asst-screen-title-text">{children}</span>
+			<span className="fl-asst-screen-title-text">
+				<BackButton />
+				{children}
+			</span>
 			{ actions && <span className="fl-asst-screen-title-actions">{actions}</span> }
 		</div>
 	)

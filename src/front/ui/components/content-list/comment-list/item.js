@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import { CommentDetail } from './detail'
 import {
 	ContentListItem,
@@ -11,7 +12,7 @@ import {
 export const CommentListItem = ( { className, ...props } ) => {
 	const context = useContext( ItemContext )
 	const { approved } = context
-	const { pushView } = useContext( StackContext )
+	const { present } = useContext( StackContext )
 
 	const classes = classname( className, {
 		'fl-asst-comment-pending': ! approved,
@@ -20,7 +21,12 @@ export const CommentListItem = ( { className, ...props } ) => {
 	return (
 		<ContentListItem
 			className={ classes }
-			onClick={ () => pushView( <CommentDetail />, { context } ) }
+			onClick={ () => present( {
+				label: __( 'Edit Comment' ),
+				content: <CommentDetail />,
+				appearance: 'form',
+				context,
+			} ) }
 			{ ...props }
 		>
 			{ ! approved &&

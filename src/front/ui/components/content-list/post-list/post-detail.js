@@ -14,6 +14,7 @@ import {
 	TagGroup,
 	Tag,
 	ToggleControl,
+	Title,
 	UIContext,
 	StackContext,
 	ViewContext,
@@ -25,7 +26,7 @@ export const PostListDetail = () => {
 	const { incrementCount, decrementCount } = getSystemActions()
 	const { contentStatus } = getSystemConfig()
 	const { presentNotification } = useContext( UIContext )
-	const { popView } = useContext( StackContext )
+	const { dismiss } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
 	const [ publishing, setPublishing ] = useState( false )
 	const [ post, setPost ] = useState( viewContext )
@@ -60,7 +61,7 @@ export const PostListDetail = () => {
 			updatePost( id, 'trash' )
 			decrementCount( `content/${ type }` )
 			removeItem()
-			popView()
+			dismiss()
 		}
 	}
 
@@ -68,7 +69,7 @@ export const PostListDetail = () => {
 		updatePost( id, 'untrash' )
 		incrementCount( `content/${ type }` )
 		removeItem()
-		popView()
+		dismiss()
 	}
 
 	const publishClicked = () => {
@@ -81,12 +82,12 @@ export const PostListDetail = () => {
 			post_title: title,
 		}, () => {
 			updateItem( { title, slug, commentsAllowed } )
-			presentNotification( 'Changes published!' )
+			presentNotification( __( 'Changes published!' ) )
 			if ( mounted.current ) {
 				setPublishing( false )
 			}
 		}, () => {
-			presentNotification( 'Error! Changes not published.', { appearance: 'error' } )
+			presentNotification( __( 'Error! Changes not published.' ), { appearance: 'error' } )
 			if ( mounted.current ) {
 				setPublishing( false )
 			}
@@ -109,6 +110,8 @@ export const PostListDetail = () => {
 	return (
 		<ContentListDetail>
 
+			<Title>{__( 'Edit Post' )}</Title>
+
 			<ScreenHeader title={ headerTitle }>
 
 				<SettingsGroup>
@@ -126,16 +129,16 @@ export const PostListDetail = () => {
 				<TagGroup appearance='muted' className='fl-asst-post-actions'>
 					{ 'trash' !== status &&
 						<Fragment>
-							<Tag href={ url }>View</Tag>
-							<Tag href={ editUrl }>Edit</Tag>
+							<Tag href={ url }>{__( 'View' )}</Tag>
+							<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
 							{ bbCanEdit &&
 								<Tag href={ bbEditUrl }>{ bbBranding }</Tag>
 							}
-							<Tag onClick={ trashClicked } appearance='warning'>Trash</Tag>
+							<Tag onClick={ trashClicked } appearance='warning'>{__( 'Trash' )}</Tag>
 						</Fragment>
 					}
 					{ 'trash' === status &&
-						<Tag onClick={restoreClicked}>Restore</Tag>
+						<Tag onClick={restoreClicked}>{__( 'Restore' )}</Tag>
 					}
 				</TagGroup>
 

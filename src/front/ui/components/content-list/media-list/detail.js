@@ -1,9 +1,7 @@
 import React, { Fragment, useContext } from 'react'
-import Color from 'color'
 import { __ } from '@wordpress/i18n'
 import {
 	ViewContext,
-	BackButton,
 	CopyButton,
 	Photo,
 	Separator,
@@ -13,13 +11,14 @@ import {
 	SettingsGroup,
 	SettingsItem,
 	StackContext,
+	Title,
 	useImageData,
 } from 'components'
 import { updatePost } from 'utils/wordpress'
 import { getSystemActions } from 'store'
 
 export const MediaDetail = () => {
-	const { popView } = useContext( StackContext )
+	const { dismiss } = useContext( StackContext )
 	const { decrementCount } = getSystemActions()
 	const view = useContext( ViewContext )
 	const {
@@ -48,39 +47,14 @@ export const MediaDetail = () => {
 
 	const imgData = useImageData( url )
 	const { colors } = imgData
-	const { whole, topLeft } = colors
-
-	const toolbarStyles = {
-		position: 'absolute',
-		zIndex: 1,
-		height: 44,
-		width: '100%',
-		display: 'flex',
-		flexDirection: 'row',
-	}
+	const { whole } = colors
 
 	let background = whole.hex
 
 	const imgStyles = {
-		maxHeight: '75vh',
+		marginTop: 'var(--fl-asst-base-padding)',
+		maxHeight: '70vh',
 		background,
-	}
-
-	let topLeftBg = null
-	if ( topLeft.hex ) {
-		let tlColor = Color( topLeft.hex )
-		if ( tlColor.isDark() ) {
-			topLeftBg = tlColor.darken( .2 ).hex()
-		} else {
-			topLeftBg = tlColor.lighten( .2 ).hex()
-		}
-	}
-
-	const btnStyles = {
-		background: topLeftBg,
-		color: topLeft.isDark ? 'white' : 'var(--fl-title-color)',
-		margin: 10,
-		boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'
 	}
 
 	const trashClicked = () => {
@@ -90,39 +64,39 @@ export const MediaDetail = () => {
 			updatePost( id, 'trash' )
 			decrementCount( `attachment/${ type }` )
 			removeItem()
-			popView()
+			dismiss()
 		}
 	}
 
 	return (
 		<Fragment>
-			<div style={toolbarStyles}><BackButton style={btnStyles} /></div>
+			<Title>{__( 'Edit Media' )}</Title>
 			<Photo src={url} style={imgStyles} />
 
 			<Padding>
 				<TagGroup appearance='muted' id="fl-asst-media-actions">
-					<Tag href={pageURL}>View</Tag>
-					<Tag href={editUrl}>Edit</Tag>
-					<Tag onClick={trashClicked} appearance='warning'>Delete</Tag>
+					<Tag href={pageURL}>{__( 'View' )}</Tag>
+					<Tag href={editUrl}>{__( 'Edit' )}</Tag>
+					<Tag onClick={trashClicked} appearance='warning'>{__( 'Delete' )}</Tag>
 				</TagGroup>
 			</Padding>
 
 			<SettingsGroup>
-				<SettingsItem label='Filesize'>
+				<SettingsItem label={__( 'Filesize' )}>
 					{filesize}
 				</SettingsItem>
-				<SettingsItem label='Uploaded'>
+				<SettingsItem label={__( 'Uploaded Date' )}>
 					{date}
 				</SettingsItem>
 			</SettingsGroup>
 
 			<Separator />
 			<SettingsGroup>
-				{ title && <SettingsItem label='Title'>{title}</SettingsItem> }
-				{ alt && <SettingsItem label='Alt Text'>{alt}</SettingsItem> }
-				{ description && <SettingsItem label='Description'>{description}</SettingsItem> }
+				{ title && <SettingsItem label={__( 'Title' )}>{title}</SettingsItem> }
+				{ alt && <SettingsItem label={__( 'Alternate Text' )}>{alt}</SettingsItem> }
+				{ description && <SettingsItem label={__( 'Description' )}>{description}</SettingsItem> }
 				<SettingsItem labelPosition='above'>
-					<CopyButton label='Copy URL' text={ pageURL } />
+					<CopyButton label={__( 'Copy URL' )} text={ pageURL } />
 				</SettingsItem>
 			</SettingsGroup>
 		</Fragment>
