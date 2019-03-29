@@ -19,6 +19,7 @@ export const UserListItem = ( { className, ...props } ) => {
 			onClick={ () => present( {
 				label: __( 'Edit User' ),
 				content: <UserDetail />,
+				appearance: 'form',
 				context,
 			} ) }
 			{ ...props }

@@ -46,7 +46,8 @@ export const MediaListItem = ( { className } ) => {
 				<ViewContext.Provider value={context}>
 					<MediaDetail />
 				</ViewContext.Provider>
-			)
+			),
+			appearance: 'form',
 		} )
 	}
 

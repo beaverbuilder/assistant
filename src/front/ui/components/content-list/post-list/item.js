@@ -17,12 +17,14 @@ export const PostListItem = props => {
 			present( {
 				label: __( 'Edit Post' ),
 				content: <PostListDetail />,
+				appearance: 'form',
 				context,
 			} )
 		} else {
 			present( {
 				label: __( 'Edit Term' ),
 				content: <TermListDetail />,
+				appearance: 'form',
 				context,
 			} )
 		}

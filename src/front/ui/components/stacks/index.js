@@ -11,7 +11,7 @@ StackContext.displayName = 'StackContext'
 const handleTransition = () => {
 	return {
 		type: 'tween',
-		duration: 220
+		duration: 0
 	}
 }
 
@@ -45,8 +45,6 @@ export const StackView = posed.div( props => {
 			left: 0,
 			right: 0,
 			bottom: 0,
-			backgroundColor: 'var(--fl-background-color)',
-			pointerEvents: 'auto'
 		},
 		past: {
 			x: '0%',
@@ -75,7 +73,8 @@ export const Stack = ( { children, className } ) => {
 		{
 			key: Date.now(),
 			pose: 'present',
-			children,
+			content: children,
+			appearance: 'normal',
 			config: {
 				shouldAnimate: true,
 				context: {}
@@ -124,18 +123,21 @@ export const Stack = ( { children, className } ) => {
 	}
 
 	// Setup the API that will be exposed with StackContext
-	const pushView = ( children, config = {} ) => {
+	const pushView = ( content, config = {} ) => {
 		const defaults = {
 			shouldAnimate: true,
 			height: null,
 			context: {},
 		}
 		const newViews = views
+
+		const obj = Object.assign( {}, defaults, config )
+
 		newViews.push( {
+			...obj,
 			key: Date.now(),
 			pose: 'future',
-			children,
-			config: Object.assign( {}, defaults, config ),
+			config: obj,
 		} )
 		setViews( Array.from( newViews ) )
 		setAction( 'push' )
@@ -216,7 +218,7 @@ export const Stack = ( { children, className } ) => {
 	return (
 		<div className={classes} style={styles}>
 			{ views.map( ( view, i ) => {
-				const { config, key, pose } = view
+				const { config, key, pose, content, appearance } = view
 				const checks = {
 					isRootView: 0 === i,
 					isCurrentView: 'present' === pose ? true : false,
@@ -224,6 +226,12 @@ export const Stack = ( { children, className } ) => {
 				const ref = createRef()
 				const context = Object.assign( { ref }, api, checks )
 				const props = Object.assign( { ref }, view )
+				delete props.onDismiss
+
+				const classes = classname({
+					'fl-asst-stack-view': true,
+					[`fl-asst-appearance-${appearance}`] : appearance,
+				})
 
 				return (
 					<StackContext.Provider key={i} value={context}>
@@ -232,10 +240,10 @@ export const Stack = ( { children, className } ) => {
 								key={key}
 								ref={ref}
 								onPoseComplete={poseComplete}
-								className='fl-asst-stack-view'
+								className={classes}
 								{...props}
 							>
-								<Scroller>{props.children}</Scroller>
+								<Scroller>{content}</Scroller>
 							</StackView>
 						</ViewContext.Provider>
 					</StackContext.Provider>

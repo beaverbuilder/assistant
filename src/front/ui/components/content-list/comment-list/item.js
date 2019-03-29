@@ -24,6 +24,7 @@ export const CommentListItem = ( { className, ...props } ) => {
 			onClick={ () => present( {
 				label: __( 'Edit Comment' ),
 				content: <CommentDetail />,
+				appearance: 'form',
 				context,
 			} ) }
 			{ ...props }
