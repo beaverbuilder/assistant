@@ -10,7 +10,7 @@ import classname from 'classnames'
 import './style.scss'
 
 export const AppHeader = () => {
-	const { activeAppName: appName, activeApp: app } = useContext( UIContext )
+	const { activeAppName: appName } = useContext( UIContext )
 	const { isAppHeaderExpanded } = useAppState( appName )
 	const { setIsAppHeaderExpanded } = getAppActions( appName )
 
