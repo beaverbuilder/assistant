@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState } from 'store'
 import {
@@ -7,17 +7,19 @@ import {
 	Header,
 	Padding,
 	Heading,
+	StackContext,
 } from 'components'
 import { UserListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
+	const { dismissAll } = useContext( StackContext )
 	return (
 		<Fragment>
 			<Header.Expanded>
 				<Padding>
 					<Heading>{__( 'Filters' )}</Heading>
-					<UserListFilter />
+					<UserListFilter dismissAll={dismissAll} />
 				</Padding>
 			</Header.Expanded>
 

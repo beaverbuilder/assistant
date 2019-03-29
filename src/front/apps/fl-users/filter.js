@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import { TagGroupControl } from 'components'
 
-export const UserListFilter = () => {
+export const UserListFilter = ({ dismissAll }) => {
 	const { filter } = useAppState()
 	const { setRole } = getAppActions()
 	const { roleTags } = getFilterTags()
@@ -15,7 +15,10 @@ export const UserListFilter = () => {
 			limit={ 6 }
 			tags={ roleTags }
 			value={ role }
-			onChange={ setRole }
+			onChange={ value => {
+				setRole( value )
+				dismissAll()
+			} }
 			appearance="muted"
 		/>
 	)
