@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import {
@@ -7,9 +7,11 @@ import {
 	NavBar,
 	Padding,
 	Heading,
+	StackContext,
 } from 'components'
 
 export const PostListFilter = () => {
+	const { dismissAll } = useContext( StackContext )
 	const { filter } = useAppState()
 	const { setType, setDate, setStatus } = getAppActions()
 	const { typeTags, dateTags, statusTags } = getFilterTags()
@@ -24,7 +26,10 @@ export const PostListFilter = () => {
 
 		navItems.push( {
 			children: item.label,
-			onClick: () => setType( item.value ),
+			onClick: () => {
+				setType( item.value )
+				dismissAll()
+			},
 			isSelected: JSON.stringify( [ type, subType ] ) === JSON.stringify( item.value ),
 		} )
 	} )

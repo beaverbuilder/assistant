@@ -16,7 +16,7 @@ export const AppHeader = () => {
 
 	return (
 		<div className="fl-asst-app-header">
-			<CollapsedContent isExpanded={isAppHeaderExpanded}>{app.label}</CollapsedContent>
+			<CollapsedContent isExpanded={isAppHeaderExpanded} />
 			<ExpandedContent isExpanded={isAppHeaderExpanded} />
 			<ExpanderButton isExpanded={isAppHeaderExpanded} onClick={ () => setIsAppHeaderExpanded( ! isAppHeaderExpanded ) } />
 		</div>
@@ -24,7 +24,7 @@ export const AppHeader = () => {
 }
 
 const CollapsedContent = props => {
-	const { children, className, isExpanded } = props
+	const { className, isExpanded } = props
 	const { activeAppName: appName } = useContext( UIContext )
 
 	if ( isExpanded ) {
@@ -155,28 +155,28 @@ const ExpanderButton = props => {
 const BreadcrumbTrail = () => {
 	return (
 		<TunnelPlaceholder id='app-breadcrumbs' multiple>
-		{ ( { items } ) => {
-			return items.map( ( item, i ) => {
-				const { children, onClick = () => {} } = item
-				const isFirst = i === 0
-				const isLast = i === items.length - 1
-				return (
-					<Fragment key={i}>
-						{ !isFirst &&
+			{ ( { items } ) => {
+				return items.map( ( item, i ) => {
+					const { children, onClick = () => {} } = item
+					const isFirst = 0 === i
+					const isLast = i === items.length - 1
+					return (
+						<Fragment key={i}>
+							{ ! isFirst &&
 							<span className="fl-asst-app-breadcrumb-separator">
 								<Icon name="forward" />
 							</span>
-						}
-						{ !isLast && <Button
-							appearance="transparent"
-							className="fl-asst-app-breadcrumb-item"
-							onClick={onClick}
-						>{children}</Button> }
-						{ isLast && <span className="fl-asst-app-breadcrumb-item">{children}</span> }
-					</Fragment>
-				)
-			})
-		}}
+							}
+							{ ! isLast && <Button
+								appearance="transparent"
+								className="fl-asst-app-breadcrumb-item"
+								onClick={onClick}
+							>{children}</Button> }
+							{ isLast && <span className="fl-asst-app-breadcrumb-item">{children}</span> }
+						</Fragment>
+					)
+				} )
+			}}
 		</TunnelPlaceholder>
 	)
 }
