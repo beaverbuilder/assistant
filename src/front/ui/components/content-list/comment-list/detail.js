@@ -30,7 +30,7 @@ export const CommentDetail = () => {
 	const [ sendingReply, setSendingReply ] = useState( false )
 	const { incrementCount, decrementCount } = getSystemActions()
 	const { presentNotification } = useContext( UIContext )
-	const { popView } = useContext( StackContext )
+	const { dismiss } = useContext( StackContext )
 	const {
 		approved,
 		authorEmail,
@@ -61,7 +61,7 @@ export const CommentDetail = () => {
 	const spamClicked = () => {
 		updateComment( id, spam ? 'unspam' : 'spam' )
 		removeItem()
-		popView()
+		dismiss()
 	}
 
 	const trashClicked = () => {
@@ -70,7 +70,7 @@ export const CommentDetail = () => {
 			updateComment( id, 'trash' )
 			decrementCount( 'comment/total' )
 			removeItem()
-			popView()
+			dismiss()
 		}
 	}
 
@@ -78,7 +78,7 @@ export const CommentDetail = () => {
 		updateComment( id, 'untrash' )
 		incrementCount( 'comment/total' )
 		removeItem()
-		popView()
+		dismiss()
 	}
 
 	const onEditSave = value => {

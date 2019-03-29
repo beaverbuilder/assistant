@@ -12,7 +12,7 @@ import { getFilterTags } from './filter'
 
 export const MenuContent = () => {
 	const { hideAppMenu } = useContext( AppContext )
-	const { popToRoot } = useContext( StackContext )
+	const { dismissAll } = useContext( StackContext )
 	const { filter } = useAppState()
 	const { setType, setDate, setStatus } = getAppActions()
 	const { typeTags, dateTags, statusTags } = getFilterTags()
@@ -20,7 +20,7 @@ export const MenuContent = () => {
 
 	const onTypeClick = value => {
 		hideAppMenu()
-		popToRoot()
+		dismissAll()
 		setType( value )
 	}
 
@@ -59,7 +59,7 @@ export const MenuContent = () => {
 								isSelected={isSelected}
 								onClick={ () => {
 									hideAppMenu()
-									popToRoot()
+									dismissAll()
 									setDate( value )
 								}}
 							>{label}</OptionGroupItem>
@@ -78,7 +78,7 @@ export const MenuContent = () => {
 								isSelected={isSelected}
 								onClick={ () => {
 									hideAppMenu()
-									popToRoot()
+									dismissAll()
 									setStatus( value )
 								}}
 							>{label}</OptionGroupItem>

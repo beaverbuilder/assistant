@@ -26,7 +26,7 @@ export const PostListDetail = () => {
 	const { incrementCount, decrementCount } = getSystemActions()
 	const { contentStatus } = getSystemConfig()
 	const { presentNotification } = useContext( UIContext )
-	const { popView } = useContext( StackContext )
+	const { dismiss } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
 	const [ publishing, setPublishing ] = useState( false )
 	const [ post, setPost ] = useState( viewContext )
@@ -61,7 +61,7 @@ export const PostListDetail = () => {
 			updatePost( id, 'trash' )
 			decrementCount( `content/${ type }` )
 			removeItem()
-			popView()
+			dismiss()
 		}
 	}
 
@@ -69,7 +69,7 @@ export const PostListDetail = () => {
 		updatePost( id, 'untrash' )
 		incrementCount( `content/${ type }` )
 		removeItem()
-		popView()
+		dismiss()
 	}
 
 	const publishClicked = () => {
@@ -82,12 +82,12 @@ export const PostListDetail = () => {
 			post_title: title,
 		}, () => {
 			updateItem( { title, slug, commentsAllowed } )
-			presentNotification( 'Changes published!' )
+			presentNotification( __('Changes published!') )
 			if ( mounted.current ) {
 				setPublishing( false )
 			}
 		}, () => {
-			presentNotification( 'Error! Changes not published.', { appearance: 'error' } )
+			presentNotification( __('Error! Changes not published.'), { appearance: 'error' } )
 			if ( mounted.current ) {
 				setPublishing( false )
 			}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, createRef, createContext } from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import posed from 'react-pose'
 import { ViewContext, Button, Icon, Scroller } from 'components'
 import './style.scss'
@@ -197,9 +198,6 @@ export const Stack = ( { children, className } ) => {
 
 		// Deprecated
 		updateCurrentView,
-		pushView,
-		popView,
-		popToRoot,
 
 		// New API
 		present,

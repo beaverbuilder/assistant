@@ -19,7 +19,7 @@ import { updatePost } from 'utils/wordpress'
 import { getSystemActions } from 'store'
 
 export const MediaDetail = () => {
-	const { popView } = useContext( StackContext )
+	const { dismiss } = useContext( StackContext )
 	const { decrementCount } = getSystemActions()
 	const view = useContext( ViewContext )
 	const {
@@ -65,7 +65,7 @@ export const MediaDetail = () => {
 			updatePost( id, 'trash' )
 			decrementCount( `attachment/${ type }` )
 			removeItem()
-			popView()
+			dismiss()
 		}
 	}
 

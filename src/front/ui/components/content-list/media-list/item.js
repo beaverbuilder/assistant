@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import { AspectBox, ItemContext, ViewContext, StackContext } from 'components'
 import { MediaDetail } from './detail'
 
 export const MediaListItem = ( { className } ) => {
 	const item = useContext( ItemContext )
 	const { sizes } = item
-	const { pushView } = useContext( StackContext )
+	const { present } = useContext( StackContext )
 	const [ orientation, setOrientation ] = useState( 'square' )
 
 	const classes = classname( {
@@ -39,11 +40,14 @@ export const MediaListItem = ( { className } ) => {
 
 	const onClick = () => {
 		const context = { ...item }
-		pushView(
-			<ViewContext.Provider value={context}>
-				<MediaDetail />
-			</ViewContext.Provider>
-		)
+		present({
+			label: __('Edit Media'),
+			content: (
+				<ViewContext.Provider value={context}>
+					<MediaDetail />
+				</ViewContext.Provider>
+			)
+		})
 	}
 
 	return (
