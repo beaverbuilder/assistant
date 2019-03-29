@@ -1,21 +1,22 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { TunnelPlaceholder } from 'react-tunnels'
-import { UIContext } from 'components'
+import {
+	UIContext,
+	Icon,
+	Button,
+} from 'components'
 import { useAppState, getAppActions } from 'store'
 import classname from 'classnames'
-import {
-	Button
-} from 'components'
 import './style.scss'
 
 export const AppHeader = () => {
-	const { activeAppName: appName, activeApp: app } = useContext( UIContext )
+	const { activeAppName: appName } = useContext( UIContext )
 	const { isAppHeaderExpanded } = useAppState( appName )
 	const { setIsAppHeaderExpanded } = getAppActions( appName )
 
 	return (
 		<div className="fl-asst-app-header">
-			<CollapsedContent isExpanded={isAppHeaderExpanded}>{app.label}</CollapsedContent>
+			<CollapsedContent isExpanded={isAppHeaderExpanded} />
 			<ExpandedContent isExpanded={isAppHeaderExpanded} />
 			<ExpanderButton isExpanded={isAppHeaderExpanded} onClick={ () => setIsAppHeaderExpanded( ! isAppHeaderExpanded ) } />
 		</div>
@@ -23,7 +24,7 @@ export const AppHeader = () => {
 }
 
 const CollapsedContent = props => {
-	const { children, className, isExpanded } = props
+	const { className, isExpanded } = props
 	const { activeAppName: appName } = useContext( UIContext )
 
 	if ( isExpanded ) {
@@ -54,7 +55,7 @@ const CollapsedContent = props => {
 				// Default to app title
 				return (
 					<div {...merged}>
-						<div className="fl-asst-app-title">{children}</div>
+						<BreadcrumbTrail />
 					</div>
 				)
 			} }
@@ -147,6 +148,35 @@ const ExpanderButton = props => {
 				}
 				return null
 			} }
+		</TunnelPlaceholder>
+	)
+}
+
+const BreadcrumbTrail = () => {
+	return (
+		<TunnelPlaceholder id='app-breadcrumbs' multiple>
+			{ ( { items } ) => {
+				return items.map( ( item, i ) => {
+					const { children, onClick = () => {} } = item
+					const isFirst = 0 === i
+					const isLast = i === items.length - 1
+					return (
+						<Fragment key={i}>
+							{ ! isFirst &&
+							<span className="fl-asst-app-breadcrumb-separator">
+								<Icon name="forward" />
+							</span>
+							}
+							{ ! isLast && <Button
+								appearance="transparent"
+								className="fl-asst-app-breadcrumb-item"
+								onClick={onClick}
+							>{children}</Button> }
+							{ isLast && <span className="fl-asst-app-breadcrumb-item">{children}</span> }
+						</Fragment>
+					)
+				} )
+			}}
 		</TunnelPlaceholder>
 	)
 }

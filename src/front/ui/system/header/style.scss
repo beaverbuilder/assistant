@@ -31,6 +31,18 @@
         .fl-asst-app-header-content {
             padding: 0 15px 0;
             min-height: 32px;
+
+            .fl-asst-app-breadcrumb-separator {
+                display: flex;
+                margin: 0 4px;
+                color: var(--fl-asst-base-art-color);
+            }
+            .fl-asst-app-breadcrumb-item {
+                padding: 4px 10px;
+                margin:0;
+                display: flex;
+                font-weight: 500;
+            }
         }
         .fl-asst-app-header-content-expanded {
             flex-direction: column;

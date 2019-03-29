@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext, createRef, createContext } from
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import posed from 'react-pose'
-import { ViewContext, Button, Icon, Scroller } from 'components'
+import { ViewContext, Button, Icon, Scroller, AppContext } from 'components'
+import { Tunnel } from 'react-tunnels'
 import './style.scss'
 
 export const StackContext = createContext()
@@ -69,6 +70,7 @@ StackView.displayName = 'StackView'
 
 
 export const Stack = ( { children, className } ) => {
+	const { label: appLabel } = useContext( AppContext )
 	const [ views, setViews ] = useState( [
 		{
 			key: Date.now(),
@@ -218,7 +220,7 @@ export const Stack = ( { children, className } ) => {
 	return (
 		<div className={classes} style={styles}>
 			{ views.map( ( view, i ) => {
-				const { config, key, pose, content, appearance } = view
+				const { config, key, pose, content, appearance, label } = view
 				const checks = {
 					isRootView: 0 === i,
 					isCurrentView: 'present' === pose ? true : false,
@@ -227,6 +229,11 @@ export const Stack = ( { children, className } ) => {
 				const context = Object.assign( { ref }, api, checks )
 				const props = Object.assign( { ref }, view )
 				delete props.onDismiss
+
+				let breadcrumb = label
+				if ( checks.isRootView && ! breadcrumb ) {
+					breadcrumb = appLabel
+				}
 
 				const classes = classname( {
 					'fl-asst-stack-view': true,
@@ -243,6 +250,7 @@ export const Stack = ( { children, className } ) => {
 								className={classes}
 								{...props}
 							>
+								<Breadcrumb onClick={dismiss}>{breadcrumb}</Breadcrumb>
 								<Scroller>{content}</Scroller>
 							</StackView>
 						</ViewContext.Provider>
@@ -277,4 +285,8 @@ export const BackButton = props => {
 			<Icon name="back" />
 		</Button>
 	)
+}
+
+const Breadcrumb = props => {
+	return <Tunnel id="app-breadcrumbs" {...props} />
 }

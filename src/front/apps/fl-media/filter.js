@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, useSystemState } from 'store'
-import { Header, NavBar, Title } from 'components'
+import { Header, NavBar, Title, StackContext } from 'components'
 
 export const MediaListFilter = () => {
+	const { dismissAll } = useContext( StackContext )
 	const { filter } = useAppState()
 	const { setType } = getAppActions()
 	const { typeTags } = getFilterTags()
@@ -22,7 +23,10 @@ export const MediaListFilter = () => {
 		}
 		navItems.push( {
 			children: tag.label,
-			onClick: () => setType( tag.value ),
+			onClick: () => {
+				setType( tag.value )
+				dismissAll()
+			},
 			isSelected: type === tag.value
 		} )
 	} )

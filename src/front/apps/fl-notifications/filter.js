@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, useSystemState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
@@ -6,9 +6,11 @@ import {
 	TagGroupControl,
 	NavBar,
 	Header,
+	StackContext,
 } from 'components'
 
 export const NotificationsFilter = () => {
+	const { dismissAll } = useContext( StackContext )
 	const { filter } = useAppState()
 	const { setType, setCommentStatus, setUpdateType } = getAppActions()
 	const { typeTags, commentStatusTags, updateTypeTags } = getFilterTags()
@@ -18,7 +20,10 @@ export const NotificationsFilter = () => {
 	typeTags.map( item => {
 		navItems.push( {
 			children: item.label,
-			onClick: () => setType( item.value ),
+			onClick: () => {
+				setType( item.value )
+				dismissAll()
+			},
 			isSelected: item.value === type
 		} )
 	} )
