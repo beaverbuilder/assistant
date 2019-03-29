@@ -228,10 +228,10 @@ export const Stack = ( { children, className } ) => {
 				const props = Object.assign( { ref }, view )
 				delete props.onDismiss
 
-				const classes = classname({
+				const classes = classname( {
 					'fl-asst-stack-view': true,
-					[`fl-asst-appearance-${appearance}`] : appearance,
-				})
+					[`fl-asst-appearance-${appearance}`]: appearance,
+				} )
 
 				return (
 					<StackContext.Provider key={i} value={context}>
