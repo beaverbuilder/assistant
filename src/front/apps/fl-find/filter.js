@@ -17,6 +17,11 @@ export const PostListFilter = () => {
 	let navItems = []
 
 	typeTags.map( item => {
+
+		if ( item.count < 1 ) {
+			return
+		}
+
 		navItems.push( {
 			children: item.label,
 			onClick: () => setType( item.value ),
