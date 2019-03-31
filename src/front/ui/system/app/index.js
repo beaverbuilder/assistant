@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import { animated, useSpring, config } from 'react-spring'
 import {
 	useSystemState,
@@ -192,7 +193,7 @@ const AppNotFoundScreen = () => {
 			<Padding>
 				<Branding name="outline" />
 			</Padding>
-			Oops, we could not find your app!
+			{__( 'Oops, we could not find your app!' )}
 		</EmptyMessage>
 	)
 }
