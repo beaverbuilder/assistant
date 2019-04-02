@@ -3,6 +3,7 @@
 
     .fl-asst-widget-title {
         margin-bottom: calc( var(--fl-asst-base-padding) / 2 );
+        user-select: none;
     }
 
     &.fl-asst-widget-no-padding {

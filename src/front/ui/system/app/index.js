@@ -207,9 +207,12 @@ const AppContentWrapper = ( { children } ) => {
 		'fl-asst-app-content-is-dimmed': isAppHeaderExpanded
 	} )
 
+	const stopProp = e => e.stopPropagation()
+
 	return (
 		<div
 			className={classes}
+			onScroll={stopProp}
 			onClickCapture={ e => {
 				if ( isAppHeaderExpanded ) {
 					setIsAppHeaderExpanded( false )

@@ -10,7 +10,7 @@ import { Help } from './help'
 import { CurrentlyViewing } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
-import { WayfinderWidget } from './wayfinder'
+import { WayfinderWidget, RecipesWidget } from './wayfinder'
 import './style.scss'
 
 export const App = () => {
