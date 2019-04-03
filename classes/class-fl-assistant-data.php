@@ -37,9 +37,7 @@ class FL_Assistant_Data {
 			'contentStatus'   => self::get_post_stati(),
 			'currentPageView' => self::get_current_view(),
 			'currentUser'     => self::get_current_user_data(),
-			'dashboardApp'    => array(
-				'adminActions' => self::get_admin_actions(),
-			),
+			'adminURLs' 	  => self::get_admin_urls(),
 			'defaultAppName'  => 'fl-dashboard',
 			'nonce'           => array(
 				'api'             => wp_create_nonce( 'wp_rest' ),
@@ -286,42 +284,30 @@ class FL_Assistant_Data {
 	/**
 	 * Get an action set for allowed admin links.
 	 */
-	static public function get_admin_actions() {
-		$actions = [];
-		$customize_url = self::get_customize_url();
+	static public function get_admin_urls() {
+		$urls = [];
 
-		// Customize Link
-		if ( $customize_url ) {
-			$actions[] = [
-				'label'      => __( 'Customize' ),
-				'href'       => $customize_url,
-				'capability' => 'customize',
-			];
+		$urls['createPost'] = admin_url('post-new.php');
+
+		if ( $url = self::get_customize_url() ) {
+			$urls['customize'] = $url;
 		}
 
-		// Your User Profile Link
+		if ( current_user_can( 'switch_themes' ) ) {
+			$urls['switchThemes'] = '';
+		}
+
+		// Your User Profile
 		$user_id = get_current_user_id();
-
 		if ( current_user_can( 'read' ) ) {
-			$profile_url = get_edit_profile_url( $user_id );
+			$urls['userProfile'] = get_edit_profile_url( $user_id );
 		}
-		$actions[] = [
-			'label'      => __( 'Your Profile' ),
-			'href'       => $profile_url,
-			'capability' => 'read',
-		];
 
-		// About Link
-		if ( current_user_can( 'read' ) ) {
-			$about_url = self_admin_url( 'about.php' );
+		if ( current_user_can( 'create_users' ) ) {
+			$urls['createUser'] = admin_url('user-new.php');
 		}
-		$actions[] = [
-			'label'      => __( 'About WordPress' ),
-			'href'       => $about_url,
-			'capability' => 'read',
-		];
 
-		return self::filter_actions_by_capability( $actions );
+		return $urls;
 	}
 
 	/**

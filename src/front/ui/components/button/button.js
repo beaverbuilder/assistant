@@ -1,10 +1,10 @@
-import React, { forwardRef } from 'react'
+import React, { createElement, forwardRef } from 'react'
 import classname from 'classnames'
 import { Icon } from 'components'
 import './style.scss'
 
 export const Button = forwardRef( ( props, ref ) => {
-	const { children, isSelected, className, appearance } = props
+	const { isSelected, className, appearance } = props
 	const classes = classname( {
 		'fl-asst-button': true,
 		'fl-asst-button-is-selected': isSelected,
@@ -22,8 +22,13 @@ export const Button = forwardRef( ( props, ref ) => {
 	delete filteredProps.appearance
 	delete filteredProps.isSelected
 
-	return (
-		<button {...filteredProps}>{children}</button>
+	if ( props.href ) {
+		delete filteredProps.type
+	}
+
+	return createElement(
+		props.href ? 'a' : 'button',
+		filteredProps
 	)
 } )
 

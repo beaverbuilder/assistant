@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import { animated, useSpring, config } from 'react-spring'
 import {
 	useSystemState,
@@ -192,7 +193,7 @@ const AppNotFoundScreen = () => {
 			<Padding>
 				<Branding name="outline" />
 			</Padding>
-			Oops, we could not find your app!
+			{__( 'Oops, we could not find your app!' )}
 		</EmptyMessage>
 	)
 }
@@ -206,9 +207,12 @@ const AppContentWrapper = ( { children } ) => {
 		'fl-asst-app-content-is-dimmed': isAppHeaderExpanded
 	} )
 
+	const stopProp = e => e.stopPropagation()
+
 	return (
 		<div
 			className={classes}
+			onScroll={stopProp}
 			onClickCapture={ e => {
 				if ( isAppHeaderExpanded ) {
 					setIsAppHeaderExpanded( false )
