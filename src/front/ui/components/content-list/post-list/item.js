@@ -32,7 +32,7 @@ export const PostListItem = props => {
 
 	const onPrimaryClick = e => {
 		e.stopPropagation()
-		onClick(e)
+		onClick( e )
 	}
 
 	const onAccessoryClick = e => {
