@@ -3,6 +3,7 @@
 
     .fl-asst-widget-title {
         margin-bottom: calc( var(--fl-asst-base-padding) / 2 );
+        -webkit-user-select:none;
         user-select: none;
     }
 
@@ -11,6 +12,15 @@
 
         .fl-asst-widget-title {
             padding: var(--fl-asst-base-padding) var(--fl-asst-base-padding) 0;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .fl-asst-widget-title-actions {
+                flex: 0 0 auto;
+                margin-left: auto;
+            }
         }
     }
 }

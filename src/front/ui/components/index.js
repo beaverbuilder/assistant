@@ -64,6 +64,7 @@ export {
 
 export {
 	ToggleControl,
+	BackForwardControl,
 } from './controls'
 
 export {
