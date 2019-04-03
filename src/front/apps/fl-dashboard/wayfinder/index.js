@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useRef, useState, useLayoutEffect } from 'react'
 import { __ } from '@wordpress/i18n'
 import {
 	Widget,
@@ -9,27 +9,52 @@ import { getSystemConfig } from 'store'
 import './style.scss'
 
 export const WayfinderWidget = () => {
-	const [ scrollPos, setScrollPos ] = useState( 0 )
-	const listRef = useRef( null )
+	const listRef = useRef()
+	const [ scroll, setScroll ] = useState( {
+		canMoveForward: false,
+		canMoveBackward: false,
+	} )
+	const increment = ( 180 * 2 ) + 5 + ( 2 * 2 ) // Increment by 2 buttons
 	const cards = getCards()
 
 	if ( 0 === cards.length ) {
 		return null
 	}
 
-	const move = direction => {
+	useLayoutEffect( () => {
 		if ( listRef.current ) {
-			const pos = listRef.current.scrollLeft
-			const unit = ( 180 * 2 ) + 5 + ( 2 * 2 ) // Check out element spacing
-			listRef.current.scrollLeft = 'forward' === direction ? pos + unit : pos - unit
-			setScrollPos( listRef.current.scrollLeft )
+			const el = listRef.current
+			const end = el.scrollWidth - el.clientWidth
+			setScroll( {
+				canMoveForward: el.scrollLeft < end,
+				canMoveBackward: 0 < el.scrollLeft,
+			} )
+		}
+	}, [] )
+
+	const move = ( direction = 'back' ) => {
+		if ( listRef.current ) {
+			const el = listRef.current
+			const pos = el.scrollLeft
+			const end = el.scrollWidth - el.clientWidth
+			const value = 'forward' === direction ? pos + increment : pos - increment
+			el.scrollLeft = value
+
+			setScroll( {
+				canMoveForward: pos < end,
+				canMoveBackward: 0 < pos,
+			} )
 		}
 	}
 
-	let end = 0
-	if ( listRef.current ) {
-		const el = listRef.current
-		end = el.scrollWidth - el.clientWidth
+	const onScroll = e => {
+		const el = e.target
+		const end = el.scrollWidth - el.clientWidth
+		setScroll( {
+			canMoveForward: el.scrollLeft < end,
+			canMoveBackward: 0 < el.scrollLeft,
+		} )
+		e.stopPropagation()
 	}
 
 	const Title = () => {
@@ -40,17 +65,12 @@ export const WayfinderWidget = () => {
 					<BackForwardControl
 						onNext={ () => move( 'forward' )}
 						onPrevious={ () => move( 'back' )}
-						isNextEnabled={ scrollPos < end }
-						isPreviousEnabled={ 0 < scrollPos }
+						isNextEnabled={scroll.canMoveForward}
+						isPreviousEnabled={scroll.canMoveBackward}
 					/>
 				</span>
 			</Fragment>
 		)
-	}
-
-	const handleScroll = e => {
-		setScrollPos( e.target.scrollLeft )
-		e.stopPropagation()
 	}
 
 	return (
@@ -61,8 +81,8 @@ export const WayfinderWidget = () => {
 		>
 			<ul
 				className="fl-asst-swipe-list"
+				onScroll={onScroll}
 				ref={listRef}
-				onScroll={handleScroll}
 			>
 				{ cards.map( ( card, i ) => {
 					return (
