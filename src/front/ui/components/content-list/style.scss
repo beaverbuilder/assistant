@@ -108,6 +108,10 @@
 
         .fl-asst-list-item-accessory {
             visibility: visible;
+
+            .fl-asst-button {
+                color: var(--fl-asst-accent-color);
+            }
         }
     }
 

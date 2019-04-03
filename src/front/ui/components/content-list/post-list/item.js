@@ -30,16 +30,24 @@ export const PostListItem = props => {
 		}
 	}
 
+	const onPrimaryClick = e => {
+		e.stopPropagation()
+		onClick(e)
+	}
+
 	const onAccessoryClick = e => {
 		e.stopPropagation()
 		redirect( url )
 	}
 
 	return (
-		<ContentListItem onClick={ onClick } { ...props }>
+		<ContentListItem onClick={ onPrimaryClick } { ...props }>
 			<div className="fl-asst-list-item-accessory">
-				<Button appearance="round" onClick={ onAccessoryClick }>
+				<Button appearance="icon" onClick={ onAccessoryClick }>
 					<Icon name="go" />
+				</Button>
+				<Button appearance="icon" onClick={ onPrimaryClick }>
+					<Icon name="forward" />
 				</Button>
 			</div>
 		</ContentListItem>
