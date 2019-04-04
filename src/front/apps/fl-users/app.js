@@ -7,13 +7,14 @@ import {
 	Padding,
 	Heading,
 	StackContext,
-	UserDetail,
+
+	/*UserDetail,*/
 } from 'components'
 import { UserListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
-	const { dismissAll, present } = useContext( StackContext )
+	const { dismissAll } = useContext( StackContext )
 
 	useLayoutEffect( () => {
 
