@@ -11,7 +11,6 @@ import {
 	SettingsGroup,
 	SettingsItem,
 	StackContext,
-	Title,
 	useImageData,
 } from 'components'
 import { updatePost } from 'utils/wordpress'
@@ -70,7 +69,6 @@ export const MediaDetail = () => {
 
 	return (
 		<Fragment>
-			<Title>{__( 'Edit Media' )}</Title>
 			<Photo src={url} style={imgStyles} />
 
 			<Padding>

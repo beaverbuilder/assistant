@@ -8,7 +8,6 @@ import {
 	SettingsItem,
 	TagGroup,
 	Tag,
-	Title,
 	ViewContext,
 } from 'components'
 
@@ -36,12 +35,10 @@ export const UserDetail = () => {
 	return (
 		<ContentListDetail className='fl-asst-user-detail'>
 
-			<Title>{__( 'Edit Profile' )}</Title>
-
 			<ScreenHeader title={ headerTitle }>
 				<TagGroup appearance='muted'>
-					<Tag href={url}>View</Tag>
-					<Tag href={editUrl}>Edit</Tag>
+					<Tag href={url}>{__( 'View' )}</Tag>
+					<Tag href={editUrl}>{__( 'Edit' )}</Tag>
 				</TagGroup>
 			</ScreenHeader>
 
@@ -57,7 +54,7 @@ export const UserDetail = () => {
 				</SettingsItem>
 				{ website &&
 					<SettingsItem label='Website'>
-						<a href={ website }>Visit Website</a>
+						<a href={ website }>{__( 'Visit Website' )}</a>
 					</SettingsItem>
 				}
 			</SettingsGroup>

@@ -45,6 +45,7 @@ export const apps = ( state = {}, action ) => {
 				content: null,
 				enabled: true,
 				icon: null,
+				appearance: 'normal',
 				label: action.key,
 				state: {},
 				actions: {},

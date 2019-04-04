@@ -1,0 +1,128 @@
+.fl-asst {
+
+    // Most likely set on StackView
+    .fl-asst-appearance-form {
+        --fl-asst-background-color: var(--fl-asst-utility-background-color);
+        background-color: var(--fl-asst-utility-background-color);
+    }
+
+    form {
+        padding: var(--fl-asst-base-padding) 0;
+
+        display: grid;
+        grid-row-gap: 15px;
+
+        & > div {
+            padding: 0 var(--fl-asst-base-padding) 3px;
+            padding-left: calc( var(--fl-asst-base-padding) - 2px );
+            border-left: 2px solid transparent;
+        }
+
+        div:focus-within {
+            border-left: 2px solid var(--fl-asst-dark-color);
+
+            label {
+                color: var(--fl-asst-title-color);
+
+                abbr {
+                    color: inherit;
+                }
+            }
+        }
+    }
+
+    label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.2;
+        color: var(--fl-asst-text-color);
+        text-transform: none;
+        text-decoration: none;
+        text-shadow: none;
+        margin: 0 0 10px;
+
+        abbr {
+            display: flex;
+            text-decoration: none;
+            margin-left: 5px;
+            color: var(--fl-asst-base-art-color);
+        }
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="password"],
+    input[type="search"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="color"],
+    select,
+    textarea {
+        font-family: var(--fl-asst-base-font-family);
+        font-size: var(--fl-asst-base-text-size);
+        font-weight: 500;
+        line-height: 1.2;
+        text-transform: none;
+        color: var(--fl-asst-title-color);
+        padding: 4px var(--fl-asst-half-unit);
+        margin:0;
+        background-color: var(--fl-asst-light-color);
+        background-image: none;
+        border: 3px solid transparent;
+        border-radius: 7px;
+        box-shadow: none;
+        max-width: none;
+        width: 100%;
+        min-height: 36px;
+        box-shadow: 0 1px 2px 0 var(--fl-asst-line-color);
+
+        &:focus,
+        &:invalid {
+            outline: none;
+            border-color: var(--fl-asst-line-color);
+            box-shadow: 0px 0px 0px 2px var(--fl-asst-highlight-color);
+        }
+        &:invalid {
+            --fl-asst-highlight-color: var(--fl-asst-error-color);
+
+            &:focus {
+                --fl-asst-highlight-color: var(--fl-asst-accent-color);
+            }
+        }
+    }
+
+    input[type="range"] {
+        -webkit-appearance: slider-horizontal;
+    }
+
+    select {
+        height: 36px;
+
+        &[multiple] {
+            height: auto;
+        }
+    }
+
+    button,
+    input[type="button"] {
+        font-family: var(--fl-asst-base-font-family);
+        font-size: var(--fl-asst-base-text-size);
+        font-weight: 500;
+        line-height: 1.2;
+        text-transform: none;
+        text-decoration: none;
+        justify-content: center;
+        box-shadow: none;
+        text-shadow: none;
+    }
+}

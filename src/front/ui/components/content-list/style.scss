@@ -62,6 +62,8 @@
     align-items: stretch;
     background: transparent;
     overflow: hidden;
+    -webkit-user-select:none;
+    user-select:none;
 
     &:hover {
         background: #F9FBFC;

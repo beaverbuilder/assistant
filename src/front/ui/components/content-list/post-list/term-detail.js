@@ -12,7 +12,6 @@ import {
 	SettingsGroup,
 	TagGroup,
 	Tag,
-	Title,
 	UIContext,
 	StackContext,
 	ViewContext,
@@ -115,8 +114,6 @@ export const TermListDetail = () => {
 
 	return (
 		<ContentListDetail>
-			<Title>{__( 'Edit' )}</Title>
-
 			<ScreenHeader title={ title }>
 				<TagGroup appearance='muted' className='fl-asst-post-actions'>
 					<Tag href={ url }>{__( 'View' )}</Tag>

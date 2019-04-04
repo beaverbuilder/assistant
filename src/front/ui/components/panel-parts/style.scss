@@ -109,7 +109,8 @@
     display: flex;
     flex-direction: row;
     min-height: 40px;
-    user-select: none;
+    -webkit-user-select:none;
+    user-select:none;
 
     .fl-asst-screen-title-text {
         position: relative;

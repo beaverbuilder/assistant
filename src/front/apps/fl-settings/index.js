@@ -59,4 +59,5 @@ registerApp( 'fl-settings', {
 	label: __( 'Preferences' ),
 	content: <App />,
 	icon: <AppIcon />,
+	appearance: 'form',
 } )

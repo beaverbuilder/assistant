@@ -1,5 +1,6 @@
 
 .fl-asst-swipe-list {
+    --fl-asst-swipe-list-item-count: 6;
     --fl-asst-swipe-list-gap: 5px;
     --fl-asst-swipe-list-padding: calc( var(--fl-asst-base-padding) - var(----fl-asst-swipe-list-gap) );
 
@@ -10,11 +11,11 @@
 
     display: grid;
     grid-gap: var(--fl-asst-swipe-list-gap);
-    grid-template-columns: 25px repeat(6, minmax(180px, 50%)) 25px;
+    grid-template-columns: 25px repeat( var(--fl-asst-swipe-list-item-count), minmax(180px, 50%)) 25px;
 
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-padding: 0 30px;
+    scroll-padding: 0 30px 0 30px;
 
     overscroll-behavior: contain;
     overflow: -moz-scrollbars-none;

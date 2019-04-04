@@ -29,9 +29,12 @@
     --fl-asst-overlay-background-color: #edf2f4c4;
 
     --fl-asst-accent-color: #2a9fcb;
+    --fl-asst-success-color: #02C67A;
     --fl-asst-warning-color: #FF8911;
     --fl-asst-error-color: #E01041;
 	--fl-asst-error-hover-color: #B00D33;
+
+    --fl-asst-highlight-color: var(--fl-asst-accent-color);
 
     // Deprecated - These will be removed
     --fl-background-color: var(--fl-asst-background-color);
@@ -53,50 +56,6 @@
     font-size: var(--fl-asst-base-text-size);
     line-height: 1.5;
     color: var(--fl-asst-text-color);
-
-    input[type="text"],
-    input[type="email"],
-    input[type="url"],
-    input[type="password"],
-    input[type="search"],
-    input[type="number"],
-    input[type="tel"],
-    input[type="date"],
-    input[type="month"],
-    input[type="week"],
-    input[type="time"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="color"],
-    textarea {
-        font-family: var(--fl-asst-base-font-family);
-        font-size: var(--fl-asst-base-text-size);
-        font-weight: 500;
-        line-height: 1.2;
-        text-transform: none;
-        padding: 8px;
-        margin:0;
-        background-color: var(--fl-asst-background-color);
-        background-image: none;
-        border: 1px solid var(--fl-asst-line-color);
-        border-radius: 2px;
-        box-shadow: none;
-        max-width: none;
-        width: 100%;
-    }
-
-    button,
-    input[type="button"] {
-        font-family: var(--fl-asst-base-font-family);
-        font-size: var(--fl-asst-base-text-size);
-        font-weight: 500;
-        line-height: 1.2;
-        text-transform: none;
-        text-decoration: none;
-        justify-content: center;
-        box-shadow: none;
-        text-shadow: none;
-    }
 
     hr {
         background-image: none;
