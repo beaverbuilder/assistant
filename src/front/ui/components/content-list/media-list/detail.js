@@ -7,6 +7,7 @@ import {
 	Separator,
 	Tag,
 	TagGroup,
+	Title,
 	Padding,
 	SettingsGroup,
 	SettingsItem,
@@ -46,14 +47,18 @@ export const MediaDetail = () => {
 
 	const imgData = useImageData( url )
 	const { colors } = imgData
-	const { whole } = colors
+	const { whole, topLeft } = colors
 
 	let background = whole.hex
 
 	const imgStyles = {
-		marginTop: 'var(--fl-asst-base-padding)',
 		maxHeight: '70vh',
 		background,
+	}
+
+	const titleStyles = {
+		backgroundColor: topLeft.isDark ? 'var(--fl-asst-light-color)' : 'var(--fl-asst-dark-color)',
+		color: topLeft.isDark ? 'var(--fl-asst-dark-color)' : 'var(--fl-asst-light-color)',
 	}
 
 	const trashClicked = () => {
@@ -69,6 +74,7 @@ export const MediaDetail = () => {
 
 	return (
 		<Fragment>
+			<Title shouldOverlay={true} style={titleStyles}>{__('Edit Media')}</Title>
 			<Photo src={url} style={imgStyles} />
 
 			<Padding>

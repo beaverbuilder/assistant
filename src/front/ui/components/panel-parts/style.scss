@@ -112,6 +112,14 @@
     -webkit-user-select:none;
     user-select:none;
 
+    &.fl-asst-screen-name-overlay {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
     .fl-asst-screen-title-text {
         position: relative;
         flex: 0 0 auto;

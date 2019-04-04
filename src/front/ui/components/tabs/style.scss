@@ -80,4 +80,12 @@
             margin-top:0;
         }
     }
+
+    &.fl-asst-tabs-above {
+        flex-direction: column;
+
+        .fl-asst-tab-content {
+            padding:0;
+        }
+    }
 }

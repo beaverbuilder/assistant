@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import {
 	ContentItem,
@@ -13,15 +13,11 @@ import {
 
 export const UserDetail = () => {
 	const {
-		date,
-		displayName,
 		editUrl,
 		email,
 		url,
-		username,
 		title,
 		thumbnail,
-		website,
 	} = useContext( ViewContext )
 
 	const headerTitle = (
@@ -42,23 +38,37 @@ export const UserDetail = () => {
 				</TagGroup>
 			</ScreenHeader>
 
+			<UserSettings />
+
+		</ContentListDetail>
+	)
+}
+
+const UserSettings = () => {
+	const {
+		date,
+		displayName,
+		username,
+		website,
+	} = useContext( ViewContext )
+	return (
+		<Fragment>
 			<SettingsGroup>
-				<SettingsItem label='Display Name'>
+				<SettingsItem label={__('Display Name')}>
 					{ displayName }
 				</SettingsItem>
-				<SettingsItem label='Username'>
+				<SettingsItem label={__('Username')}>
 					{ username }
 				</SettingsItem>
-				<SettingsItem label='Signup Date'>
+				<SettingsItem label={__('Signup Date')}>
 					{ date }
 				</SettingsItem>
 				{ website &&
-					<SettingsItem label='Website'>
+					<SettingsItem label={__('Website')}>
 						<a href={ website }>{__( 'Visit Website' )}</a>
 					</SettingsItem>
 				}
 			</SettingsGroup>
-
-		</ContentListDetail>
+		</Fragment>
 	)
 }

@@ -117,7 +117,7 @@ export const Toolbar = ( { children } ) => {
 }
 
 export const Title = props => {
-	const { children, className, actions } = props
+	const { children, className, actions, shouldOverlay = false, style } = props
 	const stack = useContext( StackContext )
 	let isRootView = true
 
@@ -128,6 +128,7 @@ export const Title = props => {
 	const classes = classname( {
 		'fl-asst-screen-name': true,
 		'fl-asst-screen-name-has-back': ! isRootView,
+		'fl-asst-screen-name-overlay': shouldOverlay,
 	}, className )
 
 	const merged = {
@@ -135,10 +136,12 @@ export const Title = props => {
 		className: classes,
 	}
 	delete merged.actions
+	delete merged.shouldOverlay
+	delete merged.style
 
 	return (
 		<div {...merged}>
-			<span className="fl-asst-screen-title-text">
+			<span className="fl-asst-screen-title-text" style={style}>
 				<BackButton />
 				{children}
 			</span>
