@@ -9,9 +9,9 @@ export const Tabs = props => {
 
 	const { content } = tabs[ index ]
 
-	const classes = classname({
-		'fl-asst-tabs' : true,
-		[`fl-asst-tabs-${placement}`] : placement
+	const classes = classname( {
+		'fl-asst-tabs': true,
+		[`fl-asst-tabs-${placement}`]: placement
 	}, className )
 
 	return (

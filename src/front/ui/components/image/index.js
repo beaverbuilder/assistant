@@ -72,7 +72,7 @@ const getColorDataForImage = img => {
 			r: null,
 			g: null,
 			b: null,
-			rgb: [null, null, null],
+			rgb: [ null, null, null ],
 			hex: null,
 			isDark: null,
 			isLight: null,

@@ -54,17 +54,17 @@ const UserSettings = () => {
 	return (
 		<Fragment>
 			<SettingsGroup>
-				<SettingsItem label={__('Display Name')}>
+				<SettingsItem label={__( 'Display Name' )}>
 					{ displayName }
 				</SettingsItem>
-				<SettingsItem label={__('Username')}>
+				<SettingsItem label={__( 'Username' )}>
 					{ username }
 				</SettingsItem>
-				<SettingsItem label={__('Signup Date')}>
+				<SettingsItem label={__( 'Signup Date' )}>
 					{ date }
 				</SettingsItem>
 				{ website &&
-					<SettingsItem label={__('Website')}>
+					<SettingsItem label={__( 'Website' )}>
 						<a href={ website }>{__( 'Visit Website' )}</a>
 					</SettingsItem>
 				}

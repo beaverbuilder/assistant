@@ -74,7 +74,7 @@ export const MediaDetail = () => {
 
 	return (
 		<Fragment>
-			<Title shouldOverlay={true} style={titleStyles}>{__('Edit Media')}</Title>
+			<Title shouldOverlay={true} style={titleStyles}>{__( 'Edit Media' )}</Title>
 			<Photo src={url} style={imgStyles} />
 
 			<Padding>
