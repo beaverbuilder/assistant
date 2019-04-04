@@ -118,16 +118,24 @@ export const Stack = ( { children, className } ) => {
 		if ( action && 'pop' === action && 'future' === name ) {
 
 			// ditch the last 'future' item
-			views.pop()
+			const view = views.pop()
 			setViews( Array.from( views ) )
 			setAction( null )
+
+			if ( 'function' === typeof view.onDismiss ) {
+				view.onDismiss()
+			}
 		}
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
-			views.pop()
+			const view = views.pop()
 			setViews( Array.from( views ) )
 			setAction( null )
+
+			if ( 'function' === typeof view.onDismiss ) {
+				view.onDismiss()
+			}
 		}
 	}
 
@@ -137,6 +145,7 @@ export const Stack = ( { children, className } ) => {
 			shouldAnimate: true,
 			height: null,
 			context: {},
+			onDismiss: () => {},
 		}
 		const newViews = views
 
