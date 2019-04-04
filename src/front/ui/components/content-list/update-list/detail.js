@@ -6,6 +6,7 @@ import {
 	ContentItem,
 	ContentListDetail,
 	Heading,
+	Icon,
 	Padding,
 	Photo,
 	ScreenHeader,
@@ -22,6 +23,9 @@ export const UpdateDetail = () => {
 		meta,
 		title,
 		thumbnail,
+		updating,
+		updatingText,
+		updateClicked,
 	} = useContext( ViewContext )
 
 	const headerTitle = (
@@ -41,7 +45,10 @@ export const UpdateDetail = () => {
 
 			<ScreenHeader title={ headerTitle }>
 				<TagGroup appearance='muted'>
-					<Tag>Update</Tag>
+					<Tag className='fl-asst-update-button' onClick={ updateClicked }>
+						{ updating && <Icon name='small-spinner' /> }
+						{ updatingText }
+					</Tag>
 				</TagGroup>
 			</ScreenHeader>
 

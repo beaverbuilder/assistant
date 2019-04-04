@@ -18,6 +18,7 @@ export const UpdateListItem = props => {
 
 	useEffect( () => {
 		updater.subscribe( type, key, response => {
+			updateItem( { updating: false } )
 			setUpdating( false )
 			if ( response.success ) {
 				updateItem( { meta: metaUpdated } )
@@ -31,11 +32,16 @@ export const UpdateListItem = props => {
 		return () => updater.unsubscribe( type, key )
 	} )
 
+	useEffect( () => {
+		updateItem( { updatingText: getButtonText() } )
+	}, [ error, updated, updating ] )
+
 	const updateClicked = e => {
 		e.stopPropagation()
 		if ( error || updated || updating ) {
 			return
 		}
+		updateItem( { updating: true } )
 		setUpdating( true )
 		updater.queue( type, key )
 	}
@@ -63,7 +69,11 @@ export const UpdateListItem = props => {
 				label: __( 'Update' ),
 				content: <UpdateDetail />,
 				appearance: 'form',
-				context,
+				context: Object.assign( context, {
+					updatingText: getButtonText(),
+					updating,
+					updateClicked,
+				} ),
 			} ) }
 			{ ...props }
 		>

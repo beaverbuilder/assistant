@@ -37,7 +37,7 @@ class FL_Assistant_Data {
 			'contentStatus'   => self::get_post_stati(),
 			'currentPageView' => self::get_current_view(),
 			'currentUser'     => self::get_current_user_data(),
-			'adminURLs' 	  => self::get_admin_urls(),
+			'adminURLs'       => self::get_admin_urls(),
 			'defaultAppName'  => 'fl-dashboard',
 			'nonce'           => array(
 				'api'             => wp_create_nonce( 'wp_rest' ),
@@ -287,9 +287,10 @@ class FL_Assistant_Data {
 	static public function get_admin_urls() {
 		$urls = [];
 
-		$urls['createPost'] = admin_url('post-new.php');
+		$urls['createPost'] = admin_url( 'post-new.php' );
 
-		if ( $url = self::get_customize_url() ) {
+		$url = self::get_customize_url();
+		if ( $url ) {
 			$urls['customize'] = $url;
 		}
 
@@ -304,7 +305,7 @@ class FL_Assistant_Data {
 		}
 
 		if ( current_user_can( 'create_users' ) ) {
-			$urls['createUser'] = admin_url('user-new.php');
+			$urls['createUser'] = admin_url( 'user-new.php' );
 		}
 
 		return $urls;
