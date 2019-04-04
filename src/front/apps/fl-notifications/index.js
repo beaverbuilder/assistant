@@ -20,4 +20,5 @@ registerApp( 'fl-notifications', {
 	actions,
 	reducers,
 	effects,
+	shouldShowTitle: false,
 } )

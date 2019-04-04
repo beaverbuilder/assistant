@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import {
 	ContentItem,
@@ -8,21 +8,16 @@ import {
 	SettingsItem,
 	TagGroup,
 	Tag,
-	Title,
 	ViewContext,
 } from 'components'
 
 export const UserDetail = () => {
 	const {
-		date,
-		displayName,
 		editUrl,
 		email,
 		url,
-		username,
 		title,
 		thumbnail,
-		website,
 	} = useContext( ViewContext )
 
 	const headerTitle = (
@@ -36,32 +31,44 @@ export const UserDetail = () => {
 	return (
 		<ContentListDetail className='fl-asst-user-detail'>
 
-			<Title>{__( 'Edit Profile' )}</Title>
-
 			<ScreenHeader title={ headerTitle }>
 				<TagGroup appearance='muted'>
-					<Tag href={url}>View</Tag>
-					<Tag href={editUrl}>Edit</Tag>
+					<Tag href={url}>{__( 'View' )}</Tag>
+					<Tag href={editUrl}>{__( 'Edit' )}</Tag>
 				</TagGroup>
 			</ScreenHeader>
 
+			<UserSettings />
+
+		</ContentListDetail>
+	)
+}
+
+const UserSettings = () => {
+	const {
+		date,
+		displayName,
+		username,
+		website,
+	} = useContext( ViewContext )
+	return (
+		<Fragment>
 			<SettingsGroup>
-				<SettingsItem label='Display Name'>
+				<SettingsItem label={__( 'Display Name' )}>
 					{ displayName }
 				</SettingsItem>
-				<SettingsItem label='Username'>
+				<SettingsItem label={__( 'Username' )}>
 					{ username }
 				</SettingsItem>
-				<SettingsItem label='Signup Date'>
+				<SettingsItem label={__( 'Signup Date' )}>
 					{ date }
 				</SettingsItem>
 				{ website &&
-					<SettingsItem label='Website'>
-						<a href={ website }>Visit Website</a>
+					<SettingsItem label={__( 'Website' )}>
+						<a href={ website }>{__( 'Visit Website' )}</a>
 					</SettingsItem>
 				}
 			</SettingsGroup>
-
-		</ContentListDetail>
+		</Fragment>
 	)
 }

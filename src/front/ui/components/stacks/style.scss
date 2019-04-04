@@ -11,9 +11,5 @@
         display: flex;
         flex-direction: column;
         background-color: var(--fl-asst-background-color);
-
-        &.fl-asst-appearance-form {
-            background-color: var(--fl-asst-utility-background-color);
-        }
     }
 }

@@ -12,3 +12,5 @@ export const UserList = props => {
 		/>
 	)
 }
+
+export { UserDetail } from './detail'

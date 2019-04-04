@@ -72,10 +72,12 @@ const getColorDataForImage = img => {
 			r: null,
 			g: null,
 			b: null,
+			rgb: [ null, null, null ],
 			hex: null,
 			isDark: null,
 			isLight: null,
 			brightness: null,
+			color: null,
 		}
 
 		if ( ! data ) {
@@ -88,10 +90,12 @@ const getColorDataForImage = img => {
 			...defaults,
 			...color.object(),
 			hex: color.hex(),
+			rgb: color.rgb().array(),
 			hsl: color.hsl().string(),
 			isDark: color.isDark(),
 			isLight: color.isLight(),
 			brightness: color.luminosity(),
+			color,
 		}
 		return props
 	}

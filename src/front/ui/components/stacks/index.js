@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, createRef, createContext } from
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import posed from 'react-pose'
-import { ViewContext, Button, Icon, Scroller, AppContext } from 'components'
+import { ViewContext, Button, Icon, Scroller, AppContext, Title } from 'components'
 import { Tunnel } from 'react-tunnels'
 import './style.scss'
 
@@ -70,13 +70,20 @@ StackView.displayName = 'StackView'
 
 
 export const Stack = ( { children, className } ) => {
-	const { label: appLabel } = useContext( AppContext )
+	const {
+		label: appLabel,
+		appearance = 'normal',
+		shouldShowTitle = true
+	} = useContext( AppContext )
+
 	const [ views, setViews ] = useState( [
 		{
 			key: Date.now(),
 			pose: 'present',
+			label: appLabel,
 			content: children,
-			appearance: 'normal',
+			appearance,
+			shouldShowTitle,
 			config: {
 				shouldAnimate: true,
 				context: {}
@@ -186,6 +193,7 @@ export const Stack = ( { children, className } ) => {
 			content: null,
 			appearance: 'normal',
 			onDismiss: () => {},
+			shouldShowTitle: true,
 		}
 		const view = Object.assign( {}, defaults, config )
 		pushView( view.content, view )
@@ -220,7 +228,7 @@ export const Stack = ( { children, className } ) => {
 	return (
 		<div className={classes} style={styles}>
 			{ views.map( ( view, i ) => {
-				const { config, key, pose, content, appearance, label } = view
+				const { config, key, pose, content, appearance, label, shouldShowTitle } = view
 				const checks = {
 					isRootView: 0 === i,
 					isCurrentView: 'present' === pose ? true : false,
@@ -251,7 +259,10 @@ export const Stack = ( { children, className } ) => {
 								{...props}
 							>
 								<Breadcrumb onClick={dismiss}>{breadcrumb}</Breadcrumb>
-								<Scroller>{content}</Scroller>
+								<Scroller>
+									{ shouldShowTitle && <Title>{label}</Title> }
+									{content}
+								</Scroller>
 							</StackView>
 						</ViewContext.Provider>
 					</StackContext.Provider>

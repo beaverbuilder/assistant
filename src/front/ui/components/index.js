@@ -60,11 +60,13 @@ export {
 	PostList,
 	UpdateList,
 	UserList,
+	UserDetail,
 } from './content-list'
 
 export {
 	ToggleControl,
 	BackForwardControl,
+	FormTest,
 } from './controls'
 
 export {

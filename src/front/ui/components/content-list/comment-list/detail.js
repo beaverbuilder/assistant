@@ -20,7 +20,6 @@ import {
 	UIContext,
 	StackContext,
 	ViewContext,
-	Title,
 } from 'components'
 
 export const CommentDetail = () => {
@@ -44,8 +43,7 @@ export const CommentDetail = () => {
 		trash,
 		url,
 		updateItem,
-		removeItem,
-		postTitle
+		removeItem
 	} = useContext( ViewContext )
 
 	useEffect( () => {
@@ -123,8 +121,6 @@ export const CommentDetail = () => {
 
 	return (
 		<ContentListDetail className='fl-asst-comment-detail'>
-
-			<Title>{postTitle}</Title>
 
 			<ScreenHeader title={ detailTitle }>
 

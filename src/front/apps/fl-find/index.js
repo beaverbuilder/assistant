@@ -14,4 +14,5 @@ registerApp( 'fl-find', {
 	actions,
 	reducers,
 	effects,
+	shouldShowTitle: false,
 } )

@@ -14,7 +14,6 @@ import {
 	TagGroup,
 	Tag,
 	ToggleControl,
-	Title,
 	UIContext,
 	StackContext,
 	ViewContext,
@@ -109,8 +108,6 @@ export const PostListDetail = () => {
 
 	return (
 		<ContentListDetail>
-
-			<Title>{__( 'Edit Post' )}</Title>
 
 			<ScreenHeader title={ headerTitle }>
 

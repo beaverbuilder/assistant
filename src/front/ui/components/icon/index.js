@@ -48,6 +48,16 @@ export const Icon = ( { name } ) => {
 				</g>
 			</svg>
 		)
+	case 'asterisk':
+		return (
+			<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g stroke="currentColor" strokeWidth="2">
+					<path d="M7,1 L7,13" id="Line-5"></path>
+					<path d="M7,1 L7,13" id="Line-5-Copy" transform="translate(7.000000, 7.000000) rotate(-60.000000) translate(-7.000000, -7.000000) "></path>
+					<path d="M7,1 L7,13" id="Line-5-Copy-2" transform="translate(7.000000, 7.000000) scale(-1, 1) rotate(-60.000000) translate(-7.000000, -7.000000) "></path>
+				</g>
+			</svg>
+		)
 	case 'trigger-button':
 		return (
 			<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
