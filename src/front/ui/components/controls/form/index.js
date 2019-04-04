@@ -159,6 +159,26 @@ export const FormTest = () => {
 						name="color"
 					/>
 				</div>
+
+				<div>
+					<label htmlFor="file">File Uploader</label>
+					<input type="file" name="file" id="file" accept="image/*" multiple />
+				</div>
+
+				<div>
+					<label htmlFor="datetime">Date Time</label>
+					<input type="datetime-local" name="datetime" id="datetime" />
+				</div>
+
+				<div>
+					<label>Progress Bar</label>
+					<progress max="100" value="75">75/100</progress>
+				</div>
+
+				<div>
+					<label>Meter</label>
+					<meter min="0" max="100" value="75" low="33" high="66" optimum="50">75</meter>
+				</div>
 			</form>
 		</Fragment>
 	)

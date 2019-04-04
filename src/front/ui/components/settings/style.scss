@@ -12,17 +12,13 @@
 
 	&.fl-asst-settings-item-label-beside {
 		display: flex;
+
+		.fl-asst-settings-item-control {
+			margin-left:auto;
+		}
 	}
 }
 
-.fl-asst-settings-item-label {
-	width: 100%;
-
-	label {
-		margin: 0;
-		padding: 0;
-	}
-}
 
 .fl-asst-settings-item-control {
 	display: flex;
