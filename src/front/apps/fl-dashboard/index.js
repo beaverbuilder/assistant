@@ -9,5 +9,6 @@ registerApp( 'fl-dashboard', {
 	label: __( 'Overview' ),
 	content: <App />,
 	icon: <Icon />,
+	shouldShowTitle: false,
 	...storeConfig,
 } )

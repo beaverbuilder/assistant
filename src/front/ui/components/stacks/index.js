@@ -70,13 +70,20 @@ StackView.displayName = 'StackView'
 
 
 export const Stack = ( { children, className } ) => {
-	const { label: appLabel, appearance } = useContext( AppContext )
+	const {
+		label: appLabel,
+		appearance = 'normal',
+		shouldShowTitle = true
+	} = useContext( AppContext )
+
 	const [ views, setViews ] = useState( [
 		{
 			key: Date.now(),
 			pose: 'present',
+			label: appLabel,
 			content: children,
 			appearance,
+			shouldShowTitle,
 			config: {
 				shouldAnimate: true,
 				context: {}

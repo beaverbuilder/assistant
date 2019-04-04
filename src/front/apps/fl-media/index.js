@@ -14,4 +14,5 @@ registerApp( 'fl-media', {
 	actions,
 	reducers,
 	effects,
+	shouldShowTitle: false,
 } )

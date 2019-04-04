@@ -60,6 +60,7 @@ export {
 	PostList,
 	UpdateList,
 	UserList,
+	UserDetail,
 } from './content-list'
 
 export {

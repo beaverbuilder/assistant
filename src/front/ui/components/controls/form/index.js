@@ -6,6 +6,9 @@ export const FormTest = () => {
 	return (
 		<Fragment>
 			<form>
+				<div>
+					<p>This is a testing sheet for different form controls and scenarios. This is intended to serve as an exhaustive testing tool.</p>
+				</div>
 
 				<div>
 					<label htmlFor="name">Name <abbr title="required"><Icon name="asterisk" /></abbr></label>
