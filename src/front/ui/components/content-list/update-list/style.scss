@@ -1,19 +1,27 @@
-.fl-asst-update-button {
-	display: none;
-	position: absolute;
-	right: 25px;
-	height: 100%;
-	button {
-	    transition-property: background-color;
-	    transition-duration: .5s;
-	    transition-delay:.2s;
-	}
-	button:focus {
-		border: 2px solid transparent;
+.fl-asst-update-button svg {
+	margin-right: 4px;
+}
+
+.fl-asst-update-item {
+
+	.fl-asst-update-button {
+		display: none;
+		position: absolute;
+		right: 25px;
+		height: 100%;
+		button {
+		    transition-property: background-color;
+		    transition-duration: .5s;
+		    transition-delay:.2s;
+		}
+		button:focus {
+			border: 2px solid transparent;
+		}
 	}
 }
 
 .fl-asst-update-item:hover {
+
 	.fl-asst-update-button {
 		display: flex;
 		button {
@@ -25,11 +33,8 @@
 .fl-asst-update-item-updating,
 .fl-asst-update-item-updated,
 .fl-asst-update-item-error {
+
 	.fl-asst-update-button {
 		display: flex;
 	}
-}
-
-.fl-asst-update-button svg {
-	margin-right: 4px;
 }

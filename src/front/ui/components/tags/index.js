@@ -29,8 +29,8 @@ export const TagGroup = props => {
 	)
 }
 
-export const Tag = ( { appearance, children, onClick = () => {}, count, isSelected, isDisabled, href, target } ) => {
-	const classes = classname( {
+export const Tag = ( { appearance, children, className, onClick = () => {}, count, isSelected, isDisabled, href, target } ) => {
+	const classes = classname( className, {
 		'fl-asst-button': true,
 		'fl-asst-tag': true,
 		'is-selected': isSelected,
