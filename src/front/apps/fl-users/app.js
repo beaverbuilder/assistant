@@ -16,12 +16,14 @@ export const App = () => {
 	const { dismissAll, present } = useContext( StackContext )
 
 	useLayoutEffect( () => {
+
+		/*
 		present( {
 			label: __( 'Your Profile' ),
 			content: <UserDetail />,
 			appearance: 'form',
 			context: {}
-		} )
+		} )*/
 	}, [] )
 
 	return (
