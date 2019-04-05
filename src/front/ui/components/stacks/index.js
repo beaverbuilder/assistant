@@ -12,7 +12,7 @@ StackContext.displayName = 'StackContext'
 const handleTransition = () => {
 	return {
 		type: 'tween',
-		duration: 0
+		duration: 150
 	}
 }
 

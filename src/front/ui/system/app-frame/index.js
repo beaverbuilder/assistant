@@ -1,4 +1,5 @@
 import React from 'react'
+import { __ } from '@wordpress/i18n'
 import { useSpring, animated, config } from 'react-spring'
 import { useSystemState, getSystemActions } from 'store'
 import { useWindowSize } from 'utils/window'
@@ -99,6 +100,7 @@ export const AppFrame = ( { children } ) => {
 		<animated.nav
 			style={styles}
 			role="navigation"
+			aria-label={__('Assistant Panel')}
 			aria-hidden={ ! isShowingUI ? 'true' : 'false' }
 		>{children}</animated.nav>
 	)

@@ -41,7 +41,7 @@ const Actions = () => {
 
 	return (
 		<Fragment>
-			{ 'posts' === filter.type && <NewButton onClick={presentNew} /> }
+			{ 'posts' === filter.type && <NewButton onClick={presentNew} title={__('Create New Post or Page')} /> }
 		</Fragment>
 	)
 }
