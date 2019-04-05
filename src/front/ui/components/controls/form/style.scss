@@ -12,13 +12,34 @@
         display: grid;
         grid-row-gap: 15px;
 
-        & > div {
+        .fl-asst-form-item {
             padding: 0 var(--fl-asst-base-padding) 3px;
             padding-left: calc( var(--fl-asst-base-padding) - 2px );
             border-left: 2px solid transparent;
+
+            &.fl-asst-form-item-placement-beside {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-gap: 15px;
+
+                label {
+                    margin:0;
+                    justify-self: start;
+                }
+            }
+
+            .fl-asst-form-item-content {
+                justify-self: end;
+                display: flex;
+                flex-direction: row;
+
+                button {
+                    flex: 0 0 auto;
+                }
+            }
         }
 
-        div:focus-within {
+        .fl-asst-form-item:focus-within {
             border-left: 2px solid var(--fl-asst-dark-color);
 
             label {

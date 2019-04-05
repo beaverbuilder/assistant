@@ -1,11 +1,15 @@
 .fl-asst-back-forward-control {
     color:black;
-    background: var(--fl-utility-background-color);
+    background: var(--fl-asst-utility-background-color);
     border-radius: 7px;
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     min-height: 32px;
     user-select: none;
+
+    .fl-asst-appearance-form & {
+        background: var(--fl-asst-light-color);
+    }
 
     button {
         margin:0;

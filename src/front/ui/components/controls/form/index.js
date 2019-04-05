@@ -1,55 +1,81 @@
 import React, { Fragment } from 'react'
-import { Icon } from 'components'
+import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
+import { Icon, ToggleControl, BackForwardControl } from 'components'
 import './style.scss'
+
+export const FormItem = props => {
+	const {
+		children,
+		label,
+		labelFor,
+		className,
+		isRequired = false,
+		placement = 'above',
+	} = props
+
+	const classes = classname({
+		'fl-asst-form-item' : true,
+		[`fl-asst-form-item-placement-${placement}`] : placement,
+	}, className )
+	return (
+		<div className={classes}>
+			{ label &&
+				<label htmlFor={labelFor}>
+					{label}
+					{ isRequired && <abbr title="required"><Icon name="asterisk" /></abbr> }
+				</label> }
+			<div className="fl-asst-form-item-content">{children}</div>
+		</div>
+	)
+}
 
 export const FormTest = () => {
 	return (
 		<Fragment>
 			<form>
-				<div>
+				<FormItem>
 					<p>This is a testing sheet for different form controls and scenarios. This is intended to serve as an exhaustive testing tool.</p>
-				</div>
+				</FormItem>
 
-				<div>
-					<label htmlFor="name">Name <abbr title="required"><Icon name="asterisk" /></abbr></label>
+				<FormItem label={__('Name')} labelFor="name" isRequired={true}>
 					<input
 						id="name"
 						type="text"
 						required={true}
 						placeholder="Type Something!"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
-					<label htmlFor="email">Email Address</label>
+
+				<FormItem label={__('Email Address')} labelFor="email" placement="beside" isRequired={true}>
 					<input
 						id="email"
 						type="email"
+						required={true}
 						placeholder="john@example.com"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
-					<label htmlFor="password">Enter New Password</label>
+				<FormItem label={__('Enter New Password')} labelFor="pw" placement="beside">
 					<input
-						id="password"
-						name="password"
+						id="pw"
+						name="pw"
 						type="password"
-						placeholder="Password123:)"
+						placeholder={__("Password123:)")}
 					/>
-				</div>
+				</FormItem>
 
-				<div>
-					<label htmlFor="search">Search Me</label>
+				<FormItem label={__('Search Me')} labelFor="search">
 					<input
 						id="search"
 						name="search"
 						type="search"
 						placeholder="Enter Your Search"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="phone">Phone Number</label>
 					<input
 						id="phone"
@@ -57,9 +83,9 @@ export const FormTest = () => {
 						type="tel"
 						placeholder="(xxx) xxx-xxxx"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="url">Website Address (URL)</label>
 					<input
 						id="url"
@@ -67,30 +93,29 @@ export const FormTest = () => {
 						type="url"
 						placeholder="https://www.yoursite.com"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="area">A text area</label>
 					<textarea id="area" rows="5"></textarea>
-				</div>
+				</FormItem>
 
-				<div>
-					<label htmlFor="selector">Select Something! <abbr title="required"><Icon name="asterisk" /></abbr></label>
+				<FormItem label={__('Select Something!')} labelFor="selector" isRequired={true}>
 					<select id="selector" name="selector">
 						<option>Select Me!</option>
 					</select>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="multi-selector">Multiple Choice</label>
 					<select id="multi-selector" name="multi-selector" multiple={true}>
 						<option>Red</option>
 						<option>Blue</option>
 						<option>Green</option>
 					</select>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="suggestions">Text Field with Suggestions</label>
 					<input
 						id="suggestions"
@@ -109,9 +134,9 @@ export const FormTest = () => {
 						<option>Peach</option>
 						<option>Pear</option>
 					</datalist>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="length">
                         Text field with min/max length
 						<abbr title="required"><Icon name="asterisk" /></abbr>
@@ -125,9 +150,9 @@ export const FormTest = () => {
 						name="length"
 						placeholder="Between 6 and 24 characters"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="number">Number Field</label>
 					<input
 						type="number"
@@ -137,9 +162,9 @@ export const FormTest = () => {
 						max="500"
 						step="10"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="range">Range Field</label>
 					<input
 						type="range"
@@ -149,36 +174,45 @@ export const FormTest = () => {
 						max="500"
 						step="10"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="color">Color Field</label>
 					<input
 						type="color"
 						id="color"
 						name="color"
 					/>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="file">File Uploader</label>
 					<input type="file" name="file" id="file" accept="image/*" multiple />
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label htmlFor="datetime">Date Time</label>
 					<input type="datetime-local" name="datetime" id="datetime" />
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label>Progress Bar</label>
 					<progress max="100" value="75">75/100</progress>
-				</div>
+				</FormItem>
 
-				<div>
+				<FormItem>
 					<label>Meter</label>
 					<meter min="0" max="100" value="75" low="33" high="66" optimum="50">75</meter>
-				</div>
+				</FormItem>
+
+				<FormItem>
+					<label>Toggle Control</label>
+					<ToggleControl />
+				</FormItem>
+
+				<FormItem label={__('Back/Forward Control')}>
+					<BackForwardControl />
+				</FormItem>
 			</form>
 		</Fragment>
 	)

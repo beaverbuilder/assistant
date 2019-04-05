@@ -67,6 +67,7 @@ export {
 	ToggleControl,
 	BackForwardControl,
 	FormTest,
+	FormItem,
 } from './controls'
 
 export {

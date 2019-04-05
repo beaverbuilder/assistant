@@ -1,23 +1,21 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Icon } from 'components'
+import { FormItem } from 'components'
 import './style.scss'
 
 export const CreatePost = () => {
 	return (
 		<form>
-			<div>
-				<label htmlFor="fl-asst-post-title">{__( 'Title' )} <abbr title="required"><Icon name="asterisk" /></abbr></label>
+			<FormItem label={__('Title')} labelFor="fl-asst-post-title" isRequired={true}>
 				<input
 					id="fl-asst-post-title"
 					name="fl-asst-post-title"
 					type="text"
 					placeholder={__( 'Title Your Post Something Great!' )}
 				/>
-			</div>
+			</FormItem>
 
-			<div>
-				<label htmlFor="fl-asst-post-type">{__( 'Post Type' )}</label>
+			<FormItem label={__( 'Post Type' )} labelFor="fl-asst-post-type">
 				<select id="fl-asst-post-type" name="fl-asst-post-type">
 					<optgroup label={__( 'Built-in Types' )}>
 						<option value="post">{__( 'Post' )}</option>
@@ -27,17 +25,16 @@ export const CreatePost = () => {
 						<option value="whatever">{__( 'Squirrel' )}</option>
 					</optgroup>
 				</select>
-			</div>
+			</FormItem>
 
-			<div>
-				<label htmlFor="fl-asst-post-slug">{__( 'Slug' )}</label>
+			<FormItem label={__( 'Slug' )} labelFor="fl-asst-post-slug">
 				<input
 					id="fl-asst-post-slug"
 					name="fl-asst-post-slug"
 					type="text"
 					placeholder={__( 'my-great-post-slug' )}
 				/>
-			</div>
+			</FormItem>
 		</form>
 	)
 }
