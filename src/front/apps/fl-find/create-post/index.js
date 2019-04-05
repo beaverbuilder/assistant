@@ -15,7 +15,7 @@ export const CreatePost = () => {
 				/>
 			</FormItem>
 
-			<FormItem label={__( 'Post Type' )} labelFor="fl-asst-post-type">
+			<FormItem label={__( 'Post Type' )} labelFor="fl-asst-post-type" placement="beside">
 				<select id="fl-asst-post-type" name="fl-asst-post-type">
 					<optgroup label={__( 'Built-in Types' )}>
 						<option value="post">{__( 'Post' )}</option>

@@ -75,7 +75,7 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-				<FormItem label={__('Phone Number')} labelFor="phone">
+				<FormItem label={__( 'Phone Number' )} labelFor="phone">
 					<input
 						id="phone"
 						name="phone"
@@ -84,7 +84,7 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-				<FormItem label={__('Website Address (URL)')} labelFor="url">
+				<FormItem label={__( 'Website Address (URL)' )} labelFor="url">
 					<input
 						id="url"
 						name="url"
@@ -93,7 +93,7 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-				<FormItem label={__('A Text Area')} labelFor="area">
+				<FormItem label={__( 'A Text Area' )} labelFor="area">
 					<textarea id="area" rows="5"></textarea>
 				</FormItem>
 
@@ -103,7 +103,7 @@ export const FormTest = () => {
 					</select>
 				</FormItem>
 
-				<FormItem label={__('Multiple Choice')} labelFor="multi-selector">
+				<FormItem label={__( 'Multiple Choice' )} labelFor="multi-selector">
 					<select id="multi-selector" name="multi-selector" multiple={true}>
 						<option>Red</option>
 						<option>Blue</option>
@@ -111,7 +111,7 @@ export const FormTest = () => {
 					</select>
 				</FormItem>
 
-				<FormItem label={__('Text Field with Suggestions')} labelFor="suggestions">
+				<FormItem label={__( 'Text Field with Suggestions' )} labelFor="suggestions">
 					<input
 						id="suggestions"
 						name="suggestions"
@@ -131,7 +131,7 @@ export const FormTest = () => {
 					</datalist>
 				</FormItem>
 
-				<FormItem label={__('Text field with min/max length')} labelFor="length" isRequired={true}>
+				<FormItem label={__( 'Text field with min/max length' )} labelFor="length" isRequired={true}>
 					<input
 						type="text"
 						required
@@ -143,7 +143,7 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-				<FormItem label={__('Number Field')} labelFor="number" placement="beside">
+				<FormItem label={__( 'Number Field' )} labelFor="number" placement="beside">
 					<input
 						type="number"
 						id="number"
@@ -154,7 +154,7 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-				<FormItem label={__('Range Field')} labelFor="range" placement="beside">
+				<FormItem label={__( 'Range Field' )} labelFor="range" placement="beside">
 					<input
 						type="range"
 						id="range"
@@ -165,7 +165,7 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-				<FormItem label={__('Color Field')} labelFor="color" placement="beside">
+				<FormItem label={__( 'Color Field' )} labelFor="color" placement="beside">
 					<input
 						type="color"
 						id="color"
@@ -173,23 +173,23 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-				<FormItem label={__('File Uploader')} labelFor="file" placement="beside">
+				<FormItem label={__( 'File Uploader' )} labelFor="file" placement="beside">
 					<input type="file" name="file" id="file" accept="image/*" multiple />
 				</FormItem>
 
-				<FormItem label={__('Date Time')} labelFor="datetime" placement="beside">
+				<FormItem label={__( 'Date Time' )} labelFor="datetime" placement="beside">
 					<input type="datetime-local" name="datetime" id="datetime" />
 				</FormItem>
 
-				<FormItem label={__('Progress (read only)')} placement="beside">
+				<FormItem label={__( 'Progress (read only)' )} placement="beside">
 					<progress max="100" value="75">75/100</progress>
 				</FormItem>
 
-				<FormItem label={__('Meter (read only)')} placement="beside">
+				<FormItem label={__( 'Meter (read only)' )} placement="beside">
 					<meter min="0" max="100" value="75" low="33" high="66" optimum="50">75</meter>
 				</FormItem>
 
-				<FormItem label={__('Toggle Control')} placement="beside">
+				<FormItem label={__( 'Toggle Control' )} placement="beside">
 					<ToggleControl />
 				</FormItem>
 

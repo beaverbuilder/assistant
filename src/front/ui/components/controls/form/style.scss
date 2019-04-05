@@ -10,7 +10,7 @@
         padding: var(--fl-asst-base-padding) 0;
 
         display: grid;
-        grid-row-gap: 15px;
+        grid-row-gap: var(--fl-asst-half-unit);
 
         .fl-asst-form-item {
             display: flex;
@@ -19,10 +19,14 @@
             padding-left: calc( var(--fl-asst-base-padding) - 2px );
             border-left: 2px solid transparent;
 
+            p {
+                margin:0;
+            }
+
             &.fl-asst-form-item-placement-beside {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                grid-gap: 15px;
+                grid-gap: var(--fl-asst-half-unit);
 
                 label {
                     margin:0;

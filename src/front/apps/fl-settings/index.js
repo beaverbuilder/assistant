@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemActions } from 'store'
-import { SettingsItem, SettingsGroup, ToggleControl, NavBar } from 'components'
+import { ToggleControl, NavBar, FormItem } from 'components'
 const { registerApp } = getSystemActions()
 import './style.scss'
 
@@ -24,18 +24,18 @@ const App = () => {
 
 	return (
 		<Fragment>
-
-			<SettingsGroup>
-				<SettingsItem label={__( 'Reduce Motion' )}>
+			<form>
+				<FormItem label={__( 'Reduce Motion' )} labelFor="fl-asst-should-reduce-motion" placement="beside" >
 					<ToggleControl
+						id="fl-asst-should-reduce-motion"
 						value={shouldReduceMotion}
 						onChange={ value => setShouldReduceMotion( value ) }
 					/>
-				</SettingsItem>
-				<SettingsItem label={__( 'Panel Position' )}>
+				</FormItem>
+				<FormItem label={__( 'Panel Position' )} placement="beside">
 					<NavBar items={edgeItems} />
-				</SettingsItem>
-			</SettingsGroup>
+				</FormItem>
+			</form>
 		</Fragment>
 	)
 }

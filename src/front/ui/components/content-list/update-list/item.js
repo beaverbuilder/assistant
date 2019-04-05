@@ -66,7 +66,7 @@ export const UpdateListItem = props => {
 		<ContentListItem
 			className={ classes }
 			onClick={ () => present( {
-				label: __( 'Update' ),
+				label: 'plugin' === type ? __( 'Plugin' ) : __( 'Theme' ),
 				content: <UpdateDetail />,
 				appearance: 'form',
 				context: Object.assign( context, {
