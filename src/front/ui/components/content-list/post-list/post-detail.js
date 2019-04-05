@@ -8,9 +8,7 @@ import {
 	ContentItem,
 	ContentListDetail,
 	Icon,
-	ScreenHeader,
-	SettingsItem,
-	SettingsGroup,
+	FormItem,
 	TagGroup,
 	Tag,
 	ToggleControl,
@@ -98,73 +96,65 @@ export const PostListDetail = () => {
 		setPost( { ...post, [ name ]: value } )
 	}
 
-	const headerTitle = (
-		<ContentItem
-			thumbnail={ thumbnail }
-			title={ <strong>{ title }</strong> }
-			meta={ author }
-		/>
-	)
-
 	return (
 		<ContentListDetail>
 
-			<ScreenHeader title={ headerTitle }>
+			<form>
+				<FormItem>
+					<ContentItem
+						thumbnail={ thumbnail }
+						title={ <strong>{ title }</strong> }
+						meta={ author }
+					/>
+				</FormItem>
+				<FormItem label={__( 'Visibility' )} placement="beside">{ visibility }</FormItem>
+				<FormItem label={__( 'Status' )} placement="beside">
+					{ contentStatus[ status ] ? contentStatus[ status ] : status }
+				</FormItem>
+				<FormItem label={__( 'PublishDate' )} placement="beside">{ date }</FormItem>
 
-				<SettingsGroup>
-					<SettingsItem label='Visibility'>
-						{ visibility }
-					</SettingsItem>
-					<SettingsItem label='Status'>
-						{ contentStatus[ status ] ? contentStatus[ status ] : status }
-					</SettingsItem>
-					<SettingsItem label='Publish Date'>
-						{ date }
-					</SettingsItem>
-				</SettingsGroup>
+				<FormItem>
+					<TagGroup appearance='muted' className='fl-asst-post-actions'>
+						{ 'trash' !== status &&
+							<Fragment>
+								<Tag href={ url }>{__( 'View' )}</Tag>
+								<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
+								{ bbCanEdit &&
+									<Tag href={ bbEditUrl }>{ bbBranding }</Tag>
+								}
+								<Tag onClick={ trashClicked } appearance='warning'>{__( 'Trash' )}</Tag>
+							</Fragment>
+						}
+						{ 'trash' === status &&
+							<Tag onClick={restoreClicked}>{__( 'Restore' )}</Tag>
+						}
+					</TagGroup>
+				</FormItem>
 
-				<TagGroup appearance='muted' className='fl-asst-post-actions'>
-					{ 'trash' !== status &&
-						<Fragment>
-							<Tag href={ url }>{__( 'View' )}</Tag>
-							<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
-							{ bbCanEdit &&
-								<Tag href={ bbEditUrl }>{ bbBranding }</Tag>
-							}
-							<Tag onClick={ trashClicked } appearance='warning'>{__( 'Trash' )}</Tag>
-						</Fragment>
-					}
-					{ 'trash' === status &&
-						<Tag onClick={restoreClicked}>{__( 'Restore' )}</Tag>
-					}
-				</TagGroup>
-
-			</ScreenHeader>
-
-			<SettingsGroup>
-				<SettingsItem label='Title' labelPosition='above'>
-					<input type='text' name='title' value={ title } onChange={ onChange } autoFocus />
-				</SettingsItem>
-				<SettingsItem label='Slug' labelPosition='above'>
-					<input type='text' name='slug' value={ slug } onChange={ onChange } />
-					<CopyButton label='Copy URL' text={ url } />
-				</SettingsItem>
-				<SettingsItem label='Comments'>
+				<FormItem label={__( 'Title' )} labelFor="title">
+					<input type='text' name='title' id="title" value={ title } onChange={ onChange } />
+				</FormItem>
+				<FormItem label={__( 'Slug' )} labelFor="slug">
+					<input type='text' name='slug' id="slug" value={ slug } onChange={ onChange } />
+					<CopyButton label={__( 'Copy URL' )} text={ url } />
+				</FormItem>
+				<FormItem label={__( 'Comments' )} labelFor="commentsAllowed" placement="beside">
 					<ToggleControl
+						id="commentsAllowed"
 						name='commentsAllowed'
 						value={ commentsAllowed }
 						onChange={ ( value ) => setPost( { ...post, commentsAllowed: value } ) }
 					/>
-				</SettingsItem>
-				<SettingsItem>
+				</FormItem>
+				<FormItem>
 					{ publishing &&
-						<Button>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
+					<Button style={{ marginLeft: 'auto' }}>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
 					}
 					{ ! publishing &&
-						<Button onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
+					<Button style={{ marginLeft: 'auto' }} onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
 					}
-				</SettingsItem>
-			</SettingsGroup>
+				</FormItem>
+			</form>
 
 		</ContentListDetail>
 	)

@@ -12,7 +12,7 @@ export const CurrentlyViewing = () => {
 	const { intro, name, actions } = useContext( PageViewContext )
 	return (
 		<div className="fl-asst-currently-viewing">
-			<Padding>
+			<Padding top={20} bottom={20}>
 				<VerticalGroup>
 					<div className="fl-asst-pretitle">{intro}</div>
 					<div className="fl-asst-title">

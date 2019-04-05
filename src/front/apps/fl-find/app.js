@@ -17,7 +17,7 @@ export const App = () => {
 		<Fragment>
 			<PostListFilter />
 
-			<Title actions={<Actions />}>{__( 'Content' )}</Title>
+			<Title actions={<Actions />} >{__( 'Content' )}</Title>
 			<PostList
 				type={ filter.type }
 				query={ query }
@@ -29,6 +29,7 @@ export const App = () => {
 
 const Actions = () => {
 	const { present } = useContext( StackContext )
+	const { filter } = useAppState()
 
 	const presentNew = () => {
 		present( {
@@ -40,7 +41,7 @@ const Actions = () => {
 
 	return (
 		<Fragment>
-			<NewButton onClick={presentNew} />
+			{ 'posts' === filter.type && <NewButton onClick={presentNew} /> }
 		</Fragment>
 	)
 }
