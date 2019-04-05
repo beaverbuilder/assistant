@@ -6,7 +6,7 @@ import './style.scss'
 export const CreatePost = () => {
 	return (
 		<form>
-			<FormItem label={__('Title')} labelFor="fl-asst-post-title" isRequired={true}>
+			<FormItem label={__( 'Title' )} labelFor="fl-asst-post-title" isRequired={true}>
 				<input
 					id="fl-asst-post-title"
 					name="fl-asst-post-title"

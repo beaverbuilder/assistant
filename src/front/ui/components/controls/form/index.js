@@ -14,9 +14,9 @@ export const FormItem = props => {
 		placement = 'above',
 	} = props
 
-	const classes = classname({
-		'fl-asst-form-item' : true,
-		[`fl-asst-form-item-placement-${placement}`] : placement,
+	const classes = classname( {
+		'fl-asst-form-item': true,
+		[`fl-asst-form-item-placement-${placement}`]: placement,
 	}, className )
 	return (
 		<div className={classes}>
@@ -38,7 +38,7 @@ export const FormTest = () => {
 					<p>This is a testing sheet for different form controls and scenarios. This is intended to serve as an exhaustive testing tool.</p>
 				</FormItem>
 
-				<FormItem label={__('Name')} labelFor="name" isRequired={true}>
+				<FormItem label={__( 'Name' )} labelFor="name" isRequired={true}>
 					<input
 						id="name"
 						type="text"
@@ -48,7 +48,7 @@ export const FormTest = () => {
 				</FormItem>
 
 
-				<FormItem label={__('Email Address')} labelFor="email" placement="beside" isRequired={true}>
+				<FormItem label={__( 'Email Address' )} labelFor="email" placement="beside" isRequired={true}>
 					<input
 						id="email"
 						type="email"
@@ -57,16 +57,16 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-				<FormItem label={__('Enter New Password')} labelFor="pw" placement="beside">
+				<FormItem label={__( 'Enter New Password' )} labelFor="pw" placement="beside">
 					<input
 						id="pw"
 						name="pw"
 						type="password"
-						placeholder={__("Password123:)")}
+						placeholder={__( 'Password123:)' )}
 					/>
 				</FormItem>
 
-				<FormItem label={__('Search Me')} labelFor="search">
+				<FormItem label={__( 'Search Me' )} labelFor="search">
 					<input
 						id="search"
 						name="search"
@@ -100,7 +100,7 @@ export const FormTest = () => {
 					<textarea id="area" rows="5"></textarea>
 				</FormItem>
 
-				<FormItem label={__('Select Something!')} labelFor="selector" isRequired={true}>
+				<FormItem label={__( 'Select Something!' )} labelFor="selector" isRequired={true}>
 					<select id="selector" name="selector">
 						<option>Select Me!</option>
 					</select>
@@ -210,7 +210,7 @@ export const FormTest = () => {
 					<ToggleControl />
 				</FormItem>
 
-				<FormItem label={__('Back/Forward Control')}>
+				<FormItem label={__( 'Back/Forward Control' )}>
 					<BackForwardControl />
 				</FormItem>
 			</form>
