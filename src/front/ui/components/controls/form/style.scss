@@ -13,6 +13,8 @@
         grid-row-gap: 15px;
 
         .fl-asst-form-item {
+            display: flex;
+            flex-direction: column;
             padding: 0 var(--fl-asst-base-padding) 3px;
             padding-left: calc( var(--fl-asst-base-padding) - 2px );
             border-left: 2px solid transparent;
