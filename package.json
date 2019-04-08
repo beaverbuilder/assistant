@@ -23,6 +23,7 @@
     "lodash-es": "^4.17.11",
     "md5": "^2.2.1",
     "react": "^16.8.4",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-clipboard.js": "^2.0.6",
     "react-dom": "^16.8.4",
     "react-image": "^2.0.0",

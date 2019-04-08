@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { UI } from './ui'
 import { UIToggleButton, useActiveApp } from 'system'
 import {
@@ -76,8 +77,14 @@ const Assistant = () => {
 		<Provider store={getSystemStore()}>
 			<UIContext.Provider value={ui}>
 				<PageViewContext.Provider value={currentPageView}>
-					{ ! isShowingUI && <UIToggleButton /> }
-					{ isShowingUI && <UI /> }
+					<ReactCSSTransitionGroup
+						transitionName="display"
+						transitionEnterTimeout={2000}
+						transitionLeaveTimeout={2000}
+					>
+						{ ! isShowingUI && <UIToggleButton key="button" /> }
+						{ isShowingUI && <UI key="panel" /> }
+					</ReactCSSTransitionGroup>
 				</PageViewContext.Provider>
 			</UIContext.Provider>
 		</Provider>

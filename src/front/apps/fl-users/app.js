@@ -8,23 +8,22 @@ import {
 	Heading,
 	StackContext,
 
-	/*UserDetail,*/
+	UserDetail,
 } from 'components'
 import { UserListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
-	const { dismissAll } = useContext( StackContext )
+	const { dismissAll, present } = useContext( StackContext )
 
 	useLayoutEffect( () => {
-
-		/*
 		present( {
 			label: __( 'Your Profile' ),
 			content: <UserDetail />,
 			appearance: 'form',
-			context: {}
-		} )*/
+			context: {},
+			shouldAnimate: false,
+		} )
 	}, [] )
 
 	return (

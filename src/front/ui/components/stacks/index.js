@@ -154,7 +154,7 @@ export const Stack = ( { children, className } ) => {
 		newViews.push( {
 			...obj,
 			key: Date.now(),
-			pose: 'future',
+			pose: ! obj.shouldAnimate ? 'present' : 'future',
 			config: obj,
 		} )
 		setViews( Array.from( newViews ) )
@@ -302,7 +302,7 @@ export const BackButton = props => {
 
 	return (
 		<Button appearance="icon" {...props} onClick={onClick}>
-			<Icon name="back" />
+			<Icon name="back-arrow" />
 		</Button>
 	)
 }

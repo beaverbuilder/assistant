@@ -28,7 +28,7 @@ export const RecentlyEditedWidget = () => {
 	]
 
 	return (
-		<Widget title={__( 'Recently Edited' )} isPadded={false}>
+		<Widget title={__( 'Recently Created' )} isPadded={false}>
 			<div style={{
 				padding: '0 var(--fl-asst-base-padding)',
 				display: 'flex',

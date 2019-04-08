@@ -18,6 +18,7 @@ export const PostListItem = props => {
 				label: __( 'Edit Post' ),
 				content: <PostListDetail />,
 				appearance: 'form',
+				shouldShowTitle: false,
 				context,
 			} )
 		} else {
@@ -47,7 +48,7 @@ export const PostListItem = props => {
 					<Icon name="go" />
 				</Button>
 				<Button appearance="icon" onClick={ onPrimaryClick }>
-					<Icon name="forward" />
+					<Icon name="forward-arrow" />
 				</Button>
 			</div>
 		</ContentListItem>

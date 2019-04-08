@@ -7,7 +7,7 @@ import {
 } from 'components'
 
 import { Help } from './help'
-import { CurrentlyViewing } from './currently-viewing'
+import { TilesWidget } from './currently-viewing'
 import { RecentlyEditedWidget } from './recently-edited'
 import { RecentCommentsWidget } from './recent-comments'
 import { WayfinderWidget } from './wayfinder'
@@ -17,14 +17,14 @@ export const App = () => {
 
 	return (
 		<Fragment>
-			<CurrentlyViewing />
 			<Header.Expanded>
 				<Help />
 			</Header.Expanded>
 
-			<WayfinderWidget />
-
+			<TilesWidget />
 			<RecentlyEditedWidget />
+			<Separator />
+			<WayfinderWidget />
 			<Separator />
 
 			{ currentUserCan( 'moderate_comments' ) &&

@@ -1,9 +1,10 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { useSpring, animated, config } from 'react-spring'
+import classname from 'classnames'
 import { useSystemState, getSystemActions } from 'store'
 import { useWindowSize } from 'utils/window'
 import { Button, Icon } from 'components'
+import './style.scss'
 
 export const useAppFrame = () => {
 	const { panelPosition, appFrameSize } = useSystemState()
@@ -49,7 +50,7 @@ export const useAppFrame = () => {
 }
 
 export const AppFrame = ( { children } ) => {
-	const { isShowingUI, shouldReduceMotion } = useSystemState()
+	const { isShowingUI } = useSystemState()
 	const { appFrame: { width, height, alignment } } = useAppFrame()
 	const { clientWidth: bodyWidth } = useWindowSize()
 
@@ -65,22 +66,6 @@ export const AppFrame = ( { children } ) => {
 		}
 	}
 
-	const springConfig = {
-		...config.default,
-		tension: 400,
-		friction: 33,
-		clamp: true,
-	}
-
-	const springProps = useSpring( {
-		width: width + 1/* account for inside edge border */,
-		height,
-		right: 'end' === alignment ? 0 : bodyWidth - width,
-		transform: transform(),
-		immediate: shouldReduceMotion,
-		config: springConfig,
-	} )
-
 	const insideBorder = '1px solid var(--fl-line-color)'
 	const insideEdge = 'end' === alignment ? 'borderLeft' : 'borderRight'
 	const outsideBorder = 'none'
@@ -89,20 +74,28 @@ export const AppFrame = ( { children } ) => {
 	const styles = {
 		position: 'fixed',
 		top: 0,
+		width: width + 1,
+		height,
+		right: 'end' === alignment ? 0 : bodyWidth - width,
+		transform: transform(),
 		zIndex: 999999,
 		boxShadow: '0px 0px 40px rgba(0, 0, 0, 0.1)',
 		[insideEdge]: insideBorder,
 		[outsideEdge]: outsideBorder,
-		...springProps
 	}
 
+	const classes = classname( {
+		'fl-asst-panel-frame': true,
+	} )
+
 	return (
-		<animated.nav
+		<nav
+			className={classes}
 			style={styles}
 			role="navigation"
-			aria-label={__('Assistant Panel')}
+			aria-label={__( 'Assistant Panel' )}
 			aria-hidden={ ! isShowingUI ? 'true' : 'false' }
-		>{children}</animated.nav>
+		>{children}</nav>
 	)
 }
 

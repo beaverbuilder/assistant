@@ -58,6 +58,7 @@ export {
 	CommentList,
 	MediaList,
 	PostList,
+	PostListDetail,
 	UpdateList,
 	UserList,
 	UserDetail,

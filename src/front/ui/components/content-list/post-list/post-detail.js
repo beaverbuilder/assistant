@@ -5,16 +5,17 @@ import { updatePost } from 'utils/wordpress'
 import {
 	Button,
 	CopyButton,
-	ContentItem,
 	ContentListDetail,
 	Icon,
 	FormItem,
 	TagGroup,
 	Tag,
 	ToggleControl,
+	Title,
 	UIContext,
 	StackContext,
 	ViewContext,
+	Separator,
 } from 'components'
 import './style.scss'
 
@@ -28,7 +29,6 @@ export const PostListDetail = () => {
 	const [ publishing, setPublishing ] = useState( false )
 	const [ post, setPost ] = useState( viewContext )
 	const {
-		author,
 		bbCanEdit,
 		bbBranding,
 		bbEditUrl,
@@ -38,7 +38,6 @@ export const PostListDetail = () => {
 		id,
 		status,
 		slug,
-		thumbnail,
 		title,
 		type,
 		url,
@@ -96,22 +95,17 @@ export const PostListDetail = () => {
 		setPost( { ...post, [ name ]: value } )
 	}
 
+	const titleStyles = {
+		background: 'var(--fl-asst-light-color)',
+		color: 'var(--fl-asst-dark-color)'
+	}
+
 	return (
 		<ContentListDetail>
+			<PostDetailHeader />
+			<Title shouldOverlay={true} style={titleStyles}>{__( 'Edit Post' )}</Title>
 
 			<form>
-				<FormItem>
-					<ContentItem
-						thumbnail={ thumbnail }
-						title={ <strong>{ title }</strong> }
-						meta={ author }
-					/>
-				</FormItem>
-				<FormItem label={__( 'Visibility' )} placement="beside">{ visibility }</FormItem>
-				<FormItem label={__( 'Status' )} placement="beside">
-					{ contentStatus[ status ] ? contentStatus[ status ] : status }
-				</FormItem>
-				<FormItem label={__( 'PublishDate' )} placement="beside">{ date }</FormItem>
 
 				<FormItem>
 					<TagGroup appearance='muted' className='fl-asst-post-actions'>
@@ -138,6 +132,17 @@ export const PostListDetail = () => {
 					<input type='text' name='slug' id="slug" value={ slug } onChange={ onChange } />
 					<CopyButton label={__( 'Copy URL' )} text={ url } />
 				</FormItem>
+
+				<Separator />
+
+				<FormItem label={__( 'Visibility' )} placement="beside">{ visibility }</FormItem>
+				<FormItem label={__( 'Status' )} placement="beside">
+					{ contentStatus[ status ] ? contentStatus[ status ] : status }
+				</FormItem>
+				<FormItem label={__( 'PublishDate' )} placement="beside">{ date }</FormItem>
+
+				<Separator />
+
 				<FormItem label={__( 'Comments' )} labelFor="commentsAllowed" placement="beside">
 					<ToggleControl
 						id="commentsAllowed"
@@ -157,5 +162,18 @@ export const PostListDetail = () => {
 			</form>
 
 		</ContentListDetail>
+	)
+}
+
+const PostDetailHeader = () => {
+	const { title, thumbnail } = useContext( ViewContext )
+	return (
+		<div className="fl-asst-detail-feature">
+			{ thumbnail && <img className="fl-asst-detail-feature-thumbnail" src={thumbnail} /> }
+			<div className="fl-asst-detail-feature-content">
+
+				<div className="fl-asst-detail-feature-title">{title}</div>
+			</div>
+		</div>
 	)
 }

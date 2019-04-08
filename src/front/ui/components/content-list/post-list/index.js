@@ -10,3 +10,5 @@ export const PostList = props => {
 		/>
 	)
 }
+
+export { PostListDetail } from './post-detail'
