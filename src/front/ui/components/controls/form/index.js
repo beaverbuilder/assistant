@@ -4,7 +4,9 @@ import { __ } from '@wordpress/i18n'
 import { Icon, ToggleControl, BackForwardControl } from 'components'
 import './style.scss'
 
-export const FormItem = props => {
+export const Form = ({ children }) => children
+
+Form.Item = props => {
 	const {
 		children,
 		label,
@@ -30,87 +32,91 @@ export const FormItem = props => {
 	)
 }
 
+Form.Section = ({ children }) => {
+	return children
+}
+
 export const FormTest = () => {
 	return (
 		<Fragment>
 			<form>
-				<FormItem>
+				<Form.Item>
 					<p>This is a testing sheet for different form controls and scenarios. This is intended to serve as an exhaustive testing tool.</p>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Name' )} labelFor="name" isRequired={true}>
+				<Form.Item label={__( 'Name' )} labelFor="name" isRequired={true}>
 					<input
 						id="name"
 						type="text"
 						required={true}
 						placeholder="Type Something!"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Email Address' )} labelFor="email" placement="beside" isRequired={true}>
+				<Form.Item label={__( 'Email Address' )} labelFor="email" placement="beside" isRequired={true}>
 					<input
 						id="email"
 						type="email"
 						required={true}
 						placeholder="john@example.com"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Enter New Password' )} labelFor="pw" placement="beside">
+				<Form.Item label={__( 'Enter New Password' )} labelFor="pw" placement="beside">
 					<input
 						id="pw"
 						name="pw"
 						type="password"
 						placeholder={__( 'Password123:)' )}
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Search Me' )} labelFor="search">
+				<Form.Item label={__( 'Search Me' )} labelFor="search">
 					<input
 						id="search"
 						name="search"
 						type="search"
 						placeholder="Enter Your Search"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Phone Number' )} labelFor="phone">
+				<Form.Item label={__( 'Phone Number' )} labelFor="phone">
 					<input
 						id="phone"
 						name="phone"
 						type="tel"
 						placeholder="(xxx) xxx-xxxx"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Website Address (URL)' )} labelFor="url">
+				<Form.Item label={__( 'Website Address (URL)' )} labelFor="url">
 					<input
 						id="url"
 						name="url"
 						type="url"
 						placeholder="https://www.yoursite.com"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'A Text Area' )} labelFor="area">
+				<Form.Item label={__( 'A Text Area' )} labelFor="area">
 					<textarea id="area" rows="5"></textarea>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Select Something!' )} labelFor="selector" isRequired={true}>
+				<Form.Item label={__( 'Select Something!' )} labelFor="selector" isRequired={true}>
 					<select id="selector" name="selector">
 						<option>Select Me!</option>
 					</select>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Multiple Choice' )} labelFor="multi-selector">
+				<Form.Item label={__( 'Multiple Choice' )} labelFor="multi-selector">
 					<select id="multi-selector" name="multi-selector" multiple={true}>
 						<option>Red</option>
 						<option>Blue</option>
 						<option>Green</option>
 					</select>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Text Field with Suggestions' )} labelFor="suggestions">
+				<Form.Item label={__( 'Text Field with Suggestions' )} labelFor="suggestions">
 					<input
 						id="suggestions"
 						name="suggestions"
@@ -128,9 +134,9 @@ export const FormTest = () => {
 						<option>Peach</option>
 						<option>Pear</option>
 					</datalist>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Text field with min/max length' )} labelFor="length" isRequired={true}>
+				<Form.Item label={__( 'Text field with min/max length' )} labelFor="length" isRequired={true}>
 					<input
 						type="text"
 						required
@@ -140,9 +146,9 @@ export const FormTest = () => {
 						name="length"
 						placeholder="Between 6 and 24 characters"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Number Field' )} labelFor="number" placement="beside">
+				<Form.Item label={__( 'Number Field' )} labelFor="number" placement="beside">
 					<input
 						type="number"
 						id="number"
@@ -151,9 +157,9 @@ export const FormTest = () => {
 						max="500"
 						step="10"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Range Field' )} labelFor="range" placement="beside">
+				<Form.Item label={__( 'Range Field' )} labelFor="range" placement="beside">
 					<input
 						type="range"
 						id="range"
@@ -162,39 +168,41 @@ export const FormTest = () => {
 						max="500"
 						step="10"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Color Field' )} labelFor="color" placement="beside">
+				<Form.Item label={__( 'Color Field' )} labelFor="color" placement="beside">
 					<input
 						type="color"
 						id="color"
 						name="color"
 					/>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'File Uploader' )} labelFor="file" placement="beside">
+				<Form.Item label={__( 'File Uploader' )} labelFor="file" placement="beside">
 					<input type="file" name="file" id="file" accept="image/*" multiple />
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Date Time' )} labelFor="datetime" placement="beside">
+				<Form.Item label={__( 'Date Time' )} labelFor="datetime" placement="beside">
 					<input type="datetime-local" name="datetime" id="datetime" />
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Progress (read only)' )} placement="beside">
+				<Form.Item label={__( 'Progress (read only)' )} placement="beside">
 					<progress max="100" value="75">75/100</progress>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Meter (read only)' )} placement="beside">
+				<Form.Item label={__( 'Meter (read only)' )} placement="beside">
 					<meter min="0" max="100" value="75" low="33" high="66" optimum="50">75</meter>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Toggle Control' )} placement="beside">
+				<Form.Item label={__( 'Toggle Control' )} placement="beside">
 					<ToggleControl />
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Back/Forward Control' )} placement="beside">
+				<Form.Item label={__( 'Back/Forward Control' )} placement="beside">
 					<BackForwardControl />
-				</FormItem>
+				</Form.Item>
+
+
 			</form>
 		</Fragment>
 	)

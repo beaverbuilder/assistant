@@ -7,7 +7,7 @@ import {
 	CopyButton,
 	ContentListDetail,
 	Icon,
-	FormItem,
+	Form,
 	TagGroup,
 	Tag,
 	ToggleControl,
@@ -107,7 +107,7 @@ export const PostListDetail = () => {
 
 			<form>
 
-				<FormItem>
+				<Form.Item>
 					<TagGroup appearance='muted' className='fl-asst-post-actions'>
 						{ 'trash' !== status &&
 							<Fragment>
@@ -123,42 +123,42 @@ export const PostListDetail = () => {
 							<Tag onClick={restoreClicked}>{__( 'Restore' )}</Tag>
 						}
 					</TagGroup>
-				</FormItem>
+				</Form.Item>
 
-				<FormItem label={__( 'Title' )} labelFor="title">
+				<Form.Item label={__( 'Title' )} labelFor="title">
 					<input type='text' name='title' id="title" value={ title } onChange={ onChange } />
-				</FormItem>
-				<FormItem label={__( 'Slug' )} labelFor="slug">
+				</Form.Item>
+				<Form.Item label={__( 'Slug' )} labelFor="slug">
 					<input type='text' name='slug' id="slug" value={ slug } onChange={ onChange } />
 					<CopyButton label={__( 'Copy URL' )} text={ url } />
-				</FormItem>
+				</Form.Item>
 
 				<Separator />
 
-				<FormItem label={__( 'Visibility' )} placement="beside">{ visibility }</FormItem>
-				<FormItem label={__( 'Status' )} placement="beside">
+				<Form.Item label={__( 'Visibility' )} placement="beside">{ visibility }</Form.Item>
+				<Form.Item label={__( 'Status' )} placement="beside">
 					{ contentStatus[ status ] ? contentStatus[ status ] : status }
-				</FormItem>
-				<FormItem label={__( 'PublishDate' )} placement="beside">{ date }</FormItem>
+				</Form.Item>
+				<Form.Item label={__( 'PublishDate' )} placement="beside">{ date }</Form.Item>
 
 				<Separator />
 
-				<FormItem label={__( 'Comments' )} labelFor="commentsAllowed" placement="beside">
+				<Form.Item label={__( 'Comments' )} labelFor="commentsAllowed" placement="beside">
 					<ToggleControl
 						id="commentsAllowed"
 						name='commentsAllowed'
 						value={ commentsAllowed }
 						onChange={ ( value ) => setPost( { ...post, commentsAllowed: value } ) }
 					/>
-				</FormItem>
-				<FormItem>
+				</Form.Item>
+				<Form.Item>
 					{ publishing &&
 					<Button style={{ marginLeft: 'auto' }}>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
 					}
 					{ ! publishing &&
 					<Button style={{ marginLeft: 'auto' }} onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
 					}
-				</FormItem>
+				</Form.Item>
 			</form>
 
 		</ContentListDetail>

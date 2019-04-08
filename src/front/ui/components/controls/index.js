@@ -1,3 +1,3 @@
 export { ToggleControl } from './toggle'
 export { BackForwardControl } from './back-forward'
-export { FormTest, FormItem } from './form'
+export { FormTest, Form } from './form'
