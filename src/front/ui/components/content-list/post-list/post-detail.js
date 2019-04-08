@@ -165,7 +165,7 @@ export const PostListDetail = () => {
 	)
 }
 
-const PostDetailHeader = data => {
+const PostDetailHeader = ({ data }) => {
 	const { title, thumbnail } = data
 	return (
 		<div className="fl-asst-detail-feature">
