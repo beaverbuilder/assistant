@@ -4,11 +4,14 @@ import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'sto
 import {
 	TagGroupControl,
 	Header,
-	NavBar,
-	Padding,
 	Heading,
+	NavBar,
+	NewButton,
+	Padding,
 	StackContext,
+	Title,
 } from 'components'
+import { CreatePost } from './create-post'
 
 export const PostListFilter = () => {
 	const { dismissAll } = useContext( StackContext )
@@ -17,11 +20,18 @@ export const PostListFilter = () => {
 	const { typeTags, dateTags, statusTags } = getFilterTags()
 	const { type, subType, date, status } = filter
 	let navItems = []
+	let title = __( 'Content' )
 
 	typeTags.map( item => {
 
 		if ( 1 > item.count ) {
 			return
+		}
+
+		const isSelected = JSON.stringify( [ type, subType ] ) === JSON.stringify( item.value )
+
+		if ( isSelected ) {
+			title = item.label
 		}
 
 		navItems.push( {
@@ -30,7 +40,7 @@ export const PostListFilter = () => {
 				setType( item.value )
 				dismissAll()
 			},
-			isSelected: JSON.stringify( [ type, subType ] ) === JSON.stringify( item.value ),
+			isSelected,
 		} )
 	} )
 
@@ -84,6 +94,27 @@ export const PostListFilter = () => {
 					}
 				</Padding>
 			</Header.Expanded>
+
+			<Title actions={<Actions />} >{ title }</Title>
+		</Fragment>
+	)
+}
+
+const Actions = () => {
+	const { present } = useContext( StackContext )
+	const { filter } = useAppState()
+
+	const presentNew = () => {
+		present( {
+			label: __( 'Create Post' ),
+			content: <CreatePost />,
+			appearance: 'form',
+		} )
+	}
+
+	return (
+		<Fragment>
+			{ 'posts' === filter.type && <NewButton onClick={presentNew} /> }
 		</Fragment>
 	)
 }

@@ -377,11 +377,14 @@ class FL_Assistant_Data {
 	 */
 	static public function get_current_user_data() {
 		$user = wp_get_current_user();
+		$request = new WP_REST_Request( 'GET', '/fl-assistant/v1/user/' . $user->ID );
+		$response = rest_do_request( $request );
 
-		return array(
-			'id'           => $user->ID,
-			'name'         => $user->display_name,
-			'capabilities' => $user->allcaps,
+		return array_merge(
+			$response->get_data(),
+			array(
+				'capabilities' => $user->allcaps,
+			)
 		);
 	}
 

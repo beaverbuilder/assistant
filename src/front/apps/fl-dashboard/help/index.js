@@ -89,7 +89,7 @@ export const Help = ( { collapse } ) => {
 		},
 	]
 
-	const welcome = sprintf( 'Welcome, %s', currentUser.name )
+	const welcome = sprintf( 'Welcome, %s', currentUser.displayName )
 	const intro = __( 'Assistant provides apps to help you navigate and manage your WordPress website. You can learn about these apps below.' )
 
 	return (
