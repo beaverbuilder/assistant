@@ -29,7 +29,6 @@ export const StackView = posed.div( props => {
 				left: 0,
 				right: 0,
 				bottom: 0,
-				backgroundColor: 'var(--fl-background-color)',
 			},
 			past: {},
 			present: {},
