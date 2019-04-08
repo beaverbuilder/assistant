@@ -102,7 +102,7 @@ export const PostListDetail = () => {
 
 	return (
 		<ContentListDetail>
-			<PostDetailHeader />
+			<PostDetailHeader data={post} />
 			<Title shouldOverlay={true} style={titleStyles}>{__( 'Edit Post' )}</Title>
 
 			<form>
@@ -165,8 +165,8 @@ export const PostListDetail = () => {
 	)
 }
 
-const PostDetailHeader = () => {
-	const { title, thumbnail } = useContext( ViewContext )
+const PostDetailHeader = data => {
+	const { title, thumbnail } = data
 	return (
 		<div className="fl-asst-detail-feature">
 			{ thumbnail && <img className="fl-asst-detail-feature-thumbnail" src={thumbnail} /> }
