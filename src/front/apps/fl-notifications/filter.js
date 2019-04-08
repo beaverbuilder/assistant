@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, useSystemState } from 'store'
 import { currentUserCan } from 'utils/wordpress'
 import {
-	TagGroupControl,
 	NavBar,
 	Header,
 	StackContext,
@@ -28,6 +27,26 @@ export const NotificationsFilter = () => {
 		} )
 	} )
 
+	const commentStatusItems = []
+	commentStatusTags.map( item => {
+		commentStatusItems.push( {
+			children: item.label,
+			onClick: () => {
+				setCommentStatus( item.value )
+			},
+			isSelected: item.value === commentStatus,
+		} )
+	} )
+
+	const updateTypeItems = []
+	updateTypeTags.map( item => {
+		updateTypeItems.push( {
+			children: item.label,
+			onClick: () => setUpdateType( item.value ),
+			isSelected: item.value === updateType
+		} )
+	} )
+
 	return (
 		<Fragment>
 
@@ -35,22 +54,8 @@ export const NotificationsFilter = () => {
 				<NavBar items={navItems} />
 			</Header>
 
-			{ 'comments' === type &&
-				<TagGroupControl
-					appearance="muted"
-					title={__( 'Status' )}
-					tags={ commentStatusTags }
-					value={ commentStatus }
-					onChange={ setCommentStatus } />
-			}
-			{ 'updates' === type &&
-				<TagGroupControl
-					appearance="muted"
-					title={__( 'Status' )}
-					tags={ updateTypeTags }
-					value={ updateType }
-					onChange={ setUpdateType } />
-			}
+			{ 'comments' === type && <NavBar items={commentStatusItems} /> }
+			{ 'updates' === type && <NavBar items={updateTypeItems} /> }
 		</Fragment>
 	)
 }

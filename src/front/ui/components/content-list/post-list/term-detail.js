@@ -7,14 +7,12 @@ import {
 	CopyButton,
 	ContentListDetail,
 	Icon,
-	ScreenHeader,
-	SettingsItem,
-	SettingsGroup,
 	TagGroup,
 	Tag,
 	UIContext,
 	StackContext,
 	ViewContext,
+	Form,
 } from 'components'
 import './style.scss'
 
@@ -114,41 +112,50 @@ export const TermListDetail = () => {
 
 	return (
 		<ContentListDetail>
-			<ScreenHeader title={ title }>
-				<TagGroup appearance='muted' className='fl-asst-post-actions'>
-					<Tag href={ url }>{__( 'View' )}</Tag>
-					<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
-					<Tag onClick={ trashClicked } appearance='warning'>{__( 'Delete' )}</Tag>
-				</TagGroup>
-			</ScreenHeader>
+			<form>
+				<Form.Item>
+					<TagGroup appearance='muted' className='fl-asst-post-actions'>
+						<Tag href={ url }>{__( 'View' )}</Tag>
+						<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
+						<Tag onClick={ trashClicked } appearance='warning'>{__( 'Delete' )}</Tag>
+					</TagGroup>
+				</Form.Item>
 
-			<SettingsGroup>
-				<SettingsItem label={__( 'Name' )} labelPosition='above'>
-					<input type='text' name='title' value={ title } onChange={ onChange } />
-				</SettingsItem>
-				<SettingsItem label={__( 'Slug' )} labelPosition='above'>
-					<input type='text' name='slug' value={ slug } onChange={ onChange } />
+				<Form.Item label={__( 'Name' )} labelFor="fl-asst-term-title">
+					<input
+						type='text'
+						name='title'
+						id='fl-asst-term-title'
+						value={ title }
+						onChange={ onChange }
+					/>
+				</Form.Item>
+
+				<Form.Item label={__( 'Slug' )} labelFor="fl-asst-term-slug">
+					<input type='text' name='slug' id='fl-asst-term-slug' value={ slug } onChange={ onChange } />
 					<CopyButton label='Copy URL' text={ url } />
-				</SettingsItem>
+				</Form.Item>
+
 				{ isHierarchical &&
-					<SettingsItem label={__( 'Parent' )} labelPosition='above'>
-						<select name='parent' value={ parent } onChange={ onChange }>
+					<Form.Item label={__( 'Parent' )} labelFor="fl-asst-term-parent">
+						<select name='parent' id="fl-asst-term-parent" value={ parent } onChange={ onChange }>
 							{ renderParentOptions() }
 						</select>
-					</SettingsItem>
+					</Form.Item>
 				}
-				<SettingsItem label={__( 'Description' )} labelPosition='above'>
-					<textarea name='description' value={ description } onChange={ onChange } />
-				</SettingsItem>
-				<SettingsItem>
+				<Form.Item label={__( 'Description' )} labelFor="fl-asst-term-description">
+					<textarea name='description' id="fl-asst-term-description" value={ description } onChange={ onChange } rows={6} />
+				</Form.Item>
+
+				<Form.Item>
 					{ publishing &&
-						<Button>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
+						<Button style={{ marginLeft: 'auto' }}>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
 					}
 					{ ! publishing &&
-						<Button onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
+						<Button onClick={ publishClicked } style={{ marginLeft: 'auto' }}>{ __( 'Publish Changes' ) }</Button>
 					}
-				</SettingsItem>
-			</SettingsGroup>
+				</Form.Item>
+			</form>
 
 		</ContentListDetail>
 	)
