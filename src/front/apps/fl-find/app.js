@@ -1,14 +1,7 @@
-import React, { Fragment, useContext } from 'react'
-import { __ } from '@wordpress/i18n'
+import React, { Fragment } from 'react'
 import { useAppState } from 'store'
-import {
-	PostList,
-	Title,
-	NewButton,
-	StackContext,
-} from 'components'
+import { PostList } from 'components'
 import { PostListFilter } from './filter'
-import { CreatePost } from './create-post'
 
 export const App = () => {
 	const { filter, query } = useAppState()
@@ -16,32 +9,11 @@ export const App = () => {
 	return (
 		<Fragment>
 			<PostListFilter />
-
-			<Title actions={<Actions />} >{__( 'Content' )}</Title>
 			<PostList
 				type={ filter.type }
 				query={ query }
 				pagination={ true }
 			/>
-		</Fragment>
-	)
-}
-
-const Actions = () => {
-	const { present } = useContext( StackContext )
-	const { filter } = useAppState()
-
-	const presentNew = () => {
-		present( {
-			label: __( 'Create Post' ),
-			content: <CreatePost />,
-			appearance: 'form',
-		} )
-	}
-
-	return (
-		<Fragment>
-			{ 'posts' === filter.type && <NewButton onClick={presentNew} /> }
 		</Fragment>
 	)
 }
