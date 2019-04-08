@@ -103,6 +103,24 @@ export const Icon = ( { name } ) => {
 				<path fill="currentColor" d="M0.292893219,1.70710678 C-0.0976310729,1.31658249 -0.0976310729,0.683417511 0.292893219,0.292893219 C0.683417511,-0.0976310729 1.31658249,-0.0976310729 1.70710678,0.292893219 L8.41421356,7 L1.70710678,13.7071068 C1.31658249,14.0976311 0.683417511,14.0976311 0.292893219,13.7071068 C-0.0976310729,13.3165825 -0.0976310729,12.6834175 0.292893219,12.2928932 L5.58578644,7 L0.292893219,1.70710678 Z" transform="translate(4.207107, 7.000000) translate(-4.207107, -7.000000) "></path>
 			</svg>
 		)
+	case 'forward-arrow':
+		return (
+			<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+					<path d="M1,8 L14,8"></path>
+					<path d="M8,1 L15,8 L8,15"></path>
+				</g>
+			</svg>
+		)
+	case 'back-arrow':
+		return (
+			<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<g stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+					<path d="M2,8 L15,8"></path>
+					<path d="M8,1 L1,8 L8,15"></path>
+				</g>
+			</svg>
+		)
 	case 'menu':
 		return (
 			<svg width="20px" height="14px" viewBox="0 0 20 14" version="1.1" xmlns="http://www.w3.org/2000/svg">

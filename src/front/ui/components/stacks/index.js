@@ -12,7 +12,7 @@ StackContext.displayName = 'StackContext'
 const handleTransition = () => {
 	return {
 		type: 'tween',
-		duration: 0
+		duration: 150
 	}
 }
 
@@ -29,7 +29,6 @@ export const StackView = posed.div( props => {
 				left: 0,
 				right: 0,
 				bottom: 0,
-				backgroundColor: 'var(--fl-background-color)',
 			},
 			past: {},
 			present: {},
@@ -154,7 +153,7 @@ export const Stack = ( { children, className } ) => {
 		newViews.push( {
 			...obj,
 			key: Date.now(),
-			pose: 'future',
+			pose: ! obj.shouldAnimate ? 'present' : 'future',
 			config: obj,
 		} )
 		setViews( Array.from( newViews ) )
@@ -302,7 +301,7 @@ export const BackButton = props => {
 
 	return (
 		<Button appearance="icon" {...props} onClick={onClick}>
-			<Icon name="back" />
+			<Icon name="back-arrow" />
 		</Button>
 	)
 }

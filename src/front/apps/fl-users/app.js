@@ -1,30 +1,29 @@
 import React, { Fragment, useContext, useLayoutEffect } from 'react'
 import { __ } from '@wordpress/i18n'
-import { useAppState } from 'store'
+import { useAppState, getSystemConfig } from 'store'
 import {
 	UserList,
 	Header,
 	Padding,
 	Heading,
 	StackContext,
-
-	/*UserDetail,*/
+	UserDetail,
 } from 'components'
 import { UserListFilter } from './filter'
 
 export const App = () => {
 	const { query } = useAppState()
-	const { dismissAll } = useContext( StackContext )
+	const { currentUser } = getSystemConfig()
+	const { dismissAll, present } = useContext( StackContext )
 
 	useLayoutEffect( () => {
-
-		/*
 		present( {
 			label: __( 'Your Profile' ),
 			content: <UserDetail />,
 			appearance: 'form',
-			context: {}
-		} )*/
+			context: currentUser,
+			shouldAnimate: false,
+		} )
 	}, [] )
 
 	return (

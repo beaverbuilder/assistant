@@ -47,7 +47,6 @@ export const FormTest = () => {
 					/>
 				</FormItem>
 
-
 				<FormItem label={__( 'Email Address' )} labelFor="email" placement="beside" isRequired={true}>
 					<input
 						id="email"
