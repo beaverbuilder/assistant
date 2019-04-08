@@ -6,17 +6,14 @@ import { getSystemActions } from 'store'
 import { updateComment, replyToComment } from 'utils/wordpress'
 import {
 	Button,
+	Form,
 	ContentFrame,
 	ContentItem,
 	ContentListDetail,
 	Icon,
-	ScreenHeader,
 	Separator,
-	SettingsGroup,
-	SettingsItem,
 	TagGroup,
 	Tag,
-	Widget,
 	UIContext,
 	StackContext,
 	ViewContext,
@@ -106,10 +103,6 @@ export const CommentDetail = () => {
 		} )
 	}
 
-	const detailTitle = (
-		<CommentDetailTitle />
-	)
-
 	const contentTitle = (
 		<CommentContentTitle
 			editing={ editing }
@@ -122,58 +115,65 @@ export const CommentDetail = () => {
 	return (
 		<ContentListDetail className='fl-asst-comment-detail'>
 
-			<ScreenHeader title={ detailTitle }>
+			<form>
+				<Form.Item>
+					<CommentDetailTitle />
+				</Form.Item>
 
-				<SettingsGroup>
-					<SettingsItem label='Email'>
+				<Form.Section label={__( 'Sender Information' )}>
+					<Form.Item label='Email' placement="beside">
 						<a href={ `mailto:${ authorEmail }` }>{ authorEmail }</a>
-					</SettingsItem>
-					<SettingsItem label='IP Address'>
+					</Form.Item>
+					<Form.Item label='IP Address' placement="beside">
 						{ authorIP }
-					</SettingsItem>
-					<SettingsItem label='Submitted On'>
+					</Form.Item>
+					<Form.Item label='Submitted On' placement="beside">
 						{ date } at { time }
-					</SettingsItem>
-				</SettingsGroup>
+					</Form.Item>
+				</Form.Section>
 
-				<TagGroup appearance='muted' className='fl-asst-comment-actions'>
-					{ ! spam && ! trash &&
+				<Form.Item style={{ paddingTop: 5}}>
+					<TagGroup appearance='muted' className='fl-asst-comment-actions'>
+						{ ! spam && ! trash &&
+							<Fragment>
+								<Tag onClick={ approveClicked }>{ approved ? 'Unapprove' : 'Approve' }</Tag>
+								<Tag href={url}>View</Tag>
+							</Fragment>
+						}
+						<Tag onClick={ spamClicked }>{ spam ? 'Not Spam' : 'Spam' }</Tag>
+						{ ! trash && <Tag onClick={ trashClicked } appearance='warning'>Trash</Tag> }
+						{ trash && <Tag onClick={ restoreClicked }>Restore</Tag> }
+					</TagGroup>
+				</Form.Item>
+
+				<Form.Section>
+					{ replying &&
 						<Fragment>
-							<Tag onClick={ approveClicked }>{ approved ? 'Unapprove' : 'Approve' }</Tag>
-							<Tag href={url}>View</Tag>
+							<CommentReplyForm
+								sendingReply={ sendingReply }
+								onSave={ onReplySave }
+								onCancel ={ () => setReplying( false ) }
+							/>
+							<Separator />
 						</Fragment>
 					}
-					<Tag onClick={ spamClicked }>{ spam ? 'Not Spam' : 'Spam' }</Tag>
-					{ ! trash && <Tag onClick={ trashClicked } appearance='warning'>Trash</Tag> }
-					{ trash && <Tag onClick={ restoreClicked }>Restore</Tag> }
-				</TagGroup>
 
-			</ScreenHeader>
+					{ editing &&
+						<CommentEditForm
+							content={ content }
+							onSave={ onEditSave }
+							onCancel ={ () => setEditing( false ) }
+						/>
+					}
 
-			{ replying &&
-				<Fragment>
-					<CommentReplyForm
-						sendingReply={ sendingReply }
-						onSave={ onReplySave }
-						onCancel ={ () => setReplying( false ) }
-					/>
-					<Separator />
-				</Fragment>
-			}
+					{ ! editing &&
+						<Form.Item label={ contentTitle } className='fl-asst-comment-content'>
+							<ContentFrame dangerouslySetInnerHTML={ { __html: autop( content ) } } />
+						</Form.Item>
+					}
+				</Form.Section>
 
-			{ editing &&
-				<CommentEditForm
-					content={ content }
-					onSave={ onEditSave }
-					onCancel ={ () => setEditing( false ) }
-				/>
-			}
-
-			{ ! editing &&
-				<Widget title={ contentTitle } className='fl-asst-comment-content'>
-					<ContentFrame dangerouslySetInnerHTML={ { __html: autop( content ) } } />
-				</Widget>
-			}
+			</form>
 		</ContentListDetail>
 	)
 }
@@ -205,9 +205,9 @@ const CommentDetailTitle = () => {
 const CommentContentTitle = ( { editing, replying, setEditing, setReplying } ) => {
 	return (
 		<Fragment>
-			<div className='fl-asst-comment-content-title'>Comment</div>
+			<div className='fl-asst-comment-content-title'>{__( 'Comment' )}</div>
 			{ ! editing && ! replying &&
-				<TagGroup className='fl-asst-comment-content-actions'>
+				<TagGroup className='fl-asst-comment-content-actions' style={{marginLeft: 'auto'}}>
 					<Tag onClick={ () => setReplying( true ) }>Reply</Tag>
 					<Tag onClick={ () => setEditing( true ) }>Edit</Tag>
 				</TagGroup>
@@ -220,8 +220,8 @@ const CommentReplyForm = ( { sendingReply, onSave, onCancel } ) => {
 	const [ reply, setReply ] = useState( '' )
 	const { approved } = useContext( ViewContext )
 	return (
-		<Widget title='Reply to Comment' className='fl-asst-comment-form'>
-			<textarea value={ reply } onChange={ e => setReply( e.target.value ) } />
+		<Form.Item label={__( 'Reply to Comment' )} className='fl-asst-comment-form'>
+			<textarea value={ reply } onChange={ e => setReply( e.target.value ) } rows={6} />
 			{ sendingReply &&
 				<Button>Replying &nbsp;<Icon name='small-spinner' /></Button>
 			}
@@ -231,17 +231,17 @@ const CommentReplyForm = ( { sendingReply, onSave, onCancel } ) => {
 					<Button onClick={ () => onCancel() }>Cancel</Button>
 				</Fragment>
 			}
-		</Widget>
+		</Form.Item>
 	)
 }
 
 const CommentEditForm = ( { content, onSave, onCancel } ) => {
 	const [ comment, setComment ] = useState( content )
 	return (
-		<Widget title='Edit Comment' className='fl-asst-comment-form'>
-			<textarea value={ comment } onChange={ e => setComment( e.target.value ) } />
+		<Form.Item label={__( 'Edit Comment' )} className='fl-asst-comment-form'>
+			<textarea value={ comment } onChange={ e => setComment( e.target.value ) } rows={15}/>
 			<Button onClick={ () => onSave( comment ) }>Save</Button>
 			<Button onClick={ () => onCancel() }>Cancel</Button>
-		</Widget>
+		</Form.Item>
 	)
 }

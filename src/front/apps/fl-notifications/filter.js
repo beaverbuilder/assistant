@@ -29,23 +29,23 @@ export const NotificationsFilter = () => {
 
 	const commentStatusItems = []
 	commentStatusTags.map( item => {
-		commentStatusItems.push({
+		commentStatusItems.push( {
 			children: item.label,
 			onClick: () => {
 				setCommentStatus( item.value )
 			},
 			isSelected: item.value === commentStatus,
-		})
-	})
+		} )
+	} )
 
 	const updateTypeItems = []
 	updateTypeTags.map( item => {
-		updateTypeItems.push({
+		updateTypeItems.push( {
 			children: item.label,
 			onClick: () => setUpdateType( item.value ),
 			isSelected: item.value === updateType
-		})
-	})
+		} )
+	} )
 
 	return (
 		<Fragment>

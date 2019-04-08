@@ -15,7 +15,6 @@ import {
 	UIContext,
 	StackContext,
 	ViewContext,
-	Separator,
 } from 'components'
 import './style.scss'
 
@@ -133,24 +132,24 @@ export const PostListDetail = () => {
 					<CopyButton label={__( 'Copy URL' )} text={ url } />
 				</Form.Item>
 
-				<Separator />
+				<Form.Section label={__( 'Publish Settings' )} isInset={true}>
+					<Form.Item label={__( 'Visibility' )} placement="beside">{ visibility }</Form.Item>
+					<Form.Item label={__( 'Status' )} placement="beside">
+						{ contentStatus[ status ] ? contentStatus[ status ] : status }
+					</Form.Item>
+					<Form.Item label={__( 'PublishDate' )} placement="beside">{ date }</Form.Item>
+				</Form.Section>
 
-				<Form.Item label={__( 'Visibility' )} placement="beside">{ visibility }</Form.Item>
-				<Form.Item label={__( 'Status' )} placement="beside">
-					{ contentStatus[ status ] ? contentStatus[ status ] : status }
-				</Form.Item>
-				<Form.Item label={__( 'PublishDate' )} placement="beside">{ date }</Form.Item>
-
-				<Separator />
-
-				<Form.Item label={__( 'Comments' )} labelFor="commentsAllowed" placement="beside">
-					<ToggleControl
-						id="commentsAllowed"
-						name='commentsAllowed'
-						value={ commentsAllowed }
-						onChange={ ( value ) => setPost( { ...post, commentsAllowed: value } ) }
-					/>
-				</Form.Item>
+				<Form.Section label={__( 'Discussion Settings' )} isInset={true}>
+					<Form.Item label={__( 'Comments' )} labelFor="commentsAllowed" placement="beside">
+						<ToggleControl
+							id="commentsAllowed"
+							name='commentsAllowed'
+							value={ commentsAllowed }
+							onChange={ ( value ) => setPost( { ...post, commentsAllowed: value } ) }
+						/>
+					</Form.Item>
+				</Form.Section>
 				<Form.Item>
 					{ publishing &&
 					<Button style={{ marginLeft: 'auto' }}>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
@@ -165,7 +164,7 @@ export const PostListDetail = () => {
 	)
 }
 
-const PostDetailHeader = ({ data }) => {
+const PostDetailHeader = ( { data } ) => {
 	const { title, thumbnail } = data
 	return (
 		<div className="fl-asst-detail-feature">

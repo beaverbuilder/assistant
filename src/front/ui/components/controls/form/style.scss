@@ -8,9 +8,42 @@
 
     form {
         padding: var(--fl-asst-base-padding) 0;
-
         display: grid;
         grid-row-gap: var(--fl-asst-half-unit);
+
+        .fl-asst-form-section {
+
+            .fl-asst-form-section-title {
+                display: flex;
+                flex-direction: row;
+                min-height: 36px;
+                align-items: center;
+                padding: 0 var(--fl-asst-base-padding);
+                color: var(--fl-asst-title-color);
+                font-weight: 500;
+            }
+            .fl-asst-form-section-content {
+                background: var(--fl-asst-light-color);
+                padding: var(--fl-asst-half-unit) 0;
+                display: grid;
+                grid-row-gap: var(--fl-asst-half-unit);
+                box-shadow: 0 1px 2px 0 var(--fl-asst-line-color);
+            }
+            &.fl-asst-form-section-is-inset {
+                padding: 0 var(--fl-asst-base-padding);
+
+                .fl-asst-form-section-title {
+                    padding:0;
+                }
+                .fl-asst-form-section-content {
+                    border-radius: 7px;
+
+                    .fl-asst-form-item {
+                        padding: 0 var(--fl-asst-half-unit);
+                    }
+                }
+            }
+        }
 
         .fl-asst-form-item {
             display: flex;
@@ -40,7 +73,9 @@
                 justify-self: end;
                 display: flex;
                 flex-direction: row;
-                align-items: center;
+                align-items: stretch;
+                align-content: center;
+                flex-wrap: wrap;
 
                 button {
                     flex: 0 0 auto;
@@ -98,6 +133,8 @@
     input[type="color"],
     select,
     textarea {
+        flex-grow: 1;
+        flex-shrink: 1;
         font-family: var(--fl-asst-base-font-family);
         font-size: var(--fl-asst-base-text-size);
         font-weight: 500;
@@ -112,7 +149,6 @@
         border-radius: 7px;
         box-shadow: none;
         max-width: none;
-        width: 100%;
         min-height: 36px;
         box-shadow: 0 1px 2px 0 var(--fl-asst-line-color);
 
@@ -129,6 +165,47 @@
                 --fl-asst-highlight-color: var(--fl-asst-accent-color);
             }
         }
+    }
+
+    .fl-asst-form-section {
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="password"],
+        input[type="search"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="month"],
+        input[type="week"],
+        input[type="time"],
+        input[type="datetime"],
+        input[type="datetime-local"],
+        input[type="color"],
+        select,
+        textarea {
+            border-color: transparent;
+            box-shadow: 0px 0px 0px 1px var(--fl-asst-line-color);
+
+            &:focus,
+            &:invalid {
+                outline: none;
+                border-color: var(--fl-asst-line-color);
+                box-shadow: 0px 0px 0px 2px var(--fl-asst-highlight-color);
+            }
+            &:invalid {
+                --fl-asst-highlight-color: var(--fl-asst-error-color);
+
+                &:focus {
+                    --fl-asst-highlight-color: var(--fl-asst-accent-color);
+                }
+            }
+        }
+    }
+
+    textarea {
+        flex: 1 0 100%;
     }
 
     input[type="range"] {
@@ -152,7 +229,15 @@
         text-transform: none;
         text-decoration: none;
         justify-content: center;
-        box-shadow: none;
         text-shadow: none;
+
+        &:focus {
+            outline: none;
+            border-color: var(--fl-asst-line-color);
+            box-shadow: 0px 0px 0px 2px var(--fl-asst-highlight-color);
+        }
+    }
+    form button {
+        box-shadow: 0 1px 2px 0 var(--fl-asst-line-color);
     }
 }

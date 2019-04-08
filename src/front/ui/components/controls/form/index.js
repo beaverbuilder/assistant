@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { Icon, ToggleControl, BackForwardControl } from 'components'
 import './style.scss'
 
-export const Form = ({ children }) => children
+export const Form = ( { children } ) => children
 
 Form.Item = props => {
 	const {
@@ -14,14 +14,16 @@ Form.Item = props => {
 		className,
 		isRequired = false,
 		placement = 'above',
+		style = {}
 	} = props
 
 	const classes = classname( {
 		'fl-asst-form-item': true,
 		[`fl-asst-form-item-placement-${placement}`]: placement,
 	}, className )
+
 	return (
-		<div className={classes}>
+		<div className={classes} style={style}>
 			{ label &&
 				<label htmlFor={labelFor}>
 					{label}
@@ -32,8 +34,21 @@ Form.Item = props => {
 	)
 }
 
-Form.Section = ({ children }) => {
-	return children
+Form.Section = props => {
+	const { children, className, label, isInset = false } = props
+	const classes = classname( {
+		'fl-asst-form-section': true,
+		'fl-asst-form-section-is-inset': isInset,
+	}, className )
+	const newProps = {...props}
+	delete newProps.isInset
+
+	return (
+		<div className={classes} {...newProps}>
+			{ label && <div className="fl-asst-form-section-title">{label}</div> }
+			<div className="fl-asst-form-section-content">{children}</div>
+		</div>
+	)
 }
 
 export const FormTest = () => {
@@ -41,7 +56,7 @@ export const FormTest = () => {
 		<Fragment>
 			<form>
 				<Form.Item>
-					<p>This is a testing sheet for different form controls and scenarios. This is intended to serve as an exhaustive testing tool.</p>
+					<p>{__( 'This is a testing sheet for different form controls and scenarios. This is intended to serve as an exhaustive testing tool.' )}</p>
 				</Form.Item>
 
 				<Form.Item label={__( 'Name' )} labelFor="name" isRequired={true}>
@@ -202,7 +217,64 @@ export const FormTest = () => {
 					<BackForwardControl />
 				</Form.Item>
 
+				<Form.Section label={__( 'Form Section' )}>
+					<Form.Item label={__( 'Phone Number' )} labelFor="phone2" placement="beside">
+						<input
+							id="phone2"
+							name="phone2"
+							type="tel"
+							placeholder="(xxx) xxx-xxxx"
+						/>
+					</Form.Item>
 
+					<Form.Item label={__( 'Website Address (URL)' )} labelFor="url2" placement="beside">
+						<input
+							id="url2"
+							name="url2"
+							type="url"
+							placeholder="https://www.yoursite.com"
+						/>
+					</Form.Item>
+					<Form.Item label={__( 'Name' )} labelFor="name2" isRequired={true}>
+						<input
+							id="name2"
+							name="name2"
+							type="text"
+							required={true}
+							placeholder="Type Something!"
+						/>
+					</Form.Item>
+					<Form.Item label={__( 'Number Field' )} labelFor="number2" placement="beside">
+						<input
+							type="number"
+							id="number2"
+							name="number2"
+							min="0"
+							max="500"
+							step="10"
+						/>
+					</Form.Item>
+				</Form.Section>
+
+				<Form.Section label={__( 'Another Section' )} isInset={true}>
+					<Form.Item label={__( 'Phone Number' )} labelFor="phone3" placement="beside">
+						<input
+							id="phone3"
+							name="phone3"
+							type="tel"
+							placeholder="(xxx) xxx-xxxx"
+						/>
+					</Form.Item>
+
+					<Form.Item label={__( 'Website Address (URL)' )} labelFor="url3" placement="beside">
+						<input
+							id="url3"
+							name="url3"
+							type="url"
+							placeholder="https://www.yoursite.com"
+						/>
+					</Form.Item>
+				</Form.Section>
 			</form>
 		</Fragment>
 	)

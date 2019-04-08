@@ -3,12 +3,10 @@ import { __ } from '@wordpress/i18n'
 import {
 	ContentItem,
 	ContentListDetail,
-	ScreenHeader,
-	SettingsGroup,
-	SettingsItem,
 	TagGroup,
 	Tag,
 	ViewContext,
+	Form,
 } from 'components'
 
 export const UserDetail = () => {
@@ -20,26 +18,25 @@ export const UserDetail = () => {
 		thumbnail,
 	} = useContext( ViewContext )
 
-	const headerTitle = (
-		<ContentItem
-			thumbnail={ thumbnail }
-			title={ <strong>{ title }</strong> }
-			meta={ email }
-		/>
-	)
-
 	return (
 		<ContentListDetail className='fl-asst-user-detail'>
+			<form>
+				<Form.Item>
+					<ContentItem
+						thumbnail={ thumbnail }
+						title={ <strong>{ title }</strong> }
+						meta={ email }
+					/>
+				</Form.Item>
+				<Form.Item>
+					<TagGroup appearance='muted'>
+						<Tag href={url}>{__( 'View' )}</Tag>
+						<Tag href={editUrl}>{__( 'Edit' )}</Tag>
+					</TagGroup>
+				</Form.Item>
 
-			<ScreenHeader title={ headerTitle }>
-				<TagGroup appearance='muted'>
-					<Tag href={url}>{__( 'View' )}</Tag>
-					<Tag href={editUrl}>{__( 'Edit' )}</Tag>
-				</TagGroup>
-			</ScreenHeader>
-
-			<UserSettings />
-
+				<UserSettings />
+			</form>
 		</ContentListDetail>
 	)
 }
@@ -53,22 +50,22 @@ const UserSettings = () => {
 	} = useContext( ViewContext )
 	return (
 		<Fragment>
-			<SettingsGroup>
-				<SettingsItem label={__( 'Display Name' )}>
+			<Form.Section label={__( 'General Information' )} isInset={true}>
+				<Form.Item label={__( 'Display Name' )} placement="beside">
 					{ displayName }
-				</SettingsItem>
-				<SettingsItem label={__( 'Username' )}>
+				</Form.Item>
+				<Form.Item label={__( 'Username' )} placement="beside">
 					{ username }
-				</SettingsItem>
-				<SettingsItem label={__( 'Signup Date' )}>
+				</Form.Item>
+				<Form.Item label={__( 'Signup Date' )} placement="beside">
 					{ date }
-				</SettingsItem>
+				</Form.Item>
 				{ website &&
-					<SettingsItem label={__( 'Website' )}>
+					<Form.Item label={__( 'Website' )} placement="beside">
 						<a href={ website }>{__( 'Visit Website' )}</a>
-					</SettingsItem>
+					</Form.Item>
 				}
-			</SettingsGroup>
+			</Form.Section>
 		</Fragment>
 	)
 }

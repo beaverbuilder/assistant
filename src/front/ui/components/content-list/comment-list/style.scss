@@ -22,16 +22,9 @@
 		}
 	}
 
-	.fl-asst-comment-content {
-		background-color: var(--fl-asst-background-color);
-
-		.fl-asst-widget-title {
-			display: flex;
-
-			> * {
-				width: 100%;
-			}
-		}
+	.fl-asst-comment-content-title {
+		font-size: 20px;
+		font-weight: 600;
 	}
 
 	.fl-asst-comment-content-actions {
@@ -50,14 +43,6 @@
 	}
 
 	.fl-asst-comment-form {
-
-		textarea {
-			font-size: 14px;
-			line-height: 26px;
-			margin-bottom: 20px;
-			min-height: 200px;
-			padding: 10px 15px;
-		}
 
 		button.fl-asst-button:first-of-type {
 			margin-left: 0;

@@ -4,6 +4,7 @@
     border-radius: var(--fl-asst-base-padding);
     border: 2px solid var(--fl-line-color);
     background: var(--fl-asst-light-color);
+    box-shadow: none;
     margin:0px;
     padding: 2px;
     display: flex;
@@ -20,6 +21,6 @@
     }
 
     &:focus {
-        border-color: var(--fl-accent-color);
+        border-color: var(--fl-asst-line-color);
     }
 }
