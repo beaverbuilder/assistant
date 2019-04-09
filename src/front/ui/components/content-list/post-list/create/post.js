@@ -2,11 +2,12 @@ import React, { Fragment, useContext, useState } from 'react'
 import { __, _x, sprintf } from '@wordpress/i18n'
 import { createPost } from 'utils/wordpress'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
+import { PostListDetail } from '../detail'
 
 export const CreatePost = () => {
 	const { presentNotification } = useContext( UIContext )
-	const { dismiss } = useContext( StackContext )
-	const { type, labels } = useContext( ViewContext )
+	const { dismissAll, present } = useContext( StackContext )
+	const { type, labels, refreshList } = useContext( ViewContext )
 	const [ creating, setCreating ] = useState( false )
 	const [ post, setPost ] = useState( {
 		post_type: type,
@@ -29,9 +30,18 @@ export const CreatePost = () => {
 				createError()
 			} else {
 				presentNotification( sprintf( _x( '%s Created!', 'Singular post type label.' ), labels.singular ) )
-				dismiss()
+				dismissAll()
+				refreshList()
 				if ( 'create-edit' === name ) {
 					window.location.href = response.editUrl
+				} else {
+					present( {
+						label: __( 'Edit Post' ),
+						content: <PostListDetail />,
+						appearance: 'form',
+						shouldShowTitle: false,
+						context: response,
+					} )
 				}
 			}
 		}, createError )
