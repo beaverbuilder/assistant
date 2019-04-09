@@ -89,7 +89,16 @@ class FL_Assistant_Data {
 			if ( 'attachment' === $slug ) {
 				continue;
 			}
-			$data[ $slug ] = esc_html( $type->labels->name );
+			$data[ $slug ] = array(
+				'canExport'    => $type->can_export,
+				'hasArchive'   => $type->has_archive,
+				'hierarchical' => $type->hierarchical,
+				'labels'       => array(
+					'singular' => esc_html( $type->labels->singular_name ),
+					'plural'   => esc_html( $type->labels->name ),
+					'newItem'  => esc_html( $type->labels->new_item ),
+				),
+			);
 		}
 
 		return $data;
@@ -134,13 +143,22 @@ class FL_Assistant_Data {
 		$data  = [];
 		$types = self::get_post_types();
 
-		foreach ( $types as $type_slug => $type_name ) {
+		foreach ( $types as $type_slug => $type ) {
 			$taxonomies = get_object_taxonomies( $type_slug, 'objects' );
 			foreach ( $taxonomies as $taxonomy_slug => $taxonomy ) {
 				if ( ! $taxonomy->public || ! $taxonomy->show_ui || 'post_format' == $taxonomy_slug ) {
 					continue;
 				}
-				$data[ $taxonomy_slug ] = $taxonomy->label;
+				$data[ $taxonomy_slug ] = array(
+					'description'  => $taxonomy->description,
+					'hierarchical' => $taxonomy->hierarchical,
+					'labels'       => array(
+						'singular'   => esc_html( $taxonomy->labels->singular_name ),
+						'plural'     => esc_html( $taxonomy->labels->name ),
+						'newItem'    => sprintf( esc_html_x( 'New %s', 'Singular term name.', 'fl-assistant' ), $taxonomy->labels->singular_name ),
+						'addNewItem' => esc_html( $taxonomy->labels->add_new_item ),
+					),
+				);
 			}
 		}
 
