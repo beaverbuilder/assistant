@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { Icon, ToggleControl, BackForwardControl } from 'components'
+import { Button, Icon, ToggleControl, BackForwardControl } from 'components'
 import './style.scss'
 
 export const Form = ( { children } ) => children
@@ -51,10 +51,20 @@ Form.Section = props => {
 	)
 }
 
+Form.Footer = props => {
+	const { children, className } = props
+	const classes = classname( {
+		'fl-asst-form-footer': true,
+	}, className )
+	return (
+		<div className={classes}>{children}</div>
+	)
+}
+
 export const FormTest = () => {
 	return (
 		<Fragment>
-			<form>
+			<form style={{paddingBottom: 150}}>
 				<Form.Item>
 					<p>{__( 'This is a testing sheet for different form controls and scenarios. This is intended to serve as an exhaustive testing tool.' )}</p>
 				</Form.Item>
@@ -275,6 +285,10 @@ export const FormTest = () => {
 						/>
 					</Form.Item>
 				</Form.Section>
+				<Form.Footer>
+					Footer contents.
+					<Button>Publish</Button>
+				</Form.Footer>
 			</form>
 		</Fragment>
 	)

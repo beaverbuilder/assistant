@@ -45,6 +45,19 @@
             }
         }
 
+        .fl-asst-form-footer {
+            padding: var(--fl-asst-half-unit) var(--fl-asst-base-padding);
+            position: -webkit-sticky;
+            position: sticky;
+            bottom:0;
+            background: var(--fl-asst-utility-background-color);
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            line-height: 1;
+        }
+
         .fl-asst-form-item {
             display: flex;
             flex-direction: column;
