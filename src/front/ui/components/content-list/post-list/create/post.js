@@ -1,35 +1,91 @@
-import React from 'react'
-import { __ } from '@wordpress/i18n'
-import { Button, Form } from 'components'
+import React, { Fragment, useContext, useState } from 'react'
+import { __, _x, sprintf } from '@wordpress/i18n'
+import { createPost } from 'utils/wordpress'
+import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
 
 export const CreatePost = () => {
+	const { presentNotification } = useContext( UIContext )
+	const { dismiss } = useContext( StackContext )
+	const { type, labels } = useContext( ViewContext )
+	const [ creating, setCreating ] = useState( false )
+	const [ post, setPost ] = useState( {
+		post_type: type,
+		post_title: '',
+		post_name: '',
+		post_excerpt: '',
+	} )
+
+	const onChange = e => {
+		const { name, value } = e.currentTarget
+		setPost( { ...post, [ name ]: value } )
+	}
+
+	const createClicked = e => {
+		const { name } = e.currentTarget
+		setCreating( true )
+		createPost( post, response => {
+			setCreating( false )
+			if ( response.error ) {
+				createError()
+			} else {
+				presentNotification( sprintf( _x( '%s Created!', 'Singular post type label.' ), labels.singular ) )
+				dismiss()
+				if ( 'create-edit' === name ) {
+					window.location.href = response.editUrl
+				}
+			}
+		}, createError )
+	}
+
+	const createError = () => {
+		setCreating( false )
+		presentNotification(
+			sprintf( _x( 'Error! %s not created.', 'Singular post type label.' ), labels.singular ),
+			{ appearance: 'error' }
+		)
+	}
+
 	return (
 		<form>
 			<Form.Item label={__( 'Title' )} labelFor="fl-asst-post-title" isRequired={true}>
 				<input
 					id="fl-asst-post-title"
-					name="fl-asst-post-title"
+					name="post_title"
 					type="text"
 					placeholder={__( 'My Great Title!' )}
+					onChange={onChange}
 				/>
 			</Form.Item>
 
 			<Form.Item label={__( 'Slug' )} labelFor="fl-asst-post-slug">
 				<input
 					id="fl-asst-post-slug"
-					name="fl-asst-post-slug"
+					name="post_name"
 					type="text"
 					placeholder={__( 'my-great-slug' )}
+					onChange={onChange}
 				/>
 			</Form.Item>
 
 			<Form.Item label={__( 'Excerpt' )} labelFor="fl-asst-post-excerpt">
-				<textarea name='excerpt' id="fl-asst-post-excerpt" rows={6} />
+				<textarea
+					name='post_excerpt'
+					id="fl-asst-post-excerpt"
+					rows={6}
+					onChange={onChange}
+				/>
 			</Form.Item>
 
 			<Form.Item>
-				<Button style={{ marginLeft: 'auto' }}>{ __( 'Create Draft' ) }</Button>
-				<Button>{ __( 'Create & Edit' ) }</Button>
+				{ creating &&
+					<Button style={{ marginLeft: 'auto' }}>{ __( 'Creating Draft' ) } &nbsp;<Icon name='small-spinner' /></Button>
+				}
+				{ ! creating &&
+					<Fragment>
+						<Button name="create" style={{ marginLeft: 'auto' }} onClick={ createClicked }>{ __( 'Create Draft' ) }</Button>
+						<Button name="create-edit" onClick={ createClicked }>{ __( 'Create & Edit' ) }</Button>
+					</Fragment>
+				}
 			</Form.Item>
 		</form>
 	)

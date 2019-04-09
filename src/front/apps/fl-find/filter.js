@@ -113,12 +113,20 @@ const Actions = () => {
 				label: contentTypes[ subType ].labels.newItem,
 				content: <CreatePost />,
 				appearance: 'form',
+				context: {
+					type: subType,
+					...contentTypes[ subType ],
+				}
 			} )
 		} else if ( 'terms' === type ) {
 			present( {
 				label: taxonomies[ subType ].labels.newItem,
 				content: <CreateTerm />,
 				appearance: 'form',
+				context: {
+					type: subType,
+					...taxonomies[ subType ],
+				}
 			} )
 		}
 	}

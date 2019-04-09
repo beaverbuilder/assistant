@@ -90,6 +90,20 @@ export const getPost = ( id, onSuccess, onError ) => {
 }
 
 /**
+ * Creates a single post.
+ */
+export const createPost = ( data = {}, onSuccess, onError ) => {
+	clearCache( 'posts' )
+	return restRequest( {
+		method: 'POST',
+		route: `fl-assistant/v1/post`,
+		data,
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
  * Updates a single post. See the update_post
  * REST method for a list of supported actions.
  */

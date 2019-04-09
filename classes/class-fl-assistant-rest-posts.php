@@ -67,6 +67,18 @@ final class FL_Assistant_REST_Posts {
 				),
 			)
 		);
+
+		register_rest_route(
+			FL_Assistant_REST::$namespace, '/post', array(
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => __CLASS__ . '::create_post',
+					'permission_callback' => function() {
+						return current_user_can( 'edit_published_posts' );
+					},
+				),
+			)
+		);
 	}
 
 	/**
@@ -161,6 +173,21 @@ final class FL_Assistant_REST_Posts {
 		}
 
 		return array();
+	}
+
+	/**
+	 * Creates a single post.
+	 */
+	static public function create_post( $request ) {
+		$id = wp_insert_post( $request->get_params() );
+
+		if ( ! $id || is_wp_error( $id ) ) {
+			return array(
+				'error' => true,
+			);
+		}
+
+		return self::get_post_response_data( get_post( $id ) );
 	}
 
 	/**
