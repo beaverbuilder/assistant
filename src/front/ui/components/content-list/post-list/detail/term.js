@@ -14,7 +14,6 @@ import {
 	ViewContext,
 	Form,
 } from 'components'
-import './style.scss'
 
 export const TermListDetail = () => {
 	const mounted = useRef( false )

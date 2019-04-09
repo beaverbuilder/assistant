@@ -2,6 +2,8 @@ import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import {
+	CreatePost,
+	CreateTerm,
 	TagGroupControl,
 	Header,
 	Heading,
@@ -11,7 +13,6 @@ import {
 	StackContext,
 	Title,
 } from 'components'
-import { CreatePost, CreateTerm } from './add-new'
 
 export const PostListFilter = () => {
 	const { dismissAll } = useContext( StackContext )

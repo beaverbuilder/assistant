@@ -8,6 +8,6 @@ export {
 
 export { CommentList } from './comment-list'
 export { MediaList } from './media-list'
-export { PostList, PostListDetail } from './post-list'
+export { PostList, PostListDetail, CreatePost, CreateTerm } from './post-list'
 export { UpdateList } from './update-list'
 export { UserList, UserDetail } from './user-list'

@@ -1,7 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form } from 'components'
-import './style.scss'
 
 export const CreateTerm = () => {
 	return (

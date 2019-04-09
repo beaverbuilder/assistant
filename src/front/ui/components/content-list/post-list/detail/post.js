@@ -16,7 +16,6 @@ import {
 	StackContext,
 	ViewContext,
 } from 'components'
-import './style.scss'
 
 export const PostListDetail = () => {
 	const mounted = useRef( false )

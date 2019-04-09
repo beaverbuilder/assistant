@@ -2,8 +2,7 @@ import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { redirect } from 'utils/location'
 import { Button, ContentListItem, Icon, ItemContext, StackContext } from 'components'
-import { PostListDetail } from './post-detail'
-import { TermListDetail } from './term-detail'
+import { PostListDetail, TermListDetail } from './detail'
 
 export const PostListItem = props => {
 	const context = useContext( ItemContext )
