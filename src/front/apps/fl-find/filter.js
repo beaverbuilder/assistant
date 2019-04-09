@@ -11,7 +11,7 @@ import {
 	StackContext,
 	Title,
 } from 'components'
-import { CreatePost } from './create-post'
+import { CreatePost, CreateTerm } from './add-new'
 
 export const PostListFilter = () => {
 	const { dismissAll } = useContext( StackContext )
@@ -101,20 +101,32 @@ export const PostListFilter = () => {
 }
 
 const Actions = () => {
+	const { contentTypes, taxonomies } = getSystemConfig()
 	const { present } = useContext( StackContext )
 	const { filter } = useAppState()
+	const { type, subType } = filter
 
 	const presentNew = () => {
-		present( {
-			label: __( 'Create Post' ),
-			content: <CreatePost />,
-			appearance: 'form',
-		} )
+		let label = __( 'New Post' )
+
+		if ( 'posts' === type ) {
+			present( {
+				label: contentTypes[ subType ].labels.newItem,
+				content: <CreatePost />,
+				appearance: 'form',
+			} )
+		} else if ( 'terms' === type ) {
+			present( {
+				label: taxonomies[ subType ].labels.newItem,
+				content: <CreateTerm />,
+				appearance: 'form',
+			} )
+		}
 	}
 
 	return (
 		<Fragment>
-			{ 'posts' === filter.type && <NewButton onClick={presentNew} /> }
+			<NewButton onClick={presentNew} />
 		</Fragment>
 	)
 }
@@ -127,7 +139,7 @@ export const getFilterTags = () => {
 
 	Object.keys( contentTypes ).map( type => {
 		typeTags.push( {
-			label: contentTypes[ type ],
+			label: contentTypes[ type ].labels.plural,
 			value: [ 'posts', type ],
 			count: counts[ `content/${ type }` ] || '0'
 		} )
@@ -135,7 +147,7 @@ export const getFilterTags = () => {
 
 	Object.keys( taxonomies ).map( type => {
 		typeTags.push( {
-			label: taxonomies[ type ],
+			label: taxonomies[ type ].labels.plural,
 			value: [ 'terms', type ],
 			count: counts[ `taxonomy/${ type }` ] || '0'
 		} )
