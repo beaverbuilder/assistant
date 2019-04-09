@@ -107,8 +107,6 @@ const Actions = () => {
 	const { type, subType } = filter
 
 	const presentNew = () => {
-		let label = __( 'New Post' )
-
 		if ( 'posts' === type ) {
 			present( {
 				label: contentTypes[ subType ].labels.newItem,
