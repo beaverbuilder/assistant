@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react'
+import slug from 'slug'
 import { __, _x, sprintf } from '@wordpress/i18n'
 import { createPost } from 'utils/wordpress'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
@@ -18,7 +19,13 @@ export const CreatePost = () => {
 
 	const onChange = e => {
 		const { name, value } = e.currentTarget
-		setPost( { ...post, [ name ]: value } )
+		post[ name ] = value
+
+		if ( 'post_title' === name ) {
+			post.post_name = slug( value ).toLowerCase()
+		}
+
+		setPost( { ...post } )
 	}
 
 	const createClicked = e => {
@@ -63,6 +70,7 @@ export const CreatePost = () => {
 					name="post_title"
 					type="text"
 					placeholder={__( 'My Great Title!' )}
+					value={ post.post_title }
 					onChange={onChange}
 				/>
 			</Form.Item>
@@ -73,6 +81,7 @@ export const CreatePost = () => {
 					name="post_name"
 					type="text"
 					placeholder={__( 'my-great-slug' )}
+					value={ post.post_name }
 					onChange={onChange}
 				/>
 			</Form.Item>
@@ -82,6 +91,7 @@ export const CreatePost = () => {
 					name='post_excerpt'
 					id="fl-asst-post-excerpt"
 					rows={6}
+					value={ post.post_excerpt }
 					onChange={onChange}
 				/>
 			</Form.Item>
