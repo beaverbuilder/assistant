@@ -1,10 +1,7 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import {
-	ActionGroup,
-	VerticalGroup,
 	PageViewContext,
-	Padding,
 	Button,
 	Icon,
 	Widget,
@@ -14,25 +11,6 @@ import {
 import Truncate from 'react-truncate'
 import { useSystemState } from 'store'
 import './style.scss'
-
-export const CurrentlyViewing = () => {
-	const { intro, name, actions } = useContext( PageViewContext )
-	return (
-		<div className="fl-asst-currently-viewing">
-			<Padding top={20} bottom={20}>
-				<VerticalGroup>
-					<div className="fl-asst-pretitle">{intro}</div>
-					<div className="fl-asst-title">
-						<Truncate lines={2}>{name}</Truncate>
-					</div>
-					<div style={{ marginTop: 10 }}>
-						{ actions && <ActionGroup actions={actions} appearance="muted" /> }
-					</div>
-				</VerticalGroup>
-			</Padding>
-		</div>
-	)
-}
 
 export const TilesWidget = () => {
 	const {
@@ -85,6 +63,7 @@ export const TilesWidget = () => {
 								<Button
 									key={i}
 									href={href}
+									target="_blank"
 									appearance="transparent"
 								>{label}</Button>
 							)

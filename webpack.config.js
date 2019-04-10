@@ -13,15 +13,18 @@ const alias = {
 }
 
 const externals = {
-    '@assistant' : 'FLAssistant',
-    '@assistant/store' : 'FLAssistant.store',
-    '@assistant/components' : 'FLAssistant.components',
-    '@assistant/utils' : 'FLAssistant.utils',
+    '@assistant' : 'UNSTABLE_FLAssistant',
+    '@assistant/store' : 'UNSTABLE_FLAssistant.store',
+    '@assistant/components' : 'UNSTABLE_FLAssistant.components',
+    '@assistant/utils' : 'UNSTABLE_FLAssistant.utils',
 
     /* Vendor Shortcuts */
-    '@assistant/react' : 'FLAssistant.vendor.React',
-    '@assistant/react-dom' : 'FLAssistant.vendor.ReactDOM',
-    '@assistant/classnames' : 'FLAssistant.vendor.classnames',
+    '@assistant/react' : 'UNSTABLE_FLAssistant.vendor.React',
+    '@assistant/react-dom' : 'UNSTABLE_FLAssistant.vendor.ReactDOM',
+    '@assistant/redux' : 'UNSTABLE_FLAssistant.vendor.redux',
+    '@assistant/react-redux' : 'UNSTABLE_FLAssistant.vendor.reactRedux',
+    '@assistant/classnames' : 'UNSTABLE_FLAssistant.vendor.classnames',
+    '@assistant/react-tunnels' : 'UNSTABLE_FLAssistant.vendor.tunnels',
 
     "@wordpress/block-editor" : 'wp.blockEditor',
     '@wordpress' : 'wp',

@@ -3,6 +3,9 @@
 
     .fl-asst-widget-title {
         margin-bottom: calc( var(--fl-asst-base-padding) / 2 );
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.2;
         -webkit-user-select:none;
         user-select: none;
     }
