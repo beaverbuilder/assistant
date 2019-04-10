@@ -117,6 +117,7 @@ export const TermListDetail = () => {
 						/>
 					</Form.Item>
 				}
+
 				<Form.Item label={__( 'Description' )} labelFor="fl-asst-term-description">
 					<textarea name='description' id="fl-asst-term-description" value={ description } onChange={ onChange } rows={6} />
 				</Form.Item>

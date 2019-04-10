@@ -151,7 +151,7 @@ class FL_Assistant_Data {
 				}
 				$data[ $taxonomy_slug ] = array(
 					'description'  => $taxonomy->description,
-					'hierarchical' => $taxonomy->hierarchical,
+					'isHierarchical' => $taxonomy->hierarchical,
 					'labels'       => array(
 						'singular'   => esc_html( $taxonomy->labels->singular_name ),
 						'plural'     => esc_html( $taxonomy->labels->name ),

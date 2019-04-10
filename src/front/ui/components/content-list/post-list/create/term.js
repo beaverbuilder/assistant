@@ -3,17 +3,18 @@ import slug from 'slug'
 import { __, _x, sprintf } from '@wordpress/i18n'
 import { createTerm } from 'utils/wordpress'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
-import { TermListDetail } from '../detail'
+import { TermListDetail, TermParentSelect } from '../detail'
 
 export const CreateTerm = () => {
 	const { presentNotification } = useContext( UIContext )
 	const { dismissAll, present } = useContext( StackContext )
-	const { type, labels, refreshList } = useContext( ViewContext )
+	const { type, labels, isHierarchical, refreshList } = useContext( ViewContext )
 	const [ creating, setCreating ] = useState( false )
 	const [ term, setTerm ] = useState( {
 		taxonomy: type,
 		name: '',
 		slug: '',
+		parent: '0',
 		description: '',
 	} )
 
@@ -88,6 +89,18 @@ export const CreateTerm = () => {
 					onChange={onChange}
 				/>
 			</Form.Item>
+
+			{ isHierarchical &&
+				<Form.Item label={__( 'Parent' )} labelFor="fl-asst-term-parent">
+					<TermParentSelect
+						taxonomy={ type }
+						name='parent'
+						id='fl-asst-term-parent'
+						value={ term.parent }
+						onChange={ onChange }
+					/>
+				</Form.Item>
+			}
 
 			<Form.Item label={__( 'Description' )} labelFor="fl-asst-term-description">
 				<textarea

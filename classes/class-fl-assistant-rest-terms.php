@@ -210,6 +210,7 @@ final class FL_Assistant_REST_Terms {
 			array(
 				'description' => $data['description'],
 				'slug' => $data['slug'],
+				'parent' => $data['parent'],
 			)
 		);
 
