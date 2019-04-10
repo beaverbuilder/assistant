@@ -40,7 +40,7 @@ export const CreatePost = () => {
 				dismissAll()
 				refreshList()
 				if ( 'create-edit' === name ) {
-					window.location.href = response.editUrl
+					window.open( response.editUrl )
 				} else {
 					present( {
 						label: __( 'Edit Post' ),
