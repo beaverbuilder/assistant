@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { redirect } from 'utils/location'
+import { getSystemConfig } from 'store'
 import { Button, ContentListItem, Icon, ItemContext, StackContext } from 'components'
 import { PostListDetail, TermListDetail } from './detail'
 
 export const PostListItem = props => {
+	const { contentTypes, taxonomies } = getSystemConfig()
 	const context = useContext( ItemContext )
 	const { url } = context
 	const { present } = useContext( StackContext )
@@ -14,7 +16,7 @@ export const PostListItem = props => {
 		// Terms don't have a status.
 		if ( context.status ) {
 			present( {
-				label: __( 'Edit Post' ),
+				label: contentTypes[ context.type ].labels.editItem,
 				content: <PostListDetail />,
 				appearance: 'form',
 				shouldShowTitle: false,
@@ -22,7 +24,7 @@ export const PostListItem = props => {
 			} )
 		} else {
 			present( {
-				label: __( 'Edit Term' ),
+				label: taxonomies[ context.taxonomy ].labels.editItem,
 				content: <TermListDetail />,
 				appearance: 'form',
 				context,

@@ -2,10 +2,12 @@ import React, { Fragment, useContext, useState } from 'react'
 import slug from 'slug'
 import { __, _x, sprintf } from '@wordpress/i18n'
 import { createTerm } from 'utils/wordpress'
+import { getSystemConfig } from 'store'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
 import { TermListDetail, TermParentSelect } from '../detail'
 
 export const CreateTerm = () => {
+	const { taxonomies } = getSystemConfig()
 	const { presentNotification } = useContext( UIContext )
 	const { dismissAll, present } = useContext( StackContext )
 	const { type, labels, isHierarchical, refreshList } = useContext( ViewContext )
@@ -41,10 +43,9 @@ export const CreateTerm = () => {
 				dismissAll()
 				refreshList()
 				present( {
-					label: __( 'Edit Term' ),
+					label: taxonomies[ type ].labels.editItem,
 					content: <TermListDetail />,
 					appearance: 'form',
-					shouldShowTitle: false,
 					context: response,
 				} )
 			}

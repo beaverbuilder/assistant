@@ -47,6 +47,7 @@ export const PostListDetail = () => {
 		updateItem,
 	} = post
 	const { supports, isHierarchical } = contentTypes[ type ]
+	const viewTitle = contentTypes[ type ].labels.editItem
 
 	useEffect( () => {
 		mounted.current = true
@@ -107,7 +108,7 @@ export const PostListDetail = () => {
 	return (
 		<ContentListDetail>
 			<PostDetailHeader data={post} />
-			<Title shouldOverlay={true} style={titleStyles}>{__( 'Edit Post' )}</Title>
+			<Title shouldOverlay={true} style={titleStyles}>{viewTitle}</Title>
 
 			<form>
 
