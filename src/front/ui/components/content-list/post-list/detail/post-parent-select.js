@@ -1,27 +1,27 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getHierarchicalTerms } from 'utils/wordpress'
+import { getHierarchicalPosts } from 'utils/wordpress'
 
-export const TermParentSelect = ( { taxonomy, name, id, value, onChange } ) => {
-	const [ terms, setTerms ] = useState( null )
+export const PostParentSelect = ( { type, name, id, value, onChange } ) => {
+	const [ posts, setPosts ] = useState( null )
 
 	useEffect( () => {
-		const request = getHierarchicalTerms( {
+		const request = getHierarchicalPosts( {
 			hide_empty: 0,
-			taxonomy,
+			post_type: type,
 		}, response => {
-			setTerms( response )
+			setPosts( response )
 		} )
 		return () => request.cancel()
 	}, [] )
 
-	const renderTerms = ( terms, depth = 0 ) => {
+	const renderPosts = ( posts, depth = 0 ) => {
 		const prefix = depth ? '-'.repeat( depth ) + ' ' : ''
-		return terms.map( ( term, i ) => {
+		return posts.map( ( post, i ) => {
 			return (
 				<Fragment key={ `${ depth }-${ i }-fragment` }>
-					<option key={ `${ depth }-${ i }` } value={ term.id }>{ prefix + term.title }</option>
-					{ renderTerms( term.children, depth + 1 ) }
+					<option key={ `${ depth }-${ i }` } value={ post.id }>{ prefix + post.title }</option>
+					{ renderPosts( post.children, depth + 1 ) }
 				</Fragment>
 			)
 		} )
@@ -29,13 +29,13 @@ export const TermParentSelect = ( { taxonomy, name, id, value, onChange } ) => {
 
 	return (
 		<select name={ name } id={ id } value={ value } onChange={ onChange }>
-			{ ! terms &&
+			{ ! posts &&
 				<option value={ value }>{ __( 'Loading...' ) }</option>
 			}
-			{ terms &&
+			{ posts &&
 				<Fragment>
 					<option value='0'>{ __( 'None' ) }</option>
-					{ renderTerms( terms )  }
+					{ renderPosts( posts )  }
 				</Fragment>
 			}
 		</select>

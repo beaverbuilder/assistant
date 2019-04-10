@@ -22,6 +22,18 @@ final class FL_Assistant_REST_Posts {
 		);
 
 		register_rest_route(
+			FL_Assistant_REST::$namespace, '/posts/hierarchical', array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::hierarchical_posts',
+					'permission_callback' => function() {
+						return current_user_can( 'edit_published_posts' );
+					},
+				),
+			)
+		);
+
+		register_rest_route(
 			FL_Assistant_REST::$namespace, '/posts/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -144,6 +156,59 @@ final class FL_Assistant_REST_Posts {
 		}
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of posts and related data
+	 * with child posts contained in the parent
+	 * post's data array.
+	 */
+	static public function hierarchical_posts( $request ) {
+		$response = array();
+		$children = array();
+		$params   = $request->get_params();
+		$posts    = get_posts(
+			array_merge(
+				$params, array(
+					'perm' => 'editable',
+				)
+			)
+		);
+
+		foreach ( $posts as $post ) {
+			if ( $post->post_parent ) {
+				if ( ! isset( $children[ $post->post_parent ] ) ) {
+					$children[ $post->post_parent ] = array();
+				}
+				$children[ $post->post_parent ][] = $post;
+			}
+		}
+
+		foreach ( $posts as $post ) {
+			if ( ! $post->post_parent ) {
+				$parent = self::get_post_response_data( $post );
+				$parent['children'] = self::get_child_posts( $post, $children );
+				$response[] = $parent;
+			}
+		}
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of child posts for the given post.
+	 * A $children array must be passed to search for children.
+	 */
+	static public function get_child_posts( $post, $children ) {
+		if ( isset( $children[ $post->ID ] ) ) {
+			$post_children = $children[ $post->ID ];
+			foreach ( $post_children as $i => $child ) {
+				$post_children[ $i ] = self::get_post_response_data( $child );
+				$post_children[ $i ]['children'] = self::get_child_posts( $child, $children );
+			}
+			return $post_children;
+		}
+		return array();
 	}
 
 	/**

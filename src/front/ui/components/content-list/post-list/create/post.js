@@ -1,20 +1,21 @@
 import React, { Fragment, useContext, useState } from 'react'
 import slug from 'slug'
 import { __, _x, sprintf } from '@wordpress/i18n'
-import { createPost } from 'utils/wordpress'
+import { createPost, getHierarchicalPosts } from 'utils/wordpress'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
-import { PostListDetail } from '../detail'
+import { PostListDetail, PostParentSelect } from '../detail'
 
 export const CreatePost = () => {
 	const { presentNotification } = useContext( UIContext )
 	const { dismissAll, present } = useContext( StackContext )
-	const { type, labels, supports, refreshList } = useContext( ViewContext )
+	const { type, labels, supports, isHierarchical, refreshList } = useContext( ViewContext )
 	const [ creating, setCreating ] = useState( false )
 	const [ post, setPost ] = useState( {
 		post_type: type,
 		post_title: '',
 		post_name: '',
 		post_excerpt: '',
+		post_parent: '0',
 	} )
 
 	const onChange = e => {
@@ -85,6 +86,18 @@ export const CreatePost = () => {
 					onChange={onChange}
 				/>
 			</Form.Item>
+
+			{ isHierarchical &&
+				<Form.Item label={__( 'Parent' )} labelFor="fl-asst-post-parent">
+					<PostParentSelect
+						type={ type }
+						name='post_parent'
+						id='fl-asst-post-parent'
+						value={ post.post_parent }
+						onChange={ onChange }
+					/>
+				</Form.Item>
+			}
 
 			{ supports.excerpt &&
 				<Form.Item label={__( 'Excerpt' )} labelFor="fl-asst-post-excerpt">

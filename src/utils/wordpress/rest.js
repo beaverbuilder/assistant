@@ -78,6 +78,20 @@ export const getPosts = ( query, onSuccess, onError ) => {
 }
 
 /**
+ * Returns any array of hierarchical posts
+ * with child post data contained within the
+ * parent post's data object.
+ */
+export const getHierarchicalPosts = ( query, onSuccess, onError ) => {
+	return restRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/posts/hierarchical', query ),
+		cacheKey: 'posts',
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
  * Returns data for a single post.
  */
 export const getPost = ( id, onSuccess, onError ) => {
