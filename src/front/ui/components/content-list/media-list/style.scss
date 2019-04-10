@@ -20,13 +20,15 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding:2px;
+    padding:2px 2px 0;
     background: var(--fl-asst-utility-background-color);
 }
 .fl-asst-grid-item {
     box-sizing: border-box;
     flex: 1 1 calc( 50% - 1px );
     width: calc( 50% - 1px );
+    min-height: 266px;
+    max-width: calc( 50% - 1px );
     padding:0;
     margin-bottom: 2px;
     background: var(--fl-asst-background-color);
@@ -50,6 +52,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         width: 100%;
+        min-height: 33px;
         padding: 10px 10px;
         line-height: 1.1;
         margin: 0;
