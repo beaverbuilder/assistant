@@ -92,7 +92,10 @@ class FL_Assistant_Data {
 			$data[ $slug ] = array(
 				'canExport'    => $type->can_export,
 				'hasArchive'   => $type->has_archive,
-				'hierarchical' => $type->hierarchical,
+				'isHierarchical' => $type->hierarchical,
+				'supports'	=> array(
+					'excerpt' => post_type_supports( $slug, 'excerpt' ),
+				),
 				'labels'       => array(
 					'singular' => esc_html( $type->labels->singular_name ),
 					'plural'   => esc_html( $type->labels->name ),

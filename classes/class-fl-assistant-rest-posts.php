@@ -91,6 +91,7 @@ final class FL_Assistant_REST_Posts {
 			'author'          => $author,
 			'commentsAllowed' => 'open' === $post->comment_status ? true : false,
 			'content'         => $post->post_content,
+			'excerpt'         => $post->post_excerpt,
 			'date'            => $date,
 			'editUrl'         => get_edit_post_link( $post->ID, '' ),
 			'id'              => $post->ID,

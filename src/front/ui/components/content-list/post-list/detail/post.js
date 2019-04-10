@@ -20,7 +20,7 @@ import {
 export const PostListDetail = () => {
 	const mounted = useRef( false )
 	const { incrementCount, decrementCount } = getSystemActions()
-	const { contentStatus } = getSystemConfig()
+	const { contentStatus, contentTypes } = getSystemConfig()
 	const { presentNotification } = useContext( UIContext )
 	const { dismiss } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
@@ -31,6 +31,7 @@ export const PostListDetail = () => {
 		bbBranding,
 		bbEditUrl,
 		commentsAllowed,
+		excerpt,
 		date,
 		editUrl,
 		id,
@@ -43,6 +44,7 @@ export const PostListDetail = () => {
 		removeItem,
 		updateItem,
 	} = post
+	const { supports } = contentTypes[ type ]
 
 	useEffect( () => {
 		mounted.current = true
@@ -74,8 +76,9 @@ export const PostListDetail = () => {
 			ping_status: commentsAllowed ? 'open' : 'closed',
 			post_name: slug,
 			post_title: title,
+			post_excerpt: excerpt,
 		}, () => {
-			updateItem( { title, slug, commentsAllowed } )
+			updateItem( { title, slug, excerpt, commentsAllowed } )
 			presentNotification( __( 'Changes published!' ) )
 			if ( mounted.current ) {
 				setPublishing( false )
@@ -126,10 +129,23 @@ export const PostListDetail = () => {
 				<Form.Item label={__( 'Title' )} labelFor="title">
 					<input type='text' name='title' id="title" value={ title } onChange={ onChange } />
 				</Form.Item>
+
 				<Form.Item label={__( 'Slug' )} labelFor="slug">
 					<input type='text' name='slug' id="slug" value={ slug } onChange={ onChange } />
 					<CopyButton label={__( 'Copy URL' )} text={ url } />
 				</Form.Item>
+
+				{ supports.excerpt &&
+					<Form.Item label={__( 'Excerpt' )} labelFor="fl-asst-post-excerpt">
+						<textarea
+							name='excerpt'
+							id="fl-asst-post-excerpt"
+							rows={6}
+							value={ excerpt }
+							onChange={ onChange }
+						/>
+					</Form.Item>
+				}
 
 				<Form.Section label={__( 'Publish Settings' )} isInset={true}>
 					<Form.Item label={__( 'Visibility' )} placement="beside">{ visibility }</Form.Item>
@@ -149,6 +165,7 @@ export const PostListDetail = () => {
 						/>
 					</Form.Item>
 				</Form.Section>
+
 				<Form.Footer>
 					{ publishing &&
 					<Button>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>

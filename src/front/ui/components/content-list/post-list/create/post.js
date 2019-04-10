@@ -8,7 +8,7 @@ import { PostListDetail } from '../detail'
 export const CreatePost = () => {
 	const { presentNotification } = useContext( UIContext )
 	const { dismissAll, present } = useContext( StackContext )
-	const { type, labels, refreshList } = useContext( ViewContext )
+	const { type, labels, supports, refreshList } = useContext( ViewContext )
 	const [ creating, setCreating ] = useState( false )
 	const [ post, setPost ] = useState( {
 		post_type: type,
@@ -86,15 +86,17 @@ export const CreatePost = () => {
 				/>
 			</Form.Item>
 
-			<Form.Item label={__( 'Excerpt' )} labelFor="fl-asst-post-excerpt">
-				<textarea
-					name='post_excerpt'
-					id="fl-asst-post-excerpt"
-					rows={6}
-					value={ post.post_excerpt }
-					onChange={onChange}
-				/>
-			</Form.Item>
+			{ supports.excerpt &&
+				<Form.Item label={__( 'Excerpt' )} labelFor="fl-asst-post-excerpt">
+					<textarea
+						name='post_excerpt'
+						id="fl-asst-post-excerpt"
+						rows={6}
+						value={ post.post_excerpt }
+						onChange={onChange}
+					/>
+				</Form.Item>
+			}
 
 			<Form.Item>
 				{ creating &&
