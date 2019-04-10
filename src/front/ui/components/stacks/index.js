@@ -114,6 +114,7 @@ export const Stack = ( { children, className } ) => {
 
 	// After pop transition completes, cleanup data
 	const poseComplete = name => {
+		console.log('pose complete', action, name )
 		if ( action && 'pop' === action && 'future' === name ) {
 
 			// ditch the last 'future' item

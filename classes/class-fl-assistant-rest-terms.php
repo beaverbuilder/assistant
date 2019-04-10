@@ -22,6 +22,18 @@ final class FL_Assistant_REST_Terms {
 		);
 
 		register_rest_route(
+			FL_Assistant_REST::$namespace, '/terms/hierarchical', array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::hierarchical_terms',
+					'permission_callback' => function() {
+						return current_user_can( 'edit_published_posts' );
+					},
+				),
+			)
+		);
+
+		register_rest_route(
 			FL_Assistant_REST::$namespace, '/terms/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -67,6 +79,18 @@ final class FL_Assistant_REST_Terms {
 				),
 			)
 		);
+
+		register_rest_route(
+			FL_Assistant_REST::$namespace, '/term', array(
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => __CLASS__ . '::create_term',
+					'permission_callback' => function() {
+						return current_user_can( 'edit_published_posts' );
+					},
+				),
+			)
+		);
 	}
 
 	/**
@@ -103,6 +127,53 @@ final class FL_Assistant_REST_Terms {
 	}
 
 	/**
+	 * Returns an array of terms and related data
+	 * with child terms contained in the parent
+	 * term's data array.
+	 */
+	static public function hierarchical_terms( $request ) {
+		$response = array();
+		$children = array();
+		$params   = $request->get_params();
+		$terms    = get_terms( $params );
+
+		foreach ( $terms as $term ) {
+			if ( $term->parent ) {
+				if ( ! isset( $children[ $term->parent ] ) ) {
+					$children[ $term->parent ] = array();
+				}
+				$children[ $term->parent ][] = $term;
+			}
+		}
+
+		foreach ( $terms as $term ) {
+			if ( ! $term->parent ) {
+				$parent = self::get_term_response_data( $term );
+				$parent['children'] = self::get_child_terms( $term, $children );
+				$response[] = $parent;
+			}
+		}
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of child terms for the given term.
+	 * A $children array must be passed to search for children.
+	 */
+	static public function get_child_terms( $term, $children ) {
+		if ( isset( $children[ $term->term_id ] ) ) {
+			$term_children = $children[ $term->term_id ];
+			foreach ( $term_children as $i => $child ) {
+				$term_children[ $i ] = self::get_term_response_data( $child );
+				$term_children[ $i ]['children'] = self::get_child_terms( $child, $children );
+			}
+			return $term_children;
+		}
+		return array();
+	}
+
+	/**
 	 * Returns an array of counts by taxonomy type.
 	 */
 	static public function terms_count( $request ) {
@@ -126,6 +197,35 @@ final class FL_Assistant_REST_Terms {
 		$response = self::get_term_response_data( $term );
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Creates a single term.
+	 */
+	static public function create_term( $request ) {
+		$data = array_map( 'sanitize_text_field', $request->get_params() );
+		$id = wp_insert_term(
+			$data['name'],
+			$data['taxonomy'],
+			array(
+				'description' => $data['description'],
+				'slug'        => $data['slug'],
+				'parent'      => $data['parent'],
+			)
+		);
+
+		if ( is_wp_error( $id ) ) {
+			if ( isset( $id->errors['term_exists'] ) ) {
+				return array(
+					'error' => 'exists',
+				);
+			}
+			return array(
+				'error' => true,
+			);
+		}
+
+		return self::get_term_response_data( get_term( $id['term_id'], $data['taxonomy'] ) );
 	}
 
 	/**

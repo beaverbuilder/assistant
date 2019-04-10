@@ -78,12 +78,40 @@ export const getPosts = ( query, onSuccess, onError ) => {
 }
 
 /**
+ * Returns any array of hierarchical posts
+ * with child post data contained within the
+ * parent post's data object.
+ */
+export const getHierarchicalPosts = ( query, onSuccess, onError ) => {
+	return restRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/posts/hierarchical', query ),
+		cacheKey: 'posts',
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
  * Returns data for a single post.
  */
 export const getPost = ( id, onSuccess, onError ) => {
 	return restRequest( {
 		route: `fl-assistant/v1/post/${ id }`,
 		cacheKey: 'posts',
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
+ * Creates a single post.
+ */
+export const createPost = ( data = {}, onSuccess, onError ) => {
+	clearCache( 'posts' )
+	return restRequest( {
+		method: 'POST',
+		route: 'fl-assistant/v1/post',
+		data,
 		onSuccess,
 		onError,
 	} )
@@ -120,12 +148,40 @@ export const getTerms = ( query, onSuccess, onError ) => {
 }
 
 /**
+ * Returns any array of hierarchical post terms
+ * with child term data contained within the
+ * parent term's data object.
+ */
+export const getHierarchicalTerms = ( query, onSuccess, onError ) => {
+	return restRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/terms/hierarchical', query ),
+		cacheKey: 'terms',
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
  * Returns data for a single term.
  */
 export const getTerm = ( id, onSuccess, onError ) => {
 	return restRequest( {
 		route: `fl-assistant/v1/term/${ id }`,
 		cacheKey: 'terms',
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
+ * Creates a single term.
+ */
+export const createTerm = ( data = {}, onSuccess, onError ) => {
+	clearCache( 'terms' )
+	return restRequest( {
+		method: 'POST',
+		route: 'fl-assistant/v1/term',
+		data,
 		onSuccess,
 		onError,
 	} )

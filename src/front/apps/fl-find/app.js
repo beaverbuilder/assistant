@@ -1,15 +1,23 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useAppState } from 'store'
 import { PostList } from 'components'
 import { PostListFilter } from './filter'
 
 export const App = () => {
 	const { filter, query } = useAppState()
+	const [ listKey, setListKey ] = useState( new Date().getTime() )
+
+	const refreshList = () => {
+		setListKey( new Date().getTime() )
+	}
 
 	return (
 		<Fragment>
-			<PostListFilter />
+			<PostListFilter
+				refreshList={ refreshList }
+			/>
 			<PostList
+				key={ listKey }
 				type={ filter.type }
 				query={ query }
 				pagination={ true }

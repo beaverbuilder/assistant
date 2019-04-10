@@ -59,6 +59,8 @@ export {
 	MediaList,
 	PostList,
 	PostListDetail,
+	CreatePost,
+	CreateTerm,
 	UpdateList,
 	UserList,
 	UserDetail,
