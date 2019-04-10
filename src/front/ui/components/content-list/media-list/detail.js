@@ -4,13 +4,10 @@ import {
 	ViewContext,
 	CopyButton,
 	Photo,
-	Separator,
 	Tag,
 	TagGroup,
 	Title,
-	Padding,
-	SettingsGroup,
-	SettingsItem,
+	Form,
 	StackContext,
 	useImageData,
 } from 'components'
@@ -77,32 +74,37 @@ export const MediaDetail = () => {
 			<Title shouldOverlay={true} style={titleStyles}>{__( 'Edit Media' )}</Title>
 			<Photo src={url} style={imgStyles} />
 
-			<Padding>
-				<TagGroup appearance='muted' id="fl-asst-media-actions">
-					<Tag href={pageURL}>{__( 'View' )}</Tag>
-					<Tag href={editUrl}>{__( 'Edit' )}</Tag>
-					<Tag onClick={trashClicked} appearance='warning'>{__( 'Delete' )}</Tag>
-				</TagGroup>
-			</Padding>
+			<form>
+				<Form.Item>
+					<TagGroup appearance='muted' id="fl-asst-media-actions">
+						<Tag href={pageURL}>{__( 'View' )}</Tag>
+						<Tag href={editUrl}>{__( 'Edit' )}</Tag>
+						<Tag onClick={trashClicked} appearance='warning'>{__( 'Delete' )}</Tag>
+					</TagGroup>
+				</Form.Item>
 
-			<SettingsGroup>
-				<SettingsItem label={__( 'Filesize' )}>
-					{filesize}
-				</SettingsItem>
-				<SettingsItem label={__( 'Uploaded Date' )}>
-					{date}
-				</SettingsItem>
-			</SettingsGroup>
+				<Form.Section label={__( 'Attachment Details' )} isInset={true}>
+					{ title && <Form.Item label={__( 'Title' )} placement="beside">{title}</Form.Item> }
+					{ alt && <Form.Item label={__( 'Alternate Text' )} placement="beside">{alt}</Form.Item> }
+					{ description && <Form.Item label={__( 'Description' )}>{description}</Form.Item> }
+				</Form.Section>
 
-			<Separator />
-			<SettingsGroup>
-				{ title && <SettingsItem label={__( 'Title' )}>{title}</SettingsItem> }
-				{ alt && <SettingsItem label={__( 'Alternate Text' )}>{alt}</SettingsItem> }
-				{ description && <SettingsItem label={__( 'Description' )}>{description}</SettingsItem> }
-				<SettingsItem labelPosition='above'>
+				<Form.Section label={__( 'File Metadata' )} isInset={true}>
+					<Form.Item label={__( 'Filesize' )} placement="beside">
+						{filesize}
+					</Form.Item>
+					<Form.Item label={__( 'Uploaded Date' )} placement="beside">
+						{date}
+					</Form.Item>
+					<Form.Item label={__( 'File Type' )} placement="beside">
+						{mime}
+					</Form.Item>
+				</Form.Section>
+
+				<Form.Footer>
 					<CopyButton label={__( 'Copy URL' )} text={ pageURL } />
-				</SettingsItem>
-			</SettingsGroup>
+				</Form.Footer>
+			</form>
 		</Fragment>
 	)
 }
