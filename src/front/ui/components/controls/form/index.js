@@ -130,10 +130,11 @@ export const FormTest = () => {
 				<Form.Item label={__( 'Select Something!' )} labelFor="selector" isRequired={true}>
 					<select id="selector" name="selector">
 						<option>Select Me!</option>
+						<option>Something Else</option>
 					</select>
 				</Form.Item>
 
-				<Form.Item label={__( 'Multiple Choice' )} labelFor="multi-selector">
+				<Form.Item label={__( 'Multiple Choice (select)' )} labelFor="multi-selector">
 					<select id="multi-selector" name="multi-selector" multiple={true}>
 						<option>Red</option>
 						<option>Blue</option>
