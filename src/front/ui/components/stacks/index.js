@@ -130,12 +130,12 @@ export const Stack = ( { children, className } ) => {
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
-			const exiting = views.splice(i, 1)
+			const exiting = views.splice( i, 1 )
 			exiting.map( view => {
 				if ( 'function' === typeof view.onDismiss ) {
 					view.onDismiss()
 				}
-			})
+			} )
 
 			setViews( Array.from( views ) )
 			setAction( null )
@@ -167,7 +167,7 @@ export const Stack = ( { children, className } ) => {
 	const popView = ( i ) => {
 
 		// Always keep the root view - can't have less than 1
-		if ( 2 > views.length || i === 0 ) {
+		if ( 2 > views.length || 0 === i ) {
 			return
 		}
 
@@ -184,13 +184,13 @@ export const Stack = ( { children, className } ) => {
 	}
 
 	const popToRoot = () => {
-		if ( views.length < 2 ) {
+		if ( 2 > views.length ) {
 			return
 		}
 		const newViews = views.map( ( view, i ) => {
-			view.pose = i === 0 ? 'present' : 'future'
+			view.pose = 0 === i ? 'present' : 'future'
 			return view
-		})
+		} )
 		setViews( Array.from( newViews ) )
 		setAction( 'root' )
 	}
@@ -236,9 +236,8 @@ export const Stack = ( { children, className } ) => {
 			onDismiss: () => {},
 			config: {},
 		}
-		const view = Object.assign({}, defaults, config)
+		const view = Object.assign( {}, defaults, config )
 		view.config = { ...config }
-		console.log('new view', view )
 		views[i] = view
 		setViews( Array.from( views ) )
 	}
