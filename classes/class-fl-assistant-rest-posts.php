@@ -108,6 +108,7 @@ final class FL_Assistant_REST_Posts {
 			'editUrl'         => get_edit_post_link( $post->ID, '' ),
 			'id'              => $post->ID,
 			'meta'            => $author . ' - ' . $date,
+			'parent'		  => $post->post_parent,
 			'slug'            => $post->post_name,
 			'status'          => $post->post_status,
 			'thumbnail'       => get_the_post_thumbnail_url( $post, 'thumbnail' ),

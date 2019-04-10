@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions, getSystemConfig } from 'store'
 import { updatePost } from 'utils/wordpress'
+import { PostParentSelect } from './post-parent-select'
 import {
 	Button,
 	CopyButton,
@@ -35,6 +36,7 @@ export const PostListDetail = () => {
 		date,
 		editUrl,
 		id,
+		parent,
 		status,
 		slug,
 		title,
@@ -44,7 +46,7 @@ export const PostListDetail = () => {
 		removeItem,
 		updateItem,
 	} = post
-	const { supports } = contentTypes[ type ]
+	const { supports, isHierarchical } = contentTypes[ type ]
 
 	useEffect( () => {
 		mounted.current = true
@@ -77,8 +79,9 @@ export const PostListDetail = () => {
 			post_name: slug,
 			post_title: title,
 			post_excerpt: excerpt,
+			post_parent: parent,
 		}, () => {
-			updateItem( { title, slug, excerpt, commentsAllowed } )
+			updateItem( { title, slug, excerpt, parent, commentsAllowed } )
 			presentNotification( __( 'Changes published!' ) )
 			if ( mounted.current ) {
 				setPublishing( false )
@@ -134,6 +137,18 @@ export const PostListDetail = () => {
 					<input type='text' name='slug' id="slug" value={ slug } onChange={ onChange } />
 					<CopyButton label={__( 'Copy URL' )} text={ url } />
 				</Form.Item>
+
+				{ isHierarchical &&
+					<Form.Item label={__( 'Parent' )} labelFor="fl-asst-post-parent">
+						<PostParentSelect
+							type={ type }
+							name='parent'
+							id='fl-asst-post-parent'
+							value={ parent }
+							onChange={ onChange }
+						/>
+					</Form.Item>
+				}
 
 				{ supports.excerpt &&
 					<Form.Item label={__( 'Excerpt' )} labelFor="fl-asst-post-excerpt">
