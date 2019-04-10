@@ -118,7 +118,7 @@ export const CreateTerm = () => {
 				}
 				{ ! creating &&
 					<Fragment>
-						<Button onClick={createClicked} style={{ marginLeft: 'auto' }}>{ __( 'Create Term' ) }</Button>
+						<Button onClick={createClicked} style={{ marginLeft: 'auto' }}>{ labels.addNewItem }</Button>
 					</Fragment>
 				}
 			</Form.Item>
