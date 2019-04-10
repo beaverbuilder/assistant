@@ -31,8 +31,7 @@ export const CreateTerm = () => {
 		setTerm( { ...term } )
 	}
 
-	const createClicked = e => {
-		const { name } = e.currentTarget
+	const createClicked = () => {
 		setCreating( true )
 		createTerm( term, response => {
 			setCreating( false )

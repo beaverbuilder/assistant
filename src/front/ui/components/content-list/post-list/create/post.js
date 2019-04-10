@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react'
 import slug from 'slug'
 import { __, _x, sprintf } from '@wordpress/i18n'
-import { createPost, getHierarchicalPosts } from 'utils/wordpress'
+import { createPost } from 'utils/wordpress'
 import { getSystemConfig } from 'store'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
 import { PostListDetail, PostParentSelect } from '../detail'

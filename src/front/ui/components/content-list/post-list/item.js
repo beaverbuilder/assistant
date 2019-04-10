@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { __ } from '@wordpress/i18n'
 import { redirect } from 'utils/location'
 import { getSystemConfig } from 'store'
 import { Button, ContentListItem, Icon, ItemContext, StackContext } from 'components'

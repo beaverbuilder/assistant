@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { updateTerm } from 'utils/wordpress'
 import { getSystemActions } from 'store'

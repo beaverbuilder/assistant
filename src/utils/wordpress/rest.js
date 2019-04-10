@@ -110,7 +110,7 @@ export const createPost = ( data = {}, onSuccess, onError ) => {
 	clearCache( 'posts' )
 	return restRequest( {
 		method: 'POST',
-		route: `fl-assistant/v1/post`,
+		route: 'fl-assistant/v1/post',
 		data,
 		onSuccess,
 		onError,
@@ -180,7 +180,7 @@ export const createTerm = ( data = {}, onSuccess, onError ) => {
 	clearCache( 'terms' )
 	return restRequest( {
 		method: 'POST',
-		route: `fl-assistant/v1/term`,
+		route: 'fl-assistant/v1/term',
 		data,
 		onSuccess,
 		onError,
