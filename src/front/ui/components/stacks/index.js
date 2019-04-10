@@ -239,12 +239,14 @@ export const Stack = ( { children, className } ) => {
 				const { config, key, pose, content, appearance, label, shouldShowTitle } = view
 				const checks = {
 					isRootView: 0 === i,
-					isCurrentView: 'present' === pose ? true : false,
+					isCurrentView: 'present' === pose,
 				}
 				const ref = createRef()
 				const context = Object.assign( { ref }, api, checks )
 				const props = Object.assign( { ref }, view )
 				delete props.onDismiss
+				delete props.label
+				delete props.content
 
 				let breadcrumb = label
 				if ( checks.isRootView && ! breadcrumb ) {

@@ -46,7 +46,7 @@ export const Tag = ( { appearance, children, className, onClick = () => {}, coun
 		)
 	} else {
 		return (
-			<button className={classes} onClick={onClick}>
+			<button type='button' className={classes} onClick={onClick}>
 				{children}
 				{ count && <span className="fl-asst-tag-count">{count}</span> }
 			</button>

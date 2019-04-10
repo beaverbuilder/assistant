@@ -149,14 +149,14 @@ export const PostListDetail = () => {
 						/>
 					</Form.Item>
 				</Form.Section>
-				<Form.Item>
+				<Form.Footer>
 					{ publishing &&
-					<Button style={{ marginLeft: 'auto' }}>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
+					<Button>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
 					}
 					{ ! publishing &&
-					<Button style={{ marginLeft: 'auto' }} onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
+					<Button onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
 					}
-				</Form.Item>
+				</Form.Footer>
 			</form>
 
 		</ContentListDetail>

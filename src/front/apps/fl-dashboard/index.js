@@ -6,7 +6,7 @@ import storeConfig from './state'
 const { registerApp } = getSystemActions()
 
 registerApp( 'fl-dashboard', {
-	label: __( 'Overview' ),
+	label: __( 'Dashboard' ),
 	content: <App />,
 	icon: <Icon />,
 	shouldShowTitle: false,

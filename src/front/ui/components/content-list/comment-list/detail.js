@@ -7,6 +7,7 @@ import { updateComment, replyToComment } from 'utils/wordpress'
 import {
 	Button,
 	Form,
+	Heading,
 	ContentFrame,
 	ContentItem,
 	ContentListDetail,
@@ -167,9 +168,12 @@ export const CommentDetail = () => {
 					}
 
 					{ ! editing &&
-						<Form.Item label={ contentTitle } className='fl-asst-comment-content'>
-							<ContentFrame dangerouslySetInnerHTML={ { __html: autop( content ) } } />
-						</Form.Item>
+						<div style={{ padding: '0 var(--fl-asst-base-padding)' }}>
+							<ContentFrame>
+								<Heading style={{ display: 'flex', flexDirection: 'row' }}>{contentTitle}</Heading>
+								<div dangerouslySetInnerHTML={ { __html: autop( content ) } } />
+							</ContentFrame>
+						</div>
 					}
 				</Form.Section>
 
@@ -205,12 +209,12 @@ const CommentDetailTitle = () => {
 const CommentContentTitle = ( { editing, replying, setEditing, setReplying } ) => {
 	return (
 		<Fragment>
-			<div className='fl-asst-comment-content-title'>{__( 'Comment' )}</div>
+			<span className='fl-asst-comment-content-title'>{__( 'Comment' )}</span>
 			{ ! editing && ! replying &&
-				<TagGroup className='fl-asst-comment-content-actions' style={{marginLeft: 'auto'}}>
-					<Tag onClick={ () => setReplying( true ) }>Reply</Tag>
-					<Tag onClick={ () => setEditing( true ) }>Edit</Tag>
-				</TagGroup>
+				<div style={{ marginLeft: 'auto' }}>
+					<Button onClick={ () => setReplying( true ) }>{__( 'Reply' )}</Button>
+					<Button onClick={ () => setEditing( true ) }>{__( 'Edit' )}</Button>
+				</div>
 			}
 		</Fragment>
 	)
@@ -220,28 +224,36 @@ const CommentReplyForm = ( { sendingReply, onSave, onCancel } ) => {
 	const [ reply, setReply ] = useState( '' )
 	const { approved } = useContext( ViewContext )
 	return (
-		<Form.Item label={__( 'Reply to Comment' )} className='fl-asst-comment-form'>
-			<textarea value={ reply } onChange={ e => setReply( e.target.value ) } rows={6} />
-			{ sendingReply &&
-				<Button>Replying &nbsp;<Icon name='small-spinner' /></Button>
-			}
-			{ ! sendingReply &&
+		<Fragment>
+			<Form.Item label={__( 'Reply to Comment' )} className='fl-asst-comment-form'>
+				<textarea value={ reply } onChange={ e => setReply( e.target.value ) } rows={6} />
+			</Form.Item>
+			<Form.Item>
+				{ sendingReply &&
+				<Button>{__( 'Replying' )} &nbsp;<Icon name='small-spinner' /></Button>
+				}
+				{ ! sendingReply &&
 				<Fragment>
 					<Button onClick={ () => onSave( reply ) }>{ approved ? 'Reply' : 'Reply & Approve' }</Button>
 					<Button onClick={ () => onCancel() }>Cancel</Button>
 				</Fragment>
-			}
-		</Form.Item>
+				}
+			</Form.Item>
+		</Fragment>
 	)
 }
 
 const CommentEditForm = ( { content, onSave, onCancel } ) => {
 	const [ comment, setComment ] = useState( content )
 	return (
-		<Form.Item label={__( 'Edit Comment' )} className='fl-asst-comment-form'>
-			<textarea value={ comment } onChange={ e => setComment( e.target.value ) } rows={15}/>
-			<Button onClick={ () => onSave( comment ) }>Save</Button>
-			<Button onClick={ () => onCancel() }>Cancel</Button>
-		</Form.Item>
+		<Fragment>
+			<Form.Item label={__( 'Edit Comment' )} className='fl-asst-comment-form'>
+				<textarea value={ comment } onChange={ e => setComment( e.target.value ) } rows={15}/>
+			</Form.Item>
+			<Form.Item>
+				<Button onClick={ () => onSave( comment ) }>Save</Button>
+				<Button onClick={ () => onCancel() }>Cancel</Button>
+			</Form.Item>
+		</Fragment>
 	)
 }

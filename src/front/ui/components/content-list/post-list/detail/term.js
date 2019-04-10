@@ -146,14 +146,14 @@ export const TermListDetail = () => {
 					<textarea name='description' id="fl-asst-term-description" value={ description } onChange={ onChange } rows={6} />
 				</Form.Item>
 
-				<Form.Item>
+				<Form.Footer>
 					{ publishing &&
-						<Button style={{ marginLeft: 'auto' }}>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
+						<Button>{ __( 'Publishing' ) } &nbsp;<Icon name='small-spinner' /></Button>
 					}
 					{ ! publishing &&
-						<Button onClick={ publishClicked } style={{ marginLeft: 'auto' }}>{ __( 'Publish Changes' ) }</Button>
+						<Button onClick={ publishClicked }>{ __( 'Publish Changes' ) }</Button>
 					}
-				</Form.Item>
+				</Form.Footer>
 			</form>
 
 		</ContentListDetail>
