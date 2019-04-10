@@ -22,6 +22,18 @@ final class FL_Assistant_REST_Terms {
 		);
 
 		register_rest_route(
+			FL_Assistant_REST::$namespace, '/terms/hierarchical', array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => __CLASS__ . '::hierarchical_terms',
+					'permission_callback' => function() {
+						return current_user_can( 'edit_published_posts' );
+					},
+				),
+			)
+		);
+
+		register_rest_route(
 			FL_Assistant_REST::$namespace, '/terms/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -112,6 +124,53 @@ final class FL_Assistant_REST_Terms {
 		}
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of terms and related data
+	 * with child terms contained in the parent
+	 * term's data array.
+	 */
+	static public function hierarchical_terms( $request ) {
+		$response = array();
+		$children = array();
+		$params   = $request->get_params();
+		$terms    = get_terms( $params );
+
+		foreach ( $terms as $term ) {
+			if ( $term->parent ) {
+				if ( ! isset( $children[ $term->parent ] ) ) {
+					$children[ $term->parent ] = array();
+				}
+				$children[ $term->parent ][] = $term;
+			}
+		}
+
+		foreach ( $terms as $term ) {
+			if ( ! $term->parent ) {
+				$parent = self::get_term_response_data( $term );
+				$parent['children'] = self::get_child_terms( $term, $children );
+				$response[] = $parent;
+			}
+		}
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of child terms for the given term.
+	 * A $children array must be passed to search for children.
+	 */
+	static public function get_child_terms( $term, $children ) {
+		if ( isset( $children[ $term->term_id ] ) ) {
+			$term_children = $children[ $term->term_id ];
+			foreach ( $term_children as $i => $child ) {
+				$term_children[ $i ] = self::get_term_response_data( $child );
+				$term_children[ $i ]['children'] = self::get_child_terms( $child, $children );
+			}
+			return $term_children;
+		}
+		return array();
 	}
 
 	/**

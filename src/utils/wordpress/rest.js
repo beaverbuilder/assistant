@@ -134,6 +134,20 @@ export const getTerms = ( query, onSuccess, onError ) => {
 }
 
 /**
+ * Returns any array of hierarchical post terms
+ * with child term data contained within the
+ * parent term's data object.
+ */
+export const getHierarchicalTerms = ( query, onSuccess, onError ) => {
+	return restRequest( {
+		route: addQueryArgs( 'fl-assistant/v1/terms/hierarchical', query ),
+		cacheKey: 'terms',
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
  * Returns data for a single term.
  */
 export const getTerm = ( id, onSuccess, onError ) => {

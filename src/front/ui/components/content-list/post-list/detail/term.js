@@ -1,7 +1,8 @@
 import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getTerms, updateTerm } from 'utils/wordpress'
+import { updateTerm } from 'utils/wordpress'
 import { getSystemActions } from 'store'
+import { TermParentSelect } from './term-parent-select'
 import {
 	Button,
 	CopyButton,
@@ -22,7 +23,6 @@ export const TermListDetail = () => {
 	const { dismiss } = useContext( StackContext )
 	const viewContext = useContext( ViewContext )
 	const [ term, setTerm ] = useState( viewContext )
-	const [ terms, setTerms ] = useState( null )
 	const [ publishing, setPublishing ] = useState( false )
 	const {
 		description,
@@ -42,35 +42,6 @@ export const TermListDetail = () => {
 		mounted.current = true
 		return () => mounted.current = false
 	} )
-
-	useEffect( () => {
-		if ( isHierarchical ) {
-			const request = getTerms( {
-				hide_empty: 0,
-				taxonomy,
-			}, response => {
-				setTerms( response )
-			} )
-			return () => request.cancel()
-		}
-	}, [] )
-
-	const renderParentOptions = () => {
-		if ( ! terms ) {
-			return <option value={ parent }>{ __( 'Loading...' ) }</option>
-		}
-		return (
-			<Fragment>
-				<option value='0'>{ __( 'None' ) }</option>
-				{ Object.entries( terms ).map( ( [ key, value ] ) => {
-					if ( value.id === id ) {
-						return null
-					}
-					return <option key={ key } value={ value.id }>{ value.title }</option>
-				} ) }
-			</Fragment>
-		)
-	}
 
 	const trashClicked = () => {
 		const message = __( 'Do you really want to delete this item?' )
@@ -137,9 +108,13 @@ export const TermListDetail = () => {
 
 				{ isHierarchical &&
 					<Form.Item label={__( 'Parent' )} labelFor="fl-asst-term-parent">
-						<select name='parent' id="fl-asst-term-parent" value={ parent } onChange={ onChange }>
-							{ renderParentOptions() }
-						</select>
+						<TermParentSelect
+							taxonomy={ taxonomy }
+							name='parent'
+							id='fl-asst-term-parent'
+							value={ parent }
+							onChange={ onChange }
+						/>
 					</Form.Item>
 				}
 				<Form.Item label={__( 'Description' )} labelFor="fl-asst-term-description">
