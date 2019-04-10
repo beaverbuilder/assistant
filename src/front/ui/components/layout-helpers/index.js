@@ -104,13 +104,21 @@ export const Separator = props => {
 	)
 }
 
-export const Heading = ( { children, level = 2, className } ) => {
+export const Heading = props => {
+	const { children, level = 2, className } = props
 	const classes = classname( {
 		'fl-asst-heading': true,
 		[`fl-asst-heading-${level}`]: level
 	}, className )
+
+	const merged = {
+		...props,
+		className: classes,
+	}
+	delete merged.level
+
 	return (
-		<div className={classes}>{children}</div>
+		<div {...merged}>{children}</div>
 	)
 }
 

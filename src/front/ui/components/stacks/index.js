@@ -245,6 +245,8 @@ export const Stack = ( { children, className } ) => {
 				const context = Object.assign( { ref }, api, checks )
 				const props = Object.assign( { ref }, view )
 				delete props.onDismiss
+				delete props.label
+				delete props.content
 
 				let breadcrumb = label
 				if ( checks.isRootView && ! breadcrumb ) {
