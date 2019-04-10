@@ -1,6 +1,7 @@
 import React from 'react'
 import { ContentQuery } from 'components'
 import { PostListItem } from './item'
+import './style.scss'
 
 export const PostList = props => {
 	return (
@@ -11,4 +12,5 @@ export const PostList = props => {
 	)
 }
 
-export { PostListDetail } from './post-detail'
+export { CreatePost, CreateTerm } from './create'
+export { PostListDetail } from './detail'

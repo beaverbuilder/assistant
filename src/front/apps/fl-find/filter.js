@@ -2,6 +2,8 @@ import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
 import {
+	CreatePost,
+	CreateTerm,
 	TagGroupControl,
 	Header,
 	Heading,
@@ -11,10 +13,10 @@ import {
 	StackContext,
 	Title,
 } from 'components'
-import { CreatePost, CreateTerm } from './add-new'
 
-export const PostListFilter = () => {
-	const { dismissAll } = useContext( StackContext )
+export const PostListFilter = ( { refreshList } ) => {
+	const { contentTypes, taxonomies } = getSystemConfig()
+	const { present, dismissAll } = useContext( StackContext )
 	const { filter } = useAppState()
 	const { setType, setDate, setStatus } = getAppActions()
 	const { typeTags, dateTags, statusTags } = getFilterTags()
@@ -43,6 +45,36 @@ export const PostListFilter = () => {
 			isSelected,
 		} )
 	} )
+
+	const presentNew = () => {
+		if ( 'posts' === type ) {
+			present( {
+				label: contentTypes[ subType ].labels.newItem,
+				content: <CreatePost />,
+				appearance: 'form',
+				context: {
+					refreshList,
+					type: subType,
+					...contentTypes[ subType ],
+				}
+			} )
+		} else if ( 'terms' === type ) {
+			present( {
+				label: taxonomies[ subType ].labels.newItem,
+				content: <CreateTerm />,
+				appearance: 'form',
+				context: {
+					refreshList,
+					type: subType,
+					...taxonomies[ subType ],
+				}
+			} )
+		}
+	}
+
+	const Actions = () => {
+		return <NewButton onClick={presentNew} />
+	}
 
 	return (
 		<Fragment>
@@ -96,35 +128,6 @@ export const PostListFilter = () => {
 			</Header.Expanded>
 
 			<Title actions={<Actions />} >{ title }</Title>
-		</Fragment>
-	)
-}
-
-const Actions = () => {
-	const { contentTypes, taxonomies } = getSystemConfig()
-	const { present } = useContext( StackContext )
-	const { filter } = useAppState()
-	const { type, subType } = filter
-
-	const presentNew = () => {
-		if ( 'posts' === type ) {
-			present( {
-				label: contentTypes[ subType ].labels.newItem,
-				content: <CreatePost />,
-				appearance: 'form',
-			} )
-		} else if ( 'terms' === type ) {
-			present( {
-				label: taxonomies[ subType ].labels.newItem,
-				content: <CreateTerm />,
-				appearance: 'form',
-			} )
-		}
-	}
-
-	return (
-		<Fragment>
-			<NewButton onClick={presentNew} />
 		</Fragment>
 	)
 }
