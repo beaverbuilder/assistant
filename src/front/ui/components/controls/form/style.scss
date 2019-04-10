@@ -232,6 +232,11 @@
         background-repeat: no-repeat;
         background-position: right 14px center;
 
+        &:-moz-focusring {
+            color: transparent;
+            text-shadow: 0 0 0 #000;
+        }
+
         &::-ms-expand {
             display: none;
         }
