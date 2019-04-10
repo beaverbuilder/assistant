@@ -2,13 +2,14 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getHierarchicalPosts } from 'utils/wordpress'
 
-export const PostParentSelect = ( { type, name, id, value, onChange } ) => {
+export const PostParentSelect = ( { type, exclude = 0, name, id, value, onChange } ) => {
 	const [ posts, setPosts ] = useState( null )
 
 	useEffect( () => {
 		const request = getHierarchicalPosts( {
 			hide_empty: 0,
 			post_type: type,
+			exclude: [ exclude ],
 		}, response => {
 			setPosts( response )
 		} )

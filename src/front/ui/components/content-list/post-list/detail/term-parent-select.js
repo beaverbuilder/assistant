@@ -2,12 +2,14 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getHierarchicalTerms } from 'utils/wordpress'
 
-export const TermParentSelect = ( { taxonomy, name, id, value, onChange } ) => {
+export const TermParentSelect = props => {
+	const { taxonomy, exclude = 0, name, id, value, onChange } = props
 	const [ terms, setTerms ] = useState( null )
 
 	useEffect( () => {
 		const request = getHierarchicalTerms( {
 			hide_empty: 0,
+			exclude,
 			taxonomy,
 		}, response => {
 			setTerms( response )

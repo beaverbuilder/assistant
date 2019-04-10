@@ -110,6 +110,7 @@ export const TermListDetail = () => {
 					<Form.Item label={__( 'Parent' )} labelFor="fl-asst-term-parent">
 						<TermParentSelect
 							taxonomy={ taxonomy }
+							exclude={ id }
 							name='parent'
 							id='fl-asst-term-parent'
 							value={ parent }

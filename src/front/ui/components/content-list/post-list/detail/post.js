@@ -142,6 +142,7 @@ export const PostListDetail = () => {
 					<Form.Item label={__( 'Parent' )} labelFor="fl-asst-post-parent">
 						<PostParentSelect
 							type={ type }
+							exclude={ id }
 							name='parent'
 							id='fl-asst-post-parent'
 							value={ parent }
