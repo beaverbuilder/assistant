@@ -59,7 +59,7 @@ export const StackView = posed.div( props => {
 			transition: handleTransition,
 		},
 		future: {
-			x: '80%',
+			x: '100%',
 			opacity: 0,
 			transition: handleTransition,
 		},
@@ -142,6 +142,7 @@ export const Stack = ( { children, className } ) => {
 	// Setup the API that will be exposed with StackContext
 	const pushView = ( content, config = {} ) => {
 		const defaults = {
+			key: Date.now(),
 			shouldAnimate: true,
 			height: null,
 			context: {},
@@ -153,7 +154,6 @@ export const Stack = ( { children, className } ) => {
 
 		newViews.push( {
 			...obj,
-			key: Date.now(),
 			pose: ! obj.shouldAnimate ? 'present' : 'future',
 			config: obj,
 		} )
@@ -176,11 +176,10 @@ export const Stack = ( { children, className } ) => {
 		if ( 2 > views.length ) {
 			return
 		}
-		const current = views[ views.length - 1 ]
-		current.pose = 'future'
-		const root = views[0]
-		root.pose = 'present'
-		setViews( [ root, current ] )
+		views.map( ( view, i ) => {
+			view.pose = i === 0 ? 'present' : 'future'
+		})
+		setViews( Array.from( views ) )
 		setAction( 'root' )
 	}
 
@@ -264,6 +263,7 @@ export const Stack = ( { children, className } ) => {
 						<ViewContext.Provider value={config.context}>
 							<StackView
 								key={key}
+								id={`fl-asst-stack-view-${key}`}
 								ref={ref}
 								onPoseComplete={poseComplete}
 								className={classes}
