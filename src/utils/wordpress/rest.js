@@ -146,6 +146,20 @@ export const getTerm = ( id, onSuccess, onError ) => {
 }
 
 /**
+ * Creates a single term.
+ */
+export const createTerm = ( data = {}, onSuccess, onError ) => {
+	clearCache( 'terms' )
+	return restRequest( {
+		method: 'POST',
+		route: `fl-assistant/v1/term`,
+		data,
+		onSuccess,
+		onError,
+	} )
+}
+
+/**
  * Updates a single term. See the update_term
  * REST method for a list of supported actions.
  */

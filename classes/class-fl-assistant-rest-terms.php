@@ -67,6 +67,18 @@ final class FL_Assistant_REST_Terms {
 				),
 			)
 		);
+
+		register_rest_route(
+			FL_Assistant_REST::$namespace, '/term', array(
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => __CLASS__ . '::create_term',
+					'permission_callback' => function() {
+						return current_user_can( 'edit_published_posts' );
+					},
+				),
+			)
+		);
 	}
 
 	/**
@@ -126,6 +138,34 @@ final class FL_Assistant_REST_Terms {
 		$response = self::get_term_response_data( $term );
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Creates a single term.
+	 */
+	static public function create_term( $request ) {
+		$data = array_map( 'sanitize_text_field', $request->get_params() );
+		$id = wp_insert_term(
+			$data['name'],
+			$data['taxonomy'],
+			array(
+				'description' => $data['description'],
+				'slug' => $data['slug'],
+			)
+		);
+
+		if ( is_wp_error( $id ) ) {
+			if ( isset( $id->errors['term_exists'] ) ) {
+				return array(
+					'error' => 'exists',
+				);
+			}
+			return array(
+				'error' => true,
+			);
+		}
+
+		return self::get_term_response_data( get_term( $id['term_id'], $data['taxonomy'] ) );
 	}
 
 	/**
