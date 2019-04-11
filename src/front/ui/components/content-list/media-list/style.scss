@@ -71,6 +71,7 @@
     }
 }
 .fl-asst-media-detail-header {
+    flex: 0 0 auto;
     min-height: 306px; /* 3:2 */
 	background: #1B6A88;
 	color: var(--fl-asst-light-color);
