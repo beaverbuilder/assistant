@@ -115,16 +115,16 @@ export const CreateTerm = () => {
 				/>
 			</Form.Item>
 
-			<Form.Item>
+			<Form.Footer>
 				{ creating &&
-					<Button style={{ marginLeft: 'auto' }}>{ __( 'Creating Term' ) } &nbsp;<Icon name='small-spinner' /></Button>
+					<Button>{ __( 'Creating Term' ) } &nbsp;<Icon name='small-spinner' /></Button>
 				}
 				{ ! creating &&
 					<Fragment>
-						<Button onClick={createClicked} style={{ marginLeft: 'auto' }}>{ labels.addNewItem }</Button>
+						<Button onClick={createClicked}>{ labels.addNewItem }</Button>
 					</Fragment>
 				}
-			</Form.Item>
+			</Form.Footer>
 		</form>
 	)
 }
