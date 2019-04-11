@@ -172,7 +172,7 @@ export const Stack = ( { children, className } ) => {
 		}
 
 		const newViews = views
-		if ( 'undefined' !== typeof i ) {
+		if ( 'undefined' !== typeof newViews[i] ) {
 			newViews[i].pose = 'future'
 			newViews[i - 1].pose = 'present'
 		} else {
