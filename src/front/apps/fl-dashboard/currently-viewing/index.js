@@ -3,10 +3,7 @@ import { __ } from '@wordpress/i18n'
 import {
 	PageViewContext,
 	Button,
-	Icon,
 	Widget,
-	StackContext,
-	PostListDetail,
 } from 'components'
 import Truncate from 'react-truncate'
 import { useSystemState } from 'store'
@@ -18,23 +15,12 @@ export const TilesWidget = () => {
 		name,
 		actions
 	} = useContext( PageViewContext )
-	const { present } = useContext( StackContext )
 	const { counts } = useSystemState()
 	const {
 		'content/post': postCount = 0,
 		'content/page': pageCount = 0,
 		'role/total': userCount = 0,
 	} = counts
-
-	const presentCurrentItem = () => {
-		present( {
-			label: __( 'Edit Post' ),
-			content: <PostListDetail />,
-			appearance: 'form',
-			shouldShowTitle: false,
-			context: {},
-		} )
-	}
 
 	return (
 		<Widget className="fl-asst-tiles-widget">
@@ -47,15 +33,6 @@ export const TilesWidget = () => {
 								<Truncate lines={2}>{name}</Truncate>
 							</div>
 						</div>
-						{ /*
-						<div className="fl-asst-viewing-action">
-							<Button
-								appearance="transparent"
-								onClick={presentCurrentItem}
-							>
-								<Icon name="forward-arrow" />
-							</Button>
-						</div> */ }
 					</div>
 					<div className="fl-asst-tile-toolbar">
 						{ actions.map( ( item, i ) => {
