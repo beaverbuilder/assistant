@@ -6,8 +6,8 @@ import './style.scss'
 export const MediaList = props => {
 	return (
 		<ContentQuery
-			className={ 'fl-asst-grid-list' }
-			type={ 'attachments' }
+			className='fl-asst-grid-list'
+			type='attachments'
 			item={ <MediaListItem /> }
 			placeholderItem={ <MediaListItemLoading /> }
 			placeholderItemCount={ 8 }

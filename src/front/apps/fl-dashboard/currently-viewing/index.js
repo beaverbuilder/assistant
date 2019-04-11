@@ -47,6 +47,7 @@ export const TilesWidget = () => {
 								<Truncate lines={2}>{name}</Truncate>
 							</div>
 						</div>
+						{ /*
 						<div className="fl-asst-viewing-action">
 							<Button
 								appearance="transparent"
@@ -54,7 +55,7 @@ export const TilesWidget = () => {
 							>
 								<Icon name="forward-arrow" />
 							</Button>
-						</div>
+						</div> */ }
 					</div>
 					<div className="fl-asst-tile-toolbar">
 						{ actions.map( ( item, i ) => {
