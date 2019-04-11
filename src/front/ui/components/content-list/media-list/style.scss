@@ -58,9 +58,17 @@
         margin: 0;
     }
 
+    --fl-asst-icon-color: var(--fl-asst-base-art-color);
+
     .fl-asst-figure-visual {
         flex: 1 1 auto;
         height: 200px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: var(--fl-asst-icon-color);
 
         img {
             display: block;
@@ -75,6 +83,10 @@
     min-height: 306px; /* 3:2 */
 	background: #1B6A88;
 	color: var(--fl-asst-light-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     img {
         display: block;
