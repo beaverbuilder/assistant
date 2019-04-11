@@ -1,40 +1,24 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { AspectBox, ItemContext, ViewContext, StackContext } from 'components'
+import { AspectBox, ItemContext, ViewContext, StackContext, Icon } from 'components'
 import { MediaDetail } from './detail'
 
 export const MediaListItem = ( { className } ) => {
 	const item = useContext( ItemContext )
-	const { sizes, title, mime } = item
+	const { sizes, title, alt } = item
 	const { present } = useContext( StackContext )
-	const [ orientation, setOrientation ] = useState( 'square' )
 
 	const classes = classname( {
 		'fl-asst-grid-item': true,
-		[`fl-asst-grid-item-${orientation}`]: orientation
 	}, className )
 
-	const onImageLoaded = e => {
-		const img = e.target
-		if ( img.naturalWidth === img.naturalHeight ) {
-			setOrientation( 'square' )
-		} else if ( img.naturalWidth >= ( img.naturalHeight * 1.75 ) ) {
-			setOrientation( 'pano' )
-		} else if ( img.naturalHeight >= ( img.naturalWidth * 2 ) ) {
-			setOrientation( 'skyscraper' )
-		} else if ( img.naturalWidth < img.naturalHeight ) {
-			setOrientation( 'portrait' )
-		} else if ( img.naturalWidth > img.naturalHeight ) {
-			setOrientation( 'landscape' )
-		}
-	}
 	let url = null
 	if ( 'undefined' !== typeof sizes ) {
-		if ( 'undefined' !== typeof sizes.medium_large ) {
-			url = sizes.medium_large.url
-		} else if ( 'undefined' !== typeof sizes.medium ) {
+		if ( 'undefined' !== typeof sizes.medium ) {
 			url = sizes.medium.url
+		} else if ( 'undefined' !== typeof sizes.thumbnail ) {
+			url = sizes.thumbnail.url
 		}
 	}
 
@@ -52,16 +36,17 @@ export const MediaListItem = ( { className } ) => {
 		} )
 	}
 
+	/*
+	const getMimeEnding = mime => {
+		const parts = mime.split('/')
+		return parts[ parts.length - 1 ]
+	}*/
+
 	return (
 		<figure className={classes} onClick={onClick}>
-			<figcaption>
-				<span>{mime}</span>
-			</figcaption>
 			<div className="fl-asst-figure-visual">
-				{ url && <img
-					src={url}
-					onLoad={onImageLoaded}
-				/> }
+				{ url && <img src={url} alt={alt} /> }
+				{ ! url && <Icon name="document" /> }
 			</div>
 			<figcaption>{title}</figcaption>
 		</figure>

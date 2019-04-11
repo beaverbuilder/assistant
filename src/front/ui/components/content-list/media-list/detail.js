@@ -8,6 +8,7 @@ import {
 	TagGroup,
 	Title,
 	Form,
+	Icon,
 	StackContext,
 	useImageData,
 } from 'components'
@@ -74,7 +75,8 @@ export const MediaDetail = () => {
 			<Title shouldOverlay={true} style={titleStyles}>{__( 'Edit Media' )}</Title>
 
 			<div className="fl-asst-media-detail-header">
-				<Photo src={url} style={imgStyles} />
+				{ url && <Photo src={url} style={imgStyles} /> }
+				{ ! url && <Icon name="document" /> }
 			</div>
 
 			<form>
