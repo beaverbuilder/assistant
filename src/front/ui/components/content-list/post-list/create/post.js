@@ -50,7 +50,10 @@ export const CreatePost = () => {
 						content: <PostListDetail />,
 						appearance: 'form',
 						shouldShowTitle: false,
-						context: response,
+						context: {
+							refreshList,
+							...response,
+						},
 					} )
 				}
 			}

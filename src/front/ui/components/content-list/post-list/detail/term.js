@@ -36,6 +36,7 @@ export const TermListDetail = () => {
 		url,
 		removeItem,
 		updateItem,
+		refreshList,
 	} = term
 
 	useEffect( () => {
@@ -48,7 +49,7 @@ export const TermListDetail = () => {
 		if ( confirm( message ) ) {
 			updateTerm( id, 'trash' )
 			decrementCount( `taxonomy/${ taxonomy }` )
-			removeItem()
+			removeItem ? removeItem() : refreshList()
 			dismiss()
 		}
 	}
@@ -62,7 +63,8 @@ export const TermListDetail = () => {
 			parent,
 			slug,
 		}, () => {
-			updateItem( { description, parent, slug, title } )
+			const newItem = { description, parent, slug, title }
+			updateItem ? updateItem( newItem ) : refreshList()
 			presentNotification( 'Changes published!' )
 			if ( mounted.current ) {
 				setPublishing( false )

@@ -45,7 +45,10 @@ export const CreateTerm = () => {
 					label: taxonomies[ type ].labels.editItem,
 					content: <TermListDetail />,
 					appearance: 'form',
-					context: response,
+					context: {
+						refreshList,
+						...response,
+					},
 				} )
 			}
 		}, createError )
