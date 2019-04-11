@@ -9,7 +9,7 @@ import { TermListDetail, TermParentSelect } from '../detail'
 export const CreateTerm = () => {
 	const { taxonomies } = getSystemConfig()
 	const { presentNotification } = useContext( UIContext )
-	const { dismissAll, present } = useContext( StackContext )
+	const { index, replace } = useContext( StackContext )
 	const { type, labels, isHierarchical, refreshList } = useContext( ViewContext )
 	const [ creating, setCreating ] = useState( false )
 	const [ term, setTerm ] = useState( {
@@ -39,14 +39,13 @@ export const CreateTerm = () => {
 				createError( response )
 			} else {
 				presentNotification( sprintf( _x( '%s Created!', 'Singular term label.' ), labels.singular ) )
-				dismissAll()
 				refreshList()
-				present( {
+				replace( {
 					label: taxonomies[ type ].labels.editItem,
 					content: <TermListDetail />,
 					appearance: 'form',
 					context: response,
-				} )
+				}, index )
 			}
 		}, createError )
 	}

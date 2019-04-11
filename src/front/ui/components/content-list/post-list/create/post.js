@@ -9,7 +9,7 @@ import { PostListDetail, PostParentSelect } from '../detail'
 export const CreatePost = () => {
 	const { contentTypes } = getSystemConfig()
 	const { presentNotification } = useContext( UIContext )
-	const { dismissAll, present } = useContext( StackContext )
+	const { index, replace } = useContext( StackContext )
 	const { type, labels, supports, isHierarchical, refreshList } = useContext( ViewContext )
 	const [ creating, setCreating ] = useState( false )
 	const [ post, setPost ] = useState( {
@@ -40,18 +40,17 @@ export const CreatePost = () => {
 				createError()
 			} else {
 				presentNotification( sprintf( _x( '%s Created!', 'Singular post type label.' ), labels.singular ) )
-				dismissAll()
 				refreshList()
 				if ( 'create-edit' === name ) {
 					window.open( response.editUrl )
 				} else {
-					present( {
+					replace( {
 						label: contentTypes[ type ].labels.editItem,
 						content: <PostListDetail />,
 						appearance: 'form',
 						shouldShowTitle: false,
 						context: response,
-					} )
+					}, index )
 				}
 			}
 		}, createError )

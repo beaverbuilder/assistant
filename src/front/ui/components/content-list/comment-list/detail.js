@@ -121,7 +121,7 @@ export const CommentDetail = () => {
 					<CommentDetailTitle />
 				</Form.Item>
 
-				<Form.Section label={__( 'Sender Information' )}>
+				<Form.Section label={__( 'Sender Information' )} isInset={true}>
 					<Form.Item label='Email' placement="beside">
 						<a href={ `mailto:${ authorEmail }` }>{ authorEmail }</a>
 					</Form.Item>

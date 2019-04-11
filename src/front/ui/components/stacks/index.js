@@ -59,7 +59,7 @@ export const StackView = posed.div( props => {
 			transition: handleTransition,
 		},
 		future: {
-			x: '80%',
+			x: '100%',
 			opacity: 0,
 			transition: handleTransition,
 		},
@@ -113,7 +113,8 @@ export const Stack = ( { children, className } ) => {
 	} )
 
 	// After pop transition completes, cleanup data
-	const poseComplete = name => {
+	const poseComplete = ( name, i ) => {
+
 		if ( action && 'pop' === action && 'future' === name ) {
 
 			// ditch the last 'future' item
@@ -125,22 +126,26 @@ export const Stack = ( { children, className } ) => {
 				view.onDismiss()
 			}
 		}
+
 		if ( action && 'root' === action && 'future' === name ) {
 
 			// Drop the last 'future' item.
-			const view = views.pop()
+			const exiting = views.splice( i, 1 )
+			exiting.map( view => {
+				if ( 'function' === typeof view.onDismiss ) {
+					view.onDismiss()
+				}
+			} )
+
 			setViews( Array.from( views ) )
 			setAction( null )
-
-			if ( 'function' === typeof view.onDismiss ) {
-				view.onDismiss()
-			}
 		}
 	}
 
 	// Setup the API that will be exposed with StackContext
 	const pushView = ( content, config = {} ) => {
 		const defaults = {
+			key: Date.now(),
 			shouldAnimate: true,
 			height: null,
 			context: {},
@@ -152,7 +157,6 @@ export const Stack = ( { children, className } ) => {
 
 		newViews.push( {
 			...obj,
-			key: Date.now(),
 			pose: ! obj.shouldAnimate ? 'present' : 'future',
 			config: obj,
 		} )
@@ -160,13 +164,21 @@ export const Stack = ( { children, className } ) => {
 		setAction( 'push' )
 	}
 
-	const popView = () => {
-		if ( 2 > views.length ) {
+	const popView = ( i ) => {
+
+		// Always keep the root view - can't have less than 1
+		if ( 2 > views.length || 0 === i ) {
 			return
 		}
+
 		const newViews = views
-		newViews[ newViews.length - 1 ].pose = 'future'
-		newViews[ newViews.length - 2 ].pose = 'present'
+		if ( 'undefined' !== typeof newViews[i] ) {
+			newViews[i].pose = 'future'
+			newViews[i - 1].pose = 'present'
+		} else {
+			newViews[ newViews.length - 1 ].pose = 'future'
+			newViews[ newViews.length - 2 ].pose = 'present'
+		}
 		setViews( Array.from( newViews ) )
 		setAction( 'pop' )
 	}
@@ -175,11 +187,11 @@ export const Stack = ( { children, className } ) => {
 		if ( 2 > views.length ) {
 			return
 		}
-		const current = views[ views.length - 1 ]
-		current.pose = 'future'
-		const root = views[0]
-		root.pose = 'present'
-		setViews( [ root, current ] )
+		const newViews = views.map( ( view, i ) => {
+			view.pose = 0 === i ? 'present' : 'future'
+			return view
+		} )
+		setViews( Array.from( newViews ) )
 		setAction( 'root' )
 	}
 
@@ -207,9 +219,28 @@ export const Stack = ( { children, className } ) => {
 		pushView( view.content, view )
 	}
 
-	const dismiss = () => popView()
+	const dismiss = ( i ) => popView( i )
 
 	const dismissAll = () => popToRoot()
+
+	const replace = ( config, i ) => {
+		const defaults = {
+			key: Date.now(),
+			label: __( 'Unnamed' ),
+			content: null,
+			appearance: 'normal',
+			shouldShowTitle: true,
+			shouldAnimate: true,
+			height: null,
+			context: {},
+			onDismiss: () => {},
+			config: {},
+		}
+		const view = Object.assign( {}, defaults, config )
+		view.config = { ...config }
+		views[i] = view
+		setViews( Array.from( views ) )
+	}
 
 	const api = {
 		isRootView: false,
@@ -223,6 +254,7 @@ export const Stack = ( { children, className } ) => {
 		present,
 		dismiss,
 		dismissAll,
+		replace,
 	}
 
 	const classes = classname( {
@@ -242,7 +274,7 @@ export const Stack = ( { children, className } ) => {
 					isCurrentView: 'present' === pose,
 				}
 				const ref = createRef()
-				const context = Object.assign( { ref }, api, checks )
+				const context = Object.assign( { ref, index: i }, api, checks )
 				const props = Object.assign( { ref }, view )
 				delete props.onDismiss
 				delete props.label
@@ -263,8 +295,9 @@ export const Stack = ( { children, className } ) => {
 						<ViewContext.Provider value={config.context}>
 							<StackView
 								key={key}
+								id={`fl-asst-stack-view-${key}`}
 								ref={ref}
-								onPoseComplete={poseComplete}
+								onPoseComplete={ name => poseComplete( name, i ) }
 								className={classes}
 								{...props}
 							>

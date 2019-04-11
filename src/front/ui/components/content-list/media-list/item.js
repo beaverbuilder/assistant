@@ -6,7 +6,7 @@ import { MediaDetail } from './detail'
 
 export const MediaListItem = ( { className } ) => {
 	const item = useContext( ItemContext )
-	const { sizes } = item
+	const { sizes, title, mime } = item
 	const { present } = useContext( StackContext )
 	const [ orientation, setOrientation ] = useState( 'square' )
 
@@ -54,10 +54,16 @@ export const MediaListItem = ( { className } ) => {
 
 	return (
 		<figure className={classes} onClick={onClick}>
-			<img
-				src={url}
-				onLoad={onImageLoaded}
-			/>
+			<figcaption>
+				<span>{mime}</span>
+			</figcaption>
+			<div className="fl-asst-figure-visual">
+				{ url && <img
+					src={url}
+					onLoad={onImageLoaded}
+				/> }
+			</div>
+			<figcaption>{title}</figcaption>
 		</figure>
 	)
 }
