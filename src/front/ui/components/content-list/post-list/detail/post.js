@@ -45,6 +45,7 @@ export const PostListDetail = () => {
 		visibility,
 		removeItem,
 		updateItem,
+		refreshList,
 	} = post
 	const { supports, isHierarchical } = contentTypes[ type ]
 	const viewTitle = contentTypes[ type ].labels.editItem
@@ -59,7 +60,7 @@ export const PostListDetail = () => {
 		if ( confirm( message ) ) {
 			updatePost( id, 'trash' )
 			decrementCount( `content/${ type }` )
-			removeItem()
+			removeItem ? removeItem() : refreshList()
 			dismiss()
 		}
 	}
@@ -67,7 +68,7 @@ export const PostListDetail = () => {
 	const restoreClicked = () => {
 		updatePost( id, 'untrash' )
 		incrementCount( `content/${ type }` )
-		removeItem()
+		removeItem ? removeItem() : refreshList()
 		dismiss()
 	}
 
@@ -82,7 +83,8 @@ export const PostListDetail = () => {
 			post_excerpt: excerpt,
 			post_parent: parent,
 		}, () => {
-			updateItem( { title, slug, excerpt, parent, commentsAllowed } )
+			const newItem = { title, slug, excerpt, parent, commentsAllowed }
+			updateItem ? updateItem( newItem ) : refreshList()
 			presentNotification( __( 'Changes published!' ) )
 			if ( mounted.current ) {
 				setPublishing( false )

@@ -49,7 +49,10 @@ export const CreatePost = () => {
 						content: <PostListDetail />,
 						appearance: 'form',
 						shouldShowTitle: false,
-						context: response,
+						context: {
+							refreshList,
+							...response,
+						},
 					}, index )
 				}
 			}
@@ -112,17 +115,17 @@ export const CreatePost = () => {
 				</Form.Item>
 			}
 
-			<Form.Item>
+			<Form.Footer>
 				{ creating &&
-					<Button style={{ marginLeft: 'auto' }}>{ __( 'Creating Draft' ) } &nbsp;<Icon name='small-spinner' /></Button>
+					<Button>{ __( 'Creating Draft' ) } &nbsp;<Icon name='small-spinner' /></Button>
 				}
 				{ ! creating &&
 					<Fragment>
-						<Button name="create" style={{ marginLeft: 'auto' }} onClick={ createClicked }>{ __( 'Create Draft' ) }</Button>
+						<Button name="create" onClick={ createClicked }>{ __( 'Create Draft' ) }</Button>
 						<Button name="create-edit" onClick={ createClicked }>{ __( 'Create & Edit' ) }</Button>
 					</Fragment>
 				}
-			</Form.Item>
+			</Form.Footer>
 		</form>
 	)
 }
