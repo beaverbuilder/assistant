@@ -70,6 +70,12 @@
         }
     }
 }
-@supports ( display: grid ) {
+.fl-asst-media-detail-header {
+    min-height: 306px; /* 3:2 */
+	background: #1B6A88;
+	color: var(--fl-asst-light-color);
 
+    img {
+        display: block;
+    }
 }

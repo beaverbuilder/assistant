@@ -72,7 +72,10 @@ export const MediaDetail = () => {
 	return (
 		<Fragment>
 			<Title shouldOverlay={true} style={titleStyles}>{__( 'Edit Media' )}</Title>
-			<Photo src={url} style={imgStyles} />
+
+			<div className="fl-asst-media-detail-header">
+				<Photo src={url} style={imgStyles} />
+			</div>
 
 			<form>
 				<Form.Item>
