@@ -1,7 +1,6 @@
 import React from 'react'
 import { ContentQuery } from 'components'
 import { UserListItem } from './item'
-import './style.scss'
 
 export const UserList = props => {
 	return (

@@ -1,18 +1,18 @@
 import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import {
-	ContentItem,
 	ContentListDetail,
 	TagGroup,
 	Tag,
 	ViewContext,
 	Form,
+	Title,
 } from 'components'
 
-export const UserDetail = () => {
+export const UserDetail = props => {
+	const { label = __('Edit User') } = props
 	const {
 		editUrl,
-		email,
 		url,
 		title,
 		thumbnail,
@@ -20,14 +20,20 @@ export const UserDetail = () => {
 
 	return (
 		<ContentListDetail className='fl-asst-user-detail'>
+
+			<Title
+				shouldOverlay={true}
+				shouldInvertColors={true}
+			>{label}</Title>
+
+			<div className="fl-asst-detail-feature">
+				<div className="fl-asst-detail-feature-content">
+					<div className="fl-asst-detail-feature-title">{title}</div>
+					{ thumbnail && <img className="fl-asst-detail-user-avatar" src={thumbnail} alt={__('User Avatar')} /> }
+				</div>
+			</div>
+
 			<form>
-				<Form.Item>
-					<ContentItem
-						thumbnail={ thumbnail }
-						title={ <strong>{ title }</strong> }
-						meta={ email }
-					/>
-				</Form.Item>
 				<Form.Item>
 					<TagGroup appearance='muted'>
 						<Tag href={url}>{__( 'View' )}</Tag>
@@ -42,12 +48,16 @@ export const UserDetail = () => {
 }
 
 const UserSettings = () => {
+	const view = useContext( ViewContext )
 	const {
 		date,
 		displayName,
 		username,
 		website,
-	} = useContext( ViewContext )
+		content,
+		meta,
+	} = view
+
 	return (
 		<Fragment>
 			<Form.Section label={__( 'General Information' )} isInset={true}>
@@ -60,12 +70,22 @@ const UserSettings = () => {
 				<Form.Item label={__( 'Signup Date' )} placement="beside">
 					{ date }
 				</Form.Item>
+				{ meta &&
+					<Form.Item label={__( 'Email Address' )} placement="beside">
+						<a href={ `mailto:${meta}` }>{meta}</a>
+					</Form.Item>
+				}
 				{ website &&
 					<Form.Item label={__( 'Website' )} placement="beside">
-						<a href={ website }>{__( 'Visit Website' )}</a>
+						<a href={ website } target="_blank">{website}</a>
 					</Form.Item>
 				}
 			</Form.Section>
+
+			{ content &&
+			<Form.Section isInset={true} label={__('Biographical Info')}>
+				<Form.Item>{content}</Form.Item>
+			</Form.Section> }
 		</Fragment>
 	)
 }

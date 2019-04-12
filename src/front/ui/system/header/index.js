@@ -117,7 +117,7 @@ const BarButton = props => {
 	delete merged.isExpanded
 
 	return (
-		<Button {...merged} appearance="transparent" title={__('Expand Header')}>
+		<Button {...merged} appearance="transparent" title={__( 'Expand Header' )}>
 			<svg className="fl-asst-icon" width="50px" height="8px" viewBox="0 0 50 8">
 				<g
 					fill="transparent"

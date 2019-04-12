@@ -131,7 +131,7 @@ export const Title = props => {
 		'fl-asst-screen-name': true,
 		'fl-asst-screen-name-has-back': ! isRootView,
 		'fl-asst-screen-name-overlay': shouldOverlay,
-		'fl-asst-screen-name-inverted' : shouldInvertColors,
+		'fl-asst-screen-name-inverted': shouldInvertColors,
 	}, className )
 
 	const merged = {
@@ -151,7 +151,7 @@ export const Title = props => {
 					onClick={dismiss}
 					appearance="transparent"
 					style={style}
-					title={__('Back to Previous Screen')}
+					title={__( 'Back to Previous Screen' )}
 				>
 					<Icon name="back-arrow" />
 					<span className="fl-asst-screen-title-text">{children}</span>

@@ -200,7 +200,6 @@ const PostDetailHeader = ( { data } ) => {
 		<div className="fl-asst-detail-feature">
 			{ thumbnail && <img className="fl-asst-detail-feature-thumbnail" src={thumbnail} /> }
 			<div className="fl-asst-detail-feature-content">
-
 				<div className="fl-asst-detail-feature-title">{title}</div>
 			</div>
 		</div>

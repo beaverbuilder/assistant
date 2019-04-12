@@ -20,6 +20,7 @@ export const UserListItem = ( { className, ...props } ) => {
 				label: __( 'Edit User' ),
 				content: <UserDetail />,
 				appearance: 'form',
+				shouldShowTitle: false,
 				context,
 			} ) }
 			{ ...props }
