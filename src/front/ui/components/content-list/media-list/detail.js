@@ -45,18 +45,13 @@ export const MediaDetail = () => {
 
 	const imgData = useImageData( url )
 	const { colors } = imgData
-	const { whole, topLeft } = colors
+	const { whole } = colors
 
 	let background = whole.hex
 
 	const imgStyles = {
 		maxHeight: '70vh',
 		background,
-	}
-
-	const titleStyles = {
-		backgroundColor: topLeft.isDark ? 'var(--fl-asst-light-color)' : 'var(--fl-asst-dark-color)',
-		color: topLeft.isDark ? 'var(--fl-asst-dark-color)' : 'var(--fl-asst-light-color)',
 	}
 
 	const trashClicked = () => {
@@ -72,7 +67,7 @@ export const MediaDetail = () => {
 
 	return (
 		<Fragment>
-			<Title shouldOverlay={true} style={titleStyles}>{__( 'Edit Media' )}</Title>
+			<Title shouldOverlay={true} shouldInvertColors={true}>{__( 'Edit Media' )}</Title>
 
 			<div className="fl-asst-media-detail-header">
 				{ url && <Photo src={url} style={imgStyles} /> }

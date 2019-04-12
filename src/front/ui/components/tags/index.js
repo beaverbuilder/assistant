@@ -37,9 +37,13 @@ export const Tag = ( { appearance, children, className, onClick = () => {}, coun
 		'is-disabled': isDisabled,
 		'is-warning': 'warning' === appearance,
 	} )
+	let rel = null
+	if ( '_blank' === target ) {
+		rel = 'noopener noreferrer'
+	}
 	if ( href ) {
 		return (
-			<a className={classes} href={href} target={target}>
+			<a className={classes} href={href} target={target} rel={rel}>
 				{children}
 				{ count && <span className="fl-asst-tag-count">{count}</span> }
 			</a>

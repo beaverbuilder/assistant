@@ -29,11 +29,17 @@
 		padding: var(--fl-asst-base-padding);
 		display: flex;
 		flex-direction: row;
+		align-items: center;
 
 		.fl-asst-detail-feature-title {
 			font-size: 22px;
 			font-weight: 500;
 			line-height: 1.15;
+		}
+
+		.fl-asst-detail-user-avatar {
+		    margin-left: auto;
+		    border-radius: 50%;
 		}
 	}
 }

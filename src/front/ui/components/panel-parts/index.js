@@ -1,7 +1,8 @@
 import React, { Fragment, useContext, useState } from 'react'
+import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import posed from 'react-pose'
-import { AppContext, StackContext, BackButton, Padding } from 'components'
+import { AppContext, StackContext, Button, Icon, Padding } from 'components'
 import { AppMenuButton } from 'system'
 import './style.scss'
 
@@ -117,8 +118,9 @@ export const Toolbar = ( { children } ) => {
 }
 
 export const Title = props => {
-	const { children, className, actions, shouldOverlay = false, style } = props
+	const { children, className, actions, shouldOverlay = false, style, shouldInvertColors = false } = props
 	const stack = useContext( StackContext )
+	const { dismiss } = stack
 	let isRootView = true
 
 	if ( 'undefined' !== typeof stack ) {
@@ -129,6 +131,7 @@ export const Title = props => {
 		'fl-asst-screen-name': true,
 		'fl-asst-screen-name-has-back': ! isRootView,
 		'fl-asst-screen-name-overlay': shouldOverlay,
+		'fl-asst-screen-name-inverted': shouldInvertColors,
 	}, className )
 
 	const merged = {
@@ -138,13 +141,27 @@ export const Title = props => {
 	delete merged.actions
 	delete merged.shouldOverlay
 	delete merged.style
+	delete merged.shouldInvertColors
 
 	return (
 		<div {...merged}>
-			<span className="fl-asst-screen-title-text" style={style}>
-				<BackButton />
-				{children}
-			</span>
+			{ ! isRootView &&
+				<Button
+					className="fl-asst-title-wrap fl-asst-title-back-button"
+					onClick={dismiss}
+					appearance="transparent"
+					style={style}
+					title={__( 'Back to Previous Screen' )}
+				>
+					<Icon name="back-arrow" />
+					<span className="fl-asst-screen-title-text">{children}</span>
+				</Button>
+			}
+			{ isRootView &&
+				<div className="fl-asst-title-wrap" style={style}>
+					<span className="fl-asst-screen-title-text">{children}</span>
+				</div>
+			}
 			{ actions && <span className="fl-asst-screen-title-actions">{actions}</span> }
 		</div>
 	)

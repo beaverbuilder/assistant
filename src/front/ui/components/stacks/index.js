@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n'
 import posed from 'react-pose'
 import { ViewContext, Button, Icon, Scroller, AppContext, Title } from 'components'
 import { Tunnel } from 'react-tunnels'
+import { render } from 'utils/react'
 import './style.scss'
 
 export const StackContext = createContext()
@@ -304,7 +305,7 @@ export const Stack = ( { children, className } ) => {
 								<Breadcrumb onClick={dismiss}>{breadcrumb}</Breadcrumb>
 								<Scroller>
 									{ shouldShowTitle && <Title>{label}</Title> }
-									{content}
+									{render( content, view )}
 								</Scroller>
 							</StackView>
 						</ViewContext.Provider>

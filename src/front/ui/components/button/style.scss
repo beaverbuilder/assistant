@@ -4,6 +4,7 @@
     align-items: center;
     border: 2px solid transparent;
     border-radius: 7px;
+    box-shadow: none;
     background: var(--fl-utility-background-color);
     color: var(--fl-text-color);
     line-height: 1.2;
@@ -18,6 +19,7 @@
     line-height: 1.2;
     -webkit-user-select:none;
     user-select: none;
+    cursor: pointer;
 
     .fl-asst-appearance-form & {
         background: var(--fl-asst-light-color);
@@ -97,6 +99,7 @@
         padding: 3px 3px;
         color: var(--fl-asst-base-art-color);
         border-radius: 7px;
+        box-shadow: none;
         transition-property: transform;
         transition-duration: .1s;
 

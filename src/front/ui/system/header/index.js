@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { TunnelPlaceholder } from 'react-tunnels'
+import { __ } from '@wordpress/i18n'
 import {
 	UIContext,
 	Icon,
@@ -11,14 +12,19 @@ import './style.scss'
 
 export const AppHeader = () => {
 	const { activeAppName: appName } = useContext( UIContext )
-	const { isAppHeaderExpanded } = useAppState( appName )
-	const { setIsAppHeaderExpanded } = getAppActions( appName )
+	const { isAppHeaderExpanded, isFirstTime } = useAppState( appName )
+	const { setIsAppHeaderExpanded, setIsFirstTime } = getAppActions( appName )
 
 	return (
 		<div className="fl-asst-app-header">
 			<CollapsedContent isExpanded={isAppHeaderExpanded} />
 			<ExpandedContent isExpanded={isAppHeaderExpanded} />
-			<ExpanderButton isExpanded={isAppHeaderExpanded} onClick={ () => setIsAppHeaderExpanded( ! isAppHeaderExpanded ) } />
+			<ExpanderButton isExpanded={isAppHeaderExpanded} onClick={ () => {
+				setIsAppHeaderExpanded( ! isAppHeaderExpanded )
+				if ( isFirstTime ) {
+					setIsFirstTime( false )
+				}
+			} } />
 		</div>
 	)
 }
@@ -116,7 +122,7 @@ const BarButton = props => {
 	delete merged.isExpanded
 
 	return (
-		<Button {...merged} appearance="transparent">
+		<Button {...merged} appearance="transparent" title={__( 'Expand Header' )}>
 			<svg className="fl-asst-icon" width="50px" height="8px" viewBox="0 0 50 8">
 				<g
 					fill="transparent"

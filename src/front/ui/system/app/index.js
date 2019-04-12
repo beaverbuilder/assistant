@@ -200,7 +200,7 @@ const AppNotFoundScreen = () => {
 
 const AppContentWrapper = ( { children } ) => {
 	const { isAppHeaderExpanded } = useAppState()
-	const { setIsAppHeaderExpanded } = getAppActions()
+	const { setIsAppHeaderExpanded, setIsFirstTime } = getAppActions()
 
 	const classes = classname( {
 		'fl-asst-app-content': true,
@@ -211,6 +211,8 @@ const AppContentWrapper = ( { children } ) => {
 		<div
 			className={classes}
 			onClickCapture={ e => {
+				setIsFirstTime( false )
+
 				if ( isAppHeaderExpanded ) {
 					setIsAppHeaderExpanded( false )
 					e.stopPropagation()

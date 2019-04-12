@@ -1,4 +1,4 @@
-=== Assistant - Every-day Productivity Apps ===
+=== Assistant - Every Day Productivity Apps ===
 Contributors: justinbusa, RobbyMcCullough, brentjettgmailcom
 Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media, Upload, Beaver Builder
 Requires at least: 5.0
@@ -8,7 +8,7 @@ Stable tag: trunk
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Assistant is an every-day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area.
+Assistant is an every day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area.
 
 **Note** - This is an early preview release. A full 1.0 release of Assistant will be coming later this year.
 
@@ -22,7 +22,7 @@ Assistant is an every-day productivity tool that lets you navigate your WordPres
 
 Watch this intro video to see it in action!
 
-[youtube https://youtu.be/lj6NPN-zQRo]
+[youtube https://youtu.be/_E0tmbd61Cg]
 
 
 == Installation ==
@@ -67,3 +67,4 @@ While we do not currently offer a developer API, that is on our roadmap for the 
 == Changelog ==
 
 * 0.1.0 - Initial Build
+* 0.2.0 - Design Iteration

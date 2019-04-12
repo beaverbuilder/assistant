@@ -120,6 +120,16 @@
         right: 0;
     }
 
+    .fl-asst-title-wrap {
+        margin: 0;
+        max-width: 80%;
+        padding: 10px var(--fl-asst-half-unit);
+        padding-left: var(--fl-asst-base-padding);
+        color: var(--fl-asst-light-color);
+        background-color: var(--fl-asst-dark-color);
+        border-radius: 0;
+    }
+
     .fl-asst-screen-title-text {
         position: relative;
         flex: 0 0 auto;
@@ -129,25 +139,23 @@
         font-size: 18px;
         font-weight: 700;
         line-height: 1.1;
-        max-width: 80%;
-        padding: 10px var(--fl-asst-half-unit);
-        padding-left: var(--fl-asst-base-padding);
-        color: var(--fl-asst-light-color);
-        background-color: var(--fl-asst-dark-color);
+    }
 
-        button {
-            position: absolute;
-            top:0;
-            left:0;
-            bottom:0;
-            color: inherit;
-            margin:0;
-            border-radius:0;
+    &.fl-asst-screen-name-inverted {
+        .fl-asst-title-wrap {
+            color: var(--fl-asst-dark-color);
+            background-color: var(--fl-asst-light-color);
         }
     }
 
-    &.fl-asst-screen-name-has-back .fl-asst-screen-title-text {
-        padding-left: 45px;
+    &.fl-asst-screen-name-has-back {
+        .fl-asst-title-wrap {
+            padding-left: var(--fl-asst-half-unit);
+
+            .fl-asst-screen-title-text {
+                padding-left: var(--fl-asst-half-unit);
+            }
+        }
     }
 
     .fl-asst-screen-title-actions {

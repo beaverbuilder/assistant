@@ -23,6 +23,7 @@ export const App = () => {
 			appearance: 'form',
 			context: currentUser,
 			shouldAnimate: false,
+			shouldShowTitle: false,
 		} )
 	}, [] )
 
