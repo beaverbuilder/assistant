@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { TunnelPlaceholder } from 'react-tunnels'
+import { __ } from '@wordpress/i18n'
 import {
 	UIContext,
 	Icon,
@@ -116,7 +117,7 @@ const BarButton = props => {
 	delete merged.isExpanded
 
 	return (
-		<Button {...merged} appearance="transparent">
+		<Button {...merged} appearance="transparent" title={__('Expand Header')}>
 			<svg className="fl-asst-icon" width="50px" height="8px" viewBox="0 0 50 8">
 				<g
 					fill="transparent"

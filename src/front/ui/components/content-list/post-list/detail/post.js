@@ -102,15 +102,10 @@ export const PostListDetail = () => {
 		setPost( { ...post, [ name ]: value } )
 	}
 
-	const titleStyles = {
-		background: 'var(--fl-asst-light-color)',
-		color: 'var(--fl-asst-dark-color)'
-	}
-
 	return (
 		<ContentListDetail>
 			<PostDetailHeader data={post} />
-			<Title shouldOverlay={true} style={titleStyles}>{viewTitle}</Title>
+			<Title shouldOverlay={true} shouldInvertColors={true}>{viewTitle}</Title>
 
 			<form>
 
