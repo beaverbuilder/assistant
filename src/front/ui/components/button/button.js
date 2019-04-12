@@ -4,7 +4,7 @@ import { Icon } from 'components'
 import './style.scss'
 
 export const Button = forwardRef( ( props, ref ) => {
-	const { isSelected, className, appearance } = props
+	const { isSelected, className, appearance, rel } = props
 	const classes = classname( {
 		'fl-asst-button': true,
 		'fl-asst-button-is-selected': isSelected,
@@ -26,8 +26,8 @@ export const Button = forwardRef( ( props, ref ) => {
 		delete filteredProps.type
 	}
 
-	if ( props.href && '_blank' === props.target ) {
-		props.rel = 'noopener noreferrer'
+	if ( props.href && '_blank' === props.target && !rel ) {
+		filteredProps.rel = 'noopener noreferrer'
 	}
 
 	return createElement(

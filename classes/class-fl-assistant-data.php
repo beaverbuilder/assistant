@@ -194,7 +194,7 @@ class FL_Assistant_Data {
 
 			$post_type = get_post_type_object( 'post' );
 			$intro     = __( 'Currently Viewing Post Type Archive', 'fl-assistant' );
-			$name      = $post_type->labels->singular;
+			$name      = $post_type->labels->singular_name;
 
 		} elseif ( is_tax() || is_category() || is_tag() ) {
 
