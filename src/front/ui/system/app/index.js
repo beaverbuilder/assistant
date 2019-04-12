@@ -212,7 +212,7 @@ const AppContentWrapper = ( { children } ) => {
 			className={classes}
 			onClickCapture={ e => {
 				setIsFirstTime( false )
-				
+
 				if ( isAppHeaderExpanded ) {
 					setIsAppHeaderExpanded( false )
 					e.stopPropagation()

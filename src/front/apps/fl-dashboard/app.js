@@ -21,7 +21,7 @@ export const App = () => {
 		if ( isFirstTime ) {
 			setIsAppHeaderExpanded( true )
 		}
-	})
+	} )
 
 	return (
 		<Fragment>
