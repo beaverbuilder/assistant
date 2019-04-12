@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useLayoutEffect } from 'react'
 import { currentUserCan } from 'utils/wordpress'
-
+import { useAppState, getAppActions } from 'store'
 import {
 	Separator,
 	Header
@@ -14,6 +14,14 @@ import { WayfinderWidget } from './wayfinder'
 import './style.scss'
 
 export const App = () => {
+	const { isFirstTime } = useAppState()
+	const { setIsAppHeaderExpanded } = getAppActions()
+
+	useLayoutEffect( () => {
+		if ( isFirstTime ) {
+			setIsAppHeaderExpanded( true )
+		}
+	})
 
 	return (
 		<Fragment>

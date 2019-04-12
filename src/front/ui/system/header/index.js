@@ -12,14 +12,19 @@ import './style.scss'
 
 export const AppHeader = () => {
 	const { activeAppName: appName } = useContext( UIContext )
-	const { isAppHeaderExpanded } = useAppState( appName )
-	const { setIsAppHeaderExpanded } = getAppActions( appName )
+	const { isAppHeaderExpanded, isFirstTime } = useAppState( appName )
+	const { setIsAppHeaderExpanded, setIsFirstTime } = getAppActions( appName )
 
 	return (
 		<div className="fl-asst-app-header">
 			<CollapsedContent isExpanded={isAppHeaderExpanded} />
 			<ExpandedContent isExpanded={isAppHeaderExpanded} />
-			<ExpanderButton isExpanded={isAppHeaderExpanded} onClick={ () => setIsAppHeaderExpanded( ! isAppHeaderExpanded ) } />
+			<ExpanderButton isExpanded={isAppHeaderExpanded} onClick={ () => {
+				setIsAppHeaderExpanded( ! isAppHeaderExpanded )
+				if ( isFirstTime ) {
+					setIsFirstTime( false )
+				}
+			} } />
 		</div>
 	)
 }
