@@ -10,7 +10,7 @@ import {
 } from 'components'
 
 export const UserDetail = props => {
-	const { label = __('Edit User') } = props
+	const { label = __( 'Edit User' ) } = props
 	const {
 		editUrl,
 		url,
@@ -29,7 +29,7 @@ export const UserDetail = props => {
 			<div className="fl-asst-detail-feature">
 				<div className="fl-asst-detail-feature-content">
 					<div className="fl-asst-detail-feature-title">{title}</div>
-					{ thumbnail && <img className="fl-asst-detail-user-avatar" src={thumbnail} alt={__('User Avatar')} /> }
+					{ thumbnail && <img className="fl-asst-detail-user-avatar" src={thumbnail} alt={__( 'User Avatar' )} /> }
 				</div>
 			</div>
 
@@ -77,13 +77,13 @@ const UserSettings = () => {
 				}
 				{ website &&
 					<Form.Item label={__( 'Website' )} placement="beside">
-						<a href={ website } target="_blank">{website}</a>
+						<a href={ website } target="_blank" rel="noopener noreferrer">{website}</a>
 					</Form.Item>
 				}
 			</Form.Section>
 
 			{ content &&
-			<Form.Section isInset={true} label={__('Biographical Info')}>
+			<Form.Section isInset={true} label={__( 'Biographical Info' )}>
 				<Form.Item>{content}</Form.Item>
 			</Form.Section> }
 		</Fragment>

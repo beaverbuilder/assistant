@@ -26,6 +26,10 @@ export const Button = forwardRef( ( props, ref ) => {
 		delete filteredProps.type
 	}
 
+	if ( props.href && '_blank' === props.target ) {
+		props.rel = 'noopener noreferrer'
+	}
+
 	return createElement(
 		props.href ? 'a' : 'button',
 		filteredProps
