@@ -120,11 +120,12 @@ export const Toolbar = ( { children } ) => {
 export const Title = props => {
 	const { children, className, actions, shouldOverlay = false, style, shouldInvertColors = false } = props
 	const stack = useContext( StackContext )
-	const { dismiss } = stack
-	let isRootView = true
 
+	let dismiss = () => {}
+	let isRootView = true
 	if ( 'undefined' !== typeof stack ) {
 		isRootView = stack.isRootView
+		dismiss = stack.dismiss
 	}
 
 	const classes = classname( {
