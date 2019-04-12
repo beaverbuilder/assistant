@@ -39,7 +39,7 @@ export const Tag = ( { appearance, children, className, onClick = () => {}, coun
 	} )
 	let rel = null
 	if ( '_blank' === target ) {
-		rel = "noopener noreferrer"
+		rel = 'noopener noreferrer'
 	}
 	if ( href ) {
 		return (
