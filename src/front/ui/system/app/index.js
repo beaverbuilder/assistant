@@ -199,7 +199,7 @@ const AppNotFoundScreen = () => {
 }
 
 const AppContentWrapper = ( { children } ) => {
-	const { isAppHeaderExpanded } = useAppState()
+	const { isAppHeaderExpanded, isFirstTime } = useAppState()
 	const { setIsAppHeaderExpanded, setIsFirstTime } = getAppActions()
 
 	const classes = classname( {
@@ -211,10 +211,12 @@ const AppContentWrapper = ( { children } ) => {
 		<div
 			className={classes}
 			onClickCapture={ e => {
-				setIsFirstTime( false )
-
 				if ( isAppHeaderExpanded ) {
 					setIsAppHeaderExpanded( false )
+
+					if ( isFirstTime ) {
+						setIsFirstTime( false )
+					}
 					e.stopPropagation()
 				}
 			}}
