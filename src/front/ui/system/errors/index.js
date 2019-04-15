@@ -1,7 +1,7 @@
 import React, { Fragment, Component, useState, useEffect, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import UAParser from 'ua-parser-js'
-import { Heading, Form, Branding, AppContext, Padding } from 'components'
+import { Heading, Form, Branding, AppContext, Padding, Button, Icon, UIContext } from 'components'
 import { render } from 'utils/react'
 
 export class ErrorBoundary extends Component {
@@ -14,7 +14,6 @@ export class ErrorBoundary extends Component {
 	}
 
 	static getDerivedStateFromError( error ) {
-
 		// Update state so the next render will show the fallback UI.
 		return {
             hasError: true,
@@ -35,10 +34,12 @@ export class ErrorBoundary extends Component {
 export const OuterErrorBoundary = props => {
 	const merged = {
 		...props,
-		alternate: <ErrorScreen />,
+		alternate: <ErrorScreen shouldShowCloseButton={true} />
 	}
 	return (
-		<ErrorBoundary {...merged} />
+        <Fragment>
+		      <ErrorBoundary {...merged} />
+        </Fragment>
 	)
 }
 
@@ -54,18 +55,16 @@ export const AppErrorBoundary = props => {
 		...props,
 		alternate: <ErrorScreen message={message} />,
 	}
-	return (
-        <Fragment>
-            <ErrorBoundary {...merged} />
-        </Fragment>
-	)
+	return <ErrorBoundary {...merged} />
 }
 
 const ErrorScreen = props => {
+    const { setIsShowingUI } = useContext( UIContext )
     const {
         message = __('Oh no! There seems to be a problem.'),
         children,
         error,
+        shouldShowCloseButton = false,
     } = props
 
 	const styles = {
@@ -88,6 +87,13 @@ const ErrorScreen = props => {
             </Padding>
             {children}
 			<Diagnostics error={error} />
+            { shouldShowCloseButton &&
+                <div style={{ position: 'absolute', top: 0, right: 0, padding: 10, zIndex: 1 }}>
+                    <Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
+                        <Icon name="close" />
+                    </Button>
+                </div>
+            }
 		</div>
 	)
 }
