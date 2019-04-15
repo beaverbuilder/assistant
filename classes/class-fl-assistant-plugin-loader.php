@@ -58,7 +58,7 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 		static private function admin_notice_hooks() {
 			global $pagenow;
 
-			if ( 'plugins.php' == $pagenow ) {
+			if ( 'plugins.php' === $pagenow ) {
 				add_action( 'admin_notices', __CLASS__ . '::admin_notice' );
 				add_action( 'network_admin_notices', __CLASS__ . '::admin_notice' );
 			}

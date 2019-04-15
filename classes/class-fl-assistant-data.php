@@ -133,7 +133,7 @@ class FL_Assistant_Data {
 		$user_can    = current_user_can( 'edit_post', $post->ID );
 		$user_access = FLBuilderUserAccess::current_user_can( 'builder_access' );
 
-		if ( in_array( $post->post_type, $post_types ) && $user_can && $user_access ) {
+		if ( in_array( $post->post_type, $post_types, true ) && $user_can && $user_access ) {
 			$editable = true;
 		}
 
@@ -150,7 +150,7 @@ class FL_Assistant_Data {
 		foreach ( $types as $type_slug => $type ) {
 			$taxonomies = get_object_taxonomies( $type_slug, 'objects' );
 			foreach ( $taxonomies as $taxonomy_slug => $taxonomy ) {
-				if ( ! $taxonomy->public || ! $taxonomy->show_ui || 'post_format' == $taxonomy_slug ) {
+				if ( ! $taxonomy->public || ! $taxonomy->show_ui || 'post_format' === $taxonomy_slug ) {
 					continue;
 				}
 				$data[ $taxonomy_slug ] = array(
