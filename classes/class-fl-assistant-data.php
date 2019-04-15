@@ -190,6 +190,11 @@ class FL_Assistant_Data {
 			$intro = __( 'Currently Viewing Search Results For', 'fl-assistant' );
 			$name  = get_search_query();
 
+		} elseif ( is_date() ) {
+
+			$intro = __( 'Currently Viewing Date Archive', 'fl-assistant' );
+			$name = get_the_date();
+
 		} elseif ( is_post_type_archive() ) {
 
 			$post_type = get_post_type_object( 'post' );
