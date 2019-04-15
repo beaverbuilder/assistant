@@ -75,13 +75,14 @@ While we do not currently offer a developer API, that is on our roadmap for the 
 
 == Changelog ==
 
-= 0.2.1 =
+= 0.2.1 (2019-04-15) =
 
 * Dramatically reduce js bundle size
 * Style Hardening
 * Improve Error Handling
 * Fix date archives showing "Untitled" in Dashboard app
 * Fix first time experience for Dashboard app
+* Fix user list for multisite admins
 
 = 0.2.0 (2019-04-12) =
 
