@@ -33,5 +33,5 @@ export const addLeadingSlash = ( route ) => {
  * Creates a URL safe slug with only letters, numbers, and dashes.
  */
 export const createSlug = ( string ) => {
-	return string.toLowerCase().replace( /\s/g, '-' ).replace( /[^a-z0-9\-]+/g, '' )
+	return string.toLowerCase().replace( /\s/g, '-' ).replace( /[^a-z0-9-]+/g, '' )
 }
