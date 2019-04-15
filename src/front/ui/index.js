@@ -8,7 +8,7 @@ import {
 	AppContext,
 } from 'components'
 import { NotificationsAppButton } from 'apps/fl-notifications/button'
-import { App, useAppsMenu, AppFrame, AppHeader } from 'system'
+import { App, useAppsMenu, AppFrame, AppHeader, OuterErrorBoundary } from 'system'
 import { useWindowSize } from 'utils/window'
 import { render } from 'utils/react'
 import { useSystemState } from 'store'
@@ -45,6 +45,7 @@ export const UI = () => {
 		<TunnelProvider>
 			<AppContext.Provider value={appContext}>
 				<AppFrame>
+					<OuterErrorBoundary>
 					<div className="fl-asst-panel-wrap">
 
 						<div className="fl-asst-panel-header">
@@ -116,6 +117,8 @@ export const UI = () => {
 					</div>
 
 					{ renderModals() }
+
+					</OuterErrorBoundary>
 				</AppFrame>
 			</AppContext.Provider>
 		</TunnelProvider>
