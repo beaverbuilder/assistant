@@ -85,11 +85,11 @@ const ErrorScreen = props => {
 			{children}
 			<Diagnostics error={error} />
 			{ shouldShowCloseButton &&
-            <div style={{ position: 'absolute', top: 0, right: 0, padding: 10, zIndex: 1 }}>
-            	<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
-            		<Icon name="close" />
-            	</Button>
-            </div>
+			<div style={{position: 'absolute', top: 0, right: 0, padding: 10, zIndex: 1}}>
+				<Button onClick={() => setIsShowingUI( false )} appearance="icon">
+					<Icon name="close" />
+				</Button>
+			</div>
 			}
 		</div>
 	)
