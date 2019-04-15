@@ -58,6 +58,10 @@
     line-height: 1.5;
     color: var(--fl-asst-text-color);
 
+    & * {
+        box-sizing: border-box;
+    }
+
     hr {
         background-image: none;
     }

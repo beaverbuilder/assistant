@@ -60,16 +60,32 @@ Watch this intro video to see it in action!
 
 == Frequently Asked Questions ==
 
-= Does Assistant require Beaver Builder to work?
+= Is Assistant Free? =
+
+Yes! All of the core Assistant features are free and will remain so.
+
+= Does Assistant require Beaver Builder to work? =
 
 No, Assistant is a standalone plugin and can be used with any WordPress installation on its own.
 
-= Does Assistant provide a public API for developers to create new apps?
+= Does Assistant provide a public API for developers to create new apps? =
 
 While we do not currently offer a developer API, that is on our roadmap for the 1.0 release. We'll be sharing more details about that as we get closer to that milestone.
 
 
 == Changelog ==
 
-* 0.1.0 - Initial Build
-* 0.2.0 - Design Iteration
+= 0.2.1 =
+
+* Style Hardening
+* Improve Error Handling
+
+= 0.2.0 (2019-04-12) =
+
+* Overall design iteration
+* Added ability to stub new posts, pages, categories and tags.
+* Added Update detail screen.
+
+= 0.1.0 =
+
+* Initial Public Build

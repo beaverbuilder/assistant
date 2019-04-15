@@ -12,6 +12,7 @@
     justify-content: flex-start;
 
     .fl-asst-control-thumb {
+        box-sizing: border-box;
         width: calc( var(--fl-asst-base-padding) - 8px );
         height: calc( var(--fl-asst-base-padding) - 8px );
         background: transparent;

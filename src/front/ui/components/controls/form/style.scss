@@ -150,6 +150,7 @@
     input[type="color"],
     select,
     textarea {
+        box-sizing: border-box;
         flex-grow: 1;
         flex-shrink: 1;
         font-family: var(--fl-asst-base-font-family);
@@ -262,6 +263,7 @@
 
     button,
     input[type="button"] {
+        box-sizing: border-box;
         font-family: var(--fl-asst-base-font-family);
         font-size: var(--fl-asst-base-text-size);
         font-weight: 500;
