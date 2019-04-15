@@ -1,7 +1,8 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { Fragment, Component, useState, useEffect, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import UAParser from 'ua-parser-js'
-import { Heading, Form, Branding } from 'components'
+import { Heading, Form, Branding, AppContext, Padding } from 'components'
+import { render } from 'utils/react'
 
 export class ErrorBoundary extends Component {
 	constructor( props ) {
@@ -23,9 +24,9 @@ export class ErrorBoundary extends Component {
 
 	render() {
 		const { alternate, children } = this.props
-		const { hasError } = this.state
+		const { hasError, error } = this.state
 		if ( hasError ) {
-			return alternate
+			return render( alternate, { error })
 		}
 		return children
 	}
@@ -34,14 +35,38 @@ export class ErrorBoundary extends Component {
 export const OuterErrorBoundary = props => {
 	const merged = {
 		...props,
-		alternate: <OuterErrorScreen />,
+		alternate: <ErrorScreen />,
 	}
 	return (
 		<ErrorBoundary {...merged} />
 	)
 }
 
-const OuterErrorScreen = () => {
+export const AppErrorBoundary = props => {
+    const { label } = useContext( AppContext )
+
+    let message = __('There seems to be a problem with this app')
+    if ( 'undefined' !== typeof label ) {
+        message = sprintf('There seems to be a problem with the %s app', label )
+    }
+
+    const merged = {
+		...props,
+		alternate: <ErrorScreen message={message} />,
+	}
+	return (
+        <Fragment>
+            <ErrorBoundary {...merged} />
+        </Fragment>
+	)
+}
+
+const ErrorScreen = props => {
+    const {
+        message = __('Oh no! There seems to be a problem.'),
+        children,
+        error,
+    } = props
 
 	const styles = {
 		position: 'absolute',
@@ -52,20 +77,22 @@ const OuterErrorScreen = () => {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
-		alignItems: 'center',
 		zIndex: 1,
 	}
 
 	return (
 		<div className="fl-asst-appearance-form" style={styles}>
-			<span style={{ color: 'var(--fl-asst-error-color)' }}><Branding name="outline" size={75} /></span>
-			<Heading style={{marginTop: 30}}>{__( 'Oh no! There seems to be problem.' )}</Heading>
-			<Diagnostics />
+            <Padding style={{ textAlign: 'center' }} bottom={false} top={false}>
+    			<span style={{ color: 'var(--fl-asst-error-color)' }}><Branding name="outline" size={75} /></span>
+    			{ message && <Heading style={{marginTop: 30}}>{message}</Heading> }
+            </Padding>
+            {children}
+			<Diagnostics error={error} />
 		</div>
 	)
 }
 
-const Diagnostics = () => {
+const Diagnostics = ({ error }) => {
 	const defaults = {
 		browser: {
 			name: null,
@@ -79,6 +106,8 @@ const Diagnostics = () => {
 	}
 	const [ results, setResults ] = useState( defaults )
 
+    const { name = '', message = '' } = error
+
 	useEffect( () => {
 		const parser = new UAParser()
 		setResults( parser.getResult() )
@@ -88,6 +117,10 @@ const Diagnostics = () => {
 	return (
 		<div style={{ width: '100%' }}>
 			<form>
+                <Form.Section label={__('Error Information')} isInset={true}>
+                    <Form.Item label={__( 'Error Type' )} placement='beside'>{name}</Form.Item>
+                    <Form.Item label={__( 'Message' )} placement='beside'>{message}</Form.Item>
+                </Form.Section>
 				<Form.Section label={__( 'System Details' )} isInset={true}>
 					<Form.Item label={__( 'Browser' )} placement='beside'>{browser.name} {browser.version}</Form.Item>
 					<Form.Item label={__( 'Operating System' )} placement='beside'>{os.name} {os.version}</Form.Item>

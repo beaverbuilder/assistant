@@ -10,7 +10,7 @@ import {
 	getAppActions,
 } from 'store'
 
-import { useAppFrame } from 'system'
+import { useAppFrame, AppErrorBoundary } from 'system'
 import { render } from 'utils/react'
 import {
 	UIContext,
@@ -63,12 +63,14 @@ export const App = props => {
 
 	return (
 		<AppContext.Provider value={appContext}>
-			<div className="fl-asst-app" style={styles}>
-				<AppContentWrapper>
-					<AppMenuRenderer />
-					<Stack>{ output }</Stack>
-				</AppContentWrapper>
-			</div>
+			<AppErrorBoundary>
+				<div className="fl-asst-app" style={styles}>
+					<AppContentWrapper>
+						<AppMenuRenderer />
+						<Stack>{ output }</Stack>
+					</AppContentWrapper>
+				</div>
+			</AppErrorBoundary>
 		</AppContext.Provider>
 	)
 }
