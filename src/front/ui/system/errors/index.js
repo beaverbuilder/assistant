@@ -1,5 +1,5 @@
-import React, { Fragment, Component, useState, useEffect, useContext } from 'react'
-import { __ } from '@wordpress/i18n'
+import React, { Component, useState, useEffect, useContext } from 'react'
+import { __, sprintf } from '@wordpress/i18n'
 import UAParser from 'ua-parser-js'
 import { Heading, Form, Branding, AppContext, Padding, Button, Icon, UIContext } from 'components'
 import { render } from 'utils/react'
@@ -9,23 +9,24 @@ export class ErrorBoundary extends Component {
 		super( props )
 		this.state = {
 			hasError: false,
-            error: null,
+			error: null,
 		}
 	}
 
 	static getDerivedStateFromError( error ) {
+
 		// Update state so the next render will show the fallback UI.
 		return {
-            hasError: true,
-            error,
-        }
+			hasError: true,
+			error,
+		}
 	}
 
 	render() {
 		const { alternate, children } = this.props
 		const { hasError, error } = this.state
 		if ( hasError ) {
-			return render( alternate, { error })
+			return render( alternate, { error } )
 		}
 		return children
 	}
@@ -36,22 +37,18 @@ export const OuterErrorBoundary = props => {
 		...props,
 		alternate: <ErrorScreen shouldShowCloseButton={true} />
 	}
-	return (
-        <Fragment>
-		      <ErrorBoundary {...merged} />
-        </Fragment>
-	)
+	return <ErrorBoundary {...merged} />
 }
 
 export const AppErrorBoundary = props => {
-    const { label } = useContext( AppContext )
+	const { label } = useContext( AppContext )
 
-    let message = __('There seems to be a problem with this app')
-    if ( 'undefined' !== typeof label ) {
-        message = sprintf('There seems to be a problem with the %s app', label )
-    }
+	let message = __( 'There seems to be a problem with this app' )
+	if ( 'undefined' !== typeof label ) {
+		message = sprintf( __( 'There seems to be a problem with the %s app' ), label )
+	}
 
-    const merged = {
+	const merged = {
 		...props,
 		alternate: <ErrorScreen message={message} />,
 	}
@@ -59,13 +56,13 @@ export const AppErrorBoundary = props => {
 }
 
 const ErrorScreen = props => {
-    const { setIsShowingUI } = useContext( UIContext )
-    const {
-        message = __('Oh no! There seems to be a problem.'),
-        children,
-        error,
-        shouldShowCloseButton = false,
-    } = props
+	const { setIsShowingUI } = useContext( UIContext )
+	const {
+		message = __( 'Oh no! There seems to be a problem.' ),
+		children,
+		error,
+		shouldShowCloseButton = false,
+	} = props
 
 	const styles = {
 		position: 'absolute',
@@ -81,24 +78,24 @@ const ErrorScreen = props => {
 
 	return (
 		<div className="fl-asst-appearance-form" style={styles}>
-            <Padding style={{ textAlign: 'center' }} bottom={false} top={false}>
-    			<span style={{ color: 'var(--fl-asst-error-color)' }}><Branding name="outline" size={75} /></span>
-    			{ message && <Heading style={{marginTop: 30}}>{message}</Heading> }
-            </Padding>
-            {children}
+			<Padding style={{ textAlign: 'center' }} bottom={false} top={false}>
+				<span style={{ color: 'var(--fl-asst-error-color)' }}><Branding name="outline" size={75} /></span>
+				{ message && <Heading style={{marginTop: 30}}>{message}</Heading> }
+			</Padding>
+			{children}
 			<Diagnostics error={error} />
-            { shouldShowCloseButton &&
-                <div style={{ position: 'absolute', top: 0, right: 0, padding: 10, zIndex: 1 }}>
-                    <Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
-                        <Icon name="close" />
-                    </Button>
-                </div>
-            }
+			{ shouldShowCloseButton &&
+            <div style={{ position: 'absolute', top: 0, right: 0, padding: 10, zIndex: 1 }}>
+            	<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
+            		<Icon name="close" />
+            	</Button>
+            </div>
+			}
 		</div>
 	)
 }
 
-const Diagnostics = ({ error }) => {
+const Diagnostics = ( { error } ) => {
 	const defaults = {
 		browser: {
 			name: null,
@@ -112,7 +109,7 @@ const Diagnostics = ({ error }) => {
 	}
 	const [ results, setResults ] = useState( defaults )
 
-    const { name = '', message = '' } = error
+	const { name = '', message = '' } = error
 
 	useEffect( () => {
 		const parser = new UAParser()
@@ -123,10 +120,10 @@ const Diagnostics = ({ error }) => {
 	return (
 		<div style={{ width: '100%' }}>
 			<form>
-                <Form.Section label={__('Error Information')} isInset={true}>
-                    <Form.Item label={__( 'Error Type' )} placement='beside'>{name}</Form.Item>
-                    <Form.Item label={__( 'Message' )} placement='beside'>{message}</Form.Item>
-                </Form.Section>
+				<Form.Section label={__( 'Error Information' )} isInset={true}>
+					<Form.Item label={__( 'Error Type' )} placement='beside'>{name}</Form.Item>
+					<Form.Item label={__( 'Message' )} placement='beside'>{message}</Form.Item>
+				</Form.Section>
 				<Form.Section label={__( 'System Details' )} isInset={true}>
 					<Form.Item label={__( 'Browser' )} placement='beside'>{browser.name} {browser.version}</Form.Item>
 					<Form.Item label={__( 'Operating System' )} placement='beside'>{os.name} {os.version}</Form.Item>
