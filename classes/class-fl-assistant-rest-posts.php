@@ -119,7 +119,7 @@ final class FL_Assistant_REST_Posts {
 		);
 
 		// Post visibility.
-		if ( 'private' == $post->post_status ) {
+		if ( 'private' === $post->post_status ) {
 			$response['visibility'] = __( 'Private', 'fl-assistant' );
 		} elseif ( ! empty( $post->post_password ) ) {
 			$response['visibility'] = __( 'Password Protected', 'fl-assistant' );
