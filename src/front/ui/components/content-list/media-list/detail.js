@@ -37,10 +37,10 @@ export const MediaDetail = () => {
 	let url = thumbnail
 	if ( 'undefined' !== typeof sizes.medium_large ) {
 		url = sizes.medium_large.url
-	} else if ( 'undefined' !== typeof sizes.medium ) {
-		url = sizes.medium.url
 	} else if ( 'undefined' !== typeof sizes.large ) {
 		url = sizes.large.url
+	} else if ( 'undefined' !== typeof sizes.medium ) {
+		url = sizes.medium.url
 	}
 
 	const imgData = useImageData( url )
