@@ -77,8 +77,11 @@ While we do not currently offer a developer API, that is on our roadmap for the 
 
 = 0.2.1 =
 
+* Dramatically reduce js bundle size
 * Style Hardening
 * Improve Error Handling
+* Fix date archives showing "Untitled" in Dashboard app
+* Fix first time experience for Dashboard app
 
 = 0.2.0 (2019-04-12) =
 
