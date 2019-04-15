@@ -1,7 +1,7 @@
 
 export const defaultState = {
 	isAppHeaderExpanded: false,
-	isFirstTime: false,
+	isFirstTime: true,
 }
 
 export const defaultActions = {
