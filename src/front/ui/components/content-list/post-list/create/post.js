@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
-import slug from 'slug'
 import { __, _x, sprintf } from '@wordpress/i18n'
+import { createSlug } from 'utils/url'
 import { createPost } from 'utils/wordpress'
 import { getSystemConfig } from 'store'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
@@ -25,7 +25,7 @@ export const CreatePost = () => {
 		post[ name ] = value
 
 		if ( 'post_title' === name ) {
-			post.post_name = slug( value ).toLowerCase()
+			post.post_name = createSlug( value )
 		}
 
 		setPost( { ...post } )
