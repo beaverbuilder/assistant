@@ -8,7 +8,7 @@ import {
 	AppContext,
 } from 'components'
 import { NotificationsAppButton } from 'apps/fl-notifications/button'
-import { App, useAppsMenu, AppFrame, AppHeader } from 'system'
+import { App, useAppsMenu, AppFrame, AppHeader, OuterErrorBoundary } from 'system'
 import { useWindowSize } from 'utils/window'
 import { render } from 'utils/react'
 import { useSystemState } from 'store'
@@ -45,77 +45,80 @@ export const UI = () => {
 		<TunnelProvider>
 			<AppContext.Provider value={appContext}>
 				<AppFrame>
-					<div className="fl-asst-panel-wrap">
+					<OuterErrorBoundary>
+						<div className="fl-asst-panel-wrap">
 
-						<div className="fl-asst-panel-header">
-							<div className="fl-asst-panel-chrome">
-								<div className="fl-asst-panel-chrome-area">
-									<NotificationsAppButton isShowingAppsMenu={isShowingAppsMenu} />
-								</div>
-								<div className="fl-asst-app-tabs-wrap">
-									<div className="fl-asst-app-tabs-area">
-										{ appOrder.map( key => {
-											const app = apps[key]
-
-											if ( key === activeAppName && count >= maxTabCount && ! excludedApps.includes( key ) ) {
-												activeAppIsBelowFold = true
-											}
-
-											if ( 'undefined' === typeof app ) {
-												return null
-											} else if ( excludedApps.includes( key ) ) {
-												return null
-											} else if ( count >= maxTabCount ) {
-												return null
-											} else if ( false === app.enabled ) {
-												return null
-											}
-											count++
-
-											const isSelected = ( key === activeAppName && ! isShowingAppsMenu )
-
-											// Render if it's a JSX literal or function (else null)
-											let icon = render( app.icon )
-											if ( ! icon ) {
-												icon = <Icon name="default-app" />
-											}
-
-											return (
-												<AppTabButton
-													key={key}
-													isSelected={isSelected}
-													onClick={ e => onClickApp( key, e ) }
-													tooltip={app.label}
-												>{ icon }</AppTabButton>
-											)
-										} ) }
-
-										<AppTabButton
-											appearance="icon"
-											isSelected={ isShowingAppsMenu || activeAppIsBelowFold }
-											onClick={toggleIsShowingAppsMenu}
-											tooltip="Apps"
-										>
-											<Icon name="apps-app" />
-										</AppTabButton>
+							<div className="fl-asst-panel-header">
+								<div className="fl-asst-panel-chrome">
+									<div className="fl-asst-panel-chrome-area">
+										<NotificationsAppButton isShowingAppsMenu={isShowingAppsMenu} />
 									</div>
-								</div>
-								<div className="fl-asst-panel-chrome-area">
-									<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
-										<Icon name="close" />
-									</Button>
-								</div>
-							</div>{ /* chrome */ }
+									<div className="fl-asst-app-tabs-wrap">
+										<div className="fl-asst-app-tabs-area">
+											{ appOrder.map( key => {
+												const app = apps[key]
 
-							{ 'undefined' !== typeof activeApp && <AppHeader key={activeAppName} /> }
+												if ( key === activeAppName && count >= maxTabCount && ! excludedApps.includes( key ) ) {
+													activeAppIsBelowFold = true
+												}
+
+												if ( 'undefined' === typeof app ) {
+													return null
+												} else if ( excludedApps.includes( key ) ) {
+													return null
+												} else if ( count >= maxTabCount ) {
+													return null
+												} else if ( false === app.enabled ) {
+													return null
+												}
+												count++
+
+												const isSelected = ( key === activeAppName && ! isShowingAppsMenu )
+
+												// Render if it's a JSX literal or function (else null)
+												let icon = render( app.icon )
+												if ( ! icon ) {
+													icon = <Icon name="default-app" />
+												}
+
+												return (
+													<AppTabButton
+														key={key}
+														isSelected={isSelected}
+														onClick={ e => onClickApp( key, e ) }
+														tooltip={app.label}
+													>{ icon }</AppTabButton>
+												)
+											} ) }
+
+											<AppTabButton
+												appearance="icon"
+												isSelected={ isShowingAppsMenu || activeAppIsBelowFold }
+												onClick={toggleIsShowingAppsMenu}
+												tooltip="Apps"
+											>
+												<Icon name="apps-app" />
+											</AppTabButton>
+										</div>
+									</div>
+									<div className="fl-asst-panel-chrome-area">
+										<Button onClick={ () => setIsShowingUI( false ) } appearance="icon">
+											<Icon name="close" />
+										</Button>
+									</div>
+								</div>{ /* chrome */ }
+
+								{ 'undefined' !== typeof activeApp && <AppHeader key={activeAppName} /> }
+							</div>
+
+							<div className="fl-asst-panel-contents">
+								<App key={activeAppName} { ...activeApp } />
+							</div>
 						</div>
 
-						<div className="fl-asst-panel-contents">
-							<App key={activeAppName} { ...activeApp } />
-						</div>
-					</div>
+						{ renderModals() }
 
-					{ renderModals() }
+					</OuterErrorBoundary>
 				</AppFrame>
 			</AppContext.Provider>
 		</TunnelProvider>
