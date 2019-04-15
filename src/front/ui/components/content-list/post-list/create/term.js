@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
-import slug from 'slug'
 import { __, _x, sprintf } from '@wordpress/i18n'
+import { createSlug } from 'utils/url'
 import { createTerm } from 'utils/wordpress'
 import { getSystemConfig } from 'store'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
@@ -25,7 +25,7 @@ export const CreateTerm = () => {
 		term[ name ] = value
 
 		if ( 'name' === name ) {
-			term.slug = slug( value ).toLowerCase()
+			term.slug = createSlug( value )
 		}
 
 		setTerm( { ...term } )
