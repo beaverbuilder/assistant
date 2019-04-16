@@ -75,6 +75,10 @@ While we do not currently offer a developer API, that is on our roadmap for the 
 
 == Changelog ==
 
+= 0.2.2 (2019-04-16) =
+
+* Fix "Show Dashboard App" button not working
+
 = 0.2.1 (2019-04-15) =
 
 * Dramatically reduce js bundle size
