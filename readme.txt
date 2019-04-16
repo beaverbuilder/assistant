@@ -79,6 +79,7 @@ While we do not currently offer a developer API, that is on our roadmap for the 
 = 0.2.2 (2019-04-16) =
 
 * Fix "Show Dashboard App" button not working
+* Edit actions on dashboard now open in same tab
 
 = 0.2.1 (2019-04-15) =
 
