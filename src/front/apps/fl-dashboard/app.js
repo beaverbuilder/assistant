@@ -15,7 +15,7 @@ import './style.scss'
 
 export const App = () => {
 	const { isFirstTime } = useAppState()
-	const { setIsAppHeaderExpanded } = getAppActions()
+	const { setIsAppHeaderExpanded, setIsFirstTime } = getAppActions()
 
 	useLayoutEffect( () => {
 		if ( isFirstTime ) {
@@ -23,10 +23,17 @@ export const App = () => {
 		}
 	} )
 
+	const collapse = () => {
+		setIsAppHeaderExpanded( false )
+		if ( isFirstTime ) {
+			setIsFirstTime( false )
+		}
+	}
+
 	return (
 		<Fragment>
 			<Header.Expanded>
-				<Help />
+				<Help collapse={collapse} />
 			</Header.Expanded>
 
 			<TilesWidget />

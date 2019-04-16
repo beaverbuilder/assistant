@@ -10,9 +10,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Assistant is a new way to work with WordPress. It's an every day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area. For example, you can quickly find a page or post and update its title or slug. You can upload media and navigate to attachment pages.
 
+**Note** - This is an early preview release. A full 1.0 release of Assistant will be coming later this year.
+
 Assistant is an open source project from the same team that makes Beaver Builder. It's free and being developed in public. Try it and let us know what you think!
 
-**Note** - This is an early preview release. A full 1.0 release of Assistant will be coming later this year.
+Watch this intro video to see it in action!
+
+[youtube https://youtu.be/_E0tmbd61Cg]
 
 = Assistant Features =
 
@@ -23,10 +27,7 @@ Assistant is an open source project from the same team that makes Beaver Builder
 *   The Notifications app shows your comments as well as available plugin and theme updates.
 *   Access your user profile.
 
-Watch this intro video to see it in action!
-
-[youtube https://youtu.be/_E0tmbd61Cg]
-
+You can also try Assistant on a [demo site here](http://demo.wpbeaverbuilder.com/?new=assistant).
 
 == Installation ==
 
@@ -74,6 +75,11 @@ While we do not currently offer a developer API, that is on our roadmap for the 
 
 
 == Changelog ==
+
+= 0.2.2 (2019-04-16) =
+
+* Fix "Show Dashboard App" button not working
+* Edit actions on dashboard now open in same tab
 
 = 0.2.1 (2019-04-15) =
 
