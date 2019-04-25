@@ -142,13 +142,7 @@ final class FL_Assistant_REST_Posts {
 	static public function posts( $request ) {
 		$response = array();
 		$params   = $request->get_params();
-		$posts    = get_posts(
-			array_merge(
-				$params, array(
-					'perm' => 'editable',
-				)
-			)
-		);
+		$posts    = get_posts( $params );
 
 		foreach ( $posts as $post ) {
 			if ( current_user_can( 'edit_post', $post->ID ) ) {
