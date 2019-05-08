@@ -83,6 +83,9 @@ class FL_Assistant_Data {
 		);
 
 		foreach ( $types as $slug => $type ) {
+			if ( ! isset( $type->cap->edit_published_posts ) ) {
+				continue;
+			}
 			if ( ! current_user_can( $type->cap->edit_published_posts ) ) {
 				continue;
 			}
