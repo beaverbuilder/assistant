@@ -11,6 +11,7 @@ class FL_Assistant_Asset_Loader {
 	 */
 	static public function init() {
 		add_action( 'wp_enqueue_scripts', __CLASS__ . '::enqueue' );
+		add_action( 'admin_enqueue_scripts', __CLASS__ . '::enqueue' );
 	}
 
 	/**
@@ -29,6 +30,9 @@ class FL_Assistant_Asset_Loader {
 
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_CONFIG', $data['config'] );
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_INITIAL_STATE', $data['state'] );
+
+			wp_enqueue_script( 'fl-assistant-ui-test', $url . 'build/fl-asst-ui-test.bundle.js', array(), $ver, true );
+			wp_enqueue_style( 'fl-assistant-ui-test', $url . 'build/fl-asst-ui-test.bundle.css', array(), $ver, null );
 		}
 	}
 

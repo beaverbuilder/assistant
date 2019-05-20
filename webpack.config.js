@@ -10,9 +10,12 @@ const alias = {
     apps: path.resolve( __dirname, './src/front/apps' ),
     utils: path.resolve( __dirname, './src/utils' ),
 	store: path.resolve( __dirname, './src/front/store/' ),
+
+    lib: path.resolve( __dirname, './packages/lib/src/' ),
 }
 
 const externals = {
+
     '@assistant' : 'UNSTABLE_FLAssistant',
     '@assistant/store' : 'UNSTABLE_FLAssistant.store',
     '@assistant/components' : 'UNSTABLE_FLAssistant.components',
@@ -31,6 +34,7 @@ const externals = {
 }
 
 const entry = {
+    'fl-asst-ui-test' : './src/ui-test',
     'fl-asst-system' : './src/front',
 }
 
@@ -38,6 +42,7 @@ const config = {
 	entry,
     externals,
 	mode: 'development',
+    target: 'web',
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
