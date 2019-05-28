@@ -49,6 +49,7 @@
         justify-content: flex-start;
         align-items: center;
         margin: 0 0 15px;
+        text-decoration: none;
 
         .icon {
             width: 50px;
@@ -60,17 +61,13 @@
             align-items: center;
         }
 
-        &:hover {
-            .icon {
-                transform: scale(1.1);
-            }
-        }
-
         label {
             font-size: 12px;
             color:white;
             margin-top: 5px;
             text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
         }
     }
 }
@@ -78,6 +75,13 @@
 @supports( display: grid ) {
     .app-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat( auto-fit, minmax(90px, 1fr) );
+        grid-template-rows: repeat( auto-fit, minmax(100px, 1fr) );
+        grid-gap: 10px;
+        align-items: center;
+
+        .app-grid-item {
+            margin:0;
+        }
     }
 }

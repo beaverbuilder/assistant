@@ -29,12 +29,12 @@ const App = props => {
 	const app = apps[appName]
 	return (
 		<Page>
-			<div>{ 'function' === typeof app.icon && app.icon( props ) }</div>
 			<div style={{ display: 'flex', flexDirection: 'row' }}>
+				<div>{ 'function' === typeof app.icon && app.icon( props ) }</div>
 				{app.label}
 				<Link to="/" style={{ marginLeft: 'auto' }}>Apps</Link>
 			</div>
-			<div>{ app.newContent && app.newContent( props ) }</div>
+			<div>{ app.newContent ? app.newContent( props ) : 'This app has not been converted.'}</div>
 		</Page>
 	)
 
@@ -51,9 +51,16 @@ const AppSwitcher = () => {
 						pathname: `/${handle}`,
 						state: app,
 					}
+
+					const { accentColor } = app
+					let color = null
+					if ( 'undefined' !== typeof accentColor ) {
+						color = accentColor.color
+					}
+
 					return (
 						<Link to={location} className="app-grid-item" key={i}>
-							<div className="icon">
+							<div className="icon" style={{ backgroundColor: color }}>
 								{ 'function' === typeof app.icon && app.icon( {} ) }
 							</div>
 							<label>{app.label}</label>

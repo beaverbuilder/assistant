@@ -37,20 +37,28 @@ export const activeApp = ( state = {}, action ) => {
 }
 
 export const apps = ( state = {}, action ) => {
+
+	const defaults = {
+		app: null,
+		label: null,
+		content: null,
+		newContent: null,
+		enabled: true,
+		icon: null,
+		appearance: 'normal',
+		state: {},
+		actions: {},
+		reducers: {},
+		effects: {},
+	}
+
 	switch ( action.type ) {
 	case 'REGISTER_APP':
 		return {
 			[ action.key ]: {
+				...defaults,
 				app: action.key,
-				content: null,
-				enabled: true,
-				icon: null,
-				appearance: 'normal',
 				label: action.key,
-				state: {},
-				actions: {},
-				reducers: {},
-				effects: {},
 				...action.config,
 			},
 			...state,

@@ -5,8 +5,8 @@ import { initialState, actions, reducers, effects } from './state'
 
 const { registerApp } = getSystemActions()
 
-registerApp( 'fl-find', {
-	label: __( 'Content' ),
+registerApp( 'fl-media', {
+	label: __( 'Media' ),
 	content: App,
 	icon: AppIcon,
 	state: initialState,
@@ -15,9 +15,7 @@ registerApp( 'fl-find', {
 	effects,
 	shouldShowTitle: false,
 
-	newContent: NewContent,
+	accentColor: {
+		color: '#FF5A5E'
+	}
 } )
-
-const NewContent = () => {
-	return 'Just Testing!'
-}

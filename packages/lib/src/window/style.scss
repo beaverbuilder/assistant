@@ -11,7 +11,7 @@
 
     &.fl-asst-window-mini {
         width: 380px;
-
+        max-height: calc( 100vh - 62px );
     }
     &.fl-asst-window-normal {
         height: 100%;
@@ -44,6 +44,7 @@
         align-items: center;
         min-height: 100px;
         position: relative;
+        overflow: auto;
     }
 }
 

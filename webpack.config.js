@@ -5,24 +5,15 @@ const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const production = 'production' === process.env.NODE_ENV
 
 const alias = {
-    components: path.resolve( __dirname, './src/front/ui/components' ),
-    system: path.resolve( __dirname, './src/front/ui/system' ),
-    apps: path.resolve( __dirname, './src/front/apps' ),
+    components: path.resolve( __dirname, './src/original-ui/ui/components' ),
+    system: path.resolve( __dirname, './src/original-ui/ui/system' ),
+    apps: path.resolve( __dirname, './src/apps' ),
     utils: path.resolve( __dirname, './src/utils' ),
     store: path.resolve( __dirname, './src/store'),
     lib: path.resolve( __dirname, './packages/lib/src/' ),
 }
 
-const externals = {
-    "@wordpress/element" : 'wp.element',
-    '@assistant/store' : 'Assistant.store',
-}
-
-const entry = {
-    'fl-asst-store' : './src/store',
-    'fl-asst-ui-test' : './src/ui-test',
-    'fl-asst-system' : './src/front',
-}
+const externals = {}
 
 const config = {
 	entry: './src',

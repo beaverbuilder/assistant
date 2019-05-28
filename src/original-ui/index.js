@@ -16,8 +16,6 @@ import {
 	useSystemState
 } from 'store'
 import { redirect } from 'utils/location'
-import './api'
-import './apps'
 
 Provider.displayName = 'StoreProvider'
 
