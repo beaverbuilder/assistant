@@ -55,6 +55,9 @@
             height: 50px;
             border-radius: 15px;
             background-color: #7A8998;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         &:hover {
@@ -69,5 +72,12 @@
             margin-top: 5px;
             text-align: center;
         }
+    }
+}
+
+@supports( display: grid ) {
+    .app-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
     }
 }

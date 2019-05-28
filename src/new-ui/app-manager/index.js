@@ -53,7 +53,9 @@ const AppSwitcher = () => {
 					}
 					return (
 						<Link to={location} className="app-grid-item" key={i}>
-							<div className="icon"></div>
+							<div className="icon">
+								{ 'function' === typeof app.icon && app.icon( {} ) }
+							</div>
 							<label>{app.label}</label>
 						</Link>
 					)
