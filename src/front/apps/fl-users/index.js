@@ -1,4 +1,3 @@
-import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions } from 'store'
 import { wordpress } from 'utils'
@@ -9,8 +8,8 @@ const { registerApp } = getSystemActions()
 
 registerApp( 'fl-users', {
 	label: __( 'People' ),
-	content: <App />,
-	icon: <AppIcon />,
+	content: App,
+	icon: AppIcon,
 	enabled: currentUserCan( 'edit_users' ),
 	state: initialState,
 	actions,

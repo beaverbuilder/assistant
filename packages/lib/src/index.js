@@ -1,3 +1,5 @@
 export * from './window'
 export * from './hooks'
 export * from './appearance'
+export * from './error-boundary'
+export * from './art'

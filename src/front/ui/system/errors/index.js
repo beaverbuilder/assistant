@@ -1,36 +1,8 @@
-import React, { Component, useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import UAParser from 'ua-parser-js'
 import { Heading, Form, Branding, AppContext, Padding, Button, Icon, UIContext } from 'components'
-import { render } from 'utils/react'
-
-export class ErrorBoundary extends Component {
-	constructor( props ) {
-		super( props )
-		this.state = {
-			hasError: false,
-			error: null,
-		}
-	}
-
-	static getDerivedStateFromError( error ) {
-
-		// Update state so the next render will show the fallback UI.
-		return {
-			hasError: true,
-			error,
-		}
-	}
-
-	render() {
-		const { alternate, children } = this.props
-		const { hasError, error } = this.state
-		if ( hasError ) {
-			return render( alternate, { error } )
-		}
-		return children
-	}
-}
+import { ErrorBoundary } from 'lib'
 
 export const OuterErrorBoundary = props => {
 	const merged = {

@@ -1,4 +1,3 @@
-import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions } from 'store'
 import { currentUserCan } from 'utils/wordpress'
@@ -9,8 +8,8 @@ const { registerApp } = getSystemActions()
 
 registerApp( 'fl-notifications', {
 	label: __( 'Notifications' ),
-	content: <App />,
-	icon: <AppIcon />,
+	content: App,
+	icon: AppIcon,
 	enabled: (
 		currentUserCan( 'update_plugins' ) ||
 		currentUserCan( 'update_themes' ) ||

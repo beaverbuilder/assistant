@@ -21,18 +21,17 @@ class FL_Assistant_Asset_Loader {
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
+		$deps = array( 'heartbeat' );
+
 		if ( self::should_enqueue() ) {
 			$data = FL_Assistant_Data::get_all();
-			wp_enqueue_script( 'heartbeat' );
 
-			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-asst-system.bundle.css', array(), $ver, null );
-			wp_enqueue_script( 'fl-assistant', $url . 'build/fl-asst-system.bundle.js', array(), $ver, true );
+			// Original Main
+			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-main.bundle.css', array(), $ver, null );
+			wp_enqueue_script( 'fl-assistant', $url . 'build/fl-assistant-main.bundle.js', $deps, $ver, true );
 
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_CONFIG', $data['config'] );
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_INITIAL_STATE', $data['state'] );
-
-			wp_enqueue_script( 'fl-assistant-ui-test', $url . 'build/fl-asst-ui-test.bundle.js', array(), $ver, true );
-			wp_enqueue_style( 'fl-assistant-ui-test', $url . 'build/fl-asst-ui-test.bundle.css', array(), $ver, null );
 		}
 	}
 

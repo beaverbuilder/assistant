@@ -1,4 +1,3 @@
-import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions } from 'store'
 import { App, AppIcon } from './app'
@@ -8,8 +7,8 @@ const { registerApp } = getSystemActions()
 
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
-	content: <App />,
-	icon: <AppIcon />,
+	content: App,
+	icon: AppIcon,
 	state: initialState,
 	actions,
 	reducers,

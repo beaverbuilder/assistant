@@ -1,24 +1,97 @@
-import React, { useState, createRef } from 'react'
+import React, { useState, createRef, createContext, useContext } from 'react'
 import classname from 'classnames'
-import { Flipped } from 'react-flip-toolkit'
+import { Flipped, Flipper } from 'react-flip-toolkit'
 import './style.scss'
 
 const transition = {
-    stiffness: 700,
-    damping: 50,
+    /*stiffness: 700,
+    damping: 50,*/
+    stiffness: 500,
+    damping: 30,
 }
 
-export const Window = ({ children, ...rest }) => {
+const adminBarSize = () => {
+    const mobile = window.matchMedia('screen and (max-width: 782px)')
+    if ( mobile.matches ) {
+        return 46
+    }
+    return 32
+}
+
+export const WindowContext = createContext()
+WindowContext.displayName = 'WindowContext'
+
+
+
+export const Window = ({
+        children,
+        title,
+        icon,
+        size: initialSize = 'mini',
+        isHidden: initialIsHidden = false,
+        position: initialPosition = [0, 0],
+        ...rest
+    }) => {
+
+    // Is Hidden
+    const [isHidden, setIsHidden] = useState( initialIsHidden )
+    const toggleIsHidden = () => {
+        setIsHidden( !isHidden )
+        requestAnimate()
+    }
+
+    // Size
+    const defaultSize = 'mini'
+    const sizes = ['mini', 'normal']
+    const [size, setSize] = useState( sizes.includes( initialSize ) ? initialSize : defaultSize )
+    const toggleSize = () => {
+        setSize( 'mini' === size ? 'normal' : 'mini' )
+        requestAnimate()
+    }
+
+    // Position
+    const [position, setPosition] = useState( initialPosition )
+
+	// Animation
+	const shouldAnimate = true
+    const [ needsAnimate, setNeedsAnimate ] = useState( 0 )
+	const requestAnimate = () =>  shouldAnimate && setNeedsAnimate( needsAnimate + 1 )
+
+    const context = {
+        isHidden,
+        setIsHidden,
+        toggleIsHidden,
+
+        size,
+        setSize,
+        toggleSize,
+
+        position,
+        setPosition,
+
+        requestAnimate,
+    }
     return (
-        <WindowLayer {...rest}>
-            <MiniPanel>{children}</MiniPanel>
-        </WindowLayer>
+        <Flipper flipKey={needsAnimate}>
+            <WindowContext.Provider value={context}>
+                <WindowLayer {...rest}>
+                    { !isHidden && <MiniPanel title={title}>{children}</MiniPanel> }
+                    { isHidden && <WindowButton title={title}>{icon}</WindowButton> }
+                </WindowLayer>
+            </WindowContext.Provider>
+        </Flipper>
     )
 }
 
-const WindowLayer = ({ className, children, requestAnimate, ...rest }) => {
+const WindowLayer = ({
+        className,
+        children,
+        ...rest
+    }) => {
+    const { requestAnimate, size, isHidden, position, setPosition } = useContext( WindowContext )
     const ref = createRef()
-    const [windowPosition, setWindowPosition] = useState( [1,1] )
+
+    // Window Movement
     const [isDragging, setIsDragging] = useState( false )
     const [initialPos, setInitialPos] = useState( { x: null, y: null } )
     const [currentPos, setCurrentPos] = useState( { x: null, y: null } )
@@ -69,7 +142,8 @@ const WindowLayer = ({ className, children, requestAnimate, ...rest }) => {
         setCurrentPos( reset )
         setOffset( reset )
         setIsDragging( false )
-        setWindowPosition([x,y])
+
+        setPosition([x,y])
         requestAnimate()
     }
 
@@ -82,7 +156,6 @@ const WindowLayer = ({ className, children, requestAnimate, ...rest }) => {
         ...rest,
         ref,
         className: classes,
-
         onTouchStart: dragStart,
         onTouchEnd: dragEnd,
         onTouchMove: drag,
@@ -94,16 +167,25 @@ const WindowLayer = ({ className, children, requestAnimate, ...rest }) => {
     const { x: xPos, y: yPos } = currentPos
     const transform = isDragging ? "translate3d(" + xPos + "px, " + yPos + "px, 0)" : ""
 
-    const [windowX, windowY] = windowPosition
-    const toolbar = 32
+    const [windowX, windowY] = position
     const pad = 15
-    const positionerStyles = {
+    let positionerStyles = {
         position: 'absolute',
-        top: windowY ? 'auto' : toolbar + pad,
+        top: windowY ? 'auto' : adminBarSize() + pad,
         bottom: windowY ? pad : 'auto',
         right: windowX ? pad : 'auto',
         left: windowX ? 'auto' : pad,
         transform,
+    }
+    if ( 'normal' === size && !isHidden ) {
+        positionerStyles = {
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: windowX ? 0 : 'auto',
+            left: windowX ? 'auto' : 0,
+            transform,
+        }
     }
 
     return (
@@ -114,25 +196,40 @@ const WindowLayer = ({ className, children, requestAnimate, ...rest }) => {
     )
 }
 
-const MiniPanel = ({ className, children, ...rest }) => {
+const MiniPanel = ({ className, children, title, ...rest }) => {
+    const { toggleIsHidden, toggleSize, size } = useContext( WindowContext )
     const classes = classname({
         'fl-asst-window' : true,
-        'fl-asst-mini-window' : true,
+        [`fl-asst-window-${size}`] : size,
     }, className )
+
     return (
-        <Flipped flipId="window" spring={transition} translate>
+        <Flipped flipId="window" spring={transition}>
             <div className={classes} {...rest}>
-                <div className="fl-asst-window-toolbar">Window</div>
-                <div className="fl-asst-window-content fl-asst-window-move-handle" onMouseDown={ e => e.stopPropagation() }>{children}</div>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div className="fl-asst-window-toolbar">
+
+                        {title}
+
+                        <span onMouseDown={ e => e.stopPropagation() } style={{ marginLeft: 'auto' }}>
+                            <button onClick={toggleSize}>[ ]</button>
+                            <button onClick={toggleIsHidden}>X</button>
+                        </span>
+                    </div>
+                    <div className="fl-asst-window-content fl-asst-window-move-handle" onMouseDown={ e => e.stopPropagation() }>{children}</div>
+                </div>
             </div>
         </Flipped>
     )
 }
 
-const WindowDropZones = ({ ...rest }) => {
+const WindowDropZones = props => {
+    const topBar = {
+        flexBasis: adminBarSize(),
+    }
     return (
-        <div className="fl-asst-window-drop-zones" {...rest}>
-            <div className="fl-asst-window-drop-zones-top-bar" />
+        <div className="fl-asst-window-drop-zones" {...props}>
+            <div className="fl-asst-window-drop-zones-top-bar" style={topBar} />
             <div className="fl-asst-window-drop-zone-area">
                 <DropZone />
                 <DropZone />
@@ -152,13 +249,12 @@ const DropZone = () => {
     )
 }
 
-export const WindowButton = ({ onClick }) => {
+export const WindowButton = ({ children, title, ...rest }) => {
+    const { toggleIsHidden } = useContext( WindowContext )
     return (
         <Flipped flipId="window" spring={transition}>
-            <button className="fl-asst-window-button" onClick={onClick}>
-                <Flipped inverseFlipId="window">
-                    <div>Icon</div>
-                </Flipped>
+            <button className="fl-asst-window-button" onClick={toggleIsHidden} {...rest}>
+                <Flipped inverseFlipId="window">{ children ? children : <div>{title}</div> }</Flipped>
             </button>
         </Flipped>
     )

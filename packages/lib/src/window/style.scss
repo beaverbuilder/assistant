@@ -9,8 +9,14 @@
 
     pointer-events: auto;
 
-    &.fl-asst-mini-window {
-        max-width: 380px;
+    &.fl-asst-window-mini {
+        width: 380px;
+
+    }
+    &.fl-asst-window-normal {
+        height: 100%;
+        width: 460px;
+        border-radius: 0;
     }
 
     .fl-asst-window-toolbar {
@@ -21,9 +27,12 @@
         justify-content: center;
         align-items: center;
         cursor: move;
+        user-select:none;
+        padding: 2px 15px;
 
-        &:hover {
-            background: #1B1F23;
+        button {
+            padding:2px 5px;
+            background:none;
         }
     }
 
@@ -34,6 +43,7 @@
         justify-content: center;
         align-items: center;
         min-height: 100px;
+        position: relative;
     }
 }
 
@@ -45,6 +55,7 @@
     border-radius: 7px;
     overflow: hidden;
     padding:0;
+    pointer-events: auto;
 }
 
 .fl-asst-window-layer {
