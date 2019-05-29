@@ -8,8 +8,8 @@ const alias = {
     components: path.resolve( __dirname, './src/original-ui/ui/components' ),
     system: path.resolve( __dirname, './src/original-ui/ui/system' ),
     apps: path.resolve( __dirname, './src/apps' ),
-    utils: path.resolve( __dirname, './src/utils' ),
     store: path.resolve( __dirname, './src/store'),
+    utils: path.resolve( __dirname, './packages/utils/src/' ),
     lib: path.resolve( __dirname, './packages/lib/src/' ),
 }
 
