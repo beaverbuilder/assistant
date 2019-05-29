@@ -27,30 +27,42 @@ export const Window = ({
         children,
         title,
         icon,
-        size: initialSize = 'mini',
-        isHidden: initialIsHidden = false,
-        position: initialPosition = [0, 0],
+        size = 'mini',
+        isHidden = false,
+        position = [0, 0],
+        onChange = () => {},
         ...rest
     }) => {
 
+    const handleChange = config => {
+        const state = {
+            isHidden,
+            size,
+            origin: position,
+        }
+        onChange({ ...state, ...config })
+    }
+
     // Is Hidden
-    const [isHidden, setIsHidden] = useState( initialIsHidden )
     const toggleIsHidden = () => {
-        setIsHidden( !isHidden )
+        handleChange({ isHidden: !isHidden })
         requestAnimate()
     }
 
     // Size
-    const defaultSize = 'mini'
-    const sizes = ['mini', 'normal']
-    const [size, setSize] = useState( sizes.includes( initialSize ) ? initialSize : defaultSize )
     const toggleSize = () => {
-        setSize( 'mini' === size ? 'normal' : 'mini' )
+        handleChange({
+            size: 'mini' === size ? 'normal' : 'mini'
+        })
         requestAnimate()
     }
 
-    // Position
-    const [position, setPosition] = useState( initialPosition )
+    // Origin
+    const setPosition = pos => {
+        handleChange({
+            origin: pos,
+        })
+    }
 
 	// Animation
 	const shouldAnimate = true
@@ -59,11 +71,9 @@ export const Window = ({
 
     const context = {
         isHidden,
-        setIsHidden,
         toggleIsHidden,
 
         size,
-        setSize,
         toggleSize,
 
         position,
@@ -74,7 +84,7 @@ export const Window = ({
     return (
         <Flipper flipKey={needsAnimate}>
             <WindowContext.Provider value={context}>
-                <WindowLayer {...rest}>
+                <WindowLayer onChange={handleChange} {...rest}>
                     { !isHidden && <MiniPanel title={title}>{children}</MiniPanel> }
                     { isHidden && <WindowButton title={title}>{icon}</WindowButton> }
                 </WindowLayer>
@@ -86,6 +96,7 @@ export const Window = ({
 const WindowLayer = ({
         className,
         children,
+        onChange = () => {},
         ...rest
     }) => {
     const { requestAnimate, size, isHidden, position, setPosition } = useContext( WindowContext )
@@ -115,13 +126,12 @@ const WindowLayer = ({
 
     const drag = e => {
         if ( isDragging ) {
-
             e.preventDefault()
 
             if ( e.type === "touchmove" ) {
                 setCurrentPos({
                     x: e.touches[0].clientX - initialPos.x,
-                    y: e.touches[0].clientX - initialPos.y,
+                    y: e.touches[0].clientY - initialPos.y,
                 })
             } else {
                 setCurrentPos({
@@ -144,6 +154,9 @@ const WindowLayer = ({
         setIsDragging( false )
 
         setPosition([x,y])
+        onChange({
+            origin: [x,y]
+        })
         requestAnimate()
     }
 

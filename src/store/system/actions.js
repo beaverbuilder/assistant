@@ -5,6 +5,7 @@ export const setIsShowingUI = ( show ) => {
 	}
 }
 
+// Deprecated
 export const setPanelPosition = position => {
 	return {
 		type: 'SET_PANEL_POSITION',
@@ -12,6 +13,7 @@ export const setPanelPosition = position => {
 	}
 }
 
+// Deprecated
 export const togglePanelPosition = () => {
 	return {
 		type: 'TOGGLE_PANEL_POSITION'
@@ -95,5 +97,19 @@ export const decrementCount = ( key ) => {
 	return {
 		type: 'DECREMENT_COUNT',
 		key,
+	}
+}
+
+// New UI Actions
+export const setWindowOrigin = ( origin = [ 1, 1 ] ) => {
+	return {
+		type: 'SET_WINDOW_ORIGIN',
+		origin,
+	}
+}
+export const setWindow = config => {
+	return {
+		type: 'SET_WINDOW',
+		config,
 	}
 }

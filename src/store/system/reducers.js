@@ -150,3 +150,39 @@ export const counts = ( state = {}, action ) => {
 		return state
 	}
 }
+
+
+// New UI
+const windowDefaults = {
+	origin: [ 1, 1 ],
+	size: 'mini',
+	isHidden: false,
+}
+export const window = ( state = windowDefaults, action ) => {
+	switch ( action.type ) {
+	case 'SET_WINDOW':
+		return {
+			origin: state.origin,
+			size: state.size,
+			isHidden: state.isHidden,
+			...action.config,
+		}
+	case 'SET_WINDOW_ORIGIN':
+		return {
+			...state,
+			origin: action.origin,
+		}
+	case 'SET_WINDOW_SIZE':
+		return {
+			...state,
+			size: action.size,
+		}
+	case 'SET_WINDOW_IS_HIDDEN':
+		return {
+			...state,
+			isHidden: action.isHidden,
+		}
+	default:
+		return state
+	}
+}

@@ -63,6 +63,7 @@ class FL_Assistant_Data {
 			'isShowingUI'        => $user_state['isShowingUI'],
 			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
+			'window'		 	 => $user_state['window'],
 		);
 
 		return array(

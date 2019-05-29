@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import { getSystemActions } from 'store'
-import { App, AppIcon, NewApp } from './app'
+import { App, AppIcon } from './app'
+import { NewApp } from './new-app'
 import { initialState, actions, reducers, effects } from './state'
 
 const { registerApp } = getSystemActions()

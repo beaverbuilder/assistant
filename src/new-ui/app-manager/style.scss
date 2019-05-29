@@ -68,6 +68,8 @@
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
     }
 }
@@ -76,7 +78,6 @@
     .app-grid {
         display: grid;
         grid-template-columns: repeat( auto-fit, minmax(90px, 1fr) );
-        grid-template-rows: repeat( auto-fit, minmax(100px, 1fr) );
         grid-gap: 10px;
         align-items: center;
 

@@ -1,18 +1,18 @@
-import React, { useContext, useEffect } from 'react'
-import { Flipper } from 'react-flip-toolkit'
-import { Switch, Route, Link } from 'react-router-dom'
+import React from 'react'
+import { MemoryRouter, Switch, Route, Link } from 'react-router-dom'
 import { useSystemState } from 'store'
-import { WindowContext } from 'lib'
 import './style.scss'
 
 export const AppRouting = () => {
 
 	return (
-		<Switch>
-			<Route exact path="/" component={AppSwitcher} />
-			<Route path="/:app" component={App} />
-			<Route component={NoApp} />
-		</Switch>
+		<MemoryRouter>
+			<Switch>
+				<Route exact path="/" component={AppSwitcher} />
+				<Route path="/:app" component={App} />
+				<Route component={NoApp} />
+			</Switch>
+		</MemoryRouter>
 	)
 }
 
@@ -27,17 +27,27 @@ const App = props => {
 		)
 	}
 	const app = apps[appName]
+	const appProps = {
+		...props,
+		...app,
+	}
 	return (
 		<Page>
-			<div style={{ display: 'flex', flexDirection: 'row' }}>
-				<div>{ 'function' === typeof app.icon && app.icon( props ) }</div>
-				{app.label}
-				<Link to="/" style={{ marginLeft: 'auto' }}>Apps</Link>
-			</div>
-			<div>{ app.newContent ? app.newContent( props ) : 'This app has not been converted.'}</div>
+			<AppHeader {...app} />
+			<div>{ app.newContent ? app.newContent( appProps ) : 'This app has not been converted.'}</div>
 		</Page>
 	)
+}
 
+const AppHeader = props => {
+	const { icon, label } = props
+	return (
+		<div style={{ display: 'flex', flexDirection: 'row' }}>
+			<div>{ 'function' === typeof icon && icon( props ) }</div>
+			{label}
+			<Link to="/" style={{ marginLeft: 'auto' }}>Apps</Link>
+		</div>
+	)
 }
 
 const AppSwitcher = () => {
@@ -73,14 +83,10 @@ const AppSwitcher = () => {
 }
 
 const Page = ( { children, ...rest } ) => {
-	const { requestAnimate } = useContext( WindowContext )
-	useEffect( () => {
-		requestAnimate()
-	}, [] )
 	return (
-		<Flipper flipId="content" className="app-screen" {...rest}>
+		<div className="app-screen" {...rest}>
 			{children}
-		</Flipper>
+		</div>
 	)
 }
 

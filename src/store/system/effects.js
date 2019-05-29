@@ -49,5 +49,10 @@ export const after = {
 	SET_APP_POSITION: ( action, store ) => {
 		const { appOrder } = store.getState()
 		updateUserState( { appOrder } )
-	}
+	},
+
+	SET_WINDOW: ( action, store ) => {
+		const { window } = store.getState()
+		updateUserState( { window } )
+	},
 }

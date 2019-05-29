@@ -1,7 +1,8 @@
 import React from 'react'
-import { MemoryRouter } from 'react-router-dom'
 import { AppRouting } from '../app-manager'
 import { Window, useAppearance, PencilIcon } from 'lib'
+import { DesignSystemDocs } from 'lib/docs'
+import { getSystemActions, useSystemState } from 'store'
 
 export const Main = () => {
 
@@ -10,20 +11,28 @@ export const Main = () => {
 		brightness: 'dark',
 	} )
 	return (
-		<MemoryRouter>
-			<AppearanceContext.Provider value={appearance}>
-				<MainWindow />
-			</AppearanceContext.Provider>
-		</MemoryRouter>
+		<AppearanceContext.Provider value={appearance}>
+			<MainWindow />
+		</AppearanceContext.Provider>
 	)
 }
 
 const MainWindow = () => {
+	const { window: mainWindow } = useSystemState()
+	const { size, origin, isHidden } = mainWindow
+	const { setWindow } = getSystemActions()
+
+	const onChanged = config => {
+		setWindow( config )
+	}
+
 	return (
 		<Window
 			icon={<PencilIcon />}
-			size="mini"
-			position={[ 1, 0 ]}
+			isHidden={isHidden}
+			size={size}
+			position={origin}
+			onChange={onChanged}
 		>
 			<AppRouting />
 		</Window>
