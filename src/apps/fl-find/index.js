@@ -16,7 +16,7 @@ registerApp( 'fl-find', {
 	effects,
 	shouldShowTitle: false,
 
-	newContent: NewApp,
+	root: NewApp,
 	accentColor: {
 		color: '#3AA4CC',
 	}

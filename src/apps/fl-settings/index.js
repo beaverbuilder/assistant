@@ -6,33 +6,27 @@ const { registerApp } = getSystemActions()
 import './style.scss'
 
 const App = () => {
-	const { shouldReduceMotion, panelPosition } = useSystemState()
-	const { setShouldReduceMotion, setPanelPosition } = getSystemActions()
+	const { appearance } = useSystemState()
+	const { brightness } = appearance
+	const { setBrightness } = getSystemActions()
 
 	const edgeItems = [
 		{
-			children: __( 'Left' ),
-			onClick: () => setPanelPosition( 'start' ),
-			isSelected: 'start' === panelPosition
+			children: __( 'Light' ),
+			onClick: () => setBrightness('light'),
+			isSelected: 'light' === brightness,
 		},
 		{
-			children: __( 'Right' ),
-			onClick: () => setPanelPosition( 'end' ),
-			isSelected: 'end' === panelPosition
+			children: __( 'Dark' ),
+			onClick: () => setBrightness('dark'),
+			isSelected: 'dark' === brightness
 		}
 	]
 
 	return (
 		<Fragment>
 			<form>
-				<Form.Item label={__( 'Reduce Motion' )} labelFor="fl-asst-should-reduce-motion" placement="beside" >
-					<ToggleControl
-						id="fl-asst-should-reduce-motion"
-						value={shouldReduceMotion}
-						onChange={ value => setShouldReduceMotion( value ) }
-					/>
-				</Form.Item>
-				<Form.Item label={__( 'Panel Position' )} placement="beside">
+				<Form.Item label={__( 'UI Brightness' )} placement="beside">
 					<NavBar items={edgeItems} />
 				</Form.Item>
 			</form>
@@ -57,6 +51,7 @@ const AppIcon = () => {
 registerApp( 'fl-settings', {
 	label: __( 'Preferences' ),
 	content: App,
+	root: App,
 	icon: AppIcon,
 	appearance: 'form',
 } )

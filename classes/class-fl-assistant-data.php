@@ -15,6 +15,10 @@ class FL_Assistant_Data {
 		'isShowingUI'        => true,
 		'panelPosition'      => 'end',
 		'shouldReduceMotion' => false,
+		'window'			 => [],
+		'appearance'		 => [
+			'brightness'	 => 'light',
+		],
 	);
 
 	/**
@@ -64,6 +68,7 @@ class FL_Assistant_Data {
 			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
 			'window'		 	 => $user_state['window'],
+			'appearance'		 => $user_state['appearance'],
 		);
 
 		return array(

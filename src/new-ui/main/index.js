@@ -1,19 +1,16 @@
 import React from 'react'
 import { AppRouting } from '../app-manager'
-import { Window, useAppearance, PencilIcon } from 'lib'
-import { DesignSystemDocs } from 'lib/docs'
+import { Window, Appearance, PencilIcon } from 'lib'
+import { MemoryRouter } from 'react-router-dom'
 import { getSystemActions, useSystemState } from 'store'
 
 export const Main = () => {
-
-	// Appearance
-	const { appearance, AppearanceContext } = useAppearance( {
-		brightness: 'dark',
-	} )
+	const { appearance } = useSystemState()
+	const { brightness = 'light' } = appearance
 	return (
-		<AppearanceContext.Provider value={appearance}>
+		<Appearance brightness={brightness}>
 			<MainWindow />
-		</AppearanceContext.Provider>
+		</Appearance>
 	)
 }
 
@@ -27,14 +24,16 @@ const MainWindow = () => {
 	}
 
 	return (
-		<Window
-			icon={<PencilIcon />}
-			isHidden={isHidden}
-			size={size}
-			position={origin}
-			onChange={onChanged}
-		>
-			<AppRouting />
-		</Window>
+		<MemoryRouter>
+			<Window
+				icon={<PencilIcon />}
+				isHidden={isHidden}
+				size={size}
+				position={origin}
+				onChange={onChanged}
+			>
+				<AppRouting />
+			</Window>
+		</MemoryRouter>
 	)
 }

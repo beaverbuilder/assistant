@@ -1,27 +1,26 @@
 .fl-asst-window {
+    --fl-asst-window-size: 380px;
+    box-sizing: border-box;
+    width: var(--fl-asst-window-size);
     min-width: 315px;
     min-height: 100px;
-    background: #2C3239;
-    color: white;
-    border-radius: 7px;
-
+    border: 1px solid #00000024;
     overflow: hidden;
-
     pointer-events: auto;
 
     &.fl-asst-window-mini {
-        width: 380px;
-        max-height: calc( 100vh - 62px );
+        max-height: calc( 100vh - 62px ); // this needs work
+        box-shadow: 0 1px 5px 0 rgba(122,137,152,0.27);
     }
     &.fl-asst-window-normal {
+        --fl-asst-window-size: 460px;
         height: 100%;
-        width: 460px;
-        border-radius: 0;
     }
 
     .fl-asst-window-toolbar {
         flex: 0 0 30px;
         height: 30px;
+        line-height: 1;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -31,17 +30,16 @@
         padding: 2px 15px;
 
         button {
+            color: inherit;
             padding:2px 5px;
             background:none;
         }
     }
 
     .fl-asst-window-content {
+        box-sizing: border-box;
         flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        display: block;
         min-height: 100px;
         position: relative;
         overflow: auto;
@@ -51,8 +49,6 @@
 .fl-asst-window-button {
     width: 60px;
     height: 60px;
-    background: #2C3239;
-    color: white;
     border-radius: 7px;
     overflow: hidden;
     padding:0;

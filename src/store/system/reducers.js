@@ -167,20 +167,20 @@ export const window = ( state = windowDefaults, action ) => {
 			isHidden: state.isHidden,
 			...action.config,
 		}
-	case 'SET_WINDOW_ORIGIN':
+	default:
+		return state
+	}
+}
+
+const defaultAppearance = {
+	brightness: 'light',
+}
+export const appearance = ( state = defaultAppearance, action ) => {
+	switch ( action.type ) {
+	case 'SET_BRIGHTNESS':
 		return {
 			...state,
-			origin: action.origin,
-		}
-	case 'SET_WINDOW_SIZE':
-		return {
-			...state,
-			size: action.size,
-		}
-	case 'SET_WINDOW_IS_HIDDEN':
-		return {
-			...state,
-			isHidden: action.isHidden,
+			brightness: action.brightness,
 		}
 	default:
 		return state

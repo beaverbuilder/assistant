@@ -1,21 +1,34 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { Docs } from './pages'
 
-export const DesignSystemDocs = () => {
-    const style = {
+export const DesignSystemDocs = ({ windowMargin = 0, align = 'left' }) => {
+
+    let style = {
         position: 'fixed',
         top:0,
         left:0,
         bottom:0,
         right:0,
-        background: 'white',
-        zIndex:999999,
+        zIndex: -1,
+        overflow: 'auto',
     }
-    return (
-        <div style={style}>
-            <div style={{ maxWidth: '80ch', padding: '30px' }}>
+    if ( 'left' === align ) {
+        style.paddingRight = windowMargin
+    } else {
+        style.paddingLeft = windowMargin
+    }
 
-                <h1>Design Lang</h1>
-                <p>This is hopefully a way to be helpful</p>
+    const contentStyle = {
+        maxWidth: '120ch',
+        padding: 60,
+        margin: 'auto',
+    }
+
+    return (
+        <div style={style} className="fl-asst-surface">
+            <div style={contentStyle}>
+                <h1>Design Docs</h1>
+                <Docs />
             </div>
         </div>
     )

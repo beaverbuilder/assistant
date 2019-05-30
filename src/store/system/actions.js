@@ -101,15 +101,16 @@ export const decrementCount = ( key ) => {
 }
 
 // New UI Actions
-export const setWindowOrigin = ( origin = [ 1, 1 ] ) => {
-	return {
-		type: 'SET_WINDOW_ORIGIN',
-		origin,
-	}
-}
 export const setWindow = config => {
 	return {
 		type: 'SET_WINDOW',
 		config,
+	}
+}
+
+export const setBrightness = brightness => {
+	return {
+		type: 'SET_BRIGHTNESS',
+		brightness,
 	}
 }

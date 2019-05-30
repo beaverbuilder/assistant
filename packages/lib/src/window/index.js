@@ -4,8 +4,6 @@ import { Flipped, Flipper } from 'react-flip-toolkit'
 import './style.scss'
 
 const transition = {
-    /*stiffness: 700,
-    damping: 50,*/
     stiffness: 500,
     damping: 30,
 }
@@ -20,8 +18,6 @@ const adminBarSize = () => {
 
 export const WindowContext = createContext()
 WindowContext.displayName = 'WindowContext'
-
-
 
 export const Window = ({
         children,
@@ -67,7 +63,11 @@ export const Window = ({
 	// Animation
 	const shouldAnimate = true
     const [ needsAnimate, setNeedsAnimate ] = useState( 0 )
-	const requestAnimate = () =>  shouldAnimate && setNeedsAnimate( needsAnimate + 1 )
+	const requestAnimate = () => {
+        if ( shouldAnimate ) {
+            setNeedsAnimate( needsAnimate + 1 )
+        }
+    }
 
     const context = {
         isHidden,
@@ -214,6 +214,8 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
     const classes = classname({
         'fl-asst-window' : true,
         [`fl-asst-window-${size}`] : size,
+        'fl-asst-surface' : true,
+        'fl-asst-rounded' : 'normal' !== size,
     }, className )
 
     return (
@@ -266,7 +268,7 @@ export const WindowButton = ({ children, title, ...rest }) => {
     const { toggleIsHidden } = useContext( WindowContext )
     return (
         <Flipped flipId="window" spring={transition}>
-            <button className="fl-asst-window-button" onClick={toggleIsHidden} {...rest}>
+            <button className="fl-asst-window-button fl-asst-surface" onClick={toggleIsHidden} {...rest}>
                 <Flipped inverseFlipId="window">{ children ? children : <div>{title}</div> }</Flipped>
             </button>
         </Flipped>

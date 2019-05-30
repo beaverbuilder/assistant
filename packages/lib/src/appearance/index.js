@@ -1,4 +1,6 @@
 import React, { createContext, useState } from 'react'
+import classname from 'classnames'
+import './style.scss'
 
 const defaults = {
     brightness: 'light',
@@ -8,6 +10,23 @@ const defaults = {
 
 export const AppearanceContext = createContext( defaults )
 AppearanceContext.displayName = 'AppearanceContext'
+
+export const Appearance = ({ className, brightness = 'light', ...rest }) => {
+
+    const classes = classname({
+        'fl-asst-appearance' : true,
+        [`fl-asst-brightness-${brightness}`] : brightness,
+    }, className )
+
+    const context = {
+        brightness,
+    }
+    return (
+        <AppearanceContext.Provider value={context}>
+            <div className={classes} {...rest} />
+        </AppearanceContext.Provider>
+    )
+}
 
 export const useAppearance = ( options = defaults ) => {
     const [appearance, setAppearance] = useState({ ...defaults, ...options })

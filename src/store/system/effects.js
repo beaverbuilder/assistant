@@ -55,4 +55,8 @@ export const after = {
 		const { window } = store.getState()
 		updateUserState( { window } )
 	},
+	SET_BRIGHTNESS: ( action, store ) => {
+		const { appearance } = store.getState()
+		updateUserState( { appearance } )
+	}
 }

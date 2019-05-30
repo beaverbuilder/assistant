@@ -1,0 +1,31 @@
+.fl-asst-appearance {
+    // Typograpy
+    --fl-asst-base-text-size: 14px;
+    --fl-asst-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+    font-family: var(--fl-asst-font-family);
+    font-size: var(--fl-asst-base-text-size);
+
+    a {
+        color: inherit;
+    }
+}
+
+.fl-asst-brightness-light {
+    --fl-asst-surface-color: black;
+    --fl-asst-surface-background: white;
+}
+
+.fl-asst-brightness-dark {
+    --fl-asst-surface-color: white;
+    --fl-asst-surface-background: #2C3239;
+}
+
+.fl-asst-surface {
+    background: var(--fl-asst-surface-background);
+    color: var(--fl-asst-surface-color);
+}
+
+.fl-asst-rounded {
+    border-radius: 7px;
+}

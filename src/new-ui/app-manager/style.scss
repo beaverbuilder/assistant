@@ -6,34 +6,37 @@
     transform-origin: bottom right;
     max-height: 40vh;
 }
-.app-screen {
+
+.fl-asst-app-header {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    padding: 2px 15px;
+
+    .fl-asst-app-header-icon {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
+        padding-right: 15px;
+    }
+
+    .fl-asst-app-header-name {
+        flex: 1 1 auto;
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+.fl-asst-app-screen {
+    box-sizing: border-box;
     flex: 1 1 auto;
     width: 100%;
-    padding: 15px;
     overflow: auto;
-    color: white;
 
-    h1 {
-        color: inherit;
-        margin:0;
-
-        &:before {
-            display: none !important;
-        }
-    }
-
-    a,
-    a:visited {
-        color: inherit;
-        margin: 10px 0;
-    }
-
-    button {
-        color: inherit;
-        padding:10px;
-        border-radius: 7px;
-        background: #1B1F23;
-        border: none;
+    .fl-asst-padding {
+        padding: 15px;
     }
 }
 
@@ -56,6 +59,7 @@
             height: 50px;
             border-radius: 15px;
             background-color: #7A8998;
+            color: inherit;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,7 +67,6 @@
 
         label {
             font-size: 12px;
-            color:white;
             margin-top: 5px;
             text-align: center;
             white-space: nowrap;

@@ -1,18 +1,15 @@
 import React from 'react'
-import { MemoryRouter, Switch, Route, Link } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import { useSystemState } from 'store'
 import './style.scss'
 
 export const AppRouting = () => {
-
 	return (
-		<MemoryRouter>
-			<Switch>
-				<Route exact path="/" component={AppSwitcher} />
-				<Route path="/:app" component={App} />
-				<Route component={NoApp} />
-			</Switch>
-		</MemoryRouter>
+		<Switch>
+			<Route exact path="/" component={AppSwitcher} />
+			<Route path="/:app" component={App} />
+			<Route component={NoApp} />
+		</Switch>
 	)
 }
 
@@ -34,7 +31,7 @@ const App = props => {
 	return (
 		<Page>
 			<AppHeader {...app} />
-			<div>{ app.newContent ? app.newContent( appProps ) : 'This app has not been converted.'}</div>
+			<div className="fl-asst-padding">{ app.root ? app.root( appProps ) : 'This app has not been converted.'}</div>
 		</Page>
 	)
 }
@@ -42,9 +39,11 @@ const App = props => {
 const AppHeader = props => {
 	const { icon, label } = props
 	return (
-		<div style={{ display: 'flex', flexDirection: 'row' }}>
-			<div>{ 'function' === typeof icon && icon( props ) }</div>
-			{label}
+		<div className="fl-asst-app-header">
+			{ 'function' === typeof icon &&
+				<div className="fl-asst-app-header-icon">{icon( props )}</div>
+			}
+			<div className="fl-asst-app-header-name">{label}</div>
 			<Link to="/" style={{ marginLeft: 'auto' }}>Apps</Link>
 		</div>
 	)
@@ -84,7 +83,7 @@ const AppSwitcher = () => {
 
 const Page = ( { children, ...rest } ) => {
 	return (
-		<div className="app-screen" {...rest}>
+		<div className="fl-asst-app-screen" {...rest}>
 			{children}
 		</div>
 	)
