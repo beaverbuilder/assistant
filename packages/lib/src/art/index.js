@@ -15,3 +15,18 @@ export const PencilIcon = ({ size = 45 }) => {
 		</svg>
 	)
 }
+
+export const AppsIcon = () => {
+	return (
+		<svg width="20px" height="12px" viewBox="0 0 20 12" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<g fill="currentColor" fillRule="nonzero">
+				<circle cx="2" cy="2" r="2"/>
+				<circle cx="10" cy="2" r="2"/>
+				<circle cx="18" cy="2" r="2"/>
+				<circle cx="2" cy="10" r="2"/>
+				<circle cx="10" cy="10" r="2"/>
+				<circle cx="18" cy="10" r="2"/>
+			</g>
+		</svg>
+	)
+}

@@ -221,7 +221,7 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
     return (
         <Flipped flipId="window" spring={transition}>
             <div className={classes} {...rest}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <div className="fl-asst-window-toolbar">
 
                         {title}

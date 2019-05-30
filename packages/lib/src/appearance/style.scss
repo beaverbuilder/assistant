@@ -8,17 +8,23 @@
 
     a {
         color: inherit;
+
+        &:hover {
+            color: inherit;
+        }
     }
 }
 
 .fl-asst-brightness-light {
     --fl-asst-surface-color: black;
     --fl-asst-surface-background: white;
+    --fl-asst-accent-color: black;
 }
 
 .fl-asst-brightness-dark {
     --fl-asst-surface-color: white;
     --fl-asst-surface-background: #2C3239;
+    --fl-asst-accent-color: white;
 }
 
 .fl-asst-surface {

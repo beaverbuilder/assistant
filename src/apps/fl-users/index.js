@@ -15,4 +15,8 @@ registerApp( 'fl-users', {
 	actions,
 	reducers,
 	effects,
+
+	accentColor: {
+		color: '#5C5AFF'
+	}
 } )

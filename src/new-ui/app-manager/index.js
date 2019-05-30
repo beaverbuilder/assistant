@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
+import { AppContext, defaultAppContext, AppsIcon } from 'lib'
 import { useSystemState } from 'store'
 import './style.scss'
 
@@ -28,23 +29,53 @@ const App = props => {
 		...props,
 		...app,
 	}
+	const context = {
+		...defaultAppContext,
+		handle: appName,
+		...app,
+	}
+	let style = {}
+	if ( 'undefined' !== context.accentColor ) {
+		style['--fl-asst-accent-color'] = context.accentColor.color
+	}
 	return (
-		<Page>
-			<AppHeader {...app} />
-			<div className="fl-asst-padding">{ app.root ? app.root( appProps ) : 'This app has not been converted.'}</div>
-		</Page>
+		<AppContext.Provider value={context}>
+			<Page style={style}>
+				<AppHeader />
+				<div className="fl-asst-padding">{ app.root ? app.root( appProps ) : 'This app has not been converted.'}</div>
+			</Page>
+		</AppContext.Provider>
 	)
 }
 
 const AppHeader = props => {
-	const { icon, label } = props
+	const app = useContext( AppContext )
+	const { icon, label } = app
+	const iconStyle = {
+		color: 'var(--fl-asst-accent-color)'
+	}
 	return (
 		<div className="fl-asst-app-header">
 			{ 'function' === typeof icon &&
-				<div className="fl-asst-app-header-icon">{icon( props )}</div>
+				<div className="fl-asst-app-header-icon" style={iconStyle}>{icon( app )}</div>
 			}
 			<div className="fl-asst-app-header-name">{label}</div>
-			<Link to="/" style={{ marginLeft: 'auto' }}>Apps</Link>
+			<Link to="/" style={{
+				marginLeft: 'auto',
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				color: 'inherit',
+				lineHeight: 1,
+			}}>
+				<div style={{
+					color: 'var(--fl-asst-accent-color)',
+					marginBottom: 5
+				}}>
+					<AppsIcon />
+				</div>
+				<div>Apps</div>
+			</Link>
 		</div>
 	)
 }

@@ -12,14 +12,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 40px;
-    padding: 2px 15px;
+    height: 44px;
+    padding: 0 15px;
 
     .fl-asst-app-header-icon {
         flex: 0 0 auto;
         display: flex;
         justify-content: center;
-        padding-right: 15px;
+        padding-right: 10px;
     }
 
     .fl-asst-app-header-name {
@@ -44,6 +44,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    padding: 15px;
 
     .app-grid-item {
         flex: 0 0 25%;
@@ -59,7 +60,7 @@
             height: 50px;
             border-radius: 15px;
             background-color: #7A8998;
-            color: inherit;
+            color:white;
             display: flex;
             justify-content: center;
             align-items: center;
