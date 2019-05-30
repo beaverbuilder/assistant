@@ -1,0 +1,26 @@
+.fl-app-cloud {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 15px;
+
+    .fl-asst-cloud-connect-button {
+        background-color: var(--fl-asst-accent-color);
+        color: black;
+        padding: 15px;
+        font-size: 16px;
+        border-radius: var(--fl-asst-base-radius);
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .center-text {
+        text-align: center;
+    }
+
+    h1 {
+        color: inherit;
+        line-height: 1.4;
+    }
+}

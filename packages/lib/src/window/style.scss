@@ -82,14 +82,12 @@
 .fl-asst-window-drop-zones {
     width: 100%;
     height: 100%;
-    background: rgba(33, 150, 243, 0.5);
     display: flex;
     flex-direction: column;
     pointer-events: none;
 
     .fl-asst-window-drop-zones-top-bar {
         flex: 0 0 32px;
-        background: rgba(33, 150, 243, 0.8);
     }
 
     .fl-asst-window-drop-zone-area {
@@ -104,9 +102,5 @@
         flex: 1 1 50%;
         background: transparent;
         width: 50%;
-
-        &.fl-asst-window-drop-zone-is-over {
-            background: rgba(33, 150, 243, 0.5);
-        }
     }
 }
