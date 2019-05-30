@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemActions } from 'store'
-import { ToggleControl, NavBar, Form } from 'components'
+import { NavBar, Form } from 'components'
 const { registerApp } = getSystemActions()
 import './style.scss'
 
@@ -13,12 +13,12 @@ const App = () => {
 	const edgeItems = [
 		{
 			children: __( 'Light' ),
-			onClick: () => setBrightness('light'),
+			onClick: () => setBrightness( 'light' ),
 			isSelected: 'light' === brightness,
 		},
 		{
 			children: __( 'Dark' ),
-			onClick: () => setBrightness('dark'),
+			onClick: () => setBrightness( 'dark' ),
 			isSelected: 'dark' === brightness
 		}
 	]

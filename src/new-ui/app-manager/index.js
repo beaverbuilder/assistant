@@ -48,7 +48,7 @@ const App = props => {
 	)
 }
 
-const AppHeader = props => {
+const AppHeader = () => {
 	const app = useContext( AppContext )
 	const { icon, label } = app
 	const iconStyle = {

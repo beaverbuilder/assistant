@@ -21,7 +21,7 @@ const Root = () => {
 	)
 }
 
-const NextScreen = ({ history }) => {
+const NextScreen = ( { history } ) => {
 	return (
 		<Fragment>
 			<h2>Test Screen</h2>

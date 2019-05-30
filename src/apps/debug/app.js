@@ -4,10 +4,10 @@ import { DesignSystemDocs } from 'lib/docs'
 import { useSystemState } from 'store'
 
 export const App = () => {
-    const [shouldShowDocs, setShouldShowDocs] = useState( false )
-    const toggleShowDocs = () => setShouldShowDocs( !shouldShowDocs )
+	const [ shouldShowDocs, setShouldShowDocs ] = useState( false )
+	const toggleShowDocs = () => setShouldShowDocs( ! shouldShowDocs )
 
-    const { window: { size, origin }, appearance } = useSystemState()
+	const { window: { size, origin }, appearance } = useSystemState()
 	const { brightness } = appearance
 
 	let align = 'left'
@@ -22,15 +22,15 @@ export const App = () => {
 	} else {
 		margin = 380
 	}
-    return (
-        <Fragment>
-            <h1>Debug</h1>
+	return (
+		<Fragment>
+			<h1>Debug</h1>
 
-            { shouldShowDocs &&
-                <Appearance brightness={ 'light' === brightness ? 'dark' : 'light' }>
-    				<DesignSystemDocs align={align} windowMargin={margin} />
-    			</Appearance>
-            }
-        </Fragment>
-    )
+			{ shouldShowDocs &&
+			<Appearance brightness={ 'light' === brightness ? 'dark' : 'light' }>
+				<DesignSystemDocs align={align} windowMargin={margin} />
+			</Appearance>
+			}
+		</Fragment>
+	)
 }
