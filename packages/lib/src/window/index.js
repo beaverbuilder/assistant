@@ -158,6 +158,7 @@ const WindowLayer = ({
             origin: [x,y]
         })
         requestAnimate()
+        return false
     }
 
     const classes = classname({
@@ -218,15 +219,15 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
         'fl-asst-rounded' : 'normal' !== size,
     }, className )
 
+    const preventProp = e => e.stopPropagation()
+
     return (
         <Flipped flipId="window" spring={transition}>
             <div className={classes} {...rest}>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <div className="fl-asst-window-toolbar">
-
                         {title}
-
-                        <span onMouseDown={ e => e.stopPropagation() } style={{ marginLeft: 'auto' }}>
+                        <span onMouseDown={preventProp} onMouseUp={preventProp} onMouseMove={preventProp} style={{ marginLeft: 'auto' }}>
                             <button onClick={toggleSize}>[ ]</button>
                             <button onClick={toggleIsHidden}>X</button>
                         </span>

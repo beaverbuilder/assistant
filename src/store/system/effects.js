@@ -53,7 +53,7 @@ export const after = {
 
 	SET_WINDOW: ( action, store ) => {
 		const { window } = store.getState()
-		updateUserState( { window } )
+		updateUserState( { window: {...window} } )
 	},
 	SET_BRIGHTNESS: ( action, store ) => {
 		const { appearance } = store.getState()

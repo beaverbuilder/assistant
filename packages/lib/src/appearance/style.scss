@@ -6,11 +6,28 @@
     font-family: var(--fl-asst-font-family);
     font-size: var(--fl-asst-base-text-size);
 
+    --fl-asst-base-radius: 7px;
+
     a {
         color: inherit;
 
         &:hover {
             color: inherit;
+        }
+    }
+
+    button {
+        background: transparent;
+        border: none;
+        border-radius: var(--fl-asst-base-radius);
+
+        &:hover {
+            top:0;
+            box-shadow: none;
+        }
+        &:focus {
+            top:0;
+            box-shadow: none;
         }
     }
 }

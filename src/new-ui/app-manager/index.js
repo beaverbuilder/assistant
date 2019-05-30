@@ -60,22 +60,24 @@ const AppHeader = () => {
 				<div className="fl-asst-app-header-icon" style={iconStyle}>{icon( app )}</div>
 			}
 			<div className="fl-asst-app-header-name">{label}</div>
-			<Link to="/" style={{
-				marginLeft: 'auto',
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				color: 'inherit',
-				lineHeight: 1,
-			}}>
-				<div style={{
-					color: 'var(--fl-asst-accent-color)',
-					marginBottom: 5
+
+			<div className="fl-asst-app-header-actions">
+				<Link to="/" style={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					color: 'inherit',
+					lineHeight: 1,
 				}}>
-					<AppsIcon />
-				</div>
-				<div>Apps</div>
-			</Link>
+					<div style={{
+						color: 'var(--fl-asst-accent-color)',
+						marginBottom: 5
+					}}>
+						<AppsIcon />
+					</div>
+					<div>Apps</div>
+				</Link>
+			</div>
 		</div>
 	)
 }
