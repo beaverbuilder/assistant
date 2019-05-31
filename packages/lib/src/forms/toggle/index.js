@@ -6,7 +6,7 @@ export const ToggleControl = props => {
 	const {
 		className,
 		value: initialValue = false,
-		onChange = () => () => {},
+		onChange = () => {},
 		label = '',
 	} = props
 	const [ value, setValue ] = useState( initialValue )

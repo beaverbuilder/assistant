@@ -36,6 +36,12 @@
         font-size: var(--fl-asst-base-text-size);
         margin: var(--fl-asst-spacing) 0;
     }
+
+    h1, h2, h3, h4, h5, h6 {
+        &:before {
+            display: none;
+        }
+    }
 }
 
 .fl-asst-brightness-light {

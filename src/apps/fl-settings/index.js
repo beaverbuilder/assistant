@@ -7,9 +7,9 @@ const { registerApp } = getSystemActions()
 import './style.scss'
 
 const App = () => {
-	const { appearance } = useSystemState()
+	const { appearance, shouldShowLabels } = useSystemState()
 	const { brightness } = appearance
-	const { setBrightness } = getSystemActions()
+	const { setBrightness, setShouldShowLabels } = getSystemActions()
 
 	const edgeItems = [
 		{
@@ -30,8 +30,11 @@ const App = () => {
 				<Form.Item label={__( 'UI Brightness' )} placement="beside">
 					<NavBar items={edgeItems} />
 				</Form.Item>
-				<Form.Item label={__('Toggle Test')} placement="beside">
-					<ToggleControl />
+				<Form.Item label={__('Display Icon Labels')} placement="beside">
+					<ToggleControl
+						value={shouldShowLabels}
+						onChange={ v => setShouldShowLabels( v ) }
+					/>
 				</Form.Item>
 			</form>
 		</Fragment>

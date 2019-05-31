@@ -102,7 +102,8 @@
         }
 
         .fl-asst-form-item:focus-within {
-            border-left: 2px solid var(--fl-asst-dark-color);
+            border-left-width: 2px;
+            border-left-color: var(--fl-asst-accent-color);
 
             label {
                 color: var(--fl-asst-title-color);

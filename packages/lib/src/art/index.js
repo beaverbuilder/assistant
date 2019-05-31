@@ -30,3 +30,40 @@ export const AppsIcon = () => {
 		</svg>
 	)
 }
+
+export const DragHandle = () => {
+	return (
+		<svg width="7px" height="14px" viewBox="0 0 7 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<g stroke="currentColor" strokeWidth="2">
+				<path d="M1,1 L6,1"></path>
+				<path d="M1,5 L6,5"></path>
+				<path d="M1,9 L6,9"></path>
+				<path d="M1,13 L6,13"></path>
+			</g>
+		</svg>
+	)
+}
+
+export const CloseIcon = () => {
+	return (
+		<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<g stroke="currentColor" strokeWidth="2" fill="none" fillRule="evenodd" strokeLinecap="round">
+				<path d="M13,1 L1,13"></path>
+				<path d="M1,1 L13,13"></path>
+			</g>
+		</svg>
+	)
+}
+
+export const ExpandIcon = () => {
+	return (
+		<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+				<polyline points="1 5 1 1 5 1"></polyline>
+				<polyline points="9 1 13 1 13 5"></polyline>
+				<polyline points="13 9 13 13 9 13"></polyline>
+				<polyline points="5 13 1 13 1 9"></polyline>
+			</g>
+		</svg>
+	)
+}

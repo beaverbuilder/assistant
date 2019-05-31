@@ -114,3 +114,10 @@ export const setBrightness = brightness => {
 		brightness,
 	}
 }
+
+export const setShouldShowLabels = ( show =  true ) => {
+	return {
+		type: 'SET_SHOULD_SHOW_LABELS',
+		show,
+	}
+}

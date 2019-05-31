@@ -1,6 +1,7 @@
 import React, { useState, createRef, createContext, useContext } from 'react'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
+import { DragHandle, CloseIcon, ExpandIcon, ButtonLabel } from 'lib'
 import './style.scss'
 
 const transition = {
@@ -189,6 +190,7 @@ const WindowLayer = ({
         bottom: windowY ? pad : 'auto',
         right: windowX ? pad : 'auto',
         left: windowX ? 'auto' : pad,
+        willChange: 'transform',
         transform,
     }
     if ( 'normal' === size && !isHidden ) {
@@ -219,20 +221,40 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
         'fl-asst-rounded' : 'normal' !== size,
     }, className )
 
-    const preventProp = e => e.stopPropagation()
+    const stopProp = e => e.stopPropagation()
 
     return (
         <Flipped flipId="window" spring={transition}>
             <div className={classes} {...rest}>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <div className="fl-asst-window-toolbar">
+                        <span style={{ display: 'inline-flex' }}>
+                            <DragHandle />
+                            <ButtonLabel>Move</ButtonLabel>
+                        </span>
                         {title}
-                        <span onMouseDown={preventProp} onMouseUp={preventProp} onMouseMove={preventProp} style={{ marginLeft: 'auto' }}>
-                            <button onClick={toggleSize}>[ ]</button>
-                            <button onClick={toggleIsHidden}>X</button>
+                        <span
+                            onMouseDown={stopProp}
+                            onMouseUp={stopProp}
+                            onMouseMove={stopProp}
+                            style={{ marginLeft: 'auto' }}
+                        >
+                            <button onClick={toggleSize}>
+                                <ExpandIcon />
+                                <ButtonLabel>Expand</ButtonLabel>
+                            </button>
+                            <button onClick={toggleIsHidden}>
+                                <CloseIcon />
+                                <ButtonLabel>Hide</ButtonLabel>
+                            </button>
                         </span>
                     </div>
-                    <div className="fl-asst-window-content fl-asst-window-move-handle" onMouseDown={ e => e.stopPropagation() }>{children}</div>
+                    <div
+                        className="fl-asst-window-content fl-asst-window-move-handle"
+                        onMouseDown={stopProp}
+                        onMouseUp={stopProp}
+                        onMouseMove={stopProp}
+                    >{children}</div>
                 </div>
             </div>
         </Flipped>

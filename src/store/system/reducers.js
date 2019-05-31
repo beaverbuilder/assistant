@@ -186,3 +186,12 @@ export const appearance = ( state = defaultAppearance, action ) => {
 		return state
 	}
 }
+
+export const shouldShowLabels = ( state = true, action ) => {
+	switch ( action.type ) {
+	case 'SET_SHOULD_SHOW_LABELS':
+		return action.show
+	default:
+		return state
+	}
+}

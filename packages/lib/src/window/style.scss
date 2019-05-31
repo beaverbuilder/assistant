@@ -18,8 +18,9 @@
     }
 
     .fl-asst-window-toolbar {
-        flex: 0 0 30px;
-        height: 30px;
+        box-sizing: border-box;
+        flex: 0 0 40px;
+        height: 40px;
         line-height: 1;
         display: flex;
         flex-direction: row;
@@ -27,12 +28,16 @@
         align-items: center;
         cursor: move;
         user-select:none;
-        padding: 2px 15px;
+        padding: 0 12px;
 
         button {
             color: inherit;
             padding:2px 5px;
             background:none;
+            line-height: 1;
+            display: inline-flex;
+            flex-direction: row;
+            align-content: center;
         }
     }
 
