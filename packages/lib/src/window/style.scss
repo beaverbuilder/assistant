@@ -1,15 +1,18 @@
 .fl-asst-window {
     --fl-asst-window-size: 380px;
+    --fl-asst-admin-bar-height: 32px;
+
     box-sizing: border-box;
     width: var(--fl-asst-window-size);
-    min-width: 315px;
+    max-width: 100vw;
     min-height: 100px;
     border: 1px solid #00000024;
     overflow: hidden;
     pointer-events: auto;
 
     &.fl-asst-window-mini {
-        max-height: calc( 100vh - 62px ); // this needs work
+        max-width: calc( 100vw - 30px );
+        max-height: calc( 100vh - ( 30px + var(--fl-asst-admin-bar-height) ) ); // this needs work
         box-shadow: 0 1px 5px 0 rgba(122,137,152,0.27);
     }
     &.fl-asst-window-normal {
@@ -107,5 +110,11 @@
         flex: 1 1 50%;
         background: transparent;
         width: 50%;
+    }
+}
+
+@media screen and ( max-width: 782px ) {
+    .fl-asst-window {
+        --fl-asst-admin-bar-height: 46px;
     }
 }

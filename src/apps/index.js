@@ -6,4 +6,4 @@ import './fl-cloud'
 import './fl-notifications'
 import './fl-settings'
 
-//import './debug'
+import './examples'
