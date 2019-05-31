@@ -1,7 +1,8 @@
 import React, { useState, createRef, createContext, useContext } from 'react'
+import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
-import { DragHandle, CloseIcon, ExpandIcon, ButtonLabel } from 'lib'
+import { DragHandle, CloseIcon, ExpandIcon, CollapseIcon, ButtonLabel } from 'lib'
 import './style.scss'
 
 const transition = {
@@ -230,7 +231,7 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                     <div className="fl-asst-window-toolbar">
                         <span style={{ display: 'inline-flex' }}>
                             <DragHandle />
-                            <ButtonLabel>Move</ButtonLabel>
+                            <ButtonLabel>{__('Move')}</ButtonLabel>
                         </span>
                         {title}
                         <span
@@ -240,12 +241,16 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                             style={{ marginLeft: 'auto' }}
                         >
                             <button onClick={toggleSize}>
-                                <ExpandIcon />
-                                <ButtonLabel>Expand</ButtonLabel>
+                                { 'mini' === size && <ExpandIcon /> }
+                                { 'normal' === size && <CollapseIcon /> }
+                                <ButtonLabel>{
+                                    'mini' === size ?
+                                    __('Expand') : __('Compact')
+                                }</ButtonLabel>
                             </button>
                             <button onClick={toggleIsHidden}>
                                 <CloseIcon />
-                                <ButtonLabel>Hide</ButtonLabel>
+                                <ButtonLabel>{__('Hide')}</ButtonLabel>
                             </button>
                         </span>
                     </div>

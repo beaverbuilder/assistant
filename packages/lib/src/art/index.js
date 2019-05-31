@@ -67,3 +67,16 @@ export const ExpandIcon = () => {
 		</svg>
 	)
 }
+
+export const CollapseIcon = () => {
+	return (
+		<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+				<polyline points="1 5 5 5 5 1"></polyline>
+				<polyline points="9 1 9 5 13 5"></polyline>
+				<polyline points="13 9 9 9 9 13"></polyline>
+				<polyline points="5 13 5 9 1 9"></polyline>
+			</g>
+		</svg>
+	)
+}
