@@ -146,8 +146,12 @@ const WindowLayer = ({
     }
 
     const dragEnd = e => {
-        const x = e.clientX > ( ref.current.clientWidth / 2 ) ? 1 : 0
-        const y = e.clientY > ( ref.current.clientHeight / 2 ) ? 1 : 0
+        let point = e.nativeEvent
+        if ( e.type === "touchend" ) {
+            point = e.nativeEvent.changedTouches[0]
+        }
+        const x = point.clientX > ( ref.current.clientWidth / 2 ) ? 1 : 0
+        const y = point.clientY > ( ref.current.clientHeight / 2 ) ? 1 : 0
 
         const reset = { x: 0 , y: 0 }
         setInitialPos( reset )
@@ -156,9 +160,7 @@ const WindowLayer = ({
         setIsDragging( false )
 
         setPosition([x,y])
-        onChange({
-            origin: [x,y]
-        })
+        onChange({ origin: [x,y] })
         requestAnimate()
         return false
     }
@@ -224,6 +226,15 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
 
     const stopProp = e => e.stopPropagation()
 
+    const stopEvts = {
+        onMouseUp: stopProp,
+        onMouseMove: stopProp,
+        onMouseDown: stopProp,
+        onTouchStart: stopProp,
+        onTouchMove: stopProp,
+        onTouchEnd: stopProp,
+    }
+
     return (
         <Flipped flipId="window" spring={transition}>
             <div className={classes} {...rest}>
@@ -235,9 +246,7 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                         </span>
                         {title}
                         <span
-                            onMouseDown={stopProp}
-                            onMouseUp={stopProp}
-                            onMouseMove={stopProp}
+                            {...stopEvts}
                             style={{ marginLeft: 'auto' }}
                         >
                             <button onClick={toggleSize}>
@@ -256,9 +265,7 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                     </div>
                     <div
                         className="fl-asst-window-content fl-asst-window-move-handle"
-                        onMouseDown={stopProp}
-                        onMouseUp={stopProp}
-                        onMouseMove={stopProp}
+                        {...stopEvts}
                     >{children}</div>
                 </div>
             </div>
