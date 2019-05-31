@@ -30,7 +30,7 @@ const App = () => {
 				<Form.Item label={__( 'UI Brightness' )} placement="beside">
 					<NavBar items={edgeItems} />
 				</Form.Item>
-				<Form.Item label={__('Display Icon Labels')} placement="beside">
+				<Form.Item label={__( 'Display Icon Labels' )} placement="beside">
 					<ToggleControl
 						value={shouldShowLabels}
 						onChange={ v => setShouldShowLabels( v ) }
