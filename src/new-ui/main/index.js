@@ -15,7 +15,7 @@ export const Main = () => {
 }
 
 const MainWindow = () => {
-	const { window: mainWindow } = useSystemState()
+	const { window: mainWindow, shouldShowLabels } = useSystemState()
 	const { size, origin, isHidden } = mainWindow
 	const { setWindow } = getSystemActions()
 
@@ -31,6 +31,7 @@ const MainWindow = () => {
 				size={size}
 				position={origin}
 				onChange={onChanged}
+				shouldShowLabels={shouldShowLabels}
 			>
 				<AppRouting />
 			</Window>

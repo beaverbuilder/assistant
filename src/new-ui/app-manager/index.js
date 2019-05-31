@@ -49,6 +49,7 @@ const App = props => {
 }
 
 const AppHeader = () => {
+	const { shouldShowLabels } = useSystemState()
 	const app = useContext( AppContext )
 	const { icon, label } = app
 	const iconStyle = {
@@ -75,7 +76,7 @@ const AppHeader = () => {
 					}}>
 						<AppsIcon />
 					</div>
-					<div>Apps</div>
+					{ shouldShowLabels && <div>Apps</div> }
 				</Link>
 			</div>
 		</div>

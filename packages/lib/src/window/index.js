@@ -27,6 +27,7 @@ export const Window = ({
         icon,
         size = 'mini',
         isHidden = false,
+        shouldShowLabels = true,
         position = [0, 0],
         onChange = () => {},
         ...rest
@@ -82,6 +83,7 @@ export const Window = ({
         setPosition,
 
         requestAnimate,
+        shouldShowLabels,
     }
     return (
         <Flipper flipKey={needsAnimate}>
@@ -216,7 +218,7 @@ const WindowLayer = ({
 }
 
 const MiniPanel = ({ className, children, title, ...rest }) => {
-    const { toggleIsHidden, toggleSize, size } = useContext( WindowContext )
+    const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( WindowContext )
     const classes = classname({
         'fl-asst-window' : true,
         [`fl-asst-window-${size}`] : size,
@@ -242,7 +244,7 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                     <div className="fl-asst-window-toolbar">
                         <span style={{ display: 'inline-flex' }}>
                             <DragHandle />
-                            <ButtonLabel>{__('Move')}</ButtonLabel>
+                            { shouldShowLabels && <ButtonLabel>{__('Move')}</ButtonLabel> }
                         </span>
                         {title}
                         <span
@@ -252,14 +254,14 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                             <button onClick={toggleSize}>
                                 { 'mini' === size && <ExpandIcon /> }
                                 { 'normal' === size && <CollapseIcon /> }
-                                <ButtonLabel>{
+                                { shouldShowLabels && <ButtonLabel>{
                                     'mini' === size ?
                                     __('Expand') : __('Compact')
-                                }</ButtonLabel>
+                                }</ButtonLabel> }
                             </button>
                             <button onClick={toggleIsHidden}>
                                 <CloseIcon />
-                                <ButtonLabel>{__('Hide')}</ButtonLabel>
+                                { shouldShowLabels && <ButtonLabel>{__('Hide')}</ButtonLabel> }
                             </button>
                         </span>
                     </div>
