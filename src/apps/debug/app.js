@@ -1,7 +1,6 @@
-import React, { Fragment, useState } from 'react'
-import { Appearance } from 'lib'
-import { DesignSystemDocs } from 'lib/docs'
-import { useSystemState } from 'store'
+import React, { Fragment, useState } from 'fl-react'
+import { Appearance, DesignSystemDocs } from 'assistant/lib'
+import { useSystemState } from 'assistant/store'
 
 export const App = () => {
 	const [ shouldShowDocs, setShouldShowDocs ] = useState( false )

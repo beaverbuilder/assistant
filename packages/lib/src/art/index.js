@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'fl-react'
 
 export const PencilIcon = ({ size = 45 }) => {
 	return (

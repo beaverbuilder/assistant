@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'fl-react'
+import { Appearance, PencilIcon, StoreRouter, Window } from 'assistant/lib'
+import { store } from 'assistant'
 import { AppRouting } from '../app-manager'
-import { Window, Appearance, PencilIcon } from 'lib'
-import { MemoryRouter } from 'react-router-dom'
-import { getSystemActions, useSystemState } from 'store'
+
+const { getSystemActions, useSystemState } = store
 
 export const Main = () => {
 	const { appearance } = useSystemState()
@@ -18,13 +19,12 @@ const MainWindow = () => {
 	const { window: mainWindow, shouldShowLabels } = useSystemState()
 	const { size, origin, isHidden } = mainWindow
 	const { setWindow } = getSystemActions()
-
 	const onChanged = config => {
 		setWindow( config )
 	}
 
 	return (
-		<MemoryRouter>
+		<StoreRouter>
 			<Window
 				icon={<PencilIcon />}
 				isHidden={isHidden}
@@ -35,6 +35,6 @@ const MainWindow = () => {
 			>
 				<AppRouting />
 			</Window>
-		</MemoryRouter>
+		</StoreRouter>
 	)
 }

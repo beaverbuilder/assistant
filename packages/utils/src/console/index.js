@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'fl-react'
 
 export const warn = ( message ) => {
 	if ( console && console.warn ) { // eslint-disable-line no-console

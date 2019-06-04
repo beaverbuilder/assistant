@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'fl-react'
 
 export const useWindowSize = () => {
 	const isClient = 'object' === typeof window

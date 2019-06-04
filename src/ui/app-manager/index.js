@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
-import { AppContext, defaultAppContext, AppsIcon } from 'lib'
-import { useSystemState } from 'store'
+import React, { useContext } from 'fl-react'
+import { AppContext, defaultAppContext, AppsIcon, Switch, Route, Link } from 'assistant/lib'
+import { useSystemState } from 'assistant/store'
 import './style.scss'
 
 export const AppRouting = () => {

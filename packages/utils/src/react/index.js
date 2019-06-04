@@ -1,4 +1,4 @@
-import { isValidElement, cloneElement } from 'react'
+import { isValidElement, cloneElement } from 'fl-react'
 
 export const render = ( componentOrFunction, props = {} ) => {
 

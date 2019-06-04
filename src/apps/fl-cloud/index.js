@@ -1,10 +1,8 @@
+import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
-import { getSystemActions } from 'store'
 import { App, AppIcon } from './app'
 
-const { registerApp } = getSystemActions()
-
-registerApp( 'fl-debug', {
+registerApp( 'fl-cloud', {
 	label: __( 'Cloud' ),
 	root: App,
 	icon: AppIcon,

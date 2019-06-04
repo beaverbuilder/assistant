@@ -1,7 +1,7 @@
-import { useContext } from 'react'
+import { useContext } from 'fl-react'
+import { AppContext } from 'lib'
 import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch } from 'utils/store'
-import { AppContext } from 'components'
 import {
 	defaultState,
 	defaultActions,
@@ -18,7 +18,7 @@ export const registerAppStore = args => {
 		effects,
 	} = args
 
-	const storeKey = `${ key }/state`
+	const storeKey = `app:${ key }/state`
 	const cache = getCache( 'app-state', key )
 	const state = {
 		...defaultState,

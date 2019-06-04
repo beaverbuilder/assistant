@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
+import { registerApp } from 'assistant'
+import React, { Fragment } from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { useSystemState, getSystemActions } from 'store'
-import { NavBar } from 'components'
-import { Form, ToggleControl } from 'lib'
-const { registerApp } = getSystemActions()
+import { useSystemState, getSystemActions } from 'assistant/store'
+import { Form, ToggleControl } from 'assistant/lib'
+
 import './style.scss'
 
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
 		<Fragment>
 			<form>
 				<Form.Item label={__( 'UI Brightness' )} placement="beside">
-					<NavBar items={edgeItems} />
+					Fix me.
 				</Form.Item>
 				<Form.Item label={__( 'Display Icon Labels' )} placement="beside">
 					<ToggleControl

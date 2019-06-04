@@ -5,18 +5,34 @@ const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const production = 'production' === process.env.NODE_ENV
 
 const alias = {
-    components: path.resolve( __dirname, './src/original-ui/ui/components' ),
-    system: path.resolve( __dirname, './src/original-ui/ui/system' ),
-    apps: path.resolve( __dirname, './src/apps' ),
-    store: path.resolve( __dirname, './src/store'),
+
+    components: path.resolve( __dirname, './src/_original/original-ui/ui/components' ),
+    system: path.resolve( __dirname, './src/_original/original-ui/ui/system' ),
+
+    store: path.resolve( __dirname, './src/system/store'),
     utils: path.resolve( __dirname, './packages/utils/src/' ),
     lib: path.resolve( __dirname, './packages/lib/src/' ),
 }
 
-const externals = {}
+const externals = {
+    'fl-react'          : 'FL.React',
+    'fl-react-dom'      : 'FL.ReactDOM',
+
+    'assistant'         : 'FL.Assistant',
+    'assistant/store'   : 'FL.Assistant.store',
+    'assistant/lib'     : 'FL.Assistant.lib',
+    'assistant/utils'     : 'FL.Assistant.utils',
+}
+
+const entry = {
+    main: './src/ui',
+    api: './src/system',
+    apps: './src/apps',
+    vendors: './src/fl-vendors',
+}
 
 const config = {
-	entry: './src',
+	entry,
     externals,
 	mode: 'development',
     target: 'web',
@@ -25,9 +41,7 @@ const config = {
         path: path.resolve( __dirname, 'build' ),
         filename: `fl-assistant-[name].bundle.js`,
     },
-    resolve: {
-        alias,
-    },
+    resolve: { alias },
     module: {
         rules: [
             {
@@ -39,20 +53,6 @@ const config = {
                 test: /\.s?css$/,
                 use: [ 'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ],
 			},
-            {
-                test: require.resolve('react'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'Assistant.vendor.React',
-                }]
-            },
-            {
-                test: require.resolve('classnames'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'Assistant.vendor.classnames',
-                }]
-            },
 		]
     },
     plugins: [

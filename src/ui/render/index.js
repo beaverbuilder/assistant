@@ -1,5 +1,5 @@
-import React from 'react'
-import { render } from 'react-dom'
+import React from 'fl-react'
+import { render } from 'fl-react-dom'
 import { Main } from '../main'
 
 // Render App into the document

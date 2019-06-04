@@ -1,8 +1,6 @@
 import { __ } from '@wordpress/i18n'
-import { getSystemActions } from 'store'
+import { registerApp } from 'assistant'
 import { App, AppIcon } from './app'
-
-const { registerApp } = getSystemActions()
 
 registerApp( 'fl-example-routing', {
     label: __('Routing Example'),

@@ -1,6 +1,6 @@
-import React, { Fragment, useContext, useLayoutEffect } from 'react'
+import React, { Fragment, useContext, useLayoutEffect } from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { useAppState, getSystemConfig } from 'store'
+import { useAppState, getSystemConfig } from 'assistant/store'
 import {
 	UserList,
 	Header,

@@ -1,10 +1,9 @@
+import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
-import { getSystemActions } from 'store'
-import { wordpress } from 'utils'
+import { wordpress } from 'assistant/utils'
 import { App, AppIcon } from './app'
 import { initialState, actions, reducers, effects } from './state'
 const { currentUserCan } = wordpress
-const { registerApp } = getSystemActions()
 
 registerApp( 'fl-users', {
 	label: __( 'People' ),

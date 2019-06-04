@@ -1,6 +1,5 @@
-import { getSystemActions } from 'store'
+import { registerApp } from 'assistant'
 import { App } from './app'
-const { registerApp } = getSystemActions()
 
 registerApp( 'fl-debug', {
 	label: 'Debug',

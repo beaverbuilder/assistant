@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { Component } from 'fl-react'
 import { render } from 'utils/react'
 
 export class ErrorBoundary extends Component {

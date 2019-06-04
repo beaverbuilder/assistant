@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'fl-react'
 import { registerStore, useStore, getDispatch } from './'
 
 const STORE_KEY = 'example-store'

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'fl-react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { Button, Icon, ToggleControl, BackForwardControl } from 'components'

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'fl-react'
 import { Docs } from './pages'
 
 export const DesignSystemDocs = ({ windowMargin = 0, align = 'left' }) => {

@@ -1,4 +1,4 @@
-import React, { useState, createRef, createContext, useContext } from 'react'
+import React, { useState, createRef, createContext, useContext } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
@@ -114,7 +114,7 @@ const WindowLayer = ({
 
     const dragStart = e => {
 
-        if (e.type === "touchstart") {
+        if ( "touchstart" === e.type ) {
             setInitialPos({
                 x: e.touches[0].clientX - offset.x,
                 y: e.touches[0].clientY - offset.y
@@ -132,7 +132,7 @@ const WindowLayer = ({
         if ( isDragging ) {
             e.preventDefault()
 
-            if ( e.type === "touchmove" ) {
+            if ( "touchmove" === e.type ) {
                 setCurrentPos({
                     x: e.touches[0].clientX - initialPos.x,
                     y: e.touches[0].clientY - initialPos.y,
@@ -149,7 +149,7 @@ const WindowLayer = ({
 
     const dragEnd = e => {
         let point = e.nativeEvent
-        if ( e.type === "touchend" ) {
+        if ( "touchend" === e.type ) {
             point = e.nativeEvent.changedTouches[0]
         }
         const x = point.clientX > ( ref.current.clientWidth / 2 ) ? 1 : 0
@@ -211,7 +211,6 @@ const WindowLayer = ({
 
     return (
         <div {...props}>
-            { isDragging && <WindowDropZones /> }
             <div style={positionerStyles}>{children}</div>
         </div>
     )

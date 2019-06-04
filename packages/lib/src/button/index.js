@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'fl-react'
 import classname from 'classnames'
 import './style.scss'
 

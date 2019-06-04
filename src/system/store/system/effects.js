@@ -1,4 +1,4 @@
-import { registerAppStore } from 'store'
+import { registerAppStore } from '../app'
 import { updateUserState } from 'utils/wordpress'
 
 /**

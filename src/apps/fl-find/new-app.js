@@ -10,7 +10,8 @@ export const NewApp = () => {
 	)
 }
 
-const Root = () => {
+const Root = ( { match, history, location } ) => {
+	console.log( 'root', match, history, location )
 	return (
 		<Fragment>
 			<p>This is the root screen</p>
@@ -21,7 +22,8 @@ const Root = () => {
 	)
 }
 
-const NextScreen = ( { history } ) => {
+const NextScreen = ( { match, history, location } ) => {
+	console.log( 'next', match, history, location )
 	return (
 		<Fragment>
 			<h2>Test Screen</h2>

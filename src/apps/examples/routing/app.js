@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { AppRoute, AppLink } from 'lib'
+import React, { Fragment } from 'fl-react'
+import { AppRoute, AppLink } from 'assistant/lib'
 
 export const App = () => {
     return (
