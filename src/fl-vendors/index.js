@@ -2,14 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 export {
-    React,
-    ReactDOM,
+	React,
+	ReactDOM,
 }
 
 const api = window.FL || {}
 
 window.FL = {
-    ...api,
-    React,
-    ReactDOM,
+	...api,
+	React,
+	ReactDOM,
 }

@@ -7,14 +7,14 @@ const asst = fl.Assistant || {}
 const { registerApp } = store.getSystemActions()
 
 const Assistant = {
-    ...asst,
-    registerApp,
-    store,
-    lib: { ...lib },
-    utils,
+	...asst,
+	registerApp,
+	store,
+	lib: { ...lib },
+	utils,
 }
 
 window.FL = {
-    ...fl,
-    Assistant,
+	...fl,
+	Assistant,
 }
