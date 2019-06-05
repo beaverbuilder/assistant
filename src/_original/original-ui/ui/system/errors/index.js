@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import UAParser from 'ua-parser-js'
 import { Heading, Form, Branding, AppContext, Padding, Button, Icon, UIContext } from 'components'
-import { ErrorBoundary } from 'lib'
+import { ErrorBoundary } from 'shared-lib'
 
 export const OuterErrorBoundary = props => {
 	const merged = {

@@ -1,4 +1,4 @@
-import React, { useState, createRef, createContext, useContext } from 'fl-react'
+import React, { useState, createRef, createContext, useContext, useEffect } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
@@ -116,13 +116,13 @@ const WindowLayer = ({
 
         if ( "touchstart" === e.type ) {
             setInitialPos({
-                x: e.touches[0].clientX - offset.x,
-                y: e.touches[0].clientY - offset.y
+                x: e.nativeEvent.touches[0].clientX - offset.x,
+                y: e.nativeEvent.touches[0].clientY - offset.y
             })
         } else {
             setInitialPos({
-                x: e.clientX - offset.x,
-                y: e.clientY - offset.y
+                x: e.nativeEvent.clientX - offset.x,
+                y: e.nativeEvent.clientY - offset.y
             })
         }
         setIsDragging( true )
@@ -134,13 +134,13 @@ const WindowLayer = ({
 
             if ( "touchmove" === e.type ) {
                 setCurrentPos({
-                    x: e.touches[0].clientX - initialPos.x,
-                    y: e.touches[0].clientY - initialPos.y,
+                    x: e.nativeEvent.touches[0].clientX - initialPos.x,
+                    y: e.nativeEvent.touches[0].clientY - initialPos.y,
                 })
             } else {
                 setCurrentPos({
-                    x: e.clientX - initialPos.x,
-                    y: e.clientY - initialPos.y,
+                    x: e.nativeEvent.clientX - initialPos.x,
+                    y: e.nativeEvent.clientY - initialPos.y,
                 })
             }
             setOffset( Object.assign({}, currentPos ) )
@@ -176,17 +176,17 @@ const WindowLayer = ({
         ...rest,
         ref,
         className: classes,
+
         onTouchStart: dragStart,
         onTouchEnd: dragEnd,
         onTouchMove: drag,
+
         onMouseDown: dragStart,
         onMouseUp: dragEnd,
         onMouseMove: drag,
     }
-
     const { x: xPos, y: yPos } = currentPos
     const transform = isDragging ? "translate3d(" + xPos + "px, " + yPos + "px, 0)" : ""
-
     const [windowX, windowY] = position
     const pad = 15
     let positionerStyles = {
@@ -229,9 +229,7 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
 
     const stopEvts = {
         onMouseMove: stopProp,
-        onMouseDown: stopProp,
         onTouchStart: stopProp,
-        onTouchMove: stopProp,
     }
 
     return (
