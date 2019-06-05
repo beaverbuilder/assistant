@@ -15,20 +15,23 @@ const alias = {
 }
 
 const externals = {
+
     'fl-react'          : 'FL.React',
     'fl-react-dom'      : 'FL.ReactDOM',
 
     'assistant'         : 'FL.Assistant',
     'assistant/store'   : 'FL.Assistant.store',
     'assistant/lib'     : 'FL.Assistant.lib',
-    'assistant/utils'     : 'FL.Assistant.utils',
+    'assistant/utils'   : 'FL.Assistant.utils',
+
+    '@wordpress/i18n'   : 'wp.i18n',
 }
 
 const entry = {
     main: './src/ui',
     api: './src/system',
     apps: './src/apps',
-    vendors: './src/fl-vendors',
+    vendors: './packages/fl-vendors',
 }
 
 const config = {

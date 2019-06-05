@@ -2,7 +2,7 @@ import React, { useState, createRef, createContext, useContext } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
-import { DragHandle, CloseIcon, ExpandIcon, CollapseIcon, ButtonLabel } from 'lib'
+import { Icon } from 'lib'
 import './style.scss'
 
 const transition = {
@@ -242,7 +242,7 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <div className="fl-asst-window-toolbar">
                         <span style={{ display: 'inline-flex' }}>
-                            <DragHandle />
+                            <Icon.DragHandle />
                             { shouldShowLabels && <ButtonLabel>{__('Move')}</ButtonLabel> }
                         </span>
                         {title}
@@ -251,15 +251,15 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                             style={{ marginLeft: 'auto' }}
                         >
                             <button onClick={toggleSize}>
-                                { 'mini' === size && <ExpandIcon /> }
-                                { 'normal' === size && <CollapseIcon /> }
+                                { 'mini' === size && <Icon.Expand /> }
+                                { 'normal' === size && <Icon.Collapse /> }
                                 { shouldShowLabels && <ButtonLabel>{
                                     'mini' === size ?
                                     __('Expand') : __('Compact')
                                 }</ButtonLabel> }
                             </button>
                             <button onClick={toggleIsHidden}>
-                                <CloseIcon />
+                                <Icon.Close />
                                 { shouldShowLabels && <ButtonLabel>{__('Hide')}</ButtonLabel> }
                             </button>
                         </span>
@@ -309,4 +309,9 @@ export const WindowButton = ({ children, title, ...rest }) => {
             </button>
         </Flipped>
     )
+}
+
+const ButtonLabel = ({ className, ...rest }) => {
+    const classes = classname('fl-asst-button-label', className )
+    return <span className={classes} {...rest} />
 }

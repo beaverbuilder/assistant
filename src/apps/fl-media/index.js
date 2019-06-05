@@ -1,19 +1,10 @@
-import { registerApp } from 'assistant'
-import { __ } from '@wordpress/i18n'
-import { App, AppIcon } from './app'
-import { initialState, actions, reducers, effects } from './state'
+import { registerApp, __ } from 'assistant'
+import { AppIcon } from './app'
 
 registerApp( 'fl-media', {
-	label: __( 'Media' ),
-	content: App,
-	icon: AppIcon,
-	state: initialState,
-	actions,
-	reducers,
-	effects,
-	shouldShowTitle: false,
-
-	accentColor: {
+    label: __('Media'),
+    icon: AppIcon,
+    accentColor: {
 		color: '#FF5A5E'
-	}
-} )
+	},
+})

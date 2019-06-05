@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { AppRoute, AppLink, PencilIcon } from 'lib'
+import React, { Fragment } from 'fl-react'
+import { AppRoute, AppLink, Icon } from 'assistant/lib'
 import './style.scss'
 
 export const App = () => {
@@ -24,7 +24,7 @@ export const AppIcon = () => {
 const NotConnectedScreen = () => {
 	return (
 		<div className="fl-app-cloud">
-			<PencilIcon size={75} />
+			<Icon.Pencil size={75} />
 			<p className="center-text">You are not currently connected to Assistant Cloud</p>
 			<AppLink to="/connected" className="fl-asst-cloud-connect-button">Connect</AppLink>
 		</div>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'fl-react'
-import { AppContext, defaultAppContext, AppsIcon, Switch, Route, Link } from 'assistant/lib'
+import { AppContext, defaultAppContext, Icon, Switch, Route, Link } from 'assistant/lib'
 import { useSystemState } from 'assistant/store'
 import './style.scss'
 
@@ -73,7 +73,7 @@ const AppHeader = () => {
 						color: 'var(--fl-asst-accent-color)',
 						marginBottom: 5
 					}}>
-						<AppsIcon />
+						<Icon.Apps />
 					</div>
 					{ shouldShowLabels && <div>Apps</div> }
 				</Link>

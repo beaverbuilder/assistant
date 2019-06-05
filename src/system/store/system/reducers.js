@@ -7,6 +7,7 @@ export const isShowingUI = ( state = true, action ) => {
 	}
 }
 
+
 export const panelPosition = ( state = 'end', action ) => {
 	switch ( action.type ) {
 	case 'TOGGLE_PANEL_POSITION':
@@ -17,6 +18,7 @@ export const panelPosition = ( state = 'end', action ) => {
 		return state
 	}
 }
+
 
 export const shouldReduceMotion = ( state = false, action ) => {
 	switch ( action.type ) {
@@ -41,15 +43,9 @@ export const apps = ( state = {}, action ) => {
 	const defaults = {
 		app: null,
 		label: null,
-		content: null,
-		newContent: null,
-		enabled: true,
+		isEnabled: true,
 		icon: null,
 		appearance: 'normal',
-		state: {},
-		actions: {},
-		reducers: {},
-		effects: {},
 	}
 
 	switch ( action.type ) {
@@ -67,6 +63,7 @@ export const apps = ( state = {}, action ) => {
 		return state
 	}
 }
+
 
 export const appFrameSize = ( state = 'normal', action ) => {
 	switch ( action.type ) {
@@ -190,8 +187,8 @@ export const appearance = ( state = defaultAppearance, action ) => {
 export const shouldShowLabels = ( state = true, action ) => {
 	switch ( action.type ) {
 	case 'SET_SHOULD_SHOW_LABELS':
-		return action.show
+		return action.show ? true : false
 	default:
-		return state
+		return state ? true : false
 	}
 }

@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { Appearance, PencilIcon, StoreRouter, Window } from 'assistant/lib'
+import { Appearance, Icon, StoreRouter, Window } from 'assistant/lib'
 import { store } from 'assistant'
 import { AppRouting } from '../app-manager'
 
@@ -26,7 +26,7 @@ const MainWindow = () => {
 	return (
 		<StoreRouter>
 			<Window
-				icon={<PencilIcon />}
+				icon={<Icon.Pencil />}
 				isHidden={isHidden}
 				size={size}
 				position={origin}
