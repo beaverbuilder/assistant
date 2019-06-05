@@ -11,7 +11,7 @@ const alias = {
 
     store: path.resolve( __dirname, './src/system/store'),
     utils: path.resolve( __dirname, './packages/utils/src/' ),
-    lib: path.resolve( __dirname, './packages/lib/src/' ),
+    lib: path.resolve( __dirname, './packages/shared-lib/src/' ),
 }
 
 const externals = {
@@ -45,6 +45,7 @@ const config = {
         filename: `fl-assistant-[name].bundle.js`,
     },
     resolve: { alias },
+    devtool: production ? '' : 'source-map',
     module: {
         rules: [
             {
@@ -54,7 +55,27 @@ const config = {
             },
             {
                 test: /\.s?css$/,
-                use: [ 'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ],
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                ],
 			},
 		]
     },

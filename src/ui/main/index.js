@@ -1,6 +1,6 @@
 import React from 'fl-react'
-import { Appearance, Icon, StoreRouter, Window } from 'assistant/lib'
 import { store } from 'assistant'
+import { Appearance, Icon, StoreRouter, Window } from 'assistant/lib'
 import { AppRouting } from '../app-manager'
 
 const { getSystemActions, useSystemState } = store

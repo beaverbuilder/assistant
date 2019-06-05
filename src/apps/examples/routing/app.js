@@ -13,7 +13,14 @@ export const App = () => {
 const Main = () => {
 	return (
 		<div>
-			<h1>Main View</h1>
+			<h1>Heading 1</h1>
+			<h2>Heading Two</h2>
+			<h3>Heading 3</h3>
+			<h4>Heading Quatre</h4>
+			<h5>Heading 5</h5>
+			<h6>Why would anyone use a Heading 6?</h6>
+			<p>Paragraph - Nullam id dolor id nibh ultricies vehicula ut id elit. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+			<blockquote>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit.</blockquote>
 			<AppLink to="/second">Go To Second Screen</AppLink>
 		</div>
 	)

@@ -1,15 +1,28 @@
+$font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
 .fl-asst-appearance {
+
+    // Colors
+    --fl-asst-dark-color: black;
+    --fl-asst-light-color: white;
+
+    --fl-asst-accent-color: black;
+
+    // Materials / Surfaces
+
+
+    // Sizes
+    --fl-asst-base-radius: 7px;
+    --fl-asst-spacing: 15px;
+
     // Typograpy
     --fl-asst-base-text-size: 14px;
-    --fl-asst-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --fl-asst-font-family: $font-stack;
 
     font-family: var(--fl-asst-font-family);
     font-size: var(--fl-asst-base-text-size);
 
-    --fl-asst-base-radius: 7px;
-    --fl-asst-spacing: 15px;
-
-    a {
+    a, button {
         color: inherit;
 
         &:hover {
@@ -38,8 +51,11 @@
     }
 
     h1, h2, h3, h4, h5, h6 {
-        &:before {
-            display: none;
+        color: inherit;
+
+        &::before {
+            display: none !important;
+            content: '';
         }
     }
 }
