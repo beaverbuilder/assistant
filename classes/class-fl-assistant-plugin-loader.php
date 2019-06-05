@@ -27,7 +27,7 @@ if ( ! class_exists( 'FL_Assistant_Plugin_Loader' ) ) {
 		 * Define plugin constants.
 		 */
 		static private function define_constants() {
-			define( 'FL_ASSISTANT_VERSION', '0.1' );
+			define( 'FL_ASSISTANT_VERSION', '0.3' );
 			define( 'FL_ASSISTANT_FILE', trailingslashit( dirname( dirname( __FILE__ ) ) ) . 'fl-assistant.php' );
 			define( 'FL_ASSISTANT_DIR', plugin_dir_path( FL_ASSISTANT_FILE ) );
 			define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );

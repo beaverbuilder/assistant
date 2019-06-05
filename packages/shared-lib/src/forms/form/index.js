@@ -1,7 +1,9 @@
 import React, { Fragment } from 'fl-react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, ToggleControl, BackForwardControl } from 'components'
+import { Icon } from 'lib'
+import { ToggleControl } from '../toggle'
+import { BackForwardControl } from '../back-forward'
 import './style.scss'
 
 export const Form = ( { children } ) => children
@@ -288,7 +290,6 @@ export const FormTest = () => {
 				</Form.Section>
 				<Form.Footer>
 					Footer contents.
-					<Button>Publish</Button>
 				</Form.Footer>
 			</form>
 		</Fragment>

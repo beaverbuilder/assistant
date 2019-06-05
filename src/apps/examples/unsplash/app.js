@@ -1,11 +1,11 @@
 import React, { useState } from 'fl-react'
-import { Switch, Route, Link } from 'assistant/lib'
+import { Switch, Route } from 'assistant/lib'
 import Unsplash from 'unsplash-js'
 
-const unsplash = new Unsplash({
-	applicationId: "c09e42c595ba312b458f788cd08934dbf79834aacf4c205f4561ef8bdcedefc9",
-	secret: "a3edadbe892968502ae3a1191bea92cb44daebad80c1c18fcbadf9a48c1a4673"
-})
+const unsplash = new Unsplash( {
+	applicationId: 'c09e42c595ba312b458f788cd08934dbf79834aacf4c205f4561ef8bdcedefc9',
+	secret: 'a3edadbe892968502ae3a1191bea92cb44daebad80c1c18fcbadf9a48c1a4673'
+} )
 
 export const App = ( { match } ) => {
 	const { url } = match
@@ -17,27 +17,29 @@ export const App = ( { match } ) => {
 }
 
 const Main = () => {
-	const [term, setTerm] = useState('')
-	const [results, setResults] = useState([])
+	const [ term, setTerm ] = useState( '' )
+	const [ results, setResults ] = useState( [] )
 
 	const onChange = e => {
 		const value = e.currentTarget.value
 		setTerm( value )
 
 		if ( '' === value  ) {
-			setResults([])
+			setResults( [] )
 			return
 		}
 
-		unsplash.search.photos( value, 1)
+		unsplash.search.photos( value, 1 )
 			.then( response => response.json() )
-		  	.then( data => {
+			.then( data => {
 				setResults( data.results )
-				console.log(data.results)
-		  	})
+			} )
 	}
 
-	const onDrag = (item, e) => {
+	const onDrag = ( item, e ) => {
+
+		// Import photo into WP media library here
+
 		// For unsplash tracking purposes
 		//unsplash.photos.downloadPhoto(item)
 	}
@@ -46,7 +48,7 @@ const Main = () => {
 		<div>
 			<input type="text" value={term} onChange={onChange}  style={{ color: 'black', width: '100%' }} />
 			<ul style={{ overflow: 'auto', maxHeight: '60vh'}}>
-				{ results.map( (item, i) => {
+				{ results.map( ( item, i ) => {
 					const { urls } = item
 					return (
 						<li key={i}>
@@ -56,10 +58,10 @@ const Main = () => {
 									onDrag( item, e )
 								}}
 								src={urls.small}
-								/>
+							/>
 						</li>
 					)
-				})}
+				} )}
 			</ul>
 		</div>
 	)

@@ -63,8 +63,7 @@
             flex-direction: column;
             justify-content: center;
             padding: 0 var(--fl-asst-base-padding);
-            padding-left: calc( var(--fl-asst-base-padding) - 2px );
-            border-left: 2px solid transparent;
+            border: none;
             min-height: 36px;
 
             p {
@@ -102,8 +101,7 @@
         }
 
         .fl-asst-form-item:focus-within {
-            border-left-width: 2px;
-            border-left-color: var(--fl-asst-accent-color);
+            box-shadow: inset 2px 0px 0px 0px var(--fl-asst-accent-color);
 
             label {
                 color: var(--fl-asst-title-color);

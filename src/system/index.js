@@ -1,6 +1,7 @@
-import * as store from './store'
-import * as lib from './lib'
-import * as utils from 'utils'
+import { api as store } from './store'
+import { api as lib } from './lib'
+
+//import { api as utils } from './utils'
 import * as i18n from '@wordpress/i18n'
 
 const fl = window.FL || {}
@@ -14,7 +15,6 @@ const Assistant = {
 	i18n,
 	store,
 	lib,
-	utils,
 }
 
 window.FL = {
