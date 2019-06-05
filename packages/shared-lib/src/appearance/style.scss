@@ -32,6 +32,7 @@
         background: transparent;
         border: none;
         border-radius: var(--fl-asst-base-radius);
+        min-height: 32px;
 
         &:hover {
             top:0;
@@ -55,6 +56,16 @@
             display: none !important;
             content: '';
         }
+    }
+
+    ul, ol {
+        list-style:none;
+        margin:0;
+        padding:0;
+    }
+
+    img {
+        max-width: 100%;
     }
 }
 
