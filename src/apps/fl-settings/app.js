@@ -1,4 +1,33 @@
-import React from 'fl-react'
+import React, { Fragment } from 'fl-react'
+import { __ } from 'assistant'
+import { useSystemState, getSystemActions } from 'assistant/store'
+import { Form, ToggleControl } from 'assistant/lib'
+import './style.scss'
+
+export const App = () => {
+	const { appearance, shouldShowLabels } = useSystemState()
+	const { brightness } = appearance
+	const { setBrightness, setShouldShowLabels } = getSystemActions()
+
+	return (
+		<Fragment>
+			<form>
+				<Form.Item label={__( 'Dark Appearance' )} placement="beside">
+					<ToggleControl
+						value={ 'dark' === brightness }
+						onChange={ v => setBrightness( v ? 'dark' : 'light' ) }
+					/>
+				</Form.Item>
+				<Form.Item label={__( 'Display Icon Labels' )} placement="beside">
+					<ToggleControl
+						value={shouldShowLabels}
+						onChange={ v => setShouldShowLabels( v ) }
+					/>
+				</Form.Item>
+			</form>
+		</Fragment>
+	)
+}
 
 export const AppIcon = () => {
 	return (

@@ -1,5 +1,3 @@
-$font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-
 .fl-asst-appearance {
 
     // Colors
@@ -17,7 +15,7 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, O
 
     // Typograpy
     --fl-asst-base-text-size: 14px;
-    --fl-asst-font-family: $font-stack;
+    --fl-asst-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
     font-family: var(--fl-asst-font-family);
     font-size: var(--fl-asst-base-text-size);

@@ -16,15 +16,19 @@ const alias = {
 
 const externals = {
 
-    'fl-react'          : 'FL.React',
-    'fl-react-dom'      : 'FL.ReactDOM',
+    /* fl-vendor */
+    'fl-react'              : 'FL.React',
+    'fl-react-dom'          : 'FL.ReactDOM',
+    'fl-react-router-dom'   : 'FL.ReactRouter',
 
-    'assistant'         : 'FL.Assistant',
-    'assistant/store'   : 'FL.Assistant.store',
-    'assistant/lib'     : 'FL.Assistant.lib',
-    'assistant/utils'   : 'FL.Assistant.utils',
+    /* system bundle */
+    'assistant'             : 'FL.Assistant',
+    'assistant/store'       : 'FL.Assistant.store',
+    'assistant/lib'         : 'FL.Assistant.lib',
+    'assistant/utils'       : 'FL.Assistant.utils',
 
-    '@wordpress/i18n'   : 'wp.i18n',
+    /* wp */
+    '@wordpress/i18n'       : 'wp.i18n',
 }
 
 const entry = {

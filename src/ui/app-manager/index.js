@@ -20,7 +20,10 @@ const App = props => {
 
 	if ( ! ( appName in apps ) ) {
 		return (
-			<Page>We can't seem to find the app you're looking for.</Page>
+			<Page>
+				<p>We can't seem to find the app you're looking for.</p>
+				<AppSwitcher />
+			</Page>
 		)
 	}
 	const app = apps[appName]

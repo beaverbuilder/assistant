@@ -1,12 +1,13 @@
-import React, { Fragment } from 'fl-react'
-import { AppRoute, AppLink } from 'assistant/lib'
+import React from 'fl-react'
+import { Switch, Route, Link } from 'assistant/lib'
 
-export const App = () => {
+export const App = ( { match } ) => {
+	const { url } = match
 	return (
-		<Fragment>
-			<AppRoute exact path="/" component={Main} />
-			<AppRoute exact path="/second" component={SecondaryScreen} />
-		</Fragment>
+		<Switch>
+			<Route exact path={`${url}/`} component={Main} />
+			<Route path={`${url}/second`} component={SecondaryScreen} />
+		</Switch>
 	)
 }
 
@@ -21,7 +22,8 @@ const Main = () => {
 			<h6>Why would anyone use a Heading 6?</h6>
 			<p>Paragraph - Nullam id dolor id nibh ultricies vehicula ut id elit. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
 			<blockquote>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit.</blockquote>
-			<AppLink to="/second">Go To Second Screen</AppLink>
+			<hr />
+			<Link to="/fl-example-routing/second">Go To Second Screen</Link>
 		</div>
 	)
 }

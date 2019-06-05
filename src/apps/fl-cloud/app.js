@@ -1,13 +1,14 @@
-import React, { Fragment } from 'fl-react'
-import { AppRoute, AppLink, Icon } from 'assistant/lib'
+import React from 'fl-react'
+import { Switch, Route, AppLink, Icon } from 'assistant/lib'
 import './style.scss'
 
-export const App = () => {
+export const App = ( { match } ) => {
+	const { url } = match
 	return (
-		<Fragment>
-			<AppRoute exact path="/" component={NotConnectedScreen} />
-			<AppRoute path="/connected" component={ConnectedScreen} />
-		</Fragment>
+		<Switch>
+			<Route exact path={`${url}/`} component={NotConnectedScreen} />
+			<Route path={`${url}/connected`} component={ConnectedScreen} />
+		</Switch>
 	)
 }
 
