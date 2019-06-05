@@ -1,5 +1,5 @@
 import React, { useContext } from 'fl-react'
-import { AppContext, defaultAppContext, Icon, Switch, Route, Link } from 'assistant/lib'
+import { AppContext, defaultAppContext, Icon, Switch, Route, Link, Page } from 'assistant/lib'
 import { useSystemState } from 'assistant/store'
 import './style.scss'
 
@@ -60,7 +60,7 @@ const AppHeader = () => {
 	return (
 		<div className="fl-asst-app-header">
 			{ 'function' === typeof icon &&
-				<div className="fl-asst-app-header-icon" style={iconStyle}>{icon( app )}</div>
+				<div className="fl-asst-app-header-icon" style={iconStyle}>{ icon( app ) }</div>
 			}
 			<div className="fl-asst-app-header-name">{label}</div>
 
@@ -78,7 +78,7 @@ const AppHeader = () => {
 					}}>
 						<Icon.Apps />
 					</div>
-					{ shouldShowLabels && <div>Apps</div> }
+					{ shouldShowLabels && <span>Apps</span> }
 				</Link>
 			</div>
 		</div>
@@ -114,14 +114,6 @@ const AppSwitcher = () => {
 				} )}
 			</div>
 		</Page>
-	)
-}
-
-const Page = ( { children, ...rest } ) => {
-	return (
-		<div className="fl-asst-app-screen" {...rest}>
-			{children}
-		</div>
 	)
 }
 

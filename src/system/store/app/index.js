@@ -1,5 +1,5 @@
 import { useContext } from 'fl-react'
-import { AppContext } from 'lib'
+import { AppContext } from 'shared-lib'
 import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch } from 'utils/store'
 import {

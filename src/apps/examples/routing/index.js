@@ -1,5 +1,4 @@
-import { __ } from '@wordpress/i18n'
-import { registerApp } from 'assistant'
+import { registerApp, __ } from 'assistant'
 import { App, AppIcon } from './app'
 
 registerApp( 'fl-example-routing', {

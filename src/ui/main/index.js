@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { store } from 'assistant'
-import { Appearance, Icon, StoreRouter, Window } from 'assistant/lib'
+import { Appearance, Icon, StoreRouter, Window, ErrorBoundary } from 'assistant/lib'
 import { AppRouting } from '../app-manager'
 
 const { getSystemActions, useSystemState } = store
@@ -33,8 +33,16 @@ const MainWindow = () => {
 				onChange={onChanged}
 				shouldShowLabels={shouldShowLabels}
 			>
-				<AppRouting />
+				<ErrorBoundary alternate={<WindowError />}>
+					<AppRouting />
+				</ErrorBoundary>
 			</Window>
 		</StoreRouter>
+	)
+}
+
+const WindowError = () => {
+	return (
+		<h1>Problem!</h1>
 	)
 }

@@ -1,6 +1,7 @@
 .fl-asst-appearance {
 
     // Colors
+    --fl-asst-blue: blue;
     --fl-asst-dark-color: black;
     --fl-asst-light-color: white;
 
@@ -19,22 +20,23 @@
 
     font-family: var(--fl-asst-font-family);
     font-size: var(--fl-asst-base-text-size);
+    line-height: 1.3;
+
+    & * {
+        box-sizing: border-box;
+    }
 
     a, button {
         color: inherit;
-
-        &:hover {
-            color: inherit;
-        }
-    }
-
-    button {
         background: transparent;
         border: none;
         border-radius: var(--fl-asst-base-radius);
         min-height: 32px;
+        user-select: none;
 
         &:hover {
+            color: inherit;
+            background: transparent; // Change to something meaningful
             top:0;
             box-shadow: none;
         }
@@ -62,10 +64,19 @@
         list-style:none;
         margin:0;
         padding:0;
+
+        li {
+            margin:0;
+            padding:0;
+        }
     }
 
     img {
         max-width: 100%;
+    }
+
+    hr {
+        background-image: none;
     }
 }
 
@@ -84,6 +95,7 @@
 .fl-asst-surface {
     background: var(--fl-asst-surface-background);
     color: var(--fl-asst-surface-color);
+    transition: background-color .5s, color .5s;
 }
 
 .fl-asst-rounded {

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'fl-react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { Icon } from 'lib'
+import { Icon } from 'shared-lib'
 import { ToggleControl } from '../toggle'
 import { BackForwardControl } from '../back-forward'
 import './style.scss'

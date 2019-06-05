@@ -2,7 +2,7 @@ import React, { useState, createRef, createContext, useContext } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
-import { Icon } from 'lib'
+import { Icon } from 'shared-lib'
 import './style.scss'
 
 const transition = {
@@ -228,12 +228,10 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
     const stopProp = e => e.stopPropagation()
 
     const stopEvts = {
-        onMouseUp: stopProp,
         onMouseMove: stopProp,
         onMouseDown: stopProp,
         onTouchStart: stopProp,
         onTouchMove: stopProp,
-        onTouchEnd: stopProp,
     }
 
     return (

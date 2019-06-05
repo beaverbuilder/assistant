@@ -6,12 +6,15 @@ const production = 'production' === process.env.NODE_ENV
 
 const alias = {
 
+    // Deprecated
     components: path.resolve( __dirname, './src/_original/original-ui/ui/components' ),
     system: path.resolve( __dirname, './src/_original/original-ui/ui/system' ),
 
+    // New UI
+    lib: path.resolve( __dirname, './src/system/lib/'),
     store: path.resolve( __dirname, './src/system/store'),
     utils: path.resolve( __dirname, './packages/utils/src/' ),
-    lib: path.resolve( __dirname, './packages/shared-lib/src/' ),
+    'shared-lib': path.resolve( __dirname, './packages/shared-lib/src/' ),
 }
 
 const externals = {
