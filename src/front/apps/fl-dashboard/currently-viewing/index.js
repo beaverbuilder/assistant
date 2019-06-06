@@ -41,7 +41,6 @@ export const TilesWidget = () => {
 								<Button
 									key={i}
 									href={href}
-									target="_blank"
 									appearance="transparent"
 								>{label}</Button>
 							)

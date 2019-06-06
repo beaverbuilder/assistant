@@ -45,7 +45,7 @@ final class FL_Assistant_REST_Users {
 						),
 					),
 					'permission_callback' => function() {
-						return current_user_can( 'edit_users' );
+						return current_user_can( 'list_users' );
 					},
 				),
 			)
