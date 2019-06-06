@@ -1,1 +1,1 @@
-import './front'
+// Nothing to see here

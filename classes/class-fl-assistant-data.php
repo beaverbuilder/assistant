@@ -15,6 +15,11 @@ class FL_Assistant_Data {
 		'isShowingUI'        => true,
 		'panelPosition'      => 'end',
 		'shouldReduceMotion' => false,
+		'window'			 => [],
+		'appearance'		 => [
+			'brightness'	 => 'light',
+		],
+		'shouldShowLabels'	 => true,
 	);
 
 	/**
@@ -63,6 +68,11 @@ class FL_Assistant_Data {
 			'isShowingUI'        => $user_state['isShowingUI'],
 			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
+
+			/* New UI Props */
+			'window'		 	 => $user_state['window'],
+			'appearance'		 => $user_state['appearance'],
+			'shouldShowLabels'	 => $user_state['shouldShowLabels'],
 		);
 
 		return array(
