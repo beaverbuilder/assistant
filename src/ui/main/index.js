@@ -1,15 +1,16 @@
 import React from 'fl-react'
 import { store } from 'assistant'
 import { Appearance, Icon, StoreRouter, Window, ErrorBoundary } from 'assistant/lib'
-import { AppRouting } from '../app-manager'
+import { AppRouting } from '../app'
 
 const { getSystemActions, useSystemState } = store
 
 export const Main = () => {
-	const { appearance } = useSystemState()
+	const { appearance, window } = useSystemState()
 	const { brightness = 'light' } = appearance
+	const { size } = window
 	return (
-		<Appearance brightness={brightness}>
+		<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
 			<MainWindow />
 		</Appearance>
 	)

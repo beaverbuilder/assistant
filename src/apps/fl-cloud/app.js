@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { Switch, Route, AppLink, Icon } from 'assistant/lib'
+import { Switch, Route, AppLink, Page, Icon } from 'assistant/lib'
 import './style.scss'
 
 export const App = ( { match } ) => {
@@ -24,19 +24,19 @@ export const AppIcon = () => {
 
 const NotConnectedScreen = () => {
 	return (
-		<div className="fl-app-cloud">
+		<Page className="fl-app-cloud">
 			<Icon.Pencil size={75} />
 			<p className="center-text">You are not currently connected to Assistant Cloud</p>
 			<AppLink to="/connected" className="fl-asst-cloud-connect-button">Connect</AppLink>
-		</div>
+		</Page>
 	)
 }
 
 const ConnectedScreen = () => {
 	return (
-		<div className="fl-app-cloud">
+		<Page className="fl-app-cloud">
 			<h1>Congrats! Pretend you're connected now.</h1>
 			<AppLink to="/" className="fl-asst-cloud-connect-button">Disconnect</AppLink>
-		</div>
+		</Page>
 	)
 }

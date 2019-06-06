@@ -88,32 +88,6 @@
     }
 }
 
-.fl-asst-window-drop-zones {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    pointer-events: none;
-
-    .fl-asst-window-drop-zones-top-bar {
-        flex: 0 0 32px;
-    }
-
-    .fl-asst-window-drop-zone-area {
-        flex: 1 1 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .fl-asst-window-drop-zone {
-        box-sizing: border-box;
-        flex: 1 1 50%;
-        background: transparent;
-        width: 50%;
-    }
-}
-
 @media screen and ( max-width: 782px ) {
     .fl-asst-window {
         --fl-asst-admin-bar-height: 46px;

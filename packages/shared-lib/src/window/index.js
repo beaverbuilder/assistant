@@ -125,7 +125,10 @@ const WindowLayer = ({
                 y: e.nativeEvent.clientY - offset.y
             })
         }
-        setIsDragging( true )
+
+        if ( e.target.classList.contains('fl-asst-window-drag-handle') ) {
+            setIsDragging( true )
+        }
     }
 
     const drag = e => {
@@ -148,6 +151,8 @@ const WindowLayer = ({
     }
 
     const dragEnd = e => {
+        if ( ! e.currentTarget || !isDragging ) return false
+
         let point = e.nativeEvent
         if ( "touchend" === e.type ) {
             point = e.nativeEvent.changedTouches[0]
@@ -172,6 +177,7 @@ const WindowLayer = ({
         'fl-asst-window-layer-is-dragging' : isDragging,
     }, className )
 
+    // Layer Props
     const props = {
         ...rest,
         ref,
@@ -185,10 +191,13 @@ const WindowLayer = ({
         onMouseUp: dragEnd,
         onMouseMove: drag,
     }
+
+    // Positioner
     const { x: xPos, y: yPos } = currentPos
     const transform = isDragging ? "translate3d(" + xPos + "px, " + yPos + "px, 0)" : ""
     const [windowX, windowY] = position
     const pad = 15
+
     let positionerStyles = {
         position: 'absolute',
         top: windowY ? 'auto' : adminBarSize() + pad,
@@ -211,7 +220,7 @@ const WindowLayer = ({
 
     return (
         <div {...props}>
-            <div style={positionerStyles}>{children}</div>
+            <div className="fl-asst-window-positioner" style={positionerStyles}>{children}</div>
         </div>
     )
 }
@@ -236,8 +245,8 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
         <Flipped flipId="window" spring={transition}>
             <div className={classes} {...rest}>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <div className="fl-asst-window-toolbar">
-                        <span style={{ display: 'inline-flex' }}>
+                    <div className="fl-asst-window-toolbar fl-asst-window-drag-handle">
+                        <span className="fl-asst-window-drag-handle" style={{ display: 'inline-flex' }}>
                             <Icon.DragHandle />
                             { shouldShowLabels && <ButtonLabel>{__('Move')}</ButtonLabel> }
                         </span>
@@ -270,38 +279,12 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
     )
 }
 
-const WindowDropZones = props => {
-    const topBar = {
-        flexBasis: adminBarSize(),
-    }
-    return (
-        <div className="fl-asst-window-drop-zones" {...props}>
-            <div className="fl-asst-window-drop-zones-top-bar" style={topBar} />
-            <div className="fl-asst-window-drop-zone-area">
-                <DropZone />
-                <DropZone />
-                <DropZone />
-                <DropZone />
-            </div>
-        </div>
-    )
-}
-
-const DropZone = () => {
-    const classes = classname({
-        'fl-asst-window-drop-zone' : true
-    })
-    return (
-        <div className={classes} />
-    )
-}
-
 export const WindowButton = ({ children, title, ...rest }) => {
     const { toggleIsHidden } = useContext( WindowContext )
     return (
         <Flipped flipId="window" spring={transition}>
-            <button className="fl-asst-window-button fl-asst-surface" onClick={toggleIsHidden} {...rest}>
-                <Flipped inverseFlipId="window">{ children ? children : <div>{title}</div> }</Flipped>
+            <button className="fl-asst-window-button fl-asst-surface fl-asst-window-drag-handle" onClick={toggleIsHidden} {...rest}>
+                <Flipped inverseFlipId="window">{children}</Flipped>
             </button>
         </Flipped>
     )

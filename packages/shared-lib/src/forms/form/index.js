@@ -3,7 +3,7 @@ import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'shared-lib'
 import { ToggleControl } from '../toggle'
-import { BackForwardControl } from '../back-forward'
+//import { BackForwardControl } from '../back-forward'
 import './style.scss'
 
 export const Form = ( { children } ) => children
@@ -227,7 +227,7 @@ export const FormTest = () => {
 				</Form.Item>
 
 				<Form.Item label={__( 'Back/Forward Control' )} placement="beside">
-					<BackForwardControl />
+					{ false && <BackForwardControl /> }
 				</Form.Item>
 
 				<Form.Section label={__( 'Form Section' )}>

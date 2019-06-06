@@ -6,7 +6,7 @@ registerApp( 'fl-example-unsplash', {
 	label: __( 'Unsplash' ),
 	root: App,
 	icon: AppIcon,
-	accentColor: {
+	accent: {
 		color: '#50E3C2',
 	},
 } )

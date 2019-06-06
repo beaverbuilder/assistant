@@ -4,7 +4,7 @@ import { AppIcon } from './app'
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
 	icon: AppIcon,
-	accentColor: {
+	accent: {
 		color: '#FF5A5E'
 	},
 } )

@@ -6,7 +6,7 @@ registerApp( 'fl-cloud', {
 	label: __( 'Cloud' ),
 	root: App,
 	icon: AppIcon,
-	accentColor: {
+	accent: {
 		color: '#FA9200'
 	}
 } )

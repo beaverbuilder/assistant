@@ -1,5 +1,5 @@
 import React, { useState } from 'fl-react'
-import { Switch, Route } from 'assistant/lib'
+import { Switch, Route, Page } from 'assistant/lib'
 import Unsplash from 'unsplash-js'
 
 const unsplash = new Unsplash( {
@@ -45,7 +45,7 @@ const Main = () => {
 	}
 
 	return (
-		<div>
+		<Page>
 			<input type="text" value={term} onChange={onChange}  style={{ color: 'black', width: '100%' }} />
 			<ul style={{ overflow: 'auto', maxHeight: '60vh'}}>
 				{ results.map( ( item, i ) => {
@@ -63,7 +63,7 @@ const Main = () => {
 					)
 				} )}
 			</ul>
-		</div>
+		</Page>
 	)
 }
 

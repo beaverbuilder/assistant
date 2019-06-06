@@ -11,11 +11,17 @@ const defaults = {
 export const AppearanceContext = createContext( defaults )
 AppearanceContext.displayName = 'AppearanceContext'
 
-export const Appearance = ({ className, brightness = 'light', ...rest }) => {
+export const Appearance = ({
+        className,
+        brightness = 'light',
+        size = 'normal', // or compact
+        ...rest,
+    }) => {
 
     const classes = classname({
         'fl-asst-appearance' : true,
         [`fl-asst-brightness-${brightness}`] : brightness,
+        [`fl-asst-size-${size}`] : size,
     }, className )
 
     const context = {

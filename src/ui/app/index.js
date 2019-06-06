@@ -6,7 +6,7 @@ import './style.scss'
 export const AppRouting = () => {
 	return (
 		<Switch>
-			<Route exact path="/" component={AppSwitcher} />
+			<Route exact path="/" component={Switcher} />
 			<Route path="/:app" component={App} />
 			<Route component={NoApp} />
 		</Switch>
@@ -20,10 +20,7 @@ const App = props => {
 
 	if ( ! ( appName in apps ) ) {
 		return (
-			<Page>
-				<p>We can't seem to find the app you're looking for.</p>
-				<AppSwitcher />
-			</Page>
+			<AppSwitcher />
 		)
 	}
 	const app = apps[appName]
@@ -36,16 +33,16 @@ const App = props => {
 		handle: appName,
 		...app,
 	}
-	let style = {}
-	if ( 'undefined' !== context.accentColor ) {
-		style['--fl-asst-accent-color'] = context.accentColor.color
+	const style = {}
+	if ( 'undefined' !== typeof context.accent ) {
+		style['--fl-asst-accent-color'] = context.accent.color
 	}
 	return (
 		<AppContext.Provider value={context}>
-			<Page style={style}>
+			<div style={style}>
 				<AppHeader />
-				<div className="fl-asst-padding">{ app.root ? app.root( appProps ) : 'This app has not been converted.'}</div>
-			</Page>
+				{ app.root ? app.root( appProps ) : <Page>This app has not been converted.</Page> }
+			</div>
 		</AppContext.Provider>
 	)
 }
@@ -54,13 +51,10 @@ const AppHeader = () => {
 	const { shouldShowLabels } = useSystemState()
 	const app = useContext( AppContext )
 	const { icon, label } = app
-	const iconStyle = {
-		color: 'var(--fl-asst-accent-color)'
-	}
 	return (
 		<div className="fl-asst-app-header">
 			{ 'function' === typeof icon &&
-				<div className="fl-asst-app-header-icon" style={iconStyle}>{ icon( app ) }</div>
+				<div className="fl-asst-app-header-icon">{ icon( app ) }</div>
 			}
 			<div className="fl-asst-app-header-name">{label}</div>
 
@@ -85,7 +79,7 @@ const AppHeader = () => {
 	)
 }
 
-const AppSwitcher = () => {
+const Switcher = () => {
 	const { apps, appOrder } = useSystemState()
 	return (
 		<Page>
@@ -96,16 +90,15 @@ const AppSwitcher = () => {
 						pathname: `/${handle}`,
 						state: app,
 					}
-
-					const { accentColor } = app
-					let color = null
-					if ( 'undefined' !== typeof accentColor ) {
-						color = accentColor.color
+					const style = {}
+					if ( 'undefined' !== typeof app.accent ) {
+						style['--fl-asst-accent-color'] = app.accent.color
+						style.backgroundColor = 'var(--fl-asst-accent-color)'
 					}
 
 					return (
 						<Link to={location} className="app-grid-item" key={i}>
-							<div className="icon" style={{ backgroundColor: color }}>
+							<div className="fl-asst-app-icon" style={style}>
 								{ 'function' === typeof app.icon && app.icon( {} ) }
 							</div>
 							<label>{app.label}</label>

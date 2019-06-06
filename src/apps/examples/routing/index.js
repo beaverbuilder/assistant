@@ -5,7 +5,7 @@ registerApp( 'fl-example-routing', {
 	label: __( 'Routing Example' ),
 	root: App,
 	icon: AppIcon,
-	accentColor: {
+	accent: {
 		color: '#00A681',
 	},
 } )
