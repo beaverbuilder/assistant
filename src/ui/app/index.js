@@ -18,11 +18,13 @@ const App = props => {
 	const { apps } = useSystemState()
 	const { params: { app: appName } } = match
 
+	// Can't find that app
 	if ( ! ( appName in apps ) ) {
 		return (
-			<AppSwitcher />
+			<Switcher />
 		)
 	}
+	
 	const app = apps[appName]
 	const appProps = {
 		...props,
