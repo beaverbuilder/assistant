@@ -1,9 +1,7 @@
 import React, { Fragment } from 'fl-react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { Icon } from 'shared-lib'
-import { ToggleControl } from '../toggle'
-//import { BackForwardControl } from '../back-forward'
+import { Icon, Control } from 'shared-lib'
 import './style.scss'
 
 export const Form = ( { children } ) => children
@@ -223,7 +221,7 @@ Form.Test = () => {
 				</Form.Item>
 
 				<Form.Item label={__( 'Toggle Control' )} placement="beside">
-					<ToggleControl />
+					<Control.Toggle />
 				</Form.Item>
 
 				<Form.Item label={__( 'Back/Forward Control' )} placement="beside">
