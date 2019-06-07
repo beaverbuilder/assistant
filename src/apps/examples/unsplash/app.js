@@ -1,5 +1,6 @@
 import React, { useState } from 'fl-react'
-import { Switch, Route, Page } from 'assistant/lib'
+import { Switch, Route } from 'fl-react-router-dom'
+import { Page } from 'assistant/lib'
 import Unsplash from 'unsplash-js'
 
 const unsplash = new Unsplash( {

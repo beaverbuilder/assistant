@@ -1,5 +1,6 @@
 import React, { useContext } from 'fl-react'
-import { AppContext, defaultAppContext, Icon, Switch, Route, Link, Page } from 'assistant/lib'
+import { Switch, Route, Link } from 'fl-react-router-dom'
+import { App, Icon, Page } from 'assistant/lib'
 import { useSystemState } from 'assistant/store'
 import './style.scss'
 
@@ -7,13 +8,13 @@ export const AppRouting = () => {
 	return (
 		<Switch>
 			<Route exact path="/" component={Switcher} />
-			<Route path="/:app" component={App} />
+			<Route path="/:app" component={AppContent} />
 			<Route component={NoApp} />
 		</Switch>
 	)
 }
 
-const App = props => {
+const AppContent = props => {
 	const { match } = props
 	const { apps } = useSystemState()
 	const { params: { app: appName } } = match
@@ -24,14 +25,14 @@ const App = props => {
 			<Switcher />
 		)
 	}
-	
+
 	const app = apps[appName]
 	const appProps = {
 		...props,
 		...app,
 	}
 	const context = {
-		...defaultAppContext,
+		...App.defaults,
 		handle: appName,
 		...app,
 	}
@@ -40,18 +41,18 @@ const App = props => {
 		style['--fl-asst-accent-color'] = context.accent.color
 	}
 	return (
-		<AppContext.Provider value={context}>
+		<App.Context.Provider value={context}>
 			<div style={style}>
 				<AppHeader />
 				{ app.root ? app.root( appProps ) : <Page>This app has not been converted.</Page> }
 			</div>
-		</AppContext.Provider>
+		</App.Context.Provider>
 	)
 }
 
 const AppHeader = () => {
 	const { shouldShowLabels } = useSystemState()
-	const app = useContext( AppContext )
+	const app = useContext( App.Context )
 	const { icon, label } = app
 	return (
 		<div className="fl-asst-app-header">
@@ -65,12 +66,13 @@ const AppHeader = () => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
+					justifyContent: 'center',
 					color: 'inherit',
 					lineHeight: 1,
 				}}>
 					<div style={{
 						color: 'var(--fl-asst-accent-color)',
-						marginBottom: 5
+						marginBottom: shouldShowLabels ? 5 : null,
 					}}>
 						<Icon.Apps />
 					</div>

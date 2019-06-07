@@ -1,7 +1,9 @@
 import { Component } from 'fl-react'
 import { render } from 'utils/react'
 
-export class ErrorBoundary extends Component {
+export const Error = props => props.children
+
+class ErrorBoundary extends Component {
 	constructor( props ) {
 		super( props )
 		this.state = {
@@ -28,3 +30,6 @@ export class ErrorBoundary extends Component {
 		return children
 	}
 }
+
+Error.Boundary = ErrorBoundary
+Error.Boundary.displayName = 'Error.Boundary'

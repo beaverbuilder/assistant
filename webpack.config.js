@@ -35,7 +35,7 @@ const externals = {
 }
 
 const entry = {
-    main: './src/ui',
+    ui: './src/ui',
     api: './src/system',
     apps: './src/apps',
     vendors: './packages/fl-vendors',

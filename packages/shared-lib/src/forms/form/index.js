@@ -63,7 +63,7 @@ Form.Footer = props => {
 	)
 }
 
-export const FormTest = () => {
+Form.Test = () => {
 	return (
 		<Fragment>
 			<form style={{paddingBottom: 150}}>

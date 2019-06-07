@@ -89,6 +89,10 @@
         background-color: var(--fl-asst-surface-color);
         height: 1px;
     }
+
+    svg {
+        display: block;
+    }
 }
 
 .fl-asst-size-compact {

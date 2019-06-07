@@ -1,5 +1,6 @@
 import React from 'fl-react'
-import { Switch, Route, Link, Page, List } from 'assistant/lib'
+import { Switch, Route, Link } from 'fl-react-router-dom'
+import { Page, List } from 'assistant/lib'
 
 export const App = ( { match } ) => {
 	const { url } = match

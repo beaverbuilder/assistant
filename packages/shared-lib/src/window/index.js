@@ -18,9 +18,6 @@ const adminBarSize = () => {
     return 32
 }
 
-export const WindowContext = createContext()
-WindowContext.displayName = 'WindowContext'
-
 export const Window = ({
         children,
         title,
@@ -28,7 +25,7 @@ export const Window = ({
         size = 'mini',
         isHidden = false,
         shouldShowLabels = true,
-        position = [0, 0],
+        position = [1,1],
         onChange = () => {},
         ...rest
     }) => {
@@ -87,15 +84,25 @@ export const Window = ({
     }
     return (
         <Flipper flipKey={needsAnimate}>
-            <WindowContext.Provider value={context}>
+            <Window.Context.Provider value={context}>
                 <WindowLayer onChange={handleChange} {...rest}>
                     { !isHidden && <MiniPanel title={title}>{children}</MiniPanel> }
                     { isHidden && <WindowButton title={title}>{icon}</WindowButton> }
                 </WindowLayer>
-            </WindowContext.Provider>
+            </Window.Context.Provider>
         </Flipper>
     )
 }
+
+Window.defaults = {
+    isHidden: false,
+    size: 'mini',
+    position: [1,1],
+    shouldShowLabels: true,
+}
+
+Window.Context = createContext( Window.defaults )
+Window.Context.displayName = 'Window.Context'
 
 const WindowLayer = ({
         className,
@@ -103,7 +110,7 @@ const WindowLayer = ({
         onChange = () => {},
         ...rest
     }) => {
-    const { requestAnimate, size, isHidden, position, setPosition } = useContext( WindowContext )
+    const { requestAnimate, size, isHidden, position, setPosition } = useContext( Window.Context )
     const ref = createRef()
 
     // Window Movement
@@ -226,7 +233,7 @@ const WindowLayer = ({
 }
 
 const MiniPanel = ({ className, children, title, ...rest }) => {
-    const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( WindowContext )
+    const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
     const classes = classname({
         'fl-asst-window' : true,
         [`fl-asst-window-${size}`] : size,
@@ -279,8 +286,8 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
     )
 }
 
-export const WindowButton = ({ children, title, ...rest }) => {
-    const { toggleIsHidden } = useContext( WindowContext )
+const WindowButton = ({ children, title, ...rest }) => {
+    const { toggleIsHidden } = useContext( Window.Context )
     return (
         <Flipped flipId="window" spring={transition}>
             <button className="fl-asst-window-button fl-asst-surface fl-asst-window-drag-handle" onClick={toggleIsHidden} {...rest}>

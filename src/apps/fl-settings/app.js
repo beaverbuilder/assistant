@@ -1,7 +1,7 @@
 import React, { Fragment } from 'fl-react'
 import { __ } from 'assistant'
 import { useSystemState, getSystemActions } from 'assistant/store'
-import { Form, ToggleControl } from 'assistant/lib'
+import { Form, Control } from 'assistant/lib'
 import './style.scss'
 
 export const App = () => {
@@ -13,13 +13,13 @@ export const App = () => {
 		<Fragment>
 			<form>
 				<Form.Item label={__( 'Dark Appearance' )} placement="beside">
-					<ToggleControl
+					<Control.Toggle
 						value={ 'dark' === brightness }
 						onChange={ v => setBrightness( v ? 'dark' : 'light' ) }
 					/>
 				</Form.Item>
 				<Form.Item label={__( 'Display Icon Labels' )} placement="beside">
-					<ToggleControl
+					<Control.Toggle
 						value={shouldShowLabels}
 						onChange={ v => setShouldShowLabels( v ) }
 					/>

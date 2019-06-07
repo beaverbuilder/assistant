@@ -1,16 +1,35 @@
-import * as shared from 'shared-lib'
+import {
+	Appearance,
+	Form,
+	Window,
+	Error,
+	Control,
+	Icon,
+} from 'shared-lib'
 
-export * from './groups'
+export * from './app'
 export * from './lists'
-export * from './docs'
 export * from './pages'
 
+// Docs is export from lib, but not included in public API
+export * from './docs'
+
 // Public API
+import { App } from './app'
+import { Button } from './button'
 import { List } from './lists'
 import { Page } from './pages'
 
+
 export const api = {
-	...shared,
+	Appearance,
+	App,
+	Button,
+	Icon,
+	Window,
+	Form,
+	Control,
 	List,
 	Page,
+	Error,
 }

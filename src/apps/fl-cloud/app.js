@@ -1,8 +1,9 @@
 import React from 'fl-react'
-import { Switch, Route, AppLink, Page, Icon } from 'assistant/lib'
+import { Switch, Route } from 'fl-react-router-dom'
+import { App, Page, Icon } from 'assistant/lib'
 import './style.scss'
 
-export const App = ( { match } ) => {
+export const Main = ( { match } ) => {
 	const { url } = match
 	return (
 		<Switch>
@@ -27,7 +28,7 @@ const NotConnectedScreen = () => {
 		<Page className="fl-app-cloud">
 			<Icon.Pencil size={75} />
 			<p className="center-text">You are not currently connected to Assistant Cloud</p>
-			<AppLink to="/connected" className="fl-asst-cloud-connect-button">Connect</AppLink>
+			<App.Link to="/connected" className="fl-asst-cloud-connect-button">Connect</App.Link>
 		</Page>
 	)
 }
@@ -36,7 +37,7 @@ const ConnectedScreen = () => {
 	return (
 		<Page className="fl-app-cloud">
 			<h1>Congrats! Pretend you're connected now.</h1>
-			<AppLink to="/" className="fl-asst-cloud-connect-button">Disconnect</AppLink>
+			<App.Link to="/" className="fl-asst-cloud-connect-button">Disconnect</App.Link>
 		</Page>
 	)
 }

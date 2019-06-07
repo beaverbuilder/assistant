@@ -2,15 +2,6 @@ import React, { createContext, useState } from 'fl-react'
 import classname from 'classnames'
 import './style.scss'
 
-const defaults = {
-    brightness: 'light',
-    contrast: 'normal',
-    color: 'normal',
-}
-
-export const AppearanceContext = createContext( defaults )
-AppearanceContext.displayName = 'AppearanceContext'
-
 export const Appearance = ({
         className,
         brightness = 'light',
@@ -28,13 +19,22 @@ export const Appearance = ({
         brightness,
     }
     return (
-        <AppearanceContext.Provider value={context}>
+        <Appearance.Context.Provider value={context}>
             <div className={classes} {...rest} />
-        </AppearanceContext.Provider>
+        </Appearance.Context.Provider>
     )
 }
 
-export const useAppearance = ( options = defaults ) => {
+Appearance.defaults = {
+    brightness: 'light',
+    contrast: 'normal',
+    color: 'normal',
+}
+
+Appearance.Context = createContext( Appearance.defaults )
+Appearance.Context.displayName = 'Appearance.Context'
+
+Appearance.useAppearance = ( options = defaults ) => {
     const [appearance, setAppearance] = useState({ ...defaults, ...options })
 
     const setAttribute = ( key = '', value = '' ) => {

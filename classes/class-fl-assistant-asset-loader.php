@@ -27,7 +27,7 @@ class FL_Assistant_Asset_Loader {
 
 			// API - loaded in header
 			$js_deps = array( 'heartbeat', 'wp-i18n', 'fl-vendors' );
-			
+
 			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.css', array(), $ver, null );
 			wp_enqueue_script( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.js', $js_deps, $ver, false );
 
@@ -40,8 +40,8 @@ class FL_Assistant_Asset_Loader {
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
 
 			// UI - loaded in footer
-			wp_enqueue_style( 'fl-assistant-ui', $url . 'build/fl-assistant-main.bundle.css', array(), $ver, null );
-			wp_enqueue_script( 'fl-assistant-ui', $url . 'build/fl-assistant-main.bundle.js', $js_deps, $ver, true );
+			wp_enqueue_style( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.css', array(), $ver, null );
+			wp_enqueue_script( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.js', $js_deps, $ver, true );
 		}
 	}
 

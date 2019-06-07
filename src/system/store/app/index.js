@@ -1,5 +1,5 @@
 import { useContext } from 'fl-react'
-import { AppContext } from 'shared-lib'
+import { App } from 'lib'
 import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch } from 'utils/store'
 import {
@@ -38,11 +38,11 @@ export const registerAppStore = args => {
 }
 
 export const useAppState = ( key ) => {
-	const app = key ? key : useContext( AppContext ).app
+	const app = key ? key : useContext( App.Context ).app
 	return useStore( `${ app }/state` )
 }
 
 export const getAppActions = ( key ) => {
-	const app = key ? key : useContext( AppContext ).app
+	const app = key ? key : useContext( App.Context ).app
 	return getDispatch( `${ key ? key : app }/state` )
 }
