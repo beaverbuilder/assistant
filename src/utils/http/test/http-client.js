@@ -57,57 +57,6 @@ describe('HttpClient', () => {
         expect(data).toBe('<h2>Hello, World</h2>')
     });
 
-    test('can transform GET response', async () => {
-        fetch.mockResponse('<h2>Hello, World</h2>', {
-            status: 200,
-            headers: {'content-type': 'text/html'}
-        });
-
-        const testApi = new HttpClient({
-            baseUrl: "https://mockapi.fake"
-        });
-
-        testApi.transformers.response.push((data) => {
-            return data.replace('World', 'Fred');
-        });
-
-        const data = await testApi.get("/hello");
-        expect(data).toBe('<h2>Hello, Fred</h2>')
-    })
-
-    test('can use multiple transformers in GET response', async () => {
-        // set up response where the data we want is deeply nested
-        fetch.mockResponse(JSON.stringify({
-            pager: {
-                currentPage: {
-                    data: posts
-                }
-            }
-        }), {
-            status: 200,
-            headers: {'content-type': 'application/json'}
-        });
-
-        const testApi = new HttpClient({
-            baseUrl: "https://mockapi.fake"
-        });
-
-        testApi.transformers.response.push((data) => {
-            return data.pager;
-        })
-
-        testApi.transformers.response.push((data) => {
-            return data.currentPage;
-        })
-
-        testApi.transformers.response.push((data) => {
-            return data.data;
-        })
-
-        const data = await testApi.get("/posts");
-        expect(data).toBeInstanceOf(Array)
-    });
-
     test('can use custom Body Parser', async () => {
         fetch.mockResponse('<h2>Hello, World</h2>', {
             status: 200,
@@ -124,7 +73,7 @@ describe('HttpClient', () => {
 
         try {
             const html = await testApi.get('/hello')
-        } catch(ex) {
+        } catch (ex) {
             expect(ex).toBeInstanceOf(Error);
         }
     })

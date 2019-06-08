@@ -34,38 +34,42 @@ export class HttpClient {
     }
 
     _transformRequest(body) {
-        // this.transformers.request.forEach((fn) => {
-        //     config.body = fn(config.body);
-        // })
+        console.log('transformRequest --');
+        this.transformers.request.forEach((transformer) => {
+            body = transformer(body)
+        })
         return body;
     }
 
     _transformResponse(data) {
+        console.log('transformResponse --');
         this.transformers.response.forEach((transformer) => {
             data = transformer(data);
         })
         return data;
     }
 
-    _interceptRequest(config) {
-        // this.interceptors.request.handlers.forEach((interceptor) => {
-        //     try {
-        //         config = interceptor.fulfilled(config)
-        //     } catch (ex) {
-        //         interceptor.rejected(ex);
-        //     }
-        // })
-        return config;
+    _interceptRequest(request) {
+        console.log("interceptRequest -- ");
+        this.interceptors.request.handlers.forEach((interceptor) => {
+            try {
+                request = interceptor.fulfilled(request)
+            } catch (ex) {
+                interceptor.rejected(ex);
+            }
+        })
+        return request;
     }
 
     _interceptResponse(response) {
-        // this.interceptors.response.handlers.forEach((interceptor) => {
-        //     try {
-        //         response = interceptor.fulfilled(response)
-        //     } catch (ex) {
-        //         interceptor.rejected(ex);
-        //     }
-        // });
+        console.log("interceptResponse -- ")
+        this.interceptors.response.handlers.forEach((interceptor) => {
+            try {
+                response = interceptor.fulfilled(response)
+            } catch (ex) {
+                interceptor.rejected(ex);
+            }
+        });
         return response;
     }
 
@@ -86,23 +90,25 @@ export class HttpClient {
             body: config.body,
         };
 
-        request.body = this._transformRequest(request.body);
         request = this._interceptRequest(request);
+        request.body = this._transformRequest(request.body);
+
 
         return fetch(url, request)
             .then((response) => {
+                response = this._interceptResponse(response);
 
                 if (!response.ok) {
-                    reject(new Error(response.statusText));
+                    throw new Error(response.status + ":" + response.statusText);
                 }
 
-                response = this._interceptResponse(response);
 
                 return this.bodyParser(response);
             })
             .then((data) => {
                 return this._transformResponse(data);
             });
+
 
     }
 
@@ -114,7 +120,6 @@ export class HttpClient {
         return this.request('POST', url, {
             ...{body: data},
             ...config,
-
         })
     }
 

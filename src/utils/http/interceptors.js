@@ -1,5 +1,14 @@
+import { isUndefined } from "lodash";
+
 export class Interceptor {
     constructor(fulfilled, rejected) {
+        if(isUndefined(fulfilled)) {
+            fulfilled = () => {};
+        }
+        if(isUndefined(rejected)) {
+            rejected = () => {};
+        }
+
         this.fulfilled = fulfilled;
         this.rejected = rejected;
     }
