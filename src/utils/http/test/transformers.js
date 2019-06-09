@@ -1,4 +1,4 @@
-import {HttpClient} from "../http-client";
+import {HttpClient} from "../index";
 import posts from './posts'
 
 global.fetch = require('jest-fetch-mock')

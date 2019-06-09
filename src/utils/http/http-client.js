@@ -79,29 +79,36 @@ export class HttpClient {
         const headers = merge(this.defaults.headers.common, this.defaults.headers[method.toLowerCase()])
 
 
+        // if the passed url is a relative path,
+        // append it to the baseUrl
         if (config.baseUrl && !isAbsoluteURL(url)) {
             url = config.baseUrl + url;
         }
 
+        // construct the basic request
         let request = {
             method,
             headers,
             credentials: config.credentials,
-            body: config.body,
         };
 
+        // run request interceptors
         request = this._interceptRequest(request);
-        request.body = this._transformRequest(request.body);
 
+        // fetch crashes when GET/HEAD requests contain a body property
+        if('GET' !== method && 'HEAD' !== method) {
+            // run request transformers
+            request.body = this._transformRequest(config.body);
+        }
 
         return fetch(url, request)
             .then((response) => {
+                // run response interceptors
                 response = this._interceptResponse(response);
 
                 if (!response.ok) {
                     throw new Error(response.status + ":" + response.statusText);
                 }
-
 
                 return this.bodyParser(response);
             })
@@ -117,8 +124,9 @@ export class HttpClient {
     }
 
     post(url, data = {}, config = {}) {
+        console.log(data, 'request data');
         return this.request('POST', url, {
-            ...{body: data},
+            body: data,
             ...config,
         })
     }
@@ -137,7 +145,3 @@ export class HttpClient {
         })
     }
 }
-
-const http = new HttpClient();
-
-export default http;

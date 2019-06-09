@@ -1,5 +1,5 @@
-import {HttpClient} from "../http-client";
-import {InterceptorManager} from "../interceptors";
+import {HttpClient, InterceptorManager } from "../index";
+
 import posts from './posts'
 
 

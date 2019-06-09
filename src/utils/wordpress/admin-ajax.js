@@ -1,17 +1,27 @@
 import { getSystemConfig } from 'store'
 import { clearCache } from 'utils/cache'
-import { getRequest, postRequest } from 'utils/request'
+import { useWpAjax } from "utils/http";
+
+const wpAjax = useWpAjax();
 
 /**
  * Fetch request for WordPress admin AJAX.
  */
 export const adminAjaxRequest = ( { method = 'GET', ...args } ) => {
-	const { ajaxUrl } = getSystemConfig()
+
 	const ajaxArgs = {
-		root: ajaxUrl,
 		...args,
 	}
-	return 'GET' === method ? getRequest( ajaxArgs ) : postRequest( ajaxArgs )
+
+	if('GET' === method.toUpperCase()) {
+		wpAjax.getAction(ajaxArgs.data.action, ajaxArgs.data)
+			.then(args.onSuccess)
+			.catch(args.onError);
+	} else {
+		wpAjax.postAction(ajaxArgs.data.action, ajaxArgs.data)
+			.then(args.onSuccess)
+			.catch(args.onError);
+	}
 }
 
 /**
@@ -20,6 +30,8 @@ export const adminAjaxRequest = ( { method = 'GET', ...args } ) => {
 export const replyToComment = ( id, postId, content, onSuccess, onError ) => {
 	const { nonce } = getSystemConfig()
 	clearCache( 'comments' )
+
+
 	return adminAjaxRequest( {
 		method: 'POST',
 		onSuccess: response => {

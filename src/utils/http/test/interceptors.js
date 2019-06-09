@@ -1,15 +1,16 @@
-import {Interceptor, InterceptorManager} from "../interceptors";
+import {HttpClient, Interceptor, InterceptorManager} from "../index";
 import posts from "./posts";
-import {HttpClient} from "../http-client";
 
 global.fetch = require('jest-fetch-mock')
 
 
 describe('Interceptor', () => {
     test('can create', () => {
-        const i = new Interceptor((response) => {
-        }, (error) => {
-        });
+        const i = new Interceptor(
+            response => {
+            },
+            error => {
+            });
         expect(i).toBeDefined();
         expect(i.fulfilled).toBeInstanceOf(Function)
         expect(i.rejected).toBeInstanceOf(Function)
