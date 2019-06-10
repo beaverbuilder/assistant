@@ -4,17 +4,17 @@ import { Window } from 'lib'
 import './style.scss'
 
 export const Page = ( {
-		className,
-		style: initialStyle,
-		shouldPadTop = false,
-		height = null,
-		...rest
+	className,
+	style: initialStyle,
+	shouldPadTop = false,
+	height = null,
+	...rest
 } ) => {
 	const { size } = useContext( Window.Context )
 
 	const classes = classname( {
 		'fl-asst-page': true,
-		'fl-asst-page-pad-top' : shouldPadTop,
+		'fl-asst-page-pad-top': shouldPadTop,
 	}, className )
 
 	// Calcuate max height

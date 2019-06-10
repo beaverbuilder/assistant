@@ -8,16 +8,15 @@ import './style.scss'
 /**
 * Router
 */
-const AppRouter = ({ onChange, history: initialHistory, ...rest }) => {
-	const [history] = useState( createMemoryHistory() )
+const AppRouter = ( { history: initialHistory, ...rest } ) => {
+	const [ history ] = useState( createMemoryHistory( initialHistory ) )
 
 	useEffect( () => {
 		// Returns a unsubscribe function
 		return history.listen( ( location, action ) => {
-
-			console.log(action, history.entries )
-		})
-	}, [])
+			// Record history to store
+		} )
+	}, [] )
 
 	return <Router history={history} {...rest} />
 }
@@ -76,7 +75,7 @@ const AppContent = props => {
 	)
 }
 
-const AppHeader = ({ label, icon }) => {
+const AppHeader = ( { label, icon } ) => {
 	const { shouldShowLabels } = useSystemState()
 	const app = useContext( App.Context )
 	return (

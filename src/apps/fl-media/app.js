@@ -2,7 +2,7 @@ import React from 'fl-react'
 import { Switch, Route } from 'fl-react-router-dom'
 import { Page } from 'assistant/lib'
 
-export const Media = ({ match }) => (
+export const Media = ( { match } ) => (
 	<Switch>
 		<Route exact path={`${match.url}/`} component={Main} />
 	</Switch>

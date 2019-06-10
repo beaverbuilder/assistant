@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { store } from 'assistant'
-import { Appearance, Icon, App, Window, Error } from 'assistant/lib'
+import { Appearance, Icon, Window, Error } from 'assistant/lib'
 import { Docs } from 'lib'
 import { AppRouting } from '../app'
 
@@ -17,7 +17,7 @@ export const Main = () => {
 
 			{ false &&
 			<DocsPanel
-			 	brightness={ 'light' === brightness ? 'dark' : 'light' }
+				brightness={ 'light' === brightness ? 'dark' : 'light' }
 				align={ origin[0] ? 'left' : 'right' }
 				margin={ 'mini' === size ? 360 : 480 }
 			/> }
@@ -49,7 +49,7 @@ const MainWindow = () => {
 	)
 }
 
-const DocsPanel = ({ brightness, margin, align }) => {
+const DocsPanel = ( { brightness, margin, align } ) => {
 	return (
 		<Appearance brightness={brightness}>
 			<Docs align={align} windowMargin={margin} />
