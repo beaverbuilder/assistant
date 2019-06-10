@@ -1,6 +1,22 @@
 import React from 'fl-react'
+import { Switch, Route } from 'fl-react-router-dom'
+import { Page } from 'assistant/lib'
 
-export const AppIcon = () => {
+export const Media = ({ match }) => (
+	<Switch>
+		<Route exact path={`${match.url}/`} component={Main} />
+	</Switch>
+)
+
+const Main = () => {
+	return (
+		<Page>
+			<h1>Media!</h1>
+		</Page>
+	)
+}
+
+Media.Icon = () => {
 	return (
 		<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g fill="currentColor" fillRule="nonzero" stroke="none">

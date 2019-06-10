@@ -7,14 +7,25 @@
     max-height: 40vh;
 }
 
-.fl-asst-app-header {
+.fl-asst-screen {
+    flex: 1 1 auto;
+
+    min-height:0;
+    display: flex;
+    flex-direction: column;
+}
+
+.fl-asst-screen-header {
     box-sizing: border-box;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 46px;
-    margin-bottom: 5px;
     padding: 0 20px;
+    margin-bottom: 5px;
+    -webkit-user-select: none;
+    user-select: none;
 
     .fl-asst-app-header-icon {
         flex: 0 0 auto;
@@ -40,6 +51,13 @@
             text-decoration: none;
         }
     }
+}
+
+.fl-asst-screen-content {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    position: relative;
+    min-height:0;
 }
 
 .app-grid {

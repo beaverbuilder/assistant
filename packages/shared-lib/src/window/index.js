@@ -112,6 +112,7 @@ const WindowLayer = ({
     }) => {
     const { requestAnimate, size, isHidden, position, setPosition } = useContext( Window.Context )
     const ref = createRef()
+    const posRef = createRef()
 
     // Window Movement
     const [isDragging, setIsDragging] = useState( false )
@@ -142,18 +143,19 @@ const WindowLayer = ({
         if ( isDragging ) {
             e.preventDefault()
 
-            if ( "touchmove" === e.type ) {
-                setCurrentPos({
-                    x: e.nativeEvent.touches[0].clientX - initialPos.x,
-                    y: e.nativeEvent.touches[0].clientY - initialPos.y,
-                })
-            } else {
-                setCurrentPos({
-                    x: e.nativeEvent.clientX - initialPos.x,
-                    y: e.nativeEvent.clientY - initialPos.y,
+            let ev = e.nativeEvent
+            if ( 'touchmove' === e.type ) {
+                ev = ev.touches[0]
+            }
+
+            const x = ev.clientX - initialPos.x
+            const y = ev.clientY - initialPos.y
+
+            if ( 'undefined' !== typeof posRef.current && null !== posRef.current ) {
+                requestAnimationFrame( () => {
+                    posRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`
                 })
             }
-            setOffset( Object.assign({}, currentPos ) )
         }
     }
 
@@ -211,6 +213,7 @@ const WindowLayer = ({
         bottom: windowY ? pad : 'auto',
         right: windowX ? pad : 'auto',
         left: windowX ? 'auto' : pad,
+        maxHeight: '100vh',
         willChange: 'transform',
         transform,
     }
@@ -221,13 +224,14 @@ const WindowLayer = ({
             bottom: 0,
             right: windowX ? 0 : 'auto',
             left: windowX ? 'auto' : 0,
+            willChange: 'transform',
             transform,
         }
     }
 
     return (
         <div {...props}>
-            <div className="fl-asst-window-positioner" style={positionerStyles}>{children}</div>
+            <div className="fl-asst-window-positioner" ref={posRef} style={positionerStyles}>{children}</div>
         </div>
     )
 }
@@ -277,7 +281,7 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
                         </span>
                     </div>
                     <div
-                        className="fl-asst-window-content fl-asst-window-move-handle"
+                        className="fl-asst-window-content"
                         {...stopEvts}
                     >{children}</div>
                 </div>
@@ -290,7 +294,7 @@ const WindowButton = ({ children, title, ...rest }) => {
     const { toggleIsHidden } = useContext( Window.Context )
     return (
         <Flipped flipId="window" spring={transition}>
-            <button className="fl-asst-window-button fl-asst-surface fl-asst-window-drag-handle" onClick={toggleIsHidden} {...rest}>
+            <button className="fl-asst-window-button fl-asst-window-drag-handle" onClick={toggleIsHidden} {...rest}>
                 <Flipped inverseFlipId="window">{children}</Flipped>
             </button>
         </Flipped>

@@ -1,7 +1,8 @@
 import React from 'fl-react'
-import { Docs } from './pages'
+import { __ } from 'assistant'
+import { Docs as DocPages } from './pages'
 
-export const DesignSystemDocs = ( { windowMargin = 0, align = 'left' } ) => {
+export const Docs = ( { windowMargin = 0, align = 'left' } ) => {
 
 	let style = {
 		position: 'fixed',
@@ -9,7 +10,7 @@ export const DesignSystemDocs = ( { windowMargin = 0, align = 'left' } ) => {
 		left: 0,
 		bottom: 0,
 		right: 0,
-		zIndex: -1,
+		zIndex: 99,
 		overflow: 'auto',
 	}
 	if ( 'left' === align ) {
@@ -27,8 +28,8 @@ export const DesignSystemDocs = ( { windowMargin = 0, align = 'left' } ) => {
 	return (
 		<div style={style} className="fl-asst-surface">
 			<div style={contentStyle}>
-				<h1>Design Docs</h1>
-				<Docs />
+				<h1>{__('Design Docs')}</h1>
+				<DocPages />
 			</div>
 		</div>
 	)

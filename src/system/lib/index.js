@@ -11,6 +11,15 @@ export * from './app'
 export * from './lists'
 export * from './pages'
 
+export {
+	Appearance,
+	Form,
+	Window,
+	Error,
+	Control,
+	Icon,
+}
+
 // Docs is export from lib, but not included in public API
 export * from './docs'
 

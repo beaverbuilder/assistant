@@ -3,7 +3,7 @@ import { Switch, Route } from 'fl-react-router-dom'
 import { App, Page, Icon } from 'assistant/lib'
 import './style.scss'
 
-export const Main = ( { match } ) => {
+export const Cloud = ( { match } ) => {
 	const { url } = match
 	return (
 		<Switch>
@@ -13,7 +13,7 @@ export const Main = ( { match } ) => {
 	)
 }
 
-export const AppIcon = () => {
+Cloud.Icon = () => {
 	return (
 		<svg width="32px" height="20px" viewBox="0 0 32 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g fill="none" stroke="currentColor" strokeWidth="2">

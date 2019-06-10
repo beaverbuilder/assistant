@@ -1,11 +1,10 @@
-import { registerApp } from 'assistant'
-import { __ } from '@wordpress/i18n'
-import { Main, AppIcon } from './app'
+import { registerApp, __ } from 'assistant'
+import { Cloud } from './app'
 
 registerApp( 'fl-cloud', {
 	label: __( 'Cloud' ),
-	root: Main,
-	icon: AppIcon,
+	root: Cloud,
+	icon: Cloud.Icon,
 	accent: {
 		color: '#FA9200'
 	}

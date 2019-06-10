@@ -1,16 +1,37 @@
-import React, { useContext } from 'fl-react'
-import { Switch, Route, Link } from 'fl-react-router-dom'
+import React, { Fragment, useState, useEffect, useContext } from 'fl-react'
+import { Router, Switch, Route, Link } from 'fl-react-router-dom'
+import { createMemoryHistory } from 'history'
 import { App, Icon, Page } from 'assistant/lib'
 import { useSystemState } from 'assistant/store'
 import './style.scss'
 
+/**
+* Router
+*/
+const AppRouter = ({ onChange, history: initialHistory, ...rest }) => {
+	const [history] = useState( createMemoryHistory() )
+
+	useEffect( () => {
+		// Returns a unsubscribe function
+		return history.listen( ( location, action ) => {
+
+			console.log(action, history.entries )
+		})
+	}, [])
+
+	return <Router history={history} {...rest} />
+}
+AppRouter.displayName = 'AppRouter'
+
 export const AppRouting = () => {
 	return (
-		<Switch>
-			<Route exact path="/" component={Switcher} />
-			<Route path="/:app" component={AppContent} />
-			<Route component={NoApp} />
-		</Switch>
+		<AppRouter>
+			<Switch>
+				<Route exact path="/" component={Switcher} />
+				<Route path="/:app" component={AppContent} />
+				<Route component={NoApp} />
+			</Switch>
+		</AppRouter>
 	)
 }
 
@@ -42,20 +63,24 @@ const AppContent = props => {
 	}
 	return (
 		<App.Context.Provider value={context}>
-			<div style={style}>
-				<AppHeader />
-				{ app.root ? app.root( appProps ) : <Page>This app has not been converted.</Page> }
+			<div className="fl-asst-screen" style={style}>
+				<AppHeader
+					label={app.label}
+					icon={app.icon}
+				/>
+				<div className="fl-asst-screen-content">
+					{ app.root ? app.root( appProps ) : <Page>This app has not been converted.</Page> }
+				</div>
 			</div>
 		</App.Context.Provider>
 	)
 }
 
-const AppHeader = () => {
+const AppHeader = ({ label, icon }) => {
 	const { shouldShowLabels } = useSystemState()
 	const app = useContext( App.Context )
-	const { icon, label } = app
 	return (
-		<div className="fl-asst-app-header">
+		<div className="fl-asst-screen-header fl-asst-app-header">
 			{ 'function' === typeof icon &&
 				<div className="fl-asst-app-header-icon">{ icon( app ) }</div>
 			}
@@ -86,31 +111,34 @@ const AppHeader = () => {
 const Switcher = () => {
 	const { apps, appOrder } = useSystemState()
 	return (
-		<Page>
-			<div className="app-grid">
-				{ appOrder.map( ( handle, i ) => {
-					const app = apps[handle]
-					const location = {
-						pathname: `/${handle}`,
-						state: app,
-					}
-					const style = {}
-					if ( 'undefined' !== typeof app.accent ) {
-						style['--fl-asst-accent-color'] = app.accent.color
-						style.backgroundColor = 'var(--fl-asst-accent-color)'
-					}
+		<Fragment>
+			<AppHeader label="Apps" />
+			<Page shouldPadTop={true}>
+				<div className="app-grid">
+					{ appOrder.map( ( handle, i ) => {
+						const app = apps[handle]
+						const location = {
+							pathname: `/${handle}`,
+							state: app,
+						}
+						const style = {}
+						if ( 'undefined' !== typeof app.accent ) {
+							style['--fl-asst-accent-color'] = app.accent.color
+							style.backgroundColor = 'var(--fl-asst-accent-color)'
+						}
 
-					return (
-						<Link to={location} className="app-grid-item" key={i}>
-							<div className="fl-asst-app-icon" style={style}>
-								{ 'function' === typeof app.icon && app.icon( {} ) }
-							</div>
-							<label>{app.label}</label>
-						</Link>
-					)
-				} )}
-			</div>
-		</Page>
+						return (
+							<Link to={location} className="app-grid-item" key={i}>
+								<div className="fl-asst-app-icon" style={style}>
+									{ 'function' === typeof app.icon && app.icon( {} ) }
+								</div>
+								<label>{app.label}</label>
+							</Link>
+						)
+					} )}
+				</div>
+			</Page>
+		</Fragment>
 	)
 }
 

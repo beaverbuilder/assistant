@@ -1,3 +1,8 @@
 .fl-asst-page {
     padding: 0 var(--fl-asst-outer-space) var(--fl-asst-outer-space);
+    overflow: auto;
+
+    &.fl-asst-page-pad-top {
+        padding-top:  var(--fl-asst-outer-space);
+    }
 }
