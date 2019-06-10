@@ -59,7 +59,7 @@ final class FL_Assistant_REST_Users {
 					'args'                => array(
 						'state' => array(
 							'required' => true,
-							'type'     => 'string',
+							'type'     => 'json',
 						),
 					),
 					'permission_callback' => function() {

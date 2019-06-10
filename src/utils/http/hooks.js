@@ -1,11 +1,8 @@
-/**
- * @todo this works in every other module but breaks everything here. I have no idea why
- */
-// import { getSystemConfig } from "../../front/store/system";
-// const {nonce, apiRoot, ajaxUrl } = getSystemConfig();
-const {nonce, apiRoot, ajaxUrl} = FL_ASSISTANT_CONFIG;
 
+import { getSystemConfig } from "store/system";
 import {HttpClient} from "./http-client";
+
+const {nonce, apiRoot, ajaxUrl } = getSystemConfig();
 
 export const useAssistantCloud = () => {
 
@@ -17,15 +14,23 @@ export const useAssistantCloud = () => {
 }
 
 export const useWpRest = () => {
-    return new HttpClient({
+    const http =  new HttpClient({
         baseUrl: apiRoot,
         credentials: 'same-origin',
         headers: {
             common: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'X-WP-Nonce': nonce.api
             }
         }
     });
+
+    http.transformers.request.push((data) => {
+        return JSON.stringify(data);
+    });
+
+    return http;
 }
 
 export const useWpAjax = () => {
@@ -34,7 +39,7 @@ export const useWpAjax = () => {
         constructor(config = {})  {
             super(config);
             this.transformers.request.push((data) => {
-                // @todo this will fail on deep object maps
+                // @todo this will fail on nested objects
                 return Object.keys(data).map((key) => {
                     return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
                 }).join('&');
@@ -42,13 +47,11 @@ export const useWpAjax = () => {
         }
 
         postAction(action, data = {}, config = {}) {
-            console.log('Ajax Post Action', action);
             data.action = action;
             return super.post(ajaxUrl, data, config)
         }
 
         getAction(action, queryParams = {}, config = {}) {
-            console.log('Ajax Get Action', action);
             queryParams.action = action
             return super.get(ajaxUrl, queryParams, config);
         }

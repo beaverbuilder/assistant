@@ -28,9 +28,9 @@ describe('HttpClient defaults', () => {
 
     })
 
-    test('default post/put/patch content type to be form encoded', () => {
-        expect(defaults.headers.post['Content-Type']).toMatch(/application\/x-www-form-urlencoded/);
-        expect(defaults.headers.put['Content-Type']).toMatch(/application\/x-www-form-urlencoded/);
-        expect(defaults.headers.patch['Content-Type']).toMatch(/application\/x-www-form-urlencoded/);
+    test('default post/put/patch content type to be json', () => {
+        expect(defaults.headers.post['Content-Type']).toMatch(/application\/json/);
+        expect(defaults.headers.put['Content-Type']).toMatch(/application\/json/);
+        expect(defaults.headers.patch['Content-Type']).toMatch(/application\/json/);
     })
 })

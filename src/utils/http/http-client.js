@@ -95,7 +95,8 @@ export class HttpClient {
         // run request interceptors
         request = this._interceptRequest(request);
 
-        // fetch crashes when GET/HEAD requests contain a body property
+        // fetch cancels requests and returns an error
+        // when GET/HEAD requests contain a body property
         if('GET' !== method && 'HEAD' !== method) {
             // run request transformers
             request.body = this._transformRequest(config.body);

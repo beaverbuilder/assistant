@@ -1,5 +1,5 @@
 const formHeaders = {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json'
 }
 
 export default {
