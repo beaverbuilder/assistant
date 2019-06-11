@@ -16,6 +16,27 @@ const http = new HttpClient({
 
 ```
 
+#### Hooks
+There are a few React style hooks:
+```javascript
+import { useWpAjax, useWpRest } from 'utils/http'
+
+const wpAjax = useWpAjax();
+const wpRest = useWpRest();
+
+wpAjax.getAction('update-plugin', {
+    'state': {
+        'appName': 'hacker-news'}
+    }
+);
+
+useEffect(async () => {
+    const posts = await wpRest.get('/v2/posts');
+    setPosts(posts)
+},[])
+```
+ 
+
 ### Making Requests
 ```javascript
     

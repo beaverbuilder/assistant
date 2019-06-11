@@ -8,9 +8,10 @@ import posts from './posts'
 
 describe('As React Hooks', () => {
     beforeEach(() => {
+
         fetch.resetMocks()
     })
-    
+
     test('can useWpRest to make api call', async () => {
 
         fetch.mockResponse(JSON.stringify(posts), {

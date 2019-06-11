@@ -1,8 +1,9 @@
 
-import { getSystemConfig } from "store/system";
-import {HttpClient} from "./http-client";
 
-const {nonce, apiRoot, ajaxUrl } = getSystemConfig();
+
+const {nonce, apiRoot, ajaxUrl } = FL_ASSISTANT_CONFIG
+
+import {HttpClient} from "./http-client";
 
 export const useAssistantCloud = () => {
 
