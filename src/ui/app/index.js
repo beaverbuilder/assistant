@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from 'fl-react'
 import { MemoryRouter, Switch, Route, Link } from 'fl-react-router-dom'
+import { __ } from 'assistant'
 import { App, Icon, Page, Nav } from 'assistant/lib'
 import { useSystemState, getSystemActions } from 'assistant/store'
 import './style.scss'
@@ -66,7 +67,7 @@ const AppContent = props => {
 					icon={app.icon}
 				/>
 				<div className="fl-asst-screen-content">
-					{ app.root ? app.root( appProps ) : <Page>This app has not been converted.</Page> }
+					{ app.root ? app.root( appProps ) : <Page>{__('This app has not been converted.')}</Page> }
 				</div>
 			</div>
 		</App.Context.Provider>
@@ -77,22 +78,24 @@ const AppHeader = ( { label, icon } ) => {
 	const { shouldShowLabels } = useSystemState()
 	const app = useContext( App.Context )
 	const { history } = useContext( Nav.Context )
-	const isRoot = 2 > history.index
+
+	const isRoot = 0 === history.index
+	const isAppRoot = 2 > history.index
 
 	return (
 		<div className="fl-asst-screen-header fl-asst-app-header">
 
 			{ 'function' === typeof icon &&
 				<div className="fl-asst-app-header-icon">
-					{ isRoot && icon( app ) }
-					{ ! isRoot && <button onClick={history.goBack}>Back</button> }
+					{ isAppRoot && icon( app ) }
+					{ ! isAppRoot && <button onClick={ history.goBack }>{__('Back')}</button> }
 				</div>
 			}
 			<div className="fl-asst-app-header-name">{label}</div>
 
 			<div className="fl-asst-app-header-actions">
 
-				{ true &&
+				{ !isRoot &&
 				<button
 				 	onClick={history.goBack}
 					style={{
@@ -110,7 +113,7 @@ const AppHeader = ( { label, icon } ) => {
 					}}>
 						<Icon.Apps />
 					</div>
-					{ shouldShowLabels && <span>Apps</span> }
+					{ shouldShowLabels && <span>{__('Apps')}</span> }
 				</button> }
 
 			</div>
@@ -155,8 +158,8 @@ const Switcher = () => {
 const NoApp = ( { history } ) => {
 	return (
 		<Page>
-			<button onClick={() => history.goBack()}>Back</button>
-			<h1>Could not find page</h1>
+			<button onClick={() => history.goBack()}>{__('Back')}</button>
+			<h1>{__('Could not find page')}</h1>
 		</Page>
 	)
 }

@@ -151,11 +151,11 @@ const WindowLayer = ({
             const x = ev.clientX - initialPos.x
             const y = ev.clientY - initialPos.y
 
-            if ( 'undefined' !== typeof posRef.current && null !== posRef.current ) {
-                requestAnimationFrame( () => {
+            requestAnimationFrame( () => {
+                if ( 'undefined' !== typeof posRef.current && null !== posRef.current ) {
                     posRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`
-                })
-            }
+                }
+            })
         }
     }
 
