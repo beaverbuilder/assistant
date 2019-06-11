@@ -67,7 +67,7 @@ const AppContent = props => {
 					icon={app.icon}
 				/>
 				<div className="fl-asst-screen-content">
-					{ app.root ? app.root( appProps ) : <Page>{__('This app has not been converted.')}</Page> }
+					{ app.root ? app.root( appProps ) : <Page>{__( 'This app has not been converted.' )}</Page> }
 				</div>
 			</div>
 		</App.Context.Provider>
@@ -79,8 +79,6 @@ const AppHeader = ( { label, icon } ) => {
 	const app = useContext( App.Context )
 	const { history } = useContext( Nav.Context )
 
-	console.log(history)
-
 	const isRoot = 0 === history.index
 	const isAppRoot = 2 > history.index
 
@@ -90,14 +88,14 @@ const AppHeader = ( { label, icon } ) => {
 			{ 'function' === typeof icon &&
 				<div className="fl-asst-app-header-icon">
 					{ isAppRoot && icon( app ) }
-					{ ! isAppRoot && <button onClick={ history.goBack }>{__('Back')}</button> }
+					{ ! isAppRoot && <button onClick={ history.goBack }>{__( 'Back' )}</button> }
 				</div>
 			}
 			<div className="fl-asst-app-header-name">{label}</div>
 
 			<div className="fl-asst-app-header-actions">
 
-				{ !isRoot &&
+				{ ! isRoot &&
 				<button
 				 	onClick={ () => history.go( -history.index ) }
 					style={{
@@ -115,7 +113,7 @@ const AppHeader = ( { label, icon } ) => {
 					}}>
 						<Icon.Apps />
 					</div>
-					{ shouldShowLabels && <span>{__('Apps')}</span> }
+					{ shouldShowLabels && <span>{__( 'Apps' )}</span> }
 				</button> }
 
 			</div>
@@ -160,8 +158,8 @@ const Switcher = () => {
 const NoApp = ( { history } ) => {
 	return (
 		<Page>
-			<button onClick={() => history.goBack()}>{__('Back')}</button>
-			<h1>{__('Could not find page')}</h1>
+			<button onClick={() => history.goBack()}>{__( 'Back' )}</button>
+			<h1>{__( 'Could not find page' )}</h1>
 		</Page>
 	)
 }
