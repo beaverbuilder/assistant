@@ -20,6 +20,10 @@ class FL_Assistant_Data {
 			'brightness'	 => 'light',
 		],
 		'shouldShowLabels'	 => true,
+		'history'	 		 => [
+			'index'			 => 0,
+			'entries'		 => [],
+		],
 	);
 
 	/**
@@ -73,6 +77,7 @@ class FL_Assistant_Data {
 			'window'		 	 => $user_state['window'],
 			'appearance'		 => $user_state['appearance'],
 			'shouldShowLabels'	 => $user_state['shouldShowLabels'],
+			'history'	 		 => $user_state['history'],
 		);
 
 		return array(

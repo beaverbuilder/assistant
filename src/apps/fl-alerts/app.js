@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'fl-react'
 import { Switch, Route, Link } from 'fl-react-router-dom'
 import { Page } from 'assistant/lib'
-import { getContent } from 'utils/wordpress'
+
+//import { getContent } from 'utils/wordpress'
 
 export const Alerts = ( { match } ) => (
 	<Switch>
@@ -14,7 +15,8 @@ const Main = ( { match } ) => {
 	const [ comments, setComments ] = useState( [] )
 
 	useEffect( () => {
-		getContent( 'comments', {}, data => setComments( data ) )
+
+		//getContent( 'comments', {}, data => setComments( data ) )
 	}, [] )
 
 	const style = {

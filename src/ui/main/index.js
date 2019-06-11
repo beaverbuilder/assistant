@@ -1,26 +1,17 @@
-import React from 'fl-react'
-import { store } from 'assistant'
+import React, { Fragment } from 'fl-react'
+import { __ } from 'assistant'
+import { getSystemActions, useSystemState } from 'assistant/store'
 import { Appearance, Icon, Window, Error } from 'assistant/lib'
-import { Docs } from 'lib'
 import { AppRouting } from '../app'
-
-const { getSystemActions, useSystemState } = store
 
 export const Main = () => {
 	const { appearance, window } = useSystemState()
 	const { brightness = 'light' } = appearance
-	const { size, origin } = window
+	const { size } = window
 
 	return (
 		<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
 			<MainWindow />
-
-			{ false &&
-			<DocsPanel
-				brightness={ 'light' === brightness ? 'dark' : 'light' }
-				align={ origin[0] ? 'left' : 'right' }
-				margin={ 'mini' === size ? 360 : 480 }
-			/> }
 		</Appearance>
 	)
 }
@@ -29,9 +20,8 @@ const MainWindow = () => {
 	const { window: mainWindow, shouldShowLabels } = useSystemState()
 	const { size, origin, isHidden } = mainWindow
 	const { setWindow } = getSystemActions()
-	const onChanged = config => {
-		setWindow( config )
-	}
+
+	const onChanged = config => setWindow( config )
 
 	return (
 		<Window
@@ -49,16 +39,11 @@ const MainWindow = () => {
 	)
 }
 
-const DocsPanel = ( { brightness, margin, align } ) => {
-	return (
-		<Appearance brightness={brightness}>
-			<Docs align={align} windowMargin={margin} />
-		</Appearance>
-	)
-}
-
 const WindowError = () => {
 	return (
-		<h1>Problem!</h1>
+		<Fragment>
+			<h1>{__( 'We Have A Problem!' )}</h1>
+			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
+		</Fragment>
 	)
 }

@@ -28,6 +28,7 @@ import { App } from './app'
 import { Button } from './button'
 import { List } from './lists'
 import { Page } from './pages'
+import { Nav } from './nav'
 
 
 export const api = {
@@ -41,4 +42,5 @@ export const api = {
 	List,
 	Page,
 	Error,
+	Nav,
 }

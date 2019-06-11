@@ -58,5 +58,10 @@ export const after = {
 	SET_BRIGHTNESS: ( action, store ) => {
 		const { appearance } = store.getState()
 		updateUserState( { appearance } )
-	}
+	},
+
+	SET_HISTORY: ( action, store ) => {
+		const { history } = store.getState()
+		updateUserState( { history } )
+	},
 }

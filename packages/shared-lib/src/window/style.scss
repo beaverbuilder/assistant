@@ -50,10 +50,11 @@
 
     .fl-asst-window-content {
         box-sizing: border-box;
-        flex: 1 1 auto;
+        flex: 1 0 auto;
         position: relative;
         max-height: calc( 100% - var( --fl-asst-window-toolbar-height ) );
-        overflow: auto;
+        display: flex;
+        flex-direction: column;
     }
 }
 

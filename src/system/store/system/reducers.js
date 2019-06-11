@@ -192,3 +192,18 @@ export const shouldShowLabels = ( state = true, action ) => {
 		return state ? true : false
 	}
 }
+
+// Navigation History
+const defaultHistory = { index: 0, entries: [] }
+
+export const history = ( state = defaultHistory, action ) => {
+	switch ( action.type ) {
+	case 'SET_HISTORY':
+		return {
+			index: action.index,
+			entries: action.entries,
+		}
+	default:
+		return state
+	}
+}

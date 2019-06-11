@@ -121,3 +121,11 @@ export const setShouldShowLabels = ( show =  true ) => {
 		show,
 	}
 }
+
+export const setHistory = ( index = 0, entries = [] ) => {
+	return {
+		type: 'SET_HISTORY',
+		index,
+		entries,
+	}
+}
