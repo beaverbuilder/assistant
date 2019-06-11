@@ -60,6 +60,11 @@ export const after = {
 		updateUserState( { appearance } )
 	},
 
+	SET_SHOULD_SHOW_LABELS: ( action, store ) => {
+		const { shouldShowLabels } = store.getState()
+		updateUserState( { shouldShowLabels } )
+	},
+
 	SET_HISTORY: ( action, store ) => {
 		const { history } = store.getState()
 		updateUserState( { history } )
