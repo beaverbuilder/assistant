@@ -79,6 +79,8 @@ const AppHeader = ( { label, icon } ) => {
 	const app = useContext( App.Context )
 	const { history } = useContext( Nav.Context )
 
+	console.log(history)
+
 	const isRoot = 0 === history.index
 	const isAppRoot = 2 > history.index
 
@@ -97,7 +99,7 @@ const AppHeader = ( { label, icon } ) => {
 
 				{ !isRoot &&
 				<button
-				 	onClick={history.goBack}
+				 	onClick={ () => history.go( -history.index ) }
 					style={{
 						display: 'flex',
 						flexDirection: 'column',

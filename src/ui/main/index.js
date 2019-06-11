@@ -25,7 +25,7 @@ const MainWindow = () => {
 
 	return (
 		<Window
-			icon={<Icon.Pencil size={40} />}
+			icon={<Icon.Pencil size={42} />}
 			isHidden={isHidden}
 			size={size}
 			position={origin}
