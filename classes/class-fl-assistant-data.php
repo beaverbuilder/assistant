@@ -9,11 +9,7 @@ class FL_Assistant_Data {
 	 * Default state for the current user.
 	 */
 	static public $default_user_state = array(
-		'activeApp'          => 'fl-dashboard',
-		'appFrameSize'       => 'normal',
 		'appOrder'           => [],
-		'isShowingUI'        => true,
-		'panelPosition'      => 'end',
 		'shouldReduceMotion' => false,
 		'window'			 => [],
 		'appearance'		 => [
@@ -65,12 +61,8 @@ class FL_Assistant_Data {
 		 * adding it to the config.
 		 */
 		$state = array(
-			'activeApp'          => $user_state['activeApp'],
-			'appFrameSize'       => $user_state['appFrameSize'],
 			'appOrder'           => $user_state['appOrder'],
 			'counts'             => self::get_counts(),
-			'isShowingUI'        => $user_state['isShowingUI'],
-			'panelPosition'      => $user_state['panelPosition'],
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
 
 			/* New UI Props */

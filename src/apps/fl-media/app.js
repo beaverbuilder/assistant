@@ -1,17 +1,28 @@
 import React from 'fl-react'
-import { Switch, Route } from 'fl-react-router-dom'
+import { Switch, Route, Link } from 'fl-react-router-dom'
 import { Page } from 'assistant/lib'
 
 export const Media = ( { match } ) => (
 	<Switch>
 		<Route exact path={`${match.url}/`} component={Main} />
+		<Route path={`${match.url}/attachment/:id`} component={AttachmentDetail} />
 	</Switch>
 )
 
-const Main = () => {
+const Main = ({ match }) => {
 	return (
 		<Page>
-			<h1>Media!</h1>
+			<p>Do you some media right here</p>
+			<Link to={`${match.url}/attachment/1`}>Test Attachment Detail View</Link>
+		</Page>
+	)
+}
+
+const AttachmentDetail = () => {
+	return (
+		<Page>
+			<h1>Attachment Detail Screen</h1>
+			<p>Kinda...</p>
 		</Page>
 	)
 }

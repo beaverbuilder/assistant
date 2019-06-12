@@ -88,7 +88,26 @@ const AppHeader = ( { label, icon } ) => {
 			{ 'function' === typeof icon &&
 				<div className="fl-asst-app-header-icon">
 					{ isAppRoot && icon( app ) }
-					{ ! isAppRoot && <button onClick={ history.goBack }>{__( 'Back' )}</button> }
+					{ ! isAppRoot &&
+					<button
+						onClick={history.goBack}
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+							justifyContent: 'center',
+							color: 'inherit',
+							lineHeight: 1,
+						}}
+					>
+						<div style={{
+							color: 'var(--fl-asst-accent-color)',
+							marginBottom: shouldShowLabels ? 5 : null,
+						}}>
+							<Icon.BackArrow />
+						</div>
+						{ shouldShowLabels && <span>{__( 'Back' )}</span> }
+					</button> }
 				</div>
 			}
 			<div className="fl-asst-app-header-name">{label}</div>

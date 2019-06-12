@@ -72,10 +72,6 @@
     &:hover {
         background: var(--fl-asst-surface-background);
     }
-
-    & > svg {
-        transform: translate( -2px, -2px );
-    }
 }
 
 .fl-asst-window-layer {
