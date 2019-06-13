@@ -208,11 +208,14 @@ const WindowLayer = ({
     const pad = 15
 
     let positionerStyles = {
+        display: 'flex',
+        flexDirection: 'column',
         position: 'absolute',
-        top: windowY ? 'auto' : adminBarSize() + pad,
+        top: adminBarSize() + pad,
         bottom: windowY ? pad : pad,
         right: windowX ? pad : 'auto',
         left: windowX ? 'auto' : pad,
+        justifyContent: windowY ? 'flex-end' : 'flex-start',
         maxHeight: '100vh',
         willChange: 'transform',
         pointerEvents: 'none',
@@ -220,6 +223,8 @@ const WindowLayer = ({
     }
     if ( 'normal' === size && !isHidden ) {
         positionerStyles = {
+            display: 'flex',
+            flexDirection: 'column',
             position: 'absolute',
             top: 0,
             bottom: 0,
@@ -256,7 +261,8 @@ const MiniPanel = ({ className, children, title, style, ...rest }) => {
 
     const styles = {
         ...style,
-        display: 'flex', flexDirection: 'column', height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
     }
 
     return (

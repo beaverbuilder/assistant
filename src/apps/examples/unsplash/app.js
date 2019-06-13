@@ -48,7 +48,7 @@ const Main = () => {
 	return (
 		<Page>
 			<input type="text" value={term} onChange={onChange}  style={{ color: 'black', width: '100%' }} />
-			<ul style={{ overflow: 'auto', maxHeight: '60vh'}}>
+			<ul>
 				{ results.map( ( item, i ) => {
 					const { urls } = item
 					return (

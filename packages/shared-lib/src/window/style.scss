@@ -13,7 +13,7 @@
     touch-action: none;
 
     &.fl-asst-window-mini {
-        max-width: calc( 100vw - 30px );
+        max-width: 100%;
         max-height: 100%;
         box-shadow: 0 1px 5px 0 rgba(122,137,152,0.27);
     }
@@ -50,9 +50,8 @@
 
     .fl-asst-window-content {
         box-sizing: border-box;
-        flex: 1 0 auto;
+        flex: 1 1 auto;
         position: relative;
-        max-height: calc( 100% - var( --fl-asst-window-toolbar-height ));
         display: flex;
         flex-direction: column;
         overflow: auto;
