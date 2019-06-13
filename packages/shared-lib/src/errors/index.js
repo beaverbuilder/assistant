@@ -1,5 +1,4 @@
-import { Component } from 'fl-react'
-import { render } from 'utils/react'
+import { Component, createElement } from 'fl-react'
 
 export const Error = props => props.children
 
@@ -25,7 +24,7 @@ class ErrorBoundary extends Component {
 		const { alternate, children } = this.props
 		const { hasError, error } = this.state
 		if ( hasError ) {
-			return render( alternate, { error } )
+			return createElement( alternate, error )
 		}
 		return children
 	}

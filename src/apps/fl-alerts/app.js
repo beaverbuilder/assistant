@@ -15,7 +15,6 @@ const Main = ( { match } ) => {
 	const [ comments, setComments ] = useState( [] )
 
 	useEffect( () => {
-
 		//getContent( 'comments', {}, data => setComments( data ) )
 	}, [] )
 
