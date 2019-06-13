@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as ReactRouter from 'react-router-dom'
+import * as Redux from 'redux'
 
 export {
 	React,
@@ -15,4 +16,5 @@ window.FL = {
 	React,
 	ReactDOM,
 	ReactRouter,
+	Redux,
 }

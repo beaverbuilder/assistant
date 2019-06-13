@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'fl-react'
-import { createStore, bindActionCreators } from 'redux'
+import { createStore, bindActionCreators } from 'fl-redux'
 import { createActions } from './actions'
 import { createReducers } from './reducers'
 import { createEnhancers } from './middleware'

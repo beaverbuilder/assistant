@@ -23,6 +23,7 @@ const externals = {
     'fl-react'              : 'FL.React',
     'fl-react-dom'          : 'FL.ReactDOM',
     'fl-react-router-dom'   : 'FL.ReactRouter',
+    'fl-redux'              : 'FL.Redux',
 
     /* system bundle */
     'assistant'             : 'FL.Assistant',

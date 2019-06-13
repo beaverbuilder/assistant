@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'fl-redux'
 
 /**
  * Creates default reducers for state keys that do not

@@ -144,7 +144,7 @@ const Switcher = () => {
 	const { apps, appOrder } = useSystemState()
 	return (
 		<Fragment>
-			<AppHeader label="Apps" />
+			<AppHeader label="Apps" icon={Icon.Apps} />
 			<Page shouldPadTop={true}>
 				<div className="app-grid">
 					{ appOrder.map( ( handle, i ) => {
