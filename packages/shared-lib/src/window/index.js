@@ -210,11 +210,12 @@ const WindowLayer = ({
     let positionerStyles = {
         position: 'absolute',
         top: windowY ? 'auto' : adminBarSize() + pad,
-        bottom: windowY ? pad : 'auto',
+        bottom: windowY ? pad : pad,
         right: windowX ? pad : 'auto',
         left: windowX ? 'auto' : pad,
         maxHeight: '100vh',
         willChange: 'transform',
+        pointerEvents: 'none',
         transform,
     }
     if ( 'normal' === size && !isHidden ) {
@@ -225,18 +226,19 @@ const WindowLayer = ({
             right: windowX ? 0 : 'auto',
             left: windowX ? 'auto' : 0,
             willChange: 'transform',
+            pointerEvents: 'none',
             transform,
         }
     }
 
     return (
-        <div {...props}>
+        <div id="canvas" {...props}>
             <div className="fl-asst-window-positioner" ref={posRef} style={positionerStyles}>{children}</div>
         </div>
     )
 }
 
-const MiniPanel = ({ className, children, title, ...rest }) => {
+const MiniPanel = ({ className, children, title, style, ...rest }) => {
     const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
     const classes = classname({
         'fl-asst-window' : true,
@@ -252,39 +254,42 @@ const MiniPanel = ({ className, children, title, ...rest }) => {
         onTouchStart: stopProp,
     }
 
+    const styles = {
+        ...style,
+        display: 'flex', flexDirection: 'column', height: '100%',
+    }
+
     return (
         <Flipped flipId="window" spring={transition}>
-            <div className={classes} {...rest}>
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <div className="fl-asst-window-toolbar fl-asst-window-drag-handle">
-                        <span className="fl-asst-window-drag-handle" style={{ display: 'inline-flex' }}>
-                            <Icon.DragHandle />
-                            { shouldShowLabels && <ButtonLabel>{__('Move')}</ButtonLabel> }
-                        </span>
-                        {title}
-                        <span
-                            {...stopEvts}
-                            style={{ marginLeft: 'auto' }}
-                        >
-                            <button onClick={toggleSize}>
-                                { 'mini' === size && <Icon.Expand /> }
-                                { 'normal' === size && <Icon.Collapse /> }
-                                { shouldShowLabels && <ButtonLabel>{
-                                    'mini' === size ?
-                                    __('Expand') : __('Compact')
-                                }</ButtonLabel> }
-                            </button>
-                            <button onClick={toggleIsHidden}>
-                                <Icon.Close />
-                                { shouldShowLabels && <ButtonLabel>{__('Hide')}</ButtonLabel> }
-                            </button>
-                        </span>
-                    </div>
-                    <div
-                        className="fl-asst-window-content"
+            <div className={classes} style={styles} {...rest}>
+                <div className="fl-asst-window-toolbar fl-asst-window-drag-handle">
+                    <span className="fl-asst-window-drag-handle" style={{ display: 'inline-flex' }}>
+                        <Icon.DragHandle />
+                        { shouldShowLabels && <ButtonLabel>{__('Move')}</ButtonLabel> }
+                    </span>
+                    {title}
+                    <span
                         {...stopEvts}
-                    >{children}</div>
+                        style={{ marginLeft: 'auto' }}
+                    >
+                        <button onClick={toggleSize}>
+                            { 'mini' === size && <Icon.Expand /> }
+                            { 'normal' === size && <Icon.Collapse /> }
+                            { shouldShowLabels && <ButtonLabel>{
+                                'mini' === size ?
+                                __('Expand') : __('Compact')
+                            }</ButtonLabel> }
+                        </button>
+                        <button onClick={toggleIsHidden}>
+                            <Icon.Close />
+                            { shouldShowLabels && <ButtonLabel>{__('Hide')}</ButtonLabel> }
+                        </button>
+                    </span>
                 </div>
+                <div
+                    className="fl-asst-window-content"
+                    {...stopEvts}
+                >{children}</div>
             </div>
         </Flipped>
     )

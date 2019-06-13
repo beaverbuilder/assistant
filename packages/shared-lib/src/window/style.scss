@@ -14,7 +14,7 @@
 
     &.fl-asst-window-mini {
         max-width: calc( 100vw - 30px );
-        max-height: calc( 100vh - ( 30px + var(--fl-asst-admin-bar-height) ) ); // this needs work
+        max-height: 100%;
         box-shadow: 0 1px 5px 0 rgba(122,137,152,0.27);
     }
     &.fl-asst-window-normal {
@@ -52,9 +52,10 @@
         box-sizing: border-box;
         flex: 1 0 auto;
         position: relative;
-        max-height: calc( 100% - var( --fl-asst-window-toolbar-height ) );
+        max-height: calc( 100% - var( --fl-asst-window-toolbar-height ));
         display: flex;
         flex-direction: column;
+        overflow: auto;
     }
 }
 
