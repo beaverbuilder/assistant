@@ -1,14 +1,14 @@
-import React from 'fl-react'
-import { store } from 'assistant'
-import { Appearance, Icon, App, Window, Error } from 'assistant/lib'
+import React, { Fragment } from 'fl-react'
+import { __ } from 'assistant'
+import { getSystemActions, useSystemState } from 'assistant/store'
+import { Appearance, Icon, Window, Error } from 'assistant/lib'
 import { AppRouting } from '../app'
-
-const { getSystemActions, useSystemState } = store
 
 export const Main = () => {
 	const { appearance, window } = useSystemState()
 	const { brightness = 'light' } = appearance
 	const { size } = window
+
 	return (
 		<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
 			<MainWindow />
@@ -20,30 +20,30 @@ const MainWindow = () => {
 	const { window: mainWindow, shouldShowLabels } = useSystemState()
 	const { size, origin, isHidden } = mainWindow
 	const { setWindow } = getSystemActions()
-	const onChanged = config => {
-		setWindow( config )
-	}
+
+	const onChanged = config => setWindow( config )
 
 	return (
-		<App.Router>
-			<Window
-				icon={<Icon.Pencil />}
-				isHidden={isHidden}
-				size={size}
-				position={origin}
-				onChange={onChanged}
-				shouldShowLabels={shouldShowLabels}
-			>
-				<Error.Boundary alternate={<WindowError />}>
-					<AppRouting />
-				</Error.Boundary>
-			</Window>
-		</App.Router>
+		<Window
+			icon={<Icon.Pencil size={42} />}
+			isHidden={isHidden}
+			size={size}
+			position={origin}
+			onChange={onChanged}
+			shouldShowLabels={shouldShowLabels}
+		>
+			<Error.Boundary alternate={<WindowError />}>
+				<AppRouting />
+			</Error.Boundary>
+		</Window>
 	)
 }
 
 const WindowError = () => {
 	return (
-		<h1>Problem!</h1>
+		<Fragment>
+			<h1>{__( 'We Have A Problem!' )}</h1>
+			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
+		</Fragment>
 	)
 }

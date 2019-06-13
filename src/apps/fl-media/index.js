@@ -1,9 +1,10 @@
 import { registerApp, __ } from 'assistant'
-import { AppIcon } from './app'
+import { Media } from './app'
 
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
-	icon: AppIcon,
+	root: Media,
+	icon: Media.Icon,
 	accent: {
 		color: '#FF5A5E'
 	},

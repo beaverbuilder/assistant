@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'fl-react'
-import { MemoryRouter, Link } from 'fl-react-router-dom'
+import { Link } from 'fl-react-router-dom'
 
 export const App = props => props.children
 
@@ -10,12 +10,17 @@ App.defaults = {
 	accentColor: { color: null, }
 }
 
+/**
+* Context
+*/
 App.Context = createContext( App.defaults )
 App.Context.displayName = 'App.Context'
 
+/**
+* Link
+*/
 App.Link = ( { to, ...rest } ) => {
 	const { handle } = useContext( App.Context )
 	return <Link to={`/${handle}${to}`} {...rest} />
 }
-
-App.Router = MemoryRouter
+App.Link.displayName = 'App.Link'

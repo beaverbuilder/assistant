@@ -31,11 +31,11 @@ const Main = () => {
 	)
 }
 
-const SecondaryScreen = ( { history } ) => {
+const SecondaryScreen = () => {
 	return (
 		<Page>
 			<h1>Second Screen</h1>
-			<button onClick={ () => history.goBack() }>Go Back</button>
+			<p>Paragraph - Nullam id dolor id nibh ultricies vehicula ut id elit. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
 		</Page>
 	)
 }

@@ -1,6 +1,33 @@
 import React from 'fl-react'
+import { Switch, Route, Link } from 'fl-react-router-dom'
+import { Page } from 'assistant/lib'
 
-export const AppIcon = () => {
+export const Media = ( { match } ) => (
+	<Switch>
+		<Route exact path={`${match.url}/`} component={Main} />
+		<Route path={`${match.url}/attachment/:id`} component={AttachmentDetail} />
+	</Switch>
+)
+
+const Main = ({ match }) => {
+	return (
+		<Page>
+			<p>Do you some media right here</p>
+			<Link to={`${match.url}/attachment/1`}>Test Attachment Detail View</Link>
+		</Page>
+	)
+}
+
+const AttachmentDetail = () => {
+	return (
+		<Page>
+			<h1>Attachment Detail Screen</h1>
+			<p>Kinda...</p>
+		</Page>
+	)
+}
+
+Media.Icon = () => {
 	return (
 		<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g fill="currentColor" fillRule="nonzero" stroke="none">

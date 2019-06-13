@@ -28,7 +28,7 @@ const externals = {
     'assistant'             : 'FL.Assistant',
     'assistant/store'       : 'FL.Assistant.store',
     'assistant/lib'         : 'FL.Assistant.lib',
-    'assistant/utils'       : 'FL.Assistant.utils',
+    'assistant/i18n'        : 'FL.Assistant.i18n',
 
     /* wp */
     '@wordpress/i18n'       : 'wp.i18n',

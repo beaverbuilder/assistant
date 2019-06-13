@@ -1,4 +1,5 @@
 import './fl-media'
 import './fl-cloud'
+import './fl-alerts'
 import './fl-settings'
 import './examples'
