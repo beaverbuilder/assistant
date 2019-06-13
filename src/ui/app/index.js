@@ -116,7 +116,7 @@ const AppHeader = ( { label, icon } ) => {
 
 				{ ! isRoot &&
 				<button
-				 	onClick={ () => history.go( -history.index ) }
+					onClick={ () => history.go( -history.index ) }
 					style={{
 						display: 'flex',
 						flexDirection: 'column',
