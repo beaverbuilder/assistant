@@ -1,24 +1,36 @@
-import React from 'fl-react'
+import React, { createRef, createContext } from 'fl-react'
 import classname from 'classnames'
 import './style.scss'
 
 export const Page = ( {
 	className,
-	style: initialStyle,
 	shouldPadTop = false,
 	height = null,
 	...rest
 } ) => {
+
+	const ref = createRef()
 
 	const classes = classname( {
 		'fl-asst-page': true,
 		'fl-asst-page-pad-top': shouldPadTop,
 	}, className )
 
-	const style = {
-		...initialStyle,
+	const context = {
+		...Page.defaults,
+		ref,
 	}
+
 	return (
-		<div className={classes} style={style} {...rest} />
+		<Page.Context.Provider value={context}>
+			<div className={classes} ref={ref} {...rest} />
+		</Page.Context.Provider>
 	)
 }
+
+Page.defaults = {
+	ref: null,
+}
+
+Page.Context = createContext( Page.defaults )
+Page.Context.displayName = 'Page.Context'
