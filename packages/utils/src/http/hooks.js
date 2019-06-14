@@ -1,7 +1,4 @@
-
-
-
-const {nonce, apiRoot, ajaxUrl } = FL_ASSISTANT_CONFIG
+const {nonce, apiRoot, ajaxUrl } = FL_ASSISTANT_CONFIG;
 
 import {HttpClient} from "./http-client";
 

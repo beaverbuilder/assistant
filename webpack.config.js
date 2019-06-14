@@ -29,6 +29,7 @@ const externals = {
     'assistant/store'       : 'FL.Assistant.store',
     'assistant/lib'         : 'FL.Assistant.lib',
     'assistant/i18n'        : 'FL.Assistant.i18n',
+    'assistant/http'        : 'FL.Assistant.http',
 
     /* wp */
     '@wordpress/i18n'       : 'wp.i18n',

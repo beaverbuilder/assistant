@@ -97,6 +97,7 @@ http.bodyParser = (response) => {
 ```
 ### Interceptors
 
+
 #### Request Interceptors
 
 #### Response Interceptors
@@ -105,17 +106,18 @@ http.bodyParser = (response) => {
 
 #### Request Transformer
 
-Request transformers are useful if you need to modify the config before a request is sent.
+Request transformers are useful if you need to modify the request data before it is sent.
 
 ```javascript
-http.transformers.request.push((request) => {
+http.transformers.request.push((data) => {
     
-    // if this is a post request
-   if(request.method.toLowerCase() === "post") {
-       //... wrap in FormData
-   } 
-   
-   return request;
+   // hypothetical 3rd party rest api requires all requests 
+   // to be wrapped in { stuff: { things: [] }}
+   return {
+       stuff: {
+           things: data
+       }
+   }
 });
 ```
 
