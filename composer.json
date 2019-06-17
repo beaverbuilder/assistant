@@ -1,0 +1,16 @@
+{
+    "name": "beaverbuilder/assistant",
+    "type": "wordpress-plugin",
+    "autoload": {
+        "psr-4": {
+            "FL\\Assistant\\": "lib/",
+            "FL\\Assistant\\Tests\\": "tests/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "brain/monkey": "2.*",
+        "mockery/mockery": "dev-master",
+        "antecedent/patchwork": "^2.1"
+    }
+}

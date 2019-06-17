@@ -1,18 +1,23 @@
 <?php
+namespace FL\Assistant\Rest;
+
+use FL\Assistant\Rest\Traits\HasAssistantNamespace;
+use FL\Assistant\Services\PostService;
 
 /**
  * REST API logic for comments.
  */
-final class FL_Assistant_REST_Comments {
+class CommentsController {
+
+	use HasAssistantNamespace;
 
 	/**
 	 * Register routes.
 	 */
 	static public function register_routes() {
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/comments', array(
+		static::route('/comments', array(
 				array(
-					'methods'             => WP_REST_Server::READABLE,
+					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::comments',
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
@@ -21,10 +26,9 @@ final class FL_Assistant_REST_Comments {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/comments/count', array(
+		static::route('/comments/count', array(
 				array(
-					'methods'             => WP_REST_Server::READABLE,
+					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::comments_count',
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
@@ -33,10 +37,9 @@ final class FL_Assistant_REST_Comments {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/comment/(?P<id>\d+)', array(
+		static::route('/comment/(?P<id>\d+)', array(
 				array(
-					'methods'             => WP_REST_Server::READABLE,
+					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::comment',
 					'args'                => array(
 						'id' => array(
@@ -49,7 +52,7 @@ final class FL_Assistant_REST_Comments {
 					},
 				),
 				array(
-					'methods'             => WP_REST_Server::CREATABLE,
+					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::update_comment',
 					'args'                => array(
 						'id'     => array(
@@ -103,7 +106,9 @@ final class FL_Assistant_REST_Comments {
 	static public function comments( $request ) {
 		$response   = array();
 		$params     = $request->get_params();
-		$post_types = array_keys( FL_Assistant_Data::get_post_types() );
+
+		$post_service = new PostService();
+		$post_types = array_keys( $post_service->get_types() );
 		$comments   = get_comments( array_merge( array( 'post_type' => $post_types ), $params ) );
 
 		foreach ( $comments as $comment ) {
@@ -190,4 +195,3 @@ final class FL_Assistant_REST_Comments {
 	}
 }
 
-FL_Assistant_REST_Comments::register_routes();

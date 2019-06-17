@@ -1,16 +1,26 @@
 <?php
 
+namespace FL\Assistant\Rest;
+
+use FL\Assistant\AssistantData;
+use FL\Assistant\Services\PostService;
+use FL\Assistant\Services\TaxonomyService;
+use FL\Assistant\Rest\Traits\HasAssistantNamespace;
+use \WP_REST_Server;
+use \WP_REST_Request;
+use \WP_REST_Response;
 /**
  * REST API logic for terms.
  */
-final class FL_Assistant_REST_Terms {
+class TermsController {
+
+	use HasAssistantNamespace;
 
 	/**
 	 * Register routes.
 	 */
 	static public function register_routes() {
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/terms', array(
+		static::route('/terms', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::terms',
@@ -21,8 +31,7 @@ final class FL_Assistant_REST_Terms {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/terms/hierarchical', array(
+		static::route('/terms/hierarchical', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::hierarchical_terms',
@@ -33,8 +42,7 @@ final class FL_Assistant_REST_Terms {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/terms/count', array(
+		static::route('/terms/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::terms_count',
@@ -45,8 +53,7 @@ final class FL_Assistant_REST_Terms {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/term/(?P<id>\d+)', array(
+		static::route('/term/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::term',
@@ -80,8 +87,7 @@ final class FL_Assistant_REST_Terms {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/term', array(
+		static::route('/term', array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::create_term',
@@ -177,7 +183,8 @@ final class FL_Assistant_REST_Terms {
 	 * Returns an array of counts by taxonomy type.
 	 */
 	static public function terms_count( $request ) {
-		$taxonomies = FL_Assistant_Data::get_taxonomies();
+		$ps = new PostService();
+		$taxonomies = $ps->get_taxononies();
 		$response = array();
 
 		foreach ( $taxonomies as $slug => $label ) {
@@ -262,4 +269,4 @@ final class FL_Assistant_REST_Terms {
 	}
 }
 
-FL_Assistant_REST_Terms::register_routes();
+TermsController::register_routes();

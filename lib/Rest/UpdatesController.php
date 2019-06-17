@@ -1,16 +1,22 @@
 <?php
+namespace FL\Assistant\Rest;
 
+use FL\Assistant\Rest\Traits\HasAssistantNamespace;
+use \WP_REST_Server;
+use \WP_REST_Request;
+use \WP_REST_Response;
 /**
  * REST API logic for updates.
  */
-final class FL_Assistant_REST_Updates {
+class UpdatesController {
+
+	use HasAssistantNamespace;
 
 	/**
 	 * Register routes.
 	 */
 	static public function register_routes() {
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/updates', array(
+		static::route('/updates', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::updates',
@@ -27,8 +33,7 @@ final class FL_Assistant_REST_Updates {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/updates/count', array(
+		static::route('/updates/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::updates_count',
@@ -189,4 +194,4 @@ final class FL_Assistant_REST_Updates {
 	}
 }
 
-FL_Assistant_REST_Updates::register_routes();
+UpdatesController::register_routes();

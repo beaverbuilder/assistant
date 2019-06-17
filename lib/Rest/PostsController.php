@@ -1,16 +1,27 @@
 <?php
 
+namespace FL\Assistant\Rest;
+
+use FL\Assistant\DataMappers\PostMapper;
+use FL\Assistant\Rest\Traits\HasAssistantNamespace;
+use FL\Assistant\Services\PostService;
+use FLBuilderModel;
+use \WP_REST_Server;
+use \WP_REST_Request;
+use \WP_REST_Response;
+
 /**
  * REST API logic for posts.
  */
-final class FL_Assistant_REST_Posts {
+class PostsController {
+
+	use HasAssistantNamespace;
 
 	/**
 	 * Register routes.
 	 */
 	static public function register_routes() {
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/posts', array(
+		static::route('/posts', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::posts',
@@ -21,8 +32,7 @@ final class FL_Assistant_REST_Posts {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/posts/hierarchical', array(
+		static::route('/posts/hierarchical', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::hierarchical_posts',
@@ -33,8 +43,7 @@ final class FL_Assistant_REST_Posts {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/posts/count', array(
+		static::route('/posts/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::posts_count',
@@ -45,8 +54,7 @@ final class FL_Assistant_REST_Posts {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/post/(?P<id>\d+)', array(
+		static::route('/post/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::post',
@@ -80,8 +88,7 @@ final class FL_Assistant_REST_Posts {
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/post', array(
+		static::route('/post', array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::create_post',
@@ -127,7 +134,7 @@ final class FL_Assistant_REST_Posts {
 
 		// Beaver Builder data.
 		if ( class_exists( 'FLBuilderModel' ) ) {
-			$response['bbCanEdit']   = FL_Assistant_Data::bb_can_edit_post( $post->ID );
+			$response['bbCanEdit']   = AssistantData::bb_can_edit_post( $post->ID );
 			$response['bbIsEnabled'] = FLBuilderModel::is_builder_enabled( $post->ID );
 			$response['bbBranding']  = FLBuilderModel::get_branding();
 			$response['bbEditUrl']   = FLBuilderModel::get_edit_url( $post->ID );
@@ -210,7 +217,8 @@ final class FL_Assistant_REST_Posts {
 	 * Returns an array of counts by post type.
 	 */
 	static public function posts_count( $request ) {
-		$post_types = FL_Assistant_Data::get_post_types();
+		$post_service = new PostService();
+		$post_types = $post_service->get_types();
 		$response = array();
 
 		foreach ( $post_types as $slug => $label ) {
@@ -297,4 +305,4 @@ final class FL_Assistant_REST_Posts {
 	}
 }
 
-FL_Assistant_REST_Posts::register_routes();
+PostsController::register_routes();

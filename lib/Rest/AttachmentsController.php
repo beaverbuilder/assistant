@@ -1,71 +1,77 @@
 <?php
 
+namespace FL\Assistant\Rest;
+
+use FL\Assistant\Rest\Traits\HasAssistantNamespace;
+use \WP_REST_Server;
+use \WP_REST_Request;
+use \WP_REST_Response;
+
 /**
  * REST API logic for attachments.
  */
-final class FL_Assistant_REST_Attachments {
+class AttachmentsController {
+
+	use HasAssistantNamespace;
 
 	/**
 	 * Register routes.
 	 */
-	static public function register_routes() {
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/attachments', array(
-				array(
+	public static function register_routes() {
+		static::route( '/attachments', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::attachments',
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-			)
+				],
+			]
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/attachments/count', array(
-				array(
+		static::route( '/attachments/count', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::attachments_count',
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-			)
+				],
+			]
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/attachment/(?P<id>\d+)', array(
-				array(
+		static::route( '/attachment/(?P<id>\d+)', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::attachment',
-					'args'                => array(
-						'id' => array(
+					'args'                => [
+						'id' => [
 							'required' => true,
 							'type'     => 'number',
-						),
-					),
-					'permission_callback' => function() {
+						],
+					],
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-				array(
+				],
+				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::update_attachment',
-					'args'                => array(
-						'id'     => array(
+					'args'                => [
+						'id'     => [
 							'required' => true,
 							'type'     => 'number',
-						),
-						'action' => array(
+						],
+						'action' => [
 							'required' => true,
 							'type'     => 'string',
-						),
-					),
-					'permission_callback' => function() {
+						],
+					],
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -73,11 +79,11 @@ final class FL_Assistant_REST_Attachments {
 	 * Returns an array of response data for a single post.
 	 */
 	static public function get_attachment_response_data( $attachment ) {
-		$size = wp_get_attachment_image_src( $attachment->ID, 'medium' );
-		$meta = wp_prepare_attachment_for_js( $attachment->ID );
+		$size  = wp_get_attachment_image_src( $attachment->ID, 'medium' );
+		$meta  = wp_prepare_attachment_for_js( $attachment->ID );
 		$thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )[0];
 
-		$response = array(
+		$response = [
 			'alt'             => $meta['title'],
 			'author'          => get_the_author_meta( 'display_name', $attachment->post_author ),
 			'commentsAllowed' => 'open' === $attachment->comment_status ? true : false,
@@ -87,17 +93,17 @@ final class FL_Assistant_REST_Attachments {
 			'filesize'        => $meta['filesizeHumanReadable'],
 			'id'              => $attachment->ID,
 			'mime'            => $meta['mime'],
-			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : array(),
+			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : [],
 			'slug'            => $attachment->post_name,
 			'subtype'         => $meta['subtype'],
 			'thumbnail'       => $thumb,
 			'title'           => $meta['title'],
 			'type'            => $meta['type'],
 			'url'             => get_permalink( $attachment ),
-			'urls'            => array(
+			'urls'            => [
 				'medium' => $size[0],
-			),
-		);
+			],
+		];
 
 		return $response;
 	}
@@ -106,8 +112,8 @@ final class FL_Assistant_REST_Attachments {
 	 * Returns an array of attachments and related data.
 	 */
 	static public function attachments( $request ) {
-		$response = array();
-		$params   = $request->get_params();
+		$response    = array();
+		$params      = $request->get_params();
 		$attachments = get_posts(
 			array_merge(
 				$params, array(
@@ -130,12 +136,12 @@ final class FL_Assistant_REST_Attachments {
 	 * Returns an array of counts by attachment type.
 	 */
 	static public function attachments_count( $request ) {
-		$counts = wp_count_attachments();
+		$counts   = wp_count_attachments();
 		$response = array();
 
 		foreach ( $counts as $type => $count ) {
 			$parts = explode( '/', $type );
-			$type = array_shift( $parts );
+			$type  = array_shift( $parts );
 
 			if ( isset( $response[ $type ] ) ) {
 				$response[ $type ] += $count;
@@ -155,6 +161,7 @@ final class FL_Assistant_REST_Attachments {
 
 		if ( current_user_can( 'edit_post', $id ) ) {
 			$attachment = get_post( $id );
+
 			return self::get_attachment_response_data( $attachment );
 		}
 
@@ -192,5 +199,3 @@ final class FL_Assistant_REST_Attachments {
 		);
 	}
 }
-
-FL_Assistant_REST_Attachments::register_routes();

@@ -16,3 +16,5 @@ none
 
 # Windows junk
 Thumbs.db
+
+/vendor/

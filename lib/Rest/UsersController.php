@@ -1,40 +1,47 @@
 <?php
 
+namespace FL\Assistant\Rest;
+
+use FL\Assistant\Services\UserService;
+use FL\Assistant\Rest\Traits\HasAssistantNamespace;
+use \WP_REST_Server;
+use \WP_REST_Request;
+use \WP_REST_Response;
+
 /**
  * REST API logic for users.
  */
-final class FL_Assistant_REST_Users {
+final class UsersController {
+
+	use HasAssistantNamespace;
 
 	/**
 	 * Register routes.
 	 */
 	static public function register_routes() {
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/users', array(
+		static::route( '/users', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::users',
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'list_users' );
 					},
 				),
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/users/count', array(
+		static::route( '/users/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::users_count',
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'list_users' );
 					},
 				),
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/user/(?P<id>\d+)', array(
+		static::route( '/user/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => __CLASS__ . '::user',
@@ -44,15 +51,14 @@ final class FL_Assistant_REST_Users {
 							'type'     => 'number',
 						),
 					),
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'list_users' );
 					},
 				),
 			)
 		);
 
-		register_rest_route(
-			FL_Assistant_REST::$namespace, '/current-user/state', array(
+		static::route( '/current-user/state', array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => __CLASS__ . '::update_user_state',
@@ -62,7 +68,7 @@ final class FL_Assistant_REST_Users {
 							'type'     => 'json',
 						),
 					),
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return ! ! wp_get_current_user()->ID;
 					},
 				),
@@ -75,6 +81,7 @@ final class FL_Assistant_REST_Users {
 	 */
 	static public function get_user_response_data( $user ) {
 		$date = mysql2date( get_option( 'date_format' ), $user->user_registered );
+
 		return array(
 			'id'          => $user->ID,
 			'content'     => get_the_author_meta( 'description', $user->ID ),
@@ -111,7 +118,7 @@ final class FL_Assistant_REST_Users {
 	 * Returns an array of counts by user role.
 	 */
 	static public function users_count( $request ) {
-		$counts = count_users();
+		$counts   = count_users();
 		$response = array(
 			'total' => $counts['total_users'],
 		);
@@ -141,8 +148,9 @@ final class FL_Assistant_REST_Users {
 		$id    = wp_get_current_user()->ID;
 		$state = json_decode( $request->get_param( 'state' ) );
 
-		FL_Assistant_Data::update_user_state( $id, $state );
+		$us = new UserService();
+		$us->update_state( $id, $state );
 	}
 }
 
-FL_Assistant_REST_Users::register_routes();
+UsersController::register_routes();
