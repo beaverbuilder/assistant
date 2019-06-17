@@ -3,11 +3,15 @@ import { withRouter } from 'fl-react-router-dom'
 
 export const Nav = () => {}
 
-Nav.defaults = {}
+Nav.defaults = {
+	location: null,
+	match: null,
+	history: null,
+}
 
 Nav.Context = createContext( Nav.defaults )
 
-const Manager = ( { children, location, match, history, onChange = () => {} } ) => {
+const NavManager = ( { children, location, match, history, onChange = () => {} } ) => {
 
 	useEffect( () => {
 		if ( 'function' === typeof onChange ) {
@@ -16,6 +20,7 @@ const Manager = ( { children, location, match, history, onChange = () => {} } ) 
 	}, [ location ] )
 
 	const context = {
+		...Nav.defaults,
 		location,
 		match,
 		history,
@@ -26,4 +31,4 @@ const Manager = ( { children, location, match, history, onChange = () => {} } ) 
 	)
 }
 
-Nav.Manager = withRouter( Manager )
+Nav.Manager = withRouter( NavManager )
