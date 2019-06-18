@@ -11,6 +11,7 @@ class FL_Assistant_Asset_Loader {
 	 */
 	static public function init() {
 		add_action( 'wp_enqueue_scripts', __CLASS__ . '::enqueue' );
+		add_action( 'admin_enqueue_scripts', __CLASS__ . '::enqueue' );
 	}
 
 	/**
@@ -20,15 +21,27 @@ class FL_Assistant_Asset_Loader {
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
+		wp_register_script( 'fl-vendors', $url . 'build/fl-assistant-vendors.bundle.js', false, $ver, false );
+
 		if ( self::should_enqueue() ) {
+
+			// API - loaded in header
+			$js_deps = array( 'heartbeat', 'wp-i18n', 'fl-vendors' );
+
+			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.css', array(), $ver, null );
+			wp_enqueue_script( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.js', $js_deps, $ver, false );
+
 			$data = FL_Assistant_Data::get_all();
-			wp_enqueue_script( 'heartbeat' );
-
-			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-asst-system.bundle.css', array(), $ver, null );
-			wp_enqueue_script( 'fl-assistant', $url . 'build/fl-asst-system.bundle.js', array(), $ver, true );
-
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_CONFIG', $data['config'] );
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_INITIAL_STATE', $data['state'] );
+
+			// Apps - loaded in header
+			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', array(), $ver, null );
+			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
+
+			// UI - loaded in footer
+			wp_enqueue_style( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.css', array(), $ver, null );
+			wp_enqueue_script( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.js', $js_deps, $ver, true );
 		}
 	}
 

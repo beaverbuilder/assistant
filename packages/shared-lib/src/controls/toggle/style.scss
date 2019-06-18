@@ -1,0 +1,28 @@
+.fl-asst-button.fl-asst-form-control-toggle {
+    width: calc( 30px * 2 );
+    height: 30px;
+    border-radius: 30px;
+    border: 2px solid var(--fl-asst-surface-color);
+    background: transparent;
+    box-shadow: none;
+    margin:0px;
+    padding: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .fl-asst-form-control-toggle-thumb {
+        box-sizing: border-box;
+        width: calc( 30px - 8px );
+        height: calc( 30px - 8px );
+        background: transparent;
+        border: 2px solid var(--fl-asst-surface-color);
+        border-radius: 30px;
+        flex: 0 0 auto;
+    }
+
+    &:focus {
+        outline: none;
+        border: 2px solid var(--fl-asst-surface-color);
+    }
+}

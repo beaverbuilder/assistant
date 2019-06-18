@@ -1,0 +1,112 @@
+.screen-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    transform-origin: bottom right;
+    max-height: 40vh;
+}
+
+.fl-asst-screen {
+    flex: 1 1 auto;
+
+    min-height:0;
+    display: flex;
+    flex-direction: column;
+}
+
+.fl-asst-screen-header {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 46px;
+    padding: 0 20px;
+    margin-bottom: 5px;
+    -webkit-user-select: none;
+    user-select: none;
+
+    .fl-asst-app-header-icon {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
+        padding-right: 10px;
+        color: var(--fl-asst-accent-color);
+        width: 38px;
+    }
+
+    .fl-asst-app-header-name {
+        flex: 1 1 auto;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .fl-asst-app-header-actions {
+        flex: 0 0 auto;
+        margin-left: auto;
+        display: flex;
+        flex-direction: row;
+
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+.fl-asst-screen-content {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    position: relative;
+    min-height:0;
+}
+
+.app-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .app-grid-item {
+        flex: 0 0 33.3%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0 0 15px;
+        text-decoration: none;
+
+        .fl-asst-app-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background-color: #16191c;
+            color:white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        label {
+            font-size: 12px;
+            margin-top: 5px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+    }
+}
+
+@supports( display: grid ) {
+    .app-grid {
+        display: grid;
+        grid-template-columns: repeat( auto-fit, minmax(90px, 1fr) );
+        grid-gap: 10px;
+        align-items: center;
+
+        .app-grid-item {
+            margin:0;
+        }
+    }
+}

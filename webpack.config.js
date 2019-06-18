@@ -5,47 +5,55 @@ const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const production = 'production' === process.env.NODE_ENV
 
 const alias = {
-    components: path.resolve( __dirname, './src/front/ui/components' ),
-    system: path.resolve( __dirname, './src/front/ui/system' ),
-    apps: path.resolve( __dirname, './src/front/apps' ),
-    utils: path.resolve( __dirname, './src/utils' ),
-	store: path.resolve( __dirname, './src/front/store/' ),
+
+    // Deprecated
+    components: path.resolve( __dirname, './src/_original/original-ui/ui/components' ),
+    system: path.resolve( __dirname, './src/_original/original-ui/ui/system' ),
+
+    // New UI
+    lib: path.resolve( __dirname, './src/system/lib/'),
+    store: path.resolve( __dirname, './src/system/store'),
+    utils: path.resolve( __dirname, './packages/utils/src/' ),
+    'shared-lib': path.resolve( __dirname, './packages/shared-lib/src/' ),
 }
 
 const externals = {
-    '@assistant' : 'UNSTABLE_FLAssistant',
-    '@assistant/store' : 'UNSTABLE_FLAssistant.store',
-    '@assistant/components' : 'UNSTABLE_FLAssistant.components',
-    '@assistant/utils' : 'UNSTABLE_FLAssistant.utils',
 
-    /* Vendor Shortcuts */
-    '@assistant/react' : 'UNSTABLE_FLAssistant.vendor.React',
-    '@assistant/react-dom' : 'UNSTABLE_FLAssistant.vendor.ReactDOM',
-    '@assistant/redux' : 'UNSTABLE_FLAssistant.vendor.redux',
-    '@assistant/react-redux' : 'UNSTABLE_FLAssistant.vendor.reactRedux',
-    '@assistant/classnames' : 'UNSTABLE_FLAssistant.vendor.classnames',
-    '@assistant/react-tunnels' : 'UNSTABLE_FLAssistant.vendor.tunnels',
+    /* fl-vendor */
+    'fl-react'              : 'FL.React',
+    'fl-react-dom'          : 'FL.ReactDOM',
+    'fl-react-router-dom'   : 'FL.ReactRouter',
 
-    "@wordpress/block-editor" : 'wp.blockEditor',
-    '@wordpress' : 'wp',
+    /* system bundle */
+    'assistant'             : 'FL.Assistant',
+    'assistant/store'       : 'FL.Assistant.store',
+    'assistant/lib'         : 'FL.Assistant.lib',
+    'assistant/i18n'        : 'FL.Assistant.i18n',
+    'assistant/http'        : 'FL.Assistant.http',
+
+    /* wp */
+    '@wordpress/i18n'       : 'wp.i18n',
 }
 
 const entry = {
-    'fl-asst-system' : './src/front',
+    ui: './src/ui',
+    api: './src/system',
+    apps: './src/apps',
+    vendors: './packages/fl-vendors',
 }
 
 const config = {
 	entry,
     externals,
 	mode: 'development',
+    target: 'web',
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
-        filename: `[name].bundle.js`,
+        filename: `fl-assistant-[name].bundle.js`,
     },
-    resolve: {
-        alias,
-    },
+    resolve: { alias },
+    devtool: production ? '' : 'source-map',
     module: {
         rules: [
             {
@@ -55,13 +63,33 @@ const config = {
             },
             {
                 test: /\.s?css$/,
-                use: [ 'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ],
-			}
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                ],
+			},
 		]
     },
     plugins: [
         new MiniCssExtractPlugin( {
-            filename: `[name].bundle.css`,
+            filename: `fl-assistant-[name].bundle.css`,
         } ),
     ]
 }
