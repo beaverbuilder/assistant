@@ -21,9 +21,14 @@ const externals = {
 
     /* system bundle */
     'assistant'             : 'FL.Assistant',
-    'assistant/store'       : 'FL.Assistant.store',
-    'assistant/lib'         : 'FL.Assistant.lib',
+    'assistant/store'       : 'FL.Assistant.data', // TODO: Delete = data replaces store
+    'assistant/data'        : 'FL.Assistant.data',
+
+    'assistant/lib'         : 'FL.Assistant.ui', // TODO: delete - ui replaces lib
+    'assistant/ui'          : 'FL.Assistant.ui',
+
     'assistant/i18n'        : 'FL.Assistant.i18n',
+    'assistant/utils'       : 'FL.Assistant.utils',
 
     /* wp */
     '@wordpress/i18n'       : 'wp.i18n',

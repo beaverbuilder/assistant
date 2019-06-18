@@ -1,13 +1,14 @@
-import React, { createContext, useState } from 'fl-react'
+import React, { createContext, useState, useContext } from 'fl-react'
 import classname from 'classnames'
 import './style.scss'
 
 export const Appearance = ({
         className,
-        brightness = 'light',
-        size = 'normal', // or compact
+        brightness, // 'light' or 'dark'
+        size, // 'normal' or 'compact'
         ...rest,
     }) => {
+    const parentContext = useContext( Appearance.Context )
 
     const classes = classname({
         'fl-asst-appearance' : true,
@@ -16,7 +17,9 @@ export const Appearance = ({
     }, className )
 
     const context = {
+        ...parentContext,
         brightness,
+        size,
     }
     return (
         <Appearance.Context.Provider value={context}>
@@ -27,8 +30,7 @@ export const Appearance = ({
 
 Appearance.defaults = {
     brightness: 'light',
-    contrast: 'normal',
-    color: 'normal',
+    size: 'normal',
 }
 
 Appearance.Context = createContext( Appearance.defaults )
@@ -63,4 +65,12 @@ Appearance.useAppearance = ( options = defaults ) => {
         appearance,
         toggleBrightness,
     }
+}
+
+Appearance.TestSheet = () => {
+    return (
+        <div>
+
+        </div>
+    )
 }

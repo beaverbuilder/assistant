@@ -5,7 +5,6 @@ import './style.scss'
 export const Page = ( {
 	className,
 	shouldPadTop = false,
-	height = null,
 	...rest
 } ) => {
 

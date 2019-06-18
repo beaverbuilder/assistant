@@ -1,21 +1,25 @@
-.fl-asst-appearance {
+.fl-asst {
+    // Light Colors
+    --fl-asst-light-1: white;
+    --fl-asst-light-2: hsl(214, 3%, 98%);
+    --fl-asst-light-3: hsl(214, 4%, 96%);
+    --fl-asst-light-4: hsl(214, 4%, 92%);
+    --fl-asst-light-5: hsl(214, 4%, 86%);
+    --fl-asst-light-text: black;
+    --fl-asst-light-subtext: var(--fl-asst-dark-2);
 
-    // Colors
-    --fl-asst-blue: blue;
-    --fl-asst-dark-color: black;
-    --fl-asst-light-color: white;
-
-    --fl-asst-surface-color: var(--fl-asst-dark-color);
-    --fl-asst-surface-background: var(--fl-asst-light-color);
-
-    --fl-asst-accent-color: var(--fl-asst-surface-color);
-    --fl-asst-line-color: var(--fl-asst-surface-color);
-
-    // Materials / Surfaces
-
+    // Darks
+    --fl-asst-dark-1: hsl(214, 30%, 11%);
+    --fl-asst-dark-2: hsl(214, 13%, 22%);
+    --fl-asst-dark-3: hsl(214, 21%, 33%);
+    --fl-asst-dark-4: hsl(214, 20%, 44%);
+    --fl-asst-dark-5: hsl(214, 20%, 55%);
+    --fl-asst-dark-text: white;
+    --fl-asst-dark-subtext: var(--fl-asst-light-3);
 
     // Sizes
     --fl-asst-base-radius: 7px;
+    --fl-asst-target-size: 36px; // Smallest actionable area
 
     // Spacing
     --fl-asst-large-space: 30px;
@@ -33,6 +37,13 @@
 
     & * {
         box-sizing: border-box;
+    }
+    img {
+        max-width: 100%;
+    }
+    svg {
+        display: block;
+        shape-rendering: crispEdges;
     }
 
     a, button {
@@ -56,71 +67,73 @@
         }
     }
 
-    p {
-        font-size: var(--fl-asst-base-text-size);
-        margin: var(--fl-asst-outer-space) 0;
-    }
 
-    h1, h2, h3, h4, h5, h6 {
-        color: inherit;
+    .fl-asst-appearance {
 
-        &::before {
-            display: none !important;
-            content: '';
+        // Semantic Color Defaults - Light Appearance
+        --fl-asst-surface-color: var(--fl-asst-light-text);
+        --fl-asst-surface-background: var(--fl-asst-light-1);
+        --fl-asst-accent-color: var(--fl-asst-light-text);
+        --fl-asst-line-color: var(--fl-asst-surface-color);
+
+        &.fl-asst-brightness-light {
+            --fl-asst-surface-color: var(--fl-asst-light-text);
+            --fl-asst-surface-background: var(--fl-asst-light-1);
         }
-    }
 
-    ul, ol {
-        list-style:none;
-        margin:0;
-        padding:0;
+        &.fl-asst-brightness-dark {
+            --fl-asst-surface-color: var(--fl-asst-dark-text);
+            --fl-asst-surface-background: var(--fl-asst-dark-2);
+        }
 
-        li {
+        p {
+            font-size: var(--fl-asst-base-text-size);
+            margin: var(--fl-asst-outer-space) 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: inherit;
+
+            &::before {
+                display: none !important;
+                content: '';
+            }
+        }
+
+        ul, ol {
+            list-style:none;
             margin:0;
             padding:0;
+
+            li {
+                margin:0;
+                padding:0;
+            }
+        }
+
+        hr {
+            background-image: none;
+            background-color: var(--fl-asst-surface-color);
+            height: 1px;
         }
     }
 
-    img {
-        max-width: 100%;
+    .fl-asst-size-compact {
+        --fl-asst-outer-space: var(--fl-asst-medium-space);
+        --fl-asst-inner-space: var(--fl-asst-small-space);
+    }
+    .fl-asst-size-normal {
+        --fl-asst-outer-space: var(--fl-asst-large-space);
+        --fl-asst-inner-space: var(--fl-asst-medium-space);
     }
 
-    hr {
-        background-image: none;
-        background-color: var(--fl-asst-surface-color);
-        height: 1px;
+    .fl-asst-surface {
+        background: var(--fl-asst-surface-background);
+        color: var(--fl-asst-surface-color);
+        transition: background-color .5s, color .5s;
     }
 
-    svg {
-        display: block;
+    .fl-asst-rounded {
+        border-radius: 7px;
     }
-}
-
-.fl-asst-size-compact {
-    --fl-asst-outer-space: var(--fl-asst-medium-space);
-    --fl-asst-inner-space: var(--fl-asst-small-space);
-}
-.fl-asst-size-normal {
-    --fl-asst-outer-space: var(--fl-asst-large-space);
-    --fl-asst-inner-space: var(--fl-asst-medium-space);
-}
-
-.fl-asst-brightness-light {
-    --fl-asst-surface-color: black;
-    --fl-asst-surface-background: white;
-}
-
-.fl-asst-brightness-dark {
-    --fl-asst-surface-color: white;
-    --fl-asst-surface-background: #2C3239;
-}
-
-.fl-asst-surface {
-    background: var(--fl-asst-surface-background);
-    color: var(--fl-asst-surface-color);
-    transition: background-color .5s, color .5s;
-}
-
-.fl-asst-rounded {
-    border-radius: 7px;
 }
