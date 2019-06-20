@@ -1,4 +1,5 @@
 import * as cache from './cache'
+import * as color from './color'
 import * as console from './console'
 import * as datetime from './datetime'
 import * as react from './react'
@@ -10,6 +11,7 @@ import * as wordpress from './wordpress'
 
 export {
 	cache,
+	color,
 	console,
 	datetime,
 	react,

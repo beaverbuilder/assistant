@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useSystemState, getSystemActions } from 'store'
-import { useWindowSize } from 'utils/window'
+import { useWindowSize } from 'shared-utils/window'
 import { Button, Icon } from 'components'
 import './style.scss'
 

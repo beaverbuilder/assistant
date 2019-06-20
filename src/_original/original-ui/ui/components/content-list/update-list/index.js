@@ -1,5 +1,5 @@
 import React from 'react'
-import { updater } from 'utils/wordpress'
+import { updater } from 'shared-utils/wordpress'
 import { ContentQuery } from 'components'
 import { UpdateListItem } from './item'
 import './style.scss'

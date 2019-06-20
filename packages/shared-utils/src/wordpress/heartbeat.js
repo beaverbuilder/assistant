@@ -1,5 +1,5 @@
 import { useEffect } from 'fl-react'
-import { addLeadingSlash } from 'utils/url'
+import { addLeadingSlash } from 'shared-utils/url'
 
 /**
  * Adds a new REST route to be batched via the heartbeat API.

@@ -67,6 +67,18 @@
         }
     }
 
+    h1:first-child,
+    h2:first-child,
+    h3:first-child { margin-top: 0; }
+    
+    h1 {
+        font-size: calc( var(--fl-asst-base-text-size) + 6px );
+    }
+    h2 {
+        font-size: calc( var(--fl-asst-base-text-size) + 2px );
+        margin: var(--fl-asst-inner-space) 0;
+    }
+
 
     .fl-asst-appearance {
 

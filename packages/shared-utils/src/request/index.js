@@ -1,4 +1,4 @@
-import { clearCache, getCache, setCache } from 'utils/cache'
+import { clearCache, getCache, setCache } from 'shared-utils/cache'
 
 /**
  * GET requests that are currently running.

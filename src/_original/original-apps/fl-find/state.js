@@ -1,5 +1,5 @@
 import { getSystemConfig } from 'store'
-import { getWeek } from 'utils/datetime'
+import { getWeek } from 'shared-utils/datetime'
 
 const { contentTypes } = getSystemConfig()
 

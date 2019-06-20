@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useComponentUpdate } from 'utils/hooks'
-import { getPagedContent } from 'utils/wordpress'
+import { useComponentUpdate } from 'shared-utils/hooks'
+import { getPagedContent } from 'shared-utils/wordpress'
 import { ContentList } from 'components'
 
 export const ContentQuery = ( {

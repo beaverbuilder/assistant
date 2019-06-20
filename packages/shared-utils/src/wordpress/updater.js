@@ -1,4 +1,4 @@
-import { updatePlugin, updateTheme } from 'utils/wordpress'
+import { updatePlugin, updateTheme } from 'shared-utils/wordpress'
 
 /**
  * Cached queue array retrieved from local storage.

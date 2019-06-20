@@ -1,7 +1,7 @@
 import { getSystemConfig } from 'store'
-import { clearCache } from 'utils/cache'
-import { getRequest, postRequest } from 'utils/request'
-import { addQueryArgs } from 'utils/url'
+import { clearCache } from 'shared-utils/cache'
+import { getRequest, postRequest } from 'shared-utils/request'
+import { addQueryArgs } from 'shared-utils/url'
 
 /**
  * Fetch request for the WordPress REST API.

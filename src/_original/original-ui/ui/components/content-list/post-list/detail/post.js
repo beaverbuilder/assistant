@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions, getSystemConfig } from 'store'
-import { updatePost } from 'utils/wordpress'
+import { updatePost } from 'shared-utils/wordpress'
 import { PostParentSelect } from './post-parent-select'
 import {
 	Button,

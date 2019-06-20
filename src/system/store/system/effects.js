@@ -1,5 +1,5 @@
 import { registerAppStore } from '../app'
-import { updateUserState } from 'utils/wordpress'
+import { updateUserState } from 'shared-utils/wordpress'
 
 /**
  * Effects that fire before an action.

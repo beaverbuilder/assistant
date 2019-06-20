@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import posed from 'react-pose'
 import { ViewContext, Button, Icon, Scroller, AppContext, Title } from 'components'
 import { Tunnel } from 'react-tunnels'
-import { render } from 'utils/react'
+import { render } from 'shared-utils/react'
 import './style.scss'
 
 export const StackContext = createContext()

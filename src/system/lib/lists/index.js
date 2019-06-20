@@ -1,30 +1,270 @@
-import React, { Children, createElement } from 'fl-react'
+import React from 'fl-react'
 import classname from 'classnames'
+import './style.scss'
+
+import { isRenderProp, resolveComponent } from 'shared-utils/react'
+import { isColor } from 'shared-utils/color'
+import { isURL } from 'shared-utils/url'
+
+import { getDefaultItemProps } from './items'
+
+const getListWrapperType = type => {
+	switch( type ) {
+		case 'ordered':
+			return 'ol'
+		case 'definition':
+			return 'dl'
+		default:
+			return 'ul'
+	}
+}
+
+const getItemType = ( item, isSection = false ) => {
+	return isSection ? List.Section : List.Item
+}
 
 export const List = ( {
-	tag: Tag = 'ul',
-	childTag = 'li',
-	className,
-	children,
-	items = [],
-	...rest,
+	children, // Literal Children | Item contents render function
+
+	items, // [{Object}] | null
+
+	listType = 'unordered', // ordered | unordered | definition
+
+	getItemProps = getDefaultItemProps,
+
+	getItemComponent = getItemType,
+
+	// What key do we use to determine if an item is a section?
+	itemTypeKey = 'type',
+
+	// What key should we use (by default) to get section items?
+	sectionItemsKey = 'items',
+
+	// Test if a data item is a section
+	isListSection = item => ( 'undefined' !== typeof item[itemTypeKey] && 'list-section' === item[itemTypeKey] ),
+
+	// Get the array of items from a section item
+	getSectionItems = section => 'undefined' !== typeof section[sectionItemsKey] ? section[sectionItemsKey] : [],
+
+	// Component to use for outermost wrapper
+	getWrapperComponent = () => getListWrapperType( listType ),
+
+	...rest, // Anything else will get folded into Wrapper props
 } ) => {
 
-	const classes = classname( {
-		'fl-asst-list': true,
-	}, className )
+	const renderListItems = items => {
 
-	// Wrap children
-	const newChildren = Children.map( children, child => {
-		return createElement( childTag, {}, child )
-	} )
+		return items.map( ( item, i ) => {
+
+			if ( isListSection( item ) ) {
+
+				const Section = getItemComponent( item, true )
+				const sectionProps = getItemProps( item, i )
+				const sectionItems = getSectionItems( item )
+				return (
+					<Section {...sectionProps}>
+						<List items={sectionItems} />
+					</Section>
+				)
+			} else {
+				return renderItem( item, i )
+			}
+		} )
+	}
+
+	const renderItem = ( item, i ) => {
+		const Item = getItemComponent( item )
+
+		const props = getItemProps( item, i )
+		if ( isRenderProp( children ) ) {
+			return (
+				<Item {...props}>{ children( item ) }</Item>
+			)
+		} else {
+			return <Item {...props} />
+		}
+	}
+
+	let content = children
+
+	// Is this a data-driven list?
+	if ( Array.isArray( items ) && items.length ) {
+		content = renderListItems( items )
+	}
 
 	const props = {
 		...rest,
-		className: classes,
-		children: newChildren,
+		className: 'fl-asst-list',
+		children: content,
 	}
+
+	const Wrap = getWrapperComponent()
 	return (
-		<Tag {...props} />
+		<Wrap {...props} />
 	)
 }
+
+const InfoItem = ({
+	label,
+	description,
+	thumbnail,
+	className,
+	...rest
+}) => {
+	const classes = classname({
+		'fl-asst-list-item-content-info' : true,
+	}, className )
+
+	let hasThumbnail = false
+	let color = false
+	if ( thumbnail && isURL( thumbnail ) ) {
+		hasThumbnail = true
+	} else if ( label && isColor( label ) ){
+		hasThumbnail = true
+		color = label
+	}
+
+	return (
+		<div className={classes} {...rest}>
+			{ hasThumbnail &&
+				<div className="fl-asst-list-item-thumbnail">
+					{ thumbnail && <img src={thumbnail} /> }
+					{ color && <div className="fl-asst-list-item-color-thumbnail"  style={{ backgroundColor: color }} /> }
+				</div>
+			}
+			<div className="fl-asst-list-item-subject">
+				{ label && <div className="fl-asst-list-item-title">{label}</div> }
+				{ description && <div className="fl-asst-list-item-description">{description}</div> }
+			</div>
+		</div>
+	)
+}
+
+List.Item = ({
+	children,
+	className,
+	tag: Tag = 'li',
+	...rest
+}) => {
+	const classes = classname( 'fl-asst-list-item', className )
+	const props = {
+		className: classes,
+		tabIndex: -1,
+	}
+	return (
+		<Tag {...props}>{ children ? children : <InfoItem {...rest} /> }</Tag>
+	)
+}
+List.Item.displayName = 'List.Item'
+
+List.Section = ({ children, className, label, ...rest }) => {
+	const classes = classname( 'fl-asst-list-section', className )
+	return (
+		<li className={classes} {...rest}>
+			<div className="fl-asst-list-section-header">{label}</div>
+			<div className="fl-asst-list-section-content">{children}</div>
+		</li>
+	)
+}
+List.Section.displayName = 'List.Section'
+
+
+
+List.TestSheet = () => {
+
+	const padSides = { padding: '0 var(--fl-asst-outer-space)'}
+
+	const SimpleDataExample = () => {
+		const items = ['Red', 'Green', 'Blue', 'Orange', 'Yellow', 'rebeccapurple', 'rgba(0,0,0,.4)']
+		return (
+			<>
+				<h2 style={padSides}>Simple Data Example</h2>
+				<List items={items} />
+			</>
+		)
+	}
+
+	const DataDrivenExample = () => {
+		const items = [
+			{
+				label: "Post One",
+				caption: 'This is something you really want to see.'
+			},
+			{
+				label: "Post Two- This one has a really long title so we'll need to deal with that somehow",
+				caption: 'This is something you really want to see.',
+				thumb: 'https://images.unsplash.com/photo-1560932668-46f7a662129e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+			},
+			{
+				label: "Post Three",
+				caption: 'This is something you really want to see.',
+				img: 'https://images.unsplash.com/photo-1560866564-d9b7dcecb5fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+			},
+			{
+				label: "Post Four",
+				description: 'Hey this is a description!',
+			},
+			{
+				label: "Post Five"
+			},
+		]
+		return (
+			<>
+				<h2 style={padSides}>Array-Driven List</h2>
+				<List items={items} />
+			</>
+		)
+	}
+
+	const SectionedListExample = () => {
+		const items = [
+			{
+				label: 'Section One',
+				type: 'list-section',
+				items: [
+					{ title: "Sectioned Post One" },
+					{ title: "Sectioned Post Two" },
+					{ title: "Sectioned Post Three" },
+					{ title: "Sectioned Post Four" },
+					{ title: "Sectioned Post Five" },
+				],
+			},
+			{
+				label: 'Section Two',
+				type: 'list-section',
+				items: [],
+			},
+		]
+		return (
+			<>
+				<h2 style={padSides}>Sectioned List</h2>
+				<List items={items} />
+			</>
+		)
+	}
+
+	const HeterogeneousExample = () => {
+		const items = [
+			{
+				type: 'page',
+
+			}
+		]
+		return (
+			<>
+				<h2 style={padSides}>Heterogeneous Types Example</h2>
+				<List items={items} />
+			</>
+		)
+	}
+
+	return (
+		<>
+			<h1 style={padSides}>List Examples</h1>
+			<SimpleDataExample />
+			<DataDrivenExample />
+			<SectionedListExample />
+		</>
+	)
+}
+List.TestSheet.displayName = 'List.TestSheet'

@@ -1,4 +1,4 @@
-import { registerStore, useStore, getStore, getDispatch } from 'utils/store'
+import { registerStore, useStore, getStore, getDispatch } from 'shared-utils/store'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'

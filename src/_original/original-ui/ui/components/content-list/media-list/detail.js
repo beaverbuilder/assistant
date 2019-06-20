@@ -12,7 +12,7 @@ import {
 	StackContext,
 	useImageData,
 } from 'components'
-import { updatePost } from 'utils/wordpress'
+import { updatePost } from 'shared-utils/wordpress'
 import { getSystemActions } from 'store'
 
 export const MediaDetail = () => {

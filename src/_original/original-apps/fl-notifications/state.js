@@ -1,4 +1,4 @@
-import { currentUserCan } from 'utils/wordpress'
+import { currentUserCan } from 'shared-utils/wordpress'
 
 export const initialState = {
 	query: {

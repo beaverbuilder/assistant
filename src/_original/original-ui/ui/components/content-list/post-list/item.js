@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { redirect } from 'utils/location'
+import { redirect } from 'shared-utils/location'
 import { getSystemConfig } from 'store'
 import { Button, ContentListItem, Icon, ItemContext, StackContext } from 'components'
 import { PostListDetail, TermListDetail } from './detail'

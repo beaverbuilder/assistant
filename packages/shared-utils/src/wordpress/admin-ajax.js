@@ -1,6 +1,6 @@
 import { getSystemConfig } from 'store'
-import { clearCache } from 'utils/cache'
-import { getRequest, postRequest } from 'utils/request'
+import { clearCache } from 'shared-utils/cache'
+import { getRequest, postRequest } from 'shared-utils/request'
 
 /**
  * Fetch request for WordPress admin AJAX.

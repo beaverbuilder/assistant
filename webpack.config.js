@@ -7,8 +7,9 @@ const production = 'production' === process.env.NODE_ENV
 const alias = {
     lib: path.resolve( __dirname, './src/system/lib/'),
     store: path.resolve( __dirname, './src/system/store'),
-    utils: path.resolve( __dirname, './packages/utils/src/' ),
+    utils: path.resolve( __dirname, './src/system/utils' ),
     'shared-lib': path.resolve( __dirname, './packages/shared-lib/src/' ),
+    'shared-utils': path.resolve( __dirname, './packages/shared-utils/src/' ),
 }
 
 const externals = {
@@ -18,6 +19,7 @@ const externals = {
     'fl-react-dom'          : 'FL.ReactDOM',
     'fl-react-router-dom'   : 'FL.ReactRouter',
     'fl-redux'              : 'FL.Redux',
+    'fl-prop-types'         : 'FL.PropTypes',
 
     /* system bundle */
     'assistant'             : 'FL.Assistant',

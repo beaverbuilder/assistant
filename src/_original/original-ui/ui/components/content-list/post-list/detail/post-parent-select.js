@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getHierarchicalPosts } from 'utils/wordpress'
+import { getHierarchicalPosts } from 'shared-utils/wordpress'
 
 export const PostParentSelect = ( { type, exclude = 0, name, id, value, onChange } ) => {
 	const [ posts, setPosts ] = useState( null )

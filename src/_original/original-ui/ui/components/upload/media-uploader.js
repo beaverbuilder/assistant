@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import { clearCache } from 'utils/cache'
-import { restRequest } from 'utils/wordpress'
-import { registerStore, useStore, getStore, getDispatch } from 'utils/store'
+import { clearCache } from 'shared-utils/cache'
+import { restRequest } from 'shared-utils/wordpress'
+import { registerStore, useStore, getStore, getDispatch } from 'shared-utils/store'
 import {
 	Branding,
 	EmptyMessage,
