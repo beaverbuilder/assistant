@@ -19,11 +19,9 @@ export const App = ( { match } ) => (
 const Main = ( { match } ) => {
 	return (
 		<Page>
-			<Button.Group direction="column">
-				<Button to={`${match.url}/unsplash`}>{__( 'Unsplash Example' )}</Button>
-				<Button to={`${match.url}/routing`}>{__( 'Routing Example' )}</Button>
-				<Button to={`${match.url}/lists`}>{__( 'List Examples' )}</Button>
-			</Button.Group>
+			<Button to={`${match.url}/unsplash`}>{__( 'Unsplash Example' )}</Button>
+			<Button to={`${match.url}/routing`}>{__( 'Routing Example' )}</Button>
+			<Button to={`${match.url}/lists`}>{__( 'List Examples' )}</Button>
 		</Page>
 	)
 }

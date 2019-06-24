@@ -1,27 +1,18 @@
-import React from 'fl-react'
+import React, { useContext } from 'fl-react'
 import classname from 'classnames'
+import InfiniteScroll from 'react-infinite-scroller'
+import { Page, Nav } from 'lib'
 import './style.scss'
 
-import { isRenderProp, resolveComponent } from 'shared-utils/react'
+import { isRenderProp } from 'shared-utils/react'
 import { isColor } from 'shared-utils/color'
 import { isURL } from 'shared-utils/url'
 
-import { getDefaultItemProps } from './items'
-
-const getListWrapperType = type => {
-	switch( type ) {
-		case 'ordered':
-			return 'ol'
-		case 'definition':
-			return 'dl'
-		default:
-			return 'ul'
-	}
-}
-
-const getItemType = ( item, isSection = false ) => {
-	return isSection ? List.Section : List.Item
-}
+import {
+	getDefaultItemProps,
+	getListWrapperType,
+	getItemType,
+} from './parts'
 
 export const List = ( {
 	children, // Literal Children | Item contents render function
@@ -52,6 +43,7 @@ export const List = ( {
 	...rest, // Anything else will get folded into Wrapper props
 } ) => {
 
+	const { scrollRef } = useContext( Page.Context )
 	const renderListItems = items => {
 
 		return items.map( ( item, i ) => {
@@ -92,34 +84,36 @@ export const List = ( {
 		content = renderListItems( items )
 	}
 
-	const props = {
-		...rest,
-		className: 'fl-asst-list',
-		children: content,
-	}
-
 	const Wrap = getWrapperComponent()
 	return (
-		<Wrap {...props} />
+		<InfiniteScroll
+			pageStart={0}
+			loadMore={ () => console.log( 'load more' ) }
+			hasMore={false}
+			useWindow={false}
+			getScrollParent={ () => scrollRef.current }
+		>
+			<Wrap className="fl-asst-list" {...rest}>{content}</Wrap>
+		</InfiniteScroll>
 	)
 }
 
-const InfoItem = ({
+const InfoItem = ( {
 	label,
 	description,
 	thumbnail,
 	className,
 	...rest
-}) => {
-	const classes = classname({
-		'fl-asst-list-item-content-info' : true,
+} ) => {
+	const classes = classname( {
+		'fl-asst-list-item-content-info': true,
 	}, className )
 
 	let hasThumbnail = false
 	let color = false
 	if ( thumbnail && isURL( thumbnail ) ) {
 		hasThumbnail = true
-	} else if ( label && isColor( label ) ){
+	} else if ( label && isColor( label ) ) {
 		hasThumbnail = true
 		color = label
 	}
@@ -140,12 +134,12 @@ const InfoItem = ({
 	)
 }
 
-List.Item = ({
+List.Item = ( {
 	children,
 	className,
 	tag: Tag = 'li',
 	...rest
-}) => {
+} ) => {
 	const classes = classname( 'fl-asst-list-item', className )
 	const props = {
 		className: classes,
@@ -157,7 +151,7 @@ List.Item = ({
 }
 List.Item.displayName = 'List.Item'
 
-List.Section = ({ children, className, label, ...rest }) => {
+List.Section = ( { children, className, label, ...rest } ) => {
 	const classes = classname( 'fl-asst-list-section', className )
 	return (
 		<li className={classes} {...rest}>
@@ -169,13 +163,13 @@ List.Section = ({ children, className, label, ...rest }) => {
 List.Section.displayName = 'List.Section'
 
 
-
 List.TestSheet = () => {
+	const { path } = useContext ( Nav.Context )
 
 	const padSides = { padding: '0 var(--fl-asst-outer-space)'}
 
 	const SimpleDataExample = () => {
-		const items = ['Red', 'Green', 'Blue', 'Orange', 'Yellow', 'rebeccapurple', 'rgba(0,0,0,.4)']
+		const items = [ 'Red', 'Green', 'Blue', 'Orange', 'Yellow', 'rebeccapurple', 'rgba(0,0,0,.4)' ]
 		return (
 			<>
 				<h2 style={padSides}>Simple Data Example</h2>
@@ -187,25 +181,25 @@ List.TestSheet = () => {
 	const DataDrivenExample = () => {
 		const items = [
 			{
-				label: "Post One",
+				label: 'Post One',
 				caption: 'This is something you really want to see.'
 			},
 			{
-				label: "Post Two- This one has a really long title so we'll need to deal with that somehow",
+				label: 'Post Two- This one has a really long title so we\'ll need to deal with that somehow',
 				caption: 'This is something you really want to see.',
 				thumb: 'https://images.unsplash.com/photo-1560932668-46f7a662129e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
 			},
 			{
-				label: "Post Three",
+				label: 'Post Three',
 				caption: 'This is something you really want to see.',
 				img: 'https://images.unsplash.com/photo-1560866564-d9b7dcecb5fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
 			},
 			{
-				label: "Post Four",
+				label: 'Post Four',
 				description: 'Hey this is a description!',
 			},
 			{
-				label: "Post Five"
+				label: 'Post Five'
 			},
 		]
 		return (
@@ -222,11 +216,11 @@ List.TestSheet = () => {
 				label: 'Section One',
 				type: 'list-section',
 				items: [
-					{ title: "Sectioned Post One" },
-					{ title: "Sectioned Post Two" },
-					{ title: "Sectioned Post Three" },
-					{ title: "Sectioned Post Four" },
-					{ title: "Sectioned Post Five" },
+					{ title: 'Sectioned Post One' },
+					{ title: 'Sectioned Post Two' },
+					{ title: 'Sectioned Post Three' },
+					{ title: 'Sectioned Post Four' },
+					{ title: 'Sectioned Post Five' },
 				],
 			},
 			{
@@ -258,12 +252,25 @@ List.TestSheet = () => {
 		)
 	}
 
+	const PostListExample = () => {
+		return (
+			<Page>
+				Post List Examples.
+			</Page>
+		)
+	}
+
 	return (
 		<>
 			<h1 style={padSides}>List Examples</h1>
 			<SimpleDataExample />
 			<DataDrivenExample />
 			<SectionedListExample />
+
+			<Nav.Switch>
+				<Nav.Route path={`${path}/posts`} component={PostListExample} />
+			</Nav.Switch>
+			<Nav.Link to={`${path}/posts`}>Posts</Nav.Link>
 		</>
 	)
 }

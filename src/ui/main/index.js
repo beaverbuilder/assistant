@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import { __ } from 'assistant'
 import { getSystemActions, useSystemState } from 'assistant/store'
-import { Appearance, Icon, Window, Error, Page } from 'assistant/lib'
+import { Appearance, Icon, Window, Error, Page, Nav } from 'assistant/lib'
 import { AppRouting } from '../app'
 
 export const Main = () => {
@@ -10,9 +10,11 @@ export const Main = () => {
 	const { size } = window
 
 	return (
-		<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
-			<MainWindow />
-		</Appearance>
+		<Nav.Provider>
+			<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
+				<MainWindow />
+			</Appearance>
+		</Nav.Provider>
 	)
 }
 

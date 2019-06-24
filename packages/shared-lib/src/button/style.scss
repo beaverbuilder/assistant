@@ -1,19 +1,24 @@
-.fl-asst-button {
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
+.fl-asst {
+    .fl-asst-button {
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
 
-.fl-asst-button-label {
-    margin-left: 8px;
-}
+        background: var(--fl-asst-light-4);
+        padding: 5px;
+    }
 
-.fl-asst-button-group {
-    display: flex;
-    flex-direction: row;
+    .fl-asst-button-label {
+        margin-left: 8px;
+    }
 
-    &.fl-asst-button-group-column {
-        flex-direction: column;
+    .fl-asst-button-group {
+        display: flex;
+        flex-direction: row;
+
+        &.fl-asst-button-group-column {
+            flex-direction: column;
+        }
     }
 }

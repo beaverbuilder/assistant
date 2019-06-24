@@ -1,37 +1,17 @@
 import React, { Fragment, useContext } from 'fl-react'
-import { MemoryRouter, Switch, Route, Link } from 'fl-react-router-dom'
+import { Route, Link } from 'fl-react-router-dom'
 import { __ } from 'assistant'
 import { App, Icon, Page, Nav } from 'assistant/lib'
-import { useSystemState, getSystemActions } from 'assistant/store'
+import { useSystemState } from 'assistant/store'
 import './style.scss'
 
-export const AppRouting = () => {
-	const { history } = useSystemState()
-	const { setHistory } = getSystemActions()
-
-	const routerProps = {
-		initialIndex: history.index,
-	}
-	if ( history.entries && history.entries.length ) {
-		routerProps.initialEntries = history.entries
-	}
-
-	const handleChange = ( history ) => {
-		setHistory( history.index, history.entries )
-	}
-
-	return (
-		<MemoryRouter {...routerProps}>
-			<Nav.Manager onChange={handleChange}>
-				<Switch>
-					<Route exact path="/" component={Switcher} />
-					<Route path="/:app" component={AppContent} />
-					<Route component={NoApp} />
-				</Switch>
-			</Nav.Manager>
-		</MemoryRouter>
-	)
-}
+export const AppRouting = () => (
+	<Nav.Switch>
+		<Route exact path="/" component={Switcher} />
+		<Route path="/:app" component={AppContent} />
+		<Route component={NoApp} />
+	</Nav.Switch>
+)
 
 const AppContent = props => {
 	const { match } = props
@@ -61,7 +41,7 @@ const AppContent = props => {
 	}
 	return (
 		<App.Context.Provider value={context}>
-			<div className="fl-asst-screen" style={style}>
+			<div className="fl-asst-screen fl-asst-app-screen fl-asst-primary-content" style={style}>
 				<AppHeader
 					label={app.label}
 					icon={app.icon}
@@ -78,9 +58,19 @@ const AppHeader = ( { label, icon } ) => {
 	const { shouldShowLabels } = useSystemState()
 	const app = useContext( App.Context )
 	const { history } = useContext( Nav.Context )
-
-	const isRoot = 0 === history.index
 	const isAppRoot = 2 > history.index
+
+	let breadcrumb = null
+	if ( 2 < history.entries.length && 1 < history.index ) {
+		const entries = Array.from( history.entries ).slice( 2 )
+		const crumbs = entries.map( entry => {
+
+			// Need better way to get name for views here.
+			const parts = entry.pathname.split( '/' )
+			return parts[parts.length - 1]
+		} )
+		breadcrumb = crumbs.join( ' > ' )
+	}
 
 	return (
 		<div className="fl-asst-screen-header fl-asst-app-header">
@@ -110,31 +100,13 @@ const AppHeader = ( { label, icon } ) => {
 					</button> }
 				</div>
 			}
-			<div className="fl-asst-app-header-name">{label}</div>
+			<div className="fl-asst-app-header-name">
+				<span>{label}</span>
+				{ breadcrumb && <span className="fl-asst-app-header-name-description">{breadcrumb}</span> }
+			</div>
 
 			<div className="fl-asst-app-header-actions">
-
-				{ ! isRoot &&
-				<button
-					onClick={ () => history.go( -history.index ) }
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						justifyContent: 'center',
-						color: 'inherit',
-						lineHeight: 1,
-					}}
-				>
-					<div style={{
-						color: 'var(--fl-asst-accent-color)',
-						marginBottom: shouldShowLabels ? 5 : null,
-					}}>
-						<Icon.Apps />
-					</div>
-					{ shouldShowLabels && <span>{__( 'Apps' )}</span> }
-				</button> }
-
+				{ /* App actions go here */ }
 			</div>
 		</div>
 	)

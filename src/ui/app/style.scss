@@ -12,6 +12,11 @@
     display: flex;
     flex-direction: column;
     max-height: 100%;
+
+    &.fl-asst-app-screen {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
 }
 
 .fl-asst-screen-header {
@@ -20,8 +25,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0 20px;
-    margin-bottom: 5px;
+    padding: 0 var(--fl-asst-outer-space);
+    margin: var(--fl-asst-tiny-space) 0;
     -webkit-user-select: none;
     user-select: none;
 
@@ -29,7 +34,7 @@
         flex: 0 0 auto;
         display: flex;
         justify-content: center;
-        padding-right: 10px;
+        padding-right: var(--fl-asst-small-space);
         color: var(--fl-asst-accent-color);
         width: 38px;
     }
@@ -38,6 +43,14 @@
         flex: 1 1 auto;
         font-size: 22px;
         font-weight: 600;
+        display: flex;
+        flex-direction: column;
+
+        .fl-asst-app-header-name-description {
+            font-size: 12px;
+            font-weight: normal;
+            text-transform: capitalize;
+        }
     }
 
     .fl-asst-app-header-actions {

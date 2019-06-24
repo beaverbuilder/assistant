@@ -1,4 +1,4 @@
-import React, { createRef, createContext } from 'fl-react'
+import React, { useRef, createContext } from 'fl-react'
 import classname from 'classnames'
 import './style.scss'
 
@@ -10,18 +10,18 @@ export const Page = ( {
 	...rest
 } ) => {
 
-	const ref = createRef()
+	const ref = useRef()
 
 	const classes = classname( {
 		'fl-asst-page': true,
 		'fl-asst-page-pad-top': shouldPadTop,
-		'fl-asst-page-pad-sides' : shouldPadSides,
-		'fl-asst-page-pad-bottom' : shouldPadBottom,
+		'fl-asst-page-pad-sides': shouldPadSides,
+		'fl-asst-page-pad-bottom': shouldPadBottom,
 	}, className )
 
 	const context = {
 		...Page.defaults,
-		ref,
+		scrollRef: ref,
 	}
 
 	return (
@@ -32,7 +32,7 @@ export const Page = ( {
 }
 
 Page.defaults = {
-	ref: null,
+	scrollRef: null,
 }
 
 Page.Context = createContext( Page.defaults )
