@@ -3,7 +3,7 @@ import { List, Page } from 'assistant/ui'
 
 export const ListExamples = () => {
 	return (
-		<Page shouldPadSides={false}>
+		<Page shouldPadTop={true} shouldPadSides={false}>
 			<List.TestSheet />
 		</Page>
 	)

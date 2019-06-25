@@ -2,7 +2,6 @@ import React, { Fragment } from 'fl-react'
 import { __ } from 'assistant'
 import { useSystemState, getSystemActions } from 'assistant/store'
 import { Form, Control } from 'assistant/lib'
-import './style.scss'
 
 export const App = () => {
 	const { appearance, shouldShowLabels } = useSystemState()

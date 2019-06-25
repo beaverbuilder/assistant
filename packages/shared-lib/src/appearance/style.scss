@@ -34,13 +34,15 @@
 
     font-family: var(--fl-asst-font-family);
     font-size: var(--fl-asst-base-text-size);
-    line-height: 1.3;
 
     & * {
         box-sizing: border-box;
+        line-height: 1.3;
     }
     img {
+        display: block;
         max-width: 100%;
+        object-fit: cover;
     }
     svg {
         display: block;
@@ -140,7 +142,7 @@
 
         hr {
             background-image: none;
-            background-color: var(--fl-asst-surface-color);
+            background-color: var(--fl-asst-secondary-surface-background);
             height: 1px;
         }
     }

@@ -88,6 +88,7 @@ const AppHeader = ( { label, icon } ) => {
 							justifyContent: 'center',
 							color: 'inherit',
 							lineHeight: 1,
+							fontSize: 12,
 						}}
 					>
 						<div style={{
@@ -96,7 +97,7 @@ const AppHeader = ( { label, icon } ) => {
 						}}>
 							<Icon.BackArrow />
 						</div>
-						{ shouldShowLabels && <span>{__( 'Back' )}</span> }
+						{ shouldShowLabels && <span style={{ marginTop: 'auto' }}>{__( 'Back' )}</span> }
 					</button> }
 				</div>
 			}

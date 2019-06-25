@@ -1,3 +1,23 @@
+.fl-asst-list {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+
+    &.fl-asst-horizontal-list {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .fl-asst-list-item {
+        flex: 0 0 auto;
+    }
+}
+
 .fl-asst-list-item-content-info {
     display: flex;
     flex-direction: row;

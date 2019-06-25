@@ -43,7 +43,7 @@ const MainWindow = () => {
 
 const WindowError = () => {
 	return (
-		<Page>
+		<Page shouldPadTop={true}>
 			<h1>{__( 'We Have A Problem!' )}</h1>
 			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
 		</Page>
