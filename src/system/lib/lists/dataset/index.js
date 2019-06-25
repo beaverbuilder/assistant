@@ -1,9 +1,9 @@
 import { useState } from 'fl-react'
 
 const useListLoader = () => {
-    const [list, setList] = useState([])
+	const [ list, setList ] = useState( [] )
 
-    return {
-        items: [],
-    }
+	return {
+		items: [],
+	}
 }

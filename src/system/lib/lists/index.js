@@ -80,10 +80,10 @@ export const List = ( {
 		content = renderListItems( items )
 	}
 
-	const classes = classname({
-		'fl-asst-list' : true,
-		[`fl-asst-${direction}-list`] : direction,
-	})
+	const classes = classname( {
+		'fl-asst-list': true,
+		[`fl-asst-${direction}-list`]: direction,
+	} )
 
 	return (
 		<Tag className={classes}>{content}</Tag>

@@ -1,8 +1,7 @@
-import React, { useContext } from 'fl-react'
-import { List, Nav } from 'lib'
+import React from 'fl-react'
+import { List } from 'lib'
 
 export const TestSheet = () => {
-	const { path } = useContext ( Nav.Context )
 
 	const padSides = { padding: '0 var(--fl-asst-outer-space)'}
 
@@ -65,9 +64,9 @@ export const TestSheet = () => {
 				label: 'Section Two',
 				type: 'list-section',
 				items: [
-                    { title: 'Sectioned Post Four' },
+					{ title: 'Sectioned Post Four' },
 					{ title: 'Sectioned Post Five' },
-                ],
+				],
 			},
 		]
 		return (
@@ -78,107 +77,104 @@ export const TestSheet = () => {
 		)
 	}
 
-    const HorizontalExample = () => {
+	const HorizontalExample = () => {
 
-        const items = [
-            { name: 'Justin', img: '' },
-            { name: 'Billy', img: '' },
-            { name: 'Robby', img: '' },
-            { name: 'Danny', img: '' },
-            { name: 'Jamie', img: '' },
-            { name: 'Nancy', img: '' },
-            { name: 'Ben', img: '' },
-            { name: 'Jun', img: '' },
-        ]
+		const items = [
+			{ name: 'Justin', img: '' },
+			{ name: 'Billy', img: '' },
+			{ name: 'Robby', img: '' },
+			{ name: 'Danny', img: '' },
+			{ name: 'Jamie', img: '' },
+			{ name: 'Nancy', img: '' },
+			{ name: 'Ben', img: '' },
+			{ name: 'Jun', img: '' },
+		]
 
-        return (
+		return (
             <>
                 <h2 style={padSides}>Horizontal List</h2>
-                <List
-                    items={items}
-                    direction='horizontal'
-                />
+                <List items={items} direction='horizontal' />
             </>
-        )
-    }
+		)
+	}
 
 	const FeedExample = () => {
 		const items = [
 			{
 				type: 'plugin',
-				message: "Justin Installed A New Plugin",
-                pluginName: 'Classic Editor',
-                pluginIcon: 'https://ps.w.org/ninja-forms/assets/icon-256x256.png?rev=1649747'
+				message: 'Justin Installed A New Plugin',
+				pluginName: 'Classic Editor',
+				pluginIcon: 'https://ps.w.org/ninja-forms/assets/icon-256x256.png?rev=1649747'
 			},
-            {
+			{
 				type: 'plugin',
-				message: "Plugin Was Updated",
-                pluginName: 'Gutenberg',
-                pluginIcon: 'https://ps.w.org/gutenberg/assets/icon-256x256.jpg?rev=1776042'
+				message: 'Plugin Was Updated',
+				pluginName: 'Gutenberg',
+				pluginIcon: 'https://ps.w.org/gutenberg/assets/icon-256x256.jpg?rev=1776042'
 			},
-            {
-                type: 'post',
-                message: "Brent edited page",
-                postTitle: "10 Ways that Spotify can help creatives be more productive!",
-                thumbnail: "https://cdn.dribbble.com/users/478776/screenshots/5895318/brindle.jpg",
-                actions: [
-                    { label: "View", to: '/posts/3' },
-                    { label: "Edit", href: 'http://www.google.com' }
-                ]
-            },
-            {
-                message: "Wildcard Item",
-            }
+			{
+				type: 'post',
+				message: 'Brent edited page',
+				postTitle: '10 Ways that Spotify can help creatives be more productive!',
+				thumbnail: 'https://cdn.dribbble.com/users/478776/screenshots/5895318/brindle.jpg',
+				actions: [
+					{ label: 'View', to: '/posts/3' },
+					{ label: 'Edit', href: 'http://www.google.com' }
+				]
+			},
+			{
+				message: 'Wildcard Item',
+			}
 		]
 
-        const Row = ({ tag: Tag = 'li', children }) => {
-            const style = {
-                margin: 'var(--fl-asst-tiny-space)',
-                marginTop: 0,
-                padding: 'var(--fl-asst-inner-space) var(--fl-asst-outer-space)',
-                background: 'var(--fl-asst-secondary-surface-background)',
-                borderRadius: 7,
-            }
-            return (
-                <li className="fl-asst-list-item" style={style}>{children}</li>
-            )
-        }
+		const Row = ( { tag: Tag = 'li', children } ) => {
+			const style = {
+				margin: 'var(--fl-asst-tiny-space)',
+				marginTop: 0,
+				padding: 'var(--fl-asst-inner-space) var(--fl-asst-outer-space)',
+				background: 'var(--fl-asst-secondary-surface-background)',
+				borderRadius: 7,
+			}
+			return (
+				<Tag className="fl-asst-list-item" style={style}>{children}</Tag>
+			)
+		}
 
-		const Plugin = ({ message, pluginName, pluginIcon }) => {
+		const Plugin = ( { message, pluginName, pluginIcon } ) => {
 			return (
 				<Row>
 					<div style={{ marginBottom: 'var(--fl-asst-tiny-space)'}}>{message}</div>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <div style={{ marginRight: 'var(--fl-asst-inner-space)'}}>
-                            <img src={pluginIcon} style={{ width: 30, height: 30 }} />
-                        </div>
-                        <div>{pluginName}</div>
-                    </div>
+					<div style={{ display: 'flex', flexDirection: 'row' }}>
+						<div style={{ marginRight: 'var(--fl-asst-inner-space)'}}>
+							<img src={pluginIcon} style={{ width: 30, height: 30 }} />
+						</div>
+						<div>{pluginName}</div>
+					</div>
 				</Row>
 			)
 		}
 
-        const Post = ({ message, postTitle: title, thumbnail }) => {
-            return (
-                <Row>
+		const Post = ( { message, postTitle: title, thumbnail } ) => {
+			return (
+				<Row>
 					<div style={{ marginBottom: 'var(--fl-asst-tiny-space)'}}>{message}</div>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <img src={thumbnail} style={{ width: 60, height: 60, marginRight: 'var(--fl-asst-inner-space)' }} />
-                        <div>{title}</div>
-                    </div>
-                </Row>
-            )
-        }
+					<div style={{ display: 'flex', flexDirection: 'row' }}>
+						<img src={thumbnail} style={{ width: 60, height: 60, marginRight: 'var(--fl-asst-inner-space)' }} />
+						<div>{title}</div>
+					</div>
+				</Row>
+			)
+		}
 
 		const getComponent = item => {
-			switch( item.type ) {
-                case 'plugin':
-                    return Plugin
-                case 'post':
-                    return Post
-                default:
-                    return List.Item
-            }
+			switch ( item.type ) {
+			case 'plugin':
+				return Plugin
+			case 'post':
+				return Post
+			default:
+				return List.Item
+			}
 		}
 
 		return (
@@ -192,7 +188,7 @@ export const TestSheet = () => {
 		)
 	}
 
-    ///// THE Render //////
+	///// THE Render //////
 
 	return (
 		<>
