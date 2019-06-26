@@ -122,9 +122,6 @@ export const TestSheet = () => {
 					{ label: 'Edit', href: 'http://www.google.com' }
 				]
 			},
-			{
-				message: 'Wildcard Item',
-			}
 		]
 
 		const Row = ( { tag: Tag = 'li', children } ) => {
