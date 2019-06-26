@@ -1,7 +1,7 @@
 import defaults from './defaults'
 import {InterceptorManager} from "./interceptors";
 import {addQueryArgs, isAbsoluteURL} from "../url";
-import {merge, clone} from 'lodash'
+import {merge} from 'lodash'
 
 export const defaultBodyParser = (response) => {
     const type = response.headers.get('content-type')
