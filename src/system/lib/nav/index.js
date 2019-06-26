@@ -10,7 +10,6 @@ Nav.Provider = ( { children } ) => {
 
 	const routerProps = {
 		initialIndex: history.index,
-		initialEntries: [],
 	}
 	if ( history.entries && history.entries.length ) {
 		routerProps.initialEntries = history.entries
