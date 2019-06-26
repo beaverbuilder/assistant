@@ -8,6 +8,7 @@ import * as store from './store'
 import * as text from './text'
 import * as url from './url'
 import * as wordpress from './wordpress'
+import * as http from './http'
 
 export {
 	cache,
@@ -20,4 +21,5 @@ export {
 	text,
 	url,
 	wordpress,
+	http,
 }

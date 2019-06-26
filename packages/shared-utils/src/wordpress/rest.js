@@ -1,22 +1,18 @@
-import { getSystemConfig } from 'store'
 import { clearCache } from 'shared-utils/cache'
-import { getRequest, postRequest } from 'shared-utils/request'
 import { addQueryArgs } from 'shared-utils/url'
 
+import { useWpRest } from "../http";
+
+const wpRest = useWpRest();
 /**
  * Fetch request for the WordPress REST API.
  */
 export const restRequest = ( { method = 'GET', ...args } ) => {
-	const { nonce, apiRoot } = getSystemConfig()
-	const wpArgs = {
-		root: apiRoot,
-		credentials: 'same-origin',
-		headers: {
-			'X-WP-Nonce': nonce.api,
-		},
-		...args,
+	if('GET' === method) {
+		wpRest.get(args.route).then(args.onSuccess).catch(args.onError)
+	} else {
+		wpRest.post(args.route, args.data).then(args.onSuccess).catch(args.onError);
 	}
-	return 'GET' === method ? getRequest( wpArgs ) : postRequest( wpArgs )
 }
 
 /**
