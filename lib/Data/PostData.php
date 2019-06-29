@@ -20,7 +20,7 @@ class PostData {
 	}
 
 	/**
-	 * Get array of post types registered in wordpress
+	 * Get array of post types registered in WordPress
 	 * @return array
 	 */
 	public function get_types() {

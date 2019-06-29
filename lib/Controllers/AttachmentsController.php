@@ -14,7 +14,8 @@ class AttachmentsController extends AssistantController {
 	 * Register routes.
 	 */
 	public function register_routes() {
-		$this->route( '/attachments', [
+		$this->route(
+			'/attachments', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'attachments' ],
@@ -25,7 +26,8 @@ class AttachmentsController extends AssistantController {
 			]
 		);
 
-		$this->route( '/attachments/count', [
+		$this->route(
+			'/attachments/count', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'attachments_count' ],
@@ -36,7 +38,8 @@ class AttachmentsController extends AssistantController {
 			]
 		);
 
-		$this->route( '/attachment/(?P<id>\d+)', [
+		$this->route(
+			'/attachment/(?P<id>\d+)', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'attachment' ],

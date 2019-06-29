@@ -46,22 +46,22 @@ class Container {
 	 * @param $object
 	 */
 	public function register_service( $key, Closure $closure ) {
-		$this->services[ $key ] = $this->singleton_factory( $closure);
+		$this->services[ $key ] = $this->singleton_factory( $closure );
 	}
 
-	public function service($key) {
-		if(!isset($this->services[$key])) {
-			throw new \Exception("Service $key is not registered");
+	public function service( $key ) {
+		if ( ! isset( $this->services[ $key ] ) ) {
+			throw new \Exception( "Service $key is not registered" );
 		}
 
-		if ( !( $this->services[ $key ] instanceof Closure )) {
-			throw new \Exception("Service $key was not a Closure");
+		if ( ! ( $this->services[ $key ] instanceof Closure ) ) {
+			throw new \Exception( "Service $key was not a Closure" );
 		}
 
-		return $this->services[$key]( $this );
+		return $this->services[ $key ]( $this );
 	}
 
-	public function unregister_service($key) {
+	public function unregister_service( $key ) {
 		unset( $this->services[ $key ] );
 	}
 
@@ -90,7 +90,7 @@ class Container {
 		}
 
 		if ( $this->values[ $key ] instanceof Closure ) {
-			return $this->values[$key]( $this );
+			return $this->values[ $key ]( $this );
 		}
 
 		return $this->values[ $key ];

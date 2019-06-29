@@ -14,7 +14,8 @@ class PostsController extends AssistantController {
 	 * Register routes.
 	 */
 	public function register_routes() {
-		$this->route( '/posts', array(
+		$this->route(
+			'/posts', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts' ],
@@ -25,7 +26,8 @@ class PostsController extends AssistantController {
 			)
 		);
 
-		$this->route( '/posts/hierarchical', array(
+		$this->route(
+			'/posts/hierarchical', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_posts' ],
@@ -36,7 +38,8 @@ class PostsController extends AssistantController {
 			)
 		);
 
-		$this->route( '/posts/count', array(
+		$this->route(
+			'/posts/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts_count' ],
@@ -47,7 +50,8 @@ class PostsController extends AssistantController {
 			)
 		);
 
-		$this->route( '/post/(?P<id>\d+)', array(
+		$this->route(
+			'/post/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'post' ],
@@ -81,7 +85,8 @@ class PostsController extends AssistantController {
 			)
 		);
 
-		$this->route( '/post', array(
+		$this->route(
+			'/post', array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_post' ],
@@ -128,7 +133,7 @@ class PostsController extends AssistantController {
 		// Beaver Builder data.
 		if ( class_exists( '\FLBuilderModel' ) ) {
 
-			$response['bbCanEdit']   = $this->container->service('site')->bb_can_edit_post( $post->ID );
+			$response['bbCanEdit']   = $this->container->service( 'site' )->bb_can_edit_post( $post->ID );
 			$response['bbIsEnabled'] = \FLBuilderModel::is_builder_enabled( $post->ID );
 			$response['bbBranding']  = \FLBuilderModel::get_branding();
 			$response['bbEditUrl']   = \FLBuilderModel::get_edit_url( $post->ID );
@@ -214,7 +219,7 @@ class PostsController extends AssistantController {
 	 */
 	public function posts_count( $request ) {
 
-		$post_types = $this->container->service('posts')->get_types();
+		$post_types = $this->container->service( 'posts' )->get_types();
 		$response   = array();
 
 		foreach ( $post_types as $slug => $label ) {

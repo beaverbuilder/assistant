@@ -12,7 +12,7 @@ class Plugin {
 	public static function init() {
 		$container = Container::instance();
 		$container->register_provider( new PluginProvider() );
-		$container->register_provider(new RestProvider());
+		$container->register_provider( new RestProvider() );
 		$container->register_provider( new CloudProvider() );
 	}
 

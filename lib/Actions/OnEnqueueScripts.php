@@ -23,9 +23,8 @@ class OnEnqueueScripts {
 	 */
 	public function generate_initial_state() {
 
-		$user_state = $this->container->service( 'users' )
-		                              ->current()
-		                              ->get_state();
+		$users      = $this->container->service( 'users' );
+		$user_state = $users->current()->get_state();
 
 		return [
 			'appOrder'           => $user_state['appOrder'],
@@ -114,7 +113,7 @@ class OnEnqueueScripts {
 	/**
 	 * Enqueue all scripts and styles
 	 */
-	public function enqueue( ) {
+	public function enqueue() {
 
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;

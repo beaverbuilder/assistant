@@ -13,10 +13,11 @@ class TermsController extends AssistantController {
 	 * Register routes.
 	 */
 	public function register_routes() {
-		$this->route('/terms', array(
+		$this->route(
+			'/terms', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, 'terms'],
+					'callback'            => [ $this, 'terms' ],
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -24,10 +25,11 @@ class TermsController extends AssistantController {
 			)
 		);
 
-		$this->route('/terms/hierarchical', array(
+		$this->route(
+			'/terms/hierarchical', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, 'hierarchical_terms'],
+					'callback'            => [ $this, 'hierarchical_terms' ],
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -35,10 +37,11 @@ class TermsController extends AssistantController {
 			)
 		);
 
-		$this->route('/terms/count', array(
+		$this->route(
+			'/terms/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, 'terms_count'],
+					'callback'            => [ $this, 'terms_count' ],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -46,10 +49,11 @@ class TermsController extends AssistantController {
 			)
 		);
 
-		$this->route('/term/(?P<id>\d+)', array(
+		$this->route(
+			'/term/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, 'term'],
+					'callback'            => [ $this, 'term' ],
 					'args'                => array(
 						'id' => array(
 							'required' => true,
@@ -62,7 +66,7 @@ class TermsController extends AssistantController {
 				),
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [$this, 'update_term'],
+					'callback'            => [ $this, 'update_term' ],
 					'args'                => array(
 						'id'     => array(
 							'required' => true,
@@ -80,10 +84,11 @@ class TermsController extends AssistantController {
 			)
 		);
 
-		$this->route('/term', array(
+		$this->route(
+			'/term', array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [$this, 'create_term'],
+					'callback'            => [ $this, 'create_term' ],
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -176,8 +181,8 @@ class TermsController extends AssistantController {
 	 * Returns an array of counts by taxonomy type.
 	 */
 	public function terms_count( $request ) {
-		$taxonomies = $this->container->service('posts')
-		                              ->get_taxononies();
+
+		$taxonomies = $this->container->service( 'posts' )->get_taxononies();
 		$response = array();
 
 		foreach ( $taxonomies as $slug => $label ) {

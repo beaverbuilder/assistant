@@ -11,7 +11,7 @@ class UserData {
 	 * @return User
 	 */
 	public function current() {
-		return $this->find(wp_get_current_user()->ID);
+		return $this->find( wp_get_current_user()->ID );
 	}
 
 	/**
@@ -57,9 +57,9 @@ class UserData {
 	 *
 	 * @return array
 	 */
-	public function counts_by_user_role( ) {
+	public function counts_by_user_role() {
 
-		$counts   = count_users();
+		$counts = count_users();
 
 		$counts_by_user_role = array(
 			'total' => $counts['total_users'],

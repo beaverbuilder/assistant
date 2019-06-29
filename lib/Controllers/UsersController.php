@@ -15,7 +15,8 @@ final class UsersController extends AssistantController {
 	 * Register routes.
 	 */
 	public function register_routes() {
-		$this->route( '/users', array(
+		$this->route(
+			'/users', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'users' ],
@@ -26,7 +27,8 @@ final class UsersController extends AssistantController {
 			)
 		);
 
-		$this->route( '/users/count', array(
+		$this->route(
+			'/users/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'users_count' ],
@@ -37,7 +39,8 @@ final class UsersController extends AssistantController {
 			)
 		);
 
-		$this->route( '/user/(?P<id>\d+)', array(
+		$this->route(
+			'/user/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'user' ],
@@ -54,7 +57,8 @@ final class UsersController extends AssistantController {
 			)
 		);
 
-		$this->route( '/current-user/state', array(
+		$this->route(
+			'/current-user/state', array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'update_user_state' ],
@@ -66,7 +70,7 @@ final class UsersController extends AssistantController {
 					),
 					'permission_callback' => function () {
 						return ! ! wp_get_current_user()->ID;
-					}
+					},
 				),
 			)
 		);
@@ -87,7 +91,7 @@ final class UsersController extends AssistantController {
 		foreach ( $users as $wp_user ) {
 			$user = new User();
 			$user->fill( $user->hydrate( $wp_user ) );
-			$response[] = $user->toArray();
+			$response[] = $user->to_array();
 		}
 
 		return rest_ensure_response( $response );
@@ -104,7 +108,7 @@ final class UsersController extends AssistantController {
 	public function users_count( \WP_REST_Request $request ) {
 
 		$response = $this->container->service( 'users' )
-		                            ->counts_by_user_role();
+									->counts_by_user_role();
 
 		return rest_ensure_response( $response );
 	}

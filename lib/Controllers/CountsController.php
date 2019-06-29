@@ -13,10 +13,11 @@ class CountsController extends AssistantController {
 	 * Register routes.
 	 */
 	public function register_routes() {
-		$this->route( '/counts', array(
+		$this->route(
+			'/counts', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, 'all'],
+					'callback'            => [ $this, 'all' ],
 					'permission_callback' => function () {
 						return is_user_logged_in();
 					},

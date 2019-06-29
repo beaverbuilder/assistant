@@ -33,7 +33,7 @@ class RestProvider implements ProviderInterface {
 		PostsController::class,
 		TermsController::class,
 		UpdatesController::class,
-		UsersController::class
+		UsersController::class,
 	];
 
 	/**
@@ -51,9 +51,9 @@ class RestProvider implements ProviderInterface {
 	 */
 	public function register_routes( Container $container ) {
 		return function () use ( $container ) {
-			foreach ( $this->controllers as $controllerName ) {
+			foreach ( $this->controllers as $controller_name ) {
 				/** @var AssistantController $controller */
-				$controller = new $controllerName( $container );
+				$controller = new $controller_name( $container );
 				$controller->register_routes();
 			}
 		};

@@ -9,7 +9,7 @@ class User {
 
 	use HasEntityAttributes;
 
-	const FL_ASSISTANT_STATE = "fl_assistant_state";
+	const FL_ASSISTANT_STATE = 'fl_assistant_state';
 
 	/**
 	 * Default state for the current user.

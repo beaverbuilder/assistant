@@ -15,10 +15,11 @@ final class NotificationsController extends AssistantController {
 	 * Register routes.
 	 */
 	public function register_routes() {
-		$this->route( '/notifications/count', array(
+		$this->route(
+			'/notifications/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, 'count'],
+					'callback'            => [ $this, 'count' ],
 					'permission_callback' => function () {
 						return is_user_logged_in();
 					},

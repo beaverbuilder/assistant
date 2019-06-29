@@ -14,10 +14,11 @@ class UpdatesController extends AssistantController {
 	 * Register routes.
 	 */
 	public function register_routes() {
-		$this->route('/updates', array(
+		$this->route(
+			'/updates', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, '::updates'],
+					'callback'            => [ $this, '::updates' ],
 					'args'                => array(
 						'type' => array(
 							'required' => false,
@@ -31,10 +32,11 @@ class UpdatesController extends AssistantController {
 			)
 		);
 
-		$this->route('/updates/count', array(
+		$this->route(
+			'/updates/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, '::updates_count'],
+					'callback'            => [ $this, '::updates_count' ],
 					'permission_callback' => function() {
 						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
 					},

@@ -12,11 +12,11 @@ abstract class AssistantController {
 
 	protected $container;
 
-	public function __construct(Container $container) {
+	public function __construct( Container $container ) {
 		$this->container = $container;
 	}
 
-	public function route( $route, array $config = []) {
+	public function route( $route, array $config = [] ) {
 		register_rest_route( $this->namespace, $route, $config );
 	}
 

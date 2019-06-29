@@ -19,7 +19,7 @@ class CloudProvider implements ProviderInterface {
 			define( 'FL_ASSISTANT_CLOUD_URL', 'http://localhost:8000/api' );
 		}
 
-		$container->set('cloud_url', FL_ASSISTANT_CLOUD_URL);
+		$container->set( 'cloud_url', FL_ASSISTANT_CLOUD_URL );
 	}
 
 }

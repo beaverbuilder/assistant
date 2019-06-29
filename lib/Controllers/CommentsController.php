@@ -9,11 +9,12 @@ class CommentsController extends AssistantController {
 	/**
 	 * Register routes.
 	 */
-	 public function register_routes() {
-		$this->route('/comments', array(
+	public function register_routes() {
+		$this->route(
+			'/comments', array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => [$this, 'comments'],
+					'callback'            => [ $this, 'comments' ],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -21,10 +22,11 @@ class CommentsController extends AssistantController {
 			)
 		);
 
-		$this->route('/comments/count', array(
+		$this->route(
+			'/comments/count', array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => [$this, 'comments_count'],
+					'callback'            => [ $this, 'comments_count' ],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -32,10 +34,11 @@ class CommentsController extends AssistantController {
 			)
 		);
 
-		$this->route('/comment/(?P<id>\d+)', array(
+		$this->route(
+			'/comment/(?P<id>\d+)', array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => [$this, 'comment'],
+					'callback'            => [ $this, 'comment' ],
 					'args'                => array(
 						'id' => array(
 							'required' => true,
@@ -48,7 +51,7 @@ class CommentsController extends AssistantController {
 				),
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => [$this, 'update_comment'],
+					'callback'            => [ $this, 'update_comment' ],
 					'args'                => array(
 						'id'     => array(
 							'required' => true,

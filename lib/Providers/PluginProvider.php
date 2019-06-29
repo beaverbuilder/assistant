@@ -31,15 +31,21 @@ class PluginProvider implements ProviderInterface {
 			return;
 		}
 
-		$container->register_service( 'users', function() {
-			return new UserData();
-		} );
-		$container->register_service( 'posts', function() {
-			return new PostData();
-		} );
-		$container->register_service( 'site', function() {
-			return new SiteData();
-		});
+		$container->register_service(
+			'users', function() {
+				return new UserData();
+			}
+		);
+		$container->register_service(
+			'posts', function() {
+				return new PostData();
+			}
+		);
+		$container->register_service(
+			'site', function() {
+				return new SiteData();
+			}
+		);
 
 		$this->register_hooks( $container );
 	}
@@ -59,9 +65,11 @@ class PluginProvider implements ProviderInterface {
 		add_filter( 'heartbeat_received', new OnHeartbeatReceived(), 11, 2 );
 
 		// register activation hook
-		register_activation_hook( FL_ASSISTANT_FILE, function () {
-			do_action( 'fl_assistant_activate' );
-		} );
+		register_activation_hook(
+			FL_ASSISTANT_FILE, function () {
+				do_action( 'fl_assistant_activate' );
+			}
+		);
 
 		// notify assistant was loaded
 		do_action( 'fl_assistant_loaded' );
