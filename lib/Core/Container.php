@@ -4,7 +4,7 @@
 namespace FL\Assistant\Core;
 
 use FL\Assistant\Providers\ProviderInterface;
-use WP_Error;
+
 use Closure;
 
 /**
@@ -18,8 +18,14 @@ class Container {
 	 */
 	private static $instance;
 
-
+	/**
+	 * @var array
+	 */
 	protected $values = [];
+
+	/**
+	 * @var array
+	 */
 	protected $services = [];
 
 
@@ -42,13 +48,19 @@ class Container {
 	}
 
 	/**
-	 * @param $key
-	 * @param $object
+	 * @param string $key
+	 * @param Closure $closure
 	 */
 	public function register_service( $key, Closure $closure ) {
 		$this->services[ $key ] = $this->singleton_factory( $closure );
 	}
 
+	/**
+	 * @param string $key
+	 *
+	 * @return object The service registered to the $key
+	 * @throws \Exception
+	 */
 	public function service( $key ) {
 		if ( ! isset( $this->services[ $key ] ) ) {
 			throw new \Exception( "Service $key is not registered" );
@@ -61,6 +73,9 @@ class Container {
 		return $this->services[ $key ]( $this );
 	}
 
+	/**
+	 * @param $key
+	 */
 	public function unregister_service( $key ) {
 		unset( $this->services[ $key ] );
 	}

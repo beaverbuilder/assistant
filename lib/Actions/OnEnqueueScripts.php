@@ -62,7 +62,7 @@ class OnEnqueueScripts {
 			'contentTypes'    => $post_data->get_types(),
 			'contentStatus'   => $post_data->get_stati(),
 			'currentPageView' => $site_data->get_current_view(),
-			'currentUser'     => $current_user->toArray(),
+			'currentUser'     => $current_user->to_array(),
 			'adminURLs'       => $site_data->get_admin_urls(),
 			'defaultAppName'  => 'fl-dashboard',
 			'nonce'           => [

@@ -13,7 +13,6 @@
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
-	<exclude-pattern>*/packages/*</exclude-pattern>
 
 	<file>.</file>
 	<arg name="extensions" value="php"/>

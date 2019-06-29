@@ -8,8 +8,14 @@ use FL\Assistant\Core\Container;
 
 abstract class AssistantController {
 
+	/**
+	 * @var string
+	 */
 	protected $namespace = 'fl-assistant/v1';
 
+	/**
+	 * @var Container
+	 */
 	protected $container;
 
 	public function __construct( Container $container ) {

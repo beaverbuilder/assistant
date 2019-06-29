@@ -125,7 +125,7 @@ final class UsersController extends AssistantController {
 		$id   = $request->get_param( 'id' );
 		$user = $this->container->service( 'users' )->find( $id );
 
-		return rest_ensure_response( $user->toArray() );
+		return rest_ensure_response( $user->to_array() );
 	}
 
 	/**
