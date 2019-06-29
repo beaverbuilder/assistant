@@ -7,8 +7,11 @@
         convertWarningsToExceptions="true"
 >
     <testsuites>
-        <testsuite name="FLAssistant">
-            <directory suffix="Test.php">./tests/</directory>
+        <testsuite name="Unit Tests">
+            <directory suffix="Test.php">./tests/Unit/</directory>
+        </testsuite>
+        <testsuite name="Rest API Integration Tests">
+            <directory suffix="Test.php">./tests/Rest/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

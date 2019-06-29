@@ -1,24 +1,19 @@
 <?php
-namespace FL\Assistant\Rest;
-
-use FL\Assistant\Rest\Traits\HasAssistantNamespace;
-use FL\Assistant\Services\PostService;
+namespace FL\Assistant\Controllers;
 
 /**
  * REST API logic for comments.
  */
-class CommentsController {
-
-	use HasAssistantNamespace;
+class CommentsController extends AssistantController {
 
 	/**
 	 * Register routes.
 	 */
-	static public function register_routes() {
-		static::route('/comments', array(
+	 public function register_routes() {
+		$this->route('/comments', array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::comments',
+					'callback'            => [$this, 'comments'],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -26,10 +21,10 @@ class CommentsController {
 			)
 		);
 
-		static::route('/comments/count', array(
+		$this->route('/comments/count', array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::comments_count',
+					'callback'            => [$this, 'comments_count'],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -37,10 +32,10 @@ class CommentsController {
 			)
 		);
 
-		static::route('/comment/(?P<id>\d+)', array(
+		$this->route('/comment/(?P<id>\d+)', array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::comment',
+					'callback'            => [$this, 'comment'],
 					'args'                => array(
 						'id' => array(
 							'required' => true,
@@ -53,7 +48,7 @@ class CommentsController {
 				),
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => __CLASS__ . '::update_comment',
+					'callback'            => [$this, 'update_comment'],
 					'args'                => array(
 						'id'     => array(
 							'required' => true,
@@ -75,7 +70,7 @@ class CommentsController {
 	/**
 	 * Returns an array of response data for a single comment.
 	 */
-	static public function get_comment_response_data( $comment ) {
+	public function get_comment_response_data( $comment ) {
 		$post = get_post( $comment->comment_post_ID );
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );
@@ -103,16 +98,16 @@ class CommentsController {
 	/**
 	 * Returns an array of comments and related data.
 	 */
-	static public function comments( $request ) {
+	public function comments( $request ) {
 		$response   = array();
 		$params     = $request->get_params();
 
-		$post_service = new PostService();
-		$post_types = array_keys( $post_service->get_types() );
+		$post_data = new PostData();
+		$post_types = array_keys( $post_data->get_types() );
 		$comments   = get_comments( array_merge( array( 'post_type' => $post_types ), $params ) );
 
 		foreach ( $comments as $comment ) {
-			$response[] = self::get_comment_response_data( $comment );
+			$response[] = $this->get_comment_response_data( $comment );
 		}
 
 		return rest_ensure_response( $response );
@@ -122,7 +117,7 @@ class CommentsController {
 	 * Returns the number of comments found given
 	 * the current args.
 	 */
-	static public function comments_count( $request ) {
+	public function comments_count( $request ) {
 		$counts = wp_count_comments();
 		return rest_ensure_response(
 			array(
@@ -138,10 +133,10 @@ class CommentsController {
 	/**
 	 * Returns data for a single comment.
 	 */
-	static public function comment( $request ) {
+	public function comment( $request ) {
 		$id       = $request->get_param( 'id' );
 		$comment  = get_comment( $id );
-		$response = self::get_comment_response_data( $comment );
+		$response = $this->get_comment_response_data( $comment );
 
 		return rest_ensure_response( $response );
 	}
@@ -149,7 +144,7 @@ class CommentsController {
 	/**
 	 * Updates a single comment based on the specified action.
 	 */
-	static public function update_comment( $request ) {
+	public function update_comment( $request ) {
 		$id       = $request->get_param( 'id' );
 		$action   = $request->get_param( 'action' );
 		$comment  = get_comment( $id );

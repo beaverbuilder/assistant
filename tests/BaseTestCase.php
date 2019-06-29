@@ -6,7 +6,11 @@ namespace FL\Assistant\Tests;
 use WP_UnitTestCase;
 use Brain\Monkey;
 
-class BaseTestCase extends WP_UnitTestCase {
+/**
+ * Class BaseTestCase
+ * @package FL\Assistant\Tests
+ */
+class BaseTestCase extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();

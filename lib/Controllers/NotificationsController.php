@@ -1,8 +1,7 @@
 <?php
 
-namespace FL\Assistant\Rest;
+namespace FL\Assistant\Controllers;
 
-use FL\Assistant\Rest\Traits\HasAssistantNamespace;
 use \WP_REST_Server;
 use \WP_REST_Request;
 use \WP_REST_Response;
@@ -10,18 +9,16 @@ use \WP_REST_Response;
 /**
  * REST API logic for notifications.
  */
-final class NotificationsController {
-
-	use HasAssistantNamespace;
+final class NotificationsController extends AssistantController {
 
 	/**
 	 * Register routes.
 	 */
-	static public function register_routes() {
-		static::route( '/notifications/count', array(
+	public function register_routes() {
+		$this->route( '/notifications/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::count',
+					'callback'            => [$this, 'count'],
 					'permission_callback' => function () {
 						return is_user_logged_in();
 					},
@@ -34,7 +31,7 @@ final class NotificationsController {
 	 * Returns the notification count for the current user.
 	 * @todo get these values from data service
 	 */
-	static public function count( $request ) {
+	public function count( $request ) {
 		$result = array(
 			'total' => 0,
 		);
@@ -54,5 +51,3 @@ final class NotificationsController {
 		return $result;
 	}
 }
-
-NotificationsController::register_routes();

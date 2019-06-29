@@ -1,76 +1,69 @@
 <?php
 
-namespace FL\Assistant\Rest;
+namespace FL\Assistant\Controllers;
 
-use FL\Assistant\DataMappers\PostMapper;
-use FL\Assistant\Rest\Traits\HasAssistantNamespace;
-use FL\Assistant\Services\PostService;
-use FLBuilderModel;
 use \WP_REST_Server;
-use \WP_REST_Request;
-use \WP_REST_Response;
 
 /**
  * REST API logic for posts.
  */
-class PostsController {
+class PostsController extends AssistantController {
 
-	use HasAssistantNamespace;
 
 	/**
 	 * Register routes.
 	 */
-	static public function register_routes() {
-		static::route('/posts', array(
+	public function register_routes() {
+		$this->route( '/posts', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::posts',
-					'permission_callback' => function() {
+					'callback'            => [ $this, 'posts' ],
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				),
 			)
 		);
 
-		static::route('/posts/hierarchical', array(
+		$this->route( '/posts/hierarchical', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::hierarchical_posts',
-					'permission_callback' => function() {
+					'callback'            => [ $this, 'hierarchical_posts' ],
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				),
 			)
 		);
 
-		static::route('/posts/count', array(
+		$this->route( '/posts/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::posts_count',
-					'permission_callback' => function() {
+					'callback'            => [ $this, 'posts_count' ],
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				),
 			)
 		);
 
-		static::route('/post/(?P<id>\d+)', array(
+		$this->route( '/post/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::post',
+					'callback'            => [ $this, 'post' ],
 					'args'                => array(
 						'id' => array(
 							'required' => true,
 							'type'     => 'number',
 						),
 					),
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				),
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => __CLASS__ . '::update_post',
+					'callback'            => [ $this, 'update_post' ],
 					'args'                => array(
 						'id'     => array(
 							'required' => true,
@@ -81,18 +74,18 @@ class PostsController {
 							'type'     => 'string',
 						),
 					),
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				),
 			)
 		);
 
-		static::route('/post', array(
+		$this->route( '/post', array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => __CLASS__ . '::create_post',
-					'permission_callback' => function() {
+					'callback'            => [ $this, 'create_post' ],
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				),
@@ -103,9 +96,9 @@ class PostsController {
 	/**
 	 * Returns an array of response data for a single post.
 	 */
-	static public function get_post_response_data( $post ) {
-		$author = get_the_author_meta( 'display_name', $post->post_author );
-		$date = get_the_date( '', $post );
+	public function get_post_response_data( $post ) {
+		$author   = get_the_author_meta( 'display_name', $post->post_author );
+		$date     = get_the_date( '', $post );
 		$response = array(
 			'author'          => $author,
 			'commentsAllowed' => 'open' === $post->comment_status ? true : false,
@@ -133,11 +126,12 @@ class PostsController {
 		}
 
 		// Beaver Builder data.
-		if ( class_exists( 'FLBuilderModel' ) ) {
-			$response['bbCanEdit']   = AssistantData::bb_can_edit_post( $post->ID );
-			$response['bbIsEnabled'] = FLBuilderModel::is_builder_enabled( $post->ID );
-			$response['bbBranding']  = FLBuilderModel::get_branding();
-			$response['bbEditUrl']   = FLBuilderModel::get_edit_url( $post->ID );
+		if ( class_exists( '\FLBuilderModel' ) ) {
+
+			$response['bbCanEdit']   = $this->container->service('site')->bb_can_edit_post( $post->ID );
+			$response['bbIsEnabled'] = \FLBuilderModel::is_builder_enabled( $post->ID );
+			$response['bbBranding']  = \FLBuilderModel::get_branding();
+			$response['bbEditUrl']   = \FLBuilderModel::get_edit_url( $post->ID );
 		}
 
 		return $response;
@@ -146,14 +140,14 @@ class PostsController {
 	/**
 	 * Returns an array of posts and related data.
 	 */
-	static public function posts( $request ) {
+	public function posts( $request ) {
 		$response = array();
 		$params   = $request->get_params();
 		$posts    = get_posts( $params );
 
 		foreach ( $posts as $post ) {
 			if ( current_user_can( 'edit_post', $post->ID ) ) {
-				$response[] = self::get_post_response_data( $post );
+				$response[] = $this->get_post_response_data( $post );
 			}
 		}
 
@@ -165,7 +159,7 @@ class PostsController {
 	 * with child posts contained in the parent
 	 * post's data array.
 	 */
-	static public function hierarchical_posts( $request ) {
+	public function hierarchical_posts( $request ) {
 		$response = array();
 		$children = array();
 		$params   = $request->get_params();
@@ -188,9 +182,9 @@ class PostsController {
 
 		foreach ( $posts as $post ) {
 			if ( ! $post->post_parent ) {
-				$parent = self::get_post_response_data( $post );
-				$parent['children'] = self::get_child_posts( $post, $children );
-				$response[] = $parent;
+				$parent             = $this->get_post_response_data( $post );
+				$parent['children'] = $this->get_child_posts( $post, $children );
+				$response[]         = $parent;
 			}
 		}
 
@@ -201,29 +195,31 @@ class PostsController {
 	 * Returns an array of child posts for the given post.
 	 * A $children array must be passed to search for children.
 	 */
-	static public function get_child_posts( $post, $children ) {
+	public function get_child_posts( $post, $children ) {
 		if ( isset( $children[ $post->ID ] ) ) {
 			$post_children = $children[ $post->ID ];
 			foreach ( $post_children as $i => $child ) {
-				$post_children[ $i ] = self::get_post_response_data( $child );
-				$post_children[ $i ]['children'] = self::get_child_posts( $child, $children );
+				$post_children[ $i ]             = $this->get_post_response_data( $child );
+				$post_children[ $i ]['children'] = $this->get_child_posts( $child, $children );
 			}
+
 			return $post_children;
 		}
+
 		return array();
 	}
 
 	/**
 	 * Returns an array of counts by post type.
 	 */
-	static public function posts_count( $request ) {
-		$post_service = new PostService();
-		$post_types = $post_service->get_types();
-		$response = array();
+	public function posts_count( $request ) {
+
+		$post_types = $this->container->service('posts')->get_types();
+		$response   = array();
 
 		foreach ( $post_types as $slug => $label ) {
-			$counts = wp_count_posts( $slug );
-			$counts->total = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
+			$counts            = wp_count_posts( $slug );
+			$counts->total     = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
 			$response[ $slug ] = $counts;
 		}
 
@@ -233,12 +229,13 @@ class PostsController {
 	/**
 	 * Returns data for a single post.
 	 */
-	static public function post( $request ) {
+	public function post( $request ) {
 		$id = $request->get_param( 'id' );
 
 		if ( current_user_can( 'edit_post', $id ) ) {
 			$post = get_post( $id );
-			return self::get_post_response_data( $post );
+
+			return $this->get_post_response_data( $post );
 		}
 
 		return array();
@@ -247,7 +244,7 @@ class PostsController {
 	/**
 	 * Creates a single post.
 	 */
-	static public function create_post( $request ) {
+	public function create_post( $request ) {
 		$id = wp_insert_post( $request->get_params() );
 
 		if ( ! $id || is_wp_error( $id ) ) {
@@ -256,13 +253,13 @@ class PostsController {
 			);
 		}
 
-		return self::get_post_response_data( get_post( $id ) );
+		return $this->get_post_response_data( get_post( $id ) );
 	}
 
 	/**
 	 * Updates a single post based on the specified action.
 	 */
-	static public function update_post( $request ) {
+	public function update_post( $request ) {
 		$id     = $request->get_param( 'id' );
 		$action = $request->get_param( 'action' );
 
@@ -305,4 +302,3 @@ class PostsController {
 	}
 }
 
-PostsController::register_routes();

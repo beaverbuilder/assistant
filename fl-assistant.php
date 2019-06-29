@@ -14,7 +14,7 @@
 
 require_once( __DIR__ . '/vendor/autoload.php' );
 
-use FL\Assistant\Plugin;
+use FL\Assistant\Core\Plugin;
 
 //defined( 'ABSPATH' ) || die();
 
@@ -25,3 +25,9 @@ define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
 
 
 Plugin::init();
+
+
+
+
+
+

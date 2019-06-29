@@ -1,79 +1,70 @@
 <?php
 
-namespace FL\Assistant;
 
-use FL\Assistant\Core\Traits\Singleton;
+namespace FL\Assistant\Providers;
+
+use FL\Assistant\Core\Container;
+
+use FL\Assistant\Data\PostData;
+use FL\Assistant\Data\SiteData;
+use FL\Assistant\Data\UserData;
 
 use FL\Assistant\Actions\OnEnqueueScripts;
-use FL\Assistant\Actions\OnInitConfig;
-use FL\Assistant\Actions\OnPluginActivate;
-use FL\Assistant\Actions\OnRestApiInit;
-
 use FL\Assistant\Filters\OnHeartbeatReceived;
-use FL\Assistant\Services\PostService;
-use FL\Assistant\Services\UserService;
 
 /**
- * Sets up plugin constants and loads the necessary PHP files.
- * If the plugin can't be loaded, an admin notice is shown.
+ * Class PluginProvider
+ * @package FL\Assistant\Providers\
  */
-class Plugin {
+class PluginProvider implements ProviderInterface {
 
-	use Singleton;
-
-	protected function __construct() {
-
-		if (! $this->is_minimum_php_version() ) {
+	/**
+	 * @param Container $container
+	 *
+	 * @throws \Exception
+	 */
+	public function register( Container $container ) {
+		// Display errors if using outdated PHP
+		if ( ! $this->is_minimum_php_version() ) {
 			$this->admin_notice_hooks();
 
 			return;
 		}
 
-		$this->load_assets()
-		     ->register_hooks()
-		     ->register_activation_hook()
-		     ->notify_assistant_loaded();
+		$container->register_service( 'users', function() {
+			return new UserData();
+		} );
+		$container->register_service( 'posts', function() {
+			return new PostData();
+		} );
+		$container->register_service( 'site', function() {
+			return new SiteData();
+		});
+
+		$this->register_hooks( $container );
 	}
 
 	/**
-	 * Initialize the plugin.
+	 * @param Container $container
+	 *
+	 * @throws \Exception
 	 */
-	public static function init() {
-		return static::instance();
-	}
+	public function register_hooks( Container $container ) {
+		// Enqueue Assistant frontend
+		$enqueue_scripts = new OnEnqueueScripts( $container );
+		add_action( 'wp_enqueue_scripts', $enqueue_scripts );
+		add_action( 'admin_enqueue_scripts', $enqueue_scripts );
 
-	protected function notify_assistant_loaded() {
-		do_action( 'fl_assistant_loaded' );
-
-		return $this;
-	}
-
-	protected function register_activation_hook() {
-		register_activation_hook( FL_ASSISTANT_FILE, new OnPluginActivate() );
-
-		return $this;
-	}
-
-
-	protected function load_assets() {
-
-		$action = new OnEnqueueScripts(
-			new PostService(),
-			new UserService(),
-			new AssistantData()
-		);
-
-		add_action( 'wp_enqueue_scripts', $action );
-		add_action( 'admin_enqueue_scripts', $action );
-
-		return $this;
-	}
-
-	protected function register_hooks() {
-		add_action( 'rest_api_init', new OnRestApiInit() );
+		// setup heartbeat
 		add_filter( 'heartbeat_received', new OnHeartbeatReceived(), 11, 2 );
 
-		return $this;
+		// register activation hook
+		register_activation_hook( FL_ASSISTANT_FILE, function () {
+			do_action( 'fl_assistant_activate' );
+		} );
+
+		// notify assistant was loaded
+		do_action( 'fl_assistant_loaded' );
 	}
 
 	/**
@@ -109,6 +100,9 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function is_minimum_php_version() {
 		return ! version_compare( phpversion(), '5.6', '<' );
 	}
@@ -121,11 +115,10 @@ class Plugin {
 		$url = 'http://www.wpupdatephp.com/contact-host/';
 
 		/* translators: php upgrade url. */
+
 		return sprintf(
 			__( 'Assistant requires PHP 5.6 or above. Please <a href="%s">update your PHP version</a> before continuing.', 'fl-assistant' ),
 			$url
 		);
-
 	}
 }
-

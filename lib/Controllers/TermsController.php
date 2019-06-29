@@ -1,29 +1,22 @@
 <?php
 
-namespace FL\Assistant\Rest;
+namespace FL\Assistant\Controllers;
 
-use FL\Assistant\AssistantData;
-use FL\Assistant\Services\PostService;
-use FL\Assistant\Services\TaxonomyService;
-use FL\Assistant\Rest\Traits\HasAssistantNamespace;
 use \WP_REST_Server;
-use \WP_REST_Request;
-use \WP_REST_Response;
+
 /**
  * REST API logic for terms.
  */
-class TermsController {
-
-	use HasAssistantNamespace;
+class TermsController extends AssistantController {
 
 	/**
 	 * Register routes.
 	 */
-	static public function register_routes() {
-		static::route('/terms', array(
+	public function register_routes() {
+		$this->route('/terms', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::terms',
+					'callback'            => [$this, 'terms'],
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -31,10 +24,10 @@ class TermsController {
 			)
 		);
 
-		static::route('/terms/hierarchical', array(
+		$this->route('/terms/hierarchical', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::hierarchical_terms',
+					'callback'            => [$this, 'hierarchical_terms'],
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -42,10 +35,10 @@ class TermsController {
 			)
 		);
 
-		static::route('/terms/count', array(
+		$this->route('/terms/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::terms_count',
+					'callback'            => [$this, 'terms_count'],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -53,10 +46,10 @@ class TermsController {
 			)
 		);
 
-		static::route('/term/(?P<id>\d+)', array(
+		$this->route('/term/(?P<id>\d+)', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::term',
+					'callback'            => [$this, 'term'],
 					'args'                => array(
 						'id' => array(
 							'required' => true,
@@ -69,7 +62,7 @@ class TermsController {
 				),
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => __CLASS__ . '::update_term',
+					'callback'            => [$this, 'update_term'],
 					'args'                => array(
 						'id'     => array(
 							'required' => true,
@@ -87,10 +80,10 @@ class TermsController {
 			)
 		);
 
-		static::route('/term', array(
+		$this->route('/term', array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => __CLASS__ . '::create_term',
+					'callback'            => [$this, 'create_term'],
 					'permission_callback' => function() {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -102,7 +95,7 @@ class TermsController {
 	/**
 	 * Returns an array of response data for a single term.
 	 */
-	static public function get_term_response_data( $term ) {
+	public function get_term_response_data( $term ) {
 		$response = array(
 			'description'    => $term->description,
 			'editUrl'        => get_edit_term_link( $term->term_id, $term->taxonomy ),
@@ -120,13 +113,13 @@ class TermsController {
 	/**
 	 * Returns an array of terms and related data.
 	 */
-	static public function terms( $request ) {
+	public function terms( $request ) {
 		$response = array();
 		$params   = $request->get_params();
 		$terms    = get_terms( $params );
 
 		foreach ( $terms as $term ) {
-			$response[] = self::get_term_response_data( $term );
+			$response[] = $this->get_term_response_data( $term );
 		}
 
 		return rest_ensure_response( $response );
@@ -137,7 +130,7 @@ class TermsController {
 	 * with child terms contained in the parent
 	 * term's data array.
 	 */
-	static public function hierarchical_terms( $request ) {
+	public function hierarchical_terms( $request ) {
 		$response = array();
 		$children = array();
 		$params   = $request->get_params();
@@ -154,8 +147,8 @@ class TermsController {
 
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
-				$parent = self::get_term_response_data( $term );
-				$parent['children'] = self::get_child_terms( $term, $children );
+				$parent = $this->get_term_response_data( $term );
+				$parent['children'] = $this->get_child_terms( $term, $children );
 				$response[] = $parent;
 			}
 		}
@@ -167,12 +160,12 @@ class TermsController {
 	 * Returns an array of child terms for the given term.
 	 * A $children array must be passed to search for children.
 	 */
-	static public function get_child_terms( $term, $children ) {
+	public function get_child_terms( $term, $children ) {
 		if ( isset( $children[ $term->term_id ] ) ) {
 			$term_children = $children[ $term->term_id ];
 			foreach ( $term_children as $i => $child ) {
-				$term_children[ $i ] = self::get_term_response_data( $child );
-				$term_children[ $i ]['children'] = self::get_child_terms( $child, $children );
+				$term_children[ $i ] = $this->get_term_response_data( $child );
+				$term_children[ $i ]['children'] = $this->get_child_terms( $child, $children );
 			}
 			return $term_children;
 		}
@@ -182,9 +175,9 @@ class TermsController {
 	/**
 	 * Returns an array of counts by taxonomy type.
 	 */
-	static public function terms_count( $request ) {
-		$ps = new PostService();
-		$taxonomies = $ps->get_taxononies();
+	public function terms_count( $request ) {
+		$taxonomies = $this->container->service('posts')
+		                              ->get_taxononies();
 		$response = array();
 
 		foreach ( $taxonomies as $slug => $label ) {
@@ -198,10 +191,10 @@ class TermsController {
 	/**
 	 * Returns data for a single term.
 	 */
-	static public function term( $request ) {
+	public function term( $request ) {
 		$id       = $request->get_param( 'id' );
 		$term     = get_term( $id );
-		$response = self::get_term_response_data( $term );
+		$response = $this->get_term_response_data( $term );
 
 		return rest_ensure_response( $response );
 	}
@@ -209,7 +202,7 @@ class TermsController {
 	/**
 	 * Creates a single term.
 	 */
-	static public function create_term( $request ) {
+	public function create_term( $request ) {
 		$data = array_map( 'sanitize_text_field', $request->get_params() );
 		$id = wp_insert_term(
 			$data['name'],
@@ -232,13 +225,13 @@ class TermsController {
 			);
 		}
 
-		return self::get_term_response_data( get_term( $id['term_id'], $data['taxonomy'] ) );
+		return $this->get_term_response_data( get_term( $id['term_id'], $data['taxonomy'] ) );
 	}
 
 	/**
 	 * Updates a single term based on the specified action.
 	 */
-	static public function update_term( $request ) {
+	public function update_term( $request ) {
 		$id     = $request->get_param( 'id' );
 		$action = $request->get_param( 'action' );
 		$term   = get_term( $id );
@@ -269,4 +262,3 @@ class TermsController {
 	}
 }
 
-TermsController::register_routes();

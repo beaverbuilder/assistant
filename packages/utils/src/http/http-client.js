@@ -88,9 +88,12 @@ export class HttpClient {
         // construct the basic request
         let request = {
             method,
-            headers,
-            credentials: config.credentials,
+            headers
         };
+
+        if(config.hasOwnProperty('credentials')) {
+            request.credentials = config.credentials;
+        }
 
         // run request interceptors
         request = this._interceptRequest(request);

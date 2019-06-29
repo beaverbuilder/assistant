@@ -8,6 +8,12 @@ namespace FL\Assistant\Filters;
  */
 class OnHeartbeatReceived {
 
+	/**
+	 * @param $response
+	 * @param $data
+	 *
+	 * @return mixed
+	 */
 	public function __invoke( $response, $data ) {
 		do_action( 'rest_api_init' );
 

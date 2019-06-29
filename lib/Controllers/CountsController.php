@@ -1,25 +1,22 @@
 <?php
 
-namespace FL\Assistant\Rest;
+namespace FL\Assistant\Controllers;
 
-use FL\Assistant\Rest\Traits\HasAssistantNamespace;
 use \WP_REST_Server;
 
 /**
  * REST API logic for content count data.
  */
-class CountsController {
-
-	use HasAssistantNamespace;
+class CountsController extends AssistantController {
 
 	/**
 	 * Register routes.
 	 */
-	static public function register_routes() {
-		static::route( '/counts', array(
+	public function register_routes() {
+		$this->route( '/counts', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::all',
+					'callback'            => [$this, 'all'],
 					'permission_callback' => function () {
 						return is_user_logged_in();
 					},
@@ -33,7 +30,7 @@ class CountsController {
 	 *
 	 * @todo move this to data service and call data service
 	 */
-	static public function all( $request ) {
+	public function all( $request ) {
 		$routes = array(
 			'/fl-assistant/v1/posts/count'         => function ( $response ) {
 				$return = array();

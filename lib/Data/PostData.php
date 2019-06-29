@@ -1,13 +1,12 @@
 <?php
 
+namespace FL\Assistant\Data;
 
-namespace FL\Assistant\Services;
-
-
-class PostService {
+class PostData {
 
 	/**
 	 * Get post status slugs and names.
+	 * @return array
 	 */
 	public function get_stati() {
 		$data  = [];
@@ -19,6 +18,7 @@ class PostService {
 
 		return $data;
 	}
+
 	/**
 	 * Get array of post types registered in wordpress
 	 * @return array
@@ -65,7 +65,7 @@ class PostService {
 	 */
 	public function get_taxononies() {
 		$data  = [];
-		$types = $this->get_types();
+		$types = static::get_types();
 
 		foreach ( $types as $type_slug => $type ) {
 			$taxonomies = get_object_taxonomies( $type_slug, 'objects' );

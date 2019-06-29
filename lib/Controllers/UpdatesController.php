@@ -1,25 +1,23 @@
 <?php
-namespace FL\Assistant\Rest;
+namespace FL\Assistant\Controllers;
 
-use FL\Assistant\Rest\Traits\HasAssistantNamespace;
 use \WP_REST_Server;
 use \WP_REST_Request;
 use \WP_REST_Response;
 /**
  * REST API logic for updates.
  */
-class UpdatesController {
+class UpdatesController extends AssistantController {
 
-	use HasAssistantNamespace;
 
 	/**
 	 * Register routes.
 	 */
-	static public function register_routes() {
-		static::route('/updates', array(
+	public function register_routes() {
+		$this->route('/updates', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::updates',
+					'callback'            => [$this, '::updates'],
 					'args'                => array(
 						'type' => array(
 							'required' => false,
@@ -33,10 +31,10 @@ class UpdatesController {
 			)
 		);
 
-		static::route('/updates/count', array(
+		$this->route('/updates/count', array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => __CLASS__ . '::updates_count',
+					'callback'            => [$this, '::updates_count'],
 					'permission_callback' => function() {
 						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
 					},
@@ -48,7 +46,7 @@ class UpdatesController {
 	/**
 	 * Returns an array of response data for a single plugin.
 	 */
-	static public function get_plugin_response_data( $update, $plugin ) {
+	public function get_plugin_response_data( $update, $plugin ) {
 		$thumbnail = null;
 		$banner = null;
 
@@ -86,7 +84,7 @@ class UpdatesController {
 	/**
 	 * Returns an array of response data for a single theme.
 	 */
-	static public function get_theme_response_data( $update, $theme ) {
+	public function get_theme_response_data( $update, $theme ) {
 		$thumbnail = null;
 
 		if ( isset( $update->icons ) ) {
@@ -115,7 +113,7 @@ class UpdatesController {
 	/**
 	 * Returns an array of updates and related data.
 	 */
-	static public function updates( $request ) {
+	public function updates( $request ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 		wp_update_plugins();
@@ -135,7 +133,7 @@ class UpdatesController {
 				foreach ( $update_plugins->response as $key => $update ) {
 					$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
 					if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
-						$plugins['items'][] = self::get_plugin_response_data( $update, $plugin );
+						$plugins['items'][] = $this->get_plugin_response_data( $update, $plugin );
 					}
 				}
 				$response[] = $plugins;
@@ -151,7 +149,7 @@ class UpdatesController {
 				foreach ( $update_themes->response as $key => $update ) {
 					$theme = wp_get_theme( $key );
 					if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
-						$themes['items'][] = self::get_theme_response_data( $update, $theme );
+						$themes['items'][] = $this->get_theme_response_data( $update, $theme );
 					}
 				}
 				$response[] = $themes;
@@ -164,7 +162,7 @@ class UpdatesController {
 	/**
 	 * Returns the number of updates found.
 	 */
-	static public function updates_count( $request ) {
+	public function updates_count( $request ) {
 		wp_update_plugins();
 		wp_update_themes();
 
@@ -193,5 +191,3 @@ class UpdatesController {
 		);
 	}
 }
-
-UpdatesController::register_routes();

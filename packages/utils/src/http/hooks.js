@@ -1,14 +1,11 @@
 const {nonce, apiRoot, ajaxUrl } = FL_ASSISTANT_CONFIG;
 
 import {HttpClient} from "./http-client";
+import AssistantCloud from "./cloud"
 
 export const useAssistantCloud = () => {
 
-    const cloud = new HttpClient();
-
-    // cloud.defaults.headers.common['Authorize'] = "Bearer " + cookie.cloudToken;
-
-    return cloud;
+    return AssistantCloud;
 }
 
 export const useWpRest = () => {
@@ -55,5 +52,7 @@ export const useWpAjax = () => {
         }
     }
 
-    return new WpAjax();
+    return new WpAjax({
+        credentials: 'same-origin'
+    });
 }

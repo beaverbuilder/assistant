@@ -4,7 +4,7 @@ const formHeaders = {
 
 export default {
     baseUrl: false,
-    credentials: null,
+    credentials: 'same-origin',
     body: null,
     headers: {
         common: {

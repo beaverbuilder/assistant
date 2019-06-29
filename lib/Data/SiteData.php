@@ -1,16 +1,13 @@
 <?php
 
-namespace FL\Assistant;
+
+namespace FL\Assistant\Data;
 
 
-/**
- * Handles working with backend assistant data.
- */
-class AssistantData {
+class SiteData {
 
 	/**
-	 * Checks to see if Beaver Builder can be used
-	 * to edit a post.
+	 * Checks to see if Beaver Builder can be uses to edit a post.
 	 */
 	public function bb_can_edit_post( $post_id ) {
 		$editable    = false;
@@ -118,7 +115,7 @@ class AssistantData {
 
 		$data['intro']   = $intro;
 		$data['name']    = $name;
-		$data['actions'] = $this->filter_actions_by_capability( $actions );
+		$data['actions'] = static::filter_actions_by_capability( $actions );
 
 		$theme         = wp_get_theme();
 		$data['theme'] = [
@@ -174,7 +171,7 @@ class AssistantData {
 
 		$urls['createPost'] = admin_url( 'post-new.php' );
 
-		$url = $this->get_customize_url();
+		$url = static::get_customize_url();
 		if ( $url ) {
 			$urls['customize'] = $url;
 		}
@@ -224,7 +221,4 @@ class AssistantData {
 
 		return $customize_url;
 	}
-
-
-
 }
