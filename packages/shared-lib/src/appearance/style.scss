@@ -1,4 +1,7 @@
+@import 'reset.scss';
+
 .fl-asst {
+
     // Light Colors
     --fl-asst-light-1: white;
     --fl-asst-light-2: hsl(214, 3%, 98%);
@@ -39,17 +42,34 @@
         box-sizing: border-box;
         line-height: 1.3;
     }
+
+    // Visuals
     img {
         display: block;
         max-width: 100%;
         object-fit: cover;
+    }
+    video {
+        display: block;
     }
     svg {
         display: block;
         shape-rendering: crispEdges;
     }
 
+    hr {
+        all: initial;
+        display: block;
+        background-color: black;
+        background-image: none;
+        height: 2px;
+        border-radius: 2px;
+        margin: 20px 0;
+    }
+
     a, button {
+        font-family: inherit;
+
         color: inherit;
         background: transparent;
         border: none;
@@ -60,7 +80,7 @@
 
         &:hover {
             color: inherit;
-            background: transparent; // Change to something meaningful
+            background: rgba(0,0,0,.05);
             top:0;
             box-shadow: none;
         }
@@ -75,9 +95,15 @@
         }
     }
 
-    h1:first-child,
-    h2:first-child,
-    h3:first-child { margin-top: 0; }
+    h1, h2, h3, h4, h5, h6 {
+
+        &::before {
+            all: unset !important;
+        }
+        &:first-child {
+            margin-top: 0;
+        }
+    }
 
     h1 {
         font-size: calc( var(--fl-asst-base-text-size) + 6px );
@@ -141,9 +167,7 @@
         }
 
         hr {
-            background-image: none;
             background-color: var(--fl-asst-secondary-surface-background);
-            height: 1px;
         }
     }
 

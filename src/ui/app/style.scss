@@ -13,9 +13,24 @@
     flex-direction: column;
     max-height: 100%;
 
-    &.fl-asst-app-screen {
+    &.fl-asst-screen-card {
+        background: var(--fl-asst-surface-background);
+        color: var(--fl-asst-surface-color);
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
+
+        position: absolute;
+        bottom:0;
+        top:0;
+        width: 100%;
+        box-shadow: 0 0 40px rgba(0,0,0,.2);
+        transform-origin: top center;
+        overflow: auto;
+
+        &:first-child {
+            position: static;
+            box-shadow: none;
+        }
     }
 }
 

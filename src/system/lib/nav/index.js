@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect } from 'fl-react'
 import { withRouter, MemoryRouter, Link, Switch, Route } from 'fl-react-router-dom'
 import { useSystemState, getSystemActions } from 'store'
+import { App } from '../'
 
 export const Nav = () => {}
 
@@ -10,6 +11,7 @@ Nav.Provider = ( { children } ) => {
 
 	const routerProps = {
 		initialIndex: history.index,
+		/* do NOT include a default for initialEntries */
 	}
 	if ( history.entries && history.entries.length ) {
 		routerProps.initialEntries = history.entries
@@ -25,6 +27,7 @@ Nav.Provider = ( { children } ) => {
 		</MemoryRouter>
 	)
 }
+Nav.Provider.displayName = 'Nav.Provider'
 
 Nav.defaults = {
 	location: null,
@@ -38,7 +41,7 @@ Nav.defaults = {
 Nav.Context = createContext( Nav.defaults )
 Nav.Context.displayName = 'Nav.Context'
 
-const Manager = ( { children, location, match, history, onChange = () => {} } ) => {
+const NavManager = withRouter( ( { children, location, match, history, onChange = () => {} } ) => {
 
 	useEffect( () => {
 		if ( 'function' === typeof onChange ) {
@@ -59,9 +62,7 @@ const Manager = ( { children, location, match, history, onChange = () => {} } ) 
 	return (
 		<Nav.Context.Provider value={context}>{children}</Nav.Context.Provider>
 	)
-}
-
-const NavManager = withRouter( Manager )
+} )
 
 Nav.SubLink = ( { to, ...rest } ) => {
 	const { path } = useContext( Nav.Context )
@@ -75,3 +76,12 @@ Nav.Link = Link
 Nav.Switch = Switch
 
 Nav.Route = Route
+
+/**
+* Link
+*/
+Nav.AppLink = ( { to, ...rest } ) => {
+	const { handle } = useContext( App.Context )
+	return <Link to={`/${handle}${to}`} {...rest} />
+}
+Nav.AppLink.displayName = 'Nav.AppLink'

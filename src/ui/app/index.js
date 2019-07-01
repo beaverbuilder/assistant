@@ -1,7 +1,8 @@
-import React, { Fragment, useContext } from 'fl-react'
+import React, { Fragment, Children, forwardRef, useState, cloneElement } from 'fl-react'
 import { Route, Link } from 'fl-react-router-dom'
+import classname from 'classnames'
 import { __ } from 'assistant'
-import { App, Icon, Page, Nav } from 'assistant/lib'
+import { App, Icon, Page, Nav, Error } from 'assistant/lib'
 import { useSystemState } from 'assistant/store'
 import './style.scss'
 
@@ -41,84 +42,95 @@ const AppContent = props => {
 	}
 	return (
 		<App.Context.Provider value={context}>
-			<div className="fl-asst-screen fl-asst-app-screen fl-asst-primary-content" style={style}>
-				<AppHeader
-					label={app.label}
-					icon={app.icon}
-				/>
+			{ /* Alerts component here */ }
+			<ScreenCard>
 				<div className="fl-asst-screen-content">
 					{ app.root ? app.root( appProps ) : <Page>{__( 'This app has not been converted.' )}</Page> }
 				</div>
-			</div>
+			</ScreenCard>
 		</App.Context.Provider>
 	)
 }
 
-const AppHeader = ( { label, icon } ) => {
-	const { shouldShowLabels } = useSystemState()
-	const app = useContext( App.Context )
-	const { history } = useContext( Nav.Context )
-	const isAppRoot = 2 > history.index
+const CardError = () => {
+	return (
+		<Page shouldPadTop={true}>
+			<h1>{__( 'We Have A Problem!' )}</h1>
+			<p>{__( 'There seems to be an issue inside the current card.' )}</p>
+		</Page>
+	)
+}
 
-	let breadcrumb = null
-	if ( 2 < history.entries.length && 1 < history.index ) {
-		const entries = Array.from( history.entries ).slice( 2 )
-		const crumbs = entries.map( entry => {
+const ScreenCard = forwardRef( ({ className, children, ...rest }, ref ) => {
+	const classes = classname({
+		'fl-asst-screen' : true,
+		'fl-asst-screen-card' : true,
+	}, className )
 
-			// Need better way to get name for views here.
-			const parts = entry.pathname.split( '/' )
-			return parts[parts.length - 1]
-		} )
-		breadcrumb = crumbs.join( ' > ' )
+	const style = {
+		maxHeight: '100%',
+		flex: '1 1 auto',
+		display: 'flex',
+		flexDirection: 'column',
 	}
 
 	return (
-		<div className="fl-asst-screen-header fl-asst-app-header">
-
-			{ 'function' === typeof icon &&
-				<div className="fl-asst-app-header-icon">
-					{ isAppRoot && icon( app ) }
-					{ ! isAppRoot &&
-					<button
-						onClick={history.goBack}
-						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-							color: 'inherit',
-							lineHeight: 1,
-							fontSize: 12,
-						}}
-					>
-						<div style={{
-							color: 'var(--fl-asst-accent-color)',
-							marginBottom: shouldShowLabels ? 5 : null,
-						}}>
-							<Icon.BackArrow />
-						</div>
-						{ shouldShowLabels && <span style={{ marginTop: 'auto' }}>{__( 'Back' )}</span> }
-					</button> }
-				</div>
-			}
-			<div className="fl-asst-app-header-name">
-				<span>{label}</span>
-				{ breadcrumb && <span className="fl-asst-app-header-name-description">{breadcrumb}</span> }
-			</div>
-
-			<div className="fl-asst-app-header-actions">
-				{ /* App actions go here */ }
+		<div className={classes} {...rest}>
+			<div ref={ref} style={style}>
+				<Error.Boundary alternate={CardError}>
+					{children}
+				</Error.Boundary>
 			</div>
 		</div>
 	)
+})
+
+const CardStack = ({ children, style: passedStyles, ...rest }) => {
+	const [cardHeight, setCardHeight] = useState(0)
+	const count = Children.count(children)
+	const offset = 20
+
+	const handleRef = el => {
+		if ( el ) {
+			if ( el.offsetHeight > cardHeight ) {
+				setCardHeight( el.offsetHeight )
+			}
+		}
+	}
+
+	const newChildren = Children.map( children, ( child, i ) => {
+		const reverseIndex = count - ( i + 1 )
+		const topOffset = ( offset / (count - 1) ) * i
+		return cloneElement( child, {
+			ref: handleRef,
+			style: {
+				top: topOffset ? topOffset : 0,
+				transform: `scale(${1 - (.06 * reverseIndex )})`,
+			}
+		})
+	})
+
+	const style = {
+		...passedStyles,
+		position: 'relative',
+		flex: '1 1 auto',
+		display: 'flex',
+		height: count > 1 ? cardHeight + offset : 'auto',
+		maxHeight: '100%',
+	}
+
+	return (
+		<div style={style} {...rest}>{newChildren}</div>
+	)
 }
+
+
 
 const Switcher = () => {
 	const { apps, appOrder } = useSystemState()
 	return (
 		<Fragment>
-			<AppHeader label="Apps" icon={Icon.Apps} />
-			<Page shouldPadTop={true}>
+			<Page shouldPadTop={true} title={__('Apps')} icon={Icon.Apps}>
 				<div className="app-grid">
 					{ appOrder.map( ( handle, i ) => {
 						const app = apps[handle]

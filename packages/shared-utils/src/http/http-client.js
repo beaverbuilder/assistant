@@ -34,7 +34,7 @@ export class HttpClient {
     }
 
     _transformRequest(body) {
-        console.log('transformRequest --');
+        //console.log('transformRequest --');
         this.transformers.request.forEach((transformer) => {
             body = transformer(body)
         })
@@ -42,7 +42,7 @@ export class HttpClient {
     }
 
     _transformResponse(data) {
-        console.log('transformResponse --');
+        //console.log('transformResponse --');
         this.transformers.response.forEach((transformer) => {
             data = transformer(data);
         })
@@ -50,7 +50,7 @@ export class HttpClient {
     }
 
     _interceptRequest(request) {
-        console.log("interceptRequest -- ");
+        //console.log("interceptRequest -- ");
         this.interceptors.request.handlers.forEach((interceptor) => {
             try {
                 request = interceptor.fulfilled(request)
@@ -62,7 +62,7 @@ export class HttpClient {
     }
 
     _interceptResponse(response) {
-        console.log("interceptResponse -- ")
+        //console.log("interceptResponse -- ")
         this.interceptors.response.handlers.forEach((interceptor) => {
             try {
                 response = interceptor.fulfilled(response)
@@ -77,7 +77,6 @@ export class HttpClient {
         config = merge(this.defaults, config);
 
         const headers = merge(this.defaults.headers.common, this.defaults.headers[method.toLowerCase()])
-
 
         // if the passed url is a relative path,
         // append it to the baseUrl
@@ -125,7 +124,7 @@ export class HttpClient {
     }
 
     post(url, data = {}, config = {}) {
-        console.log(data, 'request data');
+        //console.log(data, 'request data');
         return this.request('POST', url, {
             body: data,
             ...config,

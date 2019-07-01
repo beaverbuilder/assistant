@@ -10,6 +10,8 @@
     overflow: hidden;
     pointer-events: auto;
     touch-action: none;
+    transition-property: background;
+    transition-duration: .25s;
 
     &.fl-asst-window-mini {
         max-width: 100%;
@@ -50,7 +52,10 @@
             line-height: 1;
             display: inline-flex;
             flex-direction: row;
-            align-content: center;
+            align-items: center;
+        }
+        span.fl-asst-window-drag-handle {
+            align-items: center;
         }
     }
 
@@ -60,7 +65,6 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        overflow: auto;
     }
 }
 

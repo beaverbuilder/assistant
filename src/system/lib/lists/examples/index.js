@@ -88,6 +88,12 @@ export const TestSheet = () => {
 			{ name: 'Nancy', img: '' },
 			{ name: 'Ben', img: '' },
 			{ name: 'Jun', img: '' },
+			{ name: 'Carlos', img: '' },
+			{ name: 'Kathryn', img: '' },
+			{ name: 'Simon', img: '' },
+			{ name: 'Fred', img: '' },
+			{ name: 'Anthony', img: '' },
+			{ name: 'Gerard', img: '' },
 		]
 
 		return (
