@@ -41,13 +41,6 @@ class Container {
 	}
 
 	/**
-	 * @param ProviderInterface $provider
-	 */
-	public function register_provider( ProviderInterface $provider ) {
-		$provider->register( $this );
-	}
-
-	/**
 	 * @param string $key
 	 * @param Closure $closure
 	 */

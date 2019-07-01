@@ -18,7 +18,7 @@ class UsersControllerTest extends RestTestCase {
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
 
-		$this->assertIsArray($data);
+		$this->assertTrue(is_array($data));
 		$this->assertArrayHasKey('displayName', $data[0]);
 	}
 

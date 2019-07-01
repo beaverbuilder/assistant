@@ -4,11 +4,28 @@ namespace FL\Assistant\Core;
 
 use FL\Assistant\Providers\CloudProvider;
 use FL\Assistant\Providers\PluginProvider;
+use FL\Assistant\Providers\ProviderInterface;
 use FL\Assistant\Providers\RestProvider;
 
-
+/**
+ * Class Plugin
+ * @package FL\Assistant\Core
+ */
 class Plugin {
 
+	/**
+	 * Providers are registered in the order they are listed her
+	 * @var array
+	 */
+	protected static $providers = [
+		PluginProvider::class,
+		RestProvider::class,
+		CloudProvider::class
+	];
+
+	/**
+	 * @param $file
+	 */
 	public static function init( $file ) {
 
 		define( 'FL_ASSISTANT_VERSION', '0.3' );
@@ -17,9 +34,12 @@ class Plugin {
 		define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
 
 		$container = Container::instance();
-		$container->register_provider( new PluginProvider() );
-		$container->register_provider( new RestProvider() );
-		$container->register_provider( new CloudProvider() );
+		foreach ( static::providers as $provider_name ) {
+			$provider = new $provider_name();
+			if ( $provider instanceof ProviderInterface ) {
+				$provider->register( $container );
+			}
+		}
 	}
 }
 

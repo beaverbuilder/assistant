@@ -35,18 +35,12 @@ class UserDataTest extends BaseTestCase {
 	public function test_get_roles() {
 		$ud = new UserData();
 		$roles = $ud->get_roles();
-
-		var_dump($roles);
-
 		$this->assertIsArray($roles);
 	}
 
 	public function test_counts_by_user_role() {
 		$ud = new UserData();
 		$counts = $ud->counts_by_user_role();
-
-		var_dump($counts);
-
 		$this->assertIsArray($counts);
 	}
 }

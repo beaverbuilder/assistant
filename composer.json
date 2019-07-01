@@ -11,6 +11,7 @@
     "require-dev": {
         "brain/monkey": "2.*",
         "mockery/mockery": "dev-master",
-        "antecedent/patchwork": "^2.1"
+        "antecedent/patchwork": "^2.1",
+        "phpunit/phpunit": "7"
     }
 }

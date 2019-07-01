@@ -7,10 +7,10 @@
         convertWarningsToExceptions="true"
 >
     <testsuites>
-        <testsuite name="Unit Tests">
+        <testsuite name="unit">
             <directory suffix="Test.php">./tests/Unit/</directory>
         </testsuite>
-        <testsuite name="Rest API Integration Tests">
+        <testsuite name="rest-api">
             <directory suffix="Test.php">./tests/Rest/</directory>
         </testsuite>
     </testsuites>

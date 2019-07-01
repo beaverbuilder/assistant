@@ -22,4 +22,7 @@ class BaseTestCase extends \WP_UnitTestCase {
 		parent::tearDown();
 	}
 
+	public function assertIsArray($data) {
+		return $this->assertTrue(is_array($data));
+	}
 }
