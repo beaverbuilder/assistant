@@ -137,7 +137,7 @@ class OnEnqueueScripts {
 		}
 	}
 
-	public function doAction() {
+	public function __invoke() {
 		$this->enqueue();
 	}
 }

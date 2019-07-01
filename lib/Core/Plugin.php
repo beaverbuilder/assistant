@@ -20,7 +20,7 @@ class Plugin {
 	protected static $providers = [
 		PluginProvider::class,
 		RestProvider::class,
-		CloudProvider::class
+		CloudProvider::class,
 	];
 
 	/**

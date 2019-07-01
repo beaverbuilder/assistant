@@ -3,8 +3,6 @@
 
 namespace FL\Assistant\Core;
 
-use FL\Assistant\Providers\ProviderInterface;
-
 use Closure;
 
 /**
