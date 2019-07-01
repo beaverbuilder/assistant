@@ -31,7 +31,7 @@ export const ToggleControl = props => {
 	delete mergedProps.value
 
 	const style = {
-		transform: value ? 'translateX(30px)' : 'translateX(0px)',
+		transform: value ? 'translateX( 100% )' : 'translateX(0px)',
 		background: value ? 'var(--fl-asst-surface-color)' : 'transparent',
 		borderColor: value ? 'transparent' : '',
 	}

@@ -5,16 +5,11 @@ const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const production = 'production' === process.env.NODE_ENV
 
 const alias = {
-
-    // Deprecated
-    components: path.resolve( __dirname, './src/_original/original-ui/ui/components' ),
-    system: path.resolve( __dirname, './src/_original/original-ui/ui/system' ),
-
-    // New UI
     lib: path.resolve( __dirname, './src/system/lib/'),
     store: path.resolve( __dirname, './src/system/store'),
-    utils: path.resolve( __dirname, './packages/utils/src/' ),
+    utils: path.resolve( __dirname, './src/system/utils' ),
     'shared-lib': path.resolve( __dirname, './packages/shared-lib/src/' ),
+    'shared-utils': path.resolve( __dirname, './packages/shared-utils/src/' ),
 }
 
 const externals = {
@@ -23,12 +18,19 @@ const externals = {
     'fl-react'              : 'FL.React',
     'fl-react-dom'          : 'FL.ReactDOM',
     'fl-react-router-dom'   : 'FL.ReactRouter',
+    'fl-redux'              : 'FL.Redux',
+    'fl-prop-types'         : 'FL.PropTypes',
 
     /* system bundle */
     'assistant'             : 'FL.Assistant',
-    'assistant/store'       : 'FL.Assistant.store',
-    'assistant/lib'         : 'FL.Assistant.lib',
+    'assistant/store'       : 'FL.Assistant.data', // TODO: Delete = data replaces store
+    'assistant/data'        : 'FL.Assistant.data',
+
+    'assistant/lib'         : 'FL.Assistant.ui', // TODO: delete - ui replaces lib
+    'assistant/ui'          : 'FL.Assistant.ui',
+
     'assistant/i18n'        : 'FL.Assistant.i18n',
+    'assistant/utils'       : 'FL.Assistant.utils',
     'assistant/http'        : 'FL.Assistant.http',
 
     /* wp */

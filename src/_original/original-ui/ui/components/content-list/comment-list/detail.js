@@ -3,7 +3,7 @@ import { autop } from '@wordpress/autop'
 import { __ } from '@wordpress/i18n'
 import striptags from 'striptags'
 import { getSystemActions } from 'store'
-import { updateComment, replyToComment } from 'utils/wordpress'
+import { updateComment, replyToComment } from 'shared-utils/wordpress'
 import {
 	Button,
 	Form,

@@ -1,0 +1,14 @@
+.fl-asst {
+    all: unset;
+    line-height: 1;
+
+    a, button {
+        all: initial;
+        box-sizing: border-box;
+        user-select: none;
+        cursor: pointer;
+    }
+    div {
+        box-sizing: border-box;
+    }
+}

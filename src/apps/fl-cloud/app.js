@@ -81,6 +81,14 @@ const NotConnectedScreen = () => {
             <LoginForm/>
         </Page>
     )
+
+	return (
+		<Page className="fl-app-cloud">
+			<Icon.Pencil size={75} />
+			<p className="center-text">You are not currently connected to Assistant Cloud</p>
+			<Nav.AppLink to="/connected" className="fl-asst-cloud-connect-button">Connect</Nav.AppLink>
+		</Page>
+	)
 }
 
 const ConnectedScreen = withRouter(({history}) => {

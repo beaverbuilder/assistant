@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { getSystemActions, useSystemState } from 'store'
-import { clearCache } from 'utils/cache'
-import { useHeartbeat } from 'utils/wordpress'
+import { clearCache } from 'shared-utils/cache'
+import { useHeartbeat } from 'shared-utils/wordpress'
 import { AppTabButton, UIContext } from 'components'
 import { AppIcon } from './app'
 

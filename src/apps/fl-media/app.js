@@ -9,7 +9,7 @@ export const Media = ( { match } ) => (
 	</Switch>
 )
 
-const Main = ({ match }) => {
+const Main = ( { match } ) => {
 	return (
 		<Page>
 			<p>Do you some media right here</p>

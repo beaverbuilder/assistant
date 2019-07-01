@@ -1,6 +1,5 @@
-//import * as utils from 'utils'
 
+// Anything from utils that needs to be exposed publicly can go here
 export const api = {
 
-	/* this file isn't currently being imported into the public API. See ../index.js */
 }

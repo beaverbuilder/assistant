@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getHierarchicalTerms } from 'utils/wordpress'
+import { getHierarchicalTerms } from 'shared-utils/wordpress'
 
 export const TermParentSelect = props => {
 	const { taxonomy, exclude = 0, name, id, value, onChange } = props

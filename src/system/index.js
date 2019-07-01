@@ -1,22 +1,22 @@
-import { api as store } from './store'
-import { api as lib } from './lib'
-
-//import { api as utils } from './utils'
+import { api as data } from './store'
+import { api as ui } from './lib'
+import { api as utils } from './utils'
 import * as i18n from '@wordpress/i18n'
 
-import * as http from 'utils/http'
+import * as http from 'shared-utils/http'
 
 const fl = window.FL || {}
 const asst = fl.Assistant || {}
-const { registerApp } = store.getSystemActions()
+const { registerApp } = data.getSystemActions()
 
 const Assistant = {
 	...asst,
 	registerApp,
 	__: i18n.__,
 	i18n,
-	store,
-	lib,
+	data,
+	ui,
+	utils,
 	http,
 }
 

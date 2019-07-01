@@ -1,16 +1,17 @@
 import React, { Fragment } from 'fl-react'
 import { __ } from 'assistant'
 import { useSystemState, getSystemActions } from 'assistant/store'
-import { Form, Control } from 'assistant/lib'
-import './style.scss'
+import { Page, Form, Control } from 'assistant/ui'
 
 export const App = () => {
 	const { appearance, shouldShowLabels } = useSystemState()
 	const { brightness } = appearance
 	const { setBrightness, setShouldShowLabels } = getSystemActions()
 
+	
+
 	return (
-		<Fragment>
+		<Page title="Settings" shouldPadSides={false}>
 			<form>
 				<Form.Item label={__( 'Dark Appearance' )} placement="beside">
 					<Control.Toggle
@@ -25,7 +26,7 @@ export const App = () => {
 					/>
 				</Form.Item>
 			</form>
-		</Fragment>
+		</Page>
 	)
 }
 

@@ -1,7 +1,6 @@
 import {
 	Appearance,
 	Form,
-	Window,
 	Error,
 	Control,
 	Icon,
@@ -10,11 +9,12 @@ import {
 export * from './app'
 export * from './lists'
 export * from './pages'
+export * from './nav'
+export * from './window'
 
 export {
 	Appearance,
 	Form,
-	Window,
 	Error,
 	Control,
 	Icon,
@@ -29,7 +29,7 @@ import { Button } from './button'
 import { List } from './lists'
 import { Page } from './pages'
 import { Nav } from './nav'
-
+import { Window } from './window'
 
 export const api = {
 	Appearance,

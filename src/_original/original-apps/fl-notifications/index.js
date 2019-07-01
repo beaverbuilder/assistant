@@ -1,6 +1,6 @@
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
-import { currentUserCan } from 'utils/wordpress'
+import { currentUserCan } from 'shared-utils/wordpress'
 import { App, AppIcon } from './app'
 import { initialState, actions, reducers, effects } from './state'
 

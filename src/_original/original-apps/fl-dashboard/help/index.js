@@ -10,7 +10,7 @@ import {
 	Button,
 	UIContext,
 } from 'components'
-import { render } from 'utils/react'
+import { render } from 'shared-utils/react'
 import './style.scss'
 
 export const Help = ( { collapse } ) => {

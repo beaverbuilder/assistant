@@ -1,21 +1,29 @@
-.fl-asst-appearance {
+@import 'reset.scss';
 
-    // Colors
-    --fl-asst-blue: blue;
-    --fl-asst-dark-color: black;
-    --fl-asst-light-color: white;
+.fl-asst {
 
-    --fl-asst-surface-color: var(--fl-asst-dark-color);
-    --fl-asst-surface-background: var(--fl-asst-light-color);
+    // Light Colors
+    --fl-asst-light-1: white;
+    --fl-asst-light-2: hsl(214, 3%, 98%);
+    --fl-asst-light-3: hsl(214, 4%, 96%);
+    --fl-asst-light-4: hsl(214, 4%, 92%);
+    --fl-asst-light-5: hsl(214, 4%, 86%);
+    --fl-asst-light-text: black;
+    --fl-asst-light-subtext: var(--fl-asst-dark-2);
 
-    --fl-asst-accent-color: var(--fl-asst-surface-color);
-    --fl-asst-line-color: var(--fl-asst-surface-color);
+    // Darks
+    --fl-asst-dark-1: hsl(210, 17%, 12%);
+    --fl-asst-dark-2: hsl(210, 13%, 20%);
 
-    // Materials / Surfaces
-
+    --fl-asst-dark-3: hsl(210, 12%, 28%);
+    --fl-asst-dark-4: hsl(210, 11%, 44%);
+    --fl-asst-dark-5: hsl(210, 10%, 55%);
+    --fl-asst-dark-text: white;
+    --fl-asst-dark-subtext: var(--fl-asst-light-3);
 
     // Sizes
     --fl-asst-base-radius: 7px;
+    --fl-asst-target-size: 36px; // Smallest actionable area
 
     // Spacing
     --fl-asst-large-space: 30px;
@@ -29,13 +37,39 @@
 
     font-family: var(--fl-asst-font-family);
     font-size: var(--fl-asst-base-text-size);
-    line-height: 1.3;
 
     & * {
         box-sizing: border-box;
+        line-height: 1.3;
+    }
+
+    // Visuals
+    img {
+        display: block;
+        max-width: 100%;
+        object-fit: cover;
+    }
+    video {
+        display: block;
+    }
+    svg {
+        display: block;
+        shape-rendering: crispEdges;
+    }
+
+    hr {
+        all: initial;
+        display: block;
+        background-color: black;
+        background-image: none;
+        height: 2px;
+        border-radius: 2px;
+        margin: 20px 0;
     }
 
     a, button {
+        font-family: inherit;
+
         color: inherit;
         background: transparent;
         border: none;
@@ -46,7 +80,7 @@
 
         &:hover {
             color: inherit;
-            background: transparent; // Change to something meaningful
+            background: rgba(0,0,0,.05);
             top:0;
             box-shadow: none;
         }
@@ -54,73 +88,121 @@
             top:0;
             box-shadow: none;
         }
-    }
 
-    p {
-        font-size: var(--fl-asst-base-text-size);
-        margin: var(--fl-asst-outer-space) 0;
+        &[disabled] {
+            opacity: .5;
+            pointer-events: none;
+        }
     }
 
     h1, h2, h3, h4, h5, h6 {
-        color: inherit;
 
         &::before {
-            display: none !important;
-            content: '';
+            all: unset !important;
+        }
+        &:first-child {
+            margin-top: 0;
         }
     }
 
-    ul, ol {
-        list-style:none;
-        margin:0;
-        padding:0;
+    h1 {
+        font-size: calc( var(--fl-asst-base-text-size) + 6px );
+    }
+    h2 {
+        font-size: calc( var(--fl-asst-base-text-size) + 2px );
+        margin: var(--fl-asst-inner-space) 0;
+    }
 
-        li {
+
+    .fl-asst-appearance {
+
+        // Semantic Color Defaults - Light Appearance
+        --fl-asst-surface-color: var(--fl-asst-light-text);
+        --fl-asst-surface-background: var(--fl-asst-light-1);
+
+        --fl-asst-accent-color: var(--fl-asst-light-text);
+        --fl-asst-line-color: var(--fl-asst-surface-color);
+
+        &.fl-asst-brightness-light {
+            --fl-asst-surface-color: var(--fl-asst-light-text);
+            --fl-asst-surface-background: var(--fl-asst-light-1);
+
+            --fl-asst-secondary-surface-color: var(--fl-asst-light-text);
+            --fl-asst-secondary-surface-background: var(--fl-asst-light-4);
+        }
+
+        &.fl-asst-brightness-dark {
+            --fl-asst-surface-color: var(--fl-asst-dark-text);
+            --fl-asst-surface-background: var(--fl-asst-dark-2);
+
+            --fl-asst-secondary-surface-color: var(--fl-asst-light-4);
+            --fl-asst-secondary-surface-background: var(--fl-asst-dark-1);
+
+            --fl-asst-accent-color: var(--fl-asst-dark-text);
+        }
+
+        p {
+            font-size: var(--fl-asst-base-text-size);
+            margin: var(--fl-asst-outer-space) 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: inherit;
+
+            &::before {
+                display: none !important;
+                content: '';
+            }
+        }
+
+        ul, ol {
+            list-style:none;
             margin:0;
             padding:0;
+
+            li {
+                margin:0;
+                padding:0;
+            }
+        }
+
+        hr {
+            background-color: var(--fl-asst-secondary-surface-background);
         }
     }
 
-    img {
-        max-width: 100%;
+    .fl-asst-size-compact {
+        --fl-asst-outer-space: var(--fl-asst-medium-space);
+        --fl-asst-inner-space: var(--fl-asst-small-space);
+    }
+    .fl-asst-size-normal {
+        --fl-asst-outer-space: var(--fl-asst-large-space);
+        --fl-asst-inner-space: var(--fl-asst-medium-space);
     }
 
-    hr {
-        background-image: none;
-        background-color: var(--fl-asst-surface-color);
-        height: 1px;
+    .fl-asst-surface {
+        background: var(--fl-asst-surface-background);
+        color: var(--fl-asst-surface-color);
     }
 
-    svg {
-        display: block;
+    .fl-asst-primary-content {
+        background-color: var(--fl-asst-surface-background);
+        color: var(--fl-asst-surface-color);
+        transition: background-color .15s, color .15s;
     }
-}
+    .fl-asst-secondary-content {
+        background-color: var(--fl-asst-secondary-surface-background);
+        color: var(--fl-asst-secondary-surface-color);
+        transition: background-color .15s, color .15s;
+    }
+    &.fl-asst-brightness-dark {
+        .fl-asst-secondary-content {
+            background-color: var(--fl-asst-dark-3);
+            color: var(--fl-asst-surface-color);
+        }
+    }
 
-.fl-asst-size-compact {
-    --fl-asst-outer-space: var(--fl-asst-medium-space);
-    --fl-asst-inner-space: var(--fl-asst-small-space);
-}
-.fl-asst-size-normal {
-    --fl-asst-outer-space: var(--fl-asst-large-space);
-    --fl-asst-inner-space: var(--fl-asst-medium-space);
-}
-
-.fl-asst-brightness-light {
-    --fl-asst-surface-color: black;
-    --fl-asst-surface-background: white;
-}
-
-.fl-asst-brightness-dark {
-    --fl-asst-surface-color: white;
-    --fl-asst-surface-background: #2C3239;
-}
-
-.fl-asst-surface {
-    background: var(--fl-asst-surface-background);
-    color: var(--fl-asst-surface-color);
-    transition: background-color .5s, color .5s;
-}
-
-.fl-asst-rounded {
-    border-radius: 7px;
+    .fl-asst-rounded {
+        border-radius: 7px;
+    }
 }

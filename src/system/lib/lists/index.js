@@ -1,30 +1,97 @@
-import React, { Children, createElement } from 'fl-react'
+import React from 'fl-react'
 import classname from 'classnames'
+import { TestSheet } from './examples'
+import { Item } from './parts'
+import './style.scss'
+
+import { isRenderProp } from 'shared-utils/react'
+
+import {
+	getDefaultItemProps,
+	getItemType,
+} from './parts'
 
 export const List = ( {
-	tag: Tag = 'ul',
-	childTag = 'li',
-	className,
 	children,
-	items = [],
-	...rest,
+
+	items, // [Any] | null
+
+	direction = 'vertical',
+
+	getItemProps = getDefaultItemProps,
+
+	getItemComponent = getItemType,
+
+	// What key do we use to determine if an item is a section?
+	itemTypeKey = 'type',
+
+	// What key should we use (by default) to get section items?
+	sectionItemsKey = 'items',
+
+	// Test if a data item is a section
+	isListSection = item => ( 'undefined' !== typeof item[itemTypeKey] && 'list-section' === item[itemTypeKey] ),
+
+	// Get the array of items from a section item
+	getSectionItems = section => 'undefined' !== typeof section[sectionItemsKey] ? section[sectionItemsKey] : [],
+
+	tag: Tag = 'ul',
 } ) => {
+
+	// Page context provides the default scrolling element ref for scroll events
+	//const { scrollRef } = useContext( Page.Context )
+
+	const renderListItems = items => {
+		return items.map( ( item, i ) => {
+
+			if ( isListSection( item ) ) {
+
+				const Section = getItemComponent( item, true )
+				const sectionProps = getItemProps( item, i )
+				const sectionItems = getSectionItems( item )
+				return (
+					<Section {...sectionProps}>
+						{ sectionItems && <List items={sectionItems} /> }
+					</Section>
+				)
+			} else {
+				return renderItem( item, i )
+			}
+		} )
+	}
+
+	const renderItem = ( item, i ) => {
+		const Item = getItemComponent( item )
+
+		const props = getItemProps( item, i )
+
+		if ( isRenderProp( children ) ) {
+			return (
+				<Item {...props}>{ children( item ) }</Item>
+			)
+		} else {
+			return <Item {...props} />
+		}
+	}
+
+	let content = children
+
+	// Is this a data-driven list?
+	if ( Array.isArray( items ) && items.length ) {
+		content = renderListItems( items )
+	}
 
 	const classes = classname( {
 		'fl-asst-list': true,
-	}, className )
-
-	// Wrap children
-	const newChildren = Children.map( children, child => {
-		return createElement( childTag, {}, child )
+		[`fl-asst-${direction}-list`]: direction,
 	} )
 
-	const props = {
-		...rest,
-		className: classes,
-		children: newChildren,
-	}
 	return (
-		<Tag {...props} />
+		<Tag className={classes}>{content}</Tag>
 	)
 }
+
+List.Item = Item
+List.Item.displayName = 'List.Item'
+
+List.TestSheet = TestSheet
+List.TestSheet.displayName = 'List.TestSheet'

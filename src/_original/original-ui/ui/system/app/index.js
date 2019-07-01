@@ -11,7 +11,7 @@ import {
 } from 'store'
 
 import { useAppFrame, AppErrorBoundary } from 'system'
-import { render } from 'utils/react'
+import { render } from 'shared-utils/react'
 import {
 	UIContext,
 	Stack,

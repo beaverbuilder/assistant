@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { updateTerm } from 'utils/wordpress'
+import { updateTerm } from 'shared-utils/wordpress'
 import { getSystemActions } from 'store'
 import { TermParentSelect } from './term-parent-select'
 import {

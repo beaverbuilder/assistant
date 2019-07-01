@@ -7,7 +7,7 @@
     }
 
     form {
-        padding: var(--fl-asst-outer-space) 0;
+        padding: 0 0 var(--fl-asst-outer-space);
         display: grid;
         grid-row-gap: var(--fl-asst-inner-space);
 
@@ -235,7 +235,6 @@
             color: transparent;
             text-shadow: 0 0 0 #000;
         }
-
         &::-ms-expand {
             display: none;
         }

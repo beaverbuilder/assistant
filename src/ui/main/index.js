@@ -1,7 +1,7 @@
-import React, { Fragment } from 'fl-react'
+import React from 'fl-react'
 import { __ } from 'assistant'
 import { getSystemActions, useSystemState } from 'assistant/store'
-import { Appearance, Icon, Window, Error } from 'assistant/lib'
+import { Appearance, Icon, Window, Error, Page, Nav } from 'assistant/lib'
 import { AppRouting } from '../app'
 
 export const Main = () => {
@@ -10,9 +10,11 @@ export const Main = () => {
 	const { size } = window
 
 	return (
-		<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
-			<MainWindow />
-		</Appearance>
+		<Nav.Provider>
+			<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
+				<MainWindow />
+			</Appearance>
+		</Nav.Provider>
 	)
 }
 
@@ -32,7 +34,7 @@ const MainWindow = () => {
 			onChange={onChanged}
 			shouldShowLabels={shouldShowLabels}
 		>
-			<Error.Boundary alternate={<WindowError />}>
+			<Error.Boundary alternate={WindowError}>
 				<AppRouting />
 			</Error.Boundary>
 		</Window>
@@ -41,9 +43,9 @@ const MainWindow = () => {
 
 const WindowError = () => {
 	return (
-		<Fragment>
+		<Page shouldPadTop={true}>
 			<h1>{__( 'We Have A Problem!' )}</h1>
 			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
-		</Fragment>
+		</Page>
 	)
 }

@@ -2,7 +2,7 @@ import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemActions } from 'store'
 import { Title, Icon, UIContext, Button } from 'components'
-import { render } from 'utils/react'
+import { render } from 'shared-utils/react'
 import './style.scss'
 
 const AppsMenu = () => {

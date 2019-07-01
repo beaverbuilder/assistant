@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'fl-react'
 import { Switch, Route, Link } from 'fl-react-router-dom'
 import { Page } from 'assistant/lib'
 
-//import { getContent } from 'utils/wordpress'
+//import { getContent } from 'shared-utils/wordpress'
 
 export const Alerts = ( { match } ) => (
 	<Switch>
@@ -13,6 +13,7 @@ export const Alerts = ( { match } ) => (
 
 const Main = ( { match } ) => {
 	const [ comments, setComments ] = useState( [] )
+	const hasComments = comments.length > 0
 
 	useEffect( () => {
 
@@ -26,6 +27,7 @@ const Main = ( { match } ) => {
 
 	return (
 		<Page>
+			{ !hasComments && <div>You don't have any!</div> }
 			<ul>
 				{ comments.map( ( item, i ) => {
 					const { id, meta: authorDate, title } = item
