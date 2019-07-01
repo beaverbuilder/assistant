@@ -1,5 +1,6 @@
 import React from 'fl-react'
 import classname from 'classnames'
+import { Nav } from '../../'
 import { isColor } from 'shared-utils/color'
 import { isURL } from 'shared-utils/url'
 
@@ -69,6 +70,7 @@ const InfoItem = ( {
 	description,
 	thumbnail,
 	className,
+	to,
 	...rest
 } ) => {
 	const classes = classname( {
@@ -84,8 +86,16 @@ const InfoItem = ( {
 		color = label
 	}
 
+	let Tag = 'div'
+	let newProps = { ...rest }
+	
+	if ( to ) {
+		Tag = Nav.Link
+		newProps.to = to
+	}
+
 	return (
-		<div className={classes} {...rest}>
+		<Tag className={classes} {...newProps}>
 			{ hasThumbnail &&
 				<div className="fl-asst-list-item-thumbnail">
 					{ thumbnail && <img src={thumbnail} /> }
@@ -96,7 +106,7 @@ const InfoItem = ( {
 				{ label && <div className="fl-asst-list-item-title">{label}</div> }
 				{ description && <div className="fl-asst-list-item-description">{description}</div> }
 			</div>
-		</div>
+		</Tag>
 	)
 }
 

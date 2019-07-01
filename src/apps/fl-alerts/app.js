@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'fl-react'
+import React from 'fl-react'
 import { Switch, Route, Link } from 'fl-react-router-dom'
-import { Page } from 'assistant/lib'
+import { Page, List } from 'assistant/lib'
 
-//import { getContent } from 'shared-utils/wordpress'
+import { comments } from './test-data'
 
 export const Alerts = ( { match } ) => (
 	<Switch>
@@ -11,52 +11,39 @@ export const Alerts = ( { match } ) => (
 	</Switch>
 )
 
-const Main = ( { match } ) => {
-	const [ comments, setComments ] = useState( [] )
+const Main = ({ match }) => {
 	const hasComments = comments.length > 0
 
-	useEffect( () => {
-
-		//getContent( 'comments', {}, data => setComments( data ) )
-	}, [] )
-
-	const style = {
-		display: 'block',
-		padding: 'var(--fl-asst-outer-space) 0',
-	}
-
 	return (
-		<Page>
+		<Page shouldPadSides={false}>
 			{ !hasComments && <div>You don't have any!</div> }
-			<ul>
-				{ comments.map( ( item, i ) => {
-					const { id, meta: authorDate, title } = item
-					const location = {
-						pathname: `${match.url}/comments/${id}`,
-						state: item,
+			{ hasComments &&
+			<List
+				items={comments}
+				getItemProps={ (item, i) => {
+					return {
+						key: item.postID,
+						label: <em><strong>{item.email}</strong> commented:</em>,
+						description: item.content,
+						thumbnail: item.thumbnail,
+						to: {
+							pathname: `${match.url}/comments/${item.postID}`,
+							state: item
+						}
 					}
-					return (
-						<li key={i}>
-							<Link to={location} style={style}>
-								<div>{authorDate}</div>
-								<div>{title}</div>
-							</Link>
-						</li>
-					)
-				} )}
-			</ul>
+				}}
+			/> }
 		</Page>
 	)
 }
 
-const CommentDetail = ( { history, location } ) => {
+const CommentDetail = ( { location } ) => {
 	const comment = {
 		...location.state,
 	}
 	const { content } = comment
 	return (
-		<Page>
-			<button onClick={ () => history.goBack() }>Back</button>
+		<Page title="Edit Comment">
 			<div dangerouslySetInnerHTML={{ __html: content }} />
 		</Page>
 	)

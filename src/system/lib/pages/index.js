@@ -61,34 +61,37 @@ Page.Header = ( { icon, label } ) => {
 	return (
 		<div className="fl-asst-screen-header fl-asst-app-header">
 
-			{ 'function' === typeof visual &&
-				<div className="fl-asst-app-header-icon">
-
-					{ ( isRoot || isAppRoot ) && <div>{visual( app )}</div> }
-
-					{ !isRoot && !isAppRoot &&
-					<button
-						onClick={history.goBack}
-						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-							color: 'inherit',
-							lineHeight: 1,
-							fontSize: 12,
-						}}
-					>
-						<div style={{
-							color: 'var(--fl-asst-accent-color)',
-							marginBottom: shouldShowLabels ? 5 : null,
-						}}>
-							<Icon.BackArrow />
-						</div>
-						{ shouldShowLabels && <span style={{ marginTop: 'auto' }}>{__( 'Back' )}</span> }
-					</button> }
-				</div>
+			{ ( isRoot || isAppRoot ) && 'function' === typeof visual &&
+			<div className="fl-asst-app-header-icon">
+				<div>{visual( app )}</div>
+			</div>
 			}
+
+			{ !isRoot && !isAppRoot &&
+			<div className="fl-asst-app-header-icon">
+				<button
+					onClick={history.goBack}
+					style={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						justifyContent: 'center',
+						color: 'inherit',
+						lineHeight: 1,
+						fontSize: 12,
+					}}
+				>
+					<div style={{
+						color: 'var(--fl-asst-accent-color)',
+						marginBottom: shouldShowLabels ? 5 : null,
+					}}>
+						<Icon.BackArrow />
+					</div>
+					{ shouldShowLabels && <span style={{ marginTop: 'auto' }}>{__( 'Back' )}</span> }
+				</button>
+			</div>
+			}
+
 			<div className="fl-asst-app-header-name">
 				<span>{ label ? label : appLabel }</span>
 			</div>
