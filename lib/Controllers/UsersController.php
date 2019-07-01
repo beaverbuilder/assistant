@@ -107,7 +107,7 @@ final class UsersController extends AssistantController {
 	 */
 	public function users_count( \WP_REST_Request $request ) {
 
-		$response = $this->container->service( 'users' )
+		$response = $this->container()->service( 'users' )
 									->counts_by_user_role();
 
 		return rest_ensure_response( $response );
@@ -123,7 +123,7 @@ final class UsersController extends AssistantController {
 	 */
 	public function user( \WP_REST_Request $request ) {
 		$id   = $request->get_param( 'id' );
-		$user = $this->container->service( 'users' )->find( $id );
+		$user = $this->container()->service( 'users' )->find( $id );
 
 		return rest_ensure_response( $user->to_array() );
 	}
@@ -134,7 +134,7 @@ final class UsersController extends AssistantController {
 	public function update_user_state( \WP_REST_Request $request ) {
 
 		$state = $request->get_param( 'state' );
-		$user  = $this->container->service( 'users' )->current();
+		$user  = $this->container()->service( 'users' )->current();
 		$user->update_state( $state );
 
 		return rest_ensure_response( $user->get_state() );

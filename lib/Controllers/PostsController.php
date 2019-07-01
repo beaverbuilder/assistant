@@ -133,7 +133,7 @@ class PostsController extends AssistantController {
 		// Beaver Builder data.
 		if ( class_exists( '\FLBuilderModel' ) ) {
 
-			$response['bbCanEdit']   = $this->container->service( 'site' )->bb_can_edit_post( $post->ID );
+			$response['bbCanEdit']   = $this->container()->service( 'site' )->bb_can_edit_post( $post->ID );
 			$response['bbIsEnabled'] = \FLBuilderModel::is_builder_enabled( $post->ID );
 			$response['bbBranding']  = \FLBuilderModel::get_branding();
 			$response['bbEditUrl']   = \FLBuilderModel::get_edit_url( $post->ID );
@@ -219,7 +219,7 @@ class PostsController extends AssistantController {
 	 */
 	public function posts_count( $request ) {
 
-		$post_types = $this->container->service( 'posts' )->get_types();
+		$post_types = $this->container()->service( 'posts' )->get_types();
 		$response   = array();
 
 		foreach ( $post_types as $slug => $label ) {

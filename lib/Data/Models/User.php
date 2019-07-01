@@ -3,6 +3,8 @@
 
 namespace FL\Assistant\Data\Models;
 
+use FL\Assistant\Util\HasEntityAttributes;
+
 use \WP_User;
 
 class User {

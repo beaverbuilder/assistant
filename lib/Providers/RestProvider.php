@@ -58,4 +58,5 @@ class RestProvider implements ProviderInterface {
 			}
 		};
 	}
+
 }

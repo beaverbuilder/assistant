@@ -9,7 +9,7 @@ use FL\Assistant\Providers\RestProvider;
 
 class Plugin {
 
-	public static function init($file) {
+	public static function init( $file ) {
 
 		define( 'FL_ASSISTANT_VERSION', '0.3' );
 		define( 'FL_ASSISTANT_FILE', trailingslashit( $file ) );

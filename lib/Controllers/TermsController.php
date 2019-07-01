@@ -182,7 +182,7 @@ class TermsController extends AssistantController {
 	 */
 	public function terms_count( $request ) {
 
-		$taxonomies = $this->container->service( 'posts' )->get_taxononies();
+		$taxonomies = $this->container()->service( 'posts' )->get_taxononies();
 		$response = array();
 
 		foreach ( $taxonomies as $slug => $label ) {

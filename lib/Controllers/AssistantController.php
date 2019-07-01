@@ -3,24 +3,16 @@
 
 namespace FL\Assistant\Controllers;
 
-
-use FL\Assistant\Core\Container;
+use FL\Assistant\Util\HasContainer;
 
 abstract class AssistantController {
+
+	use HasContainer;
 
 	/**
 	 * @var string
 	 */
 	protected $namespace = 'fl-assistant/v1';
-
-	/**
-	 * @var Container
-	 */
-	protected $container;
-
-	public function __construct( Container $container ) {
-		$this->container = $container;
-	}
 
 	public function route( $route, array $config = [] ) {
 		register_rest_route( $this->namespace, $route, $config );

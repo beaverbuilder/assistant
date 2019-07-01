@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FL\Assistant\Data\Models;
+namespace FL\Assistant\Util;
 
 
 trait HasEntityAttributes {

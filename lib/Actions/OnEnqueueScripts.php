@@ -2,8 +2,6 @@
 
 namespace FL\Assistant\Actions;
 
-use FL\Assistant\Core\Container;
-
 /**
  * Class OnEnqueueScripts
  * @package FL\Assistant\Actions
@@ -11,19 +9,13 @@ use FL\Assistant\Core\Container;
  */
 class OnEnqueueScripts {
 
-	protected $container;
-
-	public function __construct( Container $container ) {
-		$this->container = $container;
-	}
-
 	/**
 	 * @return array
 	 * @throws \Exception
 	 */
 	public function generate_initial_state() {
 
-		$users      = $this->container->service( 'users' );
+		$users      = $this->container()->service( 'users' );
 		$user_state = $users->current()->get_state();
 
 		return [
@@ -50,9 +42,10 @@ class OnEnqueueScripts {
 	 */
 	public function generate_frontend_config() {
 
-		$user_data    = $this->container->service( 'users' );
-		$post_data    = $this->container->service( 'posts' );
-		$site_data    = $this->container->service( 'site' );
+		$container    = $this->container();
+		$user_data    = $container->service( 'users' );
+		$post_data    = $container->service( 'posts' );
+		$site_data    = $container->service( 'site' );
 		$current_user = $user_data->current();
 
 		return [
@@ -144,7 +137,7 @@ class OnEnqueueScripts {
 		}
 	}
 
-	public function __invoke() {
+	public function doAction() {
 		$this->enqueue();
 	}
 }
