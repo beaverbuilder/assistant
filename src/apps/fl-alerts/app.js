@@ -13,6 +13,7 @@ export const Alerts = ( { match } ) => (
 
 const Main = ( { match } ) => {
 	const [ comments, setComments ] = useState( [] )
+	const hasComments = comments.length > 0
 
 	useEffect( () => {
 
@@ -26,6 +27,7 @@ const Main = ( { match } ) => {
 
 	return (
 		<Page>
+			{ !hasComments && <div>You don't have any!</div> }
 			<ul>
 				{ comments.map( ( item, i ) => {
 					const { id, meta: authorDate, title } = item

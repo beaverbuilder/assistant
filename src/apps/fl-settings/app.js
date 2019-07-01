@@ -8,6 +8,8 @@ export const App = () => {
 	const { brightness } = appearance
 	const { setBrightness, setShouldShowLabels } = getSystemActions()
 
+	
+
 	return (
 		<Page title="Settings" shouldPadSides={false}>
 			<form>

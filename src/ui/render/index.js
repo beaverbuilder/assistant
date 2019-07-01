@@ -4,6 +4,7 @@ import { Main } from '../main'
 
 // Style Guide
 import { renderGuide } from 'shared-lib'
+
 //renderGuide()
 
 // Render App into the document

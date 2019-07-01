@@ -45,27 +45,28 @@ Page.defaults = {
 Page.Context = createContext( Page.defaults )
 Page.Context.displayName = 'Page.Context'
 
-Page.Header = ({ icon, label }) => {
+Page.Header = ( { icon, label } ) => {
 	const { shouldShowLabels } = useSystemState()
+
 	const app = useContext( App.Context )
 	const { label: appLabel, icon: appIcon } = app
-	const { history } = useContext( Nav.Context )
-	const isAppRoot = 2 > history.index
+
+	const { history, isRoot, isAppRoot } = useContext( Nav.Context )
 
 	let visual = icon
-	if ( !visual || 'function' !== typeof visual ) {
+	if ( 'function' !== typeof visual ) {
 		visual = appIcon
 	}
 
 	return (
 		<div className="fl-asst-screen-header fl-asst-app-header">
 
-			{ 'function' === typeof icon &&
+			{ 'function' === typeof visual &&
 				<div className="fl-asst-app-header-icon">
 
-					{ isAppRoot && visual( app ) }
+					{ ( isRoot || isAppRoot ) && <div>{visual( app )}</div> }
 
-					{ ! isAppRoot &&
+					{ !isRoot && !isAppRoot &&
 					<button
 						onClick={history.goBack}
 						style={{

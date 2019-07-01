@@ -61,10 +61,10 @@ const CardError = () => {
 	)
 }
 
-const ScreenCard = forwardRef( ({ className, children, ...rest }, ref ) => {
-	const classes = classname({
-		'fl-asst-screen' : true,
-		'fl-asst-screen-card' : true,
+const ScreenCard = forwardRef( ( { className, children, ...rest }, ref ) => {
+	const classes = classname( {
+		'fl-asst-screen': true,
+		'fl-asst-screen-card': true,
 	}, className )
 
 	const style = {
@@ -83,11 +83,11 @@ const ScreenCard = forwardRef( ({ className, children, ...rest }, ref ) => {
 			</div>
 		</div>
 	)
-})
+} )
 
-const CardStack = ({ children, style: passedStyles, ...rest }) => {
-	const [cardHeight, setCardHeight] = useState(0)
-	const count = Children.count(children)
+const CardStack = ( { children, style: passedStyles, ...rest } ) => {
+	const [ cardHeight, setCardHeight ] = useState( 0 )
+	const count = Children.count( children )
 	const offset = 20
 
 	const handleRef = el => {
@@ -100,22 +100,22 @@ const CardStack = ({ children, style: passedStyles, ...rest }) => {
 
 	const newChildren = Children.map( children, ( child, i ) => {
 		const reverseIndex = count - ( i + 1 )
-		const topOffset = ( offset / (count - 1) ) * i
+		const topOffset = ( offset / ( count - 1 ) ) * i
 		return cloneElement( child, {
 			ref: handleRef,
 			style: {
 				top: topOffset ? topOffset : 0,
-				transform: `scale(${1 - (.06 * reverseIndex )})`,
+				transform: `scale(${1 - ( .06 * reverseIndex )})`,
 			}
-		})
-	})
+		} )
+	} )
 
 	const style = {
 		...passedStyles,
 		position: 'relative',
 		flex: '1 1 auto',
 		display: 'flex',
-		height: count > 1 ? cardHeight + offset : 'auto',
+		height: 1 < count ? cardHeight + offset : 'auto',
 		maxHeight: '100%',
 	}
 
@@ -125,12 +125,11 @@ const CardStack = ({ children, style: passedStyles, ...rest }) => {
 }
 
 
-
 const Switcher = () => {
 	const { apps, appOrder } = useSystemState()
 	return (
 		<Fragment>
-			<Page shouldPadTop={true} title={__('Apps')} icon={Icon.Apps}>
+			<Page shouldPadTop={true} title={__( 'Apps' )} icon={Icon.Apps}>
 				<div className="app-grid">
 					{ appOrder.map( ( handle, i ) => {
 						const app = apps[handle]

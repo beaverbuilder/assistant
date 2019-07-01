@@ -11,6 +11,7 @@ Nav.Provider = ( { children } ) => {
 
 	const routerProps = {
 		initialIndex: history.index,
+
 		/* do NOT include a default for initialEntries */
 	}
 	if ( history.entries && history.entries.length ) {
@@ -35,6 +36,7 @@ Nav.defaults = {
 	history: null,
 	path: null,
 	isRoot: false,
+	isAppRoot: false,
 	goToRoot: () => {}
 }
 
@@ -56,7 +58,9 @@ const NavManager = withRouter( ( { children, location, match, history, onChange 
 		history,
 		path: match.url,
 		isRoot: 0 === history.index,
-		goToRoot: () => history.go( -history.index )
+		goToRoot: () => history.go( -history.index ),
+		isAppRoot: 1 === history.index,
+		goToAppRoot: () => history.go( -( history.index + 1 ) ),
 	}
 
 	return (

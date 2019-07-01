@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'fl-react'
 
-export const App = ({ children, ...rest }) => {
+export const App = ( { children, ...rest } ) => {
 	return (
 		<div className="fl-asst-app-root" {...rest}>
 			{children}
