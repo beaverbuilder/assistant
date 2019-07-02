@@ -1,9 +1,7 @@
-
-import {HttpClient, Interceptor} from "../http"
+import {HttpClient} from "../http"
 
 const {cloudUrl} = FL_ASSISTANT_CONFIG;
 
-console.log('cloudUrl', cloudUrl );
 const http = new HttpClient({
     baseUrl: cloudUrl,
     credentials: 'same-origin',
@@ -15,32 +13,10 @@ const http = new HttpClient({
     }
 });
 
-console.log(http.defaults.baseUrl, 'baseUrl');
-
-http.interceptors.request.use(
-    new Interceptor(
-        (request) => {
-            const auth = JSON.parse(localStorage.getItem('fl-cloud-auth'));
-
-            if (auth != null) {
-                request.headers['Authorization'] = "Bearer " + auth.access_token;
-            }
-            return request;
-        },
-        (error) => {
-
-        }
-    ));
-
-// http.interceptors.response.use(
-//     new Interceptor(
-//         (response) => {
-//
-//         },
-//         (error) => {
-//
-//         }
-//     ));
+// this is a json api
+http.transformers.request.push((body) => {
+    return JSON.stringify(body);
+});
 
 
 export default http;

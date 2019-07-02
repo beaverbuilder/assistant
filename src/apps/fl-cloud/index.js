@@ -1,10 +1,10 @@
 import { registerApp, __ } from 'assistant'
-import { Cloud } from './app'
+import { CloudApp } from './app'
 
 registerApp( 'fl-cloud', {
 	label: __( 'Cloud' ),
-	root: Cloud,
-	icon: Cloud.Icon,
+	root: CloudApp,
+	icon: CloudApp.Icon,
 	accent: {
 		color: '#FA9200'
 	}

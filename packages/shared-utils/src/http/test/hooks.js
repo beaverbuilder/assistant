@@ -1,7 +1,7 @@
 
 global.fetch = require('jest-fetch-mock')
 
-import { useWpRest, useWpAjax } from "../hooks";
+import { getWpRest, getWpAjax } from "../hooks";
 import { HttpClient } from "../http-client";
 
 import posts from './posts'
@@ -12,14 +12,14 @@ describe('As React Hooks', () => {
         fetch.resetMocks()
     })
 
-    test('can useWpRest to make api call', async () => {
+    test('can getWpRest to make api call', async () => {
 
         fetch.mockResponse(JSON.stringify(posts), {
             status: 200,
             headers: {'content-type': 'application/json'}
         });
 
-        const http = useWpRest();
+        const http = getWpRest();
         expect(http).toBeInstanceOf(HttpClient);
 
         const data = await http.get('/posts');
@@ -28,7 +28,7 @@ describe('As React Hooks', () => {
 
     })
 
-    test('can useWpAjax to call ajax action', async () => {
+    test('can getWpAjax to call ajax action', async () => {
         const expected = "<H1>Hello  World</H1>"
 
         fetch.mockResponse(expected, {
@@ -36,7 +36,7 @@ describe('As React Hooks', () => {
             headers: {'content-type': 'text/html'}
         });
 
-        const ajax = useWpAjax();
+        const ajax = getWpAjax();
 
         expect(ajax).toBeInstanceOf(HttpClient)
 

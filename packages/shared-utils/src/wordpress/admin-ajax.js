@@ -1,8 +1,8 @@
 import { getSystemConfig } from 'store'
 import { clearCache } from 'shared-utils/cache'
-import { useWpAjax } from "shared-utils/http";
+import { getWpAjax } from "shared-utils/http";
 
-const wpAjax = useWpAjax();
+const wpAjax = getWpAjax();
 
 /**
  * Fetch request for WordPress admin AJAX.

@@ -13,6 +13,7 @@ export const defaultBodyParser = (response) => {
     return response.json()
 }
 
+
 export class HttpClient {
 
     constructor(config) {
@@ -29,8 +30,10 @@ export class HttpClient {
             response: new InterceptorManager()
         };
 
-        this.defaults = merge(defaults, config);
-
+        this.defaults = {
+            ...defaults,
+            ...config
+        };
     }
 
     _transformRequest(body) {
@@ -70,18 +73,22 @@ export class HttpClient {
     }
 
     request(method, url, config = {}) {
-        config = merge(this.defaults, config);
+        config = {
+            ...this.defaults,
+            ...config
+        }
 
-        const headers = merge(this.defaults.headers.common, this.defaults.headers[method.toLowerCase()])
+        const methodHeaders = this.defaults.headers[method.toLowerCase()]
+
+        const headers = {
+            ...this.defaults.headers.common,
+            ...methodHeaders
+        }
 
         // if the passed url is a relative path, append it to the baseUrl
-        console.log(config, 'config');
-        console.log(url, 'beforeUrl');
         if (config.baseUrl && !isAbsoluteURL(url)) {
             url = config.baseUrl + url;
         }
-
-        console.log(url, 'afterUrl');
 
         // construct the basic request
         let request = {
@@ -89,7 +96,7 @@ export class HttpClient {
             headers
         };
 
-        if(config.hasOwnProperty('credentials')) {
+        if (config.hasOwnProperty('credentials')) {
             request.credentials = config.credentials;
         }
 
@@ -98,7 +105,7 @@ export class HttpClient {
 
         // fetch cancels requests and returns an error
         // when GET/HEAD requests contain a body property
-        if('GET' !== method && 'HEAD' !== method) {
+        if ('GET' !== method && 'HEAD' !== method) {
             // run request transformers
             request.body = this._transformRequest(config.body);
         }

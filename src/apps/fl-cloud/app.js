@@ -1,22 +1,32 @@
 import React, {useState, useEffect} from 'fl-react'
-import {Switch, Route, Redirect, Link, withRouter} from 'fl-react-router-dom'
+// import {Switch, Route, Redirect, Link, withRouter} from 'fl-react-router-dom'
 import {App, Page, Icon} from 'assistant/lib'
 
-import assistantCloud from 'assistant/cloud'
+import LoginForm from './components/login-form'
+import cloud from 'assistant/cloud'
 import './style.scss'
 
 
-export const Cloud = ({match}) => {
-    const {url} = match
-    return (
-        <Switch>
-            <Route exact path={`${url}/`} component={NotConnectedScreen}/>
-            <Route path={`${url}/connected`} component={ConnectedScreen}/>
-        </Switch>
-    )
+export const CloudApp = () => {
+
+    const [isConnected, setIsConnected] = useState(false);
+
+    useEffect(() => {
+        setIsConnected(cloud.auth.isConnected());
+
+        cloud.auth.onAuthStatusChanged(() => {
+            setIsConnected(cloud.auth.isConnected());
+        })
+    }, []);
+
+    if (isConnected) {
+        return <ConnectedScreen/>;
+    } else {
+        return <NotConnectedScreen/>;
+    }
 }
 
-Cloud.Icon = () => {
+CloudApp.Icon = () => {
     return (
         <svg width="32px" height="20px" viewBox="0 0 32 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g fill="none" stroke="currentColor" strokeWidth="2">
@@ -27,88 +37,30 @@ Cloud.Icon = () => {
     )
 }
 
-const LoginForm = withRouter(({history}) => {
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-
-    const handleSubmit = (event) => {
-        if (event) {
-            event.preventDefault();
-
-            assistantCloud.auth.login(email, password)
-                .then((user) => {
-                    console.log(user, 'logged in user');
-                    history.push('/fl-cloud/connected')
-                })
-                .catch((err) => {
-                    console.log(err, 'problem logging in');
-                });
-
-        }
-    }
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Email</label>
-                <input type="email"
-                       name="email"
-                       onChange={e => setEmail(e.target.value)}
-                       value={email}
-                       required/>
-            </div>
-            <div>
-                <label>Password</label>
-                <input type="password"
-                       name="password"
-                       onChange={e => setPassword(e.target.value)}
-                       value={password}/>
-            </div>
-            <div>
-                <button type="submit" className="fl-asst-cloud-connect-button">Connect</button>
-            </div>
-        </form>
-    )
-});
 
 const NotConnectedScreen = () => {
-
-    return assistantCloud.auth.isConnected() ? (
-        <Redirect to="/fl-cloud/connected"></Redirect>
-    ) : (
+    return (
         <Page className="fl-app-cloud">
             <Icon.Pencil size={75}/>
             <p className="center-text">You are not currently connected to Assistant Cloud</p>
             <LoginForm/>
         </Page>
-    )
-
-	return (
-		<Page className="fl-app-cloud">
-			<Icon.Pencil size={75} />
-			<p className="center-text">You are not currently connected to Assistant Cloud</p>
-			<Nav.AppLink to="/connected" className="fl-asst-cloud-connect-button">Connect</Nav.AppLink>
-		</Page>
-	)
+    );
 }
 
-const ConnectedScreen = withRouter(({history}) => {
+const ConnectedScreen = () => {
 
     const [user, setUser] = useState({})
     const [auth, setAuth] = useState({})
 
     const disconnect = () => {
-        assistantCloud.auth.logout().then(() => {
-            history.push('/fl-cloud/');
-        })
+        cloud.auth.logout()
     }
 
     useEffect(() => {
 
-        const auth = assistantCloud.auth.getToken()
-        const user = assistantCloud.auth.getUser()
+        const auth = cloud.auth.getToken()
+        const user = cloud.auth.getUser()
 
         setAuth(auth);
         setUser(user);
@@ -125,4 +77,4 @@ const ConnectedScreen = withRouter(({history}) => {
             <button className='fl-asst-cloud-connect-button' onClick={disconnect}>Disconnect</button>
         </Page>
     )
-});
+};

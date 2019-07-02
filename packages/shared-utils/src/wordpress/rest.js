@@ -1,9 +1,9 @@
 import { clearCache } from 'shared-utils/cache'
 import { addQueryArgs } from 'shared-utils/url'
 
-import { useWpRest } from "../http";
+import { getWpRest } from "../http";
 
-const wpRest = useWpRest();
+const wpRest = getWpRest();
 /**
  * Fetch request for the WordPress REST API.
  */

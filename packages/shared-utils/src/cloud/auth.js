@@ -1,11 +1,43 @@
 import http from './http'
+import { isObject } from 'lodash'
 
 const FL_CLOUD_AUTH_STORAGE_KEY = "fl-cloud-auth";
 const FL_CLOUD_USER_KEY = "fl-cloud-user";
 
+// If an auth token exists, append an Authorization header
+http.interceptors.request.use(
+    (request) => {
+        const auth = getToken();
+
+        if (auth != null) {
+            request.headers['Authorization'] = "Bearer " + auth.access_token;
+        }
+        return request;
+    },
+    (error) => {}
+);
+
+
+http.interceptors.response.use(
+        (response) => {
+            if(response.status === 401) {
+
+                removeToken();
+                removeUser();
+                alert('Unauthorized\n' + JSON.stringify(response.body));
+            }
+
+            if(response.status === 403) {
+                alert('Forbidden\n' + JSON.stringify(response.body));
+            }
+
+            return response;
+        },
+        (error) => {}
+);
+
 export const hasToken = () => {
-    const auth = localStorage.getItem(FL_CLOUD_AUTH_STORAGE_KEY);
-    return (null !== auth)
+    return (isObject(getToken()));
 }
 
 export const getToken = () => {
@@ -22,33 +54,33 @@ export const removeToken = () => {
 }
 
 export const hasUser = () => {
-    const user = localStorage.getItem(FL_CLOUD_USER_KEY);
-    return (null !== user)
+    return (isObject(getUser()));
 }
 
 export const getUser = () => {
     const user = localStorage.getItem(FL_CLOUD_USER_KEY);
-    return JSON.stringify(user)
+    return JSON.parse(user)
 }
 
 export const setUser = (user) => {
     localStorage.setItem(FL_CLOUD_USER_KEY, JSON.stringify(user));
 }
 
-export const removeUser = () =>  {
+export const removeUser = () => {
     localStorage.removeItem(FL_CLOUD_USER_KEY);
 }
 
 export const login = async (email, password) => {
     const credentials = {email, password}
-    const auth = await http.post('/auth/login', JSON.stringify(credentials));
+    const auth = await http.post('/auth/login', credentials);
     setToken(auth);
     const user = await me();
+    notifyAuthStatusChanged();
     return user;
 }
 
 export const me = async () => {
-    const user = await http.post('/auth/me', JSON.stringify({}));
+    const user = await http.post('/auth/me');
     setUser(user);
     return user;
 }
@@ -56,16 +88,31 @@ export const me = async () => {
 export const refresh = async () => {
     const auth = await http.post('/auth/refresh');
     setToken(auth);
+    notifyAuthStatusChanged();
 }
 
 export const logout = async () => {
+    await http.post('/auth/logout');
     removeToken();
-    return await http.post('/auth/logout');
+    removeUser();
+    notifyAuthStatusChanged();
 }
 
 export const isConnected = () => {
-    return hasToken() && hasUser()
+    return (hasToken() && hasUser())
 }
 
+
+const statusChangeHandlers = [];
+
+export const onAuthStatusChanged = (callback) => {
+    statusChangeHandlers.push(callback);
+}
+
+const notifyAuthStatusChanged = () => {
+    statusChangeHandlers.forEach((handler) => {
+        handler();
+    })
+}
 
 

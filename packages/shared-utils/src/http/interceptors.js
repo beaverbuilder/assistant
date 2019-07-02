@@ -1,27 +1,15 @@
-import { isUndefined } from "lodash";
-
-export class Interceptor {
-    constructor(fulfilled, rejected) {
-        if(isUndefined(fulfilled)) {
-            fulfilled = () => {};
-        }
-        if(isUndefined(rejected)) {
-            rejected = () => {};
-        }
-
-        this.fulfilled = fulfilled;
-        this.rejected = rejected;
-    }
-}
-
 export class InterceptorManager {
 
     constructor() {
         this.handlers = [];
     }
 
-    use(interceptor) {
-        this.handlers.push(interceptor);
+    use(fulfilled, rejected) {
+        this.handlers.push({
+            fulfilled,
+            rejected
+        });
+
         return this.handlers.length - 1;
     }
 
