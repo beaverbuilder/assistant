@@ -15,11 +15,12 @@ const alias = {
 const externals = {
 
     /* fl-vendor */
-    'fl-react'              : 'FL.React',
-    'fl-react-dom'          : 'FL.ReactDOM',
-    'fl-react-router-dom'   : 'FL.ReactRouter',
-    'fl-redux'              : 'FL.Redux',
-    'fl-prop-types'         : 'FL.PropTypes',
+    'fl-react'              : 'FL.vendors.React',
+    'fl-react-dom'          : 'FL.vendors.ReactDOM',
+    'fl-react-router-dom'   : 'FL.vendors.ReactRouter',
+    'fl-redux'              : 'FL.vendors.Redux',
+    'fl-prop-types'         : 'FL.vendors.PropTypes',
+    'fl-classnames'         : 'FL.vendors.classnames',
 
     /* system bundle */
     'assistant'             : 'FL.Assistant',

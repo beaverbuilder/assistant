@@ -1,6 +1,8 @@
 .fl-asst-page {
     box-sizing: border-box;
     flex: 1 1 auto;
+    display:flex;
+    flex-direction: column;
     overflow: auto;
     max-height:100%;
 

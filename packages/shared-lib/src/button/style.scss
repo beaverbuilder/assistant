@@ -7,6 +7,7 @@
         padding: 5px;
         background: var(--fl-asst-secondary-surface-background);
         color: var(--fl-asst-secondary-surface-color);
+        min-height: var(--fl-asst-target-size);
     }
 
     .fl-asst-button-label {
@@ -14,8 +15,22 @@
     }
 
     .fl-asst-button-group {
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
+        align-self: center; // will center self within flex columns
+        background: var(--fl-asst-secondary-surface-background);
+        color: var(--fl-asst-secondary-surface-color);
+        border-radius: var(--fl-asst-base-radius);
+
+        .fl-asst-button {
+            background: transparent;
+            color: inherit;
+
+            &.fl-asst-is-selected {
+                background: var(--fl-asst-surface-background);
+                color: var(--fl-asst-surface-color);
+            }
+        }
 
         &.fl-asst-button-group-column {
             flex-direction: column;

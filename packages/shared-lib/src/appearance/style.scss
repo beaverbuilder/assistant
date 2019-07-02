@@ -203,7 +203,7 @@
     }
 
     .fl-asst-rounded {
-        border-radius: 7px;
+        border-radius: var(--fl-asst-base-radius);
     }
 
     .fl-asst-padded {
