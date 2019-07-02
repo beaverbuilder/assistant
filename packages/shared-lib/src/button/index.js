@@ -48,6 +48,6 @@ Button.Group = ({ children, className, direction = 'row', ...rest }) => {
         [`fl-asst-button-group-${direction}`] : direction,
     }, className )
     return (
-        <div className={classes} role="group">{children}</div>
+        <div className={classes} role="group" {...rest}>{children}</div>
     )
 }

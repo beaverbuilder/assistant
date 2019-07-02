@@ -1,6 +1,7 @@
-import React from 'fl-react'
+import React, { useState } from 'fl-react'
 import { Switch, Route, Link } from 'fl-react-router-dom'
-import { Page, List } from 'assistant/lib'
+import { __ } from 'assistant'
+import { Page, List, Button } from 'assistant/ui'
 
 import { comments } from './test-data'
 
@@ -11,12 +12,29 @@ export const Alerts = ( { match } ) => (
 	</Switch>
 )
 
-const Main = ({ match }) => {
-	const hasComments = comments.length > 0
+const Main = () => {
+	const [tab, setTab] = useState('comments')
 
 	return (
 		<Page shouldPadSides={false}>
-			{ !hasComments && <div>You don't have any!</div> }
+
+			<Button.Group>
+				<Button onClick={ () => setTab('comments') }>{__('Comments')}</Button>
+				<Button onClick={ () => setTab('updates') }>{__('Updates')}</Button>
+			</Button.Group>
+			{ 'comments' === tab ? <CommentsTab/> : <UpdatesTab /> }
+
+		</Page>
+	)
+}
+
+const CommentsTab = () => {
+	const hasComments = comments.length > 0
+	const baseURL = ''
+
+	return (
+		<>
+			{ !hasComments && <div>{__("You don't have any!")}</div> }
 			{ hasComments &&
 			<List
 				items={comments}
@@ -27,13 +45,20 @@ const Main = ({ match }) => {
 						description: item.content,
 						thumbnail: item.thumbnail,
 						to: {
-							pathname: `${match.url}/comments/${item.postID}`,
+							pathname: `${baseURL}/comments/${item.postID}`,
 							state: item
 						}
 					}
 				}}
 			/> }
-		</Page>
+		</>
+	)
+}
+const UpdatesTab = () => {
+	return (
+		<>
+			<div className="fl-asst-padded">You don't have any updates</div>
+		</>
 	)
 }
 
