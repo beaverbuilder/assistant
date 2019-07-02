@@ -15,6 +15,9 @@ from extended functionality, feature specific subsystems, and customer-specific 
 
 https://viralpatel.net/blogs/microkernel-architecture-pattern-apply-software-systems/
 
+The MicroKernel implementation in Assistant is heavily inspired by the Laravel and 
+Symfony Frameworks and should look familiar to developers who have worked with these frameworks.
+
 ### SOLID Principles
 
 The goal of SOLID design principles is to improve the reusability of code. 
@@ -35,22 +38,35 @@ https://scotch.io/bar-talk/s-o-l-i-d-the-first-five-principles-of-object-oriente
 
 ### Dependency Injection (IoC) Container
 
+The DI container concept should be familiar to most PHP developers as it is a PSR standard, and
+implemented in most modern PHP frameworks. 
+
+For anyone unfamiliar:
+
 > A Dependency Injection Container is an object that knows how to instantiate and configure objects. 
 
 -- Fabien Potencier
 
 
-Dependency injection supports SOLID goals by decoupling the creation of the usage of an object. 
+Dependency injection supports SOLID goals by decoupling the creation and the usage of an object. 
 That enables you to replace dependencies without changing the class that uses them. 
 It also reduces the risk that you have to change a class just because one of its 
 dependencies changed.
 
-At the core of assistant is a *very* minimalist DI container in
+#### DI in Assistant
 
-`FL\Assistant\Core\Container`
+At the core of assistant is a *very* minimalist DI container.
+
+It implements a global config and a rudimentary Service Locator pattern.
+
+It does not yet provide auto-wiring like more advanced containers.
+
+The container class is located at `FL\Assistant\Core\Container`
 
 Some important methods in `Container` are illustrated as follows:
 ```php
+
+use FL\Assistant\Core\Container;
 
 $container = Container::instance();
 
@@ -81,7 +97,7 @@ $container->unregister_service('service_name');
 
 ```
 
-#### HasContainer Trait
+##### HasContainer Trait
 
 Assistant uses the `FL\Assistant\Utils\HasContainer` trait in classes that require a reference to the container
 at instanciation.
@@ -111,6 +127,46 @@ class MyClass {
 
 $container = Container::instance();
 $myclass = new MyClass($container);
+
+```
+### Services
+
+In Assistant any class that represents a data source or manages 
+domain logic for a subsystem should be implemented as a service.
+
+Examples of things considered to be datasources are:
+* WordPress posts, terms, taxonomy, and users
+* Code that communicates with 3rd party REST API's. e.g. mailchimp or twitter
+* Any code that queries the database directly
+* etc..
+
+A service class is any PHP object registered to the container.  
+Optionally a service can use `HasContainer`
+
+e.g. 
+```php
+class IconService {
+    use HasContainer;
+    
+    public function get_registered_icon_sets() {
+    
+        // get a config value from the container
+        $icons_dir = $this->container()->get('icons_dir');
+        
+        return [
+            // icon sets
+        ];
+    }
+   
+}
+
+// in the register method of a provider
+$container->register_service('icons', function(Container $container) {
+    return new IconService($container);
+});
+
+// using the service
+$icon_sets = $container->service('icons')->get_registered_icon_sets();
 
 ```
 
@@ -267,11 +323,12 @@ class RestProvider implements ProviderInterface {
 
 ### Action and Filter Classes
   
-      
-  In many cases hook logic becomes complex enough to depend on 
-  several other external classes or functions. This ends up 
-  polluting containing classes with unrelated methods.  
-  This breaks the Single Responsibility Principle in SOLID. 
+  In this architecture developers can still register hooks the old fashioned way,
+  however, in  many cases hook logic becomes complex enough to depend on 
+  several other external classes or functions. 
+  
+  This ends up  polluting containing classes with unrelated methods, and in doing so,
+  breaks the Single Responsibility Principle in SOLID. 
    
   PHP 5.6 introduces classes that can act as `Closure` via the `__invoke()` magic method.
   
@@ -305,4 +362,4 @@ class RestProvider implements ProviderInterface {
   add_action('init', new SomeAction());
   ```
 
-  
+
