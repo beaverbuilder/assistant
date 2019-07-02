@@ -2,12 +2,16 @@
 
 namespace FL\Assistant\Actions;
 
+use FL\Assistant\Util\HasContainer;
+
 /**
  * Class OnEnqueueScripts
  * @package FL\Assistant\Actions
  *
  */
 class OnEnqueueScripts {
+
+	use HasContainer;
 
 	/**
 	 * @return array

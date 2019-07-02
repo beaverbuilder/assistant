@@ -34,7 +34,6 @@ export class HttpClient {
     }
 
     _transformRequest(body) {
-        //console.log('transformRequest --');
         this.transformers.request.forEach((transformer) => {
             body = transformer(body)
         })
@@ -42,7 +41,6 @@ export class HttpClient {
     }
 
     _transformResponse(data) {
-        //console.log('transformResponse --');
         this.transformers.response.forEach((transformer) => {
             data = transformer(data);
         })
@@ -50,7 +48,6 @@ export class HttpClient {
     }
 
     _interceptRequest(request) {
-        //console.log("interceptRequest -- ");
         this.interceptors.request.handlers.forEach((interceptor) => {
             try {
                 request = interceptor.fulfilled(request)
@@ -62,7 +59,6 @@ export class HttpClient {
     }
 
     _interceptResponse(response) {
-        //console.log("interceptResponse -- ")
         this.interceptors.response.handlers.forEach((interceptor) => {
             try {
                 response = interceptor.fulfilled(response)
@@ -78,11 +74,14 @@ export class HttpClient {
 
         const headers = merge(this.defaults.headers.common, this.defaults.headers[method.toLowerCase()])
 
-        // if the passed url is a relative path,
-        // append it to the baseUrl
+        // if the passed url is a relative path, append it to the baseUrl
+        console.log(config, 'config');
+        console.log(url, 'beforeUrl');
         if (config.baseUrl && !isAbsoluteURL(url)) {
             url = config.baseUrl + url;
         }
+
+        console.log(url, 'afterUrl');
 
         // construct the basic request
         let request = {

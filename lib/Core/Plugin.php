@@ -14,10 +14,10 @@ use FL\Assistant\Providers\RestProvider;
 class Plugin {
 
 	/**
-	 * Providers are registered in the order they are listed her
+	 * Providers are registered in the order they are listed here
 	 * @var array
 	 */
-	protected static $providers = [
+	 static $providers = [
 		PluginProvider::class,
 		RestProvider::class,
 		CloudProvider::class,
@@ -34,7 +34,7 @@ class Plugin {
 		define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
 
 		$container = Container::instance();
-		foreach ( static::providers as $provider_name ) {
+		foreach ( static::$providers as $provider_name ) {
 			$provider = new $provider_name();
 			if ( $provider instanceof ProviderInterface ) {
 				$provider->register( $container );

@@ -2,10 +2,9 @@ import React, {useState, useEffect} from 'fl-react'
 import {Switch, Route, Redirect, Link, withRouter} from 'fl-react-router-dom'
 import {App, Page, Icon} from 'assistant/lib'
 
-import {useAssistantCloud} from "utils/http";
+import assistantCloud from 'assistant/cloud'
 import './style.scss'
 
-const assistantCloud = useAssistantCloud();
 
 export const Cloud = ({match}) => {
     const {url} = match
@@ -39,8 +38,12 @@ const LoginForm = withRouter(({history}) => {
             event.preventDefault();
 
             assistantCloud.auth.login(email, password)
-                .then((data) => {
+                .then((user) => {
+                    console.log(user, 'logged in user');
                     history.push('/fl-cloud/connected')
+                })
+                .catch((err) => {
+                    console.log(err, 'problem logging in');
                 });
 
         }
@@ -103,10 +106,13 @@ const ConnectedScreen = withRouter(({history}) => {
     }
 
     useEffect(() => {
-        setAuth(assistantCloud.auth.getTokenData());
-        assistantCloud.auth.me().then((data) => {
-            setUser(data);
-        });
+
+        const auth = assistantCloud.auth.getToken()
+        const user = assistantCloud.auth.getUser()
+
+        setAuth(auth);
+        setUser(user);
+
     }, []);
 
     return (

@@ -1,12 +1,6 @@
 const {nonce, apiRoot, ajaxUrl } = FL_ASSISTANT_CONFIG;
 
 import {HttpClient} from "./http-client";
-import AssistantCloud from "./cloud"
-
-export const useAssistantCloud = () => {
-
-    return AssistantCloud;
-}
 
 export const useWpRest = () => {
     const http =  new HttpClient({

@@ -9,7 +9,6 @@ use \WP_REST_Response;
  */
 class UpdatesController extends AssistantController {
 
-
 	/**
 	 * Register routes.
 	 */

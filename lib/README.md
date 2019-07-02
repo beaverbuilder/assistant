@@ -1,18 +1,18 @@
 # Assistant Plugin Backend
 
-## Design Philosphy
+## Design Philosophy
 
 ### MicroKernel Architecture
 
 Assistant uses a MicroKernel architecture.
 
-The Microkernel architectural pattern applies to software systems that must be able 
+> The Microkernel architectural pattern applies to software systems that must be able 
 to adapt to changing system requirements. It separates a minimal functional core 
 from extended functionality, feature specific subsystems, and customer-specific parts. 
+> The microkernel also serves as a socket for plugging in these extensions and coordinating their collaboration
 
-The microkernel also serves as a socket for plugging in these extensions and coordinating their collaboration
+-- From an article on the subject here: 
 
-There is a decent article on the subject here: 
 https://viralpatel.net/blogs/microkernel-architecture-pattern-apply-software-systems/
 
 ### SOLID Principles
@@ -224,6 +224,43 @@ class HelloController extends AssistantController {
         
         rest_ensure_response($response);
     }
+}
+```
+Rest Controllers need to be registered in `FL\Assistant\Providers\RestProvider` like so:
+
+```php
+namespace FL\Assistant\Providers;
+
+// use statements
+// ... etc 
+
+use FL\Assistant\Controllers\HelloController; // <-- our new controller!
+
+
+/**
+ * Class RestProvider
+ * @package FL\Assistant\Providers
+ */
+class RestProvider implements ProviderInterface {
+
+	/**
+	 * Registered controllers
+	 * @var array
+	 */
+	protected $controllers = [
+		AttachmentsController::class,
+		CommentsController::class,
+		CountsController::class,
+		NotificationsController::class,
+		PostsController::class,
+		TermsController::class,
+		UpdatesController::class,
+		UsersController::class,
+		HelloController::class,  // <-- our new controller!
+	];
+
+    // ...etc
+    
 }
 ```
 

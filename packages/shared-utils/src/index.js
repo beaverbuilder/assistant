@@ -9,6 +9,7 @@ import * as text from './text'
 import * as url from './url'
 import * as wordpress from './wordpress'
 import * as http from './http'
+import * as cloud from './cloud'
 
 export {
 	cache,
@@ -22,4 +23,5 @@ export {
 	url,
 	wordpress,
 	http,
+	cloud
 }
