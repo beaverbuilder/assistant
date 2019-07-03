@@ -1,5 +1,5 @@
 import React, { useState } from 'fl-react'
-import { Switch, Route, Link } from 'fl-react-router-dom'
+import { Switch, Route } from 'fl-react-router-dom'
 import { __ } from 'assistant'
 import { Page, List, Button } from 'assistant/ui'
 
@@ -19,12 +19,16 @@ const Main = () => {
 	return (
 		<Page shouldPadSides={false}>
 
-			<Button.Group>
-				<Button isSelected={isSelected('comments')} onClick={ () => setTab('comments') }>{__('Comments')}</Button>
-				<Button isSelected={isSelected('updates')} onClick={ () => setTab('updates') }>{__('Updates')}</Button>
-				
-				<Button isSelected={isSelected('msg')} onClick={ () => setTab('msg') }>{__('Messages')}</Button>
-			</Button.Group>
+			<div style={{ padding: '0 var(--fl-asst-outer-space)', display:'flex', flexDirection: 'column' }}>
+
+				<Button.Group>
+					<Button isSelected={isSelected('comments')} onClick={ () => setTab('comments') }>{__('Comments')}</Button>
+					<Button isSelected={isSelected('updates')} onClick={ () => setTab('updates') }>{__('Updates')}</Button>
+
+					<Button>Messages</Button>
+					<Button>Feedback</Button>
+				</Button.Group>
+			</div>
 
 			{ 'comments' === tab ? <CommentsTab/> : <UpdatesTab /> }
 
