@@ -23,7 +23,7 @@
 
     // Sizes
     --fl-asst-base-radius: 7px;
-    --fl-asst-target-size: 36px; // Smallest actionable area
+    --fl-asst-target-size: 32px; // Smallest actionable area
 
     // Spacing
     --fl-asst-large-space: 30px;
@@ -57,16 +57,6 @@
         shape-rendering: crispEdges;
     }
 
-    hr {
-        all: initial;
-        display: block;
-        background-color: black;
-        background-image: none;
-        height: 2px;
-        border-radius: 2px;
-        margin: 20px 0;
-    }
-
     a, button {
         font-family: inherit;
 
@@ -96,6 +86,8 @@
     }
 
     h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+        margin: var(--fl-asst-inner-space) 0;
 
         &::before {
             all: unset !important;
@@ -104,13 +96,48 @@
             margin-top: 0;
         }
     }
-
     h1 {
         font-size: calc( var(--fl-asst-base-text-size) + 6px );
     }
     h2 {
         font-size: calc( var(--fl-asst-base-text-size) + 2px );
+    }
+
+    ul, ol {
+        list-style:none;
         margin: var(--fl-asst-inner-space) 0;
+        padding:0;
+
+        li {
+            margin:0;
+            padding:0;
+        }
+    }
+
+    // Dividers - generally should be <hr/>
+    hr {
+        all: initial;
+        display: block;
+        background-color: black;
+        background-image: none;
+        height: 2px;
+        width: auto;
+        border-radius: 2px;
+        margin: var(--fl-asst-inner-space) 0;
+    }
+    .fl-asst-horizontal-divider {
+        box-sizing: border-box;
+        background: var(--fl-asst-surface-background);
+    }
+    .fl-asst-vertical-divider {
+        box-sizing: border-box;
+        background: var(--fl-asst-surface-background);
+        width: 2px;
+        height: auto;
+    }
+
+    .fl-asst-is-hidden {
+        visibility: hidden;
     }
 
 
@@ -127,7 +154,7 @@
             --fl-asst-surface-color: var(--fl-asst-light-text);
             --fl-asst-surface-background: var(--fl-asst-light-1);
 
-            --fl-asst-secondary-surface-color: var(--fl-asst-light-text);
+            --fl-asst-secondary-surface-color: var(--fl-asst-dark-4);
             --fl-asst-secondary-surface-background: var(--fl-asst-light-4);
         }
 
@@ -144,26 +171,6 @@
         p {
             font-size: var(--fl-asst-base-text-size);
             margin: var(--fl-asst-outer-space) 0;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            color: inherit;
-
-            &::before {
-                display: none !important;
-                content: '';
-            }
-        }
-
-        ul, ol {
-            list-style:none;
-            margin:0;
-            padding:0;
-
-            li {
-                margin:0;
-                padding:0;
-            }
         }
 
         hr {

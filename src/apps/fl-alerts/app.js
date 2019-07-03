@@ -14,14 +14,18 @@ export const Alerts = ( { match } ) => (
 
 const Main = () => {
 	const [tab, setTab] = useState('comments')
+	const isSelected = key => key === tab
 
 	return (
 		<Page shouldPadSides={false}>
 
 			<Button.Group>
-				<Button onClick={ () => setTab('comments') }>{__('Comments')}</Button>
-				<Button onClick={ () => setTab('updates') }>{__('Updates')}</Button>
+				<Button isSelected={isSelected('comments')} onClick={ () => setTab('comments') }>{__('Comments')}</Button>
+				<Button isSelected={isSelected('updates')} onClick={ () => setTab('updates') }>{__('Updates')}</Button>
+				
+				<Button isSelected={isSelected('msg')} onClick={ () => setTab('msg') }>{__('Messages')}</Button>
 			</Button.Group>
+
 			{ 'comments' === tab ? <CommentsTab/> : <UpdatesTab /> }
 
 		</Page>
