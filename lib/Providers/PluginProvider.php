@@ -5,12 +5,12 @@ namespace FL\Assistant\Providers;
 
 use FL\Assistant\Core\Container;
 
-use FL\Assistant\Data\PostData;
-use FL\Assistant\Data\SiteData;
-use FL\Assistant\Data\UserData;
-
 use FL\Assistant\Actions\OnEnqueueScripts;
 use FL\Assistant\Filters\OnHeartbeatReceived;
+
+use FL\Assistant\Services\PostService;
+use FL\Assistant\Services\SiteService;
+use FL\Assistant\Services\UserService;
 
 /**
  * Class PluginProvider
@@ -33,17 +33,17 @@ class PluginProvider implements ProviderInterface {
 
 		$container->register_service(
 			'users', function() {
-				return new UserData();
+				return new UserService();
 			}
 		);
 		$container->register_service(
 			'posts', function() {
-				return new PostData();
+				return new PostService();
 			}
 		);
 		$container->register_service(
 			'site', function() {
-				return new SiteData();
+				return new SiteService();
 			}
 		);
 

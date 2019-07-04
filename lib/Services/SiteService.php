@@ -1,10 +1,10 @@
 <?php
 
 
-namespace FL\Assistant\Data;
+namespace FL\Assistant\Services;
 
 
-class SiteData {
+class SiteService {
 
 	/**
 	 * Checks to see if Beaver Builder can be uses to edit a post.

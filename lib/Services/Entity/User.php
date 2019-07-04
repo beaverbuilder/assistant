@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FL\Assistant\Data\Models;
+namespace FL\Assistant\Services\Entity;
 
 use FL\Assistant\Util\HasEntityAttributes;
 

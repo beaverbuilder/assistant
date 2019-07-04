@@ -1,12 +1,12 @@
 <?php
 
 
-namespace FL\Assistant\Data;
+namespace FL\Assistant\Services;
 
 
-use FL\Assistant\Data\Models\User;
+use FL\Assistant\Services\Entity\User;
 
-class UserData {
+class UserService {
 	/**
 	 * @return User
 	 */

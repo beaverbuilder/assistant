@@ -4,19 +4,6 @@ import posts from "./posts";
 global.fetch = require('jest-fetch-mock')
 
 
-describe('Interceptor', () => {
-    test('can create', () => {
-        const i = new Interceptor(
-            response => {
-            },
-            error => {
-            });
-        expect(i).toBeDefined();
-        expect(i.fulfilled).toBeInstanceOf(Function)
-        expect(i.rejected).toBeInstanceOf(Function)
-    })
-})
-
 describe('InterceptorManager', () => {
 
     test('can create', () => {
@@ -26,39 +13,43 @@ describe('InterceptorManager', () => {
         expect(manager.handlers.length).toBe(0);
     })
 
-    test('can add Interceptor', () => {
+    test('can add interceptor', () => {
         const manager = new InterceptorManager();
-        const i = new Interceptor((response) => {
-        }, (error) => {
-        });
-        const interceptorId = manager.use(i);
 
-        console.log(interceptorId, 'interceptor id');
+        const interceptorId = manager.use(
+            (response) => {
+            },
+            (error) => {
+            }
+        );
 
         expect(interceptorId).toBe(0);
         expect(manager.handlers.length).toBe(1);
-
-        console.log(manager.handlers, 'handlers');
     })
 
-    test('can eject Interceptor', () => {
+    test('can eject interceptor', () => {
 
         const manager = new InterceptorManager();
-        const i1 = new Interceptor((response) => {
-        }, (error) => {
-        });
-        const i2 = new Interceptor((response) => {
-        }, (error) => {
-        });
-        const i1_id = manager.use(i1);
-        const i2_id = manager.use(i2);
+
+        const i1_id = manager.use(
+            (response) => {
+            },
+            (error) => {
+            }
+        );
+        const i2_id = manager.use(
+            (response) => {
+            },
+            (error) => {
+            }
+        );
 
         expect(manager.handlers.length).toBe(2);
 
         manager.eject(i1_id);
 
         expect(manager.handlers[i1_id]).toBe(null);
-        expect(manager.handlers[i2_id]).toBeInstanceOf(Interceptor);
+        expect(manager.handlers[i2_id]).toBeInstanceOf(Object);
     });
 
     test('response interceptor detects 401 auth error', async () => {
@@ -71,21 +62,19 @@ describe('InterceptorManager', () => {
             baseUrl: "https://mockapi.fake"
         });
 
-        console.log("Hello")
 
-        testApi.interceptors.response.use(new Interceptor((response) => {
-            console.log(response, 'response');
+        testApi.interceptors.response.use(
+            (response) => {
+                expect(response.ok).toBe(true)
+                expect(response.status).toBe(401)
 
-            expect(response.ok).toBe(true)
-            expect(response.status).toBe(401)
-
-        }, (error) => {
-        }));
+            },
+            (error) => {
+            });
 
         try {
             const data = await testApi.get('/hello')
         } catch (ex) {
-            console.log(ex, 'error');
             expect(ex).toBeInstanceOf(Error);
         }
 
@@ -102,23 +91,21 @@ describe('InterceptorManager', () => {
         });
 
         testApi.interceptors.request.use(
-            new Interceptor(
-                request => {
-                    request.headers['Authorize'] = 'Bearer 123456'
-                    console.log(request.headers, "set request headers");
-                    return request;
-                }
-            )
+            request => {
+                request.headers['Authorize'] = 'Bearer 123456'
+                return request;
+            },
+            error => {
+            }
         );
 
         testApi.interceptors.request.use(
-            new Interceptor(
-                request => {
-                    console.log(request.headers, "get request headers");
-                    expect(request.headers['Authorize']).toBeDefined();
-                    return request;
-                }
-            )
+            request => {
+                expect(request.headers['Authorize']).toBeDefined();
+                return request;
+            },
+            error => {
+            }
         )
 
         const data = testApi.get('/posts');

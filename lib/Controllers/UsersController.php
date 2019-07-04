@@ -2,7 +2,7 @@
 
 namespace FL\Assistant\Controllers;
 
-use FL\Assistant\Data\Models\User;
+use FL\Assistant\Services\Entity\User;
 
 use \WP_REST_Server;
 

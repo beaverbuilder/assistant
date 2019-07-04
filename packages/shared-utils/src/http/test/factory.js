@@ -1,12 +1,12 @@
 
 global.fetch = require('jest-fetch-mock')
 
-import { getWpRest, getWpAjax } from "../hooks";
+import { getWpRest, getWpAjax } from "../factory";
 import { HttpClient } from "../http-client";
 
 import posts from './posts'
 
-describe('As React Hooks', () => {
+describe('User factory functions to generate configured HttpClients', () => {
     beforeEach(() => {
 
         fetch.resetMocks()

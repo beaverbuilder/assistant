@@ -1,8 +1,8 @@
 <?php
 
-namespace FL\Assistant\Data;
+namespace FL\Assistant\Services;
 
-class PostData {
+class PostService {
 
 	/**
 	 * Get post status slugs and names.
