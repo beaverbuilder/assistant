@@ -17,3 +17,23 @@
         padding-bottom: var(--fl-asst-outer-space);
     }
 }
+
+.fl-asst-toolbar {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    min-height: var(--fl-asst-target-size);
+
+    &.fl-asst-pad-sides {
+        padding-left: var(--fl-asst-outer-space);
+        padding-right: var(--fl-asst-outer-space);
+    }
+
+    & > * {
+        margin-right: var(--fl-asst-tiny-space);
+
+        &:last-child {
+            margin-right:0;
+        }
+    }
+}

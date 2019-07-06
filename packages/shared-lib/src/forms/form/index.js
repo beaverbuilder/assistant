@@ -2,7 +2,7 @@ import React, { Fragment } from 'fl-react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { Icon, Control } from 'shared-lib'
-import './style.scss'
+//import './style.scss'
 
 export const Form = ( { children } ) => children
 

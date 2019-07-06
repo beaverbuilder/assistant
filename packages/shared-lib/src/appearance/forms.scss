@@ -1,0 +1,53 @@
+.fl-asst {
+
+    input {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: normal;
+        line-height: inherit;
+        text-align: left;
+
+        flex: 1 1 100%;
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        padding: var(--fl-asst-tiny-space);
+        color: var(--fl-asst-secondary-surface-color);
+        background-color: var(--fl-asst-secondary-surface-background);
+        border-radius: var(--fl-asst-base-radius);
+        border:none;
+        min-height: var(--fl-asst-target-size);
+
+        // Yes, these have to be separate rules.
+        &::-webkit-input-placeholder{
+            text-align: center;
+        }
+        &::-ms-input-placeholder{
+            text-align: center;
+        }
+        &::placeholder {
+            text-align: center;
+        }
+    }
+
+    /*
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="password"],
+    input[type="search"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="color"],
+    select,
+    textarea {
+
+    }
+    */
+}

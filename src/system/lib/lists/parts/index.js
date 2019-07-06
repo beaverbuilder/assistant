@@ -1,19 +1,18 @@
 import React from 'fl-react'
-import classname from 'classnames'
+import classname from 'fl-classnames'
 import { Nav } from '../../'
 import { isColor } from 'shared-utils/color'
 import { isURL } from 'shared-utils/url'
 
-export const getDefaultItemProps = ( item, index ) => {
-	let props = {}
+export const defaultItemProps = {
+	thumbnailSize: 'med',
+}
+
+export const getDefaultItemProps = ( item, defaultProps ) => {
+	let props = { ...defaultProps }
 
 	if ( 'object' === typeof item ) {
-		props = { ...item }
-	}
-
-	// Find a key
-	if ( 'undefined' === typeof props.key ) {
-		props.key = index
+		props = { ...props, ...item }
 	}
 
 	// Find a label
@@ -68,7 +67,9 @@ export const getItemType = ( item, isSection = false ) => {
 const InfoItem = ( {
 	label,
 	description,
+	shouldAlwaysShowThumbnail = false, // regardless of hasThumbnail
 	thumbnail,
+	thumbnailSize = 'med',
 	className,
 	to,
 	...rest
@@ -88,16 +89,21 @@ const InfoItem = ( {
 
 	let Tag = 'div'
 	let newProps = { ...rest }
-	
+
 	if ( to ) {
 		Tag = Nav.Link
 		newProps.to = to
 	}
 
+	const thumbClasses = classname({
+		'fl-asst-list-item-thumbnail' : true,
+		[`fl-asst-thumbnail-size-${thumbnailSize}`] : thumbnailSize,
+	})
+
 	return (
 		<Tag className={classes} {...newProps}>
-			{ hasThumbnail &&
-				<div className="fl-asst-list-item-thumbnail">
+			{ ( hasThumbnail || shouldAlwaysShowThumbnail ) &&
+				<div className={thumbClasses}>
 					{ thumbnail && <img src={thumbnail} /> }
 					{ color && <div className="fl-asst-list-item-color-thumbnail"  style={{ backgroundColor: color }} /> }
 				</div>

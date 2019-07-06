@@ -7,6 +7,7 @@ import './style.scss'
 import { isRenderProp } from 'shared-utils/react'
 
 import {
+	defaultItemProps,
 	getDefaultItemProps,
 	getItemType,
 } from './parts'
@@ -17,6 +18,8 @@ export const List = ( {
 	items, // [Any] | null
 
 	direction = 'vertical',
+
+	defaultItemProps = defaultItemProps,
 
 	getItemProps = getDefaultItemProps,
 
@@ -44,9 +47,10 @@ export const List = ( {
 		return items.map( ( item, i ) => {
 
 			if ( isListSection( item ) ) {
+				const defaultProps = { ...defaultItemProps, key: i }
 
 				const Section = getItemComponent( item, true )
-				const sectionProps = getItemProps( item, i )
+				const sectionProps = getItemProps( item, defaultProps )
 				const sectionItems = getSectionItems( item )
 				return (
 					<Section {...sectionProps}>
@@ -61,8 +65,8 @@ export const List = ( {
 
 	const renderItem = ( item, i ) => {
 		const Item = getItemComponent( item )
-
-		const props = getItemProps( item, i )
+		const defaultProps = { ...defaultItemProps, key: i }
+		const props = getItemProps( item, defaultProps )
 
 		if ( isRenderProp( children ) ) {
 			return (

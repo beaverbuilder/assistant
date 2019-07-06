@@ -1,5 +1,3 @@
-@import 'reset.scss';
-
 .fl-asst {
 
     // Light Colors
@@ -123,7 +121,7 @@
         height: 2px;
         width: auto;
         border-radius: 2px;
-        margin: var(--fl-asst-inner-space) 0;
+        margin: 0;
     }
     .fl-asst-horizontal-divider {
         box-sizing: border-box;
@@ -139,7 +137,6 @@
     .fl-asst-is-hidden {
         visibility: hidden;
     }
-
 
     .fl-asst-appearance {
 
