@@ -98,16 +98,19 @@ const InfoItem = ( {
 	const thumbClasses = classname({
 		'fl-asst-list-item-thumbnail' : true,
 		[`fl-asst-thumbnail-size-${thumbnailSize}`] : thumbnailSize,
+		'fl-asst-round' : color,
 	})
 
 	return (
 		<Tag className={classes} {...newProps}>
+
 			{ ( hasThumbnail || shouldAlwaysShowThumbnail ) &&
 				<div className={thumbClasses}>
 					{ thumbnail && <img src={thumbnail} /> }
 					{ color && <div className="fl-asst-list-item-color-thumbnail"  style={{ backgroundColor: color }} /> }
 				</div>
 			}
+
 			<div className="fl-asst-list-item-subject">
 				{ label && <div className="fl-asst-list-item-title">{label}</div> }
 				{ description && <div className="fl-asst-list-item-description">{description}</div> }

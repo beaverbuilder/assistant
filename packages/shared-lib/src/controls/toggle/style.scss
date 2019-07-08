@@ -33,6 +33,11 @@
 
     &:focus {
         outline: none;
-        border: var(--fl-asst-control-outline-size) solid var(--fl-asst-surface-color);
+        box-shadow: none;
+        border: var(--fl-asst-control-outline-size) solid var(--fl-asst-accent-color);
+
+        .fl-asst-form-control-toggle-thumb {
+            border-color: var(--fl-asst-accent-color);
+        }
     }
 }

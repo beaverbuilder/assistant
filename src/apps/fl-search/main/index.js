@@ -22,7 +22,7 @@ export const Main = () => {
                 <Button>Test</Button>
             </Page.Toolbar>
 
-            { hasResults && <Results query={{ term, }} /> }
+            { hasResults && <Results query={{ term }} /> }
         </Page>
     )
 }
