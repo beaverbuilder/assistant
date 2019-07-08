@@ -19,7 +19,6 @@ export const Main = () => {
                     onChange={ e => setTerm( e.target.value ) }
                     placeholder={ __('Search') }
                 />
-                <Button>Test</Button>
             </Page.Toolbar>
 
             { hasResults && <Results query={{ term }} /> }
@@ -44,5 +43,14 @@ const testResultData = [
     },
     {
         title: 'About Us',
-    }
+    },
+    {
+        title: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
+    },
+    {
+        title: 'Pharetra',
+    },
+    {
+        title: 'Etiam porta sem malesuada magna mollis euismod. Sed posuere consectetur est at lobortis.',
+    },
 ]

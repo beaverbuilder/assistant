@@ -24,9 +24,6 @@ const Main = () => {
 				<Button.Group>
 					<Button isSelected={isSelected('comments')} onClick={ () => setTab('comments') }>{__('Comments')}</Button>
 					<Button isSelected={isSelected('updates')} onClick={ () => setTab('updates') }>{__('Updates')}</Button>
-
-					<Button>Messages</Button>
-					<Button>Feedback</Button>
 				</Button.Group>
 			</div>
 
