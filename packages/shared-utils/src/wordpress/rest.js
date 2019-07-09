@@ -335,3 +335,19 @@ export const getUpdates = ( query, onSuccess, onError ) => {
 		onError,
 	} )
 }
+
+/**
+ * Returns any array of search results for the
+ * given REST routes.
+ */
+export const getSearchResults = ( routes, onSuccess, onError ) => {
+	return restRequest( {
+		method: 'POST',
+		route: 'fl-assistant/v1/search',
+		data: {
+			routes,
+		},
+		onSuccess,
+		onError,
+	} )
+}
