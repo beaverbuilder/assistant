@@ -15,24 +15,27 @@ const alias = {
 const externals = {
 
     /* fl-vendor */
-    'fl-react'              : 'FL.vendors.React',
-    'fl-react-dom'          : 'FL.vendors.ReactDOM',
-    'fl-react-router-dom'   : 'FL.vendors.ReactRouter',
-    'fl-redux'              : 'FL.vendors.Redux',
-    'fl-prop-types'         : 'FL.vendors.PropTypes',
-    'fl-classnames'         : 'FL.vendors.classnames',
+    'fl-react'              		: 'FL.vendors.React',
+    'fl-react-dom'          		: 'FL.vendors.ReactDOM',
+    'fl-react-router-dom'   		: 'FL.vendors.ReactRouter',
+    'fl-redux'              		: 'FL.vendors.Redux',
+    'fl-prop-types'         		: 'FL.vendors.PropTypes',
+    'fl-classnames'         		: 'FL.vendors.classnames',
 
     /* system bundle */
-    'assistant'             : 'FL.Assistant',
-    'assistant/store'       : 'FL.Assistant.data', // TODO: Delete = data replaces store
-    'assistant/data'        : 'FL.Assistant.data',
+    'assistant'             		: 'FL.Assistant',
+    'assistant/store'       		: 'FL.Assistant.data', // TODO: Delete = data replaces store
+    'assistant/data'        		: 'FL.Assistant.data',
 
-    'assistant/lib'         : 'FL.Assistant.ui', // TODO: delete - ui replaces lib
-    'assistant/ui'          : 'FL.Assistant.ui',
+    'assistant/lib'         		: 'FL.Assistant.ui', // TODO: delete - ui replaces lib
+    'assistant/ui'          		: 'FL.Assistant.ui',
 
-    'assistant/i18n'        : 'FL.Assistant.i18n',
-    'assistant/utils'       : 'FL.Assistant.utils',
-    'assistant/http'        : 'FL.Assistant.http',
+    'assistant/i18n'        		: 'FL.Assistant.i18n',
+    'assistant/utils'       		: 'FL.Assistant.utils',
+    'assistant/utils/http'        	: 'FL.Assistant.utils.http',
+    'assistant/utils/react'   		: 'FL.Assistant.utils.react',
+    'assistant/utils/url'   		: 'FL.Assistant.utils.url',
+    'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress',
 
     /* wp */
     '@wordpress/i18n'       : 'wp.i18n',

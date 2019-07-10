@@ -1,56 +1,146 @@
-import React, { useState } from 'fl-react'
-import { __ } from 'assistant'
-import { Page, List, Button } from 'assistant/ui'
-
-const defaultQuery = {
-    term: '',
-}
+import React, { Fragment, useEffect, useRef, useState } from 'fl-react'
+import classname from 'fl-classnames'
+import { __ } from 'assistant/i18n'
+import { useComponentUpdate } from 'assistant/utils/react'
+import { addLeadingSlash } from 'assistant/utils/url'
+import { getSearchResults } from 'assistant/utils/wordpress'
+import { useSystemState } from 'assistant/data'
+import { Page, List, Button, Form, Icon } from 'assistant/ui'
+import './style.scss'
 
 export const Main = () => {
-    const [term, setTerm] = useState( defaultQuery.term )
-    const hasResults = true
+	const { apps } = useSystemState()
+	const [ keyword, setKeyword ] = useState( '' )
+	const [ loading, setLoading ] = useState( false )
+	const [ results, setResults ] = useState( null )
+	const timeout = useRef( null )
+	const request = useRef( null )
+	const classes = classname( {
+		'fl-asst-search': true,
+		'fl-asst-search-is-loading': loading,
+	} )
+
+	useComponentUpdate( () => {
+		const { config, routes } = getRequestConfig()
+
+		cancelRequest()
+
+		if ( '' === keyword ) {
+			setResults( null )
+			return
+		}
+
+		timeout.current = setTimeout( () => {
+			setLoading( true )
+
+			request.current = getSearchResults( routes, response => {
+				const newResults = {}
+
+				response.map( ( result, key ) => {
+					const { label, priority, format } = config[ key ]
+
+					if ( ! result.length ) {
+						return
+					}
+					if ( ! newResults[ priority ] ) {
+						newResults[ priority ] = []
+					}
+
+					newResults[ priority ].push( {
+						label,
+						items: format( result ),
+					} )
+				} )
+
+				setResults( newResults )
+				setLoading( false )
+			} )
+		}, 1000 )
+
+		return cancelRequest
+	}, [ keyword ] )
+
+	const getRequestConfig = () => {
+		const config = []
+		const routes = []
+
+		const defaults = {
+			priority: 1000,
+			format: response => response,
+		}
+
+		const addRequestConfig = search => {
+			config.push( Object.assign( {}, defaults, search ) )
+			routes.push( addLeadingSlash( search.route( keyword ) ) )
+		}
+
+		Object.entries( apps ).map( ( [ key, app ] ) => {
+			if ( ! app.search || ! app.search.route ) {
+				return
+			} else if ( Array.isArray( app.search ) ) {
+				app.search.map( search => addRequestConfig( search ) )
+			} else {
+				addRequestConfig( app.search )
+			}
+		} )
+
+		return { config, routes }
+	}
+
+	const cancelRequest = () => {
+		if ( timeout.current ) {
+			clearTimeout( timeout.current )
+			timeout.current = null
+		}
+		if ( request.current ) {
+			request.current.cancel()
+			request.current = null
+		}
+	}
 
     return (
         <Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false}>
 
             <Page.Toolbar>
-                <input
-                    value={term}
-                    onChange={ e => setTerm( e.target.value ) }
-                    placeholder={ __('Search') }
-                />
+				<div className='fl-asst-search-form-simple'>
+	                <input
+	                    value={keyword}
+	                    onChange={ e => setKeyword( e.target.value ) }
+	                    placeholder={ __('Search') }
+	                />
+					{ loading &&
+						<div className='fl-asst-search-spinner'>
+							<Icon.SmallSpinner />
+						</div>
+					}
+				</div>
             </Page.Toolbar>
 
-            { hasResults && <Results query={{ term }} /> }
+			<form className={ classes }>
+	            { results && Object.entries( results ).map( ( [ key, groups ] ) => {
+					return groups.map( ( group, key ) => {
+						return (
+							<Form.Section key={ key } isInset={ false } label={ group.label }>
+								<List
+									items={ group.items }
+									defaultItemProps={ {
+								        shouldAlwaysShowThumbnail: true,
+								        thumbnailSize: 'sm',
+								    } }
+								/>
+							</Form.Section>
+						)
+					} )
+				} ) }
+
+				{ results && ! Object.entries( results ).length &&
+					<Form.Section isInset={ false } label={ __( 'No Results Found' ) }>
+						<Form.Item>
+							{ __( 'Please try a different search.' ) }
+						</Form.Item>
+					</Form.Section>
+				}
+			</form>
         </Page>
     )
 }
-
-const Results = ({ query }) => {
-    const itemProps = {
-        shouldAlwaysShowThumbnail: true,
-        thumbnailSize: 'sm',
-    }
-
-    return (
-        <List items={testResultData} defaultItemProps={itemProps} />
-    )
-}
-
-const testResultData = [
-    {
-        title: 'My Sample Post',
-    },
-    {
-        title: 'About Us',
-    },
-    {
-        title: 'Nullam id dolor id nibh ultricies vehicula ut id elit.',
-    },
-    {
-        title: 'Pharetra',
-    },
-    {
-        title: 'Etiam porta sem malesuada magna mollis euismod. Sed posuere consectetur est at lobortis.',
-    },
-]

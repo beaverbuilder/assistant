@@ -30,7 +30,7 @@ class FL_Assistant_REST_Search {
 	 */
 	static public function results( $request ) {
 		$response  = array();
-		$routes = json_decode( $request->get_param( 'routes' ) );
+		$routes = $request->get_param( 'routes' );
 		$requests = array_reduce( $routes, 'rest_preload_api_request', array() );
 		foreach ( $requests as $route => $request ) {
 			$response[] = $request['body'];

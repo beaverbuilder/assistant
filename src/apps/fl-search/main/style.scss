@@ -1,0 +1,13 @@
+.fl-asst-search-form-simple {
+    position: relative;
+    width: 100%;
+
+	.fl-asst-search-spinner {
+		align-items: center;
+		display: flex;
+		position: absolute;
+		bottom: 0;
+		right: 8px;
+		top: 0;
+	}
+}
