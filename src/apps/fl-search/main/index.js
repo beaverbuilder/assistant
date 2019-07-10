@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect, useRef, useState } from 'fl-react'
+import React, { useRef, useState } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from 'assistant/i18n'
 import { useComponentUpdate } from 'assistant/utils/react'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSearchResults } from 'assistant/utils/wordpress'
 import { useSystemState } from 'assistant/data'
-import { Page, List, Button, Form, Icon } from 'assistant/ui'
+import { Page, List, Form, Icon } from 'assistant/ui'
 import './style.scss'
 
 export const Main = () => {
@@ -98,6 +98,10 @@ export const Main = () => {
 		}
 	}
 
+	const entries = results ? Object.entries( results ) : null
+	const hasResults = entries && entries.length
+	const groups = hasResults ? Object.entries( results ).map( ([key, group]) => group[0] ) : []
+
     return (
         <Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false}>
 
@@ -116,6 +120,15 @@ export const Main = () => {
 				</div>
             </Page.Toolbar>
 
+			{ groups.length > 0 &&
+				<List
+					items={groups}
+					isListSection={ item => 'undefined' !== item.label }
+					getSectionItems={ section => section.items ? section.items : [] }
+				/>
+			}
+
+			{ /*
 			<form className={ classes }>
 	            { results && Object.entries( results ).map( ( [ key, groups ] ) => {
 					return groups.map( ( group, key ) => {
@@ -141,6 +154,7 @@ export const Main = () => {
 					</Form.Section>
 				}
 			</form>
+			*/ }
         </Page>
     )
 }

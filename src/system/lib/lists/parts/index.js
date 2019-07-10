@@ -139,6 +139,7 @@ const Section = ( { children, className, label, ...rest } ) => {
 	const classes = classname( 'fl-asst-list-section', className )
 	return (
 		<div className={classes} {...rest}>
+			<hr/>
 			<div className="fl-asst-list-section-header">{label}</div>
 			<div className="fl-asst-list-section-content">{children}</div>
 		</div>
