@@ -139,7 +139,7 @@ final class FL_Assistant_REST_Users {
 	 */
 	static public function update_user_state( $request ) {
 		$id    = wp_get_current_user()->ID;
-		$state = json_decode( $request->get_param( 'state' ) );
+		$state = $request->get_param( 'state' );
 
 		FL_Assistant_Data::update_user_state( $id, $state );
 	}
