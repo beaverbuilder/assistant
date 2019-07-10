@@ -40,21 +40,30 @@ export const List = ( {
 	tag: Tag = 'ul',
 } ) => {
 
-	// Page context provides the default scrolling element ref for scroll events
-	//const { scrollRef } = useContext( Page.Context )
-
 	const renderListItems = items => {
 		return items.map( ( item, i ) => {
 
 			if ( isListSection( item ) ) {
+				const isSection = true
 				const defaultProps = { ...defaultItemProps, key: i }
 
 				const Section = getItemComponent( item, true )
-				const sectionProps = getItemProps( item, defaultProps )
+				const sectionProps = getItemProps( item, defaultProps, isSection )
 				const sectionItems = getSectionItems( item )
+				const subListProps = {
+					direction,
+					defaultItemProps,
+					getItemProps,
+					getItemComponent,
+					itemTypeKey,
+					sectionItemsKey,
+					isListSection: () => false,
+					getSectionItems,
+					tag: Tag,
+				}
 				return (
 					<Section {...sectionProps}>
-						{ sectionItems && <List items={sectionItems} /> }
+						{ sectionItems && <List items={sectionItems} {...subListProps}  /> }
 					</Section>
 				)
 			} else {
@@ -64,9 +73,10 @@ export const List = ( {
 	}
 
 	const renderItem = ( item, i ) => {
+		const isSection = false
 		const Item = getItemComponent( item )
 		const defaultProps = { ...defaultItemProps, key: i }
-		const props = getItemProps( item, defaultProps )
+		const props = getItemProps( item, defaultProps, isSection )
 
 		if ( isRenderProp( children ) ) {
 			return (

@@ -71,8 +71,7 @@ const InfoItem = ( {
 	thumbnail,
 	thumbnailSize = 'med',
 	className,
-	to,
-	...rest
+	to
 } ) => {
 	const classes = classname( {
 		'fl-asst-list-item-content-info': true,
@@ -88,10 +87,10 @@ const InfoItem = ( {
 	}
 
 	let Tag = 'div'
-	let newProps = { ...rest }
+	let newProps = {}
 
 	if ( to ) {
-		Tag = Nav.Link
+		Tag = Nav.AppLink
 		newProps.to = to
 	}
 

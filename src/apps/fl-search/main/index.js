@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'fl-react'
+import React, { useRef, useState, useContext } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from 'assistant/i18n'
 import { useComponentUpdate } from 'assistant/utils/react'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSearchResults } from 'assistant/utils/wordpress'
 import { useSystemState } from 'assistant/data'
-import { Page, List, Form, Icon } from 'assistant/ui'
+import { Page, List, Form, Icon, Nav } from 'assistant/ui'
 import './style.scss'
 
 export const Main = () => {
@@ -19,6 +19,9 @@ export const Main = () => {
 		'fl-asst-search': true,
 		'fl-asst-search-is-loading': loading,
 	} )
+
+	const nav = useContext( Nav.Context )
+	console.log('nav', nav )
 
 	useComponentUpdate( () => {
 		const { config, routes } = getRequestConfig()
@@ -123,8 +126,36 @@ export const Main = () => {
 			{ groups.length > 0 &&
 				<List
 					items={groups}
-					isListSection={ item => 'undefined' !== item.label }
+					isListSection={ item => 'undefined' !== typeof item.label }
 					getSectionItems={ section => section.items ? section.items : [] }
+
+					getItemProps={ ( item, defaultProps, isSection ) => {
+						let props = {
+							...defaultProps,
+						}
+
+						console.log('item', item, defaultProps, isSection )
+
+						if ( isSection ) {
+							props.label = item.label
+						} else {
+							props.shouldAlwaysShowThumbnail = true
+
+							if ( 'undefined' !== typeof item.label ) {
+								props.label = item.label
+							} else if ( 'undefined' !== typeof item.title ) {
+								props.label = item.title
+							}
+
+							if ( 'undefined' !== typeof item.thumbnail ) {
+								props.thumbnail = item.thumbnail
+							}
+
+							props.to = '/detail'
+						}
+
+						return props
+					}}
 				/>
 			}
 
