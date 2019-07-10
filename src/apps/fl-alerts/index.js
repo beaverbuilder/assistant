@@ -1,5 +1,5 @@
 import { registerApp, __ } from 'assistant'
-import { addQueryArgs } from 'assistant/utils'
+import { addQueryArgs } from 'assistant/utils/url'
 import { Alerts } from './app'
 
 registerApp( 'fl-alerts', {

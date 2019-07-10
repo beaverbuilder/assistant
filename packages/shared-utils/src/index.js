@@ -15,11 +15,11 @@ export {
 	color,
 	console,
 	datetime,
+	http,
 	react,
 	request,
 	store,
 	text,
 	url,
 	wordpress,
-	http,
 }
