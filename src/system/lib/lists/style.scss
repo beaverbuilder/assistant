@@ -96,6 +96,11 @@
         .fl-asst-list-section-header {
             padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space);
         }
+        .fl-asst-list-section-content {
+            .fl-asst-list {
+                margin:0;
+            }
+        }
     }
 
 }

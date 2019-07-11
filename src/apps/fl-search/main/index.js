@@ -5,7 +5,7 @@ import { useComponentUpdate } from 'assistant/utils/react'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSearchResults } from 'assistant/utils/wordpress'
 import { useSystemState } from 'assistant/data'
-import { Page, List, Form, Icon, Nav } from 'assistant/ui'
+import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
 
 export const Main = () => {
@@ -19,9 +19,6 @@ export const Main = () => {
 		'fl-asst-search': true,
 		'fl-asst-search-is-loading': loading,
 	} )
-
-	const nav = useContext( Nav.Context )
-	console.log('nav', nav )
 
 	useComponentUpdate( () => {
 		const { config, routes } = getRequestConfig()
@@ -101,6 +98,7 @@ export const Main = () => {
 		}
 	}
 
+	// Prep result data
 	const entries = results ? Object.entries( results ) : null
 	const hasResults = entries && entries.length
 	const groups = hasResults ? Object.entries( results ).map( ([key, group]) => group[0] ) : []
@@ -123,69 +121,69 @@ export const Main = () => {
 				</div>
             </Page.Toolbar>
 
-			{ groups.length > 0 &&
-				<List
-					items={groups}
-					isListSection={ item => 'undefined' !== typeof item.label }
-					getSectionItems={ section => section.items ? section.items : [] }
-
-					getItemProps={ ( item, defaultProps, isSection ) => {
-						let props = {
-							...defaultProps,
-						}
-
-						console.log('item', item, defaultProps, isSection )
-
-						if ( isSection ) {
-							props.label = item.label
-						} else {
-							props.shouldAlwaysShowThumbnail = true
-
-							if ( 'undefined' !== typeof item.label ) {
-								props.label = item.label
-							} else if ( 'undefined' !== typeof item.title ) {
-								props.label = item.title
-							}
-
-							if ( 'undefined' !== typeof item.thumbnail ) {
-								props.thumbnail = item.thumbnail
-							}
-
-							props.to = '/detail'
-						}
-
-						return props
-					}}
-				/>
+			{ '' === keyword &&
+			<>
+				<Page.Pad bottom={false}>
+					<Button.Group label={__('Recent Searches')}>
+						<Button>{__('"About"')}</Button>
+						<Button>{__('"Page Builder"')}</Button>
+						<Button>{__('"WordPress"')}</Button>
+					</Button.Group>
+				</Page.Pad>
+				<Page.Pad bottom={false} >
+					<Button.Group label={__('Post Type')}>
+						<Button>{__('Posts')}</Button>
+						<Button>{__('Pages')}</Button>
+						<Button>{__('Forms')}</Button>
+						<Button>{__('Products')}</Button>
+					</Button.Group>
+				</Page.Pad>
+				<Page.Pad bottom={false} >
+					<Button.Group label={__('Status')}>
+						<Button>{__('Published')}</Button>
+						<Button>{__('Drafted')}</Button>
+						<Button>{__('Pending')}</Button>
+						<Button>{__('Trashed')}</Button>
+					</Button.Group>
+				</Page.Pad>
+			</>
 			}
 
-			{ /*
-			<form className={ classes }>
-	            { results && Object.entries( results ).map( ( [ key, groups ] ) => {
-					return groups.map( ( group, key ) => {
-						return (
-							<Form.Section key={ key } isInset={ false } label={ group.label }>
-								<List
-									items={ group.items }
-									defaultItemProps={ {
-								        shouldAlwaysShowThumbnail: true,
-								        thumbnailSize: 'sm',
-								    } }
-								/>
-							</Form.Section>
-						)
-					} )
-				} ) }
+			<div className="fl-asst-scroller">
 
-				{ results && ! Object.entries( results ).length &&
-					<Form.Section isInset={ false } label={ __( 'No Results Found' ) }>
-						<Form.Item>
-							{ __( 'Please try a different search.' ) }
-						</Form.Item>
-					</Form.Section>
+				{ results && !hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
+
+				{ groups.length > 0 &&
+					<List
+						items={groups}
+						isListSection={ item => 'undefined' !== typeof item.label }
+						getSectionItems={ section => section.items ? section.items : [] }
+
+						getItemProps={ ( item, defaultProps, isSection ) => {
+							let props = { ...defaultProps }
+
+							if ( isSection ) {
+								props.label = item.label
+							} else {
+								props.shouldAlwaysShowThumbnail = true
+
+								if ( 'undefined' !== typeof item.label ) {
+									props.label = item.label
+								} else if ( 'undefined' !== typeof item.title ) {
+									props.label = item.title
+								}
+
+								if ( 'undefined' !== typeof item.thumbnail ) {
+									props.thumbnail = item.thumbnail
+								}
+							}
+
+							return props
+						}}
+					/>
 				}
-			</form>
-			*/ }
+			</div>
+
         </Page>
     )
 }

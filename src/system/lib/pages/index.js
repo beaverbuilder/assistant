@@ -1,5 +1,5 @@
 import React, { useRef, useContext, createContext } from 'fl-react'
-import classname from 'classnames'
+import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App } from '../'
@@ -20,9 +20,9 @@ export const Page = ( {
 
 	const classes = classname( {
 		'fl-asst-page': true,
-		'fl-asst-page-pad-top': shouldPadTop,
-		'fl-asst-page-pad-sides': shouldPadSides,
-		'fl-asst-page-pad-bottom': shouldPadBottom,
+		'fl-asst-pad-top': shouldPadTop,
+		'fl-asst-pad-sides': shouldPadSides,
+		'fl-asst-pad-bottom': shouldPadBottom,
 	}, className )
 
 	const context = {
@@ -104,17 +104,47 @@ Page.Header = ( { icon, label } ) => {
 }
 Page.Header.displayName = 'Page.Header'
 
+// Horizontal Toolbar - edge padding for controls
 Page.Toolbar = ({
 	className,
 	shouldPadSides = true,
+	shouldPadBottom = true,
 	...rest
 }) => {
 	const classes = classname({
 		'fl-asst-toolbar' : true,
 		'fl-asst-pad-sides' : shouldPadSides,
+		'fl-asst-pad-bottom' : shouldPadBottom,
 	}, className )
 	return (
 		<div className={classes} {...rest} />
 	)
 }
 Page.Toolbar.displayName = 'Page.Toolbar'
+
+// Padded box
+Page.Pad = ({
+	className,
+	top = true,
+	sides = true,
+	bottom = true,
+	...rest
+}) => {
+	const classes = classname({
+		'fl-asst-pad-top' : top,
+		'fl-asst-pad-sides' : sides,
+		'fl-asst-pad-bottom' : bottom,
+	}, className )
+
+	return <div className={classes} {...rest} />
+}
+Page.Pad.displayName = 'Page.Pad'
+
+
+
+
+Page.PostDetail = () => {
+	return (
+		<Page>Yo!</Page>
+	)
+}
