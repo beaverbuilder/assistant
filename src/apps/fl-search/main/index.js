@@ -9,7 +9,7 @@ import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
 
 export const Main = () => {
-	const { apps } = useSystemState()
+	const { apps, searchHistory } = useSystemState()
 	const [ keyword, setKeyword ] = useState( '' )
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
@@ -33,7 +33,7 @@ export const Main = () => {
 		timeout.current = setTimeout( () => {
 			setLoading( true )
 
-			request.current = getSearchResults( routes, response => {
+			request.current = getSearchResults( keyword, routes, response => {
 				const newResults = {}
 
 				response.map( ( result, key ) => {
@@ -123,13 +123,15 @@ export const Main = () => {
 
 			{ '' === keyword &&
 			<>
-				<Page.Pad bottom={false}>
-					<Button.Group label={__('Recent Searches')}>
-						<Button>{__('"About"')}</Button>
-						<Button>{__('"Page Builder"')}</Button>
-						<Button>{__('"WordPress"')}</Button>
-					</Button.Group>
-				</Page.Pad>
+				{ searchHistory.length &&
+					<Page.Pad bottom={false}>
+						<Button.Group label={__('Recent Searches')}>
+							{ searchHistory.map( keyword =>
+								<Button>"{ keyword }"</Button>
+							) }
+						</Button.Group>
+					</Page.Pad>
+				}
 				<Page.Pad bottom={false} >
 					<Button.Group label={__('Post Type')}>
 						<Button>{__('Posts')}</Button>

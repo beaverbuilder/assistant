@@ -28,6 +28,7 @@ class User {
 			'index'   => 0,
 			'entries' => [],
 		],
+		'searchHistory'		 => [],
 	];
 
 	/**

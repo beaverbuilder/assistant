@@ -43,10 +43,27 @@ class SearchController extends AssistantController {
 		$response  = [];
 		$routes = $request->get_param( 'routes' );
 		$requests = array_reduce( $routes, 'rest_preload_api_request', [] );
+		$this->update_history( $request->get_param( 'keyword' ) );
 
 		foreach ( $requests as $route => $request ) {
 			$response[] = $request['body'];
 		}
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Updates the current user's search history with
+	 * the provided keyword.
+	 *
+	 * @param String $keyword
+	 *
+	 * @return void
+	 */
+	public function update_history( $keyword ) {
+		$user  = $this->container()->service( 'users' )->current();
+		$state = $user->get_state();
+		$state['searchHistory'] = array_diff( $state['searchHistory'], [ $keyword ] );
+		array_unshift( array_slice( $state['searchHistory'], 0, 9 ), $keyword );
+		$user->update_state( $state );
 	}
 }
