@@ -12,9 +12,9 @@ class SiteService {
 	public function bb_can_edit_post( $post_id ) {
 		$editable    = false;
 		$post        = get_post( $post_id );
-		$post_types  = FLBuilderModel::get_post_types();
+		$post_types  = \FLBuilderModel::get_post_types();
 		$user_can    = current_user_can( 'edit_post', $post->ID );
-		$user_access = FLBuilderUserAccess::current_user_can( 'builder_access' );
+		$user_access = \FLBuilderUserAccess::current_user_can( 'builder_access' );
 
 		if ( in_array( $post->post_type, $post_types, true ) && $user_can && $user_access ) {
 			$editable = true;
@@ -90,14 +90,14 @@ class SiteService {
 
 			// Add Beaver Builder edit link
 			global $wp_the_query;
-			if ( class_exists( 'FLBuilderModel' ) ) {
-				if ( FLBuilderModel::is_post_editable() && is_object( $wp_the_query->post ) ) {
+			if ( class_exists( '\FLBuilderModel' ) ) {
+				if ( \FLBuilderModel::is_post_editable() && is_object( $wp_the_query->post ) ) {
 
 					$enabled = get_post_meta( $wp_the_query->post->ID, '_fl_builder_enabled', true );
 
 					$actions[] = [
-						'label'      => FLBuilderModel::get_branding(),
-						'href'       => FLBuilderModel::get_edit_url( $wp_the_query->post->ID ),
+						'label'      => \FLBuilderModel::get_branding(),
+						'href'       => \FLBuilderModel::get_edit_url( $wp_the_query->post->ID ),
 						'capability' => 'edit_pages',
 						'isEnabled'  => $enabled,
 					];

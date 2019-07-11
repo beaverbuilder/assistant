@@ -56,7 +56,7 @@ const NavManager = withRouter( ( { children, location, match, history, onChange 
 		location,
 		match,
 		history,
-		path: match.url,
+		path: location.pathname,
 		isRoot: 0 === history.index,
 		goToRoot: () => history.go( -history.index ),
 		isAppRoot: 1 === history.index,
@@ -85,7 +85,7 @@ Nav.Route = Route
 * Link
 */
 Nav.AppLink = ( { to, ...rest } ) => {
-	const { handle } = useContext( App.Context )
-	return <Link to={`/${handle}${to}`} {...rest} />
+	const { path } = useContext( Nav.Context )
+	return <Link to={`${path}${to}`} {...rest} />
 }
 Nav.AppLink.displayName = 'Nav.AppLink'

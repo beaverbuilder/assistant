@@ -1,6 +1,9 @@
 import React, { createContext, useState, useContext } from 'fl-react'
 import classname from 'classnames'
+
+import './reset.scss'
 import './style.scss'
+import './forms.scss'
 
 export const Appearance = ({
         className,

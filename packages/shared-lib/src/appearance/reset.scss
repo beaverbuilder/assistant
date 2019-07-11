@@ -5,6 +5,7 @@
     a, button {
         all: initial;
         box-sizing: border-box;
+        -moz-user-select:none; // Yep, still need it.
         user-select: none;
         cursor: pointer;
     }

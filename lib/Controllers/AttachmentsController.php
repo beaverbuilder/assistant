@@ -111,14 +111,14 @@ class AttachmentsController extends AssistantController {
 	 * Returns an array of attachments and related data.
 	 */
 	public function attachments( $request ) {
-		$response    = array();
+		$response    = [];
 		$params      = $request->get_params();
 		$attachments = get_posts(
 			array_merge(
-				$params, array(
+				$params, [
 					'perm'      => 'editable',
 					'post_type' => 'attachment',
-				)
+				]
 			)
 		);
 
@@ -136,7 +136,7 @@ class AttachmentsController extends AssistantController {
 	 */
 	public function attachments_count( $request ) {
 		$counts   = wp_count_attachments();
-		$response = array();
+		$response = [];
 
 		foreach ( $counts as $type => $count ) {
 			$parts = explode( '/', $type );
@@ -164,7 +164,7 @@ class AttachmentsController extends AssistantController {
 			return $this->get_attachment_response_data( $attachment );
 		}
 
-		return array();
+		return [];
 	}
 
 	/**

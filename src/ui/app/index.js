@@ -44,7 +44,7 @@ const AppContent = props => {
 		<App.Context.Provider value={context}>
 			{ /* Alerts component here */ }
 			<ScreenCard>
-				<div className="fl-asst-screen-content">
+				<div className="fl-asst-screen-content" style={style}>
 					{ app.root ? app.root( appProps ) : <Page>{__( 'This app has not been converted.' )}</Page> }
 				</div>
 			</ScreenCard>

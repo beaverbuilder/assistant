@@ -15,86 +15,86 @@ class PostsController extends AssistantController {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/posts', array(
-				array(
+			'/posts', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts' ],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/posts/hierarchical', array(
-				array(
+			'/posts/hierarchical', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_posts' ],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/posts/count', array(
-				array(
+			'/posts/count', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts_count' ],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/post/(?P<id>\d+)', array(
-				array(
+			'/post/(?P<id>\d+)', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'post' ],
-					'args'                => array(
-						'id' => array(
+					'args'                => [
+						'id' => [
 							'required' => true,
 							'type'     => 'number',
-						),
-					),
+						],
+					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-				array(
+				],
+				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'update_post' ],
-					'args'                => array(
-						'id'     => array(
+					'args'                => [
+						'id'     => [
 							'required' => true,
 							'type'     => 'number',
-						),
-						'action' => array(
+						],
+						'action' => [
 							'required' => true,
 							'type'     => 'string',
-						),
-					),
+						],
+					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/post', array(
-				array(
+			'/post', [
+				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_post' ],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -104,7 +104,7 @@ class PostsController extends AssistantController {
 	public function get_post_response_data( $post ) {
 		$author   = get_the_author_meta( 'display_name', $post->post_author );
 		$date     = get_the_date( '', $post );
-		$response = array(
+		$response = [
 			'author'          => $author,
 			'commentsAllowed' => 'open' === $post->comment_status ? true : false,
 			'content'         => $post->post_content,
@@ -121,7 +121,7 @@ class PostsController extends AssistantController {
 			'type'            => $post->post_type,
 			'url'             => get_permalink( $post ),
 			'visibility'      => __( 'Public', 'fl-assistant' ),
-		);
+		];
 
 		// Post visibility.
 		if ( 'private' === $post->post_status ) {
@@ -146,7 +146,7 @@ class PostsController extends AssistantController {
 	 * Returns an array of posts and related data.
 	 */
 	public function posts( $request ) {
-		$response = array();
+		$response = [];
 		$params   = $request->get_params();
 		$posts    = get_posts( $params );
 
@@ -165,21 +165,21 @@ class PostsController extends AssistantController {
 	 * post's data array.
 	 */
 	public function hierarchical_posts( $request ) {
-		$response = array();
-		$children = array();
+		$response = [];
+		$children = [];
 		$params   = $request->get_params();
 		$posts    = get_posts(
 			array_merge(
-				$params, array(
+				$params, [
 					'perm' => 'editable',
-				)
+				]
 			)
 		);
 
 		foreach ( $posts as $post ) {
 			if ( $post->post_parent ) {
 				if ( ! isset( $children[ $post->post_parent ] ) ) {
-					$children[ $post->post_parent ] = array();
+					$children[ $post->post_parent ] = [];
 				}
 				$children[ $post->post_parent ][] = $post;
 			}
@@ -211,7 +211,7 @@ class PostsController extends AssistantController {
 			return $post_children;
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -220,7 +220,7 @@ class PostsController extends AssistantController {
 	public function posts_count( $request ) {
 
 		$post_types = $this->container()->service( 'posts' )->get_types();
-		$response   = array();
+		$response   = [];
 
 		foreach ( $post_types as $slug => $label ) {
 			$counts            = wp_count_posts( $slug );
@@ -243,7 +243,7 @@ class PostsController extends AssistantController {
 			return $this->get_post_response_data( $post );
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -253,9 +253,9 @@ class PostsController extends AssistantController {
 		$id = wp_insert_post( $request->get_params() );
 
 		if ( ! $id || is_wp_error( $id ) ) {
-			return array(
+			return [
 				'error' => true,
-			);
+			];
 		}
 
 		return $this->get_post_response_data( get_post( $id ) );
@@ -270,9 +270,9 @@ class PostsController extends AssistantController {
 
 		if ( ! current_user_can( 'edit_post', $id ) ) {
 			return rest_ensure_response(
-				array(
+				[
 					'error' => true,
-				)
+				]
 			);
 		}
 
@@ -281,9 +281,9 @@ class PostsController extends AssistantController {
 				$data = (array) json_decode( $request->get_param( 'data' ) );
 				wp_update_post(
 					array_merge(
-						$data, array(
+						$data, [
 							'ID' => $id,
-						)
+						]
 					)
 				);
 				break;
@@ -300,9 +300,9 @@ class PostsController extends AssistantController {
 		}
 
 		return rest_ensure_response(
-			array(
+			[
 				'success' => true,
-			)
+			]
 		);
 	}
 }

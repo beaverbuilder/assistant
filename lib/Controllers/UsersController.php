@@ -16,63 +16,63 @@ final class UsersController extends AssistantController {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/users', array(
-				array(
+			'/users', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'users' ],
 					'permission_callback' => function () {
 						return current_user_can( 'list_users' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/users/count', array(
-				array(
+			'/users/count', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'users_count' ],
 					'permission_callback' => function () {
 						return current_user_can( 'list_users' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/user/(?P<id>\d+)', array(
-				array(
+			'/user/(?P<id>\d+)', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'user' ],
-					'args'                => array(
-						'id' => array(
+					'args'                => [
+						'id' => [
 							'required' => true,
 							'type'     => 'number',
-						),
-					),
+						],
+					],
 					'permission_callback' => function () {
 						return current_user_can( 'list_users' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/current-user/state', array(
-				array(
+			'/current-user/state', [
+				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'update_user_state' ],
-					'args'                => array(
-						'state' => array(
+					'args'                => [
+						'state' => [
 							'required' => true,
 							'type'     => 'json',
-						),
-					),
+						],
+					],
 					'permission_callback' => function () {
 						return ! ! wp_get_current_user()->ID;
 					},
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -107,8 +107,9 @@ final class UsersController extends AssistantController {
 	 */
 	public function users_count( \WP_REST_Request $request ) {
 
-		$response = $this->container()->service( 'users' )
-									->counts_by_user_role();
+		$response = $this->container()
+						 ->service( 'users' )
+						 ->counts_by_user_role();
 
 		return rest_ensure_response( $response );
 	}
@@ -123,7 +124,9 @@ final class UsersController extends AssistantController {
 	 */
 	public function user( \WP_REST_Request $request ) {
 		$id   = $request->get_param( 'id' );
-		$user = $this->container()->service( 'users' )->find( $id );
+		$user = $this->container()
+					 ->service( 'users' )
+					 ->find( $id );
 
 		return rest_ensure_response( $user->to_array() );
 	}

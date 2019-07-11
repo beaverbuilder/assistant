@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'fl-react'
-import { Switch, Route, Link } from 'fl-react-router-dom'
-import { Page } from 'assistant/lib'
+import React, { useState } from 'fl-react'
+import { Switch, Route } from 'fl-react-router-dom'
+import { __ } from 'assistant'
+import { Page, List, Button } from 'assistant/ui'
 
-//import { getContent } from 'shared-utils/wordpress'
+import { comments } from './test-data'
 
 export const Alerts = ( { match } ) => (
 	<Switch>
@@ -11,52 +12,68 @@ export const Alerts = ( { match } ) => (
 	</Switch>
 )
 
-const Main = ( { match } ) => {
-	const [ comments, setComments ] = useState( [] )
-	const hasComments = comments.length > 0
-
-	useEffect( () => {
-
-		//getContent( 'comments', {}, data => setComments( data ) )
-	}, [] )
-
-	const style = {
-		display: 'block',
-		padding: 'var(--fl-asst-outer-space) 0',
-	}
+const Main = () => {
+	const [tab, setTab] = useState('comments')
+	const isSelected = key => key === tab
 
 	return (
-		<Page>
-			{ !hasComments && <div>You don't have any!</div> }
-			<ul>
-				{ comments.map( ( item, i ) => {
-					const { id, meta: authorDate, title } = item
-					const location = {
-						pathname: `${match.url}/comments/${id}`,
-						state: item,
-					}
-					return (
-						<li key={i}>
-							<Link to={location} style={style}>
-								<div>{authorDate}</div>
-								<div>{title}</div>
-							</Link>
-						</li>
-					)
-				} )}
-			</ul>
+		<Page shouldPadSides={false}>
+
+			<div style={{ padding: '0 var(--fl-asst-outer-space)', display:'flex', flexDirection: 'column' }}>
+
+				<Button.Group>
+					<Button isSelected={isSelected('comments')} onClick={ () => setTab('comments') }>{__('Comments')}</Button>
+					<Button isSelected={isSelected('updates')} onClick={ () => setTab('updates') }>{__('Updates')}</Button>
+				</Button.Group>
+			</div>
+
+			{ 'comments' === tab ? <CommentsTab/> : <UpdatesTab /> }
+
 		</Page>
 	)
 }
 
-const CommentDetail = ( { history, location } ) => {
+const CommentsTab = () => {
+	const hasComments = comments.length > 0
+	const baseURL = ''
+
+	return (
+		<>
+			{ !hasComments && <div>{__("You don't have any!")}</div> }
+			{ hasComments &&
+			<List
+				items={comments}
+				getItemProps={ (item, i) => {
+					return {
+						key: item.postID,
+						label: <em><strong>{item.email}</strong> commented:</em>,
+						description: item.content,
+						thumbnail: item.thumbnail,
+						to: {
+							pathname: `${baseURL}/comments/${item.postID}`,
+							state: item
+						}
+					}
+				}}
+			/> }
+		</>
+	)
+}
+const UpdatesTab = () => {
+	return (
+		<>
+			<div className="fl-asst-padded">You don't have any updates</div>
+		</>
+	)
+}
+
+const CommentDetail = ( { location } ) => {
 	const comment = {
 		...location.state,
 	}
 	const { content } = comment
 	return (
-		<Page>
-			<button onClick={ () => history.goBack() }>Back</button>
+		<Page title="Edit Comment">
 			<div dangerouslySetInnerHTML={{ __html: content }} />
 		</Page>
 	)

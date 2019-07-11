@@ -4,6 +4,7 @@
 namespace FL\Assistant\Providers;
 
 
+use FL\Assistant\Controllers\SearchController;
 use FL\Assistant\Core\Container;
 use FL\Assistant\Controllers\AssistantController;
 use FL\Assistant\Controllers\AttachmentsController;
@@ -34,6 +35,7 @@ class RestProvider implements ProviderInterface {
 		TermsController::class,
 		UpdatesController::class,
 		UsersController::class,
+		SearchController::class,
 	];
 
 	/**

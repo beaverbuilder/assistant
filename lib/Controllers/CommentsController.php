@@ -11,62 +11,62 @@ class CommentsController extends AssistantController {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/comments', array(
-				array(
+			'/comments', [
+				[
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comments' ],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/comments/count', array(
-				array(
+			'/comments/count', [
+				[
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comments_count' ],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/comment/(?P<id>\d+)', array(
-				array(
+			'/comment/(?P<id>\d+)', [
+				[
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comment' ],
-					'args'                => array(
-						'id' => array(
+					'args'                => [
+						'id' => [
 							'required' => true,
 							'type'     => 'number',
-						),
-					),
+						],
+					],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
-				),
-				array(
+				],
+				[
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'update_comment' ],
-					'args'                => array(
-						'id'     => array(
+					'args'                => [
+						'id'     => [
 							'required' => true,
 							'type'     => 'number',
-						),
-						'action' => array(
+						],
+						'action' => [
 							'required' => true,
 							'type'     => 'string',
-						),
-					),
+						],
+					],
 					'permission_callback' => function() {
 						return current_user_can( 'moderate_comments' );
 					},
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -77,7 +77,7 @@ class CommentsController extends AssistantController {
 		$post = get_post( $comment->comment_post_ID );
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );
-		return array(
+		return [
 			'approved'    => $comment->comment_approved ? true : false,
 			'author'      => $comment->comment_author,
 			'authorEmail' => $comment->comment_author_email,
@@ -95,19 +95,19 @@ class CommentsController extends AssistantController {
 			'title'       => strip_tags( $comment->comment_content ),
 			'trash'       => 'trash' === $comment->comment_approved,
 			'url'         => get_comment_link( $comment ),
-		);
+		];
 	}
 
 	/**
 	 * Returns an array of comments and related data.
 	 */
 	public function comments( $request ) {
-		$response   = array();
+		$response   = [];
 		$params     = $request->get_params();
 
-		$post_data = new PostData();
-		$post_types = array_keys( $post_data->get_types() );
-		$comments   = get_comments( array_merge( array( 'post_type' => $post_types ), $params ) );
+		$posts = $this->container()->service( 'posts' );
+		$post_types = array_keys( $posts->get_types() );
+		$comments   = get_comments( array_merge( [ 'post_type' => $post_types ], $params ) );
 
 		foreach ( $comments as $comment ) {
 			$response[] = $this->get_comment_response_data( $comment );
@@ -123,13 +123,13 @@ class CommentsController extends AssistantController {
 	public function comments_count( $request ) {
 		$counts = wp_count_comments();
 		return rest_ensure_response(
-			array(
+			[
 				'approved' => $counts->approved,
 				'pending'  => $counts->moderated,
 				'spam'     => $counts->spam,
 				'trash'    => $counts->trash,
 				'total'    => $counts->total_comments,
-			)
+			]
 		);
 	}
 
@@ -177,18 +177,18 @@ class CommentsController extends AssistantController {
 				break;
 			case 'content':
 				wp_update_comment(
-					array(
+					[
 						'comment_ID'      => $id,
 						'comment_content' => $request->get_param( 'content' ),
-					)
+					]
 				);
 				break;
 		}
 
 		return rest_ensure_response(
-			array(
+			[
 				'success' => true,
-			)
+			]
 		);
 	}
 }

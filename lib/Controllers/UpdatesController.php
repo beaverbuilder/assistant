@@ -14,33 +14,33 @@ class UpdatesController extends AssistantController {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/updates', array(
-				array(
+			'/updates', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, '::updates' ],
-					'args'                => array(
-						'type' => array(
+					'args'                => [
+						'type' => [
 							'required' => false,
 							'type'     => 'string',
-						),
-					),
+						],
+					],
 					'permission_callback' => function() {
 						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
 					},
-				),
-			)
+				],
+			]
 		);
 
 		$this->route(
-			'/updates/count', array(
-				array(
+			'/updates/count', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, '::updates_count' ],
 					'permission_callback' => function() {
 						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
 					},
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -67,7 +67,7 @@ class UpdatesController extends AssistantController {
 			}
 		}
 
-		return array(
+		return [
 			'author'      => $plugin['AuthorName'],
 			'banner'      => $banner,
 			'content'     => $plugin['Description'],
@@ -79,7 +79,7 @@ class UpdatesController extends AssistantController {
 			'title'       => $plugin['Name'],
 			'type'        => 'plugin',
 			'version'     => $plugin['Version'],
-		);
+		];
 	}
 
 	/**
@@ -96,7 +96,7 @@ class UpdatesController extends AssistantController {
 			}
 		}
 
-		return array(
+		return [
 			'author'       => strip_tags( $theme->Author ),
 			'banner'       => $theme->get_screenshot(),
 			'content'      => $theme->Description,
@@ -108,7 +108,7 @@ class UpdatesController extends AssistantController {
 			'title'        => $theme->Name,
 			'type'         => 'theme',
 			'version'      => $theme->Version,
-		);
+		];
 	}
 
 	/**
@@ -120,17 +120,17 @@ class UpdatesController extends AssistantController {
 		wp_update_plugins();
 		wp_update_themes();
 
-		$response       = array();
+		$response       = [];
 		$update_plugins = get_site_transient( 'update_plugins' );
 		$update_themes  = get_site_transient( 'update_themes' );
 		$type           = $request->get_param( 'type' );
 
 		if ( ! $type || 'all' === $type || 'plugins' === $type ) {
 			if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
-				$plugins = array(
+				$plugins = [
 					'label' => __( 'Plugins', 'fl-assistant' ),
 					'items' => [],
-				);
+				];
 				foreach ( $update_plugins->response as $key => $update ) {
 					$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
 					if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
@@ -143,10 +143,10 @@ class UpdatesController extends AssistantController {
 
 		if ( ! $type || 'all' === $type || 'themes' === $type ) {
 			if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
-				$themes = array(
+				$themes = [
 					'label' => __( 'Themes', 'fl-assistant' ),
 					'items' => [],
-				);
+				];
 				foreach ( $update_themes->response as $key => $update ) {
 					$theme = wp_get_theme( $key );
 					if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
@@ -184,11 +184,11 @@ class UpdatesController extends AssistantController {
 		}
 
 		return rest_ensure_response(
-			array(
+			[
 				'plugins' => $plugins,
 				'themes'  => $themes,
 				'total'   => $count,
-			)
+			]
 		);
 	}
 }

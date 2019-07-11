@@ -14,15 +14,15 @@ class CountsController extends AssistantController {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/counts', array(
-				array(
+			'/counts', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'all' ],
 					'permission_callback' => function () {
 						return is_user_logged_in();
 					},
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -32,9 +32,9 @@ class CountsController extends AssistantController {
 	 * @todo move this to data service and call data service
 	 */
 	public function all( $request ) {
-		$routes = array(
+		$routes = [
 			'/fl-assistant/v1/posts/count'         => function ( $response ) {
-				$return = array();
+				$return = [];
 				foreach ( $response as $type => $data ) {
 					$return[ 'content/' . $type ] = $data->total;
 				}
@@ -42,7 +42,7 @@ class CountsController extends AssistantController {
 				return $return;
 			},
 			'/fl-assistant/v1/terms/count'         => function ( $response ) {
-				$return = array();
+				$return = [];
 				foreach ( $response as $type => $count ) {
 					$return[ 'taxonomy/' . $type ] = $count;
 				}
@@ -50,7 +50,7 @@ class CountsController extends AssistantController {
 				return $return;
 			},
 			'/fl-assistant/v1/attachments/count'   => function ( $response ) {
-				$return = array();
+				$return = [];
 				foreach ( $response as $type => $count ) {
 					$return[ 'attachment/' . $type ] = $count;
 				}
@@ -58,7 +58,7 @@ class CountsController extends AssistantController {
 				return $return;
 			},
 			'/fl-assistant/v1/comments/count'      => function ( $response ) {
-				$return = array();
+				$return = [];
 				foreach ( $response as $type => $count ) {
 					$return[ 'comment/' . $type ] = $count;
 				}
@@ -66,7 +66,7 @@ class CountsController extends AssistantController {
 				return $return;
 			},
 			'/fl-assistant/v1/users/count'         => function ( $response ) {
-				$return = array();
+				$return = [];
 				foreach ( $response as $type => $count ) {
 					$return[ 'role/' . $type ] = $count;
 				}
@@ -74,7 +74,7 @@ class CountsController extends AssistantController {
 				return $return;
 			},
 			'/fl-assistant/v1/updates/count'       => function ( $response ) {
-				$return = array();
+				$return = [];
 				foreach ( $response as $type => $count ) {
 					$return[ 'update/' . $type ] = $count;
 				}
@@ -82,16 +82,16 @@ class CountsController extends AssistantController {
 				return $return;
 			},
 			'/fl-assistant/v1/notifications/count' => function ( $response ) {
-				$return = array();
+				$return = [];
 				foreach ( $response as $type => $count ) {
 					$return[ 'notification/' . $type ] = $count;
 				}
 
 				return $return;
 			},
-		);
+		];
 
-		$requests = array_reduce( array_keys( $routes ), 'rest_preload_api_request', array() );
+		$requests = array_reduce( array_keys( $routes ), 'rest_preload_api_request', [] );
 		$counts   = [];
 
 		foreach ( $requests as $route => $request ) {

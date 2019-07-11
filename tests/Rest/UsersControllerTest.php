@@ -6,8 +6,6 @@ namespace FL\Assistant\Tests\Rest;
 
 class UsersControllerTest extends RestTestCase {
 
-	public $container;
-
 	public function test_can_get_users() {
 		wp_set_current_user(1);
 

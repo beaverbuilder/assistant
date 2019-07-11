@@ -16,15 +16,15 @@ final class NotificationsController extends AssistantController {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/notifications/count', array(
-				array(
+			'/notifications/count', [
+				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'count' ],
 					'permission_callback' => function () {
 						return is_user_logged_in();
 					},
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -33,9 +33,9 @@ final class NotificationsController extends AssistantController {
 	 * @todo get these values from data service
 	 */
 	public function count( $request ) {
-		$result = array(
+		$result = [
 			'total' => 0,
-		);
+		];
 
 		// Comments count
 		$request         = new WP_REST_Request( 'GET', '/fl-assistant/v1/comments/count' );

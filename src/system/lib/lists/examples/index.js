@@ -10,7 +10,10 @@ export const TestSheet = () => {
 		return (
 			<>
 				<h2 style={padSides}>Simple Data Example</h2>
-				<List items={items} />
+				<List
+					items={items}
+					defaultItemProps={{ thumbnailSize: 'sm' }}
+				/>
 			</>
 		)
 	}
@@ -192,7 +195,6 @@ export const TestSheet = () => {
 	}
 
 	///// THE Render //////
-
 	return (
 		<>
 			<SimpleDataExample />
@@ -200,8 +202,6 @@ export const TestSheet = () => {
 			<DataDrivenExample />
             <hr/>
 			<SectionedListExample />
-            <hr/>
-            <HorizontalExample />
             <hr/>
 			<FeedExample />
 		</>
