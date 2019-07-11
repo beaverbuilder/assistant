@@ -47,4 +47,9 @@ export const after = {
 		const { history } = store.getState()
 		updateUserState( { history } )
 	},
+
+	SET_SEARCH_HISTORY: ( action, store ) => {
+		const { searchHistory } = store.getState()
+		updateUserState( { searchHistory } )
+	},
 }

@@ -5,4 +5,7 @@ registerApp( 'fl-search', {
 	label: __( 'Search' ),
 	root: App,
 	icon: AppIcon,
+	state: {
+		keyword: '',
+	},
 } )
