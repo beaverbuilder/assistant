@@ -18,7 +18,7 @@ export const registerAppStore = args => {
 		effects,
 	} = args
 
-	const storeKey = `app:${ key }/state`
+	const storeKey = `${ key }/state`
 	const cache = getCache( 'app-state', key )
 	const state = {
 		...defaultState,

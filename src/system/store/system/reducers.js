@@ -158,3 +158,12 @@ export const history = ( state = defaultHistory, action ) => {
 		return state
 	}
 }
+
+export const searchHistory = ( state = [], action ) => {
+	switch ( action.type ) {
+	case 'SET_SEARCH_HISTORY':
+		return [ action.keyword, ...state.filter( item => item !== action.keyword ) ]
+	default:
+		return state
+	}
+}

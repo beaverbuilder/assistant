@@ -79,3 +79,10 @@ export const setHistory = ( index = 0, entries = [] ) => {
 		entries,
 	}
 }
+
+export const setSearchHistory = ( keyword ) => {
+	return {
+		type: 'SET_SEARCH_HISTORY',
+		keyword,
+	}
+}

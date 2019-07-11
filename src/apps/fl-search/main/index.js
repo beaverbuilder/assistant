@@ -1,16 +1,17 @@
-import React, { useRef, useState, useContext } from 'fl-react'
+import React, { useEffect, useRef, useState, useContext } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from 'assistant/i18n'
-import { useComponentUpdate } from 'assistant/utils/react'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSearchResults } from 'assistant/utils/wordpress'
-import { useSystemState } from 'assistant/data'
+import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
 
 export const Main = () => {
 	const { apps, searchHistory } = useSystemState()
-	const [ keyword, setKeyword ] = useState( '' )
+	const { setSearchHistory } = getSystemActions()
+	const { keyword } = useAppState()
+	const { setKeyword } = getAppActions()
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
 	const timeout = useRef( null )
@@ -20,7 +21,7 @@ export const Main = () => {
 		'fl-asst-search-is-loading': loading,
 	} )
 
-	useComponentUpdate( () => {
+	useEffect( () => {
 		const { config, routes } = getRequestConfig()
 
 		cancelRequest()
@@ -54,6 +55,7 @@ export const Main = () => {
 
 				setResults( newResults )
 				setLoading( false )
+				setSearchHistory( keyword )
 			} )
 		}, 1000 )
 
@@ -126,8 +128,13 @@ export const Main = () => {
 				{ searchHistory.length &&
 					<Page.Pad bottom={false}>
 						<Button.Group label={__('Recent Searches')}>
-							{ searchHistory.map( keyword =>
-								<Button>"{ keyword }"</Button>
+							{ searchHistory.map( ( keyword, key ) =>
+								<Button
+									key={ key }
+									onClick={ e => setKeyword( keyword ) }
+								>
+									"{ keyword }"
+								</Button>
 							) }
 						</Button.Group>
 					</Page.Pad>
