@@ -108,11 +108,13 @@ Page.Header.displayName = 'Page.Header'
 Page.Toolbar = ({
 	className,
 	shouldPadSides = true,
+	shouldPadBottom = true,
 	...rest
 }) => {
 	const classes = classname({
 		'fl-asst-toolbar' : true,
 		'fl-asst-pad-sides' : shouldPadSides,
+		'fl-asst-pad-bottom' : shouldPadBottom,
 	}, className )
 	return (
 		<div className={classes} {...rest} />

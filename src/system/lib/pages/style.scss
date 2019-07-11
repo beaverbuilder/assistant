@@ -1,5 +1,5 @@
 .fl-asst {
-    
+
     .fl-asst-pad-top {
         padding-top:  var(--fl-asst-outer-space);
     }
@@ -38,5 +38,12 @@
                 margin-right:0;
             }
         }
+    }
+
+    .fl-asst-scroller {
+        flex: 1 1 auto;
+        min-height:0;
+        max-height:100%;
+        overflow: auto;
     }
 }

@@ -149,37 +149,41 @@ export const Main = () => {
 			</>
 			}
 
-			{ results && !hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
+			<div className="fl-asst-scroller">
 
-			{ groups.length > 0 &&
-				<List
-					items={groups}
-					isListSection={ item => 'undefined' !== typeof item.label }
-					getSectionItems={ section => section.items ? section.items : [] }
+				{ results && !hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
 
-					getItemProps={ ( item, defaultProps, isSection ) => {
-						let props = { ...defaultProps }
+				{ groups.length > 0 &&
+					<List
+						items={groups}
+						isListSection={ item => 'undefined' !== typeof item.label }
+						getSectionItems={ section => section.items ? section.items : [] }
 
-						if ( isSection ) {
-							props.label = item.label
-						} else {
-							props.shouldAlwaysShowThumbnail = true
+						getItemProps={ ( item, defaultProps, isSection ) => {
+							let props = { ...defaultProps }
 
-							if ( 'undefined' !== typeof item.label ) {
+							if ( isSection ) {
 								props.label = item.label
-							} else if ( 'undefined' !== typeof item.title ) {
-								props.label = item.title
+							} else {
+								props.shouldAlwaysShowThumbnail = true
+
+								if ( 'undefined' !== typeof item.label ) {
+									props.label = item.label
+								} else if ( 'undefined' !== typeof item.title ) {
+									props.label = item.title
+								}
+
+								if ( 'undefined' !== typeof item.thumbnail ) {
+									props.thumbnail = item.thumbnail
+								}
 							}
 
-							if ( 'undefined' !== typeof item.thumbnail ) {
-								props.thumbnail = item.thumbnail
-							}
-						}
+							return props
+						}}
+					/>
+				}
+			</div>
 
-						return props
-					}}
-				/>
-			}
         </Page>
     )
 }
