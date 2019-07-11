@@ -19,7 +19,7 @@ class OnHeartbeatReceived {
 
 		foreach ( $data as $key => $route ) {
 			if ( strstr( $key, 'fl-assistant-' ) ) {
-				$request          = array_reduce( array( $route ), 'rest_preload_api_request', array() );
+				$request          = array_reduce( [ $route ], 'rest_preload_api_request', [] );
 				$response[ $key ] = $request[ $route ]['body'];
 			}
 		}

@@ -10,7 +10,7 @@ class PostService {
 	 */
 	public function get_stati() {
 		$data  = [];
-		$stati = get_post_stati( array(), 'objects' );
+		$stati = get_post_stati( [], 'objects' );
 
 		foreach ( $stati as $slug => $status ) {
 			$data[ $slug ] = esc_html( $status->label );
@@ -26,9 +26,9 @@ class PostService {
 	public function get_types() {
 		$data  = [];
 		$types = get_post_types(
-			array(
+			[
 				'public' => true,
-			), 'objects'
+			], 'objects'
 		);
 
 		foreach ( $types as $slug => $type ) {
@@ -41,20 +41,20 @@ class PostService {
 			if ( 'attachment' === $slug ) {
 				continue;
 			}
-			$data[ $slug ] = array(
+			$data[ $slug ] = [
 				'canExport'      => $type->can_export,
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,
-				'supports'       => array(
+				'supports'       => [
 					'excerpt' => post_type_supports( $slug, 'excerpt' ),
-				),
-				'labels'         => array(
+				],
+				'labels'         => [
 					'singular' => esc_html( $type->labels->singular_name ),
 					'plural'   => esc_html( $type->labels->name ),
 					'newItem'  => esc_html( $type->labels->new_item ),
 					'editItem' => esc_html( $type->labels->edit_item ),
-				),
-			);
+				],
+			];
 		}
 
 		return $data;
@@ -73,17 +73,17 @@ class PostService {
 				if ( ! $taxonomy->public || ! $taxonomy->show_ui || 'post_format' === $taxonomy_slug ) {
 					continue;
 				}
-				$data[ $taxonomy_slug ] = array(
+				$data[ $taxonomy_slug ] = [
 					'description'    => $taxonomy->description,
 					'isHierarchical' => $taxonomy->hierarchical,
-					'labels'         => array(
+					'labels'         => [
 						'singular'   => esc_html( $taxonomy->labels->singular_name ),
 						'plural'     => esc_html( $taxonomy->labels->name ),
 						'newItem'    => sprintf( esc_html_x( 'New %s', 'Singular term name.', 'fl-assistant' ), $taxonomy->labels->singular_name ),
 						'addNewItem' => esc_html( $taxonomy->labels->add_new_item ),
 						'editItem'   => esc_html( $taxonomy->labels->edit_item ),
-					),
-				);
+					],
+				];
 			}
 		}
 

@@ -61,9 +61,9 @@ class UserService {
 
 		$counts = count_users();
 
-		$counts_by_user_role = array(
+		$counts_by_user_role = [
 			'total' => $counts['total_users'],
-		);
+		];
 
 		foreach ( $counts['avail_roles'] as $role => $count ) {
 			$counts_by_user_role[ $role ] = $count;

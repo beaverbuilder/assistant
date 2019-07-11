@@ -17,7 +17,7 @@ class Plugin {
 	 * Providers are registered in the order they are listed here
 	 * @var array
 	 */
-	 static $providers = [
+	static $providers = [
 		PluginProvider::class,
 		RestProvider::class,
 		CloudProvider::class,

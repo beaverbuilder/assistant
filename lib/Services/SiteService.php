@@ -216,7 +216,7 @@ class SiteService {
 
 		$customize_url = add_query_arg( 'url', urlencode( $current_url ), wp_customize_url() );
 		if ( is_customize_preview() ) {
-			$customize_url = add_query_arg( array( 'changeset_uuid' => $wp_customize->changeset_uuid() ), $customize_url );
+			$customize_url = add_query_arg( [ 'changeset_uuid' => $wp_customize->changeset_uuid() ], $customize_url );
 		}
 
 		return $customize_url;
