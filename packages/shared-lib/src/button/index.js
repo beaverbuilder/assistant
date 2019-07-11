@@ -64,6 +64,7 @@ Button.Group = ({
     className,
     direction = 'row',
     shouldHandleOverflow = true,
+    label,
     ...rest
 }) => {
     const [needsOverflow, setNeedsOverflow] = useState(false)
@@ -170,6 +171,7 @@ Button.Group = ({
 
     return (
         <>
+            { label && <label>{label}</label> }
             <div {...props}>
                 { children }
                 { needsOverflow && (
