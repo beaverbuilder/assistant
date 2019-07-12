@@ -28,10 +28,11 @@ class OnEnqueueScripts {
 			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
 
 			/* New UI Props */
-			'window'             => $user_state['window'],
 			'appearance'         => $user_state['appearance'],
-			'shouldShowLabels'   => $user_state['shouldShowLabels'],
 			'history'            => $user_state['history'],
+			'searchHistory'      => $user_state['searchHistory'],
+			'shouldShowLabels'   => $user_state['shouldShowLabels'],
+			'window'             => $user_state['window'],
 		];
 	}
 

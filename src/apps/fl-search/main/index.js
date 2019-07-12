@@ -1,16 +1,17 @@
-import React, { useRef, useState, useContext } from 'fl-react'
+import React, { useEffect, useRef, useState, useContext } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from 'assistant/i18n'
-import { useComponentUpdate } from 'assistant/utils/react'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSearchResults } from 'assistant/utils/wordpress'
-import { useSystemState } from 'assistant/data'
+import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
 
 export const Main = () => {
-	const { apps } = useSystemState()
-	const [ keyword, setKeyword ] = useState( '' )
+	const { apps, searchHistory } = useSystemState()
+	const { setSearchHistory } = getSystemActions()
+	const { keyword } = useAppState()
+	const { setKeyword } = getAppActions()
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
 	const timeout = useRef( null )
@@ -20,7 +21,7 @@ export const Main = () => {
 		'fl-asst-search-is-loading': loading,
 	} )
 
-	useComponentUpdate( () => {
+	useEffect( () => {
 		const { config, routes } = getRequestConfig()
 
 		cancelRequest()
@@ -33,7 +34,7 @@ export const Main = () => {
 		timeout.current = setTimeout( () => {
 			setLoading( true )
 
-			request.current = getSearchResults( routes, response => {
+			request.current = getSearchResults( keyword, routes, response => {
 				const newResults = {}
 
 				response.map( ( result, key ) => {
@@ -54,6 +55,7 @@ export const Main = () => {
 
 				setResults( newResults )
 				setLoading( false )
+				setSearchHistory( keyword )
 			} )
 		}, 1000 )
 
@@ -123,13 +125,20 @@ export const Main = () => {
 
 			{ '' === keyword &&
 			<>
-				<Page.Pad bottom={false}>
-					<Button.Group label={__('Recent Searches')}>
-						<Button>{__('"About"')}</Button>
-						<Button>{__('"Page Builder"')}</Button>
-						<Button>{__('"WordPress"')}</Button>
-					</Button.Group>
-				</Page.Pad>
+				{ searchHistory.length &&
+					<Page.Pad bottom={false}>
+						<Button.Group label={__('Recent Searches')}>
+							{ searchHistory.map( ( keyword, key ) =>
+								<Button
+									key={ key }
+									onClick={ e => setKeyword( keyword ) }
+								>
+									"{ keyword }"
+								</Button>
+							) }
+						</Button.Group>
+					</Page.Pad>
+				}
 				<Page.Pad bottom={false} >
 					<Button.Group label={__('Post Type')}>
 						<Button>{__('Posts')}</Button>
