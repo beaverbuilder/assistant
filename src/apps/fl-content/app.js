@@ -30,8 +30,9 @@ const Main = ( { match } ) => {
 		<Page shouldPadSides={false}>
 
 			<Button.Group>
-				{ Object.keys( contentTypes ).map( type =>
+				{ Object.keys( contentTypes ).map( ( type, i ) =>
 					<Button
+						key={i}
 						isSelected={ type === query.post_type }
 						onClick={ () => {
 							query.post_type = type
