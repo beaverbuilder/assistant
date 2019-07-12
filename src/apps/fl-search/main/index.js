@@ -104,7 +104,7 @@ export const Main = () => {
 	const groups = hasResults ? Object.entries( results ).map( ([key, group]) => group[0] ) : []
 
     return (
-        <Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false}>
+        <Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
 
             <Page.Toolbar>
 				<div className='fl-asst-search-form-simple'>
@@ -138,7 +138,7 @@ export const Main = () => {
 						<Button>{__('Products')}</Button>
 					</Button.Group>
 				</Page.Pad>
-				<Page.Pad bottom={false} >
+				<Page.Pad >
 					<Button.Group label={__('Status')}>
 						<Button>{__('Published')}</Button>
 						<Button>{__('Drafted')}</Button>

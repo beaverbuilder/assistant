@@ -1,6 +1,7 @@
 import React from 'fl-react'
 import { Switch, Route, Link } from 'fl-react-router-dom'
-import { Page } from 'assistant/lib'
+import { __ } from 'assistant'
+import { Page, Button, Icon } from 'assistant/lib'
 
 export const Content = ( { match } ) => (
 	<Switch>
@@ -12,8 +13,16 @@ export const Content = ( { match } ) => (
 const Main = ( { match } ) => {
 	return (
 		<Page>
-			<p>Welcome to the content app!</p>
-			<Link to={`${match.url}/post/1`}>Test Post Detail View</Link>
+			<Page.Toolbar>
+				<Button.Group>
+					<Button>
+						<Icon.Search />
+					</Button>
+					<Button>{__('Posts')}</Button>
+					<Button>{__('Posts')}</Button>
+					<Button>{__('By Me')}</Button>
+				</Button.Group>
+			</Page.Toolbar>
 		</Page>
 	)
 }
