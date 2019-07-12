@@ -9,6 +9,14 @@ registerApp( 'fl-content', {
 	accent: {
 		color: '#FF5A5E'
 	},
+	state: {
+		query: {
+			order: 'ASC',
+			orderby: 'title',
+			post_status: 'any',
+			post_type: 'post',
+		},
+	},
 	search: {
 		label: __( 'Content' ),
 		priority: 1,
