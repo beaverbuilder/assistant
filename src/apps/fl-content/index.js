@@ -5,6 +5,15 @@ import { Content } from './app'
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: Content,
+	icon: Content.Icon,
+	state: {
+		query: {
+			order: 'ASC',
+			orderby: 'title',
+			post_status: 'any',
+			post_type: 'post',
+		},
+	},
 	search: {
 		label: __( 'Content' ),
 		priority: 1,

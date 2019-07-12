@@ -1,7 +1,9 @@
-import React from 'fl-react'
+import React, { useEffect, useState } from 'fl-react'
 import { Switch, Route, Link } from 'fl-react-router-dom'
 import { __ } from 'assistant'
-import { Page, Button, Icon } from 'assistant/lib'
+import { getPagedContent } from 'assistant/utils/wordpress'
+import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
+import { Button, List, Page, Icon } from 'assistant/ui'
 
 export const Content = ( { match } ) => (
 	<Switch>
@@ -11,18 +13,38 @@ export const Content = ( { match } ) => (
 )
 
 const Main = ( { match } ) => {
+	const [ items, setItems ] = useState( [] )
+	const { contentTypes } = getSystemConfig()
+	const { query } = useAppState()
+	const { setQuery } = getAppActions()
+
+	useEffect( () => {
+		setItems( [] )
+
+		getPagedContent( 'posts', query, 0, ( data, hasMore ) => {
+			setItems( data )
+		} )
+	}, [ query ] )
+
 	return (
-		<Page>
-			<Page.Toolbar>
-				<Button.Group>
-					<Button>
-						<Icon.Search />
+		<Page shouldPadSides={false}>
+
+			<Button.Group>
+				{ Object.keys( contentTypes ).map( type =>
+					<Button
+						isSelected={ type === query.post_type }
+						onClick={ () => {
+							query.post_type = type
+							setQuery( { ...query } )
+						} }
+					>
+						{ contentTypes[ type ].labels.plural }
 					</Button>
-					<Button>{__('Posts')}</Button>
-					<Button>{__('Posts')}</Button>
-					<Button>{__('By Me')}</Button>
-				</Button.Group>
-			</Page.Toolbar>
+				) }
+			</Button.Group>
+
+			<List items={ items } />
+
 		</Page>
 	)
 }

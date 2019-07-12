@@ -1,9 +1,8 @@
-import React, { useState } from 'fl-react'
+import React, { useEffect, useState } from 'fl-react'
 import { Switch, Route } from 'fl-react-router-dom'
 import { __ } from 'assistant'
+import { getPagedContent } from 'assistant/utils/wordpress'
 import { Page, List, Button } from 'assistant/ui'
-
-import { comments } from './test-data'
 
 export const Alerts = ( { match } ) => (
 	<Switch>
@@ -34,8 +33,19 @@ const Main = () => {
 }
 
 const CommentsTab = () => {
+	const [ comments, setComments ] = useState( [] )
+	const offset = comments.length
 	const hasComments = comments.length > 0
 	const baseURL = ''
+	const query = {
+		commentStatus: 'all',
+	}
+
+	useEffect( () => {
+		getPagedContent( 'comments', query, offset, ( data, hasMore ) => {
+			setComments( comments.concat( data ) )
+		} )
+	}, [] )
 
 	return (
 		<>
@@ -59,10 +69,41 @@ const CommentsTab = () => {
 		</>
 	)
 }
+
 const UpdatesTab = () => {
+	const [ updates, setUpdates ] = useState( [] )
+	const offset = updates.length
+	const hasUpdates = updates.length > 0
+	const baseURL = ''
+	const query = {
+		updateType: 'all',
+	}
+
+	useEffect( () => {
+		getPagedContent( 'updates', query, offset, ( data, hasMore ) => {
+			setComments( updates.concat( data ) )
+		} )
+	}, [] )
+
 	return (
 		<>
-			<div className="fl-asst-padded">You don't have any updates</div>
+			{ !hasUpdates && <div>{__("You don't have any!")}</div> }
+			{ hasUpdates &&
+			<List
+				items={updates}
+				getItemProps={ (item, i) => {
+					return {
+						key: item.key,
+						label: item.meta,
+						description: item.content,
+						thumbnail: item.thumbnail,
+						to: {
+							pathname: `${baseURL}/updates/${item.key}`,
+							state: item
+						}
+					}
+				}}
+			/> }
 		</>
 	)
 }
