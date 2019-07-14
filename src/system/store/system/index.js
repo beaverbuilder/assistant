@@ -1,27 +1,36 @@
-import { registerStore, useStore, getStore, getDispatch } from 'shared-utils/store'
+import {registerStore, useStore, getStore, getDispatch} from 'shared-utils/store'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 
-registerStore( 'fl-assistant/system', {
-	state: FL_ASSISTANT_INITIAL_STATE,
-	actions,
-	reducers,
-	effects,
-} )
+import cloud from 'shared-utils/cloud';
+
+registerStore('fl-assistant/system', {
+    state: {
+        ...FL_ASSISTANT_INITIAL_STATE,
+        isCloudConnected: cloud.auth.isConnected(),
+        cloudUser: cloud.auth.getUser(),
+        cloudToken: cloud.auth.getToken(),
+        notices: [],
+        errors: []
+    },
+    actions,
+    reducers,
+    effects,
+})
 
 export const useSystemState = () => {
-	return useStore( 'fl-assistant/system' )
+    return useStore('fl-assistant/system')
 }
 
 export const getSystemStore = () => {
-	return getStore( 'fl-assistant/system' )
+    return getStore('fl-assistant/system')
 }
 
 export const getSystemActions = () => {
-	return getDispatch( 'fl-assistant/system' )
+    return getDispatch('fl-assistant/system')
 }
 
 export const getSystemConfig = () => {
-	return { ...FL_ASSISTANT_CONFIG }
+    return {...FL_ASSISTANT_CONFIG}
 }

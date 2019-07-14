@@ -1,7 +1,7 @@
 import defaults from './defaults'
 import {InterceptorManager} from "./interceptors";
 import {addQueryArgs, isAbsoluteURL} from "../url";
-import {merge} from 'lodash'
+
 
 export const defaultBodyParser = (response) => {
     const type = response.headers.get('content-type')
@@ -11,6 +11,22 @@ export const defaultBodyParser = (response) => {
     }
 
     return response.json()
+}
+
+
+class HttpError extends Error {
+    constructor(status, message, ...params) {
+        super(...params);
+
+        // Maintains proper stack trace for where our error was thrown (only available on V8)
+        // if (Error.captureStackTrace) {
+        //     Error.captureStackTrace(this, CustomError);
+        // }
+
+        this.name = "HttpError";
+        this.status = status;
+        this.message = message;
+    }
 }
 
 
@@ -116,7 +132,7 @@ export class HttpClient {
                 response = this._interceptResponse(response);
 
                 if (!response.ok) {
-                    throw new Error(response.status + ":" + response.statusText);
+                    throw new HttpError(response.status, response.statusText);
                 }
 
                 return this.bodyParser(response);

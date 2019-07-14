@@ -1,5 +1,5 @@
 import http from './http'
-import { isObject } from 'lodash'
+import {isObject} from 'lodash'
 
 const FL_CLOUD_AUTH_STORAGE_KEY = "fl-cloud-auth";
 const FL_CLOUD_USER_KEY = "fl-cloud-user";
@@ -14,26 +14,28 @@ http.interceptors.request.use(
         }
         return request;
     },
-    (error) => {}
+    (error) => {
+        return error;
+    }
 );
 
 
 http.interceptors.response.use(
-        (response) => {
-            if(response.status === 401) {
+    (response) => {
+        if (response.status === 401) {
+            removeToken();
+            removeUser();
+        }
 
-                removeToken();
-                removeUser();
-                alert('Unauthorized\n' + JSON.stringify(response.body));
-            }
+        if (response.status === 403) {
+            alert('Forbidden\n' + JSON.stringify(response.body));
+        }
 
-            if(response.status === 403) {
-                alert('Forbidden\n' + JSON.stringify(response.body));
-            }
-
-            return response;
-        },
-        (error) => {}
+        return response;
+    },
+    (error) => {
+        return error;
+    }
 );
 
 export const hasToken = () => {
@@ -72,11 +74,11 @@ export const removeUser = () => {
 
 export const login = async (email, password) => {
     const credentials = {email, password}
-    const auth = await http.post('/auth/login', credentials);
-    setToken(auth);
-    const user = await me();
+    const token = await http.post('/auth/login', credentials);
+    setToken(token);
     notifyAuthStatusChanged();
-    return user;
+    return token;
+
 }
 
 export const me = async () => {

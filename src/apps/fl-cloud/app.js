@@ -2,24 +2,17 @@ import React, {useState, useEffect} from 'fl-react'
 // import {Switch, Route, Redirect, Link, withRouter} from 'fl-react-router-dom'
 import {App, Page, Icon} from 'assistant/lib'
 
+import { useSystemState, getSystemActions } from "assistant/store";
+
 import LoginForm from './components/login-form'
-import cloud from 'assistant/cloud'
 import './style.scss'
 
 
 export const CloudApp = () => {
 
-    const [isConnected, setIsConnected] = useState(false);
+    const { isCloudConnected } = useSystemState();
 
-    useEffect(() => {
-        setIsConnected(cloud.auth.isConnected());
-
-        cloud.auth.onAuthStatusChanged(() => {
-            setIsConnected(cloud.auth.isConnected());
-        })
-    }, []);
-
-    if (isConnected) {
+    if (isCloudConnected) {
         return <ConnectedScreen/>;
     } else {
         return <NotConnectedScreen/>;
@@ -49,30 +42,20 @@ const NotConnectedScreen = () => {
 }
 
 const ConnectedScreen = () => {
-
-    const [user, setUser] = useState({})
-    const [auth, setAuth] = useState({})
+    const { cloudUser, cloudToken } = useSystemState();
+    const { doLogout } = getSystemActions();
 
     const disconnect = () => {
-        cloud.auth.logout()
+        doLogout();
     }
 
-    useEffect(() => {
-
-        const auth = cloud.auth.getToken()
-        const user = cloud.auth.getUser()
-
-        setAuth(auth);
-        setUser(user);
-
-    }, []);
 
     return (
         <Page className="fl-app-cloud">
             <p className="center-text">Congrats! You're connected now.</p>
             <div style={{maxWidth: '90%', margin: 'auto'}}>
-                <pre>{JSON.stringify(user, null, 4)}</pre>
-                <pre>{JSON.stringify(auth, null, 4)}</pre>
+                <pre>{JSON.stringify(cloudUser, null, 4)}</pre>
+                <pre>{JSON.stringify(cloudToken, null, 4)}</pre>
             </div>
             <button className='fl-asst-cloud-connect-button' onClick={disconnect}>Disconnect</button>
         </Page>

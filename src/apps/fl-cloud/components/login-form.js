@@ -1,35 +1,40 @@
 import React, {useState} from 'fl-react'
 
-import cloud from 'assistant/cloud'
+import {useSystemState, getSystemActions} from "assistant/store"
+
 
 export default function LoginForm(props) {
 
+    const {doingLogin, errors, notices} = useSystemState();
+    const {doLogin} = getSystemActions();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (event) => {
         if (event) {
             event.preventDefault();
 
-            setLoading(true);
-            cloud.auth.login(email, password)
-                .then((user) => {
-                    console.log(user, 'logged in user');
-                })
-                .catch((err) => {
-                    console.log(err, 'problem logging in');
-                    setLoading(false);
-                });
+            doLogin(email, password);
 
         }
     }
 
 
-    return loading ? (
+    return doingLogin ? (
         <p>Loading...</p>
     ) : (
         <form onSubmit={handleSubmit}>
+            {(errors.length > 0) && (
+                <div class="errors">
+                    {errors.map((error) => {
+                        return (
+                            <li>{error}</li>
+                        )
+                    })
+                    }
+                </div>
+            )}
             <div>
                 <label>Email</label>
                 <input type="email"
