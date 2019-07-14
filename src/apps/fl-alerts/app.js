@@ -53,9 +53,9 @@ const CommentsTab = () => {
 			{ hasComments &&
 			<List
 				items={comments}
-				getItemProps={ (item, i) => {
+				getItemProps={ (item, defaultProps) => {
 					return {
-						key: item.postID,
+						key: defaultProps.key,
 						label: <em><strong>{item.email}</strong> commented:</em>,
 						description: item.content,
 						thumbnail: item.thumbnail,

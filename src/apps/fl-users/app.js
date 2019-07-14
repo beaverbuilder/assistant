@@ -12,8 +12,7 @@ export const Users = ( { match } ) => (
 const Main = ( { match } ) => {
 	return (
 		<Page>
-			<p>Welcome to the users app!</p>
-			<Link to={`${match.url}/user/1`}>Test User Detail View</Link>
+			<p>Users</p>
 		</Page>
 	)
 }

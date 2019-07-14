@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'fl-react'
 import { Switch, Route, Link } from 'fl-react-router-dom'
+import { __ } from 'assistant'
 import { getPagedContent } from 'assistant/utils/wordpress'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
-import { Button, List, Page } from 'assistant/lib'
+import { Button, List, Page, Icon } from 'assistant/ui'
 
 export const Content = ( { match } ) => (
 	<Switch>
@@ -26,11 +27,12 @@ const Main = ( { match } ) => {
 	}, [ query ] )
 
 	return (
-		<Page>
+		<Page shouldPadSides={false}>
 
 			<Button.Group>
-				{ Object.keys( contentTypes ).map( type =>
+				{ Object.keys( contentTypes ).map( ( type, i ) =>
 					<Button
+						key={i}
 						isSelected={ type === query.post_type }
 						onClick={ () => {
 							query.post_type = type
