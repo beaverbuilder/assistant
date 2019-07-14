@@ -177,33 +177,6 @@ export const doingLogin = (state = false, action) => {
     }
 }
 
-export const notices = ( state = [], action ) => {
-    switch(action.type) {
-        case 'SET_NOTICE':
-            const notices = [...state];
-            notices.push(action.message);
-            return notices;
-        case 'CLEAR_NOTICES':
-            return [];
-        default:
-            return state;
-
-    }
-}
-
-export const errors = (state = [], action) => {
-    switch(action.type) {
-        case 'SET_ERROR':
-            const errors = [...state];
-            errors.push(action.message);
-            return errors;
-        case 'CLEAR_ERRORS':
-            return [];
-        default:
-            return state;
-    }
-}
-
 export const cloudToken = (state = {}, action) => {
     switch (action.type) {
         case 'SET_CLOUD_TOKEN':

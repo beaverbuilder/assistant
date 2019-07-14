@@ -1,19 +1,21 @@
 import React, {useState, useEffect} from 'fl-react'
-// import {Switch, Route, Redirect, Link, withRouter} from 'fl-react-router-dom'
 import {App, Page, Icon} from 'assistant/lib'
 
 import { useSystemState, getSystemActions } from "assistant/store";
-
+import {Switch, Route, Redirect, Link, withRouter} from 'fl-react-router-dom'
 import LoginForm from './components/login-form'
+import {CloudMain} from './pages/main'
+
 import './style.scss'
 
-
-export const CloudApp = () => {
+export const CloudApp = (props) => {
 
     const { isCloudConnected } = useSystemState();
 
+    const CloudMainWithRouter = withRouter(CloudMain);
+
     if (isCloudConnected) {
-        return <ConnectedScreen/>;
+        return <CloudMainWithRouter/>;
     } else {
         return <NotConnectedScreen/>;
     }
@@ -41,23 +43,3 @@ const NotConnectedScreen = () => {
     );
 }
 
-const ConnectedScreen = () => {
-    const { cloudUser, cloudToken } = useSystemState();
-    const { doLogout } = getSystemActions();
-
-    const disconnect = () => {
-        doLogout();
-    }
-
-
-    return (
-        <Page className="fl-app-cloud">
-            <p className="center-text">Congrats! You're connected now.</p>
-            <div style={{maxWidth: '90%', margin: 'auto'}}>
-                <pre>{JSON.stringify(cloudUser, null, 4)}</pre>
-                <pre>{JSON.stringify(cloudToken, null, 4)}</pre>
-            </div>
-            <button className='fl-asst-cloud-connect-button' onClick={disconnect}>Disconnect</button>
-        </Page>
-    )
-};

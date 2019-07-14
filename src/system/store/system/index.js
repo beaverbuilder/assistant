@@ -1,9 +1,10 @@
 import {registerStore, useStore, getStore, getDispatch} from 'shared-utils/store'
+import cloud from 'shared-utils/cloud';
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 
-import cloud from 'shared-utils/cloud';
+
 
 registerStore('fl-assistant/system', {
     state: {
@@ -11,8 +12,6 @@ registerStore('fl-assistant/system', {
         isCloudConnected: cloud.auth.isConnected(),
         cloudUser: cloud.auth.getUser(),
         cloudToken: cloud.auth.getToken(),
-        notices: [],
-        errors: []
     },
     actions,
     reducers,

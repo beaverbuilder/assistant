@@ -90,20 +90,6 @@ export const setSearchHistory = ( keyword ) => {
 }
 
 
-export const doLogin = (email, password) => {
-	return {
-		type: 'DO_LOGIN',
-		email,
-		password
-	}
-}
-
-export const doLogout = () => {
-	return {
-		type: 'DO_LOGOUT'
-	}
-}
-
 export const setDoingLogin = (doingLogin) => {
 	return {
 		type: 'DOING_LOGIN',
@@ -115,32 +101,6 @@ export const setIsCloudConnected = (isCloudConnected) => {
 	return {
 		type: 'SET_IS_CLOUD_CONNECTED',
 		isCloudConnected
-	}
-}
-
-export const addNotice = (message) => {
-	return {
-		type: 'SET_NOTICE',
-		message
-	}
-}
-
-export const clearNotices = () => {
-	return {
-		type: 'CLEAR_NOTICES'
-	}
-}
-
-export const addError = (message) => {
-	return {
-		type: 'SET_ERROR',
-		message
-	}
-}
-
-export const clearErrors = () => {
-	return {
-		type: 'CLEAR_ERRORS'
 	}
 }
 
