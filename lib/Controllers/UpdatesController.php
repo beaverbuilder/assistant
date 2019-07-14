@@ -17,7 +17,7 @@ class UpdatesController extends AssistantController {
 			'/updates', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, '::updates' ],
+					'callback'            => [ $this, 'updates' ],
 					'args'                => [
 						'type' => [
 							'required' => false,
@@ -35,7 +35,7 @@ class UpdatesController extends AssistantController {
 			'/updates/count', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, '::updates_count' ],
+					'callback'            => [ $this, 'updates_count' ],
 					'permission_callback' => function() {
 						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
 					},

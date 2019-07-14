@@ -12,8 +12,7 @@ export const Media = ( { match } ) => (
 const Main = ( { match } ) => {
 	return (
 		<Page>
-			<p>Do you some media right here</p>
-			<Link to={`${match.url}/attachment/1`}>Test Attachment Detail View</Link>
+			<p>Media</p>
 		</Page>
 	)
 }

@@ -6,9 +6,6 @@ registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: Content,
 	icon: Content.Icon,
-	accent: {
-		color: '#FF5A5E'
-	},
 	state: {
 		query: {
 			order: 'ASC',

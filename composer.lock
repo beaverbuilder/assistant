@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9437a19cea6ba1243cfc45f9833f41c7",
+    "content-hash": "a3233a135756badcb4843b27dfa377e1",
     "packages": [],
     "packages-dev": [
         {
@@ -848,16 +848,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "c99e3be9d3e85f60646f152f9002d46ed7770d18"
+                "reference": "c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/c99e3be9d3e85f60646f152f9002d46ed7770d18",
-                "reference": "c99e3be9d3e85f60646f152f9002d46ed7770d18",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c",
+                "reference": "c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c",
                 "shasum": ""
             },
             "require": {
@@ -893,7 +893,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2018-10-30T05:52:18+00:00"
+            "time": "2019-07-08T05:24:54+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -1596,37 +1596,6 @@
             "time": "2016-10-03T07:35:21+00:00"
         },
         {
-            "name": "sempro/phpunit-pretty-print",
-            "version": "1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sempro/phpunit-pretty-print.git",
-                "reference": "415d2a22d173c376ffb01db57f5c88c07c3f8dea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sempro/phpunit-pretty-print/zipball/415d2a22d173c376ffb01db57f5c88c07c3f8dea",
-                "reference": "415d2a22d173c376ffb01db57f5c88c07c3f8dea",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0.0",
-                "phpunit/phpunit": ">=7.0.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Sempro\\PHPUnitPrettyPrinter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Prettify PHPUnit output",
-            "time": "2018-09-03T07:04:02+00:00"
-        },
-        {
             "name": "symfony/polyfill-ctype",
             "version": "v1.11.0",
             "source": {
@@ -1723,37 +1692,6 @@
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "time": "2019-06-13T22:48:21+00:00"
-        },
-        {
-            "name": "webberwu/phpunit-pretty-print",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webberwu/phpunit-pretty-print.git",
-                "reference": "fd36359ef295f0af640e347f77cdf08d8ed35f3c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webberwu/phpunit-pretty-print/zipball/fd36359ef295f0af640e347f77cdf08d8ed35f3c",
-                "reference": "fd36359ef295f0af640e347f77cdf08d8ed35f3c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0.0",
-                "phpunit/phpunit": ">=6.0.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Webber\\PHPUnitPrettyPrinter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Prettify PHPUnit output",
-            "time": "2018-06-05T09:22:55+00:00"
         },
         {
             "name": "webmozart/assert",
