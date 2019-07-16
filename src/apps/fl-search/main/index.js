@@ -103,17 +103,17 @@ export const Main = () => {
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
 	const hasResults = entries && entries.length
-	const groups = hasResults ? Object.entries( results ).map( ([key, group]) => group[0] ) : []
+	const groups = hasResults ? Object.entries( results ).map( ( [ key, group ] ) => group[0] ) : []
 
-    return (
-        <Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
+	return (
+		<Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
 
-            <Page.Toolbar>
+			<Page.Toolbar>
 				<div className='fl-asst-search-form-simple'>
 	                <input
 	                    value={keyword}
 	                    onChange={ e => setKeyword( e.target.value ) }
-	                    placeholder={ __('Search') }
+	                    placeholder={ __( 'Search' ) }
 	                />
 					{ loading &&
 						<div className='fl-asst-search-spinner'>
@@ -121,13 +121,13 @@ export const Main = () => {
 						</div>
 					}
 				</div>
-            </Page.Toolbar>
+			</Page.Toolbar>
 
 			{ '' === keyword &&
 			<>
 				{ searchHistory.length &&
 					<Page.Pad>
-						<Button.Group label={__('Recent Searches')}>
+						<Button.Group label={__( 'Recent Searches' )}>
 							{ searchHistory.map( ( keyword, key ) =>
 								<Button
 									key={ key }
@@ -144,9 +144,9 @@ export const Main = () => {
 
 			<div className="fl-asst-scroller">
 
-				{ results && !hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
+				{ results && ! hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
 
-				{ groups.length > 0 &&
+				{ 0 < groups.length &&
 					<List
 						items={groups}
 						isListSection={ item => 'undefined' !== typeof item.label }
@@ -177,6 +177,6 @@ export const Main = () => {
 				}
 			</div>
 
-        </Page>
-    )
+		</Page>
+	)
 }

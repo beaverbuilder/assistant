@@ -94,11 +94,11 @@ const InfoItem = ( {
 		newProps.to = to
 	}
 
-	const thumbClasses = classname({
-		'fl-asst-list-item-thumbnail' : true,
-		[`fl-asst-thumbnail-size-${thumbnailSize}`] : thumbnailSize,
-		'fl-asst-round' : color,
-	})
+	const thumbClasses = classname( {
+		'fl-asst-list-item-thumbnail': true,
+		[`fl-asst-thumbnail-size-${thumbnailSize}`]: thumbnailSize,
+		'fl-asst-round': color,
+	} )
 
 	return (
 		<Tag className={classes} {...newProps}>

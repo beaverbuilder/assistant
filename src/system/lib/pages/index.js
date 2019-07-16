@@ -68,7 +68,7 @@ Page.Header = ( { icon, label } ) => {
 			</div>
 			}
 
-			{ !isRoot && !isAppRoot &&
+			{ ! isRoot && ! isAppRoot &&
 			<div className="fl-asst-app-header-icon">
 				<button
 					onClick={history.goBack}
@@ -106,16 +106,16 @@ Page.Header = ( { icon, label } ) => {
 Page.Header.displayName = 'Page.Header'
 
 // Horizontal Toolbar - edge padding for controls
-Page.Toolbar = ({
+Page.Toolbar = ( {
 	className,
 	shouldPadSides = true,
 	shouldPadBottom = true,
 	...rest
-}) => {
-	const classes = classname({
-		'fl-asst-toolbar' : true,
-		'fl-asst-pad-sides' : shouldPadSides,
-		'fl-asst-pad-bottom' : shouldPadBottom,
+} ) => {
+	const classes = classname( {
+		'fl-asst-toolbar': true,
+		'fl-asst-pad-sides': shouldPadSides,
+		'fl-asst-pad-bottom': shouldPadBottom,
 	}, className )
 	return (
 		<div className={classes} {...rest} />
@@ -124,17 +124,17 @@ Page.Toolbar = ({
 Page.Toolbar.displayName = 'Page.Toolbar'
 
 // Padded box
-Page.Pad = ({
+Page.Pad = ( {
 	className,
 	top = true,
 	sides = true,
 	bottom = true,
 	...rest
-}) => {
-	const classes = classname({
-		'fl-asst-pad-top' : top,
-		'fl-asst-pad-sides' : sides,
-		'fl-asst-pad-bottom' : bottom,
+} ) => {
+	const classes = classname( {
+		'fl-asst-pad-top': top,
+		'fl-asst-pad-sides': sides,
+		'fl-asst-pad-bottom': bottom,
 	}, className )
 
 	return <div className={classes} {...rest} />

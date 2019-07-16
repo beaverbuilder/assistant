@@ -2,27 +2,27 @@ import React, { useEffect, useState, useContext } from 'fl-react'
 import { Switch, Route } from 'fl-react-router-dom'
 import { __ } from 'assistant'
 import { getPagedContent } from 'assistant/utils/wordpress'
-import { Page, List, Button, Nav, App } from 'assistant/ui'
+import { Page, List, Button, App } from 'assistant/ui'
 
 export const Alerts = ( { match } ) => (
 	<Switch>
 		<Route exact path={`${match.url}/`} component={Main} />
-		<Route path={`/fl-alerts/comments/:id`} component={Page.Comment} />
+		<Route path={'/fl-alerts/comments/:id'} component={Page.Comment} />
 	</Switch>
 )
 
 const Main = () => {
-	const [tab, setTab] = useState('comments')
+	const [ tab, setTab ] = useState( 'comments' )
 	const isSelected = key => key === tab
 
 	return (
 		<Page shouldPadSides={false}>
 
-			<div style={{ padding: '0 var(--fl-asst-outer-space)', display:'flex', flexDirection: 'column' }}>
+			<div style={{ padding: '0 var(--fl-asst-outer-space)', display: 'flex', flexDirection: 'column' }}>
 
 				<Button.Group>
-					<Button isSelected={isSelected('comments')} onClick={ () => setTab('comments') }>{__('Comments')}</Button>
-					<Button isSelected={isSelected('updates')} onClick={ () => setTab('updates') }>{__('Updates')}</Button>
+					<Button isSelected={isSelected( 'comments' )} onClick={ () => setTab( 'comments' ) }>{__( 'Comments' )}</Button>
+					<Button isSelected={isSelected( 'updates' )} onClick={ () => setTab( 'updates' ) }>{__( 'Updates' )}</Button>
 				</Button.Group>
 			</div>
 
@@ -36,7 +36,7 @@ const CommentsTab = () => {
 	const [ comments, setComments ] = useState( [] )
 	const { handle } = useContext( App.Context )
 	const offset = comments.length
-	const hasComments = comments.length > 0
+	const hasComments = 0 < comments.length
 	const query = {
 		commentStatus: 'all',
 	}
@@ -49,12 +49,13 @@ const CommentsTab = () => {
 
 	return (
 		<>
-			{ !hasComments && <div>{__("You don't have any!")}</div> }
+			{ ! hasComments && <div>{__( 'You don\'t have any!' )}</div> }
 			{ hasComments &&
 			<List
 				items={comments}
-				getItemProps={ (item, defaultProps) => {
+				getItemProps={ ( item, defaultProps ) => {
 					return {
+						...defaultProps,
 						key: item.id,
 						label: <em><strong>{item.email}</strong> commented:</em>,
 						description: item.content,
@@ -72,9 +73,9 @@ const CommentsTab = () => {
 
 const UpdatesTab = () => {
 	const [ updates, setUpdates ] = useState( [] )
+	const { handle } = useContext( App.Context )
 	const offset = updates.length
-	const hasUpdates = updates.length > 0
-	const baseURL = ''
+	const hasUpdates = 0 < updates.length
 	const query = {
 		updateType: 'all',
 	}
@@ -87,18 +88,19 @@ const UpdatesTab = () => {
 
 	return (
 		<>
-			{ !hasUpdates && <div>{__("You don't have any!")}</div> }
+			{ ! hasUpdates && <div>{__( 'You don\'t have any!' )}</div> }
 			{ hasUpdates &&
 			<List
 				items={updates}
-				getItemProps={ (item, i) => {
+				getItemProps={ ( item, defaultProps ) => {
 					return {
+						...defaultProps,
 						key: item.key,
 						label: item.meta,
 						description: item.content,
 						thumbnail: item.thumbnail,
 						to: {
-							pathname: `/${baseURL}/updates/${item.key}`,
+							pathname: `/${handle}/updates/${item.key}`,
 							state: item
 						}
 					}
