@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'fl-react'
 import { Switch, Route } from 'fl-react-router-dom'
 import { __ } from 'assistant'
+import { useAppState, getAppActions } from 'assistant/data'
 import { getPagedContent } from 'assistant/utils/wordpress'
 import { Page, List, Button, App } from 'assistant/ui'
 
@@ -8,10 +9,12 @@ export const Alerts = ( { match } ) => (
 	<Switch>
 		<Route exact path={`${match.url}/`} component={Main} />
 		<Route path={'/fl-alerts/comments/:id'} component={Page.Comment} />
+		<Route path={'/fl-alerts/update'} component={Page.Update} />
 	</Switch>
 )
 
 const Main = () => {
+
 	const [ tab, setTab ] = useState( 'comments' )
 	const isSelected = key => key === tab
 
@@ -54,11 +57,12 @@ const CommentsTab = () => {
 			<List
 				items={comments}
 				getItemProps={ ( item, defaultProps ) => {
+					console.log(item)
 					return {
 						...defaultProps,
 						key: item.id,
-						label: <em><strong>{item.email}</strong> commented:</em>,
-						description: item.content,
+						label: <em><strong>{item.authorEmail}</strong> commented:</em>,
+						description: item.postTitle,
 						thumbnail: item.thumbnail,
 						to: {
 							pathname: `/${handle}/comments/${item.id}`,
@@ -102,15 +106,13 @@ const UpdatesTab = () => {
 						}
 					}
 
-					console.log(item)
-
 					return {
 						...defaultProps,
 						label: item.title,
 						description: item.meta,
 						thumbnail: item.thumbnail,
 						to: {
-							pathname: `/${handle}/updates/${item.key}`,
+							pathname: `/${handle}/update`,
 							state: item
 						}
 					}

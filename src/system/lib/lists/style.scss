@@ -102,6 +102,10 @@
                 margin:0;
             }
         }
+
+        &:first-child hr {
+            display: none;
+        }
     }
 
 }
