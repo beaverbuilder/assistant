@@ -68,13 +68,6 @@ const NavManager = withRouter( ( { children, location, match, history, onChange 
 	)
 } )
 
-Nav.SubLink = ( { to, ...rest } ) => {
-	const { path } = useContext( Nav.Context )
-	return (
-		<Link to={ path + to } {...rest} />
-	)
-}
-
 Nav.Link = Link
 
 Nav.Switch = Switch
@@ -84,8 +77,14 @@ Nav.Route = Route
 /**
 * Link
 */
+Nav.SubLink = ( { to, ...rest } ) => {
+	const { path } = useContext( Nav.Context )
+	return (
+		<Link to={ path + to } {...rest} />
+	)
+}
 Nav.AppLink = ( { to, ...rest } ) => {
 	const { path } = useContext( Nav.Context )
-	return <Link to={`${path}${to}`} {...rest} />
+	return <Link to={to} {...rest} />
 }
 Nav.AppLink.displayName = 'Nav.AppLink'

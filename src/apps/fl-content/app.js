@@ -44,7 +44,10 @@ const Main = ( { match } ) => {
 				) }
 			</Button.Group>
 
-			<List items={ items } />
+			<List
+				items={ items }
+				defaultItemProps={{ shouldAlwaysShowThumbnail: true }}
+			/>
 
 		</Page>
 	)

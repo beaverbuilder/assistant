@@ -90,7 +90,7 @@ const InfoItem = ( {
 	let newProps = {}
 
 	if ( to ) {
-		Tag = Nav.AppLink
+		Tag = Nav.Link
 		newProps.to = to
 	}
 

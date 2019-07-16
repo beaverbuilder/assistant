@@ -126,7 +126,7 @@ export const Main = () => {
 			{ '' === keyword &&
 			<>
 				{ searchHistory.length &&
-					<Page.Pad bottom={false}>
+					<Page.Pad>
 						<Button.Group label={__('Recent Searches')}>
 							{ searchHistory.map( ( keyword, key ) =>
 								<Button
@@ -139,22 +139,6 @@ export const Main = () => {
 						</Button.Group>
 					</Page.Pad>
 				}
-				<Page.Pad bottom={false} >
-					<Button.Group label={__('Post Type')}>
-						<Button>{__('Posts')}</Button>
-						<Button>{__('Pages')}</Button>
-						<Button>{__('Forms')}</Button>
-						<Button>{__('Products')}</Button>
-					</Button.Group>
-				</Page.Pad>
-				<Page.Pad >
-					<Button.Group label={__('Status')}>
-						<Button>{__('Published')}</Button>
-						<Button>{__('Drafted')}</Button>
-						<Button>{__('Pending')}</Button>
-						<Button>{__('Trashed')}</Button>
-					</Button.Group>
-				</Page.Pad>
 			</>
 			}
 

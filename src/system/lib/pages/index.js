@@ -3,6 +3,7 @@ import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App } from '../'
+import { Comment, Update, Post, Attachment } from './detail-pages'
 import './style.scss'
 
 export const Page = ( {
@@ -141,10 +142,14 @@ Page.Pad = ({
 Page.Pad.displayName = 'Page.Pad'
 
 
+Page.Comment = Comment
+Page.Comment.displayName = 'Page.Comment'
 
+Page.Update = Update
+Page.Update.displayName = 'Page.Update'
 
-Page.PostDetail = () => {
-	return (
-		<Page>Yo!</Page>
-	)
-}
+Page.Post = Post
+Page.Post.displayName = 'Page.Post'
+
+Page.Attachment = Attachment
+Page.Attachment.displayName = 'Page.Attachment'

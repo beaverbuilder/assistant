@@ -1,5 +1,5 @@
-import React, { Fragment, Children, forwardRef, useState, cloneElement } from 'fl-react'
-import { Route, Link } from 'fl-react-router-dom'
+import React, { Children, forwardRef, useState, cloneElement } from 'fl-react'
+import { Link } from 'fl-react-router-dom'
 import classname from 'classnames'
 import { __ } from 'assistant'
 import { App, Icon, Page, Nav, Error } from 'assistant/lib'
@@ -8,9 +8,9 @@ import './style.scss'
 
 export const AppRouting = () => (
 	<Nav.Switch>
-		<Route exact path="/" component={Switcher} />
-		<Route path="/:app" component={AppContent} />
-		<Route component={NoApp} />
+		<Nav.Route exact path="/" component={Switcher} />
+		<Nav.Route path="/:app" component={AppContent} />
+		<Nav.Route component={NoApp} />
 	</Nav.Switch>
 )
 
@@ -18,13 +18,6 @@ const AppContent = props => {
 	const { match } = props
 	const { apps } = useSystemState()
 	const { params: { app: appName } } = match
-
-	// Can't find that app
-	if ( ! ( appName in apps ) ) {
-		return (
-			<Switcher />
-		)
-	}
 
 	const app = apps[appName]
 	const appProps = {
@@ -45,7 +38,7 @@ const AppContent = props => {
 			{ /* Alerts component here */ }
 			<ScreenCard>
 				<div className="fl-asst-screen-content" style={style}>
-					{ app.root ? app.root( appProps ) : <Page>{__( 'This app has not been converted.' )}</Page> }
+					{ 'function' === typeof app.root ? app.root( appProps ) : null }
 				</div>
 			</ScreenCard>
 		</App.Context.Provider>
@@ -128,40 +121,37 @@ const CardStack = ( { children, style: passedStyles, ...rest } ) => {
 const Switcher = () => {
 	const { apps, appOrder } = useSystemState()
 	return (
-		<Fragment>
-			<Page shouldPadTop={true} title={__( 'Apps' )} icon={Icon.Apps}>
-				<div className="app-grid">
-					{ appOrder.map( ( handle, i ) => {
-						const app = apps[handle]
-						const location = {
-							pathname: `/${handle}`,
-							state: app,
-						}
-						const style = {}
-						if ( 'undefined' !== typeof app.accent ) {
-							style['--fl-asst-accent-color'] = app.accent.color
-							style.backgroundColor = 'var(--fl-asst-accent-color)'
-						}
+		<Page shouldPadTop={true} title={__( 'Apps' )} icon={Icon.Apps}>
+			<div className="app-grid">
+				{ appOrder.map( ( handle, i ) => {
+					const app = apps[handle]
+					const location = {
+						pathname: `/${handle}`,
+						state: app,
+					}
+					const style = {}
+					if ( 'undefined' !== typeof app.accent ) {
+						style['--fl-asst-accent-color'] = app.accent.color
+						style.backgroundColor = 'var(--fl-asst-accent-color)'
+					}
 
-						return (
-							<Link to={location} className="app-grid-item" key={i}>
-								<div className="fl-asst-app-icon" style={style}>
-									{ 'function' === typeof app.icon && app.icon( {} ) }
-								</div>
-								<label>{app.label}</label>
-							</Link>
-						)
-					} )}
-				</div>
-			</Page>
-		</Fragment>
+					return (
+						<Link to={location} className="app-grid-item" key={i}>
+							<div className="fl-asst-app-icon" style={style}>
+								{ 'function' === typeof app.icon && app.icon( {} ) }
+							</div>
+							<label>{app.label}</label>
+						</Link>
+					)
+				} )}
+			</div>
+		</Page>
 	)
 }
 
 const NoApp = ( { history } ) => {
 	return (
 		<Page>
-			<button onClick={() => history.goBack()}>{__( 'Back' )}</button>
 			<h1>{__( 'Could not find page' )}</h1>
 		</Page>
 	)

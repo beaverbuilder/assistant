@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'fl-react'
+import React, { useEffect, useState, useContext } from 'fl-react'
 import { Switch, Route } from 'fl-react-router-dom'
 import { __ } from 'assistant'
 import { getPagedContent } from 'assistant/utils/wordpress'
-import { Page, List, Button } from 'assistant/ui'
+import { Page, List, Button, Nav, App } from 'assistant/ui'
 
 export const Alerts = ( { match } ) => (
 	<Switch>
 		<Route exact path={`${match.url}/`} component={Main} />
-		<Route path={`${match.url}/comments/:id`} component={CommentDetail} />
+		<Route path={`/fl-alerts/comments/:id`} component={Page.Comment} />
 	</Switch>
 )
 
@@ -34,9 +34,9 @@ const Main = () => {
 
 const CommentsTab = () => {
 	const [ comments, setComments ] = useState( [] )
+	const { handle } = useContext( App.Context )
 	const offset = comments.length
 	const hasComments = comments.length > 0
-	const baseURL = ''
 	const query = {
 		commentStatus: 'all',
 	}
@@ -55,12 +55,12 @@ const CommentsTab = () => {
 				items={comments}
 				getItemProps={ (item, defaultProps) => {
 					return {
-						key: defaultProps.key,
+						key: item.id,
 						label: <em><strong>{item.email}</strong> commented:</em>,
 						description: item.content,
 						thumbnail: item.thumbnail,
 						to: {
-							pathname: `${baseURL}/comments/${item.postID}`,
+							pathname: `/${handle}/comments/${item.id}`,
 							state: item
 						}
 					}
@@ -81,7 +81,7 @@ const UpdatesTab = () => {
 
 	useEffect( () => {
 		getPagedContent( 'updates', query, offset, ( data, hasMore ) => {
-			setComments( updates.concat( data ) )
+			setUpdates( updates.concat( data ) )
 		} )
 	}, [] )
 
@@ -98,25 +98,13 @@ const UpdatesTab = () => {
 						description: item.content,
 						thumbnail: item.thumbnail,
 						to: {
-							pathname: `${baseURL}/updates/${item.key}`,
+							pathname: `/${baseURL}/updates/${item.key}`,
 							state: item
 						}
 					}
 				}}
 			/> }
 		</>
-	)
-}
-
-const CommentDetail = ( { location } ) => {
-	const comment = {
-		...location.state,
-	}
-	const { content } = comment
-	return (
-		<Page title="Edit Comment">
-			<div dangerouslySetInnerHTML={{ __html: content }} />
-		</Page>
 	)
 }
 
