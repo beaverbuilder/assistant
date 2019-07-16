@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import classname from 'classnames'
 import { TestSheet } from './examples'
-import { Item } from './parts'
+import { Item, Loading } from './parts'
 import './style.scss'
 
 import { isRenderProp } from 'shared-utils/react'
@@ -106,6 +106,9 @@ export const List = ( {
 
 List.Item = Item
 List.Item.displayName = 'List.Item'
+
+List.Loading = Loading
+List.Loading.displayName = 'List.Loading'
 
 List.TestSheet = TestSheet
 List.TestSheet.displayName = 'List.TestSheet'

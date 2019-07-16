@@ -35,6 +35,12 @@ const Main = () => {
 	)
 }
 
+const LoadingMessage = () => {
+	return (
+		<Page.Pad>Loading...</Page.Pad>
+	)
+}
+
 const CommentsTab = () => {
 	const [ comments, setComments ] = useState( [] )
 	const { handle } = useContext( App.Context )
@@ -52,12 +58,11 @@ const CommentsTab = () => {
 
 	return (
 		<>
-			{ ! hasComments && <div>{__( 'You don\'t have any!' )}</div> }
+			{ ! hasComments && <List.Loading /> }
 			{ hasComments &&
 			<List
 				items={comments}
 				getItemProps={ ( item, defaultProps ) => {
-					console.log(item)
 					return {
 						...defaultProps,
 						key: item.id,
@@ -92,7 +97,7 @@ const UpdatesTab = () => {
 
 	return (
 		<>
-			{ ! hasUpdates && <div>{__( 'You don\'t have any!' )}</div> }
+			{ ! hasUpdates && <List.Loading /> }
 			{ hasUpdates &&
 			<List
 				items={updates}

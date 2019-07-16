@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import classname from 'fl-classnames'
-import { Nav } from '../../'
+import { Nav, Page } from '../../'
 import { isColor } from 'shared-utils/color'
 import { isURL } from 'shared-utils/url'
 
@@ -142,5 +142,11 @@ const Section = ( { children, className, label, ...rest } ) => {
 			<div className="fl-asst-list-section-header">{label}</div>
 			<div className="fl-asst-list-section-content">{children}</div>
 		</div>
+	)
+}
+
+export const Loading = () => {
+	return (
+		<Page.Pad>Loading...</Page.Pad>
 	)
 }

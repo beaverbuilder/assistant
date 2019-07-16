@@ -123,6 +123,8 @@ export const Main = () => {
 				</div>
 			</Page.Toolbar>
 
+			{ loading && <List.Loading /> }
+
 			{ '' === keyword &&
 			<>
 				{ searchHistory.length &&
