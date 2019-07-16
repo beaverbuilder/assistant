@@ -92,12 +92,22 @@ const UpdatesTab = () => {
 			{ hasUpdates &&
 			<List
 				items={updates}
-				getItemProps={ ( item, defaultProps ) => {
+				isListSection={ item => 'undefined' !== typeof item.items }
+				getItemProps={ ( item, defaultProps, isSection ) => {
+
+					if ( isSection ) {
+						return {
+							...defaultProps,
+							label: item.label
+						}
+					}
+
+					console.log(item)
+
 					return {
 						...defaultProps,
-						key: item.key,
-						label: item.meta,
-						description: item.content,
+						label: item.title,
+						description: item.meta,
 						thumbnail: item.thumbnail,
 						to: {
 							pathname: `/${handle}/updates/${item.key}`,
