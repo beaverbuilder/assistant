@@ -62,26 +62,3 @@ const Main = ( { match } ) => {
 		</Page>
 	)
 }
-
-// Just for reference
-const defaultPost = {
-	author: null,
-	bbBranding: null,
-	bbCanEdit: true,
-	bbEditUrl: null,
-	bbIsEnabled: null,
-	commentsAllowed: null,
-	content: null,
-	date: null,
-	editUrl: null,
-	id: null,
-	meta: null,
-	parent: 0,
-	slug: null,
-	status: null,
-	thumbnail: null,
-	title: null,
-	type: "post",
-	url: null,
-	visibility: "Public",
-}

@@ -73,10 +73,38 @@ export const Update = ({ location = {} }) => {
 	)
 }
 
-export const Post = () => {
+export const Post = ({ location }) => {
+	const defaultItem = {
+		author: null,
+		bbBranding: null,
+		bbCanEdit: true,
+		bbEditUrl: null,
+		bbIsEnabled: null,
+		commentsAllowed: null,
+		content: null,
+		date: null,
+		editUrl: null,
+		id: null,
+		meta: null,
+		parent: 0,
+		slug: null,
+		status: null,
+		thumbnail: null,
+		title: null,
+		type: "post",
+		url: null,
+		visibility: "Public",
+	}
+	const item = 'undefined' !== typeof location.state ? location.state : defaultItem
+	const { title, thumbnail, url } = item
+
 	return (
 		<Page>
-			<h1>I am a Post</h1>
+			{ thumbnail && <img src={thumbnail} /> }
+			<h2>{title}</h2>
+			<div>
+				<a href={url}><em>{url}</em></a>
+			</div>
 		</Page>
 	)
 }
