@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useContext } from 'fl-react'
-import { Switch, Route } from 'fl-react-router-dom'
 import { __ } from 'assistant'
-import { useAppState, getAppActions } from 'assistant/data'
 import { getPagedContent } from 'assistant/utils/wordpress'
-import { Page, List, Button, App } from 'assistant/ui'
+import { Page, List, Button, App, Nav } from 'assistant/ui'
 
 export const Alerts = ( { match } ) => (
-	<Switch>
-		<Route exact path={`${match.url}/`} component={Main} />
-		<Route path={'/fl-alerts/comments/:id'} component={Page.Comment} />
-		<Route path={'/fl-alerts/update'} component={Page.Update} />
-	</Switch>
+	<Nav.Switch>
+		<Nav.Route exact path={`${match.url}/`} component={Main} />
+		<Nav.Route path={'/fl-alerts/comments/:id'} component={Page.Comment} />
+		<Nav.Route path={'/fl-alerts/update'} component={Page.Update} />
+	</Nav.Switch>
 )
 
 const Main = () => {

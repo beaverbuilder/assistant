@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'fl-react'
+import React, { useEffect, useRef, useState } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from 'assistant/i18n'
 import { addLeadingSlash } from 'assistant/utils/url'
@@ -7,7 +7,7 @@ import { useSystemState, getSystemActions, useAppState, getAppActions } from 'as
 import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
 
-export const Main = () => {
+export const Main = ({ match }) => {
 	const { apps, searchHistory } = useSystemState()
 	const { setSearchHistory } = getSystemActions()
 	const { keyword } = useAppState()
@@ -16,10 +16,6 @@ export const Main = () => {
 	const [ results, setResults ] = useState( null )
 	const timeout = useRef( null )
 	const request = useRef( null )
-	const classes = classname( {
-		'fl-asst-search': true,
-		'fl-asst-search-is-loading': loading,
-	} )
 
 	useEffect( () => {
 		const { config, routes } = getRequestConfig()
@@ -100,6 +96,15 @@ export const Main = () => {
 		}
 	}
 
+	// Testing scroll loading
+	const scrollRef = useRef()
+	const { isFetching, resetIsFetching } = List.useScrollLoader({
+		ref: scrollRef,
+		callback: ( reset ) => {
+			// after loaded, reset()
+		}
+	})
+
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
 	const hasResults = entries && entries.length
@@ -123,28 +128,26 @@ export const Main = () => {
 				</div>
 			</Page.Toolbar>
 
-			{ loading && <List.Loading /> }
-
 			{ '' === keyword &&
 			<>
 				{ searchHistory.length &&
-					<Page.Pad>
-						<Button.Group label={__( 'Recent Searches' )}>
-							{ searchHistory.map( ( keyword, key ) =>
-								<Button
-									key={ key }
-									onClick={ e => setKeyword( keyword ) }
-								>
-									"{ keyword }"
-								</Button>
-							) }
-						</Button.Group>
-					</Page.Pad>
+				<Page.Pad top={false}>
+					<Button.Group label={__( 'Recent Searches' )}>
+						{ searchHistory.map( ( keyword, key ) =>
+							<Button
+								key={ key }
+								onClick={ e => setKeyword( keyword ) }
+							>
+								"{ keyword }"
+							</Button>
+						) }
+					</Button.Group>
+				</Page.Pad>
 				}
 			</>
 			}
 
-			<div className="fl-asst-scroller">
+			<div className="fl-asst-scroller" ref={scrollRef}>
 
 				{ results && ! hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
 
@@ -171,12 +174,18 @@ export const Main = () => {
 								if ( 'undefined' !== typeof item.thumbnail ) {
 									props.thumbnail = item.thumbnail
 								}
+
+								props.to = {
+									pathname: `${match.url}/posts/${3}`,
+									state: item,
+								}
 							}
 
 							return props
 						}}
 					/>
 				}
+				{ isFetching && <List.Loading /> }
 			</div>
 
 		</Page>
