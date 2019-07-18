@@ -31,6 +31,10 @@
             box-shadow: 0 0 0 1px hsla(0, 0%, 26%, .1);
         }
 
+        &.fl-asst-secondary-content {
+            background: var(--fl-asst-translucent-background);
+        }
+
         .fl-asst-window-toolbar {
             box-sizing: border-box;
             flex: 0 0 var(--fl-asst-window-toolbar-height);

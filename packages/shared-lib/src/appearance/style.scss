@@ -4,20 +4,21 @@
     --fl-asst-light-1: white;
     --fl-asst-light-2: hsl(214, 3%, 98%);
     --fl-asst-light-3: hsl(214, 4%, 96%);
-    --fl-asst-light-4: hsl(214, 4%, 92%);
+    --fl-asst-light-4: hsl(214, 30%, 92%);
     --fl-asst-light-5: hsl(214, 4%, 86%);
     --fl-asst-light-text: black;
     --fl-asst-light-subtext: var(--fl-asst-dark-2);
+    --fl-asst-light-translucent: hsla(214, 30%, 92%, .96);
 
     // Darks
     --fl-asst-dark-1: hsl(210, 17%, 12%);
     --fl-asst-dark-2: hsl(210, 13%, 20%);
-
     --fl-asst-dark-3: hsl(210, 12%, 28%);
     --fl-asst-dark-4: hsl(210, 11%, 44%);
     --fl-asst-dark-5: hsl(210, 10%, 55%);
     --fl-asst-dark-text: white;
     --fl-asst-dark-subtext: var(--fl-asst-light-3);
+    --fl-asst-dark-translucent: hsla(210, 17%, 12%, .96);
 
     // Sizes
     --fl-asst-base-radius: 7px;
@@ -146,6 +147,8 @@
         --fl-asst-accent-color: var(--fl-asst-light-text);
         --fl-asst-line-color: var(--fl-asst-surface-color);
 
+        --fl-asst-translucent-background: var(--fl-asst-light-translucent);
+
         &.fl-asst-brightness-light {
             --fl-asst-surface-color: var(--fl-asst-light-text);
             --fl-asst-surface-background: var(--fl-asst-light-1);
@@ -162,6 +165,8 @@
             --fl-asst-secondary-surface-background: var(--fl-asst-dark-1);
 
             --fl-asst-accent-color: var(--fl-asst-dark-text);
+
+            --fl-asst-translucent-background: var(--fl-asst-dark-translucent);
         }
 
         p {

@@ -1,6 +1,6 @@
 import React from 'fl-react'
 
-export const Icon = () => {}
+export const Icon = () => { return null }
 
 Icon.Pencil = ({ size = 45, ...rest }) => {
 	// View box is intentionally larger than art to offset the art to the top and left

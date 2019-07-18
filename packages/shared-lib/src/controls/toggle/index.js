@@ -1,6 +1,5 @@
 import React, { useState } from 'fl-react'
-import classname from 'classnames'
-import { Control } from '../../controls'
+import classname from 'fl-classnames'
 import './style.scss'
 
 export const ToggleControl = props => {
