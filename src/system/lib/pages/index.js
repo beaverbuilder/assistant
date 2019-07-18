@@ -13,6 +13,7 @@ export const Page = ( {
 	shouldPadSides = true,
 	shouldPadBottom = true,
 	title,
+	headerActions,
 	icon,
 	...rest
 } ) => {
@@ -33,7 +34,7 @@ export const Page = ( {
 
 	return (
 		<Page.Context.Provider value={context}>
-			{ shouldShowHeader && <Page.Header label={title} icon={icon} /> }
+			{ shouldShowHeader && <Page.Header label={title} icon={icon} actions={headerActions} /> }
 			<div className={classes} ref={ref} {...rest} />
 		</Page.Context.Provider>
 	)
@@ -46,7 +47,7 @@ Page.defaults = {
 Page.Context = createContext( Page.defaults )
 Page.Context.displayName = 'Page.Context'
 
-Page.Header = ( { icon, label } ) => {
+Page.Header = ( { icon, label, actions } ) => {
 	const { shouldShowLabels } = useSystemState()
 
 	const app = useContext( App.Context )
@@ -97,9 +98,7 @@ Page.Header = ( { icon, label } ) => {
 				<span>{ label ? label : appLabel }</span>
 			</div>
 
-			<div className="fl-asst-app-header-actions">
-				{ /* App actions go here */ }
-			</div>
+			{ actions && <div className="fl-asst-app-header-actions">{actions}</div> }
 		</div>
 	)
 }

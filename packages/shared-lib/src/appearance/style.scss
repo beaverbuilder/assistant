@@ -68,7 +68,7 @@
 
         &:hover {
             color: inherit;
-            background: rgba(0,0,0,.05);
+            background: var(--fl-asst-translucent-background);
             top:0;
             box-shadow: none;
         }
@@ -153,7 +153,7 @@
             --fl-asst-surface-color: var(--fl-asst-light-text);
             --fl-asst-surface-background: var(--fl-asst-light-1);
 
-            --fl-asst-secondary-surface-color: var(--fl-asst-dark-4);
+            --fl-asst-secondary-surface-color: var(--fl-asst-dark-3);
             --fl-asst-secondary-surface-background: var(--fl-asst-light-4);
         }
 

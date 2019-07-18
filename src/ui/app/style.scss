@@ -100,8 +100,8 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        margin: 0 0 15px;
         text-decoration: none;
+        padding: var(--fl-asst-inner-space);
 
         .fl-asst-app-icon {
             width: 50px;
@@ -117,6 +117,7 @@
         label {
             font-size: 12px;
             margin-top: 5px;
+            margin-bottom:0;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
@@ -129,7 +130,7 @@
 @supports( display: grid ) {
     .app-grid {
         display: grid;
-        grid-template-columns: repeat( auto-fit, minmax(90px, 1fr) );
+        grid-template-columns: repeat( auto-fit, minmax(100px, 1fr) );
         grid-gap: 10px;
         align-items: center;
 

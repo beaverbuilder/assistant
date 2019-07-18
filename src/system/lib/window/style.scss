@@ -88,6 +88,16 @@
 
         &:hover {
             background: var(--fl-asst-surface-background);
+            box-shadow: 0px 10px 20px rgba(0,0,0,.25);
+        }
+
+        &:focus {
+            top:0;
+            outline: none;
+            background: var(--fl-asst-surface-background);
+            box-shadow: inset 0px 0px 0px 2px var(--fl-asst-accent-color),
+                        0px 0px 0px 2px var(--fl-asst-surface-background), 
+                        0px 10px 20px rgba(0,0,0,.25);
         }
     }
 

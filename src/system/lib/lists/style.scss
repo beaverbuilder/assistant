@@ -17,6 +17,10 @@
 
         .fl-asst-list-item {
             flex: 0 0 auto;
+
+            & > a {
+                border-radius: 0;
+            }
         }
     }
 
