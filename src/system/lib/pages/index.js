@@ -15,13 +15,14 @@ export const Page = ( {
 	title,
 	headerActions,
 	icon,
+	children,
 	...rest
 } ) => {
 
 	const ref = useRef()
 
 	const classes = classname( {
-		'fl-asst-page': true,
+		'fl-asst-page-content' : true,
 		'fl-asst-pad-top': shouldPadTop,
 		'fl-asst-pad-sides': shouldPadSides,
 		'fl-asst-pad-bottom': shouldPadBottom,
@@ -35,7 +36,9 @@ export const Page = ( {
 	return (
 		<Page.Context.Provider value={context}>
 			{ shouldShowHeader && <Page.Header label={title} icon={icon} actions={headerActions} /> }
-			<div className={classes} ref={ref} {...rest} />
+			<div className="fl-asst-page" ref={ref} {...rest}>
+				<div className={classes}>{children}</div>
+			</div>
 		</Page.Context.Provider>
 	)
 }
