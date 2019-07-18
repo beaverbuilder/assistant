@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect } from 'fl-react'
 import { withRouter, MemoryRouter, Link, Switch, Route } from 'fl-react-router-dom'
 import { useSystemState, getSystemActions } from 'store'
-import { App } from '../'
 
 export const Nav = () => {}
 
@@ -75,7 +74,7 @@ Nav.Switch = Switch
 Nav.Route = Route
 
 /**
-* Link
+* Link - Need to revisit these - probably remove
 */
 Nav.SubLink = ( { to, ...rest } ) => {
 	const { path } = useContext( Nav.Context )
@@ -84,7 +83,8 @@ Nav.SubLink = ( { to, ...rest } ) => {
 	)
 }
 Nav.AppLink = ( { to, ...rest } ) => {
-	const { path } = useContext( Nav.Context )
+
+	//const { path } = useContext( Nav.Context )
 	return <Link to={to} {...rest} />
 }
 Nav.AppLink.displayName = 'Nav.AppLink'

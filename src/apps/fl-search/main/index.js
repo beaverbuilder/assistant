@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'fl-react'
-import classname from 'fl-classnames'
 import { __ } from 'assistant/i18n'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSearchResults } from 'assistant/utils/wordpress'
@@ -7,7 +6,7 @@ import { useSystemState, getSystemActions, useAppState, getAppActions } from 'as
 import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
 
-export const Main = ({ match }) => {
+export const Main = ( { match } ) => {
 	const { apps, searchHistory } = useSystemState()
 	const { setSearchHistory } = getSystemActions()
 	const { keyword } = useAppState()
@@ -98,12 +97,13 @@ export const Main = ({ match }) => {
 
 	// Testing scroll loading
 	const scrollRef = useRef()
-	const { isFetching, resetIsFetching } = List.useScrollLoader({
+	const { isFetching, resetIsFetching } = List.useScrollLoader( {
 		ref: scrollRef,
 		callback: ( reset ) => {
+
 			// after loaded, reset()
 		}
-	})
+	} )
 
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
@@ -115,15 +115,15 @@ export const Main = ({ match }) => {
 
 			<Page.Toolbar>
 				<div className='fl-asst-search-form-simple'>
-	                <input
-	                    value={keyword}
-	                    onChange={ e => setKeyword( e.target.value ) }
-	                    placeholder={ __( 'Search' ) }
-	                />
+					<input
+						value={keyword}
+						onChange={ e => setKeyword( e.target.value ) }
+						placeholder={ __( 'Search' ) }
+					/>
 					{ loading &&
-						<div className='fl-asst-search-spinner'>
-							<Icon.SmallSpinner />
-						</div>
+					<div className='fl-asst-search-spinner'>
+						<Icon.SmallSpinner />
+					</div>
 					}
 				</div>
 			</Page.Toolbar>

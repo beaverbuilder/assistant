@@ -22,7 +22,7 @@ export const Page = ( {
 	const ref = useRef()
 
 	const classes = classname( {
-		'fl-asst-page-content' : true,
+		'fl-asst-page-content': true,
 		'fl-asst-pad-top': shouldPadTop,
 		'fl-asst-pad-sides': shouldPadSides,
 		'fl-asst-pad-bottom': shouldPadBottom,

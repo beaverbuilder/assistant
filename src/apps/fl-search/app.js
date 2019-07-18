@@ -2,12 +2,12 @@ import React from 'fl-react'
 import { Nav, Page } from 'assistant/ui'
 import { Main } from './main'
 
-export const App = ({ match }) => {
+export const App = ( { match } ) => {
 	return (
-        <Nav.Switch>
-            <Nav.Route exact path={`${match.url}/`} component={Main} />
+		<Nav.Switch>
+			<Nav.Route exact path={`${match.url}/`} component={Main} />
 			<Nav.Route path={`${match.url}/posts/:id`} component={Page.Post} />
-        </Nav.Switch>
+		</Nav.Switch>
 	)
 }
 

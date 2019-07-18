@@ -46,7 +46,7 @@ const Main = ( { match } ) => {
 			<List
 				items={ items }
 				defaultItemProps={{ shouldAlwaysShowThumbnail: true }}
-				getItemProps={(item, defaultProps, isSection) => {
+				getItemProps={( item, defaultProps, isSection ) => {
 					return {
 						...defaultProps,
 						label: item.title,

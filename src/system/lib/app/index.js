@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'fl-react'
+import React, { createContext } from 'fl-react'
 
 export const App = ( { children, ...rest } ) => {
 	return (

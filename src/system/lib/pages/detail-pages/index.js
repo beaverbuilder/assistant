@@ -2,7 +2,7 @@ import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page } from '../'
 
-export const Comment = ({ location = {} }) => {
+export const Comment = ( { location = {} } ) => {
 
 	const defaultItem = {
 		approved: null,
@@ -28,17 +28,15 @@ export const Comment = ({ location = {} }) => {
 	const { content, author } = item
 	const html = { __html: content }
 
-	console.log(item)
-
 	return (
-		<Page title={__('Comment')}>
+		<Page title={__( 'Comment' )}>
 			<h2>{author} said:</h2>
 			<div dangerouslySetInnerHTML={html} />
 		</Page>
 	)
 }
 
-export const Update = ({ location = {} }) => {
+export const Update = ( { location = {} } ) => {
 
 	const defaultItem = {
 		author: null,
@@ -50,7 +48,7 @@ export const Update = ({ location = {} }) => {
 		plugin: null,
 		thumbnail: null,
 		title: null,
-		type: "plugin",
+		type: 'plugin',
 		version: null,
 	}
 
@@ -59,7 +57,7 @@ export const Update = ({ location = {} }) => {
 	const { type, banner, title, content } = item
 
 	const contentHTML = { __html: content }
-	const pageType = type === 'plugin' ? __('Plugin') : __('Theme')
+	const pageType = 'plugin' === type ? __( 'Plugin' ) : __( 'Theme' )
 
 	return (
 		<Page shouldPadSides={false} title={pageType}>
@@ -73,7 +71,7 @@ export const Update = ({ location = {} }) => {
 	)
 }
 
-export const Post = ({ location }) => {
+export const Post = ( { location } ) => {
 	const defaultItem = {
 		author: null,
 		bbBranding: null,
@@ -91,9 +89,9 @@ export const Post = ({ location }) => {
 		status: null,
 		thumbnail: null,
 		title: null,
-		type: "post",
+		type: 'post',
 		url: null,
-		visibility: "Public",
+		visibility: 'Public',
 	}
 	const item = 'undefined' !== typeof location.state ? location.state : defaultItem
 	const { title, thumbnail, url } = item

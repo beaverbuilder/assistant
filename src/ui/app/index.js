@@ -78,6 +78,7 @@ const ScreenCard = forwardRef( ( { className, children, ...rest }, ref ) => {
 	)
 } )
 
+/*
 const CardStack = ( { children, style: passedStyles, ...rest } ) => {
 	const [ cardHeight, setCardHeight ] = useState( 0 )
 	const count = Children.count( children )
@@ -116,7 +117,7 @@ const CardStack = ( { children, style: passedStyles, ...rest } ) => {
 		<div style={style} {...rest}>{newChildren}</div>
 	)
 }
-
+*/
 
 const Switcher = () => {
 	const { apps, appOrder } = useSystemState()
@@ -149,7 +150,7 @@ const Switcher = () => {
 	)
 }
 
-const NoApp = ( { history } ) => {
+const NoApp = () => {
 	return (
 		<Page>
 			<h1>{__( 'Could not find page' )}</h1>
