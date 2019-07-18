@@ -116,6 +116,7 @@ export const Main = ( { match } ) => {
 			<Page.Toolbar>
 				<div className='fl-asst-search-form-simple'>
 					<input
+						type="search"
 						value={keyword}
 						onChange={ e => setKeyword( e.target.value ) }
 						placeholder={ __( 'Search' ) }
@@ -131,7 +132,7 @@ export const Main = ( { match } ) => {
 			{ '' === keyword &&
 			<>
 				{ searchHistory.length &&
-				<Page.Pad top={false}>
+				<Page.Pad>
 					<Button.Group label={__( 'Recent Searches' )}>
 						{ searchHistory.map( ( keyword, key ) =>
 							<Button

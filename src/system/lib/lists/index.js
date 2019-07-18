@@ -8,7 +8,7 @@ import './style.scss'
 import { isRenderProp } from 'shared-utils/react'
 
 import {
-	defaultItemProps as defaultItemPropsCallback,
+	defaultItemProps,
 	getDefaultItemProps,
 	getItemType,
 } from './parts'
@@ -20,7 +20,7 @@ export const List = ( {
 
 	direction = 'vertical',
 
-	defaultItemProps = defaultItemPropsCallback,
+	defaultItemProps = defaultItemProps,
 
 	getItemProps = getDefaultItemProps,
 

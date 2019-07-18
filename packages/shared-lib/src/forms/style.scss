@@ -3,7 +3,8 @@
     form {
         padding: 0 0 var(--fl-asst-outer-space);
         display: grid;
-        grid-row-gap: var(--fl-asst-inner-space);
+        grid-row-gap: var(--fl-asst-outer-space);
+        color: inherit;
 
         .fl-asst-form-section {
             background: var(--fl-asst-secondary-surface-background);
@@ -96,7 +97,7 @@
         .fl-asst-form-item:focus-within {
             box-shadow: inset 2px 0px 0px 0px var(--fl-asst-accent-color);
         }
-    }
+    } // form
 
     label {
         display: flex;
@@ -135,6 +136,9 @@
     input[type="color"],
     select,
     textarea {
+        --fl-asst-highlight-color: var(--fl-asst-accent-color);
+
+        display: block;
         box-sizing: border-box;
         flex-grow: 1;
         flex-shrink: 1;
@@ -143,8 +147,8 @@
         font-weight: 500;
         line-height: 1.2;
         text-transform: none;
-        color: black;
-        padding: 4px var(--fl-asst-half-unit);
+        color: inherit;
+        padding: var(--fl-asst-tiny-space);
         margin:0;
         background-color: var(--fl-asst-secondary-surface-background);
         background-image: none;
@@ -153,12 +157,12 @@
         box-shadow: none;
         max-width: none;
         min-height: 36px;
-		width: auto;
 
         &:focus,
         &:invalid {
             outline: none;
-            box-shadow: 0px 0px 0px 2px var(--fl-asst-highlight-color);
+            box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
+                        0px 0px 0px 2px var(--fl-asst-highlight-color);
         }
         &:invalid {
             --fl-asst-highlight-color: var(--fl-asst-error-color);
@@ -169,7 +173,9 @@
         }
     }
 
+    input,
     textarea {
+        width: 100%;
         flex: 1 0 100%;
     }
 

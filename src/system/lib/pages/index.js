@@ -111,7 +111,7 @@ Page.Header.displayName = 'Page.Header'
 Page.Toolbar = ( {
 	className,
 	shouldPadSides = true,
-	shouldPadBottom = true,
+	shouldPadBottom = false,
 	...rest
 } ) => {
 	const classes = classname( {

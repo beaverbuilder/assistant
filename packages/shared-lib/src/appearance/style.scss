@@ -62,7 +62,8 @@
         background: transparent;
         border: none;
         border-radius: var(--fl-asst-base-radius);
-        min-height: 32px;
+        min-height: var(--fl-asst-target-size);
+        min-width: var(--fl-asst-target-size);
         user-select: none;
         padding:0;
 
@@ -80,6 +81,10 @@
         &[disabled] {
             opacity: .5;
             pointer-events: none;
+        }
+
+        &:visited {
+            color: inherit;
         }
     }
 
