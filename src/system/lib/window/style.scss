@@ -31,6 +31,10 @@
             box-shadow: 0 0 0 1px hsla(0, 0%, 26%, .1);
         }
 
+        &.fl-asst-secondary-content {
+            background: var(--fl-asst-translucent-background);
+        }
+
         .fl-asst-window-toolbar {
             box-sizing: border-box;
             flex: 0 0 var(--fl-asst-window-toolbar-height);
@@ -73,6 +77,7 @@
 
     .fl-asst-window-button {
         display: flex;
+        align-items: center;
         width: 60px;
         height: 60px;
         border-radius: 50%;
@@ -84,6 +89,16 @@
 
         &:hover {
             background: var(--fl-asst-surface-background);
+            box-shadow: 0px 10px 20px rgba(0,0,0,.25);
+        }
+
+        &:focus {
+            top:0;
+            outline: none;
+            background: var(--fl-asst-surface-background);
+            box-shadow: inset 0px 0px 0px 2px var(--fl-asst-accent-color),
+                        0px 0px 0px 2px var(--fl-asst-surface-background),
+                        0px 10px 20px rgba(0,0,0,.25);
         }
     }
 

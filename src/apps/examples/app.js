@@ -6,6 +6,7 @@ import { Page, Button } from 'assistant/lib'
 import { UnsplashExample } from './unsplash'
 import { RoutingExample } from './routing'
 import { ListExamples } from './lists'
+import { FormExamples } from './forms'
 
 export const App = ( { match } ) => (
 	<Switch>
@@ -13,6 +14,7 @@ export const App = ( { match } ) => (
 		<Route path={`${match.url}/unsplash`} component={UnsplashExample} />
 		<Route path={`${match.url}/routing`} component={RoutingExample} />
 		<Route path={`${match.url}/lists`} component={ListExamples} />
+		<Route path={`${match.url}/forms`} component={FormExamples} />
 	</Switch>
 )
 
@@ -23,6 +25,7 @@ const Main = ( { match } ) => {
 				<Button to={`${match.url}/unsplash`}>{__( 'Unsplash Example' )}</Button>
 				<Button to={`${match.url}/routing`}>{__( 'Routing Example' )}</Button>
 				<Button to={`${match.url}/lists`}>{__( 'List Examples' )}</Button>
+				<Button to={`${match.url}/forms`}>{__( 'Form Examples' )}</Button>
 			</Button.Group>
 		</Page>
 	)

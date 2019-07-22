@@ -3,6 +3,7 @@ import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App } from '../'
+import { Comment, Update, Post, Attachment } from './detail-pages'
 import './style.scss'
 
 export const Page = ( {
@@ -12,14 +13,16 @@ export const Page = ( {
 	shouldPadSides = true,
 	shouldPadBottom = true,
 	title,
+	headerActions,
 	icon,
+	children,
 	...rest
 } ) => {
 
 	const ref = useRef()
 
 	const classes = classname( {
-		'fl-asst-page': true,
+		'fl-asst-page-content': true,
 		'fl-asst-pad-top': shouldPadTop,
 		'fl-asst-pad-sides': shouldPadSides,
 		'fl-asst-pad-bottom': shouldPadBottom,
@@ -32,8 +35,10 @@ export const Page = ( {
 
 	return (
 		<Page.Context.Provider value={context}>
-			{ shouldShowHeader && <Page.Header label={title} icon={icon} /> }
-			<div className={classes} ref={ref} {...rest} />
+			{ shouldShowHeader && <Page.Header label={title} icon={icon} actions={headerActions} /> }
+			<div className="fl-asst-page" ref={ref} {...rest}>
+				<div className={classes}>{children}</div>
+			</div>
 		</Page.Context.Provider>
 	)
 }
@@ -45,7 +50,7 @@ Page.defaults = {
 Page.Context = createContext( Page.defaults )
 Page.Context.displayName = 'Page.Context'
 
-Page.Header = ( { icon, label } ) => {
+Page.Header = ( { icon, label, actions } ) => {
 	const { shouldShowLabels } = useSystemState()
 
 	const app = useContext( App.Context )
@@ -67,7 +72,7 @@ Page.Header = ( { icon, label } ) => {
 			</div>
 			}
 
-			{ !isRoot && !isAppRoot &&
+			{ ! isRoot && ! isAppRoot &&
 			<div className="fl-asst-app-header-icon">
 				<button
 					onClick={history.goBack}
@@ -96,25 +101,23 @@ Page.Header = ( { icon, label } ) => {
 				<span>{ label ? label : appLabel }</span>
 			</div>
 
-			<div className="fl-asst-app-header-actions">
-				{ /* App actions go here */ }
-			</div>
+			{ actions && <div className="fl-asst-app-header-actions">{actions}</div> }
 		</div>
 	)
 }
 Page.Header.displayName = 'Page.Header'
 
 // Horizontal Toolbar - edge padding for controls
-Page.Toolbar = ({
+Page.Toolbar = ( {
 	className,
 	shouldPadSides = true,
-	shouldPadBottom = true,
+	shouldPadBottom = false,
 	...rest
-}) => {
-	const classes = classname({
-		'fl-asst-toolbar' : true,
-		'fl-asst-pad-sides' : shouldPadSides,
-		'fl-asst-pad-bottom' : shouldPadBottom,
+} ) => {
+	const classes = classname( {
+		'fl-asst-toolbar': true,
+		'fl-asst-pad-sides': shouldPadSides,
+		'fl-asst-pad-bottom': shouldPadBottom,
 	}, className )
 	return (
 		<div className={classes} {...rest} />
@@ -123,17 +126,17 @@ Page.Toolbar = ({
 Page.Toolbar.displayName = 'Page.Toolbar'
 
 // Padded box
-Page.Pad = ({
+Page.Pad = ( {
 	className,
 	top = true,
 	sides = true,
 	bottom = true,
 	...rest
-}) => {
-	const classes = classname({
-		'fl-asst-pad-top' : top,
-		'fl-asst-pad-sides' : sides,
-		'fl-asst-pad-bottom' : bottom,
+} ) => {
+	const classes = classname( {
+		'fl-asst-pad-top': top,
+		'fl-asst-pad-sides': sides,
+		'fl-asst-pad-bottom': bottom,
 	}, className )
 
 	return <div className={classes} {...rest} />
@@ -141,10 +144,14 @@ Page.Pad = ({
 Page.Pad.displayName = 'Page.Pad'
 
 
+Page.Comment = Comment
+Page.Comment.displayName = 'Page.Comment'
 
+Page.Update = Update
+Page.Update.displayName = 'Page.Update'
 
-Page.PostDetail = () => {
-	return (
-		<Page>Yo!</Page>
-	)
-}
+Page.Post = Post
+Page.Post.displayName = 'Page.Post'
+
+Page.Attachment = Attachment
+Page.Attachment.displayName = 'Page.Attachment'

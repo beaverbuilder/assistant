@@ -5,7 +5,6 @@ import { Content } from './app'
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: Content,
-	icon: Content.Icon,
 	state: {
 		query: {
 			order: 'ASC',

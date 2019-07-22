@@ -251,7 +251,6 @@ const WindowPanel = ( { className, children, style, ...rest } ) => {
 	const classes = classname( {
 		'fl-asst-window': true,
 		[`fl-asst-window-${size}`]: size,
-		'fl-asst-surface': true,
 		'fl-asst-primary-content': isRoot,
 		'fl-asst-secondary-content': ! isRoot,
 	}, className )

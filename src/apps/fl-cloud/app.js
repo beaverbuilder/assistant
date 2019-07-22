@@ -1,7 +1,6 @@
 import React, {useState, useEffect, Fragment} from 'fl-react'
-import {App, Page, Icon} from 'assistant/lib'
 
-import {useSystemState, getSystemActions, getSystemStore} from "assistant/store";
+import {useSystemState, getSystemActions} from "assistant/store";
 
 import {ProfilePage} from "./pages/profile";
 import {LoginPage} from './pages/login';
@@ -56,7 +55,6 @@ export const CloudApp = () => {
             {!isCloudConnected && (<LoginPage doLogin={doLogin} loginErrors={loginErrors}/>)}
         </Fragment>
     )
-
 }
 
 CloudApp.Icon = () => {

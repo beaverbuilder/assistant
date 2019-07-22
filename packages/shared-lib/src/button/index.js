@@ -135,7 +135,6 @@ Button.Group = ({
 
                     if ( accruedWidth > availableSpace ) {
                         // Do something here
-                        console.log('yes eject child', i, child.props )
                     }
                 }
             }

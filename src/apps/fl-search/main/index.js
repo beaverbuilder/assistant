@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'fl-react'
-import classname from 'fl-classnames'
+import React, { useEffect, useRef, useState } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSearchResults } from 'assistant/utils/wordpress'
@@ -7,7 +6,7 @@ import { useSystemState, getSystemActions, useAppState, getAppActions } from 'as
 import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
 
-export const Main = () => {
+export const Main = ( { match } ) => {
 	const { apps, searchHistory } = useSystemState()
 	const { setSearchHistory } = getSystemActions()
 	const { keyword } = useAppState()
@@ -16,10 +15,6 @@ export const Main = () => {
 	const [ results, setResults ] = useState( null )
 	const timeout = useRef( null )
 	const request = useRef( null )
-	const classes = classname( {
-		'fl-asst-search': true,
-		'fl-asst-search-is-loading': loading,
-	} )
 
 	useEffect( () => {
 		const { config, routes } = getRequestConfig()
@@ -100,69 +95,64 @@ export const Main = () => {
 		}
 	}
 
+	// Testing scroll loading
+	const scrollRef = useRef()
+	const { isFetching, resetIsFetching } = List.useScrollLoader( {
+		ref: scrollRef,
+		callback: ( reset ) => {
+
+			// after loaded, reset()
+		}
+	} )
+
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
 	const hasResults = entries && entries.length
-	const groups = hasResults ? Object.entries( results ).map( ([key, group]) => group[0] ) : []
+	const groups = hasResults ? Object.entries( results ).map( ( [ key, group ] ) => group[0] ) : []
 
-    return (
-        <Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
+	return (
+		<Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
 
-            <Page.Toolbar>
+			<Page.Toolbar>
 				<div className='fl-asst-search-form-simple'>
-	                <input
-	                    value={keyword}
-	                    onChange={ e => setKeyword( e.target.value ) }
-	                    placeholder={ __('Search') }
-	                />
+					<input
+						type="search"
+						value={keyword}
+						onChange={ e => setKeyword( e.target.value ) }
+						placeholder={ __( 'Search' ) }
+					/>
 					{ loading &&
-						<div className='fl-asst-search-spinner'>
-							<Icon.SmallSpinner />
-						</div>
+					<div className='fl-asst-search-spinner'>
+						<Icon.SmallSpinner />
+					</div>
 					}
 				</div>
-            </Page.Toolbar>
+			</Page.Toolbar>
 
 			{ '' === keyword &&
 			<>
 				{ searchHistory.length &&
-					<Page.Pad bottom={false}>
-						<Button.Group label={__('Recent Searches')}>
-							{ searchHistory.map( ( keyword, key ) =>
-								<Button
-									key={ key }
-									onClick={ e => setKeyword( keyword ) }
-								>
-									"{ keyword }"
-								</Button>
-							) }
-						</Button.Group>
-					</Page.Pad>
+				<Page.Pad>
+					<Button.Group label={__( 'Recent Searches' )}>
+						{ searchHistory.map( ( keyword, key ) =>
+							<Button
+								key={ key }
+								onClick={ e => setKeyword( keyword ) }
+							>
+								"{ keyword }"
+							</Button>
+						) }
+					</Button.Group>
+				</Page.Pad>
 				}
-				<Page.Pad bottom={false} >
-					<Button.Group label={__('Post Type')}>
-						<Button>{__('Posts')}</Button>
-						<Button>{__('Pages')}</Button>
-						<Button>{__('Forms')}</Button>
-						<Button>{__('Products')}</Button>
-					</Button.Group>
-				</Page.Pad>
-				<Page.Pad >
-					<Button.Group label={__('Status')}>
-						<Button>{__('Published')}</Button>
-						<Button>{__('Drafted')}</Button>
-						<Button>{__('Pending')}</Button>
-						<Button>{__('Trashed')}</Button>
-					</Button.Group>
-				</Page.Pad>
 			</>
 			}
 
-			<div className="fl-asst-scroller">
+			<div className="fl-asst-scroller" ref={scrollRef}>
 
-				{ results && !hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
+				{ results && ! hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
 
-				{ groups.length > 0 &&
+				{ 0 < groups.length &&
 					<List
 						items={groups}
 						isListSection={ item => 'undefined' !== typeof item.label }
@@ -185,14 +175,20 @@ export const Main = () => {
 								if ( 'undefined' !== typeof item.thumbnail ) {
 									props.thumbnail = item.thumbnail
 								}
+
+								props.to = {
+									pathname: `${match.url}/posts/${3}`,
+									state: item,
+								}
 							}
 
 							return props
 						}}
 					/>
 				}
+				{ isFetching && <List.Loading /> }
 			</div>
 
-        </Page>
-    )
+		</Page>
+	)
 }
