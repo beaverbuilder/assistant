@@ -4,14 +4,10 @@ import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 
-
-
 registerStore('fl-assistant/system', {
     state: {
         ...FL_ASSISTANT_INITIAL_STATE,
-        isCloudConnected: cloud.auth.isConnected(),
-        cloudUser: cloud.auth.getUser(),
-        cloudToken: cloud.auth.getToken(),
+        isCloudConnected: cloud.auth.isConnected()
     },
     actions,
     reducers,

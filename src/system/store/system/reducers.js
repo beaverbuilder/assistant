@@ -167,25 +167,6 @@ export const searchHistory = (state = [], action) => {
     }
 }
 
-
-export const doingLogin = (state = false, action) => {
-    switch(action.type) {
-        case 'DOING_LOGIN':
-            return action.doingLogin
-        default:
-            return state
-    }
-}
-
-export const cloudToken = (state = {}, action) => {
-    switch (action.type) {
-        case 'SET_CLOUD_TOKEN':
-            return  action.cloudToken
-        default:
-            return state;
-    }
-}
-
 export const isCloudConnected = (state = false, action ) => {
     switch(action.type) {
         case 'SET_IS_CLOUD_CONNECTED':
@@ -195,11 +176,3 @@ export const isCloudConnected = (state = false, action ) => {
     }
 }
 
-export const cloudUser = (state = {}, action) => {
-    switch (action.type) {
-        case 'SET_CLOUD_USER':
-            return action.user;
-        default:
-            return state;
-    }
-}

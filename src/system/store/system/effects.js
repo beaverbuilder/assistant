@@ -1,7 +1,7 @@
 import { registerAppStore } from '../app'
 import { updateUserState } from 'shared-utils/wordpress'
 import cloud from 'shared-utils/cloud'
-import {setDoingLogin, setCloudToken, setCloudUser, setIsCloudConnected, addError,  clearErrors, clearNotices} from "./actions";
+import {setCloudToken, setCloudUser, setIsCloudConnected} from "./actions";
 
 /**
  * Effects that fire before an action.
@@ -20,13 +20,6 @@ export const before = {
  * Effects that fire after an action.
  */
 export const after = {
-	SET_CLOUD_TOKEN: (action, store) => {
-		if(action.cloudToken !== null) {
-			cloud.auth.me().then((user) => {
-				store.dispatch(setCloudUser(user));
-			})
-		}
-	},
 	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
 		const { shouldReduceMotion } = store.getState()
 		updateUserState( { shouldReduceMotion } )

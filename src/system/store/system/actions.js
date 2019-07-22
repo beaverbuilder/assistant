@@ -89,32 +89,9 @@ export const setSearchHistory = ( keyword ) => {
 	}
 }
 
-
-export const setDoingLogin = (doingLogin) => {
-	return {
-		type: 'DOING_LOGIN',
-		doingLogin
-	}
-}
-
 export const setIsCloudConnected = (isCloudConnected) => {
 	return {
 		type: 'SET_IS_CLOUD_CONNECTED',
 		isCloudConnected
 	}
 }
-
-export const setCloudToken = (cloudToken) => {
-	return {
-		type: 'SET_CLOUD_TOKEN',
-		cloudToken
-	}
-}
-
-export const setCloudUser = (user) => {
-	return {
-		type: 'SET_CLOUD_USER',
-		user
-	}
-}
-

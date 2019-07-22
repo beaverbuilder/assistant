@@ -35,7 +35,6 @@ const externals = {
 
     'assistant/i18n'        		: 'FL.Assistant.i18n',
     'assistant/utils'       		: 'FL.Assistant.utils',
-    'assistant/utils/http'        	: 'FL.Assistant.utils.http',
     'assistant/utils/react'   		: 'FL.Assistant.utils.react',
     'assistant/utils/url'   		: 'FL.Assistant.utils.url',
     'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress',

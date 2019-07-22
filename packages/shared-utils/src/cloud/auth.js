@@ -1,120 +1,196 @@
-import http from './http'
-import {isObject} from 'lodash'
+import axios from 'axios'
+import Promise from 'promise'
+const {cloudUrl} = FL_ASSISTANT_CONFIG;
 
-const FL_CLOUD_AUTH_STORAGE_KEY = "fl-cloud-auth";
-const FL_CLOUD_USER_KEY = "fl-cloud-user";
+import * as session from './session'
 
-// If an auth token exists, append an Authorization header
-http.interceptors.request.use(
-    (request) => {
-        const auth = getToken();
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
-        if (auth != null) {
-            request.headers['Authorization'] = "Bearer " + auth.access_token;
-        }
-        return request;
-    },
-    (error) => {
-        return error;
+
+/**
+ * Request interceptor - If an auth token exists, append an Authorization header
+ *
+ * @param config
+ * @returns {*}
+ */
+const attachAuthorization = (config) => {
+    // attach jwt token to request
+    if (session.hasToken()) {
+        config.headers['Authorization'] = "Bearer " + session.getToken().access_token;
     }
-);
+    return config;
+}
 
+/**
+ * Request interceptor - Attaches Cancel Token to all requests
+ * @param config
+ * @returns {*}
+ */
+const attachCancelToken = (config) => {
+    config.cancelToken = source.token
+    return config;
+}
 
-http.interceptors.response.use(
-    (response) => {
-        if (response.status === 401) {
-            removeToken();
-            removeUser();
-        }
-
-        if (response.status === 403) {
-            alert('Forbidden\n' + JSON.stringify(response.body));
-        }
-
-        return response;
-    },
-    (error) => {
-        return error;
+/**
+ * Response interceptor - on error - Do something if unauthorized
+ *
+ * @param error
+ * @returns {*}
+ */
+const handleAuthError = (error) => {
+    if (error.response && error.response.status == 401) {
+        session.removeToken();
     }
-);
 
-export const hasToken = () => {
-    return (isObject(getToken()));
+    if (error.response && error.response.status === 403) {
+        alert('Forbidden\n' + JSON.stringify(response.body));
+    }
+
+    fireLoginFailed(error);
+
+    return Promise.reject(error);
 }
 
-export const getToken = () => {
-    const auth = localStorage.getItem(FL_CLOUD_AUTH_STORAGE_KEY);
-    return JSON.parse(auth);
+/**
+ * Create new axios instance
+ * @type {AxiosInstance}
+ */
+const http = axios.create({
+    baseURL: cloudUrl
+});
+
+/**
+ * Attach interceptors
+ */
+http.interceptors.request.use(attachAuthorization, Promise.reject);
+http.interceptors.request.use(attachCancelToken, Promise.reject);
+http.interceptors.response.use(Promise.resolve, handleAuthError)
+
+
+const interval = setInterval(async () => {
+    if (session.hasToken()) {
+        console.log('refreshing token', session.getToken());
+        try {
+            await refresh();
+        } catch (error) {
+            console.log(error);
+            clearInterval(interval);
+        }
+    }
+}, 30000);
+
+
+/**
+ * Cancel / Abort all cloud auth requests
+ * @param message
+ */
+export const cancel = (message = null) => {
+    source.cancel(message)
 }
 
-export const setToken = (token) => {
-    localStorage.setItem(FL_CLOUD_AUTH_STORAGE_KEY, JSON.stringify(token));
-}
+/**
+ * Login to Assistant Cloud
+ * @param email
+ * @param password
+ * @param config
+ */
+export const login = (email, password, config = {}) => {
 
-export const removeToken = () => {
-    localStorage.removeItem(FL_CLOUD_AUTH_STORAGE_KEY);
-}
+    return new Promise((resolve, reject) => {
+        const credentials = {email, password}
+        return http.post('/auth/login', credentials, config)
+            .then((response) => {
+                const token = response.data;
+                session.setToken(token);
+                fireLoginSuccess(response);
+                return resolve(token);
+            })
+            .catch((error) => {
+                fireLoginFailed(error);
+                return reject(error);
+            })
 
-export const hasUser = () => {
-    return (isObject(getUser()));
-}
-
-export const getUser = () => {
-    const user = localStorage.getItem(FL_CLOUD_USER_KEY);
-    return JSON.parse(user)
-}
-
-export const setUser = (user) => {
-    localStorage.setItem(FL_CLOUD_USER_KEY, JSON.stringify(user));
-}
-
-export const removeUser = () => {
-    localStorage.removeItem(FL_CLOUD_USER_KEY);
-}
-
-export const login = async (email, password) => {
-    const credentials = {email, password}
-    const token = await http.post('/auth/login', credentials);
-    setToken(token);
-    notifyAuthStatusChanged();
-    return token;
+    })
 
 }
 
-export const me = async () => {
-    const user = await http.post('/auth/me');
-    setUser(user);
-    return user;
+/**
+ * Get Cloud User info
+ * @param config
+ */
+export const me = async (config = {}) => {
+    const response = await http.post('/auth/me', {}, config);
+    return response.data;
 }
 
-export const refresh = async () => {
-    const auth = await http.post('/auth/refresh');
-    setToken(auth);
-    notifyAuthStatusChanged();
+/**
+ * Refresh JWT token
+ * @param config
+ * @returns {Promise<any>}
+ */
+export const refresh = async (config = {}) => {
+    try {
+        console.log('refreshing token');
+        const response = await http.post('/auth/refresh', {}, config);
+        session.setToken(response.data);
+        return session.getToken();
+        fireLoginSuccess(response);
+    } catch (error) {
+        fireLoginFailed(error)
+    }
 }
 
-export const logout = async () => {
-    await http.post('/auth/logout');
-    removeToken();
-    removeUser();
-    notifyAuthStatusChanged();
+/**
+ * Clear JWT token locally and on server
+ * @param config
+ * @returns {Promise<void>}
+ */
+export const logout = async (config = {}) => {
+    await http.post('/auth/logout', {}, config);
+    session.removeToken();
 }
 
+/**
+ * Session has token and user.
+ * @returns bool
+ */
 export const isConnected = () => {
-    return (hasToken() && hasUser())
+    return session.hasToken()
 }
 
-
-const statusChangeHandlers = [];
-
-export const onAuthStatusChanged = (callback) => {
-    statusChangeHandlers.push(callback);
+const loginFailureCallbacks = [];
+export const onLoginFailure = (callback) => {
+    loginFailureCallbacks.push(callback);
 }
 
-const notifyAuthStatusChanged = () => {
-    statusChangeHandlers.forEach((handler) => {
-        handler();
+export const fireLoginFailed = (error) => {
+    loginFailureCallbacks.forEach((callback) => {
+        callback(error);
+    });
+}
+
+const loginSuccessCallbacks = [];
+export const onLoginSuccess = (callback) => {
+    loginSuccessCallbacks.push(callback);
+}
+
+export const fireLoginSuccess = (response) => {
+    loginSuccessCallbacks.forEach((callback) => {
+        callback(response);
+    });
+}
+
+const logoutCallbacks = [];
+export const onLogout = (callback) => {
+    logoutCallbacks.push(callback);
+}
+
+const fireOnLogout = () => {
+    logoutCallbacks.forEach((callback) => {
+        callback();
     })
 }
+
 
 

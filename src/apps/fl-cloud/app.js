@@ -1,24 +1,62 @@
-import React, {useState, useEffect} from 'fl-react'
+import React, {useState, useEffect, Fragment} from 'fl-react'
 import {App, Page, Icon} from 'assistant/lib'
 
-import { useSystemState, getSystemActions } from "assistant/store";
-import {Switch, Route, Redirect, Link, withRouter} from 'fl-react-router-dom'
-import LoginForm from './components/login-form'
-import {CloudMain} from './pages/main'
+import {useSystemState, getSystemActions, getSystemStore} from "assistant/store";
+
+import {ProfilePage} from "./pages/profile";
+import {LoginPage} from './pages/login';
+
+import cloud from "assistant/cloud"
 
 import './style.scss'
 
-export const CloudApp = (props) => {
+export const CloudApp = () => {
 
-    const { isCloudConnected } = useSystemState();
+    const {isCloudConnected} = useSystemState();
+    const {setIsCloudConnected} = getSystemActions();
 
-    const CloudMainWithRouter = withRouter(CloudMain);
 
-    if (isCloudConnected) {
-        return <CloudMainWithRouter/>;
-    } else {
-        return <NotConnectedScreen/>;
+    const [loginErrors, setLoginErrors] = useState([]);
+
+    useEffect(() => {
+
+        return () => {
+            cloud.auth.cancel();
+        }
+    }, []);
+
+    const disconnect = () => {
+        cloud.auth.logout();
+        setIsCloudConnected(false);
     }
+
+
+    const doLogin = (email, password) => {
+        return cloud.auth.login(email, password)
+            .then(() => {
+                setIsCloudConnected(cloud.auth.isConnected());
+            })
+            .catch(error => {
+                console.log('auth error', error);
+
+                const errorMessages = [];
+
+                if (error.response && error.response.status == 401) {
+                    errorMessages.push("Invalid Credentials");
+                }
+
+                setLoginErrors(errorMessages);
+                // setDoingLogin(false);
+            })
+    }
+
+    return (
+        <Fragment>
+            {isCloudConnected && (<ProfilePage onDisconnect={disconnect}/>)}
+            {!isCloudConnected && (<LoginPage doLogin={doLogin} loginErrors={loginErrors}/>)}
+        </Fragment>
+    )
+
 }
 
 CloudApp.Icon = () => {
@@ -32,14 +70,4 @@ CloudApp.Icon = () => {
     )
 }
 
-
-const NotConnectedScreen = () => {
-    return (
-        <Page className="fl-app-cloud">
-            <Icon.Pencil size={75}/>
-            <p className="center-text">You are not currently connected to Assistant Cloud</p>
-            <LoginForm/>
-        </Page>
-    );
-}
 
