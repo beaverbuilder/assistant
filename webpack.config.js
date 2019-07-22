@@ -30,7 +30,6 @@ const externals = {
     'assistant/lib'         		: 'FL.Assistant.ui', // TODO: delete - ui replaces lib
     'assistant/ui'          		: 'FL.Assistant.ui',
 
-    'assistant/http'                : 'FL.Assistant.http',
     'assistant/cloud'               : 'FL.Assistant.cloud',
 
     'assistant/i18n'        		: 'FL.Assistant.i18n',

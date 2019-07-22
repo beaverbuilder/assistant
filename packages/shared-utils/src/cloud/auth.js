@@ -78,7 +78,7 @@ const interval = setInterval(async () => {
             clearInterval(interval);
         }
     }
-}, 30000);
+}, 60000);
 
 
 /**

@@ -1,25 +1,48 @@
 import {clearCache} from 'shared-utils/cache'
 import {addQueryArgs} from 'shared-utils/url'
 
-import {getWpRest} from "../http";
+import axios from 'axios'
+import Promise from "promise";
 
-const wpRest = getWpRest();
+const {apiRoot, nonce} = FL_ASSISTANT_CONFIG
+
+const http = axios.create({
+    baseURL: apiRoot,
+    headers: {
+        common: {
+            'X-WP-Nonce': nonce.api
+        }
+    }
+});
+
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
+
+http.interceptors.request.use((config) => {
+    config.cancelToken = source.token
+    return config;
+}, Promise.reject);
+
+export const cancelRequest = (message = null) => {
+    source.cancel(message)
+}
+
 /**
  * Fetch request for the WordPress REST API.
  */
 export const restRequest = ({method = 'GET', ...args}) => {
 
-    const {route, data = {}, onSuccess, onError} = args;
+    let promise = null;
 
     if ('GET' === method) {
-        wpRest.get(route)
-            .then(response => onSuccess(response.data))
-            .catch(onError)
+        promise = http.get(args.route)
     } else {
-        wpRest.post(route, data)
-            .then(response => onSuccess(response.data))
-            .catch(onError);
+        promise = http.post(args.route, args.data)
     }
+
+    return promise.then((response) => {
+        args.onSuccess(response.data)
+    }).catch(args.onError)
 }
 
 /**

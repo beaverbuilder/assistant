@@ -53,9 +53,4 @@ export const after = {
 		const { searchHistory } = store.getState()
 		updateUserState( { searchHistory } )
 	},
-	SET_LOGIN_SUCCESS: async( action, store ) => {
-		// const user = await cloud.auth.me();
-		// cloud.auth.setUser(user);
-		console.log('effect - user succsesfully logged in');
-	}
 }

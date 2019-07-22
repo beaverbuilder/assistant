@@ -1,5 +1,3 @@
-import cloud from 'shared-utils/cloud'
-
 export const setShouldReduceMotion = shouldReduce => {
 	return {
 		type: 'SET_SHOULD_REDUCE_MOTION',
