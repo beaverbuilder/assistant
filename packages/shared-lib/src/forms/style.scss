@@ -224,4 +224,11 @@
         justify-content: center;
         text-shadow: none;
     }
+
+    .fl-asst-form-section input,
+    .fl-asst-form-section textarea,
+    .fl-asst-form-section select {
+        background-color: var(--fl-asst-surface-background);
+        color: var(--fl-asst-surface-color);
+    }
 }
