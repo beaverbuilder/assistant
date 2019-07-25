@@ -135,3 +135,21 @@ Icon.Search = () => {
 	)
 }
 Icon.Search.displayName = 'Icon.Search'
+
+Icon.Brightness = () => (
+	<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<g stroke="none" strokeWidth="2" fill="currentColor" fillRule="evenodd">
+			<path d="M7.00294406,4 C8.63984298,4 10,5.35749265 10,6.9970617 C10,8.63663075 8.63984298,10 7.00294406,10 C5.36015702,10 4,8.63663075 4,6.9970617 C4,5.35749265 5.36015702,4 7.00294406,4 Z" id="Center" stroke="currentColor" fill="none" fillRule="nonzero"></path>
+
+			<circle cx="7" cy="1" r="1"></circle>
+			<circle cx="7" cy="13" r="1"></circle>
+			<circle cx="1" cy="7" r="1"></circle>
+			<circle cx="13" cy="7" r="1"></circle>
+			<circle transform="translate(2.757359, 2.757359) rotate(-45.000000) translate(-2.757359, -2.757359) " cx="2.75735931" cy="2.75735931" r="1"></circle>
+			<circle transform="translate(11.242641, 11.242641) rotate(-45.000000) translate(-11.242641, -11.242641) " cx="11.2426407" cy="11.2426407" r="1"></circle>
+			<circle transform="translate(2.757359, 11.242641) rotate(-45.000000) translate(-2.757359, -11.242641) " cx="2.75735931" cy="11.2426407" r="1"></circle>
+			<circle transform="translate(11.242641, 2.757359) rotate(-45.000000) translate(-11.242641, -2.757359) " cx="11.2426407" cy="2.75735931" r="1"></circle>
+		</g>
+	</svg>
+)
+Icon.Brightness.displayName = 'Icon.Brightness'

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'fl-react'
+import React from 'fl-react'
 import { __ } from 'assistant'
 import { useSystemState, getSystemActions } from 'assistant/store'
 import { Page, Form, Control } from 'assistant/ui'

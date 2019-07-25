@@ -5,7 +5,4 @@ registerApp( 'fl-ui-examples', {
 	label: __( 'Examples' ),
 	root: App,
 	icon: App.Icon,
-	accent: {
-		color: '#31e6e6',
-	}
 } )

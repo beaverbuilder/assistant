@@ -23,4 +23,7 @@ registerApp( 'fl-content', {
 			} )
 		},
 	},
+	accent: {
+		color: '#001DDB',
+	}
 } )

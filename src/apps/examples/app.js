@@ -3,31 +3,19 @@ import { __ } from 'assistant'
 import { Page, Button, Nav } from 'assistant/ui'
 import './style.scss'
 
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-
 import { UnsplashExample } from './unsplash'
 import { RoutingExample } from './routing'
 import { ListExamples } from './lists'
 import { FormExamples } from './forms'
 
-export const App = ( { match, location } ) => (
-	<TransitionGroup>
-        <CSSTransition
-			key={location.pathname}
-			timeout={550}
-			classNames='fade'
-        >
-			<div className="animator">
-			<Nav.Switch>
-				<Nav.Route exact path={`${match.url}/`} component={Main} />
-				<Nav.Route path={`${match.url}/unsplash`} component={UnsplashExample} />
-				<Nav.Route path={`${match.url}/routing`} component={RoutingExample} />
-				<Nav.Route path={`${match.url}/lists`} component={ListExamples} />
-				<Nav.Route path={`${match.url}/forms`} component={FormExamples} />
-			</Nav.Switch>
-			</div>
-		</CSSTransition>
-	</TransitionGroup>
+export const App = ( { match } ) => (
+	<Nav.Switch>
+		<Nav.Route exact path={`${match.url}/`} component={Main} />
+		<Nav.Route path={`${match.url}/unsplash`} component={UnsplashExample} />
+		<Nav.Route path={`${match.url}/routing`} component={RoutingExample} />
+		<Nav.Route path={`${match.url}/lists`} component={ListExamples} />
+		<Nav.Route path={`${match.url}/forms`} component={FormExamples} />
+	</Nav.Switch>
 )
 
 const Main = ( { match } ) => {
