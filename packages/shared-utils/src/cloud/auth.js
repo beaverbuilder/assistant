@@ -4,8 +4,6 @@ import * as session from './session'
 
 const {cloudUrl} = FL_ASSISTANT_CONFIG;
 
-
-
 const freshCancelToken = () => {
     return axios.CancelToken.source();
 }
@@ -45,12 +43,19 @@ http.interceptors.response.use((config) => {
     return error;
 })
 
-
-const isActive = () => {
+/**
+ * Is there an active request?
+ * @returns {boolean}
+ */
+export const isActive = () => {
     return currentRequest.active;
 }
 
-const cancel = (message) => {
+/**
+ * Cancel any running requests
+ * @param message
+ */
+export const cancel = (message) => {
     currentRequest.source.cancel(message);
     currentRequest.source = freshCancelToken();
 }
@@ -68,7 +73,6 @@ const interval = setInterval(async () => {
         }
     }
 }, 60000);
-
 
 /**
  * Login to Assistant Cloud

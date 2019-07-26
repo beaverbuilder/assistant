@@ -89,9 +89,9 @@ export const Main = ( { match } ) => {
 			clearTimeout( timeout.current )
 			timeout.current = null
 		}
-		if ( loading) {
-			cancelRequest();
-			setLoading(false);
+		if ( loading ) {
+			cancelRequest()
+			setLoading( false )
 		}
 	}
 
