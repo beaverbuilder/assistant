@@ -33,15 +33,9 @@ export const after = {
 
 		cloud.auth.login(action.email, action.password)
 			.then((token) => {
-
 				store.dispatch(setCloudToken(token))
 				store.dispatch(setLoginErrors([]))
-
-				return Promise.all([
-					store.dispatch(setIsCloudConnected(true))
-				]).then(() => {
-
-				});
+				store.dispatch(setIsCloudConnected(true))
 			})
 			.catch((error) => {
 				const messages = [];
