@@ -1,55 +1,18 @@
 import axios from 'axios'
 import Promise from 'promise'
-const {cloudUrl} = FL_ASSISTANT_CONFIG;
-
 import * as session from './session'
 
-const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
+const {cloudUrl} = FL_ASSISTANT_CONFIG;
 
 
-/**
- * Request interceptor - If an auth token exists, append an Authorization header
- *
- * @param config
- * @returns {*}
- */
-const attachAuthorization = (config) => {
-    // attach jwt token to request
-    if (session.hasToken()) {
-        config.headers['Authorization'] = "Bearer " + session.getToken().access_token;
-    }
-    return config;
+
+const freshCancelToken = () => {
+    return axios.CancelToken.source();
 }
 
-/**
- * Request interceptor - Attaches Cancel Token to all requests
- * @param config
- * @returns {*}
- */
-const attachCancelToken = (config) => {
-    config.cancelToken = source.token
-    return config;
-}
-
-/**
- * Response interceptor - on error - Do something if unauthorized
- *
- * @param error
- * @returns {*}
- */
-const handleAuthError = (error) => {
-    if (error.response && error.response.status == 401) {
-        session.removeToken();
-    }
-
-    if (error.response && error.response.status === 403) {
-        alert('Forbidden\n' + JSON.stringify(response.body));
-    }
-
-    fireLoginFailed(error);
-
-    return Promise.reject(error);
+const currentRequest = {
+    active: false,
+    source: freshCancelToken()
 }
 
 /**
@@ -61,20 +24,46 @@ const http = axios.create({
 });
 
 /**
- * Attach interceptors
+ * Attach JWT token to every request, if it exists
  */
-http.interceptors.request.use(attachAuthorization, Promise.reject);
-http.interceptors.request.use(attachCancelToken, Promise.reject);
-http.interceptors.response.use(Promise.resolve, handleAuthError)
+http.interceptors.request.use((config) => {
+    // mark request as active
+    currentRequest.active = true;
+    // attach jwt token to request
+    if (session.hasToken()) {
+        config.headers['Authorization'] = "Bearer " + session.getToken().access_token;
+    }
+    return config;
+}, Promise.reject);
 
 
+http.interceptors.response.use((config) => {
+    currentRequest.active = false;
+    return config;
+}, (error) => {
+    currentRequest.active = false;
+    return error;
+})
+
+
+const isActive = () => {
+    return currentRequest.active;
+}
+
+const cancel = (message) => {
+    currentRequest.source.cancel(message);
+    currentRequest.source = freshCancelToken();
+}
+
+/**
+ * Refresh the users token once per minute
+ * @type {number}
+ */
 const interval = setInterval(async () => {
     if (session.hasToken()) {
-        console.log('refreshing token', session.getToken());
         try {
             await refresh();
         } catch (error) {
-            console.log(error);
             clearInterval(interval);
         }
     }
@@ -82,34 +71,34 @@ const interval = setInterval(async () => {
 
 
 /**
- * Cancel / Abort all cloud auth requests
- * @param message
- */
-export const cancel = (message = null) => {
-    source.cancel(message)
-}
-
-/**
  * Login to Assistant Cloud
+ *
  * @param email
  * @param password
  * @param config
+ * @returns Promise
  */
 export const login = (email, password, config = {}) => {
 
+    // Wrap axios promise in our own promise
     return new Promise((resolve, reject) => {
-        const credentials = {email, password}
-        return http.post('/auth/login', credentials, config)
+
+        http.post('/auth/login', {email, password}, config)
             .then((response) => {
+                // server returns JWT
                 const token = response.data;
-                session.setToken(token);
-                fireLoginSuccess(response);
-                return resolve(token);
+                // if returned object is JWT and not empty object or error message
+                if (session.isValidToken(token)) {
+                    // save the token in localStorage
+                    session.setToken(token);
+                    // resolve the promise
+                    resolve(token);
+                } else {
+                    // reject promise with error
+                    reject(new Error('Received invalid token from the server'))
+                }
             })
-            .catch((error) => {
-                fireLoginFailed(error);
-                return reject(error);
-            })
+            .catch(reject)
 
     })
 
@@ -118,37 +107,67 @@ export const login = (email, password, config = {}) => {
 /**
  * Get Cloud User info
  * @param config
+ * @returns {Promise<T>}
  */
-export const me = async (config = {}) => {
+export const fetchCurrentUser = async (config = {}) => {
     const response = await http.post('/auth/me', {}, config);
-    return response.data;
+    const user = response.data
+    session.setUser(user);
+    return user;
 }
 
 /**
  * Refresh JWT token
  * @param config
- * @returns {Promise<any>}
+ * @returns Promise
  */
-export const refresh = async (config = {}) => {
-    try {
+export const refresh = (config = {}) => {
+
+    // Wrap axios promise in our own promise
+    return new Promise((resolve, reject) => {
         console.log('refreshing token');
-        const response = await http.post('/auth/refresh', {}, config);
-        session.setToken(response.data);
-        return session.getToken();
-        fireLoginSuccess(response);
-    } catch (error) {
-        fireLoginFailed(error)
-    }
+
+        // attempt to refresh JWT
+        http.post('/auth/refresh', {}, config)
+            .then((response) => {
+                const token = response.data;
+                // if server returns valid JWT
+                if (session.isValidToken(token)) {
+                    // save to localStorage
+                    session.setToken(token);
+                    // resolve promise with token
+                    resolve(token);
+                } else {
+                    // reject promise with error
+                    reject(new Error('Received invalid refresh token.'));
+                }
+
+            }).catch(reject);
+    });
+
 }
 
 /**
  * Clear JWT token locally and on server
  * @param config
- * @returns {Promise<void>}
+ * @returns Promise
  */
-export const logout = async (config = {}) => {
-    await http.post('/auth/logout', {}, config);
-    session.removeToken();
+export const logout = (config = {}) => {
+
+    return new Promise((resolve, reject) => {
+        http.post('/auth/logout', {}, config)
+            .then((response) => {
+                resolve();
+            })
+            .catch((error) => {
+                console.log('could not invalidate token on the server', error.message);
+                reject(error);
+            })
+            .finally(() => {
+                session.removeToken();
+                session.removeUser();
+            })
+    });
 }
 
 /**
@@ -156,40 +175,7 @@ export const logout = async (config = {}) => {
  * @returns bool
  */
 export const isConnected = () => {
-    return session.hasToken()
-}
-
-const loginFailureCallbacks = [];
-export const onLoginFailure = (callback) => {
-    loginFailureCallbacks.push(callback);
-}
-
-export const fireLoginFailed = (error) => {
-    loginFailureCallbacks.forEach((callback) => {
-        callback(error);
-    });
-}
-
-const loginSuccessCallbacks = [];
-export const onLoginSuccess = (callback) => {
-    loginSuccessCallbacks.push(callback);
-}
-
-export const fireLoginSuccess = (response) => {
-    loginSuccessCallbacks.forEach((callback) => {
-        callback(response);
-    });
-}
-
-const logoutCallbacks = [];
-export const onLogout = (callback) => {
-    logoutCallbacks.push(callback);
-}
-
-const fireOnLogout = () => {
-    logoutCallbacks.forEach((callback) => {
-        callback();
-    })
+    return session.hasToken() && session.hasUser();
 }
 
 

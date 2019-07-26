@@ -41,7 +41,9 @@ export const restRequest = ({method = 'GET', ...args}) => {
     }
 
     return promise.then((response) => {
-        args.onSuccess(response.data)
+        if(args.onSuccess instanceof Function) {
+            args.onSuccess(response.data)
+        }
     }).catch(args.onError)
 }
 

@@ -7,7 +7,10 @@ import * as effects from './effects'
 registerStore('fl-assistant/system', {
     state: {
         ...FL_ASSISTANT_INITIAL_STATE,
-        isCloudConnected: cloud.auth.isConnected()
+        isCloudConnected: cloud.auth.isConnected(),
+        cloudToken: cloud.session.getToken(),
+        currentUser: cloud.session.getUser(),
+        loginErrors: []
     },
     actions,
     reducers,

@@ -176,3 +176,29 @@ export const isCloudConnected = (state = false, action ) => {
     }
 }
 
+export const cloudToken = (state = {}, action) => {
+    switch(action.type) {
+        case 'SET_CLOUD_TOKEN':
+            return action.token;
+        default:
+            return state;
+    }
+}
+
+export const loginErrors = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_LOGIN_ERRORS':
+            return action.errors;
+        default:
+            return state;
+    }
+}
+
+export const currentUser = (state = null, action) => {
+    switch(action.type) {
+        case 'SET_CURRENT_USER':
+            return action.user;
+        default:
+            return null
+    }
+}

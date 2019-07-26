@@ -1,23 +1,34 @@
-import React, {useState, useEffect} from 'fl-react'
+import React, {useState, useEffect, Fragment} from 'fl-react'
 import {Page, Button, Icon} from 'assistant/lib'
+
+import PropTypes from 'prop-types'
+
 import {__} from 'assistant'
-import {useSystemState, getSystemActions} from "assistant/store";
 
-
-import cloud from 'assistant/cloud'
 
 export const ProfilePage = (props) => {
 
+    const {doLogout, user, token} = props
+
     return (
-        <Page className="fl-app-cloud">
+        <Fragment>
             <p className="center-text">User Information:</p>
             <div style={{maxWidth: '90%', margin: 'auto'}}>
-                <pre>{JSON.stringify(cloud.currentUser.getToken(), null, 4)}</pre>
+                <pre>{JSON.stringify(user, null, 4)}</pre>
+                <pre>{JSON.stringify(token, null, 4)}</pre>
             </div>
             <div>
-                <Button onClick={e => props.onDisconnect()}>Disconnect</Button>
+                <Button onClick={doLogout}>
+                    Disconnect
+                </Button>
             </div>
-        </Page>
+        </Fragment>
     )
-
 };
+
+ProfilePage.propTypes = {
+    doLogout: PropTypes.func.isRequired,
+    token: PropTypes.object,
+    user: PropTypes.object
+}
+

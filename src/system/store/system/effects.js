@@ -1,7 +1,13 @@
 import { registerAppStore } from '../app'
 import { updateUserState } from 'shared-utils/wordpress'
 import cloud from 'shared-utils/cloud'
-import {setCloudToken, setCloudUser, setIsCloudConnected} from "./actions";
+
+import {
+	fetchCurrentUser,
+	setCloudToken, setCurrentUser,
+	setIsCloudConnected,
+	setLoginErrors
+} from "./actions";
 
 /**
  * Effects that fire before an action.
@@ -20,6 +26,57 @@ export const before = {
  * Effects that fire after an action.
  */
 export const after = {
+	ATTEMPT_LOGIN: (action, store) => {
+		console.log("attempting Login")
+
+		store.dispatch(setLoginErrors([]));
+
+		cloud.auth.login(action.email, action.password)
+			.then((token) => {
+
+				store.dispatch(setCloudToken(token))
+				store.dispatch(setLoginErrors([]))
+
+				return Promise.all([
+					store.dispatch(setIsCloudConnected(true))
+				]).then(() => {
+
+				});
+			})
+			.catch((error) => {
+				const messages = [];
+
+				if (error.response && error.response.status == 401) {
+					messages.push("Invalid Credentials");
+				} else {
+					messages.push(error.message);
+				}
+
+				store.dispatch(setLoginErrors(messages));
+				store.dispatch(setIsCloudConnected(false));
+			})
+	},
+    ATTEMPT_LOGOUT: (action, store) => {
+        cloud.auth.logout().then(() => {
+            store.dispatch(setCloudToken({}));
+            store.dispatch(setLoginErrors([]));
+            store.dispatch(setIsCloudConnected(false));
+        });
+    },
+	SET_CLOUD_TOKEN: (action, store) => {
+		const token = store.getState().cloudToken;
+		if(cloud.session.isValidToken(token)) {
+			console.log('Auth token exists', store.getState().cloudToken);
+			store.dispatch(fetchCurrentUser());
+		}
+	},
+	FETCH_CURRENT_USER: (action, store) => {
+		cloud.auth.fetchCurrentUser()
+			.then((user) => {
+				store.dispatch(setCurrentUser(user));
+			})
+	},
+
 	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
 		const { shouldReduceMotion } = store.getState()
 		updateUserState( { shouldReduceMotion } )
@@ -34,6 +91,7 @@ export const after = {
 		const { window } = store.getState()
 		updateUserState( { window: {...window} } )
 	},
+
 	SET_BRIGHTNESS: ( action, store ) => {
 		const { appearance } = store.getState()
 		updateUserState( { appearance } )

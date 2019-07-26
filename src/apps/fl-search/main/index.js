@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { addLeadingSlash } from 'assistant/utils/url'
-import { getSearchResults } from 'assistant/utils/wordpress'
+import { getSearchResults, cancelRequest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
@@ -19,7 +19,7 @@ export const Main = ( { match } ) => {
 	useEffect( () => {
 		const { config, routes } = getRequestConfig()
 
-		cancelRequest()
+		doCancelRequest()
 
 		if ( '' === keyword ) {
 			setResults( null )
@@ -54,7 +54,7 @@ export const Main = ( { match } ) => {
 			} )
 		}, 1000 )
 
-		return cancelRequest
+		return doCancelRequest
 	}, [ keyword ] )
 
 	const getRequestConfig = () => {
@@ -84,14 +84,14 @@ export const Main = ( { match } ) => {
 		return { config, routes }
 	}
 
-	const cancelRequest = () => {
+	const doCancelRequest = () => {
 		if ( timeout.current ) {
 			clearTimeout( timeout.current )
 			timeout.current = null
 		}
-		if ( request.current ) {
-			request.current.cancel()
-			request.current = null
+		if ( loading) {
+			cancelRequest();
+			setLoading(false);
 		}
 	}
 

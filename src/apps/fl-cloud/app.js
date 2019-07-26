@@ -1,59 +1,41 @@
 import React, {useState, useEffect, Fragment} from 'fl-react'
-
 import {useSystemState, getSystemActions} from "assistant/store";
+import {Page} from 'assistant/lib'
 
-import {ProfilePage} from "./pages/profile";
-import {LoginPage} from './pages/login';
-
-import cloud from "assistant/cloud"
-
+import {ProfilePage, LoginPage} from "./pages";
 import './style.scss'
 
 export const CloudApp = () => {
 
-    const {isCloudConnected} = useSystemState();
-    const {setIsCloudConnected} = getSystemActions();
+    const {
+        loginErrors = [],
+        cloudToken = {},
+        currentUser,
+        isCloudConnected = false
+    } = useSystemState();
 
-
-    const [loginErrors, setLoginErrors] = useState([]);
-
-    useEffect(() => {
-
-        return () => {
-            cloud.auth.cancel();
-        }
-    }, []);
-
-    const disconnect = () => {
-        cloud.auth.logout();
-        setIsCloudConnected(false);
-    }
+    const {
+        attemptLogin,
+        attemptLogout
+    } = getSystemActions();
 
 
     const doLogin = (email, password) => {
-        return cloud.auth.login(email, password)
-            .then(() => {
-                setIsCloudConnected(cloud.auth.isConnected());
-            })
-            .catch(error => {
-                console.log('auth error', error);
+        attemptLogin(email, password);
+    }
 
-                const errorMessages = [];
-
-                if (error.response && error.response.status == 401) {
-                    errorMessages.push("Invalid Credentials");
-                }
-
-                setLoginErrors(errorMessages);
-                // setDoingLogin(false);
-            })
+    const doLogout = () => {
+        attemptLogout();
     }
 
     return (
-        <Fragment>
-            {isCloudConnected && (<ProfilePage onDisconnect={disconnect}/>)}
-            {!isCloudConnected && (<LoginPage doLogin={doLogin} loginErrors={loginErrors}/>)}
-        </Fragment>
+        <Page className="fl-app-cloud">
+            {isCloudConnected ? (
+                <ProfilePage doLogout={doLogout} token={cloudToken} user={currentUser}/>
+            ) : (
+                <LoginPage doLogin={doLogin} errors={loginErrors}/>
+            )}
+        </Page>
     )
 }
 

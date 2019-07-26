@@ -3,5 +3,5 @@ import * as session from './session'
 
 export default {
     auth,
-    currentUser: session
+    session
 }
