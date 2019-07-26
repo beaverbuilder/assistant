@@ -36,11 +36,11 @@ http.interceptors.request.use((config) => {
 
 
 http.interceptors.response.use((config) => {
-    currentRequest.active = false;
-    return config;
+    currentRequest.active = false
+    return config
 }, (error) => {
-    currentRequest.active = false;
-    return error;
+    currentRequest.active = false
+    return error
 })
 
 /**
@@ -48,7 +48,7 @@ http.interceptors.response.use((config) => {
  * @returns {boolean}
  */
 export const isActive = () => {
-    return currentRequest.active;
+    return currentRequest.active
 }
 
 /**
@@ -56,8 +56,8 @@ export const isActive = () => {
  * @param message
  */
 export const cancel = (message) => {
-    currentRequest.source.cancel(message);
-    currentRequest.source = freshCancelToken();
+    currentRequest.source.cancel(message)
+    currentRequest.source = freshCancelToken()
 }
 
 /**
@@ -67,12 +67,12 @@ export const cancel = (message) => {
 const interval = setInterval(async () => {
     if (session.hasToken()) {
         try {
-            await refresh();
+            await refresh()
         } catch (error) {
-            clearInterval(interval);
+            clearInterval(interval)
         }
     }
-}, 60000);
+}, 60000)
 
 /**
  * Login to Assistant Cloud
@@ -90,13 +90,13 @@ export const login = (email, password, config = {}) => {
         http.post('/auth/login', {email, password}, config)
             .then((response) => {
                 // server returns JWT
-                const token = response.data;
+                const token = response.data
                 // if returned object is JWT and not empty object or error message
                 if (session.isValidToken(token)) {
                     // save the token in localStorage
-                    session.setToken(token);
+                    session.setToken(token)
                     // resolve the promise
-                    resolve(token);
+                    resolve(token)
                 } else {
                     // reject promise with error
                     reject(new Error('Received invalid token from the server'))
@@ -114,10 +114,10 @@ export const login = (email, password, config = {}) => {
  * @returns {Promise<T>}
  */
 export const fetchCurrentUser = async (config = {}) => {
-    const response = await http.post('/auth/me', {}, config);
+    const response = await http.post('/auth/me', {}, config)
     const user = response.data
-    session.setUser(user);
-    return user;
+    session.setUser(user)
+    return user
 }
 
 /**
@@ -129,25 +129,25 @@ export const refresh = (config = {}) => {
 
     // Wrap axios promise in our own promise
     return new Promise((resolve, reject) => {
-        console.log('refreshing token');
+        console.log('refreshing token')
 
         // attempt to refresh JWT
         http.post('/auth/refresh', {}, config)
             .then((response) => {
-                const token = response.data;
+                const token = response.data
                 // if server returns valid JWT
                 if (session.isValidToken(token)) {
                     // save to localStorage
-                    session.setToken(token);
+                    session.setToken(token)
                     // resolve promise with token
-                    resolve(token);
+                    resolve(token)
                 } else {
                     // reject promise with error
-                    reject(new Error('Received invalid refresh token.'));
+                    reject(new Error('Received invalid refresh token.'))
                 }
 
-            }).catch(reject);
-    });
+            }).catch(reject)
+    })
 
 }
 
@@ -161,17 +161,17 @@ export const logout = (config = {}) => {
     return new Promise((resolve, reject) => {
         http.post('/auth/logout', {}, config)
             .then((response) => {
-                resolve();
+                resolve()
             })
             .catch((error) => {
-                console.log('could not invalidate token on the server', error.message);
-                reject(error);
+                console.log('could not invalidate token on the server', error.message)
+                reject(error)
             })
             .finally(() => {
-                session.removeToken();
-                session.removeUser();
+                session.removeToken()
+                session.removeUser()
             })
-    });
+    })
 }
 
 /**
@@ -179,7 +179,7 @@ export const logout = (config = {}) => {
  * @returns bool
  */
 export const isConnected = () => {
-    return session.hasToken() && session.hasUser();
+    return session.hasToken() && session.hasUser()
 }
 
 
