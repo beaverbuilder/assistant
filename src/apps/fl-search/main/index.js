@@ -110,24 +110,24 @@ export const Main = ( { match } ) => {
 	const hasResults = entries && entries.length
 	const groups = hasResults ? Object.entries( results ).map( ( [ key, group ] ) => group[0] ) : []
 
-	return (
-		<Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
+	const Toolbar = () => (
+		<div className='fl-asst-search-form-simple'>
+			<input
+				type="search"
+				value={keyword}
+				onChange={ e => setKeyword( e.target.value ) }
+				placeholder={ __( 'Search' ) }
+			/>
+			{ loading &&
+			<div className='fl-asst-search-spinner'>
+				<Icon.SmallSpinner />
+			</div>
+			}
+		</div>
+	)
 
-			<Page.Toolbar>
-				<div className='fl-asst-search-form-simple'>
-					<input
-						type="search"
-						value={keyword}
-						onChange={ e => setKeyword( e.target.value ) }
-						placeholder={ __( 'Search' ) }
-					/>
-					{ loading &&
-					<div className='fl-asst-search-spinner'>
-						<Icon.SmallSpinner />
-					</div>
-					}
-				</div>
-			</Page.Toolbar>
+	return (
+		<Page shouldShowHeader={false} shouldPadSides={false} shouldPadBottom={false} toolbar={<Toolbar />}>
 
 			{ '' === keyword &&
 			<>
@@ -176,9 +176,28 @@ export const Main = ( { match } ) => {
 									props.thumbnail = item.thumbnail
 								}
 
-								props.to = {
-									pathname: `${match.url}/posts/${3}`,
-									state: item,
+								// Determine Detail View
+								const type = 'post' // HARDCODED FOR NOW - NEED TO DISTINGUISH OBJECT TYPES
+								const basePath = match.url
+								let path = null
+
+								switch ( type ) {
+								case 'post':
+									path = `${basePath}/posts/${item.id}`
+									break
+								case 'user':
+									path = `${basePath}/users/${3}`
+									break
+								case 'attachment':
+								case 'plugin':
+								case 'theme':
+								case 'comment':
+								}
+								if ( path ) {
+									props.to = {
+										pathname: path,
+										state: { item },
+									}
 								}
 							}
 

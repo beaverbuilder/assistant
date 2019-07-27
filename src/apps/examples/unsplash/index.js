@@ -34,7 +34,8 @@ const Main = () => {
 			} )
 	}
 
-	const onDrag = ( item, e ) => {
+	const onDrag = () => {
+		// Args passed - (item, e)
 
 		// Import photo into WP media library here
 

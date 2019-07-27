@@ -1,18 +1,29 @@
-import React, { Children, forwardRef, useState, cloneElement } from 'fl-react'
-import { Link } from 'fl-react-router-dom'
+import React, { forwardRef } from 'fl-react'
+import { withRouter } from 'fl-react-router-dom'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import classname from 'classnames'
 import { __ } from 'assistant'
 import { App, Icon, Page, Nav, Error } from 'assistant/lib'
 import { useSystemState } from 'assistant/store'
 import './style.scss'
 
-export const AppRouting = () => (
-	<Nav.Switch>
-		<Nav.Route exact path="/" component={Switcher} />
-		<Nav.Route path="/:app" component={AppContent} />
-		<Nav.Route component={NoApp} />
-	</Nav.Switch>
-)
+export const AppRouting = withRouter(  ( { location, history } ) => {
+	return (
+		<TransitionGroup className="fl-asst-transition-group">
+			<CSSTransition
+				key={location.key}
+				classNames={history.action}
+				timeout={210}
+			>
+				<Nav.Switch location={location}>
+					<Nav.Route exact path="/" component={Switcher} />
+					<Nav.Route path="/:app" component={AppContent} />
+					<Nav.Route component={NoApp} />
+				</Nav.Switch>
+			</CSSTransition>
+		</TransitionGroup>
+	)
+} )
 
 const AppContent = props => {
 	const { match } = props
@@ -47,7 +58,7 @@ const AppContent = props => {
 
 const CardError = () => {
 	return (
-		<Page shouldPadTop={true}>
+		<Page shouldPadTop={true} shouldShowHeader={false}>
 			<h1>{__( 'We Have A Problem!' )}</h1>
 			<p>{__( 'There seems to be an issue inside the current card.' )}</p>
 		</Page>
@@ -62,6 +73,7 @@ const ScreenCard = forwardRef( ( { className, children, ...rest }, ref ) => {
 
 	const style = {
 		maxHeight: '100%',
+		minHeight: 0,
 		flex: '1 1 auto',
 		display: 'flex',
 		flexDirection: 'column',
@@ -69,7 +81,7 @@ const ScreenCard = forwardRef( ( { className, children, ...rest }, ref ) => {
 
 	return (
 		<div className={classes} {...rest}>
-			<div ref={ref} style={style}>
+			<div className="fl-asst-screen-content" ref={ref} style={style}>
 				<Error.Boundary alternate={CardError}>
 					{children}
 				</Error.Boundary>
@@ -137,12 +149,12 @@ const Switcher = () => {
 					}
 
 					return (
-						<Link to={location} className="app-grid-item" key={i}>
+						<Nav.Link to={location} className="app-grid-item" key={i}>
 							<div className="fl-asst-app-icon" style={style}>
 								{ 'function' === typeof app.icon && app.icon( {} ) }
 							</div>
 							<label>{app.label}</label>
-						</Link>
+						</Nav.Link>
 					)
 				} )}
 			</div>

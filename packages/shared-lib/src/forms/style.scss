@@ -3,19 +3,19 @@
     form {
         padding: 0 0 var(--fl-asst-outer-space);
         display: grid;
-        grid-row-gap: var(--fl-asst-outer-space);
+        grid-row-gap: var(--fl-asst-inner-space);
         color: inherit;
 
         .fl-asst-form-section {
-            background: var(--fl-asst-secondary-surface-background);
+            border-top: 5px solid var(--fl-asst-secondary-surface-background);
+            border-bottom: 5px solid var(--fl-asst-secondary-surface-background);
 
             .fl-asst-form-section-title {
                 display: flex;
                 flex-direction: row;
-                min-height: 36px;
                 align-items: center;
-                padding: 0 var(--fl-asst-outer-space);
-                font-weight: 500;
+                padding: var(--fl-asst-inner-space) var(--fl-asst-outer-space) 0;
+                font-weight: 700;
             }
             .fl-asst-form-section-content {
                 padding: var(--fl-asst-inner-space) 0;
@@ -24,14 +24,16 @@
             }
             &.fl-asst-form-section-is-inset {
                 background: transparent;
+                border: none;
                 padding: 0 var(--fl-asst-outer-space);
 
                 .fl-asst-form-section-title {
                     padding:0;
+                    padding-bottom: var(--fl-asst-inner-space);
                 }
                 .fl-asst-form-section-content {
-                    background: var(--fl-asst-secondary-surface-background);
                     border-radius: 7px;
+                    box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background);
 
                     .fl-asst-form-item {
                         padding: 0 var(--fl-asst-inner-space);
@@ -45,7 +47,8 @@
             position: -webkit-sticky;
             position: sticky;
             bottom:0;
-            background: var(--fl-asst-secondary-surface-background);
+            background: var(--fl-asst-surface-background);
+            border-top: 5px solid var(--fl-asst-secondary-surface-background);
             display: flex;
             flex-direction: row;
             justify-content: flex-end;
@@ -223,12 +226,5 @@
         text-decoration: none;
         justify-content: center;
         text-shadow: none;
-    }
-
-    .fl-asst-form-section input,
-    .fl-asst-form-section textarea,
-    .fl-asst-form-section select {
-        background-color: var(--fl-asst-surface-background);
-        color: var(--fl-asst-surface-color);
     }
 }

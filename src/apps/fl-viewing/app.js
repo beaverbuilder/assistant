@@ -1,5 +1,4 @@
 import React from 'fl-react'
-import { __ } from 'assistant'
 import { Page } from 'assistant/ui'
 
 export const App = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'fl-react'
+import React, { useState, useEffect } from 'fl-react'
 import classname from 'fl-classnames'
 import './style.scss'
 
@@ -10,6 +10,9 @@ export const ToggleControl = props => {
 		label = '',
 	} = props
 	const [ value, setValue ] = useState( initialValue )
+
+	// Ensure state value updates with props
+	useEffect( () => setValue(initialValue), [initialValue] )
 
 	const classes = classname( {
 		'fl-asst-button': true,

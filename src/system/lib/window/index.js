@@ -2,7 +2,7 @@ import React, { useState, createRef, createContext, useContext } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
-import { Icon, Nav, Appearance } from 'lib'
+import { Icon, Nav } from 'lib'
 import { useSystemState, getSystemActions } from 'store'
 import './style.scss'
 
@@ -55,9 +55,7 @@ export const Window = ( {
 
 	// Origin
 	const setPosition = pos => {
-		handleChange( {
-			origin: pos,
-		} )
+		handleChange( { origin: pos } )
 	}
 
 	// Animation
@@ -251,7 +249,7 @@ const WindowPanel = ( { className, children, style, ...rest } ) => {
 
 	const { appearance } = useSystemState()
 	const { setBrightness } = getSystemActions()
-	const toggleBrightness = () => appearance.brightness === 'light' ? setBrightness( 'dark' ) : setBrightness( 'light' )
+	const toggleBrightness = () => 'light' === appearance.brightness ? setBrightness( 'dark' ) : setBrightness( 'light' )
 
 	const classes = classname( {
 		'fl-asst-window': true,
