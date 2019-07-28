@@ -1,78 +1,317 @@
-import {clearCache} from 'shared-utils/cache'
-import {addQueryArgs} from 'shared-utils/url'
-
-import axios from 'axios'
-import Promise from "promise";
+import Promise from 'promise'
+import localforage from 'localforage'
+import {setup} from 'axios-cache-adapter'
 
 const {apiRoot, nonce} = FL_ASSISTANT_CONFIG
 
-const http = axios.create({
+
+/**
+ * Create `axios` instance
+ * with pre-configured `axios-cache-adapter`
+ * using a `localforage` store
+ *
+ * @type {AxiosInstance}
+ */
+const http = setup({
     baseURL: apiRoot,
     headers: {
         common: {
             'X-WP-Nonce': nonce.api
         }
+    },
+    cache: {
+        // Changing this to true will send alot of output to the console
+        debug: false,
+        // Set cache timeout
+        maxAge: 5 * 60 * 1000,
+        // DO NOT exclude cache requests with query params.
+        exclude: {query: false},
+        // Setup localForage store.
+        store: localforage.createInstance({
+            // Attempt IndexDB then fall back to LocalStorage
+            driver: [
+                localforage.INDEXEDDB,
+                localforage.LOCALSTORAGE,
+            ],
+            // Prefix all storage keys to prevent conflicts
+            name: 'fl-assistant-cache-rest'
+        })
+    },
+})
+
+export const getWpRest = () => {
+    return {
+        posts,
+        terms,
+        users,
+        attachments,
+        comments,
+        updates,
+        search,
+        getPagedContent,
+        getContent
     }
-});
-
-const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
-
-http.interceptors.request.use((config) => {
-    config.cancelToken = source.token
-    return config;
-}, Promise.reject);
-
-export const cancelRequest = (message = null) => {
-    source.cancel(message)
 }
 
 /**
- * Fetch request for the WordPress REST API.
+ * Posts
+ * @type {{findWhere(*=): *, findById(*): *, create(*=): *, update(*, *, *=): *}}
  */
-export const restRequest = ({method = 'GET', ...args}) => {
-
-    let promise = null;
-
-    if ('GET' === method) {
-        promise = http.get(args.route)
-    } else {
-        promise = http.post(args.route, args.data)
-    }
-
-    return promise.then((response) => {
-        if(args.onSuccess instanceof Function) {
-            args.onSuccess(response.data)
+const posts = () => {
+    return {
+        /**
+         * Get hierarchical posts by query
+         * @param params
+         * @param config
+         * @returns {Promise<AxiosResponse<T>>}
+         */
+        hierarchical(params, config = {}) {
+            config.params = params;
+            return http.get('fl-assistant/v1/posts/hierarchical', config)
+        },
+        /**
+         * Find post by ID
+         * @param id
+         * @param config
+         * @returns {Promise<*>}
+         */
+        findById(id, config = {}) {
+            return http.get(`fl-assistant/v1/post/${id}`, config);
+        },
+        /**
+         * Find posts by query
+         * @param params
+         * @param config
+         */
+        findWhere(params, config = {}) {
+            config.params = params
+            return http.get('fl-assistant/v1/posts', config)
+        },
+        /**
+         * Create a new post
+         * @param data
+         * @param config
+         */
+        create(data = {}, config = {}) {
+            return http.post('fl-assistant/v1/post', data, config)
+        },
+        /**
+         * Update a post
+         * @param id
+         * @param action
+         * @param data
+         * @param config
+         */
+        update(id, action, data = {}, config = {}) {
+            data.action = action
+            return http.post(`fl-assistant/v1/post/${id}`, data, config)
         }
-    }).catch(args.onError)
+    }
 }
 
 /**
- * Returns any array of content for the given type
- * such as posts or terms.
+ *
  */
-export const getContent = (type, query, onSuccess, onError) => {
+const users = () => {
+    return {
+        /**
+         * Find WordPress user by ID
+         * @param id
+         * @param config
+         */
+        findById(id, config = {}) {
+            return http.get(`fl-assistant/v1/user/${id}`, config)
+        },
+        /**
+         * Find WordPress users by query
+         * @param params
+         * @param config
+         */
+        findWhere(params, config = {}) {
+            config.params = params
+            return http.get('fl-assistant/v1/users', config)
+        },
+        /**
+         * Update current WordPress user state.
+         * @param state
+         * @param config
+         */
+        updateState(state, config = {}) {
+            return http.post('fl-assistant/v1/current-user/state', {state}, config = {})
+        }
+    }
+}
+
+/**
+ * Methods related to terms
+ */
+const terms = () => {
+    return {
+        /**
+         * Get hierarchical list of terms by query
+         * @param params
+         * @param config
+         */
+        hierarchical(params, config = {}) {
+            config.params = params
+            return http.get('fl-assistant/v1/terms/hierarchical', config)
+        },
+        /**
+         * Find term by ID
+         * @param id
+         * @returns {Promise<AxiosResponse<T>>}
+         */
+        findById(id) {
+            return http.get(`fl-assistant/v1/term/${id}`);
+        },
+        /**
+         * Create a new term
+         * @param data
+         * @returns {Promise<AxiosResponse<T>>}
+         */
+        create(data = {}) {
+            return http.post('fl-assistant/v1/term', data)
+        },
+        /**
+         * Update a term
+         * @param id
+         * @param action
+         * @param data
+         * @returns {Promise<AxiosResponse<T>>}
+         */
+        update(id, action, data = {}) {
+            return http.post(`fl-assistant/v1/term/${id}`, {
+                action,
+                data,
+            });
+        }
+    }
+}
+
+/**
+ * Methods related to comments
+ * @type {{findWhere(*=): *, findById(*): *, update(*, *, *=): *}}
+ */
+const comments = () => {
+
+    return {
+        /**
+         * Find comment by ID
+         * @param id
+         * @returns {Promise<AxiosResponse<T>>}
+         */
+        findById(id) {
+            return http.get(`fl-assistant/v1/comment/${id}`)
+        },
+        /**
+         * Find comment by query
+         * @param params
+         * @returns {Promise<AxiosResponse<T>>}
+         */
+        findWhere(params) {
+            return http.get('fl-assistant/v1/comments', {params});
+        },
+        /**
+         * Update a comment
+         *
+         * @param id
+         * @param action
+         * @param data
+         * @returns {Promise<AxiosResponse<T>>}
+         */
+        update(id, action, data = {}) {
+            return http.post(`fl-assistant/v1/comment/${id}`, {
+                action,
+                ...data,
+            });
+        }
+    }
+}
+
+/**
+ *
+ * @type {{findWhere(*=): *, findById(*): *, update(*, *, *=): *}}
+ */
+const attachments = () => {
+    return {
+        /**
+         * Returns data for a single attachment.
+         */
+        findById(id) {
+            return http.get(`fl-assistant/v1/attachment/${id}`)
+        },
+        /**
+         * Returns an array of attachments.
+         */
+        findWhere(params) {
+            return http.get('fl-assistant/v1/attachments', {params})
+        },
+        /**
+         * Updates a single attachment. See the update_attachment
+         * REST method for a list of supported actions.
+         */
+        update(id, action, data = {}) {
+            return http.post(`fl-assistant/v1/attachment/${id}`, {
+                action,
+                data,
+            })
+        }
+    }
+}
+
+/**
+ * Methods related to updates
+ * @returns {Promise<AxiosResponse<T>>|{findWhere(*): *}}
+ */
+const updates = () => {
+    return {
+        /**
+         * Find updates based on query params
+         *
+         * @param params
+         * @returns {Promise<AxiosResponse<T>>}
+         */
+        findWhere(params) {
+            return http.get('fl-assistant/v1/updates', {params})
+        }
+    }
+}
+
+/**
+ * Returns any array of content for the given type such as posts or terms.
+ *
+ * @param type
+ * @param params
+ * @param config
+ * @returns {*|Promise<*>|*|Promise<*>|Promise<*>|*}
+ */
+const getContent = (type, params, config = {}) => {
     switch (type) {
         case 'posts':
-            return getPosts(query, onSuccess, onError)
+            return posts().findWhere(params, config)
         case 'terms':
-            return getTerms(query, onSuccess, onError)
+            return terms().findWhere(params, config)
         case 'attachments':
-            return getAttachments(query, onSuccess, onError)
+            return attachments().findWhere(params, config)
         case 'comments':
-            return getComments(query, onSuccess, onError)
+            return comments().findWhere(params, config)
         case 'users':
-            return getUsers(query, onSuccess, onError)
+            return users().findWhere(params, config)
         case 'updates':
-            return getUpdates(query, onSuccess, onError)
+            return updates().findWhere(params, config)
     }
 }
 
 /**
  * Returns any array of paginated content.
+ *
+ * @param type
+ * @param params
+ * @param offset
+ * @param config
  */
-export const getPagedContent = (type, query, offset = 0, onSuccess, onError) => {
-    let paged = Object.assign({offset}, query)
+const getPagedContent = (type, params, offset = 0, config = {}) => {
+    let paged = Object.assign({offset}, params)
     let perPage = 20
 
     switch (type) {
@@ -87,300 +326,31 @@ export const getPagedContent = (type, query, offset = 0, onSuccess, onError) => 
             break
     }
 
-    return getContent(type, paged, data => {
-        const hasMore = data.length && data.length === perPage ? true : false
-        onSuccess && onSuccess(data, hasMore)
-    }, onError)
+    return new Promise((resolve, reject) => {
+        getContent(type, paged, config)
+            .then((response) => {
+                const data = response.data;
+                const hasMore = data.length && data.length === perPage ? true : false
+                resolve({data, hasMore})
+            }).catch(reject)
+    });
 }
 
 /**
- * Returns any array of posts.
+ * Search for pages, posts, users, or comments.
+ *
+ * Note that because search issues a POST request to the API, it will not be cached in the browser.
+ *
+ * @param keyword
+ * @param routes
+ * @param config
+ * @returns {Promise<AxiosResponse<T>>}
  */
-export const getPosts = (query, onSuccess, onError) => {
-    return restRequest({
-        route: addQueryArgs('fl-assistant/v1/posts', query),
-        cacheKey: 'posts',
-        onSuccess,
-        onError,
-    })
+const search = (keyword, routes, config = {}) => {
+    return http.post('fl-assistant/v1/search', {
+        keyword,
+        routes
+    }, config)
 }
 
-/**
- * Returns any array of hierarchical posts
- * with child post data contained within the
- * parent post's data object.
- */
-export const getHierarchicalPosts = (query, onSuccess, onError) => {
-    return restRequest({
-        route: addQueryArgs('fl-assistant/v1/posts/hierarchical', query),
-        cacheKey: 'posts',
-        onSuccess,
-        onError,
-    })
-}
 
-/**
- * Returns data for a single post.
- */
-export const getPost = (id, onSuccess, onError) => {
-    return restRequest({
-        route: `fl-assistant/v1/post/${id}`,
-        cacheKey: 'posts',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Creates a single post.
- */
-export const createPost = (data = {}, onSuccess, onError) => {
-    clearCache('posts')
-    return restRequest({
-        method: 'POST',
-        route: 'fl-assistant/v1/post',
-        data,
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Updates a single post. See the update_post
- * REST method for a list of supported actions.
- */
-export const updatePost = (id, action, data = {}, onSuccess, onError) => {
-    clearCache('posts')
-    return restRequest({
-        method: 'POST',
-        route: `fl-assistant/v1/post/${id}`,
-        data: {
-            action,
-            data,
-        },
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns any array of post terms.
- */
-export const getTerms = (query, onSuccess, onError) => {
-    return restRequest({
-        route: addQueryArgs('fl-assistant/v1/terms', query),
-        cacheKey: 'terms',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns any array of hierarchical post terms
- * with child term data contained within the
- * parent term's data object.
- */
-export const getHierarchicalTerms = (query, onSuccess, onError) => {
-    return restRequest({
-        route: addQueryArgs('fl-assistant/v1/terms/hierarchical', query),
-        cacheKey: 'terms',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns data for a single term.
- */
-export const getTerm = (id, onSuccess, onError) => {
-    return restRequest({
-        route: `fl-assistant/v1/term/${id}`,
-        cacheKey: 'terms',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Creates a single term.
- */
-export const createTerm = (data = {}, onSuccess, onError) => {
-    clearCache('terms')
-    return restRequest({
-        method: 'POST',
-        route: 'fl-assistant/v1/term',
-        data,
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Updates a single term. See the update_term
- * REST method for a list of supported actions.
- */
-export const updateTerm = (id, action, data = {}, onSuccess, onError) => {
-    clearCache('terms')
-    return restRequest({
-        method: 'POST',
-        route: `fl-assistant/v1/term/${id}`,
-        data: {
-            action,
-            data,
-        },
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns any array of attachments.
- */
-export const getAttachments = (query, onSuccess, onError) => {
-    return restRequest({
-        route: addQueryArgs('fl-assistant/v1/attachments', query),
-        cacheKey: 'attachments',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns data for a single attachment.
- */
-export const getAttachment = (id, onSuccess, onError) => {
-    return restRequest({
-        route: `fl-assistant/v1/attachment/${id}`,
-        cacheKey: 'attachments',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Updates a single attachment. See the update_attachment
- * REST method for a list of supported actions.
- */
-export const updateAttachment = (id, action, data = {}, onSuccess, onError) => {
-    clearCache('attachments')
-    return restRequest({
-        method: 'POST',
-        route: `fl-assistant/v1/attachment/${id}`,
-        data: {
-            action,
-            data,
-        },
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns any array of comments.
- */
-export const getComments = (query, onSuccess, onError) => {
-    return restRequest({
-        route: addQueryArgs('fl-assistant/v1/comments', query),
-        cacheKey: 'comments',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns data for a single comment.
- */
-export const getComment = (id, onSuccess, onError) => {
-    return restRequest({
-        route: `fl-assistant/v1/comment/${id}`,
-        cacheKey: 'comments',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Updates a single comment. See the update_comment
- * REST method for a list of supported actions.
- */
-export const updateComment = (id, action, data = {}, onSuccess, onError) => {
-    clearCache('comments')
-    return restRequest({
-        method: 'POST',
-        route: `fl-assistant/v1/comment/${id}`,
-        data: {
-            action,
-            ...data,
-        },
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns any array of users.
- */
-export const getUsers = (query, onSuccess, onError) => {
-    return restRequest({
-        route: addQueryArgs('fl-assistant/v1/users', query),
-        cacheKey: 'users',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns data for a single user.
- */
-export const getUser = (id, onSuccess, onError) => {
-    return restRequest({
-        route: `fl-assistant/v1/user/${id}`,
-        cacheKey: 'users',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Updates the saved state for the current user.
- */
-export const updateUserState = (state, onSuccess, onError) => {
-    return restRequest({
-        method: 'POST',
-        route: 'fl-assistant/v1/current-user/state',
-        data: {
-            state,
-        },
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns any array of updates.
- */
-export const getUpdates = (query, onSuccess, onError) => {
-    return restRequest({
-        route: addQueryArgs('fl-assistant/v1/updates', query),
-        cacheKey: 'updates',
-        onSuccess,
-        onError,
-    })
-}
-
-/**
- * Returns any array of search results for the
- * given REST routes.
- */
-export const getSearchResults = (keyword, routes, onSuccess, onError) => {
-    return restRequest({
-        method: 'POST',
-        route: 'fl-assistant/v1/search',
-        data: {
-            keyword,
-            routes,
-        },
-        onSuccess,
-        onError,
-    })
-}

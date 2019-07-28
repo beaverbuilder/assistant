@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'fl-react'
 import { __ } from 'assistant'
-import { getPagedContent } from 'assistant/utils/wordpress'
+import { getWpRest } from 'assistant/utils/wordpress'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
 import { Button, List, Page, Nav, Icon } from 'assistant/ui'
 
@@ -20,9 +20,12 @@ const Main = ( { match } ) => {
 	useEffect( () => {
 		setItems( [] )
 
-		getPagedContent( 'posts', query, 0, ( data, hasMore ) => {
-			setItems( data )
-		} )
+		getWpRest().getPagedContent( 'posts', query, 0)
+			.then(( { data, hasMore} ) => {
+				console.log({data, hasMore}, 'setting content')
+				setItems( data )
+			})
+
 	}, [ query ] )
 
 	return (

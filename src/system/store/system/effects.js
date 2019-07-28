@@ -1,13 +1,16 @@
 import {registerAppStore} from '../app'
-import {updateUserState} from 'shared-utils/wordpress'
+import { getWpRest } from 'shared-utils/wordpress'
 import cloud from 'shared-utils/cloud'
 
 import {
 	fetchCurrentUser,
-	setCloudToken, setCurrentUser,
+	setCloudToken,
+	setCurrentUser,
 	setIsCloudConnected,
 	setLoginErrors
 } from './actions'
+
+const wpapi = getWpRest();
 
 /**
  * Effects that fire before an action.
@@ -73,36 +76,36 @@ export const after = {
 
 	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
 		const {shouldReduceMotion} = store.getState()
-		updateUserState( {shouldReduceMotion} )
+		wpapi.users().updateState( {shouldReduceMotion} )
 	},
 
 	SET_APP_POSITION: ( action, store ) => {
 		const {appOrder} = store.getState()
-		updateUserState( {appOrder} )
+		wpapi.users().updateState( {appOrder} )
 	},
 
 	SET_WINDOW: ( action, store ) => {
 		const {window} = store.getState()
-		updateUserState( {window: {...window}} )
+		wpapi.users().updateState( {window: {...window}} )
 	},
 
 	SET_BRIGHTNESS: ( action, store ) => {
 		const {appearance} = store.getState()
-		updateUserState( {appearance} )
+		wpapi.users().updateState( {appearance} )
 	},
 
 	SET_SHOULD_SHOW_LABELS: ( action, store ) => {
 		const {shouldShowLabels} = store.getState()
-		updateUserState( {shouldShowLabels} )
+		wpapi.users().updateState( {shouldShowLabels} )
 	},
 
 	SET_HISTORY: ( action, store ) => {
 		const {history} = store.getState()
-		updateUserState( {history} )
+		wpapi.users().updateState( {history} )
 	},
 
 	SET_SEARCH_HISTORY: ( action, store ) => {
 		const {searchHistory} = store.getState()
-		updateUserState( {searchHistory} )
+		wpapi.users().updateState( {searchHistory} )
 	},
 }
