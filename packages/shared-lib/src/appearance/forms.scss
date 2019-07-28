@@ -21,6 +21,7 @@
         // Yes, these have to be separate rules.
         &::-webkit-input-placeholder{
             text-align: center;
+            color: var(--fl-asst-dim-text);
         }
         &::-ms-input-placeholder{
             text-align: center;

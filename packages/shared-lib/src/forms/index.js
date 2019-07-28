@@ -231,10 +231,6 @@ Form.Test = () => {
 					<Control.Toggle />
 				</Form.Item>
 
-				<Form.Item label={__( 'Back/Forward Control' )} placement="beside">
-					{ false && <BackForwardControl /> }
-				</Form.Item>
-
 				<Form.Section label={__( 'Form Section' )}>
 					<Form.Item label={__( 'Phone Number' )} labelFor="phone2" placement="beside">
 						<input

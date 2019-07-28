@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { Icon, Nav } from 'lib'
+import { useSystemState, getSystemActions } from 'store'
 import './style.scss'
 
 const transition = {
@@ -54,9 +55,7 @@ export const Window = ( {
 
 	// Origin
 	const setPosition = pos => {
-		handleChange( {
-			origin: pos,
-		} )
+		handleChange( { origin: pos } )
 	}
 
 	// Animation
@@ -248,6 +247,10 @@ const WindowPanel = ( { className, children, style, ...rest } ) => {
 	const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
 	const { isRoot, goToRoot } = useContext( Nav.Context )
 
+	const { appearance } = useSystemState()
+	const { setBrightness } = getSystemActions()
+	const toggleBrightness = () => 'light' === appearance.brightness ? setBrightness( 'dark' ) : setBrightness( 'light' )
+
 	const classes = classname( {
 		'fl-asst-window': true,
 		[`fl-asst-window-${size}`]: size,
@@ -282,10 +285,20 @@ const WindowPanel = ( { className, children, style, ...rest } ) => {
 						{...stopEvts}
 						style={{ marginLeft: 'auto' }}
 					>
+
+						{ /* Apps */ }
 						{ ! isRoot && <button onClick={goToRoot}>
 							<Icon.Apps />
 							{ shouldShowLabels && <span style={labelStyle}>{__( 'Apps' )}</span> }
 						</button>}
+
+						{ /* Brightness */ }
+						<button onClick={toggleBrightness}>
+							<Icon.Brightness />
+							{ shouldShowLabels && <span style={labelStyle}>{__( 'Brightness' )}</span> }
+						</button>
+
+						{ /* Window Size */ }
 						<button onClick={toggleSize}>
 							{ 'mini' === size && <Icon.Expand /> }
 							{ 'normal' === size && <Icon.Collapse /> }
@@ -294,6 +307,8 @@ const WindowPanel = ( { className, children, style, ...rest } ) => {
 									__( 'Expand' ) : __( 'Compact' )
 							}</span> }
 						</button>
+
+						{ /* Hide Window */ }
 						<button onClick={toggleIsHidden}>
 							<Icon.Close />
 							{ shouldShowLabels && <span style={labelStyle}>{__( 'Hide' )}</span> }

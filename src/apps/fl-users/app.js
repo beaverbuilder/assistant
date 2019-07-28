@@ -1,27 +1,17 @@
 import React from 'fl-react'
-import { Switch, Route, Link } from 'fl-react-router-dom'
-import { Page } from 'assistant/lib'
+import { Page, Nav } from 'assistant/lib'
 
 export const Users = ( { match } ) => (
-	<Switch>
-		<Route exact path={`${match.url}/`} component={Main} />
-		<Route path={`${match.url}/user/:id`} component={UserDetail} />
-	</Switch>
+	<Nav.Switch>
+		<Nav.Route exact path={`${match.url}/`} component={Main} />
+		<Nav.Route path={`${match.url}/user/:id`} component={Page.User} />
+	</Nav.Switch>
 )
 
-const Main = ( { match } ) => {
+const Main = () => {
 	return (
 		<Page>
 			<p>Users</p>
-		</Page>
-	)
-}
-
-const UserDetail = () => {
-	return (
-		<Page>
-			<h1>User Detail Screen</h1>
-			<p>Check back soon...</p>
 		</Page>
 	)
 }

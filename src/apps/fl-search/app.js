@@ -7,6 +7,7 @@ export const App = ( { match } ) => {
 		<Nav.Switch>
 			<Nav.Route exact path={`${match.url}/`} component={Main} />
 			<Nav.Route path={`${match.url}/posts/:id`} component={Page.Post} />
+			<Nav.Route path={`${match.url}/users/:id`} component={Page.User} />
 		</Nav.Switch>
 	)
 }

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'fl-react'
+
 import { __ } from 'assistant'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
-import { Button, List, Page, Nav, Icon } from 'assistant/ui'
+import { Button, List, Page, Nav } from 'assistant/ui'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
@@ -20,17 +21,16 @@ const Main = ( { match } ) => {
 	useEffect( () => {
 		setItems( [] )
 
-		getWpRest().getPagedContent( 'posts', query, 0)
-			.then(( { data, hasMore} ) => {
-				console.log({data, hasMore}, 'setting content')
+		getWpRest().getPagedContent( 'posts', query, 0 )
+			.then( ( { data, hasMore} ) => {
+				console.log( {data, hasMore}, 'setting content' )
 				setItems( data )
-			})
+			} )
 
 	}, [ query ] )
 
-	return (
-		<Page shouldPadSides={false}>
-
+	const Toolbar = () => {
+		return (
 			<Button.Group>
 				{ Object.keys( contentTypes ).map( ( type, i ) =>
 					<Button
@@ -45,11 +45,16 @@ const Main = ( { match } ) => {
 					</Button>
 				) }
 			</Button.Group>
+		)
+	}
+
+	return (
+		<Page shouldPadSides={false} toolbar={<Toolbar />}>
 
 			<List
 				items={ items }
 				defaultItemProps={{ shouldAlwaysShowThumbnail: true }}
-				getItemProps={( item, defaultProps, isSection ) => {
+				getItemProps={( item, defaultProps ) => {
 					return {
 						...defaultProps,
 						label: item.title,

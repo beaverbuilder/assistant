@@ -1,4 +1,4 @@
-import React, { Fragment } from 'fl-react'
+import React from 'fl-react'
 import { __ } from 'assistant'
 import { useSystemState, getSystemActions } from 'assistant/store'
 import { Page, Form, Control } from 'assistant/ui'
@@ -7,14 +7,14 @@ export const App = () => {
 	const { appearance, shouldShowLabels } = useSystemState()
 	const { brightness } = appearance
 	const { setBrightness, setShouldShowLabels } = getSystemActions()
-
+	const isDark = 'dark' === brightness
 
 	return (
 		<Page title="Settings" shouldPadSides={false}>
-			<form>
+			<Form>
 				<Form.Item label={__( 'Dark Appearance' )} placement="beside">
 					<Control.Toggle
-						value={ 'dark' === brightness }
+						value={ isDark }
 						onChange={ v => setBrightness( v ? 'dark' : 'light' ) }
 					/>
 				</Form.Item>
@@ -24,7 +24,7 @@ export const App = () => {
 						onChange={ v => setShouldShowLabels( v ) }
 					/>
 				</Form.Item>
-			</form>
+			</Form>
 		</Page>
 	)
 }

@@ -10,7 +10,7 @@ import {
 	setLoginErrors
 } from './actions'
 
-const wpapi = getWpRest();
+const wpapi = getWpRest()
 
 /**
  * Effects that fire before an action.

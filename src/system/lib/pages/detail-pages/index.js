@@ -93,16 +93,20 @@ export const Post = ( { location } ) => {
 		url: null,
 		visibility: 'Public',
 	}
-	const item = 'undefined' !== typeof location.state ? location.state : defaultItem
+	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	const { title, thumbnail, url } = item
 
 	return (
-		<Page>
+		<Page title={__( 'Post' )}>
 			{ thumbnail && <img src={thumbnail} /> }
 			<h2>{title}</h2>
 			<div>
 				<a href={url}><em>{url}</em></a>
 			</div>
+
+			<Page.ExpandedContent>
+				This should only show when expanded.
+			</Page.ExpandedContent>
 		</Page>
 	)
 }
@@ -111,6 +115,14 @@ export const Attachment = () => {
 	return (
 		<Page>
 			<h1>I am an Attachment</h1>
+		</Page>
+	)
+}
+
+export const User = () => {
+	return (
+		<Page>
+			<h1>I am an User</h1>
 		</Page>
 	)
 }
