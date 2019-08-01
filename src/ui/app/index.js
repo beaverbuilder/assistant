@@ -2,9 +2,10 @@ import React, { forwardRef } from 'fl-react'
 import { withRouter } from 'fl-react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import classname from 'classnames'
-import { __ } from 'assistant'
-import { App, Icon, Page, Nav, Error } from 'assistant/lib'
-import { useSystemState } from 'assistant/store'
+import { __ } from 'assistant/i18n'
+import { App, Page, Nav, Error } from 'assistant/ui'
+import { useSystemState } from 'assistant/data'
+import { HomeScreen } from './home-screen'
 import './style.scss'
 
 export const AppRouting = withRouter(  ( { location, history } ) => {
@@ -16,7 +17,7 @@ export const AppRouting = withRouter(  ( { location, history } ) => {
 				timeout={210}
 			>
 				<Nav.Switch location={location}>
-					<Nav.Route exact path="/" component={Switcher} />
+					<Nav.Route exact path="/" component={HomeScreen} />
 					<Nav.Route path="/:app" component={AppContent} />
 					<Nav.Route component={NoApp} />
 				</Nav.Switch>
@@ -130,37 +131,6 @@ const CardStack = ( { children, style: passedStyles, ...rest } ) => {
 	)
 }
 */
-
-const Switcher = () => {
-	const { apps, appOrder } = useSystemState()
-	return (
-		<Page shouldPadTop={true} title={__( 'Apps' )} icon={Icon.Apps}>
-			<div className="app-grid">
-				{ appOrder.map( ( handle, i ) => {
-					const app = apps[handle]
-					const location = {
-						pathname: `/${handle}`,
-						state: app,
-					}
-					const style = {}
-					if ( 'undefined' !== typeof app.accent ) {
-						style['--fl-asst-accent-color'] = app.accent.color
-						style.backgroundColor = 'var(--fl-asst-accent-color)'
-					}
-
-					return (
-						<Nav.Link to={location} className="app-grid-item" key={i}>
-							<div className="fl-asst-app-icon" style={style}>
-								{ 'function' === typeof app.icon && app.icon( {} ) }
-							</div>
-							<label>{app.label}</label>
-						</Nav.Link>
-					)
-				} )}
-			</div>
-		</Page>
-	)
-}
 
 const NoApp = () => {
 	return (

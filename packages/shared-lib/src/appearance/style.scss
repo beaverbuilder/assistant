@@ -66,6 +66,9 @@
         min-width: var(--fl-asst-target-size);
         user-select: none;
         padding:0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
 
         &:hover {
             color: inherit;
@@ -161,6 +164,8 @@
 
             --fl-asst-translucent-background: var(--fl-asst-light-translucent);
             --fl-asst-dim-text: var(--fl-asst-dark-5);
+
+            --fl-asst-alt-row-background: hsla(214, 30%, 92%, .3); // transparent version of light-4
         }
 
         &.fl-asst-brightness-dark {
@@ -174,6 +179,8 @@
 
             --fl-asst-translucent-background: var(--fl-asst-dark-translucent);
             --fl-asst-dim-text: var(--fl-asst-light-5);
+
+            --fl-asst-alt-row-background: hsla(0,0%,0%,.15);
         }
 
         p {

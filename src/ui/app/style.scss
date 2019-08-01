@@ -89,6 +89,8 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    padding: var(--fl-asst-inner-space) var(--fl-asst-tiny-space);
+    padding-top: var(--fl-asst-outer-space);
 
     .app-grid-item {
         flex: 0 0 33.3%;

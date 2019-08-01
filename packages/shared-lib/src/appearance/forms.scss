@@ -29,5 +29,17 @@
         &::placeholder {
             text-align: center;
         }
+
+        &:focus {
+            &::-webkit-input-placeholder{
+                text-align: left;
+            }
+            &::-ms-input-placeholder{
+                text-align: left;
+            }
+            &::placeholder {
+                text-align: left;
+            }
+        }
     }
 }

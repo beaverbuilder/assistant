@@ -21,6 +21,10 @@
             & > a {
                 border-radius: 0;
             }
+
+            &:nth-child(even) {
+                background: var(--fl-asst-alt-row-background);
+            }
         }
     }
 
@@ -42,7 +46,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        line-height: 1.5;
+        line-height: 1.3;
         font-weight: 500;
     }
     .fl-asst-list-item-description {
@@ -57,7 +61,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        align-self: flex-start;
         background-color: var(--fl-asst-secondary-surface-background);
         border-radius: 3px;
         overflow: hidden;
