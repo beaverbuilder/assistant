@@ -1,12 +1,8 @@
-import React, {useState, useEffect} from 'fl-react'
-
-// import {Switch, Route, Redirect, Link, withRouter} from 'fl-react-router-dom'
-import {App, Page, Icon} from 'assistant/lib'
-
+import React, { useState, useEffect } from 'fl-react'
+import { Page, Icon } from 'assistant/lib'
 import LoginForm from './components/login-form'
 import cloud from 'assistant/cloud'
 import './style.scss'
-
 
 export const CloudApp = () => {
 

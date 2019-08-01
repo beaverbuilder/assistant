@@ -9,8 +9,8 @@ import './style.scss'
 export const Main = ( { match } ) => {
 	const { apps, searchHistory } = useSystemState()
 	const { setSearchHistory } = getSystemActions()
-	const { keyword } = useAppState()
-	const { setKeyword } = getAppActions()
+	const { keyword } = useAppState( 'fl-search' )
+	const { setKeyword } = getAppActions( 'fl-search' )
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
 	const timeout = useRef( null )

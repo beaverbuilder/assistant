@@ -27,6 +27,7 @@ export const Window = ( {
 	shouldShowLabels = true,
 	position = [ 1, 1 ],
 	onChange = () => {},
+	toolbar: topbar,
 	...rest
 } ) => {
 
@@ -84,7 +85,7 @@ export const Window = ( {
 		<Flipper flipKey={needsAnimate}>
 			<Window.Context.Provider value={context}>
 				<WindowLayer onChange={handleChange} {...rest}>
-					{ ! isHidden && <WindowPanel>{children}</WindowPanel> }
+					{ ! isHidden && <WindowPanel topbar={topbar}>{children}</WindowPanel> }
 					{ isHidden && <WindowButton>{icon}</WindowButton> }
 				</WindowLayer>
 			</Window.Context.Provider>
@@ -243,13 +244,14 @@ const WindowLayer = ( {
 	)
 }
 
-const WindowPanel = ( { className, children, style, ...rest } ) => {
+const WindowPanel = ( { className, children, style, topbar: TopBar,  ...rest } ) => {
 	const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
-	const { isRoot, goToRoot } = useContext( Nav.Context )
+	const { isRoot } = useContext( Nav.Context )
 
 	const { appearance } = useSystemState()
 	const { setBrightness } = getSystemActions()
 	const toggleBrightness = () => 'light' === appearance.brightness ? setBrightness( 'dark' ) : setBrightness( 'light' )
+
 
 	const classes = classname( {
 		'fl-asst-window': true,
@@ -276,21 +278,21 @@ const WindowPanel = ( { className, children, style, ...rest } ) => {
 	return (
 		<Flipped flipId="window" spring={transition}>
 			<div className={classes} style={styles} {...rest}>
+
+				{ /* Toolbar */ }
 				<div className="fl-asst-window-toolbar fl-asst-window-drag-handle">
+
 					<span className="fl-asst-window-drag-handle" style={{ display: 'inline-flex', pointerEvents: 'none' }}>
 						<Icon.DragHandle />
 						{ shouldShowLabels && <span style={labelStyle}>{__( 'Move' )}</span> }
 					</span>
+
+					{ 'function' === typeof TopBar && <TopBar /> }
+
 					<span
 						{...stopEvts}
 						style={{ marginLeft: 'auto' }}
 					>
-
-						{ /* Apps */ }
-						{ ! isRoot && <button onClick={goToRoot}>
-							<Icon.Apps />
-							{ shouldShowLabels && <span style={labelStyle}>{__( 'Apps' )}</span> }
-						</button>}
 
 						{ /* Brightness */ }
 						<button onClick={toggleBrightness}>
@@ -315,6 +317,8 @@ const WindowPanel = ( { className, children, style, ...rest } ) => {
 						</button>
 					</span>
 				</div>
+
+
 				<div
 					className="fl-asst-window-content"
 					{...stopEvts}

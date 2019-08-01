@@ -13,8 +13,8 @@ export const Content = ( { match } ) => (
 const Main = ( { match } ) => {
 	const [ items, setItems ] = useState( [] )
 	const { contentTypes } = getSystemConfig()
-	const { query } = useAppState()
-	const { setQuery } = getAppActions()
+	const { query } = useAppState( 'fl-content' )
+	const { setQuery } = getAppActions( 'fl-content' )
 
 	useEffect( () => {
 		setItems( [] )
