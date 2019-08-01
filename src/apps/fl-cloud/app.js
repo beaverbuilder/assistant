@@ -3,6 +3,7 @@ import {useSystemState, getSystemActions} from 'assistant/store'
 import {Page} from 'assistant/lib'
 
 import {ProfilePage, LoginPage} from './pages'
+
 import './style.scss'
 
 export const CloudApp = () => {

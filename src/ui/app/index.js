@@ -45,14 +45,14 @@ const AppContent = props => {
 		style['--fl-asst-accent-color'] = context.accent.color
 	}
 	return (
-		<App.Context.Provider value={context}>
+		<>
 			{ /* Alerts component here */ }
 			<ScreenCard>
 				<div className="fl-asst-screen-content" style={style}>
 					{ 'function' === typeof app.root ? app.root( appProps ) : null }
 				</div>
 			</ScreenCard>
-		</App.Context.Provider>
+		</>
 	)
 }
 

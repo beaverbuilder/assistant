@@ -1,7 +1,7 @@
-import React from 'fl-react'
+import React, { useContext } from 'fl-react'
 import { __ } from 'assistant'
 import { getSystemActions, useSystemState } from 'assistant/store'
-import { Appearance, Icon, Window, Error, Page, Nav } from 'assistant/lib'
+import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
 import { AppRouting } from '../app'
 
 export const Main = () => {
@@ -11,9 +11,11 @@ export const Main = () => {
 
 	return (
 		<Nav.Provider>
-			<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
-				<MainWindow />
-			</Appearance>
+			<App.Provider>
+				<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
+					<MainWindow />
+				</Appearance>
+			</App.Provider>
 		</Nav.Provider>
 	)
 }
@@ -33,6 +35,7 @@ const MainWindow = () => {
 			position={origin}
 			onChange={onChanged}
 			shouldShowLabels={shouldShowLabels}
+			toolbar={WindowToolbar}
 		>
 			<Error.Boundary alternate={WindowError}>
 				<AppRouting />
@@ -47,5 +50,37 @@ const WindowError = () => {
 			<h1>{__( 'We Have A Problem!' )}</h1>
 			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
 		</Page>
+	)
+}
+
+const WindowToolbar = () => {
+	const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
+	const { isRoot, goToRoot } = useContext( Nav.Context )
+	const { label } = useContext( App.Context )
+
+	const stopProp = e => e.stopPropagation()
+	const stopEvts = {
+		onMouseMove: stopProp,
+		onTouchStart: stopProp,
+	}
+
+	const labelStyle = {
+		padding: '2px 10px',
+	}
+
+	return (
+		<>
+			<span {...stopEvts}>
+				{ /* Apps */ }
+
+				{ isRoot && <span style={labelStyle}>{__( 'Home' )}</span> }
+
+				{ ! isRoot && <>
+					<button onClick={goToRoot}>{__( 'Home' )}</button>
+					<Icon.RightCaret />
+					<span style={labelStyle}>{label}</span>
+				</> }
+			</span>
+		</>
 	)
 }

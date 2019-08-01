@@ -8,11 +8,13 @@ import axios from 'axios'
 
 import './style.scss'
 
-export const Main = ( {match} ) => {
-	const {apps, searchHistory} = useSystemState()
-	const {setSearchHistory} = getSystemActions()
-	const {keyword} = useAppState()
-	const {setKeyword} = getAppActions()
+
+export const Main = ( { match } ) => {
+	const { apps, searchHistory } = useSystemState()
+	const { setSearchHistory } = getSystemActions()
+	const { keyword } = useAppState( 'fl-search' )
+	const { setKeyword } = getAppActions( 'fl-search' )
+
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
 

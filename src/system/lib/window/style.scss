@@ -2,7 +2,7 @@
     .fl-asst-window {
         --fl-asst-window-size: 360px;
         --fl-asst-admin-bar-height: 32px;
-        --fl-asst-window-toolbar-height: 32px;
+        --fl-asst-window-toolbar-height: 38px;
 
         box-sizing: border-box;
         width: var(--fl-asst-window-size);
@@ -17,12 +17,12 @@
         &.fl-asst-window-mini {
             max-width: 100%;
             max-height: 100%;
-            box-shadow: 0 0 0 1px hsla(0, 0%, 26%, .1), 0 3px 6px 0 hsla(214, 17%, 41%, 0.2);
+            box-shadow: 0 0 0 3px var(--fl-asst-translucent-background), 0 3px 6px 0 hsla(214, 17%, 41%, 0.2);
             border-radius: var(--fl-asst-medium-space);
 
             .fl-asst-brightness-dark & {
                 border-color: transparent;
-                box-shadow: 0 1px 5px 0 hsla(0,0,0, .2);
+                box-shadow: 0 0 0 3px hsla(0, 0%, 26%, .1), 0 1px 5px 0 hsla(0,0,0, .2);
             }
         }
         &.fl-asst-window-normal {
@@ -110,7 +110,7 @@
         left:0;
         bottom:0;
         right:0;
-        z-index: 999999;
+        z-index: 9999999999999; // Yea, cause popup maker pushes the admin bar higher than normal.
 
         background-color: transparent;
 

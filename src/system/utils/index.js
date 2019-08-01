@@ -6,5 +6,5 @@ import * as wordpress from 'shared-utils/wordpress'
 export const api = {
 	react,
 	url,
-	wordpress,
+	wordpress
 }

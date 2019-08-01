@@ -1,17 +1,42 @@
+import localforage from 'localforage'
+import {setup} from 'axios-cache-adapter'
 import {getSystemConfig} from 'store'
-import {clearCache} from 'shared-utils/cache'
 
-import axios from 'axios'
 
-const {ajaxUrl} = FL_ASSISTANT_CONFIG
+const {ajaxUrl, nonce} = getSystemConfig()
 
-const http = axios.create();
+/**
+ * Create `axios` instance
+ * with pre-configured `axios-cache-adapter`
+ * using a `localforage` store
+ *
+ * @type {AxiosInstance}
+ */
+const http = setup({
+    cache: {
+        // Changing this to true will send alot of output to the console
+        debug: true,
+        // Set cache timeout
+        maxAge: 5 * 60 * 1000,
+        // DO NOT exclude cache requests with query params.
+        exclude: {query: false},
+        // Setup localForage store.
+        store: localforage.createInstance({
+            // Attempt IndexDB then fall back to LocalStorage
+            driver: [
+                localforage.INDEXEDDB,
+                localforage.LOCALSTORAGE,
+            ],
+            // Prefix all storage keys to prevent conflicts
+            name: 'fl-assistant-cache-ajax'
+        })
+    },
+});
 
 export const postAction = (action, data = {}, config = {}) => {
     data.action = action;
-    return http.post(ajaxUrl, data, config)
+    return http.post(ajaxUrl, data, config);
 }
-
 
 export const getAction = (action, queryParams = {}, config = {}) => {
     queryParams.action = action
@@ -19,88 +44,29 @@ export const getAction = (action, queryParams = {}, config = {}) => {
 }
 
 
-/**
- * Fetch request for WordPress admin AJAX.
- */
-export const adminAjaxRequest = ({method = 'GET', ...args}) => {
-
-    const ajaxArgs = {
-        ...args,
-    }
-
-    if ('GET' === method.toUpperCase()) {
-        getAction(ajaxArgs.data.action, ajaxArgs.data)
-            .then(args.onSuccess)
-            .catch(args.onError);
-    } else {
-        postAction(ajaxArgs.data.action, ajaxArgs.data)
-            .then(args.onSuccess)
-            .catch(args.onError);
-    }
+export const replyToComment = (id, postId, content, config = {}) => {
+    return postAction('replyto-comment', {
+        _wpnonce: nonce.reply,
+        _wp_unfiltered_html_comment: nonce.replyUnfiltered,
+        approve_parent: 1,
+        comment_ID: id,
+        comment_post_ID: postId,
+        content,
+    }, config)
 }
 
-/**
- * Reply to a comment.
- */
-export const replyToComment = (id, postId, content, onSuccess, onError) => {
-    const {nonce} = getSystemConfig()
-    clearCache('comments')
 
-
-    return adminAjaxRequest({
-        method: 'POST',
-        onSuccess: response => {
-            if (response.includes('<wp_ajax>')) {
-                onSuccess(response)
-            } else {
-                onError(response)
-            }
-        },
-        data: {
-            action: 'replyto-comment',
-            _wpnonce: nonce.reply,
-            _wp_unfiltered_html_comment: nonce.replyUnfiltered,
-            approve_parent: 1,
-            comment_ID: id,
-            comment_post_ID: postId,
-            content,
-        },
-    })
+export const updatePlugin = (plugin, config = {}) => {
+    return postAction('update-plugin', {
+        plugin,
+        slug: plugin.split('/').pop(),
+        _wpnonce: nonce.updates,
+    }, config)
 }
 
-/**
- * Updates a single plugin.
- */
-export const updatePlugin = (plugin, onSuccess, onError) => {
-    const {nonce} = getSystemConfig()
-    clearCache('updates')
-    return adminAjaxRequest({
-        onSuccess,
-        onError,
-        method: 'POST',
-        data: {
-            plugin,
-            action: 'update-plugin',
-            slug: plugin.split('/').pop(),
-            _wpnonce: nonce.updates,
-        },
-    })
-}
-
-/**
- * Updates a single theme.
- */
-export const updateTheme = (theme, onSuccess, onError) => {
-    const {nonce} = getSystemConfig()
-    clearCache('updates')
-    return adminAjaxRequest({
-        onSuccess,
-        onError,
-        method: 'POST',
-        data: {
-            action: 'update-theme',
-            slug: theme,
-            _wpnonce: nonce.updates,
-        },
+export const updateTheme = (theme, config = {}) => {
+    return postAction('update-theme', {
+        slug: theme,
+        _wpnonce: nonce.updates
     })
 }
