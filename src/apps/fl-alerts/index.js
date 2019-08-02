@@ -1,10 +1,10 @@
 import { registerApp, __ } from 'assistant'
 import { addQueryArgs } from 'assistant/utils/url'
-import { Alerts } from './app'
+import { CommentsApp } from './app'
 
 registerApp( 'fl-alerts', {
-	label: __( 'Alerts' ),
-	root: Alerts,
+	label: __( 'Comments' ),
+	root: CommentsApp,
 	search: {
 		label: __( 'Comments' ),
 		priority: 300,

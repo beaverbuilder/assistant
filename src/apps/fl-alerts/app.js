@@ -3,7 +3,7 @@ import { __ } from 'assistant'
 import { getPagedContent } from 'assistant/utils/wordpress'
 import { Page, List, Button, App, Nav } from 'assistant/ui'
 
-export const Alerts = ( { match } ) => (
+export const CommentsApp = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={`${match.url}/`} component={Main} />
 		<Nav.Route path={'/fl-alerts/comments/:id'} component={Page.Comment} />
@@ -124,5 +124,3 @@ const UpdatesTab = () => {
 		</>
 	)
 }
-
-Alerts.Icon = () => {}

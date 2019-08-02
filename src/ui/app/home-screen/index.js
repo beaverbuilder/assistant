@@ -1,29 +1,19 @@
 import React, { useState, useRef, useEffect } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { useSystemState } from 'assistant/data'
-import { Page, Icon, Nav } from 'assistant/ui'
+import { Page, Nav, Button } from 'assistant/ui'
+import { react as reactUtils } from 'assistant/utils'
+const { useInitialFocus } = reactUtils
 
 export const HomeScreen = () => {
 	const { apps, appOrder } = useSystemState()
-    const [term, setTerm] = useState()
-	const initialFocusEl = useRef()
-
-	useEffect( () => {
-		if ( initialFocusEl.current && initialFocusEl.current instanceof Element ) {
-			initialFocusEl.current.focus()
-		}
-	}, [initialFocusEl] )
+	const initialFocusEl = useInitialFocus()
 
 	return (
 		<Page shouldPadTop={true} shouldPadSides={false} shouldShowHeader={false}>
 
             <Page.Toolbar>
-                <input
-                    type="search"
-                    value={term}
-                    onChange={ e => setTerm( e.target.value ) }
-                    placeholder={ __( 'Search' ) }
-                />
+                <Button>{__('Search')}</Button>
             </Page.Toolbar>
 
 			<div className="app-grid">
