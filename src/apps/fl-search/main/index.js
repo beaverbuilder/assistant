@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSearchResults } from 'assistant/utils/wordpress'
+import { useInitialFocus } from 'assistant/utils/react'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Page, List, Icon, Button } from 'assistant/ui'
 import './style.scss'
@@ -110,21 +111,25 @@ export const Main = ( { match } ) => {
 	const hasResults = entries && entries.length
 	const groups = hasResults ? Object.entries( results ).map( ( [ key, group ] ) => group[0] ) : []
 
-	const Toolbar = () => (
-		<div className='fl-asst-search-form-simple'>
-			<input
-				type="search"
-				value={keyword}
-				onChange={ e => setKeyword( e.target.value ) }
-				placeholder={ __( 'Search' ) }
-			/>
-			{ loading &&
-			<div className='fl-asst-search-spinner'>
-				<Icon.SmallSpinner />
+	const Toolbar = () => {
+		const focusRef = useInitialFocus()
+		return (
+			<div className='fl-asst-search-form-simple'>
+				<input
+					type="search"
+					value={keyword}
+					onChange={ e => setKeyword( e.target.value ) }
+					placeholder={ __( 'Search' ) }
+					ref={focusRef}
+				/>
+				{ loading &&
+				<div className='fl-asst-search-spinner'>
+					<Icon.SmallSpinner />
+				</div>
+				}
 			</div>
-			}
-		</div>
-	)
+		)
+	}
 
 	return (
 		<Page shouldShowHeader={false} shouldPadSides={false} shouldPadBottom={false} toolbar={<Toolbar />}>
