@@ -64,20 +64,17 @@ const WindowToolbar = () => {
 		onTouchStart: stopProp,
 	}
 
-	const labelStyle = {
-		padding: '2px 10px',
-	}
+	const labelStyle = { padding: '2px 10px' }
+	const iconWrapStyle = { display: 'inline-flex', transform: 'translateY(1px)' }
 
 	return (
 		<>
 			<span {...stopEvts}>
-				{ /* Apps */ }
-
 				{ isRoot && <span style={labelStyle}>{__( 'Home' )}</span> }
 
 				{ ! isRoot && <>
-					<button onClick={goToRoot}>{__( 'Home' )}</button>
-					<Icon.RightCaret />
+					<button onClick={goToRoot} style={{ textDecoration: 'underline' }}>{__( 'Home' )}</button>
+					<span style={iconWrapStyle}><Icon.BreadcrumbArrow /></span>
 					<span style={labelStyle}>{label}</span>
 				</> }
 			</span>
