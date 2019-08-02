@@ -135,10 +135,15 @@
     }
 }
 
+.fl-asst .fl-asst-window-normal .app-grid .app-grid-item .fl-asst-app-icon {
+    width: 60px;
+    height: 60px;
+}
+
 @supports( display: grid ) {
     .app-grid {
         display: grid;
-        grid-template-columns: repeat( auto-fit, minmax(100px, 1fr) );
+        grid-template-columns: repeat( auto-fit, minmax(110px, 1fr) );
         grid-gap: 10px;
         align-items: center;
 
