@@ -70,10 +70,10 @@ const WindowToolbar = () => {
 	return (
 		<>
 			<span {...stopEvts}>
-				{ isRoot && <span style={labelStyle}>{__( 'Home' )}</span> }
+				{ isRoot && <span style={labelStyle}>{__( 'Assistant' )}</span> }
 
 				{ ! isRoot && <>
-					<button onClick={goToRoot} style={{ textDecoration: 'underline' }}>{__( 'Home' )}</button>
+					<button onClick={goToRoot} style={{ textDecoration: 'underline' }}>{__( 'Assistant' )}</button>
 					<span style={iconWrapStyle}><Icon.BreadcrumbArrow /></span>
 					<span style={labelStyle}>{label}</span>
 				</> }

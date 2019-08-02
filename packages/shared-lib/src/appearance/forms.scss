@@ -25,20 +25,25 @@
         }
         &::-ms-input-placeholder{
             text-align: center;
+            color: var(--fl-asst-dim-text);
         }
         &::placeholder {
             text-align: center;
+            color: var(--fl-asst-dim-text);
         }
 
         &:focus {
             &::-webkit-input-placeholder{
                 text-align: left;
+                color: var(--fl-asst-surface-color);
             }
             &::-ms-input-placeholder{
                 text-align: left;
+                color: var(--fl-asst-surface-color);
             }
             &::placeholder {
                 text-align: left;
+                color: var(--fl-asst-surface-color);
             }
         }
     }

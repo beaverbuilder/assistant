@@ -100,11 +100,21 @@
         align-items: center;
         text-decoration: none;
         padding: var(--fl-asst-inner-space);
+        border-radius: var(--fl-asst-base-radius);
+
+        &:focus {
+            outline: none;
+
+            .fl-asst-app-icon {
+                box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
+                            0px 0px 0px 2px var(--fl-asst-accent-color);
+            }
+        }
 
         .fl-asst-app-icon {
             width: 50px;
             height: 50px;
-            border-radius: 15px;
+            border-radius: 7px;
             background-color: #16191c;
             color:white;
             display: flex;

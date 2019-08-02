@@ -1,4 +1,4 @@
-import React, { useState } from 'fl-react'
+import React, { useState, useRef, useEffect } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { useSystemState } from 'assistant/data'
 import { Page, Icon, Nav } from 'assistant/ui'
@@ -6,6 +6,14 @@ import { Page, Icon, Nav } from 'assistant/ui'
 export const HomeScreen = () => {
 	const { apps, appOrder } = useSystemState()
     const [term, setTerm] = useState()
+	const initialFocusEl = useRef()
+
+	useEffect( () => {
+		if ( initialFocusEl.current && initialFocusEl.current instanceof Element ) {
+			initialFocusEl.current.focus()
+		}
+	}, [initialFocusEl] )
+
 	return (
 		<Page shouldPadTop={true} shouldPadSides={false} shouldShowHeader={false}>
 
@@ -32,7 +40,7 @@ export const HomeScreen = () => {
 					}
 
 					return (
-						<Nav.Link to={location} className="app-grid-item" key={i}>
+						<Nav.Link to={location} className="app-grid-item" key={i} innerRef={ i === 0 ? initialFocusEl : null }>
 							<div className="fl-asst-app-icon" style={style}>
 								{ 'function' === typeof app.icon && app.icon( {} ) }
 							</div>
