@@ -71,10 +71,12 @@ export const Update = ( { location = {} } ) => {
 	)
 }
 
-export const Attachment = () => {
+export const Attachment = ({ location }) => {
+	const item = typeof location.state.item !== 'undefined' ? location.state.item : {}
+	console.log('media', item)
 	return (
 		<Page>
-			<h1>I am an Attachment</h1>
+			<img src={item.thumbnail} style={{ width: 150, height: 150 }}/>
 		</Page>
 	)
 }
