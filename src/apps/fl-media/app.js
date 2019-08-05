@@ -35,8 +35,9 @@ const Main = ({ match }) => {
 							pathname: `${match.url}/attachment/${item.id}`,
 							state: { item }
 						}
+
 						return (
-							<Nav.Link key={i} to={to}>
+							<Nav.Link key={i} to={to} >
 								<img src={item.thumbnail} />
 							</Nav.Link>
 						)

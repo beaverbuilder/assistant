@@ -71,16 +71,6 @@ export const Update = ( { location = {} } ) => {
 	)
 }
 
-export const Attachment = ({ location }) => {
-	const item = typeof location.state.item !== 'undefined' ? location.state.item : {}
-	console.log('media', item)
-	return (
-		<Page>
-			<img src={item.thumbnail} style={{ width: 150, height: 150 }}/>
-		</Page>
-	)
-}
-
 export const User = () => {
 	return (
 		<Page>

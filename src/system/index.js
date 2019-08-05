@@ -1,6 +1,6 @@
 import { api as data } from './store'
 import { api as ui } from './lib'
-import { api as utils } from './utils'
+import utils from './utils'
 import * as i18n from '@wordpress/i18n'
 
 import * as cloud from 'shared-utils/cloud'
