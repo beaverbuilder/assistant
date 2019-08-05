@@ -45,7 +45,7 @@ const Main = ( { match } ) => {
 		)
 	}
 
-	const Actions = ({ baseUrl }) => {
+	const Actions = ( { baseUrl } ) => {
 		return (
 			<>
 				<Nav.Link to={`${baseUrl}/post/new`}>

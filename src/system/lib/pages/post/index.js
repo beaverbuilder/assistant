@@ -44,7 +44,7 @@ export const Post = ( { location } ) => {
 
 export const CreatePost = () => {
 	return (
-		<Page title={__('Create')}>
+		<Page title={__( 'Create' )}>
 			<h1>Create new post</h1>
 		</Page>
 	)

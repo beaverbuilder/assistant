@@ -2,7 +2,7 @@ import { registerApp, __ } from 'assistant'
 import { addQueryArgs } from 'assistant/utils/url'
 import { CommentsApp } from './app'
 
-registerApp( 'fl-alerts', {
+registerApp( 'fl-comments', {
 	label: __( 'Comments' ),
 	root: CommentsApp,
 	search: {
