@@ -16,6 +16,3 @@ none
 
 # Windows junk
 Thumbs.db
-
-# Composer libs
-/vendor/

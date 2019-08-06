@@ -44,6 +44,3 @@ Use the following npm commands after cloning the repo to work on the project:
 `npm run test` - Run unit tests and linters.
 
 `npm run fix` - Attempt to fix errors caught by linters.
-
-
-

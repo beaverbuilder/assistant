@@ -5,64 +5,47 @@ const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const production = 'production' === process.env.NODE_ENV
 
 const alias = {
-    lib: path.resolve( __dirname, './src/system/lib/'),
-    store: path.resolve( __dirname, './src/system/store'),
-    utils: path.resolve( __dirname, './src/system/utils' ),
-    'shared-lib': path.resolve( __dirname, './packages/shared-lib/src/' ),
-    'shared-utils': path.resolve( __dirname, './packages/shared-utils/src/' ),
+    components: path.resolve( __dirname, './src/front/ui/components' ),
+    system: path.resolve( __dirname, './src/front/ui/system' ),
+    apps: path.resolve( __dirname, './src/front/apps' ),
+    utils: path.resolve( __dirname, './src/utils' ),
+	store: path.resolve( __dirname, './src/front/store/' ),
 }
 
 const externals = {
+    '@assistant' : 'UNSTABLE_FLAssistant',
+    '@assistant/store' : 'UNSTABLE_FLAssistant.store',
+    '@assistant/components' : 'UNSTABLE_FLAssistant.components',
+    '@assistant/utils' : 'UNSTABLE_FLAssistant.utils',
 
-    /* fl-vendor */
-    'fl-react'              		: 'FL.vendors.React',
-    'fl-react-dom'          		: 'FL.vendors.ReactDOM',
-    'fl-react-router-dom'   		: 'FL.vendors.ReactRouter',
-    'fl-redux'              		: 'FL.vendors.Redux',
-    'fl-prop-types'         		: 'FL.vendors.PropTypes',
-    'fl-classnames'         		: 'FL.vendors.classnames',
+    /* Vendor Shortcuts */
+    '@assistant/react' : 'UNSTABLE_FLAssistant.vendor.React',
+    '@assistant/react-dom' : 'UNSTABLE_FLAssistant.vendor.ReactDOM',
+    '@assistant/redux' : 'UNSTABLE_FLAssistant.vendor.redux',
+    '@assistant/react-redux' : 'UNSTABLE_FLAssistant.vendor.reactRedux',
+    '@assistant/classnames' : 'UNSTABLE_FLAssistant.vendor.classnames',
+    '@assistant/react-tunnels' : 'UNSTABLE_FLAssistant.vendor.tunnels',
 
-    /* system bundle */
-    'assistant'             		: 'FL.Assistant',
-    'assistant/store'       		: 'FL.Assistant.data', // TODO: Delete = data replaces store
-    'assistant/data'        		: 'FL.Assistant.data',
-
-    'assistant/lib'         		: 'FL.Assistant.ui', // TODO: delete - ui replaces lib
-    'assistant/ui'          		: 'FL.Assistant.ui',
-
-    'assistant/http'                : 'FL.Assistant.http',
-    'assistant/cloud'               : 'FL.Assistant.cloud',
-
-    'assistant/i18n'        		: 'FL.Assistant.i18n',
-    'assistant/utils'       		: 'FL.Assistant.utils',
-    'assistant/utils/http'        	: 'FL.Assistant.utils.http',
-    'assistant/utils/react'   		: 'FL.Assistant.utils.react',
-    'assistant/utils/url'   		: 'FL.Assistant.utils.url',
-    'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress',
-
-    /* wp */
-    '@wordpress/i18n'               : 'wp.i18n',
+    "@wordpress/block-editor" : 'wp.blockEditor',
+    '@wordpress' : 'wp',
 }
 
 const entry = {
-    ui: './src/ui',
-    api: './src/system',
-    apps: './src/apps',
-    vendors: './packages/fl-vendors',
+    'fl-asst-system' : './src/front',
 }
 
 const config = {
 	entry,
     externals,
 	mode: 'development',
-    target: 'web',
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
-        filename: `fl-assistant-[name].bundle.js`,
+        filename: `[name].bundle.js`,
     },
-    resolve: { alias },
-    devtool: production ? '' : 'source-map',
+    resolve: {
+        alias,
+    },
     module: {
         rules: [
             {
@@ -72,33 +55,13 @@ const config = {
             },
             {
                 test: /\.s?css$/,
-                use: [
-                    {
-                        loader: 'style-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                ],
-			},
+                use: [ 'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ],
+			}
 		]
     },
     plugins: [
         new MiniCssExtractPlugin( {
-            filename: `fl-assistant-[name].bundle.css`,
+            filename: `[name].bundle.css`,
         } ),
     ]
 }
