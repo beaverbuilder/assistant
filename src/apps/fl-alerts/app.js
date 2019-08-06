@@ -1,7 +1,9 @@
-import React, {useEffect, useState, useContext} from 'fl-react'
+import React, {useEffect, useState, useContext, Fragment} from 'fl-react'
 import {__} from 'assistant'
 import {getWpRest} from 'assistant/utils/wordpress'
+// import { useAppState, getAppActions} from "assistant/data";
 import {Page, List, Button, App, Nav} from 'assistant/ui'
+
 
 export const Alerts = ( {match} ) => (
 	<Nav.Switch>
@@ -53,9 +55,9 @@ const CommentsTab = () => {
 	useEffect( () => {
 		getWpRest()
 			.getPagedContent( 'comments', query, offset )
-			.then( ( {data, hasMore} ) => {
+			.then(response => {
 				console.log( 'got comments' )
-				setComments( comments.concat( data ) )
+				setComments( comments.concat( response.data.items ) )
 			} )
 	}, [] )
 
@@ -84,6 +86,8 @@ const CommentsTab = () => {
 }
 
 const UpdatesTab = () => {
+
+
 	const [ updates, setUpdates ] = useState( [] )
 	const {handle} = useContext( App.Context )
 	const offset = updates.length
@@ -95,13 +99,13 @@ const UpdatesTab = () => {
 	useEffect( () => {
 		getWpRest()
 			.getPagedContent( 'updates', query, offset )
-			.then( ( {data, hasMore} ) => {
-				setUpdates( updates.concat( data ) )
+			.then( response  => {
+				setUpdates( updates.concat( response.data ) )
 			} )
 	}, [] )
 
 	return (
-        <>
+        <Fragment>
             {! hasUpdates && <List.Loading/>}
             {hasUpdates &&
             <List
@@ -128,7 +132,7 @@ const UpdatesTab = () => {
             		}
             	}}
             />}
-        </>
+        </Fragment>
 	)
 }
 

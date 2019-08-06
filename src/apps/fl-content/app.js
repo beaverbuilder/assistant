@@ -13,18 +13,28 @@ export const Content = ( { match } ) => (
 )
 
 const Main = ( { match } ) => {
-	const [ items, setItems ] = useState( [] )
+	// const [ items, setItems ] = useState( [] )
 	const { contentTypes } = getSystemConfig()
-	const { query } = useAppState( 'fl-content' )
-	const { setQuery } = getAppActions( 'fl-content' )
+	const { query, pager } = useAppState( 'fl-content' )
+	const { setQuery, setPager } = getAppActions( 'fl-content' )
 
 	useEffect( () => {
-		setItems( [] )
+		setPager({
+			items: [],
+			items_count: 0,
+			current_offset: 0,
+			current_page: 0,
+			first_page: 1,
+			has_more: true,
+			last_page: 2,
+			items_per_page: 20,
+			total_pages: 1
+		});
 
 		getWpRest().getPagedContent( 'posts', query, 0 )
-			.then( ( { data, hasMore} ) => {
-				console.log( {data, hasMore}, 'setting content' )
-				setItems( data )
+			.then( response  => {
+				setPager( response.data )
+				console.log(response.data);
 			} )
 
 	}, [ query ] )
@@ -52,7 +62,7 @@ const Main = ( { match } ) => {
 		<Page shouldPadSides={false} toolbar={<Toolbar />}>
 
 			<List
-				items={ items }
+				items={ pager.items }
 				defaultItemProps={{ shouldAlwaysShowThumbnail: true }}
 				getItemProps={( item, defaultProps ) => {
 					return {

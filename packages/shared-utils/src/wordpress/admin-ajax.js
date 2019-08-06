@@ -1,9 +1,7 @@
 import localforage from 'localforage'
 import {setup} from 'axios-cache-adapter'
-import {getSystemConfig} from 'store'
 
-
-const {ajaxUrl, nonce} = getSystemConfig()
+const {ajaxUrl, nonce} = FL_ASSISTANT_CONFIG
 
 /**
  * Create `axios` instance
@@ -68,5 +66,5 @@ export const updateTheme = (theme, config = {}) => {
     return postAction('update-theme', {
         slug: theme,
         _wpnonce: nonce.updates
-    })
+    }, config)
 }

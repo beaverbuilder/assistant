@@ -43,7 +43,8 @@ export const Main = ( { match } ) => {
 			response.data.map( ( result, key ) => {
 				const {label, priority, format} = config[key]
 
-				if ( ! result.length ) {
+				console.log(result);
+				if ( ! result.items ) {
 					return
 				}
 				if ( ! newResults[priority] ) {
@@ -52,7 +53,7 @@ export const Main = ( { match } ) => {
 
 				newResults[priority].push( {
 					label,
-					items: format( result ),
+					items: format( result.items ),
 				} )
 			} )
 

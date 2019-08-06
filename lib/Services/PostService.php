@@ -2,7 +2,26 @@
 
 namespace FL\Assistant\Services;
 
+use FL\Assistant\Services\Entity\Post;
+use FL\Assistant\Pagination\PostsPaginator;
+
 class PostService {
+
+	/**
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	public function query( array $args = [] ) {
+
+		$p = new PostsPaginator();
+
+		return $p->query($args, function(\WP_Post $post) {
+			$postEntity = new Post();
+			$postEntity->fill($postEntity->hydrate($post));
+			return $postEntity->to_array();
+		});
+	}
 
 	/**
 	 * Get post status slugs and names.
@@ -28,7 +47,8 @@ class PostService {
 		$types = get_post_types(
 			[
 				'public' => true,
-			], 'objects'
+			],
+			'objects'
 		);
 
 		foreach ( $types as $slug => $type ) {

@@ -22,8 +22,8 @@ const http = setup({
     cache: {
         // Changing this to true will send alot of output to the console
         debug: false,
-        // Set cache timeout
-        maxAge: 5 * 60 * 1000,
+        // Set cache timeout - 15 minutes
+        maxAge: 15 * 60 * 1000,
         // DO NOT exclude cache requests with query params.
         exclude: {query: false},
         // Setup localForage store.
@@ -35,7 +35,12 @@ const http = setup({
             ],
             // Prefix all storage keys to prevent conflicts
             name: 'fl-assistant-cache-rest'
-        })
+        }),
+        // invalidate: async (config, request) => {
+        //     if (request.clearCache) {
+        //         await config.store.removeItem(config.uuid)
+        //     }
+        // }
     },
 })
 
@@ -67,7 +72,11 @@ const posts = () => {
          */
         hierarchical(params, config = {}) {
             config.params = params;
-            return http.get('fl-assistant/v1/posts/hierarchical', config)
+            return http.get('fl-assistant/v1/posts/hierarchical', {
+                params,
+                cacheKey: 'posts-hierarchical',
+                ...config
+            })
         },
         /**
          * Find post by ID
@@ -153,24 +162,28 @@ const terms = () => {
          * @param config
          */
         hierarchical(params, config = {}) {
-            config.params = params
-            return http.get('fl-assistant/v1/terms/hierarchical', config)
+            return http.get('fl-assistant/v1/terms/hierarchical', {
+                params,
+                ...config
+            })
         },
         /**
          * Find term by ID
          * @param id
+         * @param config
          * @returns {Promise<AxiosResponse<T>>}
          */
-        findById(id) {
-            return http.get(`fl-assistant/v1/term/${id}`);
+        findById(id, config = {}) {
+            return http.get(`fl-assistant/v1/term/${id}`, config);
         },
         /**
-         * Create a new term
-         * @param data
+         * Create a new Term
+         * @param term
+         * @param config
          * @returns {Promise<AxiosResponse<T>>}
          */
-        create(data = {}) {
-            return http.post('fl-assistant/v1/term', data)
+        create(term, config = {}) {
+            return http.post('fl-assistant/v1/term', term, config)
         },
         /**
          * Update a term
@@ -179,11 +192,11 @@ const terms = () => {
          * @param data
          * @returns {Promise<AxiosResponse<T>>}
          */
-        update(id, action, data = {}) {
+        update(id, action, data = {}, config = {}) {
             return http.post(`fl-assistant/v1/term/${id}`, {
                 action,
-                data,
-            });
+                ...data,
+            }, config);
         }
     }
 }
@@ -200,16 +213,18 @@ const comments = () => {
          * @param id
          * @returns {Promise<AxiosResponse<T>>}
          */
-        findById(id) {
-            return http.get(`fl-assistant/v1/comment/${id}`)
+        findById(id, config = {}) {
+            return http.get(`fl-assistant/v1/comment/${id}`, config)
         },
         /**
          * Find comment by query
          * @param params
          * @returns {Promise<AxiosResponse<T>>}
          */
-        findWhere(params) {
-            return http.get('fl-assistant/v1/comments', {params});
+        findWhere(params, config = {}) {
+            config.params = params;
+
+            return http.get('fl-assistant/v1/comments', config);
         },
         /**
          * Update a comment
@@ -219,11 +234,9 @@ const comments = () => {
          * @param data
          * @returns {Promise<AxiosResponse<T>>}
          */
-        update(id, action, data = {}) {
-            return http.post(`fl-assistant/v1/comment/${id}`, {
-                action,
-                ...data,
-            });
+        update(id, action, data = {}, config = {}) {
+            data.action = action;
+            return http.post(`fl-assistant/v1/comment/${id}`, data, config);
         }
     }
 }
@@ -237,24 +250,27 @@ const attachments = () => {
         /**
          * Returns data for a single attachment.
          */
-        findById(id) {
-            return http.get(`fl-assistant/v1/attachment/${id}`)
+        findById(id, config = {}) {
+            return http.get(`fl-assistant/v1/attachment/${id}`, config)
         },
         /**
          * Returns an array of attachments.
          */
-        findWhere(params) {
-            return http.get('fl-assistant/v1/attachments', {params})
+        findWhere(params, config = {}) {
+            return http.get('fl-assistant/v1/attachments', {
+                params,
+                ...config
+            })
         },
         /**
          * Updates a single attachment. See the update_attachment
          * REST method for a list of supported actions.
          */
-        update(id, action, data = {}) {
+        update(id, action, data = {}, config = {}) {
             return http.post(`fl-assistant/v1/attachment/${id}`, {
                 action,
                 data,
-            })
+            }, config)
         }
     }
 }
@@ -271,8 +287,11 @@ const updates = () => {
          * @param params
          * @returns {Promise<AxiosResponse<T>>}
          */
-        findWhere(params) {
-            return http.get('fl-assistant/v1/updates', {params})
+        findWhere(params, config = {}) {
+            return http.get('fl-assistant/v1/updates', {
+                params,
+                ...config
+            })
         }
     }
 }
@@ -310,7 +329,7 @@ const getContent = (type, params, config = {}) => {
  * @param offset
  * @param config
  */
-const getPagedContent = (type, params, offset = 0, config = {}) => {
+const getPagedContent = async (type, params, offset = 0, config = {}) => {
     let paged = Object.assign({offset}, params)
     let perPage = 20
 
@@ -326,14 +345,11 @@ const getPagedContent = (type, params, offset = 0, config = {}) => {
             break
     }
 
-    return new Promise((resolve, reject) => {
-        getContent(type, paged, config)
-            .then((response) => {
-                const data = response.data;
-                const hasMore = data.length && data.length === perPage ? true : false
-                resolve({data, hasMore})
-            }).catch(reject)
-    });
+    try {
+        return await getContent(type, paged, config);
+    } catch(error) {
+        return Promise.reject(error);
+    }
 }
 
 /**
@@ -347,10 +363,13 @@ const getPagedContent = (type, params, offset = 0, config = {}) => {
  * @returns {Promise<AxiosResponse<T>>}
  */
 const search = (keyword, routes, config = {}) => {
-    return http.post('fl-assistant/v1/search', {
-        keyword,
-        routes
-    }, config)
+    return http.get('fl-assistant/v1/search', {
+        params: {
+            keyword,
+            routes
+        },
+        ...config
+    });
 }
 
 
