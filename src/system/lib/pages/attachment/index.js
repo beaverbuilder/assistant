@@ -1,5 +1,6 @@
 import React from 'fl-react'
-import { Page, Button } from 'lib'
+import { __ } from '@wordpress/i18n'
+import { Page, Form } from 'lib'
 import utils from 'utils'
 const { react: { useInitialFocus }} = utils
 
@@ -8,22 +9,52 @@ const { react: { useInitialFocus }} = utils
  * Expects size.url and size.width to be present.
  */
 const getSrcSet = ( sizes = {} ) => {
-    return Object.values(sizes).map( size => {
-        return size.url + ' ' + size.width + 'w'
-    }).join(', ')
+	return Object.values( sizes ).map( size => {
+		return size.url + ' ' + size.width + 'w'
+	} ).join( ', ' )
 }
 
-export const Attachment = ({ location }) => {
-    const firstRef = useInitialFocus()
-    const defaultItem = {
-        sizes: {}
-    }
-	const item = typeof location.state.item !== 'undefined' ? location.state.item : defaultItem
-    const srcSet = getSrcSet( item.sizes )
+export const Attachment = ( { location } ) => {
+	const firstRef = useInitialFocus()
+	const defaultItem = {
+		sizes: {}
+	}
+	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
+	const srcSet = getSrcSet( item.sizes )
+
+    const [values, setValue] = Form.useFormState({
+        title: item.title,
+        description: item.description,
+    })
+
 	return (
-		<Page>
-            <img src={item.thumbnail} srcSet={srcSet} />
-            <Button ref={firstRef}>Test</Button>
+		<Page shouldPadSides={false} title={__( 'Attachment' )}>
+			<Page.Toolbar shouldPadBottom={true}>
+				<img src={item.thumbnail} srcSet={srcSet} />
+			</Page.Toolbar>
+
+			<Form>
+				<Form.Item label={__( 'Name' )} labelFor="name" isRequired={true} placement="beside">
+					<input
+						id="name"
+						type="text"
+						required={true}
+						placeholder={__( 'Attachment Title' )}
+						value={values.title}
+						onChange={ e => setValue( 'title', e.target.value ) }
+						ref={firstRef}
+					/>
+				</Form.Item>
+				<Form.Item label={__( 'Description' )} labelFor="description" isRequired={true} placement="beside">
+					<input
+						id="description"
+						type="text"
+						placeholder={__( 'Description' )}
+						value={values.description}
+						onChange={ e => setValue( 'description', e.target.value ) }
+					/>
+				</Form.Item>
+			</Form>
 		</Page>
 	)
 }

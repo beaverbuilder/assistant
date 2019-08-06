@@ -109,7 +109,7 @@ export const Main = ( { match } ) => {
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
 	const hasResults = entries && entries.length
-	const groups = hasResults ? Object.entries( results ).map( ( [ key, group ] ) => group[0] ) : []
+	const groups = hasResults ? Object.entries( results ).map( ( [ , group ] ) => group[0] ) : []
 
 	const Toolbar = () => {
 		const focusRef = useInitialFocus()

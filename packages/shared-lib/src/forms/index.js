@@ -2,6 +2,7 @@ import React from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { Icon, Control } from '../'
+import { useFormState } from './use-form-data'
 import './style.scss'
 
 export const Form = ({ className, ...rest }) => {
@@ -67,6 +68,8 @@ Form.Footer = props => {
 		<div className={classes}>{children}</div>
 	)
 }
+
+Form.useFormState = useFormState
 
 Form.Test = () => {
 	return (

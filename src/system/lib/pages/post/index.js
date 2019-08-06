@@ -34,18 +34,14 @@ export const Post = ( { location } ) => {
 			<div>
 				<a href={url}><em>{url}</em></a>
 			</div>
-
-			<Page.ExpandedContent>
-				This should only show when expanded.
-			</Page.ExpandedContent>
 		</Page>
 	)
 }
 
 export const CreatePost = () => {
 	return (
-		<Page title={__( 'Create' )}>
-			<h1>Create new post</h1>
+		<Page title={__( 'Create New' )}>
+			<p>Make something new right here.</p>
 		</Page>
 	)
 }
