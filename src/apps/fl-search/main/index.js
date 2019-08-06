@@ -152,7 +152,9 @@ export const Main = ( { match } ) => {
 					items={groups}
 					isListSection={ item => 'undefined' !== typeof item.label }
 					getSectionItems={ section => section.items ? section.items : [] }
-
+					loadItems={ ( setHasMore ) => {
+						setTimeout( () => setHasMore( false ), 2000 )
+					} }
 					getItemProps={ ( item, defaultProps, isSection ) => {
 						let props = { ...defaultProps }
 

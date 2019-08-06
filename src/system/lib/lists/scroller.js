@@ -1,19 +1,18 @@
 import React, { useRef } from 'fl-react'
-import classname from 'classnames'
 import { List } from './'
 
-export const Scroller = ( { ...rest } ) => {
+export const Scroller = ( {
+	loadItems = () => {},
+	...rest
+} ) => {
 	const scrollRef = useRef()
-	const { isFetching, resetIsFetching } = List.useScrollLoader( {
+	const { isFetching } = List.useScrollLoader( {
 		ref: scrollRef,
-		callback: ( reset ) => {
-			console.log( 'Load stuff!' )
-			reset()
-		}
+		callback: loadItems,
 	} )
 
 	return (
-		<div className="fl-asst-scroller" ref={scrollRef}>
+		<div className="fl-asst-list-scroller fl-asst-scroller" ref={scrollRef}>
 			<List {...rest} />
 			{ isFetching && <List.Loading /> }
 		</div>
