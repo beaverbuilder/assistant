@@ -80,33 +80,6 @@ export const TestSheet = () => {
 		)
 	}
 
-	const HorizontalExample = () => {
-
-		const items = [
-			{ name: 'Justin', img: '' },
-			{ name: 'Billy', img: '' },
-			{ name: 'Robby', img: '' },
-			{ name: 'Danny', img: '' },
-			{ name: 'Jamie', img: '' },
-			{ name: 'Nancy', img: '' },
-			{ name: 'Ben', img: '' },
-			{ name: 'Jun', img: '' },
-			{ name: 'Carlos', img: '' },
-			{ name: 'Kathryn', img: '' },
-			{ name: 'Simon', img: '' },
-			{ name: 'Fred', img: '' },
-			{ name: 'Anthony', img: '' },
-			{ name: 'Gerard', img: '' },
-		]
-
-		return (
-            <>
-                <h2 style={padSides}>Horizontal List</h2>
-                <List items={items} direction='horizontal' />
-            </>
-		)
-	}
-
 	const FeedExample = () => {
 		const items = [
 			{

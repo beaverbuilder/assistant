@@ -10,27 +10,29 @@ export const Media = ( { match } ) => (
 	</Nav.Switch>
 )
 
-const Main = ({ match }) => {
+const Main = ( { match } ) => {
 	const [ images, setImages ] = useState( [] )
-	const [ hasMore, setHasMore ] = useState( false )
+	const [ , setHasMore ] = useState( false )
 	const hasImages = 0 < images.length
 	const query = {
 		postsPerPage: 5,
 	}
 
 	useLayoutEffect( () => {
-		getPagedContent('attachments', query, 0, ( data, hasMore ) => {
-			setImages(data)
-			setHasMore(hasMore)
+		getPagedContent( 'attachments', query, 0, ( data, hasMore ) => {
+			setImages( data )
+			setHasMore( hasMore )
 		} )
-	}, [])
+	}, [] )
 
 	return (
 		<Page>
 			{ hasImages &&
 				<div className="fl-asst-recent-media-display">
-					{ images.map( (item, i) => {
-						if ( item.type !== 'image') return null
+					{ images.map( ( item, i ) => {
+						if ( 'image' !== item.type ) {
+							return null
+						}
 						const to = {
 							pathname: `${match.url}/attachment/${item.id}`,
 							state: { item }
@@ -41,18 +43,9 @@ const Main = ({ match }) => {
 								<img src={item.thumbnail} />
 							</Nav.Link>
 						)
-					})}
+					} )}
 				</div>
 			}
-		</Page>
-	)
-}
-
-const AttachmentDetail = () => {
-	return (
-		<Page>
-			<h1>Attachment Detail Screen</h1>
-			<p>Kinda...</p>
 		</Page>
 	)
 }
