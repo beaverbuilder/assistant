@@ -96,16 +96,6 @@ export const Main = ( { match } ) => {
 		}
 	}
 
-	// Testing scroll loading
-	const scrollRef = useRef()
-	const { isFetching, resetIsFetching } = List.useScrollLoader( {
-		ref: scrollRef,
-		callback: ( reset ) => {
-
-			// after loaded, reset()
-		}
-	} )
-
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
 	const hasResults = entries && entries.length
@@ -153,65 +143,63 @@ export const Main = ( { match } ) => {
 			</>
 			}
 
-			<div className="fl-asst-scroller" ref={scrollRef}>
+			{ results && ! hasResults &&
+				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
+			}
 
-				{ results && ! hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
+			{ 0 < groups.length &&
+				<List.Scroller
+					items={groups}
+					isListSection={ item => 'undefined' !== typeof item.label }
+					getSectionItems={ section => section.items ? section.items : [] }
 
-				{ 0 < groups.length &&
-					<List
-						items={groups}
-						isListSection={ item => 'undefined' !== typeof item.label }
-						getSectionItems={ section => section.items ? section.items : [] }
+					getItemProps={ ( item, defaultProps, isSection ) => {
+						let props = { ...defaultProps }
 
-						getItemProps={ ( item, defaultProps, isSection ) => {
-							let props = { ...defaultProps }
+						if ( isSection ) {
+							props.label = item.label
+						} else {
+							props.shouldAlwaysShowThumbnail = true
 
-							if ( isSection ) {
+							if ( 'undefined' !== typeof item.label ) {
 								props.label = item.label
-							} else {
-								props.shouldAlwaysShowThumbnail = true
-
-								if ( 'undefined' !== typeof item.label ) {
-									props.label = item.label
-								} else if ( 'undefined' !== typeof item.title ) {
-									props.label = item.title
-								}
-
-								if ( 'undefined' !== typeof item.thumbnail ) {
-									props.thumbnail = item.thumbnail
-								}
-
-								// Determine Detail View
-								const type = 'post' // HARDCODED FOR NOW - NEED TO DISTINGUISH OBJECT TYPES
-								const basePath = match.url
-								let path = null
-
-								switch ( type ) {
-								case 'post':
-									path = `${basePath}/posts/${item.id}`
-									break
-								case 'user':
-									path = `${basePath}/users/${3}`
-									break
-								case 'attachment':
-								case 'plugin':
-								case 'theme':
-								case 'comment':
-								}
-								if ( path ) {
-									props.to = {
-										pathname: path,
-										state: { item },
-									}
-								}
+							} else if ( 'undefined' !== typeof item.title ) {
+								props.label = item.title
 							}
 
-							return props
-						}}
-					/>
-				}
-				{ isFetching && <List.Loading /> }
-			</div>
+							if ( 'undefined' !== typeof item.thumbnail ) {
+								props.thumbnail = item.thumbnail
+							}
+
+							// Determine Detail View
+							const type = 'post' // HARDCODED FOR NOW - NEED TO DISTINGUISH OBJECT TYPES
+							const basePath = match.url
+							let path = null
+
+							switch ( type ) {
+							case 'post':
+								path = `${basePath}/posts/${item.id}`
+								break
+							case 'user':
+								path = `${basePath}/users/${3}`
+								break
+							case 'attachment':
+							case 'plugin':
+							case 'theme':
+							case 'comment':
+							}
+							if ( path ) {
+								props.to = {
+									pathname: path,
+									state: { item },
+								}
+							}
+						}
+
+						return props
+					}}
+				/>
+			}
 
 		</Page>
 	)
