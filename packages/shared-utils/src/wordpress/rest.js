@@ -21,7 +21,7 @@ const http = setup({
     },
     cache: {
         // Changing this to true will send alot of output to the console
-        debug: false,
+        debug: true,
         // Set cache timeout - 15 minutes
         maxAge: 15 * 60 * 1000,
         // DO NOT exclude cache requests with query params.
@@ -30,17 +30,12 @@ const http = setup({
         store: localforage.createInstance({
             // Attempt IndexDB then fall back to LocalStorage
             driver: [
-                localforage.INDEXEDDB,
+                // localforage.INDEXEDDB,
                 localforage.LOCALSTORAGE,
             ],
             // Prefix all storage keys to prevent conflicts
             name: 'fl-assistant-cache-rest'
         }),
-        // invalidate: async (config, request) => {
-        //     if (request.clearCache) {
-        //         await config.store.removeItem(config.uuid)
-        //     }
-        // }
     },
 })
 
@@ -74,7 +69,7 @@ const posts = () => {
             config.params = params;
             return http.get('fl-assistant/v1/posts/hierarchical', {
                 params,
-                cacheKey: 'posts-hierarchical',
+                // cacheKey: 'posts-hierarchical',
                 ...config
             })
         },

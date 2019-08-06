@@ -4,201 +4,206 @@ import {addLeadingSlash} from 'assistant/utils/url'
 import {getWpRest} from 'assistant/utils/wordpress'
 import {useSystemState, getSystemActions, useAppState, getAppActions} from 'assistant/data'
 import {Page, List, Icon, Button} from 'assistant/ui'
-import axios from 'axios'
+import {CancelToken, isCancel} from 'axios'
 
 import './style.scss'
 
 
-export const Main = ( { match } ) => {
-	const { apps, searchHistory } = useSystemState()
-	const { setSearchHistory } = getSystemActions()
-	const { keyword } = useAppState( 'fl-search' )
-	const { setKeyword } = getAppActions( 'fl-search' )
+export const Main = ({match}) => {
+    const {apps, searchHistory} = useSystemState()
+    const {setSearchHistory} = getSystemActions()
+    const {keyword} = useAppState('fl-search')
+    const {setKeyword} = getAppActions('fl-search')
 
-	const [ loading, setLoading ] = useState( false )
-	const [ results, setResults ] = useState( null )
+    const [loading, setLoading] = useState(false)
+    const [results, setResults] = useState(null)
 
-	let source = axios.CancelToken.source()
+    const wp = getWpRest();
+    let source = CancelToken.source()
 
-	useEffect( value => {
+    useEffect(value => {
 
-		const {config, routes} = getRequestConfig()
+        const {config, routes} = getRequestConfig()
 
-		if ( '' === keyword ) {
-			setResults( null )
-			return
-		}
+        if ('' === keyword) {
+            setResults(null)
+            return
+        }
 
-		source.cancel( 'Cancelling old requests to start new' )
-		source = axios.CancelToken.source()
+        source.cancel('Cancelling old requests to start new')
+        source = CancelToken.source()
 
-		setLoading( true )
+        setLoading(true)
 
-		getWpRest().search( keyword, routes, {
-			cancelToken: source.token
-		} ).then( response => {
+        wp.search(keyword, routes, {
+            cancelToken: source.token,
+            cache: {
+                debug: true,
+                maxAge: 60 * 1000, // one minute (default: 15 mins)
+            }
+        }).then(response => {
 
-			const newResults = {}
+            const newResults = {}
 
-			response.data.map( ( result, key ) => {
-				const {label, priority, format} = config[key]
+            response.data.map((result, key) => {
+                const {label, priority, format} = config[key]
 
-				console.log(result);
-				if ( ! result.items ) {
-					return
-				}
-				if ( ! newResults[priority] ) {
-					newResults[priority] = []
-				}
+                console.log(result);
+                if (!result.items) {
+                    return
+                }
+                if (!newResults[priority]) {
+                    newResults[priority] = []
+                }
 
-				newResults[priority].push( {
-					label,
-					items: format( result.items ),
-				} )
-			} )
+                newResults[priority].push({
+                    label,
+                    items: format(result.items),
+                })
+            })
 
-			setResults( newResults )
-			setLoading( false )
-			setSearchHistory( keyword )
-		} ).catch( ( error ) => {
+            setResults(newResults)
+            setLoading(false)
+            setSearchHistory(keyword)
+        }).catch((error) => {
 
-			// if the request was cancelled
-			if ( axios.isCancel( error ) ) {
+            // if the request was cancelled
+            if (isCancel(error)) {
 
-				// log the message sent to source.cancel()
-				console.log( error.message )
-			}
-		} )
-
-
-		return () => {
-			source.cancel( 'Cancelling all requests on unmounting search component' )
-		}
-
-	}, [ keyword ] )
-
-	const getRequestConfig = () => {
-		const config = []
-		const routes = []
-
-		const defaults = {
-			priority: 1000,
-			format: response => response,
-		}
-
-		const addRequestConfig = search => {
-			config.push( Object.assign( {}, defaults, search ) )
-			routes.push( addLeadingSlash( search.route( keyword ) ) )
-		}
-
-		Object.entries( apps ).map( ( [ key, app ] ) => {
-			if ( ! app.search || ! app.search.route ) {
-				return
-			} else if ( Array.isArray( app.search ) ) {
-				app.search.map( search => addRequestConfig( search ) )
-			} else {
-				addRequestConfig( app.search )
-			}
-		} )
-
-		return {config, routes}
-	}
+                // log the message sent to source.cancel()
+                console.log(error.message)
+            }
+        })
 
 
-	// Testing scroll loading
-	const scrollRef = useRef()
-	const {isFetching, resetIsFetching} = List.useScrollLoader( {
-		ref: scrollRef,
-		callback: ( reset ) => {
+        return () => {
+            source.cancel('Cancelling all requests on unmounting search component')
+        }
 
-			// after loaded, reset()
-		}
-	} )
+    }, [keyword])
 
-	// Prep result data
-	const entries = results ? Object.entries( results ) : null
-	const hasResults = entries && entries.length
-	const groups = hasResults ? Object.entries( results ).map( ( [ key, group ] ) => group[0] ) : []
+    const getRequestConfig = () => {
+        const config = []
+        const routes = []
 
-	return (
-		<Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
+        const defaults = {
+            priority: 1000,
+            format: response => response,
+        }
 
-			<Page.Toolbar>
-				<div className='fl-asst-search-form-simple'>
-					<input
-						type="search"
-						value={keyword}
-						onChange={e => setKeyword( e.target.value )}
-						placeholder={__( 'Search' )}
-					/>
-					{loading &&
+        const addRequestConfig = search => {
+            config.push(Object.assign({}, defaults, search))
+            routes.push(addLeadingSlash(search.route(keyword)))
+        }
+
+        Object.entries(apps).map(([key, app]) => {
+            if (!app.search || !app.search.route) {
+                return
+            } else if (Array.isArray(app.search)) {
+                app.search.map(search => addRequestConfig(search))
+            } else {
+                addRequestConfig(app.search)
+            }
+        })
+
+        return {config, routes}
+    }
+
+
+    // Testing scroll loading
+    const scrollRef = useRef()
+    const {isFetching, resetIsFetching} = List.useScrollLoader({
+        ref: scrollRef,
+        callback: (reset) => {
+
+            // after loaded, reset()
+        }
+    })
+
+    // Prep result data
+    const entries = results ? Object.entries(results) : null
+    const hasResults = entries && entries.length
+    const groups = hasResults ? Object.entries(results).map(([key, group]) => group[0]) : []
+
+    return (
+        <Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
+
+            <Page.Toolbar>
+                <div className='fl-asst-search-form-simple'>
+                    <input
+                        type="search"
+                        value={keyword}
+                        onChange={e => setKeyword(e.target.value)}
+                        placeholder={__('Search')}
+                    />
+                    {loading &&
                     <div className='fl-asst-search-spinner'>
-                    	<Icon.SmallSpinner/>
+                        <Icon.SmallSpinner/>
                     </div>
-					}
-				</div>
-			</Page.Toolbar>
+                    }
+                </div>
+            </Page.Toolbar>
 
-			{'' === keyword &&
+            {'' === keyword &&
             <>
                 {searchHistory.length &&
                 <Page.Pad>
-                	<Button.Group label={__( 'Recent Searches' )}>
-                		{searchHistory.map( ( keyword, key ) =>
-                			<Button
-                				key={key}
-                				onClick={e => setKeyword( keyword )}
-                			>
+                    <Button.Group label={__('Recent Searches')}>
+                        {searchHistory.map((keyword, key) =>
+                            <Button
+                                key={key}
+                                onClick={e => setKeyword(keyword)}
+                            >
                                 "{keyword}"
-                			</Button>
-                		)}
-                	</Button.Group>
+                            </Button>
+                        )}
+                    </Button.Group>
                 </Page.Pad>
                 }
             </>
-			}
+            }
 
-			<div className="fl-asst-scroller" ref={scrollRef}>
+            <div className="fl-asst-scroller" ref={scrollRef}>
 
-				{results && ! hasResults && <Page.Toolbar>{__( 'Please try a different search.' )}</Page.Toolbar>}
+                {results && !hasResults && <Page.Toolbar>{__('Please try a different search.')}</Page.Toolbar>}
 
-				{0 < groups.length &&
+                {0 < groups.length &&
                 <List
-                	items={groups}
-                	isListSection={item => 'undefined' !== typeof item.label}
-                	getSectionItems={section => section.items ? section.items : []}
+                    items={groups}
+                    isListSection={item => 'undefined' !== typeof item.label}
+                    getSectionItems={section => section.items ? section.items : []}
 
-                	getItemProps={( item, defaultProps, isSection ) => {
-                		let props = {...defaultProps}
+                    getItemProps={(item, defaultProps, isSection) => {
+                        let props = {...defaultProps}
 
-                		if ( isSection ) {
-                			props.label = item.label
-                		} else {
-                			props.shouldAlwaysShowThumbnail = true
+                        if (isSection) {
+                            props.label = item.label
+                        } else {
+                            props.shouldAlwaysShowThumbnail = true
 
-                			if ( 'undefined' !== typeof item.label ) {
-                				props.label = item.label
-                			} else if ( 'undefined' !== typeof item.title ) {
-                				props.label = item.title
-                			}
+                            if ('undefined' !== typeof item.label) {
+                                props.label = item.label
+                            } else if ('undefined' !== typeof item.title) {
+                                props.label = item.title
+                            }
 
-                			if ( 'undefined' !== typeof item.thumbnail ) {
-                				props.thumbnail = item.thumbnail
-                			}
+                            if ('undefined' !== typeof item.thumbnail) {
+                                props.thumbnail = item.thumbnail
+                            }
 
-                			props.to = {
-                				pathname: `${match.url}/posts/${3}`,
-                				state: item,
-                			}
-                		}
+                            props.to = {
+                                pathname: `${match.url}/posts/${3}`,
+                                state: item,
+                            }
+                        }
 
-                		return props
-                	}}
+                        return props
+                    }}
                 />
-				}
-				{isFetching && <List.Loading/>}
-			</div>
+                }
+                {isFetching && <List.Loading/>}
+            </div>
 
-		</Page>
-	)
+        </Page>
+    )
 }
