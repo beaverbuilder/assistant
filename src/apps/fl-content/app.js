@@ -5,7 +5,7 @@ import { getWpRest } from 'assistant/utils/wordpress'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
 import { Button, List, Page, Nav } from 'assistant/ui'
 
-import { CancelToken, isCancel } from 'axios';
+import { CancelToken, isCancel } from 'axios'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
@@ -20,13 +20,13 @@ const Main = ( { match } ) => {
 	const { query, pager } = useAppState( 'fl-content' )
 	const { setQuery, setPager } = getAppActions( 'fl-content' )
 
-	const wp = getWpRest();
+	const wp = getWpRest()
 
-	const source = CancelToken.source();
+	const source = CancelToken.source()
 
 
-	useEffect(() => {
-		setPager({
+	useEffect( () => {
+		setPager( {
 			items: [],
 			items_count: 0,
 			current_offset: 0,
@@ -36,7 +36,7 @@ const Main = ( { match } ) => {
 			last_page: 2,
 			items_per_page: 20,
 			total_pages: 1
-		})
+		} )
 
 
 		let config = {
@@ -46,21 +46,21 @@ const Main = ( { match } ) => {
 			}
 		}
 
-		wp.getPagedContent('posts', query, 0, config)
-			.then((response) => {
-				setPager(response.data)
-			})
-			.catch(error => {
-				if(isCancel(error)) {
-					console.log("request cancelled", error.message)
+		wp.getPagedContent( 'posts', query, 0, config )
+			.then( ( response ) => {
+				setPager( response.data )
+			} )
+			.catch( error => {
+				if ( isCancel( error ) ) {
+					console.log( 'request cancelled', error.message )
 				} else {
-					console.log('some other error', error);
+					console.log( 'some other error', error )
 				}
-			})
+			} )
 
-        return () => {
-		    source.cancel('unmounting component')
-        }
+		return () => {
+		    source.cancel( 'unmounting component' )
+		}
 	}, [ query ] )
 
 	const Toolbar = () => {

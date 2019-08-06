@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useContext, Fragment} from 'fl-react'
 import {__} from 'assistant'
 import {getWpRest} from 'assistant/utils/wordpress'
+
 // import { useAppState, getAppActions} from "assistant/data";
 import {Page, List, Button, App, Nav} from 'assistant/ui'
 
@@ -55,7 +56,7 @@ const CommentsTab = () => {
 	useEffect( () => {
 		getWpRest()
 			.getPagedContent( 'comments', query, offset )
-			.then(response => {
+			.then( response => {
 				console.log( 'got comments' )
 				setComments( comments.concat( response.data.items ) )
 			} )
@@ -105,9 +106,9 @@ const UpdatesTab = () => {
 	}, [] )
 
 	return (
-        <Fragment>
-            {! hasUpdates && <List.Loading/>}
-            {hasUpdates &&
+		<Fragment>
+			{! hasUpdates && <List.Loading/>}
+			{hasUpdates &&
             <List
             	items={updates}
             	isListSection={item => 'undefined' !== typeof item.items}
@@ -132,7 +133,7 @@ const UpdatesTab = () => {
             		}
             	}}
             />}
-        </Fragment>
+		</Fragment>
 	)
 }
 
