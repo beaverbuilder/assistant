@@ -54,7 +54,6 @@ const WindowError = () => {
 }
 
 const WindowToolbar = () => {
-	const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
 	const { isRoot, goToRoot } = useContext( Nav.Context )
 	const { label } = useContext( App.Context )
 

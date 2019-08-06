@@ -12,7 +12,7 @@ export const Media = ( { match } ) => (
 
 const Main = ( { match } ) => {
 	const [ images, setImages ] = useState( [] )
-	const [ hasMore, setHasMore ] = useState( false )
+	const [ , setHasMore ] = useState( false )
 	const hasImages = 0 < images.length
 	const query = {
 		postsPerPage: 5,
@@ -46,15 +46,6 @@ const Main = ( { match } ) => {
 					} )}
 				</div>
 			}
-		</Page>
-	)
-}
-
-const AttachmentDetail = () => {
-	return (
-		<Page>
-			<h1>Attachment Detail Screen</h1>
-			<p>Kinda...</p>
 		</Page>
 	)
 }

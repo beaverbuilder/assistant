@@ -2,7 +2,7 @@ import React, {useState} from 'fl-react'
 
 import cloud from 'assistant/cloud'
 
-export default function LoginForm( props ) {
+export default function LoginForm() {
 
 	const [ email, setEmail ] = useState( '' )
 	const [ password, setPassword ] = useState( '' )

@@ -21,7 +21,7 @@ const Main = ( { match } ) => {
 	useEffect( () => {
 		setItems( [] )
 
-		getPagedContent( 'posts', query, 0, ( data, hasMore ) => {
+		getPagedContent( 'posts', query, 0, ( data ) => {
 			setItems( data )
 		} )
 	}, [ query ] )

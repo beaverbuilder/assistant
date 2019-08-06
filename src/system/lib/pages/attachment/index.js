@@ -22,10 +22,10 @@ export const Attachment = ( { location } ) => {
 	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	const srcSet = getSrcSet( item.sizes )
 
-    const [values, setValue] = Form.useFormState({
-        title: item.title,
-        description: item.description,
-    })
+	const [ values, setValue ] = Form.useFormState( {
+		title: item.title,
+		description: item.description,
+	} )
 
 	return (
 		<Page shouldPadSides={false} title={__( 'Attachment' )}>

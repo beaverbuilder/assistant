@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'fl-react'
-import { __ } from 'assistant'
 import { getPagedContent } from 'assistant/utils/wordpress'
 import { Page, List, App, Nav } from 'assistant/ui'
 
@@ -19,12 +18,6 @@ const UpdatesMain = () => {
 	)
 }
 
-const LoadingMessage = () => {
-	return (
-		<Page.Pad>Loading...</Page.Pad>
-	)
-}
-
 const UpdatesTab = () => {
 	const [ updates, setUpdates ] = useState( [] )
 	const { handle } = useContext( App.Context )
@@ -35,7 +28,7 @@ const UpdatesTab = () => {
 	}
 
 	useEffect( () => {
-		getPagedContent( 'updates', query, offset, ( data, hasMore ) => {
+		getPagedContent( 'updates', query, offset, ( data ) => {
 			setUpdates( updates.concat( data ) )
 		} )
 	}, [] )

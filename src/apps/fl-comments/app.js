@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'fl-react'
-import { __ } from 'assistant'
 import { getPagedContent } from 'assistant/utils/wordpress'
 import { Page, List, App, Nav } from 'assistant/ui'
 
@@ -18,12 +17,6 @@ const Main = () => {
 	)
 }
 
-const LoadingMessage = () => {
-	return (
-		<Page.Pad>Loading...</Page.Pad>
-	)
-}
-
 const CommentsTab = () => {
 	const [ comments, setComments ] = useState( [] )
 	const { handle } = useContext( App.Context )
@@ -34,7 +27,7 @@ const CommentsTab = () => {
 	}
 
 	useEffect( () => {
-		getPagedContent( 'comments', query, offset, ( data, hasMore ) => {
+		getPagedContent( 'comments', query, offset, ( data ) => {
 			setComments( comments.concat( data ) )
 		} )
 	}, [] )
