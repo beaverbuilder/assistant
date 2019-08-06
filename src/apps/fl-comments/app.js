@@ -26,32 +26,28 @@ const CommentsTab = () => {
 		commentStatus: 'all',
 	}
 
-	useEffect( () => {
-		getPagedContent( 'comments', query, offset, ( data ) => {
-			setComments( comments.concat( data ) )
-		} )
-	}, [] )
-
 	return (
-		<>
-			{ ! hasComments && <List.Loading /> }
-			{ hasComments &&
-			<List
-				items={comments}
-				getItemProps={ ( item, defaultProps ) => {
-					return {
-						...defaultProps,
-						key: item.id,
-						label: <em><strong>{item.authorEmail}</strong> commented:</em>,
-						description: item.postTitle,
-						thumbnail: item.thumbnail,
-						to: {
-							pathname: `/${handle}/comments/${item.id}`,
-							state: item
-						}
+		<List.Scroller
+			items={comments}
+			loadItems={ ( setHasMore ) => {
+				getPagedContent( 'comments', query, offset, ( data, hasMore ) => {
+					setComments( comments.concat( data ) )
+					setHasMore( hasMore )
+				} )
+			} }
+			getItemProps={ ( item, defaultProps ) => {
+				return {
+					...defaultProps,
+					key: item.id,
+					label: <em><strong>{item.authorEmail}</strong> commented:</em>,
+					description: item.postTitle,
+					thumbnail: item.thumbnail,
+					to: {
+						pathname: `/${handle}/comments/${item.id}`,
+						state: item
 					}
-				}}
-			/> }
-		</>
+				}
+			}}
+		/>
 	)
 }
