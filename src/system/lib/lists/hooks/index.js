@@ -10,7 +10,7 @@ export const useScrollLoader = ( {
 	callback = () => {},
 	shouldFetch = hasReachedBounds,
 } ) => {
-	const [ isFetching, setIsFetching ] = useState( false )
+	const [ isFetching, setIsFetching ] = useState( true )
 	const [ hasMore, setHasMore ] = useState( true )
 
 	useEffect( () => {
@@ -30,10 +30,11 @@ export const useScrollLoader = ( {
 
 	useEffect( () => {
 		if ( isFetching ) {
-			callback( ( hasMore ) => {
+			const handleUnmount = callback( ( hasMore ) => {
 				setHasMore( hasMore )
 				setIsFetching( false )
 			} )
+			return () => handleUnmount && handleUnmount()
 		}
 	}, [ isFetching ] )
 
