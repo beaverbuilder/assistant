@@ -47,9 +47,9 @@
     "unsplash-js": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@wordpress/babel-preset-default": "^3.0.2",
     "babel-eslint": "^10.0.2",
@@ -67,7 +67,7 @@
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "webpack": "^4.35.3",
+    "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
   }
 }
