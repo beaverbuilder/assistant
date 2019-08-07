@@ -9,7 +9,6 @@ export default {
 	wordpress
 }
 
-export * from 'shared-utils/http'
 export * from 'shared-utils/react'
 export * from 'shared-utils/url'
 export * from 'shared-utils/wordpress'

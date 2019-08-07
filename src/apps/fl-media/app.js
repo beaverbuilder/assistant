@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from 'fl-react'
 import { Page, Nav } from 'assistant/ui'
-import { getPagedContent } from 'assistant/utils/wordpress'
+import { getWpRest } from 'assistant/utils/wordpress'
 import './style.scss'
 
 export const Media = ( { match } ) => (
@@ -19,10 +19,12 @@ const Main = ( { match } ) => {
 	}
 
 	useLayoutEffect( () => {
-		getPagedContent( 'attachments', query, 0, ( data, hasMore ) => {
-			setImages( data )
-			setHasMore( hasMore )
-		} )
+		getWpRest()
+			.getPagedContent('attachments', query, 0)
+			.then(response => {
+				setImages(response.data.items)
+				setHasMore(response.data.has_more)
+			})
 	}, [] )
 
 	return (
