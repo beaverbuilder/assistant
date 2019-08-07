@@ -2,8 +2,12 @@ import React from 'fl-react'
 import classname from 'classnames'
 import { TestSheet } from './examples'
 import { Item, Loading } from './parts'
-import { Scroller } from './scroller'
-import { useScrollLoader } from './hooks'
+import { Scroller, useScrollLoader } from './scroller'
+import { WordPress } from './wordpress'
+import { Comments } from './comments'
+import { Posts } from './posts'
+import { Users } from './users'
+import { Updates } from './updates'
 import './style.scss'
 
 import { isRenderProp } from 'shared-utils/react'
@@ -114,8 +118,22 @@ List.Loading.displayName = 'List.Loading'
 
 List.Scroller = Scroller
 List.Scroller.displayName = 'List.Scroller'
+List.useScrollLoader = useScrollLoader
+
+List.WordPress = WordPress
+List.WordPress.displayName = 'List.WordPress'
+
+List.Comments = Comments
+List.Comments.displayName = 'List.Comments'
+
+List.Posts = Posts
+List.Posts.displayName = 'List.Posts'
+
+List.Users = Users
+List.Users.displayName = 'List.Users'
+
+List.Updates = Updates
+List.Updates.displayName = 'List.Updates'
 
 List.TestSheet = TestSheet
 List.TestSheet.displayName = 'List.TestSheet'
-
-List.useScrollLoader = useScrollLoader
