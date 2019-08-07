@@ -56,6 +56,8 @@
 
             &:focus {
                 color: var(--fl-asst-surface-color);
+                box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
+                            0px 0px 0px 2px var(--fl-asst-accent-color);
             }
 
             &.fl-asst-is-selected {

@@ -10,38 +10,35 @@ export const useScrollLoader = ( {
 	callback = () => {},
 	shouldFetch = hasReachedBounds,
 } ) => {
-	const [ isFetching, setIsFetching ] = useState( false )
-
-	const handleScroll = e => {
-		if ( isFetching ) {
-			return
-		}
-
-		if ( shouldFetch( e ) ) {
-			setIsFetching( true )
-		}
-	}
-
-	const resetIsFetching = () => setIsFetching( false )
+	const [ isFetching, setIsFetching ] = useState( true )
+	const [ hasMore, setHasMore ] = useState( true )
 
 	useEffect( () => {
-		if ( 'undefined' !== ref.current ) {
+		if ( 'undefined' === ref.current ) {
+			return
+		}
+		if ( hasMore && ! isFetching ) {
+			const handleScroll = e => {
+				if ( shouldFetch( e ) ) {
+					setIsFetching( true )
+				}
+			}
 			ref.current.addEventListener( 'scroll', handleScroll )
 			return () => ref.current.removeEventListener( 'scroll', handleScroll )
 		}
-	}, [] )
+	}, [ isFetching, hasMore ] )
 
 	useEffect( () => {
-		if ( ! isFetching ) {
-			return
-		}
-		if ( 'function' === typeof callback ) {
-			callback( resetIsFetching )
+		if ( isFetching ) {
+			const handleUnmount = callback( ( hasMore ) => {
+				setHasMore( hasMore )
+				setIsFetching( false )
+			} )
+			return () => handleUnmount && handleUnmount()
 		}
 	}, [ isFetching ] )
 
 	return {
 		isFetching,
-		resetIsFetching: () => setIsFetching( false )
 	}
 }

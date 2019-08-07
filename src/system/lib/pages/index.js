@@ -3,7 +3,11 @@ import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App, Window } from '../'
-import { Comment, Update, Post, Attachment, User } from './detail-pages'
+
+import { Comment, Update, User } from './detail-pages'
+import { Post, CreatePost } from './post'
+import { Attachment } from './attachment'
+
 import './style.scss'
 
 export const Page = ( {
@@ -166,6 +170,9 @@ Page.Attachment.displayName = 'Page.Attachment'
 
 Page.User = User
 Page.User.displayName = 'Page.User'
+
+Page.CreatePost = CreatePost
+Page.CreatePost.displayName = 'Page.CreatePost'
 
 Page.ExpandedContent = ( { children } ) => {
 	const { size } = useContext( Window.Context )

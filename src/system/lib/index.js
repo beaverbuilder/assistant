@@ -11,6 +11,7 @@ export * from './lists'
 export * from './pages'
 export * from './nav'
 export * from './window'
+export * from './button'
 
 export {
 	Appearance,

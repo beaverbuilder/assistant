@@ -2,6 +2,7 @@ import React from 'fl-react'
 import classname from 'classnames'
 import { TestSheet } from './examples'
 import { Item, Loading } from './parts'
+import { Scroller } from './scroller'
 import { useScrollLoader } from './hooks'
 import './style.scss'
 
@@ -110,6 +111,9 @@ List.Item.displayName = 'List.Item'
 
 List.Loading = Loading
 List.Loading.displayName = 'List.Loading'
+
+List.Scroller = Scroller
+List.Scroller.displayName = 'List.Scroller'
 
 List.TestSheet = TestSheet
 List.TestSheet.displayName = 'List.TestSheet'

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, isValidElement } from 'fl-react'
+import React, { useEffect, useRef } from 'fl-react'
 
 /**
  * Check if a given prop (most likely children) is a function to be rendered.
@@ -20,22 +20,20 @@ export const useComponentUpdate = ( callback, compare = [] ) => {
 }
 
 /**
- * Resove multiple kinds of vars to a valid component type
- *
- * @param component - Component | <Component /> | 'div' | () => Component
- * @return - a valid react component type
+ * Hook to create a ref and call focus on it when the component mounts.
+ * Allows for a callback to be passed that recieves the HTMLElement as an argument.
+ * If false is returned from callback, focus is prevented. Good for overrides.
  */
-/*
-export const resolveComponent = ( component, args ) => { console.log('resolve', component, args )
+export const useInitialFocus = ( callback = () => {} ) => {
+	const ref = useRef()
 
-	if ( isValidElement( component ) || 'string' === typeof component ) {
-		return component
-
-	} else if ( 'function' === typeof component ) {
-		const result = component( args )
-		if ( isValidElement( result ) || 'string' === typeof result ) {
-			return result
+	useEffect( () => {
+		if ( ref.current && ref.current instanceof Element ) {
+			if ( false !== callback( ref.current ) ) {
+				ref.current.focus()
+			}
 		}
-	}
-	return Fragment
-}*/
+	}, [ref])
+
+	return ref
+}

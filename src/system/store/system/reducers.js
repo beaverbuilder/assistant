@@ -15,6 +15,7 @@ export const apps = ( state = {}, action ) => {
 				...defaults,
 				app: action.key,
 				label: action.key,
+				shouldShowInAppList: true,
 				...action.config,
 			},
 			...state,

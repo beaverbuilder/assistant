@@ -16,7 +16,7 @@
 
         &.fl-asst-window-mini {
             max-width: 100%;
-            max-height: 100%;
+            max-height: 70vh;
             box-shadow: 0 0 0 3px var(--fl-asst-translucent-background), 0 3px 6px 0 hsla(214, 17%, 41%, 0.2);
             border-radius: var(--fl-asst-medium-space);
 
@@ -28,7 +28,7 @@
         &.fl-asst-window-normal {
             --fl-asst-window-size: 460px;
             height: 100%;
-            box-shadow: 0 0 0 1px hsla(0, 0%, 26%, .1);
+            border: 3px solid hsla(0, 0%, 26%, .1);
         }
 
         &.fl-asst-secondary-content {

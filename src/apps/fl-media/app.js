@@ -1,26 +1,51 @@
-import React from 'fl-react'
+import React, { useState, useLayoutEffect } from 'fl-react'
 import { Page, Nav } from 'assistant/ui'
+import { getPagedContent } from 'assistant/utils/wordpress'
+import './style.scss'
 
 export const Media = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={`${match.url}/`} component={Main} />
-		<Nav.Route path={`${match.url}/attachment/:id`} component={AttachmentDetail} />
+		<Nav.Route path={`${match.url}/attachment/:id`} component={Page.Attachment} />
 	</Nav.Switch>
 )
 
-const Main = () => {
-	return (
-		<Page>
-			<p>Media</p>
-		</Page>
-	)
-}
+const Main = ( { match } ) => {
+	const [ images, setImages ] = useState( [] )
+	const [ , setHasMore ] = useState( false )
+	const hasImages = 0 < images.length
+	const query = {
+		postsPerPage: 5,
+	}
 
-const AttachmentDetail = () => {
+	useLayoutEffect( () => {
+		getPagedContent( 'attachments', query, 0, ( data, hasMore ) => {
+			setImages( data )
+			setHasMore( hasMore )
+		} )
+	}, [] )
+
 	return (
 		<Page>
-			<h1>Attachment Detail Screen</h1>
-			<p>Kinda...</p>
+			{ hasImages &&
+				<div className="fl-asst-recent-media-display">
+					{ images.map( ( item, i ) => {
+						if ( 'image' !== item.type ) {
+							return null
+						}
+						const to = {
+							pathname: `${match.url}/attachment/${item.id}`,
+							state: { item }
+						}
+
+						return (
+							<Nav.Link key={i} to={to} >
+								<img src={item.thumbnail} />
+							</Nav.Link>
+						)
+					} )}
+				</div>
+			}
 		</Page>
 	)
 }

@@ -32,8 +32,5 @@ registerApp( 'fl-content', {
 				s: keyword,
 			} )
 		},
-	},
-	accent: {
-		color: '#001DDB',
 	}
 } )

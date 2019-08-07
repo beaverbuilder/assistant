@@ -1,3 +1,4 @@
+
 import React, {useEffect, useRef, useState} from 'fl-react'
 import {__} from 'assistant/i18n'
 import {addLeadingSlash} from 'assistant/utils/url'
@@ -5,6 +6,9 @@ import {getWpRest} from 'assistant/utils/wordpress'
 import {useSystemState, getSystemActions, useAppState, getAppActions} from 'assistant/data'
 import {Page, List, Icon, Button} from 'assistant/ui'
 import {CancelToken, isCancel} from 'axios'
+
+import { useInitialFocus } from 'assistant/utils/react'
+
 
 import './style.scss'
 
@@ -77,7 +81,7 @@ export const Main = ( {match} ) => {
 
 
 		return () => {
-			source.cancel( 'Cancelling all requests on unmounting search component' )
+			source.cancel( 'Unmounting search component' )
 		}
 
 	}, [ keyword ] )
@@ -110,20 +114,31 @@ export const Main = ( {match} ) => {
 	}
 
 
-	// Testing scroll loading
-	const scrollRef = useRef()
-	const {isFetching, resetIsFetching} = List.useScrollLoader( {
-		ref: scrollRef,
-		callback: ( reset ) => {
-
-			// after loaded, reset()
-		}
-	} )
-
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
 	const hasResults = entries && entries.length
-	const groups = hasResults ? Object.entries( results ).map( ( [ key, group ] ) => group[0] ) : []
+	const groups = hasResults ? Object.entries( results ).map( ( [ , group ] ) => group[0] ) : []
+
+	const Toolbar = () => {
+		const focusRef = useInitialFocus()
+		return (
+			<div className='fl-asst-search-form-simple'>
+				<input
+					type="search"
+					value={keyword}
+					onChange={ e => setKeyword( e.target.value ) }
+					placeholder={ __( 'Search' ) }
+					ref={focusRef}
+				/>
+				{ loading &&
+				<div className='fl-asst-search-spinner'>
+					<Icon.SmallSpinner />
+				</div>
+				}
+			</div>
+		)
+	}
+
 
 	return (
 		<Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
@@ -163,46 +178,65 @@ export const Main = ( {match} ) => {
             </>
 			}
 
-			<div className="fl-asst-scroller" ref={scrollRef}>
+			{ results && ! hasResults &&
+				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
+			}
 
-				{results && ! hasResults && <Page.Toolbar>{__( 'Please try a different search.' )}</Page.Toolbar>}
+			{ 0 < groups.length &&
+				<List.Scroller
+					items={groups}
+					isListSection={ item => 'undefined' !== typeof item.label }
+					getSectionItems={ section => section.items ? section.items : [] }
+					loadItems={ ( setHasMore ) => {
+						setTimeout( () => setHasMore( false ), 2000 )
+					} }
+					getItemProps={ ( item, defaultProps, isSection ) => {
+						let props = { ...defaultProps }
 
-				{0 < groups.length &&
-                <List
-                	items={groups}
-                	isListSection={item => 'undefined' !== typeof item.label}
-                	getSectionItems={section => section.items ? section.items : []}
+						if ( isSection ) {
+							props.label = item.label
+						} else {
+							props.shouldAlwaysShowThumbnail = true
 
-                	getItemProps={( item, defaultProps, isSection ) => {
-                		let props = {...defaultProps}
+							if ( 'undefined' !== typeof item.label ) {
+								props.label = item.label
+							} else if ( 'undefined' !== typeof item.title ) {
+								props.label = item.title
+							}
 
-                		if ( isSection ) {
-                			props.label = item.label
-                		} else {
-                			props.shouldAlwaysShowThumbnail = true
+							if ( 'undefined' !== typeof item.thumbnail ) {
+								props.thumbnail = item.thumbnail
+							}
 
-                			if ( 'undefined' !== typeof item.label ) {
-                				props.label = item.label
-                			} else if ( 'undefined' !== typeof item.title ) {
-                				props.label = item.title
-                			}
+							// Determine Detail View
+							const type = 'post' // HARDCODED FOR NOW - NEED TO DISTINGUISH OBJECT TYPES
+							const basePath = match.url
+							let path = null
 
-                			if ( 'undefined' !== typeof item.thumbnail ) {
-                				props.thumbnail = item.thumbnail
-                			}
+							switch ( type ) {
+							case 'post':
+								path = `${basePath}/posts/${item.id}`
+								break
+							case 'user':
+								path = `${basePath}/users/${3}`
+								break
+							case 'attachment':
+							case 'plugin':
+							case 'theme':
+							case 'comment':
+							}
+							if ( path ) {
+								props.to = {
+									pathname: path,
+									state: { item },
+								}
+							}
+						}
 
-                			props.to = {
-                				pathname: `${match.url}/posts/${3}`,
-                				state: item,
-                			}
-                		}
-
-                		return props
-                	}}
-                />
-				}
-				{isFetching && <List.Loading/>}
-			</div>
+						return props
+					}}
+				/>
+			}
 
 		</Page>
 	)

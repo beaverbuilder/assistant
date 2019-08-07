@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect } from 'fl-react'
+import classname from 'fl-classnames'
 import { withRouter, MemoryRouter, Link, Switch, Route } from 'fl-react-router-dom'
 import { useSystemState, getSystemActions } from 'store'
 
@@ -72,6 +73,13 @@ Nav.Link = Link
 Nav.Switch = Switch
 
 Nav.Route = Route
+
+Nav.ButtonLink = ( { className, ...rest } ) => {
+	const classes = classname( 'fl-asst-button', className )
+	return (
+		<Nav.Link className={classes} {...rest} />
+	)
+}
 
 /**
 * Link - Need to revisit these - probably remove
