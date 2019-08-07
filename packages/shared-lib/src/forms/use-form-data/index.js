@@ -1,6 +1,6 @@
 import { useReducer } from 'fl-react'
 
-export const useFormState = ( initial = {} ) => {
+export const useFormState = ( initial = {}, onChange = () => {} ) => {
 
     const reducer = ( state, action ) => {
         switch( action.type ) {
@@ -19,6 +19,7 @@ export const useFormState = ( initial = {} ) => {
         value,
     })
 
+    onChange( state )
 
     return [ state, setValue ]
 }

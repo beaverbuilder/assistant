@@ -2,8 +2,8 @@ import React from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { useSystemState } from 'assistant/data'
 import { Page, Nav } from 'assistant/ui'
-import { react as reactUtils } from 'assistant/utils'
-const { useInitialFocus } = reactUtils
+import { useInitialFocus } from 'assistant/utils/react'
+import './style.scss'
 
 export const HomeScreen = () => {
 	const { apps, appOrder } = useSystemState()
@@ -16,6 +16,8 @@ export const HomeScreen = () => {
 			<Page.Toolbar>
 				<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
 			</Page.Toolbar>
+
+			<CurrentlyViewing />
 
 			<div className="app-grid">
 				{ appOrder.map( ( handle, i ) => {
@@ -53,5 +55,15 @@ export const HomeScreen = () => {
 				} )}
 			</div>
 		</Page>
+	)
+}
+
+const CurrentlyViewing = () => {
+
+	return (
+		<Page.Pad className="fl-asst-currently-viewing-summary">
+			<div>Currently Viewing Post</div>
+			<div>Post Title</div>
+		</Page.Pad>
 	)
 }
