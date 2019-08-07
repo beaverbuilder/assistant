@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { Page, Nav } from 'assistant/lib'
+import { Page, Nav, List } from 'assistant/lib'
 
 export const Users = ( { match } ) => (
 	<Nav.Switch>
@@ -10,8 +10,8 @@ export const Users = ( { match } ) => (
 
 const Main = () => {
 	return (
-		<Page>
-			<p>Users</p>
+		<Page shouldPadSides={false}>
+			<List.Users />
 		</Page>
 	)
 }

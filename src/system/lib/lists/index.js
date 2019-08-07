@@ -6,6 +6,7 @@ import { Scroller, useScrollLoader } from './scroller'
 import { WordPress } from './wordpress'
 import { Comments } from './comments'
 import { Posts } from './posts'
+import { Users } from './users'
 import { Updates } from './updates'
 import './style.scss'
 
@@ -127,6 +128,9 @@ List.Comments.displayName = 'List.Comments'
 
 List.Posts = Posts
 List.Posts.displayName = 'List.Posts'
+
+List.Users = Users
+List.Users.displayName = 'List.Users'
 
 List.Updates = Updates
 List.Updates.displayName = 'List.Updates'
