@@ -5,6 +5,8 @@ import { Item, Loading } from './parts'
 import { Scroller, useScrollLoader } from './scroller'
 import { WordPress } from './wordpress'
 import { Comments } from './comments'
+import { Posts } from './posts'
+import { Updates } from './updates'
 import './style.scss'
 
 import { isRenderProp } from 'shared-utils/react'
@@ -122,6 +124,12 @@ List.WordPress.displayName = 'List.WordPress'
 
 List.Comments = Comments
 List.Comments.displayName = 'List.Comments'
+
+List.Posts = Posts
+List.Posts.displayName = 'List.Posts'
+
+List.Updates = Updates
+List.Updates.displayName = 'List.Updates'
 
 List.TestSheet = TestSheet
 List.TestSheet.displayName = 'List.TestSheet'

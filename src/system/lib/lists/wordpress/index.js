@@ -6,6 +6,7 @@ import { App, List } from 'lib'
 export const WordPress = ( {
 	type = 'posts',
 	getItemProps = ( item, defaultProps ) => defaultProps,
+	onItemsLoaded = ( response ) => {},
 	query = {},
 	...rest,
 } ) => {
@@ -17,8 +18,8 @@ export const WordPress = ( {
 	const hasItems = 0 < items.length
 
 	useEffect( () => {
-		return () => source.cancel()
-	}, [] )
+		setItems( [] )
+	}, [ type, query ] )
 
 	return (
 		<List.Scroller
@@ -29,6 +30,7 @@ export const WordPress = ( {
 				} ).then( response  => {
 					setItems( items.concat( response.data.items ) )
 					setHasMore( response.data.has_more )
+					onItemsLoaded( response )
 				} ).catch( ( error ) => {
 					if ( ! isCancel( error ) ) {
 						console.log( error )

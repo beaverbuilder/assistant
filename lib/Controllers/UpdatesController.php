@@ -157,7 +157,9 @@ class UpdatesController extends AssistantController {
 			}
 		}
 
-		return rest_ensure_response( $response );
+		return rest_ensure_response( array(
+			'items' => $response, // Temp fix until pager is in place.
+		) );
 	}
 
 	/**

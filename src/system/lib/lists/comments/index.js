@@ -15,7 +15,6 @@ export const Comments = ( {
 			getItemProps={ ( item, defaultProps ) => {
 				return getItemProps( item, {
 					...defaultProps,
-					key: item.id,
 					label: <em><strong>{item.authorEmail}</strong> commented:</em>,
 					description: item.postTitle,
 					thumbnail: item.thumbnail,
