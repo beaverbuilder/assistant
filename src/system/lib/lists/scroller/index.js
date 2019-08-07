@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'fl-react'
+import React, { useState, useEffect, useRef } from 'fl-react'
+import { List } from '../'
 
 const hasReachedBounds = e => {
 	const el = e.target
@@ -41,4 +42,22 @@ export const useScrollLoader = ( {
 	return {
 		isFetching,
 	}
+}
+
+export const Scroller = ( {
+	loadItems = () => {},
+	...rest
+} ) => {
+	const scrollRef = useRef()
+	const { isFetching } = List.useScrollLoader( {
+		ref: scrollRef,
+		callback: loadItems,
+	} )
+
+	return (
+		<div className="fl-asst-list-scroller fl-asst-scroller" ref={scrollRef}>
+			<List {...rest} />
+			{ isFetching && <List.Loading /> }
+		</div>
+	)
 }
