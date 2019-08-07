@@ -1,7 +1,11 @@
-import React, { useEffect, useState, useContext } from 'fl-react'
-import { getPagedContent } from 'assistant/utils/wordpress'
+import React, { useEffect, useState } from 'fl-react'
+
+import { __ } from 'assistant'
+import { getWpRest } from 'assistant/utils/wordpress'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
 import { Button, List, Page, Nav, Icon, Window } from 'assistant/ui'
+
+import { CancelToken, isCancel } from 'axios'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
@@ -12,18 +16,51 @@ export const Content = ( { match } ) => (
 )
 
 const Main = ( { match } ) => {
-	const [ items, setItems ] = useState( [] )
+
 	const { contentTypes } = getSystemConfig()
-	const { query } = useAppState( 'fl-content' )
-	const { setQuery } = getAppActions( 'fl-content' )
+	const { query, pager } = useAppState( 'fl-content' )
+	const { setQuery, setPager } = getAppActions( 'fl-content' )
 	const { size } = useContext( Window.Context )
 
-	useEffect( () => {
-		setItems( [] )
+	const wp = getWpRest()
+	const source = CancelToken.source()
 
-		getPagedContent( 'posts', query, 0, ( data ) => {
-			setItems( data )
-		} )
+	useEffect( () => {
+		setPager({
+			items: [],
+			items_count: 0,
+			current_offset: 0,
+			current_page: 0,
+			first_page: 1,
+			has_more: true,
+			last_page: 2,
+			items_per_page: 20,
+			total_pages: 1
+		})
+
+
+		let config = {
+			cancelToken: source.token,
+			cache: {
+				debug: true
+			}
+		}
+
+		wp.getPagedContent( 'posts', query, 0, config )
+			.then( ( response ) => {
+				setPager( response.data )
+			} )
+			.catch( error => {
+				if ( isCancel( error ) ) {
+					console.log( 'request cancelled', error.message )
+				} else {
+					console.log( 'some other error', error )
+				}
+			} )
+
+		return () => {
+		    source.cancel( 'unmounting component' )
+		}
 	}, [ query ] )
 
 	const Toolbar = () => {
@@ -59,7 +96,7 @@ const Main = ( { match } ) => {
 		<Page shouldPadSides={false} toolbar={<Toolbar />} headerActions={<Actions baseUrl={match.url} />}>
 
 			<List
-				items={ items }
+				items={ pager.items }
 				defaultItemProps={{ shouldAlwaysShowThumbnail: true }}
 				getItemProps={( item, defaultProps ) => {
 					const desc = 'by ' + item.author + ' | ' + item.visibility

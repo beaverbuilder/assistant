@@ -2,6 +2,7 @@
 
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Pagination\PostsPaginator;
 use \WP_REST_Server;
 
 
@@ -111,24 +112,34 @@ class AttachmentsController extends AssistantController {
 	 * Returns an array of attachments and related data.
 	 */
 	public function attachments( $request ) {
-		$response    = [];
-		$params      = $request->get_params();
-		$attachments = get_posts(
-			array_merge(
-				$params, [
-					'perm'      => 'editable',
-					'post_type' => 'attachment',
-				]
-			)
+		$response = [];
+		$params   = $request->get_params();
+//		$attachments = get_posts(
+//			array_merge(
+//				$params, [
+//					'perm'      => 'editable',
+//					'post_type' => 'attachment',
+//				]
+//			)
+//		);
+
+		$args = array_merge(
+			$params, [
+				'perm'      => 'editable',
+				'post_type' => 'attachment',
+			]
 		);
 
-		foreach ( $attachments as $attachment ) {
-			if ( current_user_can( 'edit_post', $attachment->ID ) ) {
-				$response[] = $this->get_attachment_response_data( $attachment );
-			}
-		}
+		$paginator = new PostsPaginator();
+		$pager     = $paginator->query( $args, [ $this, 'get_attachment_response_data' ] );
 
-		return rest_ensure_response( $response );
+//		foreach ( $attachments as $attachment ) {
+//			if ( current_user_can( 'edit_post', $attachment->ID ) ) {
+//				$response[] = $this->get_attachment_response_data( $attachment );
+//			}
+//		}
+
+		return rest_ensure_response( $pager->to_array() );
 	}
 
 	/**

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'fl-react'
-import { getPagedContent } from 'assistant/utils/wordpress'
+import { getWpRest } from 'assistant/utils/wordpress'
 import { Page, List, App, Nav } from 'assistant/ui'
 
 export const CommentsApp = ( { match } ) => (
@@ -26,32 +26,30 @@ const CommentsTab = () => {
 		commentStatus: 'all',
 	}
 
-	useEffect( () => {
-		getPagedContent( 'comments', query, offset, ( data ) => {
-			setComments( comments.concat( data ) )
-		} )
-	}, [] )
+	const wp = getWpRest()
 
 	return (
-		<>
-			{ ! hasComments && <List.Loading /> }
-			{ hasComments &&
-			<List
-				items={comments}
-				getItemProps={ ( item, defaultProps ) => {
-					return {
-						...defaultProps,
-						key: item.id,
-						label: <em><strong>{item.authorEmail}</strong> commented:</em>,
-						description: item.postTitle,
-						thumbnail: item.thumbnail,
-						to: {
-							pathname: `/${handle}/comments/${item.id}`,
-							state: item
-						}
+		<List.Scroller
+			items={comments}
+			loadItems={ ( setHasMore ) => {
+				wp.getPagedContent( 'comments', query, offset).then( response  => {
+					setComments( comments.concat( response.data.items ) )
+					setHasMore( response.data.has_more )
+				} )
+			} }
+			getItemProps={ ( item, defaultProps ) => {
+				return {
+					...defaultProps,
+					key: item.id,
+					label: <em><strong>{item.authorEmail}</strong> commented:</em>,
+					description: item.postTitle,
+					thumbnail: item.thumbnail,
+					to: {
+						pathname: `/${handle}/comments/${item.id}`,
+						state: item
 					}
-				}}
-			/> }
-		</>
+				}
+			}}
+		/>
 	)
 }

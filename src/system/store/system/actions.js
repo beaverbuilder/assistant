@@ -65,7 +65,7 @@ export const setBrightness = brightness => {
 	}
 }
 
-export const setShouldShowLabels = ( show =  true ) => {
+export const setShouldShowLabels = ( show = true ) => {
 	return {
 		type: 'SET_SHOULD_SHOW_LABELS',
 		show,
@@ -86,3 +86,52 @@ export const setSearchHistory = ( keyword ) => {
 		keyword,
 	}
 }
+
+export const setIsCloudConnected = ( isCloudConnected ) => {
+	return {
+		type: 'SET_IS_CLOUD_CONNECTED',
+		isCloudConnected
+	}
+}
+
+export const setCloudToken = ( token ) => {
+	return {
+		type: 'SET_CLOUD_TOKEN',
+		token
+	}
+}
+
+export const setLoginErrors = ( errors ) => {
+	return {
+		type: 'SET_LOGIN_ERRORS',
+		errors
+	}
+}
+
+export const setCurrentUser = ( user ) => {
+	return {
+		type: 'SET_CURRENT_USER',
+		user
+	}
+}
+
+export const fetchCurrentUser = () => {
+	return {
+		type: 'FETCH_CURRENT_USER'
+	}
+}
+
+export const attemptLogin = ( email, password ) => {
+	return {
+		type: 'ATTEMPT_LOGIN',
+		email,
+		password
+	}
+}
+
+export const attemptLogout = () => {
+	return {
+		type: 'ATTEMPT_LOGOUT'
+	}
+}
+

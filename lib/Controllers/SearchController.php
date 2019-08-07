@@ -21,7 +21,7 @@ class SearchController extends AssistantController {
 		$this->route(
 			'/search', [
 				[
-					'methods'             => WP_REST_Server::CREATABLE,
+					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'results' ],
 					'permission_callback' => function() {
 						return is_user_logged_in();

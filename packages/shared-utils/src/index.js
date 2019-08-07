@@ -8,7 +8,6 @@ import * as store from './store'
 import * as text from './text'
 import * as url from './url'
 import * as wordpress from './wordpress'
-import * as http from './http'
 import * as cloud from './cloud'
 
 export {
@@ -16,7 +15,6 @@ export {
 	color,
 	console,
 	datetime,
-	http,
 	react,
 	request,
 	store,

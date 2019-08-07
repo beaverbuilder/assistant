@@ -15,16 +15,20 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
-    "@wordpress/autop": "^2.3.0",
-    "@wordpress/i18n": "^3.5.0",
+    "@wordpress/autop": "^2.4.0",
+    "@wordpress/i18n": "^3.6.0",
+    "axios": "^0.19.0",
+    "axios-cache-adapter": "^2.3.3",
     "babel-jest": "^24.8.0",
     "camelcase": "^5.3.1",
     "classnames": "^2.2.6",
     "color": "^3.1.2",
-    "cross-fetch": "^3.0.3",
     "framer-motion": "^1.2.2",
     "history": "^4.9.0",
+    "jwt-decode": "^2.2.0",
+    "localforage": "^1.7.3",
     "md5": "^2.2.1",
+    "promise": "^8.0.3",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-clipboard.js": "^2.0.13",
@@ -54,10 +58,9 @@
     "eslint": "^5.16.0",
     "eslint-config-wordpress": "^2.0.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react": "^7.14.3",
     "expose-loader": "^0.7.5",
     "jest": "^24.8.0",
-    "jest-fetch-mock": "^2.1.2",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -65,6 +68,6 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.6"
   }
 }

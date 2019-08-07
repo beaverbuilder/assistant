@@ -1,5 +1,9 @@
 <?php
+
 namespace FL\Assistant\Controllers;
+
+use FL\Assistant\Pagination\CommentsPaginator;
+use FL\Assistant\Pagination\PostsPaginator;
 
 /**
  * REST API logic for comments.
@@ -15,7 +19,7 @@ class CommentsController extends AssistantController {
 				[
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comments' ],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
 					},
 				],
@@ -27,7 +31,7 @@ class CommentsController extends AssistantController {
 				[
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comments_count' ],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
 					},
 				],
@@ -45,7 +49,7 @@ class CommentsController extends AssistantController {
 							'type'     => 'number',
 						],
 					],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
 					},
 				],
@@ -62,7 +66,7 @@ class CommentsController extends AssistantController {
 							'type'     => 'string',
 						],
 					],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
 					},
 				],
@@ -77,6 +81,7 @@ class CommentsController extends AssistantController {
 		$post = get_post( $comment->comment_post_ID );
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );
+
 		return [
 			'approved'    => $comment->comment_approved ? true : false,
 			'author'      => $comment->comment_author,
@@ -102,18 +107,15 @@ class CommentsController extends AssistantController {
 	 * Returns an array of comments and related data.
 	 */
 	public function comments( $request ) {
-		$response   = [];
 		$params     = $request->get_params();
-
-		$posts = $this->container()->service( 'posts' );
+		$posts      = $this->container()->service( 'posts' );
 		$post_types = array_keys( $posts->get_types() );
-		$comments   = get_comments( array_merge( [ 'post_type' => $post_types ], $params ) );
+		$args       = array_merge( [ 'post_type' => $post_types ], $params );
 
-		foreach ( $comments as $comment ) {
-			$response[] = $this->get_comment_response_data( $comment );
-		}
+		$paginator = new CommentsPaginator();
+		$pager     = $paginator->query( $args, [ $this, 'get_comment_response_data' ] );
 
-		return rest_ensure_response( $response );
+		return rest_ensure_response( $pager->to_array() );
 	}
 
 	/**
@@ -122,6 +124,7 @@ class CommentsController extends AssistantController {
 	 */
 	public function comments_count( $request ) {
 		$counts = wp_count_comments();
+
 		return rest_ensure_response(
 			[
 				'approved' => $counts->approved,
@@ -148,9 +151,9 @@ class CommentsController extends AssistantController {
 	 * Updates a single comment based on the specified action.
 	 */
 	public function update_comment( $request ) {
-		$id       = $request->get_param( 'id' );
-		$action   = $request->get_param( 'action' );
-		$comment  = get_comment( $id );
+		$id      = $request->get_param( 'id' );
+		$action  = $request->get_param( 'action' );
+		$comment = get_comment( $id );
 
 		switch ( $action ) {
 			case 'approve':

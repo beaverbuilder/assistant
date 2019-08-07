@@ -1,26 +1,43 @@
-import React, { useState, useEffect } from 'fl-react'
-import { Page, Icon } from 'assistant/lib'
-import LoginForm from './components/login-form'
-import cloud from 'assistant/cloud'
+import React from 'fl-react'
+import {useSystemState, getSystemActions} from 'assistant/store'
+import {Page} from 'assistant/lib'
+
+import {ProfilePage, LoginPage} from './pages'
+
 import './style.scss'
 
 export const CloudApp = () => {
 
-	const [ isConnected, setIsConnected ] = useState( false )
+	const {
+		loginErrors = [],
+		cloudToken = {},
+		currentUser,
+		isCloudConnected = false
+	} = useSystemState()
 
-	useEffect( () => {
-		setIsConnected( cloud.auth.isConnected() )
+	const {
+		attemptLogin,
+		attemptLogout
+	} = getSystemActions()
 
-		cloud.auth.onAuthStatusChanged( () => {
-			setIsConnected( cloud.auth.isConnected() )
-		} )
-	}, [] )
 
-	if ( isConnected ) {
-		return <ConnectedScreen/>
-	} else {
-		return <NotConnectedScreen/>
+	const doLogin = ( email, password ) => {
+		attemptLogin( email, password )
 	}
+
+	const doLogout = () => {
+		attemptLogout()
+	}
+
+	return (
+		<Page className="fl-app-cloud">
+			{isCloudConnected ? (
+				<ProfilePage doLogout={doLogout} token={cloudToken} user={currentUser}/>
+			) : (
+				<LoginPage doLogin={doLogin} errors={loginErrors}/>
+			)}
+		</Page>
+	)
 }
 
 CloudApp.Icon = () => {
@@ -35,43 +52,3 @@ CloudApp.Icon = () => {
 }
 
 
-const NotConnectedScreen = () => {
-	return (
-		<Page className="fl-app-cloud">
-			<Icon.Pencil size={75}/>
-			<p className="center-text">You are not currently connected to Assistant Cloud</p>
-			<LoginForm/>
-		</Page>
-	)
-}
-
-const ConnectedScreen = () => {
-
-	const [ user, setUser ] = useState( {} )
-	const [ auth, setAuth ] = useState( {} )
-
-	const disconnect = () => {
-		cloud.auth.logout()
-	}
-
-	useEffect( () => {
-
-		const auth = cloud.auth.getToken()
-		const user = cloud.auth.getUser()
-
-		setAuth( auth )
-		setUser( user )
-
-	}, [] )
-
-	return (
-		<Page className="fl-app-cloud">
-			<p className="center-text">Congrats! You're connected now.</p>
-			<div style={{maxWidth: '90%', margin: 'auto'}}>
-				<pre>{JSON.stringify( user, null, 4 )}</pre>
-				<pre>{JSON.stringify( auth, null, 4 )}</pre>
-			</div>
-			<button className='fl-asst-cloud-connect-button' onClick={disconnect}>Disconnect</button>
-		</Page>
-	)
-}

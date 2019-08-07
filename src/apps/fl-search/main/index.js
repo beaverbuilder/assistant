@@ -1,61 +1,89 @@
-import React, { useEffect, useRef, useState } from 'fl-react'
-import { __ } from 'assistant/i18n'
-import { addLeadingSlash } from 'assistant/utils/url'
-import { getSearchResults } from 'assistant/utils/wordpress'
+
+import React, {useEffect, useRef, useState} from 'fl-react'
+import {__} from 'assistant/i18n'
+import {addLeadingSlash} from 'assistant/utils/url'
+import {getWpRest} from 'assistant/utils/wordpress'
+import {useSystemState, getSystemActions, useAppState, getAppActions} from 'assistant/data'
+import {Page, List, Icon, Button} from 'assistant/ui'
+import {CancelToken, isCancel} from 'axios'
+
 import { useInitialFocus } from 'assistant/utils/react'
-import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
-import { Page, List, Icon, Button } from 'assistant/ui'
+
+
 import './style.scss'
 
-export const Main = ( { match } ) => {
-	const { apps, searchHistory } = useSystemState()
-	const { setSearchHistory } = getSystemActions()
-	const { keyword } = useAppState( 'fl-search' )
-	const { setKeyword } = getAppActions( 'fl-search' )
+
+export const Main = ( {match} ) => {
+	const {apps, searchHistory} = useSystemState()
+	const {setSearchHistory} = getSystemActions()
+	const {keyword} = useAppState( 'fl-search' )
+	const {setKeyword} = getAppActions( 'fl-search' )
+
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
-	const timeout = useRef( null )
-	const request = useRef( null )
 
-	useEffect( () => {
-		const { config, routes } = getRequestConfig()
+	const wp = getWpRest()
+	let source = CancelToken.source()
 
-		cancelRequest()
+	useEffect( value => {
+
+		const {config, routes} = getRequestConfig()
 
 		if ( '' === keyword ) {
 			setResults( null )
 			return
 		}
 
-		timeout.current = setTimeout( () => {
-			setLoading( true )
+		source.cancel( 'Cancelling old requests to start new' )
+		source = CancelToken.source()
 
-			request.current = getSearchResults( keyword, routes, response => {
-				const newResults = {}
+		setLoading( true )
 
-				response.map( ( result, key ) => {
-					const { label, priority, format } = config[ key ]
+		wp.search( keyword, routes, {
+			cancelToken: source.token,
+			cache: {
+				debug: true,
+				maxAge: 60 * 1000, // one minute (default: 15 mins)
+			}
+		} ).then( response => {
 
-					if ( ! result.length ) {
-						return
-					}
-					if ( ! newResults[ priority ] ) {
-						newResults[ priority ] = []
-					}
+			const newResults = {}
 
-					newResults[ priority ].push( {
-						label,
-						items: format( result ),
-					} )
+			response.data.map( ( result, key ) => {
+				const {label, priority, format} = config[key]
+
+				console.log( result )
+				if ( ! result.items ) {
+					return
+				}
+				if ( ! newResults[priority] ) {
+					newResults[priority] = []
+				}
+
+				newResults[priority].push( {
+					label,
+					items: format( result.items ),
 				} )
-
-				setResults( newResults )
-				setLoading( false )
-				setSearchHistory( keyword )
 			} )
-		}, 1000 )
 
-		return cancelRequest
+			setResults( newResults )
+			setLoading( false )
+			setSearchHistory( keyword )
+		} ).catch( ( error ) => {
+
+			// if the request was cancelled
+			if ( isCancel( error ) ) {
+
+				// log the message sent to source.cancel()
+				console.log( error.message )
+			}
+		} )
+
+
+		return () => {
+			source.cancel( 'Unmounting search component' )
+		}
+
 	}, [ keyword ] )
 
 	const getRequestConfig = () => {
@@ -82,29 +110,9 @@ export const Main = ( { match } ) => {
 			}
 		} )
 
-		return { config, routes }
+		return {config, routes}
 	}
 
-	const cancelRequest = () => {
-		if ( timeout.current ) {
-			clearTimeout( timeout.current )
-			timeout.current = null
-		}
-		if ( request.current ) {
-			request.current.cancel()
-			request.current = null
-		}
-	}
-
-	// Testing scroll loading
-	const scrollRef = useRef()
-	const { isFetching, resetIsFetching } = List.useScrollLoader( {
-		ref: scrollRef,
-		callback: ( reset ) => {
-
-			// after loaded, reset()
-		}
-	} )
 
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
@@ -131,87 +139,104 @@ export const Main = ( { match } ) => {
 		)
 	}
 
-	return (
-		<Page shouldShowHeader={false} shouldPadSides={false} shouldPadBottom={false} toolbar={<Toolbar />}>
 
-			{ '' === keyword &&
-			<>
-				{ searchHistory.length &&
-				<Page.Pad>
-					<Button.Group label={__( 'Recent Searches' )}>
-						{ searchHistory.map( ( keyword, key ) =>
-							<Button
-								key={ key }
-								onClick={ e => setKeyword( keyword ) }
-							>
-								"{ keyword }"
-							</Button>
-						) }
-					</Button.Group>
-				</Page.Pad>
-				}
-			</>
+	return (
+		<Page shouldShowHeader={false} shouldPadTop={true} shouldPadSides={false} shouldPadBottom={false}>
+
+			<Page.Toolbar>
+				<div className='fl-asst-search-form-simple'>
+					<input
+						type="search"
+						value={keyword}
+						onChange={e => setKeyword( e.target.value )}
+						placeholder={__( 'Search' )}
+					/>
+					{loading &&
+                    <div className='fl-asst-search-spinner'>
+                    	<Icon.SmallSpinner/>
+                    </div>
+					}
+				</div>
+			</Page.Toolbar>
+
+			{'' === keyword &&
+            <>
+                {searchHistory.length &&
+                <Page.Pad>
+                	<Button.Group label={__( 'Recent Searches' )}>
+                		{searchHistory.map( ( keyword, key ) =>
+                			<Button
+                				key={key}
+                				onClick={e => setKeyword( keyword )}
+                			>
+                                "{keyword}"
+                			</Button>
+                		)}
+                	</Button.Group>
+                </Page.Pad>
+                }
+            </>
 			}
 
-			<div className="fl-asst-scroller" ref={scrollRef}>
+			{ results && ! hasResults &&
+				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
+			}
 
-				{ results && ! hasResults && <Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar> }
+			{ 0 < groups.length &&
+				<List.Scroller
+					items={groups}
+					isListSection={ item => 'undefined' !== typeof item.label }
+					getSectionItems={ section => section.items ? section.items : [] }
+					loadItems={ ( setHasMore ) => {
+						setTimeout( () => setHasMore( false ), 2000 )
+					} }
+					getItemProps={ ( item, defaultProps, isSection ) => {
+						let props = { ...defaultProps }
 
-				{ 0 < groups.length &&
-					<List
-						items={groups}
-						isListSection={ item => 'undefined' !== typeof item.label }
-						getSectionItems={ section => section.items ? section.items : [] }
+						if ( isSection ) {
+							props.label = item.label
+						} else {
+							props.shouldAlwaysShowThumbnail = true
 
-						getItemProps={ ( item, defaultProps, isSection ) => {
-							let props = { ...defaultProps }
-
-							if ( isSection ) {
+							if ( 'undefined' !== typeof item.label ) {
 								props.label = item.label
-							} else {
-								props.shouldAlwaysShowThumbnail = true
-
-								if ( 'undefined' !== typeof item.label ) {
-									props.label = item.label
-								} else if ( 'undefined' !== typeof item.title ) {
-									props.label = item.title
-								}
-
-								if ( 'undefined' !== typeof item.thumbnail ) {
-									props.thumbnail = item.thumbnail
-								}
-
-								// Determine Detail View
-								const type = 'post' // HARDCODED FOR NOW - NEED TO DISTINGUISH OBJECT TYPES
-								const basePath = match.url
-								let path = null
-
-								switch ( type ) {
-								case 'post':
-									path = `${basePath}/posts/${item.id}`
-									break
-								case 'user':
-									path = `${basePath}/users/${3}`
-									break
-								case 'attachment':
-								case 'plugin':
-								case 'theme':
-								case 'comment':
-								}
-								if ( path ) {
-									props.to = {
-										pathname: path,
-										state: { item },
-									}
-								}
+							} else if ( 'undefined' !== typeof item.title ) {
+								props.label = item.title
 							}
 
-							return props
-						}}
-					/>
-				}
-				{ isFetching && <List.Loading /> }
-			</div>
+							if ( 'undefined' !== typeof item.thumbnail ) {
+								props.thumbnail = item.thumbnail
+							}
+
+							// Determine Detail View
+							const type = 'post' // HARDCODED FOR NOW - NEED TO DISTINGUISH OBJECT TYPES
+							const basePath = match.url
+							let path = null
+
+							switch ( type ) {
+							case 'post':
+								path = `${basePath}/posts/${item.id}`
+								break
+							case 'user':
+								path = `${basePath}/users/${3}`
+								break
+							case 'attachment':
+							case 'plugin':
+							case 'theme':
+							case 'comment':
+							}
+							if ( path ) {
+								props.to = {
+									pathname: path,
+									state: { item },
+								}
+							}
+						}
+
+						return props
+					}}
+				/>
+			}
 
 		</Page>
 	)

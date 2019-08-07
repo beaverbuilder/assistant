@@ -6,7 +6,7 @@ registerApp( 'fl-search', {
 	root: App,
 	icon: AppIcon,
 	state: {
-		keyword: '',
+		keyword: ''
 	},
 	shouldShowInAppList: false,
 } )

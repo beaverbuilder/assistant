@@ -1,4 +1,3 @@
-
 export const apps = ( state = {}, action ) => {
 
 	const defaults = {
@@ -12,7 +11,7 @@ export const apps = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'REGISTER_APP':
 		return {
-			[ action.key ]: {
+			[action.key]: {
 				...defaults,
 				app: action.key,
 				label: action.key,
@@ -30,7 +29,7 @@ export const appOrder = ( state = [], action ) => {
 	switch ( action.type ) {
 	case 'REGISTER_APP':
 	case 'SET_APP_POSITION': {
-		const { key, position = null } = action
+		const {key, position = null} = action
 
 		if ( null === position ) {
 			const newState = Array.from( state )
@@ -44,7 +43,7 @@ export const appOrder = ( state = [], action ) => {
 			const index = state.indexOf( key )
 			if ( index ) {
 				const newState = Array.from( state )
-				delete newState[ index ]
+				delete newState[index]
 				return newState
 			}
 
@@ -70,21 +69,21 @@ export const appOrder = ( state = [], action ) => {
 export const counts = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_COUNTS':
-		return { ...state, ...action.counts }
+		return {...state, ...action.counts}
 	case 'SET_COUNT':
 		return {
 			...state,
-			[ action.key ]: action.count
+			[action.key]: action.count
 		}
 	case 'INCREMENT_COUNT':
 		return {
 			...state,
-			[ action.key ]: state[ action.key ] + 1
+			[action.key]: state[action.key] + 1
 		}
 	case 'DECREMENT_COUNT':
 		return {
 			...state,
-			[ action.key ]: state[ action.key ] ? state[ action.key ] - 1 : 0
+			[action.key]: state[action.key] ? state[action.key] - 1 : 0
 		}
 	default:
 		return state
@@ -146,7 +145,7 @@ export const shouldShowLabels = ( state = true, action ) => {
 }
 
 // Navigation History
-const defaultHistory = { index: 0, entries: [] }
+const defaultHistory = {index: 0, entries: []}
 
 export const history = ( state = defaultHistory, action ) => {
 	switch ( action.type ) {
@@ -166,5 +165,41 @@ export const searchHistory = ( state = [], action ) => {
 		return [ action.keyword, ...state.filter( item => item !== action.keyword ) ]
 	default:
 		return state
+	}
+}
+
+export const isCloudConnected = ( state = false, action ) => {
+	switch ( action.type ) {
+	case 'SET_IS_CLOUD_CONNECTED':
+		return action.isCloudConnected
+	default:
+		return state
+	}
+}
+
+export const cloudToken = ( state = {}, action ) => {
+	switch ( action.type ) {
+	case 'SET_CLOUD_TOKEN':
+		return action.token
+	default:
+		return state
+	}
+}
+
+export const loginErrors = ( state = [], action ) => {
+	switch ( action.type ) {
+	case 'SET_LOGIN_ERRORS':
+		return action.errors
+	default:
+		return state
+	}
+}
+
+export const currentUser = ( state = null, action ) => {
+	switch ( action.type ) {
+	case 'SET_CURRENT_USER':
+		return action.user
+	default:
+		return null
 	}
 }

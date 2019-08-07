@@ -35,7 +35,7 @@ export const registerStore = ( key, {
 		store: createStore(
 			createReducers( reducers, state ),
 			state,
-			createEnhancers( key, effects )
+			createEnhancers(key, effects)
 		)
 	}
 }

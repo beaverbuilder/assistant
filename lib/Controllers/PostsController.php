@@ -145,16 +145,14 @@ class PostsController extends AssistantController {
 	/**
 	 * Returns an array of posts and related data.
 	 */
-	public function posts( $request ) {
-		$response = [];
-		$params   = $request->get_params();
-		$posts    = get_posts( $params );
+	public function posts( \WP_REST_Request $request ) {
 
-		foreach ( $posts as $post ) {
-			if ( current_user_can( 'edit_post', $post->ID ) ) {
-				$response[] = $this->get_post_response_data( $post );
-			}
-		}
+		$posts  = $this->container()->service( 'posts' );
+		$params = $request->get_params();
+
+		$params['perm'] = 'editable';
+
+		$response = $posts->query( $params )->to_array();
 
 		return rest_ensure_response( $response );
 	}
