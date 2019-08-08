@@ -56,9 +56,6 @@ const WindowError = () => {
 const WindowToolbar = () => {
 	const { isRoot, goToRoot } = useContext( Nav.Context )
 	const { label } = useContext( App.Context )
-
-	const stopProp = e => e.stopPropagation()
-
 	const labelStyle = { padding: '2px 10px' }
 	const iconWrapStyle = { display: 'inline-flex', transform: 'translateY(2px)' }
 

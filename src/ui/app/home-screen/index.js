@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { useSystemState, getSystemConfig } from 'assistant/data'
-import { Page, Nav } from 'assistant/ui'
+import { Page, Nav, Button } from 'assistant/ui'
 import { useInitialFocus } from 'assistant/utils/react'
 import './style.scss'
 
@@ -74,12 +74,19 @@ export const HomeScreen = () => {
 
 const CurrentlyViewing = () => {
 	const { currentPageView } = getSystemConfig()
-	const { name, intro } = currentPageView
-
+	const { name, intro, actions } = currentPageView
 	return (
 		<div className="fl-asst-currently-viewing-summary">
 			<div className="fl-asst-pretitle">{intro}</div>
 			<div className="fl-asst-title">{name}</div>
+			<Button.Group style={{ marginTop: 'var(--fl-asst-small-space)'}}>
+			{ actions.map( ( item, i ) => {
+				const { label, href } = item
+				return (
+					<Button key={i} href={href}>{label}</Button>
+				)
+			})}
+			</Button.Group>
 		</div>
 	)
 }
