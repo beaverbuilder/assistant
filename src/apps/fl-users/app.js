@@ -17,7 +17,7 @@ const Main = () => {
 					...defaultProps,
 					to: {
 						pathname: `/${handle}/user/${item.id}`,
-						state: item
+						state: { item }
 					},
 				} ) }
 			/>
