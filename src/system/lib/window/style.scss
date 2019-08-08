@@ -103,6 +103,7 @@
     }
 
     .fl-asst-window-layer {
+        --fl-asst-admin-bar-height: 32px;
         box-sizing: border-box;
 
         position: fixed;
@@ -113,6 +114,9 @@
         z-index: 9999999999999; // Yea, cause popup maker pushes the admin bar higher than normal.
 
         background-color: transparent;
+        box-shadow: inset 0px 0px 0px 0px white;
+        transition-property: box-shadow;
+        transition-duration: .15s;
 
         user-select: none;
         touch-action: none;
@@ -120,6 +124,57 @@
 
         &.fl-asst-window-layer-is-dragging {
             pointer-events: auto;
+            box-shadow: inset 0px 0px 0px 4px #16D4F3;
+            background-color: hsla(188, 89%, 52%, .1);
+
+
+            &:after {
+                content: '';
+                pointer-events: none;
+                display: block;
+                position: absolute;
+                top: calc( 15px + var(--fl-asst-admin-bar-height) );
+                left:15px;
+                width: 60px;
+                height: 60px;
+                background: #16D4F3;
+                border-radius: var(--fl-asst-base-radius);
+                z-index: -1;
+            }
+            &.fl-asst-window-layer-origin-top-right:after {
+                left: auto;
+                right: 15px;
+            }
+            &.fl-asst-window-layer-origin-bottom-left:after {
+                top: auto;
+                bottom: 15px;
+                left: 15px;
+            }
+            &.fl-asst-window-layer-origin-bottom-right:after {
+                top: auto;
+                bottom: 15px;
+                left: auto;
+                right: 15px;
+            }
+            &.fl-asst-window-size-normal {
+                &:after {
+                    height: 100vh;
+                    width: 40px;
+                    top:0;
+                    bottom: auto;
+                    border-radius: 0;
+                }
+                &.fl-asst-window-layer-origin-top-left:after,
+                &.fl-asst-window-layer-origin-bottom-left:after {
+                    right:auto;
+                    left:0;
+                }
+                &.fl-asst-window-layer-origin-top-right:after,
+                &.fl-asst-window-layer-origin-bottom-right:after {
+                    right: 0;
+                    left:auto;
+                }
+            }
         }
 
         .fl-asst-window-positioner {
