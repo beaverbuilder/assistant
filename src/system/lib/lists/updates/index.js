@@ -13,6 +13,7 @@ export const Updates = ( {
 			type={ 'updates' }
 			query={ query }
 			isListSection={ item => 'undefined' !== typeof item.items }
+			getSectionItems={ section => section.items }
 			getItemProps={ ( item, defaultProps, isSection ) => {
 				if ( isSection ) {
 					return {

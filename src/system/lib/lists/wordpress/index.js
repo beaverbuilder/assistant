@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'fl-react'
+import React, { useEffect, useState } from 'fl-react'
 import { CancelToken, isCancel } from 'axios'
 import { getWpRest } from 'shared-utils/wordpress'
-import { App, List } from 'lib'
+import { List } from 'lib'
 
 export const WordPress = ( {
 	type = 'posts',
@@ -11,7 +11,6 @@ export const WordPress = ( {
 	...rest,
 } ) => {
 	const [ items, setItems ] = useState( [] )
-	const { handle } = useContext( App.Context )
 	const { getPagedContent } = getWpRest()
 	const source = CancelToken.source()
 	const offset = items.length
@@ -24,6 +23,7 @@ export const WordPress = ( {
 	return (
 		<List.Scroller
 			items={ items }
+			getItemProps={ getItemProps }
 			loadItems={ ( setHasMore ) => {
 				getPagedContent( type, query, offset, {
 					cancelToken: source.token,
@@ -37,15 +37,6 @@ export const WordPress = ( {
 					}
 				} )
 			} }
-			getItemProps={ ( item, defaultProps ) => {
-				return getItemProps( item, {
-					...defaultProps,
-					to: {
-						pathname: `/${handle}/${type}/${item.id}`,
-						state: { item }
-					},
-				} )
-			}}
 			{ ...rest }
 		/>
 	)

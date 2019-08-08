@@ -1,17 +1,26 @@
-import React from 'fl-react'
-import { Page, List, Nav } from 'assistant/ui'
+import React, { useContext } from 'fl-react'
+import { App, Page, List, Nav } from 'assistant/ui'
 
 export const UpdatesApp = ( {match} ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={`${match.url}/`} component={UpdatesMain}/>
-		<Nav.Route path={`${match.url}/updates/:id`} component={Page.Update}/>
+		<Nav.Route path={`${match.url}/update/:key`} component={Page.Update}/>
 	</Nav.Switch>
 )
 
 const UpdatesMain = () => {
+	const { handle } = useContext( App.Context )
 	return (
 		<Page shouldPadSides={false}>
-			<List.Updates />
+			<List.Updates
+				getItemProps={ ( item, defaultProps ) => ( {
+					...defaultProps,
+					to: {
+						pathname: `/${handle}/update/${item.key}`,
+						state: item
+					},
+				} ) }
+			/>
 		</Page>
 	)
 }
