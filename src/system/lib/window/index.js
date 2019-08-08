@@ -117,7 +117,7 @@ const WindowLayer = ( {
 	const [ isDragging, setIsDragging ] = useState( false )
 	const [ initialPos, setInitialPos ] = useState( { x: null, y: null } )
 	const [ currentPos, setCurrentPos ] = useState( { x: null, y: null } )
-	const [ currentOrigin, setCurrentOrigin ] = useState( [ 0, 0 ] ) // Tracks the origin while dragging
+	const [ currentOrigin, setCurrentOrigin ] = useState( position ) // Tracks the origin while dragging
 	const [ offset, setOffset ] = useState( { x: 0, y: 0 } )
 
 	const dragStart = e => {
@@ -250,7 +250,7 @@ const WindowLayer = ( {
 	}
 
 	return (
-		<div id="canvas" {...props}>
+		<div id="fl-asst-canvas" {...props}>
 			<div className="fl-asst-window-positioner" ref={posRef} style={positionerStyles}>{children}</div>
 		</div>
 	)

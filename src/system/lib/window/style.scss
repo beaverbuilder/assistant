@@ -131,7 +131,6 @@
             &:after {
                 content: '';
                 pointer-events: none;
-                display: block;
                 position: absolute;
                 top: calc( 15px + var(--fl-asst-admin-bar-height) );
                 left:15px;
@@ -141,16 +140,22 @@
                 border-radius: var(--fl-asst-base-radius);
                 z-index: -1;
             }
+            &.fl-asst-window-layer-origin-top-left:after {
+                display: block;
+            }
             &.fl-asst-window-layer-origin-top-right:after {
+                display: block;
                 left: auto;
                 right: 15px;
             }
             &.fl-asst-window-layer-origin-bottom-left:after {
+                display: block;
                 top: auto;
                 bottom: 15px;
                 left: 15px;
             }
             &.fl-asst-window-layer-origin-bottom-right:after {
+                display: block;
                 top: auto;
                 bottom: 15px;
                 left: auto;
