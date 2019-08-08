@@ -1,5 +1,5 @@
-import React from 'fl-react'
-import { Page, Nav, List } from 'assistant/lib'
+import React, { useContext } from 'fl-react'
+import { App, Page, Nav, List } from 'assistant/lib'
 
 export const Users = ( { match } ) => (
 	<Nav.Switch>
@@ -9,9 +9,18 @@ export const Users = ( { match } ) => (
 )
 
 const Main = () => {
+	const { handle } = useContext( App.Context )
 	return (
 		<Page shouldPadSides={false}>
-			<List.Users />
+			<List.Users
+				getItemProps={ ( item, defaultProps ) => ( {
+					...defaultProps,
+					to: {
+						pathname: `/${handle}/user/${item.id}`,
+						state: item
+					},
+				} ) }
+			/>
 		</Page>
 	)
 }
