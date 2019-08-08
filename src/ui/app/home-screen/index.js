@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from 'assistant/i18n'
-import { useSystemState } from 'assistant/data'
+import { useSystemState, getSystemConfig } from 'assistant/data'
 import { Page, Nav } from 'assistant/ui'
 import { useInitialFocus } from 'assistant/utils/react'
 import './style.scss'
@@ -13,11 +13,17 @@ export const HomeScreen = () => {
 	return (
 		<Page shouldPadTop={true} shouldPadSides={false} shouldShowHeader={false}>
 
-			<Page.Toolbar>
+			<Page.Toolbar shouldPadBottom={true}>
 				<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
 			</Page.Toolbar>
 
-			<CurrentlyViewing />
+			<hr className="fl-asst-shortie-divider" />
+
+			<Page.Pad>
+				<CurrentlyViewing />
+			</Page.Pad>
+
+			<hr className="fl-asst-shortie-divider" />
 
 			<div className="app-grid">
 				{ appOrder.map( ( handle, i ) => {
@@ -59,11 +65,13 @@ export const HomeScreen = () => {
 }
 
 const CurrentlyViewing = () => {
+	const { currentPageView } = getSystemConfig()
+	const { name, intro } = currentPageView
 
 	return (
-		<Page.Pad className="fl-asst-currently-viewing-summary">
-			<div>Currently Viewing Post</div>
-			<div>Post Title</div>
-		</Page.Pad>
+		<div className="fl-asst-currently-viewing-summary">
+			<div className="fl-asst-pretitle">{intro}</div>
+			<div className="fl-asst-title">{name}</div>
+		</div>
 	)
 }

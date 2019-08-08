@@ -34,6 +34,8 @@ const externals = {
 
     'assistant/i18n'        		: 'FL.Assistant.i18n',
     'assistant/utils'       		: 'FL.Assistant.utils',
+
+    // I'd be great not to need these
     'assistant/utils/react'   		: 'FL.Assistant.utils.react',
     'assistant/utils/url'   		: 'FL.Assistant.utils.url',
     'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress',

@@ -31,17 +31,11 @@ export const List = ( {
 
 	getItemComponent = getItemType,
 
-	// What key do we use to determine if an item is a section?
-	itemTypeKey = 'type',
-
-	// What key should we use (by default) to get section items?
-	sectionItemsKey = 'items',
-
 	// Test if a data item is a section
-	isListSection = item => ( 'undefined' !== typeof item[itemTypeKey] && 'list-section' === item[itemTypeKey] ),
+	isListSection = item => false,
 
 	// Get the array of items from a section item
-	getSectionItems = section => 'undefined' !== typeof section[sectionItemsKey] ? section[sectionItemsKey] : [],
+	getSectionItems = section => [],
 
 	tag: Tag = 'ul',
 } ) => {
@@ -61,8 +55,6 @@ export const List = ( {
 					defaultItemProps,
 					getItemProps,
 					getItemComponent,
-					itemTypeKey,
-					sectionItemsKey,
 					isListSection: () => false,
 					getSectionItems,
 					tag: Tag,

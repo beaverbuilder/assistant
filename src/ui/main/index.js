@@ -64,19 +64,17 @@ const WindowToolbar = () => {
 	}
 
 	const labelStyle = { padding: '2px 10px' }
-	const iconWrapStyle = { display: 'inline-flex', transform: 'translateY(1px)' }
+	const iconWrapStyle = { display: 'inline-flex', transform: 'translateY(2px)' }
 
 	return (
-		<>
-			<span {...stopEvts}>
-				{ isRoot && <span style={labelStyle}>{__( 'Assistant' )}</span> }
+		<span>
+			{ isRoot && <span style={labelStyle}>{__( 'Assistant' )}</span> }
 
-				{ ! isRoot && <>
-					<button onClick={goToRoot} style={{ textDecoration: 'underline' }}>{__( 'Assistant' )}</button>
-					<span style={iconWrapStyle}><Icon.BreadcrumbArrow /></span>
-					<span style={labelStyle}>{label}</span>
-				</> }
-			</span>
-		</>
+			{ ! isRoot && <>
+				<button onClick={goToRoot} style={{ textDecoration: 'underline' }}>{__( 'Assistant' )}</button>
+				<span style={iconWrapStyle}><Icon.BreadcrumbArrow /></span>
+				<span style={labelStyle}>{label}</span>
+			</> }
+		</span>
 	)
 }

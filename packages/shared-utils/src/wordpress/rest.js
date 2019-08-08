@@ -2,7 +2,7 @@ import Promise from 'promise'
 import localforage from 'localforage'
 import {setup} from 'axios-cache-adapter'
 
-const {apiRoot, nonce} = FL_ASSISTANT_CONFIG
+const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 
 
 /**
@@ -25,7 +25,7 @@ const http = setup({
         // Set cache timeout - 15 minutes
         maxAge: 15 * 60 * 1000,
         // DO NOT exclude cache requests with query params.
-        exclude: {query: false},
+        exclude: { query: false },
         // Setup localForage store.
         store: localforage.createInstance({
             // Attempt IndexDB then fall back to LocalStorage
