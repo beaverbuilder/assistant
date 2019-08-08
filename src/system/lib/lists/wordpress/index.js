@@ -42,7 +42,7 @@ export const WordPress = ( {
 					...defaultProps,
 					to: {
 						pathname: `/${handle}/${type}/${item.id}`,
-						state: item
+						state: { item }
 					},
 				} )
 			}}
