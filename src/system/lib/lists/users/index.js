@@ -11,8 +11,12 @@ export const Users = ( {
 			type={ 'users' }
 			query={ query }
 			getItemProps={ ( item, defaultProps ) => {
+				console.log(item)
 				return getItemProps( item, {
 					...defaultProps,
+					thumbnail: item.thumbnail,
+					label: item.title,
+					description: item.meta,
 				} )
 			}}
 			{ ...rest }
