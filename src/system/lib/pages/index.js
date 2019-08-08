@@ -15,7 +15,7 @@ export const Page = ( {
 	shouldShowHeader = true,
 	shouldPadTop = false,
 	shouldPadSides = true,
-	shouldPadBottom = true,
+	shouldPadBottom = false,
 	title,
 	headerActions,
 	toolbar,
