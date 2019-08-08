@@ -22,7 +22,7 @@ export const Attachment = ( { location } ) => {
 	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	const srcSet = getSrcSet( item.sizes )
 
-    const onFormChange = values => {}
+	const onFormChange = values => {}
 
 	const [ values, setValue ] = Form.useFormState( {
 		title: item.title,

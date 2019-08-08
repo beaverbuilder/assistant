@@ -20,11 +20,11 @@ const Main = ( { match } ) => {
 
 	useLayoutEffect( () => {
 		getWpRest()
-			.getPagedContent('attachments', query, 0)
-			.then(response => {
-				setImages(response.data.items)
-				setHasMore(response.data.has_more)
-			})
+			.getPagedContent( 'attachments', query, 0 )
+			.then( response => {
+				setImages( response.data.items )
+				setHasMore( response.data.has_more )
+			} )
 	}, [] )
 
 	return (
