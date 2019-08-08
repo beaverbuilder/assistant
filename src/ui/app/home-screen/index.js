@@ -1,23 +1,31 @@
 import React from 'fl-react'
 import { __ } from 'assistant/i18n'
-import { useSystemState } from 'assistant/data'
+import { useSystemState, getSystemConfig } from 'assistant/data'
 import { Page, Nav } from 'assistant/ui'
-import { react as reactUtils } from 'assistant/utils'
-const { useInitialFocus } = reactUtils
+import { useInitialFocus } from 'assistant/utils/react'
+import './style.scss'
 
 export const HomeScreen = () => {
-	const { apps, appOrder } = useSystemState()
+	const { apps, appOrder, window } = useSystemState()
 	const focusRef = useInitialFocus()
 	let didSetFocusRef = false
 
 	return (
 		<Page shouldPadTop={true} shouldPadSides={false} shouldShowHeader={false}>
 
-			<Page.Toolbar>
+			<Page.Toolbar style={{ paddingBottom: 'var(--fl-asst-outer-space)'}}>
 				<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
 			</Page.Toolbar>
 
-			<div className="app-grid">
+			<hr className="fl-asst-shortie-divider" />
+
+			<Page.Pad>
+				<CurrentlyViewing />
+			</Page.Pad>
+
+			<hr className="fl-asst-shortie-divider" />
+
+			<div className="fl-asst-app-grid">
 				{ appOrder.map( ( handle, i ) => {
 					const app = apps[handle]
 
@@ -42,10 +50,18 @@ export const HomeScreen = () => {
 						didSetFocusRef = true
 					}
 
+					const size = 'mini' === window.size ? 50 : 60
+					const iconProps = {
+						width: size,
+						height: size,
+						windowSize: window.size,
+						context: 'app-list',
+					}
+
 					return (
-						<Nav.Link to={location} className="app-grid-item" key={i} innerRef={ref}>
+						<Nav.Link to={location} className="fl-asst-app-grid-item" key={i} innerRef={ref}>
 							<div className="fl-asst-app-icon" style={style}>
-								{ 'function' === typeof app.icon && app.icon( {} ) }
+								{ 'function' === typeof app.icon && app.icon( iconProps ) }
 							</div>
 							<label>{app.label}</label>
 						</Nav.Link>
@@ -53,5 +69,17 @@ export const HomeScreen = () => {
 				} )}
 			</div>
 		</Page>
+	)
+}
+
+const CurrentlyViewing = () => {
+	const { currentPageView } = getSystemConfig()
+	const { name, intro } = currentPageView
+
+	return (
+		<div className="fl-asst-currently-viewing-summary">
+			<div className="fl-asst-pretitle">{intro}</div>
+			<div className="fl-asst-title">{name}</div>
+		</div>
 	)
 }

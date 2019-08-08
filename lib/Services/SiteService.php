@@ -36,82 +36,91 @@ class SiteService {
 		$obj                    = get_queried_object();
 		$data['queried_object'] = $obj;
 
-		if ( is_404() ) {
-			$name = __( 'Page Not Found (404)', 'fl-assistant' );
+		if ( is_admin() ) {
+			$intro = __( 'Currently Viewing Admin Page', 'fl-assistant' );
+			$screen = get_current_screen();
+			$name = $screen->id;
+		} else {
 
-		} elseif ( is_search() ) {
+			if ( is_404() ) {
+				$name = __( 'Page Not Found (404)', 'fl-assistant' );
 
-			$intro = __( 'Currently Viewing Search Results For', 'fl-assistant' );
-			$name  = get_search_query();
+			} elseif ( is_search() ) {
 
-		} elseif ( is_date() ) {
+				$intro = __( 'Currently Viewing Search Results For', 'fl-assistant' );
+				$name  = get_search_query();
 
-			$intro = __( 'Currently Viewing Date Archive', 'fl-assistant' );
-			$name  = get_the_date();
+			} elseif ( is_date() ) {
 
-		} elseif ( is_post_type_archive() ) {
+				$intro = __( 'Currently Viewing Date Archive', 'fl-assistant' );
+				$name  = get_the_date();
 
-			$post_type = get_post_type_object( 'post' );
-			$intro     = __( 'Currently Viewing Post Type Archive', 'fl-assistant' );
-			$name      = $post_type->labels->singular_name;
+			} elseif ( is_post_type_archive() ) {
 
-		} elseif ( is_tax() || is_category() || is_tag() ) {
+				$post_type = get_post_type_object( 'post' );
+				$intro     = __( 'Currently Viewing Post Type Archive', 'fl-assistant' );
+				$name      = $post_type->labels->singular_name;
 
-			$tax    = get_taxonomy( $obj->taxonomy );
-			$labels = $tax->labels;
+			} elseif ( is_tax() || is_category() || is_tag() ) {
 
-			$intro = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $labels->singular_name );
-			$name  = $obj->name;
+				$tax    = get_taxonomy( $obj->taxonomy );
+				$labels = $tax->labels;
 
-			$actions[] = [
-				'label'      => $labels->edit_item,
-				'href'       => get_edit_term_link( $obj->term_id, $obj->taxonomy, null ),
-				'capability' => 'manage_categories',
-			];
+				$intro = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $labels->singular_name );
+				$name  = $obj->name;
 
-		} elseif ( is_singular() || is_attachment() ) {
+				$actions[] = [
+					'label'      => $labels->edit_item,
+					'href'       => get_edit_term_link( $obj->term_id, $obj->taxonomy, null ),
+					'capability' => 'manage_categories',
+				];
 
-			$post_type = get_post_type_object( get_post_type() );
-			$labels    = $post_type->labels;
-			$post_type = $labels->singular_name;
-			$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $post_type );
-			$name      = $obj->post_title;
+			} elseif ( is_singular() || is_attachment() ) {
 
-			if ( is_attachment() ) {
-				$meta = wp_get_attachment_metadata( $obj->ID );
-				$name = basename( $meta['file'] );
-			}
+				$post_type = get_post_type_object( get_post_type() );
+				$labels    = $post_type->labels;
+				$post_type = $labels->singular_name;
+				$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $post_type );
+				$name      = $obj->post_title;
 
-			$actions[] = [
-				'label'      => $labels->edit_item,
-				'href'       => get_edit_post_link( $obj->ID, '' ),
-				'capability' => 'edit_pages',
-			];
-
-			// Add Beaver Builder edit link
-			global $wp_the_query;
-			if ( class_exists( '\FLBuilderModel' ) ) {
-				if ( \FLBuilderModel::is_post_editable() && is_object( $wp_the_query->post ) ) {
-
-					$enabled = get_post_meta( $wp_the_query->post->ID, '_fl_builder_enabled', true );
-
-					$actions[] = [
-						'label'      => \FLBuilderModel::get_branding(),
-						'href'       => \FLBuilderModel::get_edit_url( $wp_the_query->post->ID ),
-						'capability' => 'edit_pages',
-						'isEnabled'  => $enabled,
-					];
+				if ( is_attachment() ) {
+					$meta = wp_get_attachment_metadata( $obj->ID );
+					$name = basename( $meta['file'] );
 				}
+
+				$actions[] = [
+					'label'      => $labels->edit_item,
+					'href'       => get_edit_post_link( $obj->ID, '' ),
+					'capability' => 'edit_pages',
+				];
+
+				// Add Beaver Builder edit link
+				global $wp_the_query;
+				if ( class_exists( '\FLBuilderModel' ) ) {
+					if ( \FLBuilderModel::is_post_editable() && is_object( $wp_the_query->post ) ) {
+
+						$enabled = get_post_meta( $wp_the_query->post->ID, '_fl_builder_enabled', true );
+
+						$actions[] = [
+							'label'      => \FLBuilderModel::get_branding(),
+							'href'       => \FLBuilderModel::get_edit_url( $wp_the_query->post->ID ),
+							'capability' => 'edit_pages',
+							'isEnabled'  => $enabled,
+						];
+					}
+				}
+			} elseif ( is_author() ) {
+
+				$intro = __( 'Currently Viewing Author', 'fl-assistant' );
+				$name  = wp_get_current_user()->display_name;
+
+			} elseif ( is_front_page() ) {
+				$intro = __( 'Currently Viewing Post Archive', 'fl-assistant' );
+				$name  = __( 'Latest Posts', 'fl-assistant' );
 			}
-		} elseif ( is_author() ) {
-
-			$intro = __( 'Currently Viewing Author', 'fl-assistant' );
-			$name  = wp_get_current_user()->display_name;
-
-		} elseif ( is_front_page() ) {
-			$intro = __( 'Currently Viewing Post Archive', 'fl-assistant' );
-			$name  = __( 'Latest Posts', 'fl-assistant' );
 		}
+
+
 
 		$data['intro']   = $intro;
 		$data['name']    = $name;

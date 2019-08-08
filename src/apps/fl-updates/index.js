@@ -5,7 +5,10 @@ import { UpdatesApp } from './app'
 registerApp( 'fl-updates', {
 	label: __( 'Updates' ),
 	root: UpdatesApp,
-
+	icon: UpdatesApp.Icon,
+	accent: {
+		color: '#00D281'
+	},
 	search: {
 		label: __( 'Updates' ),
 		priority: 300,

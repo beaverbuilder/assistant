@@ -24,7 +24,7 @@ export const Comment = ( { location = {} } ) => {
 		url: null,
 	}
 
-	const item = 'undefined' !== typeof location.state ? location.state : defaultItem
+	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	const { content, author } = item
 	const html = { __html: content }
 

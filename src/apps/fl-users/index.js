@@ -5,6 +5,10 @@ import { Users } from './app'
 registerApp( 'fl-users', {
 	label: __( 'Users' ),
 	root: Users,
+	icon: Users.Icon,
+	accent: {
+		color: '#7166EC'
+	},
 	search: {
 		label: __( 'Users' ),
 		priority: 200,
