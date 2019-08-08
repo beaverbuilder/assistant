@@ -52,9 +52,9 @@ const Main = ( { match } ) => {
 	)
 }
 
-MediaApp.Icon = ({ windowSize, context }) => {
+MediaApp.Icon = ( { windowSize, context } ) => {
 	let size = 32
-	if ( context === 'app-list' ) {
+	if ( 'app-list' === context ) {
 		size = 'mini' === windowSize ? 34 : 42
 	}
 	return (

@@ -16,7 +16,7 @@ const Main = () => {
 	)
 }
 
-CommentsApp.Icon = ({ windowSize }) => {
+CommentsApp.Icon = ( { windowSize } ) => {
 	const size = 'mini' === windowSize ? 33 : 42
 	return (
 		<svg width={size} viewBox="0 0 33 32" version="1.1" xmlns="http://www.w3.org/2000/svg">

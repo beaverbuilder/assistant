@@ -40,7 +40,7 @@ export const CloudApp = () => {
 	)
 }
 
-CloudApp.Icon = ({ windowSize }) => {
+CloudApp.Icon = ( { windowSize } ) => {
 	const size = 'mini' === windowSize ? 32 : 45
 	return (
 		<svg width={size} viewBox="0 0 32 20" version="1.1" xmlns="http://www.w3.org/2000/svg">

@@ -16,9 +16,9 @@ const UpdatesMain = () => {
 	)
 }
 
-UpdatesApp.Icon = ({ windowSize, context }) => {
+UpdatesApp.Icon = ( { windowSize, context } ) => {
 	let size = 32
-	if ( context === 'app-list' ) {
+	if ( 'app-list' === context ) {
 		size = 'mini' === windowSize ? 40 : 48
 	}
 	return (
