@@ -11,7 +11,17 @@ export const Users = ( { match } ) => (
 const Main = () => {
 	return (
 		<Page shouldPadSides={false}>
-			<List.Users />
+			<List.Users
+				getItemProps={ ( item, defaultProps ) => {
+					return {
+						...defaultProps,
+						to: {
+							pathname: `/${handle}/user/${item.id}`,
+							state: item
+						},
+					}
+				} }
+			/>
 		</Page>
 	)
 }
