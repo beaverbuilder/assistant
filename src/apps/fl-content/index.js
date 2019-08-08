@@ -5,6 +5,9 @@ import {Content} from './app'
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: Content,
+	accent: {
+		color: '#1BADF8'
+	},
 	state: {
 		query: {
 			order: 'ASC',

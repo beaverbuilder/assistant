@@ -5,6 +5,10 @@ import { CommentsApp } from './app'
 registerApp( 'fl-comments', {
 	label: __( 'Comments' ),
 	root: CommentsApp,
+	icon: CommentsApp.Icon,
+	accent: {
+		color: '#FFCC00'
+	},
 	search: {
 		label: __( 'Comments' ),
 		priority: 300,

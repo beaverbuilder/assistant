@@ -91,47 +91,6 @@ const ScreenCard = forwardRef( ( { className, children, ...rest }, ref ) => {
 	)
 } )
 
-/*
-const CardStack = ( { children, style: passedStyles, ...rest } ) => {
-	const [ cardHeight, setCardHeight ] = useState( 0 )
-	const count = Children.count( children )
-	const offset = 20
-
-	const handleRef = el => {
-		if ( el ) {
-			if ( el.offsetHeight > cardHeight ) {
-				setCardHeight( el.offsetHeight )
-			}
-		}
-	}
-
-	const newChildren = Children.map( children, ( child, i ) => {
-		const reverseIndex = count - ( i + 1 )
-		const topOffset = ( offset / ( count - 1 ) ) * i
-		return cloneElement( child, {
-			ref: handleRef,
-			style: {
-				top: topOffset ? topOffset : 0,
-				transform: `scale(${1 - ( .06 * reverseIndex )})`,
-			}
-		} )
-	} )
-
-	const style = {
-		...passedStyles,
-		position: 'relative',
-		flex: '1 1 auto',
-		display: 'flex',
-		height: 1 < count ? cardHeight + offset : 'auto',
-		maxHeight: '100%',
-	}
-
-	return (
-		<div style={style} {...rest}>{newChildren}</div>
-	)
-}
-*/
-
 const NoApp = () => {
 	return (
 		<Page>
