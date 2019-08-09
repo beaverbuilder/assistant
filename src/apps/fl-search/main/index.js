@@ -37,7 +37,7 @@ export const Main = ( { match } ) => {
 
 			response.data.map( ( result, key ) => {
 				const { label, format } = config[ key ]
-				if ( ! result.items ) {
+				if ( ! result.items || ! result.items.length ) {
 					return
 				}
 				results.push( {
@@ -81,7 +81,11 @@ export const Main = ( { match } ) => {
 				</div>
 			</Page.Toolbar>
 
-			{ '' === keyword &&
+			{ results && ! results.length &&
+				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
+			}
+
+			{ ( '' === keyword || results && ! results.length ) &&
 				<>
 				{ searchHistory.length &&
 					<Page.Pad>
@@ -100,15 +104,11 @@ export const Main = ( { match } ) => {
 				</>
 			}
 
-			{ results && ! results.length &&
-				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
-			}
-
-			{ null !== viewAllKey && results && results.length &&
+			{ null !== viewAllKey && results && !! results.length &&
 				<button onClick={ () => setViewAllKey( null ) }>Go back</button>
 			}
 
-			{ null === viewAllKey && results && results.length &&
+			{ null === viewAllKey && results && !! results.length &&
 				<List
 					items={ results }
 					isListSection={ item => 'undefined' !== typeof item.label }

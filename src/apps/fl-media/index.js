@@ -15,7 +15,7 @@ registerApp( 'fl-media', {
 		priority: 100,
 		route: ( keyword, number, offset ) => {
 			return addQueryArgs( 'fl-assistant/v1/attachments', {
-				search: keyword,
+				s: keyword,
 				posts_per_page: number,
 				offset,
 			} )
