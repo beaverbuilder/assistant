@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React, { Fragment } from 'fl-react'
 import { Nav, Page } from 'assistant/ui'
 import { Main } from './main'
 import { ViewAll } from './view-all'
@@ -14,11 +14,16 @@ export const App = ( { match } ) => {
 			{ config.map( ( { detail }, key ) => {
 				if ( detail ) {
 					return (
-						<Nav.Route
-							key={ key }
-							path={ match.url + addLeadingSlash( detail.path ) }
-							component={ detail.component }
-						/>
+						<Fragment key={ key }>
+							<Nav.Route
+								path={ match.url + addLeadingSlash( detail.path ) }
+								component={ detail.component }
+							/>
+							<Nav.Route
+								path={ `${match.url}/all` + addLeadingSlash( detail.path ) }
+								component={ detail.component }
+							/>
+						</Fragment>
 					)
 				}
 			} ) }

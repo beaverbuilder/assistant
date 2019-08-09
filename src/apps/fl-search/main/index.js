@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { addLeadingSlash } from 'assistant/utils/url'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
-import { Nav, Page, List, Icon, Button } from 'assistant/ui'
+import { Page, List, Icon, Button } from 'assistant/ui'
 import { CancelToken, isCancel } from 'axios'
-import { getRequestConfig } from '../config'
+import { getRequestConfig, getListItemConfig } from '../config'
 import './style.scss'
 
 export const Main = ( { match } ) => {
@@ -15,14 +14,11 @@ export const Main = ( { match } ) => {
 	const { setKeyword } = getAppActions( 'fl-search' )
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
-	const [ viewAllKey, setViewAllKey ] = useState( null )
 	const { config, routes } = getRequestConfig( { keyword } )
 	const wp = getWpRest()
 	let source = CancelToken.source()
 
 	useEffect( () => {
-		const searchRoutes = null === viewAllKey ? routes : [ routes[ viewAllKey ] ]
-
 		if ( '' === keyword ) {
 			setResults( null )
 			return
@@ -33,22 +29,21 @@ export const Main = ( { match } ) => {
 		setLoading( true )
 		setResults( null )
 
-		wp.search( keyword, searchRoutes, {
+		wp.search( keyword, routes, {
 			cancelToken: source.token,
 		} ).then( response => {
 			const results = []
 
 			response.data.map( ( result, key ) => {
 				const { label, format } = config[ key ]
-				const configKey = null === viewAllKey ? key : viewAllKey
 				if ( ! result.items || ! result.items.length ) {
 					return
 				}
 				results.push( {
 					label,
-					configKey,
+					configKey: key,
 					items: format( result.items ).map( item => {
-						return { ...item, configKey }
+						return { ...item, configKey: key }
 					} ),
 				} )
 			} )
@@ -63,10 +58,6 @@ export const Main = ( { match } ) => {
 		} )
 
 		return () => source.cancel()
-	}, [ keyword, viewAllKey ] )
-
-	useEffect( () => {
-		setViewAllKey( null )
 	}, [ keyword ] )
 
 	return (
@@ -111,49 +102,20 @@ export const Main = ( { match } ) => {
 				</>
 			}
 
-			{ null !== viewAllKey && results && !! results.length &&
-				<button onClick={ () => setViewAllKey( null ) }>Go back</button>
-			}
-
 			{ results && !! results.length &&
 				<List
 					items={ results }
 					isListSection={ item => 'undefined' !== typeof item.label }
 					getSectionItems={ section => section.items ? section.items : [] }
 					getItemProps={ ( item, defaultProps, isSection ) => {
-						const { configKey } = item
-						const { detail } = config[ configKey ]
-						let props = { ...defaultProps }
-
-						if ( isSection ) {
-							props.label = item.label
-							if ( null === viewAllKey ) {
-								props.footer = (
-									<button onClick={ () => setViewAllKey( configKey ) }>View All</button>
-								)
-							}
-						} else {
-							props.shouldAlwaysShowThumbnail = true
-
-							if ( 'undefined' !== typeof item.label ) {
-								props.label = item.label
-							} else if ( 'undefined' !== typeof item.title ) {
-								props.label = item.title
-							}
-
-							if ( 'undefined' !== typeof item.thumbnail ) {
-								props.thumbnail = item.thumbnail
-							}
-
-							if ( detail ) {
-								props.to = {
-									pathname: match.url + addLeadingSlash( detail.pathname( item ) ),
-									state: { item },
-								}
-							}
-						}
-
-						return props
+						return getListItemConfig( {
+							item,
+							defaultProps,
+							isSection,
+							keyword,
+							config,
+							match,
+						} )
 					} }
 				/>
 			}
