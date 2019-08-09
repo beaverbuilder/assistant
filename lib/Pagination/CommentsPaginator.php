@@ -4,14 +4,14 @@ namespace FL\Assistant\Pagination;
 
 class CommentsPaginator extends AbstractPaginator {
 
-	public function query( array $args = [], Callable $formatter = null ) {
+	public function query( array $args = [], callable $formatter = null ) {
 		$args['no_found_rows'] = false;
 
-		if(empty($args['offset'])) {
+		if ( empty( $args['offset'] ) ) {
 			$args['offset'] = 0;
 		}
 
-		if(empty($args['number'])) {
+		if ( empty( $args['number'] ) ) {
 			$args['number'] = 5;
 		}
 
@@ -24,15 +24,15 @@ class CommentsPaginator extends AbstractPaginator {
 			$current_page   = ceil( ( $offset + 1 ) / $items_per_page );
 			$last_page      = $query->max_num_pages;
 
-			$this->setItems(array_map( $formatter, $query->get_comments() ))
-				->setItemsCount($query->found_comments)
-				->setItemsPerPage($items_per_page)
-				->setLastPage($last_page)
-				->setCurrentPage($current_page)
-				->setCurrentOffset($offset);
+			$this->setItems( array_map( $formatter, $query->get_comments() ) )
+				->setItemsCount( $query->found_comments )
+				->setItemsPerPage( $items_per_page )
+				->setLastPage( $last_page )
+				->setCurrentPage( $current_page )
+				->setCurrentOffset( $offset );
 
 			if ( $current_page < $last_page ) {
-				$this->setHasMore(true);
+				$this->setHasMore( true );
 			}
 		}
 

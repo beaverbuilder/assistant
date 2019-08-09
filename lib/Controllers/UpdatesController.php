@@ -1,6 +1,7 @@
 <?php
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Pagination\UpdatesPaginator;
 use \WP_REST_Server;
 use \WP_REST_Request;
 use \WP_REST_Response;
@@ -16,17 +17,17 @@ class UpdatesController extends AssistantController {
 		$this->route(
 			'/updates', [
 				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'updates' ],
-					'args'                => [
+					'methods'  => WP_REST_Server::READABLE,
+					'callback' => [ $this, 'updates' ],
+					'args'     => [
 						'type' => [
 							'required' => false,
 							'type'     => 'string',
 						],
 					],
-					'permission_callback' => function() {
-						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
-					},
+					//                  'permission_callback' => function() {
+					//                      return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
+					//                  },
 				],
 			]
 		);
@@ -126,40 +127,31 @@ class UpdatesController extends AssistantController {
 		$type           = $request->get_param( 'type' );
 
 		if ( ! $type || 'all' === $type || 'plugins' === $type ) {
-			if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
-				$plugins = [
-					'label' => __( 'Plugins', 'fl-assistant' ),
-					'items' => [],
-				];
-				foreach ( $update_plugins->response as $key => $update ) {
-					$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
-					if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
-						$plugins['items'][] = $this->get_plugin_response_data( $update, $plugin );
-					}
+			//          if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
+
+			foreach ( $update_plugins->response as $key => $update ) {
+				$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
+				if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
+					$response[] = $this->get_plugin_response_data( $update, $plugin );
 				}
-				$response[] = $plugins;
 			}
+			//          }
 		}
 
 		if ( ! $type || 'all' === $type || 'themes' === $type ) {
-			if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
-				$themes = [
-					'label' => __( 'Themes', 'fl-assistant' ),
-					'items' => [],
-				];
-				foreach ( $update_themes->response as $key => $update ) {
-					$theme = wp_get_theme( $key );
-					if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
-						$themes['items'][] = $this->get_theme_response_data( $update, $theme );
-					}
+			//          if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
+
+			foreach ( $update_themes->response as $key => $update ) {
+				$theme = wp_get_theme( $key );
+				if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
+					$response[] = $this->get_theme_response_data( $update, $theme );
 				}
-				$response[] = $themes;
 			}
+			//          }
 		}
 
-		return rest_ensure_response( array(
-			'items' => $response, // Temp fix until pager is in place.
-		) );
+		$p = new UpdatesPaginator();
+		return rest_ensure_response( $p->paginate( $response )->to_array() );
 	}
 
 	/**

@@ -47,6 +47,7 @@ class SearchController extends AssistantController {
 		foreach ( $requests as $route => $request ) {
 			$response[] = $request['body'];
 		}
+
 		return rest_ensure_response( $response );
 	}
 }

@@ -112,32 +112,20 @@ class AttachmentsController extends AssistantController {
 	 * Returns an array of attachments and related data.
 	 */
 	public function attachments( $request ) {
-		$response = [];
-		$params   = $request->get_params();
-//		$attachments = get_posts(
-//			array_merge(
-//				$params, [
-//					'perm'      => 'editable',
-//					'post_type' => 'attachment',
-//				]
-//			)
-//		);
+		$paginator = new PostsPaginator();
 
 		$args = array_merge(
-			$params, [
-				'perm'      => 'editable',
-				'post_type' => 'attachment',
+			$request->get_params(),
+			[
+				// attachments have an empty post status.
+				// removing this arg will give empty results
+				'post_status' => 'any',
+				'perm'        => 'editable',
+				'post_type'   => 'attachment',
 			]
 		);
 
-		$paginator = new PostsPaginator();
-		$pager     = $paginator->query( $args, [ $this, 'get_attachment_response_data' ] );
-
-//		foreach ( $attachments as $attachment ) {
-//			if ( current_user_can( 'edit_post', $attachment->ID ) ) {
-//				$response[] = $this->get_attachment_response_data( $attachment );
-//			}
-//		}
+		$pager = $paginator->query( $args, [ $this, 'get_attachment_response_data' ] );
 
 		return rest_ensure_response( $pager->to_array() );
 	}

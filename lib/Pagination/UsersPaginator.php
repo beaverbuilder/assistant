@@ -18,22 +18,30 @@ class UsersPaginator extends AbstractPaginator {
 
 		if ( ! empty( $query->get_results() ) ) {
 
-			$offset         = $query->get( 'offset' );
 			$items_per_page = $query->get( 'number' );
-			$items_count    = $query->get_total();
-			$current_page   = ceil( ( $offset + 1 ) / $items_per_page );
-			$last_page      = ceil( $items_count / $items_per_page );
+			if ( empty( $items_per_page ) ) {
+				$items_per_page = $query->get_total();
+			}
 
-			$this->setItems( array_map($formatter, $query->get_results() ))
-			     ->setItemsPerPage( $items_per_page )
-			     ->setItemsCount( $query->get_total() )
-			     ->setLastPage( $last_page )
-			     ->setCurrentOffset( $offset )
-			     ->setCurrentPage( $current_page );
+			$offset = $query->get( 'offset' );
+			if ( empty( $offset ) ) {
+				$offset = 0;
+			}
 
-				if ( $this->getCurrentPage() < $this->getLastPage() ) {
-					$this->setHasMore( true );
-				}
+			$items_count  = $query->get_total();
+			$current_page = ceil( ( $offset + 1 ) / $items_per_page );
+			$last_page    = ceil( $items_count / $items_per_page );
+
+			$this->setItems( array_map( $formatter, $query->get_results() ) )
+				 ->setItemsPerPage( $items_per_page )
+				 ->setItemsCount( $query->get_total() )
+				 ->setLastPage( $last_page )
+				 ->setCurrentOffset( $offset )
+				 ->setCurrentPage( $current_page );
+
+			if ( $this->getCurrentPage() < $this->getLastPage() ) {
+				$this->setHasMore( true );
+			}
 		}
 
 		return $this;

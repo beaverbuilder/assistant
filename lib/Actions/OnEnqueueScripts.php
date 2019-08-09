@@ -25,13 +25,13 @@ class OnEnqueueScripts {
 		return [
 			'appOrder'           => $user_state['appOrder'],
 			'counts'             => $this->get_counts(),
-			'shouldReduceMotion' => false /* Disabled */,
+			'shouldReduceMotion' => false, /* Disabled */
 
 			/* New UI Props */
 			'appearance'         => $user_state['appearance'],
 			'history'            => $user_state['history'],
 			'searchHistory'      => $user_state['searchHistory'],
-			'shouldShowLabels'   => false /* Disabled */,
+			'shouldShowLabels'   => false, /* Disabled */
 			'window'             => $user_state['window'],
 		];
 	}
@@ -54,16 +54,16 @@ class OnEnqueueScripts {
 		$current_user = $user_data->current();
 
 		return [
-			'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
-			'apiRoot'         => esc_url_raw( get_rest_url() ),
-			'cloudUrl'        => FL_ASSISTANT_CLOUD_URL,
-			'contentTypes'    => $post_data->get_types(),
-			'contentStatus'   => $post_data->get_stati(),
-			'currentPageView' => $site_data->get_current_view(),
-			'currentUser'     => $current_user->to_array(),
-			'adminURLs'       => $site_data->get_admin_urls(),
-			'defaultAppName'  => 'fl-dashboard',
-			'nonce'           => [
+			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
+			'apiRoot'           => esc_url_raw( get_rest_url() ),
+			'cloudUrl'          => FL_ASSISTANT_CLOUD_URL,
+			'contentTypes'      => $post_data->get_types(),
+			'contentStatus'     => $post_data->get_stati(),
+			'currentPageView'   => $site_data->get_current_view(),
+			'currentUser'       => $current_user->to_array(),
+			'adminURLs'         => $site_data->get_admin_urls(),
+			'defaultAppName'    => 'fl-dashboard',
+			'nonce'             => [
 				'api'             => wp_create_nonce( 'wp_rest' ),
 				'reply'           => wp_create_nonce( 'replyto-comment' ),
 				'replyUnfiltered' => wp_create_nonce( 'unfiltered-html-comment' ),
@@ -73,7 +73,7 @@ class OnEnqueueScripts {
 			'taxonomies'        => $post_data->get_taxononies(),
 			'userRoles'         => $user_data->get_roles(),
 			'isShowingAdminBar' => is_admin_bar_showing(),
-			'isAdmin' 			=> is_admin(),
+			'isAdmin'           => is_admin(),
 		];
 	}
 
