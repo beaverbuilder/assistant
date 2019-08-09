@@ -14,7 +14,7 @@ registerApp( 'fl-media', {
 		priority: 100,
 		route: keyword => {
 			return addQueryArgs( 'fl-assistant/v1/attachments', {
-				s: keyword,
+				search: keyword,
 			} )
 		},
 	},

@@ -32,7 +32,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 		return $this;
 	}
 
-	abstract public function query( array $args = [], Callable $formatter = null );
+	abstract public function query( array $args = [], callable $formatter = null );
 
 	/**
 	 * @return array
@@ -155,7 +155,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 * @return AbstractPaginator
 	 */
 	public function setCurrentOffset( $current_offset ) {
-		$this->current_offset = $current_offset;
+		$this->current_offset = intval( $current_offset );
 
 		return $this;
 	}
@@ -175,13 +175,13 @@ abstract class AbstractPaginator implements \JsonSerializable {
 
 	public function to_array() {
 		return [
-			'items' => $this->getItems(),
-			'items_count' => $this->getItemsCount(),
+			'items'          => $this->getItems(),
+			'items_count'    => $this->getItemsCount(),
 			'items_per_page' => $this->getItemsPerPage(),
-			'current_page' => $this->getCurrentPage(),
+			'current_page'   => $this->getCurrentPage(),
 			'current_offset' => $this->getCurrentOffset(),
-			'first_page' => $this->getFirstPage(),
-			'last_page' => $this->getLastPage()
+			'first_page'     => $this->getFirstPage(),
+			'last_page'      => $this->getLastPage(),
 		];
 	}
 }

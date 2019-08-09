@@ -9,6 +9,7 @@
 
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.WhiteSpace.PrecisionAlignment"/>
 
 	</rule>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />

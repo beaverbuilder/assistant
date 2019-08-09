@@ -16,11 +16,13 @@ class PostService {
 
 		$p = new PostsPaginator();
 
-		return $p->query($args, function(\WP_Post $post) {
-			$postEntity = new Post();
-			$postEntity->fill($postEntity->hydrate($post));
-			return $postEntity->to_array();
-		});
+		return $p->query(
+			$args, function( \WP_Post $post ) {
+				$p = new Post();
+				$p->fill( $p->hydrate( $post ) );
+				return $p->to_array();
+			}
+		);
 	}
 
 	/**

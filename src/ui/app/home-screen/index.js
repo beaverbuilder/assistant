@@ -81,11 +81,11 @@ const CurrentlyViewing = () => {
 			<div className="fl-asst-title">{name}</div>
 
 			{ actions && 0 < actions.length &&
-			<Page.Toolbar style={{ marginTop: 'var(--fl-asst-small-space)', padding: 0 }}>
+			<Page.Toolbar style={ { marginTop: 'var(--fl-asst-small-space)', padding: 0 } }>
 				{ actions && 0 < actions.length && actions.map( ( item, i ) => {
 					const { label, href } = item
 					return (
-						<Button key={i} href={href}>{label}</Button>
+						<Button key={ i } href={ href }>{label}</Button>
 					)
 				} )}
 			</Page.Toolbar> }

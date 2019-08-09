@@ -9,7 +9,7 @@ use FL\Assistant\Util\HasEntityAttributes;
 class Post {
 	use HasEntityAttributes;
 
-	public function hydrate(\WP_Post $post) {
+	public function hydrate( \WP_Post $post ) {
 		$author   = get_the_author_meta( 'display_name', $post->post_author );
 		$date     = get_the_date( '', $post );
 		$response = [
@@ -39,13 +39,13 @@ class Post {
 		}
 
 		// Beaver Builder data.
-//		if ( class_exists( '\FLBuilderModel' ) ) {
-//
-//			$response['bbCanEdit']   = $this->container()->service( 'site' )->bb_can_edit_post( $post->ID );
-//			$response['bbIsEnabled'] = \FLBuilderModel::is_builder_enabled( $post->ID );
-//			$response['bbBranding']  = \FLBuilderModel::get_branding();
-//			$response['bbEditUrl']   = \FLBuilderModel::get_edit_url( $post->ID );
-//		}
+		//      if ( class_exists( '\FLBuilderModel' ) ) {
+		//
+		//          $response['bbCanEdit']   = $this->container()->service( 'site' )->bb_can_edit_post( $post->ID );
+		//          $response['bbIsEnabled'] = \FLBuilderModel::is_builder_enabled( $post->ID );
+		//          $response['bbBranding']  = \FLBuilderModel::get_branding();
+		//          $response['bbEditUrl']   = \FLBuilderModel::get_edit_url( $post->ID );
+		//      }
 
 		return $response;
 	}

@@ -86,15 +86,16 @@ final class UsersController extends AssistantController {
 	 */
 	public function users( \WP_REST_Request $request ) {
 
-		$params   = $request->get_params();
-
 		$paginator = new UsersPaginator();
-		$pager = $paginator->query($params, function($user) {
-			$u = new User();
-			return $u->hydrate($user);
-		});
+		$pager = $paginator->query(
+			$request->get_params(), function( $user ) {
+				$u = new User();
+				$u->fill( $u->hydrate( $user ) );
+				return $u->to_array();
+			}
+		);
 
-		return rest_ensure_response( $pager );
+		return rest_ensure_response( $pager->to_array() );
 	}
 
 	/**
