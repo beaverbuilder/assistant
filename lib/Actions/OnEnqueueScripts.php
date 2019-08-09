@@ -25,13 +25,13 @@ class OnEnqueueScripts {
 		return [
 			'appOrder'           => $user_state['appOrder'],
 			'counts'             => $this->get_counts(),
-			'shouldReduceMotion' => $user_state['shouldReduceMotion'],
+			'shouldReduceMotion' => false /* Disabled */,
 
 			/* New UI Props */
 			'appearance'         => $user_state['appearance'],
 			'history'            => $user_state['history'],
 			'searchHistory'      => $user_state['searchHistory'],
-			'shouldShowLabels'   => $user_state['shouldShowLabels'],
+			'shouldShowLabels'   => false /* Disabled */,
 			'window'             => $user_state['window'],
 		];
 	}
@@ -69,9 +69,11 @@ class OnEnqueueScripts {
 				'replyUnfiltered' => wp_create_nonce( 'unfiltered-html-comment' ),
 				'updates'         => wp_create_nonce( 'updates' ),
 			],
-			'pluginURL'       => FL_ASSISTANT_URL,
-			'taxonomies'      => $post_data->get_taxononies(),
-			'userRoles'       => $user_data->get_roles(),
+			'pluginURL'         => FL_ASSISTANT_URL,
+			'taxonomies'        => $post_data->get_taxononies(),
+			'userRoles'         => $user_data->get_roles(),
+			'isShowingAdminBar' => is_admin_bar_showing(),
+			'isAdmin' 			=> is_admin(),
 		];
 	}
 

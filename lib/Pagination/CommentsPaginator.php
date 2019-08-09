@@ -1,12 +1,10 @@
 <?php
 
-
 namespace FL\Assistant\Pagination;
-
 
 class CommentsPaginator extends AbstractPaginator {
 
-	public function query( array $args = [], Callable $mapper = null ) {
+	public function query( array $args = [], Callable $formatter = null ) {
 		$args['no_found_rows'] = false;
 
 		if(empty($args['offset'])) {
@@ -19,7 +17,6 @@ class CommentsPaginator extends AbstractPaginator {
 
 		$query = new \WP_Comment_Query( $args );
 
-		$pager = [];
 		if ( $query->found_comments > 0 ) {
 
 			$offset         = intval( $query->query_vars['offset'] );
@@ -27,18 +24,17 @@ class CommentsPaginator extends AbstractPaginator {
 			$current_page   = ceil( ( $offset + 1 ) / $items_per_page );
 			$last_page      = $query->max_num_pages;
 
-			$pager['items']          = array_map( $mapper, $query->get_comments() );
-			$pager['items_count']    = $query->found_comments;
-			$pager['last_page']      = $last_page;
-			$pager['current_page']   = $current_page;
-			$pager['current_offset'] = $offset;
+			$this->setItems(array_map( $formatter, $query->get_comments() ))
+				->setItemsCount($query->found_comments)
+				->setItemsPerPage($items_per_page)
+				->setLastPage($last_page)
+				->setCurrentPage($current_page)
+				->setCurrentOffset($offset);
 
 			if ( $current_page < $last_page ) {
-				$pager['has_more'] = true;
+				$this->setHasMore(true);
 			}
 		}
-
-		$this->pagerData = array_merge( $this->pagerData, $pager );
 
 		return $this;
 

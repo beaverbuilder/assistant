@@ -3,51 +3,164 @@
 
 namespace FL\Assistant\Pagination;
 
+abstract class AbstractPaginator implements \JsonSerializable {
 
-abstract class AbstractPaginator implements PaginatorInterface, \JsonSerializable {
+	protected $items = [];
+	protected $items_count = 0;
+	protected $items_per_page = 20;
+	protected $first_page = 1;
+	protected $last_page = 1;
+	protected $current_page = 1;
+	protected $current_offset = 0;
+	protected $has_more = false;
 
-	protected $pagerData = [
-		"has_more"       => false,
-		"items"          => [],
-		"items_count"    => 0,
-		"items_per_page" => 20,
-		"first_page"     => 1,
-		"last_page"      => 1,
-		"current_page"   => 1,
-		"current_offset" => 0,
-	];
-
-	public function items() {
-		return $this->pagerData['items'];
+	/**
+	 * @return bool
+	 */
+	public function hasMore() {
+		return $this->has_more;
 	}
 
-	public function items_count() {
-		return $this->pagerData['items_count'];
+	/**
+	 * @param bool $has_more
+	 *
+	 * @return AbstractPaginator
+	 */
+	public function setHasMore( $has_more ) {
+		$this->has_more = $has_more;
+
+		return $this;
 	}
 
-	public function items_per_page() {
-		return $this->pagerData['items_perge_page'];
+	abstract public function query( array $args = [], Callable $formatter = null );
+
+	/**
+	 * @return array
+	 */
+	public function getItems() {
+		return $this->items;
 	}
 
-	public function first_page() {
-		return $this->pagerData['first_page'];
+	/**
+	 * @param array $items
+	 *
+	 * @return AbstractPaginator
+	 */
+	public function setItems( $items ) {
+		$this->items = $items;
+
+		return $this;
 	}
 
-	public function last_page() {
-		return $this->pagerData['last_page'];
+	/**
+	 * @return int
+	 */
+	public function getItemsCount() {
+		return $this->items_count;
 	}
 
-	public function total_pages() {
-		return $this->pagerData['total_pages'];
+	/**
+	 * @param int $items_count
+	 *
+	 * @return AbstractPaginator
+	 */
+	public function setItemsCount( $items_count ) {
+		$this->items_count = $items_count;
+
+		return $this;
 	}
 
-	public function current_page() {
-		return $this->pagerData['current_page'];
+	/**
+	 * @return int
+	 */
+	public function getItemsPerPage() {
+		return $this->items_per_page;
 	}
 
-	public function current_offset() {
-		return $this->pagerData['current_offset'];
+	/**
+	 * @param int $items_per_page
+	 *
+	 * @return AbstractPaginator
+	 */
+	public function setItemsPerPage( $items_per_page ) {
+		$this->items_per_page = $items_per_page;
+
+		return $this;
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getFirstPage() {
+		return $this->first_page;
+	}
+
+	/**
+	 * @param int $first_page
+	 *
+	 * @return AbstractPaginator
+	 */
+	public function setFirstPage( $first_page ) {
+		$this->first_page = $first_page;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLastPage() {
+		return $this->last_page;
+	}
+
+	/**
+	 * @param int $last_page
+	 *
+	 * @return AbstractPaginator
+	 */
+	public function setLastPage( $last_page ) {
+		$this->last_page = $last_page;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCurrentPage() {
+		return $this->current_page;
+	}
+
+	/**
+	 * @param int $current_page
+	 *
+	 * @return AbstractPaginator
+	 */
+	public function setCurrentPage( $current_page ) {
+		$this->current_page = $current_page;
+
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCurrentOffset() {
+		return $this->current_offset;
+	}
+
+	/**
+	 * @param int $current_offset
+	 *
+	 * @return AbstractPaginator
+	 */
+	public function setCurrentOffset( $current_offset ) {
+		$this->current_offset = $current_offset;
+
+		return $this;
+	}
+
+
 
 	/**
 	 * Specify data which should be serialized to JSON
@@ -57,10 +170,18 @@ abstract class AbstractPaginator implements PaginatorInterface, \JsonSerializabl
 	 * @since 5.4.0
 	 */
 	public function jsonSerialize() {
-		return $this->pagerData;
+		return $this->to_array();
 	}
 
 	public function to_array() {
-		return $this->pagerData;
+		return [
+			'items' => $this->getItems(),
+			'items_count' => $this->getItemsCount(),
+			'items_per_page' => $this->getItemsPerPage(),
+			'current_page' => $this->getCurrentPage(),
+			'current_offset' => $this->getCurrentOffset(),
+			'first_page' => $this->getFirstPage(),
+			'last_page' => $this->getLastPage()
+		];
 	}
 }

@@ -1,7 +1,6 @@
 .fl-asst {
     .fl-asst-window {
         --fl-asst-window-size: 360px;
-        --fl-asst-admin-bar-height: 32px;
         --fl-asst-window-toolbar-height: 38px;
 
         box-sizing: border-box;
@@ -115,8 +114,8 @@
 
         background-color: transparent;
         box-shadow: inset 0px 0px 0px 0px white;
-        transition-property: box-shadow;
-        transition-duration: .15s;
+        transition-property: box-shadow, background-color;
+        transition-duration: .3s;
 
         user-select: none;
         touch-action: none;
@@ -125,32 +124,44 @@
         &.fl-asst-window-layer-is-dragging {
             pointer-events: auto;
             box-shadow: inset 0px 0px 0px 4px #16D4F3;
-            background-color: hsla(188, 89%, 52%, .1);
-
+            background-color: hsla(188, 89%, 52%, .15);
 
             &:after {
                 content: '';
                 pointer-events: none;
-                display: block;
                 position: absolute;
-                top: calc( 15px + var(--fl-asst-admin-bar-height) );
+                top: 15px;
                 left:15px;
                 width: 60px;
                 height: 60px;
                 background: #16D4F3;
-                border-radius: var(--fl-asst-base-radius);
+                border-radius: 15px;
                 z-index: -1;
             }
+            &.fl-asst-window-layer-origin-top-left:after {
+                display: block;
+
+                body.admin-bar & {
+                    top: calc( 15px + var(--fl-asst-admin-bar-height) );
+                }
+            }
             &.fl-asst-window-layer-origin-top-right:after {
+                display: block;
                 left: auto;
                 right: 15px;
+
+                body.admin-bar & {
+                    top: calc( 15px + var(--fl-asst-admin-bar-height) );
+                }
             }
             &.fl-asst-window-layer-origin-bottom-left:after {
+                display: block;
                 top: auto;
                 bottom: 15px;
                 left: 15px;
             }
             &.fl-asst-window-layer-origin-bottom-right:after {
+                display: block;
                 top: auto;
                 bottom: 15px;
                 left: auto;

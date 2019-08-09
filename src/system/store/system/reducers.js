@@ -90,15 +90,6 @@ export const counts = ( state = {}, action ) => {
 	}
 }
 
-export const shouldReduceMotion = ( state = false, action ) => {
-	switch ( action.type ) {
-	case 'SET_SHOULD_REDUCE_MOTION':
-		return action.shouldReduce ? true : false
-	default:
-		return state ? true : false
-	}
-}
-
 
 // New UI
 const windowDefaults = {
@@ -138,7 +129,7 @@ export const appearance = ( state = defaultAppearance, action ) => {
 export const shouldShowLabels = ( state = true, action ) => {
 	switch ( action.type ) {
 	case 'SET_SHOULD_SHOW_LABELS':
-		return action.show ? true : false
+		return false /* Temporarily Disable */
 	default:
 		return state ? true : false
 	}
@@ -203,3 +194,5 @@ export const currentUser = ( state = null, action ) => {
 		return state
 	}
 }
+
+export const shouldReduceMotion = () => false

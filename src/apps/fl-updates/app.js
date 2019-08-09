@@ -17,7 +17,7 @@ const UpdatesMain = () => {
 					...defaultProps,
 					to: {
 						pathname: `/${handle}/update/${item.key}`,
-						state: item
+						state: { item }
 					},
 				} ) }
 			/>

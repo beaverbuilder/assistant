@@ -51,6 +51,7 @@ export const after = {
 				store.dispatch( setIsCloudConnected( false ) )
 			} )
 	},
+
 	ATTEMPT_LOGOUT: ( action, store ) => {
 		cloud.auth.logout().then( () => {
 			store.dispatch( setCloudToken( {} ) )
@@ -58,22 +59,19 @@ export const after = {
 			store.dispatch( setIsCloudConnected( false ) )
 		} )
 	},
+
 	SET_CLOUD_TOKEN: ( action, store ) => {
 		const token = store.getState().cloudToken
 		if ( cloud.session.isValidToken( token ) ) {
 			store.dispatch( fetchCurrentUser() )
 		}
 	},
+
 	FETCH_CURRENT_USER: ( action, store ) => {
 		cloud.auth.fetchCurrentUser()
 			.then( ( user ) => {
 				store.dispatch( setCurrentUser( user ) )
 			} )
-	},
-
-	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
-		const { shouldReduceMotion } = store.getState()
-		wpapi.users().updateState( { shouldReduceMotion } )
 	},
 
 	SET_APP_POSITION: ( action, store ) => {

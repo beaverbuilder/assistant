@@ -56,7 +56,7 @@ const Main = ( { match } ) => {
 					...defaultProps,
 					to: {
 						pathname: `/${handle}/post/${item.id}`,
-						state: item
+						state: { item }
 					},
 				} ) }
 			/>

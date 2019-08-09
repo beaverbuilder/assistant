@@ -120,8 +120,6 @@ class SiteService {
 			}
 		}
 
-
-
 		$data['intro']   = $intro;
 		$data['name']    = $name;
 		$data['actions'] = static::filter_actions_by_capability( $actions );

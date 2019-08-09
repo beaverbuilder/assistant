@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { Icon, Nav } from 'lib'
-import { useSystemState, getSystemActions } from 'store'
+import { useSystemState, getSystemActions, getSystemConfig } from 'store'
 import './style.scss'
 
 const transition = {
@@ -13,6 +13,10 @@ const transition = {
 
 const adminBarSize = () => {
 	const mobile = window.matchMedia( 'screen and (max-width: 782px)' )
+	const { isShowingAdminBar, isAdmin } = getSystemConfig()
+
+	if ( !isShowingAdminBar && !isAdmin ) return 0
+
 	if ( mobile.matches ) {
 		return 46
 	}
@@ -117,7 +121,7 @@ const WindowLayer = ( {
 	const [ isDragging, setIsDragging ] = useState( false )
 	const [ initialPos, setInitialPos ] = useState( { x: null, y: null } )
 	const [ currentPos, setCurrentPos ] = useState( { x: null, y: null } )
-	const [ currentOrigin, setCurrentOrigin ] = useState( [ 0, 0 ] ) // Tracks the origin while dragging
+	const [ currentOrigin, setCurrentOrigin ] = useState( position ) // Tracks the origin while dragging
 	const [ offset, setOffset ] = useState( { x: 0, y: 0 } )
 
 	const dragStart = e => {
@@ -250,7 +254,7 @@ const WindowLayer = ( {
 	}
 
 	return (
-		<div id="canvas" { ...props }>
+		<div id="fl-asst-canvas" { ...props }>
 			<div className="fl-asst-window-positioner" ref={ posRef } style={ positionerStyles }>{children}</div>
 		</div>
 	)

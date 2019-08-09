@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { useSystemState, getSystemConfig } from 'assistant/data'
-import { Page, Nav } from 'assistant/ui'
+import { Page, Nav, Button } from 'assistant/ui'
 import { useInitialFocus } from 'assistant/utils/react'
 import './style.scss'
 
@@ -17,13 +17,13 @@ export const HomeScreen = () => {
 				<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
 			</Page.Toolbar>
 
-			<hr className="fl-asst-shortie-divider" />
+			<hr />
 
 			<Page.Pad>
 				<CurrentlyViewing />
 			</Page.Pad>
 
-			<hr className="fl-asst-shortie-divider" />
+			<hr />
 
 			<div className="fl-asst-app-grid">
 				{ appOrder.map( ( handle, i ) => {
@@ -74,12 +74,21 @@ export const HomeScreen = () => {
 
 const CurrentlyViewing = () => {
 	const { currentPageView } = getSystemConfig()
-	const { name, intro } = currentPageView
-
+	const { name, intro, actions } = currentPageView
 	return (
 		<div className="fl-asst-currently-viewing-summary">
 			<div className="fl-asst-pretitle">{intro}</div>
 			<div className="fl-asst-title">{name}</div>
+
+			{ actions && 0 < actions.length &&
+			<Page.Toolbar style={{ marginTop: 'var(--fl-asst-small-space)', padding: 0 }}>
+				{ actions && 0 < actions.length && actions.map( ( item, i ) => {
+					const { label, href } = item
+					return (
+						<Button key={i} href={href}>{label}</Button>
+					)
+				} )}
+			</Page.Toolbar> }
 		</div>
 	)
 }

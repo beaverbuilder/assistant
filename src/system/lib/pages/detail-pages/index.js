@@ -52,7 +52,7 @@ export const Update = ( { location = {} } ) => {
 		version: null,
 	}
 
-	const item = 'undefined' !== typeof location.state ? location.state : defaultItem
+	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 
 	const { type, banner, title, content } = item
 
@@ -71,7 +71,10 @@ export const Update = ( { location = {} } ) => {
 	)
 }
 
-export const User = () => {
+export const User = ( { location } ) => {
+	const defaultItem = {}
+	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
+	console.log( 'user', item )
 	return (
 		<Page>
 			<h1>I am an User</h1>

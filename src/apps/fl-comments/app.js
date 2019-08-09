@@ -17,7 +17,7 @@ const Main = () => {
 					...defaultProps,
 					to: {
 						pathname: `/${handle}/comment/${item.id}`,
-						state: item
+						state: { item }
 					},
 				} ) }
 			/>

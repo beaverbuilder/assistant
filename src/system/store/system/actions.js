@@ -1,10 +1,3 @@
-export const setShouldReduceMotion = shouldReduce => {
-	return {
-		type: 'SET_SHOULD_REDUCE_MOTION',
-		shouldReduce,
-	}
-}
-
 export const registerApp = ( key, config ) => {
 	return {
 		type: 'REGISTER_APP',
@@ -134,4 +127,3 @@ export const attemptLogout = () => {
 		type: 'ATTEMPT_LOGOUT'
 	}
 }
-
