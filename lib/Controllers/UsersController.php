@@ -90,8 +90,8 @@ final class UsersController extends AssistantController {
 
 		$paginator = new UsersPaginator();
 		$pager = $paginator->query($params, function($user) {
-			$e = new User();
-			return $e->hydrate($user);
+			$u = new User();
+			return $u->hydrate($user);
 		});
 
 		return rest_ensure_response( $pager );
