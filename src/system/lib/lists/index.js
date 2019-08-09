@@ -62,6 +62,7 @@ export const List = ( {
 				return (
 					<Section { ...sectionProps }>
 						{ sectionItems && <List items={ sectionItems } { ...subListProps }  /> }
+						{ sectionProps.footer ? sectionProps.footer : null }
 					</Section>
 				)
 			} else {

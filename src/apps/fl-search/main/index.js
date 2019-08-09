@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
-import { Page, List, Icon, Button } from 'assistant/ui'
+import { Nav, Page, List, Icon, Button } from 'assistant/ui'
 import { CancelToken, isCancel } from 'axios'
 import { getRequestConfig } from '../config'
 import './style.scss'
@@ -32,26 +32,33 @@ export const Main = ( { match } ) => {
 		wp.search( keyword, routes, {
 			cancelToken: source.token,
 		} ).then( response => {
-			const newResults = {}
+			const sorted = []
+			const results = []
 
+			// Sort results by priority.
 			response.data.map( ( result, key ) => {
-				const { label, priority, format } = config[key]
-
+				const { label, priority, format } = config[ key ]
 				if ( ! result.items ) {
 					return
 				}
-				if ( ! newResults[priority] ) {
-					newResults[priority] = []
+				if ( ! sorted[ priority ] ) {
+					sorted[ priority ] = []
 				}
-
-				newResults[priority].push( {
+				sorted[ priority ].push( {
 					key,
 					label,
 					items: format( result.items ),
 				} )
 			} )
 
-			setResults( newResults )
+			// Format sorted groups into a flat array.
+			sorted.map( result => {
+				result.map( group => {
+					results.push( group )
+				} )
+			} )
+
+			setResults( results )
 			setLoading( false )
 			setSearchHistory( keyword )
 		} ).catch( ( error ) => {
@@ -65,13 +72,6 @@ export const Main = ( { match } ) => {
 		}
 
 	}, [ keyword ] )
-
-	// Prep result data
-	const entries = results ? Object.entries( results ) : null
-	const hasResults = entries && entries.length
-	const groups = hasResults ? Object.entries( results ).map( ( [ , group ] ) => group[0] ) : []
-
-	console.log( results, entries, groups )
 
 	return (
 		<Page shouldShowHeader={ false } shouldPadTop={ true } shouldPadSides={ false } shouldPadBottom={ false }>
@@ -111,20 +111,23 @@ export const Main = ( { match } ) => {
 				</>
 			}
 
-			{ results && ! hasResults &&
+			{ results && ! results.length &&
 				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
 			}
 
-			{ 0 < groups.length &&
+			{ results && results.length &&
 				<List
-					items={ groups }
+					items={ results }
 					isListSection={ item => 'undefined' !== typeof item.label }
 					getSectionItems={ section => section.items ? section.items : [] }
-					getItemProps={ ( item, defaultProps, isSection ) => {
+					getItemProps={ ( item, defaultProps, isSection, sectionKey ) => {
 						let props = { ...defaultProps }
 
 						if ( isSection ) {
 							props.label = item.label
+							props.footer = (
+								<button>View All</button>
+							)
 						} else {
 							props.shouldAlwaysShowThumbnail = true
 
