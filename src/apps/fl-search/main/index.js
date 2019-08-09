@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'fl-react'
 import { __ } from 'assistant/i18n'
-import { addLeadingSlash } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Page, List, Icon, Button } from 'assistant/ui'
 import { CancelToken, isCancel } from 'axios'
+import { getRequestConfig } from '../config'
 import './style.scss'
 
 export const Main = ( { match } ) => {
-	const { apps, searchHistory } = useSystemState()
+	const { searchHistory } = useSystemState()
 	const { setSearchHistory } = getSystemActions()
 	const { keyword } = useAppState( 'fl-search' )
 	const { setKeyword } = getAppActions( 'fl-search' )
@@ -18,7 +18,7 @@ export const Main = ( { match } ) => {
 	let source = CancelToken.source()
 
 	useEffect( () => {
-		const { config, routes } = getRequestConfig()
+		const { config, routes } = getRequestConfig( keyword )
 
 		if ( '' === keyword ) {
 			setResults( null )
@@ -45,6 +45,7 @@ export const Main = ( { match } ) => {
 				}
 
 				newResults[priority].push( {
+					key,
 					label,
 					items: format( result.items ),
 				} )
@@ -65,36 +66,12 @@ export const Main = ( { match } ) => {
 
 	}, [ keyword ] )
 
-	const getRequestConfig = () => {
-		const config = []
-		const routes = []
-		const defaults = {
-			priority: 1000,
-			format: response => response,
-		}
-		const addRequestConfig = search => {
-			config.push( Object.assign( {}, defaults, search ) )
-			routes.push( addLeadingSlash( search.route( keyword ) ) )
-		}
-
-		Object.entries( apps ).map( ( data ) => {
-			const app = data[ 1 ]
-			if ( ! app.search || ! app.search.route ) {
-				return
-			} else if ( Array.isArray( app.search ) ) {
-				app.search.map( search => addRequestConfig( search ) )
-			} else {
-				addRequestConfig( app.search )
-			}
-		} )
-
-		return { config, routes }
-	}
-
 	// Prep result data
 	const entries = results ? Object.entries( results ) : null
 	const hasResults = entries && entries.length
 	const groups = hasResults ? Object.entries( results ).map( ( [ , group ] ) => group[0] ) : []
+
+	console.log( results, entries, groups )
 
 	return (
 		<Page shouldShowHeader={ false } shouldPadTop={ true } shouldPadSides={ false } shouldPadBottom={ false }>

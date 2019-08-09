@@ -2,14 +2,25 @@ import React from 'fl-react'
 import { Nav, Page } from 'assistant/ui'
 import { Main } from './main'
 import { ViewAll } from './view-all'
+import { getRequestConfig } from './config'
 
 export const App = ( { match } ) => {
+	const { config } = getRequestConfig()
 	return (
 		<Nav.Switch>
 			<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-			<Nav.Route exact path={ `${match.url}/all/:type` } component={ ViewAll } />
-			<Nav.Route path={ `${match.url}/post/:id` } component={ Page.Post } />
-			<Nav.Route path={ `${match.url}/user/:id` } component={ Page.User } />
+			<Nav.Route exact path={ `${match.url}/all` } component={ ViewAll } />
+			{ config.map( ( { detail }, key ) => {
+				if ( detail ) {
+					return (
+						<Nav.Route
+							key={ key }
+							path={ detail.path }
+							component={ detail.component }
+						/>
+					)
+				}
+			} ) }
 		</Nav.Switch>
 	)
 }
