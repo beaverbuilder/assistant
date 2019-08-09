@@ -4,6 +4,11 @@ import { addLeadingSlash } from 'assistant/utils/url'
 import { getSystemStore } from 'assistant/data'
 
 /**
+ * Number of results per group for the main search list.
+ */
+const NUMBER_OF_RESULTS = 5
+
+/**
  * Get routes and route config objects registered by apps.
  */
 export const getRequestConfig = ( args = {} ) => {
@@ -17,7 +22,7 @@ export const getRequestConfig = ( args = {} ) => {
 	}
 	const { keyword, number, offset } = Object.assign( {
 		keyword: '',
-		number: 5,
+		number: NUMBER_OF_RESULTS,
 		offset: 0,
 	}, args )
 
@@ -74,14 +79,16 @@ export const getListItemConfig = ( {
 
 	if ( isSection ) {
 		props.label = item.label
-		props.footer = (
-			<Nav.Link to={ {
-				pathname: `${match.url}/all`,
-				state: { keyword, configKey }
-			} }>
-				View All
-			</Nav.Link>
-		)
+		if ( item.items.length >= NUMBER_OF_RESULTS ) {
+			props.footer = (
+				<Nav.Link to={ {
+					pathname: `${match.url}/all`,
+					state: { keyword, configKey }
+				} }>
+					View All
+				</Nav.Link>
+			)
+		}
 	} else {
 		props.shouldAlwaysShowThumbnail = true
 
