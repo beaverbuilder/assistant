@@ -15,7 +15,9 @@ const adminBarSize = () => {
 	const mobile = window.matchMedia( 'screen and (max-width: 782px)' )
 	const { isShowingAdminBar, isAdmin } = getSystemConfig()
 
-	if ( !isShowingAdminBar && !isAdmin ) return 0
+	if ( ! isShowingAdminBar && ! isAdmin ) {
+		return 0
+	}
 
 	if ( mobile.matches ) {
 		return 46
