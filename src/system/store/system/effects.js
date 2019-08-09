@@ -74,38 +74,33 @@ export const after = {
 			} )
 	},
 
-	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
-		const {shouldReduceMotion} = store.getState()
-		wpapi.users().updateState( {shouldReduceMotion} )
-	},
-
 	SET_APP_POSITION: ( action, store ) => {
 		const {appOrder} = store.getState()
-		wpapi.users().updateState( {appOrder} )
+		wpapi.users().updateState( { appOrder } )
 	},
 
 	SET_WINDOW: ( action, store ) => {
 		const {window} = store.getState()
-		wpapi.users().updateState( {window: {...window}} )
+		wpapi.users().updateState( { window: { ...window } } )
 	},
 
 	SET_BRIGHTNESS: ( action, store ) => {
 		const {appearance} = store.getState()
-		wpapi.users().updateState( {appearance} )
+		wpapi.users().updateState( { appearance } )
 	},
 
 	SET_SHOULD_SHOW_LABELS: ( action, store ) => {
 		const {shouldShowLabels} = store.getState()
-		wpapi.users().updateState( {shouldShowLabels} )
+		wpapi.users().updateState( { shouldShowLabels } )
 	},
 
 	SET_HISTORY: ( action, store ) => {
 		const {history} = store.getState()
-		wpapi.users().updateState( {history} )
+		wpapi.users().updateState( { history } )
 	},
 
 	SET_SEARCH_HISTORY: ( action, store ) => {
 		const {searchHistory} = store.getState()
-		wpapi.users().updateState( {searchHistory} )
+		wpapi.users().updateState( { searchHistory } )
 	},
 }

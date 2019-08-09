@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { Icon, Nav } from 'lib'
-import { useSystemState, getSystemActions } from 'store'
+import { useSystemState, getSystemActions, getSystemConfig } from 'store'
 import './style.scss'
 
 const transition = {
@@ -13,6 +13,10 @@ const transition = {
 
 const adminBarSize = () => {
 	const mobile = window.matchMedia( 'screen and (max-width: 782px)' )
+	const { isShowingAdminBar, isAdmin } = getSystemConfig()
+
+	if ( !isShowingAdminBar && !isAdmin ) return 0
+
 	if ( mobile.matches ) {
 		return 46
 	}

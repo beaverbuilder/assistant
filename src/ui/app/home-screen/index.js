@@ -17,13 +17,13 @@ export const HomeScreen = () => {
 				<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
 			</Page.Toolbar>
 
-			<hr className="fl-asst-shortie-divider" />
+			<hr />
 
 			<Page.Pad>
 				<CurrentlyViewing />
 			</Page.Pad>
 
-			<hr className="fl-asst-shortie-divider" />
+			<hr />
 
 			<div className="fl-asst-app-grid">
 				{ appOrder.map( ( handle, i ) => {
