@@ -52,12 +52,17 @@ class RestProvider implements ProviderInterface {
 	 * @return \Closure
 	 */
 	public function register_routes( Container $container ) {
-		return function () use ( $container ) {
-			foreach ( $this->controllers as $controller_name ) {
+
+		$controllers = $this->controllers;
+
+		return function () use ( $container, $controllers ) {
+
+			foreach ( $controllers as $controller_name ) {
 				/** @var AssistantController $controller */
 				$controller = new $controller_name( $container );
 				$controller->register_routes();
 			}
+
 		};
 	}
 
