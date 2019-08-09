@@ -13,14 +13,16 @@ export const Main = ( { match } ) => {
 	const { setSearchHistory } = getSystemActions()
 	const { keyword } = useAppState( 'fl-search' )
 	const { setKeyword } = getAppActions( 'fl-search' )
-	const { config, routes } = getRequestConfig( keyword )
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
 	const [ viewAllKey, setViewAllKey ] = useState( null )
+	const { config, routes } = getRequestConfig( { keyword } )
 	const wp = getWpRest()
 	let source = CancelToken.source()
 
 	useEffect( () => {
+		const searchRoutes = null === viewAllKey ? routes : [ routes[ viewAllKey ] ]
+
 		if ( '' === keyword ) {
 			setResults( null )
 			return
@@ -29,24 +31,25 @@ export const Main = ( { match } ) => {
 		source.cancel()
 		source = CancelToken.source()
 		setLoading( true )
+		setResults( null )
 
-		wp.search( keyword, routes, {
+		wp.search( keyword, searchRoutes, {
 			cancelToken: source.token,
 		} ).then( response => {
 			const results = []
 
 			response.data.map( ( result, key ) => {
 				const { label, format } = config[ key ]
+				const configKey = null === viewAllKey ? key : viewAllKey
 				if ( ! result.items || ! result.items.length ) {
 					return
 				}
 				results.push( {
 					label,
+					configKey,
 					items: format( result.items ).map( item => {
-						item.configKey = key
-						return item
+						return { ...item, configKey }
 					} ),
-					configKey: key,
 				} )
 			} )
 
@@ -60,6 +63,10 @@ export const Main = ( { match } ) => {
 		} )
 
 		return () => source.cancel()
+	}, [ keyword, viewAllKey ] )
+
+	useEffect( () => {
+		setViewAllKey( null )
 	}, [ keyword ] )
 
 	return (
@@ -108,7 +115,7 @@ export const Main = ( { match } ) => {
 				<button onClick={ () => setViewAllKey( null ) }>Go back</button>
 			}
 
-			{ null === viewAllKey && results && !! results.length &&
+			{ results && !! results.length &&
 				<List
 					items={ results }
 					isListSection={ item => 'undefined' !== typeof item.label }
@@ -120,9 +127,11 @@ export const Main = ( { match } ) => {
 
 						if ( isSection ) {
 							props.label = item.label
-							props.footer = (
-								<button onClick={ () => setViewAllKey( configKey ) }>View All</button>
-							)
+							if ( null === viewAllKey ) {
+								props.footer = (
+									<button onClick={ () => setViewAllKey( configKey ) }>View All</button>
+								)
+							}
 						} else {
 							props.shouldAlwaysShowThumbnail = true
 

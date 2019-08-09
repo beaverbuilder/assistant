@@ -1,12 +1,7 @@
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSystemStore } from 'assistant/data'
 
-export const getRequestConfig = (
-	keyword = '',
-	number = 5,
-	offset = 0,
-	key = false
-) => {
+export const getRequestConfig = ( args = {} ) => {
 	const { apps } = getSystemStore().getState()
 	const sorted = []
 	const config = []
@@ -15,6 +10,11 @@ export const getRequestConfig = (
 		priority: 1000,
 		format: response => response,
 	}
+	const { keyword, number, offset } = Object.assign( {
+		keyword: '',
+		number: 5,
+		offset: 0,
+	}, args )
 
 	const addRequestConfig = search => {
 		const route = addLeadingSlash( search.route( keyword, number, offset ) )
@@ -49,15 +49,5 @@ export const getRequestConfig = (
 		} )
 	} )
 
-	if ( false === key ) {
-		return {
-			config,
-			routes
-		}
-	}
-
-	return {
-		config: config[ key ],
-		routes: routes[ key ]
-	}
+	return { config, routes }
 }
