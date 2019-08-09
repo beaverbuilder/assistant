@@ -25,12 +25,12 @@ registerApp( 'fl-users', {
 				label: result.displayName,
 			} ) )
 		},
-		detail: item => {
-			return {
-				component: Page.User,
-				path: '/user/:id',
-				pathname: `/user/${ item.id }`,
-			}
+		detail: {
+			component: Page.User,
+			path: '/user/:id',
+			pathname: item => {
+				return `/user/${ item.id }`
+			},
 		},
 	},
 } )

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
+import { addLeadingSlash } from 'assistant/utils/url'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Nav, Page, List, Icon, Button } from 'assistant/ui'
 import { CancelToken, isCancel } from 'axios'
@@ -12,14 +13,14 @@ export const Main = ( { match } ) => {
 	const { setSearchHistory } = getSystemActions()
 	const { keyword } = useAppState( 'fl-search' )
 	const { setKeyword } = getAppActions( 'fl-search' )
+	const { config, routes } = getRequestConfig( keyword )
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
+	const [ viewAllKey, setViewAllKey ] = useState( null )
 	const wp = getWpRest()
 	let source = CancelToken.source()
 
 	useEffect( () => {
-		const { config, routes } = getRequestConfig( keyword )
-
 		if ( '' === keyword ) {
 			setResults( null )
 			return
@@ -32,29 +33,20 @@ export const Main = ( { match } ) => {
 		wp.search( keyword, routes, {
 			cancelToken: source.token,
 		} ).then( response => {
-			const sorted = []
 			const results = []
 
-			// Sort results by priority.
 			response.data.map( ( result, key ) => {
-				const { label, priority, format } = config[ key ]
+				const { label, format } = config[ key ]
 				if ( ! result.items ) {
 					return
 				}
-				if ( ! sorted[ priority ] ) {
-					sorted[ priority ] = []
-				}
-				sorted[ priority ].push( {
-					key,
+				results.push( {
 					label,
-					items: format( result.items ),
-				} )
-			} )
-
-			// Format sorted groups into a flat array.
-			sorted.map( result => {
-				result.map( group => {
-					results.push( group )
+					items: format( result.items ).map( item => {
+						item.configKey = key
+						return item
+					} ),
+					configKey: key,
 				} )
 			} )
 
@@ -67,10 +59,7 @@ export const Main = ( { match } ) => {
 			}
 		} )
 
-		return () => {
-			source.cancel()
-		}
-
+		return () => source.cancel()
 	}, [ keyword ] )
 
 	return (
@@ -115,18 +104,24 @@ export const Main = ( { match } ) => {
 				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
 			}
 
-			{ results && results.length &&
+			{ null !== viewAllKey && results && results.length &&
+				<button onClick={ () => setViewAllKey( null ) }>Go back</button>
+			}
+
+			{ null === viewAllKey && results && results.length &&
 				<List
 					items={ results }
 					isListSection={ item => 'undefined' !== typeof item.label }
 					getSectionItems={ section => section.items ? section.items : [] }
-					getItemProps={ ( item, defaultProps, isSection, sectionKey ) => {
+					getItemProps={ ( item, defaultProps, isSection ) => {
+						const { configKey } = item
+						const { detail } = config[ configKey ]
 						let props = { ...defaultProps }
 
 						if ( isSection ) {
 							props.label = item.label
 							props.footer = (
-								<button>View All</button>
+								<button onClick={ () => setViewAllKey( configKey ) }>View All</button>
 							)
 						} else {
 							props.shouldAlwaysShowThumbnail = true
@@ -141,26 +136,9 @@ export const Main = ( { match } ) => {
 								props.thumbnail = item.thumbnail
 							}
 
-							// Determine Detail View
-							const type = 'post' // HARDCODED FOR NOW - NEED TO DISTINGUISH OBJECT TYPES
-							const basePath = match.url
-							let path = null
-
-							switch ( type ) {
-							case 'post':
-								path = `${basePath}/post/${item.id}`
-								break
-							case 'user':
-								path = `${basePath}/user/${item.id}`
-								break
-							case 'attachment':
-							case 'plugin':
-							case 'theme':
-							case 'comment':
-							}
-							if ( path ) {
+							if ( detail ) {
 								props.to = {
-									pathname: path,
+									pathname: match.url + addLeadingSlash( detail.pathname( item ) ),
 									state: { item },
 								}
 							}

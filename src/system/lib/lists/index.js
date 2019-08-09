@@ -46,7 +46,6 @@ export const List = ( {
 			if ( isListSection( item ) ) {
 				const isSection = true
 				const defaultProps = { ...defaultItemProps, key: i }
-
 				const Section = getItemComponent( item, true )
 				const sectionProps = getItemProps( item, defaultProps, isSection )
 				const sectionItems = getSectionItems( item )
@@ -62,7 +61,11 @@ export const List = ( {
 				return (
 					<Section { ...sectionProps }>
 						{ sectionItems && <List items={ sectionItems } { ...subListProps }  /> }
-						{ sectionProps.footer ? sectionProps.footer : null }
+						{ sectionProps.footer &&
+							<div className="fl-asst-list-section-footer">
+								{ sectionProps.footer }
+							</div>
+						}
 					</Section>
 				)
 			} else {

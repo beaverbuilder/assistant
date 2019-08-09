@@ -8,15 +8,27 @@ export const getRequestConfig = (
 	key = false
 ) => {
 	const { apps } = getSystemStore().getState()
+	const sorted = []
 	const config = []
 	const routes = []
 	const defaults = {
 		priority: 1000,
 		format: response => response,
 	}
+
 	const addRequestConfig = search => {
-		config.push( Object.assign( {}, defaults, search ) )
-		routes.push( addLeadingSlash( search.route( keyword, number, offset ) ) )
+		const route = addLeadingSlash( search.route( keyword, number, offset ) )
+		const config = Object.assign( {}, defaults, search )
+		const { priority } = config
+
+		if ( ! sorted[ priority ] ) {
+			sorted[ priority ] = []
+		}
+
+		sorted[ priority ].push( {
+			route,
+			config,
+		} )
 	}
 
 	Object.entries( apps ).map( ( data ) => {
@@ -28,6 +40,13 @@ export const getRequestConfig = (
 		} else {
 			addRequestConfig( app.search )
 		}
+	} )
+
+	sorted.map( groups => {
+		groups.map( group => {
+			routes.push( group.route )
+			config.push( group.config )
+		} )
 	} )
 
 	if ( false === key ) {
