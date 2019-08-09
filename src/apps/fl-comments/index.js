@@ -1,5 +1,6 @@
 import { registerApp, __ } from 'assistant'
 import { addQueryArgs } from 'assistant/utils/url'
+import { Page } from 'assistant/ui'
 import { CommentsApp } from './app'
 
 registerApp( 'fl-comments', {
@@ -12,15 +13,25 @@ registerApp( 'fl-comments', {
 	search: {
 		label: __( 'Comments' ),
 		priority: 300,
-		route: keyword => {
+		route: ( keyword, number, offset ) => {
 			return addQueryArgs( 'fl-assistant/v1/comments', {
 				search: keyword,
+				number,
+				offset,
 			} )
 		},
-		format: response => {
-			return response.map( result => ( {
-				label: result.meta,
+		format: items => {
+			return items.map( item => ( {
+				...item,
+				label: item.meta,
 			} ) )
+		},
+		detail: {
+			component: Page.Comment,
+			path: '/comment/:id',
+			pathname: item => {
+				return `/comment/${ item.id }`
+			},
 		},
 	},
 } )

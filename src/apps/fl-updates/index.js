@@ -9,18 +9,4 @@ registerApp( 'fl-updates', {
 	accent: {
 		color: '#00D281'
 	},
-	search: {
-		label: __( 'Updates' ),
-		priority: 300,
-		route: keyword => {
-			return addQueryArgs( 'fl-assistant/v1/updates', {
-				search: keyword,
-			} )
-		},
-		format: response => {
-			return response.map( result => ( {
-				label: result.meta,
-			} ) )
-		},
-	},
 } )

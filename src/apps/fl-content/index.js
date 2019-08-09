@@ -1,5 +1,6 @@
 import { registerApp, __ } from 'assistant'
 import { addQueryArgs } from 'assistant/utils/url'
+import { Page } from 'assistant/ui'
 import { Content } from './app'
 
 registerApp( 'fl-content', {
@@ -29,11 +30,25 @@ registerApp( 'fl-content', {
 	search: {
 		label: __( 'Content' ),
 		priority: 1,
-		route: keyword => {
+		route: ( keyword, number, offset ) => {
 			return addQueryArgs( 'fl-assistant/v1/posts', {
 				post_type: 'any',
 				s: keyword,
+				posts_per_page: number,
+				offset,
 			} )
+		},
+		format: items => {
+			return items.map( item => ( {
+				...item,
+			} ) )
+		},
+		detail: {
+			component: Page.Post,
+			path: '/post/:id',
+			pathname: item => {
+				return `/post/${ item.id }`
+			},
 		},
 	}
 } )

@@ -20,9 +20,10 @@ registerApp( 'fl-users', {
 				offset,
 			} )
 		},
-		format: response => {
-			return response.map( result => ( {
-				label: result.displayName,
+		format: items => {
+			return items.map( item => ( {
+				...item,
+				label: item.displayName,
 			} ) )
 		},
 		detail: {

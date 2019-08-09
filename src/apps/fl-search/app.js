@@ -2,6 +2,7 @@ import React from 'fl-react'
 import { Nav, Page } from 'assistant/ui'
 import { Main } from './main'
 import { ViewAll } from './view-all'
+import { addLeadingSlash } from 'assistant/utils/url'
 import { getRequestConfig } from './config'
 
 export const App = ( { match } ) => {
@@ -15,7 +16,7 @@ export const App = ( { match } ) => {
 					return (
 						<Nav.Route
 							key={ key }
-							path={ detail.path }
+							path={ match.url + addLeadingSlash( detail.path ) }
 							component={ detail.component }
 						/>
 					)

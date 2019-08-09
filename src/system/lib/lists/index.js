@@ -58,6 +58,9 @@ export const List = ( {
 					getSectionItems,
 					tag: Tag,
 				}
+				if ( ! sectionItems.length ) {
+					return null
+				}
 				return (
 					<Section { ...sectionProps }>
 						{ sectionItems && <List items={ sectionItems } { ...subListProps }  /> }
