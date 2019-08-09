@@ -77,8 +77,8 @@ export const MediaDropUploader = ( { children } ) => {
 	if ( current ) {
 		return (
 			<EmptyMessage className="fl-asst-file-uploading fl-asst-file-drop-dragging-view">
-				<Padding bottom={150}>
-					<Padding top={false} style={{ display: 'flex', justifyContent: 'center' }}>
+				<Padding bottom={ 150 }>
+					<Padding top={ false } style={ { display: 'flex', justifyContent: 'center' } }>
 						<Branding name="outline" />
 					</Padding>
 					<div className="fl-asst-file-uploading-text">

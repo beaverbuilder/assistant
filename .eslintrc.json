@@ -52,6 +52,22 @@
             "error",
             "single"
         ],
+        "semi": [
+            "error",
+            "never"
+        ],
+        "space-in-parens" : [
+          "error",
+          "always"
+        ],
+        "object-curly-spacing" : [
+          "error",
+          "always"
+        ],
+        "array-bracket-spacing" : [
+          "error",
+          "always"
+        ],
         "react/prop-types": [
             "off"
         ],
@@ -61,11 +77,7 @@
         "react/no-unescaped-entities": [
             "off"
         ],
-        "semi": [
-            "error",
-            "never"
-        ],
-        "space-in-parens" : [
+        "react/jsx-curly-spacing" : [
           "error",
           "always"
         ]

@@ -73,52 +73,52 @@ export const PostListFilter = ( { refreshList } ) => {
 	}
 
 	const Actions = () => {
-		return <NewButton onClick={presentNew} />
+		return <NewButton onClick={ presentNew } />
 	}
 
 	return (
 		<Fragment>
 
 			<Header>
-				<NavBar items={navItems} maxItems={5} />
+				<NavBar items={ navItems } maxItems={ 5 } />
 			</Header>
 
 			<Header.Expanded>
 				<Padding>
 					<Heading>{__( 'Filters' )}</Heading>
 					<TagGroupControl
-						title={__( 'Type' )}
-						tags={typeTags}
-						value={[ type, subType ]}
+						title={ __( 'Type' ) }
+						tags={ typeTags }
+						value={ [ type, subType ] }
 						onChange={ value => {
 							setType( value )
 							dismissAll()
-						}}
+						} }
 						appearance="muted"
 					/>
 
 					{ 'posts' === type &&
 						<Fragment>
 							<TagGroupControl
-								tags={dateTags}
-								value={date}
-								title={__( 'Created' )}
+								tags={ dateTags }
+								value={ date }
+								title={ __( 'Created' ) }
 								onChange={ value => {
 									setDate( value )
 									dismissAll()
-								}}
+								} }
 								appearance="muted"
 							/>
 
 							{ 'attachment' !== subType &&
 								<TagGroupControl
-									tags={statusTags}
-									value={status}
-									title={__( 'Status' )}
+									tags={ statusTags }
+									value={ status }
+									title={ __( 'Status' ) }
 									onChange={ value => {
 										setStatus( value )
 										dismissAll()
-									}}
+									} }
 									appearance="muted"
 								/>
 							}
@@ -127,7 +127,7 @@ export const PostListFilter = ( { refreshList } ) => {
 				</Padding>
 			</Header.Expanded>
 
-			<Title actions={<Actions />} >{ title }</Title>
+			<Title actions={ <Actions /> } >{ title }</Title>
 		</Fragment>
 	)
 }

@@ -22,22 +22,22 @@ export const UserDetail = props => {
 		<ContentListDetail className='fl-asst-user-detail'>
 
 			<Title
-				shouldOverlay={true}
-				shouldInvertColors={true}
+				shouldOverlay={ true }
+				shouldInvertColors={ true }
 			>{label}</Title>
 
 			<div className="fl-asst-detail-feature">
 				<div className="fl-asst-detail-feature-content">
 					<div className="fl-asst-detail-feature-title">{title}</div>
-					{ thumbnail && <img className="fl-asst-detail-user-avatar" src={thumbnail} alt={__( 'User Avatar' )} /> }
+					{ thumbnail && <img className="fl-asst-detail-user-avatar" src={ thumbnail } alt={ __( 'User Avatar' ) } /> }
 				</div>
 			</div>
 
 			<form>
 				<Form.Item>
 					<TagGroup appearance='muted'>
-						<Tag href={url}>{__( 'View' )}</Tag>
-						<Tag href={editUrl}>{__( 'Edit' )}</Tag>
+						<Tag href={ url }>{__( 'View' )}</Tag>
+						<Tag href={ editUrl }>{__( 'Edit' )}</Tag>
 					</TagGroup>
 				</Form.Item>
 
@@ -60,30 +60,30 @@ const UserSettings = () => {
 
 	return (
 		<Fragment>
-			<Form.Section label={__( 'General Information' )} isInset={true}>
-				<Form.Item label={__( 'Display Name' )} placement="beside">
+			<Form.Section label={ __( 'General Information' ) } isInset={ true }>
+				<Form.Item label={ __( 'Display Name' ) } placement="beside">
 					{ displayName }
 				</Form.Item>
-				<Form.Item label={__( 'Username' )} placement="beside">
+				<Form.Item label={ __( 'Username' ) } placement="beside">
 					{ username }
 				</Form.Item>
-				<Form.Item label={__( 'Signup Date' )} placement="beside">
+				<Form.Item label={ __( 'Signup Date' ) } placement="beside">
 					{ date }
 				</Form.Item>
 				{ meta &&
-					<Form.Item label={__( 'Email Address' )} placement="beside">
+					<Form.Item label={ __( 'Email Address' ) } placement="beside">
 						<a href={ `mailto:${meta}` }>{meta}</a>
 					</Form.Item>
 				}
 				{ website &&
-					<Form.Item label={__( 'Website' )} placement="beside">
+					<Form.Item label={ __( 'Website' ) } placement="beside">
 						<a href={ website } target="_blank" rel="noopener noreferrer">{website}</a>
 					</Form.Item>
 				}
 			</Form.Section>
 
 			{ content &&
-			<Form.Section isInset={true} label={__( 'Biographical Info' )}>
+			<Form.Section isInset={ true } label={ __( 'Biographical Info' ) }>
 				<Form.Item>{content}</Form.Item>
 			</Form.Section> }
 		</Fragment>

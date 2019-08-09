@@ -82,10 +82,10 @@ export const Window = ( {
 		shouldShowLabels,
 	}
 	return (
-		<Flipper flipKey={needsAnimate}>
-			<Window.Context.Provider value={context}>
-				<WindowLayer onChange={handleChange} {...rest}>
-					{ ! isHidden && <WindowPanel topbar={topbar}>{children}</WindowPanel> }
+		<Flipper flipKey={ needsAnimate }>
+			<Window.Context.Provider value={ context }>
+				<WindowLayer onChange={ handleChange } { ...rest }>
+					{ ! isHidden && <WindowPanel topbar={ topbar }>{children}</WindowPanel> }
 					{ isHidden && <WindowButton>{icon}</WindowButton> }
 				</WindowLayer>
 			</Window.Context.Provider>
@@ -250,8 +250,8 @@ const WindowLayer = ( {
 	}
 
 	return (
-		<div id="canvas" {...props}>
-			<div className="fl-asst-window-positioner" ref={posRef} style={positionerStyles}>{children}</div>
+		<div id="canvas" { ...props }>
+			<div className="fl-asst-window-positioner" ref={ posRef } style={ positionerStyles }>{children}</div>
 		</div>
 	)
 }
@@ -288,44 +288,44 @@ const WindowPanel = ( { className, children, style, topbar: TopBar,  ...rest } )
 	const labelStyle = { marginLeft: 'var(--fl-asst-tiny-space)' }
 
 	return (
-		<Flipped flipId="window" spring={transition}>
-			<div className={classes} style={styles} {...rest}>
+		<Flipped flipId="window" spring={ transition }>
+			<div className={ classes } style={ styles } { ...rest }>
 
 				{ /* Toolbar */ }
 				<div className="fl-asst-window-toolbar fl-asst-window-drag-handle">
 
-					<span className="fl-asst-window-drag-handle" style={{ display: 'inline-flex', pointerEvents: 'none' }}>
+					<span className="fl-asst-window-drag-handle" style={ { display: 'inline-flex', pointerEvents: 'none' } }>
 						<Icon.DragHandle />
-						{ shouldShowLabels && <span style={labelStyle}>{__( 'Move' )}</span> }
+						{ shouldShowLabels && <span style={ labelStyle }>{__( 'Move' )}</span> }
 					</span>
 
 					{ 'function' === typeof TopBar && <TopBar /> }
 
 					<span
-						{...stopEvts}
-						style={{ marginLeft: 'auto' }}
+						{ ...stopEvts }
+						style={ { marginLeft: 'auto' } }
 					>
 
 						{ /* Brightness */ }
-						<button onClick={toggleBrightness}>
+						<button onClick={ toggleBrightness }>
 							<Icon.Brightness />
-							{ shouldShowLabels && <span style={labelStyle}>{__( 'Brightness' )}</span> }
+							{ shouldShowLabels && <span style={ labelStyle }>{__( 'Brightness' )}</span> }
 						</button>
 
 						{ /* Window Size */ }
-						<button onClick={toggleSize}>
+						<button onClick={ toggleSize }>
 							{ 'mini' === size && <Icon.Expand /> }
 							{ 'normal' === size && <Icon.Collapse /> }
-							{ shouldShowLabels && <span style={labelStyle}>{
+							{ shouldShowLabels && <span style={ labelStyle }>{
 								'mini' === size ?
 									__( 'Expand' ) : __( 'Compact' )
 							}</span> }
 						</button>
 
 						{ /* Hide Window */ }
-						<button onClick={toggleIsHidden}>
+						<button onClick={ toggleIsHidden }>
 							<Icon.Close />
-							{ shouldShowLabels && <span style={labelStyle}>{__( 'Hide' )}</span> }
+							{ shouldShowLabels && <span style={ labelStyle }>{__( 'Hide' )}</span> }
 						</button>
 					</span>
 				</div>
@@ -333,7 +333,7 @@ const WindowPanel = ( { className, children, style, topbar: TopBar,  ...rest } )
 
 				<div
 					className="fl-asst-window-content"
-					{...stopEvts}
+					{ ...stopEvts }
 				>{children}</div>
 			</div>
 		</Flipped>
@@ -343,8 +343,8 @@ const WindowPanel = ( { className, children, style, topbar: TopBar,  ...rest } )
 const WindowButton = ( { children, ...rest } ) => {
 	const { toggleIsHidden } = useContext( Window.Context )
 	return (
-		<Flipped flipId="window" spring={transition}>
-			<button className="fl-asst-window-button fl-asst-window-drag-handle" onClick={toggleIsHidden} {...rest}>
+		<Flipped flipId="window" spring={ transition }>
+			<button className="fl-asst-window-button fl-asst-window-drag-handle" onClick={ toggleIsHidden } { ...rest }>
 				<Flipped inverseFlipId="window">{children}</Flipped>
 			</button>
 		</Flipped>

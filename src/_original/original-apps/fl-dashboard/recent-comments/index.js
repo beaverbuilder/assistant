@@ -5,7 +5,7 @@ import './style.scss'
 
 export const RecentCommentsWidget = () => {
 	return (
-		<Widget title={__( 'Recent Comments' )} isPadded={ false } className="fl-asst-recent-comments-widget">
+		<Widget title={ __( 'Recent Comments' ) } isPadded={ false } className="fl-asst-recent-comments-widget">
 			<CommentList
 				query={ { number: 5 } }
 				placeholderItemCount={ 5 }

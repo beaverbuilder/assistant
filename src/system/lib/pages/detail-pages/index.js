@@ -29,9 +29,9 @@ export const Comment = ( { location = {} } ) => {
 	const html = { __html: content }
 
 	return (
-		<Page title={__( 'Comment' )}>
+		<Page title={ __( 'Comment' ) }>
 			<h2>{author} said:</h2>
-			<div dangerouslySetInnerHTML={html} />
+			<div dangerouslySetInnerHTML={ html } />
 		</Page>
 	)
 }
@@ -60,12 +60,12 @@ export const Update = ( { location = {} } ) => {
 	const pageType = 'plugin' === type ? __( 'Plugin' ) : __( 'Theme' )
 
 	return (
-		<Page shouldPadSides={false} title={pageType}>
-			{ banner && <img src={banner} /> }
+		<Page shouldPadSides={ false } title={ pageType }>
+			{ banner && <img src={ banner } /> }
 
 			<Page.Pad>
 				<h1>{title}</h1>
-				<div dangerouslySetInnerHTML={contentHTML} />
+				<div dangerouslySetInnerHTML={ contentHTML } />
 			</Page.Pad>
 		</Page>
 	)

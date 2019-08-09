@@ -6,7 +6,7 @@ import { List } from 'lib'
 export const WordPress = ( {
 	type = 'posts',
 	getItemProps = ( item, defaultProps ) => defaultProps,
-	onItemsLoaded = ( response ) => {},
+	onItemsLoaded = () => {},
 	query = {},
 	...rest,
 } ) => {
@@ -14,7 +14,6 @@ export const WordPress = ( {
 	const { getPagedContent } = getWpRest()
 	const source = CancelToken.source()
 	const offset = items.length
-	const hasItems = 0 < items.length
 
 	useEffect( () => {
 		setItems( [] )
@@ -33,7 +32,7 @@ export const WordPress = ( {
 					onItemsLoaded( response )
 				} ).catch( ( error ) => {
 					if ( ! isCancel( error ) ) {
-						console.log( error )
+						console.log( error ) // eslint-disable-line no-console
 					}
 				} )
 			} }

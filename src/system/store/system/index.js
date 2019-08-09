@@ -1,4 +1,4 @@
-import {registerStore, useStore, getStore, getDispatch} from 'shared-utils/store'
+import { registerStore, useStore, getStore, getDispatch } from 'shared-utils/store'
 import cloud from 'shared-utils/cloud'
 import * as actions from './actions'
 import * as reducers from './reducers'
@@ -30,5 +30,5 @@ export const getSystemActions = () => {
 }
 
 export const getSystemConfig = () => {
-	return {...FL_ASSISTANT_CONFIG}
+	return { ...FL_ASSISTANT_CONFIG }
 }

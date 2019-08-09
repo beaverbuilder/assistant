@@ -17,7 +17,7 @@ export const ScreenHeader = ( { children, showTitle, title } ) => {
 	} )
 	return (
 		<div className="fl-asst-screen-header">
-			{ false !== showTitle && <div className={titleClasses}>
+			{ false !== showTitle && <div className={ titleClasses }>
 				<div className="fl-asst-screen-title-text">{screenTitle}</div>
 				<AppMenuButton />
 			</div> }
@@ -31,7 +31,7 @@ export const ScreenFooter = ( { children } ) => {
 		'fl-asst-screen-footer': true,
 	} )
 	return (
-		<div className={classes}>
+		<div className={ classes }>
 			<div className="fl-asst-screen-footer-content">{children}</div>
 		</div>
 	)
@@ -77,13 +77,13 @@ export const ExpandedContents = ( { children } ) => {
 		'fl-asst-expanded-contents': true,
 	} )
 	return (
-		<div className={classes}>
+		<div className={ classes }>
 			<Expander pose={ isExpanded ? 'open' : 'closed' } className="fl-asst-expanded-contents-wrap">{children}</Expander>
 			<div className="fl-asst-expanded-contents-footer">
-				<MoreButton className="fl-asst-button fl-asst-more-button" onClick={toggleExpanded}>
+				<MoreButton className="fl-asst-button fl-asst-more-button" onClick={ toggleExpanded }>
 					<svg className="fl-asst-icon" width="50px" height="8px" viewBox="0 0 50 8">
 						<g fill="transparent" fillRule="nonzero" strokeWidth="4" strokeLinecap="round">
-							<MoreButtonPath isExpanded={isExpanded} />
+							<MoreButtonPath isExpanded={ isExpanded } />
 						</g>
 					</svg>
 				</MoreButton>
@@ -104,7 +104,7 @@ export const EmptyMessage = props => {
 		className: classes,
 	}
 	return (
-		<div {...merged} />
+		<div { ...merged } />
 	)
 }
 
@@ -113,7 +113,7 @@ export const Toolbar = ( { children } ) => {
 		'fl-asst-toolbar': true,
 	} )
 	return (
-		<div className={classes}>{children}</div>
+		<div className={ classes }>{children}</div>
 	)
 }
 
@@ -145,21 +145,21 @@ export const Title = props => {
 	delete merged.shouldInvertColors
 
 	return (
-		<div {...merged}>
+		<div { ...merged }>
 			{ ! isRootView &&
 				<Button
 					className="fl-asst-title-wrap fl-asst-title-back-button"
-					onClick={dismiss}
+					onClick={ dismiss }
 					appearance="transparent"
-					style={style}
-					title={__( 'Back to Previous Screen' )}
+					style={ style }
+					title={ __( 'Back to Previous Screen' ) }
 				>
 					<Icon name="back-arrow" />
 					<span className="fl-asst-screen-title-text">{children}</span>
 				</Button>
 			}
 			{ isRootView &&
-				<div className="fl-asst-title-wrap" style={style}>
+				<div className="fl-asst-title-wrap" style={ style }>
 					<span className="fl-asst-screen-title-text">{children}</span>
 				</div>
 			}
@@ -184,9 +184,9 @@ export const ContentFrame = props => {
 	return (
 		<Fragment>
 			{ padded && <Padding>
-				<div {...mergedProps} />
+				<div { ...mergedProps } />
 			</Padding> }
-			{ ! padded && <div {...mergedProps} /> }
+			{ ! padded && <div { ...mergedProps } /> }
 		</Fragment>
 	)
 }

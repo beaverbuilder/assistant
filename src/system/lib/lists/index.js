@@ -13,7 +13,7 @@ import './style.scss'
 import { isRenderProp } from 'shared-utils/react'
 
 import {
-	defaultItemProps,
+	defaultItemProps, // eslint-disable-line no-unused-vars
 	getDefaultItemProps,
 	getItemType,
 } from './parts'
@@ -32,10 +32,10 @@ export const List = ( {
 	getItemComponent = getItemType,
 
 	// Test if a data item is a section
-	isListSection = item => false,
+	isListSection = () => false,
 
 	// Get the array of items from a section item
-	getSectionItems = section => [],
+	getSectionItems = () => [],
 
 	tag: Tag = 'ul',
 } ) => {
@@ -60,8 +60,8 @@ export const List = ( {
 					tag: Tag,
 				}
 				return (
-					<Section {...sectionProps}>
-						{ sectionItems && <List items={sectionItems} {...subListProps}  /> }
+					<Section { ...sectionProps }>
+						{ sectionItems && <List items={ sectionItems } { ...subListProps }  /> }
 					</Section>
 				)
 			} else {
@@ -78,10 +78,10 @@ export const List = ( {
 
 		if ( isRenderProp( children ) ) {
 			return (
-				<Item {...props}>{ children( item ) }</Item>
+				<Item { ...props }>{ children( item ) }</Item>
 			)
 		} else {
-			return <Item {...props} />
+			return <Item { ...props } />
 		}
 	}
 
@@ -98,7 +98,7 @@ export const List = ( {
 	} )
 
 	return (
-		<Tag className={classes}>{content}</Tag>
+		<Tag className={ classes }>{content}</Tag>
 	)
 }
 

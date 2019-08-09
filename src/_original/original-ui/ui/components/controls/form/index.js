@@ -23,9 +23,9 @@ Form.Item = props => {
 	}, className )
 
 	return (
-		<div className={classes} style={style}>
+		<div className={ classes } style={ style }>
 			{ label &&
-				<label htmlFor={labelFor}>
+				<label htmlFor={ labelFor }>
 					{label}
 					{ isRequired && <abbr title="required"><Icon name="asterisk" /></abbr> }
 				</label> }
@@ -40,11 +40,11 @@ Form.Section = props => {
 		'fl-asst-form-section': true,
 		'fl-asst-form-section-is-inset': isInset,
 	}, className )
-	const newProps = {...props}
+	const newProps = { ...props }
 	delete newProps.isInset
 
 	return (
-		<div className={classes} {...newProps}>
+		<div className={ classes } { ...newProps }>
 			{ label && <div className="fl-asst-form-section-title">{label}</div> }
 			<div className="fl-asst-form-section-content">{children}</div>
 		</div>
@@ -57,46 +57,46 @@ Form.Footer = props => {
 		'fl-asst-form-footer': true,
 	}, className )
 	return (
-		<div className={classes}>{children}</div>
+		<div className={ classes }>{children}</div>
 	)
 }
 
 export const FormTest = () => {
 	return (
 		<Fragment>
-			<form style={{paddingBottom: 150}}>
+			<form style={ { paddingBottom: 150 } }>
 				<Form.Item>
 					<p>{__( 'This is a testing sheet for different form controls and scenarios. This is intended to serve as an exhaustive testing tool.' )}</p>
 				</Form.Item>
 
-				<Form.Item label={__( 'Name' )} labelFor="name" isRequired={true}>
+				<Form.Item label={ __( 'Name' ) } labelFor="name" isRequired={ true }>
 					<input
 						id="name"
 						type="text"
-						required={true}
+						required={ true }
 						placeholder="Type Something!"
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Email Address' )} labelFor="email" placement="beside" isRequired={true}>
+				<Form.Item label={ __( 'Email Address' ) } labelFor="email" placement="beside" isRequired={ true }>
 					<input
 						id="email"
 						type="email"
-						required={true}
+						required={ true }
 						placeholder="john@example.com"
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Enter New Password' )} labelFor="pw" placement="beside">
+				<Form.Item label={ __( 'Enter New Password' ) } labelFor="pw" placement="beside">
 					<input
 						id="pw"
 						name="pw"
 						type="password"
-						placeholder={__( 'Password123:)' )}
+						placeholder={ __( 'Password123:)' ) }
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Search Me' )} labelFor="search">
+				<Form.Item label={ __( 'Search Me' ) } labelFor="search">
 					<input
 						id="search"
 						name="search"
@@ -105,7 +105,7 @@ export const FormTest = () => {
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Phone Number' )} labelFor="phone">
+				<Form.Item label={ __( 'Phone Number' ) } labelFor="phone">
 					<input
 						id="phone"
 						name="phone"
@@ -114,7 +114,7 @@ export const FormTest = () => {
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Website Address (URL)' )} labelFor="url">
+				<Form.Item label={ __( 'Website Address (URL)' ) } labelFor="url">
 					<input
 						id="url"
 						name="url"
@@ -123,26 +123,26 @@ export const FormTest = () => {
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'A Text Area' )} labelFor="area">
+				<Form.Item label={ __( 'A Text Area' ) } labelFor="area">
 					<textarea id="area" rows="5"></textarea>
 				</Form.Item>
 
-				<Form.Item label={__( 'Select Something!' )} labelFor="selector" isRequired={true}>
+				<Form.Item label={ __( 'Select Something!' ) } labelFor="selector" isRequired={ true }>
 					<select id="selector" name="selector">
 						<option>Select Me!</option>
 						<option>Something Else</option>
 					</select>
 				</Form.Item>
 
-				<Form.Item label={__( 'Multiple Choice (select)' )} labelFor="multi-selector">
-					<select id="multi-selector" name="multi-selector" multiple={true}>
+				<Form.Item label={ __( 'Multiple Choice (select)' ) } labelFor="multi-selector">
+					<select id="multi-selector" name="multi-selector" multiple={ true }>
 						<option>Red</option>
 						<option>Blue</option>
 						<option>Green</option>
 					</select>
 				</Form.Item>
 
-				<Form.Item label={__( 'Text Field with Suggestions' )} labelFor="suggestions">
+				<Form.Item label={ __( 'Text Field with Suggestions' ) } labelFor="suggestions">
 					<input
 						id="suggestions"
 						name="suggestions"
@@ -162,7 +162,7 @@ export const FormTest = () => {
 					</datalist>
 				</Form.Item>
 
-				<Form.Item label={__( 'Text field with min/max length' )} labelFor="length" isRequired={true}>
+				<Form.Item label={ __( 'Text field with min/max length' ) } labelFor="length" isRequired={ true }>
 					<input
 						type="text"
 						required
@@ -174,7 +174,7 @@ export const FormTest = () => {
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Number Field' )} labelFor="number" placement="beside">
+				<Form.Item label={ __( 'Number Field' ) } labelFor="number" placement="beside">
 					<input
 						type="number"
 						id="number"
@@ -185,7 +185,7 @@ export const FormTest = () => {
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Range Field' )} labelFor="range" placement="beside">
+				<Form.Item label={ __( 'Range Field' ) } labelFor="range" placement="beside">
 					<input
 						type="range"
 						id="range"
@@ -196,7 +196,7 @@ export const FormTest = () => {
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Color Field' )} labelFor="color" placement="beside">
+				<Form.Item label={ __( 'Color Field' ) } labelFor="color" placement="beside">
 					<input
 						type="color"
 						id="color"
@@ -204,32 +204,32 @@ export const FormTest = () => {
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'File Uploader' )} labelFor="file" placement="beside">
+				<Form.Item label={ __( 'File Uploader' ) } labelFor="file" placement="beside">
 					<input type="file" name="file" id="file" accept="image/*" multiple />
 				</Form.Item>
 
-				<Form.Item label={__( 'Date Time' )} labelFor="datetime" placement="beside">
+				<Form.Item label={ __( 'Date Time' ) } labelFor="datetime" placement="beside">
 					<input type="datetime-local" name="datetime" id="datetime" />
 				</Form.Item>
 
-				<Form.Item label={__( 'Progress (read only)' )} placement="beside">
+				<Form.Item label={ __( 'Progress (read only)' ) } placement="beside">
 					<progress max="100" value="75">75/100</progress>
 				</Form.Item>
 
-				<Form.Item label={__( 'Meter (read only)' )} placement="beside">
+				<Form.Item label={ __( 'Meter (read only)' ) } placement="beside">
 					<meter min="0" max="100" value="75" low="33" high="66" optimum="50">75</meter>
 				</Form.Item>
 
-				<Form.Item label={__( 'Toggle Control' )} placement="beside">
+				<Form.Item label={ __( 'Toggle Control' ) } placement="beside">
 					<ToggleControl />
 				</Form.Item>
 
-				<Form.Item label={__( 'Back/Forward Control' )} placement="beside">
+				<Form.Item label={ __( 'Back/Forward Control' ) } placement="beside">
 					<BackForwardControl />
 				</Form.Item>
 
-				<Form.Section label={__( 'Form Section' )}>
-					<Form.Item label={__( 'Phone Number' )} labelFor="phone2" placement="beside">
+				<Form.Section label={ __( 'Form Section' ) }>
+					<Form.Item label={ __( 'Phone Number' ) } labelFor="phone2" placement="beside">
 						<input
 							id="phone2"
 							name="phone2"
@@ -238,7 +238,7 @@ export const FormTest = () => {
 						/>
 					</Form.Item>
 
-					<Form.Item label={__( 'Website Address (URL)' )} labelFor="url2" placement="beside">
+					<Form.Item label={ __( 'Website Address (URL)' ) } labelFor="url2" placement="beside">
 						<input
 							id="url2"
 							name="url2"
@@ -246,16 +246,16 @@ export const FormTest = () => {
 							placeholder="https://www.yoursite.com"
 						/>
 					</Form.Item>
-					<Form.Item label={__( 'Name' )} labelFor="name2" isRequired={true}>
+					<Form.Item label={ __( 'Name' ) } labelFor="name2" isRequired={ true }>
 						<input
 							id="name2"
 							name="name2"
 							type="text"
-							required={true}
+							required={ true }
 							placeholder="Type Something!"
 						/>
 					</Form.Item>
-					<Form.Item label={__( 'Number Field' )} labelFor="number2" placement="beside">
+					<Form.Item label={ __( 'Number Field' ) } labelFor="number2" placement="beside">
 						<input
 							type="number"
 							id="number2"
@@ -267,8 +267,8 @@ export const FormTest = () => {
 					</Form.Item>
 				</Form.Section>
 
-				<Form.Section label={__( 'Another Section' )} isInset={true}>
-					<Form.Item label={__( 'Phone Number' )} labelFor="phone3" placement="beside">
+				<Form.Section label={ __( 'Another Section' ) } isInset={ true }>
+					<Form.Item label={ __( 'Phone Number' ) } labelFor="phone3" placement="beside">
 						<input
 							id="phone3"
 							name="phone3"
@@ -277,7 +277,7 @@ export const FormTest = () => {
 						/>
 					</Form.Item>
 
-					<Form.Item label={__( 'Website Address (URL)' )} labelFor="url3" placement="beside">
+					<Form.Item label={ __( 'Website Address (URL)' ) } labelFor="url3" placement="beside">
 						<input
 							id="url3"
 							name="url3"

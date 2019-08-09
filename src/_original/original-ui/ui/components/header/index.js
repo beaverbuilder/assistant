@@ -4,10 +4,10 @@ import { UIContext } from 'components'
 
 export const Header = props => {
 	const { activeAppName } = useContext( UIContext )
-	return <Tunnel id={`app-header-${activeAppName}`} {...props} />
+	return <Tunnel id={ `app-header-${activeAppName}` } { ...props } />
 }
 
 Header.Expanded = props => {
 	const { activeAppName } = useContext( UIContext )
-	return <Tunnel id={`app-header-expanded-${activeAppName}`} {...props} />
+	return <Tunnel id={ `app-header-expanded-${activeAppName}` } { ...props } />
 }

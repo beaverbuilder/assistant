@@ -267,7 +267,7 @@ export const Stack = ( { children, className } ) => {
 	}
 
 	return (
-		<div className={classes} style={styles}>
+		<div className={ classes } style={ styles }>
 			{ views.map( ( view, i ) => {
 				const { config, key, pose, content, appearance, label, shouldShowTitle } = view
 				const checks = {
@@ -292,17 +292,17 @@ export const Stack = ( { children, className } ) => {
 				} )
 
 				return (
-					<StackContext.Provider key={i} value={context}>
-						<ViewContext.Provider value={config.context}>
+					<StackContext.Provider key={ i } value={ context }>
+						<ViewContext.Provider value={ config.context }>
 							<StackView
-								key={key}
-								id={`fl-asst-stack-view-${key}`}
-								ref={ref}
+								key={ key }
+								id={ `fl-asst-stack-view-${key}` }
+								ref={ ref }
 								onPoseComplete={ name => poseComplete( name, i ) }
-								className={classes}
-								{...props}
+								className={ classes }
+								{ ...props }
 							>
-								<Breadcrumb onClick={dismiss}>{breadcrumb}</Breadcrumb>
+								<Breadcrumb onClick={ dismiss }>{breadcrumb}</Breadcrumb>
 								<Scroller>
 									{ shouldShowTitle && <Title>{label}</Title> }
 									{render( content, view )}
@@ -336,12 +336,12 @@ export const BackButton = props => {
 	}
 
 	return (
-		<Button appearance="icon" {...props} onClick={onClick}>
+		<Button appearance="icon" { ...props } onClick={ onClick }>
 			<Icon name="back-arrow" />
 		</Button>
 	)
 }
 
 const Breadcrumb = props => {
-	return <Tunnel id="app-breadcrumbs" {...props} />
+	return <Tunnel id="app-breadcrumbs" { ...props } />
 }

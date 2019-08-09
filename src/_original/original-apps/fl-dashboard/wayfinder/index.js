@@ -63,10 +63,10 @@ export const WayfinderWidget = () => {
 				{__( 'How would you like to begin?' )}
 				<span className="fl-asst-widget-title-actions">
 					<BackForwardControl
-						onNext={ () => move( 'forward' )}
-						onPrevious={ () => move( 'back' )}
-						isNextEnabled={scroll.canMoveForward}
-						isPreviousEnabled={scroll.canMoveBackward}
+						onNext={ () => move( 'forward' ) }
+						onPrevious={ () => move( 'back' ) }
+						isNextEnabled={ scroll.canMoveForward }
+						isPreviousEnabled={ scroll.canMoveBackward }
 					/>
 				</span>
 			</Fragment>
@@ -75,19 +75,19 @@ export const WayfinderWidget = () => {
 
 	return (
 		<Widget
-			title={<Title />}
-			isPadded={false}
+			title={ <Title /> }
+			isPadded={ false }
 			className="fl-asst-wayfinder-widget"
 		>
 			<ul
 				className="fl-asst-swipe-list"
-				onScroll={onScroll}
-				ref={listRef}
+				onScroll={ onScroll }
+				ref={ listRef }
 			>
 				{ cards.map( ( card, i ) => {
 					return (
-						<li key={i}>
-							<Button {...card} />
+						<li key={ i }>
+							<Button { ...card } />
 						</li>
 					)
 				} )}

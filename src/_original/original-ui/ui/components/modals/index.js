@@ -16,13 +16,13 @@ export const useModals = () => {
 			case 'notification':
 				return (
 					<Notification
-						key={key}
-						modalID={key}
-						pose={pose}
-						initialPose={initialPose}
-						onPoseComplete={onModalComplete}
-						appearance={config.appearance}
-						expiry={config.expiry}
+						key={ key }
+						modalID={ key }
+						pose={ pose }
+						initialPose={ initialPose }
+						onPoseComplete={ onModalComplete }
+						appearance={ config.appearance }
+						expiry={ config.expiry }
 						onClick={ 'function' === typeof config.onClick ? config.onClick : null }
 					>
 						{children}
@@ -31,23 +31,23 @@ export const useModals = () => {
 			case 'menu':
 				return (
 					<MenuModal
-						key={key}
-						modalID={key}
-						pose={pose}
-						initialPose={initialPose}
-						onPoseComplete={onModalComplete}
-						onDismiss={config.onDismiss}
+						key={ key }
+						modalID={ key }
+						pose={ pose }
+						initialPose={ initialPose }
+						onPoseComplete={ onModalComplete }
+						onDismiss={ config.onDismiss }
 					>{children}</MenuModal>
 				)
 			default:
 				return (
 					<Modal
-						key={key}
-						modalID={key}
-						pose={pose}
-						initialPose={initialPose}
-						onPoseComplete={onModalComplete}
-						config={config}
+						key={ key }
+						modalID={ key }
+						pose={ pose }
+						initialPose={ initialPose }
+						onPoseComplete={ onModalComplete }
+						config={ config }
 					>{children}</Modal>
 				)
 			}
@@ -147,14 +147,14 @@ export const Modal = ( { children, pose, initialPose, onPoseComplete, modalID, c
 	}
 
 	return (
-		<ModalBox className="fl-asst-modal-screen" pose={pose} initialPose={initialPose} onPoseComplete={complete} style={styles}>
+		<ModalBox className="fl-asst-modal-screen" pose={ pose } initialPose={ initialPose } onPoseComplete={ complete } style={ styles }>
 			<Toolbar>
 				<div className="fl-asst-toolbar-spacer" />
-				<Button onClick={ () => dismissModal( modalID )} appearance="icon">
+				<Button onClick={ () => dismissModal( modalID ) } appearance="icon">
 					<Icon name="close" />
 				</Button>
 			</Toolbar>
-			<Separator isSlim={true} />
+			<Separator isSlim={ true } />
 			<div className="fl-asst-modal-contents">
 				<Stack>
 					{children}
@@ -231,9 +231,9 @@ const Notification = ( { children, pose, initialPose, onPoseComplete, appearance
 
 	return (
 		<div className="fl-asst-modal-screen fl-asst-modal-notification-screen">
-			<NotificationBox className={classes} pose={pose} initialPose={initialPose} onPoseComplete={complete}>
-				<Button onClick={mainClick} className="fl-asst-notification-message" appearance="transparent">{children}</Button>
-				<Button onClick={dismiss} appearance="icon">
+			<NotificationBox className={ classes } pose={ pose } initialPose={ initialPose } onPoseComplete={ complete }>
+				<Button onClick={ mainClick } className="fl-asst-notification-message" appearance="transparent">{children}</Button>
+				<Button onClick={ dismiss } appearance="icon">
 					<Icon name="close" />
 				</Button>
 			</NotificationBox>
@@ -313,15 +313,15 @@ const MenuModal = ( { children, modalID, pose, initialPose, onPoseComplete, onDi
 	return (
 		<OverlayBox
 			className="fl-asst-modal-screen fl-asst-screen-menu-frame"
-			onClick={dismiss}
-			pose={pose}
-			initialPose={initialPose}
-			onPoseComplete={complete}
+			onClick={ dismiss }
+			pose={ pose }
+			initialPose={ initialPose }
+			onPoseComplete={ complete }
 		>
 			<MenuBox
 				className="fl-asst-screen-menu-contents"
-				initialPose={initialPose}
-				onClick={preventPropagation}
+				initialPose={ initialPose }
+				onClick={ preventPropagation }
 			>
 				{children}
 			</MenuBox>

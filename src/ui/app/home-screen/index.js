@@ -11,9 +11,9 @@ export const HomeScreen = () => {
 	let didSetFocusRef = false
 
 	return (
-		<Page shouldPadTop={true} shouldPadSides={false} shouldShowHeader={false}>
+		<Page shouldPadTop={ true } shouldPadSides={ false } shouldShowHeader={ false }>
 
-			<Page.Toolbar style={{ paddingBottom: 'var(--fl-asst-outer-space)'}}>
+			<Page.Toolbar style={ { paddingBottom: 'var(--fl-asst-outer-space)' } }>
 				<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
 			</Page.Toolbar>
 
@@ -59,8 +59,8 @@ export const HomeScreen = () => {
 					}
 
 					return (
-						<Nav.Link to={location} className="fl-asst-app-grid-item" key={i} innerRef={ref}>
-							<div className="fl-asst-app-icon" style={style}>
+						<Nav.Link to={ location } className="fl-asst-app-grid-item" key={ i } innerRef={ ref }>
+							<div className="fl-asst-app-icon" style={ style }>
 								{ 'function' === typeof app.icon && app.icon( iconProps ) }
 							</div>
 							<label>{app.label}</label>

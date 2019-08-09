@@ -16,8 +16,8 @@ export const Docs = () => {
 			</nav>
 			<div>
 				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route exact path="/buttons" component={Buttons} />
+					<Route exact path="/" component={ Home } />
+					<Route exact path="/buttons" component={ Buttons } />
 				</Switch>
 			</div>
 		</MemoryRouter>

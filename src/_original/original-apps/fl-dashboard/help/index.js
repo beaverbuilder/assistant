@@ -27,8 +27,8 @@ export const Help = ( { collapse } ) => {
 					<Heading>{apps['fl-dashboard'].label}</Heading>
 					<div>{__( 'The Dashboard app gives you a glance at what\'s happening across your website.' )}</div>
 					<Button
-						onClick={collapse}
-						style={{ margin: '15px 0 0' }}
+						onClick={ collapse }
+						style={ { margin: '15px 0 0' } }
 					>{__( 'Show Dashboard' )}</Button>
 				</Fragment>
 			),
@@ -95,13 +95,13 @@ export const Help = ( { collapse } ) => {
 	return (
 		<Fragment>
 			<ToolbarLabels />
-			<Padding bottom={half}>
+			<Padding bottom={ half }>
 				<BrandIcon />
-				<Heading level={1}>{welcome}</Heading>
-				<p style={{margin: 0}}>{intro}</p>
+				<Heading level={ 1 }>{welcome}</Heading>
+				<p style={ { margin: 0 } }>{intro}</p>
 			</Padding>
-			<Padding top={false} left={half} right={half}>
-				<Tabs tabs={tabs} />
+			<Padding top={ false } left={ half } right={ half }>
+				<Tabs tabs={ tabs } />
 			</Padding>
 		</Fragment>
 	)
@@ -115,8 +115,8 @@ const GoToApp = ( { id, children } ) => {
 	}
 	return (
 		<Button
-			onClick={click}
-			style={{ margin: '15px 0 0' }}
+			onClick={ click }
+			style={ { margin: '15px 0 0' } }
 		>{children}</Button>
 	)
 }
@@ -134,8 +134,8 @@ const BrandIcon = () => {
 		marginBottom: 'calc( var(--fl-asst-base-padding) / 2 )'
 	}
 	return (
-		<div style={styles}>
-			<Branding size={50} />
+		<div style={ styles }>
+			<Branding size={ 50 } />
 		</div>
 	)
 }
@@ -161,18 +161,18 @@ const ToolbarLabels = () => {
 
 	return (
 		<div className="fl-asst-toolbar-labels">
-			<div className="fl-asst-toolbar-label-cell" style={noteStyles}>{__( 'Notifications' )}</div>
+			<div className="fl-asst-toolbar-label-cell" style={ noteStyles }>{__( 'Notifications' )}</div>
 
 			<div className="fl-asst-toolbar-label-center">
 				<div className="fl-asst-toolbar-label-center-wrap">
 					<div className="fl-asst-toolbar-label-cell fl-asst-toolbar-label-cell-apps">
 						<span>{__( 'Apps' )}</span>
 					</div>
-					<div className="fl-asst-toolbar-label-cell" style={more}>{__( 'More' )}</div>
+					<div className="fl-asst-toolbar-label-cell" style={ more }>{__( 'More' )}</div>
 				</div>
 			</div>
 
-			<div className="fl-asst-toolbar-label-cell" style={hideStyles}>{__( 'Hide' )}</div>
+			<div className="fl-asst-toolbar-label-cell" style={ hideStyles }>{__( 'Hide' )}</div>
 		</div>
 	)
 }

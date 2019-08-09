@@ -33,7 +33,7 @@ export const App = () => {
 	return (
 		<Fragment>
 			<Header.Expanded>
-				<Help collapse={collapse} />
+				<Help collapse={ collapse } />
 			</Header.Expanded>
 
 			<TilesWidget />

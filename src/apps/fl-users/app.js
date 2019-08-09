@@ -3,15 +3,15 @@ import { App, Page, Nav, List } from 'assistant/lib'
 
 export const Users = ( { match } ) => (
 	<Nav.Switch>
-		<Nav.Route exact path={`${match.url}/`} component={Main} />
-		<Nav.Route path={`${match.url}/user/:id`} component={Page.User} />
+		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+		<Nav.Route path={ `${match.url}/user/:id` } component={ Page.User } />
 	</Nav.Switch>
 )
 
 const Main = () => {
 	const { handle } = useContext( App.Context )
 	return (
-		<Page shouldPadSides={false}>
+		<Page shouldPadSides={ false }>
 			<List.Users
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,

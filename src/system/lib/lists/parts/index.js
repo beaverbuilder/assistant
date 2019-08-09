@@ -102,12 +102,12 @@ const InfoItem = ( {
 	} )
 
 	return (
-		<Tag className={classes} {...newProps}>
+		<Tag className={ classes } { ...newProps }>
 
 			{ ( hasThumbnail || shouldAlwaysShowThumbnail ) &&
-				<div className={thumbClasses}>
-					{ thumbnail && <img src={thumbnail} /> }
-					{ color && <div className="fl-asst-list-item-color-thumbnail"  style={{ backgroundColor: color }} /> }
+				<div className={ thumbClasses }>
+					{ thumbnail && <img src={ thumbnail } /> }
+					{ color && <div className="fl-asst-list-item-color-thumbnail"  style={ { backgroundColor: color } } /> }
 				</div>
 			}
 
@@ -131,14 +131,14 @@ export const Item = ( {
 		tabIndex: -1,
 	}
 	return (
-		<Tag {...props}>{ children ? children : <InfoItem {...rest} /> }</Tag>
+		<Tag { ...props }>{ children ? children : <InfoItem { ...rest } /> }</Tag>
 	)
 }
 
-const Section = ( { children, className, label, type, items, ...rest } ) => {
+const Section = ( { children, className, label, ...rest } ) => {
 	const classes = classname( 'fl-asst-list-section', className )
 	return (
-		<li className={classes} {...rest}>
+		<li className={ classes } { ...rest }>
 			<hr/>
 			<div className="fl-asst-list-section-header">{label}</div>
 			<div className="fl-asst-list-section-content">{children}</div>

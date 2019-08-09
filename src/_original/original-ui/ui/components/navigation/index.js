@@ -18,7 +18,7 @@ export const NavBar = props => {
 	delete merged.maxItems
 
 	return (
-		<nav {...merged}>
+		<nav { ...merged }>
 			{ items.map( ( item, i ) => {
 
 				if ( maxItems && i >= maxItems ) {
@@ -26,7 +26,7 @@ export const NavBar = props => {
 				}
 
 				return (
-					<Button key={i} {...item} />
+					<Button key={ i } { ...item } />
 				)
 			} )}
 			{ false && <MoreButton /> }

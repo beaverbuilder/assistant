@@ -28,8 +28,8 @@ export const Scroller = props => {
 	}
 
 	return (
-		<Scroller.Context.Provider value={context}>
-			<div {...merged} />
+		<Scroller.Context.Provider value={ context }>
+			<div { ...merged } />
 		</Scroller.Context.Provider>
 	)
 }

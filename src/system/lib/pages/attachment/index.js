@@ -2,7 +2,7 @@ import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Form } from 'lib'
 import utils from 'utils'
-const { react: { useInitialFocus }} = utils
+const { react: { useInitialFocus } } = utils
 
 /**
  * Get a srcset string from an object of sizes.
@@ -22,7 +22,7 @@ export const Attachment = ( { location } ) => {
 	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	const srcSet = getSrcSet( item.sizes )
 
-	const onFormChange = values => {}
+	const onFormChange = () => {}
 
 	const [ values, setValue ] = Form.useFormState( {
 		title: item.title,
@@ -30,29 +30,29 @@ export const Attachment = ( { location } ) => {
 	}, onFormChange )
 
 	return (
-		<Page shouldPadSides={false} title={__( 'Attachment' )}>
-			<Page.Toolbar shouldPadBottom={true}>
-				<img src={item.thumbnail} srcSet={srcSet} />
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) }>
+			<Page.Toolbar shouldPadBottom={ true }>
+				<img src={ item.thumbnail } srcSet={ srcSet } />
 			</Page.Toolbar>
 
 			<Form>
-				<Form.Item label={__( 'Name' )} labelFor="name" isRequired={true} placement="beside">
+				<Form.Item label={ __( 'Name' ) } labelFor="name" isRequired={ true } placement="beside">
 					<input
 						id="name"
 						type="text"
-						required={true}
-						placeholder={__( 'Attachment Title' )}
-						value={values.title}
+						required={ true }
+						placeholder={ __( 'Attachment Title' ) }
+						value={ values.title }
 						onChange={ e => setValue( 'title', e.target.value ) }
-						ref={firstRef}
+						ref={ firstRef }
 					/>
 				</Form.Item>
-				<Form.Item label={__( 'Description' )} labelFor="description" isRequired={true} placement="beside">
+				<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true } placement="beside">
 					<input
 						id="description"
 						type="text"
-						placeholder={__( 'Description' )}
-						value={values.description}
+						placeholder={ __( 'Description' ) }
+						value={ values.description }
 						onChange={ e => setValue( 'description', e.target.value ) }
 					/>
 				</Form.Item>

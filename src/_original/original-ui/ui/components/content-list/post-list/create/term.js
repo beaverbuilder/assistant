@@ -70,30 +70,30 @@ export const CreateTerm = () => {
 
 	return (
 		<form>
-			<Form.Item label={__( 'Name' )} labelFor="fl-asst-term-name" isRequired={true}>
+			<Form.Item label={ __( 'Name' ) } labelFor="fl-asst-term-name" isRequired={ true }>
 				<input
 					id="fl-asst-term-name"
 					name="name"
 					type="text"
-					placeholder={__( 'My Great Name!' )}
-					value={term.name}
-					onChange={onChange}
+					placeholder={ __( 'My Great Name!' ) }
+					value={ term.name }
+					onChange={ onChange }
 				/>
 			</Form.Item>
 
-			<Form.Item label={__( 'Slug' )} labelFor="fl-asst-term-slug">
+			<Form.Item label={ __( 'Slug' ) } labelFor="fl-asst-term-slug">
 				<input
 					id="fl-asst-term-slug"
 					name="slug"
 					type="text"
-					placeholder={__( 'my-great-slug' )}
-					value={term.slug}
-					onChange={onChange}
+					placeholder={ __( 'my-great-slug' ) }
+					value={ term.slug }
+					onChange={ onChange }
 				/>
 			</Form.Item>
 
 			{ isHierarchical &&
-				<Form.Item label={__( 'Parent' )} labelFor="fl-asst-term-parent">
+				<Form.Item label={ __( 'Parent' ) } labelFor="fl-asst-term-parent">
 					<TermParentSelect
 						taxonomy={ type }
 						name='parent'
@@ -104,13 +104,13 @@ export const CreateTerm = () => {
 				</Form.Item>
 			}
 
-			<Form.Item label={__( 'Description' )} labelFor="fl-asst-term-description">
+			<Form.Item label={ __( 'Description' ) } labelFor="fl-asst-term-description">
 				<textarea
 					name='description'
 					id="fl-asst-term-description"
-					rows={6}
-					value={term.description}
-					onChange={onChange}
+					rows={ 6 }
+					value={ term.description }
+					onChange={ onChange }
 				/>
 			</Form.Item>
 
@@ -120,7 +120,7 @@ export const CreateTerm = () => {
 				}
 				{ ! creating &&
 					<Fragment>
-						<Button onClick={createClicked}>{ labels.addNewItem }</Button>
+						<Button onClick={ createClicked }>{ labels.addNewItem }</Button>
 					</Fragment>
 				}
 			</Form.Footer>

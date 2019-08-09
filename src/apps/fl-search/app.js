@@ -5,9 +5,9 @@ import { Main } from './main'
 export const App = ( { match } ) => {
 	return (
 		<Nav.Switch>
-			<Nav.Route exact path={`${match.url}/`} component={Main} />
-			<Nav.Route path={`${match.url}/posts/:id`} component={Page.Post} />
-			<Nav.Route path={`${match.url}/users/:id`} component={Page.User} />
+			<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+			<Nav.Route path={ `${match.url}/posts/:id` } component={ Page.Post } />
+			<Nav.Route path={ `${match.url}/users/:id` } component={ Page.User } />
 		</Nav.Switch>
 	)
 }

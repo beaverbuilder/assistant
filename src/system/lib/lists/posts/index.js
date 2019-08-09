@@ -24,7 +24,7 @@ export const Posts = ( {
 					thumbnail: item.thumbnail,
 					thumbnailSize: 'normal' === size ? 'med' : 'sm',
 				} )
-			}}
+			} }
 			{ ...rest }
 		/>
 	)

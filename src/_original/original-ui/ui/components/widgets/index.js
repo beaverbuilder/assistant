@@ -9,9 +9,9 @@ export const Widget = ( { children, title, isPadded, className, style, contentSt
 		'fl-asst-widget-no-padding': false === isPadded ? true : false
 	}, className )
 	return (
-		<div className={classes} style={style}>
+		<div className={ classes } style={ style }>
 			{ title && <Heading className="fl-asst-widget-title">{title}</Heading> }
-			<div className="fl-asst-widget-contents" style={contentStyle}>{children}</div>
+			<div className="fl-asst-widget-contents" style={ contentStyle }>{children}</div>
 		</div>
 	)
 }

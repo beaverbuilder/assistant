@@ -17,9 +17,9 @@ export const BackForwardControl = props => {
 	}, className )
 
 	return (
-		<div className={classes}>
-			<Button onClick={onPrevious} appearance="transparent" disabled={! isPreviousEnabled}><Icon name="back" /></Button>
-			<Button onClick={onNext} appearance="transparent" disabled={! isNextEnabled}><Icon name="forward" /></Button>
+		<div className={ classes }>
+			<Button onClick={ onPrevious } appearance="transparent" disabled={ ! isPreviousEnabled }><Icon name="back" /></Button>
+			<Button onClick={ onNext } appearance="transparent" disabled={ ! isNextEnabled }><Icon name="forward" /></Button>
 		</div>
 	)
 }

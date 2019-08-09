@@ -17,9 +17,9 @@ export const AppHeader = () => {
 
 	return (
 		<div className="fl-asst-app-header">
-			<CollapsedContent isExpanded={isAppHeaderExpanded} />
-			<ExpandedContent isExpanded={isAppHeaderExpanded} />
-			<ExpanderButton isExpanded={isAppHeaderExpanded} onClick={ () => {
+			<CollapsedContent isExpanded={ isAppHeaderExpanded } />
+			<ExpandedContent isExpanded={ isAppHeaderExpanded } />
+			<ExpanderButton isExpanded={ isAppHeaderExpanded } onClick={ () => {
 				setIsAppHeaderExpanded( ! isAppHeaderExpanded )
 				if ( isFirstTime ) {
 					setIsFirstTime( false )
@@ -48,11 +48,11 @@ const CollapsedContent = props => {
 	delete merged.isExpanded
 
 	return (
-		<TunnelPlaceholder id={`app-header-${appName}`} appName={appName} multiple>
+		<TunnelPlaceholder id={ `app-header-${appName}` } appName={ appName } multiple>
 			{ ( { items } ) => {
 				if ( 'undefined' !== items && 0 < items.length ) {
 					return (
-						<div {...merged}>
+						<div { ...merged }>
 							{ items.map( item => item.children )}
 						</div>
 					)
@@ -60,7 +60,7 @@ const CollapsedContent = props => {
 
 				// Default to app title
 				return (
-					<div {...merged}>
+					<div { ...merged }>
 						<BreadcrumbTrail />
 					</div>
 				)
@@ -91,11 +91,11 @@ const ExpandedContent = props => {
 	delete merged.isExpanded
 
 	return (
-		<TunnelPlaceholder id={`app-header-expanded-${appName}`} appName={appName} multiple>
+		<TunnelPlaceholder id={ `app-header-expanded-${appName}` } appName={ appName } multiple>
 			{ ( { items } ) => {
 				if ( 'undefined' !== items && 0 < items.length ) {
 					return (
-						<div {...merged}>
+						<div { ...merged }>
 							{ items.map( item => item.children )}
 						</div>
 					)
@@ -122,7 +122,7 @@ const BarButton = props => {
 	delete merged.isExpanded
 
 	return (
-		<Button {...merged} appearance="transparent" title={__( 'Expand Header' )}>
+		<Button { ...merged } appearance="transparent" title={ __( 'Expand Header' ) }>
 			<svg className="fl-asst-icon" width="50px" height="8px" viewBox="0 0 50 8">
 				<g
 					fill="transparent"
@@ -142,13 +142,13 @@ const ExpanderButton = props => {
 	const { activeAppName: appName } = useContext( UIContext )
 
 	return (
-		<TunnelPlaceholder id={`app-header-expanded-${appName}`} key={name} multiple>
+		<TunnelPlaceholder id={ `app-header-expanded-${appName}` } key={ name } multiple>
 			{ ( { items } ) => {
 				if ( 'undefined' !== items && 0 < items.length ) {
 
 					return (
 						<div className="fl-asst-app-header-control">
-							<BarButton {...props} />
+							<BarButton { ...props } />
 						</div>
 					)
 				}
@@ -167,7 +167,7 @@ const BreadcrumbTrail = () => {
 					const isFirst = 0 === i
 					const isLast = i === items.length - 1
 					return (
-						<Fragment key={i}>
+						<Fragment key={ i }>
 							{ ! isFirst &&
 							<span className="fl-asst-app-breadcrumb-separator">
 								<Icon name="forward" />
@@ -176,7 +176,7 @@ const BreadcrumbTrail = () => {
 							{ ! isLast && <Button
 								appearance="transparent"
 								className="fl-asst-app-breadcrumb-item"
-								onClick={onClick}
+								onClick={ onClick }
 							>{children}</Button> }
 							{ isLast && <span className="fl-asst-app-breadcrumb-item">{children}</span> }
 						</Fragment>

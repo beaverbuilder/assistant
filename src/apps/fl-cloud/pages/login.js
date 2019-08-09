@@ -1,10 +1,10 @@
-import React, {useState, Fragment} from 'fl-react'
+import React, { useState, Fragment } from 'fl-react'
 import PropTypes from 'prop-types'
-import {Button, Icon} from 'assistant/lib'
+import { Button, Icon } from 'assistant/lib'
 
 export const LoginPage = ( props ) => {
 
-	const {doLogin, errors} = props
+	const { doLogin, errors } = props
 
 	const [ email, setEmail ] = useState( '' )
 	const [ password, setPassword ] = useState( '' )
@@ -22,16 +22,16 @@ export const LoginPage = ( props ) => {
 
 	return (
 		<Fragment>
-			<Icon.Pencil size={75}/>
+			<Icon.Pencil size={ 75 }/>
 			{doingLogin && ( <p>Authenticating...</p> )}
 			{! doingLogin && (
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={ handleSubmit }>
 					<p className="center-text">You are not currently connected to Assistant Cloud</p>
 					<div className="errors">
 						{
 							( null !== errors && errors.map( ( error, index ) => {
 								return (
-									<li key={index}>{error}</li>
+									<li key={ index }>{error}</li>
 								)
 							} ) )
 						}
@@ -40,20 +40,20 @@ export const LoginPage = ( props ) => {
 						<label>Email</label>
 						<input type="email"
 							name="email"
-							onChange={e => {
+							onChange={ e => {
 								setEmail( e.target.value )
-							}}
-							value={email}
+							} }
+							value={ email }
 							required/>
 					</div>
 					<div>
 						<label>Password</label>
 						<input type="password"
 							name="password"
-							onChange={e => {
+							onChange={ e => {
 								setPassword( e.target.value )
-							}}
-							value={password}/>
+							} }
+							value={ password }/>
 					</div>
 					<div>
 						<Button type="submit" className="fl-asst-cloud-connect-button">Connect</Button>

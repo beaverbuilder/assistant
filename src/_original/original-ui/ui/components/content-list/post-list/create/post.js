@@ -69,30 +69,30 @@ export const CreatePost = () => {
 
 	return (
 		<form>
-			<Form.Item label={__( 'Title' )} labelFor="fl-asst-post-title" isRequired={true}>
+			<Form.Item label={ __( 'Title' ) } labelFor="fl-asst-post-title" isRequired={ true }>
 				<input
 					id="fl-asst-post-title"
 					name="post_title"
 					type="text"
-					placeholder={__( 'My Great Title!' )}
+					placeholder={ __( 'My Great Title!' ) }
 					value={ post.post_title }
-					onChange={onChange}
+					onChange={ onChange }
 				/>
 			</Form.Item>
 
-			<Form.Item label={__( 'Slug' )} labelFor="fl-asst-post-slug">
+			<Form.Item label={ __( 'Slug' ) } labelFor="fl-asst-post-slug">
 				<input
 					id="fl-asst-post-slug"
 					name="post_name"
 					type="text"
-					placeholder={__( 'my-great-slug' )}
+					placeholder={ __( 'my-great-slug' ) }
 					value={ post.post_name }
-					onChange={onChange}
+					onChange={ onChange }
 				/>
 			</Form.Item>
 
 			{ isHierarchical &&
-				<Form.Item label={__( 'Parent' )} labelFor="fl-asst-post-parent">
+				<Form.Item label={ __( 'Parent' ) } labelFor="fl-asst-post-parent">
 					<PostParentSelect
 						type={ type }
 						name='post_parent'
@@ -104,13 +104,13 @@ export const CreatePost = () => {
 			}
 
 			{ supports.excerpt &&
-				<Form.Item label={__( 'Excerpt' )} labelFor="fl-asst-post-excerpt">
+				<Form.Item label={ __( 'Excerpt' ) } labelFor="fl-asst-post-excerpt">
 					<textarea
 						name='post_excerpt'
 						id="fl-asst-post-excerpt"
-						rows={6}
+						rows={ 6 }
 						value={ post.post_excerpt }
-						onChange={onChange}
+						onChange={ onChange }
 					/>
 				</Form.Item>
 			}

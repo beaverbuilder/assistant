@@ -74,13 +74,13 @@ const Assistant = () => {
 	}
 
 	return (
-		<Provider store={getSystemStore()}>
-			<UIContext.Provider value={ui}>
-				<PageViewContext.Provider value={currentPageView}>
+		<Provider store={ getSystemStore() }>
+			<UIContext.Provider value={ ui }>
+				<PageViewContext.Provider value={ currentPageView }>
 					<ReactCSSTransitionGroup
 						transitionName="display"
-						transitionEnterTimeout={2000}
-						transitionLeaveTimeout={2000}
+						transitionEnterTimeout={ 2000 }
+						transitionLeaveTimeout={ 2000 }
 					>
 						{ ! isShowingUI && <UIToggleButton key="button" /> }
 						{ isShowingUI && <UI key="panel" /> }

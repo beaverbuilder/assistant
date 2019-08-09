@@ -26,8 +26,8 @@ export const Docs = ( { windowMargin = 0, align = 'left' } ) => {
 	}
 
 	return (
-		<div style={style} className="fl-asst-surface">
-			<div style={contentStyle}>
+		<div style={ style } className="fl-asst-surface">
+			<div style={ contentStyle }>
 				<h1>{__( 'Design Docs' )}</h1>
 				<DocPages />
 			</div>

@@ -40,10 +40,10 @@ const AppsMenu = () => {
 					return (
 						<Button
 							className="fl-asst-app-list-item"
-							key={key}
+							key={ key }
 							appearance="transparent"
 							onClick={ () => clickItem( key ) }
-							isSelected={isSelected}
+							isSelected={ isSelected }
 						>
 							{ icon }
 							<div className="fl-asst-app-list-item-title">

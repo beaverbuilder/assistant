@@ -10,17 +10,17 @@ export const App = () => {
 	const isDark = 'dark' === brightness
 
 	return (
-		<Page title="Settings" shouldPadSides={false}>
+		<Page title="Settings" shouldPadSides={ false }>
 			<Form>
-				<Form.Item label={__( 'Dark Appearance' )} placement="beside">
+				<Form.Item label={ __( 'Dark Appearance' ) } placement="beside">
 					<Control.Toggle
 						value={ isDark }
 						onChange={ v => setBrightness( v ? 'dark' : 'light' ) }
 					/>
 				</Form.Item>
-				<Form.Item label={__( 'Display Icon Labels' )} placement="beside">
+				<Form.Item label={ __( 'Display Icon Labels' ) } placement="beside">
 					<Control.Toggle
-						value={shouldShowLabels}
+						value={ shouldShowLabels }
 						onChange={ v => setShouldShowLabels( v ) }
 					/>
 				</Form.Item>

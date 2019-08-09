@@ -104,8 +104,8 @@ export const PostListDetail = () => {
 
 	return (
 		<ContentListDetail>
-			<PostDetailHeader data={post} />
-			<Title shouldOverlay={true} shouldInvertColors={true}>{viewTitle}</Title>
+			<PostDetailHeader data={ post } />
+			<Title shouldOverlay={ true } shouldInvertColors={ true }>{viewTitle}</Title>
 
 			<form>
 
@@ -122,22 +122,22 @@ export const PostListDetail = () => {
 							</Fragment>
 						}
 						{ 'trash' === status &&
-							<Tag onClick={restoreClicked}>{__( 'Restore' )}</Tag>
+							<Tag onClick={ restoreClicked }>{__( 'Restore' )}</Tag>
 						}
 					</TagGroup>
 				</Form.Item>
 
-				<Form.Item label={__( 'Title' )} labelFor="title">
+				<Form.Item label={ __( 'Title' ) } labelFor="title">
 					<input type='text' name='title' id="title" value={ title } onChange={ onChange } />
 				</Form.Item>
 
-				<Form.Item label={__( 'Slug' )} labelFor="slug">
+				<Form.Item label={ __( 'Slug' ) } labelFor="slug">
 					<input type='text' name='slug' id="slug" value={ slug } onChange={ onChange } />
-					<CopyButton label={__( 'Copy URL' )} text={ url } />
+					<CopyButton label={ __( 'Copy URL' ) } text={ url } />
 				</Form.Item>
 
 				{ isHierarchical &&
-					<Form.Item label={__( 'Parent' )} labelFor="fl-asst-post-parent">
+					<Form.Item label={ __( 'Parent' ) } labelFor="fl-asst-post-parent">
 						<PostParentSelect
 							type={ type }
 							exclude={ id }
@@ -150,27 +150,27 @@ export const PostListDetail = () => {
 				}
 
 				{ supports.excerpt &&
-					<Form.Item label={__( 'Excerpt' )} labelFor="fl-asst-post-excerpt">
+					<Form.Item label={ __( 'Excerpt' ) } labelFor="fl-asst-post-excerpt">
 						<textarea
 							name='excerpt'
 							id="fl-asst-post-excerpt"
-							rows={6}
+							rows={ 6 }
 							value={ excerpt }
 							onChange={ onChange }
 						/>
 					</Form.Item>
 				}
 
-				<Form.Section label={__( 'Publish Settings' )} isInset={true}>
-					<Form.Item label={__( 'Visibility' )} placement="beside">{ visibility }</Form.Item>
-					<Form.Item label={__( 'Status' )} placement="beside">
+				<Form.Section label={ __( 'Publish Settings' ) } isInset={ true }>
+					<Form.Item label={ __( 'Visibility' ) } placement="beside">{ visibility }</Form.Item>
+					<Form.Item label={ __( 'Status' ) } placement="beside">
 						{ contentStatus[ status ] ? contentStatus[ status ] : status }
 					</Form.Item>
-					<Form.Item label={__( 'PublishDate' )} placement="beside">{ date }</Form.Item>
+					<Form.Item label={ __( 'PublishDate' ) } placement="beside">{ date }</Form.Item>
 				</Form.Section>
 
-				<Form.Section label={__( 'Discussion Settings' )} isInset={true}>
-					<Form.Item label={__( 'Comments' )} labelFor="commentsAllowed" placement="beside">
+				<Form.Section label={ __( 'Discussion Settings' ) } isInset={ true }>
+					<Form.Item label={ __( 'Comments' ) } labelFor="commentsAllowed" placement="beside">
 						<ToggleControl
 							id="commentsAllowed"
 							name='commentsAllowed'
@@ -198,7 +198,7 @@ const PostDetailHeader = ( { data } ) => {
 	const { title, thumbnail } = data
 	return (
 		<div className="fl-asst-detail-feature">
-			{ thumbnail && <img className="fl-asst-detail-feature-thumbnail" src={thumbnail} /> }
+			{ thumbnail && <img className="fl-asst-detail-feature-thumbnail" src={ thumbnail } /> }
 			<div className="fl-asst-detail-feature-content">
 				<div className="fl-asst-detail-feature-title">{title}</div>
 			</div>

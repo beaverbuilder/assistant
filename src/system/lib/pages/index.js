@@ -39,12 +39,12 @@ export const Page = ( {
 	}
 
 	return (
-		<Page.Context.Provider value={context}>
+		<Page.Context.Provider value={ context }>
 			<div className="fl-asst-page">
-				{ shouldShowHeader && <Page.Header label={title} icon={icon} actions={headerActions} /> }
-				{ toolbar && <Page.Toolbar shouldPadTop={! shouldShowHeader} shouldPadBottom={true}>{toolbar}</Page.Toolbar> }
-				<div className="fl-asst-page-content-wrap" ref={ref} {...rest}>
-					<div className={classes}>{children}</div>
+				{ shouldShowHeader && <Page.Header label={ title } icon={ icon } actions={ headerActions } /> }
+				{ toolbar && <Page.Toolbar shouldPadTop={ ! shouldShowHeader } shouldPadBottom={ true }>{toolbar}</Page.Toolbar> }
+				<div className="fl-asst-page-content-wrap" ref={ ref } { ...rest }>
+					<div className={ classes }>{children}</div>
 				</div>
 			</div>
 		</Page.Context.Provider>
@@ -91,8 +91,8 @@ Page.Header = ( { icon, label, actions } ) => {
 				{ ! isRoot && ! isAppRoot &&
 				<div className="fl-asst-app-header-icon">
 					<button
-						onClick={history.goBack}
-						style={{
+						onClick={ history.goBack }
+						style={ {
 							display: 'flex',
 							flexDirection: 'column',
 							alignItems: 'center',
@@ -100,15 +100,15 @@ Page.Header = ( { icon, label, actions } ) => {
 							color: 'inherit',
 							lineHeight: 1,
 							fontSize: 12,
-						}}
+						} }
 					>
-						<div style={{
+						<div style={ {
 							color: 'var(--fl-asst-accent-color)',
 							marginBottom: shouldShowLabels ? 5 : null,
-						}}>
+						} }>
 							<Icon.BackArrow />
 						</div>
-						{ shouldShowLabels && <span style={{ marginTop: 'auto' }}>{__( 'Back' )}</span> }
+						{ shouldShowLabels && <span style={ { marginTop: 'auto' } }>{__( 'Back' )}</span> }
 					</button>
 				</div>
 				}
@@ -139,7 +139,7 @@ Page.Toolbar = ( {
 		'fl-asst-pad-bottom': shouldPadBottom,
 	}, className )
 	return (
-		<div className={classes} {...rest} />
+		<div className={ classes } { ...rest } />
 	)
 }
 Page.Toolbar.displayName = 'Page.Toolbar'
@@ -158,7 +158,7 @@ Page.Pad = ( {
 		'fl-asst-pad-bottom': bottom,
 	}, className )
 
-	return <div className={classes} {...rest} />
+	return <div className={ classes } { ...rest } />
 }
 Page.Pad.displayName = 'Page.Pad'
 

@@ -38,7 +38,7 @@ export const UpdateDetail = () => {
 	return (
 		<ContentListDetail className='fl-asst-update-detail'>
 
-			{ banner && <Photo src={banner} style={ { marginTop: 'var(--fl-asst-base-padding)' } } /> }
+			{ banner && <Photo src={ banner } style={ { marginTop: 'var(--fl-asst-base-padding)' } } /> }
 
 			<ScreenHeader title={ headerTitle }>
 				<TagGroup appearance='muted'>

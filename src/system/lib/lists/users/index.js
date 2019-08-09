@@ -14,7 +14,7 @@ export const Users = ( {
 				return getItemProps( item, {
 					...defaultProps,
 				} )
-			}}
+			} }
 			{ ...rest }
 		/>
 	)

@@ -27,7 +27,7 @@ export const MediaListItem = ( { className } ) => {
 		present( {
 			label: __( 'Edit Media' ),
 			content: (
-				<ViewContext.Provider value={context}>
+				<ViewContext.Provider value={ context }>
 					<MediaDetail />
 				</ViewContext.Provider>
 			),
@@ -43,9 +43,9 @@ export const MediaListItem = ( { className } ) => {
 	}*/
 
 	return (
-		<figure className={classes} onClick={onClick}>
+		<figure className={ classes } onClick={ onClick }>
 			<div className="fl-asst-figure-visual">
-				{ url && <img src={url} alt={alt} /> }
+				{ url && <img src={ url } alt={ alt } /> }
 				{ ! url && <Icon name="document" /> }
 			</div>
 			<figcaption>{title}</figcaption>
@@ -60,7 +60,7 @@ export const MediaListItemLoading = ( { className } ) => {
 	}
 
 	return (
-		<div className={classes} style={styles}>
+		<div className={ classes } style={ styles }>
 			<div className="fl-asst-grid-item-anchor">
 				<AspectBox />
 			</div>

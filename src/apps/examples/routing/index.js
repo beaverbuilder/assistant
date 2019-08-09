@@ -4,8 +4,8 @@ import { Page, List } from 'assistant/lib'
 
 export const RoutingExample = ( { match } ) => (
 	<Switch>
-		<Route exact path={`${match.url}/`} component={Main} />
-		<Route path={`${match.url}/second`} component={SecondaryScreen} />
+		<Route exact path={ `${match.url}/` } component={ Main } />
+		<Route path={ `${match.url}/second` } component={ SecondaryScreen } />
 	</Switch>
 )
 

@@ -59,8 +59,8 @@ export const useFileDrop = ( handleDrop = () => {} ) => {
 const DraggingView = () => {
 	return (
 		<EmptyMessage>
-			<Padding bottom={150}>
-				<Padding top={false} style={{ display: 'flex', justifyContent: 'center' }}>
+			<Padding bottom={ 150 }>
+				<Padding top={ false } style={ { display: 'flex', justifyContent: 'center' } }>
 					<Branding name="outline" />
 				</Padding>
 				<div>{ __( 'Drop files to begin uploading.' ) }</div>
@@ -95,7 +95,7 @@ export const FileDropListener = props => {
 
 	return (
 		<Fragment>
-			<div {...merged}>
+			<div { ...merged }>
 				<div className="fl-asst-file-drop-content-view">{children}</div>
 				<div className="fl-asst-file-drop-dragging-view">{draggingView}</div>
 			</div>

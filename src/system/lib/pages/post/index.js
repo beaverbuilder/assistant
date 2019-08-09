@@ -28,11 +28,11 @@ export const Post = ( { location } ) => {
 	const { title, thumbnail, url } = item
 
 	return (
-		<Page title={__( 'Post' )}>
-			{ thumbnail && <img src={thumbnail} /> }
+		<Page title={ __( 'Post' ) }>
+			{ thumbnail && <img src={ thumbnail } /> }
 			<h2>{title}</h2>
 			<div>
-				<a href={url}><em>{url}</em></a>
+				<a href={ url }><em>{url}</em></a>
 			</div>
 		</Page>
 	)
@@ -40,7 +40,7 @@ export const Post = ( { location } ) => {
 
 export const CreatePost = () => {
 	return (
-		<Page title={__( 'Create New' )}>
+		<Page title={ __( 'Create New' ) }>
 			<p>Make something new right here.</p>
 		</Page>
 	)

@@ -90,10 +90,10 @@ export const AppFrame = ( { children } ) => {
 
 	return (
 		<nav
-			className={classes}
-			style={styles}
+			className={ classes }
+			style={ styles }
 			role="navigation"
-			aria-label={__( 'Assistant Panel' )}
+			aria-label={ __( 'Assistant Panel' ) }
 			aria-hidden={ ! isShowingUI ? 'true' : 'false' }
 		>{children}</nav>
 	)
@@ -110,8 +110,8 @@ export const FrameSizeButton = () => {
 	}
 
 	return (
-		<Button appearance="icon" onClick={toggleSize}>
-			<Icon name={`expand-${appFrameSize}`} />
+		<Button appearance="icon" onClick={ toggleSize }>
+			<Icon name={ `expand-${appFrameSize}` } />
 		</Button>
 	)
 }

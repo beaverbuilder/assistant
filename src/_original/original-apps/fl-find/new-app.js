@@ -4,8 +4,8 @@ import { AppRoute, AppLink } from 'lib'
 export const NewApp = () => {
 	return (
 		<Fragment>
-			<AppRoute exact path="/" component={Root} />
-			<AppRoute path="/next" component={NextScreen} />
+			<AppRoute exact path="/" component={ Root } />
+			<AppRoute path="/next" component={ NextScreen } />
 		</Fragment>
 	)
 }
@@ -25,7 +25,7 @@ const NextScreen = () => {
 	return (
 		<Fragment>
 			<h2>Test Screen</h2>
-			<button onClick={() => history.goBack()}>Back</button>
+			<button onClick={ () => history.goBack() }>Back</button>
 		</Fragment>
 	)
 }

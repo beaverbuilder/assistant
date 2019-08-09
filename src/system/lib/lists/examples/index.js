@@ -3,16 +3,16 @@ import { List } from 'lib'
 
 export const TestSheet = () => {
 
-	const padSides = { padding: '0 var(--fl-asst-outer-space)'}
+	const padSides = { padding: '0 var(--fl-asst-outer-space)' }
 
 	const SimpleDataExample = () => {
 		const items = [ 'Red', 'Green', 'Blue', 'Orange', 'Yellow', 'rebeccapurple', 'rgba(0,0,0,.4)' ]
 		return (
 			<>
-				<h2 style={padSides}>Simple Data Example</h2>
+				<h2 style={ padSides }>Simple Data Example</h2>
 				<List
-					items={items}
-					defaultItemProps={{ thumbnailSize: 'sm' }}
+					items={ items }
+					defaultItemProps={ { thumbnailSize: 'sm' } }
 				/>
 			</>
 		)
@@ -46,8 +46,8 @@ export const TestSheet = () => {
 		]
 		return (
 			<>
-				<h2 style={padSides}>Array-Driven List</h2>
-				<List items={items} />
+				<h2 style={ padSides }>Array-Driven List</h2>
+				<List items={ items } />
 			</>
 		)
 	}
@@ -74,9 +74,9 @@ export const TestSheet = () => {
 		]
 		return (
 			<>
-				<h2 style={padSides}>Sectioned List</h2>
+				<h2 style={ padSides }>Sectioned List</h2>
 				<List
-					items={items}
+					items={ items }
 					isListSection={ item => 'undefined' !== typeof item.items }
 					getSectionItems={ section => section.items }
 				/>
@@ -119,17 +119,17 @@ export const TestSheet = () => {
 				borderRadius: 7,
 			}
 			return (
-				<Tag className="fl-asst-list-item" style={style}>{children}</Tag>
+				<Tag className="fl-asst-list-item" style={ style }>{children}</Tag>
 			)
 		}
 
 		const Plugin = ( { message, pluginName, pluginIcon } ) => {
 			return (
 				<Row>
-					<div style={{ marginBottom: 'var(--fl-asst-tiny-space)'}}>{message}</div>
-					<div style={{ display: 'flex', flexDirection: 'row' }}>
-						<div style={{ marginRight: 'var(--fl-asst-inner-space)'}}>
-							<img src={pluginIcon} style={{ width: 30, height: 30 }} />
+					<div style={ { marginBottom: 'var(--fl-asst-tiny-space)' } }>{message}</div>
+					<div style={ { display: 'flex', flexDirection: 'row' } }>
+						<div style={ { marginRight: 'var(--fl-asst-inner-space)' } }>
+							<img src={ pluginIcon } style={ { width: 30, height: 30 } } />
 						</div>
 						<div>{pluginName}</div>
 					</div>
@@ -140,9 +140,9 @@ export const TestSheet = () => {
 		const Post = ( { message, postTitle: title, thumbnail } ) => {
 			return (
 				<Row>
-					<div style={{ marginBottom: 'var(--fl-asst-tiny-space)'}}>{message}</div>
-					<div style={{ display: 'flex', flexDirection: 'row' }}>
-						<img src={thumbnail} style={{ width: 60, height: 60, marginRight: 'var(--fl-asst-inner-space)' }} />
+					<div style={ { marginBottom: 'var(--fl-asst-tiny-space)' } }>{message}</div>
+					<div style={ { display: 'flex', flexDirection: 'row' } }>
+						<img src={ thumbnail } style={ { width: 60, height: 60, marginRight: 'var(--fl-asst-inner-space)' } } />
 						<div>{title}</div>
 					</div>
 				</Row>
@@ -162,10 +162,10 @@ export const TestSheet = () => {
 
 		return (
 			<>
-				<h2 style={padSides}>Heterogeneous Types Example</h2>
+				<h2 style={ padSides }>Heterogeneous Types Example</h2>
 				<List
-					items={items}
-					getItemComponent={getComponent}
+					items={ items }
+					getItemComponent={ getComponent }
 				/>
 			</>
 		)

@@ -10,7 +10,7 @@ const unsplash = new Unsplash( {
 
 export const UnsplashExample = ( { match } ) => (
 	<Switch>
-		<Route exact path={`${match.url}/`} component={Main} />
+		<Route exact path={ `${match.url}/` } component={ Main } />
 	</Switch>
 )
 
@@ -46,18 +46,18 @@ const Main = () => {
 
 	return (
 		<Page>
-			<input type="text" value={term} onChange={onChange}  style={{ color: 'black', width: '100%' }} />
+			<input type="text" value={ term } onChange={ onChange }  style={ { color: 'black', width: '100%' } } />
 			<ul>
 				{ results.map( ( item, i ) => {
 					const { urls } = item
 					return (
-						<li key={i}>
+						<li key={ i }>
 							<img
 								draggable
 								onDragStart={ e => {
 									onDrag( item, e )
-								}}
-								src={urls.small}
+								} }
+								src={ urls.small }
 							/>
 						</li>
 					)

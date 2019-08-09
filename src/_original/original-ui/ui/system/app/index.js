@@ -62,9 +62,9 @@ export const App = props => {
 	}
 
 	return (
-		<AppContext.Provider value={appContext}>
+		<AppContext.Provider value={ appContext }>
 			<AppErrorBoundary>
-				<div className="fl-asst-app" style={styles}>
+				<div className="fl-asst-app" style={ styles }>
 					<AppContentWrapper>
 						<AppMenuRenderer />
 						<Stack>{ output }</Stack>
@@ -116,11 +116,11 @@ const Menu = ( { title, children, displayBeside = 'full', width = 260 } ) => {
 	const preventClickThrough = e => e.stopPropagation()
 
 	return (
-		<div className={classes}>
+		<div className={ classes }>
 			{ ! shouldDisplayBesideContent &&
-                <animated.div className="fl-asst-app-menu-overlay" style={overlayProps} onClick={hideAppMenu} />
+                <animated.div className="fl-asst-app-menu-overlay" style={ overlayProps } onClick={ hideAppMenu } />
 			}
-			<animated.div className="fl-asst-app-menu-panel" style={viewProps} onClick={preventClickThrough}>
+			<animated.div className="fl-asst-app-menu-panel" style={ viewProps } onClick={ preventClickThrough }>
 				<Stack>
 					{ false !== title && <AppMenuHeader title={ title ? title : label } /> }
 					<div className="fl-asst-app-menu-contents">{children}</div>
@@ -136,7 +136,7 @@ const AppMenuRenderer = () => {
 			{ ( { items } ) => {
 				if ( 'undefined' !== items && 0 < items.length ) {
 					const props = items[0]
-					return <Menu {...props} />
+					return <Menu { ...props } />
 				}
 				return null
 			} }
@@ -156,7 +156,7 @@ const AppMenuHeader = ( { title } ) => {
 
 export const AppMenu = props => {
 	return (
-		<Tunnel id="app-menu" {...props} />
+		<Tunnel id="app-menu" { ...props } />
 	)
 }
 
@@ -178,7 +178,7 @@ export const AppMenuButton = () => {
 					}
 
 					return (
-						<Button onClick={toggleAppMenu} appearance="icon">
+						<Button onClick={ toggleAppMenu } appearance="icon">
 							<Icon name="menu" />
 						</Button>
 					)
@@ -211,7 +211,7 @@ const AppContentWrapper = ( { children } ) => {
 
 	return (
 		<div
-			className={classes}
+			className={ classes }
 			onClickCapture={ e => {
 				if ( isAppHeaderExpanded ) {
 					setIsAppHeaderExpanded( false )
@@ -221,7 +221,7 @@ const AppContentWrapper = ( { children } ) => {
 					}
 					e.stopPropagation()
 				}
-			}}
+			} }
 		>{children}</div>
 	)
 }

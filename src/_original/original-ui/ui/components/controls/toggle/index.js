@@ -45,8 +45,8 @@ export const ToggleControl = props => {
 	} )
 
 	return (
-		<button {...mergedProps}>
-			<animated.div className="fl-asst-control-thumb" style={thumbProps} />
+		<button { ...mergedProps }>
+			<animated.div className="fl-asst-control-thumb" style={ thumbProps } />
 		</button>
 	)
 }

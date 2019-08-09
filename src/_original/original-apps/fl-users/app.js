@@ -32,7 +32,7 @@ export const App = () => {
 			<Header.Expanded>
 				<Padding>
 					<Heading>{__( 'Filters' )}</Heading>
-					<UserListFilter dismissAll={dismissAll} />
+					<UserListFilter dismissAll={ dismissAll } />
 				</Padding>
 			</Header.Expanded>
 

@@ -19,7 +19,7 @@ export const Comments = ( {
 					description: item.postTitle,
 					thumbnail: item.thumbnail,
 				} )
-			}}
+			} }
 			{ ...rest }
 		/>
 	)

@@ -24,5 +24,5 @@ export const AppTabButton = props => {
 		title: tooltip,
 	}
 
-	return <button {...merged} />
+	return <button { ...merged } />
 }

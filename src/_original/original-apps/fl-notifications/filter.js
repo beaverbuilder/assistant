@@ -51,11 +51,11 @@ export const NotificationsFilter = () => {
 		<Fragment>
 
 			<Header>
-				<NavBar items={navItems} />
+				<NavBar items={ navItems } />
 			</Header>
 
-			{ 'comments' === type && <NavBar items={commentStatusItems} /> }
-			{ 'updates' === type && <NavBar items={updateTypeItems} /> }
+			{ 'comments' === type && <NavBar items={ commentStatusItems } /> }
+			{ 'updates' === type && <NavBar items={ updateTypeItems } /> }
 		</Fragment>
 	)
 }

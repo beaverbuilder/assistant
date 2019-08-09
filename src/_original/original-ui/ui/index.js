@@ -43,7 +43,7 @@ export const UI = () => {
 
 	return (
 		<TunnelProvider>
-			<AppContext.Provider value={appContext}>
+			<AppContext.Provider value={ appContext }>
 				<AppFrame>
 					<OuterErrorBoundary>
 						<div className="fl-asst-panel-wrap">
@@ -51,7 +51,7 @@ export const UI = () => {
 							<div className="fl-asst-panel-header">
 								<div className="fl-asst-panel-chrome">
 									<div className="fl-asst-panel-chrome-area">
-										<NotificationsAppButton isShowingAppsMenu={isShowingAppsMenu} />
+										<NotificationsAppButton isShowingAppsMenu={ isShowingAppsMenu } />
 									</div>
 									<div className="fl-asst-app-tabs-wrap">
 										<div className="fl-asst-app-tabs-area">
@@ -83,10 +83,10 @@ export const UI = () => {
 
 												return (
 													<AppTabButton
-														key={key}
-														isSelected={isSelected}
+														key={ key }
+														isSelected={ isSelected }
 														onClick={ e => onClickApp( key, e ) }
-														tooltip={app.label}
+														tooltip={ app.label }
 													>{ icon }</AppTabButton>
 												)
 											} ) }
@@ -94,7 +94,7 @@ export const UI = () => {
 											<AppTabButton
 												appearance="icon"
 												isSelected={ isShowingAppsMenu || activeAppIsBelowFold }
-												onClick={toggleIsShowingAppsMenu}
+												onClick={ toggleIsShowingAppsMenu }
 												tooltip="Apps"
 											>
 												<Icon name="apps-app" />
@@ -108,11 +108,11 @@ export const UI = () => {
 									</div>
 								</div>{ /* chrome */ }
 
-								{ 'undefined' !== typeof activeApp && <AppHeader key={activeAppName} /> }
+								{ 'undefined' !== typeof activeApp && <AppHeader key={ activeAppName } /> }
 							</div>
 
 							<div className="fl-asst-panel-contents">
-								<App key={activeAppName} { ...activeApp } />
+								<App key={ activeAppName } { ...activeApp } />
 							</div>
 						</div>
 

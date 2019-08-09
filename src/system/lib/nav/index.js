@@ -23,8 +23,8 @@ Nav.Provider = ( { children } ) => {
 	}
 
 	return (
-		<MemoryRouter {...routerProps}>
-			<NavManager onChange={handleChange}>{children}</NavManager>
+		<MemoryRouter { ...routerProps }>
+			<NavManager onChange={ handleChange }>{children}</NavManager>
 		</MemoryRouter>
 	)
 }
@@ -64,7 +64,7 @@ const NavManager = withRouter( ( { children, location, match, history, onChange 
 	}
 
 	return (
-		<Nav.Context.Provider value={context}>{children}</Nav.Context.Provider>
+		<Nav.Context.Provider value={ context }>{children}</Nav.Context.Provider>
 	)
 } )
 
@@ -77,7 +77,7 @@ Nav.Route = Route
 Nav.ButtonLink = ( { className, ...rest } ) => {
 	const classes = classname( 'fl-asst-button', className )
 	return (
-		<Nav.Link className={classes} {...rest} />
+		<Nav.Link className={ classes } { ...rest } />
 	)
 }
 
@@ -87,12 +87,12 @@ Nav.ButtonLink = ( { className, ...rest } ) => {
 Nav.SubLink = ( { to, ...rest } ) => {
 	const { path } = useContext( Nav.Context )
 	return (
-		<Link to={ path + to } {...rest} />
+		<Link to={ path + to } { ...rest } />
 	)
 }
 Nav.AppLink = ( { to, ...rest } ) => {
 
 	//const { path } = useContext( Nav.Context )
-	return <Link to={to} {...rest} />
+	return <Link to={ to } { ...rest } />
 }
 Nav.AppLink.displayName = 'Nav.AppLink'

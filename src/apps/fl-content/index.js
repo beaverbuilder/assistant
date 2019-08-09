@@ -1,6 +1,6 @@
-import {registerApp, __} from 'assistant'
-import {addQueryArgs} from 'assistant/utils/url'
-import {Content} from './app'
+import { registerApp, __ } from 'assistant'
+import { addQueryArgs } from 'assistant/utils/url'
+import { Content } from './app'
 
 registerApp( 'fl-content', {
 	label: __( 'Content' ),

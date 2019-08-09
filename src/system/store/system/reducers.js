@@ -29,7 +29,7 @@ export const appOrder = ( state = [], action ) => {
 	switch ( action.type ) {
 	case 'REGISTER_APP':
 	case 'SET_APP_POSITION': {
-		const {key, position = null} = action
+		const { key, position = null } = action
 
 		if ( null === position ) {
 			const newState = Array.from( state )
@@ -69,7 +69,7 @@ export const appOrder = ( state = [], action ) => {
 export const counts = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_COUNTS':
-		return {...state, ...action.counts}
+		return { ...state, ...action.counts }
 	case 'SET_COUNT':
 		return {
 			...state,
@@ -145,7 +145,7 @@ export const shouldShowLabels = ( state = true, action ) => {
 }
 
 // Navigation History
-const defaultHistory = {index: 0, entries: []}
+const defaultHistory = { index: 0, entries: [] }
 
 export const history = ( state = defaultHistory, action ) => {
 	switch ( action.type ) {
@@ -200,6 +200,6 @@ export const currentUser = ( state = null, action ) => {
 	case 'SET_CURRENT_USER':
 		return action.user
 	default:
-		return null
+		return state
 	}
 }

@@ -4,7 +4,7 @@ import { useSystemState } from 'store'
 
 export const App = ( { children, ...rest } ) => {
 	return (
-		<div className="fl-asst-app-root" {...rest}>
+		<div className="fl-asst-app-root" { ...rest }>
 			{children}
 		</div>
 	)
@@ -38,7 +38,7 @@ App.Provider = withRouter( ( { children, location } ) => {
 		...app
 	}
 	return (
-		<App.Context.Provider value={context}>{children}</App.Context.Provider>
+		<App.Context.Provider value={ context }>{children}</App.Context.Provider>
 	)
 } )
 App.Provider.displayName = 'App.Provider'

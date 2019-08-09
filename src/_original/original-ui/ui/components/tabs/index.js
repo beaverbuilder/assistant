@@ -15,16 +15,16 @@ export const Tabs = props => {
 	}, className )
 
 	return (
-		<div className={classes}>
+		<div className={ classes }>
 			<div className="fl-asst-tab-list">
 				<ul>
 					{ tabs.map( ( item, i ) => {
 						const { label, icon } = item
 						return (
-							<li key={i}>
+							<li key={ i }>
 								<Button
 									isSelected={ i === index }
-									onClick={ () => setIndex( i )}
+									onClick={ () => setIndex( i ) }
 								>
 									{ icon && <span className="fl-asst-tab-item-icon">{icon}</span> }
 									{label}

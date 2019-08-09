@@ -62,9 +62,9 @@ export const ContentListItem = ( { className, children, onClick } ) => {
 			<div className="fl-asst-list-item-visual">
 				<div className="fl-asst-list-item-image-box" style={ thumbStyles }></div>
 			</div>
-			<div className="fl-asst-list-item-content" ref={ref}>
+			<div className="fl-asst-list-item-content" ref={ ref }>
 				<div className="fl-asst-list-item-title">
-					<Truncate lines={contentLineCount} width={truncateWidth}>{title}</Truncate>
+					<Truncate lines={ contentLineCount } width={ truncateWidth }>{title}</Truncate>
 				</div>
 				<div className="fl-asst-list-item-meta">
 					{ meta }

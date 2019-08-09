@@ -121,7 +121,7 @@ export const CommentDetail = () => {
 					<CommentDetailTitle />
 				</Form.Item>
 
-				<Form.Section label={__( 'Sender Information' )} isInset={true}>
+				<Form.Section label={ __( 'Sender Information' ) } isInset={ true }>
 					<Form.Item label='Email' placement="beside">
 						<a href={ `mailto:${ authorEmail }` }>{ authorEmail }</a>
 					</Form.Item>
@@ -133,12 +133,12 @@ export const CommentDetail = () => {
 					</Form.Item>
 				</Form.Section>
 
-				<Form.Item style={{ paddingTop: 5}}>
+				<Form.Item style={ { paddingTop: 5 } }>
 					<TagGroup appearance='muted' className='fl-asst-comment-actions'>
 						{ ! spam && ! trash &&
 							<Fragment>
 								<Tag onClick={ approveClicked }>{ approved ? 'Unapprove' : 'Approve' }</Tag>
-								<Tag href={url}>View</Tag>
+								<Tag href={ url }>View</Tag>
 							</Fragment>
 						}
 						<Tag onClick={ spamClicked }>{ spam ? 'Not Spam' : 'Spam' }</Tag>
@@ -168,9 +168,9 @@ export const CommentDetail = () => {
 					}
 
 					{ ! editing &&
-						<div style={{ padding: '0 var(--fl-asst-base-padding)' }}>
+						<div style={ { padding: '0 var(--fl-asst-base-padding)' } }>
 							<ContentFrame>
-								<Heading style={{ display: 'flex', flexDirection: 'row' }}>{contentTitle}</Heading>
+								<Heading style={ { display: 'flex', flexDirection: 'row' } }>{contentTitle}</Heading>
 								<div dangerouslySetInnerHTML={ { __html: autop( content ) } } />
 							</ContentFrame>
 						</div>
@@ -211,7 +211,7 @@ const CommentContentTitle = ( { editing, replying, setEditing, setReplying } ) =
 		<Fragment>
 			<span className='fl-asst-comment-content-title'>{__( 'Comment' )}</span>
 			{ ! editing && ! replying &&
-				<div style={{ marginLeft: 'auto' }}>
+				<div style={ { marginLeft: 'auto' } }>
 					<Button onClick={ () => setReplying( true ) }>{__( 'Reply' )}</Button>
 					<Button onClick={ () => setEditing( true ) }>{__( 'Edit' )}</Button>
 				</div>
@@ -225,8 +225,8 @@ const CommentReplyForm = ( { sendingReply, onSave, onCancel } ) => {
 	const { approved } = useContext( ViewContext )
 	return (
 		<Fragment>
-			<Form.Item label={__( 'Reply to Comment' )} className='fl-asst-comment-form'>
-				<textarea value={ reply } onChange={ e => setReply( e.target.value ) } rows={6} />
+			<Form.Item label={ __( 'Reply to Comment' ) } className='fl-asst-comment-form'>
+				<textarea value={ reply } onChange={ e => setReply( e.target.value ) } rows={ 6 } />
 			</Form.Item>
 			<Form.Item>
 				{ sendingReply &&
@@ -247,8 +247,8 @@ const CommentEditForm = ( { content, onSave, onCancel } ) => {
 	const [ comment, setComment ] = useState( content )
 	return (
 		<Fragment>
-			<Form.Item label={__( 'Edit Comment' )} className='fl-asst-comment-form'>
-				<textarea value={ comment } onChange={ e => setComment( e.target.value ) } rows={15}/>
+			<Form.Item label={ __( 'Edit Comment' ) } className='fl-asst-comment-form'>
+				<textarea value={ comment } onChange={ e => setComment( e.target.value ) } rows={ 15 }/>
 			</Form.Item>
 			<Form.Item>
 				<Button onClick={ () => onSave( comment ) }>Save</Button>

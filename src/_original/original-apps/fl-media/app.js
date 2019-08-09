@@ -20,7 +20,7 @@ export const App = () => {
 
 	return (
 		<MediaDropUploader>
-			<Scroller style={scroller}>
+			<Scroller style={ scroller }>
 				<MediaListFilter />
 				<MediaList
 					query={ query }

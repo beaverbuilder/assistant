@@ -143,6 +143,6 @@ export const Photo = props => {
 		className: classes,
 	} )
 	return (
-		<Img {...merged} />
+		<Img { ...merged } />
 	)
 }

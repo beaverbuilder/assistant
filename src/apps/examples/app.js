@@ -10,11 +10,11 @@ import { FormExamples } from './forms'
 
 export const App = ( { match } ) => (
 	<Nav.Switch>
-		<Nav.Route exact path={`${match.url}/`} component={Main} />
-		<Nav.Route path={`${match.url}/unsplash`} component={UnsplashExample} />
-		<Nav.Route path={`${match.url}/routing`} component={RoutingExample} />
-		<Nav.Route path={`${match.url}/lists`} component={ListExamples} />
-		<Nav.Route path={`${match.url}/forms`} component={FormExamples} />
+		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+		<Nav.Route path={ `${match.url}/unsplash` } component={ UnsplashExample } />
+		<Nav.Route path={ `${match.url}/routing` } component={ RoutingExample } />
+		<Nav.Route path={ `${match.url}/lists` } component={ ListExamples } />
+		<Nav.Route path={ `${match.url}/forms` } component={ FormExamples } />
 	</Nav.Switch>
 )
 
@@ -22,10 +22,10 @@ const Main = ( { match } ) => {
 	return (
 		<Page>
 			<Button.Group direction='column'>
-				<Button to={`${match.url}/unsplash`}>{__( 'Unsplash Example' )}</Button>
-				<Button to={`${match.url}/routing`}>{__( 'Routing Example' )}</Button>
-				<Button to={`${match.url}/lists`}>{__( 'List Examples' )}</Button>
-				<Button to={`${match.url}/forms`}>{__( 'Form Examples' )}</Button>
+				<Button to={ `${match.url}/unsplash` }>{__( 'Unsplash Example' )}</Button>
+				<Button to={ `${match.url}/routing` }>{__( 'Routing Example' )}</Button>
+				<Button to={ `${match.url}/lists` }>{__( 'List Examples' )}</Button>
+				<Button to={ `${match.url}/forms` }>{__( 'Form Examples' )}</Button>
 			</Button.Group>
 		</Page>
 	)

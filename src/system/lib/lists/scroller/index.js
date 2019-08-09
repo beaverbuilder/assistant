@@ -8,7 +8,6 @@ const hasReachedBounds = e => {
 
 export const useScrollLoader = ( {
 	ref = window,
-	items = [],
 	callback = () => {},
 	shouldFetch = hasReachedBounds,
 } ) => {
@@ -69,8 +68,8 @@ export const Scroller = ( {
 	}, [ items ] )
 
 	return (
-		<div className="fl-asst-list-scroller fl-asst-scroller" ref={scrollRef}>
-			<List items={ items } {...rest} />
+		<div className="fl-asst-list-scroller fl-asst-scroller" ref={ scrollRef }>
+			<List items={ items } { ...rest } />
 			{ isFetching && <List.Loading /> }
 		</div>
 	)

@@ -38,9 +38,9 @@ export const MediaListFilter = () => {
 	return (
 		<Fragment>
 			<Header>
-				<NavBar items={navItems} />
+				<NavBar items={ navItems } />
 			</Header>
-			<Title actions={<TitleActions />}>{title}</Title>
+			<Title actions={ <TitleActions /> }>{title}</Title>
 		</Fragment>
 	)
 }

@@ -30,7 +30,7 @@ export const TilesWidget = () => {
 						<div className="fl-asst-viewing-text">
 							<div className="fl-asst-pretitle">{intro}</div>
 							<div className="fl-asst-title">
-								<Truncate lines={2}>{name}</Truncate>
+								<Truncate lines={ 2 }>{name}</Truncate>
 							</div>
 						</div>
 					</div>
@@ -39,8 +39,8 @@ export const TilesWidget = () => {
 							const { label, href } = item
 							return (
 								<Button
-									key={i}
-									href={href}
+									key={ i }
+									href={ href }
 									appearance="transparent"
 								>{label}</Button>
 							)

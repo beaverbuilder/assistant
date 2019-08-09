@@ -12,14 +12,14 @@ export const AppRouting = withRouter(  ( { location, history } ) => {
 	return (
 		<TransitionGroup className="fl-asst-transition-group">
 			<CSSTransition
-				key={location.key}
-				classNames={history.action}
-				timeout={210}
+				key={ location.key }
+				classNames={ history.action }
+				timeout={ 210 }
 			>
-				<Nav.Switch location={location}>
-					<Nav.Route exact path="/" component={HomeScreen} />
-					<Nav.Route path="/:app" component={AppContent} />
-					<Nav.Route component={NoApp} />
+				<Nav.Switch location={ location }>
+					<Nav.Route exact path="/" component={ HomeScreen } />
+					<Nav.Route path="/:app" component={ AppContent } />
+					<Nav.Route component={ NoApp } />
 				</Nav.Switch>
 			</CSSTransition>
 		</TransitionGroup>
@@ -49,7 +49,7 @@ const AppContent = props => {
 		<>
 			{ /* Alerts component here */ }
 			<ScreenCard>
-				<div className="fl-asst-screen-content" style={style}>
+				<div className="fl-asst-screen-content" style={ style }>
 					{ 'function' === typeof app.root ? app.root( appProps ) : null }
 				</div>
 			</ScreenCard>
@@ -59,7 +59,7 @@ const AppContent = props => {
 
 const CardError = () => {
 	return (
-		<Page shouldPadTop={true} shouldShowHeader={false}>
+		<Page shouldPadTop={ true } shouldShowHeader={ false }>
 			<h1>{__( 'We Have A Problem!' )}</h1>
 			<p>{__( 'There seems to be an issue inside the current card.' )}</p>
 		</Page>
@@ -81,9 +81,9 @@ const ScreenCard = forwardRef( ( { className, children, ...rest }, ref ) => {
 	}
 
 	return (
-		<div className={classes} {...rest}>
-			<div className="fl-asst-screen-content" ref={ref} style={style}>
-				<Error.Boundary alternate={CardError}>
+		<div className={ classes } { ...rest }>
+			<div className="fl-asst-screen-content" ref={ ref } style={ style }>
+				<Error.Boundary alternate={ CardError }>
 					{children}
 				</Error.Boundary>
 			</div>

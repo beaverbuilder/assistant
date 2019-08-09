@@ -9,8 +9,8 @@ export const OptionGroup = props => {
 		'fl-asst-option-group': true
 	}, className )
 	return (
-		<div className={classes}>
-			{ title && <Heading level={3}>{title}</Heading> }
+		<div className={ classes }>
+			{ title && <Heading level={ 3 }>{title}</Heading> }
 			<ul>{children}</ul>
 		</div>
 	)
@@ -27,8 +27,8 @@ export const OptionGroupItem = props => {
 	delete mergedProps.onClick
 	delete mergedProps.isSelected
 	return (
-		<li {...mergedProps}>
-			<Button onClick={onClick} appearance="transparent" isSelected={isSelected}>
+		<li { ...mergedProps }>
+			<Button onClick={ onClick } appearance="transparent" isSelected={ isSelected }>
 				{children}
 				{ count && <span className="fl-asst-option-group-item-count">{count}</span> }
 			</Button>

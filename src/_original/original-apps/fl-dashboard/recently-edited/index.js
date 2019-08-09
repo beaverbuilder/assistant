@@ -28,19 +28,19 @@ export const RecentlyEditedWidget = () => {
 	]
 
 	return (
-		<Widget title={__( 'Recently Created' )} isPadded={false}>
-			<div style={{
+		<Widget title={ __( 'Recently Created' ) } isPadded={ false }>
+			<div style={ {
 				padding: '0 var(--fl-asst-base-padding)',
 				display: 'flex',
-			}}>
-				<NavBar items={navItems} />
+			} }>
+				<NavBar items={ navItems } />
 			</div>
 			<PostList
-				query={{
+				query={ {
 					posts_per_page: 5,
 					post_type: postType,
-				}}
-				placeholderItemCount={5}
+				} }
+				placeholderItemCount={ 5 }
 			/>
 		</Widget>
 	)

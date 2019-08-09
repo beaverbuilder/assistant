@@ -1,4 +1,4 @@
-import {registerAppStore} from '../app'
+import { registerAppStore } from '../app'
 import { getWpRest } from 'shared-utils/wordpress'
 import cloud from 'shared-utils/cloud'
 
@@ -30,8 +30,6 @@ export const before = {
  */
 export const after = {
 	ATTEMPT_LOGIN: ( action, store ) => {
-		console.log( 'attempting Login' )
-
 		store.dispatch( setLoginErrors( [] ) )
 
 		cloud.auth.login( action.email, action.password )
@@ -63,7 +61,6 @@ export const after = {
 	SET_CLOUD_TOKEN: ( action, store ) => {
 		const token = store.getState().cloudToken
 		if ( cloud.session.isValidToken( token ) ) {
-			console.log( 'Auth token exists', store.getState().cloudToken )
 			store.dispatch( fetchCurrentUser() )
 		}
 	},
@@ -75,37 +72,37 @@ export const after = {
 	},
 
 	SET_SHOULD_REDUCE_MOTION: ( action, store ) => {
-		const {shouldReduceMotion} = store.getState()
-		wpapi.users().updateState( {shouldReduceMotion} )
+		const { shouldReduceMotion } = store.getState()
+		wpapi.users().updateState( { shouldReduceMotion } )
 	},
 
 	SET_APP_POSITION: ( action, store ) => {
-		const {appOrder} = store.getState()
-		wpapi.users().updateState( {appOrder} )
+		const { appOrder } = store.getState()
+		wpapi.users().updateState( { appOrder } )
 	},
 
 	SET_WINDOW: ( action, store ) => {
-		const {window} = store.getState()
-		wpapi.users().updateState( {window: {...window}} )
+		const { window } = store.getState()
+		wpapi.users().updateState( { window: { ...window } } )
 	},
 
 	SET_BRIGHTNESS: ( action, store ) => {
-		const {appearance} = store.getState()
-		wpapi.users().updateState( {appearance} )
+		const { appearance } = store.getState()
+		wpapi.users().updateState( { appearance } )
 	},
 
 	SET_SHOULD_SHOW_LABELS: ( action, store ) => {
-		const {shouldShowLabels} = store.getState()
-		wpapi.users().updateState( {shouldShowLabels} )
+		const { shouldShowLabels } = store.getState()
+		wpapi.users().updateState( { shouldShowLabels } )
 	},
 
 	SET_HISTORY: ( action, store ) => {
-		const {history} = store.getState()
-		wpapi.users().updateState( {history} )
+		const { history } = store.getState()
+		wpapi.users().updateState( { history } )
 	},
 
 	SET_SEARCH_HISTORY: ( action, store ) => {
-		const {searchHistory} = store.getState()
-		wpapi.users().updateState( {searchHistory} )
+		const { searchHistory } = store.getState()
+		wpapi.users().updateState( { searchHistory } )
 	},
 }

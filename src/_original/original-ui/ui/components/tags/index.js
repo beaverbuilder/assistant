@@ -22,7 +22,7 @@ export const TagGroup = props => {
 	delete merged.isDisabled
 
 	return (
-		<div {...merged}>
+		<div { ...merged }>
 			{ title && <div className="fl-asst-tag-group-title">{title}</div> }
 			<div className="fl-asst-tag-group-content">{children}</div>
 		</div>
@@ -43,14 +43,14 @@ export const Tag = ( { appearance, children, className, onClick = () => {}, coun
 	}
 	if ( href ) {
 		return (
-			<a className={classes} href={href} target={target} rel={rel}>
+			<a className={ classes } href={ href } target={ target } rel={ rel }>
 				{children}
 				{ count && <span className="fl-asst-tag-count">{count}</span> }
 			</a>
 		)
 	} else {
 		return (
-			<button type='button' className={classes} onClick={onClick}>
+			<button type='button' className={ classes } onClick={ onClick }>
 				{children}
 				{ count && <span className="fl-asst-tag-count">{count}</span> }
 			</button>
@@ -68,7 +68,7 @@ export const TagGroupControl = ( { title, tags, value, appearance, onChange, isD
 	}
 
 	return (
-		<TagGroup title={title} appearance={appearance} isDisabled={isDisabled}>
+		<TagGroup title={ title } appearance={ appearance } isDisabled={ isDisabled }>
 			{ items.map( ( tag, i ) => {
 				const { label, count } = tag
 
@@ -79,17 +79,17 @@ export const TagGroupControl = ( { title, tags, value, appearance, onChange, isD
 
 				return (
 					<Tag
-						key={i}
-						count={count}
-						onClick={() => onChange( tag.value )}
-						isSelected={isSelected}
+						key={ i }
+						count={ count }
+						onClick={ () => onChange( tag.value ) }
+						isSelected={ isSelected }
 					>{label}</Tag>
 				)
 			} )}
 			{ renderMoreTag &&
 				<Button
 					className='fl-asst-tag'
-					onClick={() => setMoreShowing( ! moreShowing )}
+					onClick={ () => setMoreShowing( ! moreShowing ) }
 				>{ moreShowing ? 'Less...' : 'More...' }</Button>
 			}
 		</TagGroup>
@@ -98,10 +98,10 @@ export const TagGroupControl = ( { title, tags, value, appearance, onChange, isD
 
 export const ActionGroup = ( { actions = [], appearance } ) => {
 	return (
-		<TagGroup appearance={appearance}>
+		<TagGroup appearance={ appearance }>
 			{ actions.map( ( action, i ) => {
 				return (
-					<Tag key={i} {...action}>{action.label}</Tag>
+					<Tag key={ i } { ...action }>{action.label}</Tag>
 				)
 			} )}
 		</TagGroup>

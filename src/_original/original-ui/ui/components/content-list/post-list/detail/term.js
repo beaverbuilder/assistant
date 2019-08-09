@@ -93,7 +93,7 @@ export const TermListDetail = () => {
 					</TagGroup>
 				</Form.Item>
 
-				<Form.Item label={__( 'Name' )} labelFor="fl-asst-term-title">
+				<Form.Item label={ __( 'Name' ) } labelFor="fl-asst-term-title">
 					<input
 						type='text'
 						name='title'
@@ -103,13 +103,13 @@ export const TermListDetail = () => {
 					/>
 				</Form.Item>
 
-				<Form.Item label={__( 'Slug' )} labelFor="fl-asst-term-slug">
+				<Form.Item label={ __( 'Slug' ) } labelFor="fl-asst-term-slug">
 					<input type='text' name='slug' id='fl-asst-term-slug' value={ slug } onChange={ onChange } />
 					<CopyButton label='Copy URL' text={ url } />
 				</Form.Item>
 
 				{ isHierarchical &&
-					<Form.Item label={__( 'Parent' )} labelFor="fl-asst-term-parent">
+					<Form.Item label={ __( 'Parent' ) } labelFor="fl-asst-term-parent">
 						<TermParentSelect
 							taxonomy={ taxonomy }
 							exclude={ id }
@@ -121,8 +121,8 @@ export const TermListDetail = () => {
 					</Form.Item>
 				}
 
-				<Form.Item label={__( 'Description' )} labelFor="fl-asst-term-description">
-					<textarea name='description' id="fl-asst-term-description" value={ description } onChange={ onChange } rows={6} />
+				<Form.Item label={ __( 'Description' ) } labelFor="fl-asst-term-description">
+					<textarea name='description' id="fl-asst-term-description" value={ description } onChange={ onChange } rows={ 6 } />
 				</Form.Item>
 
 				<Form.Footer>

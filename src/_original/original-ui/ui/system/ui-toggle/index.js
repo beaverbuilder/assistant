@@ -16,12 +16,12 @@ export const UIToggleButton = () => {
 		transformOrigin: 'start' === panelPosition ? 'bottom left' : 'bottom right',
 	}
 	return (
-		<div style={styles}>
+		<div style={ styles }>
 			<Button
 				id="fl-asst-trigger"
 				onClick={ () => setIsShowingUI( true ) }
-				isSelected={true}
-				aria-label={__( 'Assistant Panel' )}
+				isSelected={ true }
+				aria-label={ __( 'Assistant Panel' ) }
 				aria-expanded={ isShowingUI ? 'false' : 'true' }
 			>
 				<Branding />

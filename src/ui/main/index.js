@@ -12,7 +12,7 @@ export const Main = () => {
 	return (
 		<Nav.Provider>
 			<App.Provider>
-				<Appearance brightness={brightness} size={ 'mini' === size ? 'compact' : 'normal' }>
+				<Appearance brightness={ brightness } size={ 'mini' === size ? 'compact' : 'normal' }>
 					<MainWindow />
 				</Appearance>
 			</App.Provider>
@@ -29,15 +29,15 @@ const MainWindow = () => {
 
 	return (
 		<Window
-			icon={<Icon.Pencil size={42} />}
-			isHidden={isHidden}
-			size={size}
-			position={origin}
-			onChange={onChanged}
-			shouldShowLabels={shouldShowLabels}
-			toolbar={WindowToolbar}
+			icon={ <Icon.Pencil size={ 42 } /> }
+			isHidden={ isHidden }
+			size={ size }
+			position={ origin }
+			onChange={ onChanged }
+			shouldShowLabels={ shouldShowLabels }
+			toolbar={ WindowToolbar }
 		>
-			<Error.Boundary alternate={WindowError}>
+			<Error.Boundary alternate={ WindowError }>
 				<AppRouting />
 			</Error.Boundary>
 		</Window>
@@ -46,7 +46,7 @@ const MainWindow = () => {
 
 const WindowError = () => {
 	return (
-		<Page shouldPadTop={true}>
+		<Page shouldPadTop={ true }>
 			<h1>{__( 'We Have A Problem!' )}</h1>
 			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
 		</Page>
@@ -57,19 +57,17 @@ const WindowToolbar = () => {
 	const { isRoot, goToRoot } = useContext( Nav.Context )
 	const { label } = useContext( App.Context )
 
-	const stopProp = e => e.stopPropagation()
-
 	const labelStyle = { padding: '2px 10px' }
 	const iconWrapStyle = { display: 'inline-flex', transform: 'translateY(2px)' }
 
 	return (
 		<span>
-			{ isRoot && <span style={labelStyle}>{__( 'Assistant' )}</span> }
+			{ isRoot && <span style={ labelStyle }>{__( 'Assistant' )}</span> }
 
 			{ ! isRoot && <>
-				<button onClick={goToRoot} style={{ textDecoration: 'underline' }}>{__( 'Assistant' )}</button>
-				<span style={iconWrapStyle}><Icon.BreadcrumbArrow /></span>
-				<span style={labelStyle}>{label}</span>
+				<button onClick={ goToRoot } style={ { textDecoration: 'underline' } }>{__( 'Assistant' )}</button>
+				<span style={ iconWrapStyle }><Icon.BreadcrumbArrow /></span>
+				<span style={ labelStyle }>{label}</span>
 			</> }
 		</span>
 	)

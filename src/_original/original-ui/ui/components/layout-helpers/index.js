@@ -8,7 +8,7 @@ export const HorizontalGroup = ( { className, children } ) => {
 		'fl-asst-hgroup': true
 	}, className )
 	return (
-		<div className={classes}>{children}</div>
+		<div className={ classes }>{children}</div>
 	)
 }
 
@@ -17,7 +17,7 @@ export const VerticalGroup = ( { className, children } ) => {
 		'fl-asst-vgroup': true
 	}, className )
 	return (
-		<div className={classes}>{children}</div>
+		<div className={ classes }>{children}</div>
 	)
 }
 
@@ -54,7 +54,7 @@ export const Padding = props => {
 	}
 
 	return (
-		<div {...merged}/>
+		<div { ...merged }/>
 	)
 }
 
@@ -94,12 +94,12 @@ export const Separator = props => {
 	delete merged.isSlim
 
 	if ( isSlim ) {
-		return <hr {...merged} />
+		return <hr { ...merged } />
 	}
 
 	return (
-		<div {...merged}>
-			<Pattern name={appearance} />
+		<div { ...merged }>
+			<Pattern name={ appearance } />
 		</div>
 	)
 }
@@ -118,7 +118,7 @@ export const Heading = props => {
 	delete merged.level
 
 	return (
-		<div {...merged}>{children}</div>
+		<div { ...merged }>{children}</div>
 	)
 }
 
@@ -127,8 +127,8 @@ export const AspectBox = ( { className, children, style } ) => {
 		'fl-asst-aspect-box': true,
 	}, className )
 	return (
-		<div className={classes}>
-			<div style={style}>{children}</div>
+		<div className={ classes }>
+			<div style={ style }>{children}</div>
 		</div>
 	)
 }

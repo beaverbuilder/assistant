@@ -11,7 +11,7 @@ export const UserListFilter = ( { dismissAll } ) => {
 
 	return (
 		<TagGroupControl
-			title={__( 'User Role' )}
+			title={ __( 'User Role' ) }
 			limit={ 6 }
 			tags={ roleTags }
 			value={ role }
