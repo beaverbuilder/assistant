@@ -2,6 +2,7 @@
 
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Pagination\UsersPaginator;
 use FL\Assistant\Services\Entity\User;
 
 use \WP_REST_Server;
@@ -84,19 +85,16 @@ final class UsersController extends AssistantController {
 	 * @return mixed|\WP_REST_Response
 	 */
 	public function users( \WP_REST_Request $request ) {
-		$response = [];
+
 		$params   = $request->get_params();
-		$users    = get_users( $params );
 
-		foreach ( $users as $wp_user ) {
-			$user = new User();
-			$user->fill( $user->hydrate( $wp_user ) );
-			$response[] = $user->to_array();
-		}
+		$paginator = new UsersPaginator();
+		$pager = $paginator->query($params, function($user) {
+			$e = new User();
+			return $e->hydrate($user);
+		});
 
-		return rest_ensure_response( array(
-			'items' => $response, // Temp fix until pager is in place.
-		) );
+		return rest_ensure_response( $pager );
 	}
 
 	/**
