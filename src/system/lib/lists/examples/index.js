@@ -75,7 +75,11 @@ export const TestSheet = () => {
 		return (
 			<>
 				<h2 style={padSides}>Sectioned List</h2>
-				<List items={items} />
+				<List
+					items={items}
+					isListSection={ item => 'undefined' !== typeof item.items }
+					getSectionItems={ section => section.items }
+				/>
 			</>
 		)
 	}

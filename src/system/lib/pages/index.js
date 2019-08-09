@@ -15,7 +15,7 @@ export const Page = ( {
 	shouldShowHeader = true,
 	shouldPadTop = false,
 	shouldPadSides = true,
-	shouldPadBottom = true,
+	shouldPadBottom = false,
 	title,
 	headerActions,
 	toolbar,
@@ -59,7 +59,7 @@ Page.Context = createContext( Page.defaults )
 Page.Context.displayName = 'Page.Context'
 
 Page.Header = ( { icon, label, actions } ) => {
-	const { shouldShowLabels } = useSystemState()
+	const { shouldShowLabels, window } = useSystemState()
 
 	const app = useContext( App.Context )
 	const { label: appLabel, icon: appIcon } = app
@@ -71,13 +71,20 @@ Page.Header = ( { icon, label, actions } ) => {
 		visual = appIcon
 	}
 
+	const iconProps = {
+		width: 24,
+		height: 24,
+		windowSize: window.size,
+		context: 'header',
+	}
+
 	return (
 		<>
 			<div className="fl-asst-app-header">
 
 				{ ( isRoot || isAppRoot ) && 'function' === typeof visual &&
 				<div className="fl-asst-app-header-icon">
-					<div>{visual( app )}</div>
+					{ visual( iconProps ) }
 				</div>
 				}
 

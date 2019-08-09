@@ -1,21 +1,17 @@
-import React, { useEffect, useState, useContext } from 'fl-react'
-
-import { __ } from 'assistant'
-import { getWpRest } from 'assistant/utils/wordpress'
+import React, { useContext } from 'fl-react'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
-import { Button, List, Page, Nav, Icon, Window } from 'assistant/ui'
-
-import { CancelToken, isCancel } from 'axios'
+import { App, Button, List, Page, Nav, Icon } from 'assistant/ui'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={`${match.url}/`} component={Main} />
-		<Nav.Route path={`${match.url}/posts/new`} component={Page.CreatePost} />
-		<Nav.Route path={`${match.url}/posts/:id`} component={Page.Post} />
+		<Nav.Route path={`${match.url}/post/new`} component={Page.CreatePost} />
+		<Nav.Route path={`${match.url}/post/:id`} component={Page.Post} />
 	</Nav.Switch>
 )
 
 const Main = ( { match } ) => {
+	const { handle } = useContext( App.Context )
 	const { contentTypes } = getSystemConfig()
 	const { query, pager } = useAppState( 'fl-content' )
 	const { setQuery, setPager } = getAppActions( 'fl-content' )
@@ -42,7 +38,7 @@ const Main = ( { match } ) => {
 	const Actions = ( { baseUrl } ) => {
 		return (
 			<>
-				<Nav.Link to={`${baseUrl}/posts/new`}>
+				<Nav.Link to={`${baseUrl}/post/new`}>
 					<Icon.Plus />
 				</Nav.Link>
 			</>
@@ -56,6 +52,13 @@ const Main = ( { match } ) => {
 				onItemsLoaded={ response => {
 					setPager( response.data )
 				} }
+				getItemProps={ ( item, defaultProps ) => ( {
+					...defaultProps,
+					to: {
+						pathname: `/${handle}/post/${item.id}`,
+						state: { item }
+					},
+				} ) }
 			/>
 		</Page>
 	)

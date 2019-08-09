@@ -130,6 +130,14 @@
         width: auto;
         border-radius: 2px;
         margin: 0;
+
+        &.fl-asst-shortie-divider {
+            height: 3px;
+            width: 100px;
+            margin: 0 auto;
+            background-color: var(--fl-asst-secondary-surface-background);
+            border-radius: 3px;
+        }
     }
     .fl-asst-horizontal-divider {
         box-sizing: border-box;

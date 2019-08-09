@@ -117,6 +117,7 @@ const WindowLayer = ( {
 	const [ isDragging, setIsDragging ] = useState( false )
 	const [ initialPos, setInitialPos ] = useState( { x: null, y: null } )
 	const [ currentPos, setCurrentPos ] = useState( { x: null, y: null } )
+	const [ currentOrigin, setCurrentOrigin ] = useState( position ) // Tracks the origin while dragging
 	const [ offset, setOffset ] = useState( { x: 0, y: 0 } )
 
 	const dragStart = e => {
@@ -150,10 +151,16 @@ const WindowLayer = ( {
 			const x = ev.clientX - initialPos.x
 			const y = ev.clientY - initialPos.y
 
+			const originX = ev.clientX > ( ref.current.clientWidth / 2 ) ? 1 : 0
+			const originY = ev.clientY > ( ref.current.clientHeight / 2 ) ? 1 : 0
+
 			requestAnimationFrame( () => {
 				if ( 'undefined' !== typeof posRef.current && null !== posRef.current ) {
 					posRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`
 				}
+
+				// Make sure this always happens inside the Raf
+				setCurrentOrigin( [ originX, originY ] )
 			} )
 		}
 	}
@@ -175,17 +182,22 @@ const WindowLayer = ( {
 		setCurrentPos( reset )
 		setOffset( reset )
 		setIsDragging( false )
-
+		setCurrentOrigin( [ x, y ] )
 		setPosition( [ x, y ] )
 		onChange( { origin: [ x, y ] } )
 		requestAnimate()
 		return false
 	}
 
+	const vAlign = 1 === currentOrigin[1] ? 'bottom' : 'top'
+	const hAlign = 1 === currentOrigin[0] ? 'right' : 'left'
+	const originClass = `fl-asst-window-layer-origin-${vAlign}-${hAlign}`
+
 	const classes = classname( {
 		'fl-asst-window-layer': true,
 		'fl-asst-window-layer-is-dragging': isDragging,
-	}, className )
+		[`fl-asst-window-size-${size}`]: size,
+	}, originClass, className )
 
 	// Layer Props
 	const props = {
@@ -238,7 +250,7 @@ const WindowLayer = ( {
 	}
 
 	return (
-		<div id="canvas" {...props}>
+		<div id="fl-asst-canvas" {...props}>
 			<div className="fl-asst-window-positioner" ref={posRef} style={positionerStyles}>{children}</div>
 		</div>
 	)
@@ -263,7 +275,7 @@ const WindowPanel = ( { className, children, style, topbar: TopBar,  ...rest } )
 	const stopProp = e => e.stopPropagation()
 
 	const stopEvts = {
-		onMouseMove: stopProp,
+		onMouseDown: stopProp,
 		onTouchStart: stopProp,
 	}
 

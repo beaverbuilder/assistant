@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import classname from 'fl-classnames'
 import { Nav, Page } from '../../'
-import { isColor } from 'shared-utils/color'
+import { isColor } from 'utils/color'
 import { isURL } from 'shared-utils/url'
 
 export const defaultItemProps = {
@@ -53,8 +53,6 @@ export const getListWrapperType = type => {
 	switch ( type ) {
 	case 'ordered':
 		return 'ol'
-	case 'definition':
-		return 'dl'
 	default:
 		return 'ul'
 	}
@@ -64,6 +62,9 @@ export const getItemType = ( item, isSection = false ) => {
 	return isSection ? Section : Item
 }
 
+/**
+ * The default list item component.
+ */
 const InfoItem = ( {
 	label,
 	description,
@@ -71,7 +72,7 @@ const InfoItem = ( {
 	thumbnail,
 	thumbnailSize = 'med',
 	className,
-	to
+	to,
 } ) => {
 	const classes = classname( {
 		'fl-asst-list-item-content-info': true,
@@ -134,14 +135,14 @@ export const Item = ( {
 	)
 }
 
-const Section = ( { children, className, label, ...rest } ) => {
+const Section = ( { children, className, label, type, items, ...rest } ) => {
 	const classes = classname( 'fl-asst-list-section', className )
 	return (
-		<div className={classes} {...rest}>
+		<li className={classes} {...rest}>
 			<hr/>
 			<div className="fl-asst-list-section-header">{label}</div>
 			<div className="fl-asst-list-section-content">{children}</div>
-		</div>
+		</li>
 	)
 }
 

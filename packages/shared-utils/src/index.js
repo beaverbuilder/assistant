@@ -1,5 +1,4 @@
 import * as cache from './cache'
-import * as color from './color'
 import * as console from './console'
 import * as datetime from './datetime'
 import * as react from './react'
@@ -12,7 +11,6 @@ import * as cloud from './cloud'
 
 export {
 	cache,
-	color,
 	console,
 	datetime,
 	react,
