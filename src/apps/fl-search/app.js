@@ -1,13 +1,15 @@
 import React from 'fl-react'
 import { Nav, Page } from 'assistant/ui'
 import { Main } from './main'
+import { ViewAll } from './view-all'
 
 export const App = ( { match } ) => {
 	return (
 		<Nav.Switch>
 			<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-			<Nav.Route path={ `${match.url}/posts/:id` } component={ Page.Post } />
-			<Nav.Route path={ `${match.url}/users/:id` } component={ Page.User } />
+			<Nav.Route exact path={ `${match.url}/all/:type` } component={ ViewAll } />
+			<Nav.Route path={ `${match.url}/post/:id` } component={ Page.Post } />
+			<Nav.Route path={ `${match.url}/user/:id` } component={ Page.User } />
 		</Nav.Switch>
 	)
 }

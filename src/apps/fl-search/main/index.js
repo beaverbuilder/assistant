@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { addLeadingSlash } from 'assistant/utils/url'
@@ -13,15 +12,12 @@ export const Main = ( { match } ) => {
 	const { setSearchHistory } = getSystemActions()
 	const { keyword } = useAppState( 'fl-search' )
 	const { setKeyword } = getAppActions( 'fl-search' )
-
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
-
 	const wp = getWpRest()
 	let source = CancelToken.source()
 
 	useEffect( () => {
-
 		const { config, routes } = getRequestConfig()
 
 		if ( '' === keyword ) {
@@ -29,19 +25,13 @@ export const Main = ( { match } ) => {
 			return
 		}
 
-		source.cancel( 'Cancelling old requests to start new' )
+		source.cancel()
 		source = CancelToken.source()
-
 		setLoading( true )
 
 		wp.search( keyword, routes, {
 			cancelToken: source.token,
-			cache: {
-				debug: true,
-				maxAge: 60 * 1000, // one minute (default: 15 mins)
-			}
 		} ).then( response => {
-
 			const newResults = {}
 
 			response.data.map( ( result, key ) => {
@@ -65,13 +55,12 @@ export const Main = ( { match } ) => {
 			setSearchHistory( keyword )
 		} ).catch( ( error ) => {
 			if ( ! isCancel( error ) ) {
-				console.log( error.message ) // eslint-disable-line no-console
+				console.log( error ) // eslint-disable-line no-console
 			}
 		} )
 
-
 		return () => {
-			source.cancel( 'Unmounting search component' )
+			source.cancel()
 		}
 
 	}, [ keyword ] )
@@ -79,12 +68,10 @@ export const Main = ( { match } ) => {
 	const getRequestConfig = () => {
 		const config = []
 		const routes = []
-
 		const defaults = {
 			priority: 1000,
 			format: response => response,
 		}
-
 		const addRequestConfig = search => {
 			config.push( Object.assign( {}, defaults, search ) )
 			routes.push( addLeadingSlash( search.route( keyword ) ) )
@@ -120,7 +107,7 @@ export const Main = ( { match } ) => {
 						onChange={ e => setKeyword( e.target.value ) }
 						placeholder={ __( 'Search' ) }
 					/>
-					{loading &&
+					{ loading &&
 						<div className='fl-asst-search-spinner'>
 							<Icon.SmallSpinner/>
 						</div>
@@ -128,19 +115,19 @@ export const Main = ( { match } ) => {
 				</div>
 			</Page.Toolbar>
 
-			{'' === keyword &&
+			{ '' === keyword &&
 				<>
-				{searchHistory.length &&
+				{ searchHistory.length &&
 					<Page.Pad>
 						<Button.Group label={ __( 'Recent Searches' ) }>
-							{searchHistory.map( ( keyword, key ) =>
+							{ searchHistory.map( ( keyword, key ) =>
 								<Button
 									key={ key }
 									onClick={ () => setKeyword( keyword ) }
 								>
-									"{keyword}"
+									"{ keyword }"
 								</Button>
-							)}
+							) }
 						</Button.Group>
 					</Page.Pad>
 				}
@@ -152,13 +139,10 @@ export const Main = ( { match } ) => {
 			}
 
 			{ 0 < groups.length &&
-				<List.Scroller
+				<List
 					items={ groups }
 					isListSection={ item => 'undefined' !== typeof item.label }
 					getSectionItems={ section => section.items ? section.items : [] }
-					loadItems={ ( setHasMore ) => {
-						setTimeout( () => setHasMore( false ), 2000 )
-					} }
 					getItemProps={ ( item, defaultProps, isSection ) => {
 						let props = { ...defaultProps }
 
@@ -184,10 +168,10 @@ export const Main = ( { match } ) => {
 
 							switch ( type ) {
 							case 'post':
-								path = `${basePath}/posts/${item.id}`
+								path = `${basePath}/post/${item.id}`
 								break
 							case 'user':
-								path = `${basePath}/users/${3}`
+								path = `${basePath}/user/${item.id}`
 								break
 							case 'attachment':
 							case 'plugin':
