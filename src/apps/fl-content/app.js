@@ -1,11 +1,6 @@
-import React, { useEffect, useState, useContext } from 'fl-react'
-
-import { __ } from 'assistant'
-import { getWpRest } from 'assistant/utils/wordpress'
+import React, { useContext } from 'fl-react'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
-import { App, Button, List, Page, Nav, Icon, Window } from 'assistant/ui'
-
-import { CancelToken, isCancel } from 'axios'
+import { App, Button, List, Page, Nav, Icon } from 'assistant/ui'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>

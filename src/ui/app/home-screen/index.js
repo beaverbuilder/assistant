@@ -79,14 +79,16 @@ const CurrentlyViewing = () => {
 		<div className="fl-asst-currently-viewing-summary">
 			<div className="fl-asst-pretitle">{intro}</div>
 			<div className="fl-asst-title">{name}</div>
-			<Button.Group style={{ marginTop: 'var(--fl-asst-small-space)'}}>
-			{ actions.map( ( item, i ) => {
-				const { label, href } = item
-				return (
-					<Button key={i} href={href}>{label}</Button>
-				)
-			})}
-			</Button.Group>
+
+			{ actions && 0 < actions.length &&
+			<Page.Toolbar style={{ marginTop: 'var(--fl-asst-small-space)', padding: 0 }}>
+				{ actions && 0 < actions.length && actions.map( ( item, i ) => {
+					const { label, href } = item
+					return (
+						<Button key={i} href={href}>{label}</Button>
+					)
+				} )}
+			</Page.Toolbar> }
 		</div>
 	)
 }
