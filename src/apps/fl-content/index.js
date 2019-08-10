@@ -32,7 +32,7 @@ registerApp( 'fl-content', {
 	},
 	search: Object.entries( contentTypes ).map( ( [ type, data ], key ) => {
 		return {
-			label: data.labels.singular,
+			label: data.labels.plural,
 			priority: key,
 			route: ( keyword, number, offset ) => {
 				return addQueryArgs( 'fl-assistant/v1/posts', {
