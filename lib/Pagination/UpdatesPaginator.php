@@ -6,14 +6,10 @@ namespace FL\Assistant\Pagination;
 
 class UpdatesPaginator extends AbstractPaginator {
 
-	public function query( array $args = [], callable $formatter = null ) {
-		return $this;
-	}
-
 	public function paginate( $items = [] ) {
-		$this->setItems( $items );
-		$this->setItemsCount( count( $items ) );
-		$this->setItemsPerPage( count( $items ) );
+		$this->set_items( $items );
+		$this->set_items_count( count( $items ) );
+		$this->set_items_per_page( count( $items ) );
 		return $this;
 	}
 }

@@ -17,7 +17,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	/**
 	 * @return bool
 	 */
-	public function hasMore() {
+	public function has_more() {
 		return $this->has_more;
 	}
 
@@ -26,18 +26,16 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 *
 	 * @return AbstractPaginator
 	 */
-	public function setHasMore( $has_more ) {
+	public function set_has_more( $has_more ) {
 		$this->has_more = $has_more;
 
 		return $this;
 	}
 
-	abstract public function query( array $args = [], callable $formatter = null );
-
 	/**
 	 * @return array
 	 */
-	public function getItems() {
+	public function get_items() {
 		return $this->items;
 	}
 
@@ -46,7 +44,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 *
 	 * @return AbstractPaginator
 	 */
-	public function setItems( $items ) {
+	public function set_items( $items ) {
 		$this->items = $items;
 
 		return $this;
@@ -55,7 +53,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getItemsCount() {
+	public function get_items_count() {
 		return $this->items_count;
 	}
 
@@ -64,7 +62,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 *
 	 * @return AbstractPaginator
 	 */
-	public function setItemsCount( $items_count ) {
+	public function set_items_count( $items_count ) {
 		$this->items_count = $items_count;
 
 		return $this;
@@ -73,7 +71,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getItemsPerPage() {
+	public function get_items_per_page() {
 		return $this->items_per_page;
 	}
 
@@ -82,7 +80,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 *
 	 * @return AbstractPaginator
 	 */
-	public function setItemsPerPage( $items_per_page ) {
+	public function set_items_per_page( $items_per_page ) {
 		$this->items_per_page = $items_per_page;
 
 		return $this;
@@ -91,7 +89,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getFirstPage() {
+	public function get_first_page() {
 		return $this->first_page;
 	}
 
@@ -100,7 +98,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 *
 	 * @return AbstractPaginator
 	 */
-	public function setFirstPage( $first_page ) {
+	public function set_first_page( $first_page ) {
 		$this->first_page = $first_page;
 
 		return $this;
@@ -109,7 +107,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getLastPage() {
+	public function get_last_page() {
 		return $this->last_page;
 	}
 
@@ -118,7 +116,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 *
 	 * @return AbstractPaginator
 	 */
-	public function setLastPage( $last_page ) {
+	public function set_last_page( $last_page ) {
 		$this->last_page = $last_page;
 
 		return $this;
@@ -127,7 +125,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getCurrentPage() {
+	public function get_current_page() {
 		return $this->current_page;
 	}
 
@@ -136,7 +134,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 *
 	 * @return AbstractPaginator
 	 */
-	public function setCurrentPage( $current_page ) {
+	public function set_current_page( $current_page ) {
 		$this->current_page = $current_page;
 
 		return $this;
@@ -145,7 +143,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getCurrentOffset() {
+	public function get_current_offset() {
 		return $this->current_offset;
 	}
 
@@ -154,7 +152,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	 *
 	 * @return AbstractPaginator
 	 */
-	public function setCurrentOffset( $current_offset ) {
+	public function set_current_offset( $current_offset ) {
 		$this->current_offset = intval( $current_offset );
 
 		return $this;
@@ -174,14 +172,14 @@ abstract class AbstractPaginator implements \JsonSerializable {
 
 	public function to_array() {
 		return [
-			'items'          => $this->getItems(),
-			'items_count'    => $this->getItemsCount(),
-			'items_per_page' => $this->getItemsPerPage(),
-			'current_page'   => $this->getCurrentPage(),
-			'current_offset' => $this->getCurrentOffset(),
-			'first_page'     => $this->getFirstPage(),
-			'last_page'      => $this->getLastPage(),
-			'has_more'       => $this->hasMore()
+			'items'          => $this->get_items(),
+			'items_count'    => $this->get_items_count(),
+			'items_per_page' => $this->get_items_per_page(),
+			'current_page'   => $this->get_current_page(),
+			'current_offset' => $this->get_current_offset(),
+			'first_page'     => $this->get_first_page(),
+			'last_page'      => $this->get_last_page(),
+			'has_more'       => $this->has_more(),
 		];
 	}
 }

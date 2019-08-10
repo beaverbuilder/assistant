@@ -4,7 +4,7 @@
 namespace FL\Assistant\Pagination;
 
 
-class PostsPaginator extends AbstractPaginator {
+class PostsPaginator extends QueryPaginator {
 
 	public function query( array $args = [], callable $formatter = null ) {
 
@@ -22,15 +22,15 @@ class PostsPaginator extends AbstractPaginator {
 			$items_per_page = $query->post_count;
 			$current_page   = ceil( ( $offset + 1 ) / $items_per_page );
 
-			$this->setItems( array_map( $formatter, $query->posts ) )
-				 ->setItemsCount( intval( $query->found_posts ) )
-				 ->setItemsPerPage( $items_per_page )
-				 ->setLastPage( $query->max_num_pages )
-				 ->setCurrentOffset( $offset )
-				 ->setCurrentPage( $current_page );
+			$this->set_items( array_map( $formatter, $query->posts ) )
+				 ->set_items_count( intval( $query->found_posts ) )
+				 ->set_items_per_page( $items_per_page )
+				 ->set_last_page( $query->max_num_pages )
+				 ->set_current_offset( $offset )
+				 ->set_current_page( $current_page );
 
-			if ( $this->getCurrentPage() < $this->getLastPage() ) {
-				$this->setHasMore( true );
+			if ( $this->get_current_page() < $this->get_last_page() ) {
+				$this->set_has_more( true );
 			}
 		}
 

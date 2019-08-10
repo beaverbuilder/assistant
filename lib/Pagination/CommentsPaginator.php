@@ -2,7 +2,7 @@
 
 namespace FL\Assistant\Pagination;
 
-class CommentsPaginator extends AbstractPaginator {
+class CommentsPaginator extends QueryPaginator {
 
 	public function query( array $args = [], callable $formatter = null ) {
 		$args['no_found_rows'] = false;
@@ -24,15 +24,15 @@ class CommentsPaginator extends AbstractPaginator {
 			$current_page   = ceil( ( $offset + 1 ) / $items_per_page );
 			$last_page      = $query->max_num_pages;
 
-			$this->setItems( array_map( $formatter, $query->get_comments() ) )
-				->setItemsCount( $query->found_comments )
-				->setItemsPerPage( $items_per_page )
-				->setLastPage( $last_page )
-				->setCurrentPage( $current_page )
-				->setCurrentOffset( $offset );
+			$this->set_items( array_map( $formatter, $query->get_comments() ) )
+				->set_items_count( $query->found_comments )
+				->set_items_per_page( $items_per_page )
+				->set_last_page( $last_page )
+				->set_current_page( $current_page )
+				->set_current_offset( $offset );
 
 			if ( $current_page < $last_page ) {
-				$this->setHasMore( true );
+				$this->set_has_more( true );
 			}
 		}
 
