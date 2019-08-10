@@ -127,7 +127,9 @@ class TermsController extends AssistantController {
 			$response[] = $this->get_term_response_data( $term );
 		}
 
-		return rest_ensure_response( $response );
+		return rest_ensure_response( array(
+			'items' => $response, // Temp fix until we have a pager.
+		) );
 	}
 
 	/**
@@ -266,4 +268,3 @@ class TermsController extends AssistantController {
 		);
 	}
 }
-

@@ -6,6 +6,7 @@ import { Nav, Icon, App, Window } from '../'
 
 import { Comment, Update, User } from './detail-pages'
 import { Post, CreatePost } from './post'
+import { Term } from './term'
 import { Attachment } from './attachment'
 
 import './style.scss'
@@ -171,6 +172,9 @@ Page.Update.displayName = 'Page.Update'
 
 Page.Post = Post
 Page.Post.displayName = 'Page.Post'
+
+Page.Term = Term
+Page.Term.displayName = 'Page.Term'
 
 Page.Attachment = Attachment
 Page.Attachment.displayName = 'Page.Attachment'
