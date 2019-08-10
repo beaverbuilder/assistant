@@ -43,7 +43,7 @@ export const getRequestConfig = ( args = {} ) => {
 
 	Object.entries( apps ).map( ( data ) => {
 		const app = data[ 1 ]
-		if ( ! app.search || ! app.search.route ) {
+		if ( ! app.search ) {
 			return
 		} else if ( Array.isArray( app.search ) ) {
 			app.search.map( search => addRequestConfig( search ) )

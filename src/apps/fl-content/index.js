@@ -1,7 +1,10 @@
 import { registerApp, __ } from 'assistant'
 import { addQueryArgs } from 'assistant/utils/url'
+import { getSystemConfig } from 'assistant/data'
 import { Page } from 'assistant/ui'
 import { Content } from './app'
+
+const { contentTypes, taxonomies } = getSystemConfig()
 
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
@@ -27,28 +30,46 @@ registerApp( 'fl-content', {
 			total: 21
 		}
 	},
-	search: {
-		label: __( 'Content' ),
-		priority: 1,
-		route: ( keyword, number, offset ) => {
-			return addQueryArgs( 'fl-assistant/v1/posts', {
-				post_type: 'any',
-				s: keyword,
-				posts_per_page: number,
-				offset,
-			} )
-		},
-		format: items => {
-			return items.map( item => ( {
-				...item,
-			} ) )
-		},
-		detail: {
-			component: Page.Post,
-			path: '/post/:id',
-			pathname: item => {
-				return `/post/${ item.id }`
+	search: Object.entries( contentTypes ).map( ( [ type, data ], key ) => {
+		return {
+			label: data.labels.plural,
+			priority: key,
+			route: ( keyword, number, offset ) => {
+				return addQueryArgs( 'fl-assistant/v1/posts', {
+					post_type: type,
+					s: keyword,
+					posts_per_page: number,
+					offset,
+				} )
 			},
-		},
-	}
+			detail: {
+				component: Page.Post,
+				path: '/post/:id',
+				pathname: item => {
+					return `/post/${ item.id }`
+				},
+			},
+		}
+	} ).concat( Object.entries( taxonomies ).map( ( [ type, data ], key ) => {
+		return {
+			label: data.labels.plural,
+			priority: Object.entries( contentTypes ).length + key,
+			route: ( keyword, number, offset ) => {
+				return addQueryArgs( 'fl-assistant/v1/terms', {
+					taxonomy: type,
+					hide_empty: 0,
+					search: keyword,
+					number,
+					offset,
+				} )
+			},
+			detail: {
+				component: Page.Term,
+				path: '/term/:id',
+				pathname: item => {
+					return `/term/${ item.id }`
+				},
+			},
+		}
+	} ) )
 } )
