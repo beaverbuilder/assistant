@@ -7,12 +7,18 @@ import { getRequestConfig } from './config'
 
 export const App = ( { match } ) => {
 	const { config } = getRequestConfig()
+	const rendered = []
 	return (
 		<Nav.Switch>
 			<Nav.Route exact path={ `${match.url}/` } component={ Main } />
 			<Nav.Route exact path={ `${match.url}/all` } component={ ViewAll } />
 			{ config.map( ( { detail }, key ) => {
 				if ( detail ) {
+					if ( rendered.includes( detail.path ) ) {
+						return null
+					} else {
+						rendered.push( detail.path )
+					}
 					return (
 						<Fragment key={ key }>
 							<Nav.Route
