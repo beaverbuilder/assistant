@@ -161,7 +161,6 @@ abstract class AbstractPaginator implements \JsonSerializable {
 	}
 
 
-
 	/**
 	 * Specify data which should be serialized to JSON
 	 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -182,6 +181,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 			'current_offset' => $this->getCurrentOffset(),
 			'first_page'     => $this->getFirstPage(),
 			'last_page'      => $this->getLastPage(),
+			'has_more'       => $this->hasMore()
 		];
 	}
 }
