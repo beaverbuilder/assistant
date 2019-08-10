@@ -59,8 +59,6 @@ export const getRequestConfig = ( args = {} ) => {
 		} )
 	} )
 
-	console.log( config )
-
 	return { config, routes }
 }
 
