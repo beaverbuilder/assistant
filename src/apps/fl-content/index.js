@@ -1,7 +1,10 @@
 import { registerApp, __ } from 'assistant'
 import { addQueryArgs } from 'assistant/utils/url'
+import { getSystemConfig } from 'assistant/data'
 import { Page } from 'assistant/ui'
 import { Content } from './app'
+
+const { contentTypes } = getSystemConfig()
 
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
@@ -27,28 +30,25 @@ registerApp( 'fl-content', {
 			total: 21
 		}
 	},
-	search: {
-		label: __( 'Content' ),
-		priority: 1,
-		route: ( keyword, number, offset ) => {
-			return addQueryArgs( 'fl-assistant/v1/posts', {
-				post_type: 'any',
-				s: keyword,
-				posts_per_page: number,
-				offset,
-			} )
-		},
-		format: items => {
-			return items.map( item => ( {
-				...item,
-			} ) )
-		},
-		detail: {
-			component: Page.Post,
-			path: '/post/:id',
-			pathname: item => {
-				return `/post/${ item.id }`
+	search: Object.entries( contentTypes ).map( ( [ type, data ], key ) => {
+		return {
+			label: data.labels.singular,
+			priority: key,
+			route: ( keyword, number, offset ) => {
+				return addQueryArgs( 'fl-assistant/v1/posts', {
+					post_type: type,
+					s: keyword,
+					posts_per_page: number,
+					offset,
+				} )
 			},
-		},
-	}
+			detail: {
+				component: Page.Post,
+				path: '/post/:id',
+				pathname: item => {
+					return `/post/${ item.id }`
+				},
+			},
+		}
+	} )
 } )
