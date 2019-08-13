@@ -9,12 +9,17 @@ import { HomeScreen } from './home-screen'
 import './style.scss'
 
 export const AppRouting = withRouter(  ( { location, history } ) => {
+
+	const shouldTransitionCard = false
+	const classes = classname({
+		[history.action] : shouldTransitionCard
+	})
 	return (
 		<TransitionGroup className="fl-asst-transition-group">
 			<CSSTransition
 				key={ location.key }
-				classNames={ history.action }
-				timeout={ 210 }
+				classNames={ classes }
+				timeout={ shouldTransitionCard ? 210 : 0 }
 			>
 				<Nav.Switch location={ location }>
 					<Nav.Route exact path="/" component={ HomeScreen } />
