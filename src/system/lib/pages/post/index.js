@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, Button } from 'lib'
+import { Page, Nav, Button, Form } from 'lib'
 
 export const Post = ( { location, match, history } ) => {
 	const defaultItem = {
@@ -32,8 +32,7 @@ export const Post = ( { location, match, history } ) => {
 	const PageHeader = () => {
 		return (
 			<div>
-				Page Header!
-				{ thumbnail && <img src={ thumbnail } /> }
+				{ thumbnail && <img src={ thumbnail } style={{ height: 150, width: 150 }} /> }
 				<h2>{title}</h2>
 
 				<Page.Toolbar>
@@ -46,7 +45,7 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	return (
-		<Page title={ __( 'Post' ) } header={<PageHeader item={item} />}>
+		<Page title={ __( 'Post' ) } header={<PageHeader item={item} />} shouldPadSides={false}>
 			<Nav.Switch>
 				<Nav.Route exact path={`${match.url}/`} component={GeneralTab} />
 				<Nav.Route path={`${match.url}/general`} component={GeneralTab} />
@@ -59,17 +58,40 @@ export const Post = ( { location, match, history } ) => {
 
 const GeneralTab = () => {
 	return (
-		<>
-			General Tab Content.
-		</>
+		<Form>
+			<Form.Section label={__('URL')}>
+				<Form.Item label={__('Permalink or something')}>
+					URL stuff here.
+				</Form.Item>
+			</Form.Section>
+			<Form.Section label={__('Featured Image')}>
+				<Form.Item>
+					Img or something.
+				</Form.Item>
+			</Form.Section>
+		</Form>
 	)
 }
 
 const MetaTab = () => {
 	return (
-		<>
-			Metadata Tab Content.
-		</>
+		<Form>
+			<Form.Section label={__('Categories')}>
+				<Form.Item>
+					Category controls
+				</Form.Item>
+			</Form.Section>
+			<Form.Section label={__('Tags')}>
+				<Form.Item>
+					tag controls
+				</Form.Item>
+			</Form.Section>
+			<Form.Section label={__('Excerpt')}>
+				<Form.Item>
+					Excerpt controls
+				</Form.Item>
+			</Form.Section>
+		</Form>
 	)
 }
 
