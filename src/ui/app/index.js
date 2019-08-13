@@ -11,9 +11,9 @@ import './style.scss'
 export const AppRouting = withRouter(  ( { location, history } ) => {
 
 	const shouldTransitionCard = false
-	const classes = classname({
-		[history.action] : shouldTransitionCard
-	})
+	const classes = classname( {
+		[history.action]: shouldTransitionCard
+	} )
 	return (
 		<TransitionGroup className="fl-asst-transition-group">
 			<CSSTransition
