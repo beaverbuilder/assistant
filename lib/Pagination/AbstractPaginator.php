@@ -158,7 +158,6 @@ abstract class AbstractPaginator implements \JsonSerializable {
 		return $this;
 	}
 
-
 	/**
 	 * Specify data which should be serialized to JSON
 	 * @link https://php.net/manual/en/jsonserializable.jsonserialize.php

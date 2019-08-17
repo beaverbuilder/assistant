@@ -2,6 +2,7 @@
 
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Pagination\TermsPaginator;
 use \WP_REST_Server;
 
 /**
@@ -18,7 +19,7 @@ class TermsController extends AssistantController {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'terms' ],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
@@ -30,7 +31,7 @@ class TermsController extends AssistantController {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_terms' ],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
@@ -42,7 +43,7 @@ class TermsController extends AssistantController {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'terms_count' ],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
 					},
 				],
@@ -60,7 +61,7 @@ class TermsController extends AssistantController {
 							'type'     => 'number',
 						],
 					],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
@@ -77,7 +78,7 @@ class TermsController extends AssistantController {
 							'type'     => 'string',
 						],
 					],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
@@ -89,7 +90,7 @@ class TermsController extends AssistantController {
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_term' ],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
@@ -112,6 +113,7 @@ class TermsController extends AssistantController {
 			'title'          => $term->name,
 			'url'            => get_term_link( $term ),
 		];
+
 		return $response;
 	}
 
@@ -119,19 +121,14 @@ class TermsController extends AssistantController {
 	 * Returns an array of terms and related data.
 	 */
 	public function terms( $request ) {
-		$response = [];
-		$params   = $request->get_params();
-		$terms    = get_terms( $params );
+		$params    = $request->get_params();
+		$paginator = new TermsPaginator();
 
-		foreach ( $terms as $term ) {
-			$response[] = $this->get_term_response_data( $term );
-		}
+		$pager = $paginator->query( $params, function ( $term ) {
+			return $this->get_term_response_data( $term );
+		} );
 
-		return rest_ensure_response(
-			[
-				'items' => $response, // Temp fix until we have a pager.
-			]
-		);
+		return rest_ensure_response( $pager->to_array() );
 	}
 
 	/**
@@ -156,9 +153,9 @@ class TermsController extends AssistantController {
 
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
-				$parent = $this->get_term_response_data( $term );
+				$parent             = $this->get_term_response_data( $term );
 				$parent['children'] = $this->get_child_terms( $term, $children );
-				$response[] = $parent;
+				$response[]         = $parent;
 			}
 		}
 
@@ -173,11 +170,13 @@ class TermsController extends AssistantController {
 		if ( isset( $children[ $term->term_id ] ) ) {
 			$term_children = $children[ $term->term_id ];
 			foreach ( $term_children as $i => $child ) {
-				$term_children[ $i ] = $this->get_term_response_data( $child );
+				$term_children[ $i ]             = $this->get_term_response_data( $child );
 				$term_children[ $i ]['children'] = $this->get_child_terms( $child, $children );
 			}
+
 			return $term_children;
 		}
+
 		return [];
 	}
 
@@ -187,10 +186,10 @@ class TermsController extends AssistantController {
 	public function terms_count( $request ) {
 
 		$taxonomies = $this->container()->service( 'posts' )->get_taxononies();
-		$response = [];
+		$response   = [];
 
 		foreach ( $taxonomies as $slug => $label ) {
-			$count = wp_count_terms( $slug );
+			$count             = wp_count_terms( $slug );
 			$response[ $slug ] = (int) $count;
 		}
 
@@ -213,7 +212,7 @@ class TermsController extends AssistantController {
 	 */
 	public function create_term( $request ) {
 		$data = array_map( 'sanitize_text_field', $request->get_params() );
-		$id = wp_insert_term(
+		$id   = wp_insert_term(
 			$data['name'],
 			$data['taxonomy'],
 			[
@@ -229,6 +228,7 @@ class TermsController extends AssistantController {
 					'error' => 'exists',
 				];
 			}
+
 			return [
 				'error' => true,
 			];

@@ -16,7 +16,7 @@ class UpdatesControllerTest extends RestTestCase {
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
 
-		$this->assertIsArray($data);
+		$this->assertIsPager($data);
 	}
 
 	public function test_can_get_updates_count() {
