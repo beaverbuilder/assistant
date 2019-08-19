@@ -20,6 +20,7 @@ export const Page = ( {
 	title,
 	headerActions,
 	toolbar,
+	header,
 	icon,
 	children,
 	...rest
@@ -44,6 +45,7 @@ export const Page = ( {
 			<div className="fl-asst-page">
 				{ shouldShowHeader && <Page.Header label={ title } icon={ icon } actions={ headerActions } /> }
 				{ toolbar && <Page.Toolbar shouldPadTop={ ! shouldShowHeader } shouldPadBottom={ true }>{toolbar}</Page.Toolbar> }
+				{ header && <div className="fl-asst-page-header">{header}</div> }
 				<div className="fl-asst-page-content-wrap" ref={ ref } { ...rest }>
 					<div className={ classes }>{children}</div>
 				</div>
