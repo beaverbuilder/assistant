@@ -53,6 +53,8 @@ class User {
 			'url'         => get_author_posts_url( $user->ID ),
 			'username'    => $user->user_login,
 			'website'     => $user->user_url,
+			'posts'       => count_user_posts( $user->ID, 'post' ),
+			'pages'       => count_user_posts( $user->ID, 'page' )
 		];
 	}
 

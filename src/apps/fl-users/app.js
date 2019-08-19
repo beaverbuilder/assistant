@@ -1,29 +1,20 @@
 import React, { useContext } from 'fl-react'
 import { App, Page, Nav, List } from 'assistant/lib'
 
+import { Main } from './pages/main'
+import { User } from './pages/user'
+import { Search } from './pages/search'
+import { Invite } from './pages/invite'
+
 export const Users = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-		<Nav.Route path={ `${match.url}/user/:id` } component={ Page.User } />
+		<Nav.Route path={`${match.url}/search` } component={ Search }/>
+		<Nav.Route path={`${match.url}/invite` } component={ Invite }/>
+		<Nav.Route path={ `${match.url}/user/:id` } component={ User } />
 	</Nav.Switch>
 )
 
-const Main = () => {
-	const { handle } = useContext( App.Context )
-	return (
-		<Page shouldPadSides={ false }>
-			<List.Users
-				getItemProps={ ( item, defaultProps ) => ( {
-					...defaultProps,
-					to: {
-						pathname: `/${handle}/user/${item.id}`,
-						state: { item }
-					},
-				} ) }
-			/>
-		</Page>
-	)
-}
 
 Users.Icon = () => {
 	return (

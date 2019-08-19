@@ -4,7 +4,7 @@ import { Page } from 'assistant/ui'
 import { Users } from './app'
 
 registerApp( 'fl-users', {
-	label: __( 'Users' ),
+	label: __( 'People' ),
 	root: Users,
 	icon: Users.Icon,
 	accent: {

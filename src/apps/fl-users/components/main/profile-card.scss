@@ -1,0 +1,36 @@
+.fl-asst-users-profile {
+
+  .fl-asst-users-profile-title {
+
+  }
+
+  .fl-asst-users-profile-card {
+    background-color: #eee;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 150px;
+    width: 100%;
+
+    .fl-asst-users-profile-avatar-row {
+      overflow: hidden;
+      clear: both;
+
+      .fl-asst-users-profile-avatar {
+        float: left;
+        clear: right;
+        width: 33%;
+
+        img {
+          border-radius: 50%;
+        }
+      }
+
+      .fl-asst-users-profile-info {
+        float: left;
+        clear: right;
+        width: 66%;
+      }
+
+    }
+  }
+}

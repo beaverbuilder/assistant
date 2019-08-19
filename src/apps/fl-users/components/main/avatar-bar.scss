@@ -1,0 +1,14 @@
+.fl-asst-users-avatar-bar-users {
+  .fl-asst-users-avatar-bar-avatar {
+    width: 25%;
+    float: left;
+    clear: right;
+
+    img {
+      display: block;
+      width: 100%;
+      clear: both;
+      border-radius: 50%;
+    }
+  }
+}

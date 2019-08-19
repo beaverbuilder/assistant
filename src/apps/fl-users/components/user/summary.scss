@@ -1,0 +1,23 @@
+.fl-asst-users-summary-user-panel {
+  display: flex;
+  flex-direction: column;
+  background: #eee;
+
+
+  .fl-asst-users-summary-user-panel-badges {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      .fl-asst-users-summary-user-panel-badge {
+          border: 2px solid #ccc;
+          border-radius: 50%;
+          min-width: 20%;
+          img {
+            border: 2px solid #ccc;
+            border-radius: 50%;
+          }
+
+      }
+  }
+}
