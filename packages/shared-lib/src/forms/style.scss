@@ -2,43 +2,43 @@
 
     form {
         padding: 0 0 var(--fl-asst-outer-space);
-        display: grid;
-        grid-row-gap: var(--fl-asst-inner-space);
         color: inherit;
 
         .fl-asst-form-section {
-            border-top: 5px solid var(--fl-asst-secondary-surface-background);
-            border-bottom: 5px solid var(--fl-asst-secondary-surface-background);
+            background: var(--fl-asst-surface-background);
+            display: flex;
+            flex-direction: column;
 
             .fl-asst-form-section-title {
+                flex: 0 0 auto;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                padding: var(--fl-asst-inner-space) var(--fl-asst-outer-space) 0;
+                background-color: var(--fl-asst-secondary-surface-background);
+                padding: 3px 0 0;
                 font-weight: 700;
+
+                position: -webkit-sticky;
+                position: -moz-sticky;
+                position: -ms-sticky;
+                position: -o-sticky;
+                position: sticky;
+                top:0;
+
+                .fl-asst-form-section-title-text {
+                    display: inline-flex;
+                    background-color: var(--fl-asst-surface-background);
+                    padding: 5px;
+                    padding-right: var(--fl-asst-inner-space);
+                    padding-left: var(--fl-asst-outer-space);
+                    min-height: var(--fl-asst-target-size);
+                }
             }
             .fl-asst-form-section-content {
+                flex: 1 1 auto;
                 padding: var(--fl-asst-inner-space) 0;
                 display: grid;
                 grid-row-gap: var(--fl-asst-inner-space);
-            }
-            &.fl-asst-form-section-is-inset {
-                background: transparent;
-                border: none;
-                padding: 0 var(--fl-asst-outer-space);
-
-                .fl-asst-form-section-title {
-                    padding:0;
-                    padding-bottom: var(--fl-asst-inner-space);
-                }
-                .fl-asst-form-section-content {
-                    border-radius: 7px;
-                    box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background);
-
-                    .fl-asst-form-item {
-                        padding: 0 var(--fl-asst-inner-space);
-                    }
-                }
             }
         }
 
