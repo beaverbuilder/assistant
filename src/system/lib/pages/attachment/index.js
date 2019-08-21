@@ -36,26 +36,28 @@ export const Attachment = ( { location } ) => {
 			</Page.Toolbar>
 
 			<Form>
-				<Form.Item label={ __( 'Name' ) } labelFor="name" isRequired={ true } placement="beside">
-					<input
-						id="name"
-						type="text"
-						required={ true }
-						placeholder={ __( 'Attachment Title' ) }
-						value={ values.title }
-						onChange={ e => setValue( 'title', e.target.value ) }
-						ref={ firstRef }
-					/>
-				</Form.Item>
-				<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true } placement="beside">
-					<input
-						id="description"
-						type="text"
-						placeholder={ __( 'Description' ) }
-						value={ values.description }
-						onChange={ e => setValue( 'description', e.target.value ) }
-					/>
-				</Form.Item>
+                <Form.Section label={__('Metadata')}>
+    				<Form.Item label={ __( 'Name' ) } labelFor="name" isRequired={ true } placement="beside">
+    					<input
+    						id="name"
+    						type="text"
+    						required={ true }
+    						placeholder={ __( 'Attachment Title' ) }
+    						value={ values.title }
+    						onChange={ e => setValue( 'title', e.target.value ) }
+    						ref={ firstRef }
+    					/>
+    				</Form.Item>
+    				<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true } placement="beside">
+    					<input
+    						id="description"
+    						type="text"
+    						placeholder={ __( 'Description' ) }
+    						value={ values.description }
+    						onChange={ e => setValue( 'description', e.target.value ) }
+    					/>
+    				</Form.Item>
+                </Form.Section>
 			</Form>
 		</Page>
 	)
