@@ -16,17 +16,17 @@ export const AppRouting = withRouter(  ( { location, history } ) => {
 	} )
 	return (
 		<TransitionGroup className="fl-asst-transition-group">
-			<CSSTransition
+			{/*<CSSTransition
 				key={ location.key }
 				classNames={ classes }
 				timeout={ shouldTransitionCard ? 210 : 0 }
-			>
+			>*/}
 				<Nav.Switch location={ location }>
 					<Nav.Route exact path="/" component={ HomeScreen } />
 					<Nav.Route path="/:app" component={ AppContent } />
 					<Nav.Route component={ NoApp } />
 				</Nav.Switch>
-			</CSSTransition>
+			{/*</CSSTransition>*/}
 		</TransitionGroup>
 	)
 } )

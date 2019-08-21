@@ -55,6 +55,12 @@
         display: flex;
         flex-direction: column;
 
+        &.fl-asst-app-small-title {
+            font-size: 14px;
+            border-left: 2px solid var(--fl-asst-dim-text);
+            padding-left: var(--fl-asst-inner-space);
+        }
+
         .fl-asst-app-header-name-description {
             font-size: 12px;
             font-weight: normal;
