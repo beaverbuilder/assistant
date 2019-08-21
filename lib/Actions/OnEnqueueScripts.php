@@ -126,7 +126,7 @@ class OnEnqueueScripts {
 			$state  = $this->generate_initial_state();
 
 			// API - loaded in header
-			$js_deps = [ 'heartbeat', 'wp-i18n', 'fl-vendors' ];
+			$js_deps = [ 'heartbeat', 'wp-i18n', 'wp-keycodes', 'fl-vendors' ];
 
 			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.js', $js_deps, $ver, false );

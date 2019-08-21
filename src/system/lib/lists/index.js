@@ -37,6 +37,8 @@ export const List = ( {
 	// Get the array of items from a section item
 	getSectionItems = () => [],
 
+	isSelecting = false,
+
 	tag: Tag = 'ul',
 } ) => {
 

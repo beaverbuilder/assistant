@@ -1,8 +1,10 @@
-import React from 'fl-react'
+import React, { useState, useContext } from 'fl-react'
 import classname from 'fl-classnames'
 import { Nav, Page } from '../../'
 import { isColor } from 'utils/color'
 import { isURL } from 'shared-utils/url'
+import { __ } from '@wordpress/i18n'
+import { ENTER } from '@wordpress/keycodes'
 
 export const defaultItemProps = {
 	thumbnailSize: 'med',
@@ -72,7 +74,9 @@ const InfoItem = ( {
 	thumbnail,
 	thumbnailSize = 'med',
 	className,
-	to,
+	isHovering,
+	isFocused,
+	extras,
 } ) => {
 	const classes = classname( {
 		'fl-asst-list-item-content-info': true,
@@ -88,11 +92,8 @@ const InfoItem = ( {
 	}
 
 	let Tag = 'div'
-	let newProps = {}
+	let newProps = {
 
-	if ( to ) {
-		Tag = Nav.Link
-		newProps.to = to
 	}
 
 	const thumbClasses = classname( {
@@ -101,20 +102,23 @@ const InfoItem = ( {
 		'fl-asst-round': color,
 	} )
 
+	const itemExtras = 'function' === typeof extras ? extras( { isHovering, isFocused } ) : null
+
 	return (
 		<Tag className={ classes } { ...newProps }>
-
-			{ ( hasThumbnail || shouldAlwaysShowThumbnail ) &&
-				<div className={ thumbClasses }>
-					{ thumbnail && <img src={ thumbnail } /> }
-					{ color && <div className="fl-asst-list-item-color-thumbnail"  style={ { backgroundColor: color } } /> }
+			<div className="fl-asst-list-item-default-content-row">
+				{ ( hasThumbnail || shouldAlwaysShowThumbnail ) &&
+					<div className={ thumbClasses }>
+						{ thumbnail && <img src={ thumbnail } /> }
+						{ color && <div className="fl-asst-list-item-color-thumbnail"  style={ { backgroundColor: color } } /> }
+					</div>
+				}
+				<div className="fl-asst-list-item-subject">
+					{ label && <div className="fl-asst-list-item-title">{label}</div> }
+					{ description && <div className="fl-asst-list-item-description">{description}</div> }
 				</div>
-			}
-
-			<div className="fl-asst-list-item-subject">
-				{ label && <div className="fl-asst-list-item-title">{label}</div> }
-				{ description && <div className="fl-asst-list-item-description">{description}</div> }
 			</div>
+			{ itemExtras && <div className="fl-asst-list-item-extras">{itemExtras}</div> }
 		</Tag>
 	)
 }
@@ -123,15 +127,55 @@ export const Item = ( {
 	children,
 	className,
 	tag: Tag = 'li',
+	to,
 	...rest
 } ) => {
 	const classes = classname( 'fl-asst-list-item', className )
-	const props = {
+	const { history } = useContext( Nav.Context )
+	const [ isHovering, setIsHovering ] = useState( false )
+	const [ isFocused, setIsFocused ] = useState( false )
+
+	let props = {
 		className: classes,
-		tabIndex: -1,
+		onMouseOver: () => ! isHovering && setIsHovering( true ),
+		onMouseOut: () => isHovering && setIsHovering( false ),
+		onFocus: () => setIsFocused( true ),
+		onBlur: () => setIsFocused( false ),
 	}
+
+	let itemProps = {
+		...rest,
+		isHovering,
+		isFocused,
+	}
+
+	if ( to ) {
+		let path = ''
+		let state = null
+
+		// list item is actionable
+		props.tabIndex = 0
+
+		if ( 'string' === typeof to ) {
+			path = to
+		}
+		if ( 'object' === typeof to ) {
+			path = to.pathname
+			state = to.state
+		}
+		props.onClick = () => history.push( path, state )
+
+		props.onKeyPress = e => {
+			const { keyCode } = e.nativeEvent
+
+			if ( ENTER === keyCode ) {
+				history.push( path, state )
+			}
+		}
+	}
+
 	return (
-		<Tag { ...props }>{ children ? children : <InfoItem { ...rest } /> }</Tag>
+		<Tag { ...props }>{ 'function' === typeof children ? children( rest ) : <InfoItem { ...itemProps } /> }</Tag>
 	)
 }
 
@@ -148,6 +192,6 @@ const Section = ( { children, className, label, ...rest } ) => {
 
 export const Loading = () => {
 	return (
-		<Page.Pad>Loading...</Page.Pad>
+		<Page.Pad>{__( 'Loading...' )}</Page.Pad>
 	)
 }
