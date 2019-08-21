@@ -17,30 +17,59 @@
 
         .fl-asst-list-item {
             flex: 0 0 auto;
+            display: flex;
+            flex-direction: row;
             --fl-asst-list-item-shadow-color: #B8CCE1;
+
+            box-shadow: 0px 0px 0px rgba(0,0,0,0);
+            transition-property: box-shadow;
+            transition-duration: .15s;
+
+            &:hover {
+                background-color: var(--fl-asst-surface-background);
+                box-shadow: 0px 7px 7px 0px hsla(210, 41%, 80%, .25);
+            }
 
             &:focus,
             &:focus-within {
+                background-color: var(--fl-asst-surface-background);
                 outline: none;
-                box-shadow: inset 3px 0px 0px var(--fl-asst-line-color),
-                            0px 0px 45px 0px var(--fl-asst-list-item-shadow-color);
+                box-shadow: inset 0px 1px 0px rgba(0,0,0,.1),
+                            inset 3px 0px 0px var(--fl-asst-line-color),
+                            0px 5px 45px 0px var(--fl-asst-list-item-shadow-color);
                 z-index: 1;
+            }
+
+            .fl-asst-list-item-selector {
+                box-sizing:border-box;
+                padding: 0 5px;
+                flex: 0 0 32px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
     }
     .fl-asst-brightness-dark .fl-asst-list .fl-asst-list-item {
         --fl-asst-list-item-shadow-color: var(--fl-asst-secondary-surface-background);
-        &:focus {
+
+        &:hover,
+        &:focus,
+        &:focus-within {
             background: var(--fl-asst-secondary-surface-background);
 
             .fl-asst-list-item-thumbnail {
                 background-color: var(--fl-asst-surface-background);
             }
         }
+        &:hover {
+            box-shadow: none;
+        }
     }
 
     // Default Item Component
     .fl-asst-list-item-content-info {
+        flex: 1 1 auto;
         display: flex;
         flex-direction: column;
         min-height: 36px;

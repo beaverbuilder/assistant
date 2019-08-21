@@ -36,7 +36,7 @@ export const Posts = ( {
 								<Button tabIndex="-1">
 									<Icon.Clone />
 								</Button>
-								<Button tabIndex="-1">
+								<Button tabIndex="-1" className="fl-asst-destructive">
 									<Icon.Trash />
 								</Button>
 							</div>
