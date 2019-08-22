@@ -104,6 +104,11 @@ class OnEnqueueScripts {
 			return false;
 		}
 
+		// Don't show in admin iframes.
+		if ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+			return false;
+		}
+
 		// Don't show Assistant in the WP Admin if the user has turned it off.
 		if ( is_admin() && !$user_state['shouldShowInAdmin'] ) {
 			return false;
