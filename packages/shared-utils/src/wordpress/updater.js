@@ -1,4 +1,18 @@
+import { setCache, getCache } from 'shared-utils/cache'
+import { registerStore, useStore, getStore, getDispatch } from 'shared-utils/store'
 import { updatePlugin, updateTheme } from 'shared-utils/wordpress'
+
+const storeKey = 'fl-updater/state'
+
+registerStore( storeKey, {
+	state: {
+		queue: [],
+	}
+} )
+
+getStore( storeKey ).subscribe( () => {
+	setCache( 'updater', 'state', getStore( storeKey ).getState(), false )
+} )
 
 /**
  * Cached queue array retrieved from local storage.
