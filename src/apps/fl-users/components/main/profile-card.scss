@@ -1,34 +1,39 @@
+@mixin linear-gradient($top-color, $bottom-color, $opacity) {
+  background: -moz-linear-gradient(top, rgba($top-color, $opacity) 0%, rgba($bottom-color, $opacity) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba($top-color, $opacity) 0%, rgba($bottom-color, $opacity) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba($top-color, $opacity) 0%, rgba($bottom-color, $opacity) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{ie-hex-str(rgba($top-color, $opacity))}', endColorstr='#{ie-hex-str(rgba($bottom-color, $opacity))}',GradientType=0 ); /* IE6-9 */
+}
+
 .fl-asst-users-profile {
 
   .fl-asst-users-profile-title {
-
+    font-weight: bold;
   }
 
   .fl-asst-users-profile-card {
-    background-color: #eee;
+    @include linear-gradient(#666, #fff, .1);
+    border: 1px solid rgba(66,66,66,0.1);
     border-radius: 10px;
     padding: 20px;
     min-height: 150px;
     width: 100%;
+    margin-bottom: 15px;
 
     .fl-asst-users-profile-avatar-row {
-      overflow: hidden;
-      clear: both;
+      display: inline-flex;
 
       .fl-asst-users-profile-avatar {
-        float: left;
-        clear: right;
-        width: 33%;
-
         img {
           border-radius: 50%;
         }
       }
 
       .fl-asst-users-profile-info {
-        float: left;
-        clear: right;
-        width: 66%;
+        .username {
+          font-size: 16px;
+          font-weight: bold;
+        }
       }
 
     }

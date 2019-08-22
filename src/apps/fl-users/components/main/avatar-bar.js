@@ -35,14 +35,17 @@ AvatarBar.Avatar = (props) => {
 
     const {user} = props
     return (
-        <Nav.Link
-            className="fl-asst-users-avatar-bar-avatar"
-            to={`/fl-users/user/${user.id}`}>
-            <img src={user.thumbnail} alt=""/>
-
+        <div className="fl-asst-users-avatar-bar-avatar">
             <div>
-                {user.displayName}
+                <Nav.Link to={`/fl-users/user/${user.id}`}>
+                    <img src={user.thumbnail} alt={user.displayName}/>
+                </Nav.Link>
             </div>
-        </Nav.Link>
+            <div>
+                <Nav.Link to={`/fl-users/user/${user.id}`}>
+                    {user.displayName}
+                </Nav.Link>
+            </div>
+        </div>
     )
 }

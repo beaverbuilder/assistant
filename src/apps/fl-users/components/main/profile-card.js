@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import {Button} from 'assistant/lib'
+import {Toolbar, Button} from 'assistant/lib'
 
 import './profile-card.scss'
 
@@ -22,11 +22,11 @@ export const ProfileCard = (props) => {
                     </div>
                 </div>
 
-                <div className="fl-asst-users-profile-button-bar">
+                <Button.Group>
                     <Button to={`/fl-users/user/${user.id}`}>Edit</Button>
                     <Button href={user.url}>Author Page</Button>
                     <Button href={user.editUrl}>Edit in Admin</Button>
-                </div>
+                </Button.Group>
             </div>
         </div>
     )

@@ -23,7 +23,12 @@ export const Main = () => {
         wordpress.users()
             .findWhere({ number: 3}, { cancelToken: source.token })
             .then((response) => {
+                console.log(response.data.items);
                 setUsers(response.data.items)
+
+            })
+            .finally(() => {
+                console.log(users);
             })
 
         return () => {

@@ -14,6 +14,10 @@ class UsersPaginator extends QueryPaginator {
 			};
 		}
 
+		$args = array_merge($args, [
+			'fields'         => 'all_with_meta'
+		]);
+
 		$query = new \WP_User_Query( $args );
 
 		if ( ! empty( $query->get_results() ) ) {
@@ -32,7 +36,7 @@ class UsersPaginator extends QueryPaginator {
 			$current_page = ceil( ( $offset + 1 ) / $items_per_page );
 			$last_page    = ceil( $items_count / $items_per_page );
 
-			$this->set_items( array_map( $formatter, $query->get_results() ) )
+			$this->set_items( array_values(array_map( $formatter, $query->get_results() )) )
 				 ->set_items_per_page( $items_per_page )
 				 ->set_items_count( $query->get_total() )
 				 ->set_last_page( $last_page )

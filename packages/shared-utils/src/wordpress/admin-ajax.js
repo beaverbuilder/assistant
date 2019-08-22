@@ -11,6 +11,13 @@ const {ajaxUrl, nonce} = FL_ASSISTANT_CONFIG
  * @type {AxiosInstance}
  */
 const http = setup({
+    defaults: {
+        headers: {
+            common: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+    },
     cache: {
         // Changing this to true will send alot of output to the console
         debug: true,
