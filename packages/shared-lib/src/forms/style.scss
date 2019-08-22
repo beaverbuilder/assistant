@@ -38,7 +38,7 @@
                 flex: 1 1 auto;
                 padding: var(--fl-asst-outer-space) 0;
                 display: grid;
-                grid-row-gap: var(--fl-asst-inner-space);
+                grid-row-gap: var(--fl-asst-outer-space);
             }
         }
 
@@ -61,7 +61,7 @@
             flex-direction: column;
             justify-content: center;
             padding: 0 var(--fl-asst-outer-space);
-            min-height: 36px;
+            min-height: var(--fl-asst-target-size);
 
             p {
                 margin:0;
@@ -113,7 +113,7 @@
         text-transform: none;
         text-decoration: none;
         text-shadow: none;
-        margin: 0 0 10px;
+        margin: 0 0 var(--fl-asst-small-space);
 
         abbr {
             display: flex;
