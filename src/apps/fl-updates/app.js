@@ -1,5 +1,7 @@
-import React, { useContext } from 'fl-react'
-import { App, Page, List, Nav } from 'assistant/ui'
+import React, { useContext, useState } from 'fl-react'
+import { getWpRest, updater } from 'assistant/utils/wordpress'
+import { __ } from 'assistant/i18n'
+import { App, Page, Button, List, Nav } from 'assistant/ui'
 
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
@@ -9,9 +11,39 @@ export const UpdatesApp = ( { match } ) => (
 )
 
 const UpdatesMain = () => {
+	const [ updatingAll, setUpdatingAll ] = useState( false )
 	const { handle } = useContext( App.Context )
+	const { getContent } = getWpRest()
+
+	const updateAll = () => {
+		setUpdatingAll( true )
+		getContent( 'updates' ).then( response => {
+			const { items } = response.data
+			items.map( item => {
+				//updater.queue( item.type, item.key )
+			} )
+		} ).catch( error => {
+			alert( __( 'Something went wrong. Please try again.' ) )
+		} )
+	}
+
+	const HeaderActions = () => {
+		if ( updatingAll ) {
+			return (
+				<Button.Loading>
+					{ __( 'Updating' ) }
+				</Button.Loading>
+			)
+		}
+		return (
+			<Button onClick={ updateAll }>
+				{ __( 'Update All' ) }
+			</Button>
+		)
+	}
+
 	return (
-		<Page shouldPadSides={ false }>
+		<Page shouldPadSides={ false } headerActions={ <HeaderActions /> }>
 			<List.Updates
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,

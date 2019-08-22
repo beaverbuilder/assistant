@@ -100,4 +100,10 @@
         display: flex;
         flex-direction: column;
     }
+
+	.fl-asst-button-loading {
+		svg {
+			margin-left: 8px;
+		}
+	}
 }
