@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'fl-react'
 import { getWpRest, updater } from 'assistant/utils/wordpress'
-import { useAppState, getAppActions } from 'assistant/data'
+import { useSystemState, useAppState, getAppActions } from 'assistant/data'
 import { __ } from 'assistant/i18n'
 import { App, Page, Button, List, Nav } from 'assistant/ui'
 
@@ -12,6 +12,7 @@ export const UpdatesApp = ( { match } ) => (
 )
 
 const UpdatesMain = () => {
+	const { counts } = useSystemState()
 	const { updatingAll } = useAppState( 'fl-updates' )
 	const { setUpdatingAll } = getAppActions( 'fl-updates' )
 	const { handle } = useContext( App.Context )
@@ -60,6 +61,12 @@ const UpdatesMain = () => {
 
 	return (
 		<Page shouldPadSides={ false } headerActions={ <HeaderActions /> }>
+		<Page.Toolbar>
+			<Button.Group>
+				<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
+				<Button>{ counts['update/themes'] } { __( 'Themes' ) }</Button>
+			</Button.Group>
+		</Page.Toolbar>
 			<List.Updates
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,

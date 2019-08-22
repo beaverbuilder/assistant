@@ -137,7 +137,7 @@ const resolveSubscription = ( type, key, response ) => {
 /**
  * Fire up the queue if it's not empty.
  */
-requestUpdate()
+// requestUpdate()
 
 /**
  * The public updater.
