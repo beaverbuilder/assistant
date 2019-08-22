@@ -102,6 +102,11 @@ class OnEnqueueScripts {
 			return false;
 		}
 
+		// Don't show in admin iframes.
+		if ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+			return false;
+		}
+
 		// There is no read-only assistant (for now). Users must be able to edit.
 		if ( ! current_user_can( 'edit_published_posts' ) ) {
 			return false;
