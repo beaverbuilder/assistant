@@ -51,6 +51,13 @@ const isUpdateQueued = ( type, key ) => {
 }
 
 /**
+ * Checks if the queue is empty or not.
+ */
+const isQueueEmpty = () => {
+	return ! queue.length
+}
+
+/**
  * Checks if an update is currently updating.
  */
 const isUpdateUpdating = ( type, key ) => {
@@ -128,12 +135,17 @@ const resolveSubscription = ( type, key, response ) => {
 }
 
 /**
+ * Fire up the queue if it's not empty.
+ */
+requestUpdate()
+
+/**
  * The public updater.
  */
 export const updater = {
-	init: requestUpdate,
 	queue: queueUpdate,
 	isQueued: isUpdateQueued,
+	isQueueEmpty: isQueueEmpty,
 	subscribe: subscribeToUpdate,
 	unsubscribe: unsubscribeToUpdate,
 }

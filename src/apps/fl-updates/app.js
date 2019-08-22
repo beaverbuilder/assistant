@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'fl-react'
+import React, { useContext, useEffect, useState } from 'fl-react'
 import { getWpRest, updater } from 'assistant/utils/wordpress'
+import { useAppState, getAppActions } from 'assistant/data'
 import { __ } from 'assistant/i18n'
 import { App, Page, Button, List, Nav } from 'assistant/ui'
 
@@ -11,18 +12,33 @@ export const UpdatesApp = ( { match } ) => (
 )
 
 const UpdatesMain = () => {
-	const [ updatingAll, setUpdatingAll ] = useState( false )
+	const { updatingAll } = useAppState( 'fl-updates' )
+	const { setUpdatingAll } = getAppActions( 'fl-updates' )
 	const { handle } = useContext( App.Context )
 	const { getContent } = getWpRest()
+
+	useEffect( () => {
+		if ( updater.isQueueEmpty() ) {
+			setUpdatingAll( false )
+		}
+	}, [] )
 
 	const updateAll = () => {
 		setUpdatingAll( true )
 		getContent( 'updates' ).then( response => {
 			const { items } = response.data
-			items.map( item => {
-				//updater.queue( item.type, item.key )
+			const test = [ items[0] ]
+			test.map( item => {
+				updater.queue( item.type, item.key )
+				updater.subscribe( item.type, item.key, () => {
+					if ( updater.isQueueEmpty() ) {
+						setUpdatingAll( false )
+					}
+				} )
 			} )
 		} ).catch( error => {
+			console.log( error )
+			setUpdatingAll( false )
 			alert( __( 'Something went wrong. Please try again.' ) )
 		} )
 	}
