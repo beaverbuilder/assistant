@@ -1,4 +1,7 @@
 import React from 'fl-react'
+import { __ } from '@wordpress/i18n'
+import { updater } from 'shared-utils/wordpress'
+import { Button, Icon } from 'shared-lib'
 import { List } from 'lib'
 
 export const Updates = ( {
@@ -21,11 +24,27 @@ export const Updates = ( {
 						label: item.label
 					}
 				}
+
+				const updateItem = () => {
+					updater.queue( item.type, item.key )
+				}
+
+				const Extras = () => {
+					return (
+						<div className="fl-asst-item-extras" onClick={ e => e.stopPropagation() }>
+							<div className="fl-asst-item-extras-left">
+								<Button tabIndex="-1" onClick={ updateItem }>{__( 'Update' )}</Button>
+							</div>
+						</div>
+					)
+				}
+
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
 					description: item.meta,
 					thumbnail: item.thumbnail,
+					extras: props => <Extras { ...props } />,
 				} )
 			} }
 			{ ...rest }
