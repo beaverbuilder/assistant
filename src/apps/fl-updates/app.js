@@ -1,8 +1,15 @@
 import React, { useContext, useEffect, useState } from 'fl-react'
-import { getWpRest, updater } from 'assistant/utils/wordpress'
-import { useSystemState, useAppState, getAppActions } from 'assistant/data'
+import { getWpRest } from 'assistant/utils/wordpress'
 import { __ } from 'assistant/i18n'
 import { App, Page, Button, List, Nav } from 'assistant/ui'
+import {
+	useSystemState,
+	useAppState,
+	getAppActions,
+	getUpdaterStore,
+	getUpdaterActions,
+	getUpdaterSelectors
+} from 'assistant/data'
 
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
@@ -12,6 +19,8 @@ export const UpdatesApp = ( { match } ) => (
 )
 
 const UpdatesMain = () => {
+	const updater = getUpdaterStore()
+	const { setUpdateQueueItems } = getUpdaterActions()
 	const { counts } = useSystemState()
 	const { updatingAll } = useAppState( 'fl-updates' )
 	const { setUpdatingAll } = getAppActions( 'fl-updates' )
@@ -19,24 +28,22 @@ const UpdatesMain = () => {
 	const { getContent } = getWpRest()
 
 	useEffect( () => {
-		if ( updater.isQueueEmpty() ) {
-			setUpdatingAll( false )
-		}
+		const unsubscribe = updater.subscribe( () => {
+			const { updateQueue } = updater.getState()
+			if ( ! Object.values( updateQueue ).length ) {
+				setUpdatingAll( false )
+			}
+		} )
+		return () => unsubscribe()
 	}, [] )
 
 	const updateAll = () => {
 		setUpdatingAll( true )
 		getContent( 'updates' ).then( response => {
 			const { items } = response.data
-			const test = [ items[0] ]
-			test.map( item => {
-				updater.queue( item.type, item.key )
-				updater.subscribe( item.type, item.key, () => {
-					if ( updater.isQueueEmpty() ) {
-						setUpdatingAll( false )
-					}
-				} )
-			} )
+			//setUpdateQueue( items )
+			const test = [ items[0], items[1], items[2] ]
+			setUpdateQueueItems( test )
 		} ).catch( error => {
 			console.log( error )
 			setUpdatingAll( false )

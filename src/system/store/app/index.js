@@ -46,3 +46,8 @@ export const getAppActions = ( key ) => {
 	const app = key ? key : useContext( App.Context ).app
 	return getDispatch( `${ key ? key : app }/state` )
 }
+
+export const getAppSelectors = ( key ) => {
+	const app = key ? key : useContext( App.Context ).app
+	return getSelectors( `${ key ? key : app }/state` )
+}

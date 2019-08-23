@@ -1,6 +1,5 @@
 import React, { useState } from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { updater } from 'shared-utils/wordpress'
 import { Button, Icon } from 'shared-lib'
 import { List } from 'lib'
 
@@ -26,8 +25,8 @@ export const Updates = ( {
 				}
 
 				const Extras = () => {
-					const isQueued = updater.isQueued( item.type, item.key )
-					const [ updating, setUpdating ] = useState( isQueued )
+					//const isQueued = updater.isQueued( item.type, item.key )
+					const [ updating, setUpdating ] = useState( false )
 					return (
 						<div className="fl-asst-item-extras" onClick={ e => e.stopPropagation() }>
 							<div className="fl-asst-item-extras-left">
@@ -40,7 +39,7 @@ export const Updates = ( {
 									tabIndex="-1"
 									onClick={ () => {
 										setUpdating( true )
-										updater.queue( item.type, item.key )
+										//updater.queue( item.type, item.key )
 									} }
 								>
 									{__( 'Update' )}
