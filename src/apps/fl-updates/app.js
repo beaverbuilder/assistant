@@ -31,7 +31,9 @@ const UpdatesMain = () => {
 		setUpdatingAll( true )
 		getContent( 'updates' ).then( response => {
 			const { items } = response.data
-			setUpdateQueueItems( items )
+			//setUpdateQueueItems( items )
+			const test = [ items[0], items[1] ]
+			setUpdateQueueItems( test )
 		} ).catch( error => {
 			console.log( error )
 			setUpdatingAll( false )
