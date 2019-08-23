@@ -47,7 +47,7 @@ const MainWindow = () => {
 		}
 		*/
 
-	}, [])
+	}, [] )
 
 	return (
 		<Window
