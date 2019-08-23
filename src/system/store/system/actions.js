@@ -43,11 +43,16 @@ export const decrementCount = ( key ) => {
 	}
 }
 
-// New UI Actions
 export const setWindow = config => {
 	return {
 		type: 'SET_WINDOW',
 		config,
+	}
+}
+
+export const toggleIsShowingUI = () => {
+	return {
+		type: 'TOGGLE_IS_SHOWING_UI'
 	}
 }
 

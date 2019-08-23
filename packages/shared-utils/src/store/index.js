@@ -2,6 +2,7 @@ import { useEffect, useState } from 'fl-react'
 import { createStore, bindActionCreators } from 'fl-redux'
 import { createActions } from './actions'
 import { createReducers } from './reducers'
+import { createSelectors } from './selectors'
 import { createEnhancers } from './middleware'
 
 /**
@@ -21,6 +22,7 @@ export const registerStore = ( key, {
 	state = {},
 	actions = {},
 	reducers = {},
+	selectors = {},
 	effects = {},
 } ) => {
 
@@ -35,9 +37,11 @@ export const registerStore = ( key, {
 		store: createStore(
 			createReducers( reducers, state ),
 			state,
-			createEnhancers(key, effects)
-		)
+			createEnhancers( key, effects )
+		),
 	}
+
+	registry[ key ].selectors = createSelectors( selectors, registry[ key ].store )
 }
 
 /**
@@ -70,4 +74,12 @@ export const getStore = ( key ) => {
 export const getDispatch = ( key ) => {
 	const { actions, store } = registry[ key ]
 	return bindActionCreators( actions, store.dispatch )
+}
+
+/**
+ * Returns all selectors for a store in the registry.
+ */
+export const getSelectors = ( key ) => {
+	const { selectors } = registry[ key ]
+	return selectors
 }

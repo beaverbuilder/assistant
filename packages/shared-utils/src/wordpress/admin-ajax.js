@@ -18,7 +18,7 @@ const http = setup({
     },
     cache: {
         // Changing this to true will send alot of output to the console
-        debug: true,
+        debug: false,
         // Set cache timeout
         maxAge: 5 * 60 * 1000,
         // DO NOT exclude cache requests with query params.

@@ -29,6 +29,10 @@ export const getSystemActions = () => {
 	return getDispatch( 'fl-assistant/system' )
 }
 
+export const getSystemSelectors = () => {
+	return getSelectors( 'fl-assistant/system' )
+}
+
 export const getSystemConfig = () => {
 	return { ...FL_ASSISTANT_CONFIG }
 }

@@ -1,5 +1,15 @@
-import React, { useContext } from 'fl-react'
-import { App, Page, List, Nav } from 'assistant/ui'
+import React, { useContext, useEffect, useState } from 'fl-react'
+import { getWpRest } from 'assistant/utils/wordpress'
+import { __ } from 'assistant/i18n'
+import { App, Page, Button, List, Nav } from 'assistant/ui'
+import {
+	useSystemState,
+	useAppState,
+	getAppActions,
+	getUpdaterStore,
+	getUpdaterActions,
+	getUpdaterSelectors
+} from 'assistant/data'
 
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
@@ -9,9 +19,62 @@ export const UpdatesApp = ( { match } ) => (
 )
 
 const UpdatesMain = () => {
+	const updater = getUpdaterStore()
+	const { setUpdateQueueItems } = getUpdaterActions()
+	const { updatingAll } = useAppState( 'fl-updates' )
+	const { setUpdatingAll } = getAppActions( 'fl-updates' )
 	const { handle } = useContext( App.Context )
+	const { getContent } = getWpRest()
+	const { counts } = useSystemState()
+
+	const updateAll = () => {
+		setUpdatingAll( true )
+		getContent( 'updates' ).then( response => {
+			const { items } = response.data
+			setUpdateQueueItems( items )
+		} ).catch( error => {
+			console.log( error )
+			setUpdatingAll( false )
+			alert( __( 'Something went wrong. Please try again.' ) )
+		} )
+	}
+
+	const maybeSetUpdatingAll = () => {
+		const { updateQueue } = updater.getState()
+		if ( ! Object.values( updateQueue ).length ) {
+			setUpdatingAll( false )
+		}
+	}
+
+	useEffect( () => {
+		maybeSetUpdatingAll()
+		const unsubscribe = updater.subscribe( maybeSetUpdatingAll )
+		return () => unsubscribe()
+	}, [] )
+
+	const HeaderActions = () => {
+		if ( updatingAll ) {
+			return (
+				<Button.Loading>
+					{ __( 'Updating' ) }
+				</Button.Loading>
+			)
+		}
+		return (
+			<Button onClick={ updateAll }>
+				{ __( 'Update All' ) }
+			</Button>
+		)
+	}
+
 	return (
-		<Page shouldPadSides={ false }>
+		<Page shouldPadSides={ false } headerActions={ <HeaderActions /> }>
+		<Page.Toolbar>
+			<Button.Group>
+				<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
+				<Button>{ counts['update/themes'] } { __( 'Themes' ) }</Button>
+			</Button.Group>
+		</Page.Toolbar>
 			<List.Updates
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,
