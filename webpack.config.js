@@ -42,6 +42,7 @@ const externals = {
 
     /* wp */
     '@wordpress/i18n'               : 'wp.i18n',
+    '@wordpress/keycodes'           : 'wp.keycodes',
 }
 
 const entry = {

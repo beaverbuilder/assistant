@@ -1,4 +1,4 @@
-import React, { useState, createRef, createContext, useContext } from 'fl-react'
+import React, { useState, useEffect, createRef, createContext, useContext } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
@@ -31,6 +31,7 @@ export const Window = ( {
 	size = 'mini',
 	isHidden = false,
 	shouldShowLabels = true,
+	shouldDisplayButton = true,
 	position = [ 1, 1 ],
 	onChange = () => {},
 	toolbar: topbar,
@@ -92,7 +93,7 @@ export const Window = ( {
 			<Window.Context.Provider value={ context }>
 				<WindowLayer onChange={ handleChange } { ...rest }>
 					{ ! isHidden && <WindowPanel topbar={ topbar }>{children}</WindowPanel> }
-					{ isHidden && <WindowButton>{icon}</WindowButton> }
+					{ isHidden && shouldDisplayButton && <WindowButton>{icon}</WindowButton> }
 				</WindowLayer>
 			</Window.Context.Provider>
 		</Flipper>
@@ -348,9 +349,16 @@ const WindowPanel = ( { className, children, style, topbar: TopBar,  ...rest } )
 
 const WindowButton = ( { children, ...rest } ) => {
 	const { toggleIsHidden } = useContext( Window.Context )
+	const ref = createRef()
+
+	useEffect( () => {
+		if ( ref.current && 'function' === typeof ref.current.focus ) {
+			ref.current.focus()
+		}
+	}, [] )
 	return (
 		<Flipped flipId="window" spring={ transition }>
-			<button className="fl-asst-window-button fl-asst-window-drag-handle" onClick={ toggleIsHidden } { ...rest }>
+			<button className="fl-asst-window-button fl-asst-window-drag-handle" ref={ ref } onClick={ toggleIsHidden } { ...rest }>
 				<Flipped inverseFlipId="window">{children}</Flipped>
 			</button>
 		</Flipped>

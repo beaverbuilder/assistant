@@ -81,6 +81,11 @@ Page.Header = ( { icon, label, actions } ) => {
 		context: 'header',
 	}
 
+	const titleClasses = classname({
+		'fl-asst-app-header-name': true,
+		'fl-asst-app-small-title' : !isRoot && !isAppRoot,
+	})
+
 	return (
 		<>
 			<div className="fl-asst-app-header">
@@ -116,7 +121,7 @@ Page.Header = ( { icon, label, actions } ) => {
 				</div>
 				}
 
-				<div className="fl-asst-app-header-name">
+				<div className={titleClasses}>
 					<span>{ label ? label : appLabel }</span>
 				</div>
 

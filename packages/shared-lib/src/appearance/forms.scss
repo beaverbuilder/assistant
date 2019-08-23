@@ -33,6 +33,8 @@
         }
 
         &:focus {
+            background-color: var(--fl-asst-secondary-surface-background) !important;
+
             &::-webkit-input-placeholder{
                 text-align: left;
                 color: var(--fl-asst-surface-color);

@@ -96,6 +96,7 @@ const windowDefaults = {
 	origin: [ 1, 1 ],
 	size: 'mini',
 	isHidden: false,
+	shouldDisplayButtonWhenHidden: true,
 }
 export const window = ( state = windowDefaults, action ) => {
 	switch ( action.type ) {
@@ -104,6 +105,7 @@ export const window = ( state = windowDefaults, action ) => {
 			origin: state.origin,
 			size: state.size,
 			isHidden: state.isHidden,
+			shouldDisplayButtonWhenHidden: state.shouldDisplayButtonWhenHidden,
 			...action.config,
 		}
 	default:

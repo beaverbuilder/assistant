@@ -37,6 +37,8 @@ export const List = ( {
 	// Get the array of items from a section item
 	getSectionItems = () => [],
 
+	isSelecting = false,
+
 	tag: Tag = 'ul',
 } ) => {
 
@@ -80,7 +82,7 @@ export const List = ( {
 	const renderItem = ( item, i ) => {
 		const isSection = false
 		const Item = getItemComponent( item )
-		const defaultProps = { ...defaultItemProps, key: i }
+		const defaultProps = { ...defaultItemProps, key: i, isSelecting }
 		const props = getItemProps( item, defaultProps, isSection )
 
 		if ( isRenderProp( children ) ) {
@@ -102,6 +104,7 @@ export const List = ( {
 	const classes = classname( {
 		'fl-asst-list': true,
 		[`fl-asst-${direction}-list`]: direction,
+		'fl-asst-list-is-selecting' : isSelecting,
 	} )
 
 	return (

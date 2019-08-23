@@ -29,6 +29,7 @@ class User {
 			'entries' => [],
 		],
 		'searchHistory'      => [],
+		'shouldShowInAdmin' => true,
 	];
 
 	/**

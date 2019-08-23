@@ -9,9 +9,6 @@ const { contentTypes, taxonomies } = getSystemConfig()
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: Content,
-	accent: {
-		color: '#1BADF8'
-	},
 	state: {
 		query: {
 			order: 'ASC',
