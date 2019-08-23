@@ -96,6 +96,7 @@ const windowDefaults = {
 	origin: [ 1, 1 ],
 	size: 'mini',
 	isHidden: false,
+	hiddenAppearance: '',
 }
 export const window = ( state = windowDefaults, action ) => {
 	switch ( action.type ) {
@@ -104,7 +105,13 @@ export const window = ( state = windowDefaults, action ) => {
 			origin: state.origin,
 			size: state.size,
 			isHidden: state.isHidden,
+			hiddenAppearance: state.hiddenAppearance,
 			...action.config,
+		}
+	case 'TOGGLE_IS_SHOWING_UI':
+		return {
+			...state,
+			isHidden: ! state.isHidden,
 		}
 	default:
 		return state

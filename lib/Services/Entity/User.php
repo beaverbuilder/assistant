@@ -18,17 +18,23 @@ class User {
 	 */
 	public static $default_state = [
 		'appOrder'           => [],
-		'shouldReduceMotion' => false,
-		'window'             => [],
+		'window'             => [
+			'origin' => [1,0],
+			'size' => 'mini',
+			'isHidden' => false,
+			'hiddenAppearance' => '',
+		],
 		'appearance'         => [
 			'brightness' => 'light',
 		],
-		'shouldShowLabels'   => true,
 		'history'            => [
 			'index'   => 0,
 			'entries' => [],
 		],
 		'searchHistory'      => [],
+		'shouldReduceMotion' => false,
+		'shouldShowLabels'   => true,
+		'shouldShowInAdmin' => true,
 	];
 
 	/**

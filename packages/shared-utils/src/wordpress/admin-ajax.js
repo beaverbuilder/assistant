@@ -1,6 +1,6 @@
 import localforage from 'localforage'
 import {setup} from 'axios-cache-adapter'
-
+import qs from 'qs'
 const {ajaxUrl, nonce} = FL_ASSISTANT_CONFIG
 
 /**
@@ -11,6 +11,11 @@ const {ajaxUrl, nonce} = FL_ASSISTANT_CONFIG
  * @type {AxiosInstance}
  */
 const http = setup({
+    headers: {
+        common: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    },
     cache: {
         // Changing this to true will send alot of output to the console
         debug: true,
@@ -33,12 +38,12 @@ const http = setup({
 
 export const postAction = (action, data = {}, config = {}) => {
     data.action = action;
-    return http.post(ajaxUrl, data, config);
+    return http.post(ajaxUrl, qs.stringify(data), config);
 }
 
 export const getAction = (action, queryParams = {}, config = {}) => {
     queryParams.action = action
-    return http.get(ajaxUrl, queryParams, config);
+    return http.get(ajaxUrl, qs.stringify(queryParams), config);
 }
 
 

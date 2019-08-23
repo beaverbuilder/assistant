@@ -91,6 +91,8 @@ class OnEnqueueScripts {
 	 * Check if the frontend scripts/styles should be enqueued
 	 */
 	public function should_enqueue() {
+		$users      = $this->container()->service( 'users' );
+		$user_state = $users->current()->get_state();
 
 		// Users must be logged in.
 		if ( ! is_user_logged_in() ) {
@@ -99,6 +101,16 @@ class OnEnqueueScripts {
 
 		// Don't show Assistant in customizer.
 		if ( is_customize_preview() ) {
+			return false;
+		}
+
+		// Don't show in admin iframes.
+		if ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+			return false;
+		}
+
+		// Don't show Assistant in the WP Admin if the user has turned it off.
+		if ( is_admin() && !$user_state['shouldShowInAdmin'] ) {
 			return false;
 		}
 

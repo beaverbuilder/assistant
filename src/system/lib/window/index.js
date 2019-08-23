@@ -31,6 +31,7 @@ export const Window = ( {
 	size = 'mini',
 	isHidden = false,
 	shouldShowLabels = true,
+	shouldDisplayButton = true,
 	position = [ 1, 1 ],
 	onChange = () => {},
 	toolbar: topbar,
@@ -92,7 +93,7 @@ export const Window = ( {
 			<Window.Context.Provider value={ context }>
 				<WindowLayer onChange={ handleChange } { ...rest }>
 					{ ! isHidden && <WindowPanel topbar={ topbar }>{children}</WindowPanel> }
-					{ isHidden && <WindowButton>{icon}</WindowButton> }
+					{ isHidden && shouldDisplayButton && <WindowButton>{icon}</WindowButton> }
 				</WindowLayer>
 			</Window.Context.Provider>
 		</Flipper>

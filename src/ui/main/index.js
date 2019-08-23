@@ -22,10 +22,10 @@ export const Main = () => {
 
 const MainWindow = () => {
 	const { window: mainWindow, shouldShowLabels } = useSystemState()
-	const { size, origin, isHidden } = mainWindow
+	const { size, origin, isHidden, hiddenAppearance } = mainWindow
 	const { setWindow } = getSystemActions()
 
-	const onChanged = config => setWindow( config )
+	const onChanged = config => setWindow( { ...mainWindow, ...config } )
 
 	return (
 		<Window
@@ -35,6 +35,7 @@ const MainWindow = () => {
 			position={ origin }
 			onChange={ onChanged }
 			shouldShowLabels={ shouldShowLabels }
+			shouldDisplayButton={ '' === hiddenAppearance }
 			toolbar={ WindowToolbar }
 		>
 			<Error.Boundary alternate={ WindowError }>

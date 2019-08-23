@@ -6,6 +6,9 @@ namespace FL\Assistant\Providers;
 use FL\Assistant\Core\Container;
 
 use FL\Assistant\Actions\OnEnqueueScripts;
+use FL\Assistant\Actions\OnEditUserProfile;
+use FL\Assistant\Actions\OnPersonalOptionsUpdate;
+use FL\Assistant\Actions\OnWPBeforeAdminBarRender;
 use FL\Assistant\Filters\OnHeartbeatReceived;
 
 use FL\Assistant\Services\PostService;
@@ -61,15 +64,20 @@ class PluginProvider implements ProviderInterface {
 		add_action( 'wp_enqueue_scripts', $enqueue_scripts );
 		add_action( 'admin_enqueue_scripts', $enqueue_scripts );
 
+		// setup user profile meta fields - shows on YOUR profile, not on others.
+		add_action( 'show_user_profile', new OnEditUserProfile( $container ) );
+		add_action( 'personal_options_update', new OnPersonalOptionsUpdate( $container ) );
+
+		// Add Assistant Toolbar Item
+		add_action( 'wp_before_admin_bar_render', new OnWPBeforeAdminBarRender( $container ) );
+
 		// setup heartbeat
 		add_filter( 'heartbeat_received', new OnHeartbeatReceived(), 11, 2 );
 
 		// register activation hook
-		register_activation_hook(
-			FL_ASSISTANT_FILE, function () {
-				do_action( 'fl_assistant_activate' );
-			}
-		);
+		register_activation_hook( FL_ASSISTANT_FILE, function() {
+			do_action( 'fl_assistant_activate' );
+		} );
 
 		// notify assistant was loaded
 		do_action( 'fl_assistant_loaded' );

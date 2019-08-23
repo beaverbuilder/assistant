@@ -1,5 +1,5 @@
 import React, { Fragment } from 'fl-react'
-import { Nav, Page } from 'assistant/ui'
+import { Nav } from 'assistant/ui'
 import { Main } from './main'
 import { ViewAll } from './view-all'
 import { addLeadingSlash } from 'assistant/utils/url'
