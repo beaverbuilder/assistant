@@ -23,7 +23,7 @@ class OnPersonalOptionsUpdate {
         $saved = get_user_meta( $user_id, User::FL_ASSISTANT_STATE, true );
 
         $updates = [
-            'shouldShowInAdmin' => $_POST['show_assistant_in_admin'] ? true : false,
+            'shouldShowInAdmin' => boolval($_POST['show_assistant_in_admin']),
         ];
 
         // create/update user meta for the $user_id

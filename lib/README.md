@@ -114,6 +114,10 @@ This trait also supplies a public method to access the container:
 `$this->container()`
 
 
+The trait also provides a convenience method to get directly to services:
+
+`$this->service($serviceName)`
+
 e.g.
 ```php
 class MyClass {
@@ -121,6 +125,11 @@ class MyClass {
   
   public function do_something() {
     $container = $this->container();
+    
+    $posts = $this->service('posts');
+    
+    $view = $this->service('view');
+    
   }
   
 }
@@ -348,7 +357,10 @@ class RestProvider implements ProviderInterface {
         // do stuff here
         
         // or access the container
-        $this->container()->service('foo')->do_foo_things();
+        
+        $cloud_url = $this->container()->get('cloud_url');
+        
+        $this->service('foo')->do_foo_things();
     } 
       
     public function __invoke(/* any args */) {
@@ -363,3 +375,31 @@ class RestProvider implements ProviderInterface {
   ```
 
 
+## View Service
+
+Render php views in any object that uses `HasContainer`
+
+E.g.
+
+> lib/Actions/HelloAction.php
+
+```php
+
+class HelloAction {
+    use HasContainer;
+    
+    public function __invoke($name) {
+        
+        $this->service('view')
+             ->render('hello', ['name' => $name]);
+    }
+}
+
+```
+
+> lib/views/hello.php
+
+```php
+
+<h2>Hello, <?php echo $name; ?></h2>
+```
