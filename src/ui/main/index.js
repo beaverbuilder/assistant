@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'fl-react'
+import React, { useContext } from 'fl-react'
 import { __ } from 'assistant'
 import { getSystemActions, useSystemState } from 'assistant/store'
 import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
@@ -26,28 +26,6 @@ const MainWindow = () => {
 	const { setWindow } = getSystemActions()
 
 	const onChanged = config => setWindow( { ...mainWindow, ...config } )
-
-	useEffect( () => {
-
-		/*
-		if ( 'admin_bar' === hiddenAppearance ) {
-
-			console.log('setup')
-
-			const toggleAssistant = e => {
-				console.log(e.target)
-				if ( e.target === document.querySelector('#wp-admin-bar-fl_assistant_toggle_ui div') ) {
-					console.log('bingo')
-				}
-			}
-
-			document.body.addEventListener( 'click', toggleAssistant )
-
-			//return document.body.removeEventListener( 'click', toggleAssistant )
-		}
-		*/
-
-	}, [] )
 
 	return (
 		<Window
