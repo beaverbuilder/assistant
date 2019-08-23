@@ -27,7 +27,7 @@ class OnPersonalOptionsUpdate {
 
 		$updates = [
 			'shouldShowInAdmin' => boolval( $_POST['show_assistant_in_admin'] ),
-			'window'            => $window
+			'window'            => $window,
 		];
 
 		// create/update user meta for the $user_id

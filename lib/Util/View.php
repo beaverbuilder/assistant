@@ -24,7 +24,7 @@ class View {
 
 
 	public function render_to_string( $template_name, array $data = [] ) {
-		$path = sprintf( "%s/%s.php", $this->template_dir, $template_name );
+		$path = sprintf( '%s/%s.php', $this->template_dir, $template_name );
 
 		ob_start();
 		extract( $data );

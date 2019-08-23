@@ -20,14 +20,16 @@ class OnEditUserProfile {
 		$window = $state['window'];
 		$view   = $this->service( 'view' );
 
-		$view->render( 'user-profile', [
-			'show_in_admin'      => $state['shouldShowInAdmin'],
-			'window'             => $window,
-			'hidden_appearance'  => isset( $window['hiddenAppearance'] ) ? $window['hiddenAppearance'] : '',
-			'hidden_appearances' => [
-				''          => __( 'Button (Default)', 'fl-assistant' ),
-				'admin_bar' => __( 'Admin Bar Item', 'fl-assistant' )
+		$view->render(
+			'user-profile', [
+				'show_in_admin'      => $state['shouldShowInAdmin'],
+				'window'             => $window,
+				'hidden_appearance'  => isset( $window['hiddenAppearance'] ) ? $window['hiddenAppearance'] : '',
+				'hidden_appearances' => [
+					''          => __( 'Button (Default)', 'fl-assistant' ),
+					'admin_bar' => __( 'Admin Bar Item', 'fl-assistant' ),
+				],
 			]
-		] );
+		);
 	}
 }

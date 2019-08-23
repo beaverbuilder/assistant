@@ -21,7 +21,7 @@ class OnWPBeforeAdminBarRender {
 		$state             = $users->current()->get_state();
 
 		$show_toolbar_item = false;
-		if(isset($state['window']['hiddenAppearance'])) {
+		if ( isset( $state['window']['hiddenAppearance'] ) ) {
 			$show_toolbar_item = 'admin_bar' === $state['window']['hiddenAppearance'];
 		}
 
@@ -30,10 +30,10 @@ class OnWPBeforeAdminBarRender {
 		}
 
 		if ( $show_toolbar_item ) {
-			$args = array(
+			$args = [
 				'id'    => 'fl_assistant_toggle_ui',
 				'title' => __( 'Assistant', 'fl-assistant' ),
-			);
+			];
 			$wp_admin_bar->add_menu( $args );
 		}
 	}

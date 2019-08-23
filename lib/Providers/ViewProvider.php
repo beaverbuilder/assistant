@@ -9,10 +9,12 @@ use FL\Assistant\Util\View;
 class ViewProvider implements ProviderInterface {
 
 	public function register( Container $container ) {
-		$template_dir = sprintf("%s/lib/views", FL_ASSISTANT_DIR);
+		$template_dir = sprintf( '%s/lib/views', FL_ASSISTANT_DIR );
 
-		$container->register_service('view', function($container) use ($template_dir) {
-			return new View($template_dir);
-		});
+		$container->register_service(
+			'view', function( $container ) use ( $template_dir ) {
+				return new View( $template_dir );
+			}
+		);
 	}
 }
