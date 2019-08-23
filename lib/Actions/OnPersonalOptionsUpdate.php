@@ -22,8 +22,12 @@ class OnPersonalOptionsUpdate {
 
         $saved = get_user_meta( $user_id, User::FL_ASSISTANT_STATE, true );
 
+        $window = $saved['window'];
+        $window['hiddenAppearance'] = $_POST['fl_asst_hidden_ui'];
+        
         $updates = [
             'shouldShowInAdmin' => $_POST['show_assistant_in_admin'] ? true : false,
+            'window' => $window
         ];
 
         // create/update user meta for the $user_id

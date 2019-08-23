@@ -18,6 +18,14 @@ class OnEditUserProfile {
 
         $state = get_user_meta( $user->ID, User::FL_ASSISTANT_STATE, true );
         $show_in_admin = $state['shouldShowInAdmin'];
+
+		$window = $state['window'];
+		$hidden_appearance = isset( $window['hiddenAppearance'] ) ? $window['hiddenAppearance'] : '';
+		$hidden_appearances = [
+			'' => __('Button (Default)', 'fl-assistant' ),
+			'admin_bar' => __('Admin Bar Item', 'fl-assistant')
+		];
+
         ?>
         <h2><?php _e('Assistant', 'fl-assistant') ?></h2>
         <table class="form-table" role="presentation">
@@ -37,8 +45,12 @@ class OnEditUserProfile {
                     </th>
                     <td>
                         <select name="fl_asst_hidden_ui" id="fl_asst_hidden_ui">
-                            <option value=""><?php _e('Button (Default)', 'fl-assistant') ?></option>
-                            <option value="admin_bar"><?php _e('Admin Bar Item', 'fl-assistant') ?></option>
+							<?php foreach( $hidden_appearances as $value => $label ) {
+								$selected = $hidden_appearance === $value ? 'selected' : '';
+								?>
+								<option value="<?php echo $value ?>" <?php echo $selected ?> ><?php echo $label ?></option>
+								<?php
+							} ?>
                         </select>
                     </td>
                 </tr>
