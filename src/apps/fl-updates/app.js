@@ -21,35 +21,36 @@ export const UpdatesApp = ( { match } ) => (
 const UpdatesMain = () => {
 	const updater = getUpdaterStore()
 	const { setUpdateQueueItems } = getUpdaterActions()
-	const { counts } = useSystemState()
 	const { updatingAll } = useAppState( 'fl-updates' )
 	const { setUpdatingAll } = getAppActions( 'fl-updates' )
 	const { handle } = useContext( App.Context )
 	const { getContent } = getWpRest()
-
-	useEffect( () => {
-		const unsubscribe = updater.subscribe( () => {
-			const { updateQueue } = updater.getState()
-			if ( ! Object.values( updateQueue ).length ) {
-				setUpdatingAll( false )
-			}
-		} )
-		return () => unsubscribe()
-	}, [] )
+	const { counts } = useSystemState()
 
 	const updateAll = () => {
 		setUpdatingAll( true )
 		getContent( 'updates' ).then( response => {
 			const { items } = response.data
-			//setUpdateQueue( items )
-			const test = [ items[0], items[1], items[2] ]
-			setUpdateQueueItems( test )
+			setUpdateQueueItems( items )
 		} ).catch( error => {
 			console.log( error )
 			setUpdatingAll( false )
 			alert( __( 'Something went wrong. Please try again.' ) )
 		} )
 	}
+
+	const maybeSetUpdatingAll = () => {
+		const { updateQueue } = updater.getState()
+		if ( ! Object.values( updateQueue ).length ) {
+			setUpdatingAll( false )
+		}
+	}
+
+	useEffect( () => {
+		maybeSetUpdatingAll()
+		const unsubscribe = updater.subscribe( maybeSetUpdatingAll )
+		return () => unsubscribe()
+	}, [] )
 
 	const HeaderActions = () => {
 		if ( updatingAll ) {

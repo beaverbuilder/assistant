@@ -1,5 +1,6 @@
-import React, { useState } from 'fl-react'
+import React, { useEffect, useState } from 'fl-react'
 import { __ } from '@wordpress/i18n'
+import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'store'
 import { Button, Icon } from 'shared-lib'
 import { List } from 'lib'
 
@@ -25,25 +26,35 @@ export const Updates = ( {
 				}
 
 				const Extras = () => {
-					//const isQueued = updater.isQueued( item.type, item.key )
-					const [ updating, setUpdating ] = useState( false )
+					const updater = getUpdaterStore()
+					const { setUpdateQueueItem } = getUpdaterActions()
+					const { getQueuedUpdate } = getUpdaterSelectors()
+					const [ updating, setUpdating ] = useState( !! getQueuedUpdate( item.key ) )
+
+					useEffect( () => {
+						const unsubscribe = updater.subscribe( () => {
+							if ( ! getQueuedUpdate( item.key ) ) {
+								setUpdating( false )
+							} else {
+								setUpdating( true )
+							}
+						} )
+						return () => unsubscribe()
+					}, [] )
+
 					return (
 						<div className="fl-asst-item-extras" onClick={ e => e.stopPropagation() }>
 							<div className="fl-asst-item-extras-left">
-								{ updating && <Button
-									tabIndex="-1"
-								>
-									{__( 'Updating...' )}
-								</Button> }
-								{ ! updating && <Button
-									tabIndex="-1"
-									onClick={ () => {
-										setUpdating( true )
-										//updater.queue( item.type, item.key )
-									} }
-								>
-									{__( 'Update' )}
-								</Button> }
+								{ updating &&
+									<Button tabIndex="-1">
+										{__( 'Updating...' )}
+									</Button>
+								}
+								{ ! updating &&
+									<Button tabIndex="-1" onClick={ () => setUpdateQueueItem( item ) }>
+										{__( 'Update' )}
+									</Button>
+								}
 							</div>
 						</div>
 					)

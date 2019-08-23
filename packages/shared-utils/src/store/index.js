@@ -41,7 +41,7 @@ export const registerStore = ( key, {
 		),
 	}
 
-	registry[ key ].selectors = createSelectors( selectors, registry[ key ] )
+	registry[ key ].selectors = createSelectors( selectors, registry[ key ].store )
 }
 
 /**
