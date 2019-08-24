@@ -104,7 +104,7 @@ export const List = ( {
 	const classes = classname( {
 		'fl-asst-list': true,
 		[`fl-asst-${direction}-list`]: direction,
-		'fl-asst-list-is-selecting' : isSelecting,
+		'fl-asst-list-is-selecting': isSelecting,
 	} )
 
 	return (

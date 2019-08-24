@@ -20,8 +20,8 @@ class UserService {
 	 * @return User
 	 */
 	public function find( $id ) {
-		$wp_user = get_user_by( 'id', $id );
 
+		$wp_user = get_user_by( 'id', $id );
 		$user = new User();
 		$user->fill(
 			$user->hydrate( $wp_user )

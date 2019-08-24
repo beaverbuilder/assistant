@@ -14,27 +14,31 @@ class OnPersonalOptionsUpdate {
 
 	use HasContainer;
 
-    public function __invoke( $user_id ) {
-        // check that the current user have the capability to edit the $user_id
-        if ( ! current_user_can( 'edit_user', $user_id ) ) {
-            return false;
-        }
+	public function __invoke( $user_id ) {
+		// check that the current user have the capability to edit the $user_id
+		if ( ! current_user_can( 'edit_user', $user_id ) ) {
+			return false;
+		}
 
-        $saved = get_user_meta( $user_id, User::FL_ASSISTANT_STATE, true );
+		$saved = get_user_meta( $user_id, User::FL_ASSISTANT_STATE, true );
 
-        $updates = [
-            'shouldShowInAdmin' => $_POST['show_assistant_in_admin'] ? true : false,
-        ];
+		$window                     = $saved['window'];
+		$window['hiddenAppearance'] = $_POST['fl_asst_hidden_ui'];
 
-        // create/update user meta for the $user_id
-        return update_user_meta(
-            $user_id,
-            User::FL_ASSISTANT_STATE,
-            array_merge(
-    			User::$default_state,
-    			$saved ? (array) $saved : [],
-                $updates
-    		)
-        );
+		$updates = [
+			'shouldShowInAdmin' => boolval( $_POST['show_assistant_in_admin'] ),
+			'window'            => $window,
+		];
+
+		// create/update user meta for the $user_id
+		return update_user_meta(
+			$user_id,
+			User::FL_ASSISTANT_STATE,
+			array_merge(
+				User::$default_state,
+				$saved ? (array) $saved : [],
+				$updates
+			)
+		);
 	}
 }

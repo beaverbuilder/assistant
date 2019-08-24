@@ -1,23 +1,60 @@
-.fl-asst-users-summary-user-panel {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-  padding: 15px;
+$prefix: fl-asst-users-summary-user-panel;
 
-  .fl-asst-users-summary-user-panel-badges {
+.#{$prefix} {
+  padding: var(--fl-asst-inner-space);
+  margin-bottom: 10px;
+
+  .#{$prefix}-info {
+    padding-top: var(--fl-asst-inner-space);
+    padding-bottom: var(--fl-asst-inner-space);
+    .username {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .email {
+      font-style: italic;
+    }
+  }
+
+  #{$prefix}-actions {
+    padding-top: var(--fl-asst-inner-space);
+    padding-bottom: var(--fl-asst-inner-space);
+  }
+
+  .#{$prefix}-circles {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+
+    .#{$prefix}-circle {
+      border: 2px solid var(--fl-asst-dim-text);
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
       display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      .fl-asst-users-summary-user-panel-badge {
-          border: 2px solid #ccc;
-          border-radius: 50%;
-          min-width: 20%;
-          img {
-            border: 2px solid #ccc;
-            border-radius: 50%;
-          }
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin-right: 10px;
+      background: var(--fl-asst-surface-background);
+      color: var(--fl-asst-surface-color);
 
+      .count {
+        display: block;
+        font-size: 25px;
       }
+
+      .title {
+        display: block;
+      }
+
+      img {
+        border: 1px solid #ccc;
+        border-radius: 50%;
+      }
+
+    }
   }
 }

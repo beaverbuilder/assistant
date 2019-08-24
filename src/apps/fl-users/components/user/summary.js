@@ -1,51 +1,49 @@
 import React, {useEffect, useState} from 'fl-react'
 import {Button} from 'assistant/lib'
-import { isArray } from 'lodash'
-
-
+import {Panel} from "../panel";
+import {cssPrefixer} from "../../lib";
 import './summary.scss'
+
 
 export const Summary = (props) => {
     const {user} = props
 
-
-    const c = (names) => {
-        if(isArray(names)) {
-            return names.map((name) => {
-                return `fl-asst-users-summary-user-panel-${names}`
-            }).join()
-        } else {
-            return `fl-asst-users-summary-user-panel-${names}`
-        }
-    }
+    const c = cssPrefixer('fl-asst-users-summary-user-panel');
 
     return (
-        <div className="fl-asst-users-summary-user-panel">
-            <div className={c('badges')}>
-                <div className={c('badge')}>
-                    <img src={user.thumbnail} alt={user.displayName}/>
+        <Panel className="fl-asst-users-summary-user-panel">
+            <div className={c('circles')}>
+                <div className={c('col')}>
+                    <div className={c('circle')}>
+                        <img className={c('avatar')} src={user.thumbnail} alt={user.displayName}/>
+                    </div>
                 </div>
-                <div className={c('badge')}>
-                    <div className="count">{user.posts}</div>
-                    <div className="title">Posts</div>
+                <div className={c('col')}>
+                    <div className={c('circle')}>
+                        <div className="count">{user.posts}</div>
+                        <div className="title">Posts</div>
+                    </div>
                 </div>
-                <div className={c('badge')}>
-                    <div className="count">{user.pages}</div>
-                    <div className="title">Posts</div>
+                <div className={c('col')}>
+                    <div className={c('circle')}>
+                        <div className="count">{user.pages}</div>
+                        <div className="title">Posts</div>
+                    </div>
                 </div>
             </div>
             <div className={c('info')}>
-                <div className={c('display-name')}>
-                    { user.displayName }
+                <div className='username'>
+                    {user.displayName}
                 </div>
-                <div className={c('email')}>
-                    { user.email }
+                <div className='email'>
+                    {user.email}
                 </div>
             </div>
-            <div className={c('buttons')}>
+            <div className={c('actions')}>
                 <Button href={user.url}>Author Page</Button>
+                &nbsp;
                 <Button href={user.editUrl}>Edit in Admin</Button>
             </div>
-        </div>
+        </Panel>
     )
 }

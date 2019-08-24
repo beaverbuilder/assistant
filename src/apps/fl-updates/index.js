@@ -9,4 +9,7 @@ registerApp( 'fl-updates', {
 	accent: {
 		color: '#00D281'
 	},
+	state: {
+		updatingAll: false,
+	}
 } )

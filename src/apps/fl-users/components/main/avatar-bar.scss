@@ -1,14 +1,28 @@
-.fl-asst-users-avatar-bar-users {
-  .fl-asst-users-avatar-bar-avatar {
-    width: 25%;
-    float: left;
-    clear: right;
+$prefix: fl-asst-users-avatar-bar;
 
+.#{$prefix}-title {
+  font-weight: bold;
+}
+.#{$prefix}-users {
+  display: flex;
+
+  .#{$prefix}-avatar {
+    width: 75px;
+    border-radius: 50%;
     img {
-      display: block;
-      width: 100%;
-      clear: both;
+      width: 75px;
+      height: 75px;
       border-radius: 50%;
     }
+
+    .username {
+      text-align: center;
+      width: 100%;
+    }
   }
+}
+
+.fl-asst-avatar-button {
+  border-radius: 15px !important;
+  max-height: 30px !important;
 }

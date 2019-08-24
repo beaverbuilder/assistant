@@ -19,7 +19,7 @@ class OnEnqueueScripts {
 	 */
 	public function generate_initial_state() {
 
-		$users      = $this->container()->service( 'users' );
+		$users      = $this->service( 'users' );
 		$user_state = $users->current()->get_state();
 
 		return [
@@ -91,7 +91,7 @@ class OnEnqueueScripts {
 	 * Check if the frontend scripts/styles should be enqueued
 	 */
 	public function should_enqueue() {
-		$users      = $this->container()->service( 'users' );
+		$users      = $this->service( 'users' );
 		$user_state = $users->current()->get_state();
 
 		// Users must be logged in.
@@ -110,7 +110,7 @@ class OnEnqueueScripts {
 		}
 
 		// Don't show Assistant in the WP Admin if the user has turned it off.
-		if ( is_admin() && !$user_state['shouldShowInAdmin'] ) {
+		if ( is_admin() && ! $user_state['shouldShowInAdmin'] ) {
 			return false;
 		}
 
