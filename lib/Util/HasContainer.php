@@ -24,4 +24,8 @@ trait HasContainer {
 		return $this->container;
 	}
 
+	public function service( $service_name ) {
+		return $this->container()->service( $service_name );
+	}
+
 }

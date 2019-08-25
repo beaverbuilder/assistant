@@ -110,7 +110,7 @@ class OnEnqueueScripts {
 		}
 
 		// Don't show Assistant in the WP Admin if the user has turned it off.
-		if ( is_admin() && !$user_state['shouldShowInAdmin'] ) {
+		if ( is_admin() && ! $user_state['shouldShowInAdmin'] ) {
 			return false;
 		}
 

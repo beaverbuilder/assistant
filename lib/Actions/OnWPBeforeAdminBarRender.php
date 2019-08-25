@@ -14,21 +14,27 @@ class OnWPBeforeAdminBarRender {
 
 	use HasContainer;
 
-    public function __invoke() {
-        global $wp_admin_bar;
+	public function __invoke() {
+		global $wp_admin_bar;
 
-        $users      = $this->container()->service( 'users' );
-		$state = $users->current()->get_state();
-        $show_toolbar_item = 'admin_bar' === $state['window']['hiddenAppearance'];
+		$users             = $this->service( 'users' );
+		$state             = $users->current()->get_state();
 
-        if ( is_admin() && ! $state['shouldShowInAdmin'] ) return;
+		$show_toolbar_item = false;
+		if ( isset( $state['window']['hiddenAppearance'] ) ) {
+			$show_toolbar_item = 'admin_bar' === $state['window']['hiddenAppearance'];
+		}
 
-        if ( $show_toolbar_item ) {
-            $args = array(
-                'id'     => 'fl_assistant_toggle_ui',
-                'title'  => __( 'Assistant', 'fl-assistant' ),
-            );
-            $wp_admin_bar->add_menu( $args );
-        }
+		if ( is_admin() && ! $state['shouldShowInAdmin'] ) {
+			return;
+		}
+
+		if ( $show_toolbar_item ) {
+			$args = [
+				'id'    => 'fl_assistant_toggle_ui',
+				'title' => __( 'Assistant', 'fl-assistant' ),
+			];
+			$wp_admin_bar->add_menu( $args );
+		}
 	}
 }

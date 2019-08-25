@@ -6,6 +6,7 @@ use FL\Assistant\Providers\CloudProvider;
 use FL\Assistant\Providers\PluginProvider;
 use FL\Assistant\Providers\ProviderInterface;
 use FL\Assistant\Providers\RestProvider;
+use FL\Assistant\Providers\ViewProvider;
 
 /**
  * Class Plugin
@@ -19,6 +20,7 @@ class Plugin {
 	 */
 	static $providers = [
 		PluginProvider::class,
+		ViewProvider::class,
 		RestProvider::class,
 		CloudProvider::class,
 	];

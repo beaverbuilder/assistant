@@ -19,9 +19,9 @@ class User {
 	public static $default_state = [
 		'appOrder'           => [],
 		'window'             => [
-			'origin' => [1,0],
-			'size' => 'mini',
-			'isHidden' => false,
+			'origin'           => [ 1, 0 ],
+			'size'             => 'mini',
+			'isHidden'         => false,
 			'hiddenAppearance' => '',
 		],
 		'appearance'         => [
@@ -34,7 +34,7 @@ class User {
 		'searchHistory'      => [],
 		'shouldReduceMotion' => false,
 		'shouldShowLabels'   => true,
-		'shouldShowInAdmin' => true,
+		'shouldShowInAdmin'  => true,
 	];
 
 	/**
