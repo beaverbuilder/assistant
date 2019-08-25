@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'store'
-import { List, Button, Icon } from 'lib'
+import { List, Button } from 'lib'
 
 export const Updates = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
@@ -24,7 +24,7 @@ export const Updates = ( {
 					}
 				}
 
-				const Extras = () => {
+				const UpdateButton = () => {
 					const updater = getUpdaterStore()
 					const { setUpdateQueueItem } = getUpdaterActions()
 					const { getQueuedUpdate } = getUpdaterSelectors()
@@ -42,18 +42,26 @@ export const Updates = ( {
 					}, [] )
 
 					return (
+						<>
+						{ updating &&
+							<Button tabIndex="-1">
+								{__( 'Updating...' )}
+							</Button>
+						}
+						{ ! updating &&
+							<Button tabIndex="-1" onClick={ () => setUpdateQueueItem( item ) }>
+								{__( 'Update' )}
+							</Button>
+						}
+						</>
+					)
+				}
+
+				const Extras = () => {
+					return (
 						<div className="fl-asst-item-extras" onClick={ e => e.stopPropagation() }>
 							<div className="fl-asst-item-extras-left">
-								{ updating &&
-									<Button tabIndex="-1">
-										{__( 'Updating...' )}
-									</Button>
-								}
-								{ ! updating &&
-									<Button tabIndex="-1" onClick={ () => setUpdateQueueItem( item ) }>
-										{__( 'Update' )}
-									</Button>
-								}
+								<UpdateButton />
 							</div>
 						</div>
 					)
@@ -65,6 +73,7 @@ export const Updates = ( {
 					description: item.meta,
 					thumbnail: item.thumbnail,
 					extras: props => <Extras { ...props } />,
+					accessory: props => <UpdateButton {...props} />,
 				} )
 			} }
 			{ ...rest }

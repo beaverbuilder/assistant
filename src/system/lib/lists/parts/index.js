@@ -74,8 +74,8 @@ const InfoItem = ( {
 	thumbnail,
 	thumbnailSize = 'med',
 	className,
-	isHovering,
-	isFocused,
+	isHovering, // probably deprecate
+	isFocused, // probably deprecate
 	extras,
 	accessory,
 } ) => {
@@ -103,8 +103,8 @@ const InfoItem = ( {
 		'fl-asst-round': color,
 	} )
 
-	const itemExtras = 'function' === typeof extras ? extras( { isHovering, isFocused } ) : null
-	const accessories = 'function' === typeof accessory ? accessory() : null
+	const itemExtras = 'function' === typeof extras ? extras( {} ) : null
+	const accessories = 'function' === typeof accessory ? accessory( {} ) : null
 	const stopProp = e => e.stopPropagation()
 
 	return (
@@ -120,7 +120,7 @@ const InfoItem = ( {
 					{ label && <div className="fl-asst-list-item-title">{label}</div> }
 					{ description && <div className="fl-asst-list-item-description">{description}</div> }
 				</div>
-				{ accessories && <div className="fl-asst-list-item-accessory" onClick={ stopProp }>{accessories}</div> }
+				{ accessories && <div className="fl-asst-list-item-accessory" onClick={ stopProp }>{accessories}</div>}
 			</div>
 			{ itemExtras && <div className="fl-asst-list-item-extras" onClick={ stopProp }>{itemExtras}</div> }
 		</Tag>
