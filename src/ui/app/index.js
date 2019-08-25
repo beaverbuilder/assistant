@@ -56,16 +56,16 @@ const AppContent = props => {
 		style['--fl-asst-accent-color'] = context.accent.color
 	}
 
-	const appWrapClasses = classname({
-		'fl-asst-screen-content' : true,
-		'fl-asst-app-content' : true,
-		[`fl-asst-app-${appName}`] : appName,
-	})
+	const appWrapClasses = classname( {
+		'fl-asst-screen-content': true,
+		'fl-asst-app-content': true,
+		[`fl-asst-app-${appName}`]: appName,
+	} )
 	return (
 		<>
 			{ /* Alerts component here */ }
 			<ScreenCard>
-				<div className={appWrapClasses} style={ style }>
+				<div className={ appWrapClasses } style={ style }>
 					{ 'function' === typeof app.root ? app.root( appProps ) : null }
 				</div>
 			</ScreenCard>
