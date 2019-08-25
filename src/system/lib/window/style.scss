@@ -16,7 +16,8 @@
         &.fl-asst-window-mini {
             max-width: 100%;
             max-height: 70vh;
-            box-shadow: 0 0 0 3px var(--fl-asst-translucent-background), 0 3px 6px 0 hsla(214, 17%, 41%, 0.2);
+            box-shadow: 0 0 0 3px var(--fl-asst-secondary-surface-background),
+                        0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
             border-radius: var(--fl-asst-medium-space);
 
             .fl-asst-brightness-dark & {
@@ -31,7 +32,7 @@
         }
 
         &.fl-asst-secondary-content {
-            background: var(--fl-asst-translucent-background);
+            background: var(--fl-asst-secondary-surface-background);
         }
 
         .fl-asst-window-toolbar {
@@ -71,6 +72,16 @@
             flex-direction: column;
             max-height:100%;
             min-height:0;
+        }
+    }
+    .fl-asst-window-layer-is-dragging {
+        .fl-asst-window-mini {
+            box-shadow: 0 0 0 3px #16D4F3,
+                        0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
+        }
+        .fl-asst-window-normal {
+            border-color: #16D4F3;
+            border-radius: 15px;
         }
     }
 
@@ -171,7 +182,7 @@
                 &:after {
                     height: 100vh;
                     width: 40px;
-                    top:0;
+                    top:0 !important;
                     bottom: auto;
                     border-radius: 0;
                 }

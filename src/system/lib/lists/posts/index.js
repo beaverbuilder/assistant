@@ -20,7 +20,7 @@ export const Posts = ( {
 
 				const Extras = () => {
 					return (
-						<div className="fl-asst-item-extras" onClick={ e => e.stopPropagation() }>
+						<div className="fl-asst-item-extras">
 							<div className="fl-asst-item-extras-left">
 								<Button tabIndex="-1">{__( 'View' )}</Button>
 								<Button tabIndex="-1">{__( 'Edit' )}</Button>

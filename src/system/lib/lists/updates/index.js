@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { List } from 'lib'
+import { List, Button } from 'lib'
 
 export const Updates = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
@@ -26,6 +26,7 @@ export const Updates = ( {
 					label: item.title,
 					description: item.meta,
 					thumbnail: item.thumbnail,
+					accessory: () => <Button>Update</Button>
 				} )
 			} }
 			{ ...rest }

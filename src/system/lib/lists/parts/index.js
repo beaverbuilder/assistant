@@ -77,6 +77,7 @@ const InfoItem = ( {
 	isHovering,
 	isFocused,
 	extras,
+	accessory,
 } ) => {
 	const classes = classname( {
 		'fl-asst-list-item-content-info': true,
@@ -103,6 +104,8 @@ const InfoItem = ( {
 	} )
 
 	const itemExtras = 'function' === typeof extras ? extras( { isHovering, isFocused } ) : null
+	const accessories = 'function' === typeof accessory ? accessory() : null
+	const stopProp = e => e.stopPropagation()
 
 	return (
 		<Tag className={ classes } { ...newProps }>
@@ -117,8 +120,9 @@ const InfoItem = ( {
 					{ label && <div className="fl-asst-list-item-title">{label}</div> }
 					{ description && <div className="fl-asst-list-item-description">{description}</div> }
 				</div>
+				{ accessories && <div className="fl-asst-list-item-accessory" onClick={stopProp}>{accessories}</div> }
 			</div>
-			{ itemExtras && <div className="fl-asst-list-item-extras">{itemExtras}</div> }
+			{ itemExtras && <div className="fl-asst-list-item-extras" onClick={stopProp}>{itemExtras}</div> }
 		</Tag>
 	)
 }

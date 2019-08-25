@@ -36,9 +36,11 @@ export const Post = ( { location, match, history } ) => {
 				<h2>{title}</h2>
 
 				<Page.Toolbar>
-					<Button onClick={ () => setTab( `${match.url}/general` ) }>{__( 'General' )}</Button>
-					<Button onClick={ () => setTab( `${match.url}/meta` ) }>{__( 'Metadata' )}</Button>
-					<Button onClick={ () => setTab( `${match.url}/comments` ) }>{__( 'Comments' )}</Button>
+					<Button.Group>
+						<Button onClick={ () => setTab( `${match.url}/general` ) }>{__( 'General' )}</Button>
+						<Button onClick={ () => setTab( `${match.url}/meta` ) }>{__( 'Metadata' )}</Button>
+						<Button onClick={ () => setTab( `${match.url}/comments` ) }>{__( 'Comments' )}</Button>
+					</Button.Group>
 				</Page.Toolbar>
 			</div>
 		)
