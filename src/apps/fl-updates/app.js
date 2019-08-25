@@ -69,12 +69,12 @@ const UpdatesMain = () => {
 
 	return (
 		<Page shouldPadSides={ false } headerActions={ <HeaderActions /> }>
-		<Page.Toolbar>
-			<Button.Group>
-				<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
-				<Button>{ counts['update/themes'] } { __( 'Themes' ) }</Button>
-			</Button.Group>
-		</Page.Toolbar>
+			<Page.Toolbar>
+				<Button.Group>
+					<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
+					<Button>{ counts['update/themes'] } { __( 'Themes' ) }</Button>
+				</Button.Group>
+			</Page.Toolbar>
 			<List.Updates
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,

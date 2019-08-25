@@ -73,7 +73,7 @@ export const Updates = ( {
 					description: item.meta,
 					thumbnail: item.thumbnail,
 					extras: props => <Extras { ...props } />,
-					accessory: props => <UpdateButton {...props} />,
+					accessory: props => <UpdateButton { ...props } />,
 				} )
 			} }
 			{ ...rest }
