@@ -18,6 +18,7 @@ export const User = ({match}) => {
 
     const {currentUser} = getSystemConfig()
 
+    const [loading, setLoading] = useState(false)
     const [user, setUser] = useState({})
     const [title, setTitle] = useState('User Profile')
     const [currentTab, setCurrentTab] = useState(0)
@@ -25,9 +26,12 @@ export const User = ({match}) => {
     const source = CancelToken.source()
 
     useEffect(() => {
+
+        setLoading(true)
         wordpress.users().findById(userId, {cancelToken: source.token})
             .then((response) => {
                 setUser(response.data)
+                setLoading(false)
             })
 
         if (parseInt(userId) === parseInt(currentUser.id)) {
@@ -41,7 +45,7 @@ export const User = ({match}) => {
     }, [])
 
     const showTab = (tabIndex) => {
-        switch(tabIndex) {
+        switch (tabIndex) {
             case 2:
                 return (<PostsTab user={user}/>)
             case 1:
@@ -53,15 +57,19 @@ export const User = ({match}) => {
     }
 
 
-    return (
-        <Page shouldPadSides={false} title={title}>
-            <Summary user={user}/>
-            <Button.Group>
-                <Button isSelected={currentTab == 0} onClick={e => setCurrentTab(0)}>General</Button>
-                <Button isSelected={currentTab == 1} onClick={e => setCurrentTab(1)}>Preferences</Button>
-                <Button isSelected={currentTab == 2} onClick={e => setCurrentTab(2)}>Posts</Button>
-            </Button.Group>
-            {showTab(currentTab)}
-        </Page>
-    )
+    if (loading) {
+        return (<p>Loading...</p>)
+    } else {
+        return (
+            <Page shouldPadSides={false} title={title}>
+                <Summary user={user}/>
+                <Button.Group>
+                    <Button isSelected={currentTab == 0} onClick={e => setCurrentTab(0)}>General</Button>
+                    <Button isSelected={currentTab == 1} onClick={e => setCurrentTab(1)}>Preferences</Button>
+                    <Button isSelected={currentTab == 2} onClick={e => setCurrentTab(2)}>Posts</Button>
+                </Button.Group>
+                {showTab(currentTab)}
+            </Page>
+        )
+    }
 }

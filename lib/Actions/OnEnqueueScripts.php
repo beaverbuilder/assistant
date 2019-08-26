@@ -2,6 +2,7 @@
 
 namespace FL\Assistant\Actions;
 
+use FL\Assistant\Core\Container;
 use FL\Assistant\Util\HasContainer;
 
 /**
@@ -13,11 +14,15 @@ class OnEnqueueScripts {
 
 	use HasContainer;
 
+
 	/**
 	 * @return array
 	 * @throws \Exception
 	 */
 	public function generate_initial_state() {
+		if ( ! is_user_logged_in() ) {
+			return [];
+		}
 
 		$users      = $this->service( 'users' );
 		$user_state = $users->current()->get_state();
@@ -34,6 +39,7 @@ class OnEnqueueScripts {
 			'shouldShowLabels'   => false, /* Disabled */
 			'window'             => $user_state['window'],
 		];
+
 	}
 
 	/**
@@ -91,11 +97,9 @@ class OnEnqueueScripts {
 	 * Check if the frontend scripts/styles should be enqueued
 	 */
 	public function should_enqueue() {
-		$users      = $this->service( 'users' );
-		$user_state = $users->current()->get_state();
 
 		// Users must be logged in.
-		if ( ! is_user_logged_in() ) {
+		if ( !is_user_logged_in() ) {
 			return false;
 		}
 
@@ -109,8 +113,13 @@ class OnEnqueueScripts {
 			return false;
 		}
 
+		// User is logged in, and the current request is not customizer or an iframe
+		$state = $this->service('users')
+		              ->current()
+		              ->get_state();
+
 		// Don't show Assistant in the WP Admin if the user has turned it off.
-		if ( is_admin() && ! $user_state['shouldShowInAdmin'] ) {
+		if ( is_admin() && ! $state['shouldShowInAdmin'] ) {
 			return false;
 		}
 

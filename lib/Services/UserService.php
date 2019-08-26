@@ -7,6 +7,7 @@ namespace FL\Assistant\Services;
 use FL\Assistant\Services\Entity\User;
 
 class UserService {
+
 	/**
 	 * @return User
 	 */
