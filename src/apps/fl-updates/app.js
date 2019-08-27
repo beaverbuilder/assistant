@@ -14,7 +14,7 @@ import {
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ UpdatesMain }/>
-		<Nav.Route path={ `${match.url}/update/:key` } component={ Page.Update }/>
+		<Nav.Route path={ `${match.url}/update/:id` } component={ Page.Update }/>
 	</Nav.Switch>
 )
 
@@ -79,7 +79,7 @@ const UpdatesMain = () => {
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,
 					to: {
-						pathname: `/${handle}/update/${item.key}`,
+						pathname: `/${handle}/update/${item.id}`,
 						state: { item }
 					},
 				} ) }

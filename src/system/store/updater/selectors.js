@@ -1,6 +1,6 @@
 export const selectors = {
-	getQueuedUpdate( state, key ) {
+	getQueuedUpdate( state, id ) {
 		const { updateQueue } = state
-		return 'undefined' === typeof updateQueue[ key ] ? null : updateQueue[ key ]
+		return 'undefined' === typeof updateQueue[ id ] ? null : updateQueue[ id ]
 	}
 }

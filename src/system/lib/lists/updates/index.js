@@ -28,13 +28,16 @@ export const Updates = ( {
 					const updater = getUpdaterStore()
 					const { setUpdateQueueItem } = getUpdaterActions()
 					const { getQueuedUpdate } = getUpdaterSelectors()
-					const [ updating, setUpdating ] = useState( !! getQueuedUpdate( item.key ) )
+					const [ updating, setUpdating ] = useState( !! getQueuedUpdate( item.id ) )
 
 					useEffect( () => {
 						const unsubscribe = updater.subscribe( () => {
-							if ( ! getQueuedUpdate( item.key ) ) {
-								setUpdating( false )
-							} else {
+							const queued = getQueuedUpdate( item.id )
+							const currentUpdate = updater.getState().currentUpdate
+							const { removeItem } = defaultProps
+							if ( ! queued && currentUpdate && currentUpdate === item.id ) {
+								removeItem()
+							} else if ( queued ) {
 								setUpdating( true )
 							}
 						} )

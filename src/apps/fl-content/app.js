@@ -55,13 +55,15 @@ const Main = ( { match } ) => {
 				onItemsLoaded={ response => {
 					setPager( response.data )
 				} }
-				getItemProps={ ( item, defaultProps ) => ( {
-					...defaultProps,
-					to: {
-						pathname: `/${handle}/post/${item.id}`,
-						state: { item }
-					},
-				} ) }
+				getItemProps={ ( item, defaultProps ) => {
+					return {
+						...defaultProps,
+						to: {
+							pathname: `/${handle}/post/${item.id}`,
+							state: { item }
+						},
+					}
+				} }
 
 				isSelecting={ isSelecting }
 			/>

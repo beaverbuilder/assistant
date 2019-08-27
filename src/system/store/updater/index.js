@@ -33,6 +33,7 @@ export const getUpdaterSelectors = () => {
 }
 
 const updateComplete = () => {
+	console.log( 'updateComplete' )
 	const { currentUpdate, updateQueue } = getUpdaterStore().getState()
 	const { setCurrentUpdate, setUpdateQueue } = getUpdaterActions()
 	delete updateQueue[ currentUpdate ]
@@ -49,17 +50,19 @@ const requestUpdate = () => {
 
 	if ( ! currentUpdate && items.length ) {
 		const item = items[ 0 ]
-		setCurrentUpdate( item.key )
+		setCurrentUpdate( item.id )
 		if ( 'plugin' === item.type ) {
-			updatePlugin( item.key ).then( () => {
-				decrementCount( 'update/plugins' )
-				decrementCount( 'update/total' )
-			} ).finally( updateComplete )
+			updatePlugin( item.id ).finally( () => {
+				updateComplete()
+				// decrementCount( 'update/plugins' )
+				// decrementCount( 'update/total' )
+			} )
 		} else {
-			updateTheme( item.key ).then( () => {
-				decrementCount( 'update/themes' )
-				decrementCount( 'update/total' )
-			} ).finally( updateComplete )
+			updateTheme( item.id ).finally( () => {
+				updateComplete()
+				// decrementCount( 'update/themes' )
+				// decrementCount( 'update/total' )
+			} )
 		}
 	}
 

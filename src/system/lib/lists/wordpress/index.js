@@ -22,7 +22,16 @@ export const WordPress = ( {
 	return (
 		<List.Scroller
 			items={ items }
-			getItemProps={ getItemProps }
+			getItemProps={ ( item, defaultProps, isSection ) => {
+				return getItemProps( item, {
+					...defaultProps,
+					removeItem: () => {
+						const { key } = defaultProps
+						items.splice( key, 1 )
+						setItems( [ ...items ] )
+					}
+				} )
+			} }
 			loadItems={ ( setHasMore ) => {
 				getPagedContent( type, query, offset, {
 					cancelToken: source.token,
