@@ -2,6 +2,7 @@ import React, { forwardRef, Children, cloneElement, useState, useLayoutEffect, u
 import { __ } from '@wordpress/i18n'
 import { Link } from 'fl-react-router-dom'
 import classname from 'fl-classnames'
+import { Icon } from 'lib'
 import './style.scss'
 
 export const Button = forwardRef( ( props, ref ) => {
@@ -200,5 +201,22 @@ Button.Group = ( {
 const MoreMenu = ( { children } ) => {
 	return (
 		<div className="fl-asst-more-menu">{children}</div>
+	)
+}
+
+Button.Loading = ( {
+	className,
+	children,
+	...rest
+} ) => {
+	const classes = classname({
+        'fl-asst-button-loading' : true,
+    }, className )
+
+	return (
+		<Button className={ classes } { ...rest }>
+			{ children }
+			<Icon.SmallSpinner />
+		</Button>
 	)
 }
