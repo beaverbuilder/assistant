@@ -4,12 +4,14 @@ export const useFormState = ( initial = {}, onChange = () => {} ) => {
 
 	const reducer = ( state, action ) => {
 		switch ( action.type ) {
+
 		case 'SET_VALUE':
 			const newState = { ...state }
 			newState[action.key] = action.value
 			return newState
+		default:
+			return state
 		}
-		return state
 	}
 	const [ state, dispatch ] = useReducer( reducer, initial )
 

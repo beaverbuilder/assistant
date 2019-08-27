@@ -71,23 +71,23 @@ export const Update = ( { location = {} } ) => {
 	)
 }
 
-export const User = ({ location }) => {
+export const User = ( { location } ) => {
 	const defaultItem = {}
 	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	const { url, displayName, email } = item
 
 	return (
-		<Page shouldPadSides={false}>
+		<Page shouldPadSides={ false }>
 
 			<Form>
-				<Form.Section label={__('Basic Info')}>
-					<Form.Item label={__('Display Name')} placement="beside">{displayName}</Form.Item>
-					<Form.Item label={__('Email Address')} placement="beside">{email}</Form.Item>
+				<Form.Section label={ __( 'Basic Info' ) }>
+					<Form.Item label={ __( 'Display Name' ) } placement="beside">{displayName}</Form.Item>
+					<Form.Item label={ __( 'Email Address' ) } placement="beside">{email}</Form.Item>
 				</Form.Section>
 				{ url &&
 				<Form.Section label={ __( 'Author Archive' ) }>
 					<Form.Item>
-						<Control.URL url={url} />
+						<Control.URL url={ url } />
 					</Form.Item>
 				</Form.Section> }
 			</Form>

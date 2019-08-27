@@ -58,13 +58,13 @@ export const Post = ( { location, match, history } ) => {
 	)
 }
 
-const GeneralTab = ({ location }) => {
+const GeneralTab = ( { location } ) => {
 	const { url } = location.state.item
 	return (
 		<Form>
 			<Form.Section label={ __( 'Permalink' ) }>
 				<Form.Item>
-					<Control.URL url={url} />
+					<Control.URL url={ url } />
 				</Form.Item>
 			</Form.Section>
 		</Form>

@@ -27,26 +27,26 @@ export const Attachment = ( { location } ) => {
 	const [ values, setValue ] = Form.useFormState( {
 		title: item.title,
 		description: item.description,
-        url: item.url,
+		url: item.url,
 	}, onFormChange )
 
-    const Header = () => {
-        return (
-            <Page.Pad top={false}>
+	const Header = () => {
+		return (
+			<Page.Pad top={ false }>
 				<img src={ item.thumbnail } srcSet={ srcSet } />
 			</Page.Pad>
-        )
-    }
+		)
+	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={<Header />}>
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> }>
 
 			<Form>
-                <Form.Section label={ __( 'Permalink' ) }>
-                    <Form.Item>
-                        <Control.URL url={values.url} />
-                    </Form.Item>
-                </Form.Section>
+				<Form.Section label={ __( 'Permalink' ) }>
+					<Form.Item>
+						<Control.URL url={ values.url } />
+					</Form.Item>
+				</Form.Section>
 				<Form.Section label={ __( 'Metadata' ) }>
 					<Form.Item label={ __( 'Name' ) } labelFor="name" isRequired={ true } placement="beside">
 						<input
@@ -64,7 +64,7 @@ export const Attachment = ( { location } ) => {
 							id="description"
 							type="text"
 							value={ values.description }
-                            rows={4}
+							rows={ 4 }
 							onChange={ e => setValue( 'description', e.target.value ) }
 						/>
 					</Form.Item>
