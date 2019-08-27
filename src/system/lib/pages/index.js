@@ -21,6 +21,7 @@ export const Page = ( {
 	headerActions,
 	toolbar,
 	header,
+	headerAppearance,
 	icon,
 	children,
 	...rest
@@ -40,12 +41,19 @@ export const Page = ( {
 		scrollRef: ref,
 	}
 
+	const headerWrapClasses = classname({
+		'fl-asst-page-header-wrap' : true,
+		'fl-asst-header-appearance-feature' : 'feature' === headerAppearance
+	})
+
 	return (
 		<Page.Context.Provider value={ context }>
 			<div className="fl-asst-page">
-				{ shouldShowHeader && <Page.Header label={ title } icon={ icon } actions={ headerActions } /> }
-				{ toolbar && <Page.Toolbar shouldPadTop={ ! shouldShowHeader } shouldPadBottom={ true }>{toolbar}</Page.Toolbar> }
-				{ header && <div className="fl-asst-page-header">{header}</div> }
+				<div className={headerWrapClasses}>
+					{ shouldShowHeader && <Page.Header label={ title } icon={ icon } actions={ headerActions } /> }
+					{ toolbar && <Page.Toolbar shouldPadTop={ ! shouldShowHeader } shouldPadBottom={ true }>{toolbar}</Page.Toolbar> }
+					{ header && <div className="fl-asst-page-header">{header}</div> }
+				</div>
 				<div className="fl-asst-page-content-wrap" ref={ ref } { ...rest }>
 					<div className={ classes }>{children}</div>
 				</div>

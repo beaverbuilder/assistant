@@ -29,11 +29,18 @@ export const Attachment = ( { location } ) => {
 		description: item.description,
 	}, onFormChange )
 
-	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) }>
-			<Page.Toolbar shouldPadBottom={ true }>
+    const Header = () => {
+        return (
+            <Page.Pad top={false}>
 				<img src={ item.thumbnail } srcSet={ srcSet } />
-			</Page.Toolbar>
+                <div>{values.title}</div>
+                <div>Actions</div>
+			</Page.Pad>
+        )
+    }
+
+	return (
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={<Header />} headerAppearance="feature">
 
 			<Form>
 				<Form.Section label={ __( 'Metadata' ) }>
