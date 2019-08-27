@@ -49,4 +49,10 @@
             }
         }
     }
+    select,
+    textarea {
+        &:focus {
+            background-color: var(--fl-asst-secondary-surface-background) !important;
+        }
+    }
 }

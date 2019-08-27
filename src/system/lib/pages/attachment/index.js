@@ -17,7 +17,13 @@ const getSrcSet = ( sizes = {} ) => {
 export const Attachment = ( { location } ) => {
 	const firstRef = useInitialFocus()
 	const defaultItem = {
-		sizes: {}
+        url: '',
+		sizes: {},
+        caption: '',
+        description: '',
+        alt: '',
+        title: '',
+        filesize: '',
 	}
 	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	const srcSet = getSrcSet( item.sizes )
@@ -28,15 +34,20 @@ export const Attachment = ( { location } ) => {
 		title: item.title,
 		description: item.description,
 		url: item.url,
+        alt: item.alt,
+        caption: item.caption,
 	}, onFormChange )
 
 	const Header = () => {
 		return (
 			<Page.Pad top={ false }>
 				<img src={ item.thumbnail } srcSet={ srcSet } />
+                <div style={{ paddingTop: 'var(--fl-asst-tiny-space)'}}>{item.filesize}</div>
 			</Page.Pad>
 		)
 	}
+
+    console.log(item)
 
 	return (
 		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> }>
@@ -47,10 +58,11 @@ export const Attachment = ( { location } ) => {
 						<Control.URL url={ values.url } />
 					</Form.Item>
 				</Form.Section>
+
 				<Form.Section label={ __( 'Metadata' ) }>
-					<Form.Item label={ __( 'Name' ) } labelFor="name" isRequired={ true } placement="beside">
+					<Form.Item label={ __( 'Title' ) } labelFor="title">
 						<input
-							id="name"
+							id="title"
 							type="text"
 							required={ true }
 							placeholder={ __( 'Attachment Title' ) }
@@ -59,13 +71,30 @@ export const Attachment = ( { location } ) => {
 							ref={ firstRef }
 						/>
 					</Form.Item>
+                    <Form.Item label={ __( 'Alternative Text' ) } labelFor="alt">
+						<input
+							id="alt"
+							type="text"
+							required={ true }
+							placeholder={ __( 'Describe your file' ) }
+							value={ values.alt }
+							onChange={ e => setValue( 'alt', e.target.value ) }
+						/>
+					</Form.Item>
 					<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true }>
 						<textarea
 							id="description"
-							type="text"
 							value={ values.description }
 							rows={ 4 }
 							onChange={ e => setValue( 'description', e.target.value ) }
+						/>
+					</Form.Item>
+                    <Form.Item label={ __( 'Caption' ) } labelFor="caption">
+						<textarea
+							id="caption"
+							value={ values.caption }
+							rows={ 4 }
+							onChange={ e => setValue( 'caption', e.target.value ) }
 						/>
 					</Form.Item>
 				</Form.Section>
