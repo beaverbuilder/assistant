@@ -18,10 +18,12 @@ const wpapi = getWpRest()
 export const before = {
 
 	REGISTER_APP: ( action ) => {
-		registerAppStore( {
-			key: action.key,
-			...action.config,
-		} )
+		if ( action.config.state ) {
+			registerAppStore( {
+				key: action.key,
+				...action.config,
+			} )
+		}
 	},
 }
 
