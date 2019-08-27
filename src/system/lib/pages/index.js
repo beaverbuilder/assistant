@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App, Window } from '../'
 
+import { Pad, Toolbar, TitleCard } from './parts'
 import { Comment, Update } from './detail-pages'
 import { Post, CreatePost } from './post'
 import { User } from './user'
@@ -142,42 +143,15 @@ Page.Header = ( { icon, label, actions } ) => {
 Page.Header.displayName = 'Page.Header'
 
 // Horizontal Toolbar - edge padding for controls
-Page.Toolbar = ( {
-	className,
-	shouldPadSides = true,
-	shouldPadBottom = false,
-	shouldPadTop = false,
-	...rest
-} ) => {
-	const classes = classname( {
-		'fl-asst-toolbar': true,
-		'fl-asst-pad-top': shouldPadTop,
-		'fl-asst-pad-sides': shouldPadSides,
-		'fl-asst-pad-bottom': shouldPadBottom,
-	}, className )
-	return (
-		<div className={ classes } { ...rest } />
-	)
-}
+Page.Toolbar = Toolbar
 Page.Toolbar.displayName = 'Page.Toolbar'
 
 // Padded box
-Page.Pad = ( {
-	className,
-	top = true,
-	sides = true,
-	bottom = true,
-	...rest
-} ) => {
-	const classes = classname( {
-		'fl-asst-pad-top': top,
-		'fl-asst-pad-sides': sides,
-		'fl-asst-pad-bottom': bottom,
-	}, className )
-
-	return <div className={ classes } { ...rest } />
-}
+Page.Pad = Pad
 Page.Pad.displayName = 'Page.Pad'
+
+Page.TitleCard = TitleCard
+Page.TitleCard.displayName = 'Page.TitleCard'
 
 
 Page.Comment = Comment

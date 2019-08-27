@@ -263,7 +263,13 @@ const WindowLayer = ( {
 	)
 }
 
-const WindowPanel = ( { className, children, style, topbar: TopBar,  ...rest } ) => {
+const WindowPanel = ( {
+	className,
+	children,
+	style,
+	topbar: TopBar,
+	...rest
+} ) => {
 	const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
 	const { isRoot } = useContext( Nav.Context )
 
@@ -308,10 +314,7 @@ const WindowPanel = ( { className, children, style, topbar: TopBar,  ...rest } )
 
 					{ 'function' === typeof TopBar && <TopBar /> }
 
-					<span
-						{ ...stopEvts }
-						style={ { marginLeft: 'auto' } }
-					>
+					<span { ...stopEvts } style={ { marginLeft: 'auto' } } >
 
 						{ /* Brightness */ }
 						<button onClick={ toggleBrightness }>
