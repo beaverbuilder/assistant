@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'fl-react'
+import React, { useEffect, useRef, useState } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'store'
 import { List, Button } from 'lib'
@@ -27,22 +27,28 @@ export const Updates = ( {
 				const UpdateButton = () => {
 					const updater = getUpdaterStore()
 					const { setUpdateQueueItem } = getUpdaterActions()
-					const { getQueuedUpdate } = getUpdaterSelectors()
+					const { getQueuedUpdate, getUpdateQueue, getCurrentUpdate } = getUpdaterSelectors()
 					const [ updating, setUpdating ] = useState( !! getQueuedUpdate( item.id ) )
+					const mounted = useRef()
+
+					useEffect( () => {
+						mounted.current = true
+						return () => mounted.current = false
+					}, [] )
 
 					useEffect( () => {
 						const unsubscribe = updater.subscribe( () => {
 							const queued = getQueuedUpdate( item.id )
-							const currentUpdate = updater.getState().currentUpdate
 							const { removeItem } = defaultProps
-							if ( ! queued && currentUpdate && currentUpdate === item.id ) {
+							if ( ! queued && updating && mounted.current ) {
+								setUpdating( false )
 								removeItem()
 							} else if ( queued ) {
 								setUpdating( true )
 							}
 						} )
 						return () => unsubscribe()
-					}, [] )
+					} )
 
 					return (
 						<>

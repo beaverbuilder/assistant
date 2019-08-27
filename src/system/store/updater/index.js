@@ -33,7 +33,6 @@ export const getUpdaterSelectors = () => {
 }
 
 const updateComplete = () => {
-	console.log( 'updateComplete' )
 	const { currentUpdate, updateQueue } = getUpdaterStore().getState()
 	const { setCurrentUpdate, setUpdateQueue } = getUpdaterActions()
 	delete updateQueue[ currentUpdate ]
