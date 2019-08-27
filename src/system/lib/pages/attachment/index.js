@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form } from 'lib'
+import { Page, Form, Control } from 'lib'
 import utils from 'utils'
 const { react: { useInitialFocus } } = utils
 
@@ -27,22 +27,26 @@ export const Attachment = ( { location } ) => {
 	const [ values, setValue ] = Form.useFormState( {
 		title: item.title,
 		description: item.description,
+        url: item.url,
 	}, onFormChange )
 
     const Header = () => {
         return (
             <Page.Pad top={false}>
 				<img src={ item.thumbnail } srcSet={ srcSet } />
-                <div>{values.title}</div>
-                <div>Actions</div>
 			</Page.Pad>
         )
     }
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={<Header />} headerAppearance="feature">
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={<Header />}>
 
 			<Form>
+                <Form.Section label={ __( 'Permalink' ) }>
+                    <Form.Item>
+                        <Control.URL url={values.url} />
+                    </Form.Item>
+                </Form.Section>
 				<Form.Section label={ __( 'Metadata' ) }>
 					<Form.Item label={ __( 'Name' ) } labelFor="name" isRequired={ true } placement="beside">
 						<input
@@ -55,12 +59,12 @@ export const Attachment = ( { location } ) => {
 							ref={ firstRef }
 						/>
 					</Form.Item>
-					<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true } placement="beside">
-						<input
+					<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true }>
+						<textarea
 							id="description"
 							type="text"
-							placeholder={ __( 'Description' ) }
 							value={ values.description }
+                            rows={4}
 							onChange={ e => setValue( 'description', e.target.value ) }
 						/>
 					</Form.Item>

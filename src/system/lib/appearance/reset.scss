@@ -9,6 +9,13 @@
         user-select: none;
         cursor: pointer;
     }
+    a {
+        text-decoration: underline;
+        
+        &:hover {
+            background: none;
+        }
+    }
     div {
         box-sizing: border-box;
     }

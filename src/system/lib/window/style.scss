@@ -10,7 +10,8 @@
         overflow: hidden;
         pointer-events: auto;
         touch-action: none;
-        transition-property: background;
+        border-radius: 0;
+        transition-property: background, box-shadow, border-radius;
         transition-duration: .25s;
 
         &.fl-asst-window-mini {

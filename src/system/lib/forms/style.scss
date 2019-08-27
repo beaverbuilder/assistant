@@ -14,8 +14,7 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                padding: 3px 0 0;
-                padding-left: var(--fl-asst-outer-space);
+                padding: 3px var(--fl-asst-outer-space) 0;
                 text-transform: uppercase;
                 background-color: var(--fl-asst-surface-background);
                 border-bottom: 2px solid var(--fl-asst-secondary-surface-background);
@@ -32,7 +31,10 @@
                     display: inline-flex;
                     align-items: center;
                     min-height: var(--fl-asst-target-size);
-                    box-shadow: 0px 2px 0px 0px var(--fl-asst-accent-color);
+                    max-width: 70%;
+                    box-shadow: 0px 2px 0px 0px currentColor;
+                    align-items: flex-end;
+                    padding: 0 0 5px;
                 }
             }
             .fl-asst-form-section-content {

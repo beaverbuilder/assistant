@@ -1,0 +1,27 @@
+.fl-asst {
+    .fl-asst-control-url {
+        display: flex;
+        flex-direction: row;
+        flex: 1 1 auto;
+
+        .fl-asst-control-url-wrap,
+        .fl-asst-control-url-actions {
+            display: flex;
+            align-items: center;
+        }
+        .fl-asst-control-url-wrap {
+            flex: 1 1 auto;
+            padding-right: var(--fl-asst-inner-space);
+
+            a {
+                word-break: break-all;
+                font-style: italic;
+                font-size: 13px;
+                line-height: 1.5;
+            }
+        }
+        .fl-asst-control-url-actions {
+            flex: 0 0 auto;
+        }
+    }
+}
