@@ -2,7 +2,7 @@ import { setCache } from 'shared-utils/cache'
 import { registerStore, getStore, getDispatch, getSelectors } from 'shared-utils/store'
 import { updatePlugin, updateTheme } from 'shared-utils/wordpress'
 import { getSystemActions } from '../system'
-import { state, cache } from './state'
+import { state } from './state'
 import { actions } from './actions'
 import { reducers } from './reducers'
 import { selectors } from './selectors'
@@ -10,7 +10,7 @@ import { selectors } from './selectors'
 const STORE_KEY = 'fl-updater/state'
 
 registerStore( STORE_KEY, {
-	state: cache ? { ...state, ...cache } : state,
+	state,
 	actions,
 	reducers,
 	selectors,
@@ -65,7 +65,7 @@ const requestUpdate = () => {
 		}
 	}
 
-	setCache( 'updater', 'state', state, false )
+	setCache( 'updater', 'queue', updateQueue, false )
 }
 
 getUpdaterStore().subscribe( requestUpdate )

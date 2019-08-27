@@ -1,8 +1,8 @@
 import { getCache } from 'shared-utils/cache'
 
-export const cache = getCache( 'updater', 'state' )
+const cache = getCache( 'updater', 'queue' )
 
 export const state = {
 	currentUpdate: null,
-	updateQueue: {},
+	updateQueue: cache ? cache : {},
 }
