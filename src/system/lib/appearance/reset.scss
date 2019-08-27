@@ -8,10 +8,14 @@
         -moz-user-select:none; // Yep, still need it.
         user-select: none;
         cursor: pointer;
+
+        &:focus {
+            background: none;
+        }
     }
     a {
         text-decoration: underline;
-        
+
         &:hover {
             background: none;
         }

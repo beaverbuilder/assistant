@@ -62,8 +62,6 @@
         background: transparent;
         border: none;
         border-radius: var(--fl-asst-base-radius);
-        min-height: var(--fl-asst-target-size);
-        min-width: var(--fl-asst-target-size);
         user-select: none;
         padding:0;
         display: inline-flex;
@@ -98,6 +96,9 @@
         }
     }
     button {
+        min-height: var(--fl-asst-target-size);
+        min-width: var(--fl-asst-target-size);
+        
         &:focus {
             box-shadow: 0px 0px 0px 2px rgba(128, 128, 128, .5);
         }
@@ -174,12 +175,12 @@
 
     // Sizing
     .fl-asst-size-compact {
-        --fl-asst-outer-space: var(--fl-asst-medium-space);
-        --fl-asst-inner-space: var(--fl-asst-small-space);
+        --fl-asst-outer-space: 20px;
+        --fl-asst-inner-space: 15px;
     }
     .fl-asst-size-normal {
         --fl-asst-outer-space: 20px;
-        --fl-asst-inner-space: var(--fl-asst-medium-space);
+        --fl-asst-inner-space: 15px;
     }
 
     // Brightness Setups
@@ -222,21 +223,21 @@
     }
 
     // Surfaces and content areas
-    .fl-asst-surface {
-        background: var(--fl-asst-surface-background);
-        color: var(--fl-asst-surface-color);
-    }
+    .fl-asst-surface,
     .fl-asst-primary-content {
         background-color: var(--fl-asst-surface-background);
         color: var(--fl-asst-surface-color);
         transition: background-color .15s, color .15s;
     }
+    .fl-asst-secondary-surface,
     .fl-asst-secondary-content {
         background-color: var(--fl-asst-secondary-surface-background);
         color: var(--fl-asst-secondary-surface-color);
         transition: background-color .15s, color .15s;
     }
     &.fl-asst-brightness-dark {
+
+        .fl-asst-secondary-surface,
         .fl-asst-secondary-content {
             background-color: var(--fl-asst-dark-3);
             color: var(--fl-asst-surface-color);

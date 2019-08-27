@@ -31,18 +31,19 @@ export const Post = ( { location, match, history } ) => {
 
 	const PageHeader = () => {
 		return (
-			<div>
-				{ thumbnail && <img src={ thumbnail } style={ { height: 150, width: 150 } } /> }
-				<h2>{title}</h2>
+			<>
+				<Page.TitleCard title={title}>
 
-				<Page.Toolbar>
+				</Page.TitleCard>
+
+				<Page.Pad>
 					<Button.Group>
 						<Button onClick={ () => setTab( `${match.url}/general` ) }>{__( 'General' )}</Button>
 						<Button onClick={ () => setTab( `${match.url}/meta` ) }>{__( 'Metadata' )}</Button>
 						<Button onClick={ () => setTab( `${match.url}/comments` ) }>{__( 'Comments' )}</Button>
 					</Button.Group>
-				</Page.Toolbar>
-			</div>
+				</Page.Pad>
+			</>
 		)
 	}
 

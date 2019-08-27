@@ -1,5 +1,7 @@
-import React from 'fl-react'
+import React, { useContext } from 'fl-react'
 import classname from 'fl-classnames'
+import { Window } from 'lib'
+import './style.scss'
 
 // Horizontal Toolbar - edge padding for controls
 export const Toolbar = ( {
@@ -37,14 +39,26 @@ export const Pad = ( {
 	return <div className={ classes } { ...rest } />
 }
 
-export const TitleCard = ({ className, title }) => {
+export const TitleCard = ({ className, title, children, ...rest }) => {
     const classes = classname({
-        'fl-asst-title-card' : true,
+        'fl-asst-card' : true,
+		'fl-asst-secondary-surface ' : true,
     }, className )
-    
+
     return (
-        <div className={classes}>
-            { title && <div>{title}</div> }
+        <div className={classes} {...rest}>
+            { title && <div className="fl-asst-card-title">{title}</div> }
+			{children}
         </div>
     )
+}
+
+export const ExpandedContent = ( { children } ) => {
+	const { size } = useContext( Window.Context )
+
+	if ( 'normal' === size ) {
+		return children
+	}
+
+	return null
 }

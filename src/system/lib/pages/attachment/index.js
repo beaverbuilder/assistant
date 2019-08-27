@@ -40,21 +40,29 @@ export const Attachment = ( { location } ) => {
 
 	const Header = () => {
 		return (
-			<Page.Pad top={ false }>
+			<Page.TitleCard>
 				<img src={ item.thumbnail } srcSet={ srcSet } />
                 <div style={{ paddingTop: 'var(--fl-asst-tiny-space)'}}>{item.filesize}</div>
-			</Page.Pad>
+			</Page.TitleCard>
 		)
 	}
 
-    console.log(item)
+    let hasFullURL = false
+    if ( 'undefined' !== typeof item.sizes.full ) {
+        hasFullURL = true
+    }
 
 	return (
 		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> }>
 
 			<Form>
-				<Form.Section label={ __( 'Permalink' ) }>
-					<Form.Item>
+				<Form.Section label={ __( 'Links' ) }>
+                    { hasFullURL &&
+                    <Form.Item label={__('File URL')}>
+                        <Control.URL url={item.sizes.full.url} />
+                    </Form.Item> }
+                    
+					<Form.Item label={__('Attachment Page')}>
 						<Control.URL url={ values.url } />
 					</Form.Item>
 				</Form.Section>
