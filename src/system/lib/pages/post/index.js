@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, Button, Form } from 'lib'
+import { Page, Nav, Button, Form, Control } from 'lib'
 
 export const Post = ( { location, match, history } ) => {
 	const defaultItem = {
@@ -58,17 +58,13 @@ export const Post = ( { location, match, history } ) => {
 	)
 }
 
-const GeneralTab = () => {
+const GeneralTab = ( { location } ) => {
+	const { url } = location.state.item
 	return (
 		<Form>
-			<Form.Section label={ __( 'URL' ) }>
-				<Form.Item label={ __( 'Permalink or something' ) }>
-					URL stuff here.
-				</Form.Item>
-			</Form.Section>
-			<Form.Section label={ __( 'Featured Image' ) }>
+			<Form.Section label={ __( 'Permalink' ) }>
 				<Form.Item>
-					Img or something.
+					<Control.URL url={ url } />
 				</Form.Item>
 			</Form.Section>
 		</Form>

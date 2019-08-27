@@ -1,4 +1,5 @@
 import React, { forwardRef, Children, cloneElement, useState, useLayoutEffect, useRef } from 'fl-react'
+import { __ } from '@wordpress/i18n'
 import { Link } from 'fl-react-router-dom'
 import classname from 'fl-classnames'
 import './style.scss'
@@ -174,7 +175,7 @@ Button.Group = ( {
 
 	const MoreBtn = () => {
 		return (
-			<Button ref={ moreBtnRef } onClick={ () => setShouldShowMoreMenu( ! shouldShowMoreMenu ) }>More</Button>
+			<Button ref={ moreBtnRef } onClick={ () => setShouldShowMoreMenu( ! shouldShowMoreMenu ) }>{__( 'More' )}</Button>
 		)
 	}
 

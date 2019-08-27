@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page } from 'lib'
+import { Page, Form, Control } from 'lib'
 
 export const Comment = ( { location = {} } ) => {
 
@@ -71,13 +71,26 @@ export const Update = ( { location = {} } ) => {
 	)
 }
 
-export const User = () => {
+export const User = ( { location } ) => {
+	const defaultItem = {}
+	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
+	const { url, displayName, email } = item
 
-	//const defaultItem = {}
-	//const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	return (
-		<Page>
-			<h1>I am an User</h1>
+		<Page shouldPadSides={ false }>
+
+			<Form>
+				<Form.Section label={ __( 'Basic Info' ) }>
+					<Form.Item label={ __( 'Display Name' ) } placement="beside">{displayName}</Form.Item>
+					<Form.Item label={ __( 'Email Address' ) } placement="beside">{email}</Form.Item>
+				</Form.Section>
+				{ url &&
+				<Form.Section label={ __( 'Author Archive' ) }>
+					<Form.Item>
+						<Control.URL url={ url } />
+					</Form.Item>
+				</Form.Section> }
+			</Form>
 		</Page>
 	)
 }
