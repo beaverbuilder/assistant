@@ -21,7 +21,7 @@ class OnWPBeforeAdminBarRender {
 		$state             = $users->current()->get_state();
 
 		$show_toolbar_item = false;
-		if ( isset( $state['window']['hiddenAppearance'] ) ) {
+		if ( isset( $state['window'] ) && isset( $state['window']['hiddenAppearance'] ) ) {
 			$show_toolbar_item = 'admin_bar' === $state['window']['hiddenAppearance'];
 		}
 

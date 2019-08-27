@@ -47,7 +47,7 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	return (
-		<Page title={ __( 'Post' ) } header={ <PageHeader item={ item } /> } shouldPadSides={ false }>
+		<Page title={ __( 'Post' ) } header={ <PageHeader item={ item } /> } shouldPadSides={ false } headerAppearance="feature">
 			<Nav.Switch>
 				<Nav.Route exact path={ `${match.url}/` } component={ GeneralTab } />
 				<Nav.Route path={ `${match.url}/general` } component={ GeneralTab } />
