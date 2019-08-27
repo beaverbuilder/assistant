@@ -4,8 +4,9 @@ import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App, Window } from '../'
 
-import { Comment, Update, User } from './detail-pages'
+import { Comment, Update } from './detail-pages'
 import { Post, CreatePost } from './post'
+import { User } from './user'
 import { Term } from './term'
 import { Attachment } from './attachment'
 

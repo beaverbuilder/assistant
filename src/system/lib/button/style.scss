@@ -11,6 +11,10 @@
         min-height: var(--fl-asst-target-size);
         text-decoration: none;
 
+        &:hover {
+            background: var(--fl-asst-secondary-surface-background);
+        }
+
         &:focus {
             z-index: 2; // ensure box shadow doesn't get obscured
             outline: none;

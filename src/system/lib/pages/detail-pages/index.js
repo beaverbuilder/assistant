@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form, Control } from 'lib'
+import { Page } from 'lib'
 
 export const Comment = ( { location = {} } ) => {
 
@@ -29,7 +29,7 @@ export const Comment = ( { location = {} } ) => {
 	const html = { __html: content }
 
 	return (
-		<Page title={ __( 'Comment' ) }>
+		<Page title={ __( 'Edit Comment' ) }>
 			<h2>{author} said:</h2>
 			<div dangerouslySetInnerHTML={ html } />
 		</Page>
@@ -67,30 +67,6 @@ export const Update = ( { location = {} } ) => {
 				<h1>{title}</h1>
 				<div dangerouslySetInnerHTML={ contentHTML } />
 			</Page.Pad>
-		</Page>
-	)
-}
-
-export const User = ( { location } ) => {
-	const defaultItem = {}
-	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
-	const { url, displayName, email } = item
-
-	return (
-		<Page shouldPadSides={ false }>
-
-			<Form>
-				<Form.Section label={ __( 'Basic Info' ) }>
-					<Form.Item label={ __( 'Display Name' ) } placement="beside">{displayName}</Form.Item>
-					<Form.Item label={ __( 'Email Address' ) } placement="beside">{email}</Form.Item>
-				</Form.Section>
-				{ url &&
-				<Form.Section label={ __( 'Author Archive' ) }>
-					<Form.Item>
-						<Control.URL url={ url } />
-					</Form.Item>
-				</Form.Section> }
-			</Form>
 		</Page>
 	)
 }
