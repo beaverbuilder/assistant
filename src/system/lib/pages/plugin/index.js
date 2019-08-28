@@ -39,11 +39,11 @@ export const Plugin = ( { location = {} } ) => {
 					<Form.Item label={ __( 'Version' ) } placement="beside">{version}</Form.Item>
 					<Form.Item label={ __( 'Author' ) } placement="beside">{author}</Form.Item>
 				</Form.Section>
-				<Form.Section label={__('Actions')}>
+				<Form.Section label={ __( 'Actions' ) }>
 					<Form.Item>
 						<Button.Group appearance="grid">
-							<Button>{__('Update')}</Button>
-							<Button>{__('Deactivate')}</Button>
+							<Button>{__( 'Update' )}</Button>
+							<Button>{__( 'Deactivate' )}</Button>
 						</Button.Group>
 					</Form.Item>
 				</Form.Section>

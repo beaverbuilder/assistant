@@ -36,12 +36,12 @@ export const Post = ( { location, match, history } ) => {
 
 				</Page.TitleCard>
 
-				<Page.Pad style={{ display:'flex', justifyContent: 'center' }}>
+				<Page.Pad style={ { display: 'flex', justifyContent: 'center' } }>
 					<Button.Group>
 						<Button
 							onClick={ () => setTab( `${match.url}/general` ) }
-							isSelected={   location.pathname === `${match.url}/general`
-										|| location.pathname === `${match.url}` }
+							isSelected={   location.pathname === `${match.url}/general` ||
+										location.pathname === `${match.url}` }
 						>{__( 'General' )}</Button>
 						<Button
 							onClick={ () => setTab( `${match.url}/meta` ) }
@@ -78,15 +78,15 @@ const GeneralTab = ( { location } ) => {
 					<Control.URL url={ url } />
 				</Form.Item>
 			</Form.Section>
-			<Form.Section label={__('Actions')}>
+			<Form.Section label={ __( 'Actions' ) }>
 				<Form.Item>
 					<Button.Group appearance="grid">
-						<Button>{__('View Post')}</Button>
-						<Button>{__('Edit in Admin')}</Button>
-						<Button>{__('Beaver Builder')}</Button>
-						<Button>{__('Bookmark')}</Button>
-						<Button>{__('Duplicate')}</Button>
-						<Button>{__('Move to Trash')}</Button>
+						<Button>{__( 'View Post' )}</Button>
+						<Button>{__( 'Edit in Admin' )}</Button>
+						<Button>{__( 'Beaver Builder' )}</Button>
+						<Button>{__( 'Bookmark' )}</Button>
+						<Button>{__( 'Duplicate' )}</Button>
+						<Button>{__( 'Move to Trash' )}</Button>
 					</Button.Group>
 				</Form.Item>
 			</Form.Section>

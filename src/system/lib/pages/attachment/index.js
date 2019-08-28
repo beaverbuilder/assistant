@@ -107,17 +107,17 @@ export const Attachment = ( { location } ) => {
 						/>
 					</Form.Item>
 				</Form.Section>
-                <Form.Section label={__('Actions')}>
-    				<Form.Item>
-    					<Button.Group appearance="grid">
-    						<Button>{__('View Attachment Page')}</Button>
-    						<Button>{__('Edit in Admin')}</Button>
-    						<Button>{__('Replace File')}</Button>
-    						<Button>{__('Regenerate Thumbnails')}</Button>
-    						<Button>{__('Move to Trash')}</Button>
-    					</Button.Group>
-    				</Form.Item>
-    			</Form.Section>
+				<Form.Section label={ __( 'Actions' ) }>
+					<Form.Item>
+						<Button.Group appearance="grid">
+							<Button>{__( 'View Attachment Page' )}</Button>
+							<Button>{__( 'Edit in Admin' )}</Button>
+							<Button>{__( 'Replace File' )}</Button>
+							<Button>{__( 'Regenerate Thumbnails' )}</Button>
+							<Button>{__( 'Move to Trash' )}</Button>
+						</Button.Group>
+					</Form.Item>
+				</Form.Section>
 			</Form>
 		</Page>
 	)

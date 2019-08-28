@@ -168,8 +168,8 @@ Button.Group = ( {
 
 	const classes = classname( {
 		'fl-asst-button-group': true,
-		[`fl-asst-button-group-${direction}`] : direction,
-		[`fl-asst-button-group-appearance-${appearance}`] : appearance,
+		[`fl-asst-button-group-${direction}`]: direction,
+		[`fl-asst-button-group-appearance-${appearance}`]: appearance,
 	}, className )
 
 	const props = {

@@ -43,15 +43,15 @@ export const Comment = ( { location = {} } ) => {
 					<Form.Item label={ __( 'Email Address' ) } placement="beside">{authorEmail}</Form.Item>
 					<Form.Item label={ __( 'Submitted On' ) } placement="beside">{date}</Form.Item>
 				</Form.Section>
-				<Form.Section label={__('Actions')}>
+				<Form.Section label={ __( 'Actions' ) }>
 					<Form.Item>
 						<Button.Group appearance="grid">
-							<Button>{__('View Post')}</Button>
-							<Button>{__('Edit Comment')}</Button>
-							<Button>{__('Reply to Comment')}</Button>
-							<Button>{__('Approve')}</Button>
-							<Button>{__('Mark as Spam')}</Button>
-							<Button>{__('Move to Trash')}</Button>
+							<Button>{__( 'View Post' )}</Button>
+							<Button>{__( 'Edit Comment' )}</Button>
+							<Button>{__( 'Reply to Comment' )}</Button>
+							<Button>{__( 'Approve' )}</Button>
+							<Button>{__( 'Mark as Spam' )}</Button>
+							<Button>{__( 'Move to Trash' )}</Button>
 						</Button.Group>
 					</Form.Item>
 				</Form.Section>
