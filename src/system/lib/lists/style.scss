@@ -50,6 +50,12 @@
                 align-items: center;
             }
         }
+
+        &.fl-asst-user-list {
+            .fl-asst-list-item-thumbnail {
+                border-radius: 50%;
+            }
+        }
     }
     .fl-asst-brightness-dark .fl-asst-list .fl-asst-list-item {
         --fl-asst-list-item-shadow-color: var(--fl-asst-secondary-surface-background);

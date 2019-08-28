@@ -1,23 +1,23 @@
-import React, { useContext } from 'fl-react'
-import { List, Window } from 'lib'
+import React from 'fl-react'
+import { List } from 'lib'
 
 export const Users = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {},
 	...rest,
 } ) => {
-	const { size } = useContext( Window.Context )
 	return (
 		<List.WordPress
+			className="fl-asst-user-list"
 			type={ 'users' }
 			query={ query }
 			getItemProps={ ( item, defaultProps ) => {
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
-					description: 'normal' === size ? item.meta : null,
+					description: item.meta,
 					thumbnail: item.thumbnail,
-					thumbnailSize: 'normal' === size ? 'med' : 'sm',
+					thumbnailSize: 'med',
 				} )
 			} }
 			{ ...rest }
