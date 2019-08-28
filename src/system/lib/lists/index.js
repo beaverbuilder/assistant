@@ -51,7 +51,7 @@ export const List = ( {
 		return items.map( ( item, i ) => {
 			if ( isListSection( item ) ) {
 				const Section = getItemComponent( item, true )
-				const defaultProps = { key: i, label: '' }
+				const defaultProps = { key: i, label: 'undefined' === typeof item.label ? '' : item.label }
 				const sectionProps = getSectionProps( item, defaultProps )
 				const sectionItems = getSectionItems( item )
 				const subListProps = {
