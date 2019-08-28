@@ -31,7 +31,7 @@ export const Comment = ( { location = {} } ) => {
 	return (
 		<Page title={ __( 'Edit Comment' ) } shouldPadSides={ false }>
 
-			<Page.Section label={ sprintf('%s Said:', author ) }>
+			<Page.Section label={ sprintf( '%s Said:', author ) }>
 				<div dangerouslySetInnerHTML={ html } />
 			</Page.Section>
 

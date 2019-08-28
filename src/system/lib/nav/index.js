@@ -75,9 +75,9 @@ Nav.Switch = Switch
 Nav.Route = Route
 
 Nav.ButtonLink = ( { className, appearance, ...rest } ) => {
-	const classes = classname({
-		'fl-asst-button' : true,
-		[`fl-asst-button-appearance-${appearance}`] : appearance
+	const classes = classname( {
+		'fl-asst-button': true,
+		[`fl-asst-button-appearance-${appearance}`]: appearance
 	}, className )
 	return (
 		<Nav.Link className={ classes } { ...rest } />

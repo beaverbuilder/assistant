@@ -18,7 +18,7 @@ export const Button = forwardRef( ( props, ref ) => {
 	const classes = classname( {
 		'fl-asst-button': true,
 		'fl-asst-is-selected': isSelected,
-		[`fl-asst-button-appearance-${appearance}`] : appearance,
+		[`fl-asst-button-appearance-${appearance}`]: appearance,
 	}, className )
 
 	let newProps = {

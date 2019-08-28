@@ -104,10 +104,10 @@ const CommentsTab = () => {
 
 export const CreatePost = () => {
 	return (
-		<Page title={ __( 'Create New' ) } shouldPadSides={false}>
+		<Page title={ __( 'Create New' ) } shouldPadSides={ false }>
 			<Form>
-				<Form.Section label={__('Basic Info')}>
-					<Form.Item label={__('Title')}>
+				<Form.Section label={ __( 'Basic Info' ) }>
+					<Form.Item label={ __( 'Title' ) }>
 						<input
 							type="text"
 
