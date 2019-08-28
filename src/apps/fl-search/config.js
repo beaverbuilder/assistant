@@ -64,13 +64,35 @@ export const getRequestConfig = ( args = {} ) => {
 }
 
 /**
+ * Get the props for each section in a results list.
+ */
+export const getListSectionConfig = ( {
+	section,
+	defaultProps,
+	keyword,
+	match,
+} ) => {
+	const { configKey } = section
+	let props = { ...defaultProps }
+
+	if ( section.items.length >= NUMBER_OF_RESULTS ) {
+		props.footer = (
+			<Nav.ButtonLink to={ {
+				pathname: `${match.url}/all`,
+				state: { keyword, configKey }
+			} }>{__( 'View All' )}</Nav.ButtonLink>
+		)
+	}
+
+	return props
+}
+
+/**
  * Get the props for each item in a results list.
  */
 export const getListItemConfig = ( {
 	item,
 	defaultProps,
-	isSection,
-	keyword,
 	config,
 	match,
 } ) => {
@@ -78,35 +100,23 @@ export const getListItemConfig = ( {
 	const { detail } = config[ configKey ]
 	let props = { ...defaultProps }
 
-	if ( isSection ) {
+	props.shouldAlwaysShowThumbnail = true
+	props.thumbnailSize = 'sm'
+
+	if ( 'undefined' !== typeof item.label ) {
 		props.label = item.label
-		if ( item.items.length >= NUMBER_OF_RESULTS ) {
-			props.footer = (
-				<Nav.ButtonLink to={ {
-					pathname: `${match.url}/all`,
-					state: { keyword, configKey }
-				} }>{__( 'View All' )}</Nav.ButtonLink>
-			)
-		}
-	} else {
-		props.shouldAlwaysShowThumbnail = true
-		props.thumbnailSize = 'sm'
+	} else if ( 'undefined' !== typeof item.title ) {
+		props.label = item.title
+	}
 
-		if ( 'undefined' !== typeof item.label ) {
-			props.label = item.label
-		} else if ( 'undefined' !== typeof item.title ) {
-			props.label = item.title
-		}
+	if ( 'undefined' !== typeof item.thumbnail ) {
+		props.thumbnail = item.thumbnail
+	}
 
-		if ( 'undefined' !== typeof item.thumbnail ) {
-			props.thumbnail = item.thumbnail
-		}
-
-		if ( detail ) {
-			props.to = {
-				pathname: match.url + addLeadingSlash( detail.pathname( item ) ),
-				state: { item },
-			}
+	if ( detail ) {
+		props.to = {
+			pathname: match.url + addLeadingSlash( detail.pathname( item ) ),
+			state: { item },
 		}
 	}
 

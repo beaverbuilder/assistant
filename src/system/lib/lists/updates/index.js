@@ -14,8 +14,6 @@ export const Updates = ( {
 		<List.WordPress
 			type={ 'updates' }
 			query={ query }
-			isListSection={ item => 'undefined' !== typeof item.items }
-			getSectionItems={ section => section.items }
 			formatItems={ items => {
 				const groups = [ {
 					label: __( 'Plugins' ),
@@ -33,14 +31,7 @@ export const Updates = ( {
 				} )
 				return groups
 			} }
-			getItemProps={ ( item, defaultProps, isSection ) => {
-				if ( isSection ) {
-					return {
-						...defaultProps,
-						label: item.label
-					}
-				}
-
+			getItemProps={ ( item, defaultProps ) => {
 				const UpdateButton = () => {
 					const updater = getUpdaterStore()
 					const { setUpdateQueueItem, removeCompletedUpdate } = getUpdaterActions()

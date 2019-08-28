@@ -16,6 +16,7 @@ import {
 	defaultItemProps, // eslint-disable-line no-unused-vars
 	getDefaultItemProps,
 	getItemType,
+	getDefaultSectionProps,
 } from './parts'
 
 export const List = ( {
@@ -32,10 +33,12 @@ export const List = ( {
 	getItemComponent = getItemType,
 
 	// Test if a data item is a section
-	isListSection = () => false,
+	isListSection = item => 'undefined' !== typeof item.items,
 
 	// Get the array of items from a section item
-	getSectionItems = () => [],
+	getSectionItems = section => section.items,
+
+	getSectionProps = getDefaultSectionProps,
 
 	isSelecting = false,
 
@@ -46,12 +49,10 @@ export const List = ( {
 
 	const renderListItems = items => {
 		return items.map( ( item, i ) => {
-
 			if ( isListSection( item ) ) {
-				const isSection = true
-				const defaultProps = { ...defaultItemProps, key: i }
 				const Section = getItemComponent( item, true )
-				const sectionProps = getItemProps( item, defaultProps, isSection )
+				const defaultProps = { key: i, label: '' }
+				const sectionProps = getSectionProps( item, defaultProps )
 				const sectionItems = getSectionItems( item )
 				const subListProps = {
 					direction,
@@ -82,10 +83,9 @@ export const List = ( {
 	}
 
 	const renderItem = ( item, i ) => {
-		const isSection = false
 		const Item = getItemComponent( item )
 		const defaultProps = { ...defaultItemProps, key: i, isSelecting }
-		const props = getItemProps( item, defaultProps, isSection )
+		const props = getItemProps( item, defaultProps )
 
 		if ( isRenderProp( children ) ) {
 			return (
