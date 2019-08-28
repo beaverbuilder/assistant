@@ -36,11 +36,11 @@ export const Post = ( { location, match, history } ) => {
 
 				</Page.TitleCard>
 
-				<Page.Pad>
+				<Page.Pad style={{ display:'flex', justifyContent: 'center' }}>
 					<Button.Group>
 						<Button
 							onClick={ () => setTab( `${match.url}/general` ) }
-							isSelected={   location.pathname === `${match.url}/general` 
+							isSelected={   location.pathname === `${match.url}/general`
 										|| location.pathname === `${match.url}` }
 						>{__( 'General' )}</Button>
 						<Button
