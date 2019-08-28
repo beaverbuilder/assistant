@@ -30,7 +30,7 @@ export const CloudApp = () => {
 	}
 
 	return (
-		<Page className="fl-app-cloud" shouldPadSides={false}>
+		<Page className="fl-app-cloud" shouldPadSides={ false }>
 			{isCloudConnected ? (
 				<ProfilePage doLogout={ doLogout } token={ cloudToken } user={ currentUser }/>
 			) : (

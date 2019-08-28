@@ -25,21 +25,21 @@ export const Plugin = ( { location = {} } ) => {
 	const contentHTML = { __html: content }
 
 	return (
-		<Page shouldPadSides={ false } title={__('Plugin')}>
+		<Page shouldPadSides={ false } title={ __( 'Plugin' ) }>
 			{ banner && <img src={ banner } /> }
 
-            <Form>
-                <Form.Section>
-                    <Form.Item>
-                        <h1>{title}</h1>
-                        <div dangerouslySetInnerHTML={ contentHTML } />
-                    </Form.Item>
-                </Form.Section>
-                <Form.Section label={__('Details')}>
-                    <Form.Item label={__('Version')} placement="beside">{version}</Form.Item>
-                    <Form.Item label={__('Author')} placement="beside">{author}</Form.Item>
-                </Form.Section>
-            </Form>
+			<Form>
+				<Form.Section>
+					<Form.Item>
+						<h1>{title}</h1>
+						<div dangerouslySetInnerHTML={ contentHTML } />
+					</Form.Item>
+				</Form.Section>
+				<Form.Section label={ __( 'Details' ) }>
+					<Form.Item label={ __( 'Version' ) } placement="beside">{version}</Form.Item>
+					<Form.Item label={ __( 'Author' ) } placement="beside">{author}</Form.Item>
+				</Form.Section>
+			</Form>
 		</Page>
 	)
 }

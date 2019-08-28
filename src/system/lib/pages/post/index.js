@@ -25,14 +25,14 @@ export const Post = ( { location, match, history } ) => {
 		visibility: 'Public',
 	}
 	const item = 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
-	const { title, thumbnail } = item
+	const { title } = item
 
 	const setTab = path => history.replace( path, location.state )
 
 	const PageHeader = () => {
 		return (
 			<>
-				<Page.TitleCard title={title}>
+				<Page.TitleCard title={ title }>
 
 				</Page.TitleCard>
 

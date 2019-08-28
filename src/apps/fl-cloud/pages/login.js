@@ -25,15 +25,15 @@ export const LoginPage = ( props ) => {
 		<Fragment>
 			<Icon.Pencil size={ 75 }/>
 
-			{doingLogin && ( <p>{__('Authenticating...')}</p> )}
+			{doingLogin && ( <p>{__( 'Authenticating...' )}</p> )}
 
 			{! doingLogin && (
 				<Form onSubmit={ handleSubmit }>
 					<Form.Section>
 						<Form.Item>
-							<p className="center-text">{__('You are not currently connected to Assistant Cloud')}</p>
+							<p className="center-text">{__( 'You are not currently connected to Assistant Cloud' )}</p>
 						</Form.Item>
-						{ errors.length > 0 && <Form.Item className="errors">
+						{ 0 < errors.length && <Form.Item className="errors">
 							{
 								( null !== errors && errors.map( ( error, index ) => {
 									return (
@@ -42,29 +42,29 @@ export const LoginPage = ( props ) => {
 								} ) )
 							}
 						</Form.Item> }
-						<Form.Item label={__('Email')} labelFor="cloudEmail" required={true}>
+						<Form.Item label={ __( 'Email' ) } labelFor="cloudEmail" required={ true }>
 							<input
 								type="email"
 								id="cloudEmail"
 								name="email"
 								onChange={ e => setEmail( e.target.value ) }
 								value={ email }
-								placeholder={__('john@example.com')}
+								placeholder={ __( 'john@example.com' ) }
 								required
 							/>
 						</Form.Item>
-						<Form.Item label={__('Password')} labelFor="cloudPwd">
+						<Form.Item label={ __( 'Password' ) } labelFor="cloudPwd">
 							<input
 								type="password"
 								id="cloudPwd"
 								name="password"
 								onChange={ e => setPassword( e.target.value ) }
 								value={ password }
-								placeholder={__('Password')}
+								placeholder={ __( 'Password' ) }
 							/>
 						</Form.Item>
 						<Form.Item>
-							<Button type="submit" className="fl-asst-cloud-connect-button">{__('Connect')}</Button>
+							<Button type="submit" className="fl-asst-cloud-connect-button">{__( 'Connect' )}</Button>
 						</Form.Item>
 					</Form.Section>
 				</Form>

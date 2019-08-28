@@ -39,18 +39,18 @@ export const Pad = ( {
 	return <div className={ classes } { ...rest } />
 }
 
-export const TitleCard = ({ className, title, children, ...rest }) => {
-    const classes = classname({
-        'fl-asst-card' : true,
-		'fl-asst-secondary-surface ' : true,
-    }, className )
+export const TitleCard = ( { className, title, children, ...rest } ) => {
+	const classes = classname( {
+		'fl-asst-card': true,
+		'fl-asst-secondary-surface ': true,
+	}, className )
 
-    return (
-        <div className={classes} {...rest}>
-            { title && <div className="fl-asst-card-title">{title}</div> }
+	return (
+		<div className={ classes } { ...rest }>
+			{ title && <div className="fl-asst-card-title">{title}</div> }
 			{children}
-        </div>
-    )
+		</div>
+	)
 }
 
 export const ExpandedContent = ( { children } ) => {

@@ -74,8 +74,6 @@ const InfoItem = ( {
 	thumbnail,
 	thumbnailSize = 'med',
 	className,
-	isHovering, // probably deprecate
-	isFocused, // probably deprecate
 	extras,
 	accessory,
 } ) => {

@@ -17,13 +17,13 @@ const getSrcSet = ( sizes = {} ) => {
 export const Attachment = ( { location } ) => {
 	const firstRef = useInitialFocus()
 	const defaultItem = {
-        url: '',
+		url: '',
 		sizes: {},
-        caption: '',
-        description: '',
-        alt: '',
-        title: '',
-        filesize: '',
+		caption: '',
+		description: '',
+		alt: '',
+		title: '',
+		filesize: '',
 	}
 	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
 	const srcSet = getSrcSet( item.sizes )
@@ -34,35 +34,36 @@ export const Attachment = ( { location } ) => {
 		title: item.title,
 		description: item.description,
 		url: item.url,
-        alt: item.alt,
-        caption: item.caption,
+		alt: item.alt,
+		caption: item.caption,
 	}, onFormChange )
 
 	const Header = () => {
 		return (
 			<Page.TitleCard>
 				<img src={ item.thumbnail } srcSet={ srcSet } />
-                <div style={{ paddingTop: 'var(--fl-asst-tiny-space)'}}>{item.filesize}</div>
+				<div style={ { paddingTop: 'var(--fl-asst-tiny-space)' } }>{item.filesize}</div>
 			</Page.TitleCard>
 		)
 	}
 
-    let hasFullURL = false
-    if ( 'undefined' !== typeof item.sizes.full ) {
-        hasFullURL = true
-    }
+	let hasFullURL = false
+	if ( 'undefined' !== typeof item.sizes.full ) {
+		hasFullURL = true
+	}
 
 	return (
 		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> }>
 
 			<Form>
 				<Form.Section label={ __( 'Links' ) }>
-                    { hasFullURL &&
-                    <Form.Item label={__('File URL')}>
-                        <Control.URL url={item.sizes.full.url} />
-                    </Form.Item> }
-                    
-					<Form.Item label={__('Attachment Page')}>
+					{ hasFullURL && (
+						<Form.Item label={ __( 'File URL' ) }>
+							<Control.URL url={ item.sizes.full.url } />
+						</Form.Item>
+					)}
+
+					<Form.Item label={ __( 'Attachment Page' ) }>
 						<Control.URL url={ values.url } />
 					</Form.Item>
 				</Form.Section>
@@ -79,7 +80,7 @@ export const Attachment = ( { location } ) => {
 							ref={ firstRef }
 						/>
 					</Form.Item>
-                    <Form.Item label={ __( 'Alternative Text' ) } labelFor="alt">
+					<Form.Item label={ __( 'Alternative Text' ) } labelFor="alt">
 						<input
 							id="alt"
 							type="text"
@@ -97,7 +98,7 @@ export const Attachment = ( { location } ) => {
 							onChange={ e => setValue( 'description', e.target.value ) }
 						/>
 					</Form.Item>
-                    <Form.Item label={ __( 'Caption' ) } labelFor="caption">
+					<Form.Item label={ __( 'Caption' ) } labelFor="caption">
 						<textarea
 							id="caption"
 							value={ values.caption }

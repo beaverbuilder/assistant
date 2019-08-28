@@ -180,20 +180,19 @@ Button.Group = ( {
 	}
 
 	return (
-        <>
-            { label && <label>{label}</label> }
-            <div { ...props }>
-            	{ children }
-            	{ needsOverflow && (
+			<>
+				{ label && <label>{label}</label> }
+				<div { ...props }>
+					{ children }
+					{ needsOverflow && (
 					<>
 						<Rule direction={ dividerDirection } />
 						<MoreBtn />
 					</>
-            	) }
-
-            </div>
-            { shouldShowMoreMenu && needsOverflow && <MoreMenu>{ejected}</MoreMenu> }
-        </>
+					) }
+				</div>
+				{ shouldShowMoreMenu && needsOverflow && <MoreMenu>{ejected}</MoreMenu> }
+			</>
 	)
 }
 
