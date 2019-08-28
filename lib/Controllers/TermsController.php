@@ -255,7 +255,7 @@ class TermsController extends AssistantController {
 
 		switch ( $action ) {
 			case 'data':
-				$data = (array) json_decode( $request->get_param( 'data' ) );
+				$data = (array) $request->get_param( 'data' );
 				wp_update_term( $id, $term->taxonomy, $data );
 				break;
 			case 'trash':

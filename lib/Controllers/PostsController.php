@@ -276,7 +276,7 @@ class PostsController extends AssistantController {
 
 		switch ( $action ) {
 			case 'data':
-				$data = (array) json_decode( $request->get_param( 'data' ) );
+				$data = (array) $request->get_param( 'data' );
 				wp_update_post(
 					array_merge(
 						$data, [
@@ -304,4 +304,3 @@ class PostsController extends AssistantController {
 		);
 	}
 }
-
