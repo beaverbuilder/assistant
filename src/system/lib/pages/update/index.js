@@ -2,40 +2,6 @@ import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page } from 'lib'
 
-export const Comment = ( { location = {} } ) => {
-
-	const defaultItem = {
-		approved: null,
-		author: null,
-		authorEmail: null,
-		authorIP: null,
-		content: null,
-		date: null,
-		editUrl: null,
-		id: null,
-		meta: null,
-		postId: null,
-		postTitle: null,
-		spam: false,
-		thumbnail: null,
-		time: null,
-		title: null,
-		trash: false,
-		url: null,
-	}
-
-	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
-	const { content, author } = item
-	const html = { __html: content }
-
-	return (
-		<Page title={ __( 'Edit Comment' ) }>
-			<h2>{author} said:</h2>
-			<div dangerouslySetInnerHTML={ html } />
-		</Page>
-	)
-}
-
 export const Update = ( { location = {} } ) => {
 
 	const defaultItem = {

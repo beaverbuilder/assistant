@@ -91,6 +91,7 @@ export const getListItemConfig = ( {
 		}
 	} else {
 		props.shouldAlwaysShowThumbnail = true
+		props.thumbnailSize = 'sm'
 
 		if ( 'undefined' !== typeof item.label ) {
 			props.label = item.label

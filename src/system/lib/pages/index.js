@@ -5,12 +5,13 @@ import { useSystemState } from '../../store'
 import { Nav, Icon, App } from 'lib'
 
 import { Pad, Toolbar, TitleCard, ExpandedContent } from './parts'
-import { Comment, Update } from './detail-pages'
 import { Post, CreatePost } from './post'
 import { User } from './user'
 import { Term } from './term'
 import { Attachment } from './attachment'
 import { Plugin } from './plugin'
+import { Comment } from './comment'
+import { Update } from './update'
 
 import './style.scss'
 
