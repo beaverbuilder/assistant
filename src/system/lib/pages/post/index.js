@@ -36,11 +36,21 @@ export const Post = ( { location, match, history } ) => {
 
 				</Page.TitleCard>
 
-				<Page.Pad>
+				<Page.Pad style={ { display: 'flex', justifyContent: 'center' } }>
 					<Button.Group>
-						<Button onClick={ () => setTab( `${match.url}/general` ) }>{__( 'General' )}</Button>
-						<Button onClick={ () => setTab( `${match.url}/meta` ) }>{__( 'Metadata' )}</Button>
-						<Button onClick={ () => setTab( `${match.url}/comments` ) }>{__( 'Comments' )}</Button>
+						<Button
+							onClick={ () => setTab( `${match.url}/general` ) }
+							isSelected={   location.pathname === `${match.url}/general` ||
+										location.pathname === `${match.url}` }
+						>{__( 'General' )}</Button>
+						<Button
+							onClick={ () => setTab( `${match.url}/meta` ) }
+							isSelected={ location.pathname === `${match.url}/meta` }
+						>{__( 'Metadata' )}</Button>
+						<Button
+							onClick={ () => setTab( `${match.url}/comments` ) }
+							isSelected={ location.pathname === `${match.url}/comments` }
+						>{__( 'Comments' )}</Button>
 					</Button.Group>
 				</Page.Pad>
 			</>
@@ -66,6 +76,18 @@ const GeneralTab = ( { location } ) => {
 			<Form.Section label={ __( 'Permalink' ) }>
 				<Form.Item>
 					<Control.URL url={ url } />
+				</Form.Item>
+			</Form.Section>
+			<Form.Section label={ __( 'Actions' ) }>
+				<Form.Item>
+					<Button.Group appearance="grid">
+						<Button>{__( 'View Post' )}</Button>
+						<Button>{__( 'Edit in Admin' )}</Button>
+						<Button>{__( 'Beaver Builder' )}</Button>
+						<Button>{__( 'Bookmark' )}</Button>
+						<Button>{__( 'Duplicate' )}</Button>
+						<Button>{__( 'Move to Trash' )}</Button>
+					</Button.Group>
 				</Form.Item>
 			</Form.Section>
 		</Form>

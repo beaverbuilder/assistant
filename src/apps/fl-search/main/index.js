@@ -70,6 +70,7 @@ export const Main = ( { match } ) => {
 						onChange={ e => setKeyword( e.target.value ) }
 						placeholder={ __( 'Search' ) }
 					/>
+					{ '' !== keyword && <Button appearance="transparent" onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
 					{ loading &&
 						<div className='fl-asst-search-spinner'>
 							<Icon.SmallSpinner/>

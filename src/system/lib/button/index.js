@@ -68,6 +68,7 @@ Button.Group = ( {
 	children: passedChildren,
 	className,
 	direction = 'row',
+	appearance = 'normal',
 	shouldHandleOverflow = true,
 	label,
 	...rest
@@ -81,6 +82,7 @@ Button.Group = ( {
 
 	let children = passedChildren
 	let ejected = []
+	const shouldInsertDividers = 'normal' === appearance
 	const dividerDirection = 'row' === direction ? 'vertical' : 'horizontal'
 
 	// First Pass - Is the scroll width greater than the width of the container?
@@ -133,7 +135,7 @@ Button.Group = ( {
 
 			let shouldEject = false
 			const isFirst = 0 === i
-			const shouldInsertDivider = ! isFirst
+			const shouldInsertDivider = ! isFirst && shouldInsertDividers
 			const shouldHideDivider = child.props.isSelected
 
 			const childRef = el => {
@@ -167,6 +169,7 @@ Button.Group = ( {
 	const classes = classname( {
 		'fl-asst-button-group': true,
 		[`fl-asst-button-group-${direction}`]: direction,
+		[`fl-asst-button-group-appearance-${appearance}`]: appearance,
 	}, className )
 
 	const props = {
