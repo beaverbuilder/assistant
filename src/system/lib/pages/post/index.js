@@ -38,9 +38,19 @@ export const Post = ( { location, match, history } ) => {
 
 				<Page.Pad>
 					<Button.Group>
-						<Button onClick={ () => setTab( `${match.url}/general` ) }>{__( 'General' )}</Button>
-						<Button onClick={ () => setTab( `${match.url}/meta` ) }>{__( 'Metadata' )}</Button>
-						<Button onClick={ () => setTab( `${match.url}/comments` ) }>{__( 'Comments' )}</Button>
+						<Button
+							onClick={ () => setTab( `${match.url}/general` ) }
+							isSelected={   location.pathname === `${match.url}/general` 
+										|| location.pathname === `${match.url}` }
+						>{__( 'General' )}</Button>
+						<Button
+							onClick={ () => setTab( `${match.url}/meta` ) }
+							isSelected={ location.pathname === `${match.url}/meta` }
+						>{__( 'Metadata' )}</Button>
+						<Button
+							onClick={ () => setTab( `${match.url}/comments` ) }
+							isSelected={ location.pathname === `${match.url}/comments` }
+						>{__( 'Comments' )}</Button>
 					</Button.Group>
 				</Page.Pad>
 			</>
