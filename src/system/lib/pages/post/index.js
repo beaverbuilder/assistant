@@ -29,12 +29,10 @@ export const Post = ( { location, match, history } ) => {
 
 	const setTab = path => history.replace( path, location.state )
 
-	const PageHeader = () => {
+	const Header = () => {
 		return (
 			<>
-				<Page.TitleCard title={ title }>
-
-				</Page.TitleCard>
+				<Page.TitleCard title={ title } />
 
 				<Page.Pad style={ { display: 'flex', justifyContent: 'center' } }>
 					<Button.Group>
@@ -57,8 +55,17 @@ export const Post = ( { location, match, history } ) => {
 		)
 	}
 
+	const Actions = () => {
+        return (
+            <Control.NextPrev
+                onPrev={ () => console.log('prev') }
+                onNext={ () => console.log('next')}
+            />
+        )
+    }
+
 	return (
-		<Page title={ __( 'Edit Post' ) } header={ <PageHeader item={ item } /> } shouldPadSides={ false }>
+		<Page title={ __( 'Edit Post' ) } header={ <Header /> } headerActions={<Actions />} shouldPadSides={ false }>
 			<Nav.Switch>
 				<Nav.Route exact path={ `${match.url}/` } component={ GeneralTab } />
 				<Nav.Route path={ `${match.url}/general` } component={ GeneralTab } />

@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Page, Form, Button } from 'lib'
+import { Page, Form, Button, Control } from 'lib'
 
 export const Comment = ( { location = {} } ) => {
 
@@ -28,8 +28,17 @@ export const Comment = ( { location = {} } ) => {
 	const { content, author, authorIP, date, authorEmail } = item
 	const html = { __html: content }
 
+	const Actions = () => {
+        return (
+            <Control.NextPrev
+                onPrev={ () => console.log('prev') }
+                onNext={ () => console.log('next')}
+            />
+        )
+    }
+
 	return (
-		<Page title={ __( 'Edit Comment' ) } shouldPadSides={ false }>
+		<Page title={ __( 'Edit Comment' ) } shouldPadSides={ false } headerActions={<Actions />}>
 
 			<Page.TitleCard>
 				<h2>{sprintf( '%s Said:', author )}</h2>
