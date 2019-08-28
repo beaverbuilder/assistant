@@ -28,7 +28,7 @@ const Main = ( { match } ) => {
 	}, [] )
 
 	return (
-		<Page shouldPadBottom={ true } shouldPadSides={false}>
+		<Page shouldPadBottom={ true } shouldPadSides={ false }>
 			{ hasImages &&
 				<div className="fl-asst-recent-media-display">
 					{ images.map( ( item, i ) => {
