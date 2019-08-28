@@ -4,7 +4,7 @@ import { getWpRest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Page, List, Icon, Button } from 'assistant/ui'
 import { CancelToken, isCancel } from 'axios'
-import { getRequestConfig, getListItemConfig } from '../config'
+import { getRequestConfig, getListSectionConfig, getListItemConfig } from '../config'
 import './style.scss'
 
 export const Main = ( { match } ) => {
@@ -115,14 +115,18 @@ export const Main = ( { match } ) => {
 			{ results && !! results.length &&
 				<List
 					items={ results }
-					isListSection={ item => 'undefined' !== typeof item.label }
-					getSectionItems={ section => section.items ? section.items : [] }
-					getItemProps={ ( item, defaultProps, isSection ) => {
+					getSectionProps={ ( section, defaultProps ) => {
+						return getListSectionConfig( {
+							section,
+							defaultProps,
+							keyword,
+							match,
+						} )
+					} }
+					getItemProps={ ( item, defaultProps ) => {
 						return getListItemConfig( {
 							item,
 							defaultProps,
-							isSection,
-							keyword,
 							config,
 							match,
 						} )

@@ -64,6 +64,13 @@ export const getItemType = ( item, isSection = false ) => {
 	return isSection ? Section : Item
 }
 
+export const getDefaultSectionProps = ( section, defaultProps ) => {
+	return {
+		...defaultProps,
+		label: 'undefined' === typeof section.label ? '' : section.label,
+	}
+}
+
 /**
  * The default list item component.
  */
