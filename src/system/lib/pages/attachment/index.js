@@ -47,14 +47,14 @@ export const Attachment = ( { location } ) => {
 		)
 	}
 
-    const Actions = () => {
-        return (
-            <Control.NextPrev
-                onPrev={ () => console.log('prev') }
-                onNext={ () => console.log('next')}
-            />
-        )
-    }
+	const Actions = () => {
+		return (
+			<Control.NextPrev
+				onPrev={ () => {} }
+				onNext={ () => {} }
+			/>
+		)
+	}
 
 	let hasFullURL = false
 	if ( 'undefined' !== typeof item.sizes.full ) {
@@ -62,7 +62,7 @@ export const Attachment = ( { location } ) => {
 	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> } headerActions={<Actions />}>
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> } headerActions={ <Actions /> }>
 
 			<Form>
 				<Form.Section label={ __( 'Links' ) }>

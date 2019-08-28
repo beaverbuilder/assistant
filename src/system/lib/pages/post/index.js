@@ -56,16 +56,16 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	const Actions = () => {
-        return (
-            <Control.NextPrev
-                onPrev={ () => console.log('prev') }
-                onNext={ () => console.log('next')}
-            />
-        )
-    }
+		return (
+			<Control.NextPrev
+				onPrev={ () => {} }
+				onNext={ () => {} }
+			/>
+		)
+	}
 
 	return (
-		<Page title={ __( 'Edit Post' ) } header={ <Header /> } headerActions={<Actions />} shouldPadSides={ false }>
+		<Page title={ __( 'Edit Post' ) } header={ <Header /> } headerActions={ <Actions /> } shouldPadSides={ false }>
 			<Nav.Switch>
 				<Nav.Route exact path={ `${match.url}/` } component={ GeneralTab } />
 				<Nav.Route path={ `${match.url}/general` } component={ GeneralTab } />
