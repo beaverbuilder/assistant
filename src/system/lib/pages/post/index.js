@@ -96,16 +96,25 @@ const MetaTab = () => {
 
 const CommentsTab = () => {
 	return (
-		<>
-			Comments Tab Content.
-		</>
+		<Page.Section label={ __( 'Comments' ) }>
+			Comments List
+		</Page.Section>
 	)
 }
 
 export const CreatePost = () => {
 	return (
-		<Page title={ __( 'Create New' ) }>
-			<p>Make something new right here.</p>
+		<Page title={ __( 'Create New' ) } shouldPadSides={false}>
+			<Form>
+				<Form.Section label={__('Basic Info')}>
+					<Form.Item label={__('Title')}>
+						<input
+							type="text"
+
+						/>
+					</Form.Item>
+				</Form.Section>
+			</Form>
 		</Page>
 	)
 }

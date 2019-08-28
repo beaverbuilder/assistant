@@ -13,6 +13,7 @@
 
         &:hover {
             background: var(--fl-asst-secondary-surface-background);
+            text-decoration: none;
         }
 
         &:focus {
@@ -26,6 +27,10 @@
         &.fl-asst-destructive {
             --fl-asst-accent-color: red;
             color: red;
+        }
+
+        &.fl-asst-button-appearance-transparent {
+            background: transparent;
         }
     }
 

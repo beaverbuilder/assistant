@@ -31,34 +31,42 @@ class SiteService {
 		$data    = [];
 		$actions = [];
 		$intro   = __( 'Currently Viewing', 'fl-assistant' );
+		$type 	 = '';
 		$name    = __( 'Untitled', 'fl-assistant' );
 
 		$obj                    = get_queried_object();
 		$data['queried_object'] = $obj;
 
 		if ( is_admin() ) {
+
 			$intro = __( 'Currently Viewing Admin Page', 'fl-assistant' );
+			$type = __( 'Admin Page', 'fl-assistant');
 			$screen = get_current_screen();
 			$name = $screen->id;
+
 		} else {
 
 			if ( is_404() ) {
-				$name = __( 'Page Not Found (404)', 'fl-assistant' );
+				$name = __( 'Page Not Found', 'fl-assistant' );
+				$type = __( '404', 'fl-assistant' );
 
 			} elseif ( is_search() ) {
 
 				$intro = __( 'Currently Viewing Search Results For', 'fl-assistant' );
+				$type = __( 'Search Results For:', 'fl-assistant' );
 				$name  = get_search_query();
 
 			} elseif ( is_date() ) {
 
 				$intro = __( 'Currently Viewing Date Archive', 'fl-assistant' );
+				$type = __( 'Date Archive', 'fl-assistant' );
 				$name  = get_the_date();
 
 			} elseif ( is_post_type_archive() ) {
 
 				$post_type = get_post_type_object( 'post' );
 				$intro     = __( 'Currently Viewing Post Type Archive', 'fl-assistant' );
+				$type = __( 'Post Type Archive', 'fl-assistant' );
 				$name      = $post_type->labels->singular_name;
 
 			} elseif ( is_tax() || is_category() || is_tag() ) {
@@ -67,6 +75,7 @@ class SiteService {
 				$labels = $tax->labels;
 
 				$intro = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $labels->singular_name );
+				$type = $labels->singular_name;
 				$name  = $obj->name;
 
 				$actions[] = [
@@ -81,6 +90,7 @@ class SiteService {
 				$labels    = $post_type->labels;
 				$post_type = $labels->singular_name;
 				$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $post_type );
+				$type 	   = $post_type;
 				$name      = $obj->post_title;
 
 				if ( is_attachment() ) {
@@ -112,16 +122,19 @@ class SiteService {
 			} elseif ( is_author() ) {
 
 				$intro = __( 'Currently Viewing Author', 'fl-assistant' );
+				$type = __('Author Archive', 'fl-assistant' );
 				$name  = wp_get_current_user()->display_name;
 
 			} elseif ( is_front_page() ) {
 				$intro = __( 'Currently Viewing Post Archive', 'fl-assistant' );
+				$type = __( 'Post Archive', 'fl-assistant' );
 				$name  = __( 'Latest Posts', 'fl-assistant' );
 			}
 		}
 
 		$data['intro']   = $intro;
 		$data['name']    = $name;
+		$data['type']	 = $type;
 		$data['actions'] = static::filter_actions_by_capability( $actions );
 
 		$theme         = wp_get_theme();

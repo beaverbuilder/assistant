@@ -40,8 +40,8 @@ const Main = ( { match } ) => {
 	const Actions = ( { baseUrl } ) => {
 		return (
 			<>
-				<Button onClick={ () => setIsSelecting( ! isSelecting ) }>{ isSelecting ? __( 'Cancel' ) : __( 'Select' ) }</Button>
-				<Nav.ButtonLink to={ `${baseUrl}/post/new` }>
+				<Button onClick={ () => setIsSelecting( ! isSelecting ) } appearance="transparent">{ isSelecting ? __( 'Cancel' ) : __( 'Select' ) }</Button>
+				<Nav.ButtonLink to={ `${baseUrl}/post/new` } appearance="transparent">
 					<Icon.Plus />
 				</Nav.ButtonLink>
 			</>

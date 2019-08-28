@@ -62,3 +62,25 @@ export const ExpandedContent = ( { children } ) => {
 
 	return null
 }
+
+export  const Section = ({
+	children,
+	className,
+	label,
+	handle,
+	shouldPadSides = true,
+	...rest
+}) => {
+	const classes = classname( {
+		'fl-asst-page-section': true,
+		[`'fl-asst-page-section-${handle}'`]: handle,
+		'fl-asst-page-section-pad-sides' : shouldPadSides,
+	}, className )
+
+	return (
+		<div className={ classes } { ...rest }>
+			{ label && <div className="fl-asst-page-section-title"><span className="fl-asst-page-section-title-text">{label}</span></div> }
+			<div className="fl-asst-page-section-content">{children}</div>
+		</div>
+	)
+}

@@ -11,12 +11,14 @@ export const Button = forwardRef( ( props, ref ) => {
 		href,
 		onClick,
 		isSelected = false,
+		appearance = 'normal',
 		...rest
 	} = props
 
 	const classes = classname( {
 		'fl-asst-button': true,
 		'fl-asst-is-selected': isSelected,
+		[`fl-asst-button-appearance-${appearance}`] : appearance,
 	}, className )
 
 	let newProps = {

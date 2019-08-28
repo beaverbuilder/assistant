@@ -49,4 +49,49 @@
             line-height: 1.2;
         }
     }
+
+    .fl-asst-page-section {
+        background: var(--fl-asst-surface-background);
+        display: flex;
+        flex-direction: column;
+
+        .fl-asst-page-section-title {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 3px var(--fl-asst-outer-space) 0;
+            text-transform: uppercase;
+            background-color: var(--fl-asst-surface-background);
+            border-bottom: 2px solid var(--fl-asst-secondary-surface-background);
+
+            // Yea, all this for sticky headers
+            position: -webkit-sticky;
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+            position: sticky;
+            top:0;
+
+            .fl-asst-page-section-title-text {
+                display: inline-flex;
+                align-items: center;
+                min-height: var(--fl-asst-target-size);
+                max-width: 70%;
+                box-shadow: 0px 2px 0px 0px currentColor;
+                align-items: flex-end;
+                padding: 0 0 5px;
+            }
+        }
+        .fl-asst-page-section-content {
+            flex: 1 1 auto;
+            padding: var(--fl-asst-outer-space) 0 var(--fl-asst-inner-space);
+            display: grid;
+            grid-row-gap: var(--fl-asst-outer-space);
+        }
+        &.fl-asst-page-section-pad-sides .fl-asst-page-section-content {
+            padding-left: var(--fl-asst-outer-space);
+            padding-right: var(--fl-asst-outer-space);
+        }
+    }
 }

@@ -11,20 +11,15 @@ export const HomeScreen = () => {
 	let didSetFocusRef = false
 
 	return (
-		<Page shouldPadTop={ true } shouldPadSides={ false } shouldShowHeader={ false }>
+		<Page shouldPadSides={ false } shouldShowHeader={ false }>
 
-			<Page.Toolbar style={ { paddingBottom: 'var(--fl-asst-outer-space)' } }>
+			<Page.Section>
 				<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
-			</Page.Toolbar>
+			</Page.Section>
 
-			<hr />
+			<CurrentlyViewingSection />
 
-			<Page.Pad>
-				<CurrentlyViewing />
-			</Page.Pad>
-
-			<hr />
-
+			<Page.Section label={__('Apps')} handle="apps" shouldPadSides={false}>
 			<div className="fl-asst-app-grid">
 				{ appOrder.map( ( handle, i ) => {
 					const app = apps[handle]
@@ -68,27 +63,20 @@ export const HomeScreen = () => {
 					)
 				} )}
 			</div>
+			</Page.Section>
 		</Page>
 	)
 }
 
-const CurrentlyViewing = () => {
+const CurrentlyViewingSection = () => {
 	const { currentPageView } = getSystemConfig()
-	const { name, intro, actions } = currentPageView
+	const { name, type } = currentPageView
 	return (
-		<div className="fl-asst-currently-viewing-summary">
-			<div className="fl-asst-pretitle">{intro}</div>
-			<div className="fl-asst-title">{name}</div>
-
-			{ actions && 0 < actions.length &&
-			<Page.Toolbar style={ { marginTop: 'var(--fl-asst-small-space)', padding: 0 } }>
-				{ actions && 0 < actions.length && actions.map( ( item, i ) => {
-					const { label, href } = item
-					return (
-						<Button key={ i } href={ href }>{label}</Button>
-					)
-				} )}
-			</Page.Toolbar> }
-		</div>
+		<Page.Section label={__('Currently Viewing')} handle="currently-viewing">
+			<div className="fl-asst-currently-viewing-summary">
+				{ type && <div className="fl-asst-pretitle">{type}</div> }
+				<div className="fl-asst-title">{name}</div>
+			</div>
+		</Page.Section>
 	)
 }
