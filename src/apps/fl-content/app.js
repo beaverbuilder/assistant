@@ -41,9 +41,9 @@ const Main = ( { match } ) => {
 		return (
 			<>
 				<Button onClick={ () => setIsSelecting( ! isSelecting ) }>{ isSelecting ? __( 'Cancel' ) : __( 'Select' ) }</Button>
-				<Nav.Link to={ `${baseUrl}/post/new` }>
+				<Nav.ButtonLink to={ `${baseUrl}/post/new` }>
 					<Icon.Plus />
-				</Nav.Link>
+				</Nav.ButtonLink>
 			</>
 		)
 	}

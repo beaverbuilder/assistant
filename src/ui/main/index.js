@@ -1,5 +1,5 @@
 import React, { useContext } from 'fl-react'
-import { __ } from 'assistant'
+import { __ } from '@wordpress/i18n'
 import { getSystemActions, useSystemState } from 'assistant/store'
 import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
 import { AppRouting } from '../app'
