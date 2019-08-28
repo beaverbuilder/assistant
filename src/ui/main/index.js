@@ -1,5 +1,5 @@
 import React, { useContext } from 'fl-react'
-import { __ } from 'assistant'
+import { __ } from '@wordpress/i18n'
 import { getSystemActions, useSystemState } from 'assistant/store'
 import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
 import { AppRouting } from '../app'
@@ -61,7 +61,7 @@ const WindowToolbar = () => {
 	const iconWrapStyle = { display: 'inline-flex', transform: 'translateY(2px)' }
 
 	return (
-		<span>
+		<span style={ { pointerEvents: 'none' } }>
 			{ isRoot && <span style={ labelStyle }>{__( 'Assistant' )}</span> }
 
 			{ ! isRoot && <>

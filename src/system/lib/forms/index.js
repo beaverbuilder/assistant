@@ -46,7 +46,7 @@ Form.Section = props => {
 	const { children, className, label, handle, ...rest } = props
 	const classes = classname( {
 		'fl-asst-form-section': true,
-		[`'fl-asst-form-section-${handle}'`] : handle,
+		[`'fl-asst-form-section-${handle}'`]: handle,
 	}, className )
 
 	return (

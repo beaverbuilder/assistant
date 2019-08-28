@@ -2,13 +2,16 @@ import React, { useRef, useContext, createContext } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
-import { Nav, Icon, App, Window } from '../'
+import { Nav, Icon, App } from 'lib'
 
-import { Comment, Update } from './detail-pages'
+import { Pad, Toolbar, TitleCard, ExpandedContent, Section } from './parts'
 import { Post, CreatePost } from './post'
 import { User } from './user'
 import { Term } from './term'
 import { Attachment } from './attachment'
+import { Plugin } from './plugin'
+import { Comment } from './comment'
+import { Update } from './update'
 
 import './style.scss'
 
@@ -63,6 +66,8 @@ export const Page = ( {
 	)
 }
 
+
+/* ------ Page System Setup ------ */
 Page.defaults = {
 	scrollRef: null,
 }
@@ -70,6 +75,7 @@ Page.defaults = {
 Page.Context = createContext( Page.defaults )
 Page.Context.displayName = 'Page.Context'
 
+/* ------ Partial Components ------ */
 Page.Header = ( { icon, label, actions } ) => {
 	const { shouldShowLabels, window } = useSystemState()
 
@@ -142,44 +148,23 @@ Page.Header = ( { icon, label, actions } ) => {
 Page.Header.displayName = 'Page.Header'
 
 // Horizontal Toolbar - edge padding for controls
-Page.Toolbar = ( {
-	className,
-	shouldPadSides = true,
-	shouldPadBottom = false,
-	shouldPadTop = false,
-	...rest
-} ) => {
-	const classes = classname( {
-		'fl-asst-toolbar': true,
-		'fl-asst-pad-top': shouldPadTop,
-		'fl-asst-pad-sides': shouldPadSides,
-		'fl-asst-pad-bottom': shouldPadBottom,
-	}, className )
-	return (
-		<div className={ classes } { ...rest } />
-	)
-}
+Page.Toolbar = Toolbar
 Page.Toolbar.displayName = 'Page.Toolbar'
 
-// Padded box
-Page.Pad = ( {
-	className,
-	top = true,
-	sides = true,
-	bottom = true,
-	...rest
-} ) => {
-	const classes = classname( {
-		'fl-asst-pad-top': top,
-		'fl-asst-pad-sides': sides,
-		'fl-asst-pad-bottom': bottom,
-	}, className )
+Page.ExpandedContent = ExpandedContent
+Page.ExpandedContent.displayName = 'Page.ExpandedContent'
 
-	return <div className={ classes } { ...rest } />
-}
+// Padded box
+Page.Pad = Pad
 Page.Pad.displayName = 'Page.Pad'
 
+Page.TitleCard = TitleCard
+Page.TitleCard.displayName = 'Page.TitleCard'
 
+Page.Section = Section
+Page.Section.displayName = 'Page.Section'
+
+/* ------ Page Types ------ */
 Page.Comment = Comment
 Page.Comment.displayName = 'Page.Comment'
 
@@ -188,6 +173,9 @@ Page.Update.displayName = 'Page.Update'
 
 Page.Post = Post
 Page.Post.displayName = 'Page.Post'
+
+Page.CreatePost = CreatePost
+Page.CreatePost.displayName = 'Page.CreatePost'
 
 Page.Term = Term
 Page.Term.displayName = 'Page.Term'
@@ -198,16 +186,5 @@ Page.Attachment.displayName = 'Page.Attachment'
 Page.User = User
 Page.User.displayName = 'Page.User'
 
-Page.CreatePost = CreatePost
-Page.CreatePost.displayName = 'Page.CreatePost'
-
-Page.ExpandedContent = ( { children } ) => {
-	const { size } = useContext( Window.Context )
-
-	if ( 'normal' === size ) {
-		return children
-	}
-
-	return null
-}
-Page.ExpandedContent.displayName = 'Page.ExpandedContent'
+Page.Plugin = Plugin
+Page.Plugin.displayName = 'Page.Plugin'

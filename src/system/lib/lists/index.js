@@ -40,6 +40,8 @@ export const List = ( {
 	isSelecting = false,
 
 	tag: Tag = 'ul',
+
+	className,
 } ) => {
 
 	const renderListItems = items => {
@@ -105,7 +107,7 @@ export const List = ( {
 		'fl-asst-list': true,
 		[`fl-asst-${direction}-list`]: direction,
 		'fl-asst-list-is-selecting': isSelecting,
-	} )
+	}, className )
 
 	return (
 		<Tag className={ classes }>{content}</Tag>

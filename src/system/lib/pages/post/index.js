@@ -25,24 +25,25 @@ export const Post = ( { location, match, history } ) => {
 		visibility: 'Public',
 	}
 	const item = 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
-	const { title, thumbnail } = item
+	const { title } = item
 
 	const setTab = path => history.replace( path, location.state )
 
 	const PageHeader = () => {
 		return (
-			<div>
-				{ thumbnail && <img src={ thumbnail } style={ { height: 150, width: 150 } } /> }
-				<h2>{title}</h2>
+			<>
+				<Page.TitleCard title={ title }>
 
-				<Page.Toolbar>
+				</Page.TitleCard>
+
+				<Page.Pad>
 					<Button.Group>
 						<Button onClick={ () => setTab( `${match.url}/general` ) }>{__( 'General' )}</Button>
 						<Button onClick={ () => setTab( `${match.url}/meta` ) }>{__( 'Metadata' )}</Button>
 						<Button onClick={ () => setTab( `${match.url}/comments` ) }>{__( 'Comments' )}</Button>
 					</Button.Group>
-				</Page.Toolbar>
-			</div>
+				</Page.Pad>
+			</>
 		)
 	}
 
@@ -95,16 +96,25 @@ const MetaTab = () => {
 
 const CommentsTab = () => {
 	return (
-		<>
-			Comments Tab Content.
-		</>
+		<Page.Section label={ __( 'Comments' ) }>
+			Comments List
+		</Page.Section>
 	)
 }
 
 export const CreatePost = () => {
 	return (
-		<Page title={ __( 'Create New' ) }>
-			<p>Make something new right here.</p>
+		<Page title={ __( 'Create New' ) } shouldPadSides={ false }>
+			<Form>
+				<Form.Section label={ __( 'Basic Info' ) }>
+					<Form.Item label={ __( 'Title' ) }>
+						<input
+							type="text"
+
+						/>
+					</Form.Item>
+				</Form.Section>
+			</Form>
 		</Page>
 	)
 }

@@ -12,12 +12,14 @@ export const Button = forwardRef( ( props, ref ) => {
 		href,
 		onClick,
 		isSelected = false,
+		appearance = 'normal',
 		...rest
 	} = props
 
 	const classes = classname( {
 		'fl-asst-button': true,
 		'fl-asst-is-selected': isSelected,
+		[`fl-asst-button-appearance-${appearance}`]: appearance,
 	}, className )
 
 	let newProps = {
@@ -181,20 +183,19 @@ Button.Group = ( {
 	}
 
 	return (
-        <>
-            { label && <label>{label}</label> }
-            <div { ...props }>
-            	{ children }
-            	{ needsOverflow && (
+			<>
+				{ label && <label>{label}</label> }
+				<div { ...props }>
+					{ children }
+					{ needsOverflow && (
 					<>
 						<Rule direction={ dividerDirection } />
 						<MoreBtn />
 					</>
-            	) }
-
-            </div>
-            { shouldShowMoreMenu && needsOverflow && <MoreMenu>{ejected}</MoreMenu> }
-        </>
+					) }
+				</div>
+				{ shouldShowMoreMenu && needsOverflow && <MoreMenu>{ejected}</MoreMenu> }
+			</>
 	)
 }
 

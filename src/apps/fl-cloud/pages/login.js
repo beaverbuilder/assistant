@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'fl-react'
+import { __ } from '@wordpress/i18n'
 import PropTypes from 'prop-types'
-import { Button, Icon } from 'assistant/lib'
+import { Button, Icon, Form } from 'assistant/ui'
 
 export const LoginPage = ( props ) => {
 
@@ -11,54 +12,62 @@ export const LoginPage = ( props ) => {
 	const [ doingLogin, setDoingLogin ] = useState( false )
 
 
-	const handleSubmit = ( event ) => {
+	const handleSubmit = e => {
 
 		setDoingLogin( true )
 
 		doLogin( email, password )
 
-		event.preventDefault()
+		e.preventDefault()
 	}
 
 	return (
 		<Fragment>
 			<Icon.Pencil size={ 75 }/>
-			{doingLogin && ( <p>Authenticating...</p> )}
+
+			{doingLogin && ( <p>{__( 'Authenticating...' )}</p> )}
+
 			{! doingLogin && (
-				<form onSubmit={ handleSubmit }>
-					<p className="center-text">You are not currently connected to Assistant Cloud</p>
-					<div className="errors">
-						{
-							( null !== errors && errors.map( ( error, index ) => {
-								return (
-									<li key={ index }>{error}</li>
-								)
-							} ) )
-						}
-					</div>
-					<div>
-						<label>Email</label>
-						<input type="email"
-							name="email"
-							onChange={ e => {
-								setEmail( e.target.value )
-							} }
-							value={ email }
-							required/>
-					</div>
-					<div>
-						<label>Password</label>
-						<input type="password"
-							name="password"
-							onChange={ e => {
-								setPassword( e.target.value )
-							} }
-							value={ password }/>
-					</div>
-					<div>
-						<Button type="submit" className="fl-asst-cloud-connect-button">Connect</Button>
-					</div>
-				</form>
+				<Form onSubmit={ handleSubmit }>
+					<Form.Section>
+						<Form.Item>
+							<p className="center-text">{__( 'You are not currently connected to Assistant Cloud' )}</p>
+						</Form.Item>
+						{ 0 < errors.length && <Form.Item className="errors">
+							{
+								( null !== errors && errors.map( ( error, index ) => {
+									return (
+										<li key={ index }>{error}</li>
+									)
+								} ) )
+							}
+						</Form.Item> }
+						<Form.Item label={ __( 'Email' ) } labelFor="cloudEmail" required={ true }>
+							<input
+								type="email"
+								id="cloudEmail"
+								name="email"
+								onChange={ e => setEmail( e.target.value ) }
+								value={ email }
+								placeholder={ __( 'john@example.com' ) }
+								required
+							/>
+						</Form.Item>
+						<Form.Item label={ __( 'Password' ) } labelFor="cloudPwd">
+							<input
+								type="password"
+								id="cloudPwd"
+								name="password"
+								onChange={ e => setPassword( e.target.value ) }
+								value={ password }
+								placeholder={ __( 'Password' ) }
+							/>
+						</Form.Item>
+						<Form.Item>
+							<Button type="submit" className="fl-asst-cloud-connect-button">{__( 'Connect' )}</Button>
+						</Form.Item>
+					</Form.Section>
+				</Form>
 			)}
 		</Fragment>
 	)

@@ -14,7 +14,7 @@ import {
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ UpdatesMain }/>
-		<Nav.Route path={ `${match.url}/update/:id` } component={ Page.Update }/>
+		<Nav.Route path={ `${match.url}/update/:id` } component={ Page.Plugin }/>
 	</Nav.Switch>
 )
 

@@ -60,10 +60,9 @@ export const Main = ( { match } ) => {
 		return () => source.cancel()
 	}, [ keyword ] )
 
-	return (
-		<Page shouldShowHeader={ false } shouldPadTop={ true } shouldPadSides={ false } shouldPadBottom={ false }>
-
-			<Page.Toolbar>
+	const Header = () => {
+		return (
+			<Page.Pad bottom={ false }>
 				<div className='fl-asst-search-form-simple'>
 					<input
 						type="search"
@@ -77,7 +76,17 @@ export const Main = ( { match } ) => {
 						</div>
 					}
 				</div>
-			</Page.Toolbar>
+			</Page.Pad>
+		)
+	}
+
+	return (
+		<Page
+			shouldShowHeader={ false }
+			shouldPadTop={ true }
+			shouldPadSides={ false }
+			header={ <Header /> }
+		>
 
 			{ results && ! results.length &&
 				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>

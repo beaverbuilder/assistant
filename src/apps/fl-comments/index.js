@@ -1,4 +1,5 @@
-import { registerApp, __ } from 'assistant'
+import { registerApp } from 'assistant'
+import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
 import { CommentsApp } from './app'

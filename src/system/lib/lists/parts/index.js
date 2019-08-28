@@ -74,8 +74,6 @@ const InfoItem = ( {
 	thumbnail,
 	thumbnailSize = 'med',
 	className,
-	isHovering, // probably deprecate
-	isFocused, // probably deprecate
 	extras,
 	accessory,
 } ) => {
@@ -193,8 +191,9 @@ const Section = ( { children, className, label, ...rest } ) => {
 	const classes = classname( 'fl-asst-list-section', className )
 	return (
 		<li className={ classes } { ...rest }>
-			<hr/>
-			<div className="fl-asst-list-section-header">{label}</div>
+			<div className="fl-asst-list-section-header">
+				<span className="fl-asst-list-section-title-text">{label}</span>
+			</div>
 			<div className="fl-asst-list-section-content">{children}</div>
 		</li>
 	)

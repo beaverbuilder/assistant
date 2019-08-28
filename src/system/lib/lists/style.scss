@@ -50,6 +50,12 @@
                 align-items: center;
             }
         }
+
+        &.fl-asst-user-list {
+            .fl-asst-list-item-thumbnail {
+                border-radius: 50%;
+            }
+        }
     }
     .fl-asst-brightness-dark .fl-asst-list .fl-asst-list-item {
         --fl-asst-list-item-shadow-color: var(--fl-asst-secondary-surface-background);
@@ -155,25 +161,6 @@
         flex: 0 0 auto;
     }
 
-    .fl-asst-list-section {
-        .fl-asst-list-section-header {
-            padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space);
-        }
-        .fl-asst-list-section-content {
-            .fl-asst-list {
-                margin:0;
-            }
-        }
-
-        &:first-child hr {
-            display: none;
-        }
-    }
-
-	.fl-asst-list-section-footer {
-		padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space);
-	}
-
     .fl-asst-item-extras {
         flex-direction: row;
         flex-wrap: wrap;
@@ -216,4 +203,52 @@
             display: flex;
         }
     }
+
+    .fl-asst-list-section {
+        background: var(--fl-asst-surface-background);
+        display: flex;
+        flex-direction: column;
+
+        .fl-asst-list-section-header {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 3px var(--fl-asst-outer-space) 0;
+            text-transform: uppercase;
+            background-color: var(--fl-asst-surface-background);
+            border-bottom: 2px solid var(--fl-asst-secondary-surface-background);
+
+            // Yea, all this for sticky headers
+            position: -webkit-sticky;
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+            position: sticky;
+            top:0;
+
+            .fl-asst-list-section-title-text {
+                display: inline-flex;
+                align-items: center;
+                min-height: var(--fl-asst-target-size);
+                max-width: 70%;
+                box-shadow: 0px 2px 0px 0px currentColor;
+                align-items: flex-end;
+                padding: 0 0 5px;
+            }
+        }
+        .fl-asst-list-section-content {
+            .fl-asst-list {
+                margin:0;
+            }
+        }
+
+        &:first-child hr {
+            display: none;
+        }
+    }
+
+	.fl-asst-list-section-footer {
+		padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) var(--fl-asst-outer-space);
+	}
 }
