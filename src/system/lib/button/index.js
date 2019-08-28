@@ -210,9 +210,9 @@ Button.Loading = ( {
 	children,
 	...rest
 } ) => {
-	const classes = classname({
-        'fl-asst-button-loading' : true,
-    }, className )
+	const classes = classname( {
+		'fl-asst-button-loading': true,
+	}, className )
 
 	return (
 		<Button className={ classes } { ...rest }>

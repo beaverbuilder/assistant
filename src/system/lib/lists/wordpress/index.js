@@ -22,7 +22,7 @@ export const WordPress = ( {
 	return (
 		<List.Scroller
 			items={ items }
-			getItemProps={ ( item, defaultProps, isSection ) => {
+			getItemProps={ ( item, defaultProps ) => {
 				return getItemProps( item, {
 					...defaultProps,
 					removeItem: () => {

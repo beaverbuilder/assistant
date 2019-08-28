@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'fl-react'
+import React, { useContext, useEffect } from 'fl-react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __ } from 'assistant/i18n'
 import { App, Page, Button, List, Nav } from 'assistant/ui'
@@ -8,7 +8,6 @@ import {
 	getAppActions,
 	getUpdaterStore,
 	getUpdaterActions,
-	getUpdaterSelectors
 } from 'assistant/data'
 
 export const UpdatesApp = ( { match } ) => (
@@ -33,7 +32,7 @@ const UpdatesMain = () => {
 			const { items } = response.data
 			setUpdateQueueItems( items )
 		} ).catch( error => {
-			console.log( error )
+			console.log( error ) // eslint-disable-line no-console
 			setUpdatingAll( false )
 			alert( __( 'Something went wrong. Please try again.' ) )
 		} )
