@@ -78,6 +78,18 @@ const GeneralTab = ( { location } ) => {
 					<Control.URL url={ url } />
 				</Form.Item>
 			</Form.Section>
+			<Form.Section label={__('Actions')}>
+				<Form.Item>
+					<Button.Group appearance="grid">
+						<Button>{__('View Post')}</Button>
+						<Button>{__('Edit in Admin')}</Button>
+						<Button>{__('Beaver Builder')}</Button>
+						<Button>{__('Bookmark')}</Button>
+						<Button>{__('Duplicate')}</Button>
+						<Button>{__('Move to Trash')}</Button>
+					</Button.Group>
+				</Form.Item>
+			</Form.Section>
 		</Form>
 	)
 }

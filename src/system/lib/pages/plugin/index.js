@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form } from 'lib'
+import { Page, Form, Button } from 'lib'
 
 export const Plugin = ( { location = {} } ) => {
 
@@ -38,6 +38,14 @@ export const Plugin = ( { location = {} } ) => {
 				<Form.Section label={ __( 'Details' ) }>
 					<Form.Item label={ __( 'Version' ) } placement="beside">{version}</Form.Item>
 					<Form.Item label={ __( 'Author' ) } placement="beside">{author}</Form.Item>
+				</Form.Section>
+				<Form.Section label={__('Actions')}>
+					<Form.Item>
+						<Button.Group appearance="grid">
+							<Button>{__('Update')}</Button>
+							<Button>{__('Deactivate')}</Button>
+						</Button.Group>
+					</Form.Item>
 				</Form.Section>
 			</Form>
 		</Page>

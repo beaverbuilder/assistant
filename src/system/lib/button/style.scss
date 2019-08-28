@@ -4,6 +4,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        text-align: center;
         flex: 1 0 auto;
         padding: 0 10px;
         background: var(--fl-asst-secondary-surface-background);
@@ -67,12 +68,6 @@
         }
 
         .fl-asst-button {
-            background: transparent;
-            color: inherit;
-            border-radius: 4px;
-            z-index:1;
-            white-space: nowrap;
-
             &:hover {
                 color: var(--fl-asst-surface-color);
             }
@@ -95,6 +90,16 @@
             }
         }
 
+        &.fl-asst-button-group-appearance-normal {
+            .fl-asst-button {
+                background: transparent;
+                color: inherit;
+                border-radius: 4px;
+                z-index:1;
+                white-space: nowrap;
+            }
+        }
+
         .fl-asst-vertical-divider {
             flex: 0 0 auto;
             margin: var(--fl-asst-tiny-space) 0;
@@ -107,6 +112,19 @@
         }
         .fl-asst-is-selected + .fl-asst-divider {
             visibility: hidden;
+        }
+
+        &.fl-asst-button-group-appearance-grid {
+            background: transparent;
+            flex: 1 1 auto;
+            display: grid;
+            grid-gap: var(--fl-asst-tiny-space);
+            grid-template-columns: 1fr 1fr;
+            margin: -3px;
+
+            .fl-asst-button {
+                background: var(--fl-asst-secondary-surface-background);
+            }
         }
     }
 
