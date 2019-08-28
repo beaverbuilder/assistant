@@ -2,13 +2,15 @@
     .fl-asst-search-form-simple {
         position: relative;
         width: 100%;
+        display: flex;
+        flex-direction: row;
 
     	.fl-asst-search-spinner {
     		align-items: center;
     		display: flex;
     		position: absolute;
     		bottom: 0;
-    		right: 8px;
+    		right: 60px; // hack, find a better way
     		top: 0;
     	}
     }
