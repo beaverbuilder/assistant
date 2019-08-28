@@ -6,6 +6,7 @@ import { List } from 'lib'
 export const WordPress = ( {
 	type = 'posts',
 	getItemProps = ( item, defaultProps ) => defaultProps,
+	formatItems = items => items,
 	onItemsLoaded = () => {},
 	query = {},
 	...rest,
@@ -21,8 +22,11 @@ export const WordPress = ( {
 
 	return (
 		<List.Scroller
-			items={ items }
-			getItemProps={ ( item, defaultProps ) => {
+			items={ formatItems( items ) }
+			getItemProps={ ( item, defaultProps, isSection ) => {
+				if ( isSection ) {
+					return getItemProps( item, defaultProps, isSection )
+				}
 				return getItemProps( item, {
 					...defaultProps,
 					removeItem: () => {

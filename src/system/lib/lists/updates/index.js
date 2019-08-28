@@ -16,6 +16,23 @@ export const Updates = ( {
 			query={ query }
 			isListSection={ item => 'undefined' !== typeof item.items }
 			getSectionItems={ section => section.items }
+			formatItems={ items => {
+				const groups = [ {
+					label: __( 'Plugins' ),
+					items: [],
+				}, {
+					label: __( 'Themes' ),
+					items: [],
+				} ]
+				items.map( item => {
+					if ( 'plugin' === item.type ) {
+						groups[0].items.push( item )
+					} else {
+						groups[1].items.push( item )
+					}
+				} )
+				return groups
+			} }
 			getItemProps={ ( item, defaultProps, isSection ) => {
 				if ( isSection ) {
 					return {
@@ -60,22 +77,11 @@ export const Updates = ( {
 					)
 				}
 
-				const Extras = () => {
-					return (
-						<div className="fl-asst-item-extras" onClick={ e => e.stopPropagation() }>
-							<div className="fl-asst-item-extras-left">
-								<UpdateButton />
-							</div>
-						</div>
-					)
-				}
-
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
 					description: item.meta,
 					thumbnail: item.thumbnail,
-					extras: props => <Extras { ...props } />,
 					accessory: props => <UpdateButton { ...props } />,
 				} )
 			} }
