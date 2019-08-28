@@ -37,8 +37,8 @@
 
     .fl-asst-card {
         border-radius: 15px;
-        padding: var(--fl-asst-outer-space) calc( var(--fl-asst-outer-space) - 3px );
-        margin: 0 3px;
+        padding: var(--fl-asst-outer-space);
+        margin: 0 var(--fl-asst-outer-space);
         display: grid;
         grid-gap: var(--fl-asst-tiny-space);
 

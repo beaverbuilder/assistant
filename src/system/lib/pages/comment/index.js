@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { Page, Form } from 'lib'
 
 export const Comment = ( { location = {} } ) => {
@@ -30,8 +30,10 @@ export const Comment = ( { location = {} } ) => {
 
 	return (
 		<Page title={ __( 'Edit Comment' ) } shouldPadSides={ false }>
-			<h2>{author} said:</h2>
-			<div dangerouslySetInnerHTML={ html } />
+
+			<Page.Section label={ sprintf('%s Said:', author ) }>
+				<div dangerouslySetInnerHTML={ html } />
+			</Page.Section>
 
 			<Form>
 				<Form.Section label={ __( 'Details' ) }>
