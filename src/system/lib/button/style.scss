@@ -77,17 +77,6 @@
                 box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
                             0px 0px 0px 2px var(--fl-asst-accent-color);
             }
-
-            &.fl-asst-is-selected {
-                background: var(--fl-asst-surface-background);
-                color: var(--fl-asst-surface-color);
-                box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
-
-                &:focus {
-                    box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background),
-                                0px 0px 0px 2px var(--fl-asst-accent-color);
-                }
-            }
         }
 
         &.fl-asst-button-group-appearance-normal {
@@ -97,6 +86,17 @@
                 border-radius: 4px;
                 z-index:1;
                 white-space: nowrap;
+
+                &.fl-asst-is-selected {
+                    background: var(--fl-asst-surface-background);
+                    color: var(--fl-asst-surface-color);
+                    box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+
+                    &:focus {
+                        box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background),
+                                    0px 0px 0px 2px var(--fl-asst-accent-color);
+                    }
+                }
             }
         }
 

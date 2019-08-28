@@ -47,13 +47,22 @@ export const Attachment = ( { location } ) => {
 		)
 	}
 
+	const Actions = () => {
+		return (
+			<Control.NextPrev
+				onPrev={ () => {} }
+				onNext={ () => {} }
+			/>
+		)
+	}
+
 	let hasFullURL = false
 	if ( 'undefined' !== typeof item.sizes.full ) {
 		hasFullURL = true
 	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> }>
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> } headerActions={ <Actions /> }>
 
 			<Form>
 				<Form.Section label={ __( 'Links' ) }>
