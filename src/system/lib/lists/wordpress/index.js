@@ -17,7 +17,7 @@ export const WordPress = ( {
 
 	useEffect( () => {
 		setItems( [] )
-	}, [ type, query ] )
+	}, [ type, JSON.stringify( query ) ] )
 
 	return (
 		<List.Scroller

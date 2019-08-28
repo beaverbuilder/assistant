@@ -16,5 +16,17 @@ export const actions = {
 			type: 'SET_UPDATE_QUEUE_ITEMS',
 			items,
 		}
+	},
+	setCompletedUpdates( ids ) {
+		return {
+			type: 'SET_COMPLETED_UPDATES',
+			ids,
+		}
+	},
+	removeCompletedUpdate( id ) {
+		return {
+			type: 'REMOVE_COMPLETED_UPDATE',
+			id,
+		}
 	}
 }
