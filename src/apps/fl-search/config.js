@@ -2,6 +2,7 @@ import React from 'fl-react'
 import { Nav } from 'assistant/ui'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSystemStore } from 'assistant/data'
+import { __ } from '@wordpress/i18n'
 
 /**
  * Number of results per group for the main search list.
@@ -81,12 +82,10 @@ export const getListItemConfig = ( {
 		props.label = item.label
 		if ( item.items.length >= NUMBER_OF_RESULTS ) {
 			props.footer = (
-				<Nav.Link to={ {
+				<Nav.ButtonLink to={ {
 					pathname: `${match.url}/all`,
 					state: { keyword, configKey }
-				} }>
-					View All
-				</Nav.Link>
+				} }>{__( 'View All' )}</Nav.ButtonLink>
 			)
 		}
 	} else {

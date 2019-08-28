@@ -29,18 +29,18 @@ export const Comment = ( { location = {} } ) => {
 	const html = { __html: content }
 
 	return (
-		<Page title={ __( 'Edit Comment' ) } shouldPadSides={false}>
+		<Page title={ __( 'Edit Comment' ) } shouldPadSides={ false }>
 			<h2>{author} said:</h2>
 			<div dangerouslySetInnerHTML={ html } />
 
-            <Form>
-                <Form.Section label={__('Details')}>
-                    <Form.Item label={__('Author')} placement="beside">{author}</Form.Item>
-                    <Form.Item label={__('IP Address')} placement="beside">{authorIP}</Form.Item>
-                    <Form.Item label={__('Email Address')} placement="beside">{authorEmail}</Form.Item>
-                    <Form.Item label={__('Submitted On')} placement="beside">{date}</Form.Item>
-                </Form.Section>
-            </Form>
+			<Form>
+				<Form.Section label={ __( 'Details' ) }>
+					<Form.Item label={ __( 'Author' ) } placement="beside">{author}</Form.Item>
+					<Form.Item label={ __( 'IP Address' ) } placement="beside">{authorIP}</Form.Item>
+					<Form.Item label={ __( 'Email Address' ) } placement="beside">{authorEmail}</Form.Item>
+					<Form.Item label={ __( 'Submitted On' ) } placement="beside">{date}</Form.Item>
+				</Form.Section>
+			</Form>
 		</Page>
 	)
 }

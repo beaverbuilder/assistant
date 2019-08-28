@@ -62,7 +62,7 @@ export const Main = ( { match } ) => {
 
 	const Header = () => {
 		return (
-			<Page.Pad bottom={false}>
+			<Page.Pad bottom={ false }>
 				<div className='fl-asst-search-form-simple'>
 					<input
 						type="search"
@@ -85,7 +85,7 @@ export const Main = ( { match } ) => {
 			shouldShowHeader={ false }
 			shouldPadTop={ true }
 			shouldPadSides={ false }
-			header={<Header />}
+			header={ <Header /> }
 		>
 
 			{ results && ! results.length &&
