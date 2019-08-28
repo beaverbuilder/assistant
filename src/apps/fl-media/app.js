@@ -15,7 +15,7 @@ const Main = ( { match } ) => {
 	const [ , setHasMore ] = useState( false )
 	const hasImages = 0 < images.length
 	const query = {
-		postsPerPage: 5,
+		postsPerPage: 50,
 	}
 
 	useLayoutEffect( () => {
@@ -28,7 +28,7 @@ const Main = ( { match } ) => {
 	}, [] )
 
 	return (
-		<Page shouldPadBottom={ true }>
+		<Page shouldPadBottom={ true } shouldPadSides={ false }>
 			{ hasImages &&
 				<div className="fl-asst-recent-media-display">
 					{ images.map( ( item, i ) => {

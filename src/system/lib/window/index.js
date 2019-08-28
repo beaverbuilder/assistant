@@ -88,6 +88,7 @@ export const Window = ( {
 		requestAnimate,
 		shouldShowLabels,
 	}
+
 	return (
 		<Flipper flipKey={ needsAnimate }>
 			<Window.Context.Provider value={ context }>
