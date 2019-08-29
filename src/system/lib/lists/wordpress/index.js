@@ -33,7 +33,7 @@ export const WordPress = ( {
 					},
 					cloneItem: () => {
 						const { key } = defaultProps
-						items.splice( key, 0, Object.assign( {}, items[0] ) )
+						items.splice( key, 0, Object.assign( {}, items[ key ] ) )
 						setItems( [ ...items ] )
 					}
 				} )
