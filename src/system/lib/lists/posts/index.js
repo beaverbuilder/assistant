@@ -27,8 +27,10 @@ export const Posts = ( {
 				}
 
 				const trashPost = () => {
-					update( item.id, 'trash' )
-					removeItem()
+					if ( confirm( __( 'Do you really want to trash this post?' ) ) ) {
+						update( item.id, 'trash' )
+						removeItem()
+					}
 				}
 
 				const Extras = () => {
