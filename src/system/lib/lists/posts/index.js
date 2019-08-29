@@ -8,7 +8,7 @@ export const Posts = ( {
 	query = {},
 	...rest,
 } ) => {
-	const { update } = getWpRest().posts()
+	const { update, clone } = getWpRest().posts()
 
 	return (
 		<List.WordPress
@@ -20,6 +20,11 @@ export const Posts = ( {
 			getItemProps={ ( item, defaultProps ) => {
 				const { removeItem, cloneItem } = defaultProps
 				const desc = 'by ' + item.author + ' | ' + item.visibility
+
+				const clonePost = () => {
+					clone( item.id )
+					cloneItem()
+				}
 
 				const trashPost = () => {
 					update( item.id, 'trash' )
@@ -41,7 +46,7 @@ export const Posts = ( {
 								<Button tabIndex="-1">
 									<Icon.Bookmark />
 								</Button>
-								<Button onClick={ cloneItem } tabIndex="-1">
+								<Button onClick={ clonePost } tabIndex="-1">
 									<Icon.Clone />
 								</Button>
 								<Button onClick={ trashPost } tabIndex="-1" className="fl-asst-destructive">
