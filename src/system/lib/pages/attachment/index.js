@@ -52,7 +52,7 @@ export const Attachment = ( { location } ) => {
 	return (
 		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } headerActions={ <Actions /> }>
 
-            <img src={ item.thumbnail } srcSet={ srcSet } />
+			<img src={ item.thumbnail } srcSet={ srcSet } />
 
 			<Form>
 				<Form.Section label={ __( 'Links' ) }>
