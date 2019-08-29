@@ -16,18 +16,14 @@ export const User = ( { location } ) => {
 	const { currentUser } = getSystemConfig()
 	const isYou = currentUser.id === id
 
-	const Header = () => (
-		<Page.TitleCard title={ item.displayName }>
-			{item.email}
-		</Page.TitleCard>
-	)
-
 	return (
 		<Page
 			shouldPadSides={ false }
 			title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }
-			header={ <Header /> }
 		>
+			<Page.TitleCard title={ item.displayName }>
+				{item.email}
+			</Page.TitleCard>
 			<Form>
 				<AuthorArchiveSection url={ url } />
 

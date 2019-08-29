@@ -1,8 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Form, Control, Button } from 'lib'
-import utils from 'utils'
-const { react: { useInitialFocus } } = utils
 
 /**
  * Get a srcset string from an object of sizes.
@@ -15,7 +13,6 @@ const getSrcSet = ( sizes = {} ) => {
 }
 
 export const Attachment = ( { location } ) => {
-	const firstRef = useInitialFocus()
 	const defaultItem = {
 		url: '',
 		sizes: {},
@@ -38,15 +35,6 @@ export const Attachment = ( { location } ) => {
 		caption: item.caption,
 	}, onFormChange )
 
-	const Header = () => {
-		return (
-			<Page.TitleCard>
-				<img src={ item.thumbnail } srcSet={ srcSet } />
-				<div style={ { paddingTop: 'var(--fl-asst-tiny-space)' } }>{item.filesize}</div>
-			</Page.TitleCard>
-		)
-	}
-
 	const Actions = () => {
 		return (
 			<Control.NextPrev
@@ -62,7 +50,9 @@ export const Attachment = ( { location } ) => {
 	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } header={ <Header /> } headerActions={ <Actions /> }>
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } headerActions={ <Actions /> }>
+
+            <img src={ item.thumbnail } srcSet={ srcSet } />
 
 			<Form>
 				<Form.Section label={ __( 'Links' ) }>
@@ -86,7 +76,6 @@ export const Attachment = ( { location } ) => {
 							placeholder={ __( 'Attachment Title' ) }
 							value={ values.title }
 							onChange={ e => setValue( 'title', e.target.value ) }
-							ref={ firstRef }
 						/>
 					</Form.Item>
 					<Form.Item label={ __( 'Alternative Text' ) } labelFor="alt">
