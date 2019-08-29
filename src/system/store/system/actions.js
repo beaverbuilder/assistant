@@ -132,3 +132,11 @@ export const attemptLogout = () => {
 		type: 'ATTEMPT_LOGOUT'
 	}
 }
+
+export const registerSection = ( handle = '', config = {} ) => {
+	return {
+		type: 'REGISTER_SECTION',
+		handle,
+		config,
+	}
+}

@@ -203,3 +203,37 @@ export const currentUser = ( state = null, action ) => {
 }
 
 export const shouldReduceMotion = () => false
+
+
+
+export const sections = ( state = {}, action ) => {
+
+	const defaultSection = {
+		screen: '',
+		label: '',
+		tab: null,
+		order: 10,
+		render: () => {},
+	}
+
+	switch ( action.type ) {
+	case 'REGISTER_SECTION':
+
+		const section = {
+			...defaultSection,
+			...action.config,
+			handle: action.handle,
+		}
+		const { handle, screen } = section
+
+		// abort
+		if ( '' === screen ) return state
+
+		return {
+			...state,
+			[handle] : section,
+		}
+	default:
+		return state
+	}
+}
