@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n'
-import React, { useContext, useEffect, useState } from 'fl-react'
+import React, { useEffect, useState } from 'fl-react'
 import { getSystemConfig } from 'assistant/data'
-import { App, Page, Button } from 'assistant/lib'
+import { Page, Button } from 'assistant/lib'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { CancelToken } from 'axios'
 
@@ -12,8 +12,6 @@ import { PostsTab } from '../components/user/posts'
 
 export const User = ( { match } ) => {
 
-	// const { handle } = useContext( App.Context )
-
 	const wordpress = getWpRest()
 	const userId = match.params.id
 
@@ -21,7 +19,7 @@ export const User = ( { match } ) => {
 
 	const [ loading, setLoading ] = useState( false )
 	const [ user, setUser ] = useState( {} )
-	const [ title, setTitle ] = useState( 'User Profile' )
+	const [ title, setTitle ] = useState( __( 'User Profile' ) )
 	const [ currentTab, setCurrentTab ] = useState( 0 )
 
 	const source = CancelToken.source()
@@ -36,7 +34,7 @@ export const User = ( { match } ) => {
 			} )
 
 		if ( parseInt( userId ) === parseInt( currentUser.id ) ) {
-			setTitle( 'Your Profile' )
+			setTitle( __( 'Your Profile' ) )
 		}
 
 		return () => {
@@ -59,15 +57,15 @@ export const User = ( { match } ) => {
 
 
 	if ( loading ) {
-		return ( <p>Loading...</p> )
+		return ( <p>{__( 'Loading...' )}</p> )
 	} else {
 		return (
 			<Page shouldPadSides={ false } title={ title }>
 				<Summary user={ user }/>
 				<Button.Group>
-					<Button isSelected={ 0 == currentTab } onClick={ e => setCurrentTab( 0 ) }>General</Button>
-					<Button isSelected={ 1 == currentTab } onClick={ e => setCurrentTab( 1 ) }>Preferences</Button>
-					<Button isSelected={ 2 == currentTab } onClick={ e => setCurrentTab( 2 ) }>Posts</Button>
+					<Button isSelected={ 0 == currentTab } onClick={ () => setCurrentTab( 0 ) }>{__( 'General' )}</Button>
+					<Button isSelected={ 1 == currentTab } onClick={ () => setCurrentTab( 1 ) }>{__( 'Preferences' )}</Button>
+					<Button isSelected={ 2 == currentTab } onClick={ () => setCurrentTab( 2 ) }>{__( 'Posts' )}</Button>
 				</Button.Group>
 				{showTab( currentTab )}
 			</Page>

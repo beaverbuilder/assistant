@@ -1,5 +1,5 @@
-import React, { useContext } from 'fl-react'
-import { App, Page, Nav, List } from 'assistant/lib'
+import React from 'fl-react'
+import { Nav } from 'assistant/lib'
 
 import { Main } from './pages/main'
 import { User } from './pages/user'

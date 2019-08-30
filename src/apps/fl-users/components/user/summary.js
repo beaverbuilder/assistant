@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'fl-react'
+import React from 'fl-react'
 import { Button } from 'assistant/lib'
 import { Panel } from '../panel'
 import { cssPrefixer } from '../../lib'

@@ -10,9 +10,6 @@ import {
 	setLoginErrors
 } from './actions'
 
-
-console.log('getWpRest', getWpRest)
-
 const wpapi = getWpRest()
 
 /**

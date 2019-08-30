@@ -13,7 +13,7 @@ const gravatar = ( email = null, size = 75 ) => {
 }
 
 export const Avatar = ( props ) => {
-	const { email = null, size = 50, displayName = null } = props
+	const { email = null, size = 50 } = props
 
 	const classes = classnames(
 		'fl-asst-avatar',

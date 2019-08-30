@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import React, { useContext, useState } from 'fl-react'
-import { App, Page, Nav, List } from 'assistant/lib'
+import { App, Page, List } from 'assistant/lib'
 
 export const Search = () => {
 	const { handle } = useContext( App.Context )

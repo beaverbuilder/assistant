@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import React from 'fl-react'
-import { Toolbar, Button } from 'assistant/lib'
+import { Button } from 'assistant/lib'
 import { cssPrefixer } from '../../lib'
 import { Well } from '../well'
 import './profile-card.scss'
@@ -35,4 +35,3 @@ export const ProfileCard = ( props ) => {
 		</div>
 	)
 }
-

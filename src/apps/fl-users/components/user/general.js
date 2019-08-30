@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'fl-react'
-import { Page, Form } from 'assistant/lib'
+import React, { useEffect } from 'fl-react'
+import { Form } from 'assistant/lib'
 import { __ } from '@wordpress/i18n'
 import { isEmpty } from 'lodash'
 
@@ -38,8 +38,6 @@ export const GeneralTab = ( props ) => {
 
 	}
 
-	console.log( 'initialFormState', user )
-
 	const [ state, setValue ] = Form.useFormState( {
 		content: '',
 		date: new Date(),
@@ -63,7 +61,6 @@ export const GeneralTab = ( props ) => {
 		for ( let [ key, value ] of Object.entries( user ) ) {
 			setValue( key, value )
 		}
-		console.log( 'state', state )
 	}, [ user ] )
 
 	return (

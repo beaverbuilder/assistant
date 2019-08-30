@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'fl-react'
-import { Page, Form, List } from 'assistant/lib'
+import React from 'fl-react'
+import { Form, List } from 'assistant/lib'
 import { __ } from '@wordpress/i18n'
 
-import { getWpRest } from 'assistant/utils/wordpress'
+//import { getWpRest } from 'assistant/utils/wordpress'
 
 export const PostsTab = ( props ) => {
 
