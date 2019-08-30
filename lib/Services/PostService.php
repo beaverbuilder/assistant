@@ -2,27 +2,23 @@
 
 namespace FL\Assistant\Services;
 
-use FL\Assistant\Services\Entity\Post;
 use FL\Assistant\Pagination\PostsPaginator;
+use FL\Assistant\Transformers\PostTransformer;
+use FL\Assistant\Util\HasContainer;
 
 class PostService {
+
+	use HasContainer;
 
 	/**
 	 * @param array $args
 	 *
 	 * @return array
 	 */
-	public function query( array $args = [] ) {
-
+	public function paginate( array $args = [] ) {
 		$p = new PostsPaginator();
-
-		return $p->query(
-			$args, function( \WP_Post $post ) {
-				$p = new Post();
-				$p->fill( $p->hydrate( $post ) );
-				return $p->to_array();
-			}
-		);
+		$transformer = new PostTransformer($this->container());
+		return $p->query( $args, $transformer);
 	}
 
 	/**

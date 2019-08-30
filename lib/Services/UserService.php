@@ -4,9 +4,22 @@
 namespace FL\Assistant\Services;
 
 
+use FL\Assistant\Pagination\UsersPaginator;
 use FL\Assistant\Services\Entity\User;
+use FL\Assistant\Transformers\UserTransformer;
+use FL\Assistant\Util\HasContainer;
 
 class UserService {
+
+	use HasContainer;
+
+	public function paginate( $args ) {
+		$paginator   = new UsersPaginator();
+		$transformer = new UserTransformer( $this->container() );
+		$pager       = $paginator->query( $args, $transformer );
+
+		return $pager;
+	}
 
 	/**
 	 * @return User
@@ -22,11 +35,9 @@ class UserService {
 	 */
 	public function find( $id ) {
 
+		$transformer = new UserTransformer( $this->container() );
 		$wp_user = get_user_by( 'id', $id );
-		$user = new User();
-		$user->fill(
-			$user->hydrate( $wp_user )
-		);
+		$user    = new User( $transformer->transform( $wp_user ) );
 
 		return $user;
 	}

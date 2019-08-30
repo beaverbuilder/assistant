@@ -11,6 +11,7 @@ use FL\Assistant\Actions\OnPersonalOptionsUpdate;
 use FL\Assistant\Actions\OnWPBeforeAdminBarRender;
 use FL\Assistant\Filters\OnHeartbeatReceived;
 
+use FL\Assistant\Services\BeaverBuilderService;
 use FL\Assistant\Services\PostService;
 use FL\Assistant\Services\SiteService;
 use FL\Assistant\Services\UserService;
@@ -34,21 +35,21 @@ class PluginProvider implements ProviderInterface {
 			return;
 		}
 
-		$container->register_service(
-			'users', function() {
-				return new UserService();
-			}
-		);
-		$container->register_service(
-			'posts', function() {
-				return new PostService();
-			}
-		);
-		$container->register_service(
-			'site', function() {
-				return new SiteService();
-			}
-		);
+		$container->register_service( 'users', function ($container) {
+			return new UserService($container);
+		} );
+
+		$container->register_service( 'posts', function ( $container ) {
+			return new PostService( $container );
+		} );
+
+		$container->register_service( 'site', function ($container) {
+			return new SiteService($container);
+		} );
+
+		$container->register_service( 'beaver_builder', function ( $container ) {
+			return new BeaverBuilderService( $container );
+		} );
 
 		$this->register_hooks( $container );
 	}
@@ -76,9 +77,9 @@ class PluginProvider implements ProviderInterface {
 
 		// register activation hook
 		register_activation_hook(
-			FL_ASSISTANT_FILE, function() {
-				do_action( 'fl_assistant_activate' );
-			}
+			FL_ASSISTANT_FILE, function () {
+			do_action( 'fl_assistant_activate' );
+		}
 		);
 
 		// notify assistant was loaded

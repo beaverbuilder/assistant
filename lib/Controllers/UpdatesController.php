@@ -25,9 +25,9 @@ class UpdatesController extends AssistantController {
 							'type'     => 'string',
 						],
 					],
-					//                  'permission_callback' => function() {
-					//                      return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
-					//                  },
+					'permission_callback' => function () {
+						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
+					},
 				],
 			]
 		);

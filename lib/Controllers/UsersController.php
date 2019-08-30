@@ -5,6 +5,7 @@ namespace FL\Assistant\Controllers;
 use FL\Assistant\Pagination\UsersPaginator;
 use FL\Assistant\Services\Entity\User;
 
+use FL\Assistant\Transformers\UserTransformer;
 use \WP_REST_Server;
 
 /**
@@ -86,15 +87,8 @@ final class UsersController extends AssistantController {
 	 */
 	public function users( \WP_REST_Request $request ) {
 
-		$paginator = new UsersPaginator();
-		$pager = $paginator->query(
-			$request->get_params(), function( $user ) {
-				$u = new User();
-				return $u->hydrate( $user );
-
-			}
-		);
-
+		$params = $request->get_params();
+		$pager  = $this->service( 'users' )->paginate( $params );
 
 		return rest_ensure_response( $pager->to_array() );
 	}
@@ -109,10 +103,7 @@ final class UsersController extends AssistantController {
 	 */
 	public function users_count( \WP_REST_Request $request ) {
 
-		$response = $this->container()
-						 ->service( 'users' )
-						 ->counts_by_user_role();
-
+		$response = $this->service( 'users' )->counts_by_user_role();
 		return rest_ensure_response( $response );
 	}
 
@@ -126,9 +117,7 @@ final class UsersController extends AssistantController {
 	 */
 	public function user( \WP_REST_Request $request ) {
 		$id   = $request->get_param( 'id' );
-		$user = $this->container()
-					 ->service( 'users' )
-					 ->find( $id );
+		$user = $this->service( 'users' )->find( $id );
 
 		return rest_ensure_response( $user->to_array() );
 	}
@@ -139,7 +128,7 @@ final class UsersController extends AssistantController {
 	public function update_user_state( \WP_REST_Request $request ) {
 
 		$state = $request->get_param( 'state' );
-		$user  = $this->container()->service( 'users' )->current();
+		$user  = $this->service( 'users' )->current();
 		$user->update_state( $state );
 
 		return rest_ensure_response( $user->get_state() );
