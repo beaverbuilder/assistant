@@ -16,42 +16,42 @@ registerSection( 'fl-media-details', {
 		const setValue = () => {}
 		return (
             <>
-                <Form.Item label={ __( 'Title' ) } labelFor="title">
-                	<input
-                		id="title"
-                		type="text"
-                		required={ true }
-                		placeholder={ __( 'Attachment Title' ) }
-                		value={ attachment.title }
-                		onChange={ e => setValue( 'title', e.target.value ) }
-                	/>
-                </Form.Item>
-                <Form.Item label={ __( 'Alternative Text' ) } labelFor="alt">
-                	<input
-                		id="alt"
-                		type="text"
-                		required={ true }
-                		placeholder={ __( 'Describe your file' ) }
-                		value={ attachment.alt }
-                		onChange={ e => setValue( 'alt', e.target.value ) }
-                	/>
-                </Form.Item>
-                <Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true }>
-                	<textarea
-                		id="description"
-                		value={ attachment.description }
-                		rows={ 4 }
-                		onChange={ e => setValue( 'description', e.target.value ) }
-                	/>
-                </Form.Item>
-                <Form.Item label={ __( 'Caption' ) } labelFor="caption">
-                	<textarea
-                		id="caption"
-                		value={ attachment.caption }
-                		rows={ 4 }
-                		onChange={ e => setValue( 'caption', e.target.value ) }
-                	/>
-                </Form.Item>
+				<Form.Item label={ __( 'Title' ) } labelFor="title">
+					<input
+						id="title"
+						type="text"
+						required={ true }
+						placeholder={ __( 'Attachment Title' ) }
+						value={ attachment.title }
+						onChange={ e => setValue( 'title', e.target.value ) }
+					/>
+				</Form.Item>
+				<Form.Item label={ __( 'Alternative Text' ) } labelFor="alt">
+					<input
+						id="alt"
+						type="text"
+						required={ true }
+						placeholder={ __( 'Describe your file' ) }
+						value={ attachment.alt }
+						onChange={ e => setValue( 'alt', e.target.value ) }
+					/>
+				</Form.Item>
+				<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true }>
+					<textarea
+						id="description"
+						value={ attachment.description }
+						rows={ 4 }
+						onChange={ e => setValue( 'description', e.target.value ) }
+					/>
+				</Form.Item>
+				<Form.Item label={ __( 'Caption' ) } labelFor="caption">
+					<textarea
+						id="caption"
+						value={ attachment.caption }
+						rows={ 4 }
+						onChange={ e => setValue( 'caption', e.target.value ) }
+					/>
+				</Form.Item>
             </>
 		)
 	},
@@ -69,15 +69,15 @@ registerSection( 'fl-media-links', {
 		}
 		return (
             <>
-                { hasFullURL && (
-                	<Form.Item label={ __( 'File URL' ) }>
-                		<Control.URL url={ attachment.sizes.full.url } />
-                	</Form.Item>
-                )}
+				{ hasFullURL && (
+					<Form.Item label={ __( 'File URL' ) }>
+						<Control.URL url={ attachment.sizes.full.url } />
+					</Form.Item>
+				)}
 
-                <Form.Item label={ __( 'Attachment Page' ) }>
-                	<Control.URL url={ attachment.url } />
-                </Form.Item>
+				<Form.Item label={ __( 'Attachment Page' ) }>
+					<Control.URL url={ attachment.url } />
+				</Form.Item>
             </>
 		)
 	},
