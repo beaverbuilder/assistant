@@ -4,7 +4,7 @@ import { getWpRest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Page, List, Icon, Button } from 'assistant/ui'
 import { CancelToken, isCancel } from 'axios'
-import { getRequestConfig, getListItemConfig } from '../config'
+import { getRequestConfig, getListSectionConfig, getListItemConfig } from '../config'
 import './style.scss'
 
 export const Main = ( { match } ) => {
@@ -60,10 +60,9 @@ export const Main = ( { match } ) => {
 		return () => source.cancel()
 	}, [ keyword ] )
 
-	return (
-		<Page shouldShowHeader={ false } shouldPadTop={ true } shouldPadSides={ false } shouldPadBottom={ false }>
-
-			<Page.Toolbar>
+	const Header = () => {
+		return (
+			<Page.Pad bottom={ false }>
 				<div className='fl-asst-search-form-simple'>
 					<input
 						type="search"
@@ -71,13 +70,24 @@ export const Main = ( { match } ) => {
 						onChange={ e => setKeyword( e.target.value ) }
 						placeholder={ __( 'Search' ) }
 					/>
+					{ '' !== keyword && <Button appearance="transparent" onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
 					{ loading &&
 						<div className='fl-asst-search-spinner'>
 							<Icon.SmallSpinner/>
 						</div>
 					}
 				</div>
-			</Page.Toolbar>
+			</Page.Pad>
+		)
+	}
+
+	return (
+		<Page
+			shouldShowHeader={ false }
+			shouldPadTop={ true }
+			shouldPadSides={ false }
+			header={ <Header /> }
+		>
 
 			{ results && ! results.length &&
 				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
@@ -105,14 +115,18 @@ export const Main = ( { match } ) => {
 			{ results && !! results.length &&
 				<List
 					items={ results }
-					isListSection={ item => 'undefined' !== typeof item.label }
-					getSectionItems={ section => section.items ? section.items : [] }
-					getItemProps={ ( item, defaultProps, isSection ) => {
+					getSectionProps={ ( section, defaultProps ) => {
+						return getListSectionConfig( {
+							section,
+							defaultProps,
+							keyword,
+							match,
+						} )
+					} }
+					getItemProps={ ( item, defaultProps ) => {
 						return getListItemConfig( {
 							item,
 							defaultProps,
-							isSection,
-							keyword,
 							config,
 							match,
 						} )

@@ -1,0 +1,71 @@
+.fl-asst {
+
+    // Things that look like a text field
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="number"],
+    input[type="search"],
+    input[type="url"],
+    select,
+    textarea {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+
+        flex: 1 1 auto;
+
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: normal;
+        line-height: inherit;
+        text-align: left;
+
+        padding: var(--fl-asst-tiny-space);
+        color: var(--fl-asst-secondary-surface-color);
+        background-color: var(--fl-asst-secondary-surface-background);
+        border-radius: var(--fl-asst-base-radius);
+        border:none;
+        outline: none;
+        box-shadow: none;
+        min-height: var(--fl-asst-target-size);
+
+        // Yes, these have to be separate rules.
+        &::-webkit-input-placeholder{
+            text-align: center;
+            color: var(--fl-asst-dim-text);
+        }
+        &::-ms-input-placeholder{
+            text-align: center;
+            color: var(--fl-asst-dim-text);
+        }
+        &::placeholder {
+            text-align: center;
+            color: var(--fl-asst-dim-text);
+        }
+
+        &:focus {
+            background-color: var(--fl-asst-secondary-surface-background) !important;
+
+            &::-webkit-input-placeholder{
+                text-align: left;
+                color: var(--fl-asst-surface-color);
+            }
+            &::-ms-input-placeholder{
+                text-align: left;
+                color: var(--fl-asst-surface-color);
+            }
+            &::placeholder {
+                text-align: left;
+                color: var(--fl-asst-surface-color);
+            }
+        }
+    }
+}

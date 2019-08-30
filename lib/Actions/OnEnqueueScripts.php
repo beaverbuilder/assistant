@@ -103,6 +103,10 @@ class OnEnqueueScripts {
 			return false;
 		}
 
+		$users      = $this->container()->service( 'users' );
+		$user_state = $users->current()->get_state();
+
+
 		// Don't show Assistant in customizer.
 		if ( is_customize_preview() ) {
 			return false;
@@ -162,6 +166,8 @@ class OnEnqueueScripts {
 			// UI - loaded in footer
 			wp_enqueue_style( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.js', $js_deps, $ver, true );
+
+			do_action('fl_assistant_enqueue');
 		}
 	}
 

@@ -1,9 +1,9 @@
 .fl-asst {
     .fl-asst-recent-media-display {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         grid-gap: 6px;
-        padding-top:4px;
+        padding:4px var(--fl-asst-inner-space) var(--fl-asst-outer-space);
 
         a {
             border-radius: 0;

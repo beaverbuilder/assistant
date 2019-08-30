@@ -1,8 +1,8 @@
 import { setCache } from 'shared-utils/cache'
-import { registerStore, getStore, getDispatch, getSelectors } from 'shared-utils/store'
+import { registerStore, getStore, getDispatch, getSelectors, useStore } from 'shared-utils/store'
 import { updatePlugin, updateTheme } from 'shared-utils/wordpress'
 import { getSystemActions } from '../system'
-import { state, cache } from './state'
+import { state } from './state'
 import { actions } from './actions'
 import { reducers } from './reducers'
 import { selectors } from './selectors'
@@ -10,7 +10,7 @@ import { selectors } from './selectors'
 const STORE_KEY = 'fl-updater/state'
 
 registerStore( STORE_KEY, {
-	state: cache ? { ...state, ...cache } : state,
+	state,
 	actions,
 	reducers,
 	selectors,
@@ -33,10 +33,12 @@ export const getUpdaterSelectors = () => {
 }
 
 const updateComplete = () => {
-	const { currentUpdate, updateQueue } = getUpdaterStore().getState()
-	const { setCurrentUpdate, setUpdateQueue } = getUpdaterActions()
+	const { currentUpdate, updateQueue, completedUpdates } = getUpdaterStore().getState()
+	const { setCurrentUpdate, setUpdateQueue, setCompletedUpdates } = getUpdaterActions()
 	delete updateQueue[ currentUpdate ]
+	completedUpdates.push( currentUpdate )
 	setUpdateQueue( updateQueue )
+	setCompletedUpdates( completedUpdates )
 	setCurrentUpdate( null )
 }
 
@@ -49,21 +51,23 @@ const requestUpdate = () => {
 
 	if ( ! currentUpdate && items.length ) {
 		const item = items[ 0 ]
-		setCurrentUpdate( item.key )
+		setCurrentUpdate( item.id )
 		if ( 'plugin' === item.type ) {
-			updatePlugin( item.key ).then( () => {
+			updatePlugin( item.id ).finally( () => {
+				updateComplete()
 				decrementCount( 'update/plugins' )
 				decrementCount( 'update/total' )
-			} ).finally( updateComplete )
+			} )
 		} else {
-			updateTheme( item.key ).then( () => {
+			updateTheme( item.id ).finally( () => {
+				updateComplete()
 				decrementCount( 'update/themes' )
 				decrementCount( 'update/total' )
-			} ).finally( updateComplete )
+			} )
 		}
 	}
 
-	setCache( 'updater', 'state', state, false )
+	setCache( 'updater', 'queue', updateQueue, false )
 }
 
 getUpdaterStore().subscribe( requestUpdate )

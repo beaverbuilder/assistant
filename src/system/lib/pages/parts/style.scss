@@ -1,0 +1,105 @@
+.fl-asst {
+
+    .fl-asst-pad-top {
+        padding-top:  var(--fl-asst-outer-space);
+    }
+    .fl-asst-pad-sides {
+        padding-left:  var(--fl-asst-outer-space);
+        padding-right:  var(--fl-asst-outer-space);
+    }
+    .fl-asst-pad-bottom {
+        padding-bottom: var(--fl-asst-outer-space);
+    }
+
+    .fl-asst-toolbar {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: row;
+        min-height: var(--fl-asst-target-size);
+        justify-content: center;
+
+        &.fl-asst-pad-sides {
+            padding-left: var(--fl-asst-outer-space);
+            padding-right: var(--fl-asst-outer-space);
+        }
+        &.fl-asst-pad-bottom {
+            padding-bottom: var(--fl-asst-inner-space);
+        }
+
+        & > * {
+            margin-right: var(--fl-asst-tiny-space);
+
+            &:last-child {
+                margin-right:0;
+            }
+        }
+    }
+
+    .fl-asst-card {
+        border-radius: 15px;
+        padding: var(--fl-asst-outer-space);
+        margin: 0 var(--fl-asst-outer-space);
+        display: grid;
+        grid-gap: var(--fl-asst-tiny-space);
+
+        .fl-asst-card-title {
+            margin: var(--fl-asst-outer-space) 0 0;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+    }
+
+    .fl-asst-section {
+        background: var(--fl-asst-surface-background);
+        display: flex;
+        flex-direction: column;
+
+        .fl-asst-section-title {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 3px var(--fl-asst-outer-space) 0;
+            text-transform: uppercase;
+            background-color: var(--fl-asst-surface-background);
+            border-bottom: 2px solid var(--fl-asst-secondary-surface-background);
+
+            // Yea, all this for sticky headers
+            position: -webkit-sticky;
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+            position: sticky;
+            top:0;
+            z-index: 1;
+
+            .fl-asst-section-title-text {
+                display: inline-flex;
+                align-items: center;
+                min-height: var(--fl-asst-target-size);
+                max-width: 70%;
+                box-shadow: 0px 2px 0px 0px currentColor;
+                align-items: flex-end;
+                padding: 0 0 5px;
+                font-weight: 500;
+            }
+        }
+        .fl-asst-section-content {
+            flex: 1 1 auto;
+            padding: var(--fl-asst-outer-space) 0 var(--fl-asst-inner-space);
+            display: grid;
+            grid-row-gap: var(--fl-asst-outer-space);
+        }
+        &.fl-asst-section-pad-sides .fl-asst-section-content,
+        &.fl-asst-section-pad-sides .fl-asst-section-footer {
+            padding-left: var(--fl-asst-outer-space);
+            padding-right: var(--fl-asst-outer-space);
+        }
+
+        .fl-asst-section-footer {
+            flex: 1 1 auto;
+            padding: 0 0 var(--fl-asst-inner-space);
+        }
+    }
+}

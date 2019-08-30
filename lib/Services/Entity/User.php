@@ -54,7 +54,7 @@ class User {
 			true
 		);
 
-		return array_merge(
+		return array_replace_recursive(
 			static::$default_state,
 			$saved ? (array) $saved : []
 		);

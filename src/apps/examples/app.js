@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { __ } from 'assistant'
+import { __ } from '@wordpress/i18n'
 import { Page, Button, Nav } from 'assistant/ui'
 import './style.scss'
 

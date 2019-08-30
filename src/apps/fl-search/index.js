@@ -1,4 +1,5 @@
-import { registerApp, __ } from 'assistant'
+import { registerApp } from 'assistant'
+import { __ } from '@wordpress/i18n'
 import { App, AppIcon } from './app'
 
 registerApp( 'fl-search', {

@@ -1,0 +1,26 @@
+.fl-asst {
+    all: unset;
+    line-height: 1;
+
+    a, button {
+        all: initial;
+        box-sizing: border-box;
+        -moz-user-select:none; // Yep, still need it.
+        user-select: none;
+        cursor: pointer;
+
+        &:focus {
+            background: none;
+        }
+    }
+    a {
+        text-decoration: underline;
+
+        &:hover {
+            background: none;
+        }
+    }
+    div {
+        box-sizing: border-box;
+    }
+}

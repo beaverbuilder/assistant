@@ -1,5 +1,5 @@
-import { registerApp, __ } from 'assistant'
-import { addQueryArgs } from 'assistant/utils/url'
+import { registerApp } from 'assistant'
+import { __ } from '@wordpress/i18n'
 import { UpdatesApp } from './app'
 
 registerApp( 'fl-updates', {

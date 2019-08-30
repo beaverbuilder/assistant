@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'fl-react'
+import React, { useContext, useEffect } from 'fl-react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __ } from 'assistant/i18n'
 import { App, Page, Button, List, Nav } from 'assistant/ui'
@@ -8,13 +8,12 @@ import {
 	getAppActions,
 	getUpdaterStore,
 	getUpdaterActions,
-	getUpdaterSelectors
 } from 'assistant/data'
 
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ UpdatesMain }/>
-		<Nav.Route path={ `${match.url}/update/:key` } component={ Page.Update }/>
+		<Nav.Route path={ `${match.url}/update/:id` } component={ Page.Plugin }/>
 	</Nav.Switch>
 )
 
@@ -33,7 +32,7 @@ const UpdatesMain = () => {
 			const { items } = response.data
 			setUpdateQueueItems( items )
 		} ).catch( error => {
-			console.log( error )
+			console.log( error ) // eslint-disable-line no-console
 			setUpdatingAll( false )
 			alert( __( 'Something went wrong. Please try again.' ) )
 		} )
@@ -69,17 +68,17 @@ const UpdatesMain = () => {
 
 	return (
 		<Page shouldPadSides={ false } headerActions={ <HeaderActions /> }>
-		<Page.Toolbar>
-			<Button.Group>
-				<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
-				<Button>{ counts['update/themes'] } { __( 'Themes' ) }</Button>
-			</Button.Group>
-		</Page.Toolbar>
+			<Page.Toolbar>
+				<Button.Group>
+					<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
+					<Button>{ counts['update/themes'] } { __( 'Themes' ) }</Button>
+				</Button.Group>
+			</Page.Toolbar>
 			<List.Updates
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,
 					to: {
-						pathname: `/${handle}/update/${item.key}`,
+						pathname: `/${handle}/update/${item.id}`,
 						state: { item }
 					},
 				} ) }

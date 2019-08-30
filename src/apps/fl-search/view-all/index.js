@@ -17,12 +17,10 @@ export const ViewAll = ( { match, location } ) => {
 		<Page title={ label } shouldPadSides={ false }>
 			<List.Scroller
 				items={ items }
-				getItemProps={ ( item, defaultProps, isSection ) => {
+				getItemProps={ ( item, defaultProps ) => {
 					return getListItemConfig( {
 						item,
 						defaultProps,
-						isSection,
-						keyword,
 						config,
 						match,
 					} )

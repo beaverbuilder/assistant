@@ -6,6 +6,7 @@ import { List } from 'lib'
 export const WordPress = ( {
 	type = 'posts',
 	getItemProps = ( item, defaultProps ) => defaultProps,
+	formatItems = items => items,
 	onItemsLoaded = () => {},
 	query = {},
 	...rest,
@@ -17,12 +18,26 @@ export const WordPress = ( {
 
 	useEffect( () => {
 		setItems( [] )
-	}, [ type, query ] )
+	}, [ type, JSON.stringify( query ) ] )
 
 	return (
 		<List.Scroller
-			items={ items }
-			getItemProps={ getItemProps }
+			items={ formatItems( items ) }
+			getItemProps={ ( item, defaultProps ) => {
+				return getItemProps( item, {
+					...defaultProps,
+					removeItem: () => {
+						const { key } = defaultProps
+						items.splice( key, 1 )
+						setItems( [ ...items ] )
+					},
+					cloneItem: () => {
+						const { key } = defaultProps
+						items.splice( key, 0, Object.assign( {}, items[ key ] ) )
+						setItems( [ ...items ] )
+					}
+				} )
+			} }
 			loadItems={ ( setHasMore ) => {
 				getPagedContent( type, query, offset, {
 					cancelToken: source.token,

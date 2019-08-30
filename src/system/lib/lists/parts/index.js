@@ -64,6 +64,13 @@ export const getItemType = ( item, isSection = false ) => {
 	return isSection ? Section : Item
 }
 
+export const getDefaultSectionProps = ( section, defaultProps ) => {
+	return {
+		...defaultProps,
+		label: 'undefined' === typeof section.label ? '' : section.label,
+	}
+}
+
 /**
  * The default list item component.
  */
@@ -74,9 +81,8 @@ const InfoItem = ( {
 	thumbnail,
 	thumbnailSize = 'med',
 	className,
-	isHovering,
-	isFocused,
 	extras,
+	accessory,
 } ) => {
 	const classes = classname( {
 		'fl-asst-list-item-content-info': true,
@@ -102,7 +108,9 @@ const InfoItem = ( {
 		'fl-asst-round': color,
 	} )
 
-	const itemExtras = 'function' === typeof extras ? extras( { isHovering, isFocused } ) : null
+	const itemExtras = 'function' === typeof extras ? extras( {} ) : null
+	const accessories = 'function' === typeof accessory ? accessory( {} ) : null
+	const stopProp = e => e.stopPropagation()
 
 	return (
 		<Tag className={ classes } { ...newProps }>
@@ -117,8 +125,9 @@ const InfoItem = ( {
 					{ label && <div className="fl-asst-list-item-title">{label}</div> }
 					{ description && <div className="fl-asst-list-item-description">{description}</div> }
 				</div>
+				{ accessories && <div className="fl-asst-list-item-accessory" onClick={ stopProp }>{accessories}</div>}
 			</div>
-			{ itemExtras && <div className="fl-asst-list-item-extras">{itemExtras}</div> }
+			{ itemExtras && <div className="fl-asst-list-item-extras" onClick={ stopProp }>{itemExtras}</div> }
 		</Tag>
 	)
 }
@@ -185,13 +194,15 @@ export const Item = ( {
 	)
 }
 
-const Section = ( { children, className, label, ...rest } ) => {
-	const classes = classname( 'fl-asst-list-section', className )
+const Section = ( { children, className, label, footer, ...rest } ) => {
+	const classes = classname( 'fl-asst-section', 'fl-asst-list-section', className )
 	return (
 		<li className={ classes } { ...rest }>
-			<hr/>
-			<div className="fl-asst-list-section-header">{label}</div>
-			<div className="fl-asst-list-section-content">{children}</div>
+			<div className="fl-asst-section-title">
+				<span className="fl-asst-section-title-text">{label}</span>
+			</div>
+			<div className="fl-asst-section-content">{children}</div>
+			{ footer && <div className="fl-asst-section-footer">{footer}</div> }
 		</li>
 	)
 }

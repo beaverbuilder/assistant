@@ -203,3 +203,44 @@ export const currentUser = ( state = null, action ) => {
 }
 
 export const shouldReduceMotion = () => false
+
+
+// Page Sections
+export const sections = ( state = {}, action ) => {
+
+	const defaultSection = {
+		label: '',
+		order: 10,
+		location: {},
+		render: () => {},
+		isEnabled: true,
+	}
+	const defaultLocation = {
+		type: '',
+		tab: '',
+	}
+
+	switch ( action.type ) {
+	case 'REGISTER_SECTION':
+
+		const section = {
+			...defaultSection,
+			...action.config,
+			location: { ...defaultLocation, ...action.config.location },
+			handle: action.handle,
+		}
+		const { handle, location } = section
+
+		// abort
+		if ( '' === location ) {
+			return state
+		}
+
+		return {
+			...state,
+			[handle]: section,
+		}
+	default:
+		return state
+	}
+}

@@ -34,10 +34,11 @@
             &:focus-within {
                 background-color: var(--fl-asst-surface-background);
                 outline: none;
-                box-shadow: inset 0px 1px 0px rgba(0,0,0,.1),
-                            inset 3px 0px 0px var(--fl-asst-line-color),
-                            0px 5px 45px 0px var(--fl-asst-list-item-shadow-color);
+                box-shadow: inset 0px 0px 0px 3px var(--fl-asst-surface-background),
+                            inset 0px 0px 0px 5px var(--fl-asst-surface-color),
+                            /*0px 5px 45px 0px var(--fl-asst-list-item-shadow-color)*/;
                 z-index: 1;
+                border-radius: 15px;
             }
 
             .fl-asst-list-item-selector {
@@ -47,6 +48,12 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+        }
+
+        &.fl-asst-user-list {
+            .fl-asst-list-item-thumbnail {
+                border-radius: 50%;
             }
         }
     }
@@ -150,24 +157,9 @@
         }
     }
 
-    .fl-asst-list-section {
-        .fl-asst-list-section-header {
-            padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space);
-        }
-        .fl-asst-list-section-content {
-            .fl-asst-list {
-                margin:0;
-            }
-        }
-
-        &:first-child hr {
-            display: none;
-        }
+    .fl-asst-list-item-accessory {
+        flex: 0 0 auto;
     }
-
-	.fl-asst-list-section-footer {
-		padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space);
-	}
 
     .fl-asst-item-extras {
         flex-direction: row;
@@ -211,4 +203,18 @@
             display: flex;
         }
     }
+
+    .fl-asst-section.fl-asst-list-section {
+        .fl-asst-section-content {
+            grid-gap: 0;
+
+            .fl-asst-list {
+                margin:0;
+            }
+        }
+    }
+
+	.fl-asst-list-section-footer {
+		padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) var(--fl-asst-outer-space);
+	}
 }

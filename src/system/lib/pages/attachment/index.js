@@ -1,8 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form } from 'lib'
-import utils from 'utils'
-const { react: { useInitialFocus } } = utils
+import { Page, Form, Control, Button } from 'lib'
 
 /**
  * Get a srcset string from an object of sizes.
@@ -15,47 +13,47 @@ const getSrcSet = ( sizes = {} ) => {
 }
 
 export const Attachment = ( { location } ) => {
-	const firstRef = useInitialFocus()
 	const defaultItem = {
-		sizes: {}
+		url: '',
+		sizes: {},
+		caption: '',
+		description: '',
+		alt: '',
+		title: '',
+		filesize: '',
 	}
-	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
+	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
 	const srcSet = getSrcSet( item.sizes )
 
-	const onFormChange = () => {}
-
-	const [ values, setValue ] = Form.useFormState( {
-		title: item.title,
-		description: item.description,
-	}, onFormChange )
+	const Actions = () => {
+		return (
+			<Control.NextPrev
+				onPrev={ () => {} }
+				onNext={ () => {} }
+			/>
+		)
+	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) }>
-			<Page.Toolbar shouldPadBottom={ true }>
-				<img src={ item.thumbnail } srcSet={ srcSet } />
-			</Page.Toolbar>
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } headerActions={ <Actions /> }>
+
+			<img src={ item.thumbnail } srcSet={ srcSet } />
 
 			<Form>
-				<Form.Section label={ __( 'Metadata' ) }>
-					<Form.Item label={ __( 'Name' ) } labelFor="name" isRequired={ true } placement="beside">
-						<input
-							id="name"
-							type="text"
-							required={ true }
-							placeholder={ __( 'Attachment Title' ) }
-							value={ values.title }
-							onChange={ e => setValue( 'title', e.target.value ) }
-							ref={ firstRef }
-						/>
-					</Form.Item>
-					<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true } placement="beside">
-						<input
-							id="description"
-							type="text"
-							placeholder={ __( 'Description' ) }
-							value={ values.description }
-							onChange={ e => setValue( 'description', e.target.value ) }
-						/>
+				<Page.RegisteredSections
+					location={ { type: 'attachment' } }
+					data={ { attachment: item } }
+				/>
+
+				<Form.Section label={ __( 'Actions' ) }>
+					<Form.Item>
+						<Button.Group appearance="grid">
+							<Button>{__( 'View Attachment Page' )}</Button>
+							<Button>{__( 'Edit in Admin' )}</Button>
+							<Button>{__( 'Replace File' )}</Button>
+							<Button>{__( 'Regenerate Thumbnails' )}</Button>
+							<Button>{__( 'Move to Trash' )}</Button>
+						</Button.Group>
 					</Form.Item>
 				</Form.Section>
 			</Form>

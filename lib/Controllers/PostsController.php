@@ -52,6 +52,18 @@ class PostsController extends AssistantController {
 		);
 
 		$this->route(
+			'/post', [
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'create_post' ],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_published_posts' );
+					},
+				],
+			]
+		);
+
+		$this->route(
 			'/post/(?P<id>\d+)', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
@@ -87,10 +99,16 @@ class PostsController extends AssistantController {
 		);
 
 		$this->route(
-			'/post', [
+			'/post/(?P<id>\d+)/clone', [
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'create_post' ],
+					'callback'            => [ $this, 'clone_post' ],
+					'args'                => [
+						'id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -225,6 +243,54 @@ class PostsController extends AssistantController {
 	}
 
 	/**
+	 * Clones a single post.
+	 */
+	public function clone_post( $request ) {
+		global $wpdb;
+
+		$post_id      = absint( $request->get_param( 'id' ) );
+		$post         = get_post( $post_id );
+		$current_user = wp_get_current_user();
+		$post_data 	  = array(
+			'comment_status' => $post->comment_status,
+			'ping_status'    => $post->ping_status,
+			'post_author'    => $current_user->ID,
+			'post_content'   => $post->post_content,
+			'post_excerpt'   => $post->post_excerpt,
+			'post_name'      => $post->post_name . '-copy',
+			'post_parent'    => $post->post_parent,
+			'post_password'  => $post->post_password,
+			'post_status'    => 'draft',
+			/* translators: %s: post/page title */
+			'post_title'     => sprintf( _x( '%s - Copy', '%s stands for post/page title.', 'fl-assistant' ), $post->post_title ),
+			'post_type'      => $post->post_type,
+			'to_ping'        => $post->to_ping,
+			'menu_order'     => $post->menu_order,
+		);
+
+		$new_post_id = wp_insert_post( $post_data );
+		$post_meta = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id ) );
+		$taxonomies = get_object_taxonomies( $post->post_type );
+
+		if ( count( $post_meta ) !== 0 ) {
+			foreach ( $post_meta as $meta_info ) {
+				$meta_key = $meta_info->meta_key;
+				$meta_value = addslashes( $meta_info->meta_value );
+				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			}
+		}
+
+		foreach ( $taxonomies as $taxonomy ) {
+			$post_terms = wp_get_object_terms( $post_id, $taxonomy );
+			for ( $i = 0; $i < count( $post_terms ); $i++ ) {
+				wp_set_object_terms( $new_post_id, $post_terms[ $i ]->slug, $taxonomy, true );
+			}
+		}
+
+		return $this->get_post_response_data( get_post( $new_post_id ) );
+	}
+
+	/**
 	 * Updates a single post based on the specified action.
 	 */
 	public function update_post( $request ) {
@@ -241,7 +307,7 @@ class PostsController extends AssistantController {
 
 		switch ( $action ) {
 			case 'data':
-				$data = (array) json_decode( $request->get_param( 'data' ) );
+				$data = (array) $request->get_param( 'data' );
 				wp_update_post(
 					array_merge(
 						$data, [
@@ -269,4 +335,3 @@ class PostsController extends AssistantController {
 		);
 	}
 }
-

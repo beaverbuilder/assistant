@@ -1,8 +1,9 @@
-import { registerStore, useStore, getStore, getDispatch } from 'shared-utils/store'
+import { registerStore, useStore, getStore, getDispatch, getSelectors } from 'shared-utils/store'
 import cloud from 'shared-utils/cloud'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
+import * as selectors from './selectors'
 
 registerStore( 'fl-assistant/system', {
 	state: {
@@ -15,6 +16,7 @@ registerStore( 'fl-assistant/system', {
 	actions,
 	reducers,
 	effects,
+	selectors,
 } )
 
 export const useSystemState = () => {

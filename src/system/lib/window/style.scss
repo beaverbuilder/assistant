@@ -1,6 +1,6 @@
 .fl-asst {
     .fl-asst-window {
-        --fl-asst-window-size: 360px;
+        --fl-asst-window-size: 400px;
         --fl-asst-window-toolbar-height: 38px;
 
         box-sizing: border-box;
@@ -10,28 +10,30 @@
         overflow: hidden;
         pointer-events: auto;
         touch-action: none;
-        transition-property: background;
+        border-radius: 0;
+        transition-property: background, box-shadow, border-radius;
         transition-duration: .25s;
+
+        box-shadow: 0 0 0 3px var(--fl-asst-secondary-surface-background),
+                    0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
+
+        .fl-asst-brightness-dark & {
+            border-color: transparent;
+            box-shadow: 0 0 0 3px hsla(0, 0%, 26%, .1), 0 1px 5px 0 hsla(0,0,0, .2);
+        }
 
         &.fl-asst-window-mini {
             max-width: 100%;
             max-height: 70vh;
-            box-shadow: 0 0 0 3px var(--fl-asst-translucent-background), 0 3px 6px 0 hsla(214, 17%, 41%, 0.2);
             border-radius: var(--fl-asst-medium-space);
-
-            .fl-asst-brightness-dark & {
-                border-color: transparent;
-                box-shadow: 0 0 0 3px hsla(0, 0%, 26%, .1), 0 1px 5px 0 hsla(0,0,0, .2);
-            }
         }
         &.fl-asst-window-normal {
-            --fl-asst-window-size: 460px;
+            --fl-asst-window-size: 430px;
             height: 100%;
-            border: 3px solid hsla(0, 0%, 26%, .1);
         }
 
         &.fl-asst-secondary-content {
-            background: var(--fl-asst-translucent-background);
+            background: var(--fl-asst-secondary-surface-background);
         }
 
         .fl-asst-window-toolbar {
@@ -71,6 +73,18 @@
             flex-direction: column;
             max-height:100%;
             min-height:0;
+        }
+    }
+    .fl-asst-window-layer-is-dragging {
+        .fl-asst-window-mini {
+            box-shadow: 0 0 0 3px #16D4F3,
+                        0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
+        }
+        .fl-asst-window-normal {
+            box-shadow: 0 0 0 3px #16D4F3,
+                        0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
+            border-radius: 15px;
+            max-height: 96vh;
         }
     }
 
@@ -171,7 +185,7 @@
                 &:after {
                     height: 100vh;
                     width: 40px;
-                    top:0;
+                    top:0 !important;
                     bottom: auto;
                     border-radius: 0;
                 }

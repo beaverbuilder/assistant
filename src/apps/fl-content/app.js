@@ -40,11 +40,10 @@ const Main = ( { match } ) => {
 	const Actions = ( { baseUrl } ) => {
 		return (
 			<>
-				<Button onClick={ () => setIsSelecting( ! isSelecting ) }>{ isSelecting ? __( 'Cancel' ) : __( 'Select' ) }</Button>
-				<Button>List</Button>
-				<Nav.Link to={ `${baseUrl}/post/new` }>
+				<Button onClick={ () => setIsSelecting( ! isSelecting ) } appearance="transparent">{ isSelecting ? __( 'Cancel' ) : __( 'Select' ) }</Button>
+				<Nav.ButtonLink to={ `${baseUrl}/post/new` } appearance="transparent">
 					<Icon.Plus />
-				</Nav.Link>
+				</Nav.ButtonLink>
 			</>
 		)
 	}
@@ -56,13 +55,15 @@ const Main = ( { match } ) => {
 				onItemsLoaded={ response => {
 					setPager( response.data )
 				} }
-				getItemProps={ ( item, defaultProps ) => ( {
-					...defaultProps,
-					to: {
-						pathname: `/${handle}/post/${item.id}`,
-						state: { item }
-					},
-				} ) }
+				getItemProps={ ( item, defaultProps ) => {
+					return {
+						...defaultProps,
+						to: {
+							pathname: `/${handle}/post/${item.id}`,
+							state: { item }
+						},
+					}
+				} }
 
 				isSelecting={ isSelecting }
 			/>

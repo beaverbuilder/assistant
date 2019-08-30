@@ -107,9 +107,19 @@ const posts = () => {
          * @param config
          */
         update(id, action, data = {}, config = {}) {
-            data.action = action
-            return http.post(`fl-assistant/v1/post/${id}`, data, config)
-        }
+            return http.post(`fl-assistant/v1/post/${id}`, {
+				action,
+				data,
+			}, config)
+        },
+        /**
+         * Create a new post
+         * @param data
+         * @param config
+         */
+        clone(id, config = {}) {
+            return http.post(`fl-assistant/v1/post/${id}/clone`, config)
+        },
     }
 }
 
@@ -190,7 +200,7 @@ const terms = () => {
         update(id, action, data = {}, config = {}) {
             return http.post(`fl-assistant/v1/term/${id}`, {
                 action,
-                ...data,
+                data,
             }, config);
         }
     }
@@ -230,8 +240,10 @@ const comments = () => {
          * @returns {Promise<AxiosResponse<T>>}
          */
         update(id, action, data = {}, config = {}) {
-            data.action = action;
-            return http.post(`fl-assistant/v1/comment/${id}`, data, config);
+            return http.post(`fl-assistant/v1/comment/${id}`, {
+				action,
+				data,
+			}, config);
         }
     }
 }
