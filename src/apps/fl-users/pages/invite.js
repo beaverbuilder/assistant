@@ -3,8 +3,8 @@ import React, {useContext} from 'fl-react'
 import {Page, Form, Button, Control} from 'assistant/lib'
 import {Well} from "../components/well"
 import {Avatar} from '../components/avatar'
-import { cssPrefixer } from "../lib";
-
+import {cssPrefixer} from "../lib"
+import './invite.scss'
 
 export const Invite = (props) => {
 
@@ -27,13 +27,15 @@ export const Invite = (props) => {
 
     return (
         <Page shouldPadSides={true} title={__('Invite New User')}>
-            <Well>
-                <div>
-                    <Avatar email={state.email} size={100}/>
-                </div>
-                <div>
-                    <div>{ state.username }</div>
-                    <div>{ state.email }</div>
+            <Well className={c('well')}>
+                <div className={c('user')}>
+                    <div className={c('avatar')}>
+                        <Avatar email={state.email} size={100}/>
+                    </div>
+                    <div className={c('user-info')}>
+                        <div className="username">{state.username}</div>
+                        <div className="email">{state.email}</div>
+                    </div>
                 </div>
             </Well>
             <Form autoComplete="off">
@@ -118,7 +120,7 @@ export const Invite = (props) => {
                             placeholder={__('Subscriber')}
                             value={state.role}
                             onChange={e => setValue('role', e.target.value)}
-                            style={ {width: '150px'} }
+                            style={{width: '150px'}}
                         >
                             <option value="subscriber">Subscriber</option>
                             <option value="editor">Editor</option>
