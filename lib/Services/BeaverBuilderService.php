@@ -6,6 +6,11 @@ namespace FL\Assistant\Services;
 
 use FL\Assistant\Util\HasContainer;
 
+/**
+ * Class BeaverBuilderService
+ *
+ * @package FL\Assistant\Services
+ */
 class BeaverBuilderService {
 	use HasContainer;
 
@@ -14,7 +19,7 @@ class BeaverBuilderService {
 	 * @return bool
 	 */
 	public function bb_is_installed() {
-		return class_exists( '\FLBuilderModel' ) && class_exists('\FLBuilderUserAccess');
+		return class_exists( '\FLBuilderModel' ) && class_exists( '\FLBuilderUserAccess' );
 	}
 
 	/**

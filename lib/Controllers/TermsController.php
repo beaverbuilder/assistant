@@ -124,9 +124,11 @@ class TermsController extends AssistantController {
 		$params    = $request->get_params();
 		$paginator = new TermsPaginator();
 
-		$pager = $paginator->query( $params, function ( $term ) {
-			return $this->get_term_response_data( $term );
-		} );
+		$pager = $paginator->query(
+			$params, function ( $term ) {
+				return $this->get_term_response_data( $term );
+			}
+		);
 
 		return rest_ensure_response( $pager->to_array() );
 	}

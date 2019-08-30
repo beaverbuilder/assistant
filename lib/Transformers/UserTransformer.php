@@ -5,15 +5,34 @@ namespace FL\Assistant\Transformers;
 
 use FL\Assistant\Util\HasContainer;
 
+/**
+ * Class UserTransformer
+ *
+ * Convert a WP_User object to array suitable for REST output
+ *
+ * @package FL\Assistant\Transformers
+ */
 class UserTransformer {
 	use HasContainer;
 
-	public function __invoke(\WP_User $user) {
-		return $this->transform($user);
+	/**
+	 * Allow this class to be used as a callback for pagination
+	 *
+	 * @param \WP_User $user
+	 *
+	 * @return array
+	 */
+	public function __invoke( \WP_User $user ) {
+		return $this->transform( $user );
 	}
 
 
-	public function transform(\WP_User $user) {
+	/**
+	 * @param \WP_User $user
+	 *
+	 * @return array
+	 */
+	public function transform( \WP_User $user ) {
 		$date = mysql2date( get_option( 'date_format' ), $user->user_registered );
 
 		return [
@@ -34,7 +53,7 @@ class UserTransformer {
 			'pages'       => count_user_posts( $user->ID, 'page' ),
 			'firstName'   => get_user_meta( $user->ID, 'first_name', true ),
 			'lastName'    => get_user_meta( $user->ID, 'last_name', true ),
-			'nickname'    => get_user_meta( $user->ID, 'nickname', true )
+			'nickname'    => get_user_meta( $user->ID, 'nickname', true ),
 		];
 	}
 

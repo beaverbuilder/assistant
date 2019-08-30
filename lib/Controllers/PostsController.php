@@ -103,8 +103,8 @@ class PostsController extends AssistantController {
 	 * Returns an array of response data for a single post.
 	 */
 	public function get_post_response_data( $post ) {
-		$transformer = new PostTransformer($this->container());
-		return $transformer->transform($post);
+		$transformer = new PostTransformer( $this->container() );
+		return $transformer->transform( $post );
 	}
 
 	/**

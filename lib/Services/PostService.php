@@ -11,14 +11,15 @@ class PostService {
 	use HasContainer;
 
 	/**
+	 * Return Pager object for Posts
 	 * @param array $args
 	 *
 	 * @return array
 	 */
 	public function paginate( array $args = [] ) {
 		$p = new PostsPaginator();
-		$transformer = new PostTransformer($this->container());
-		return $p->query( $args, $transformer);
+		$transformer = new PostTransformer( $this->container() );
+		return $p->query( $args, $transformer );
 	}
 
 	/**

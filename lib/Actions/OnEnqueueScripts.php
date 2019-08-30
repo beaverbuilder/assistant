@@ -99,7 +99,7 @@ class OnEnqueueScripts {
 	public function should_enqueue() {
 
 		// Users must be logged in.
-		if ( !is_user_logged_in() ) {
+		if ( ! is_user_logged_in() ) {
 			return false;
 		}
 
@@ -114,9 +114,9 @@ class OnEnqueueScripts {
 		}
 
 		// User is logged in, and the current request is not customizer or an iframe
-		$state = $this->service('users')
-		              ->current()
-		              ->get_state();
+		$state = $this->service( 'users' )
+					  ->current()
+					  ->get_state();
 
 		// Don't show Assistant in the WP Admin if the user has turned it off.
 		if ( is_admin() && ! $state['shouldShowInAdmin'] ) {

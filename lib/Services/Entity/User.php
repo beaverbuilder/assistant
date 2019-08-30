@@ -14,8 +14,8 @@ class User {
 
 	const FL_ASSISTANT_STATE = 'fl_assistant_state';
 
-	public function __construct(array $data = []) {
-		$this->fill($data);
+	public function __construct( array $data = [] ) {
+		$this->fill( $data );
 	}
 
 	/**
@@ -76,9 +76,9 @@ class User {
 
 	public function get_public_name_display_options() {
 		/**
-		 * Borrowed from wordpress source code
+		 * Borrowed from WordPress source code
 		 */
-		$public_display                     = array();
+		$public_display                     = [];
 		$public_display['display_nickname'] = $this->nickname;
 		$public_display['display_username'] = $this->user_login;
 
@@ -96,7 +96,7 @@ class User {
 		}
 
 		if ( ! in_array( $this->display_name, $public_display ) ) { // Only add this if it isn't duplicated elsewhere
-			$public_display = array( 'display_displayname' => $this->display_name ) + $public_display;
+			$public_display = [ 'display_displayname' => $this->display_name ] + $public_display;
 		}
 
 		$public_display = array_map( 'trim', $public_display );

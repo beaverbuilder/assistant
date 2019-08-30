@@ -13,6 +13,11 @@ class UserService {
 
 	use HasContainer;
 
+	/**
+	 * @param $args
+	 *
+	 * @return UsersPaginator
+	 */
 	public function paginate( $args ) {
 		$paginator   = new UsersPaginator();
 		$transformer = new UserTransformer( $this->container() );

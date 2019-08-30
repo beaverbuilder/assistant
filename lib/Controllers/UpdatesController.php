@@ -17,9 +17,9 @@ class UpdatesController extends AssistantController {
 		$this->route(
 			'/updates', [
 				[
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => [ $this, 'updates' ],
-					'args'     => [
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ $this, 'updates' ],
+					'args'                => [
 						'type' => [
 							'required' => false,
 							'type'     => 'string',

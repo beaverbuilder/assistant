@@ -6,6 +6,8 @@ namespace FL\Assistant\Util;
 /**
  * Class View
  * @package FL\Assistant\Util
+ *
+ * @phpcs:disable WordPress.PHP.DontExtract.extract_extract
  */
 class View {
 

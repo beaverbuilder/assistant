@@ -181,7 +181,7 @@ abstract class AbstractPaginator implements \JsonSerializable {
 			'current_offset' => $this->get_current_offset(),
 			'first_page'     => $this->get_first_page(),
 			'last_page'      => $this->get_last_page(),
-			'has_more'       => $this->has_more()
+			'has_more'       => $this->has_more(),
 		];
 	}
 }

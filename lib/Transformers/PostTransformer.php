@@ -5,17 +5,35 @@ namespace FL\Assistant\Transformers;
 
 use FL\Assistant\Util\HasContainer;
 
+/**
+ * Class PostTransformer
+ *
+ * Convert a WP_Post object to array suitable for REST output
+ *
+ * @package FL\Assistant\Transformers
+ */
 class PostTransformer {
 
 	use HasContainer;
 
-	public function __invoke(\WP_Post $post) {
-		return $this->transform($post);
+	/**
+	 * Allow this class to be used as a callback for pagination
+	 * @param \WP_Post $post
+	 *
+	 * @return array
+	 */
+	public function __invoke( \WP_Post $post ) {
+		return $this->transform( $post );
 	}
 
-	public function transform(\WP_Post $post) {
+	/**
+	 * @param \WP_Post $post
+	 *
+	 * @return array
+	 */
+	public function transform( \WP_Post $post ) {
 
-		$bb_service = $this->service('beaver_builder');
+		$bb_service = $this->service( 'beaver_builder' );
 
 		$author   = get_the_author_meta( 'display_name', $post->post_author );
 		$date     = get_the_date( '', $post );

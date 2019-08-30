@@ -35,21 +35,29 @@ class PluginProvider implements ProviderInterface {
 			return;
 		}
 
-		$container->register_service( 'users', function ($container) {
-			return new UserService($container);
-		} );
+		$container->register_service(
+			'users', function ( $container ) {
+				return new UserService( $container );
+			}
+		);
 
-		$container->register_service( 'posts', function ( $container ) {
-			return new PostService( $container );
-		} );
+		$container->register_service(
+			'posts', function ( $container ) {
+				return new PostService( $container );
+			}
+		);
 
-		$container->register_service( 'site', function ($container) {
-			return new SiteService($container);
-		} );
+		$container->register_service(
+			'site', function ( $container ) {
+				return new SiteService( $container );
+			}
+		);
 
-		$container->register_service( 'beaver_builder', function ( $container ) {
-			return new BeaverBuilderService( $container );
-		} );
+		$container->register_service(
+			'beaver_builder', function ( $container ) {
+				return new BeaverBuilderService( $container );
+			}
+		);
 
 		$this->register_hooks( $container );
 	}
@@ -78,8 +86,8 @@ class PluginProvider implements ProviderInterface {
 		// register activation hook
 		register_activation_hook(
 			FL_ASSISTANT_FILE, function () {
-			do_action( 'fl_assistant_activate' );
-		}
+				do_action( 'fl_assistant_activate' );
+			}
 		);
 
 		// notify assistant was loaded

@@ -18,7 +18,7 @@ class PostsPaginator extends QueryPaginator {
 
 		if ( $query->have_posts() ) {
 
-			$offset         = intval($query->get( 'offset' ));
+			$offset         = intval( $query->get( 'offset' ) );
 			$items_per_page = $query->post_count;
 			$current_page   = ceil( ( $offset + 1 ) / $items_per_page );
 
