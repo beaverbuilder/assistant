@@ -30,6 +30,11 @@ export const WordPress = ( {
 						const { key } = defaultProps
 						items.splice( key, 1 )
 						setItems( [ ...items ] )
+					},
+					cloneItem: () => {
+						const { key } = defaultProps
+						items.splice( key, 0, Object.assign( {}, items[ key ] ) )
+						setItems( [ ...items ] )
 					}
 				} )
 			} }

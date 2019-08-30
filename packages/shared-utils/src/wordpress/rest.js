@@ -111,7 +111,15 @@ const posts = () => {
 				action,
 				data,
 			}, config)
-        }
+        },
+        /**
+         * Create a new post
+         * @param data
+         * @param config
+         */
+        clone(id, config = {}) {
+            return http.post(`fl-assistant/v1/post/${id}/clone`, config)
+        },
     }
 }
 
