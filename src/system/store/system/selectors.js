@@ -29,7 +29,12 @@ export const querySections = ( state, passedQuery ) => {
 
 	// Check if a registered section matches the query
 	const matchesQuery = section => {
-		const { type, tab } = section.location
+		const { type, tab, isEnabled } = section.location
+
+		// Filter out BOOL isEnabled - functions get tested on render
+		if ( 'boolean' === typeof isEnabled && ! isEnabled ) {
+			return false
+		}
 
 		// Page Type - post, user, term, etc...
 		if ( ! matchesAny( type, query.type ) ) {

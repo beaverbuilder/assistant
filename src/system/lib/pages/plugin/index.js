@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form, Button } from 'lib'
+import { Page, Form } from 'lib'
 
 export const Plugin = ( { location = {} } ) => {
 
@@ -20,33 +20,18 @@ export const Plugin = ( { location = {} } ) => {
 
 	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
 
-	const { banner, title, content, version, author } = item
+	const { banner } = item
 
-	const contentHTML = { __html: content }
 
 	return (
 		<Page shouldPadSides={ false } title={ __( 'Plugin' ) }>
 			{ banner && <img src={ banner } /> }
 
 			<Form>
-				<Form.Section>
-					<Form.Item>
-						<h1>{title}</h1>
-						<div dangerouslySetInnerHTML={ contentHTML } />
-					</Form.Item>
-				</Form.Section>
-				<Form.Section label={ __( 'Details' ) }>
-					<Form.Item label={ __( 'Version' ) } placement="beside">{version}</Form.Item>
-					<Form.Item label={ __( 'Author' ) } placement="beside">{author}</Form.Item>
-				</Form.Section>
-				<Form.Section label={ __( 'Actions' ) }>
-					<Form.Item>
-						<Button.Group appearance="grid">
-							<Button>{__( 'Update' )}</Button>
-							<Button>{__( 'Deactivate' )}</Button>
-						</Button.Group>
-					</Form.Item>
-				</Form.Section>
+				<Page.RegisteredSections
+					location={ { type: 'plugin' } }
+					data={ { plugin: item } }
+				/>
 			</Form>
 		</Page>
 	)

@@ -92,14 +92,10 @@ export const CreatePost = () => {
 	return (
 		<Page title={ __( 'Create New' ) } shouldPadSides={ false }>
 			<Form>
-				<Form.Section label={ __( 'Basic Info' ) }>
-					<Form.Item label={ __( 'Title' ) }>
-						<input
-							type="text"
-
-						/>
-					</Form.Item>
-				</Form.Section>
+				<Page.RegisteredSections
+					location={ { type: 'create-post' } }
+					data={ {} }
+				/>
 			</Form>
 		</Page>
 	)

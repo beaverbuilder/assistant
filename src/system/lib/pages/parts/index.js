@@ -92,6 +92,11 @@ export const RegisteredSections = ( { location, data } ) => {
 
 	return sections.map( section => {
 		const { handle, label, render } = section
+
+		if ( 'function' === typeof section.isEnabled && ! section.isEnabled( data ) ) {
+			return null
+		}
+
 		return (
 			<Section key={ handle } label={ label }>{render( data )}</Section>
 		)

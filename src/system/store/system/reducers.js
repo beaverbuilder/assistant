@@ -213,6 +213,7 @@ export const sections = ( state = {}, action ) => {
 		order: 10,
 		location: {},
 		render: () => {},
+		isEnabled: true,
 	}
 	const defaultLocation = {
 		type: '',

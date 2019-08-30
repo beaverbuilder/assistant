@@ -84,3 +84,19 @@ registerSection( 'fl-post-comments', {
 		<div>Comments List</div>
 	),
 } )
+
+
+// Create Post Screen
+registerSection( 'fl-new-post-title', {
+	label: 'Basic Info',
+	location: {
+		type: 'create-post',
+	},
+	render: () => (
+		<>
+			<Form.Item label={ __( 'Title' ) }>
+				<input type="text" placeholder={ __( 'Title' ) } />
+			</Form.Item>
+		</>
+	),
+} )

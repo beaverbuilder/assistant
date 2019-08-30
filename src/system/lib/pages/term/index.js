@@ -4,8 +4,11 @@ import { Page } from 'lib'
 
 export const Term = () => {
 	return (
-		<Page title={ __( 'Term' ) }>
-			<p>Coming soon...</p>
+		<Page title={ __( 'Edit Term' ) }>
+			<Page.RegisteredSections
+				location={ { type: 'term' } }
+				data={ {} }
+			/>
 		</Page>
 	)
 }
