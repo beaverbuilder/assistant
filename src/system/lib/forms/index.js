@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
-import { Icon, Control } from 'lib'
+import { Icon, Control, Page } from 'lib'
 import { useFormState } from './use-form-data'
 import './style.scss'
 
@@ -41,21 +41,7 @@ Form.Item = props => {
 		</div>
 	)
 }
-
-Form.Section = props => {
-	const { children, className, label, handle, ...rest } = props
-	const classes = classname( {
-		'fl-asst-form-section': true,
-		[`'fl-asst-form-section-${handle}'`]: handle,
-	}, className )
-
-	return (
-		<div className={ classes } { ...rest }>
-			{ label && <div className="fl-asst-form-section-title"><span className="fl-asst-form-section-title-text">{label}</span></div> }
-			<div className="fl-asst-form-section-content">{children}</div>
-		</div>
-	)
-}
+Form.Section = props => <Page.Section className="fl-asst-form-section" { ...props } />
 
 Form.Footer = props => {
 	const { children, className } = props

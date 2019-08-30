@@ -22,18 +22,8 @@ export const Attachment = ( { location } ) => {
 		title: '',
 		filesize: '',
 	}
-	const item = 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
+	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
 	const srcSet = getSrcSet( item.sizes )
-
-	const onFormChange = () => {}
-
-	const [ values, setValue ] = Form.useFormState( {
-		title: item.title,
-		description: item.description,
-		url: item.url,
-		alt: item.alt,
-		caption: item.caption,
-	}, onFormChange )
 
 	const Actions = () => {
 		return (
@@ -44,67 +34,17 @@ export const Attachment = ( { location } ) => {
 		)
 	}
 
-	let hasFullURL = false
-	if ( 'undefined' !== typeof item.sizes.full ) {
-		hasFullURL = true
-	}
-
 	return (
 		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } headerActions={ <Actions /> }>
 
 			<img src={ item.thumbnail } srcSet={ srcSet } />
 
 			<Form>
-				<Form.Section label={ __( 'Links' ) }>
-					{ hasFullURL && (
-						<Form.Item label={ __( 'File URL' ) }>
-							<Control.URL url={ item.sizes.full.url } />
-						</Form.Item>
-					)}
+				<Page.RegisteredSections
+					location={ { type: 'attachment' } }
+					data={ { attachment: item } }
+				/>
 
-					<Form.Item label={ __( 'Attachment Page' ) }>
-						<Control.URL url={ values.url } />
-					</Form.Item>
-				</Form.Section>
-
-				<Form.Section label={ __( 'Metadata' ) }>
-					<Form.Item label={ __( 'Title' ) } labelFor="title">
-						<input
-							id="title"
-							type="text"
-							required={ true }
-							placeholder={ __( 'Attachment Title' ) }
-							value={ values.title }
-							onChange={ e => setValue( 'title', e.target.value ) }
-						/>
-					</Form.Item>
-					<Form.Item label={ __( 'Alternative Text' ) } labelFor="alt">
-						<input
-							id="alt"
-							type="text"
-							required={ true }
-							placeholder={ __( 'Describe your file' ) }
-							value={ values.alt }
-							onChange={ e => setValue( 'alt', e.target.value ) }
-						/>
-					</Form.Item>
-					<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true }>
-						<textarea
-							id="description"
-							value={ values.description }
-							rows={ 4 }
-							onChange={ e => setValue( 'description', e.target.value ) }
-						/>
-					</Form.Item>
-					<Form.Item label={ __( 'Caption' ) } labelFor="caption">
-						<textarea
-							id="caption"
-							value={ values.caption }
-							rows={ 4 }
-							onChange={ e => setValue( 'caption', e.target.value ) }
-						/>
-					</Form.Item>
-				</Form.Section>
 				<Form.Section label={ __( 'Actions' ) }>
 					<Form.Item>
 						<Button.Group appearance="grid">

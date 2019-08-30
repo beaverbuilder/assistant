@@ -77,14 +77,13 @@ export const Post = ( { location, match, history } ) => {
 }
 
 const GeneralTab = ( { location } ) => {
-	const { url } = location.state.item
 	return (
 		<Form>
-			<Form.Section label={ __( 'Permalink' ) }>
-				<Form.Item>
-					<Control.URL url={ url } />
-				</Form.Item>
-			</Form.Section>
+			<Page.RegisteredSections
+				location={ { type: 'post' } }
+				data={ { post: location.state.item } }
+			/>
+
 			<Form.Section label={ __( 'Actions' ) }>
 				<Form.Item>
 					<Button.Group appearance="grid">
@@ -101,24 +100,13 @@ const GeneralTab = ( { location } ) => {
 	)
 }
 
-const MetaTab = () => {
+const MetaTab = ( { location } ) => {
 	return (
 		<Form>
-			<Form.Section label={ __( 'Categories' ) }>
-				<Form.Item>
-					Category controls
-				</Form.Item>
-			</Form.Section>
-			<Form.Section label={ __( 'Tags' ) }>
-				<Form.Item>
-					tag controls
-				</Form.Item>
-			</Form.Section>
-			<Form.Section label={ __( 'Excerpt' ) }>
-				<Form.Item>
-					Excerpt controls
-				</Form.Item>
-			</Form.Section>
+			<Page.RegisteredSections
+				location={ { type: 'post', tab: 'metadata' } }
+				data={ { post: location.state.item } }
+			/>
 		</Form>
 	)
 }
@@ -130,6 +118,7 @@ const CommentsTab = () => {
 		</Page.Section>
 	)
 }
+
 
 export const CreatePost = () => {
 	return (

@@ -64,6 +64,7 @@
             flex-direction: column;
             justify-content: center;
             padding: 0 var(--fl-asst-outer-space);
+            margin: 0 calc( 0px - var(--fl-asst-outer-space) );
             min-height: var(--fl-asst-target-size);
 
             p {

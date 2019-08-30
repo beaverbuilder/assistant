@@ -205,15 +205,18 @@ export const currentUser = ( state = null, action ) => {
 export const shouldReduceMotion = () => false
 
 
-
+// Page Sections
 export const sections = ( state = {}, action ) => {
 
 	const defaultSection = {
-		screen: '',
 		label: '',
-		tab: null,
 		order: 10,
+		location: {},
 		render: () => {},
+	}
+	const defaultLocation = {
+		type: '',
+		tab: '',
 	}
 
 	switch ( action.type ) {
@@ -222,16 +225,19 @@ export const sections = ( state = {}, action ) => {
 		const section = {
 			...defaultSection,
 			...action.config,
+			location: { ...defaultLocation, ...action.config.location },
 			handle: action.handle,
 		}
-		const { handle, screen } = section
+		const { handle, location } = section
 
 		// abort
-		if ( '' === screen ) return state
+		if ( '' === location ) {
+			return state
+		}
 
 		return {
 			...state,
-			[handle] : section,
+			[handle]: section,
 		}
 	default:
 		return state

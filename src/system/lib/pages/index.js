@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App } from 'lib'
 
-import { Pad, Toolbar, TitleCard, ExpandedContent, Section } from './parts'
+import { Pad, Toolbar, TitleCard, ExpandedContent, Section, RegisteredSections } from './parts'
 import { Post, CreatePost } from './post'
 import { User } from './user'
 import { Term } from './term'
@@ -163,6 +163,9 @@ Page.TitleCard.displayName = 'Page.TitleCard'
 
 Page.Section = Section
 Page.Section.displayName = 'Page.Section'
+
+Page.RegisteredSections = RegisteredSections
+Page.RegisteredSections.displayName = 'Page.RegisteredSections'
 
 /* ------ Page Types ------ */
 Page.Comment = Comment

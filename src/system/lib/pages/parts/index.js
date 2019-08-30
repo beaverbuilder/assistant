@@ -1,6 +1,7 @@
 import React, { useContext } from 'fl-react'
 import classname from 'fl-classnames'
 import { Window } from 'lib'
+import { getSystemSelectors } from 'store'
 import './style.scss'
 
 // Horizontal Toolbar - edge padding for controls
@@ -63,7 +64,7 @@ export const ExpandedContent = ( { children } ) => {
 	return null
 }
 
-export  const Section = ( {
+export const Section = ( {
 	children,
 	className,
 	label,
@@ -72,7 +73,7 @@ export  const Section = ( {
 	...rest
 } ) => {
 	const classes = classname( {
-		'fl-asst-section' : true,
+		'fl-asst-section': true,
 		[`'fl-asst-page-section-${handle}'`]: handle,
 		'fl-asst-section-pad-sides': shouldPadSides,
 	}, className )
@@ -83,4 +84,16 @@ export  const Section = ( {
 			<div className="fl-asst-section-content">{children}</div>
 		</div>
 	)
+}
+
+export const RegisteredSections = ( { location, data } ) => {
+	const { querySections } = getSystemSelectors()
+	const sections = querySections( location )
+
+	return sections.map( section => {
+		const { handle, label, render } = section
+		return (
+			<Section key={ handle } label={ label }>{render( data )}</Section>
+		)
+	} )
 }
