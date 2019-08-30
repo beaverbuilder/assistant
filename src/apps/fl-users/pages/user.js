@@ -1,75 +1,76 @@
-import {__} from "@wordpress/i18n";
-import React, {useContext, useEffect, useState} from 'fl-react'
-import {getSystemConfig} from 'assistant/data'
-import {App, Page, Button} from 'assistant/lib'
-import {getWpRest} from "assistant/utils/wordpress"
-import {CancelToken} from "axios"
+import { __ } from '@wordpress/i18n'
+import React, { useContext, useEffect, useState } from 'fl-react'
+import { getSystemConfig } from 'assistant/data'
+import { App, Page, Button } from 'assistant/lib'
+import { getWpRest } from 'assistant/utils/wordpress'
+import { CancelToken } from 'axios'
 
-import {Summary} from "../components/user/summary"
-import {GeneralTab} from "../components/user/general"
-import {PreferencesTab} from "../components/user/preferences"
-import {PostsTab} from "../components/user/posts"
+import { Summary } from '../components/user/summary'
+import { GeneralTab } from '../components/user/general'
+import { PreferencesTab } from '../components/user/preferences'
+import { PostsTab } from '../components/user/posts'
 
-export const User = ({match}) => {
-    // const { handle } = useContext( App.Context )
+export const User = ( { match } ) => {
 
-    const wordpress = getWpRest()
-    const userId = match.params.id
+	// const { handle } = useContext( App.Context )
 
-    const {currentUser} = getSystemConfig()
+	const wordpress = getWpRest()
+	const userId = match.params.id
 
-    const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState({})
-    const [title, setTitle] = useState('User Profile')
-    const [currentTab, setCurrentTab] = useState(0)
+	const { currentUser } = getSystemConfig()
 
-    const source = CancelToken.source()
+	const [ loading, setLoading ] = useState( false )
+	const [ user, setUser ] = useState( {} )
+	const [ title, setTitle ] = useState( 'User Profile' )
+	const [ currentTab, setCurrentTab ] = useState( 0 )
 
-    useEffect(() => {
+	const source = CancelToken.source()
 
-        setLoading(true)
-        wordpress.users().findById(userId, {cancelToken: source.token})
-            .then((response) => {
-                setUser(response.data)
-                setLoading(false)
-            })
+	useEffect( () => {
 
-        if (parseInt(userId) === parseInt(currentUser.id)) {
-            setTitle('Your Profile')
-        }
+		setLoading( true )
+		wordpress.users().findById( userId, { cancelToken: source.token } )
+			.then( ( response ) => {
+				setUser( response.data )
+				setLoading( false )
+			} )
 
-        return () => {
-            source.cancel()
-        }
+		if ( parseInt( userId ) === parseInt( currentUser.id ) ) {
+			setTitle( 'Your Profile' )
+		}
 
-    }, [])
+		return () => {
+			source.cancel()
+		}
 
-    const showTab = (tabIndex) => {
-        switch (tabIndex) {
-            case 2:
-                return (<PostsTab user={user}/>)
-            case 1:
-                return (<PreferencesTab user={user}/>)
-            case 0:
-            default:
-                return (<GeneralTab user={user}/>)
-        }
-    }
+	}, [] )
+
+	const showTab = ( tabIndex ) => {
+		switch ( tabIndex ) {
+		case 2:
+			return ( <PostsTab user={ user }/> )
+		case 1:
+			return ( <PreferencesTab user={ user }/> )
+		case 0:
+		default:
+			return ( <GeneralTab user={ user }/> )
+		}
+	}
 
 
-    if (loading) {
-        return (<p>Loading...</p>)
-    } else {
-        return (
-            <Page shouldPadSides={false} title={title}>
-                <Summary user={user}/>
-                <Button.Group>
-                    <Button isSelected={currentTab == 0} onClick={e => setCurrentTab(0)}>General</Button>
-                    <Button isSelected={currentTab == 1} onClick={e => setCurrentTab(1)}>Preferences</Button>
-                    <Button isSelected={currentTab == 2} onClick={e => setCurrentTab(2)}>Posts</Button>
-                </Button.Group>
-                {showTab(currentTab)}
-            </Page>
-        )
-    }
+	if ( loading ) {
+		return ( <p>Loading...</p> )
+	} else {
+		return (
+			<Page shouldPadSides={ false } title={ title }>
+				<Summary user={ user }/>
+				<Button.Group>
+					<Button isSelected={ 0 == currentTab } onClick={ e => setCurrentTab( 0 ) }>General</Button>
+					<Button isSelected={ 1 == currentTab } onClick={ e => setCurrentTab( 1 ) }>Preferences</Button>
+					<Button isSelected={ 2 == currentTab } onClick={ e => setCurrentTab( 2 ) }>Posts</Button>
+				</Button.Group>
+				{showTab( currentTab )}
+			</Page>
+		)
+	}
 }

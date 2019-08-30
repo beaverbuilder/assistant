@@ -9,8 +9,8 @@ import { Invite } from './pages/invite'
 export const Users = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-		<Nav.Route path={`${match.url}/search` } component={ Search }/>
-		<Nav.Route path={`${match.url}/invite` } component={ Invite }/>
+		<Nav.Route path={ `${match.url}/search` } component={ Search }/>
+		<Nav.Route path={ `${match.url}/invite` } component={ Invite }/>
 		<Nav.Route path={ `${match.url}/user/:id` } component={ User } />
 	</Nav.Switch>
 )
