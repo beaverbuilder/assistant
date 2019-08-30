@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { Nav } from 'assistant/ui'
+import { Nav, Page } from 'assistant/ui'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSystemStore } from 'assistant/data'
 import { __ } from '@wordpress/i18n'
@@ -77,10 +77,12 @@ export const getListSectionConfig = ( {
 
 	if ( section.items.length >= NUMBER_OF_RESULTS ) {
 		props.footer = (
-			<Nav.ButtonLink to={ {
-				pathname: `${match.url}/all`,
-				state: { keyword, configKey }
-			} }>{__( 'View All' )}</Nav.ButtonLink>
+			<Page.Toolbar>
+				<Nav.ButtonLink to={ {
+					pathname: `${match.url}/all`,
+					state: { keyword, configKey }
+				} }>{__( 'View All' )}</Nav.ButtonLink>
+			</Page.Toolbar>
 		)
 	}
 

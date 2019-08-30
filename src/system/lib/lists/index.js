@@ -69,11 +69,6 @@ export const List = ( {
 				return (
 					<Section { ...sectionProps }>
 						{ sectionItems && <List items={ sectionItems } { ...subListProps }  /> }
-						{ sectionProps.footer &&
-							<div className="fl-asst-list-section-footer">
-								{ sectionProps.footer }
-							</div>
-						}
 					</Section>
 				)
 			} else {
