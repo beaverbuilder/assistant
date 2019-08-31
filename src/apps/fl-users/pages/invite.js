@@ -1,15 +1,11 @@
 import { __ } from '@wordpress/i18n'
-import React, { useContext } from 'fl-react'
+import React from 'fl-react'
 import { Page, Form, Button, Control } from 'assistant/lib'
 import { Well } from '../components/well'
 import { Avatar } from '../components/avatar'
-import { cssPrefixer } from '../lib'
 import './invite.scss'
 
-export const Invite = ( props ) => {
-
-	const c = cssPrefixer( 'fl-asst-user-invite' )
-
+export const Invite = ( ) => {
 
 	const [ state, setValue ] = Form.useFormState( {
 		username: '',
@@ -20,19 +16,17 @@ export const Invite = ( props ) => {
 		role: 'subscriber',
 		password: '',
 		displayName: ''
-	}, ( state ) => {
-
-	} )
+	}, () => {} )
 
 
 	return (
 		<Page shouldPadSides={ true } title={ __( 'Invite New User' ) }>
-			<Well className={ c( 'well' ) }>
-				<div className={ c( 'user' ) }>
-					<div className={ c( 'avatar' ) }>
+			<Well>
+				<div className="user">
+					<div className="avatar">
 						<Avatar email={ state.email } size={ 100 }/>
 					</div>
-					<div className={ c( 'user-info' ) }>
+					<div className="user-info">
 						<div className="username">{state.username}</div>
 						<div className="email">{state.email}</div>
 					</div>

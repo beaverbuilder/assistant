@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from 'fl-react'
-import { App, Page, Nav, List } from 'assistant/lib'
+import React, { useState, useEffect } from 'fl-react'
+import { Page } from 'assistant/lib'
 
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getSystemConfig } from 'assistant/data'
@@ -23,12 +23,8 @@ export const Main = () => {
 		wordpress.users()
 			.findWhere( { number: 3 }, { cancelToken: source.token } )
 			.then( ( response ) => {
-				console.log( response.data.items )
 				setUsers( response.data.items )
 
-			} )
-			.finally( () => {
-				console.log( users )
 			} )
 
 		return () => {

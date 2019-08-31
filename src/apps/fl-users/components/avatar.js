@@ -1,16 +1,7 @@
 import React from 'fl-react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import md5 from 'md5'
-import './avatar.scss'
-
-const gravatar = ( email = null, size = 75 ) => {
-	if ( null === email || '' === email ) {
-		return 'https://gravatar.com/avatar/avatar.jpg'
-	}
-	const emailHash = md5( email )
-	return `http://www.gravatar.com/avatar/${emailHash}.jpg?s=${size}`
-}
+import { gravatar } from 'assistant/utils'
 
 export const Avatar = ( props ) => {
 	const { email = null, size = 50, displayName = null } = props
@@ -20,14 +11,16 @@ export const Avatar = ( props ) => {
 		props.className
 	)
 
-	const sizeStyle = {
+	const imgStyle = {
+		borderRadius: '50%',
+		border: '2px solid var(--fl-asst-dim-text)',
 		height: `${size}px`,
 		width: `${size}px`
 	}
 
 	return (
-		<div className={ classes }>
-			<img src={ gravatar( email, size ) } style={ sizeStyle }/>
+		<div className={ classes } style={ { borderRadius: '50%' } }>
+			<img src={ gravatar( email, size ) } style={ imgStyle } alt={displayName}/>
 		</div>
 	)
 }

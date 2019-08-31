@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'fl-react'
-import { Page, Form, Control, Button } from 'assistant/lib'
+import React from 'fl-react'
+import { Form, Control, Button } from 'assistant/lib'
 import { __ } from '@wordpress/i18n'
 
 export const PreferencesTab = ( props ) => {
@@ -10,18 +10,7 @@ export const PreferencesTab = ( props ) => {
 		password: null,
 		darkmode: false,
 		uiposition: 'topright'
-	}, ( state ) => {
-
-	} )
-
-	const onGeneratePassword = () => {
-
-	}
-
-	const doGlobalLogout = () => {
-
-	}
-
+	}, () => {})
 
 	return (
 		<Form>
