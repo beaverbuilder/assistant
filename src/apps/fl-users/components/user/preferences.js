@@ -9,7 +9,7 @@ export const PreferencesTab = () => {
 		password: null,
 		darkmode: false,
 		uiposition: 'topright'
-	} )
+	}, () => {} )
 
 	return (
 		<Form>

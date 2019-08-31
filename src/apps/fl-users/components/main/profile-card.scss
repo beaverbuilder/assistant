@@ -1,20 +1,18 @@
-$prefix: fl-asst-users-profile;
+.fl-asst-users-profile {
 
-.#{$prefix} {
-
-  .#{$prefix}-title {
+  .title {
     font-weight: bold;
   }
 
-  .#{$prefix}-actions {
+  .actions {
     margin-top: var(--fl-asst-inner-space);
   }
 
-  .#{$prefix}-card {
-    .#{$prefix}-avatar-row {
+  .card {
+    .avatar-row {
       display: inline-flex;
 
-      .#{$prefix}-avatar {
+      .avatar {
         img {
           border-radius: 50%;
 
@@ -22,13 +20,13 @@ $prefix: fl-asst-users-profile;
         }
       }
 
-      .#{$prefix}-info {
+      .info {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         padding-left: var(--fl-asst-inner-space);
-        
+
         .username {
           font-size: 20px;
           font-weight: bold;
