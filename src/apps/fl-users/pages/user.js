@@ -55,12 +55,10 @@ export const User = ( { match } ) => {
 		}
 	}
 
-
-	if ( loading ) {
-		return ( <p>{__( 'Loading...' )}</p> )
-	} else {
-		return (
-			<Page shouldPadSides={ false } title={ title }>
+	return (
+		<Page shouldPadSides={ loading } title={ title }>
+			{ loading && <p>{__( 'Loading...' )}</p> }
+			{ !loading && <>
 				<Summary user={ user }/>
 				<Button.Group>
 					<Button isSelected={ 0 == currentTab } onClick={ () => setCurrentTab( 0 ) }>{__( 'General' )}</Button>
@@ -68,7 +66,7 @@ export const User = ( { match } ) => {
 					<Button isSelected={ 2 == currentTab } onClick={ () => setCurrentTab( 2 ) }>{__( 'Posts' )}</Button>
 				</Button.Group>
 				{showTab( currentTab )}
-			</Page>
-		)
-	}
+			</> }
+		</Page>
+	)
 }

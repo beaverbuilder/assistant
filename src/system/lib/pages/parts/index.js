@@ -74,7 +74,7 @@ export const Section = ( {
 } ) => {
 	const classes = classname( {
 		'fl-asst-section': true,
-		[`'fl-asst-page-section-${handle}'`]: handle,
+		[`${handle}-section`]: handle,
 		'fl-asst-section-pad-sides': shouldPadSides,
 	}, className )
 
@@ -91,14 +91,21 @@ export const RegisteredSections = ( { location, data } ) => {
 	const sections = querySections( location )
 
 	return sections.map( section => {
-		const { handle, label, render } = section
+		const {
+			handle,
+			render,
+			location, // Just pulling this out so it doesn't get passed into ...rest
+			isEnabled,
+			...rest
+		} = section
 
-		if ( 'function' === typeof section.isEnabled && ! section.isEnabled( data ) ) {
+
+		if ( 'function' === typeof isEnabled && ! isEnabled( data ) ) {
 			return null
 		}
 
 		return (
-			<Section key={ handle } label={ label }>{render( data )}</Section>
+			<Section key={ handle } handle={handle} {...rest}>{render( data )}</Section>
 		)
 	} )
 }
