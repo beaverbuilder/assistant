@@ -14,28 +14,18 @@ export const Main = () => {
 	const [ users, setUsers ] = useState( [] )
 	const { currentUser } = getSystemConfig()
 
-	const wordpress = getWpRest()
-
 	let source = CancelToken.source()
 
 	useEffect( () => {
 
-		wordpress.users()
+		getWpRest()
+			.users()
 			.findWhere( { number: 3 }, { cancelToken: source.token } )
 			.then( ( response ) => {
-
-				//console.log( response.data.items )
 				setUsers( response.data.items )
-
-			} )
-			.finally( () => {
-
-				//console.log( users )
 			} )
 
-		return () => {
-			source.cancel( 'Component Unmounted' )
-		}
+		return () => source.cancel()
 	}, [] )
 
 	return (

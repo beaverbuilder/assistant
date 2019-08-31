@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import React, { useEffect, useState } from 'fl-react'
 import { getSystemConfig } from 'assistant/data'
-import { Page, Button } from 'assistant/lib'
+import { Page, Button, Nav } from 'assistant/lib'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { CancelToken } from 'axios'
 
@@ -10,62 +10,72 @@ import { GeneralTab } from '../components/user/general'
 import { PreferencesTab } from '../components/user/preferences'
 import { PostsTab } from '../components/user/posts'
 
-export const User = ( { match } ) => {
-
-	const wordpress = getWpRest()
-	const userId = match.params.id
+export const User = ( { location, match, history } ) => {
 
 	const { currentUser } = getSystemConfig()
 
+	const isYou = ( currentUser.id === match.params.id )
+
 	const [ loading, setLoading ] = useState( false )
-	const [ user, setUser ] = useState( {} )
-	const [ title, setTitle ] = useState( __( 'User Profile' ) )
-	const [ currentTab, setCurrentTab ] = useState( 0 )
+	const [ user, setUser ] = useState( {
+		id: null
+	} )
 
 	const source = CancelToken.source()
 
-	useEffect( () => {
+	const setTab = path => history.replace( path, location.state )
 
+	const tabs = [
+		{
+			path: match.url,
+			label: __( 'General' ),
+			exact: true,
+			component: () => ( <GeneralTab user={ user }/> ),
+		},
+		{
+			path: match.url + '/preferences',
+			label: __( 'Preferences' ),
+			component: () => ( <PreferencesTab user={ user }/> ),
+		},
+		{
+			path: match.url + '/posts',
+			label: __( 'Posts' ),
+			component: () => ( <PostsTab user={ user }/> ),
+		}
+	]
+
+	const loadUser = async() => {
 		setLoading( true )
-		wordpress.users().findById( userId, { cancelToken: source.token } )
-			.then( ( response ) => {
-				setUser( response.data )
-				setLoading( false )
-			} )
-
-		if ( parseInt( userId ) === parseInt( currentUser.id ) ) {
-			setTitle( __( 'Your Profile' ) )
-		}
-
-		return () => {
-			source.cancel()
-		}
-
-	}, [] )
-
-	const showTab = ( tabIndex ) => {
-		switch ( tabIndex ) {
-		case 2:
-			return ( <PostsTab user={ user }/> )
-		case 1:
-			return ( <PreferencesTab user={ user }/> )
-		case 0:
-		default:
-			return ( <GeneralTab user={ user }/> )
-		}
+		const config = { cancelToken: source.token }
+		const response = await getWpRest().users().findById( match.params.id, config )
+		setUser( response.data )
+		setLoading( false )
 	}
 
+	useEffect( () => {
+		loadUser()
+		return () => source.cancel()
+	}, [] )
+
 	return (
-		<Page shouldPadSides={ loading } title={ title }>
+		<Page shouldPadSides={ loading }
+			title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }>
 			{ loading && <p>{__( 'Loading...' )}</p> }
 			{ ! loading && <>
 				<Summary user={ user }/>
 				<Button.Group>
-					<Button isSelected={ 0 == currentTab } onClick={ () => setCurrentTab( 0 ) }>{__( 'General' )}</Button>
-					<Button isSelected={ 1 == currentTab } onClick={ () => setCurrentTab( 1 ) }>{__( 'Preferences' )}</Button>
-					<Button isSelected={ 2 == currentTab } onClick={ () => setCurrentTab( 2 ) }>{__( 'Posts' )}</Button>
+					{tabs.map( ( { label, path }, i ) => (
+						<Button key={ i }
+							onClick={ () => setTab( path ) }
+							isSelected={ path === match.url }
+						>{label}</Button>
+					) )}
 				</Button.Group>
-				{showTab( currentTab )}
+
+
+				<Nav.Switch>
+					{tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> )}
+				</Nav.Switch>
 			</> }
 		</Page>
 	)

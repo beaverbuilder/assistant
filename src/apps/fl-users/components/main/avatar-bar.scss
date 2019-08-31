@@ -1,28 +1,30 @@
-$prefix: fl-asst-users-avatar-bar;
+.fl-asst-users-avatar-bar {
+  .title {
+    font-weight: bold;
+  }
 
-.#{$prefix}-title {
-  font-weight: bold;
-}
-.#{$prefix}-users {
-  display: flex;
+  .users {
+    display: flex;
 
-  .#{$prefix}-avatar {
-    width: 75px;
-    border-radius: 50%;
-    img {
+    .avatar {
       width: 75px;
-      height: 75px;
       border-radius: 50%;
+
+      img {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+      }
+
+      .username {
+        text-align: center;
+        width: 100%;
+      }
     }
 
-    .username {
-      text-align: center;
-      width: 100%;
+    .button {
+      border-radius: 15px !important;
+      max-height: 30px !important;
     }
   }
-}
-
-.fl-asst-avatar-button {
-  border-radius: 15px !important;
-  max-height: 30px !important;
 }

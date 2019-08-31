@@ -1,13 +1,12 @@
+import { __ } from '@wordpress/i18n'
 import React, { useEffect } from 'fl-react'
 import { Form } from 'assistant/lib'
-import { __ } from '@wordpress/i18n'
 import { isEmpty } from 'lodash'
 
 export const GeneralTab = ( props ) => {
 
 	const publicDisplayOptions = ( user ) => {
 		const options = []
-
 
 		options.push( { value: 'nickname', label: user.nickname } )
 		options.push( { value: 'username', label: user.username } )
@@ -140,9 +139,6 @@ export const GeneralTab = ( props ) => {
 					/>
 				</Form.Item>
 			</Form.Section>
-			{/*<Form.Section label={__('User Data')}>*/}
-			{/*    <pre>{JSON.stringify(publicDisplayOptions(user), null, 4)}</pre>*/}
-			{/*</Form.Section>*/}
 		</Form>
 	)
 }

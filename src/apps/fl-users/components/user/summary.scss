@@ -1,10 +1,8 @@
-$prefix: fl-asst-users-summary-user-panel;
-
-.#{$prefix} {
+.fl-asst-users-summary {
   padding: var(--fl-asst-inner-space);
   margin-bottom: 10px;
 
-  .#{$prefix}-info {
+  .info {
     padding-top: var(--fl-asst-inner-space);
     padding-bottom: var(--fl-asst-inner-space);
     .username {
@@ -17,18 +15,18 @@ $prefix: fl-asst-users-summary-user-panel;
     }
   }
 
-  #{$prefix}-actions {
+  .actions {
     padding-top: var(--fl-asst-inner-space);
     padding-bottom: var(--fl-asst-inner-space);
   }
 
-  .#{$prefix}-circles {
+  .circles {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
 
-    .#{$prefix}-circle {
+    .circle {
       border: 2px solid var(--fl-asst-dim-text);
       border-radius: 50%;
       width: 100px;
