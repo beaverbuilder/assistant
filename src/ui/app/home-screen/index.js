@@ -13,11 +13,10 @@ export const HomeScreen = () => {
 	return (
 		<Page shouldPadSides={ false } shouldShowHeader={ false }>
 
-			<Page.Section>
-				<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
-			</Page.Section>
-
-			<CurrentlyViewingSection />
+			<Page.RegisteredSections
+				location={ { type: 'home' } }
+				data={ {} }
+			/>
 
 			<Page.Section label={ __( 'Apps' ) } handle="apps" shouldPadSides={ false }>
 				<div className="fl-asst-app-grid">
@@ -65,18 +64,5 @@ export const HomeScreen = () => {
 				</div>
 			</Page.Section>
 		</Page>
-	)
-}
-
-const CurrentlyViewingSection = () => {
-	const { currentPageView } = getSystemConfig()
-	const { name, type } = currentPageView
-	return (
-		<Page.Section label={ __( 'Currently Viewing' ) } handle="currently-viewing">
-			<div className="fl-asst-currently-viewing-summary">
-				{ type && <div className="fl-asst-pretitle">{type}</div> }
-				<div className="fl-asst-title">{name}</div>
-			</div>
-		</Page.Section>
 	)
 }
