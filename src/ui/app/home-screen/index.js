@@ -8,7 +8,7 @@ import './style.scss'
 const { registerSection } = getSystemActions()
 
 registerSection( 'fl-home-apps', {
-	label: __('Apps'),
+	label: __( 'Apps' ),
 	location: {
 		type: 'home',
 	},

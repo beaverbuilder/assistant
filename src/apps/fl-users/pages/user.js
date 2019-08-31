@@ -58,7 +58,7 @@ export const User = ( { match } ) => {
 	return (
 		<Page shouldPadSides={ loading } title={ title }>
 			{ loading && <p>{__( 'Loading...' )}</p> }
-			{ !loading && <>
+			{ ! loading && <>
 				<Summary user={ user }/>
 				<Button.Group>
 					<Button isSelected={ 0 == currentTab } onClick={ () => setCurrentTab( 0 ) }>{__( 'General' )}</Button>

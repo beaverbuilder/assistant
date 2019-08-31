@@ -94,8 +94,10 @@ export const RegisteredSections = ( { location, data } ) => {
 		const {
 			handle,
 			render,
-			location, // Just pulling this out so it doesn't get passed into ...rest
 			isEnabled,
+
+			// Location is pulled out here to avoid being passed in ...rest
+			location, // eslint-disable-line
 			...rest
 		} = section
 
@@ -105,7 +107,7 @@ export const RegisteredSections = ( { location, data } ) => {
 		}
 
 		return (
-			<Section key={ handle } handle={handle} {...rest}>{render( data )}</Section>
+			<Section key={ handle } handle={ handle } { ...rest }>{render( data )}</Section>
 		)
 	} )
 }
