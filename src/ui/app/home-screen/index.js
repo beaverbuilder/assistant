@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from 'assistant/i18n'
-import { useSystemState, getSystemConfig } from 'assistant/data'
+import { useSystemState } from 'assistant/data'
 import { Page, Nav } from 'assistant/ui'
 import { useInitialFocus } from 'assistant/utils/react'
 import './style.scss'

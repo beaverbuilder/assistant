@@ -22,13 +22,13 @@ export const Summary = ( props ) => {
 				<div className={ c( 'col' ) }>
 					<div className={ c( 'circle' ) }>
 						<div className="count">{user.posts}</div>
-						<div className="title">{__('Posts')}</div>
+						<div className="title">{__( 'Posts' )}</div>
 					</div>
 				</div>
 				<div className={ c( 'col' ) }>
 					<div className={ c( 'circle' ) }>
 						<div className="count">{user.pages}</div>
-						<div className="title">{__('Posts')}</div>
+						<div className="title">{__( 'Posts' )}</div>
 					</div>
 				</div>
 			</div>
@@ -42,8 +42,8 @@ export const Summary = ( props ) => {
 			</div>
 			<div className={ c( 'actions' ) }>
 				<Button.Group appearance="grid">
-					<Button href={ user.url }>{__('Author Page')}</Button>
-					<Button href={ user.editUrl }>{__('Edit in Admin')}</Button>
+					<Button href={ user.url }>{__( 'Author Page' )}</Button>
+					<Button href={ user.editUrl }>{__( 'Edit in Admin' )}</Button>
 				</Button.Group>
 			</div>
 		</Panel>
