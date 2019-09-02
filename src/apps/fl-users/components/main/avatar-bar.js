@@ -4,12 +4,10 @@ import { Button, Nav, Icon } from 'assistant/lib'
 import './avatar-bar.scss'
 
 export const AvatarBar = ( props ) => {
-
 	const { users } = props
 
 	return (
 		<div className="fl-asst-users-avatar-bar">
-			<h2 className="title">{ __( 'WordPress Users' ) }</h2>
 			<div className="users">
 				{users.map( ( user, i ) => {
 					<AvatarBar.Avatar key={ i } user={ user }></AvatarBar.Avatar>

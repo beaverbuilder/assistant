@@ -20,7 +20,7 @@ export const Avatar = ( props ) => {
 
 	return (
 		<div className={ classes } style={ { borderRadius: '50%' } }>
-			<img src={ gravatar( email, size ) } style={ imgStyle }/>
+			<img src={ gravatar.gravatar( email, size ) } style={ imgStyle }/>
 		</div>
 	)
 }

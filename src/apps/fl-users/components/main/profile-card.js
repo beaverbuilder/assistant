@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n'
 import React from 'fl-react'
 import { Button } from 'assistant/lib'
 import { Well } from '../well'
@@ -9,7 +8,6 @@ export const ProfileCard = ( props ) => {
 
 	return (
 		<div className="fl-asst-users-profile">
-			<h2 className="title">{__( 'Your Profile' )}</h2>
 			<Well className="card">
 				<div className="avatar-row">
 					<div className="avatar">

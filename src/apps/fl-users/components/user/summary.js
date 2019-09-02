@@ -38,8 +38,8 @@ export const Summary = ( props ) => {
 				</div>
 			</div>
 			<div className="actions">
-			<Button href={ user.url }>{__( 'Author Page' )}</Button>
-			<Button href={ user.editUrl }>{__( 'Edit in Admin' )}</Button>
+				<Button href={ user.url }>{__( 'Author Page' )}</Button>
+				<Button href={ user.editUrl }>{__( 'Edit in Admin' )}</Button>
 			</div>
 		</Panel>
 	)

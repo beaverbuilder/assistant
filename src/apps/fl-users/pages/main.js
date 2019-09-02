@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'fl-react'
 import { Page } from 'assistant/lib'
+import { __ } from '@wordpress/i18n'
 
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getSystemConfig } from 'assistant/data'
@@ -29,9 +30,13 @@ export const Main = () => {
 	}, [] )
 
 	return (
-		<Page shouldPadSides={ true }>
-			<ProfileCard user={ currentUser }/>
-			<AvatarBar user={ currentUser } users={ users }/>
+		<Page shouldPadSides={ false }>
+			<Page.Section label={ __( 'Your Profile' ) }>
+				<ProfileCard user={ currentUser }/>
+			</Page.Section>
+			<Page.Section label={ __( 'Users' ) }>
+				<AvatarBar user={ currentUser } users={ users }/>
+			</Page.Section>
 		</Page>
 	)
 }

@@ -20,11 +20,11 @@ export const Invite = ( ) => {
 	}, () => {} )
 
 	return (
-		<Page shouldPadSides={ true } title={ __( 'Invite New User' ) }>
+		<Page shouldPadSides={ false } title={ __( 'Invite New User' ) }>
 			<Well>
 				<div className="user">
 					<div className="avatar">
-						<Avatar email={ state.email } size={ 100 }/>
+						<Avatar email={ state.email } />
 					</div>
 					<div className="user-info">
 						<div className="username">{state.username}</div>

@@ -59,6 +59,10 @@
                 display: inline-flex;
                 flex-direction: row;
                 align-items: center;
+
+                &:focus {
+                    outline: none;
+                }
             }
             span.fl-asst-window-drag-handle {
                 align-items: center;

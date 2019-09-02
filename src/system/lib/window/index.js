@@ -342,10 +342,7 @@ const WindowPanel = ( {
 				</div>
 
 
-				<div
-					className="fl-asst-window-content"
-					{ ...stopEvts }
-				>{children}</div>
+				<div className="fl-asst-window-content" { ...stopEvts }>{children}</div>
 			</div>
 		</Flipped>
 	)
