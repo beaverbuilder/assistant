@@ -223,13 +223,13 @@ export const sections = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'REGISTER_SECTION':
 
-		const section = {
+		const section = { // eslint-disable-line
 			...defaultSection,
 			...action.config,
 			location: { ...defaultLocation, ...action.config.location },
 			handle: action.handle,
 		}
-		const { handle, location } = section
+		const { handle, location } = section // eslint-disable-line
 
 		// abort
 		if ( '' === location ) {
