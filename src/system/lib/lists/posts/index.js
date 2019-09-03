@@ -1,6 +1,7 @@
 import React from 'fl-react'
-import { List, Button, Icon } from 'lib'
 import { __ } from '@wordpress/i18n'
+import { List, Button, Icon } from 'lib'
+import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'shared-utils/wordpress'
 
 export const Posts = ( {
@@ -44,9 +45,13 @@ export const Posts = ( {
 								}
 							</div>
 							<div className="fl-asst-item-extras-right">
-								<Button tabIndex="-1">
+								<Clipboard
+									button-tabIndex={ '-1' }
+									button-className={ 'fl-asst-button fl-asst-button-appearance-normal' }
+									data-clipboard-text={ item.url }
+								>
 									<Icon.Link />
-								</Button>
+								</Clipboard>
 								<Button tabIndex="-1">
 									<Icon.Bookmark />
 								</Button>
