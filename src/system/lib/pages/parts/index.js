@@ -70,6 +70,7 @@ export const Section = ( {
 	label,
 	handle,
 	shouldPadSides = true,
+	contentStyle = {},
 	...rest
 } ) => {
 	const classes = classname( {
@@ -81,7 +82,7 @@ export const Section = ( {
 	return (
 		<div className={ classes } { ...rest }>
 			{ label && <div className="fl-asst-section-title"><span className="fl-asst-section-title-text">{label}</span></div> }
-			<div className="fl-asst-section-content">{children}</div>
+			<div className="fl-asst-section-content" style={ contentStyle }>{children}</div>
 		</div>
 	)
 }
