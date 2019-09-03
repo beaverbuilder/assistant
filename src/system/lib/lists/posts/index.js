@@ -20,17 +20,31 @@ export const Posts = ( {
 			} }
 			getItemProps={ ( item, defaultProps ) => {
 				const { removeItem, cloneItem } = defaultProps
-				const desc = 'by ' + item.author + ' | ' + item.visibility
 
 				const clonePost = () => {
-					clone( item.id )
-					cloneItem()
+					//clone( item.id )
+					cloneItem( {
+						id: null,
+						author: null,
+						visibility: null,
+						title: __( 'Cloning...' ),
+					} )
 				}
 
 				const trashPost = () => {
 					if ( confirm( __( 'Do you really want to trash this post?' ) ) ) {
 						update( item.id, 'trash' )
 						removeItem()
+					}
+				}
+
+				const getDescription = () => {
+					if ( item.author && item.visibility ) {
+						return __( 'by' ) + ' ' + item.author + ' | ' + item.visibility
+					} else if ( item.author ) {
+						return __( 'by' ) + ' ' + item.author
+					} else if ( item.visibility ) {
+						return item.visibility
 					}
 				}
 
@@ -69,10 +83,10 @@ export const Posts = ( {
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
-					description: desc,
+					description: getDescription(),
 					thumbnail: item.thumbnail,
 					thumbnailSize: 'med',
-					extras: props => <Extras { ...props } />,
+					extras: item.isCloning ? null : props => <Extras { ...props } />,
 				} )
 			} }
 			{ ...rest }

@@ -31,9 +31,10 @@ export const WordPress = ( {
 						items.splice( key, 1 )
 						setItems( [ ...items ] )
 					},
-					cloneItem: () => {
+					cloneItem: ( newProps = {} ) => {
 						const { key } = defaultProps
-						items.splice( key, 0, Object.assign( {}, items[ key ] ) )
+						const newItem = Object.assign( { isCloning: true }, items[ key ], newProps )
+						items.splice( key + 1, 0, newItem )
 						setItems( [ ...items ] )
 					}
 				} )
