@@ -33,10 +33,27 @@ export const WordPress = ( {
 					},
 					cloneItem: ( newProps = {} ) => {
 						const { key } = defaultProps
-						const newItem = Object.assign( { isCloning: true }, items[ key ], newProps )
-						items.splice( key + 1, 0, newItem )
+						const newItem = {
+							isCloning: true,
+							cloneId: new Date().getTime(),
+						}
+						items.splice( key + 1, 0, Object.assign( newItem, items[ key ], newProps ) )
 						setItems( [ ...items ] )
-					}
+						return newItem.cloneId
+					},
+					updateItem: ( newProps = {} ) => {
+						const { key } = defaultProps
+						items[ key ] = Object.assign( items[ key ], newProps )
+						setItems( [ ...items ] )
+					},
+					updateItemsBy: ( key, value, newProps = {} ) => {
+						items.map( ( item, i ) => {
+							if ( item[ key ] == value ) {
+								items[ i ] = Object.assign( items[ i ], newProps )
+							}
+						} )
+						setItems( [ ...items ] )
+					},
 				} )
 			} }
 			loadItems={ ( setHasMore ) => {

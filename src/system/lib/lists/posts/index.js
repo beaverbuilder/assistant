@@ -19,15 +19,20 @@ export const Posts = ( {
 				shouldAlwaysShowThumbnail: true
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const { removeItem, cloneItem } = defaultProps
+				const { removeItem, cloneItem, updateItemsBy } = defaultProps
 
 				const clonePost = () => {
-					//clone( item.id )
-					cloneItem( {
+					const cloneId = cloneItem( {
 						id: null,
 						author: null,
 						visibility: null,
 						title: __( 'Cloning...' ),
+					} )
+					clone( item.id ).then( response => {
+						updateItemsBy( 'cloneId', cloneId, {
+							...response.data,
+							isCloning: false,
+						} )
 					} )
 				}
 
