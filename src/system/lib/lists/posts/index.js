@@ -39,7 +39,9 @@ export const Posts = ( {
 							<div className="fl-asst-item-extras-left">
 								<Button tabIndex="-1" href={ item.url }>{__( 'View' )}</Button>
 								<Button tabIndex="-1" href={ item.editUrl }>{__( 'Edit' )}</Button>
-								<Button tabIndex="-1">{__( 'Beaver Builder' )}</Button>
+								{ item.bbCanEdit &&
+									<Button tabIndex="-1" href={ item.bbEditUrl }>{ item.bbBranding }</Button>
+								}
 							</div>
 							<div className="fl-asst-item-extras-right">
 								<Button tabIndex="-1">
