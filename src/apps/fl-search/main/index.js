@@ -67,7 +67,8 @@ export const Main = ( { match } ) => {
 			if ( inputRef.current ) {
 				inputRef.current.focus()
 			}
-		} )
+		}, [] )
+		
 		return (
 			<Page.Pad>
 				<div className='fl-asst-search-form-simple'>
