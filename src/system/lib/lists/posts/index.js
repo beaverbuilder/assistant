@@ -19,17 +19,18 @@ export const Posts = ( {
 				shouldAlwaysShowThumbnail: true
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const { removeItem, cloneItem, updateItemsBy } = defaultProps
+				const { cloneItem, updateItem, updateItemBy } = defaultProps
 
 				const clonePost = () => {
-					const cloneId = cloneItem( {
+					const clonedItem = cloneItem( {
 						id: null,
 						author: null,
 						visibility: null,
 						title: __( 'Cloning...' ),
+						isCloning: true,
 					} )
 					clone( item.id ).then( response => {
-						updateItemsBy( 'cloneId', cloneId, {
+						updateItemBy( 'uuid', clonedItem.uuid, {
 							...response.data,
 							isCloning: false,
 						} )
@@ -38,9 +39,37 @@ export const Posts = ( {
 
 				const trashPost = () => {
 					if ( confirm( __( 'Do you really want to trash this post?' ) ) ) {
-						update( item.id, 'trash' )
-						removeItem()
+						const { id, uuid } = item
+						updateItem( {
+							id: null,
+							title: __( 'Moving item to trash' ),
+							author: null,
+							visibility: null,
+							isTrashing: true,
+							trashedItem: Object.assign( {}, item ),
+						} )
+						update( id, 'trash' ).then( response => {
+							updateItemBy( 'uuid', uuid, {
+								title: __( 'This item has been moved to the trash' ),
+								isTrashing: false,
+								isTrashed: true,
+							} )
+						} )
 					}
+				}
+
+				const restorePost = () => {
+					updateItemBy( 'uuid', item.uuid, {
+						title: __( 'Restoring item' ),
+						isTrashed: false,
+						isRestoring: true,
+					} )
+					update( item.trashedItem.id, 'untrash' ).then( response => {
+						updateItemBy( 'uuid', item.trashedItem.uuid, {
+							...item.trashedItem,
+							isRestoring: false,
+						} )
+					} )
 				}
 
 				const getDescription = () => {
@@ -53,7 +82,17 @@ export const Posts = ( {
 					}
 				}
 
+				const Accessory = () => {
+					if ( item.isTrashed ) {
+						return <Button onClick={ restorePost } tabIndex="-1">Restore</Button>
+					}
+					return null
+				}
+
 				const Extras = () => {
+					if ( item.isCloning || item.isTrashing || item.isTrashed || item.isRestoring ) {
+						return null
+					}
 					return (
 						<div className="fl-asst-item-extras">
 							<div className="fl-asst-item-extras-left">
@@ -91,7 +130,8 @@ export const Posts = ( {
 					description: getDescription(),
 					thumbnail: item.thumbnail,
 					thumbnailSize: 'med',
-					extras: item.isCloning ? null : props => <Extras { ...props } />,
+					accessory: props => <Accessory { ...props } />,
+					extras: props => <Extras { ...props } />,
 				} )
 			} }
 			{ ...rest }
