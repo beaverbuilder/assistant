@@ -19,7 +19,7 @@ export const Posts = ( {
 				shouldAlwaysShowThumbnail: true
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const { removeItem, cloneItem, updateItemsBy } = defaultProps
+				const { cloneItem, updateItem, updateItemsBy } = defaultProps
 
 				const clonePost = () => {
 					const cloneId = cloneItem( {
@@ -38,9 +38,31 @@ export const Posts = ( {
 
 				const trashPost = () => {
 					if ( confirm( __( 'Do you really want to trash this post?' ) ) ) {
-						update( item.id, 'trash' )
-						removeItem()
+						const trashId = item.id
+						updateItem( {
+							id: null,
+							title: __( 'Moving item to trash' ),
+							author: null,
+							visibility: null,
+							isTrashing: true,
+							trashId,
+						} )
+						update( trashId, 'trash' ).then( response => {
+							updateItemsBy( 'trashId', trashId, {
+								title: __( 'This item has been moved to the trash' ),
+								isTrashing: false,
+								isTrashed: true,
+							} )
+						} )
 					}
+				}
+
+				const restorePost = () => {
+					updateItemsBy( 'trashId', item.trashId, {
+						title: __( 'Restoring item' ),
+						isTrashed: false,
+						isRestoring: true,
+					} )
 				}
 
 				const getDescription = () => {
@@ -53,7 +75,17 @@ export const Posts = ( {
 					}
 				}
 
+				const Accessory = () => {
+					if ( item.isTrashed ) {
+						return <Button onClick={ restorePost } tabIndex="-1">Restore</Button>
+					}
+					return null
+				}
+
 				const Extras = () => {
+					if ( item.isCloning || item.isTrashing || item.isTrashed || item.isRestoring ) {
+						return null
+					}
 					return (
 						<div className="fl-asst-item-extras">
 							<div className="fl-asst-item-extras-left">
@@ -91,7 +123,8 @@ export const Posts = ( {
 					description: getDescription(),
 					thumbnail: item.thumbnail,
 					thumbnailSize: 'med',
-					extras: item.isCloning ? null : props => <Extras { ...props } />,
+					accessory: props => <Accessory { ...props } />,
+					extras: props => <Extras { ...props } />,
 				} )
 			} }
 			{ ...rest }
