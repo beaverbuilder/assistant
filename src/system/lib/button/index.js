@@ -224,3 +224,15 @@ Button.Loading = ( {
 		</Button>
 	)
 }
+
+Button.renderActions = actions => {
+	const defaultAction = {
+		label: null,
+	}
+	return Object.values( actions ).map( ( action, i ) => {
+		const { label, ...rest } = { ...defaultAction, ...action }
+		return (
+			<Button key={ i } { ...rest }>{label}</Button>
+		)
+	} )
+}

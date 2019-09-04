@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { getSystemActions } from 'store'
-import { Form, Control, Button } from 'lib'
+import { Form, Control } from 'lib'
 import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
@@ -52,25 +52,6 @@ registerSection( 'fl-post-tags', {
 	},
 	render: () => (
 		<div>Tags</div>
-	),
-} )
-
-registerSection( 'fl-post-actions', {
-	label: __( 'Actions' ),
-	location: {
-		type: 'post',
-	},
-	render: () => (
-		<Form.Item>
-			<Button.Group appearance="grid">
-				<Button>{__( 'View Post' )}</Button>
-				<Button>{__( 'Edit in Admin' )}</Button>
-				<Button>{__( 'Beaver Builder' )}</Button>
-				<Button>{__( 'Bookmark' )}</Button>
-				<Button>{__( 'Duplicate' )}</Button>
-				<Button>{__( 'Move to Trash' )}</Button>
-			</Button.Group>
-		</Form.Item>
 	),
 } )
 
