@@ -19,17 +19,18 @@ export const Posts = ( {
 				shouldAlwaysShowThumbnail: true
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const { cloneItem, updateItem, updateItemsBy } = defaultProps
+				const { cloneItem, updateItem, updateItemBy } = defaultProps
 
 				const clonePost = () => {
-					const cloneId = cloneItem( {
+					const clonedItem = cloneItem( {
 						id: null,
 						author: null,
 						visibility: null,
 						title: __( 'Cloning...' ),
+						isCloning: true,
 					} )
 					clone( item.id ).then( response => {
-						updateItemsBy( 'cloneId', cloneId, {
+						updateItemBy( 'uuid', clonedItem.uuid, {
 							...response.data,
 							isCloning: false,
 						} )
@@ -38,17 +39,17 @@ export const Posts = ( {
 
 				const trashPost = () => {
 					if ( confirm( __( 'Do you really want to trash this post?' ) ) ) {
-						const trashId = item.id
+						const { id, uuid } = item
 						updateItem( {
 							id: null,
 							title: __( 'Moving item to trash' ),
 							author: null,
 							visibility: null,
 							isTrashing: true,
-							trashId,
+							trashedItem: Object.assign( {}, item ),
 						} )
-						update( trashId, 'trash' ).then( response => {
-							updateItemsBy( 'trashId', trashId, {
+						update( id, 'trash' ).then( response => {
+							updateItemBy( 'uuid', uuid, {
 								title: __( 'This item has been moved to the trash' ),
 								isTrashing: false,
 								isTrashed: true,
@@ -58,10 +59,16 @@ export const Posts = ( {
 				}
 
 				const restorePost = () => {
-					updateItemsBy( 'trashId', item.trashId, {
+					updateItemBy( 'uuid', item.uuid, {
 						title: __( 'Restoring item' ),
 						isTrashed: false,
 						isRestoring: true,
+					} )
+					update( item.trashedItem.id, 'untrash' ).then( response => {
+						updateItemBy( 'uuid', item.trashedItem.uuid, {
+							...item.trashedItem,
+							isRestoring: false,
+						} )
 					} )
 				}
 

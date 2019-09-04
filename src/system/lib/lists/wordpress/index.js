@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'fl-react'
+import uuidv1 from 'uuid/v1'
 import { CancelToken, isCancel } from 'axios'
 import { getWpRest } from 'shared-utils/wordpress'
 import { List } from 'lib'
@@ -23,6 +24,22 @@ export const WordPress = ( {
 	return (
 		<List.Scroller
 			items={ formatItems( items ) }
+			loadItems={ ( setHasMore ) => {
+				getPagedContent( type, query, offset, {
+					cancelToken: source.token,
+				} ).then( response  => {
+					response.data.items.map( ( item, i ) => {
+						response.data.items[ i ].uuid = uuidv1()
+					} )
+					setItems( items.concat( response.data.items ) )
+					setHasMore( response.data.has_more )
+					onItemsLoaded( response )
+				} ).catch( ( error ) => {
+					if ( ! isCancel( error ) ) {
+						console.log( error ) // eslint-disable-line no-console
+					}
+				} )
+			} }
 			getItemProps={ ( item, defaultProps ) => {
 				return getItemProps( item, {
 					...defaultProps,
@@ -33,20 +50,18 @@ export const WordPress = ( {
 					},
 					cloneItem: ( newProps = {} ) => {
 						const { key } = defaultProps
-						const newItem = {
-							isCloning: true,
-							cloneId: new Date().getTime(),
-						}
-						items.splice( key + 1, 0, Object.assign( newItem, items[ key ], newProps ) )
+						const clone = Object.assign( {}, items[ key ], newProps )
+						clone.uuid = uuidv1()
+						items.splice( key + 1, 0, clone )
 						setItems( [ ...items ] )
-						return newItem.cloneId
+						return clone
 					},
 					updateItem: ( newProps = {} ) => {
 						const { key } = defaultProps
 						items[ key ] = Object.assign( items[ key ], newProps )
 						setItems( [ ...items ] )
 					},
-					updateItemsBy: ( key, value, newProps = {} ) => {
+					updateItemBy: ( key, value, newProps = {} ) => {
 						items.map( ( item, i ) => {
 							if ( item[ key ] == value ) {
 								items[ i ] = Object.assign( items[ i ], newProps )
@@ -54,19 +69,6 @@ export const WordPress = ( {
 						} )
 						setItems( [ ...items ] )
 					},
-				} )
-			} }
-			loadItems={ ( setHasMore ) => {
-				getPagedContent( type, query, offset, {
-					cancelToken: source.token,
-				} ).then( response  => {
-					setItems( items.concat( response.data.items ) )
-					setHasMore( response.data.has_more )
-					onItemsLoaded( response )
-				} ).catch( ( error ) => {
-					if ( ! isCancel( error ) ) {
-						console.log( error ) // eslint-disable-line no-console
-					}
 				} )
 			} }
 			{ ...rest }
