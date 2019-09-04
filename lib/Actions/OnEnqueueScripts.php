@@ -155,7 +155,6 @@ class OnEnqueueScripts {
 				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',
-				'wp-components',
 				'fl-vendors',
 			];
 
