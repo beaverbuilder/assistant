@@ -97,13 +97,13 @@ export const Main = ( { match } ) => {
 			header={ <Header /> }
 		>
 
-			{ results && ! results.length &&
+			{ null !== results && ! results.length &&
 				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
 			}
 
-			{ ( '' === keyword || results && ! results.length ) &&
+			{ ( '' === keyword || ( null !== results && ! results.length ) ) &&
 				<>
-				{ searchHistory.length &&
+				{ searchHistory.length > 0 &&
 					<Page.Pad>
 						<Button.Group label={ __( 'Recent Searches' ) }>
 							{ searchHistory.map( ( keyword, key ) =>
@@ -120,7 +120,7 @@ export const Main = ( { match } ) => {
 				</>
 			}
 
-			{ results && !! results.length &&
+			{ null !== results && !! results.length &&
 				<List
 					items={ results }
 					getSectionProps={ ( section, defaultProps ) => {
