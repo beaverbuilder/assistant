@@ -29,6 +29,44 @@ export const Post = ( { location, match, history } ) => {
 
 	const setTab = path => history.replace( path, location.state )
 
+	// What should we be sending to sections?
+	/*
+	- Post data or a getter function (ex: getPost('ID') )
+	- Comments for this post
+	- A collection of actions that can be turned into buttons.
+	- location, match, history for navigation
+	*/
+	const sectionData = {
+		post: item,
+		actions: [
+			{
+				label: __( 'View Post' ),
+				href: item.url,
+			},
+			{
+				label: __( 'Edit in Admin' ),
+				href: '#',
+			},
+			{
+				label: __( 'Beaver Builder' ),
+				href: '#', /* Maybe we want to check here if we can re-enter BB without refresh? */
+			},
+			{
+				label: __( 'Duplicate' ),
+				onClick: () => {},
+			},
+			{
+				label: __( 'Bookmark' ),
+				onClick: () => {},
+			},
+			{
+				label: __( 'Move to Trash' ),
+				onClick: () => {},
+			}
+		],
+		nav: { location, match, history },
+	}
+
 	const tabs = [
 		{
 			path: match.url,
@@ -37,7 +75,7 @@ export const Post = ( { location, match, history } ) => {
 			component: () => (
 				<Page.RegisteredSections
 					location={ { type: 'post' } }
-					data={ { post: item } }
+					data={ sectionData }
 				/>
 			),
 		},
@@ -47,7 +85,7 @@ export const Post = ( { location, match, history } ) => {
 			component: () => (
 				<Page.RegisteredSections
 					location={ { type: 'post', tab: 'comments' } }
-					data={ { post: location.state.item } }
+					data={ sectionData }
 				/>
 			),
 		},

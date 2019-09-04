@@ -97,8 +97,10 @@ export const RegisteredSections = ( { location, data } ) => {
 			render,
 			isEnabled,
 
-			// Location is pulled out here to avoid being passed in ...rest
+			// Location & order are pulled out here to avoid being passed in ...rest
 			location, // eslint-disable-line
+			order, // eslint-disable-line
+
 			...rest
 		} = section
 
