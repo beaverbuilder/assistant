@@ -5,6 +5,7 @@ namespace FL\Assistant\Providers;
 
 use FL\Assistant\Core\Container;
 
+use FL\Assistant\Actions\OnInit;
 use FL\Assistant\Actions\OnEnqueueScripts;
 use FL\Assistant\Actions\OnEditUserProfile;
 use FL\Assistant\Actions\OnPersonalOptionsUpdate;
@@ -68,6 +69,9 @@ class PluginProvider implements ProviderInterface {
 	 * @throws \Exception
 	 */
 	public function register_hooks( Container $container ) {
+		// Handle the WordPress init action.
+		add_action( 'init', new OnInit( $container ) );
+
 		// Enqueue Assistant frontend
 		$enqueue_scripts = new OnEnqueueScripts( $container );
 		add_action( 'wp_enqueue_scripts', $enqueue_scripts );
