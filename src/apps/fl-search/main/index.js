@@ -61,13 +61,13 @@ export const Main = ( { match } ) => {
 	}, [ keyword ] )
 
 	const Header = () => {
-		const inputRef = useRef(null)
+		const inputRef = useRef( null )
 
 		useEffect( () => {
 			if ( inputRef.current ) {
 				inputRef.current.focus()
 			}
-		})
+		} )
 		return (
 			<Page.Pad>
 				<div className='fl-asst-search-form-simple'>
@@ -76,7 +76,7 @@ export const Main = ( { match } ) => {
 						value={ keyword }
 						onChange={ e => setKeyword( e.target.value ) }
 						placeholder={ __( 'Search' ) }
-						ref={inputRef}
+						ref={ inputRef }
 					/>
 					{ '' !== keyword && <Button appearance="transparent" onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
 					{ loading &&
@@ -94,7 +94,7 @@ export const Main = ( { match } ) => {
 			shouldShowHeader={ false }
 			shouldPadTop={ false }
 			shouldPadSides={ false }
-			header={<Header />}
+			header={ <Header /> }
 		>
 
 			{ results && ! results.length &&

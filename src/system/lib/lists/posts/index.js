@@ -48,7 +48,7 @@ export const Posts = ( {
 							isTrashing: true,
 							trashedItem: Object.assign( {}, item ),
 						} )
-						update( id, 'trash' ).then( response => {
+						update( id, 'trash' ).then( () => {
 							updateItemBy( 'uuid', uuid, {
 								title: __( 'This item has been moved to the trash' ),
 								isTrashing: false,
@@ -64,7 +64,7 @@ export const Posts = ( {
 						isTrashed: false,
 						isRestoring: true,
 					} )
-					update( item.trashedItem.id, 'untrash' ).then( response => {
+					update( item.trashedItem.id, 'untrash' ).then( () => {
 						updateItemBy( 'uuid', item.trashedItem.uuid, {
 							...item.trashedItem,
 							isRestoring: false,

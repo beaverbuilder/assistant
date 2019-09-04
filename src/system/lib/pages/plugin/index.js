@@ -26,11 +26,11 @@ export const Plugin = ( { location = {} } ) => {
 		plugin: item,
 		actions: [
 			{
-				label: __('Update'),
+				label: __( 'Update' ),
 				onClick: () => {},
 			},
 			{
-				label: __('Deactivate'),
+				label: __( 'Deactivate' ),
 				onClick: () => {},
 			},
 		]
@@ -43,7 +43,7 @@ export const Plugin = ( { location = {} } ) => {
 			<Form>
 				<Page.RegisteredSections
 					location={ { type: 'plugin' } }
-					data={sectionData}
+					data={ sectionData }
 				/>
 			</Form>
 		</Page>

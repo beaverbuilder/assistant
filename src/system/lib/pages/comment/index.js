@@ -41,27 +41,27 @@ export const Comment = ( { location, match, history } ) => {
 		comment: item,
 		actions: [
 			{
-				label: __('View Post'),
+				label: __( 'View Post' ),
 				href: '#',
 			},
 			{
-				label: __('Edit Comment'),
+				label: __( 'Edit Comment' ),
 				onClick: () => {},
 			},
 			{
-				label: __('Reply to Comment'),
+				label: __( 'Reply to Comment' ),
 				onClick: () => {},
 			},
 			{
-				label: __('Approve Comment'),
+				label: __( 'Approve Comment' ),
 				onClick: () => {},
 			},
 			{
-				label: __('Mark as Spam'),
+				label: __( 'Mark as Spam' ),
 				onClick: () => {},
 			},
 			{
-				label: __('Move to Trash'),
+				label: __( 'Move to Trash' ),
 				onClick: () => {},
 			},
 		],
