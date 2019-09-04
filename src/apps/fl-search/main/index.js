@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'fl-react'
+import React, { useEffect, useState, useRef } from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
@@ -61,14 +61,22 @@ export const Main = ( { match } ) => {
 	}, [ keyword ] )
 
 	const Header = () => {
+		const inputRef = useRef(null)
+
+		useEffect( () => {
+			if ( inputRef.current ) {
+				inputRef.current.focus()
+			}
+		})
 		return (
-			<Page.Pad bottom={ false }>
+			<Page.Pad>
 				<div className='fl-asst-search-form-simple'>
 					<input
-						type="search"
+						type="text"
 						value={ keyword }
 						onChange={ e => setKeyword( e.target.value ) }
 						placeholder={ __( 'Search' ) }
+						ref={inputRef}
 					/>
 					{ '' !== keyword && <Button appearance="transparent" onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
 					{ loading &&
@@ -84,9 +92,9 @@ export const Main = ( { match } ) => {
 	return (
 		<Page
 			shouldShowHeader={ false }
-			shouldPadTop={ true }
+			shouldPadTop={ false }
 			shouldPadSides={ false }
-			header={ <Header /> }
+			header={<Header />}
 		>
 
 			{ results && ! results.length &&
