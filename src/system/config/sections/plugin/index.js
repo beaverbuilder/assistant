@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { getSystemActions } from 'store'
-import { Form, Button } from 'lib'
+import { Form } from 'lib'
 import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
@@ -31,23 +31,6 @@ registerSection( 'fl-plugin-details', {
                 <Form.Item label={ __( 'Version' ) } placement="beside">{plugin.version}</Form.Item>
                 <Form.Item label={ __( 'Author' ) } placement="beside">{plugin.author}</Form.Item>
             </>
-		)
-	},
-} )
-
-registerSection( 'fl-plugin-actions', {
-	label: __( 'Actions' ),
-	location: {
-		type: 'plugin',
-	},
-	render: () => {
-		return (
-			<Form.Item>
-				<Button.Group appearance="grid">
-					<Button>{__( 'Update' )}</Button>
-					<Button>{__( 'Deactivate' )}</Button>
-				</Button.Group>
-			</Form.Item>
 		)
 	},
 } )

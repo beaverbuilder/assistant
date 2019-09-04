@@ -2,7 +2,7 @@ import React from 'fl-react'
 import { __, sprintf } from '@wordpress/i18n'
 import { Page, Form, Control } from 'lib'
 
-export const Comment = ( { location = {} } ) => {
+export const Comment = ( { location, match, history } ) => {
 
 	const defaultItem = {
 		approved: null,
@@ -37,6 +37,37 @@ export const Comment = ( { location = {} } ) => {
 		)
 	}
 
+	const sectionData = {
+		comment: item,
+		actions: [
+			{
+				label: __('View Post'),
+				href: '#',
+			},
+			{
+				label: __('Edit Comment'),
+				onClick: () => {},
+			},
+			{
+				label: __('Reply to Comment'),
+				onClick: () => {},
+			},
+			{
+				label: __('Approve Comment'),
+				onClick: () => {},
+			},
+			{
+				label: __('Mark as Spam'),
+				onClick: () => {},
+			},
+			{
+				label: __('Move to Trash'),
+				onClick: () => {},
+			},
+		],
+		nav: { history, location, match }
+	}
+
 	return (
 		<Page title={ __( 'Edit Comment' ) } shouldPadSides={ false } headerActions={ <Actions /> }>
 
@@ -48,7 +79,7 @@ export const Comment = ( { location = {} } ) => {
 			<Form>
 				<Page.RegisteredSections
 					location={ { type: 'comment' } }
-					data={ { comment: item } }
+					data={ sectionData }
 				/>
 			</Form>
 		</Page>

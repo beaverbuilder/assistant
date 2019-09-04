@@ -22,6 +22,19 @@ export const Plugin = ( { location = {} } ) => {
 
 	const { banner } = item
 
+	const sectionData = {
+		plugin: item,
+		actions: [
+			{
+				label: __('Update'),
+				onClick: () => {},
+			},
+			{
+				label: __('Deactivate'),
+				onClick: () => {},
+			},
+		]
+	}
 
 	return (
 		<Page shouldPadSides={ false } title={ __( 'Plugin' ) }>
@@ -30,7 +43,7 @@ export const Plugin = ( { location = {} } ) => {
 			<Form>
 				<Page.RegisteredSections
 					location={ { type: 'plugin' } }
-					data={ { plugin: item } }
+					data={sectionData}
 				/>
 			</Form>
 		</Page>

@@ -9,7 +9,7 @@ const { registerSection } = getSystemActions()
 registerSection( 'fl-screen-actions', {
 	label: __( 'Actions' ),
 	location: {
-		type: [ 'post', 'attachment' ],
+		type: [ 'post', 'attachment', 'comment', 'plugin' ],
 	},
 	render: ( { actions } ) => {
 
