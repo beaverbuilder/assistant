@@ -1,6 +1,7 @@
 import React from 'fl-react'
-import { List, Button, Icon } from 'lib'
 import { __ } from '@wordpress/i18n'
+import { List, Button, Icon } from 'lib'
+import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'shared-utils/wordpress'
 
 export const Posts = ( {
@@ -18,12 +19,21 @@ export const Posts = ( {
 				shouldAlwaysShowThumbnail: true
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const { removeItem, cloneItem } = defaultProps
-				const desc = 'by ' + item.author + ' | ' + item.visibility
+				const { removeItem, cloneItem, updateItemsBy } = defaultProps
 
 				const clonePost = () => {
-					clone( item.id )
-					cloneItem()
+					const cloneId = cloneItem( {
+						id: null,
+						author: null,
+						visibility: null,
+						title: __( 'Cloning...' ),
+					} )
+					clone( item.id ).then( response => {
+						updateItemsBy( 'cloneId', cloneId, {
+							...response.data,
+							isCloning: false,
+						} )
+					} )
 				}
 
 				const trashPost = () => {
@@ -33,18 +43,34 @@ export const Posts = ( {
 					}
 				}
 
+				const getDescription = () => {
+					if ( item.author && item.visibility ) {
+						return __( 'by' ) + ' ' + item.author + ' | ' + item.visibility
+					} else if ( item.author ) {
+						return __( 'by' ) + ' ' + item.author
+					} else if ( item.visibility ) {
+						return item.visibility
+					}
+				}
+
 				const Extras = () => {
 					return (
 						<div className="fl-asst-item-extras">
 							<div className="fl-asst-item-extras-left">
 								<Button tabIndex="-1" href={ item.url }>{__( 'View' )}</Button>
 								<Button tabIndex="-1" href={ item.editUrl }>{__( 'Edit' )}</Button>
-								<Button tabIndex="-1">{__( 'Beaver Builder' )}</Button>
+								{ item.bbCanEdit &&
+									<Button tabIndex="-1" href={ item.bbEditUrl }>{ item.bbBranding }</Button>
+								}
 							</div>
 							<div className="fl-asst-item-extras-right">
-								<Button tabIndex="-1">
+								<Clipboard
+									button-tabIndex={ '-1' }
+									button-className={ 'fl-asst-button fl-asst-button-appearance-normal' }
+									data-clipboard-text={ item.url }
+								>
 									<Icon.Link />
-								</Button>
+								</Clipboard>
 								<Button tabIndex="-1">
 									<Icon.Bookmark />
 								</Button>
@@ -62,10 +88,10 @@ export const Posts = ( {
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
-					description: desc,
+					description: getDescription(),
 					thumbnail: item.thumbnail,
 					thumbnailSize: 'med',
-					extras: props => <Extras { ...props } />,
+					extras: item.isCloning ? null : props => <Extras { ...props } />,
 				} )
 			} }
 			{ ...rest }

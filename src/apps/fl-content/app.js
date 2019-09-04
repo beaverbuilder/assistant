@@ -56,13 +56,16 @@ const Main = ( { match } ) => {
 					setPager( response.data )
 				} }
 				getItemProps={ ( item, defaultProps ) => {
-					return {
-						...defaultProps,
-						to: {
-							pathname: `/${handle}/post/${item.id}`,
-							state: { item }
-						},
+					if ( item.id ) {
+						return {
+							...defaultProps,
+							to: {
+								pathname: `/${handle}/post/${item.id}`,
+								state: { item }
+							},
+						}
 					}
+					return defaultProps
 				} }
 
 				isSelecting={ isSelecting }

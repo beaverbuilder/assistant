@@ -155,3 +155,10 @@
     }
 
 }
+
+/* Hide while in Beaver Builder */
+.fl-builder-edit {
+	.fl-asst {
+		display: none;
+	}
+}
