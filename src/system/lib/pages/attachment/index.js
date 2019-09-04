@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form, Control, Button } from 'lib'
+import { Page, Form, Control } from 'lib'
 
 /**
  * Get a srcset string from an object of sizes.
@@ -12,7 +12,7 @@ const getSrcSet = ( sizes = {} ) => {
 	} ).join( ', ' )
 }
 
-export const Attachment = ( { location } ) => {
+export const Attachment = ( { location, match, history } ) => {
 	const defaultItem = {
 		url: '',
 		sizes: {},
@@ -34,6 +34,33 @@ export const Attachment = ( { location } ) => {
 		)
 	}
 
+	const sectionData = {
+		attachment: item,
+		actions: [
+			{
+				label: __( 'View Attachment Page' ),
+				href: '#'
+			},
+			{
+				label: __( 'Edit in Admin' ),
+				href: '#'
+			},
+			{
+				label: __( 'Replace File' ),
+				onClick: () => {}
+			},
+			{
+				label: __( 'Refresh Thumbnails' ),
+				onClick: () => {}
+			},
+			{
+				label: __( 'Move to Trash' ),
+				onClick: () => {}
+			},
+		],
+		nav: { location, match, history },
+	}
+
 	return (
 		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } headerActions={ <Actions /> }>
 
@@ -42,20 +69,8 @@ export const Attachment = ( { location } ) => {
 			<Form>
 				<Page.RegisteredSections
 					location={ { type: 'attachment' } }
-					data={ { attachment: item } }
+					data={ sectionData }
 				/>
-
-				<Form.Section label={ __( 'Actions' ) }>
-					<Form.Item>
-						<Button.Group appearance="grid">
-							<Button>{__( 'View Attachment Page' )}</Button>
-							<Button>{__( 'Edit in Admin' )}</Button>
-							<Button>{__( 'Replace File' )}</Button>
-							<Button>{__( 'Regenerate Thumbnails' )}</Button>
-							<Button>{__( 'Move to Trash' )}</Button>
-						</Button.Group>
-					</Form.Item>
-				</Form.Section>
 			</Form>
 		</Page>
 	)
