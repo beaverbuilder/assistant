@@ -402,8 +402,8 @@ const notations = () => {
 				post_status: 'publish',
 				meta_input: {
 					fl_asst_notation_type: type,
-					fl_asst_notation_object_id: objectType,
-					fl_asst_notation_object_type: objectId,
+					fl_asst_notation_object_id: objectId,
+					fl_asst_notation_object_type: objectType,
 					...meta,
 				},
 			}, config )
@@ -412,8 +412,13 @@ const notations = () => {
 		/**
          * Delete a notation
          */
-        delete( id, config = {} ) {
-            return posts().delete( id, config )
+        delete( type, objectType, objectId, meta = {}, config = {} ) {
+            return http.post(`fl-assistant/v1/notations/delete-where-meta`, {
+				fl_asst_notation_type: type,
+				fl_asst_notation_object_type: objectType,
+				fl_asst_notation_object_id: objectId,
+				...meta,
+			}, config)
         },
 
 		/**
@@ -426,12 +431,30 @@ const notations = () => {
         },
 
 		/**
+         * Delete a "favorite" notation
+         */
+        deleteFavorite( objectType, objectId, userId, config = {} ) {
+            return notations().delete( 'favorite', objectType, objectId, {
+				fl_asst_notation_user_id: userId,
+			}, config )
+        },
+
+		/**
          * Create a new "label" notation
          */
         createLabel( objectType, objectId, labelId, config = {} ) {
             return notations().create( 'label', objectType, objectId, {
 				fl_asst_notation_label_id: labelId,
 			}, config )
-        }
+        },
+
+		/**
+         * Delete a "label" notation
+         */
+        deleteLabel( objectType, objectId, labelId, config = {} ) {
+            return notations().delete( 'label', objectType, objectId, {
+				fl_asst_notation_label_id: labelId,
+			}, config )
+        },
     }
 }

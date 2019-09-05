@@ -24,8 +24,13 @@ export const Posts = ( {
 				const { cloneItem, updateItem, updateItemBy } = defaultProps
 
 				const favoritePost = () => {
-					//wpRest.notations().createFavorite( 'post', item.id, currentUser.id )
-					//wpRest.notations().delete( 21623 )
+					if ( item.isFavorite ) {
+						wpRest.notations().deleteFavorite( 'post', item.id, currentUser.id )
+						updateItem( { isFavorite: false } )
+					} else {
+						wpRest.notations().createFavorite( 'post', item.id, currentUser.id )
+						updateItem( { isFavorite: true } )
+					}
 				}
 
 				const clonePost = () => {
@@ -117,7 +122,7 @@ export const Posts = ( {
 								>
 									<Icon.Link />
 								</Clipboard>
-								<Button onClick={ favoritePost } tabIndex="-1">
+								<Button onClick={ favoritePost } tabIndex="-1" className={ item.isFavorite ? 'fl-asst-is-favorite' : '' }>
 									<Icon.Bookmark />
 								</Button>
 								<Button onClick={ clonePost } tabIndex="-1">

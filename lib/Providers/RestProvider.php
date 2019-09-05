@@ -10,6 +10,7 @@ use FL\Assistant\Controllers\AssistantController;
 use FL\Assistant\Controllers\AttachmentsController;
 use FL\Assistant\Controllers\CommentsController;
 use FL\Assistant\Controllers\CountsController;
+use FL\Assistant\Controllers\NotationsController;
 use FL\Assistant\Controllers\NotificationsController;
 use FL\Assistant\Controllers\PostsController;
 use FL\Assistant\Controllers\TermsController;
@@ -30,6 +31,7 @@ class RestProvider implements ProviderInterface {
 		AttachmentsController::class,
 		CommentsController::class,
 		CountsController::class,
+		NotationsController::class,
 		NotificationsController::class,
 		PostsController::class,
 		TermsController::class,

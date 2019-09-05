@@ -13,6 +13,7 @@ use FL\Assistant\Actions\OnWPBeforeAdminBarRender;
 use FL\Assistant\Filters\OnHeartbeatReceived;
 
 use FL\Assistant\Services\BeaverBuilderService;
+use FL\Assistant\Services\NotationService;
 use FL\Assistant\Services\PostService;
 use FL\Assistant\Services\SiteService;
 use FL\Assistant\Services\UserService;
@@ -57,6 +58,12 @@ class PluginProvider implements ProviderInterface {
 		$container->register_service(
 			'beaver_builder', function ( $container ) {
 				return new BeaverBuilderService( $container );
+			}
+		);
+
+		$container->register_service(
+			'notations', function ( $container ) {
+				return new NotationService( $container );
 			}
 		);
 
