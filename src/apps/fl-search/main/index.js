@@ -68,7 +68,7 @@ export const Main = ( { match } ) => {
 				inputRef.current.focus()
 			}
 		}, [] )
-		
+
 		return (
 			<Page.Pad>
 				<div className='fl-asst-search-form-simple'>
@@ -104,7 +104,7 @@ export const Main = ( { match } ) => {
 
 			{ ( '' === keyword || ( null !== results && ! results.length ) ) &&
 				<>
-				{ searchHistory.length > 0 &&
+				{ 0 < searchHistory.length &&
 					<Page.Pad>
 						<Button.Group label={ __( 'Recent Searches' ) }>
 							{ searchHistory.map( ( keyword, key ) =>

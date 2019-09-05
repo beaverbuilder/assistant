@@ -3,6 +3,7 @@ import { ToggleControl } from './toggle'
 import { URLControl } from './url'
 import { NextPrev } from './prev-next'
 import { Code } from './code'
+import { TagGroup, Tag } from './tag-group'
 
 export const Control = props => <input { ...props } />
 
@@ -17,3 +18,9 @@ Control.NextPrev.displayName = 'Control.NextPrev'
 
 Control.Code = Code
 Control.Code.displayName = 'Control.Code'
+
+Control.Tag = Tag
+Control.Tag.displayName = 'Control.Tag'
+
+Control.TagGroup = TagGroup
+Control.TagGroup.displayName = 'Control.TagGroup'

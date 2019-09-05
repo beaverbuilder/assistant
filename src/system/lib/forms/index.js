@@ -11,7 +11,7 @@ export const Form = ( { className, ...rest } ) => {
 		'fl-asst-form': true,
 	}, className )
 
-	return <form className={ classes } { ...rest } />
+	return <form className={ classes } onSubmit={ e => e.preventDefault() } { ...rest } />
 }
 
 Form.Item = props => {

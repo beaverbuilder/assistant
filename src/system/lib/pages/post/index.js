@@ -29,6 +29,7 @@ export const Post = ( { location, match, history } ) => {
 
 	const setTab = path => history.replace( path, location.state )
 
+
 	// What should we be sending to sections?
 	/*
 	- Post data or a getter function (ex: getPost('ID') )
@@ -56,13 +57,19 @@ export const Post = ( { location, match, history } ) => {
 				onClick: () => {},
 			},
 			{
-				label: __( 'Bookmark' ),
+				label: __( 'Mark as Favorite' ),
 				onClick: () => {},
 			},
 			{
 				label: __( 'Move to Trash' ),
 				onClick: () => {},
 			}
+		],
+		labels: [
+			{ id: 4, label: __( 'Red' ), color: 'red' },
+			{ id: 5, label: __( 'Blue' ), color: 'blue' },
+			{ id: 6, label: __( 'Needs SEO' ), color: 'green' },
+			{ id: 7, label: __( 'This is Stupid' ), color: 'orange' },
 		],
 		nav: { location, match, history },
 	}

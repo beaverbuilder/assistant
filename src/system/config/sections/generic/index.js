@@ -1,11 +1,30 @@
 import React from 'fl-react'
 import { getSystemActions } from 'store'
-import { Form, Button } from 'lib'
+import { Form, Button, Control } from 'lib'
 import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
 
-// Generic Actions Section
+registerSection( 'fl-screen-labels', {
+	label: __( 'Labels & Favorites' ),
+	location: {
+		type: [ 'post', 'attachment', 'comment', 'plugin' ],
+	},
+	render: ( { labels } ) => {
+
+		return (
+			<>
+				<Form.Item label={ __( 'Labels' ) }>
+					<Control.TagGroup tags={ labels } />
+				</Form.Item>
+				<Form.Item label={ __( 'Mark as Favorite' ) } placement="beside">
+					<Button>{__( 'Favorite' )}</Button>
+				</Form.Item>
+			</>
+		)
+	},
+} )
+
 registerSection( 'fl-screen-actions', {
 	label: __( 'Actions' ),
 	location: {
