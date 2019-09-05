@@ -25,22 +25,29 @@ export const User = ( { location, match, history } ) => {
 
 	const setTab = path => history.replace( path, location.state )
 
+	const tabProps = {
+		user,
+		location,
+		match,
+		history,
+	}
+
 	const tabs = [
 		{
 			path: match.url,
 			label: __( 'General' ),
 			exact: true,
-			component: () => ( <GeneralTab user={ user }/> ),
+			component: () => ( <GeneralTab {...tabProps} /> ),
 		},
 		{
 			path: match.url + '/preferences',
 			label: __( 'Preferences' ),
-			component: () => ( <PreferencesTab user={ user }/> ),
+			component: () => ( <PreferencesTab {...tabProps} /> ),
 		},
 		{
 			path: match.url + '/posts',
 			label: __( 'Posts' ),
-			component: () => ( <PostsTab user={ user }/> ),
+			component: () => ( <PostsTab {...tabProps} /> ),
 		}
 	]
 

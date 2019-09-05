@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { Nav } from 'assistant/lib'
+import { Nav, Page } from 'assistant/lib'
 
 import { Main } from './pages/main'
 import { User } from './pages/user'
@@ -12,6 +12,7 @@ export const Users = ( { match } ) => (
 		<Nav.Route path={ `${match.url}/search` } component={ Search }/>
 		<Nav.Route path={ `${match.url}/invite` } component={ Invite }/>
 		<Nav.Route path={ `${match.url}/user/:id` } component={ User } />
+		<Nav.Route path={`${match.url}/post/:id`} component={Page.Post} />
 	</Nav.Switch>
 )
 

@@ -20,7 +20,7 @@ export const useScrollLoader = ( {
 	}
 
 	useEffect( () => {
-		if ( 'undefined' === ref.current ) {
+		if ( 'undefined' === typeof ref.current ) {
 			return
 		}
 		if ( hasMore && ! isFetching ) {
@@ -29,8 +29,8 @@ export const useScrollLoader = ( {
 					setIsFetching( true )
 				}
 			}
-			ref.current.addEventListener( 'scroll', handleScroll )
-			return () => ref.current.removeEventListener( 'scroll', handleScroll )
+			ref.current.addEventListener('scroll', handleScroll )
+			return () => ref.current.removeEventListener('scroll', handleScroll )
 		}
 	}, [ isFetching, hasMore ] )
 
