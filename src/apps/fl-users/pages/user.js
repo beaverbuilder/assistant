@@ -67,7 +67,7 @@ export const User = ( { location, match, history } ) => {
 					{tabs.map( ( { label, path }, i ) => (
 						<Button key={ i }
 							onClick={ () => setTab( path ) }
-							isSelected={ path === match.url }
+							isSelected={ path === location.pathname }
 						>{label}</Button>
 					) )}
 				</Button.Group>
