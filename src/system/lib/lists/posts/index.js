@@ -3,13 +3,15 @@ import { __ } from '@wordpress/i18n'
 import { List, Button, Icon } from 'lib'
 import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'shared-utils/wordpress'
+import { getSystemConfig } from 'store'
 
 export const Posts = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {},
 	...rest,
 } ) => {
-	const { update, clone } = getWpRest().posts()
+	const wpRest = getWpRest()
+	const { currentUser } = getSystemConfig()
 
 	return (
 		<List.WordPress
@@ -21,6 +23,11 @@ export const Posts = ( {
 			getItemProps={ ( item, defaultProps ) => {
 				const { cloneItem, updateItem, updateItemBy } = defaultProps
 
+				const favoritePost = () => {
+					//wpRest.notations().createFavorite( 'post', item.id, currentUser.id )
+					//wpRest.notations().delete( 21623 )
+				}
+
 				const clonePost = () => {
 					const clonedItem = cloneItem( {
 						id: null,
@@ -29,7 +36,7 @@ export const Posts = ( {
 						title: __( 'Cloning...' ),
 						isCloning: true,
 					} )
-					clone( item.id ).then( response => {
+					wpRest.posts().clone( item.id ).then( response => {
 						updateItemBy( 'uuid', clonedItem.uuid, {
 							...response.data,
 							isCloning: false,
@@ -48,7 +55,7 @@ export const Posts = ( {
 							isTrashing: true,
 							trashedItem: Object.assign( {}, item ),
 						} )
-						update( id, 'trash' ).then( response => {
+						wpRest.posts().update( id, 'trash' ).then( response => {
 							updateItemBy( 'uuid', uuid, {
 								title: __( 'This item has been moved to the trash' ),
 								isTrashing: false,
@@ -64,7 +71,7 @@ export const Posts = ( {
 						isTrashed: false,
 						isRestoring: true,
 					} )
-					update( item.trashedItem.id, 'untrash' ).then( response => {
+					wpRest.posts().update( item.trashedItem.id, 'untrash' ).then( response => {
 						updateItemBy( 'uuid', item.trashedItem.uuid, {
 							...item.trashedItem,
 							isRestoring: false,
@@ -110,7 +117,7 @@ export const Posts = ( {
 								>
 									<Icon.Link />
 								</Clipboard>
-								<Button tabIndex="-1">
+								<Button onClick={ favoritePost } tabIndex="-1">
 									<Icon.Bookmark />
 								</Button>
 								<Button onClick={ clonePost } tabIndex="-1">

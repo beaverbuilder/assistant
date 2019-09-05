@@ -48,6 +48,7 @@ export const getWpRest = () => {
         comments,
         updates,
         search,
+		notations,
         getPagedContent,
         getContent
     }
@@ -113,7 +114,15 @@ const posts = () => {
 			}, config)
         },
         /**
-         * Create a new post
+         * Delete a post
+         * @param id
+         * @param config
+         */
+        delete(id, config = {}) {
+            return http.delete(`fl-assistant/v1/post/${id}`, config)
+        },
+        /**
+         * Clone a post
          * @param data
          * @param config
          */
@@ -124,7 +133,7 @@ const posts = () => {
 }
 
 /**
- *
+ * Methods related to users
  */
 const users = () => {
     return {
@@ -249,7 +258,7 @@ const comments = () => {
 }
 
 /**
- *
+ * Methods related to attachments
  * @type {{findWhere(*=): *, findById(*): *, update(*, *, *=): *}}
  */
 const attachments = () => {
@@ -377,4 +386,52 @@ const search = (keyword, routes, config = {}) => {
         },
         ...config
     });
+}
+
+/**
+ * Methods related to notations
+ */
+const notations = () => {
+    return {
+        /**
+         * Create a new notation
+         */
+        create( type, objectType, objectId, meta = {}, config = {} ) {
+            return posts().create( {
+				post_type: 'fl_asst_notation',
+				post_status: 'publish',
+				meta_input: {
+					fl_asst_notation_type: type,
+					fl_asst_notation_object_id: objectType,
+					fl_asst_notation_object_type: objectId,
+					...meta,
+				},
+			}, config )
+        },
+
+		/**
+         * Delete a notation
+         */
+        delete( id, config = {} ) {
+            return posts().delete( id, config )
+        },
+
+		/**
+         * Create a new "favorite" notation
+         */
+        createFavorite( objectType, objectId, userId, config = {} ) {
+            return notations().create( 'favorite', objectType, objectId, {
+				fl_asst_notation_user_id: userId,
+			}, config )
+        },
+
+		/**
+         * Create a new "label" notation
+         */
+        createLabel( objectType, objectId, labelId, config = {} ) {
+            return notations().create( 'label', objectType, objectId, {
+				fl_asst_notation_label_id: labelId,
+			}, config )
+        }
+    }
 }
