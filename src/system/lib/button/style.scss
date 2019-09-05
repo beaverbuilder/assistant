@@ -83,7 +83,7 @@
         &.fl-asst-button-group-appearance-normal {
             .fl-asst-button {
                 background: transparent;
-                color: inherit;
+                color: var(--fl-asst-secondary-surface-color);
                 border-radius: 4px;
                 z-index:1;
                 white-space: nowrap;

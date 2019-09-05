@@ -49,6 +49,8 @@
     }
 
     .fl-asst-brightness-dark .fl-asst-tag {
+        color: var(--fl-asst-secondary-surface-color);
+        background: var(--fl-asst-dark-3);
         box-shadow: none;
     }
 }
