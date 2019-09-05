@@ -34,6 +34,7 @@ class PostTransformer {
 	public function transform( \WP_Post $post ) {
 
 		$bb_service = $this->service( 'beaver_builder' );
+		$notations_service = $this->service( 'notations' );
 
 		$author   = get_the_author_meta( 'display_name', $post->post_author );
 		$date     = get_the_date( '', $post );
@@ -71,6 +72,10 @@ class PostTransformer {
 			$response['bbBranding']  = \FLBuilderModel::get_branding();
 			$response['bbEditUrl']   = \FLBuilderModel::get_edit_url( $post->ID );
 		}
+
+		// Favorites
+		$favorites = $notations_service->get_favorites( 'post', $post->ID, get_current_user_id() );
+		$response['isFavorite'] = !! count( $favorites );
 
 		return $response;
 	}
