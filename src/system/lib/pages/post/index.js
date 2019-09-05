@@ -66,10 +66,10 @@ export const Post = ( { location, match, history } ) => {
 			}
 		],
 		labels: [
-			{ id: 4, label: __( 'Red' ), color: 'red' },
-			{ id: 5, label: __( 'Blue' ), color: 'blue' },
-			{ id: 6, label: __( 'Needs SEO' ), color: 'green' },
-			{ id: 7, label: __( 'This is Stupid' ), color: 'orange' },
+			{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
+			{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
+			{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
+			{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
 		],
 		nav: { location, match, history },
 	}
