@@ -37,17 +37,17 @@ export const User = ( { location, match, history } ) => {
 			path: match.url,
 			label: __( 'General' ),
 			exact: true,
-			component: () => ( <GeneralTab {...tabProps} /> ),
+			component: () => ( <GeneralTab { ...tabProps } /> ),
 		},
 		{
 			path: match.url + '/preferences',
 			label: __( 'Preferences' ),
-			component: () => ( <PreferencesTab {...tabProps} /> ),
+			component: () => ( <PreferencesTab { ...tabProps } /> ),
 		},
 		{
 			path: match.url + '/posts',
 			label: __( 'Posts' ),
-			component: () => ( <PostsTab {...tabProps} /> ),
+			component: () => ( <PostsTab { ...tabProps } /> ),
 		}
 	]
 

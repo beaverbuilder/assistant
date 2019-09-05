@@ -2,14 +2,14 @@ import React, { useContext } from 'fl-react'
 import { sprintf } from '@wordpress/i18n'
 import { Form, List, App } from 'assistant/lib'
 
-export const PostsTab = ({ user }) => {
+export const PostsTab = ( { user } ) => {
 	const { handle } = useContext( App.Context )
 	return (
 		<Form>
-			<Form.Section label={ sprintf( 'Posts by %s', user.displayName )} shouldPadSides={false}>
+			<Form.Section label={ sprintf( 'Posts by %s', user.displayName ) } shouldPadSides={ false }>
 				<List.Posts
 					query={ { author: user.id } }
-					getItemProps={ (item, defaultProps) => {
+					getItemProps={ ( item, defaultProps ) => {
 						return {
 							...defaultProps,
 							extras: null,
@@ -20,7 +20,7 @@ export const PostsTab = ({ user }) => {
 								state: { item }
 							}
 						}
-					}}
+					} }
 				/>
 			</Form.Section>
 		</Form>

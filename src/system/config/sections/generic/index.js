@@ -12,7 +12,9 @@ registerSection( 'fl-screen-labels', {
 	},
 	render: ( { labels } ) => {
 
-		if ( 'undefined' === typeof labels ) return null
+		if ( 'undefined' === typeof labels ) {
+			return null
+		}
 
 		return (
 			<>

@@ -29,8 +29,8 @@ export const useScrollLoader = ( {
 					setIsFetching( true )
 				}
 			}
-			ref.current.addEventListener('scroll', handleScroll )
-			return () => ref.current.removeEventListener('scroll', handleScroll )
+			ref.current.addEventListener( 'scroll', handleScroll )
+			return () => ref.current.removeEventListener( 'scroll', handleScroll )
 		}
 	}, [ isFetching, hasMore ] )
 
