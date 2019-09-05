@@ -1,9 +1,10 @@
 import React from 'fl-react'
 import classnames from 'classnames'
 
-export const Well = ( props ) => {
+export const Well = ({ className, style: initialStyles, ...rest }) => {
 
 	const style = {
+		...initialStyles,
 		background: 'var(--fl-asst-secondary-surface-background)',
 		borderRadius: 15,
 		padding: '20px',
@@ -11,12 +12,10 @@ export const Well = ( props ) => {
 	}
 
 	const classes = classnames(
-		'fl-asst-well',
-		props.className
+		'fl-asst-secondary-surface',
+		className
 	)
 	return (
-		<div className={ classes } style={ style }>
-			{ props.children }
-		</div>
+		<div className={ classes } style={ style } {...rest} />
 	)
 }

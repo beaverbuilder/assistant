@@ -1,5 +1,6 @@
 import React from 'fl-react'
-import { Button } from 'assistant/lib'
+import { Button, Page } from 'assistant/lib'
+import { __ } from '@wordpress/i18n'
 import { Well } from '../well'
 import './profile-card.scss'
 
@@ -21,11 +22,11 @@ export const ProfileCard = ( props ) => {
 					</div>
 				</div>
 
-				<Button.Group className="actions">
-					<Button to={ `/fl-users/user/${user.id}` }>Edit</Button>
-					<Button href={ user.url }>Author Page</Button>
-					<Button href={ user.editUrl }>Edit in Admin</Button>
-				</Button.Group>
+				<Page.Toolbar style={{ padding: 'var(--fl-asst-inner-space) 0 0' }}>
+					<Button to={ `/fl-users/user/${user.id}` }>{__('Edit')}</Button>
+					<Button href={ user.url }>{__('Author Page')}</Button>
+					<Button href={ user.editUrl }>{__('Edit in Admin')}</Button>
+				</Page.Toolbar>
 			</Well>
 		</div>
 	)
