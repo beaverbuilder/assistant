@@ -1,6 +1,8 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, List } from 'assistant/ui'
+import { useAppState, getAppActions } from 'assistant/data'
+import { image as imgUtils } from 'assistant/utils'
 import './style.scss'
 
 export const MediaApp = ( { match } ) => (
@@ -11,28 +13,90 @@ export const MediaApp = ( { match } ) => (
 )
 
 const Main = ( { match } ) => {
+	const { listStyle } = useAppState( 'fl-media' )
+	const { setListStyle } = getAppActions()
+
+	const Actions = () => {
+		return (
+			<>
+				<select onChange={ e => setListStyle( e.target.value ) } value={ listStyle }>
+					<option value=''>{__( 'List' )}</option>
+					<option value='grid'>{__( 'Grid' )}</option>
+				</select>
+			</>
+		)
+	}
 
 	return (
-		<Page shouldPadBottom={ true } shouldPadSides={ false }>
+		<Page shouldPadBottom={ true } shouldPadSides={ false } headerActions={ <Actions /> }>
 
-			<List.WordPress
-				type="attachments"
-				getItemProps={ ( item, defaultProps ) => {
-					return {
-						...defaultProps,
-						thumbnail: item.thumbnail,
-						shouldAlwaysShowThumbnail: true,
+			{ '' === listStyle && <MediaList baseURL={ match.url } /> }
+			{ 'grid' === listStyle && <MediaGrid baseURL={ match.url } /> }
 
-						label: item.title ? item.title : __( 'Untitled' ),
-						description: item.type + ' | ' + item.subtype,
-						to: {
-							pathname: `${match.url}/attachment/${item.id}`,
-							state: { item }
-						},
-					}
-				} }
-			/>
 		</Page>
+	)
+}
+
+const MediaList = ( { baseURL, ...rest } ) => {
+	return (
+		<List.WordPress
+			type="attachments"
+			getItemProps={ ( item, defaultProps ) => {
+				return {
+					...defaultProps,
+					thumbnail: item.thumbnail,
+					shouldAlwaysShowThumbnail: true,
+
+					label: item.title ? item.title : __( 'Untitled' ),
+					description: item.type + ' | ' + item.subtype,
+					to: {
+						pathname: `${baseURL}/attachment/${item.id}`,
+						state: { item }
+					},
+				}
+			} }
+			{ ...rest }
+		/>
+	)
+}
+
+const GridItem = ( { type, thumbnail, sizes } ) => {
+	const { getSrcSet } = imgUtils
+
+	if ( 'image' !== type ) {
+		return null
+	}
+
+	return (
+		<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
+	)
+}
+
+const MediaGrid = ( { baseURL, ...rest } ) => {
+	return (
+		<List.WordPress
+			type="attachments"
+			className="fl-asst-grid-list"
+			getItemProps={ ( item, defaultProps ) => {
+				return {
+					...defaultProps,
+					thumbnail: item.thumbnail,
+					shouldAlwaysShowThumbnail: true,
+
+					label: item.title ? item.title : __( 'Untitled' ),
+					to: {
+						pathname: `${baseURL}/attachment/${item.id}`,
+						state: { item }
+					},
+
+					className: 'fl-asst-grid-list-item',
+					children: () => (
+						<GridItem { ...item } />
+					)
+				}
+			} }
+			{ ...rest }
+		/>
 	)
 }
 

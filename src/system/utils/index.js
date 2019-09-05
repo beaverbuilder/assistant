@@ -4,6 +4,7 @@ import * as wordpress from 'shared-utils/wordpress'
 
 import * as color from './color'
 import * as gravatar from './gravatar'
+import * as image from './image'
 
 // Anything from utils that needs to be exposed publicly can go here
 export default {
@@ -12,6 +13,7 @@ export default {
 	wordpress,
 	color,
 	gravatar,
+	image,
 }
 
 export * from 'shared-utils/react'

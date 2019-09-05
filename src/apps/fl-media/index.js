@@ -11,6 +11,9 @@ registerApp( 'fl-media', {
 	accent: {
 		color: '#FF5A5E'
 	},
+	state: {
+		listStyle: '',
+	},
 	search: {
 		label: __( 'Media' ),
 		priority: 100,

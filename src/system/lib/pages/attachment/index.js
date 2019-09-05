@@ -1,16 +1,7 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Form, Control } from 'lib'
-
-/**
- * Get a srcset string from an object of sizes.
- * Expects size.url and size.width to be present.
- */
-const getSrcSet = ( sizes = {} ) => {
-	return Object.values( sizes ).map( size => {
-		return size.url + ' ' + size.width + 'w'
-	} ).join( ', ' )
-}
+import { getSrcSet } from 'utils/image'
 
 export const Attachment = ( { location, match, history } ) => {
 	const defaultItem = {
