@@ -22,10 +22,10 @@ export const ProfileCard = ( props ) => {
 					</div>
 				</div>
 
-				<Page.Toolbar style={{ padding: 'var(--fl-asst-inner-space) 0 0' }}>
-					<Button to={ `/fl-users/user/${user.id}` }>{__('Edit')}</Button>
-					<Button href={ user.url }>{__('Author Page')}</Button>
-					<Button href={ user.editUrl }>{__('Edit in Admin')}</Button>
+				<Page.Toolbar style={ { padding: 'var(--fl-asst-inner-space) 0 0' } }>
+					<Button to={ `/fl-users/user/${user.id}` }>{__( 'Edit' )}</Button>
+					<Button href={ user.url }>{__( 'Author Page' )}</Button>
+					<Button href={ user.editUrl }>{__( 'Edit in Admin' )}</Button>
 				</Page.Toolbar>
 			</Well>
 		</div>

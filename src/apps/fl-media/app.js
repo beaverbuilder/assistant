@@ -1,6 +1,6 @@
-import React, { useState, useLayoutEffect } from 'fl-react'
-import { Page, Nav } from 'assistant/ui'
-import { getWpRest } from 'assistant/utils/wordpress'
+import React from 'fl-react'
+import { __ } from '@wordpress/i18n'
+import { Page, Nav, List } from 'assistant/ui'
 import './style.scss'
 
 export const MediaApp = ( { match } ) => (
@@ -11,43 +11,27 @@ export const MediaApp = ( { match } ) => (
 )
 
 const Main = ( { match } ) => {
-	const [ images, setImages ] = useState( [] )
-	const [ , setHasMore ] = useState( false )
-	const hasImages = 0 < images.length
-	const query = {
-		postsPerPage: 50,
-	}
-
-	useLayoutEffect( () => {
-		getWpRest()
-			.getPagedContent( 'attachments', query, 0 )
-			.then( response => {
-				setImages( response.data.items )
-				setHasMore( response.data.has_more )
-			} )
-	}, [] )
 
 	return (
 		<Page shouldPadBottom={ true } shouldPadSides={ false }>
-			{ hasImages &&
-				<div className="fl-asst-recent-media-display">
-					{ images.map( ( item, i ) => {
-						if ( 'image' !== item.type ) {
-							return null
-						}
-						const to = {
+
+			<List.WordPress
+				type="attachments"
+				getItemProps={ ( item, defaultProps ) => {
+					return {
+						...defaultProps,
+						thumbnail: item.thumbnail,
+						shouldAlwaysShowThumbnail: true,
+
+						label: item.title ? item.title : __( 'Untitled' ),
+						description: item.type + ' | ' + item.subtype,
+						to: {
 							pathname: `${match.url}/attachment/${item.id}`,
 							state: { item }
-						}
-
-						return (
-							<Nav.Link key={ i } to={ to } >
-								<img src={ item.thumbnail } />
-							</Nav.Link>
-						)
-					} )}
-				</div>
-			}
+						},
+					}
+				} }
+			/>
 		</Page>
 	)
 }

@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import classnames from 'classnames'
 
-export const Well = ({ className, style: initialStyles, ...rest }) => {
+export const Well = ( { className, style: initialStyles, ...rest } ) => {
 
 	const style = {
 		...initialStyles,
@@ -16,6 +16,6 @@ export const Well = ({ className, style: initialStyles, ...rest }) => {
 		className
 	)
 	return (
-		<div className={ classes } style={ style } {...rest} />
+		<div className={ classes } style={ style } { ...rest } />
 	)
 }
