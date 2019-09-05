@@ -8,9 +8,11 @@ const { registerSection } = getSystemActions()
 registerSection( 'fl-screen-labels', {
 	label: __( 'Labels & Favorites' ),
 	location: {
-		type: [ 'post', 'attachment', 'comment', 'plugin' ],
+		type: [ 'post' ],
 	},
 	render: ( { labels } ) => {
+
+		if ( 'undefined' === typeof labels ) return null
 
 		return (
 			<>
