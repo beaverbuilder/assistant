@@ -38,7 +38,7 @@ registerSection( 'fl-user-url', {
 	render: ( { user } ) => {
 		return (
 			<Form.Item>
-				<Control.URL url={ user.url } />
+				<Control.URL value={ user.url } />
 			</Form.Item>
 		)
 	},

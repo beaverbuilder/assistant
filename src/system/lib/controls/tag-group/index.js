@@ -3,7 +3,7 @@ import classname from 'fl-classnames'
 import { Button } from 'lib'
 import './style.scss'
 
-export const TagGroup = ( { tags, className } ) => {
+export const TagGroup = ( { value: tags, className } ) => {
 
 	const classes = classname( {
 		'fl-asst-tag-group': true,

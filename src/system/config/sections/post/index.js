@@ -9,28 +9,31 @@ registerSection( 'fl-post-title', {
 	location: {
 		type: 'post',
 	},
-	render: ({ useForm }) => {
+	render: ( { useForm } ) => {
 		const { title, slug } = useForm()
 
 		return (
 			<>
-				<Form.TextItem {...title} />
-				<Form.TextItem {...slug} />
+				<Form.TextItem { ...title } />
+				<Form.TextItem { ...slug } />
 			</>
 		)
 	},
-})
+} )
 
 registerSection( 'fl-post-permalink', {
 	label: __( 'Permalink' ),
 	location: {
 		type: 'post',
 	},
-	render: ( { post } ) => {
+	render: ( { useForm } ) => {
+		const { url } = useForm()
 		return (
 			<>
 				<Form.Item>
-					<Control.URL url={ post.url } />
+					<Control.URL
+						value={ url.value }
+					/>
 				</Form.Item>
 			</>
 		)
@@ -42,12 +45,13 @@ registerSection( 'fl-post-publish', {
 	location: {
 		type: 'post',
 	},
-	render: ( { post } ) => {
+	render: ( { useForm } ) => {
+		const { status, visibility, parent } = useForm()
 		return (
 			<>
-				<Form.Item label={ __( 'Publish Status' ) } placement="beside">{post.status}</Form.Item>
-				<Form.Item label={ __( 'Visibility' ) } placement="beside">{post.visibility}</Form.Item>
-				<Form.Item label={ __( 'Parent' ) } placement="beside">{post.parent}</Form.Item>
+				<Form.SelectItem { ...status } />
+				<Form.SelectItem { ...visibility } />
+				<Form.SelectItem { ...parent } />
 			</>
 		)
 	},

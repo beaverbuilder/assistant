@@ -71,12 +71,12 @@ registerSection( 'fl-media-links', {
             <>
 				{ hasFullURL && (
 					<Form.Item label={ __( 'File URL' ) }>
-						<Control.URL url={ attachment.sizes.full.url } />
+						<Control.URL value={ attachment.sizes.full.url } />
 					</Form.Item>
 				)}
 
 				<Form.Item label={ __( 'Attachment Page' ) }>
-					<Control.URL url={ attachment.url } />
+					<Control.URL value={ attachment.url } />
 				</Form.Item>
             </>
 		)

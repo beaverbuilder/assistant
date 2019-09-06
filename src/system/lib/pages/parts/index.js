@@ -89,7 +89,7 @@ export const Section = ( {
 
 export const RegisteredSections = ( { location, data } ) => {
 	const { querySections } = getSystemSelectors()
-	const sections = useMemo( () => querySections( location ), [location] )
+	const sections = useMemo( () => querySections( location ), [ location ] )
 
 	return sections.map( section => {
 		const {

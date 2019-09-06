@@ -4,7 +4,8 @@ import classname from 'fl-classnames'
 import Clipboard from 'react-clipboard.js'
 import './style.scss'
 
-export const URLControl = ( { url, className } ) => {
+export const URLControl = ( { value: url, className } ) => {
+
 	const classes = classname( {
 		'fl-asst-control-url': true,
 	}, className )

@@ -10,19 +10,18 @@ registerSection( 'fl-screen-labels', {
 	location: {
 		type: [ 'post' ],
 	},
-	render: ( { labels } ) => {
+	render: ( { useForm } ) => {
 
-		if ( 'undefined' === typeof labels ) {
-			return null
-		}
+		const { labels } = useForm()
 
 		return (
 			<>
 				<Form.Item label={ __( 'Mark as Favorite' ) } placement="beside">
 					<Button>{__( 'Favorite' )}</Button>
 				</Form.Item>
-				<Form.Item label={ __( 'Labels' ) }>
-					<Control.TagGroup tags={ labels } />
+
+				<Form.Item label={ labels.label }>
+					<Control.TagGroup value={ labels.value } />
 				</Form.Item>
 			</>
 		)
