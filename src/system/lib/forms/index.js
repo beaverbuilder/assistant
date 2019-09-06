@@ -1,18 +1,29 @@
-import React from 'fl-react'
+import React, { createContext } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { Icon, Control, Page } from 'lib'
 import { useFormState } from './use-form-data'
+import { TextItem } from './items'
 import './style.scss'
 
-export const Form = ( { className, ...rest } ) => {
+export const Form = ( { className, context = Form.defaults, ...rest } ) => {
 
 	const classes = classname( {
 		'fl-asst-form': true,
 	}, className )
 
-	return <form className={ classes } onSubmit={ e => e.preventDefault() } { ...rest } />
+	return (
+		<Form.Context.Provider value={context}>
+			<form className={ classes } onSubmit={ e => e.preventDefault() } { ...rest } />
+		</Form.Context.Provider>
+	)
 }
+
+Form.defaults = {}
+
+Form.Context = createContext( Form.defaults )
+Form.Context.displayName = 'Form.Context'
+
 
 Form.Item = props => {
 	const {
@@ -54,6 +65,9 @@ Form.Footer = props => {
 }
 
 Form.useFormState = useFormState
+
+Form.TextItem = TextItem
+Form.TextItem.displayName = 'Form.TextItem'
 
 Form.Test = () => {
 	return (

@@ -1,4 +1,4 @@
-import React, { useContext } from 'fl-react'
+import React, { useContext, useMemo } from 'fl-react'
 import classname from 'fl-classnames'
 import { Window } from 'lib'
 import { getSystemSelectors } from 'store'
@@ -89,7 +89,7 @@ export const Section = ( {
 
 export const RegisteredSections = ( { location, data } ) => {
 	const { querySections } = getSystemSelectors()
-	const sections = querySections( location )
+	const sections = useMemo( () => querySections( location ), [location] )
 
 	return sections.map( section => {
 		const {

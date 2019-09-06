@@ -1,8 +1,37 @@
-import React from 'fl-react'
+import React, { useState, useMemo, useContext } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, Button, Form, Control } from 'lib'
 
+
+const useFormContext = ( initial ) => {
+
+	// Temp
+	const [titleVal, setTitle] = useState( initial.title )
+	const [slugVal, setSlug] = useState( initial.slug )
+
+	const context = {
+		title: {
+			label: __('Title'),
+			id: 'postTitle',
+			value: titleVal,
+			onChange: e => setTitle( e.target.value )
+		},
+		slug: {
+			label: __('Slug'),
+			id: 'postSlug',
+			value: slugVal,
+			onChange: e => setSlug( e.target.value )
+		}
+	}
+	const hook = () => {
+		return useContext( Form.Context )
+	}
+
+	return [context, hook]
+}
+
 export const Post = ( { location, match, history } ) => {
+
 	const defaultItem = {
 		author: null,
 		bbBranding: null,
@@ -24,21 +53,21 @@ export const Post = ( { location, match, history } ) => {
 		url: null,
 		visibility: 'Public',
 	}
-	const item = 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ? location.state.item : defaultItem
-	const { title } = item
+
+	let item = defaultItem
+	if ( 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ) {
+		item = { ...defaultItem, ...location.state.item }
+	}
+
+	const [formContext, useForm] = useFormContext( item )
 
 	const setTab = path => history.replace( path, location.state )
 
-
-	// What should we be sending to sections?
-	/*
-	- Post data or a getter function (ex: getPost('ID') )
-	- Comments for this post
-	- A collection of actions that can be turned into buttons.
-	- location, match, history for navigation
-	*/
 	const sectionData = {
 		post: item,
+
+		useForm,
+
 		actions: [
 			{
 				label: __( 'View Post' ),
@@ -110,8 +139,9 @@ export const Post = ( { location, match, history } ) => {
 	return (
 		<Page title={ __( 'Edit Post' ) } headerActions={ <Actions /> } shouldPadSides={ false }>
 
-			<Page.TitleCard title={ title } />
+			<Page.TitleCard title={formContext.title.value} />
 
+			{ useMemo( () => (
 			<Page.Pad style={ { display: 'flex', justifyContent: 'center' } }>
 				<Button.Group>
 					{ tabs.map( ( { label, path }, i ) => (
@@ -122,12 +152,17 @@ export const Post = ( { location, match, history } ) => {
 					) )}
 				</Button.Group>
 			</Page.Pad>
+			), [location.pathname] )}
 
-			<Form>
+
+			<Form context={formContext}>
+			{ useMemo( () => (
 				<Nav.Switch>
-					{ tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> ) }
+					{ tabs.map( ( tab, i ) => <Nav.Route key={i} { ...tab } /> ) }
 				</Nav.Switch>
+			), [])}
 			</Form>
+
 		</Page>
 	)
 }

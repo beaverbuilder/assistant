@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n'
 const { registerSection } = getSystemActions()
 
 registerSection( 'fl-screen-labels', {
-	label: __( 'Labels & Favorites' ),
+	label: __( 'Labels' ),
 	location: {
 		type: [ 'post' ],
 	},
@@ -18,11 +18,11 @@ registerSection( 'fl-screen-labels', {
 
 		return (
 			<>
-				<Form.Item label={ __( 'Labels' ) }>
-					<Control.TagGroup tags={ labels } />
-				</Form.Item>
 				<Form.Item label={ __( 'Mark as Favorite' ) } placement="beside">
 					<Button>{__( 'Favorite' )}</Button>
+				</Form.Item>
+				<Form.Item label={ __( 'Labels' ) }>
+					<Control.TagGroup tags={ labels } />
 				</Form.Item>
 			</>
 		)

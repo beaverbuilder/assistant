@@ -5,6 +5,22 @@ import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
 
+registerSection( 'fl-post-title', {
+	location: {
+		type: 'post',
+	},
+	render: ({ useForm }) => {
+		const { title, slug } = useForm()
+
+		return (
+			<>
+				<Form.TextItem {...title} />
+				<Form.TextItem {...slug} />
+			</>
+		)
+	},
+})
+
 registerSection( 'fl-post-permalink', {
 	label: __( 'Permalink' ),
 	location: {
@@ -12,9 +28,11 @@ registerSection( 'fl-post-permalink', {
 	},
 	render: ( { post } ) => {
 		return (
-			<Form.Item>
-				<Control.URL url={ post.url } />
-			</Form.Item>
+			<>
+				<Form.Item>
+					<Control.URL url={ post.url } />
+				</Form.Item>
+			</>
 		)
 	},
 } )
