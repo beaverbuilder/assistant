@@ -95,6 +95,19 @@ class PostsController extends AssistantController {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
+				[
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => [ $this, 'delete_post' ],
+					'args'                => [
+						'id'     => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_published_posts' );
+					},
+				],
 			]
 		);
 
@@ -327,6 +340,29 @@ class PostsController extends AssistantController {
 				wp_untrash_post( $id );
 				break;
 		}
+
+		return rest_ensure_response(
+			[
+				'success' => true,
+			]
+		);
+	}
+
+	/**
+	 * Deletes a single post based on the specified ID.
+	 */
+	public function delete_post( $request ) {
+		$id = $request->get_param( 'id' );
+
+		if ( ! current_user_can( 'edit_post', $id ) ) {
+			return rest_ensure_response(
+				[
+					'error' => true,
+				]
+			);
+		}
+
+		wp_delete_post( $id );
 
 		return rest_ensure_response(
 			[

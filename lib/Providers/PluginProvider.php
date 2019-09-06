@@ -5,6 +5,7 @@ namespace FL\Assistant\Providers;
 
 use FL\Assistant\Core\Container;
 
+use FL\Assistant\Actions\OnInit;
 use FL\Assistant\Actions\OnEnqueueScripts;
 use FL\Assistant\Actions\OnEditUserProfile;
 use FL\Assistant\Actions\OnPersonalOptionsUpdate;
@@ -12,6 +13,7 @@ use FL\Assistant\Actions\OnWPBeforeAdminBarRender;
 use FL\Assistant\Filters\OnHeartbeatReceived;
 
 use FL\Assistant\Services\BeaverBuilderService;
+use FL\Assistant\Services\NotationService;
 use FL\Assistant\Services\PostService;
 use FL\Assistant\Services\SiteService;
 use FL\Assistant\Services\UserService;
@@ -59,6 +61,12 @@ class PluginProvider implements ProviderInterface {
 			}
 		);
 
+		$container->register_service(
+			'notations', function ( $container ) {
+				return new NotationService( $container );
+			}
+		);
+
 		$this->register_hooks( $container );
 	}
 
@@ -68,6 +76,9 @@ class PluginProvider implements ProviderInterface {
 	 * @throws \Exception
 	 */
 	public function register_hooks( Container $container ) {
+		// Handle the WordPress init action.
+		add_action( 'init', new OnInit( $container ) );
+
 		// Enqueue Assistant frontend
 		$enqueue_scripts = new OnEnqueueScripts( $container );
 		add_action( 'wp_enqueue_scripts', $enqueue_scripts );

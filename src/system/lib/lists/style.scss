@@ -197,6 +197,10 @@
             flex-direction: row;
             align-self: flex-end;
         }
+
+		.fl-asst-is-favorite {
+			color: blue;
+		}
     }
     .fl-asst-list-item:hover,
     .fl-asst-list-item:focus,
