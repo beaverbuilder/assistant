@@ -14,7 +14,7 @@ export const TextItem = ( {
 
 	return (
 		<Form.Item label={ label } placement={ labelPlacement } labelFor={ id } isRequired={ isRequired }>
-			<input type={ type } key={ id } id={ id } value={ value } onChange={ onChange } { ...rest } />
+			<input type={ type } key={ id } id={ id } value={ value } onChange={ e => onChange( e.target.value, e ) } { ...rest } />
 		</Form.Item>
 	)
 }
@@ -36,7 +36,7 @@ export const SelectItem = ( {
 				key={ id }
 				id={ id }
 				value={ value }
-				onChange={ onChange }
+				onChange={ e => onChange( e.target.value, e ) }
 				{ ...rest }
 			>
 				{ Object.entries( options ).map( ( [ value, label ] ) => (

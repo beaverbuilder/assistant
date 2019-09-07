@@ -8,6 +8,7 @@ const alias = {
     lib: path.resolve( __dirname, './src/system/lib/'),
     store: path.resolve( __dirname, './src/system/store'),
     utils: path.resolve( __dirname, './src/system/utils' ),
+    config: path.resolve( __dirname, './src/system/config'),
     'shared-utils': path.resolve( __dirname, './packages/shared-utils/src/' ),
 }
 

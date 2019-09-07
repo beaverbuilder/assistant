@@ -1,144 +1,147 @@
 import { __ } from '@wordpress/i18n'
 import React from 'fl-react'
 import { Page, Form, Button, Control } from 'assistant/lib'
-import { Well } from '../components/well'
 import { Avatar } from '../components/avatar'
 import './invite.scss'
 
 
 export const Invite = ( ) => {
 
-	const [ state, setValue ] = Form.useFormState( {
-		username: '',
+	const defaultValues = {
+		username: 'user_123',
 		email: '',
 		firstName: '',
 		lastName: '',
 		website: '',
 		role: 'subscriber',
 		password: '',
-		displayName: ''
-	}, () => {} )
+		displayName: '',
+		sendNotification: true,
+	}
+
+	const {
+		form,
+		values,
+		fields,
+		submitForm,
+		resetForm,
+	} = Form.useForm( {
+		username: {
+			label: __( 'Username' ),
+			id: 'username',
+			labelPlacement: 'beside',
+			required: true,
+		},
+		email: {
+			label: __( 'Email Address' ),
+			id: 'email',
+			type: 'email',
+			labelPlacement: 'beside',
+			required: true,
+		},
+		firstName: {
+			label: __( 'First Name' ),
+			id: 'firstName',
+			labelPlacement: 'beside',
+		},
+		lastName: {
+			label: __( 'Last Name' ),
+			id: 'lastName',
+			labelPlacement: 'beside',
+		},
+		website: {
+			label: __( 'Website' ),
+			id: 'website',
+		},
+		role: {
+			label: __( 'User Role' ),
+			id: 'role',
+			labelPlacement: 'beside',
+			required: true,
+			options: {
+				'admin': __( 'Administrator' ),
+				'editor': __( 'Editor' ),
+				'author': __( 'Author' ),
+				'contributor': __( 'Contributor' ),
+				'subscriber': __( 'Subscriber' ),
+			},
+		},
+		sendNotification: {
+			label: __( 'Send Notification' ),
+			id: 'sendNotification',
+			labelPlacement: 'beside',
+		},
+		password: {
+			label: __( 'Password' ),
+			type: 'password',
+			required: true,
+		}
+	}, {
+		onSubmit: ( changes, state ) => {
+			console.log( 'send state', changes, state )
+		}
+	}, defaultValues )
+
+	const {
+		username,
+		email,
+		firstName,
+		lastName,
+		website,
+		role,
+		password,
+		sendNotification
+	} = fields
+
+	const Footer = () => {
+		return (
+			<Page.Toolbar>
+				<Button onClick={ resetForm }>{__( 'Cancel' )}</Button>
+				<Button onClick={ submitForm }>{__( 'Invite' )}</Button>
+			</Page.Toolbar>
+		)
+	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Invite New User' ) }>
-			<Well>
+		<Page
+			shouldPadSides={ false }
+			title={ __( 'Invite New User' ) }
+			footer={ <Footer /> }
+		>
+			<Page.TitleCard>
 				<div className="user">
 					<div className="avatar">
-						<Avatar email={ state.email } />
+						<Avatar email={ values.email } />
 					</div>
 					<div className="user-info">
-						<div className="username">{state.username}</div>
-						<div className="email">{state.email}</div>
+						<div className="username">{values.username}</div>
+						<div className="email">{values.email}</div>
 					</div>
 				</div>
-			</Well>
-			<Form autoComplete="off">
-				<Form.Section>
-					<Form.Item label={ __( 'Username' ) }
-						labelFor="username"
-						isRequired={ true }
-						placement="beside">
-						<input
-							id="username"
-							type="text"
-							required={ true }
-							placeholder={ __( 'Username' ) }
-							value={ state.username }
-							onChange={ e => setValue( 'username', e.target.value ) }
+			</Page.TitleCard>
+
+			<Form { ...form }>
+
+				<Page.Section>
+					<Form.TextItem { ...username } />
+					<Form.TextItem { ...email } />
+					<Form.TextItem { ...firstName } />
+					<Form.TextItem { ...lastName } />
+					<Form.TextItem { ...website } />
+				</Page.Section>
+
+				<Page.Section label={ __( 'Access Info' ) }>
+
+					<Form.Item { ...sendNotification } placement={ sendNotification.labelPlacement }>
+						<Control.Toggle
+							value={ sendNotification.value }
+							onChange={ sendNotification.onChange }
 						/>
 					</Form.Item>
-					<Form.Item label={ __( 'Email' ) }
-						labelFor="username"
-						isRequired={ true }
-						placement="beside">
-						<input
-							id="email"
-							type="text"
-							required={ true }
-							placeholder={ __( 'Email' ) }
-							value={ state.email }
-							onChange={ e => setValue( 'email', e.target.value ) }
-						/>
-					</Form.Item>
-					<Form.Item label={ __( 'First Name' ) }
-						labelFor="firstName"
-						isRequired={ true }
-						placement="beside">
-						<input
-							id="firstName"
-							type="text"
-							required={ true }
-							placeholder={ __( 'First Name' ) }
-							value={ state.firstName }
-							onChange={ e => setValue( 'firstName', e.target.value ) }
-						/>
-					</Form.Item>
-					<Form.Item label={ __( 'Last Name' ) }
-						labelFor="lastName"
-						isRequired={ true }
-						placement="beside">
-						<input
-							id="lastName"
-							type="text"
-							required={ true }
-							placeholder={ __( 'Last Name' ) }
-							value={ state.firstName }
-							onChange={ e => setValue( 'lastName', e.target.value ) }
-						/>
-					</Form.Item>
-					<Form.Item label={ __( 'Website' ) }
-						labelFor="website"
-						isRequired={ true }
-						placement="beside">
-						<input
-							id="website"
-							type="text"
-							required={ true }
-							placeholder={ __( 'Website' ) }
-							value={ state.firstName }
-							onChange={ e => setValue( 'website', e.target.value ) }
-						/>
-					</Form.Item>
-				</Form.Section>
-				<Form.Section label={ __( 'Access Info' ) }>
-					<Form.Item label={ __( 'Send Notification?' ) } labelFor='notify' placement="beside">
-						<Control.Toggle/>
-					</Form.Item>
-					<Form.Item label={ __( 'Role' ) }
-						labelFor="role"
-						isRequired={ true }
-						placement="beside">
-						<select
-							id="role"
-							required={ true }
-							placeholder={ __( 'Subscriber' ) }
-							value={ state.role }
-							onChange={ e => setValue( 'role', e.target.value ) }
-							style={ { width: '150px' } }
-						>
-							<option value="subscriber">Subscriber</option>
-							<option value="editor">Editor</option>
-							<option value="admin">Admin</option>
-						</select>
-					</Form.Item>
-					<Form.Item label={ __( 'Password' ) }
-						labelFor="password"
-						isRequired={ true }
-						placement="beside">
-						<input
-							id="password"
-							type="password"
-							required={ true }
-							placeholder={ __( 'Show Password' ) }
-							value={ state.firstName }
-							onChange={ e => setValue( 'password', e.target.value ) }
-						/>
-					</Form.Item>
-					<Form.Footer>
-						<Button>Cancel</Button>
-						<Button>Invite User</Button>
-					</Form.Footer>
-				</Form.Section>
+
+					<Form.SelectItem { ...role } />
+					<Form.TextItem { ...password } />
+				</Page.Section>
 			</Form>
 
 		</Page>

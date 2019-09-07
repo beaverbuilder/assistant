@@ -26,6 +26,7 @@ export const Page = ( {
 	toolbar,
 	header,
 	headerAppearance,
+	footer,
 	icon,
 	children,
 	...rest
@@ -61,6 +62,11 @@ export const Page = ( {
 				<div className="fl-asst-page-content-wrap" ref={ ref } { ...rest }>
 					<div className={ classes }>{children}</div>
 				</div>
+				{ footer && (
+					<div className="fl-asst-page-footer">
+						<div className="fl-asst-page-footer-content fl-asst-secondary-surface">{footer}</div>
+					</div>
+				)}
 			</div>
 		</Page.Context.Provider>
 	)

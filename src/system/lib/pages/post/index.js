@@ -2,6 +2,56 @@ import React, { useMemo } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, Button, Form, Control } from 'lib'
 
+const slugify = value => {
+	return value.replace( ' ', '' )
+		.replace( '_', '-' )
+		.trim()
+}
+
+export const config = {
+	title: {
+		label: __( 'Title' ),
+		id: 'postTitle',
+	},
+	slug: {
+		label: __( 'Slug' ),
+		id: 'postSlug',
+		sanitize: slugify,
+	},
+	url: {
+		label: __( 'URL' ),
+		id: 'postURL',
+	},
+	status: {
+		label: __( 'Publish Status' ),
+		id: 'postStatus',
+		options: {
+			'publish': __( 'Published' ),
+			'draft': __( 'Drafted' ),
+		},
+		labelPlacement: 'beside',
+	},
+	visibility: {
+		label: __( 'Visibility' ),
+		id: 'postVisibility',
+		options: {
+			'public': __( 'Public' ),
+			'private': __( 'Private' ),
+			'protected': __( 'Protected' ),
+		},
+		labelPlacement: 'beside',
+	},
+	parent: {
+		label: __( 'Parent' ),
+		id: 'postParent',
+		options: {
+			0: __( 'None' )
+		},
+		labelPlacement: 'beside',
+	},
+}
+
+
 export const Post = ( { location, match, history } ) => {
 
 	const defaultItem = {
@@ -32,46 +82,18 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	// Setup Form Handler & Context
-	const { values, formContext, useForm } = Form.useFormContext( {
-		title: {
-			label: __( 'Title' ),
-			id: 'postTitle',
-		},
-		slug: {
-			label: __( 'Slug' ),
-			id: 'postSlug',
-		},
-		url: {
-			label: __( 'URL' ),
-			id: 'postURL',
-		},
-		status: {
-			label: __( 'Publish Status' ),
-			id: 'postStatus',
-			options: {
-				'publish': __( 'Published' ),
-				'draft': __( 'Drafted' ),
-			},
-			labelPlacement: 'beside',
-		},
-		visibility: {
-			label: __( 'Visibility' ),
-			id: 'postVisibility',
-			options: {
-				'public': __( 'Public' ),
-				'private': __( 'Private' ),
-				'protected': __( 'Protected' ),
-			},
-			labelPlacement: 'beside',
-		},
-		parent: {
-			label: __( 'Parent' ),
-			id: 'postParent',
-			options: {
-				0: __( 'None' )
-			},
-			labelPlacement: 'beside',
-		},
+	const {
+		values,
+		form,
+		useFormContext,
+		hasChanges,
+		resetForm,
+		submitForm,
+	} = Form.useForm( {
+
+		// Most of the static config happens in './form-config'
+		...config,
+
 		labels: {
 			label: __( 'Labels' ),
 			id: 'postLabels',
@@ -82,8 +104,35 @@ export const Post = ( { location, match, history } ) => {
 				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
 			],
 		}
+	}, {
+		onSubmit: changed => console.log( 'submit', changed )
 	}, item )
 
+
+	// Setup Tab Handling
+	const tabs = [
+		{
+			path: match.url,
+			label: __( 'General' ),
+			exact: true,
+			component: () => (
+				<Page.RegisteredSections
+					location={ { type: 'post' } }
+					data={ sectionData }
+				/>
+			),
+		},
+		{
+			path: match.url + '/comments',
+			label: __( 'Comments' ),
+			component: () => (
+				<Page.RegisteredSections
+					location={ { type: 'post', tab: 'comments' } }
+					data={ sectionData }
+				/>
+			),
+		},
+	]
 	const setTab = path => history.replace( path, location.state )
 
 	/*
@@ -91,7 +140,7 @@ export const Post = ( { location, match, history } ) => {
 	*/
 	const sectionData = {
 		post: item,
-		useForm,
+		useForm: useFormContext, // Rename
 
 		actions: [
 			{
@@ -119,33 +168,10 @@ export const Post = ( { location, match, history } ) => {
 				onClick: () => {},
 			}
 		],
-		nav: { location, match, history },
 	}
 
-	const tabs = [
-		{
-			path: match.url,
-			label: __( 'General' ),
-			exact: true,
-			component: () => (
-				<Page.RegisteredSections
-					location={ { type: 'post' } }
-					data={ sectionData }
-				/>
-			),
-		},
-		{
-			path: match.url + '/comments',
-			label: __( 'Comments' ),
-			component: () => (
-				<Page.RegisteredSections
-					location={ { type: 'post', tab: 'comments' } }
-					data={ sectionData }
-				/>
-			),
-		},
-	]
-
+	// Area to the right of the page title bar
+	// This gets rendered into <Page headerActions />
 	const Actions = () => {
 		return (
 			<Control.NextPrev
@@ -155,8 +181,29 @@ export const Post = ( { location, match, history } ) => {
 		)
 	}
 
+	const Footer = () => {
+		return (
+            <>
+<Page.Toolbar>
+	<Button
+		onClick={ resetForm }
+	>{__( 'Cancel' )}</Button>
+
+	<div style={ { flex: '1 1 auto', margin: 'auto' } } />
+
+	<Button type="submit" onClick={ submitForm } >{__( 'Publish' )}</Button>
+</Page.Toolbar>
+            </>
+		)
+	}
+
 	return (
-		<Page title={ __( 'Edit Post' ) } headerActions={ <Actions /> } shouldPadSides={ false }>
+		<Page
+			title={ __( 'Edit Post' ) }
+			headerActions={ <Actions /> }
+			shouldPadSides={ false }
+			footer={ hasChanges && <Footer /> }
+		>
 
 			<Page.TitleCard title={ values.title } />
 
@@ -174,7 +221,8 @@ export const Post = ( { location, match, history } ) => {
 			), [ location.pathname ] )}
 
 
-			<Form context={ formContext }>
+			<Form { ...form }>
+				{ /* Memoizing to prevent unnecessary rerenders and causing form fields to be replaced and lose focus */}
 				{ useMemo( () => (
 					<Nav.Switch>
 						{ tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> ) }

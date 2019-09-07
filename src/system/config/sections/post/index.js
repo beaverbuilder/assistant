@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { getSystemActions } from 'store'
-import { Form, Control } from 'lib'
+import { Form, Control, List } from 'lib'
 import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
@@ -83,9 +83,21 @@ registerSection( 'fl-post-comments', {
 		type: 'post',
 		tab: 'comments',
 	},
-	render: () => (
-		<div>Comments List</div>
-	),
+	contentStyle: { padding: 0 },
+	render: ( { post } ) => {
+		return (
+			<List.Comments
+				query={ { postID: post.id } }
+				getItemProps={ ( item, defaultProps ) => ( {
+					...defaultProps,
+					to: {
+						pathname: `/fl-comments/comment/${item.id}`,
+						state: { item }
+					},
+				} ) }
+			/>
+		)
+	},
 } )
 
 

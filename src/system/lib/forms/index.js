@@ -6,12 +6,18 @@ import { Icon, Control, Page } from 'lib'
 // Deprecated
 import { useFormState } from './use-form-data'
 
-import { useFormContext } from './use-form-context'
+// New Form Handler
+import { useForm } from './use-form'
 
 import { TextItem, SelectItem } from './items'
 import './style.scss'
 
-export const Form = ( { className, context = Form.defaults, ...rest } ) => {
+export const Form = ( {
+	className,
+	context = Form.defaults,
+	onSubmit = e => e.preventDefault(),
+	...rest,
+} ) => {
 
 	const classes = classname( {
 		'fl-asst-form': true,
@@ -19,7 +25,7 @@ export const Form = ( { className, context = Form.defaults, ...rest } ) => {
 
 	return (
 		<Form.Context.Provider value={ context }>
-			<form className={ classes } onSubmit={ e => e.preventDefault() } { ...rest } />
+			<form className={ classes } onSubmit={ onSubmit } { ...rest } />
 		</Form.Context.Provider>
 	)
 }
@@ -29,7 +35,7 @@ Form.defaults = {}
 Form.Context = createContext( Form.defaults )
 Form.Context.displayName = 'Form.Context'
 
-Form.useFormContext = useFormContext
+Form.useForm = useForm
 
 
 Form.Item = props => {
