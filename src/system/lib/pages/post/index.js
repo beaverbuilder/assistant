@@ -9,6 +9,9 @@ const slugify = value => {
 }
 
 export const config = {
+	id: {
+		label: __( 'ID' ),
+	},
 	title: {
 		label: __( 'Title' ),
 		id: 'postTitle',
@@ -105,7 +108,9 @@ export const Post = ( { location, match, history } ) => {
 			],
 		}
 	}, {
-		onSubmit: changed => console.log( 'submit', changed )
+		onSubmit: ( changed, state ) => {
+			console.log( 'submit post', state.id,  changed )
+		}
 	}, item )
 
 
@@ -184,15 +189,15 @@ export const Post = ( { location, match, history } ) => {
 	const Footer = () => {
 		return (
             <>
-<Page.Toolbar>
-	<Button
-		onClick={ resetForm }
-	>{__( 'Cancel' )}</Button>
+				<Page.Toolbar>
+					<Button
+						onClick={ resetForm }
+					>{__( 'Cancel' )}</Button>
 
-	<div style={ { flex: '1 1 auto', margin: 'auto' } } />
+					<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 
-	<Button type="submit" onClick={ submitForm } >{__( 'Publish' )}</Button>
-</Page.Toolbar>
+					<Button type="submit" onClick={ submitForm } >{__( 'Publish' )}</Button>
+				</Page.Toolbar>
             </>
 		)
 	}
