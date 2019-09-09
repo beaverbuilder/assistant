@@ -188,9 +188,8 @@
     }
     input[type="checkbox"] {
         flex: 0 0 auto;
-        width: auto;
         margin: 0;
-        margin-right: var(--fl-asst-inner-space);
+        margin-right: var(--fl-asst-small-space);
     }
 
     select {

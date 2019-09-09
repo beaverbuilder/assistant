@@ -9,8 +9,9 @@ import { useFormState } from './use-form-data'
 // New Form Handler
 import { useForm } from './use-form'
 
-import { TextItem, SelectItem } from './items'
+import { TextItem, SelectItem, CheckboxItem } from './items'
 import './style.scss'
+
 
 export const Form = ( {
 	className,
@@ -84,6 +85,9 @@ Form.TextItem.displayName = 'Form.TextItem'
 
 Form.SelectItem = SelectItem
 Form.SelectItem.displayName = 'Form.SelectItem'
+
+Form.CheckboxItem = CheckboxItem
+Form.CheckboxItem.displayName = 'Form.CheckboxItem'
 
 Form.Test = () => {
 	return (

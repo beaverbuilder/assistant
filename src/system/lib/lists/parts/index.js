@@ -140,7 +140,10 @@ export const Item = ( {
 	isSelecting,
 	...rest
 } ) => {
-	const classes = classname( 'fl-asst-list-item', className )
+	const classes = classname( {
+		'fl-asst-list-item': true,
+		'fl-asst-is-clickable': to,
+	}, className )
 	const { history } = useContext( Nav.Context )
 	const [ isHovering, setIsHovering ] = useState( false )
 	const [ isFocused, setIsFocused ] = useState( false )

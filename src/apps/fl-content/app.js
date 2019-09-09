@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'fl-react'
-import { __ } from 'assistant/i18n'
+import React, { useContext } from 'fl-react'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
 import { App, Button, List, Page, Nav, Icon } from 'assistant/ui'
 
@@ -16,7 +15,6 @@ const Main = ( { match } ) => {
 	const { contentTypes } = getSystemConfig()
 	const { query } = useAppState( 'fl-content' )
 	const { setQuery, setPager } = getAppActions( 'fl-content' )
-	const [ isSelecting, setIsSelecting ] = useState( false )
 
 	const Toolbar = () => {
 		return (
@@ -40,7 +38,6 @@ const Main = ( { match } ) => {
 	const Actions = ( { baseUrl } ) => {
 		return (
 			<>
-				<Button onClick={ () => setIsSelecting( ! isSelecting ) } appearance="transparent">{ isSelecting ? __( 'Cancel' ) : __( 'Select' ) }</Button>
 				<Nav.ButtonLink to={ `${baseUrl}/post/new` } appearance="transparent">
 					<Icon.Plus />
 				</Nav.ButtonLink>
@@ -67,8 +64,6 @@ const Main = ( { match } ) => {
 					}
 					return defaultProps
 				} }
-
-				isSelecting={ isSelecting }
 			/>
 		</Page>
 	)

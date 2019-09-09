@@ -33,9 +33,7 @@ export const GeneralTab = ( props ) => {
 
 	const { user } = props
 
-	const onFormChange = () => {
-
-	}
+	const onFormChange = () => {}
 
 	const [ state, setValue ] = Form.useFormState( {
 		content: '',
@@ -63,7 +61,7 @@ export const GeneralTab = ( props ) => {
 	}, [ user ] )
 
 	return (
-		<Form>
+		<>
 			<Form.Section label={ __( 'Name' ) }>
 				<Form.Item label={ __( 'First Name' ) } labelFor="firstName" isRequired={ true } placement="beside">
 					<input
@@ -139,6 +137,6 @@ export const GeneralTab = ( props ) => {
 					/>
 				</Form.Item>
 			</Form.Section>
-		</Form>
+		</>
 	)
 }

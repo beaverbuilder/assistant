@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { Form, Control } from 'lib'
-import { useSystemState, getSystemActions } from 'store'
+import { getSystemActions } from 'store'
 import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
@@ -44,51 +44,42 @@ registerSection( 'fl-user-url', {
 	},
 } )
 
+registerSection( 'fl-user-prefs', {
+	label: __( 'Preferences' ),
+	location: {
+		type: 'user',
+		tab: 'preferences',
+	},
+	isEnabled: ( { isYou } ) => isYou,
+	render: ( { useForm } ) => {
+
+		const { showAdminBar } = useForm()
+
+		return (
+			<>
+				<Form.CheckboxItem { ...showAdminBar } />
+			</>
+		)
+	},
+} )
+
+
 registerSection( 'fl-user-assistant-prefs', {
 	label: __( 'Assistant Preferences' ),
 	location: {
 		type: 'user',
+		tab: 'preferences',
 	},
 	isEnabled: ( { isYou } ) => isYou,
+	render: ( { useForm } ) => {
 
-	render: () => {
-		const { window } = useSystemState()
-		const { setWindow } = getSystemActions()
-
-		const showWhenHidden = 'undefined' !== typeof window.hiddenAppearance ? window.hiddenAppearance : ''
-		const whenHiddenOptions = {
-			'': __( 'Button (Default)' ),
-			'admin_bar': __( 'Admin Bar Item' )
-		}
-		const handleChange = ( key, value ) => {
-			switch ( key ) {
-			case 'showWhenHidden':
-				if ( value !== window.hiddenAppearance ) {
-					setWindow( { ...window, hiddenAppearance: value } )
-				}
-			}
-		}
+		const { showInAdmin, showWhenHidden } = useForm()
 
 		return (
 			<>
-			<Form.Item>
-				<p>{__( 'These options pertain specifically to the Assistant panel.' )}</p>
-			</Form.Item>
-
-			<Form.Item label={ __( 'Show in Admin' ) } >
-				<label>
-					<input type="checkbox" id="showInAdmin" checked={ true } onChange={ () => {} } />
-					<span>{__( 'Show Assistant UI in the WordPress Admin' )}</span>
-				</label>
-			</Form.Item>
-
-			<Form.Item label={ __( 'Show when hidden' ) } labelFor="showWhenHidden" placement="beside" >
-				<select id="showWhenHidden" value={ showWhenHidden } onChange={ e => handleChange( 'showWhenHidden', e.target.value ) }>
-					{ Object.entries( whenHiddenOptions ).map( ( [ key, value ], i ) => (
-						<option key={ i } value={ key }>{value}</option>
-					) )}
-				</select>
-			</Form.Item>
+				<Form.Item>{__( 'These options pertain specifically to the Assistant panel.' )}</Form.Item>
+				<Form.CheckboxItem { ...showInAdmin } />
+				<Form.SelectItem { ...showWhenHidden } />
 			</>
 		)
 	},

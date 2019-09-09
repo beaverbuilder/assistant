@@ -56,6 +56,9 @@
                     background: var(--fl-asst-surface-background);
                 }
             }
+            &.fl-asst-is-clickable {
+                cursor: pointer;
+            }
         }
 
         &.fl-asst-user-list {

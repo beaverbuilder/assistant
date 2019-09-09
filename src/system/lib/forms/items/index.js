@@ -66,3 +66,29 @@ export const SelectItem = ( {
 		</Form.Item>
 	)
 }
+
+export const CheckboxItem = ( {
+	label,
+	labelPlacement,
+	id,
+	value,
+	isRequired = false,
+	onChange = () => {},
+	content,
+	...rest,
+} ) => {
+
+	return (
+		<Form.Item label={ label } placement={ labelPlacement } isRequired={ isRequired }>
+			<input
+				type="checkbox"
+				key={ id }
+				id={ id }
+				checked={ value ? true : false }
+				onChange={ e => onChange( e.target.checked, e ) }
+				{ ...rest }
+			/>
+			{ content && <label htmlFor={ id }>{content}</label> }
+		</Form.Item>
+	)
+}

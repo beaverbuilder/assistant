@@ -12,7 +12,8 @@ export const PreferencesTab = () => {
 	}, () => {} )
 
 	return (
-		<Form>
+		<>
+
 			<Form.Section label={ __( 'Preferences' ) }>
 				<Form.Item label={ __( 'Show Admin Bar?' ) } labelFor='adminbar' placement="beside">
 					<Control.Toggle value={ state.showAdminBar }/>
@@ -24,6 +25,8 @@ export const PreferencesTab = () => {
 					<Button>{__( 'Log Out Everywhere' )}</Button>
 				</Form.Item>
 			</Form.Section>
+
+
 			<Form.Section label={ __( 'Assistant' ) }>
 				<Form.Item>
 					<p>{__( 'These preferences apply specifically to the Assistant user interface (not the WordPress Admin)' )}</p>
@@ -40,6 +43,6 @@ export const PreferencesTab = () => {
 					</select>
 				</Form.Item>
 			</Form.Section>
-		</Form>
+		</>
 	)
 }

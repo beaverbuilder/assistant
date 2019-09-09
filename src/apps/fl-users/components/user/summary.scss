@@ -1,58 +1,53 @@
 .fl-asst-users-summary {
-  padding: var(--fl-asst-inner-space);
-  margin-bottom: 10px;
+    padding: var(--fl-asst-inner-space);
+    margin-bottom: 10px;
 
-  .info {
-    padding-top: var(--fl-asst-inner-space);
-    padding-bottom: var(--fl-asst-inner-space);
-    .username {
-      font-size: 20px;
-      font-weight: bold;
+    .info {
+        .username {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .email {
+            font-style: italic;
+        }
     }
 
-    .email {
-      font-style: italic;
+    .actions {
+        padding-top: var(--fl-asst-inner-space);
     }
-  }
 
-  .actions {
-    padding-top: var(--fl-asst-inner-space);
-    padding-bottom: var(--fl-asst-inner-space);
-  }
+    .circles {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
 
-  .circles {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+        .circle {
+            border: 2px solid var(--fl-asst-dim-text);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-right: 10px;
+            background: var(--fl-asst-surface-background);
+            color: var(--fl-asst-surface-color);
 
-    .circle {
-      border: 2px solid var(--fl-asst-dim-text);
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      margin-right: 10px;
-      background: var(--fl-asst-surface-background);
-      color: var(--fl-asst-surface-color);
-
-      .count {
-        display: block;
-        font-size: 25px;
-      }
-
-      .title {
-        display: block;
-      }
-
-      img {
-        border: 1px solid #ccc;
-        border-radius: 50%;
-      }
-
+            .count {
+                display: block;
+                font-size: 25px;
+            }
+            .title {
+                display: block;
+            }
+            img {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+            }
+        }
     }
-  }
 }
