@@ -16,6 +16,34 @@ export const Attachment = ( { location, match, history } ) => {
 	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
 	const srcSet = getSrcSet( item.sizes )
 
+
+	// Form Handler
+	const { form, useFormContext } = Form.useForm({
+		title: {
+			label: __('Title'),
+			labelPlacement: 'beside',
+		},
+		alt: {
+			label: __('Alternative Text'),
+			labelPlacement: 'beside',
+		},
+		description: {
+			type: 'textarea',
+			label: __('Description'),
+			rows: 2,
+		},
+		caption: {
+			type: 'textarea',
+			label: __('Caption'),
+			rows: 2,
+		},
+		url: {
+			label: __('URL'),
+		}
+	}, {}, item )
+
+
+
 	const Actions = () => {
 		return (
 			<Control.NextPrev
@@ -27,6 +55,9 @@ export const Attachment = ( { location, match, history } ) => {
 
 	const sectionData = {
 		attachment: item,
+
+		useForm: useFormContext,
+
 		actions: [
 			{
 				label: __( 'View Attachment Page' ),
@@ -49,7 +80,6 @@ export const Attachment = ( { location, match, history } ) => {
 				onClick: () => {}
 			},
 		],
-		nav: { location, match, history },
 	}
 
 	return (
@@ -57,7 +87,7 @@ export const Attachment = ( { location, match, history } ) => {
 
 			<img src={ item.thumbnail } srcSet={ srcSet } />
 
-			<Form>
+			<Form {...form}>
 				<Page.RegisteredSections
 					location={ { type: 'attachment' } }
 					data={ sectionData }

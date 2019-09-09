@@ -10,48 +10,16 @@ registerSection( 'fl-media-details', {
 	location: {
 		type: 'attachment',
 	},
-	render: ( { attachment } ) => {
+	render: ( { useForm } ) => {
 
-		// TEMP - update with real func
-		const setValue = () => {}
+		const { title, alt, caption, description } = useForm()
+
 		return (
             <>
-				<Form.Item label={ __( 'Title' ) } labelFor="title">
-					<input
-						id="title"
-						type="text"
-						required={ true }
-						placeholder={ __( 'Attachment Title' ) }
-						value={ attachment.title }
-						onChange={ e => setValue( 'title', e.target.value ) }
-					/>
-				</Form.Item>
-				<Form.Item label={ __( 'Alternative Text' ) } labelFor="alt">
-					<input
-						id="alt"
-						type="text"
-						required={ true }
-						placeholder={ __( 'Describe your file' ) }
-						value={ attachment.alt }
-						onChange={ e => setValue( 'alt', e.target.value ) }
-					/>
-				</Form.Item>
-				<Form.Item label={ __( 'Description' ) } labelFor="description" isRequired={ true }>
-					<textarea
-						id="description"
-						value={ attachment.description }
-						rows={ 4 }
-						onChange={ e => setValue( 'description', e.target.value ) }
-					/>
-				</Form.Item>
-				<Form.Item label={ __( 'Caption' ) } labelFor="caption">
-					<textarea
-						id="caption"
-						value={ attachment.caption }
-						rows={ 4 }
-						onChange={ e => setValue( 'caption', e.target.value ) }
-					/>
-				</Form.Item>
+				<Form.TextItem {...title} />
+				<Form.TextItem {...alt} />
+				<Form.TextItem {...description} />
+				<Form.TextItem {...caption} />
             </>
 		)
 	},
@@ -62,11 +30,15 @@ registerSection( 'fl-media-links', {
 	location: {
 		type: 'attachment',
 	},
-	render: ( { attachment } ) => {
+	render: ( { attachment, useForm } ) => {
+
+		const { url } = useForm()
+
 		let hasFullURL = false
 		if ( 'undefined' !== typeof attachment.sizes.full ) {
 			hasFullURL = true
 		}
+		
 		return (
             <>
 				{ hasFullURL && (
@@ -75,8 +47,11 @@ registerSection( 'fl-media-links', {
 					</Form.Item>
 				)}
 
-				<Form.Item label={ __( 'Attachment Page' ) }>
-					<Control.URL value={ attachment.url } />
+				<Form.Item label={url.label} labelForm={url.id}>
+					<Control.URL
+						value={url.value}
+						onChange={url.onChange}
+					/>
 				</Form.Item>
             </>
 		)

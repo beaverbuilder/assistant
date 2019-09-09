@@ -24,7 +24,11 @@ const init = ( { config, initialValues } ) => {
 	}
 
 	for ( let name in config ) {
-		obj[name] = { ...defaultProperty, ...config[name] }
+		obj[name] = {
+			...defaultProperty,
+			id: name,
+			...config[name]
+		}
 
 		if ( 'undefined' !== typeof initialValues[name] ) {
 			const value = obj[name].sanitize( initialValues[name] )

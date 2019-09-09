@@ -12,9 +12,29 @@ export const TextItem = ( {
 	...rest,
 } ) => {
 
+	const isTextArea = 'textarea' === type
+
 	return (
 		<Form.Item label={ label } placement={ labelPlacement } labelFor={ id } isRequired={ isRequired }>
-			<input type={ type } key={ id } id={ id } value={ value } onChange={ e => onChange( e.target.value, e ) } { ...rest } />
+			{ isTextArea && (
+				<textarea
+					key={id}
+					id={id}
+					value={value}
+					onChange={ e => onChange( e.target.value, e ) }
+					{ ...rest }
+				/>
+			)}
+			{ ! isTextArea && (
+				<input
+					type={ type }
+					key={ id }
+					id={ id }
+					value={ value }
+					onChange={ e => onChange( e.target.value, e ) }
+					{ ...rest }
+				/>
+			)}
 		</Form.Item>
 	)
 }
