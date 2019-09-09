@@ -95,6 +95,7 @@ export const Post = ( { location, match, history } ) => {
 	// Setup Form Handler & Context
 	const {
 		values,
+		changed,
 		form,
 		useFormContext,
 		hasChanges,
@@ -117,8 +118,10 @@ export const Post = ( { location, match, history } ) => {
 		}
 	}, {
 		onSubmit: ( changed, state ) => {
-
-			//console.log( 'submit post', state.id,  changed )
+			console.log( 'submit', state.id,  changed, state )
+		},
+		onReset: ( changed, state ) => {
+			console.log( 'reset', changed, state )
 		}
 	}, item )
 

@@ -69,6 +69,16 @@
         }
     }
 
+    input[disabled],
+    select[disabled],
+    textarea[disabled],
+    .fl-asst-is-disabled {
+        pointer-events: none;
+        opacity: .5;
+        font-style: italic;
+        color: var(--fl-asst-dim-text);
+    }
+
     @supports(-webkit-appearance: none) {
         input[type="checkbox"] {
             -webkit-appearance: none;

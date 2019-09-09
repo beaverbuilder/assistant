@@ -1,4 +1,4 @@
-import { useState, useContext, useReducer } from 'fl-react'
+import { useContext, useReducer } from 'fl-react'
 import { Form } from '../'
 
 const hook = () => {
@@ -14,13 +14,12 @@ const init = ( { config, initialValues } ) => {
 	let obj = {}
 	const defaultProperty = {
 		value: undefined,
-		previousValue: undefined,
+		lastCommittedValue: undefined,
 		label: null,
 		id: null,
 		disabled: false,
 		required: false,
 		sanitize,
-		hasChanged: false,
 		onChange: () => {},
 	}
 
@@ -31,10 +30,15 @@ const init = ( { config, initialValues } ) => {
 			...config[name]
 		}
 
+		// Initialize Last Committed Value
+		if ( 'undefined' !== typeof obj[name].value ) {
+			obj[name].lastCommittedValue = obj[name].value
+		}
+
 		if ( 'undefined' !== typeof initialValues[name] ) {
 			const value = obj[name].sanitize( initialValues[name] )
 			obj[name].value = value
-			obj[name].previousValue = value
+			obj[name].lastCommittedValue = value
 		}
 	}
 
@@ -44,6 +48,7 @@ const init = ( { config, initialValues } ) => {
 const defaultOptions = {
 	onSubmit: () => {},
 	onChange: () => {},
+	onReset: () => {},
 }
 
 export const useForm = (
@@ -54,9 +59,9 @@ export const useForm = (
 
 	const options = { ...defaultOptions, ...givenOptions }
 
-	const [ hasChanges, setHasChanges ] = useState( false )
-
 	const [ state, dispatch ] = useReducer( ( state, action ) => {
+
+		const obj = { ...state }
 
 		switch ( action.type ) {
 		case 'SET_VALUE':
@@ -69,23 +74,67 @@ export const useForm = (
 				[action.key]: {
 					...state[action.key],
 					value: state[action.key].sanitize( action.value ),
-					previousValue: state[action.key].value,
-					hasChanged: true,
 				}
 			}
+
+		case 'COMMIT_VALUE':
+			return {
+				...state,
+				[action.key]: {
+					...state[action.key],
+					lastCommittedValue: state[action.key].value
+				}
+			}
+
+		case 'COMMIT_ALL':
+
+			for ( let key in state ) {
+				obj[key].lastCommittedValue = obj[key].value
+			}
+			return obj
+
+		case 'REVERT_VALUE':
+			return {
+				...state,
+				[action.key]: {
+					...state[action.key],
+					value: state[action.key].lastCommittedValue
+				}
+			}
+
+		case 'REVERT_ALL':
+
+			for ( let key in state ) {
+				obj[key].value = obj[key].lastCommittedValue
+			}
+			return obj
+
 		default:
 			return state
 		}
 
 	}, { config, initialValues }, init )
 
-	const setValue = ( key, value ) => {
+	/**
+	 * Set a single field to a new value.
+	 * Optionally set its last committed value also.
+	 */
+	const setValue = ( key, value, shouldCommit = false ) => {
 		dispatch( {
 			type: 'SET_VALUE',
 			key,
 			value,
 		} )
+		if ( shouldCommit ) {
+			dispatch( {
+				type: 'COMMIT_VALUE',
+				key,
+			} )
+		}
 	}
+
+	// Has a single field's value changed since last commit (or initialize)
+	const valueHasChanged = field => field.value !== field.lastCommittedValue
 
 	// Values Selector - reduces state to just key/value pairs
 	const selectValues = state => {
@@ -99,7 +148,7 @@ export const useForm = (
 	const selectChanged = state => {
 		let obj = {}
 		for ( let key in state ) {
-			if ( state[key].hasChanged ) {
+			if ( state[key].value !== state[key].lastCommittedValue ) {
 				obj[key] = state[key].value
 			}
 		}
@@ -115,11 +164,9 @@ export const useForm = (
 			const field = state[key]
 			obj[key] = {
 				...field,
+				hasChanges: valueHasChanged( field ),
 				onChange: v => {
 					setValue( key, v )
-					if ( ! hasChanges ) {
-						setHasChanges( true )
-					}
 
 					// call onChange from field config
 					if ( 'function' === typeof field.onChange ) {
@@ -133,8 +180,7 @@ export const useForm = (
 
 			// Remove properties that should not be on DOM elements
 			delete obj[key].sanitize
-			delete obj[key].hasChanged
-			delete obj[key].previousValue
+			delete obj[key].lastCommittedValue
 		}
 		return obj
 	}
@@ -142,11 +188,22 @@ export const useForm = (
 	const values = selectValues( state )
 	const fields = selectFields( state )
 	const changed = selectChanged( state )
+	const hasChanges = 0 < Object.keys( changed ).length
 	const context = { values, fields }
 
-	const resetForm = () => setHasChanges( false )
+	const resetForm = () => {
+		dispatch( {
+			type: 'REVERT_ALL'
+		} )
+		options.onReset( changed, values )
+	}
 
-	const submitForm = () => options.onSubmit( changed, values )
+	const submitForm = () => {
+		dispatch( {
+			type: 'COMMIT_ALL'
+		} )
+		options.onSubmit( changed, values )
+	}
 
 	const result = {
 		values,

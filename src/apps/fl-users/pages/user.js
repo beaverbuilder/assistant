@@ -40,7 +40,9 @@ export const User = ( { location, match, history } ) => {
 		pages: 0,
 		posts: 0,
 	}
-	const item = 'undefined' !== typeof location.state.item ? { ...defaultUser, ...location.state.item } : defaultUser
+	const item = 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ?
+		{ ...defaultUser, ...location.state.item } :
+		defaultUser
 
 	const { currentUser } = getSystemConfig()
 
@@ -155,17 +157,16 @@ export const User = ( { location, match, history } ) => {
 
 			{ loading && <p>{__( 'Loading...' )}</p> }
 
-			{ ! loading && <>
-				<Summary user={ user }/>
+			<Summary user={ user }/>
 
-				<TabButtons />
+			<TabButtons />
 
-				<Form { ...form }>
-					<Nav.Switch>
-						{tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> )}
-					</Nav.Switch>
-				</Form>
-			</> }
+			<Form { ...form }>
+				<Nav.Switch>
+					{tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> )}
+				</Nav.Switch>
+			</Form>
+
 		</Page>
 	)
 }

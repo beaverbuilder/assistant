@@ -3,10 +3,11 @@ import classname from 'fl-classnames'
 import { Button, Color } from 'lib'
 import './style.scss'
 
-export const TagGroup = ( { value: tags, className } ) => {
+export const TagGroup = ( { value: tags, disabled = false, className } ) => {
 
 	const classes = classname( {
 		'fl-asst-tag-group': true,
+		'fl-asst-is-disabled': disabled,
 	}, className )
 
 	return (

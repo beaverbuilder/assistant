@@ -7,6 +7,7 @@ export const TextItem = ( {
 	type = 'text',
 	id,
 	value,
+	hasChanges = false,
 	isRequired = false,
 	onChange = () => {},
 	...rest,
@@ -15,7 +16,13 @@ export const TextItem = ( {
 	const isTextArea = 'textarea' === type
 
 	return (
-		<Form.Item label={ label } placement={ labelPlacement } labelFor={ id } isRequired={ isRequired }>
+		<Form.Item
+			label={ label }
+			placement={ labelPlacement }
+			labelFor={ id }
+			isRequired={ isRequired }
+			hasChanges={ hasChanges }
+		>
 			{ isTextArea && (
 				<textarea
 					key={ id }
@@ -46,12 +53,19 @@ export const SelectItem = ( {
 	value,
 	options = {},
 	isRequired = false,
+	hasChanges = false,
 	onChange = () => {},
 	...rest,
 } ) => {
 
 	return (
-		<Form.Item label={ label } placement={ labelPlacement } labelFor={ id } isRequired={ isRequired }>
+		<Form.Item
+			label={ label }
+			placement={ labelPlacement }
+			labelFor={ id }
+			isRequired={ isRequired }
+			hasChanges={ hasChanges }
+		>
 			<select
 				key={ id }
 				id={ id }
@@ -73,13 +87,19 @@ export const CheckboxItem = ( {
 	id,
 	value,
 	isRequired = false,
+	hasChanges = false,
 	onChange = () => {},
 	content,
 	...rest,
 } ) => {
 
 	return (
-		<Form.Item label={ label } placement={ labelPlacement } isRequired={ isRequired }>
+		<Form.Item
+			label={ label }
+			placement={ labelPlacement }
+			isRequired={ isRequired }
+			hasChanges={ hasChanges }
+		>
 			<input
 				type="checkbox"
 				key={ id }

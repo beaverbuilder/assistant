@@ -47,12 +47,14 @@ Form.Item = props => {
 		className,
 		isRequired = false,
 		placement = 'above',
+		hasChanges = false,
 		style = {}
 	} = props
 
 	const classes = classname( {
 		'fl-asst-form-item': true,
 		[`fl-asst-form-item-placement-${placement}`]: placement,
+		'fl-asst-form-item-has-changes': hasChanges,
 	}, className )
 
 	return (

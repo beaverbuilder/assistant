@@ -9,5 +9,6 @@ export const Color = {
 		orange: '#FF9500',
 		purple: '#CC73E1',
 		pink: '#FF2968',
+		lightBlue: '#EBF8FF',
 	},
 }
