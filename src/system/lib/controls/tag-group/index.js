@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import classname from 'fl-classnames'
-import { Button } from 'lib'
+import { Button, Color } from 'lib'
 import './style.scss'
 
 export const TagGroup = ( { value: tags, className } ) => {
@@ -16,16 +16,6 @@ export const TagGroup = ( { value: tags, className } ) => {
 	)
 }
 
-const knownColors = {
-	red: '#FF305C',
-	blue: '#1BADF8',
-	green: '#00D281',
-	yellow: '#FFD000',
-	orange: '#FF9500',
-	purple: '#CC73E1',
-	pink: '#FF2968',
-}
-
 export const Tag = ( {
 	className,
 	label,
@@ -37,6 +27,7 @@ export const Tag = ( {
 		'fl-asst-tag': true,
 	}, className )
 
+	const knownColors = Color.knownColors
 	let tagColor = color
 	if ( color && Object.keys( knownColors ).includes( color ) ) {
 		tagColor = knownColors[color]

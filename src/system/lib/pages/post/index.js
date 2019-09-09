@@ -53,7 +53,7 @@ export const config = {
 		labelPlacement: 'beside',
 	},
 	tags: {
-		label: __('Tags'),
+		label: __( 'Tags' ),
 		value: [
 			{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
 			{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },

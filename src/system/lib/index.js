@@ -2,7 +2,7 @@
 import { Appearance } from './appearance'
 import { App } from './app'
 import { Button } from './button'
-import { Icon } from './art'
+import { Icon, Color } from './art'
 import { List } from './lists'
 import { Page } from './pages'
 import { Nav } from './nav'
@@ -30,6 +30,7 @@ export const api = {
 	App,
 	Button,
 	Icon,
+	Color,
 	Window,
 	Form,
 	Control,

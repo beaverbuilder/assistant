@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form, Control } from 'lib'
+import { Page, Form } from 'lib'
 import { getSrcSet } from 'utils/image'
 
 export const Attachment = ( { location } ) => {

@@ -58,11 +58,11 @@ registerSection( 'fl-post-publish', {
 } )
 
 registerSection( 'fl-post-cats-tags', {
-	label: __('Categories & Tags'),
+	label: __( 'Categories & Tags' ),
 	location: {
 		type: 'post',
 	},
-	render: ({ useForm }) => {
+	render: ( { useForm } ) => {
 		const { tags } = useForm()
 
 		return (

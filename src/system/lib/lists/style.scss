@@ -43,6 +43,19 @@
                 justify-content: center;
                 align-items: center;
             }
+
+            &.fl-asst-is-transitioning {
+                opacity: .8;
+                pointer-events: none;
+                background: var(--fl-asst-secondary-surface-background);
+            }
+            &.fl-asst-is-trashed {
+                background: var(--fl-asst-secondary-surface-background);
+
+                button {
+                    background: var(--fl-asst-surface-background);
+                }
+            }
         }
 
         &.fl-asst-user-list {
@@ -203,7 +216,7 @@
         }
 
 		.fl-asst-is-favorite {
-			color: blue;
+			color: var(--fl-asst-bookmark-color);
 		}
     }
     .fl-asst-list-item:hover,

@@ -27,8 +27,8 @@
         }
 
         &.fl-asst-destructive {
-            --fl-asst-accent-color: red;
-            color: red;
+            --fl-asst-accent-color: var(--fl-asst-red);
+            color: var(--fl-asst-red);
         }
 
         &.fl-asst-button-appearance-transparent {

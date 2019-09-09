@@ -1,4 +1,5 @@
 import React from 'fl-react'
+import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon } from 'lib'
 import Clipboard from 'react-clipboard.js'
@@ -123,7 +124,7 @@ export const Posts = ( {
 									<Icon.Link />
 								</Clipboard>
 								<Button onClick={ favoritePost } tabIndex="-1" className={ item.isFavorite ? 'fl-asst-is-favorite' : '' }>
-									<Icon.Bookmark />
+									{ item.isFavorite ? <Icon.FavoriteSolid /> : <Icon.Favorite /> }
 								</Button>
 								<Button onClick={ clonePost } tabIndex="-1">
 									<Icon.Clone />
@@ -136,14 +137,23 @@ export const Posts = ( {
 					)
 				}
 
+				const thumbnailSize = ( item.isTrashing || item.isTrashed || item.isRestoring ) ? 'sm' : 'med'
+
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
 					description: getDescription(),
 					thumbnail: item.thumbnail,
-					thumbnailSize: 'med',
+					thumbnailSize,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
+					className: classname( {
+						'fl-asst-is-trashing': item.isTrashing,
+						'fl-asst-is-trashed': item.isTrashed,
+						'fl-asst-is-restoring': item.isRestoring,
+						'fl-asst-is-isCloning': item.isCloning,
+						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring )
+					}, defaultProps.className )
 				} )
 			} }
 			{ ...rest }
