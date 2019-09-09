@@ -57,24 +57,22 @@ registerSection( 'fl-post-publish', {
 	},
 } )
 
-registerSection( 'fl-post-categories', {
-	label: 'Categories',
+registerSection( 'fl-post-cats-tags', {
+	label: __('Categories & Tags'),
 	location: {
 		type: 'post',
 	},
-	render: () => (
-		<div>Categories</div>
-	),
-} )
+	render: ({ useForm }) => {
+		const { tags } = useForm()
 
-registerSection( 'fl-post-tags', {
-	label: 'Tags',
-	location: {
-		type: 'post',
+		return (
+			<>
+				<Form.Item label={ tags.label } labelForm={ tags.id }>
+					<Control.TagGroup value={ tags.value } />
+				</Form.Item>
+			</>
+		)
 	},
-	render: () => (
-		<div>Tags</div>
-	),
 } )
 
 registerSection( 'fl-post-comments', {

@@ -16,29 +16,23 @@
         }
 
         .fl-asst-list-item {
+            position: relative;
             flex: 0 0 auto;
             display: flex;
             flex-direction: row;
-            --fl-asst-list-item-shadow-color: #B8CCE1;
-
-            box-shadow: 0px 0px 0px rgba(0,0,0,0);
-            transition-property: box-shadow;
+            transition-property: background;
             transition-duration: .15s;
 
             &:hover {
-                background-color: var(--fl-asst-surface-background);
-                box-shadow: 0px 7px 7px 0px hsla(210, 41%, 80%, .25);
+                background-color: var(--fl-asst-secondary-surface-background);
             }
 
             &:focus,
             &:focus-within {
-                background-color: var(--fl-asst-surface-background);
+                background-color: var(--fl-asst-secondary-surface-background);
                 outline: none;
-                box-shadow: inset 0px 0px 0px 3px var(--fl-asst-surface-background),
-                            inset 0px 0px 0px 5px var(--fl-asst-surface-color),
-                            /*0px 5px 45px 0px var(--fl-asst-list-item-shadow-color)*/;
+                box-shadow: inset 3px 0px 0px 0px var(--fl-asst-surface-color);
                 z-index: 1;
-                border-radius: 15px;
             }
 
             .fl-asst-list-item-selector {
@@ -166,7 +160,17 @@
     .fl-asst-item-extras {
         flex-direction: row;
         flex-wrap: wrap;
-        display: none;
+        display: flex;
+
+        z-index: 1;
+
+        opacity: 0;
+        height:0;
+        transform: translate( 32px, 0px );
+
+        transition-property: opacity, height, transform;
+        transition-delay: 0s;
+        transition-duration: 0s;
 
         button, a {
             flex: 0 0 auto;
@@ -174,11 +178,11 @@
             padding: var(--fl-asst-tiny-space);
             background: transparent;
 
-            &:first-child {
-                padding-left: 0;
+            &:hover {
+                background: var(--fl-asst-surface-background);
             }
-            &:last-child {
-                padding-right: 0;
+            &:focus {
+                background: var(--fl-asst-surface-background);
             }
         }
 
@@ -205,8 +209,19 @@
     .fl-asst-list-item:hover,
     .fl-asst-list-item:focus,
     .fl-asst-list-item:focus-within {
+        .fl-asst-list-item-thumbnail {
+            background-color: var(--fl-asst-surface-background);
+        }
         .fl-asst-item-extras {
-            display: flex;
+            opacity: 1;
+            height: 32px;
+            transform: translate(0,0)
+        }
+    }
+    .fl-asst-list-item:hover {
+        .fl-asst-item-extras {
+            transition-delay: .5s;
+            transition-duration: .25s;
         }
     }
 

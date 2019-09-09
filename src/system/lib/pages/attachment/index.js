@@ -46,15 +46,6 @@ export const Attachment = ( { location } ) => {
 	},
 	{ /* options */ }, item )
 
-	const Actions = () => {
-		return (
-			<Control.NextPrev
-				onPrev={ () => {} }
-				onNext={ () => {} }
-			/>
-		)
-	}
-
 	const sectionData = {
 		attachment: item,
 
@@ -85,7 +76,7 @@ export const Attachment = ( { location } ) => {
 	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) } headerActions={ <Actions /> }>
+		<Page shouldPadSides={ false } title={ __( 'Attachment' ) }>
 
 			<img src={ item.thumbnail } srcSet={ srcSet } />
 
