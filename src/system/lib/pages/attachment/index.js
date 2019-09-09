@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Page, Form, Control } from 'lib'
 import { getSrcSet } from 'utils/image'
 
-export const Attachment = ( { location, match, history } ) => {
+export const Attachment = ( { location } ) => {
 	const defaultItem = {
 		url: '',
 		sizes: {},
@@ -18,30 +18,29 @@ export const Attachment = ( { location, match, history } ) => {
 
 
 	// Form Handler
-	const { form, useFormContext } = Form.useForm({
+	const { form, useFormContext } = Form.useForm( {
 		title: {
-			label: __('Title'),
+			label: __( 'Title' ),
 			labelPlacement: 'beside',
 		},
 		alt: {
-			label: __('Alternative Text'),
+			label: __( 'Alternative Text' ),
 			labelPlacement: 'beside',
 		},
 		description: {
 			type: 'textarea',
-			label: __('Description'),
+			label: __( 'Description' ),
 			rows: 2,
 		},
 		caption: {
 			type: 'textarea',
-			label: __('Caption'),
+			label: __( 'Caption' ),
 			rows: 2,
 		},
 		url: {
-			label: __('URL'),
+			label: __( 'URL' ),
 		}
 	}, {}, item )
-
 
 
 	const Actions = () => {
@@ -87,7 +86,7 @@ export const Attachment = ( { location, match, history } ) => {
 
 			<img src={ item.thumbnail } srcSet={ srcSet } />
 
-			<Form {...form}>
+			<Form { ...form }>
 				<Page.RegisteredSections
 					location={ { type: 'attachment' } }
 					data={ sectionData }

@@ -18,9 +18,9 @@ export const TextItem = ( {
 		<Form.Item label={ label } placement={ labelPlacement } labelFor={ id } isRequired={ isRequired }>
 			{ isTextArea && (
 				<textarea
-					key={id}
-					id={id}
-					value={value}
+					key={ id }
+					id={ id }
+					value={ value }
 					onChange={ e => onChange( e.target.value, e ) }
 					{ ...rest }
 				/>

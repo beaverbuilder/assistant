@@ -78,7 +78,8 @@ export const Invite = ( ) => {
 		}
 	}, {
 		onSubmit: ( changes, state ) => {
-			console.log( 'send state', changes, state )
+
+			//console.log( 'send state', changes, state )
 		}
 	}, defaultValues )
 

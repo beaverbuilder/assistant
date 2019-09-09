@@ -16,10 +16,10 @@ registerSection( 'fl-media-details', {
 
 		return (
             <>
-				<Form.TextItem {...title} />
-				<Form.TextItem {...alt} />
-				<Form.TextItem {...description} />
-				<Form.TextItem {...caption} />
+				<Form.TextItem { ...title } />
+				<Form.TextItem { ...alt } />
+				<Form.TextItem { ...description } />
+				<Form.TextItem { ...caption } />
             </>
 		)
 	},
@@ -38,7 +38,7 @@ registerSection( 'fl-media-links', {
 		if ( 'undefined' !== typeof attachment.sizes.full ) {
 			hasFullURL = true
 		}
-		
+
 		return (
             <>
 				{ hasFullURL && (
@@ -47,10 +47,10 @@ registerSection( 'fl-media-links', {
 					</Form.Item>
 				)}
 
-				<Form.Item label={url.label} labelForm={url.id}>
+				<Form.Item label={ url.label } labelForm={ url.id }>
 					<Control.URL
-						value={url.value}
-						onChange={url.onChange}
+						value={ url.value }
+						onChange={ url.onChange }
 					/>
 				</Form.Item>
             </>

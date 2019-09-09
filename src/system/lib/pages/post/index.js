@@ -109,7 +109,8 @@ export const Post = ( { location, match, history } ) => {
 		}
 	}, {
 		onSubmit: ( changed, state ) => {
-			console.log( 'submit post', state.id,  changed )
+
+			//console.log( 'submit post', state.id,  changed )
 		}
 	}, item )
 
