@@ -21,6 +21,7 @@ const init = ( { config, initialValues } ) => {
 		required: false,
 		sanitize,
 		hasChanged: false,
+		onChange: () => {},
 	}
 
 	for ( let name in config ) {
@@ -42,12 +43,16 @@ const init = ( { config, initialValues } ) => {
 
 const defaultOptions = {
 	onSubmit: () => {},
-	autocomplete: 'randomkey',
+	onChange: () => {},
 }
 
-export const useForm = ( config = {}, _options = {}, initialValues = {} ) => {
+export const useForm = (
+	config = {},
+	givenOptions = {},
+	initialValues = {}
+) => {
 
-	const options = { ...defaultOptions, ..._options }
+	const options = { ...defaultOptions, ...givenOptions }
 
 	const [ hasChanges, setHasChanges ] = useState( false )
 
@@ -59,7 +64,6 @@ export const useForm = ( config = {}, _options = {}, initialValues = {} ) => {
 			if ( state[action.key].value === action.value ) {
 				return state
 			}
-
 			return {
 				...state,
 				[action.key]: {
@@ -86,7 +90,6 @@ export const useForm = ( config = {}, _options = {}, initialValues = {} ) => {
 	// Values Selector - reduces state to just key/value pairs
 	const selectValues = state => {
 		let obj = {}
-
 		for ( let key in state ) {
 			obj[key] = state[key].value
 		}
@@ -108,6 +111,7 @@ export const useForm = ( config = {}, _options = {}, initialValues = {} ) => {
 		let obj = {}
 
 		for ( let key in state ) {
+
 			const field = state[key]
 			obj[key] = {
 				...field,
@@ -116,10 +120,18 @@ export const useForm = ( config = {}, _options = {}, initialValues = {} ) => {
 					if ( ! hasChanges ) {
 						setHasChanges( true )
 					}
+
+					// call onChange from field config
+					if ( 'function' === typeof field.onChange ) {
+						field.onChange( v )
+					}
+
+					// call options onChange handler
+					options.onChange( key, v )
 				}
 			}
 
-			// Filter properties that should not be on dom elements
+			// Remove properties that should not be on DOM elements
 			delete obj[key].sanitize
 			delete obj[key].hasChanged
 			delete obj[key].previousValue
@@ -130,16 +142,11 @@ export const useForm = ( config = {}, _options = {}, initialValues = {} ) => {
 	const values = selectValues( state )
 	const fields = selectFields( state )
 	const changed = selectChanged( state )
-
 	const context = { values, fields }
 
-	const resetForm = () => {
-		setHasChanges( false )
-	}
+	const resetForm = () => setHasChanges( false )
 
-	const submitForm = () => {
-		options.onSubmit( changed, values )
-	}
+	const submitForm = () => options.onSubmit( changed, values )
 
 	const result = {
 		values,

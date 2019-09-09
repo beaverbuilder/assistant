@@ -13,7 +13,10 @@ export const Attachment = ( { location } ) => {
 		title: '',
 		filesize: '',
 	}
-	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
+	const item = 'undefined' !== typeof location.state.item ?
+		{ ...defaultItem, ...location.state.item } :
+		defaultItem
+
 	const srcSet = getSrcSet( item.sizes )
 
 
@@ -40,8 +43,8 @@ export const Attachment = ( { location } ) => {
 		url: {
 			label: __( 'URL' ),
 		}
-	}, {}, item )
-
+	},
+	{ /* options */ }, item )
 
 	const Actions = () => {
 		return (

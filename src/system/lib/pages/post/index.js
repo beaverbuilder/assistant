@@ -226,9 +226,7 @@ export const Post = ( { location, match, history } ) => {
 				</Page.Pad>
 			), [ location.pathname ] )}
 
-
 			<Form { ...form }>
-				{ /* Memoizing to prevent unnecessary rerenders and causing form fields to be replaced and lose focus */}
 				{ useMemo( () => (
 					<Nav.Switch>
 						{ tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> ) }
@@ -242,12 +240,46 @@ export const Post = ( { location, match, history } ) => {
 
 
 export const CreatePost = () => {
+
+	const initial = {
+		title: '',
+		slug: '',
+	}
+
+	const { form, useFormContext, submitForm } = Form.useForm( {
+		title: {
+			label: __( 'Title' ),
+			placeholder: __( 'TItle' ),
+		},
+		slug: {
+			label: __( 'Slug' ),
+			placeholder: __( 'my-post-slug' ),
+			sanitize: slugify,
+		},
+		url: {
+
+			/* This needs to be a derived value */
+		}
+	}, {}, initial )
+
+	const Footer = () => {
+		return (
+            <>
+				<Page.Toolbar>
+					<Button type="submit" onClick={ submitForm } >{__( 'Create' )}</Button>
+				</Page.Toolbar>
+            </>
+		)
+	}
+
 	return (
-		<Page title={ __( 'Create New' ) } shouldPadSides={ false }>
-			<Form>
+		<Page title={ __( 'Create New' ) } shouldPadSides={ false } footer={ <Footer /> }>
+			<Form { ...form }>
 				<Page.RegisteredSections
 					location={ { type: 'create-post' } }
-					data={ {} }
+					data={ {
+						useForm: useFormContext
+					} }
 				/>
 			</Form>
 		</Page>

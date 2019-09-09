@@ -107,11 +107,13 @@ registerSection( 'fl-new-post-title', {
 	location: {
 		type: 'create-post',
 	},
-	render: () => (
-		<>
-			<Form.Item label={ __( 'Title' ) }>
-				<input type="text" placeholder={ __( 'Title' ) } />
-			</Form.Item>
-		</>
-	),
+	render: ( { useForm } ) => {
+		const { title, slug } = useForm()
+		return (
+			<>
+				<Form.TextItem { ...title } />
+				<Form.TextItem { ...slug } />
+			</>
+		)
+	},
 } )
