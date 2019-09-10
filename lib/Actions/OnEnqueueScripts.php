@@ -60,6 +60,7 @@ class OnEnqueueScripts {
 		$current_user = $user_data->current();
 
 		return [
+			'adminURLs'         => $site_data->get_admin_urls(),
 			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
 			'apiRoot'           => esc_url_raw( get_rest_url() ),
 			'cloudUrl'          => FL_ASSISTANT_CLOUD_URL,
@@ -67,8 +68,10 @@ class OnEnqueueScripts {
 			'contentStatus'     => $post_data->get_stati(),
 			'currentPageView'   => $site_data->get_current_view(),
 			'currentUser'       => $current_user->to_array(),
-			'adminURLs'         => $site_data->get_admin_urls(),
 			'defaultAppName'    => 'fl-dashboard',
+			'emptyTrashDays'	=> EMPTY_TRASH_DAYS,
+			'isShowingAdminBar' => is_admin_bar_showing(),
+			'isAdmin'           => is_admin(),
 			'nonce'             => [
 				'api'             => wp_create_nonce( 'wp_rest' ),
 				'reply'           => wp_create_nonce( 'replyto-comment' ),
@@ -78,8 +81,6 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $post_data->get_taxononies(),
 			'userRoles'         => $user_data->get_roles(),
-			'isShowingAdminBar' => is_admin_bar_showing(),
-			'isAdmin'           => is_admin(),
 		];
 	}
 

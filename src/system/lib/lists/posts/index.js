@@ -12,7 +12,7 @@ export const Posts = ( {
 	...rest,
 } ) => {
 	const wpRest = getWpRest()
-	const { currentUser } = getSystemConfig()
+	const { currentUser, emptyTrashDays } = getSystemConfig()
 
 	return (
 		<List.WordPress
@@ -22,7 +22,7 @@ export const Posts = ( {
 				shouldAlwaysShowThumbnail: true
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const { cloneItem, updateItem, updateItemBy } = defaultProps
+				const { cloneItem, updateItem, updateItemBy, removeItem } = defaultProps
 
 				const favoritePost = () => {
 					if ( item.isFavorite ) {
@@ -51,8 +51,13 @@ export const Posts = ( {
 				}
 
 				const trashPost = () => {
-					if ( confirm( __( 'Do you really want to trash this post?' ) ) ) {
-						const { id, uuid } = item
+					const { id, uuid } = item
+					if ( ! Number( emptyTrashDays ) ) {
+						if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
+							removeItem()
+							wpRest.posts().update( id, 'trash' )
+						}
+					} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
 						updateItem( {
 							id: null,
 							title: __( 'Moving item to trash' ),
