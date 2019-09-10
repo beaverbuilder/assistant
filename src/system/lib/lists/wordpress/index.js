@@ -21,6 +21,45 @@ export const WordPress = ( {
 		setItems( [] )
 	}, [ type, JSON.stringify( query ) ] )
 
+	const getItemKey = ( uuid ) => {
+		for ( let i = 0; i < items.length; i++ ) {
+			if ( 'undefined' === typeof items[ i ].uuid ) {
+				continue
+			} else if ( items[ i ].uuid == uuid ) {
+				return i
+			}
+		}
+		return -1
+	}
+
+	const updateItem = ( uuid, newProps = {} ) => {
+		const key = getItemKey( uuid )
+		if ( key > -1 ) {
+			items[ key ] = Object.assign( items[ key ], newProps )
+			setItems( [ ...items ] )
+		}
+	}
+
+	const removeItem = ( uuid ) => {
+		const key = getItemKey( uuid )
+		if ( key > -1 ) {
+			items.splice( key, 1 )
+			setItems( [ ...items ] )
+		}
+	}
+
+	const cloneItem = ( uuid, newProps = {} ) => {
+		const key = getItemKey( uuid )
+		if ( key > -1 ) {
+			const clone = Object.assign( {}, items[ key ], newProps )
+			clone.uuid = uuidv1()
+			items.splice( key + 1, 0, clone )
+			setItems( [ ...items ] )
+			return clone
+		}
+		return null
+	}
+
 	return (
 		<List.Scroller
 			items={ formatItems( items ) }
@@ -43,32 +82,10 @@ export const WordPress = ( {
 			getItemProps={ ( item, defaultProps ) => {
 				return getItemProps( item, {
 					...defaultProps,
-					removeItem: () => {
-						const { key } = defaultProps
-						items.splice( key, 1 )
-						setItems( [ ...items ] )
-					},
-					cloneItem: ( newProps = {} ) => {
-						const { key } = defaultProps
-						const clone = Object.assign( {}, items[ key ], newProps )
-						clone.uuid = uuidv1()
-						items.splice( key + 1, 0, clone )
-						setItems( [ ...items ] )
-						return clone
-					},
-					updateItem: ( newProps = {} ) => {
-						const { key } = defaultProps
-						items[ key ] = Object.assign( items[ key ], newProps )
-						setItems( [ ...items ] )
-					},
-					updateItemBy: ( key, value, newProps = {} ) => {
-						items.map( ( item, i ) => {
-							if ( item[ key ] == value ) {
-								items[ i ] = Object.assign( items[ i ], newProps )
-							}
-						} )
-						setItems( [ ...items ] )
-					},
+					removeItem,
+					cloneItem,
+					updateItem,
+					getItemKey,
 				} )
 			} }
 			{ ...rest }
