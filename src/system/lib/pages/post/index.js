@@ -187,17 +187,6 @@ export const Post = ( { location, match, history } ) => {
 		],
 	}
 
-	// Area to the right of the page title bar
-	// This gets rendered into <Page headerActions />
-	const Actions = () => {
-		return (
-			<Control.NextPrev
-				onPrev={ () => {} }
-				onNext={ () => {} }
-			/>
-		)
-	}
-
 	const Footer = () => {
 		return (
             <>
@@ -217,7 +206,6 @@ export const Post = ( { location, match, history } ) => {
 	return (
 		<Page
 			title={ __( 'Edit Post' ) }
-			headerActions={ <Actions /> }
 			shouldPadSides={ false }
 			footer={ hasChanges && <Footer /> }
 		>
