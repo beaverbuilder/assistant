@@ -24,7 +24,7 @@ export const useListItems = () => {
 	const updateItem = ( uuid, newProps = {} ) => {
 		const { items } = itemsRef.current
 		const key = getItemKey( uuid )
-		if ( key > -1 ) {
+		if ( -1 < key ) {
 			items[ key ] = Object.assign( items[ key ], newProps )
 			setItems( [ ...items ] )
 		}
@@ -33,7 +33,7 @@ export const useListItems = () => {
 	const removeItem = ( uuid ) => {
 		const { items } = itemsRef.current
 		const key = getItemKey( uuid )
-		if ( key > -1 ) {
+		if ( -1 < key ) {
 			items.splice( key, 1 )
 			setItems( [ ...items ] )
 		}
@@ -42,7 +42,7 @@ export const useListItems = () => {
 	const cloneItem = ( uuid, newProps = {} ) => {
 		const { items } = itemsRef.current
 		const key = getItemKey( uuid )
-		if ( key > -1 ) {
+		if ( -1 < key ) {
 			const clone = Object.assign( {}, items[ key ], newProps )
 			clone.uuid = uuidv1()
 			items.splice( key + 1, 0, clone )
