@@ -60,7 +60,34 @@ export const config = {
 			{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
 			{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
 		]
+	},
+	actions: {
+		label: __('Actions'),
+		getValue: ( value, state, setValue ) => {
+
+			const { isFavorite, bbCanEdit, bbEditUrl } = state
+
+			const actions = [
+				{
+					label: isFavorite.value ? __('Unfavorite') : __('Favorite'),
+					value: isFavorite.value,
+					onClick: () => {
+						setValue( 'isFavorite', ! isFavorite.value )
+					},
+				},
+			]
+
+			if ( bbCanEdit.value ) {
+				actions.push({
+					label: __('Beaver Builder'),
+					href: bbEditUrl.value,
+				})
+			}
+
+			return actions
+		},
 	}
+
 }
 
 
@@ -72,6 +99,7 @@ export const Post = ( { location, match, history } ) => {
 		bbCanEdit: true,
 		bbEditUrl: null,
 		bbIsEnabled: null,
+		isFavorite: false,
 		commentsAllowed: null,
 		content: null,
 		date: null,
