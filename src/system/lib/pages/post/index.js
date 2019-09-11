@@ -1,6 +1,7 @@
 import React, { useMemo } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, Button, Form } from 'lib'
+import { getWpRest } from 'shared-utils/wordpress'
 import { getPostActions } from './actions'
 
 const slugify = value => {
@@ -116,7 +117,23 @@ export const Post = ( { location, match, history } ) => {
 				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
 			],
 		}
-	}, {}, item )
+	}, {
+		onSubmit: ( changes ) => {
+			const wpRest = getWpRest()
+			const data = {}
+			const keyMap = {
+				title: 'post_title',
+				slug: 'post_name',
+				status: 'post_status',
+			}
+			for ( let key in changes ) {
+				data[ keyMap[ key ] ] = changes[ key ]
+			}
+			wpRest.posts().update( item.id, 'data', data ).then( () => {
+				alert( 'Changes Published!' )
+			} )
+		},
+	}, item )
 
 
 	// Setup Tab Handling
