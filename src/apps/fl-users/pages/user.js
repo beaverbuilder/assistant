@@ -6,8 +6,9 @@ import { getWpRest } from 'assistant/utils/wordpress'
 import { CancelToken } from 'axios'
 
 import { Summary } from '../components/user/summary'
-import { GeneralTab } from '../components/user/general'
 
+// Original Tabs
+//import { GeneralTab } from '../components/user/general'
 //import { PreferencesTab } from '../components/user/preferences'
 import { PostsTab } from '../components/user/posts'
 
@@ -52,21 +53,21 @@ export const User = ( { location, match, history } ) => {
 	const isYou = currentUser.id === user.id
 
 
-	const { form, useFormContext, values } = Form.useForm( {
+	const { form, useFormContext } = Form.useForm( {
 		firstName: {
-			label: __('First Name'),
+			label: __( 'First Name' ),
 			labelPlacement: 'beside',
 		},
 		lastName: {
-			label: __('Last Name'),
+			label: __( 'Last Name' ),
 			labelPlacement: 'beside',
 		},
 		email: {
-			label: __('Email'),
+			label: __( 'Email' ),
 			labelPlacement: 'beside',
 		},
 		displayName: {
-			label: __('Display Name'),
+			label: __( 'Display Name' ),
 			labelPlacement: 'beside',
 			disabled: true,
 		},
@@ -93,13 +94,7 @@ export const User = ( { location, match, history } ) => {
 			}
 		}
 	},
-	{
-		onChange: (key, val) => {
-			switch( key ) {
-				
-			}
-		}
-	}, user )
+	{}, user )
 
 
 	const source = CancelToken.source()
@@ -167,7 +162,7 @@ export const User = ( { location, match, history } ) => {
 	].filter( tab => false !== tab.shouldInclude )
 
 	// Don't show tab buttons for only 1 tab
-	const TabButtons = () => useMemo( () =>  tabs.length > 1 && (
+	const TabButtons = () => useMemo( () =>  1 < tabs.length && (
 		<Page.Pad style={ { display: 'flex', justifyContent: 'center' } } bottom={ false }>
 			<Button.Group>
 				{tabs.map( ( { label, path, shouldInclude = true }, i ) => shouldInclude && (
@@ -181,7 +176,7 @@ export const User = ( { location, match, history } ) => {
 	), [] )
 
 	return (
-		<Page shouldPadSides={false}
+		<Page shouldPadSides={ false }
 			title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }>
 
 			{ loading && <p>{__( 'Loading...' )}</p> }
@@ -195,7 +190,7 @@ export const User = ( { location, match, history } ) => {
 					<Nav.Switch>
 						{tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> )}
 					</Nav.Switch>
-				), [])}
+				), [] )}
 			</Form>
 
 		</Page>

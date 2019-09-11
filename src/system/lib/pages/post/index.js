@@ -1,6 +1,6 @@
 import React, { useMemo } from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, Button, Form, Control } from 'lib'
+import { Page, Nav, Button, Form } from 'lib'
 
 const slugify = value => {
 	return value.replace( ' ', '' )
@@ -95,7 +95,6 @@ export const Post = ( { location, match, history } ) => {
 	// Setup Form Handler & Context
 	const {
 		values,
-		changed,
 		form,
 		useFormContext,
 		hasChanges,
@@ -116,14 +115,7 @@ export const Post = ( { location, match, history } ) => {
 				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
 			],
 		}
-	}, {
-		onSubmit: ( changed, state ) => {
-			console.log( 'submit', state.id,  changed, state )
-		},
-		onReset: ( changed, state ) => {
-			console.log( 'reset', changed, state )
-		}
-	}, item )
+	}, {}, item )
 
 
 	// Setup Tab Handling

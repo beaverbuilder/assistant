@@ -16,10 +16,10 @@ registerSection( 'fl-user-info', {
 
 		return (
 			<>
-				<Form.TextItem {...firstName} />
-				<Form.TextItem {...lastName} />
-				<Form.TextItem {...email} />
-				<Form.TextItem {...displayName} />
+				<Form.TextItem { ...firstName } />
+				<Form.TextItem { ...lastName } />
+				<Form.TextItem { ...email } />
+				<Form.TextItem { ...displayName } />
 			</>
 		)
 	},
