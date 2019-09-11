@@ -166,11 +166,12 @@ export const Post = ( { location, match, history } ) => {
 			},
 			{
 				label: __( 'Edit in Admin' ),
-				href: '#',
+				href: item.editUrl,
 			},
 			{
-				label: __( 'Beaver Builder' ),
-				href: '#', /* Maybe we want to check here if we can re-enter BB without refresh? */
+				label: item.bbBranding,
+				href: item.bbEditUrl,
+				shouldRender: item.bbCanEdit,
 			},
 			{
 				label: __( 'Duplicate' ),
