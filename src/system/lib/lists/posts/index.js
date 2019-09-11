@@ -12,7 +12,7 @@ export const Posts = ( {
 	...rest,
 } ) => {
 	const wpRest = getWpRest()
-	const { currentUser } = getSystemConfig()
+	const { currentUser, emptyTrashDays } = getSystemConfig()
 
 	return (
 		<List.WordPress
@@ -22,38 +22,45 @@ export const Posts = ( {
 				shouldAlwaysShowThumbnail: true
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const { cloneItem, updateItem, updateItemBy } = defaultProps
+				const { cloneItem, updateItem, removeItem } = defaultProps
 
 				const favoritePost = () => {
 					if ( item.isFavorite ) {
 						wpRest.notations().deleteFavorite( 'post', item.id, currentUser.id )
-						updateItem( { isFavorite: false } )
+						updateItem( item.uuid, { isFavorite: false } )
 					} else {
 						wpRest.notations().createFavorite( 'post', item.id, currentUser.id )
-						updateItem( { isFavorite: true } )
+						updateItem( item.uuid, { isFavorite: true } )
 					}
 				}
 
 				const clonePost = () => {
-					const clonedItem = cloneItem( {
+					const clonedItem = cloneItem( item.uuid, {
 						id: null,
 						author: null,
 						visibility: null,
 						title: __( 'Cloning...' ),
 						isCloning: true,
 					} )
-					wpRest.posts().clone( item.id ).then( response => {
-						updateItemBy( 'uuid', clonedItem.uuid, {
-							...response.data,
-							isCloning: false,
+					if ( clonedItem ) {
+						wpRest.posts().clone( item.id ).then( response => {
+							updateItem( clonedItem.uuid, {
+								...response.data,
+								isCloning: false,
+							} )
 						} )
-					} )
+					}
 				}
 
 				const trashPost = () => {
-					if ( confirm( __( 'Do you really want to trash this post?' ) ) ) {
-						const { id, uuid } = item
-						updateItem( {
+					const { id, uuid } = item
+					if ( ! Number( emptyTrashDays ) ) {
+						if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
+							removeItem( uuid )
+							wpRest.posts().update( id, 'trash' )
+						}
+					} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
+						updateItem( uuid, {
 							id: null,
 							title: __( 'Moving item to trash' ),
 							author: null,
@@ -62,7 +69,7 @@ export const Posts = ( {
 							trashedItem: Object.assign( {}, item ),
 						} )
 						wpRest.posts().update( id, 'trash' ).then( () => {
-							updateItemBy( 'uuid', uuid, {
+							updateItem( uuid, {
 								title: __( 'This item has been moved to the trash' ),
 								isTrashing: false,
 								isTrashed: true,
@@ -72,13 +79,13 @@ export const Posts = ( {
 				}
 
 				const restorePost = () => {
-					updateItemBy( 'uuid', item.uuid, {
+					updateItem( item.trashedItem.uuid, {
 						title: __( 'Restoring item' ),
 						isTrashed: false,
 						isRestoring: true,
 					} )
 					wpRest.posts().update( item.trashedItem.id, 'untrash' ).then( () => {
-						updateItemBy( 'uuid', item.trashedItem.uuid, {
+						updateItem( item.trashedItem.uuid, {
 							...item.trashedItem,
 							isRestoring: false,
 						} )

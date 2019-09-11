@@ -2,6 +2,7 @@ import React from 'fl-react'
 import classname from 'classnames'
 import { TestSheet } from './examples'
 import { Item, Loading } from './parts'
+import { useListItems } from './items'
 import { Scroller, useScrollLoader } from './scroller'
 import { WordPress } from './wordpress'
 import { Comments } from './comments'
@@ -118,8 +119,6 @@ List.Loading.displayName = 'List.Loading'
 List.Scroller = Scroller
 List.Scroller.displayName = 'List.Scroller'
 
-List.useScrollLoader = useScrollLoader
-
 List.WordPress = WordPress
 List.WordPress.displayName = 'List.WordPress'
 
@@ -137,3 +136,6 @@ List.Updates.displayName = 'List.Updates'
 
 List.TestSheet = TestSheet
 List.TestSheet.displayName = 'List.TestSheet'
+
+List.useScrollLoader = useScrollLoader
+List.useListItems = useListItems
