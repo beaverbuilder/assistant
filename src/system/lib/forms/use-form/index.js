@@ -77,6 +77,19 @@ export const useForm = (
 				}
 			}
 
+		case 'SET_VALUES':
+			for( let key in action.values ) {
+				if ( 'undefined' !== typeof obj[key] ) {
+					let value = action.values[key]
+					obj[key].value = value
+
+					if ( action.shouldCommit ) {
+						obj[key].lastCommittedValue = value
+					}
+				}
+			}
+			return obj
+
 		case 'COMMIT_VALUE':
 			return {
 				...state,
@@ -131,6 +144,17 @@ export const useForm = (
 				key,
 			} )
 		}
+	}
+
+	/**
+	 * Set some or all values with a given object of key/val pairs
+	 */
+	const setValues = ( values, shouldCommit = true ) => {
+		dispatch( {
+			type: 'SET_VALUES',
+			values,
+			shouldCommit,
+		} )
 	}
 
 	// Has a single field's value changed since last commit (or initialize)
@@ -217,6 +241,7 @@ export const useForm = (
 		hasChanges,
 		resetForm,
 		submitForm,
+		setValues,
 	}
 	return result
 }
