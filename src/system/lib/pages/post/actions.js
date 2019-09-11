@@ -15,6 +15,26 @@ export const getPostActions = ( item ) => {
 		}
 	}
 
+	const clonePost = () => {
+		wpRest.posts().clone( item.id ).then( response => {
+			alert( 'Post Duplicated!' )
+		} )
+	}
+
+	const trashPost = () => {
+		if ( ! Number( emptyTrashDays ) ) {
+			if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
+				wpRest.posts().update( item.id, 'trash' ).then( () => {
+					alert( 'Post permanently deleted!' )
+				} )
+			}
+		} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
+			wpRest.posts().update( item.id, 'trash' ).then( () => {
+				alert( 'Post trashed!' )
+			} )
+		}
+	}
+
 	return [
 		{
 			label: __( 'View Post' ),
@@ -31,7 +51,7 @@ export const getPostActions = ( item ) => {
 		},
 		{
 			label: __( 'Duplicate' ),
-			onClick: () => {},
+			onClick: clonePost,
 		},
 		{
 			label: item.isFavorite ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
@@ -39,7 +59,7 @@ export const getPostActions = ( item ) => {
 		},
 		{
 			label: __( 'Move to Trash' ),
-			onClick: () => {},
+			onClick: trashPost,
 		}
 	]
 }
