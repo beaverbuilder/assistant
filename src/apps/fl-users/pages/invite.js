@@ -76,12 +76,7 @@ export const Invite = ( ) => {
 			type: 'password',
 			required: true,
 		}
-	}, {
-		onSubmit: ( changes, state ) => {
-
-			//console.log( 'send state', changes, state )
-		}
-	}, defaultValues )
+	}, {}, defaultValues )
 
 	const {
 		username,

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'fl-react'
+import { useEffect, useRef, useState } from 'fl-react'
 import uuidv1 from 'uuid/v1'
 
 export const useListItems = () => {

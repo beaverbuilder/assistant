@@ -90,7 +90,7 @@
         display: flex;
         flex-direction: column;
         min-height: 36px;
-        padding: var(--fl-asst-inner-space) 0;
+        padding: 10px 0;
 
         .fl-asst-list-item-default-content-row {
             display: flex;
@@ -174,6 +174,7 @@
     }
 
     .fl-asst-item-extras {
+        box-sizing: border-box;
         flex-direction: row;
         flex-wrap: wrap;
         display: flex;
@@ -225,6 +226,7 @@
     .fl-asst-list-item:hover,
     .fl-asst-list-item:focus,
     .fl-asst-list-item:focus-within {
+
         .fl-asst-list-item-thumbnail {
             background-color: var(--fl-asst-surface-background);
         }
