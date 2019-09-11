@@ -1,6 +1,7 @@
 import React, { useMemo } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, Button, Form } from 'lib'
+import { getPostActions } from './actions'
 
 const slugify = value => {
 	return value.replace( ' ', '' )
@@ -150,33 +151,7 @@ export const Post = ( { location, match, history } ) => {
 	const sectionData = {
 		post: item,
 		useForm: useFormContext, // Rename
-
-		actions: [
-			{
-				label: __( 'View Post' ),
-				href: item.url,
-			},
-			{
-				label: __( 'Edit in Admin' ),
-				href: '#',
-			},
-			{
-				label: __( 'Beaver Builder' ),
-				href: '#', /* Maybe we want to check here if we can re-enter BB without refresh? */
-			},
-			{
-				label: __( 'Duplicate' ),
-				onClick: () => {},
-			},
-			{
-				label: __( 'Mark as Favorite' ),
-				onClick: () => {},
-			},
-			{
-				label: __( 'Move to Trash' ),
-				onClick: () => {},
-			}
-		],
+		actions: getPostActions( item ),
 	}
 
 	const Footer = () => {

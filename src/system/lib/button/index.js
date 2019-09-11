@@ -228,9 +228,13 @@ Button.Loading = ( {
 Button.renderActions = actions => {
 	const defaultAction = {
 		label: null,
+		shouldRender: true,
 	}
 	return Object.values( actions ).map( ( action, i ) => {
-		const { label, ...rest } = { ...defaultAction, ...action }
+		const { label, shouldRender, ...rest } = { ...defaultAction, ...action }
+		if ( ! shouldRender ) {
+			return null
+		}
 		return (
 			<Button key={ i } { ...rest }>{label}</Button>
 		)
