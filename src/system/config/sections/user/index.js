@@ -10,21 +10,16 @@ registerSection( 'fl-user-info', {
 	location: {
 		type: 'user',
 	},
-	render: ( { user } ) => {
-		const { displayName, email } = user
+	render: ( { useForm } ) => {
+
+		const { firstName, lastName, email, displayName } = useForm()
+
 		return (
 			<>
-				<Form.Item label={ __( 'First Name' ) } labelFor="firstName" placement="beside">
-					<input type="text" id="firstName" placeholder={ __( 'First Name' ) } />
-				</Form.Item>
-
-				<Form.Item label={ __( 'Last Name' ) } labelFor="lastName" placement="beside">
-					<input type="text" id="lastName" placeholder={ __( 'Last Name' ) } />
-				</Form.Item>
-
-				<Form.Item label={ __( 'Display Name' ) } placement="beside">{displayName}</Form.Item>
-
-				<Form.Item label={ __( 'Email Address' ) } placement="beside">{email}</Form.Item>
+				<Form.TextItem {...firstName} />
+				<Form.TextItem {...lastName} />
+				<Form.TextItem {...email} />
+				<Form.TextItem {...displayName} />
 			</>
 		)
 	},

@@ -52,7 +52,24 @@ export const User = ( { location, match, history } ) => {
 	const isYou = currentUser.id === user.id
 
 
-	const { form, useFormContext } = Form.useForm( {
+	const { form, useFormContext, values } = Form.useForm( {
+		firstName: {
+			label: __('First Name'),
+			labelPlacement: 'beside',
+		},
+		lastName: {
+			label: __('Last Name'),
+			labelPlacement: 'beside',
+		},
+		email: {
+			label: __('Email'),
+			labelPlacement: 'beside',
+		},
+		displayName: {
+			label: __('Display Name'),
+			labelPlacement: 'beside',
+			disabled: true,
+		},
 		showAdminBar: {
 			label: __( 'Admin Bar' ),
 			labelPlacement: 'beside',
@@ -76,7 +93,13 @@ export const User = ( { location, match, history } ) => {
 			}
 		}
 	},
-	{ /* options */ }, user )
+	{
+		onChange: (key, val) => {
+			switch( key ) {
+				
+			}
+		}
+	}, user )
 
 
 	const source = CancelToken.source()
@@ -117,7 +140,12 @@ export const User = ( { location, match, history } ) => {
 			path: match.url,
 			label: __( 'General' ),
 			exact: true,
-			component: () => ( <GeneralTab { ...tabProps } /> ),
+			component: () => (
+				<Page.RegisteredSections
+					location={ { type: 'user', tab: '' } }
+					data={ sectionProps }
+				/>
+			),
 		},
 		{
 			path: match.url + '/preferences',
@@ -136,9 +164,10 @@ export const User = ( { location, match, history } ) => {
 			component: () => ( <PostsTab { ...tabProps } /> ),
 			shouldInclude: 0 < user.posts
 		}
-	]
+	].filter( tab => false !== tab.shouldInclude )
 
-	const TabButtons = () => useMemo( () => (
+	// Don't show tab buttons for only 1 tab
+	const TabButtons = () => useMemo( () =>  tabs.length > 1 && (
 		<Page.Pad style={ { display: 'flex', justifyContent: 'center' } } bottom={ false }>
 			<Button.Group>
 				{tabs.map( ( { label, path, shouldInclude = true }, i ) => shouldInclude && (
@@ -152,7 +181,7 @@ export const User = ( { location, match, history } ) => {
 	), [] )
 
 	return (
-		<Page shouldPadSides={ loading }
+		<Page shouldPadSides={false}
 			title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }>
 
 			{ loading && <p>{__( 'Loading...' )}</p> }
@@ -162,9 +191,11 @@ export const User = ( { location, match, history } ) => {
 			<TabButtons />
 
 			<Form { ...form }>
-				<Nav.Switch>
-					{tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> )}
-				</Nav.Switch>
+				{ useMemo( () => (
+					<Nav.Switch>
+						{tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> )}
+					</Nav.Switch>
+				), [])}
 			</Form>
 
 		</Page>
