@@ -2,8 +2,8 @@
 
 namespace FL\Assistant\Controllers;
 
-use FL\Assistant\Transformers\PostTransformer;
 use \WP_REST_Server;
+use FL\Assistant\Transformers\PostTransformer;
 
 /**
  * REST API logic for posts.
@@ -52,7 +52,7 @@ class PostsController extends AssistantController {
 		);
 
 		$this->route(
-			'/post', [
+			'/posts', [
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_post' ],
@@ -64,7 +64,7 @@ class PostsController extends AssistantController {
 		);
 
 		$this->route(
-			'/post/(?P<id>\d+)', [
+			'/posts/(?P<id>\d+)', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'post' ],
@@ -112,7 +112,7 @@ class PostsController extends AssistantController {
 		);
 
 		$this->route(
-			'/post/(?P<id>\d+)/clone', [
+			'/posts/(?P<id>\d+)/clone', [
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'clone_post' ],

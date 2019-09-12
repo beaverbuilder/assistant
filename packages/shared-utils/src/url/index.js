@@ -55,3 +55,5 @@ export const isAbsoluteURL = (url) => {
 	// by any combination of letters, digits, plus, period, or hyphen.
 	return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 };
+
+

@@ -1,43 +1,31 @@
 import Promise from 'promise'
-import localforage from 'localforage'
-import {setup} from 'axios-cache-adapter'
-
+import { createCachedAxios } from '../axios'
 const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 
 
-/**
- * Create `axios` instance
- * with pre-configured `axios-cache-adapter`
- * using a `localforage` store
- *
- * @type {AxiosInstance}
- */
-const http = setup({
+const axiosConfig = {
     baseURL: apiRoot,
     headers: {
         common: {
             'X-WP-Nonce': nonce.api
         }
-    },
-    cache: {
-        // Changing this to true will send alot of output to the console
-        debug: false,
-        // Set cache timeout - 15 minutes
-        maxAge: 15 * 60 * 1000,
-        // DO NOT exclude cache requests with query params.
-        exclude: { query: false },
-        // Setup localForage store.
-        store: localforage.createInstance({
-            // Attempt IndexDB then fall back to LocalStorage
-            driver: [
-                // localforage.INDEXEDDB,
-                localforage.LOCALSTORAGE,
-            ],
-            // Prefix all storage keys to prevent conflicts
-            name: 'fl-assistant-cache-rest'
-        }),
-    },
-})
+    }
+}
+
+const cacheConfig = {
+    // Changing this to true will send alot of output to the console
+    debug: true,
+    // Set cache timeout - 15 minutes
+    maxAge: 15 * 60 * 1000,
+}
+
+/**
+ * Create `axios` instance with pre-configured `axios-cache-adapter`
+ * and some custom cache invalidation magic.
+ *
+ * @type {AxiosInstance}
+ */
+const http = createCachedAxios('FL_ASSISTANT_WP_REST', axiosConfig, cacheConfig);
 
 export const getWpRest = () => {
     return {
@@ -48,17 +36,19 @@ export const getWpRest = () => {
         comments,
         updates,
         search,
-		notations,
+        notations,
         getPagedContent,
         getContent
     }
 }
+
 
 /**
  * Posts
  * @type {{findWhere(*=): *, findById(*): *, create(*=): *, update(*, *, *=): *}}
  */
 const posts = () => {
+
     return {
         /**
          * Get hierarchical posts by query
@@ -67,12 +57,8 @@ const posts = () => {
          * @returns {Promise<AxiosResponse<T>>}
          */
         hierarchical(params, config = {}) {
-            config.params = params;
-            return http.get('fl-assistant/v1/posts/hierarchical', {
-                params,
-                // cacheKey: 'posts-hierarchical',
-                ...config
-            })
+            config.params = params
+            return http.get('fl-assistant/v1/posts/hierarchical', config);
         },
         /**
          * Find post by ID
@@ -81,7 +67,7 @@ const posts = () => {
          * @returns {Promise<*>}
          */
         findById(id, config = {}) {
-            return http.get(`fl-assistant/v1/post/${id}`, config);
+            return http.get(`fl-assistant/v1/posts/${id}`, config);
         },
         /**
          * Find posts by query
@@ -98,7 +84,7 @@ const posts = () => {
          * @param config
          */
         create(data = {}, config = {}) {
-            return http.post('fl-assistant/v1/post', data, config)
+            return http.post('fl-assistant/v1/posts', data, config)
         },
         /**
          * Update a post
@@ -108,10 +94,10 @@ const posts = () => {
          * @param config
          */
         update(id, action, data = {}, config = {}) {
-            return http.post(`fl-assistant/v1/post/${id}`, {
-				action,
-				data,
-			}, config)
+            return http.post(`fl-assistant/v1/posts/${id}`, {
+                action,
+                data,
+            }, config)
         },
         /**
          * Delete a post
@@ -119,7 +105,7 @@ const posts = () => {
          * @param config
          */
         delete(id, config = {}) {
-            return http.delete(`fl-assistant/v1/post/${id}`, config)
+            return http.delete(`fl-assistant/v1/posts/${id}`, config)
         },
         /**
          * Clone a post
@@ -127,7 +113,7 @@ const posts = () => {
          * @param config
          */
         clone(id, config = {}) {
-            return http.post(`fl-assistant/v1/post/${id}/clone`, config)
+            return http.post(`fl-assistant/v1/posts/${id}/clone`, config)
         },
     }
 }
@@ -160,7 +146,7 @@ const users = () => {
          * @param config
          */
         updateState(state, config = {}) {
-            return http.post('fl-assistant/v1/current-user/state', {state}, config = {})
+            return http.post('fl-assistant/v1/current-user/state', { state }, config = {})
         }
     }
 }
@@ -250,9 +236,9 @@ const comments = () => {
          */
         update(id, action, data = {}, config = {}) {
             return http.post(`fl-assistant/v1/comment/${id}`, {
-				action,
-				data,
-			}, config);
+                action,
+                data,
+            }, config);
         }
     }
 }
@@ -346,7 +332,7 @@ const getContent = (type, params, config = {}) => {
  * @param config
  */
 const getPagedContent = async (type, params, offset = 0, config = {}) => {
-    let paged = Object.assign({offset}, params)
+    let paged = Object.assign({ offset }, params)
     let perPage = 20
 
     switch (type) {
@@ -363,7 +349,7 @@ const getPagedContent = async (type, params, offset = 0, config = {}) => {
 
     try {
         return await getContent(type, paged, config);
-    } catch(error) {
+    } catch (error) {
         return Promise.reject(error);
     }
 }
@@ -396,65 +382,65 @@ const notations = () => {
         /**
          * Create a new notation
          */
-        create( type, objectType, objectId, meta = {}, config = {} ) {
-            return posts().create( {
-				post_type: 'fl_asst_notation',
-				post_status: 'publish',
-				meta_input: {
-					fl_asst_notation_type: type,
-					fl_asst_notation_object_id: objectId,
-					fl_asst_notation_object_type: objectType,
-					...meta,
-				},
-			}, config )
+        create(type, objectType, objectId, meta = {}, config = {}) {
+            return posts().create({
+                post_type: 'fl_asst_notation',
+                post_status: 'publish',
+                meta_input: {
+                    fl_asst_notation_type: type,
+                    fl_asst_notation_object_id: objectId,
+                    fl_asst_notation_object_type: objectType,
+                    ...meta,
+                },
+            }, config)
         },
 
-		/**
+        /**
          * Delete a notation
          */
-        delete( type, objectType, objectId, meta = {}, config = {} ) {
+        delete(type, objectType, objectId, meta = {}, config = {}) {
             return http.post(`fl-assistant/v1/notations/delete-where-meta`, {
-				fl_asst_notation_type: type,
-				fl_asst_notation_object_type: objectType,
-				fl_asst_notation_object_id: objectId,
-				...meta,
-			}, config)
+                fl_asst_notation_type: type,
+                fl_asst_notation_object_type: objectType,
+                fl_asst_notation_object_id: objectId,
+                ...meta,
+            }, config)
         },
 
-		/**
+        /**
          * Create a new "favorite" notation
          */
-        createFavorite( objectType, objectId, userId, config = {} ) {
-            return notations().create( 'favorite', objectType, objectId, {
-				fl_asst_notation_user_id: userId,
-			}, config )
+        createFavorite(objectType, objectId, userId, config = {}) {
+            return notations().create('favorite', objectType, objectId, {
+                fl_asst_notation_user_id: userId,
+            }, config)
         },
 
-		/**
+        /**
          * Delete a "favorite" notation
          */
-        deleteFavorite( objectType, objectId, userId, config = {} ) {
-            return notations().delete( 'favorite', objectType, objectId, {
-				fl_asst_notation_user_id: userId,
-			}, config )
+        deleteFavorite(objectType, objectId, userId, config = {}) {
+            return notations().delete('favorite', objectType, objectId, {
+                fl_asst_notation_user_id: userId,
+            }, config)
         },
 
-		/**
+        /**
          * Create a new "label" notation
          */
-        createLabel( objectType, objectId, labelId, config = {} ) {
-            return notations().create( 'label', objectType, objectId, {
-				fl_asst_notation_label_id: labelId,
-			}, config )
+        createLabel(objectType, objectId, labelId, config = {}) {
+            return notations().create('label', objectType, objectId, {
+                fl_asst_notation_label_id: labelId,
+            }, config)
         },
 
-		/**
+        /**
          * Delete a "label" notation
          */
-        deleteLabel( objectType, objectId, labelId, config = {} ) {
-            return notations().delete( 'label', objectType, objectId, {
-				fl_asst_notation_label_id: labelId,
-			}, config )
+        deleteLabel(objectType, objectId, labelId, config = {}) {
+            return notations().delete('label', objectType, objectId, {
+                fl_asst_notation_label_id: labelId,
+            }, config)
         },
     }
 }

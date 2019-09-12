@@ -1,5 +1,6 @@
 {
     "name": "beaverbuilder/assistant",
+    "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
     "type": "wordpress-plugin",
     "autoload": {
         "psr-4": {
