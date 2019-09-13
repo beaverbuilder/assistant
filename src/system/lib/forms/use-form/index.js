@@ -51,6 +51,7 @@ const init = ( { config, initialValues } ) => {
 				...defaultProperty,
 				id: name,
 				value: initialValues[name],
+				lastCommittedValue: initialValues[name],
 				disabled: true,
 				alwaysCommit: true,
 			}
