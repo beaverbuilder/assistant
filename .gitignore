@@ -19,3 +19,10 @@ Thumbs.db
 
 # Composer libs
 /vendor/
+
+# IDE generated files
+.vscode
+.idea
+
+# nvm
+.nvmrc

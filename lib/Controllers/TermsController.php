@@ -51,7 +51,7 @@ class TermsController extends AssistantController {
 		);
 
 		$this->route(
-			'/term/(?P<id>\d+)', [
+			'/terms/(?P<id>\d+)', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'term' ],
@@ -86,7 +86,7 @@ class TermsController extends AssistantController {
 		);
 
 		$this->route(
-			'/term', [
+			'/terms', [
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_term' ],

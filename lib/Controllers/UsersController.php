@@ -42,7 +42,7 @@ final class UsersController extends AssistantController {
 		);
 
 		$this->route(
-			'/user/(?P<id>\d+)', [
+			'/users/(?P<id>\d+)', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'user' ],
