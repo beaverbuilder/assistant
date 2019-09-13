@@ -15,12 +15,14 @@ const init = ( { config, initialValues } ) => {
 	const defaultProperty = {
 		value: undefined,
 		lastCommittedValue: undefined,
+		alwaysCommit: false,
 		label: null,
 		id: null,
 		disabled: false,
 		required: false,
 		sanitize,
 		onChange: () => {},
+		getValue: null,
 	}
 
 	for ( let name in config ) {
@@ -39,6 +41,19 @@ const init = ( { config, initialValues } ) => {
 			const value = obj[name].sanitize( initialValues[name] )
 			obj[name].value = value
 			obj[name].lastCommittedValue = value
+		}
+	}
+
+	// Import read-only values from initialValues
+	for ( let name in initialValues ) {
+		if ( 'undefined' === typeof obj[name] ) {
+			obj[name] = {
+				...defaultProperty,
+				id: name,
+				value: initialValues[name],
+				disabled: true,
+				alwaysCommit: true,
+			}
 		}
 	}
 
@@ -69,13 +84,31 @@ export const useForm = (
 			if ( state[action.key].value === action.value ) {
 				return state
 			}
+
+			let value = state[action.key].sanitize( action.value )
+			let alwaysCommit = true === state[action.key].alwaysCommit
+
 			return {
 				...state,
 				[action.key]: {
 					...state[action.key],
-					value: state[action.key].sanitize( action.value ),
+					value: value,
+					lastCommittedValue: alwaysCommit ? value : state[action.key].lastCommittedValue
 				}
 			}
+
+		case 'SET_VALUES':
+			for( let key in action.values ) {
+				if ( 'undefined' !== typeof obj[key] ) {
+					let value = action.values[key]
+					obj[key].value = value
+
+					if ( action.shouldCommit ) {
+						obj[key].lastCommittedValue = value
+					}
+				}
+			}
+			return obj
 
 		case 'COMMIT_VALUE':
 			return {
@@ -133,14 +166,38 @@ export const useForm = (
 		}
 	}
 
+	/**
+	 * Set some or all values with a given object of key/val pairs
+	 */
+	const setValues = ( values, shouldCommit = true ) => {
+		dispatch( {
+			type: 'SET_VALUES',
+			values,
+			shouldCommit,
+		} )
+	}
+
 	// Has a single field's value changed since last commit (or initialize)
 	const valueHasChanged = field => field.value !== field.lastCommittedValue
 
 	// Values Selector - reduces state to just key/value pairs
 	const selectValues = state => {
 		let obj = {}
+
 		for ( let key in state ) {
 			obj[key] = state[key].value
+		}
+
+		return obj
+	}
+
+	const selectDerivedValues = ( state ) => {
+		let obj = {}
+		// Process derived values
+		for ( let key in state ) {
+			if ( 'function' === typeof state[key].getValue ) {
+				obj[key] = state[key].getValue( state[key].value, state, setValue )
+			}
 		}
 		return obj
 	}
@@ -148,6 +205,10 @@ export const useForm = (
 	const selectChanged = state => {
 		let obj = {}
 		for ( let key in state ) {
+
+			// Ignore derived values
+			if ( 'function' === typeof state[key].getValue ) continue
+
 			if ( state[key].value !== state[key].lastCommittedValue ) {
 				obj[key] = state[key].value
 			}
@@ -156,7 +217,7 @@ export const useForm = (
 	}
 
 	// Field Config Selector
-	const selectFields = state => {
+	const selectFields = ( state, values ) => {
 		let obj = {}
 
 		for ( let key in state ) {
@@ -165,6 +226,7 @@ export const useForm = (
 			obj[key] = {
 				...field,
 				hasChanges: valueHasChanged( field ),
+				value: values[key],
 				onChange: v => {
 					setValue( key, v )
 
@@ -181,13 +243,19 @@ export const useForm = (
 			// Remove properties that should not be on DOM elements
 			delete obj[key].sanitize
 			delete obj[key].lastCommittedValue
+			delete obj[key].alwaysCommit
+			delete obj[key].getValue
 		}
 		return obj
 	}
 
-	const values = selectValues( state )
-	const fields = selectFields( state )
+	const staticValues = selectValues( state )
+	const derivedValues = selectDerivedValues( state )
+	const values = { ...staticValues, ...derivedValues }
 	const changed = selectChanged( state )
+
+	const fields = selectFields( state, values )
+
 	const hasChanges = 0 < Object.keys( changed ).length
 	const context = { values, fields }
 
@@ -217,6 +285,7 @@ export const useForm = (
 		hasChanges,
 		resetForm,
 		submitForm,
+		setValues,
 	}
 	return result
 }

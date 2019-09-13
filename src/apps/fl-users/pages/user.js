@@ -53,7 +53,7 @@ export const User = ( { location, match, history } ) => {
 	const isYou = currentUser.id === user.id
 
 
-	const { form, useFormContext } = Form.useForm( {
+	const { form, useFormContext, setValues } = Form.useForm( {
 		firstName: {
 			label: __( 'First Name' ),
 			labelPlacement: 'beside',
@@ -104,6 +104,10 @@ export const User = ( { location, match, history } ) => {
 		const config = { cancelToken: source.token }
 		const response = await getWpRest().users().findById( match.params.id, config )
 		setUser( response.data )
+
+		// Update form handler
+		setValues( response.data )
+
 		setLoading( false )
 	}
 
