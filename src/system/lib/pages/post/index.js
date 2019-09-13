@@ -2,7 +2,6 @@ import React, { useMemo } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, Button, Form } from 'lib'
 import { getWpRest } from 'shared-utils/wordpress'
-import { getSystemConfig } from 'store'
 import { getPostActions } from './actions'
 
 const slugify = value => {
@@ -67,7 +66,7 @@ const getConfig = () => {
 		},
 		actions: {
 			label: __('Actions'),
-			getValue: getPostActions,
+			value: getPostActions,
 		}
 	}
 }
@@ -117,7 +116,7 @@ export const Post = ( { location, match, history } ) => {
 		labels: {
 			label: __( 'Labels' ),
 			id: 'postLabels',
-			value: [
+			value: () => [
 				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
 				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
 				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
@@ -125,9 +124,7 @@ export const Post = ( { location, match, history } ) => {
 			],
 		}
 	}, {
-		onSubmit: ( changes, values, ids, fields ) => {
-
-			console.log(changes, values, ids, fields)
+		onSubmit: ( changes, ids ) => {
 
 			const wpRest = getWpRest()
 			const data = {}

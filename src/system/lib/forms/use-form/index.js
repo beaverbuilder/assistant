@@ -22,7 +22,6 @@ const init = ( { config, initialValues } ) => {
 		required: false,
 		sanitize,
 		onChange: () => {},
-		getValue: null,
 
 	}
 
@@ -185,9 +184,25 @@ export const useForm = (
 	// Values Selector - reduces state to just key/value pairs
 	const selectValues = state => {
 		let obj = {}
+		let staticValues = {}
 
 		for ( let key in state ) {
-			obj[key] = state[key].value
+			if ( 'function' !== typeof state[key].value ) {
+				staticValues[key] = state[key].value
+			}
+		}
+
+		for ( let key in state ) {
+			const value = state[key].value
+
+			obj = Object.defineProperty( obj, key, {
+				get() {
+					if ( 'function' === typeof value ) {
+						return value( key, staticValues, setValue )
+					}
+					return value
+				}
+			})
 		}
 
 		return obj
@@ -203,23 +218,12 @@ export const useForm = (
 		return obj
 	}
 
-	const selectDerivedValues = ( state ) => {
-		let obj = {}
-		// Process derived values
-		for ( let key in state ) {
-			if ( 'function' === typeof state[key].getValue ) {
-				obj[key] = state[key].getValue( state[key].value, state, setValue )
-			}
-		}
-		return obj
-	}
-
 	const selectChanged = state => {
 		let obj = {}
 		for ( let key in state ) {
 
 			// Ignore derived values
-			if ( 'function' === typeof state[key].getValue ) continue
+			if ( 'function' === typeof state[key].value ) continue
 
 			if ( state[key].value !== state[key].lastCommittedValue ) {
 				obj[key] = state[key].value
@@ -261,7 +265,7 @@ export const useForm = (
 				obj[key] = Object.defineProperty(obj[key], 'options', {
 					get() {
 						if ( 'function' === typeof value ) {
-							return value( state )
+							return value( key, state )
 						}
 						return value
 					}
@@ -272,34 +276,31 @@ export const useForm = (
 			delete obj[key].sanitize
 			delete obj[key].lastCommittedValue
 			delete obj[key].alwaysCommit
-			delete obj[key].getValue
 		}
 		return obj
 	}
 
-	const staticValues = selectValues( state )
-	const derivedValues = selectDerivedValues( state )
-	const values = { ...staticValues, ...derivedValues }
+	const values = selectValues( state )
 	const changed = selectChanged( state )
 	const fields = selectFields( state, values )
 	const ids = selectIDs( state )
 
 	const hasChanges = 0 < Object.keys( changed ).length
-	
+
 	const context = { values, fields }
 
 	const resetForm = () => {
 		dispatch( {
 			type: 'REVERT_ALL'
 		} )
-		options.onReset( changed, values )
+		options.onReset( changed, ids, values )
 	}
 
 	const submitForm = () => {
 		dispatch( {
 			type: 'COMMIT_ALL'
 		} )
-		options.onSubmit( changed, values, ids, fields )
+		options.onSubmit( changed, ids, values )
 	}
 
 	const result = {

@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
 
-export const getPostActions = ( value, state, setValue ) => {
+export const getPostActions = ( key, values, setValue ) => {
 	const { currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
 	const {
@@ -16,19 +16,19 @@ export const getPostActions = ( value, state, setValue ) => {
 		bbCanEdit,
 		bbBranding,
 		bbEditUrl
-	} = state
+	} = values
 
 	const favoritePost = () => {
-		if ( isFavorite.value ) {
-			wpRest.notations().deleteFavorite( 'post', id.value, currentUser.id )
+		if ( isFavorite ) {
+			wpRest.notations().deleteFavorite( 'post', id, currentUser.id )
 		} else {
-			wpRest.notations().createFavorite( 'post', id.value, currentUser.id )
+			wpRest.notations().createFavorite( 'post', id, currentUser.id )
 		}
-		setValue( 'isFavorite', ! isFavorite.value )
+		setValue( 'isFavorite', ! isFavorite )
 	}
 
 	const clonePost = () => {
-		wpRest.posts().clone( id.value ).then( response => {
+		wpRest.posts().clone( id ).then( () => {
 			alert( 'Post Duplicated!' )
 		} )
 	}
@@ -36,48 +36,48 @@ export const getPostActions = ( value, state, setValue ) => {
 	const trashPost = () => {
 		if ( ! Number( emptyTrashDays ) ) {
 			if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-				wpRest.posts().update( id.value, 'trash' ).then( () => {
+				wpRest.posts().update( id, 'trash' ).then( () => {
 					alert( 'Post permanently deleted!' )
 				} )
 			}
 		} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
-			wpRest.posts().update( id.value, 'trash' )
-			setValue( 'trashedStatus', status.value )
+			wpRest.posts().update( id, 'trash' )
+			setValue( 'trashedStatus', status )
 			setValue( 'status', 'trash', true )
 		}
 	}
 
 	const untrashPost = () => {
-		wpRest.posts().update( id.value, 'untrash' )
-		setValue( 'status', trashedStatus.value, true )
+		wpRest.posts().update( id, 'untrash' )
+		setValue( 'status', trashedStatus, true )
 		setValue( 'trashedStatus', '' )
 	}
 
 	return [
 		{
 			label: __( 'View Post' ),
-			href: url.value,
+			href: url,
 		},
 		{
 			label: __( 'Edit in Admin' ),
-			href: editUrl.value,
+			href: editUrl,
 		},
 		{
-			label: bbBranding.value,
-			href: bbEditUrl.value,
-			shouldRender: bbCanEdit.value,
+			label: bbBranding,
+			href: bbEditUrl,
+			shouldRender: bbCanEdit,
 		},
 		{
 			label: __( 'Duplicate' ),
 			onClick: clonePost,
 		},
 		{
-			label: isFavorite.value ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
+			label: isFavorite ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
 			onClick: favoritePost,
 		},
 		{
-			label: 'trash' === status.value ? __( 'Untrash' ) : __( 'Move to Trash' ),
-			onClick: 'trash' === status.value ? untrashPost : trashPost,
+			label: 'trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
+			onClick: 'trash' === status ? untrashPost : trashPost,
 		}
 	]
 }
