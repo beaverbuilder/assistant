@@ -40,7 +40,7 @@ class AttachmentsController extends AssistantController {
 		);
 
 		$this->route(
-			'/attachment/(?P<id>\d+)', [
+			'/attachments/(?P<id>\d+)', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'attachment' ],

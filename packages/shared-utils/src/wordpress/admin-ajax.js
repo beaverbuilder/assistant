@@ -1,39 +1,13 @@
-import localforage from 'localforage'
-import {setup} from 'axios-cache-adapter'
+import axios from 'axios'
 import qs from 'qs'
 const {ajaxUrl, nonce} = FL_ASSISTANT_CONFIG
 
-/**
- * Create `axios` instance
- * with pre-configured `axios-cache-adapter`
- * using a `localforage` store
- *
- * @type {AxiosInstance}
- */
-const http = setup({
+const http = axios.create({
     headers: {
         common: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-    },
-    cache: {
-        // Changing this to true will send alot of output to the console
-        debug: false,
-        // Set cache timeout
-        maxAge: 5 * 60 * 1000,
-        // DO NOT exclude cache requests with query params.
-        exclude: {query: false},
-        // Setup localForage store.
-        store: localforage.createInstance({
-            // Attempt IndexDB then fall back to LocalStorage
-            driver: [
-                localforage.INDEXEDDB,
-                localforage.LOCALSTORAGE,
-            ],
-            // Prefix all storage keys to prevent conflicts
-            name: 'fl-assistant-cache-ajax'
-        })
-    },
+    }
 });
 
 export const postAction = (action, data = {}, config = {}) => {

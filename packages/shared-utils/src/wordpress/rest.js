@@ -1,23 +1,15 @@
 import Promise from 'promise'
-import { createCachedAxios } from '../axios'
+import axios from 'axios'
+import CacheHelper from './cache-helper'
+
 const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 
-
-const axiosConfig = {
-    baseURL: apiRoot,
-    headers: {
-        common: {
-            'X-WP-Nonce': nonce.api
-        }
-    }
-}
-
-const cacheConfig = {
+const cacheHelper = new CacheHelper('fl-assistant-wp-rest', {
     // Changing this to true will send alot of output to the console
-    debug: true,
+    debug: false,
     // Set cache timeout - 15 minutes
     maxAge: 15 * 60 * 1000,
-}
+})
 
 /**
  * Create `axios` instance with pre-configured `axios-cache-adapter`
@@ -25,7 +17,15 @@ const cacheConfig = {
  *
  * @type {AxiosInstance}
  */
-const http = createCachedAxios('FL_ASSISTANT_WP_REST', axiosConfig, cacheConfig);
+const http = axios.create({
+        baseURL: apiRoot,
+        headers: {
+            common: {
+                'X-WP-Nonce': nonce.api
+            }
+        },
+        adapter: cacheHelper.generateCacheAdapter()
+    })
 
 export const getWpRest = () => {
     return {
@@ -129,7 +129,7 @@ const users = () => {
          * @param config
          */
         findById(id, config = {}) {
-            return http.get(`fl-assistant/v1/user/${id}`, config)
+            return http.get(`fl-assistant/v1/users/${id}`, config)
         },
         /**
          * Find WordPress users by query
@@ -174,7 +174,7 @@ const terms = () => {
          * @returns {Promise<AxiosResponse<T>>}
          */
         findById(id, config = {}) {
-            return http.get(`fl-assistant/v1/term/${id}`, config);
+            return http.get(`fl-assistant/v1/terms/${id}`, config);
         },
         /**
          * Create a new Term
@@ -183,7 +183,7 @@ const terms = () => {
          * @returns {Promise<AxiosResponse<T>>}
          */
         create(term, config = {}) {
-            return http.post('fl-assistant/v1/term', term, config)
+            return http.post('fl-assistant/v1/terms', term, config)
         },
         /**
          * Update a term
@@ -193,7 +193,7 @@ const terms = () => {
          * @returns {Promise<AxiosResponse<T>>}
          */
         update(id, action, data = {}, config = {}) {
-            return http.post(`fl-assistant/v1/term/${id}`, {
+            return http.post(`fl-assistant/v1/terms/${id}`, {
                 action,
                 data,
             }, config);
@@ -214,7 +214,7 @@ const comments = () => {
          * @returns {Promise<AxiosResponse<T>>}
          */
         findById(id, config = {}) {
-            return http.get(`fl-assistant/v1/comment/${id}`, config)
+            return http.get(`fl-assistant/v1/comments/${id}`, config)
         },
         /**
          * Find comment by query
@@ -235,7 +235,7 @@ const comments = () => {
          * @returns {Promise<AxiosResponse<T>>}
          */
         update(id, action, data = {}, config = {}) {
-            return http.post(`fl-assistant/v1/comment/${id}`, {
+            return http.post(`fl-assistant/v1/comments/${id}`, {
                 action,
                 data,
             }, config);
@@ -253,7 +253,7 @@ const attachments = () => {
          * Returns data for a single attachment.
          */
         findById(id, config = {}) {
-            return http.get(`fl-assistant/v1/attachment/${id}`, config)
+            return http.get(`fl-assistant/v1/attachments/${id}`, config)
         },
         /**
          * Returns an array of attachments.
@@ -269,7 +269,7 @@ const attachments = () => {
          * REST method for a list of supported actions.
          */
         update(id, action, data = {}, config = {}) {
-            return http.post(`fl-assistant/v1/attachment/${id}`, {
+            return http.post(`fl-assistant/v1/attachments/${id}`, {
                 action,
                 data,
             }, config)
@@ -290,10 +290,11 @@ const updates = () => {
          * @returns {Promise<AxiosResponse<T>>}
          */
         findWhere(params, config = {}) {
-            return http.get('fl-assistant/v1/updates', {
-                params,
-                ...config
-            })
+            config.params = params;
+            // disable cache for updates
+            config.cache = {ignoreCache: true};
+
+            return http.get('fl-assistant/v1/updates', config)
         }
     }
 }

@@ -39,7 +39,7 @@ class CommentsController extends AssistantController {
 		);
 
 		$this->route(
-			'/comment/(?P<id>\d+)', [
+			'/comments/(?P<id>\d+)', [
 				[
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comment' ],
