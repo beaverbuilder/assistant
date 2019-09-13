@@ -6,7 +6,7 @@ import { getSystemConfig } from 'store'
 import { getPostActions } from './actions'
 
 const slugify = value => {
-	return value.replace( ' ', '' )
+	return value.replace( ' ', '-' )
 		.replace( '_', '-' )
 		.trim()
 }
@@ -18,11 +18,11 @@ const getConfig = () => {
 		},
 		title: {
 			label: __( 'Title' ),
-			id: 'postTitle',
+			id: 'post_title',
 		},
 		slug: {
 			label: __( 'Slug' ),
-			id: 'postSlug',
+			id: 'post_name',
 			sanitize: slugify,
 		},
 		url: {
@@ -31,7 +31,7 @@ const getConfig = () => {
 		},
 		status: {
 			label: __( 'Publish Status' ),
-			id: 'postStatus',
+			id: 'post_status',
 			options: {
 				'publish': __( 'Published' ),
 				'pending': __( 'Pending Review' ),
@@ -52,9 +52,9 @@ const getConfig = () => {
 		parent: {
 			label: __( 'Parent' ),
 			id: 'postParent',
-			options: {
+			options: () => ({
 				0: __( 'None' )
-			},
+			}),
 			labelPlacement: 'beside',
 		},
 		tags: {
@@ -112,7 +112,6 @@ export const Post = ( { location, match, history } ) => {
 		submitForm,
 	} = Form.useForm( {
 
-		// Most of the static config happens in './form-config'
 		...getConfig(),
 
 		labels: {
@@ -126,14 +125,13 @@ export const Post = ( { location, match, history } ) => {
 			],
 		}
 	}, {
-		onSubmit: ( changes ) => {
+		onSubmit: ( changes, values, ids, fields ) => {
+
+			console.log(changes, values, ids, fields)
+
 			const wpRest = getWpRest()
 			const data = {}
-			const keyMap = {
-				title: 'post_title',
-				slug: 'post_name',
-				status: 'post_status',
-			}
+			const keyMap = ids
 			for ( let key in changes ) {
 				if ( ! keyMap[ key ] ) {
 					continue

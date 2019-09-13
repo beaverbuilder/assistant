@@ -23,6 +23,7 @@ const init = ( { config, initialValues } ) => {
 		sanitize,
 		onChange: () => {},
 		getValue: null,
+
 	}
 
 	for ( let name in config ) {
@@ -192,6 +193,16 @@ export const useForm = (
 		return obj
 	}
 
+	const selectIDs = state => {
+		let obj = {}
+
+		for ( let key in state ) {
+			obj[key] = state[key].id ? state[key].id : key
+		}
+
+		return obj
+	}
+
 	const selectDerivedValues = ( state ) => {
 		let obj = {}
 		// Process derived values
@@ -271,8 +282,10 @@ export const useForm = (
 	const values = { ...staticValues, ...derivedValues }
 	const changed = selectChanged( state )
 	const fields = selectFields( state, values )
+	const ids = selectIDs( state )
 
 	const hasChanges = 0 < Object.keys( changed ).length
+	
 	const context = { values, fields }
 
 	const resetForm = () => {
@@ -286,7 +299,7 @@ export const useForm = (
 		dispatch( {
 			type: 'COMMIT_ALL'
 		} )
-		options.onSubmit( changed, values )
+		options.onSubmit( changed, values, ids, fields )
 	}
 
 	const result = {
