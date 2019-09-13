@@ -1,5 +1,5 @@
 
-import {setupCache} from 'axios-cache-adapter'
+import { setupCache } from 'axios-cache-adapter'
 import localforage from 'localforage'
 import qs from 'qs'
 
@@ -23,127 +23,133 @@ import qs from 'qs'
  */
 class CacheHelper {
 
-    constructor(storagePrefix, cacheConfig = {}) {
+	constructor( storagePrefix, cacheConfig = {} ) {
 
-        let defaults = {
-            debug: false,
-            // try to determine maxAge by parsing `cache-control` or `expires` headers
-            readHeaders: true,
-            // Dont exclude cache requests with query params.
-            exclude: {query: false}
-        }
+		let defaults = {
+			debug: false,
 
-        this.cacheConfig = {
-            ...defaults,
-            ...cacheConfig
-        }
+			// try to determine maxAge by parsing `cache-control` or `expires` headers
+			readHeaders: true,
 
-        this.cacheStore = this.createStorage(storagePrefix);
-    }
+			// Dont exclude cache requests with query params.
+			exclude: { query: false }
+		}
 
-    log(...args) {
-        if (this.cacheConfig.debug) {
-            console.log("%c[assistant][cache-helper]", "color: orange;font-weight:bold;", ...args);
-        }
-    }
+		this.cacheConfig = {
+			...defaults,
+			...cacheConfig
+		}
 
-    /**
+		this.cacheStore = this.createStorage( storagePrefix )
+	}
+
+	log( ...args ) {
+		if ( this.cacheConfig.debug ) {
+
+			console.log( '%c[assistant][cache-helper]', 'color: orange;font-weight:bold;', ...args ) // eslint-disable-line no-console
+		}
+	}
+
+	/**
      * Create the localforage instance.
      * @param {String} storagePrefix This is a prefix for the localforage instance, not the cache key for requests.
      */
-     createStorage(storagePrefix) {
-        return localforage.createInstance({
-            // Attempt IndexDB then fall back to LocalStorage
-            driver: [
-                localforage.LOCALSTORAGE,
-            ],
-            // Prefix all storage keys to prevent conflicts
-            name: storagePrefix
-        })
-    }
+	createStorage( storagePrefix ) {
+		return localforage.createInstance( {
 
-    /**
+			// Attempt IndexDB then fall back to LocalStorage
+			driver: [
+				localforage.LOCALSTORAGE,
+			],
+
+			// Prefix all storage keys to prevent conflicts
+			name: storagePrefix
+		} )
+	}
+
+	/**
      * Infers the cache prefix from the request url
      * @param {Request} req
      */
-    inferPrefixFromUrl(req) {
+	inferPrefixFromUrl( req ) {
 
-        let base = FL_ASSISTANT_CONFIG.apiRoot + "fl-assistant/v1/";
-        let remainingPath = req.url.replace(base, "");
+		let base = FL_ASSISTANT_CONFIG.apiRoot + 'fl-assistant/v1/'
+		let remainingPath = req.url.replace( base, '' )
 
-        let pathTokens = remainingPath.split("/");
-        if (pathTokens.length > 0) {
-            return pathTokens[0];
-        }
-        return pathTokens;
-    }
+		let pathTokens = remainingPath.split( '/' )
+		if ( 0 < pathTokens.length ) {
+			return pathTokens[0]
+		}
+		return pathTokens
+	}
 
-    /**
+	/**
      * Iterate keys in the cache, and remove any that start with the supplied prefix.
      * @param {String} prefix
      */
-    async clearCachePrefix(prefix) {
-        let keys = await this.cacheStore.keys();
-        keys.forEach( async( key ) => {
-			this.log( "Checking key", key )
-			if (key.startsWith( prefix, 0 )) {
-				this.log( "invalidating cache for prefix", prefix )
-				await this.cacheStore.removeItem( key );
+	async clearCachePrefix( prefix ) {
+		let keys = await this.cacheStore.keys()
+		keys.forEach( async( key ) => {
+			this.log( 'Checking key', key )
+			if ( key.startsWith( prefix, 0 ) ) {
+				this.log( 'invalidating cache for prefix', prefix )
+				await this.cacheStore.removeItem( key )
 			}
-		})
-    }
+		} )
+	}
 
-    /**
+	/**
      * Creates cache key callback that should be passed to axios-cache-adapter.
      */
-    getKeyCallback() {
-        /**
+	getKeyCallback() {
+
+		/**
          * Generates a unique cache key for each request by appending request params to the prefix.
          */
-        return (req) => {
+		return ( req ) => {
 
-            // allow for requests to override the infered cachePrefix.
-            let cachePrefix = this.inferPrefixFromUrl(req);
+			// allow for requests to override the infered cachePrefix.
+			let cachePrefix = this.inferPrefixFromUrl( req )
 
-            if (req.cachePrefix) {
-                cachePrefix = req.cachePrefix
-            }
+			if ( req.cachePrefix ) {
+				cachePrefix = req.cachePrefix
+			}
 
-            if (req.params) {
-                cachePrefix = `${cachePrefix}/${qs.stringify(req.params)}`
-            }
+			if ( req.params ) {
+				cachePrefix = `${cachePrefix}/${qs.stringify( req.params )}`
+			}
 
-            this.log("Generated cache prefix", cachePrefix)
+			this.log( 'Generated cache prefix', cachePrefix )
 
-            return cachePrefix
-        }
-    }
+			return cachePrefix
+		}
+	}
 
-    /**
+	/**
      * Factory method to create an invalidate callback function with reference to an instance of the created cacheStore
      *
      */
-    getInvalidateCallback() {
-        return async (cfg, req) => {
-            const method = req.method.toLowerCase()
-            if (method !== 'get') {
+	getInvalidateCallback() {
+		return async( cfg, req ) => {
+			const method = req.method.toLowerCase()
+			if ( 'get' !== method ) {
 
-                this.log("attempting to clear cache prefix", cfg.uuid)
+				this.log( 'attempting to clear cache prefix', cfg.uuid )
 
-                await this.clearCachePrefix(cfg.uuid);
-            }
-        }
-    }
+				await this.clearCachePrefix( cfg.uuid )
+			}
+		}
+	}
 
-    generateCacheAdapter() {
-        this.cacheConfig.store = this.cacheStore
-        this.cacheConfig.key = this.getKeyCallback()
-        this.cacheConfig.invalidate = this.getInvalidateCallback();
+	generateCacheAdapter() {
+		this.cacheConfig.store = this.cacheStore
+		this.cacheConfig.key = this.getKeyCallback()
+		this.cacheConfig.invalidate = this.getInvalidateCallback()
 
-        let cache = setupCache(this.cacheConfig);
-        return cache.adapter;
-    }
+		let cache = setupCache( this.cacheConfig )
+		return cache.adapter
+	}
 }
 
 
-export default CacheHelper;
+export default CacheHelper
