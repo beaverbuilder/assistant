@@ -99,7 +99,7 @@ export const useForm = (
 			}
 
 		case 'SET_VALUES':
-			for( let key in action.values ) {
+			for ( let key in action.values ) {
 				if ( 'undefined' !== typeof obj[key] ) {
 					let value = action.values[key]
 					obj[key].value = value
@@ -202,7 +202,7 @@ export const useForm = (
 					}
 					return value
 				}
-			})
+			} )
 		}
 
 		return obj
@@ -223,7 +223,9 @@ export const useForm = (
 		for ( let key in state ) {
 
 			// Ignore derived values
-			if ( 'function' === typeof state[key].value ) continue
+			if ( 'function' === typeof state[key].value ) {
+				continue
+			}
 
 			if ( state[key].value !== state[key].lastCommittedValue ) {
 				obj[key] = state[key].value
@@ -262,14 +264,14 @@ export const useForm = (
 			if ( 'undefined' !== typeof obj[key].options ) {
 				const value = obj[key].options
 
-				obj[key] = Object.defineProperty(obj[key], 'options', {
+				obj[key] = Object.defineProperty( obj[key], 'options', {
 					get() {
 						if ( 'function' === typeof value ) {
 							return value( key, state )
 						}
 						return value
 					}
-				})
+				} )
 			}
 
 			// Remove properties that should not be on DOM elements

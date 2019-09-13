@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'

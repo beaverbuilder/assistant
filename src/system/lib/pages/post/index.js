@@ -51,9 +51,9 @@ const getConfig = () => {
 		parent: {
 			label: __( 'Parent' ),
 			id: 'postParent',
-			options: () => ({
+			options: () => ( {
 				0: __( 'None' )
-			}),
+			} ),
 			labelPlacement: 'beside',
 		},
 		tags: {
@@ -65,7 +65,7 @@ const getConfig = () => {
 			]
 		},
 		actions: {
-			label: __('Actions'),
+			label: __( 'Actions' ),
 			value: getPostActions,
 		}
 	}

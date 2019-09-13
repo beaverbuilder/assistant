@@ -1,6 +1,6 @@
-import React, { useContext } from 'fl-react'
+import React from 'fl-react'
 import { getSystemActions } from 'store'
-import { Form, Button, Control, Nav } from 'lib'
+import { Form, Button, Control } from 'lib'
 import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
@@ -17,8 +17,10 @@ registerSection( 'fl-screen-labels', {
 		return (
 			<>
 				<Form.Item label={ __( 'Mark as Favorite' ) } placement="beside">
-					<Button onClick={ () => { isFavorite.onChange( !isFavorite.value )}}>
-						{ isFavorite.value ? __( 'Favorite' ) : __('Not Your Favorite') }
+					<Button onClick={ () => {
+						isFavorite.onChange( ! isFavorite.value )
+					} }>
+						{ isFavorite.value ? __( 'Favorite' ) : __( 'Not Your Favorite' ) }
 					</Button>
 				</Form.Item>
 
@@ -37,17 +39,21 @@ registerSection( 'fl-screen-actions', {
 	},
 	render: ( { useForm } ) => {
 
-		if ( 'undefined' === typeof useForm ) return null
+		if ( 'undefined' === typeof useForm ) {
+			return null
+		}
 
 		const { actions } = useForm()
 
-		if ( 'undefined' === typeof actions || actions.length < 1 ) return (
-			<div>{__('No Actions Found')}</div>
-		)
+		if ( 'undefined' === typeof actions || 1 > actions.length ) {
+			return (
+				<div>{__( 'No Actions Found' )}</div>
+			)
+		}
 
 		return (
 			<>
-				<Form.Item label={actions.label}>
+				<Form.Item label={ actions.label }>
 					<Button.Group appearance="grid">
 						{ Button.renderActions( actions.value ) }
 					</Button.Group>
