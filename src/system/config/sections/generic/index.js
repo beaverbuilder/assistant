@@ -35,21 +35,21 @@ registerSection( 'fl-screen-actions', {
 	location: {
 		type: [ 'post', 'attachment', 'comment', 'plugin' ],
 	},
-	render: ( { actions: __actions, useForm } ) => {
+	render: ( { useForm } ) => {
+
+		if ( 'undefined' === typeof useForm ) return null
 
 		const { actions } = useForm()
+
+		if ( 'undefined' === typeof actions || actions.length < 1 ) return (
+			<div>{__('No Actions Found')}</div>
+		)
 
 		return (
 			<>
 				<Form.Item label={actions.label}>
 					<Button.Group appearance="grid">
 						{ Button.renderActions( actions.value ) }
-					</Button.Group>
-				</Form.Item>
-
-				<Form.Item>
-					<Button.Group appearance="grid">
-						{ Button.renderActions( __actions ) }
 					</Button.Group>
 				</Form.Item>
 			</>

@@ -227,7 +227,9 @@ export const useForm = (
 			obj[key] = {
 				...field,
 				hasChanges: valueHasChanged( field ),
+
 				value: values[key],
+
 				onChange: v => {
 					setValue( key, v )
 
@@ -241,6 +243,7 @@ export const useForm = (
 				}
 			}
 
+			// Setup 'options' key config
 			if ( 'undefined' !== typeof obj[key].options ) {
 				const value = obj[key].options
 
