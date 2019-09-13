@@ -247,7 +247,7 @@ export const useForm = (
 				obj[key] = Object.defineProperty(obj[key], 'options', {
 					get() {
 						if ( 'function' === typeof value ) {
-							return value()
+							return value( state )
 						}
 						return value
 					}
@@ -267,7 +267,6 @@ export const useForm = (
 	const derivedValues = selectDerivedValues( state )
 	const values = { ...staticValues, ...derivedValues }
 	const changed = selectChanged( state )
-
 	const fields = selectFields( state, values )
 
 	const hasChanges = 0 < Object.keys( changed ).length
