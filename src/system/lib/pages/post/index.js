@@ -64,31 +64,8 @@ export const config = {
 	},
 	actions: {
 		label: __('Actions'),
-		getValue: ( value, state, setValue ) => {
-
-			const { isFavorite, bbCanEdit, bbEditUrl } = state
-
-			const actions = [
-				{
-					label: isFavorite.value ? __('Unfavorite') : __('Favorite'),
-					value: isFavorite.value,
-					onClick: () => {
-						setValue( 'isFavorite', ! isFavorite.value )
-					},
-				},
-			]
-
-			if ( bbCanEdit.value ) {
-				actions.push({
-					label: __('Beaver Builder'),
-					href: bbEditUrl.value,
-				})
-			}
-
-			return actions
-		},
+		getValue: getPostActions,
 	}
-
 }
 
 
@@ -196,7 +173,7 @@ export const Post = ( { location, match, history } ) => {
 	const sectionData = {
 		post: item,
 		useForm: useFormContext, // Rename
-		actions: getPostActions( item ),
+		actions: [],
 	}
 
 	const Footer = () => {
