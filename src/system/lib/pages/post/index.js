@@ -2,6 +2,7 @@ import React, { useMemo } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, Button, Form } from 'lib'
 import { getWpRest } from 'shared-utils/wordpress'
+import { getSystemConfig } from 'store'
 import { getPostActions } from './actions'
 
 const slugify = value => {
@@ -10,64 +11,66 @@ const slugify = value => {
 		.trim()
 }
 
-export const config = {
-	id: {
-		label: __( 'ID' ),
-	},
-	title: {
-		label: __( 'Title' ),
-		id: 'postTitle',
-	},
-	slug: {
-		label: __( 'Slug' ),
-		id: 'postSlug',
-		sanitize: slugify,
-	},
-	url: {
-		label: __( 'URL' ),
-		id: 'postURL',
-	},
-	status: {
-		label: __( 'Publish Status' ),
-		id: 'postStatus',
-		options: {
-			'publish': __( 'Published' ),
-			'draft': __( 'Drafted' ),
+const getConfig = () => {
+	return {
+		id: {
+			label: __( 'ID' ),
 		},
-		labelPlacement: 'beside',
-	},
-	visibility: {
-		label: __( 'Visibility' ),
-		id: 'postVisibility',
-		options: {
-			'public': __( 'Public' ),
-			'private': __( 'Private' ),
-			'protected': __( 'Protected' ),
+		title: {
+			label: __( 'Title' ),
+			id: 'postTitle',
 		},
-		labelPlacement: 'beside',
-	},
-	parent: {
-		label: __( 'Parent' ),
-		id: 'postParent',
-		options: {
-			0: __( 'None' )
+		slug: {
+			label: __( 'Slug' ),
+			id: 'postSlug',
+			sanitize: slugify,
 		},
-		labelPlacement: 'beside',
-	},
-	tags: {
-		label: __( 'Tags' ),
-		value: [
-			{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
-			{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
-			{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
-		]
-	},
-	actions: {
-		label: __('Actions'),
-		getValue: getPostActions,
+		url: {
+			label: __( 'URL' ),
+			id: 'postURL',
+		},
+		status: {
+			label: __( 'Publish Status' ),
+			id: 'postStatus',
+			options: {
+				'publish': __( 'Published' ),
+				'pending': __( 'Pending Review' ),
+				'draft': __( 'Drafted' ),
+			},
+			labelPlacement: 'beside',
+		},
+		visibility: {
+			label: __( 'Visibility' ),
+			id: 'postVisibility',
+			options: {
+				'public': __( 'Public' ),
+				'private': __( 'Private' ),
+				'protected': __( 'Protected' ),
+			},
+			labelPlacement: 'beside',
+		},
+		parent: {
+			label: __( 'Parent' ),
+			id: 'postParent',
+			options: {
+				0: __( 'None' )
+			},
+			labelPlacement: 'beside',
+		},
+		tags: {
+			label: __( 'Tags' ),
+			value: [
+				{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
+				{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
+				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
+			]
+		},
+		actions: {
+			label: __('Actions'),
+			getValue: getPostActions,
+		}
 	}
 }
-
 
 export const Post = ( { location, match, history } ) => {
 
@@ -110,7 +113,7 @@ export const Post = ( { location, match, history } ) => {
 	} = Form.useForm( {
 
 		// Most of the static config happens in './form-config'
-		...config,
+		...getConfig(),
 
 		labels: {
 			label: __( 'Labels' ),
@@ -132,6 +135,9 @@ export const Post = ( { location, match, history } ) => {
 				status: 'post_status',
 			}
 			for ( let key in changes ) {
+				if ( ! keyMap[ key ] ) {
+					continue
+				}
 				data[ keyMap[ key ] ] = changes[ key ]
 			}
 			wpRest.posts().update( item.id, 'data', data ).then( () => {
