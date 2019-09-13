@@ -241,6 +241,19 @@ export const useForm = (
 				}
 			}
 
+			if ( 'undefined' !== typeof obj[key].options ) {
+				const value = obj[key].options
+
+				obj[key] = Object.defineProperty(obj[key], 'options', {
+					get() {
+						if ( 'function' === typeof value ) {
+							return value()
+						}
+						return value
+					}
+				})
+			}
+
 			// Remove properties that should not be on DOM elements
 			delete obj[key].sanitize
 			delete obj[key].lastCommittedValue

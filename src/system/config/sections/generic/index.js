@@ -39,8 +39,6 @@ registerSection( 'fl-screen-actions', {
 
 		const { actions } = useForm()
 
-		//console.log(actions.value)
-
 		return (
 			<>
 				<Form.Item label={actions.label}>
