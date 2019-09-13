@@ -1,4 +1,3 @@
-
 import { setupCache } from 'axios-cache-adapter'
 import localforage from 'localforage'
 import qs from 'qs'
@@ -28,8 +27,6 @@ class CacheHelper {
 		let defaults = {
 			debug: false,
 
-			// try to determine maxAge by parsing `cache-control` or `expires` headers
-			readHeaders: true,
 
 			// Dont exclude cache requests with query params.
 			exclude: { query: false }
@@ -40,7 +37,21 @@ class CacheHelper {
 			...cacheConfig
 		}
 
-		this.cacheStore = this.createStorage( storagePrefix )
+		this.log = this.log.bind( this )
+		this.clearCachePrefix = this.clearCachePrefix.bind( this )
+		this.inferPrefixFromUrl = this.inferPrefixFromUrl.bind( this )
+		this.generateCacheKey = this.generateCacheKey.bind( this )
+		this.shouldInvalidate = this.shouldInvalidate.bind( this )
+
+
+		this.cacheStore = localforage.createInstance( {
+			driver: [
+				localforage.LOCALSTORAGE,
+			],
+
+			// Prefix all storage keys to prevent conflicts
+			name: storagePrefix
+		} )
 	}
 
 	log( ...args ) {
@@ -51,26 +62,9 @@ class CacheHelper {
 	}
 
 	/**
-     * Create the localforage instance.
-     * @param {String} storagePrefix This is a prefix for the localforage instance, not the cache key for requests.
-     */
-	createStorage( storagePrefix ) {
-		return localforage.createInstance( {
-
-			// Attempt IndexDB then fall back to LocalStorage
-			driver: [
-				localforage.LOCALSTORAGE,
-			],
-
-			// Prefix all storage keys to prevent conflicts
-			name: storagePrefix
-		} )
-	}
-
-	/**
-     * Infers the cache prefix from the request url
-     * @param {Request} req
-     */
+	 * Infers the cache prefix from the request url
+	 * @param {Request} req
+	 */
 	inferPrefixFromUrl( req ) {
 
 		let base = FL_ASSISTANT_CONFIG.apiRoot + 'fl-assistant/v1/'
@@ -84,9 +78,9 @@ class CacheHelper {
 	}
 
 	/**
-     * Iterate keys in the cache, and remove any that start with the supplied prefix.
-     * @param {String} prefix
-     */
+	 * Iterate keys in the cache, and remove any that start with the supplied prefix.
+	 * @param {String} prefix
+	 */
 	async clearCachePrefix( prefix ) {
 		let keys = await this.cacheStore.keys()
 		keys.forEach( async( key ) => {
@@ -99,52 +93,45 @@ class CacheHelper {
 	}
 
 	/**
-     * Creates cache key callback that should be passed to axios-cache-adapter.
-     */
-	getKeyCallback() {
+	 * Creates cache key callback that should be passed to axios-cache-adapter.
+	 */
+	generateCacheKey( req ) {
 
-		/**
-         * Generates a unique cache key for each request by appending request params to the prefix.
-         */
-		return ( req ) => {
+		// allow for requests to override the infered cachePrefix.
+		let cachePrefix = this.inferPrefixFromUrl( req )
 
-			// allow for requests to override the infered cachePrefix.
-			let cachePrefix = this.inferPrefixFromUrl( req )
-
-			if ( req.cachePrefix ) {
-				cachePrefix = req.cachePrefix
-			}
-
-			if ( req.params ) {
-				cachePrefix = `${cachePrefix}/${qs.stringify( req.params )}`
-			}
-
-			this.log( 'Generated cache prefix', cachePrefix )
-
-			return cachePrefix
+		if ( req.cachePrefix ) {
+			cachePrefix = req.cachePrefix
 		}
+
+		if ( req.params ) {
+			cachePrefix = `${cachePrefix}/${qs.stringify( req.params )}`
+		}
+
+		this.log( 'Generated cache prefix', cachePrefix )
+
+		return cachePrefix
 	}
 
 	/**
-     * Factory method to create an invalidate callback function with reference to an instance of the created cacheStore
-     *
-     */
-	getInvalidateCallback() {
-		return async( cfg, req ) => {
-			const method = req.method.toLowerCase()
-			if ( 'get' !== method ) {
+	 * Factory method to create an invalidate callback function with reference to an instance of the created cacheStore
+	 *
+	 */
+	async shouldInvalidate( cfg, req ) {
+		const method = req.method.toLowerCase()
+		if ( 'get' !== method ) {
 
-				this.log( 'attempting to clear cache prefix', cfg.uuid )
+			this.log( 'attempting to clear cache prefix', cfg.uuid )
 
-				await this.clearCachePrefix( cfg.uuid )
-			}
+			await this.clearCachePrefix( cfg.uuid )
 		}
+
 	}
 
 	generateCacheAdapter() {
 		this.cacheConfig.store = this.cacheStore
-		this.cacheConfig.key = this.getKeyCallback()
-		this.cacheConfig.invalidate = this.getInvalidateCallback()
+		this.cacheConfig.key = this.generateCacheKey
+		this.cacheConfig.invalidate = this.shouldInvalidate
 
 		let cache = setupCache( this.cacheConfig )
 		return cache.adapter
