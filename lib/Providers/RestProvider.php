@@ -3,19 +3,18 @@
 
 namespace FL\Assistant\Providers;
 
-
-use FL\Assistant\Controllers\SearchController;
 use FL\Assistant\Core\Container;
-use FL\Assistant\Controllers\AssistantController;
-use FL\Assistant\Controllers\AttachmentsController;
-use FL\Assistant\Controllers\CommentsController;
-use FL\Assistant\Controllers\CountsController;
-use FL\Assistant\Controllers\NotationsController;
-use FL\Assistant\Controllers\NotificationsController;
-use FL\Assistant\Controllers\PostsController;
-use FL\Assistant\Controllers\TermsController;
-use FL\Assistant\Controllers\UpdatesController;
-use FL\Assistant\Controllers\UsersController;
+use FL\Assistant\RestApi\Controllers\SearchController;
+use FL\Assistant\RestApi\Controllers\AssistantController;
+use FL\Assistant\RestApi\Controllers\AttachmentsController;
+use FL\Assistant\RestApi\Controllers\CommentsController;
+use FL\Assistant\RestApi\Controllers\CountsController;
+use FL\Assistant\RestApi\Controllers\NotationsController;
+use FL\Assistant\RestApi\Controllers\NotificationsController;
+use FL\Assistant\RestApi\Controllers\PostsController;
+use FL\Assistant\RestApi\Controllers\TermsController;
+use FL\Assistant\RestApi\Controllers\UpdatesController;
+use FL\Assistant\RestApi\Controllers\UsersController;
 
 /**
  * Class RestProvider

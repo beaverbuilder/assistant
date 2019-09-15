@@ -5,18 +5,18 @@ namespace FL\Assistant\Providers;
 
 use FL\Assistant\Core\Container;
 
-use FL\Assistant\Actions\OnInit;
-use FL\Assistant\Actions\OnEnqueueScripts;
-use FL\Assistant\Actions\OnEditUserProfile;
-use FL\Assistant\Actions\OnPersonalOptionsUpdate;
-use FL\Assistant\Actions\OnWPBeforeAdminBarRender;
-use FL\Assistant\Filters\OnHeartbeatReceived;
+use FL\Assistant\Hooks\Actions\OnInit;
+use FL\Assistant\Hooks\Actions\OnEnqueueScripts;
+use FL\Assistant\Hooks\Actions\OnEditUserProfile;
+use FL\Assistant\Hooks\Actions\OnPersonalOptionsUpdate;
+use FL\Assistant\Hooks\Actions\OnWPBeforeAdminBarRender;
+use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 
-use FL\Assistant\Services\BeaverBuilderService;
-use FL\Assistant\Services\NotationService;
-use FL\Assistant\Services\PostService;
-use FL\Assistant\Services\SiteService;
-use FL\Assistant\Services\UserService;
+use FL\Assistant\Support\Integrations\BeaverBuilder;
+use FL\Assistant\Data\Notations;
+use FL\Assistant\Data\Posts;
+use FL\Assistant\Data\Site;
+use FL\Assistant\Data\Users;
 
 /**
  * Class PluginProvider
@@ -39,31 +39,31 @@ class PluginProvider implements ProviderInterface {
 
 		$container->register_service(
 			'users', function ( $container ) {
-				return new UserService( $container );
+				return new Users( $container );
 			}
 		);
 
 		$container->register_service(
 			'posts', function ( $container ) {
-				return new PostService( $container );
+				return new Posts( $container );
 			}
 		);
 
 		$container->register_service(
 			'site', function ( $container ) {
-				return new SiteService( $container );
+				return new Site( $container );
 			}
 		);
 
 		$container->register_service(
 			'beaver_builder', function ( $container ) {
-				return new BeaverBuilderService( $container );
+				return new BeaverBuilder( $container );
 			}
 		);
 
 		$container->register_service(
 			'notations', function ( $container ) {
-				return new NotationService( $container );
+				return new Notations( $container );
 			}
 		);
 

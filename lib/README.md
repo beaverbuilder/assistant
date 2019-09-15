@@ -138,7 +138,7 @@ $container = Container::instance();
 $myclass = new MyClass($container);
 
 ```
-### Services
+### Data
 
 In Assistant any class that represents a data source or manages 
 domain logic for a subsystem should be implemented as a service.
