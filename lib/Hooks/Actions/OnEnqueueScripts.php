@@ -2,9 +2,11 @@
 
 namespace FL\Assistant\Hooks\Actions;
 
+use FL\Assistant\Data\Posts;
+use FL\Assistant\Data\Site;
+use FL\Assistant\Data\Users;
 use FL\Assistant\Data\UserState;
 use FL\Assistant\RestApi\Transformers\UserTransformer;
-use FL\Assistant\Util\HasContainer;
 use WP_REST_Request;
 
 /**
@@ -14,7 +16,39 @@ use WP_REST_Request;
  */
 class OnEnqueueScripts {
 
-	use HasContainer;
+	/**
+	 * @var Users
+	 */
+	protected $users;
+	/**
+	 * @var Posts
+	 */
+	protected $posts;
+
+	/**
+	 * @var Site
+	 */
+	protected $site;
+
+	/**
+	 * @var UserTransformer
+	 */
+	protected $user_transformer;
+
+	/**
+	 * OnEnqueueScripts constructor.
+	 *
+	 * @param Users $users
+	 * @param Posts $posts
+	 * @param Site $site
+	 * @param UserTransformer $user_transformer
+	 */
+	public function __construct( Users $users, Posts $posts, Site $site, UserTransformer $user_transformer ) {
+		$this->users            = $users;
+		$this->posts            = $posts;
+		$this->site             = $site;
+		$this->user_transformer = $user_transformer;
+	}
 
 
 	/**
@@ -54,22 +88,19 @@ class OnEnqueueScripts {
 	 */
 	public function generate_frontend_config() {
 
-		$container    = $this->container();
-		$user_data    = $container->service( 'users' );
-		$post_data    = $container->service( 'posts' );
-		$site_data    = $container->service( 'site' );
-		$current_user = $user_data->current();
+
+		$current_user = $this->users->current();
 
 
 		return [
-			'adminURLs'         => $site_data->get_admin_urls(),
+			'adminURLs'         => $this->site->get_admin_urls(),
 			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
 			'apiRoot'           => esc_url_raw( get_rest_url() ),
 			'cloudUrl'          => FL_ASSISTANT_CLOUD_URL,
-			'contentTypes'      => $post_data->get_types(),
-			'contentStatus'     => $post_data->get_stati(),
-			'currentPageView'   => $site_data->get_current_view(),
-			'currentUser'       => (new UserTransformer($this->container()))->transform($current_user),
+			'contentTypes'      => $this->posts->get_types(),
+			'contentStatus'     => $this->posts->get_stati(),
+			'currentPageView'   => $this->site->get_current_view(),
+			'currentUser'       => call_user_func( [ $this->user_transformer, "transform" ], $current_user ),
 			'defaultAppName'    => 'fl-dashboard',
 			'emptyTrashDays'    => EMPTY_TRASH_DAYS,
 			'isShowingAdminBar' => is_admin_bar_showing(),
@@ -81,8 +112,8 @@ class OnEnqueueScripts {
 				'updates'         => wp_create_nonce( 'updates' ),
 			],
 			'pluginURL'         => FL_ASSISTANT_URL,
-			'taxonomies'        => $post_data->get_taxononies(),
-			'userRoles'         => $user_data->get_roles(),
+			'taxonomies'        => $this->posts->get_taxononies(),
+			'userRoles'         => $this->users->get_roles(),
 		];
 	}
 

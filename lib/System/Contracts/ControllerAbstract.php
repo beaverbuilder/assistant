@@ -1,11 +1,11 @@
 <?php
 
 
-namespace FL\Assistant\RestApi\Controllers;
+namespace FL\Assistant\System\Contracts;
 
 use FL\Assistant\Util\HasContainer;
 
-abstract class AssistantController {
+abstract class ControllerAbstract {
 
 	use HasContainer;
 

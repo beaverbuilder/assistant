@@ -3,13 +3,15 @@
 namespace FL\Assistant\RestApi\Controllers;
 
 use FL\Assistant\Pagination\PostsPaginator;
-use \WP_REST_Server;
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use Illuminate\Pagination\Paginator;
+use WP_REST_Server;
 
 
 /**
  * REST API logic for attachments.
  */
-class AttachmentsController extends AssistantController {
+class AttachmentsController extends ControllerAbstract {
 
 	/**
 	 * Register routes.
@@ -76,43 +78,10 @@ class AttachmentsController extends AssistantController {
 	}
 
 	/**
-	 * Returns an array of response data for a single post.
-	 */
-	public function get_attachment_response_data( $attachment ) {
-		$size  = wp_get_attachment_image_src( $attachment->ID, 'medium' );
-		$meta  = wp_prepare_attachment_for_js( $attachment->ID );
-		$thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )[0];
-
-		$response = [
-			'alt'             => $meta['title'],
-			'author'          => get_the_author_meta( 'display_name', $attachment->post_author ),
-			'commentsAllowed' => 'open' === $attachment->comment_status ? true : false,
-			'date'            => get_the_date( '', $attachment ),
-			'description'     => $meta['description'],
-			'editUrl'         => get_edit_post_link( $attachment->ID, '' ),
-			'filesize'        => $meta['filesizeHumanReadable'],
-			'id'              => $attachment->ID,
-			'mime'            => $meta['mime'],
-			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : [],
-			'slug'            => $attachment->post_name,
-			'subtype'         => $meta['subtype'],
-			'thumbnail'       => $thumb,
-			'title'           => $meta['title'],
-			'type'            => $meta['type'],
-			'url'             => get_permalink( $attachment ),
-			'urls'            => [
-				'medium' => $size[0],
-			],
-		];
-
-		return $response;
-	}
-
-	/**
 	 * Returns an array of attachments and related data.
 	 */
 	public function attachments( $request ) {
-		$paginator = new PostsPaginator();
+
 
 		$args = array_merge(
 			$request->get_params(),
@@ -125,6 +94,7 @@ class AttachmentsController extends AssistantController {
 			]
 		);
 
+		$paginator = new Paginator();
 		$pager = $paginator->query( $args, [ $this, 'get_attachment_response_data' ] );
 
 		return rest_ensure_response( $pager->to_array() );
@@ -164,6 +134,39 @@ class AttachmentsController extends AssistantController {
 		}
 
 		return [];
+	}
+
+	/**
+	 * Returns an array of response data for a single post.
+	 */
+	public function get_attachment_response_data( $attachment ) {
+		$size  = wp_get_attachment_image_src( $attachment->ID, 'medium' );
+		$meta  = wp_prepare_attachment_for_js( $attachment->ID );
+		$thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )[0];
+
+		$response = [
+			'alt'             => $meta['title'],
+			'author'          => get_the_author_meta( 'display_name', $attachment->post_author ),
+			'commentsAllowed' => 'open' === $attachment->comment_status ? true : false,
+			'date'            => get_the_date( '', $attachment ),
+			'description'     => $meta['description'],
+			'editUrl'         => get_edit_post_link( $attachment->ID, '' ),
+			'filesize'        => $meta['filesizeHumanReadable'],
+			'id'              => $attachment->ID,
+			'mime'            => $meta['mime'],
+			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : [],
+			'slug'            => $attachment->post_name,
+			'subtype'         => $meta['subtype'],
+			'thumbnail'       => $thumb,
+			'title'           => $meta['title'],
+			'type'            => $meta['type'],
+			'url'             => get_permalink( $attachment ),
+			'urls'            => [
+				'medium' => $size[0],
+			],
+		];
+
+		return $response;
 	}
 
 	/**

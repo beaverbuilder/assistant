@@ -5,22 +5,33 @@ namespace FL\Assistant\Data;
 
 
 use FL\Assistant\Pagination\UsersPaginator;
-use FL\Assistant\RestApi\Transformers\UserTransformer;
-use FL\Assistant\Util\HasContainer;
+
 
 class Users {
 
-	use HasContainer;
+	protected $pagination_helper;
+	protected $user_transformer;
+
+	/**
+	 * Users constructor.
+	 *
+	 * @param $pagination_helper
+	 * @param $user_transformer
+	 */
+	public function __construct( $pagination_helper, $user_transformer ) {
+		$this->pagination_helper = $pagination_helper;
+		$this->user_transformer  = $user_transformer;
+	}
+
 
 	/**
 	 * @param $args
 	 *
-	 * @return UsersPaginator
+	 * @return array
 	 */
 	public function paginate( $args ) {
-		$paginator   = new UsersPaginator();
-		$transformer = new UserTransformer( $this->container() );
-		$pager       = $paginator->query( $args, $transformer );
+		$pager          = $this->pagination_helper->users( $args );
+		$pager["items"] = call_user_func( [ $this->user_transformer, "transform" ], $pager["items"] );
 
 		return $pager;
 	}

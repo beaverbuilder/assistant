@@ -3,12 +3,13 @@
 namespace FL\Assistant\RestApi\Controllers;
 
 use FL\Assistant\Pagination\TermsPaginator;
-use \WP_REST_Server;
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Server;
 
 /**
  * REST API logic for terms.
  */
-class TermsController extends AssistantController {
+class TermsController extends ControllerAbstract {
 
 	/**
 	 * Register routes.
@@ -99,6 +100,22 @@ class TermsController extends AssistantController {
 	}
 
 	/**
+	 * Returns an array of terms and related data.
+	 */
+	public function terms( $request ) {
+		$params    = $request->get_params();
+		$paginator = new TermsPaginator();
+
+		$pager = $paginator->query(
+			$params, function ( $term ) {
+			return $this->get_term_response_data( $term );
+		}
+		);
+
+		return rest_ensure_response( $pager->to_array() );
+	}
+
+	/**
 	 * Returns an array of response data for a single term.
 	 */
 	public function get_term_response_data( $term ) {
@@ -115,22 +132,6 @@ class TermsController extends AssistantController {
 		];
 
 		return $response;
-	}
-
-	/**
-	 * Returns an array of terms and related data.
-	 */
-	public function terms( $request ) {
-		$params    = $request->get_params();
-		$paginator = new TermsPaginator();
-
-		$pager = $paginator->query(
-			$params, function ( $term ) {
-				return $this->get_term_response_data( $term );
-			}
-		);
-
-		return rest_ensure_response( $pager->to_array() );
 	}
 
 	/**

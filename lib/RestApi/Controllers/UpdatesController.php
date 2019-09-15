@@ -1,14 +1,15 @@
 <?php
+
 namespace FL\Assistant\RestApi\Controllers;
 
 use FL\Assistant\Pagination\UpdatesPaginator;
-use \WP_REST_Server;
-use \WP_REST_Request;
-use \WP_REST_Response;
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Server;
+
 /**
  * REST API logic for updates.
  */
-class UpdatesController extends AssistantController {
+class UpdatesController extends ControllerAbstract {
 
 	/**
 	 * Register routes.
@@ -37,7 +38,7 @@ class UpdatesController extends AssistantController {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'updates_count' ],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
 					},
 				],
@@ -46,11 +47,54 @@ class UpdatesController extends AssistantController {
 	}
 
 	/**
+	 * Returns an array of updates and related data.
+	 */
+	public function updates( $request ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		wp_update_plugins();
+		wp_update_themes();
+
+		$response       = [];
+		$update_plugins = get_site_transient( 'update_plugins' );
+		$update_themes  = get_site_transient( 'update_themes' );
+		$type           = $request->get_param( 'type' );
+
+		if ( ! $type || 'all' === $type || 'plugins' === $type ) {
+			//          if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
+
+			foreach ( $update_plugins->response as $key => $update ) {
+				$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
+				if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
+					$response[] = $this->get_plugin_response_data( $update, $plugin );
+				}
+			}
+			//          }
+		}
+
+		if ( ! $type || 'all' === $type || 'themes' === $type ) {
+			//          if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
+
+			foreach ( $update_themes->response as $key => $update ) {
+				$theme = wp_get_theme( $key );
+				if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
+					$response[] = $this->get_theme_response_data( $update, $theme );
+				}
+			}
+			//          }
+		}
+
+		$p = new UpdatesPaginator();
+
+		return rest_ensure_response( $p->paginate( $response )->to_array() );
+	}
+
+	/**
 	 * Returns an array of response data for a single plugin.
 	 */
 	public function get_plugin_response_data( $update, $plugin ) {
 		$thumbnail = null;
-		$banner = null;
+		$banner    = null;
 
 		if ( isset( $update->icons ) ) {
 			if ( isset( $update->icons['2x'] ) ) {
@@ -113,48 +157,6 @@ class UpdatesController extends AssistantController {
 	}
 
 	/**
-	 * Returns an array of updates and related data.
-	 */
-	public function updates( $request ) {
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-		wp_update_plugins();
-		wp_update_themes();
-
-		$response       = [];
-		$update_plugins = get_site_transient( 'update_plugins' );
-		$update_themes  = get_site_transient( 'update_themes' );
-		$type           = $request->get_param( 'type' );
-
-		if ( ! $type || 'all' === $type || 'plugins' === $type ) {
-			//          if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
-
-			foreach ( $update_plugins->response as $key => $update ) {
-				$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
-				if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
-					$response[] = $this->get_plugin_response_data( $update, $plugin );
-				}
-			}
-			//          }
-		}
-
-		if ( ! $type || 'all' === $type || 'themes' === $type ) {
-			//          if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
-
-			foreach ( $update_themes->response as $key => $update ) {
-				$theme = wp_get_theme( $key );
-				if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
-					$response[] = $this->get_theme_response_data( $update, $theme );
-				}
-			}
-			//          }
-		}
-
-		$p = new UpdatesPaginator();
-		return rest_ensure_response( $p->paginate( $response )->to_array() );
-	}
-
-	/**
 	 * Returns the number of updates found.
 	 */
 	public function updates_count( $request ) {
@@ -169,12 +171,12 @@ class UpdatesController extends AssistantController {
 
 		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
 			$plugins = count( $update_plugins->response );
-			$count += $plugins;
+			$count   += $plugins;
 		}
 
 		if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
 			$themes = count( $update_themes->response );
-			$count += $themes;
+			$count  += $themes;
 		}
 
 		return rest_ensure_response(

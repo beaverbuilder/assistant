@@ -5,7 +5,7 @@ namespace FL\Assistant\RestApi\Transformers;
 
 use FL\Assistant\Data\Notations;
 use FL\Assistant\Data\Posts;
-use FL\Assistant\Support\Integrations\BeaverBuilder;
+use FL\Assistant\System\Integrations\BeaverBuilder;
 
 
 /**

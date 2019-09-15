@@ -2,14 +2,17 @@
 
 namespace FL\Assistant\RestApi\Controllers;
 
+use Exception;
 use FL\Assistant\Data\UserState;
-
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Request;
+use WP_REST_Response;
 use WP_REST_Server;
 
 /**
  * REST API logic for users.
  */
-final class UsersController extends AssistantController {
+final class UsersController extends ControllerAbstract {
 
 	/**
 	 * Register routes.
@@ -79,11 +82,11 @@ final class UsersController extends AssistantController {
 	/**
 	 * Returns an array of users and related data.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param WP_REST_Request $request
 	 *
-	 * @return mixed|\WP_REST_Response
+	 * @return mixed|WP_REST_Response
 	 */
-	public function users( \WP_REST_Request $request ) {
+	public function users( WP_REST_Request $request ) {
 
 		$params = $request->get_params();
 		$pager  = $this->service( 'users' )->paginate( $params );
@@ -94,12 +97,12 @@ final class UsersController extends AssistantController {
 	/**
 	 * Returns an array of counts by user role.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param WP_REST_Request $request
 	 *
-	 * @return mixed|\WP_REST_Response
-	 * @throws \Exception
+	 * @return mixed|WP_REST_Response
+	 * @throws Exception
 	 */
-	public function users_count( \WP_REST_Request $request ) {
+	public function users_count( WP_REST_Request $request ) {
 
 		$response = $this->service( 'users' )->counts_by_user_role();
 
@@ -109,12 +112,12 @@ final class UsersController extends AssistantController {
 	/**
 	 * Returns data for a single user.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param WP_REST_Request $request
 	 *
-	 * @return mixed|\WP_REST_Response
-	 * @throws \Exception
+	 * @return mixed|WP_REST_Response
+	 * @throws Exception
 	 */
-	public function user( \WP_REST_Request $request ) {
+	public function user( WP_REST_Request $request ) {
 		$id   = $request->get_param( 'id' );
 		$user = $this->service( 'users' )->find( $id );
 
@@ -124,7 +127,7 @@ final class UsersController extends AssistantController {
 	/**
 	 * Updates the saved state for a user.
 	 */
-	public function update_user_state( \WP_REST_Request $request ) {
+	public function update_user_state( WP_REST_Request $request ) {
 
 		$state = $request->get_param( 'state' );
 		UserState::update( $state );

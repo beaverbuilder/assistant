@@ -4,11 +4,8 @@
 namespace FL\Assistant\Data;
 
 
-use FL\Assistant\Util\HasContainer;
-
 class Site {
 
-	use HasContainer;
 
 	/**
 	 * Get info about the current page view.
@@ -121,7 +118,7 @@ class Site {
 		$data['intro']   = $intro;
 		$data['name']    = $name;
 		$data['type']	 = $type;
-		$data['actions'] = static::filter_actions_by_capability( $actions );
+		$data['actions'] = $this->filter_actions_by_capability( $actions );
 
 		$theme         = wp_get_theme();
 		$data['theme'] = [

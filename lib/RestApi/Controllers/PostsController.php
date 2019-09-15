@@ -4,14 +4,16 @@ namespace FL\Assistant\RestApi\Controllers;
 
 use FL\Assistant\Data\Notations;
 use FL\Assistant\Data\Posts;
-use FL\Assistant\Support\Integrations\BeaverBuilder;
-use \WP_REST_Server;
 use FL\Assistant\RestApi\Transformers\PostTransformer;
+use FL\Assistant\System\Integrations\BeaverBuilder;
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Request;
+use WP_REST_Server;
 
 /**
  * REST API logic for posts.
  */
-class PostsController extends AssistantController {
+class PostsController extends ControllerAbstract {
 
 
 	/**
@@ -102,7 +104,7 @@ class PostsController extends AssistantController {
 					'methods'             => WP_REST_Server::DELETABLE,
 					'callback'            => [ $this, 'delete_post' ],
 					'args'                => [
-						'id'     => [
+						'id' => [
 							'required' => true,
 							'type'     => 'number',
 						],
@@ -134,21 +136,9 @@ class PostsController extends AssistantController {
 	}
 
 	/**
-	 * Returns an array of response data for a single post.
-	 */
-	public function get_post_response_data( $post ) {
-		$transformer = new PostTransformer(
-			new Posts(),
-			new Notations(),
-			new BeaverBuilder()
-		);
-		return $transformer->transform( $post );
-	}
-
-	/**
 	 * Returns an array of posts and related data.
 	 */
-	public function posts( \WP_REST_Request $request ) {
+	public function posts( WP_REST_Request $request ) {
 
 		$posts  = $this->service( 'posts' );
 		$params = $request->get_params();
@@ -195,6 +185,19 @@ class PostsController extends AssistantController {
 		}
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of response data for a single post.
+	 */
+	public function get_post_response_data( $post ) {
+		$transformer = new PostTransformer(
+			new Posts(),
+			new Notations(),
+			new BeaverBuilder()
+		);
+
+		return $transformer->transform( $post );
 	}
 
 	/**
@@ -271,7 +274,7 @@ class PostsController extends AssistantController {
 		$post_id      = absint( $request->get_param( 'id' ) );
 		$post         = get_post( $post_id );
 		$current_user = wp_get_current_user();
-		$post_data 	  = array(
+		$post_data    = array(
 			'comment_status' => $post->comment_status,
 			'ping_status'    => $post->ping_status,
 			'post_author'    => $current_user->ID,
@@ -289,12 +292,12 @@ class PostsController extends AssistantController {
 		);
 
 		$new_post_id = wp_insert_post( $post_data );
-		$post_meta = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id ) );
-		$taxonomies = get_object_taxonomies( $post->post_type );
+		$post_meta   = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id ) );
+		$taxonomies  = get_object_taxonomies( $post->post_type );
 
 		if ( count( $post_meta ) !== 0 ) {
 			foreach ( $post_meta as $meta_info ) {
-				$meta_key = $meta_info->meta_key;
+				$meta_key   = $meta_info->meta_key;
 				$meta_value = addslashes( $meta_info->meta_value );
 				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
@@ -302,7 +305,7 @@ class PostsController extends AssistantController {
 
 		foreach ( $taxonomies as $taxonomy ) {
 			$post_terms = wp_get_object_terms( $post_id, $taxonomy );
-			for ( $i = 0; $i < count( $post_terms ); $i++ ) {
+			for ( $i = 0; $i < count( $post_terms ); $i ++ ) {
 				wp_set_object_terms( $new_post_id, $post_terms[ $i ]->slug, $taxonomy, true );
 			}
 		}

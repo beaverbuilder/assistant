@@ -2,29 +2,45 @@
 
 namespace FL\Assistant\Data;
 
-use FL\Assistant\Pagination\PostsPaginator;
+use FL\Assistant\Helpers\PaginationHelper;
 use FL\Assistant\RestApi\Transformers\PostTransformer;
-use FL\Assistant\Support\Integrations\BeaverBuilder;
-use FL\Assistant\Util\HasContainer;
+
 
 class Posts {
 
-	use HasContainer;
+	/**
+	 * @var PaginationHelper
+	 */
+	protected $pagination_helper;
+
+	/**
+	 * @var PostTransformer
+	 */
+	protected $transformer;
+
+	/**
+	 * Posts constructor.
+	 *
+	 * @param PaginationHelper $pagination_helper
+	 * @param PostTransformer $transformer
+	 */
+	public function __construct( PaginationHelper $pagination_helper, PostTransformer $transformer ) {
+		$this->pagination_helper = $pagination_helper;
+		$this->transformer       = $transformer;
+	}
 
 	/**
 	 * Return Pager object for Posts
+	 *
 	 * @param array $args
 	 *
 	 * @return array
 	 */
 	public function paginate( array $args = [] ) {
-		$p = new PostsPaginator();
-		$transformer = new PostTransformer(
-			new Posts(),
-			new Notations(),
-			new BeaverBuilder()
-		);
-		return $p->query( $args, $transformer );
+		$pager          = $this->pagination_helper->posts( $args );
+		$pager['items'] = call_user_func( [ $this->transformer, "transform" ], $pager["items"] );
+
+		return $pager;
 	}
 
 	/**

@@ -1,13 +1,13 @@
 <?php
 
 
-namespace FL\Assistant\Support\Integrations;
+namespace FL\Assistant\System\Integrations;
 
 
 /**
  * Class BeaverBuilder
  *
- * @package FL\Assistant\Support\Integrations
+ * @package FL\Assistant\System\Integrations
  */
 class BeaverBuilder {
 

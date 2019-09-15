@@ -2,12 +2,13 @@
 
 namespace FL\Assistant\RestApi\Controllers;
 
-use \WP_REST_Server;
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Server;
 
 /**
  * REST API logic for content count data.
  */
-class CountsController extends AssistantController {
+class CountsController extends ControllerAbstract {
 
 	/**
 	 * Register routes.

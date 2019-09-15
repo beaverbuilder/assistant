@@ -3,23 +3,14 @@
 
 namespace FL\Assistant\Providers;
 
-use FL\Assistant\Core\Container;
+use FL\Assistant\System\Contracts\ProviderAbstract;
 
-class CloudProvider implements ProviderInterface {
+class CloudProvider extends ProviderAbstract {
 
-	/**
-	 * Modifies the given dependency injection container.
-	 *
-	 * @param Container $container
-	 */
-	public function register( Container $container ) {
-
+	public function bootstrap() {
 		// allow this to be overridden in wp-config.php for development
 		if ( ! defined( 'FL_ASSISTANT_CLOUD_URL' ) ) {
 			define( 'FL_ASSISTANT_CLOUD_URL', 'http://localhost:8000/api' );
 		}
-
-		$container->set( 'cloud_url', FL_ASSISTANT_CLOUD_URL );
 	}
-
 }

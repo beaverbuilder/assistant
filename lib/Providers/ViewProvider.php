@@ -3,18 +3,17 @@
 
 namespace FL\Assistant\Providers;
 
-use FL\Assistant\Core\Container;
-use FL\Assistant\Util\View;
 
-class ViewProvider implements ProviderInterface {
+use FL\Assistant\Helpers\ViewHelper;
+use FL\Assistant\System\Contracts\ProviderAbstract;
 
-	public function register( Container $container ) {
-		$template_dir = sprintf( '%s/lib/views', FL_ASSISTANT_DIR );
+class ViewProvider extends ProviderAbstract {
 
-		$container->register_service(
-			'view', function( $container ) use ( $template_dir ) {
-				return new View( $template_dir );
-			}
-		);
+
+	public function bootstrap() {
+
+		$this->injector->define( ViewHelper::class, [
+			"template_dir" => sprintf( '%s/lib/views', FL_ASSISTANT_DIR )
+		] );
 	}
 }

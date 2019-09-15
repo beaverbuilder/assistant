@@ -2,14 +2,14 @@
 
 namespace FL\Assistant\RestApi\Controllers;
 
-use \WP_REST_Server;
-use \WP_REST_Request;
-use \WP_REST_Response;
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Request;
+use WP_REST_Server;
 
 /**
  * REST API logic for notifications.
  */
-final class NotificationsController extends AssistantController {
+final class NotificationsController extends ControllerAbstract {
 
 	/**
 	 * Register routes.

@@ -3,12 +3,13 @@
 namespace FL\Assistant\RestApi\Controllers;
 
 use FL\Assistant\Pagination\CommentsPaginator;
-use FL\Assistant\Pagination\PostsPaginator;
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Server;
 
 /**
  * REST API logic for comments.
  */
-class CommentsController extends AssistantController {
+class CommentsController extends ControllerAbstract {
 
 	/**
 	 * Register routes.
@@ -17,7 +18,7 @@ class CommentsController extends AssistantController {
 		$this->route(
 			'/comments', [
 				[
-					'methods'             => \WP_REST_Server::READABLE,
+					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comments' ],
 					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
@@ -29,7 +30,7 @@ class CommentsController extends AssistantController {
 		$this->route(
 			'/comments/count', [
 				[
-					'methods'             => \WP_REST_Server::READABLE,
+					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comments_count' ],
 					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
@@ -41,7 +42,7 @@ class CommentsController extends AssistantController {
 		$this->route(
 			'/comments/(?P<id>\d+)', [
 				[
-					'methods'             => \WP_REST_Server::READABLE,
+					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comment' ],
 					'args'                => [
 						'id' => [
@@ -54,7 +55,7 @@ class CommentsController extends AssistantController {
 					},
 				],
 				[
-					'methods'             => \WP_REST_Server::CREATABLE,
+					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'update_comment' ],
 					'args'                => [
 						'id'     => [
@@ -72,35 +73,6 @@ class CommentsController extends AssistantController {
 				],
 			]
 		);
-	}
-
-	/**
-	 * Returns an array of response data for a single comment.
-	 */
-	public function get_comment_response_data( $comment ) {
-		$post = get_post( $comment->comment_post_ID );
-		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
-		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );
-
-		return [
-			'approved'    => $comment->comment_approved ? true : false,
-			'author'      => $comment->comment_author,
-			'authorEmail' => $comment->comment_author_email,
-			'authorIP'    => $comment->comment_author_IP,
-			'content'     => $comment->comment_content,
-			'date'        => $date,
-			'editUrl'     => admin_url( 'comment.php?action=editcomment&c=' ) . $comment->comment_ID,
-			'id'          => $comment->comment_ID,
-			'meta'        => $comment->comment_author . ' - ' . $date,
-			'postId'      => $post->ID,
-			'postTitle'   => $post->post_title,
-			'spam'        => 'spam' === $comment->comment_approved,
-			'time'        => $time,
-			'thumbnail'   => get_avatar_url( $comment->comment_author_email ),
-			'title'       => strip_tags( $comment->comment_content ),
-			'trash'       => 'trash' === $comment->comment_approved,
-			'url'         => get_comment_link( $comment ),
-		];
 	}
 
 	/**
@@ -145,6 +117,35 @@ class CommentsController extends AssistantController {
 		$response = $this->get_comment_response_data( $comment );
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of response data for a single comment.
+	 */
+	public function get_comment_response_data( $comment ) {
+		$post = get_post( $comment->comment_post_ID );
+		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
+		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );
+
+		return [
+			'approved'    => $comment->comment_approved ? true : false,
+			'author'      => $comment->comment_author,
+			'authorEmail' => $comment->comment_author_email,
+			'authorIP'    => $comment->comment_author_IP,
+			'content'     => $comment->comment_content,
+			'date'        => $date,
+			'editUrl'     => admin_url( 'comment.php?action=editcomment&c=' ) . $comment->comment_ID,
+			'id'          => $comment->comment_ID,
+			'meta'        => $comment->comment_author . ' - ' . $date,
+			'postId'      => $post->ID,
+			'postTitle'   => $post->post_title,
+			'spam'        => 'spam' === $comment->comment_approved,
+			'time'        => $time,
+			'thumbnail'   => get_avatar_url( $comment->comment_author_email ),
+			'title'       => strip_tags( $comment->comment_content ),
+			'trash'       => 'trash' === $comment->comment_approved,
+			'url'         => get_comment_link( $comment ),
+		];
 	}
 
 	/**

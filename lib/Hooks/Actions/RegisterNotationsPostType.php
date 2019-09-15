@@ -2,16 +2,13 @@
 
 namespace FL\Assistant\Hooks\Actions;
 
-use FL\Assistant\Util\HasContainer;
 
 /**
- * Class OnInit
+ * Class RegisterNotationsPostType
  * @package FL\Assistant\Hooks\Actions
  *
  */
-class OnInit {
-
-	use HasContainer;
+class RegisterNotationsPostType {
 
 	/**
 	 * @return void

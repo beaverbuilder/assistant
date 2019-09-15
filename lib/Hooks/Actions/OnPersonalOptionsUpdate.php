@@ -3,7 +3,7 @@
 namespace FL\Assistant\Hooks\Actions;
 
 use FL\Assistant\Data\UserState;
-use FL\Assistant\Util\HasContainer;
+
 
 /**
  * Class OnPersonalOptionsUpdate
@@ -12,7 +12,7 @@ use FL\Assistant\Util\HasContainer;
  */
 class OnPersonalOptionsUpdate {
 
-	use HasContainer;
+
 
 	public function __invoke( $user_id ) {
 		// check that the current user have the capability to edit the $user_id

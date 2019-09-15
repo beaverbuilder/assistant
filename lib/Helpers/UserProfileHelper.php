@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FL\Assistant\Support\Helpers;
+namespace FL\Assistant\Helpers;
 
 
 class UserProfileHelper {

@@ -3,7 +3,8 @@
 
 namespace FL\Assistant\RestApi\Controllers;
 
-
+use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Request;
 use WP_REST_Server;
 
 /**
@@ -15,7 +16,7 @@ use WP_REST_Server;
  *
  * @package FL\Assistant\RestApi\Controllers
  */
-class SearchController extends AssistantController {
+class SearchController extends ControllerAbstract {
 
 	public function register_routes() {
 		$this->route(
@@ -23,7 +24,7 @@ class SearchController extends AssistantController {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'results' ],
-					'permission_callback' => function() {
+					'permission_callback' => function () {
 						return is_user_logged_in();
 					},
 				],
@@ -35,13 +36,13 @@ class SearchController extends AssistantController {
 	 * Returns search results for the endpoints sent
 	 * in the current request.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param WP_REST_Request $request
 	 *
 	 * @return array
 	 */
-	public function results( \WP_REST_Request $request ) {
-		$response  = [];
-		$routes = $request->get_param( 'routes' );
+	public function results( WP_REST_Request $request ) {
+		$response = [];
+		$routes   = $request->get_param( 'routes' );
 		$requests = array_reduce( $routes, 'rest_preload_api_request', [] );
 
 		foreach ( $requests as $route => $request ) {

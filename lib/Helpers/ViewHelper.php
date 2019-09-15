@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FL\Assistant\Util;
+namespace FL\Assistant\Helpers;
 
 /**
  * Class View
@@ -9,7 +9,7 @@ namespace FL\Assistant\Util;
  *
  * @phpcs:disable WordPress.PHP.DontExtract.extract_extract
  */
-class View {
+class ViewHelper {
 
 	/**
 	 * @var string path to template dir

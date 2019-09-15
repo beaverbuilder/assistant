@@ -3,7 +3,7 @@
 namespace FL\Assistant\Hooks\Actions;
 
 use FL\Assistant\Data\UserState;
-use FL\Assistant\Util\HasContainer;
+
 
 /**
  * Class OnWPBeforeAdminBarRender
@@ -12,7 +12,6 @@ use FL\Assistant\Util\HasContainer;
  */
 class OnWPBeforeAdminBarRender {
 
-	use HasContainer;
 
 	public function __invoke() {
 		global $wp_admin_bar;
