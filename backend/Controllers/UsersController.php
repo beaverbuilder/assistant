@@ -1,6 +1,6 @@
 <?php
 
-namespace FL\Assistant\RestApi\Controllers;
+namespace FL\Assistant\Controllers;
 
 use Exception;
 use FL\Assistant\Data\Repository\UsersRepository;
@@ -47,17 +47,6 @@ class UsersController extends ControllerAbstract {
 			]
 		);
 
-		$this->route(
-			'/users/count', [
-				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'users_count' ],
-					'permission_callback' => function () {
-						return current_user_can( 'list_users' );
-					},
-				],
-			]
-		);
 
 		$this->route(
 			'/users/(?P<id>\d+)', [
@@ -77,23 +66,20 @@ class UsersController extends ControllerAbstract {
 			]
 		);
 
+
 		$this->route(
-			'/current-user/state', [
+			'/users/count', [
 				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'update_user_state' ],
-					'args'                => [
-						'state' => [
-							'required' => true,
-							'type'     => 'json',
-						],
-					],
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ $this, 'users_count' ],
 					'permission_callback' => function () {
-						return ! ! wp_get_current_user()->ID;
+						return current_user_can( 'list_users' );
 					},
 				],
 			]
 		);
+
+
 	}
 
 	/**
@@ -143,14 +129,5 @@ class UsersController extends ControllerAbstract {
 
 
 
-	/**
-	 * Updates the saved state for a user.
-	 */
-	public function update_user_state( WP_REST_Request $request ) {
 
-		$state = $request->get_param( 'state' );
-		UserState::update( $state );
-
-		return rest_ensure_response( UserState::get() );
-	}
 }

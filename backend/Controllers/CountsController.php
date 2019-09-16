@@ -1,6 +1,6 @@
 <?php
 
-namespace FL\Assistant\RestApi\Controllers;
+namespace FL\Assistant\Controllers;
 
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Server;

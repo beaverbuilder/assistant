@@ -51,13 +51,21 @@ class Pager {
 	 * @param int $offset
 	 */
 	public function __construct( array $items = [], $total = 0, $limit = 0, $offset = 0 ) {
-		$this->items        = $items;
-		$this->total        = intval( $total );
-		$this->limit        = intval( $limit );
-		$this->offset       = intval( $offset );
-		$this->last_page    = max( (int) ceil( $this->total / $this->limit ), 1 );
-		$this->current_page = ceil( ( $this->offset + 1 ) / $this->limit );
-		$this->has_more     = ( $this->current_page < $this->last_page );
+
+		$this->items     = $items;
+		$this->total     = $total;
+		$this->limit     = $limit;
+		$this->offset    = $offset;
+
+		if(count($items) === 0) {
+			$this->last_page = 1;
+			$this->current_page = 1;
+			$this->has_more = false;
+		} else {
+			$this->last_page = max( (int) ceil( $this->total / $this->limit ), 1 );
+			$this->current_page = ceil( ( $this->offset + 1 ) / $this->limit );
+			$this->has_more = ( $this->current_page < $this->last_page );
+		}
 	}
 
 	/**
@@ -72,8 +80,9 @@ class Pager {
 	 *
 	 * @return Pager
 	 */
-	public function set_items(array $items  = [] ) {
+	public function set_items( array $items = [] ) {
 		$this->items = $items;
+
 		return $this;
 	}
 
@@ -84,8 +93,9 @@ class Pager {
 	 *
 	 * @return Pager
 	 */
-	public function apply_transform(callable $transformer) {
-		$this->items = array_map($transformer, $this->items);
+	public function apply_transform( callable $transformer ) {
+		$this->items = array_map( $transformer, $this->items );
+
 		return $this;
 	}
 
@@ -114,7 +124,6 @@ class Pager {
 	}
 
 
-
 	/**
 	 * @return mixed
 	 */
@@ -123,14 +132,12 @@ class Pager {
 	}
 
 
-
 	/**
 	 * @return float
 	 */
 	public function current_page() {
 		return $this->current_page;
 	}
-
 
 
 	/**
@@ -158,6 +165,6 @@ class Pager {
 	}
 
 	public function to_rest_response() {
-		return rest_ensure_response($this->to_array());
+		return rest_ensure_response( $this->to_array() );
 	}
 }

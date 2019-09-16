@@ -1,7 +1,7 @@
 <?php
 
 
-namespace FL\Assistant\RestApi\Controllers;
+namespace FL\Assistant\Controllers;
 
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Request;
@@ -14,7 +14,7 @@ use WP_REST_Server;
  * Results are obtained by calling REST routes registered
  * in an Assistant app's config.
  *
- * @package FL\Assistant\RestApi\Controllers
+ * @package FL\Assistant\Controllers
  */
 class SearchController extends ControllerAbstract {
 

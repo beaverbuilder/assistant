@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || die();
 
-require_once( __DIR__ . '/lib/autoloader.php' );
+require_once( __DIR__ . '/backend/autoloader.php' );
 
 new FL\Assistant\System\Plugin(__FILE__);
 

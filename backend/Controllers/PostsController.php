@@ -1,6 +1,6 @@
 <?php
 
-namespace FL\Assistant\RestApi\Controllers;
+namespace FL\Assistant\Controllers;
 
 use FL\Assistant\Data\Repository\NotationsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;
@@ -155,6 +155,7 @@ class PostsController extends ControllerAbstract {
 		$params['perm'] = 'editable';
 
 		$pager = $this->posts->paginate( $params , $this->transformer);
+
 
 		return rest_ensure_response( $pager->to_array() );
 	}

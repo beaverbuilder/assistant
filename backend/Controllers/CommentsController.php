@@ -1,6 +1,6 @@
 <?php
 
-namespace FL\Assistant\RestApi\Controllers;
+namespace FL\Assistant\Controllers;
 
 use FL\Assistant\Data\Repository\CommentsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;

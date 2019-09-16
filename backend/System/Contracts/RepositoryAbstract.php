@@ -4,8 +4,6 @@
 namespace FL\Assistant\System\Contracts;
 
 
-use FL\Assistant\Data\Pager;
-
 
 abstract class RepositoryAbstract {
 

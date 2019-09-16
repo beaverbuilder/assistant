@@ -1,17 +1,35 @@
 import Promise from 'promise'
 import axios from 'axios'
-import CacheHelper from './cache-helper'
+import CacheHelper  from "./cache-helper"
+import { setupCache } from 'axios-cache-adapter'
+import localforage from "localforage"
 
 const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 
 const cacheHelper = new CacheHelper( 'fl-assistant-wp-rest', {
 
 	// Changing this to true will send alot of output to the console
-	debug: false,
+	debug: true,
+	ignoreCache: true,
 
 	// Set cache timeout - 15 minutes
 	maxAge: 15 * 60 * 1000,
 } )
+
+// const cache = setupCache( {
+// 	debug: true,
+// 	exclude: { query: false },
+// 	// Set cache timeout - 15 minutes
+// 	maxAge: 15 * 60 * 1000,
+// 	store: localforage.createInstance( {
+// 		driver: [
+// 			localforage.LOCALSTORAGE,
+// 		],
+//
+// 		// Prefix all storage keys to prevent conflicts
+// 		name: "fl-assistant-rest"
+// 	})
+// } )
 
 /**
  * Create `axios` instance with pre-configured `axios-cache-adapter`
@@ -54,52 +72,52 @@ const posts = () => {
 	return {
 
 		/**
-         * Get hierarchical posts by query
-         * @param params
-         * @param config
-         * @returns {Promise<AxiosResponse<T>>}
-         */
+		 * Get hierarchical posts by query
+		 * @param params
+		 * @param config
+		 * @returns {Promise<AxiosResponse<T>>}
+		 */
 		hierarchical( params, config = {} ) {
 			config.params = params
 			return http.get( 'fl-assistant/v1/posts/hierarchical', config )
 		},
 
 		/**
-         * Find post by ID
-         * @param id
-         * @param config
-         * @returns {Promise<*>}
-         */
+		 * Find post by ID
+		 * @param id
+		 * @param config
+		 * @returns {Promise<*>}
+		 */
 		findById( id, config = {} ) {
 			return http.get( `fl-assistant/v1/posts/${id}`, config )
 		},
 
 		/**
-         * Find posts by query
-         * @param params
-         * @param config
-         */
+		 * Find posts by query
+		 * @param params
+		 * @param config
+		 */
 		findWhere( params, config = {} ) {
 			config.params = params
 			return http.get( 'fl-assistant/v1/posts', config )
 		},
 
 		/**
-         * Create a new post
-         * @param data
-         * @param config
-         */
+		 * Create a new post
+		 * @param data
+		 * @param config
+		 */
 		create( data = {}, config = {} ) {
 			return http.post( 'fl-assistant/v1/posts', data, config )
 		},
 
 		/**
-         * Update a post
-         * @param id
-         * @param action
-         * @param data
-         * @param config
-         */
+		 * Update a post
+		 * @param id
+		 * @param action
+		 * @param data
+		 * @param config
+		 */
 		update( id, action, data = {}, config = {} ) {
 			return http.post( `fl-assistant/v1/posts/${id}`, {
 				action,
@@ -108,19 +126,19 @@ const posts = () => {
 		},
 
 		/**
-         * Delete a post
-         * @param id
-         * @param config
-         */
+		 * Delete a post
+		 * @param id
+		 * @param config
+		 */
 		delete( id, config = {} ) {
 			return http.delete( `fl-assistant/v1/posts/${id}`, config )
 		},
 
 		/**
-         * Clone a post
-         * @param data
-         * @param config
-         */
+		 * Clone a post
+		 * @param data
+		 * @param config
+		 */
 		clone( id, config = {} ) {
 			return http.post( `fl-assistant/v1/posts/${id}/clone`, config )
 		},
@@ -134,29 +152,29 @@ const users = () => {
 	return {
 
 		/**
-         * Find WordPress user by ID
-         * @param id
-         * @param config
-         */
+		 * Find WordPress user by ID
+		 * @param id
+		 * @param config
+		 */
 		findById( id, config = {} ) {
 			return http.get( `fl-assistant/v1/users/${id}`, config )
 		},
 
 		/**
-         * Find WordPress users by query
-         * @param params
-         * @param config
-         */
+		 * Find WordPress users by query
+		 * @param params
+		 * @param config
+		 */
 		findWhere( params, config = {} ) {
 			config.params = params
 			return http.get( 'fl-assistant/v1/users', config )
 		},
 
 		/**
-         * Update current WordPress user state.
-         * @param state
-         * @param config
-         */
+		 * Update current WordPress user state.
+		 * @param state
+		 * @param config
+		 */
 		updateState( state, config = {} ) {
 			return http.post( 'fl-assistant/v1/current-user/state', { state }, config )
 		}
@@ -170,10 +188,10 @@ const terms = () => {
 	return {
 
 		/**
-         * Get hierarchical list of terms by query
-         * @param params
-         * @param config
-         */
+		 * Get hierarchical list of terms by query
+		 * @param params
+		 * @param config
+		 */
 		hierarchical( params, config = {} ) {
 			return http.get( 'fl-assistant/v1/terms/hierarchical', {
 				params,
@@ -182,32 +200,32 @@ const terms = () => {
 		},
 
 		/**
-         * Find term by ID
-         * @param id
-         * @param config
-         * @returns {Promise<AxiosResponse<T>>}
-         */
+		 * Find term by ID
+		 * @param id
+		 * @param config
+		 * @returns {Promise<AxiosResponse<T>>}
+		 */
 		findById( id, config = {} ) {
 			return http.get( `fl-assistant/v1/terms/${id}`, config )
 		},
 
 		/**
-         * Create a new Term
-         * @param term
-         * @param config
-         * @returns {Promise<AxiosResponse<T>>}
-         */
+		 * Create a new Term
+		 * @param term
+		 * @param config
+		 * @returns {Promise<AxiosResponse<T>>}
+		 */
 		create( term, config = {} ) {
 			return http.post( 'fl-assistant/v1/terms', term, config )
 		},
 
 		/**
-         * Update a term
-         * @param id
-         * @param action
-         * @param data
-         * @returns {Promise<AxiosResponse<T>>}
-         */
+		 * Update a term
+		 * @param id
+		 * @param action
+		 * @param data
+		 * @returns {Promise<AxiosResponse<T>>}
+		 */
 		update( id, action, data = {}, config = {} ) {
 			return http.post( `fl-assistant/v1/terms/${id}`, {
 				action,
@@ -226,19 +244,19 @@ const comments = () => {
 	return {
 
 		/**
-         * Find comment by ID
-         * @param id
-         * @returns {Promise<AxiosResponse<T>>}
-         */
+		 * Find comment by ID
+		 * @param id
+		 * @returns {Promise<AxiosResponse<T>>}
+		 */
 		findById( id, config = {} ) {
 			return http.get( `fl-assistant/v1/comments/${id}`, config )
 		},
 
 		/**
-         * Find comment by query
-         * @param params
-         * @returns {Promise<AxiosResponse<T>>}
-         */
+		 * Find comment by query
+		 * @param params
+		 * @returns {Promise<AxiosResponse<T>>}
+		 */
 		findWhere( params, config = {} ) {
 			config.params = params
 
@@ -246,13 +264,13 @@ const comments = () => {
 		},
 
 		/**
-         * Update a comment
-         *
-         * @param id
-         * @param action
-         * @param data
-         * @returns {Promise<AxiosResponse<T>>}
-         */
+		 * Update a comment
+		 *
+		 * @param id
+		 * @param action
+		 * @param data
+		 * @returns {Promise<AxiosResponse<T>>}
+		 */
 		update( id, action, data = {}, config = {} ) {
 			return http.post( `fl-assistant/v1/comments/${id}`, {
 				action,
@@ -270,15 +288,15 @@ const attachments = () => {
 	return {
 
 		/**
-         * Returns data for a single attachment.
-         */
+		 * Returns data for a single attachment.
+		 */
 		findById( id, config = {} ) {
 			return http.get( `fl-assistant/v1/attachments/${id}`, config )
 		},
 
 		/**
-         * Returns an array of attachments.
-         */
+		 * Returns an array of attachments.
+		 */
 		findWhere( params, config = {} ) {
 			return http.get( 'fl-assistant/v1/attachments', {
 				params,
@@ -287,9 +305,9 @@ const attachments = () => {
 		},
 
 		/**
-         * Updates a single attachment. See the update_attachment
-         * REST method for a list of supported actions.
-         */
+		 * Updates a single attachment. See the update_attachment
+		 * REST method for a list of supported actions.
+		 */
 		update( id, action, data = {}, config = {} ) {
 			return http.post( `fl-assistant/v1/attachments/${id}`, {
 				action,
@@ -307,11 +325,11 @@ const updates = () => {
 	return {
 
 		/**
-         * Find updates based on query params
-         *
-         * @param params
-         * @returns {Promise<AxiosResponse<T>>}
-         */
+		 * Find updates based on query params
+		 *
+		 * @param params
+		 * @returns {Promise<AxiosResponse<T>>}
+		 */
 		findWhere( params, config = {} ) {
 			config.params = params
 
@@ -332,19 +350,19 @@ const updates = () => {
  * @returns {*|Promise<*>|*|Promise<*>|Promise<*>|*}
  */
 const getContent = ( type, params, config = {} ) => {
-	switch ( type ) {
-	case 'posts':
-		return posts().findWhere( params, config )
-	case 'terms':
-		return terms().findWhere( params, config )
-	case 'attachments':
-		return attachments().findWhere( params, config )
-	case 'comments':
-		return comments().findWhere( params, config )
-	case 'users':
-		return users().findWhere( params, config )
-	case 'updates':
-		return updates().findWhere( params, config )
+	switch (type) {
+		case 'posts':
+			return posts().findWhere( params, config )
+		case 'terms':
+			return terms().findWhere( params, config )
+		case 'attachments':
+			return attachments().findWhere( params, config )
+		case 'comments':
+			return comments().findWhere( params, config )
+		case 'users':
+			return users().findWhere( params, config )
+		case 'updates':
+			return updates().findWhere( params, config )
 	}
 }
 
@@ -360,21 +378,21 @@ const getPagedContent = async( type, params, offset = 0, config = {} ) => {
 	let paged = Object.assign( { offset }, params )
 	let perPage = 20
 
-	switch ( type ) {
-	case 'posts':
-	case 'attachments':
-		paged.posts_per_page = paged.posts_per_page ? paged.posts_per_page : perPage
-		perPage = paged.posts_per_page
-		break
-	default:
-		paged.number = paged.number ? paged.number : perPage
-		perPage = paged.number
-		break
+	switch (type) {
+		case 'posts':
+		case 'attachments':
+			paged.posts_per_page = paged.posts_per_page ? paged.posts_per_page : perPage
+			perPage = paged.posts_per_page
+			break
+		default:
+			paged.number = paged.number ? paged.number : perPage
+			perPage = paged.number
+			break
 	}
 
 	try {
 		return await getContent( type, paged, config )
-	} catch ( error ) {
+	} catch (error) {
 		return Promise.reject( error )
 	}
 }
@@ -406,8 +424,8 @@ const notations = () => {
 	return {
 
 		/**
-         * Create a new notation
-         */
+		 * Create a new notation
+		 */
 		create( type, objectType, objectId, meta = {}, config = {} ) {
 			return posts().create( {
 				post_type: 'fl_asst_notation',
@@ -422,8 +440,8 @@ const notations = () => {
 		},
 
 		/**
-         * Delete a notation
-         */
+		 * Delete a notation
+		 */
 		delete( type, objectType, objectId, meta = {}, config = {} ) {
 			return http.post( 'fl-assistant/v1/notations/delete-where-meta', {
 				fl_asst_notation_type: type,
@@ -434,8 +452,8 @@ const notations = () => {
 		},
 
 		/**
-         * Create a new "favorite" notation
-         */
+		 * Create a new "favorite" notation
+		 */
 		createFavorite( objectType, objectId, userId, config = {} ) {
 			return notations().create( 'favorite', objectType, objectId, {
 				fl_asst_notation_user_id: userId,
@@ -443,8 +461,8 @@ const notations = () => {
 		},
 
 		/**
-         * Delete a "favorite" notation
-         */
+		 * Delete a "favorite" notation
+		 */
 		deleteFavorite( objectType, objectId, userId, config = {} ) {
 			return notations().delete( 'favorite', objectType, objectId, {
 				fl_asst_notation_user_id: userId,
@@ -452,8 +470,8 @@ const notations = () => {
 		},
 
 		/**
-         * Create a new "label" notation
-         */
+		 * Create a new "label" notation
+		 */
 		createLabel( objectType, objectId, labelId, config = {} ) {
 			return notations().create( 'label', objectType, objectId, {
 				fl_asst_notation_label_id: labelId,
@@ -461,8 +479,8 @@ const notations = () => {
 		},
 
 		/**
-         * Delete a "label" notation
-         */
+		 * Delete a "label" notation
+		 */
 		deleteLabel( objectType, objectId, labelId, config = {} ) {
 			return notations().delete( 'label', objectType, objectId, {
 				fl_asst_notation_label_id: labelId,

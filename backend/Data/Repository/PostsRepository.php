@@ -57,6 +57,7 @@ class PostsRepository extends RepositoryAbstract {
 	public function paginate( array $args = [], callable $transform = null ) {
 		$query = $this->query( $args );
 
+
 		$pager = new Pager(
 			$query->posts,
 			$query->found_posts,
@@ -64,9 +65,14 @@ class PostsRepository extends RepositoryAbstract {
 			$query->get( 'offset' )
 		);
 
-		if(!is_null($transform)) {
+
+
+		if(!is_null($transform) && $pager->total() > 0) {
 			$pager->apply_transform($transform);
 		}
+
+
+
 
 		return $pager;
 	}
