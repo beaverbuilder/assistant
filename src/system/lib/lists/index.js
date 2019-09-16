@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import classname from 'classnames'
 import { TestSheet } from './examples'
-import { Item, Loading } from './parts'
+import { Item, Loading, NoResultsMessage } from './parts'
 import { useListItems } from './items'
 import { Scroller, useScrollLoader } from './scroller'
 import { WordPress } from './wordpress'
@@ -113,9 +113,6 @@ export const List = ( {
 List.Item = Item
 List.Item.displayName = 'List.Item'
 
-List.Loading = Loading
-List.Loading.displayName = 'List.Loading'
-
 List.Scroller = Scroller
 List.Scroller.displayName = 'List.Scroller'
 
@@ -133,6 +130,12 @@ List.Users.displayName = 'List.Users'
 
 List.Updates = Updates
 List.Updates.displayName = 'List.Updates'
+
+List.Loading = Loading
+List.Loading.displayName = 'List.Loading'
+
+List.NoResultsMessage = NoResultsMessage
+List.NoResultsMessage.displayName = 'List.NoResultsMessage'
 
 List.TestSheet = TestSheet
 List.TestSheet.displayName = 'List.TestSheet'

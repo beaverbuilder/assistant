@@ -215,3 +215,9 @@ export const Loading = () => {
 		<Page.Pad>{__( 'Loading...' )}</Page.Pad>
 	)
 }
+
+export const NoResultsMessage = () => {
+	return (
+		<Page.Pad>{__( 'Nothing found.' )}</Page.Pad>
+	)
+}
