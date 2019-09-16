@@ -3,8 +3,7 @@
 namespace FL\Assistant\Hooks\Actions;
 
 use FL\Assistant\Data\UserState;
-use FL\Assistant\Util\HasContainer;
-
+use FL\Assistant\System\View;
 /**
  * Class OnEditUserProfile
  * @package FL\Assistant\Hooks\Actions
@@ -12,16 +11,30 @@ use FL\Assistant\Util\HasContainer;
  */
 class OnEditUserProfile {
 
-	use HasContainer;
+	/**
+	 * @var View
+	 */
+	protected $view;
+
+	/**
+	 * OnEditUserProfile constructor.
+	 *
+	 * @param View $view
+	 */
+	public function __construct(View $view) {
+		$this->view = $view;
+	}
 
 
+	/**
+	 * @param $user
+	 */
 	public function __invoke( $user ) {
 
 		$state  = get_user_meta( $user->ID, UserState::FL_ASSISTANT_STATE, true );
 		$window = $state['window'];
-		$view   = $this->service( 'view' );
 
-		$view->render(
+		$this->view->render(
 			'user-profile', [
 				'show_in_admin'      => $state['shouldShowInAdmin'],
 				'window'             => $window,

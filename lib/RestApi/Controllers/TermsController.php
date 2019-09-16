@@ -2,6 +2,8 @@
 
 namespace FL\Assistant\RestApi\Controllers;
 
+use FL\Assistant\Data\Repository\PostsRepository;
+use FL\Assistant\Data\Repository\TermsRepository;
 use FL\Assistant\Pagination\TermsPaginator;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Server;
@@ -11,6 +13,12 @@ use WP_REST_Server;
  */
 class TermsController extends ControllerAbstract {
 
+	protected $terms;
+
+	public function __construct(TermsRepository $terms, PostsRepository $posts) {
+		$this->terms = $terms;
+		$this->posts = $posts;
+	}
 	/**
 	 * Register routes.
 	 */
@@ -188,7 +196,7 @@ class TermsController extends ControllerAbstract {
 	 */
 	public function terms_count( $request ) {
 
-		$taxonomies = $this->container()->service( 'posts' )->get_taxononies();
+		$taxonomies = $this->posts->get_taxononies();
 		$response   = [];
 
 		foreach ( $taxonomies as $slug => $label ) {

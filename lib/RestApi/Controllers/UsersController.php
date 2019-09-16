@@ -3,6 +3,8 @@
 namespace FL\Assistant\RestApi\Controllers;
 
 use Exception;
+use FL\Assistant\Data\Repository\UsersRepository;
+use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Request;
@@ -12,7 +14,22 @@ use WP_REST_Server;
 /**
  * REST API logic for users.
  */
-final class UsersController extends ControllerAbstract {
+class UsersController extends ControllerAbstract {
+
+	/**
+	 * @var UsersRepository
+	 */
+	protected $users;
+	/**
+	 * @var UserTransformer
+	 */
+	protected $transformer;
+
+	public function __construct(UsersRepository $users, UserTransformer $transformer) {
+		$this->users = $users;
+		$this->transformer = $transformer;
+	}
+
 
 	/**
 	 * Register routes.
@@ -22,7 +39,7 @@ final class UsersController extends ControllerAbstract {
 			'/users', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'users' ],
+					'callback'            => [ $this, 'index' ],
 					'permission_callback' => function () {
 						return current_user_can( 'list_users' );
 					},
@@ -46,7 +63,7 @@ final class UsersController extends ControllerAbstract {
 			'/users/(?P<id>\d+)', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'user' ],
+					'callback'            => [ $this, 'read' ],
 					'args'                => [
 						'id' => [
 							'required' => true,
@@ -86,12 +103,27 @@ final class UsersController extends ControllerAbstract {
 	 *
 	 * @return mixed|WP_REST_Response
 	 */
-	public function users( WP_REST_Request $request ) {
+	public function index( WP_REST_Request $request ) {
 
 		$params = $request->get_params();
-		$pager  = $this->service( 'users' )->paginate( $params );
+		$pager  = $this->users->paginate( $params , $this->transformer);
 
 		return rest_ensure_response( $pager->to_array() );
+	}
+
+	/**
+	 * Returns data for a single user.
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return mixed|WP_REST_Response
+	 * @throws Exception
+	 */
+	public function read( WP_REST_Request $request ) {
+		$id   = $request->get_param( 'id' );
+		$user = $this->users->find( $id , $this->transformer);
+
+		return rest_ensure_response( $user );
 	}
 
 	/**
@@ -104,25 +136,12 @@ final class UsersController extends ControllerAbstract {
 	 */
 	public function users_count( WP_REST_Request $request ) {
 
-		$response = $this->service( 'users' )->counts_by_user_role();
+		$response = $this->users->counts_by_user_role();
 
 		return rest_ensure_response( $response );
 	}
 
-	/**
-	 * Returns data for a single user.
-	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return mixed|WP_REST_Response
-	 * @throws Exception
-	 */
-	public function user( WP_REST_Request $request ) {
-		$id   = $request->get_param( 'id' );
-		$user = $this->service( 'users' )->find( $id );
 
-		return rest_ensure_response( $user->to_array() );
-	}
 
 	/**
 	 * Updates the saved state for a user.

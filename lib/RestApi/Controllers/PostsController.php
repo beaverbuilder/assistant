@@ -2,9 +2,9 @@
 
 namespace FL\Assistant\RestApi\Controllers;
 
-use FL\Assistant\Data\Notations;
-use FL\Assistant\Data\Posts;
-use FL\Assistant\RestApi\Transformers\PostTransformer;
+use FL\Assistant\Data\Repository\NotationsRepository;
+use FL\Assistant\Data\Repository\PostsRepository;
+use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\System\Integrations\BeaverBuilder;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Request;
@@ -14,6 +14,15 @@ use WP_REST_Server;
  * REST API logic for posts.
  */
 class PostsController extends ControllerAbstract {
+
+	protected $posts;
+	protected $transformer;
+
+	public function __construct(PostsRepository $posts, PostTransformer $transformer) {
+		$this->posts = $posts;
+		$this->transformer = $transformer;
+	}
+
 
 
 	/**
@@ -140,12 +149,12 @@ class PostsController extends ControllerAbstract {
 	 */
 	public function posts( WP_REST_Request $request ) {
 
-		$posts  = $this->service( 'posts' );
+
 		$params = $request->get_params();
 
 		$params['perm'] = 'editable';
 
-		$pager = $posts->paginate( $params );
+		$pager = $this->posts->paginate( $params , $this->transformer);
 
 		return rest_ensure_response( $pager->to_array() );
 	}
@@ -191,13 +200,7 @@ class PostsController extends ControllerAbstract {
 	 * Returns an array of response data for a single post.
 	 */
 	public function get_post_response_data( $post ) {
-		$transformer = new PostTransformer(
-			new Posts(),
-			new Notations(),
-			new BeaverBuilder()
-		);
-
-		return $transformer->transform( $post );
+		return call_user_func($this->transformer, $post );
 	}
 
 	/**
@@ -223,7 +226,7 @@ class PostsController extends ControllerAbstract {
 	 */
 	public function posts_count( $request ) {
 
-		$post_types = $this->container()->service( 'posts' )->get_types();
+		$post_types = $this->posts->get_types();
 		$response   = [];
 
 		foreach ( $post_types as $slug => $label ) {

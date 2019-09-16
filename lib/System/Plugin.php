@@ -1,14 +1,14 @@
 <?php
 
-namespace FL\Assistant\Core;
+namespace FL\Assistant\System;
 
-use FL\Assistant\Providers\CloudProvider;
-use FL\Assistant\Providers\DataProvider;
-use FL\Assistant\Providers\HooksProvider;
-use FL\Assistant\Providers\RestProvider;
-use FL\Assistant\Providers\ViewProvider;
+use FL\Assistant\Providers\CloudServiceProvider;
+use FL\Assistant\Providers\DataServiceProvider;
+use FL\Assistant\Providers\HooksServiceProvider;
+use FL\Assistant\Providers\RestServiceProvider;
+use FL\Assistant\Providers\ViewServiceProvider;
 use FL\Assistant\System\Container\Injector;
-use FL\Assistant\System\PhpVersionCheck;
+
 
 /**
  * Class Plugin
@@ -26,12 +26,16 @@ class Plugin {
 	 * @var array
 	 */
 	public $providers = [
-		DataProvider::class,
-		HooksProvider::class,
-		RestProvider::class,
-		ViewProvider::class,
-		CloudProvider::class,
+
+		ViewServiceProvider::class,
+		DataServiceProvider::class,
+		HooksServiceProvider::class,
+		RestServiceProvider::class,
+
+		CloudServiceProvider::class,
 	];
+
+
 
 	/**
 	 * Plugin constructor.
@@ -49,6 +53,9 @@ class Plugin {
 
 		$this->check_minimum_php_requirements();
 		$this->bootstrap_providers();
+
+		// notify assistant was loaded
+		do_action( 'fl_assistant_loaded' );
 	}
 
 	/**

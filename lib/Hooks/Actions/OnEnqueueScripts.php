@@ -2,11 +2,12 @@
 
 namespace FL\Assistant\Hooks\Actions;
 
-use FL\Assistant\Data\Posts;
+use FL\Assistant\Data\Repository\PostsRepository;
+use FL\Assistant\Data\Repository\TermsRepository;
+use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
-use FL\Assistant\Data\Users;
+use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
-use FL\Assistant\RestApi\Transformers\UserTransformer;
 use WP_REST_Request;
 
 /**
@@ -17,11 +18,11 @@ use WP_REST_Request;
 class OnEnqueueScripts {
 
 	/**
-	 * @var Users
+	 * @var UsersRepository
 	 */
 	protected $users;
 	/**
-	 * @var Posts
+	 * @var PostsRepository
 	 */
 	protected $posts;
 
@@ -33,21 +34,28 @@ class OnEnqueueScripts {
 	/**
 	 * @var UserTransformer
 	 */
-	protected $user_transformer;
+	protected $user_transform;
+
 
 	/**
 	 * OnEnqueueScripts constructor.
 	 *
-	 * @param Users $users
-	 * @param Posts $posts
+	 * @param UsersRepository $users
+	 * @param PostsRepository $posts
 	 * @param Site $site
-	 * @param UserTransformer $user_transformer
+	 * @param UserTransformer $user_transform
 	 */
-	public function __construct( Users $users, Posts $posts, Site $site, UserTransformer $user_transformer ) {
-		$this->users            = $users;
-		$this->posts            = $posts;
-		$this->site             = $site;
-		$this->user_transformer = $user_transformer;
+	public function __construct(
+		UsersRepository $users,
+		PostsRepository $posts,
+		Site $site,
+		UserTransformer $user_transform
+	) {
+
+		$this->users          = $users;
+		$this->posts          = $posts;
+		$this->site           = $site;
+		$this->user_transform = $user_transform;
 	}
 
 
@@ -88,9 +96,7 @@ class OnEnqueueScripts {
 	 */
 	public function generate_frontend_config() {
 
-
-		$current_user = $this->users->current();
-
+		$current_user = $this->users->current($this->user_transform);
 
 		return [
 			'adminURLs'         => $this->site->get_admin_urls(),
@@ -100,7 +106,7 @@ class OnEnqueueScripts {
 			'contentTypes'      => $this->posts->get_types(),
 			'contentStatus'     => $this->posts->get_stati(),
 			'currentPageView'   => $this->site->get_current_view(),
-			'currentUser'       => call_user_func( [ $this->user_transformer, "transform" ], $current_user ),
+			'currentUser'       => $current_user,
 			'defaultAppName'    => 'fl-dashboard',
 			'emptyTrashDays'    => EMPTY_TRASH_DAYS,
 			'isShowingAdminBar' => is_admin_bar_showing(),

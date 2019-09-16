@@ -84,9 +84,9 @@ class UpdatesController extends ControllerAbstract {
 			//          }
 		}
 
-		$p = new UpdatesPaginator();
+		$p = $this->paginate_array($response, count($response),  0);
 
-		return rest_ensure_response( $p->paginate( $response )->to_array() );
+		return rest_ensure_response( $p->to_array() );
 	}
 
 	/**

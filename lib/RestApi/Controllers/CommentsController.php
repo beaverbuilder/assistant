@@ -2,7 +2,9 @@
 
 namespace FL\Assistant\RestApi\Controllers;
 
-use FL\Assistant\Pagination\CommentsPaginator;
+use FL\Assistant\Data\Repository\CommentsRepository;
+use FL\Assistant\Data\Repository\PostsRepository;
+use FL\Assistant\Data\Transformers\CommentTransformer;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Server;
 
@@ -10,6 +12,22 @@ use WP_REST_Server;
  * REST API logic for comments.
  */
 class CommentsController extends ControllerAbstract {
+
+	protected $posts;
+
+	protected $comments;
+
+	protected $transformer;
+
+	public function __construct(
+		PostsRepository $posts,
+		CommentsRepository $comments,
+		CommentTransformer $transformer
+	) {
+		$this->posts       = $posts;
+		$this->comments    = $comments;
+		$this->transformer = $transformer;
+	}
 
 	/**
 	 * Register routes.
@@ -19,7 +37,7 @@ class CommentsController extends ControllerAbstract {
 			'/comments', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'comments' ],
+					'callback'            => [ $this, 'index' ],
 					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -43,7 +61,7 @@ class CommentsController extends ControllerAbstract {
 			'/comments/(?P<id>\d+)', [
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'comment' ],
+					'callback'            => [ $this, 'read' ],
 					'args'                => [
 						'id' => [
 							'required' => true,
@@ -56,7 +74,7 @@ class CommentsController extends ControllerAbstract {
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'update_comment' ],
+					'callback'            => [ $this, 'update' ],
 					'args'                => [
 						'id'     => [
 							'required' => true,
@@ -78,16 +96,17 @@ class CommentsController extends ControllerAbstract {
 	/**
 	 * Returns an array of comments and related data.
 	 */
-	public function comments( $request ) {
-		$params     = $request->get_params();
-		$posts      = $this->container()->service( 'posts' );
-		$post_types = array_keys( $posts->get_types() );
+	public function index( $request ) {
+		$params = $request->get_params();
+
+		$post_types = array_keys( $this->posts->get_types() );
 		$args       = array_merge( [ 'post_type' => $post_types ], $params );
 
-		$paginator = new CommentsPaginator();
-		$pager     = $paginator->query( $args, [ $this, 'get_comment_response_data' ] );
 
-		return rest_ensure_response( $pager->to_array() );
+		return $this->comments->paginate( $args )
+		                      ->apply_transform( $this->transformer )
+		                      ->to_rest_response();
+
 	}
 
 	/**
@@ -111,47 +130,17 @@ class CommentsController extends ControllerAbstract {
 	/**
 	 * Returns data for a single comment.
 	 */
-	public function comment( $request ) {
+	public function read( $request ) {
 		$id       = $request->get_param( 'id' );
-		$comment  = get_comment( $id );
-		$response = $this->get_comment_response_data( $comment );
+		$comment  = $this->comments->find($id, $this->transformer);
 
-		return rest_ensure_response( $response );
-	}
-
-	/**
-	 * Returns an array of response data for a single comment.
-	 */
-	public function get_comment_response_data( $comment ) {
-		$post = get_post( $comment->comment_post_ID );
-		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
-		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );
-
-		return [
-			'approved'    => $comment->comment_approved ? true : false,
-			'author'      => $comment->comment_author,
-			'authorEmail' => $comment->comment_author_email,
-			'authorIP'    => $comment->comment_author_IP,
-			'content'     => $comment->comment_content,
-			'date'        => $date,
-			'editUrl'     => admin_url( 'comment.php?action=editcomment&c=' ) . $comment->comment_ID,
-			'id'          => $comment->comment_ID,
-			'meta'        => $comment->comment_author . ' - ' . $date,
-			'postId'      => $post->ID,
-			'postTitle'   => $post->post_title,
-			'spam'        => 'spam' === $comment->comment_approved,
-			'time'        => $time,
-			'thumbnail'   => get_avatar_url( $comment->comment_author_email ),
-			'title'       => strip_tags( $comment->comment_content ),
-			'trash'       => 'trash' === $comment->comment_approved,
-			'url'         => get_comment_link( $comment ),
-		];
+		return rest_ensure_response( $comment );
 	}
 
 	/**
 	 * Updates a single comment based on the specified action.
 	 */
-	public function update_comment( $request ) {
+	public function update( $request ) {
 		$id      = $request->get_param( 'id' );
 		$action  = $request->get_param( 'action' );
 		$comment = get_comment( $id );

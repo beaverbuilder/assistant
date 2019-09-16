@@ -3,11 +3,10 @@
 
 namespace FL\Assistant\System\Contracts;
 
-use FL\Assistant\Util\HasContainer;
+use FL\Assistant\Data\Pager;
 
 abstract class ControllerAbstract {
 
-	use HasContainer;
 
 	/**
 	 * @var string
@@ -19,4 +18,23 @@ abstract class ControllerAbstract {
 	}
 
 	abstract public function register_routes();
+
+	/**
+	 * Paginates the contents of an array
+	 *
+	 * @param array $data - complete list of items to paginate
+	 * @param $limit
+	 * @param $offset
+	 *
+	 * @return Pager
+	 */
+	public function paginate_array( array $data, $limit, $offset ) {
+
+		$items  = array_slice( $data, $offset, $limit, false );
+		$total  = count( $items );
+		$limit  = intval( $limit );
+		$offset = intval( $offset );
+
+		return new Pager( $items, $total, $limit, $offset );
+	}
 }
