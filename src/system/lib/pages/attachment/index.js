@@ -9,11 +9,11 @@ const getItemActions = ( key, values ) => {
 
 	return [
 		{
-			label: __('View Attachment Page'),
+			label: __( 'View Attachment Page' ),
 			href: url,
 		},
 		{
-			label: __('Edit in Admin'),
+			label: __( 'Edit in Admin' ),
 			href: editUrl,
 		},
 	]

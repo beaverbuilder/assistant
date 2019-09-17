@@ -151,7 +151,7 @@ export const Posts = ( {
 						return (
 							<>
 								{item.title}
-								<span style={{ marginLeft: 10, color: 'var(--fl-asst-bookmark-color)' }}>
+								<span style={ { marginLeft: 10, color: 'var(--fl-asst-bookmark-color)' } }>
 									<Icon.FavoriteSolid />
 								</span>
 							</>
