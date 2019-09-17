@@ -101,6 +101,18 @@
             }
         }
 
+        &.fl-asst-button-group-appearance-buttons {
+            background: transparent;
+
+            .fl-asst-button {
+                margin-right: var(--fl-asst-tiny-space);
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
         .fl-asst-vertical-divider {
             flex: 0 0 auto;
             margin: var(--fl-asst-tiny-space) 0;
