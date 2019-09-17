@@ -7,6 +7,11 @@ import './profile-card.scss'
 export const ProfileCard = ( props ) => {
 	const { user } = props
 
+	const to = {
+		pathname: `/fl-users/user/${user.id}`,
+		state: { item: user }
+	}
+
 	return (
 		<div className="fl-asst-users-profile">
 			<Well className="card">
@@ -23,7 +28,7 @@ export const ProfileCard = ( props ) => {
 				</div>
 
 				<Page.Toolbar style={ { padding: 'var(--fl-asst-inner-space) 0 0' } }>
-					<Button to={ `/fl-users/user/${user.id}` }>{__( 'Edit' )}</Button>
+					<Button to={ to }>{__( 'Edit' )}</Button>
 					<Button href={ user.url }>{__( 'Author Page' )}</Button>
 					<Button href={ user.editUrl }>{__( 'Edit in Admin' )}</Button>
 				</Page.Toolbar>
