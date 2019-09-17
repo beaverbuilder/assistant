@@ -35,9 +35,6 @@ export const Attachment = ( { location } ) => {
 
 	const srcSet = getSrcSet( item.sizes )
 
-	console.log(item)
-
-
 	// Form Handler
 	const { form, useFormContext } = Form.useForm( {
 		title: {
