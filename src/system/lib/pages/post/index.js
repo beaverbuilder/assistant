@@ -65,7 +65,6 @@ const getConfig = () => {
 			]
 		},
 		actions: {
-			label: __( 'Actions' ),
 			value: getPostActions,
 		}
 	}
