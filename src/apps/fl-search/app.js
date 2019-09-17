@@ -1,4 +1,4 @@
-import React, { Fragment } from 'fl-react'
+import React from 'fl-react'
 import { Nav } from 'assistant/ui'
 import { Main } from './main'
 import { ViewAll } from './view-all'

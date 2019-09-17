@@ -21,7 +21,7 @@ export const Main = () => {
 
 		getWpRest()
 			.users()
-			.findWhere( { number: 3 }, { cancelToken: source.token } )
+			.findWhere( { number: 7 }, { cancelToken: source.token } )
 			.then( ( response ) => {
 				setUsers( response.data.items )
 			} )

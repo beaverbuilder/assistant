@@ -1,35 +1,67 @@
-.fl-asst-users-avatar-bar {
-  .title {
-    font-weight: bold;
-  }
+.fl-asst {
+    .fl-asst-users-avatar-bar {
 
-  .users {
-    display: flex;
+        .title {
+            font-weight: bold;
+        }
 
-    .avatar {
-      width: 75px;
-      border-radius: 50%;
+        .users {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-bottom: var(--fl-asst-inner-space);
 
-      .fl-asst-avatar {
-          width: 75px;
-          height: 75px;
-      }
+            .user-avatar-item {
+                flex: 1 1 25%;
+                max-width: 25%;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                padding: 5px 0;
 
-      img {
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
-      }
+                .username {
+                    text-align: center;
+                    width: 100%;
+                    font-size: 12px;
+                }
+            }
 
-      .username {
-        text-align: center;
-        width: 100%;
-      }
+            .avatar {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                margin: auto;
+                margin-bottom: var(--fl-asst-tiny-space);
+                background-color: var(--fl-asst-secondary-surface-background);
+
+                .fl-asst-avatar {
+                    width: 60px;
+                    height: 60px;
+                }
+
+                img {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                }
+            }
+
+            .button {
+                border-radius: 15px !important;
+                max-height: 30px !important;
+            }
+            .add-new-user-button {
+                flex: 0 0 auto;
+                box-sizing: border-box;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+            }
+        }
+        .show-all {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
     }
-
-    .button {
-      border-radius: 15px !important;
-      max-height: 30px !important;
-    }
-  }
 }
