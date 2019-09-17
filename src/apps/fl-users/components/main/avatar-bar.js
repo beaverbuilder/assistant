@@ -32,15 +32,20 @@ AvatarBar.Avatar = ( props ) => {
 	const { user } = props
 	const editUrl = `/fl-users/user/${user.id}`
 
+	const to = {
+		pathname: editUrl,
+		state: { item: user },
+	}
+
 	return (
 		<div className="user-avatar-item">
 			<div className="avatar">
-				<Nav.Link to={ editUrl }>
+				<Nav.Link to={ to }>
 					<img src={ user.thumbnail } alt={ user.displayName }/>
 				</Nav.Link>
 			</div>
 			<div className="username">
-				<Nav.Link to={ editUrl }>
+				<Nav.Link to={ to }>
 					{user.displayName}
 				</Nav.Link>
 			</div>
