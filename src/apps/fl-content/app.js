@@ -14,7 +14,7 @@ const Main = ( { match } ) => {
 	const { handle } = useContext( App.Context )
 	const { contentTypes } = getSystemConfig()
 	const { query } = useAppState( 'fl-content' )
-	const { setQuery, setPager } = getAppActions( 'fl-content' )
+	const { setQuery } = getAppActions( 'fl-content' )
 
 	const Toolbar = () => {
 		return (
@@ -49,9 +49,6 @@ const Main = ( { match } ) => {
 		<Page shouldPadSides={ false } toolbar={ <Toolbar /> } headerActions={ <Actions baseUrl={ match.url } /> }>
 			<List.Posts
 				query={ query }
-				onItemsLoaded={ response => {
-					setPager( response.data )
-				} }
 				getItemProps={ ( item, defaultProps ) => {
 					if ( item.id ) {
 						return {
