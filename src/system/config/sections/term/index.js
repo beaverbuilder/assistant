@@ -10,10 +10,15 @@ registerSection( 'fl-term-details', {
 	location: {
 		type: 'term',
 	},
-	render: () => {
+	render: ( { useForm } ) => {
+		const { title, slug, parent, description } = useForm()
+
 		return (
             <>
-                <Form.Item label={ __( 'Test' ) } placement="beside">Test</Form.Item>
+                <Form.TextItem { ...title } />
+				<Form.TextItem { ...slug } />
+				<Form.SelectItem { ...parent } />
+				<Form.TextItem { ...description } />
             </>
 		)
 	},
