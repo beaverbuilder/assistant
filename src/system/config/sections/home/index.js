@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { getSystemActions, getSystemConfig } from 'store'
-import { Nav, Page, Button } from 'lib'
+import { Nav, Button } from 'lib'
 import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
@@ -25,8 +25,6 @@ registerSection( 'fl-home-currently-viewing', {
 		const { currentPageView } = getSystemConfig()
 		const { name, type, actions } = currentPageView
 
-		console.log(actions)
-
 		return (
 			<>
 				<div className="fl-asst-currently-viewing-summary">
@@ -34,7 +32,7 @@ registerSection( 'fl-home-currently-viewing', {
 					<div className="fl-asst-title">{name}</div>
 				</div>
 				<Button.Group appearance="buttons">
-					{ Button.renderActions(actions) }
+					{ Button.renderActions( actions ) }
 				</Button.Group>
 			</>
 		)
