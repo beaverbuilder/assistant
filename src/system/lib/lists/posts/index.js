@@ -146,9 +146,23 @@ export const Posts = ( {
 
 				const thumbnailSize = ( item.isTrashing || item.isTrashed || item.isRestoring ) ? 'sm' : 'med'
 
+				const Title = () => {
+					if ( item.isFavorite ) {
+						return (
+							<>
+								{item.title}
+								<span style={{ marginLeft: 10, color: 'var(--fl-asst-bookmark-color)' }}>
+									<Icon.FavoriteSolid />
+								</span>
+							</>
+						)
+					}
+					return item.title
+				}
+
 				return getItemProps( item, {
 					...defaultProps,
-					label: item.title,
+					label: <Title />,
 					description: getDescription(),
 					thumbnail: item.thumbnail,
 					thumbnailSize,
