@@ -229,12 +229,18 @@ Button.renderActions = actions => {
 	const defaultAction = {
 		label: null,
 		shouldRender: true,
+		isEnabled: true,
 	}
 	return Object.values( actions ).map( ( action, i ) => {
-		const { label, shouldRender, ...rest } = { ...defaultAction, ...action }
-		if ( ! shouldRender ) {
+
+		const { label, shouldRender, isEnabled, ...rest } = { ...defaultAction, ...action }
+
+		// NOTE: isEnabled is an older prop coming from the currently viewing actions.
+
+		if ( ! shouldRender || ! isEnabled ) {
 			return null
 		}
+
 		return (
 			<Button key={ i } { ...rest }>{label}</Button>
 		)
