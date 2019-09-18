@@ -8,14 +8,13 @@ const hasReachedBounds = e => {
 
 export const useScrollLoader = ( {
 	ref = window,
+	hasMore = true,
 	callback = () => {},
 	shouldFetch = hasReachedBounds,
 } ) => {
 	const [ isFetching, setIsFetching ] = useState( true )
-	const [ hasMore, setHasMore ] = useState( true )
 
 	const reset = () => {
-		setHasMore( true )
 		setIsFetching( true )
 	}
 
@@ -36,8 +35,7 @@ export const useScrollLoader = ( {
 
 	useEffect( () => {
 		if ( isFetching ) {
-			callback( ( hasMore ) => {
-				setHasMore( hasMore )
+			callback( () => {
 				setIsFetching( false )
 			} )
 		}
@@ -45,19 +43,20 @@ export const useScrollLoader = ( {
 
 	return {
 		isFetching,
-		hasMore,
 		reset,
 	}
 }
 
 export const Scroller = ( {
 	items = [],
+	hasMoreItems = true,
 	loadItems = () => {},
 	...rest
 } ) => {
 	const scrollRef = useRef()
 	const { isFetching, reset } = List.useScrollLoader( {
 		ref: scrollRef,
+		hasMore: hasMoreItems,
 		callback: loadItems,
 	} )
 
@@ -70,7 +69,12 @@ export const Scroller = ( {
 	return (
 		<div className="fl-asst-list-scroller fl-asst-scroller" ref={ scrollRef }>
 			<List items={ items } { ...rest } />
-			{ isFetching && <List.Loading /> }
+			{ isFetching &&
+				<List.Loading />
+			}
+			{ ! isFetching && ! hasMoreItems && ! items.length &&
+				<List.NoResultsMessage />
+			}
 		</div>
 	)
 }

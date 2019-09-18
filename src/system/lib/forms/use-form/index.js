@@ -86,8 +86,8 @@ export const useForm = (
 				return state
 			}
 
-			let value = state[action.key].sanitize( action.value )
-			let alwaysCommit = true === state[action.key].alwaysCommit
+			let value = state[action.key].sanitize( action.value ) // eslint-disable-line
+			let alwaysCommit = true === state[action.key].alwaysCommit // eslint-disable-line
 
 			return {
 				...state,

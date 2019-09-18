@@ -99,23 +99,26 @@ export const User = ( { location, match, history } ) => {
 
 	const source = CancelToken.source()
 
-	const loadUser = async() => {
-		setLoading( true )
-		const config = { cancelToken: source.token }
-		const response = await getWpRest().users().findById( match.params.id, config )
-		setUser( response.data )
-
-		// Update form handler
-		setValues( response.data )
-
-		setLoading( false )
-	}
-
-	// Load user when component first mounts
-	useEffect( () => {
-		loadUser()
-		return () => source.cancel()
-	}, [] )
+	/**
+	 * TODO: Revisit this when we look at dynamically loading detail data.
+	 */
+	// const loadUser = async() => {
+	// 	setLoading( true )
+	// 	const config = { cancelToken: source.token }
+	// 	const response = await getWpRest().users().findById( match.params.id, config )
+	// 	setUser( response.data )
+	//
+	// 	// Update form handler
+	// 	setValues( response.data )
+	//
+	// 	setLoading( false )
+	// }
+	//
+	// // Load user when component first mounts
+	// useEffect( () => {
+	// 	loadUser()
+	// 	return () => source.cancel()
+	// }, [] )
 
 
 	// Screen Tabs

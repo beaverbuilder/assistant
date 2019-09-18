@@ -9,12 +9,16 @@ export const AvatarBar = ( props ) => {
 	return (
 		<div className="fl-asst-users-avatar-bar">
 			<div className="users">
-				{users.map( ( user, i ) => {
-					<AvatarBar.Avatar key={ i } user={ user }></AvatarBar.Avatar>
-				} )}
-				<Button className="button" to="/fl-users/invite">
-					<Icon.Plus/>
-				</Button>
+				{ users.map( user => {
+					return (
+						<AvatarBar.Avatar key={ user.id } user={ user }></AvatarBar.Avatar>
+					)
+				} ) }
+				<div className="user-avatar-item">
+					<Button className="add-new-user-button" to="/fl-users/invite">
+						<Icon.Plus/>
+					</Button>
+				</div>
 			</div>
 			<div className="show-all">
 				<Button to="/fl-users/search">{ __( 'Show All Users' ) }</Button>
@@ -27,15 +31,21 @@ AvatarBar.Avatar = ( props ) => {
 
 	const { user } = props
 	const editUrl = `/fl-users/user/${user.id}`
+
+	const to = {
+		pathname: editUrl,
+		state: { item: user },
+	}
+
 	return (
-		<div>
+		<div className="user-avatar-item">
 			<div className="avatar">
-				<Nav.Link to={ editUrl }>
+				<Nav.Link to={ to }>
 					<img src={ user.thumbnail } alt={ user.displayName }/>
 				</Nav.Link>
 			</div>
 			<div className="username">
-				<Nav.Link to={ editUrl }>
+				<Nav.Link to={ to }>
 					{user.displayName}
 				</Nav.Link>
 			</div>

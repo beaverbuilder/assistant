@@ -85,7 +85,7 @@ registerSection( 'fl-post-comments', {
 	render: ( { post } ) => {
 		return (
 			<List.Comments
-				query={ { postID: post.id } }
+				query={ { post__in: [ post.id ] } }
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,
 					to: {

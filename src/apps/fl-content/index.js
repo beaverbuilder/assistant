@@ -20,16 +20,6 @@ registerApp( 'fl-content', {
 			post_status: 'any',
 			post_type: 'post',
 		},
-		pager: {
-			data: [],
-			current_page: 0,
-			first_page: 1,
-			has_more: true,
-			last_page: 2,
-			offset: 0,
-			per_page: 20,
-			total: 21
-		}
 	},
 	search: Object.entries( contentTypes ).map( ( [ type, data ], key ) => {
 		return {

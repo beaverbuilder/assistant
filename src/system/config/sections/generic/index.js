@@ -35,7 +35,7 @@ registerSection( 'fl-screen-labels', {
 registerSection( 'fl-screen-actions', {
 	label: __( 'Actions' ),
 	location: {
-		type: [ 'post', 'attachment', 'comment', 'plugin' ],
+		type: [ 'post', 'attachment' ],
 	},
 	render: ( { useForm } ) => {
 

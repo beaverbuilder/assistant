@@ -3,6 +3,22 @@ import { __ } from '@wordpress/i18n'
 import { Page, Form } from 'lib'
 import { getSrcSet } from 'utils/image'
 
+const getItemActions = ( key, values ) => {
+
+	const { url, editUrl } = values
+
+	return [
+		{
+			label: __( 'View Attachment Page' ),
+			href: url,
+		},
+		{
+			label: __( 'Edit in Admin' ),
+			href: editUrl,
+		},
+	]
+}
+
 export const Attachment = ( { location } ) => {
 	const defaultItem = {
 		url: '',
@@ -18,7 +34,6 @@ export const Attachment = ( { location } ) => {
 		defaultItem
 
 	const srcSet = getSrcSet( item.sizes )
-
 
 	// Form Handler
 	const { form, useFormContext } = Form.useForm( {
@@ -42,7 +57,10 @@ export const Attachment = ( { location } ) => {
 		},
 		url: {
 			label: __( 'URL' ),
-		}
+		},
+		actions: {
+			value: getItemActions,
+		},
 	},
 	{ /* options */ }, item )
 

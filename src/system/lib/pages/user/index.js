@@ -16,6 +16,8 @@ export const User = ( { location } ) => {
 	const { currentUser } = getSystemConfig()
 	const isYou = currentUser.id === id
 
+	const { form, useFormContext } = Form.useForm()
+
 	return (
 		<Page
 			shouldPadSides={ false }
@@ -25,12 +27,16 @@ export const User = ( { location } ) => {
 				{item.email}
 			</Page.TitleCard>
 
-			<Form>
+			<Form { ...form }>
 				<Page.RegisteredSections
 					location={ {
 						type: 'user'
 					} }
-					data={ { user: item, isYou } }
+					data={ {
+						user: item,
+						isYou,
+						useForm: useFormContext
+					} }
 				/>
 			</Form>
 		</Page>

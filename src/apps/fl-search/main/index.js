@@ -48,9 +48,12 @@ export const Main = ( { match } ) => {
 				} )
 			} )
 
+			if ( results.length ) {
+				setSearchHistory( keyword )
+			}
+
 			setResults( results )
 			setLoading( false )
-			setSearchHistory( keyword )
 		} ).catch( ( error ) => {
 			if ( ! isCancel( error ) ) {
 				console.log( error ) // eslint-disable-line no-console
