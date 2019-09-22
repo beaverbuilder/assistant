@@ -6,17 +6,18 @@
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
 		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
 		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
-
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.WhiteSpace.PrecisionAlignment"/>
-
 	</rule>
+
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 
-	<file>.</file>
+	<file>./backend/</file>
+
 	<arg name="extensions" value="php"/>
 	<arg name="parallel" value="20"/>
 	<arg value="ps"/>
