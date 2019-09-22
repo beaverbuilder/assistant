@@ -1,11 +1,13 @@
 <phpunit
-        bootstrap="backend/tests/bootstrap.php"
-        backupGlobals="false"
-        colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
->
+	bootstrap="backend/tests/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true">
+	<php>
+		<env name="WP_PHPUNIT__TESTS_CONFIG" value="backend/tests/wp-config.php" />
+	</php>
     <testsuites>
         <testsuite name="unit">
             <directory suffix="Test.php">backend/tests/Unit/</directory>
@@ -14,4 +16,5 @@
             <directory suffix="Test.php">backend/tests/Rest/</directory>
         </testsuite>
     </testsuites>
+
 </phpunit>

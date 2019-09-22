@@ -31,10 +31,11 @@ class AttachmentsControllerTest extends RestTestCase {
 	public function test_can_get_single_attachment() {
 		wp_set_current_user( 1 );
 
-		// @todo generate single attachment and replace this var with its id
-		$attachment_id = 1;
+		$attachment_id = $this->factory()
+			->attachment
+			->create_upload_object(__DIR__ . "/../resources/mountains.jpg");
 
-		$route = sprintf( '/fl-assistant/v1/attachment/%d', $attachment_id );
+		$route = sprintf( '/fl-assistant/v1/attachments/%d', $attachment_id );
 		$request = new \WP_REST_Request( 'GET', $route );
 		$response = $this->server->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
@@ -43,13 +44,15 @@ class AttachmentsControllerTest extends RestTestCase {
 		print_r( $data );
 	}
 
-	public function test_can_update_attachment() {
+	public function test_can_trash_attachment() {
 		wp_set_current_user( 1 );
 
-		// @todo generate single attachment and replace this var with its id
-		$attachment_id = 1;
+		$attachment_id = $this->factory()
+			->attachment
+			->create_upload_object(__DIR__ . "/../resources/mountains.jpg");
 
-		$route = sprintf( '/fl-assistant/v1/attachment/%d', $attachment_id );
+
+		$route = sprintf( '/fl-assistant/v1/attachments/%d', $attachment_id );
 
 		$request = new \WP_REST_Request( 'GET', $route );
 		$request->set_body_params(

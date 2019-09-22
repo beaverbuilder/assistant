@@ -12,6 +12,11 @@ class UsersRepository extends RepositoryAbstract {
 
 
 	public function query( array $args = [], callable $transform = null ) {
+		$defaults = [
+			"number" => 20,
+			"offset" => 0
+		];
+		$args = array_merge($defaults, $args);
 		return new \WP_User_Query( $args );
 	}
 
@@ -51,14 +56,14 @@ class UsersRepository extends RepositoryAbstract {
 	 *
 	 * @return Pager
 	 */
-	public function paginate( array $args = [], callable $transform = null ) {
-		$query = $this->query( $args );
-		$users = array_map( $this->transformer, $query->get_results() );
+	public function paginate( array $args = [], callable $transform = null )
+	{
+		$query = $this->query($args);
 
 		$pager = new Pager(
-			$users,
+			$query->get_results(),
 			$query->get_total(),
-			$query->get( 'number' ),
+			$query->get('number'),
 			$query->get( 'offset' )
 		);
 

@@ -110,15 +110,9 @@ class TermsController extends ControllerAbstract {
 	/**
 	 * Returns an array of terms and related data.
 	 */
-	public function terms( $request ) {
-		$params    = $request->get_params();
-		$paginator = new TermsPaginator();
+	public function terms( \WP_REST_Request $request ) {
 
-		$pager = $paginator->query(
-			$params, function ( $term ) {
-			return $this->get_term_response_data( $term );
-		}
-		);
+		$pager = $this->terms->paginate($request->get_params());
 
 		return rest_ensure_response( $pager->to_array() );
 	}

@@ -10,7 +10,7 @@ use Brain\Monkey;
  * Class BaseTestCase
  * @package FL\Assistant\Tests
  */
-class BaseTestCase extends \WP_UnitTestCase {
+class BaseTestCase extends WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
@@ -21,10 +21,6 @@ class BaseTestCase extends \WP_UnitTestCase {
 		Monkey\tearDown();
 		parent::tearDown();
 	}
-
-//	public function assertIsArray($data) {
-//		return $this->assertTrue(is_array($data));
-//	}
 
 	public function assertIsPager($data) {
 		$this->assertIsArray($data);

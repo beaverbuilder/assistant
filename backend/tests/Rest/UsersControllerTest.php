@@ -9,6 +9,8 @@ class UsersControllerTest extends RestTestCase {
 	public function test_can_get_users() {
 		wp_set_current_user( 1 );
 
+		$this->factory()->user->create_many(10);
+
 		$namespace = '/fl-assistant/v1';
 		$request   = new \WP_REST_Request( 'GET', $namespace . '/users' );
 		$response  = $this->server->dispatch( $request );

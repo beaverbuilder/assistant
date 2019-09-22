@@ -1,3 +1,6 @@
+# Test Configs
+backend/tests/wp-config.php
+
 # Built files
 /build/
 
