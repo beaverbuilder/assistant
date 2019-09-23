@@ -45,7 +45,7 @@ class UpdatesController extends ControllerAbstract
 			'/updates', [
 				[
 					'methods' => WP_REST_Server::READABLE,
-					'callback' => [$this, 'updatesV2'],
+					'callback' => [$this, 'updates'],
 					'args' => [
 						'type' => [
 							'required' => false,
@@ -78,7 +78,7 @@ class UpdatesController extends ControllerAbstract
 	 * @param \WP_REST_Request $request
 	 * @return mixed|\WP_REST_Response
 	 */
-	public function updatesV2(\WP_REST_Request $request)
+	public function updates(\WP_REST_Request $request)
 	{
 
 		$plugins = get_plugin_updates();
