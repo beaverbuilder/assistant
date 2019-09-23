@@ -19,8 +19,8 @@ class UsersRepositoryTest extends BaseTestCase {
 		wp_set_current_user( $user_id );
 
 		$repo = new UsersRepository();
-		$currentUser = $repo->current();
-		$this->assertEquals( $user_id, $currentUser->ID );
+		$current_user = $repo->current();
+		$this->assertEquals( $user_id, $current_user->ID );
 	}
 
 
@@ -40,14 +40,14 @@ class UsersRepositoryTest extends BaseTestCase {
 	}
 
 	public function test_can_find_many() {
-		$this->factory()->user->create_many(5);
+		$this->factory()->user->create_many( 5 );
 		$repo = new UsersRepository();
-		$users = $repo->findWhere([]);
+		$users = $repo->find_where( [] );
 
-		var_dump($users);
-		$this->assertIsArray($users);
-		$this->assertIsObject($users[1]);
-		$this->assertObjectHasAttribute("ID", $users[1]);
+		var_dump( $users );
+		$this->assertIsArray( $users );
+		$this->assertIsObject( $users[1] );
+		$this->assertObjectHasAttribute( 'ID', $users[1] );
 	}
 
 	public function test_can_get_counts_by_user_role() {

@@ -34,10 +34,10 @@ class CommentsRepository extends RepositoryAbstract {
 	 *
 	 * @return array|int
 	 */
-	public function findWhere( array $args = [], callable $transform = null ) {
+	public function find_where( array $args = [], callable $transform = null ) {
 		$comments = $this->query( $args )->get_comments();
-		if(!is_null($transform)) {
-			$comments = array_map($transform, $comments);
+		if ( ! is_null( $transform ) ) {
+			$comments = array_map( $transform, $comments );
 		}
 		return $comments;
 	}
@@ -58,8 +58,8 @@ class CommentsRepository extends RepositoryAbstract {
 			$query->query_vars['offset']
 		);
 
-		if(!is_null($transform)) {
-			$pager->apply_transform($transform);
+		if ( ! is_null( $transform ) ) {
+			$pager->apply_transform( $transform );
 		}
 
 		return $pager;

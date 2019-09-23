@@ -4,9 +4,9 @@
 namespace FL\Assistant\Data\Transformers;
 
 
-class ThemeUpdatesTransformer
-{
-	public function __invoke(\WP_Theme $theme) {
+class ThemeUpdatesTransformer {
+
+	public function __invoke( \WP_Theme $theme ) {
 
 		$update = $theme->update;
 

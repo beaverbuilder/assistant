@@ -33,8 +33,8 @@ class TermsRepository extends RepositoryAbstract {
 	 *
 	 * @return array
 	 */
-	public function findWhere( array $args = [], callable $transform = null ) {
-		$terms =  $this->query( $args )->get_terms();
+	public function find_where( array $args = [], callable $transform = null ) {
+		$terms = $this->query( $args )->get_terms();
 		if ( ! is_null( $transform ) ) {
 			$terms = array_map( $transform, $terms );
 		}
@@ -59,7 +59,7 @@ class TermsRepository extends RepositoryAbstract {
 		);
 
 		if ( ! is_null( $transform ) ) {
-			$pager->apply_transform($transform);
+			$pager->apply_transform( $transform );
 		}
 
 		return $pager;
@@ -73,11 +73,11 @@ class TermsRepository extends RepositoryAbstract {
 	 * @param callable $transformer
 	 * @return array
 	 */
-	public function get_child_terms( $term, $children , callable $transformer) {
+	public function get_child_terms( $term, $children, callable $transformer ) {
 		if ( isset( $children[ $term->term_id ] ) ) {
 			$term_children = $children[ $term->term_id ];
 			foreach ( $term_children as $i => $child ) {
-				$term_children[ $i ]             = call_user_func($transformer, $child);
+				$term_children[ $i ]             = call_user_func( $transformer, $child );
 				$term_children[ $i ]['children'] = $this->get_child_terms( $child, $children );
 			}
 

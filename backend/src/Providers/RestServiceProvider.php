@@ -45,7 +45,7 @@ class RestServiceProvider extends ServiceProviderAbstract {
 	 *
 	 */
 	public function bootstrap() {
-		add_action( 'rest_api_init', [ $this, "register_routes" ] );
+		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
 	}
 
 
@@ -55,7 +55,7 @@ class RestServiceProvider extends ServiceProviderAbstract {
 	public function register_routes() {
 		foreach ( $this->controllers as $controller_name ) {
 			/** @var ControllerAbstract $controller */
-			$controller = $this->injector->make($controller_name);
+			$controller = $this->injector->make( $controller_name );
 			$controller->register_routes();
 		}
 	}

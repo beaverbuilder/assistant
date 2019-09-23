@@ -3,9 +3,9 @@
 
 namespace FL\Assistant\Data\Transformers;
 
-class TermsTransformer
-{
-	public function __invoke(\WP_Term $term) {
+class TermsTransformer {
+
+	public function __invoke( \WP_Term $term ) {
 		return [
 			'description'    => $term->description,
 			'editUrl'        => get_edit_term_link( $term->term_id, $term->taxonomy ),

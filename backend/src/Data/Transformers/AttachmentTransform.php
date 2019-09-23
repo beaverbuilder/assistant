@@ -4,14 +4,14 @@
 namespace FL\Assistant\Data\Transformers;
 
 
-class AttachmentTransform  {
+class AttachmentTransform {
 
 	public function __invoke( \WP_Post $attachment ) {
 		$size  = wp_get_attachment_image_src( $attachment->ID, 'medium' );
 		$meta  = wp_prepare_attachment_for_js( $attachment->ID );
 		$thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )[0];
 
-		print_r($meta);
+		print_r( $meta );
 
 		return [
 			'alt'             => $meta['title'],

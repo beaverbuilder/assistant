@@ -29,12 +29,12 @@ class SearchControllerTest extends RestTestCase {
 			]
 		);
 
-//		$this->factory()->comment->create_many(10);
-//		// @todo create some test comments and media attachments
-////		$this->factory()->attachment->create_object()
-//		$attachment_id = $this->factory()
-//			->attachment
-//			->create_upload_object(__DIR__ . "/../resources/mountains.jpg");
+		//      $this->factory()->comment->create_many(10);
+		//      // @todo create some test comments and media attachments
+		////        $this->factory()->attachment->create_object()
+		//      $attachment_id = $this->factory()
+		//          ->attachment
+		//          ->create_upload_object(__DIR__ . "/../resources/mountains.jpg");
 
 		$request = new \WP_REST_Request( 'GET', '/fl-assistant/v1/search' );
 		$request->set_query_params(

@@ -33,7 +33,7 @@ class AttachmentsControllerTest extends RestTestCase {
 
 		$attachment_id = $this->factory()
 			->attachment
-			->create_upload_object(__DIR__ . "/../resources/mountains.jpg");
+			->create_upload_object( __DIR__ . '/../resources/mountains.jpg' );
 
 		$route = sprintf( '/fl-assistant/v1/attachments/%d', $attachment_id );
 		$request = new \WP_REST_Request( 'GET', $route );
@@ -49,8 +49,7 @@ class AttachmentsControllerTest extends RestTestCase {
 
 		$attachment_id = $this->factory()
 			->attachment
-			->create_upload_object(__DIR__ . "/../resources/mountains.jpg");
-
+			->create_upload_object( __DIR__ . '/../resources/mountains.jpg' );
 
 		$route = sprintf( '/fl-assistant/v1/attachments/%d', $attachment_id );
 

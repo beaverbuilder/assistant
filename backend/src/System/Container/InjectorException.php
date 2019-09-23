@@ -2,6 +2,6 @@
 
 namespace FL\Assistant\System\Container;
 
-class InjectorException extends \Exception
-{
+class InjectorException extends \Exception {
+
 }

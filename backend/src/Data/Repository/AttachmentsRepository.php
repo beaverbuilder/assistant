@@ -11,8 +11,8 @@ use FL\Assistant\System\Contracts\RepositoryAbstract;
  * Class AttachmentsRepository
  * @package FL\Assistant\Data\Repository
  */
-class AttachmentsRepository extends RepositoryAbstract
-{
+class AttachmentsRepository extends RepositoryAbstract {
+
 
 	/**
 	 * @param array $args
@@ -21,12 +21,11 @@ class AttachmentsRepository extends RepositoryAbstract
 	 *
 	 * @return array
 	 */
-	public function findWhere(array $args = [], callable $transform = null)
-	{
-		$query = $this->query($args);
+	public function find_where( array $args = [], callable $transform = null ) {
+		$query = $this->query( $args );
 		$attachments = $query->posts;
-		if (!is_null($transform)) {
-			$attachments = array_map($transform, $attachments);
+		if ( ! is_null( $transform ) ) {
+			$attachments = array_map( $transform, $attachments );
 		}
 		return $attachments;
 	}
@@ -36,17 +35,18 @@ class AttachmentsRepository extends RepositoryAbstract
 	 *
 	 * @return \WP_Query
 	 */
-	public function query(array $args = [])
-	{
-		$args = array_merge($args, [
-			// attachments have an empty post status.
-			// removing this arg will give empty results
-			'post_status' => 'any',
-			'perm' => 'editable',
-			'post_type' => 'attachment',
-		]);
+	public function query( array $args = [] ) {
+		$args = array_merge(
+			$args, [
+				// attachments have an empty post status.
+				// removing this arg will give empty results
+				'post_status' => 'any',
+				'perm'        => 'editable',
+				'post_type'   => 'attachment',
+			]
+		);
 
-		return new \WP_Query($args);
+		return new \WP_Query( $args );
 	}
 
 	/**
@@ -54,20 +54,18 @@ class AttachmentsRepository extends RepositoryAbstract
 	 *
 	 * @return $this
 	 */
-	public function delete($id)
-	{
-		wp_delete_attachment($id);
+	public function delete( $id ) {
+		wp_delete_attachment( $id );
 		return $this;
 	}
 
 
-	public function restore($id, callable $transform = null)
-	{
-		wp_untrash_post($id);
-		if (!is_null($transform)) {
-			return $this->find($id, $transform);
+	public function restore( $id, callable $transform = null ) {
+		wp_untrash_post( $id );
+		if ( ! is_null( $transform ) ) {
+			return $this->find( $id, $transform );
 		}
-		return $this->find($id);
+		return $this->find( $id );
 	}
 
 	/**
@@ -77,11 +75,10 @@ class AttachmentsRepository extends RepositoryAbstract
 	 *
 	 * @return array|\WP_Post|null
 	 */
-	public function find($id, callable $transform = null)
-	{
-		$attachment = get_post($id);
-		if (!is_null($transform)) {
-			$attachment = call_user_func($transform, $attachment);
+	public function find( $id, callable $transform = null ) {
+		$attachment = get_post( $id );
+		if ( ! is_null( $transform ) ) {
+			$attachment = call_user_func( $transform, $attachment );
 		}
 		return $attachment;
 	}
@@ -93,19 +90,18 @@ class AttachmentsRepository extends RepositoryAbstract
 	 *
 	 * @return Pager
 	 */
-	public function paginate(array $args = [], callable $transform = null)
-	{
-		$query = $this->query($args);
+	public function paginate( array $args = [], callable $transform = null ) {
+		$query = $this->query( $args );
 
 		$pager = new Pager(
 			$query->posts,
 			$query->found_posts,
 			$query->post_count,
-			$query->get('offset')
+			$query->get( 'offset' )
 		);
 
-		if (!is_null($transform)) {
-			$pager->apply_transform($transform);
+		if ( ! is_null( $transform ) ) {
+			$pager->apply_transform( $transform );
 		}
 
 		return $pager;

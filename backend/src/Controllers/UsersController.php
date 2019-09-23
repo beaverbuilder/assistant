@@ -25,7 +25,7 @@ class UsersController extends ControllerAbstract {
 	 */
 	protected $transformer;
 
-	public function __construct(UsersRepository $users, UserTransformer $transformer) {
+	public function __construct( UsersRepository $users, UserTransformer $transformer ) {
 		$this->users = $users;
 		$this->transformer = $transformer;
 	}
@@ -47,7 +47,6 @@ class UsersController extends ControllerAbstract {
 			]
 		);
 
-
 		$this->route(
 			'/users/(?P<id>\d+)', [
 				[
@@ -66,7 +65,6 @@ class UsersController extends ControllerAbstract {
 			]
 		);
 
-
 		$this->route(
 			'/users/count', [
 				[
@@ -78,7 +76,6 @@ class UsersController extends ControllerAbstract {
 				],
 			]
 		);
-
 
 	}
 
@@ -92,7 +89,7 @@ class UsersController extends ControllerAbstract {
 	public function index( WP_REST_Request $request ) {
 
 		$params = $request->get_params();
-		$pager  = $this->users->paginate( $params , $this->transformer);
+		$pager  = $this->users->paginate( $params, $this->transformer );
 
 		return rest_ensure_response( $pager->to_array() );
 	}
@@ -107,7 +104,7 @@ class UsersController extends ControllerAbstract {
 	 */
 	public function read( WP_REST_Request $request ) {
 		$id   = $request->get_param( 'id' );
-		$user = $this->users->find( $id , $this->transformer);
+		$user = $this->users->find( $id, $this->transformer );
 
 		return rest_ensure_response( $user );
 	}

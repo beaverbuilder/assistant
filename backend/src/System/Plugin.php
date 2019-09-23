@@ -36,6 +36,10 @@ class Plugin {
 		RestServiceProvider::class,
 		CloudServiceProvider::class,
 	];
+	/**
+	 * @var array
+	 */
+	protected $plugin_data;
 
 	/**
 	 * Plugin constructor.
@@ -44,7 +48,8 @@ class Plugin {
 	 *
 	 * @throws \FL\Assistant\System\Container\InjectionException
 	 */
-	public function __construct( $pluginFile ) {
+	public function __construct( $plugin_file ) {
+		$this->plugin_data = get_plugin_data( $plugin_file );
 		$this->check_minimum_php_requirements();
 		$this->register_providers();
 

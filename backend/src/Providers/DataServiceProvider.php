@@ -25,8 +25,8 @@ use FL\Assistant\System\Integrations\BeaverBuilder;
  * Class DataServiceProvider
  * @package FL\Assistant\Providers\
  */
-class DataServiceProvider extends ServiceProviderAbstract
-{
+class DataServiceProvider extends ServiceProviderAbstract {
+
 
 	protected $repository = [
 		UsersRepository::class,
@@ -34,7 +34,7 @@ class DataServiceProvider extends ServiceProviderAbstract
 		AttachmentsRepository::class,
 		CommentsRepository::class,
 		TermsRepository::class,
-		NotationsRepository::class
+		NotationsRepository::class,
 	];
 
 	protected $transformers = [
@@ -51,30 +51,26 @@ class DataServiceProvider extends ServiceProviderAbstract
 	 * Inject all data sources
 	 * @throws \FL\Assistant\System\Container\InjectionException
 	 */
-	public function bootstrap()
-	{
+	public function bootstrap() {
 		// data
-		$this->injector->define(Site::class, []);
+		$this->injector->define( Site::class, [] );
 		// integrations
-		$this->injector->define(BeaverBuilder::class, []);
+		$this->injector->define( BeaverBuilder::class, [] );
 
 		$this->register_repositories();
 		$this->register_transformers();
 
 	}
 
-	public function register_repositories()
-	{
-		foreach ($this->repository as $repository_name) {
-			$this->injector->define($repository_name, []);
+	public function register_repositories() {
+		foreach ( $this->repository as $repository_name ) {
+			$this->injector->define( $repository_name, [] );
 		}
 	}
 
-	public function register_transformers()
-	{
-
-		foreach ($this->transformers as $transformer_class) {
-			$this->injector->define($transformer_class, []);
+	public function register_transformers() {
+		foreach ( $this->transformers as $transformer_class ) {
+			$this->injector->define( $transformer_class, [] );
 		}
 	}
 }

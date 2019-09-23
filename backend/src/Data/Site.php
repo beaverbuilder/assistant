@@ -14,7 +14,7 @@ class Site {
 		$data    = [];
 		$actions = [];
 		$intro   = __( 'Currently Viewing', 'fl-assistant' );
-		$type 	 = '';
+		$type    = '';
 		$name    = __( 'Untitled', 'fl-assistant' );
 
 		$obj                    = get_queried_object();
@@ -23,7 +23,7 @@ class Site {
 		if ( is_admin() ) {
 
 			$intro = __( 'Currently Viewing Admin Page', 'fl-assistant' );
-			$type = __( 'Admin Page', 'fl-assistant');
+			$type = __( 'Admin Page', 'fl-assistant' );
 			$screen = get_current_screen();
 			$name = $screen->id;
 
@@ -73,7 +73,7 @@ class Site {
 				$labels    = $post_type->labels;
 				$post_type = $labels->singular_name;
 				$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $post_type );
-				$type 	   = $post_type;
+				$type      = $post_type;
 				$name      = $obj->post_title;
 
 				if ( is_attachment() ) {
@@ -105,7 +105,7 @@ class Site {
 			} elseif ( is_author() ) {
 
 				$intro = __( 'Currently Viewing Author', 'fl-assistant' );
-				$type = __('Author Archive', 'fl-assistant' );
+				$type = __( 'Author Archive', 'fl-assistant' );
 				$name  = wp_get_current_user()->display_name;
 
 			} elseif ( is_front_page() ) {
@@ -117,7 +117,7 @@ class Site {
 
 		$data['intro']   = $intro;
 		$data['name']    = $name;
-		$data['type']	 = $type;
+		$data['type']    = $type;
 		$data['actions'] = $this->filter_actions_by_capability( $actions );
 
 		$theme         = wp_get_theme();

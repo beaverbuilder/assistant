@@ -102,10 +102,9 @@ class CommentsController extends ControllerAbstract {
 		$post_types = array_keys( $this->posts->get_types() );
 		$args       = array_merge( [ 'post_type' => $post_types ], $params );
 
-
 		return $this->comments->paginate( $args )
-		                      ->apply_transform( $this->transformer )
-		                      ->to_rest_response();
+							  ->apply_transform( $this->transformer )
+							  ->to_rest_response();
 
 	}
 
@@ -132,7 +131,7 @@ class CommentsController extends ControllerAbstract {
 	 */
 	public function read( $request ) {
 		$id       = $request->get_param( 'id' );
-		$comment  = $this->comments->find($id, $this->transformer);
+		$comment  = $this->comments->find( $id, $this->transformer );
 
 		return rest_ensure_response( $comment );
 	}

@@ -18,7 +18,7 @@ class PostsController extends ControllerAbstract {
 	protected $posts;
 	protected $transformer;
 
-	public function __construct(PostsRepository $posts, PostTransformer $transformer) {
+	public function __construct( PostsRepository $posts, PostTransformer $transformer ) {
 		$this->posts = $posts;
 		$this->transformer = $transformer;
 	}
@@ -149,13 +149,11 @@ class PostsController extends ControllerAbstract {
 	 */
 	public function posts( WP_REST_Request $request ) {
 
-
 		$params = $request->get_params();
 
 		$params['perm'] = 'editable';
 
-		$pager = $this->posts->paginate( $params , $this->transformer);
-
+		$pager = $this->posts->paginate( $params, $this->transformer );
 
 		return rest_ensure_response( $pager->to_array() );
 	}
@@ -188,7 +186,7 @@ class PostsController extends ControllerAbstract {
 
 		foreach ( $posts as $post ) {
 			if ( ! $post->post_parent ) {
-				$parent             = $this->get_post_response_data( $post );
+				$parent             = $this->transform( $post );
 				$parent['children'] = $this->get_child_posts( $post, $children );
 				$response[]         = $parent;
 			}
@@ -200,8 +198,8 @@ class PostsController extends ControllerAbstract {
 	/**
 	 * Returns an array of response data for a single post.
 	 */
-	public function get_post_response_data( $post ) {
-		return call_user_func($this->transformer, $post );
+	public function transform( $post ) {
+		return call_user_func( $this->transformer, $post );
 	}
 
 	/**
@@ -212,7 +210,7 @@ class PostsController extends ControllerAbstract {
 		if ( isset( $children[ $post->ID ] ) ) {
 			$post_children = $children[ $post->ID ];
 			foreach ( $post_children as $i => $child ) {
-				$post_children[ $i ]             = $this->get_post_response_data( $child );
+				$post_children[ $i ]             = $this->transform( $child );
 				$post_children[ $i ]['children'] = $this->get_child_posts( $child, $children );
 			}
 
@@ -248,7 +246,7 @@ class PostsController extends ControllerAbstract {
 		if ( current_user_can( 'edit_post', $id ) ) {
 			$post = get_post( $id );
 
-			return $this->get_post_response_data( $post );
+			return $this->transform( $post );
 		}
 
 		return [];
@@ -266,7 +264,7 @@ class PostsController extends ControllerAbstract {
 			];
 		}
 
-		return $this->get_post_response_data( get_post( $id ) );
+		return $this->transform( get_post( $id ) );
 	}
 
 	/**
@@ -278,7 +276,7 @@ class PostsController extends ControllerAbstract {
 		$post_id      = absint( $request->get_param( 'id' ) );
 		$post         = get_post( $post_id );
 		$current_user = wp_get_current_user();
-		$post_data    = array(
+		$post_data    = [
 			'comment_status' => $post->comment_status,
 			'ping_status'    => $post->ping_status,
 			'post_author'    => $current_user->ID,
@@ -293,7 +291,7 @@ class PostsController extends ControllerAbstract {
 			'post_type'      => $post->post_type,
 			'to_ping'        => $post->to_ping,
 			'menu_order'     => $post->menu_order,
-		);
+		];
 
 		$new_post_id = wp_insert_post( $post_data );
 		$post_meta   = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id ) );
@@ -314,7 +312,7 @@ class PostsController extends ControllerAbstract {
 			}
 		}
 
-		return $this->get_post_response_data( get_post( $new_post_id ) );
+		return $this->transform( get_post( $new_post_id ) );
 	}
 
 	/**

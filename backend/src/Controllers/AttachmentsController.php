@@ -112,22 +112,23 @@ class AttachmentsController extends ControllerAbstract {
 			]
 		);
 
-
-		$this->route( "/attachments/restore/(?P<id>\d+)", [
-			[
-				'methods'             => WP_REST_Server::EDITABLE,
-				'callback'            => [ $this, 'restore' ],
-				'args'                => [
-					'id' => [
-						'required' => true,
-						'type'     => 'number',
+		$this->route(
+			'/attachments/restore/(?P<id>\d+)', [
+				[
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => [ $this, 'restore' ],
+					'args'                => [
+						'id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
 					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_published_posts' );
+					},
 				],
-				'permission_callback' => function () {
-					return current_user_can( 'edit_published_posts' );
-				},
-			],
-		] );
+			]
+		);
 	}
 
 	/**
@@ -167,8 +168,8 @@ class AttachmentsController extends ControllerAbstract {
 		$args = $request->get_params();
 
 		return $this->attachments->paginate( $args )
-		                         ->apply_transform( $this->transformer )
-		                         ->to_rest_response();
+								 ->apply_transform( $this->transformer )
+								 ->to_rest_response();
 	}
 
 
@@ -208,7 +209,7 @@ class AttachmentsController extends ControllerAbstract {
 			return rest_ensure_response( [ 'error' => true ] );
 		}
 
-		$deprecated = "This route is deprecated. ";
+		$deprecated = 'This route is deprecated. ';
 		switch ( $action ) {
 			case 'trash':
 				wp_delete_attachment( $id );
@@ -222,7 +223,7 @@ class AttachmentsController extends ControllerAbstract {
 
 		$response = new WP_REST_Response( [ 'success' => true ] );
 
-		$response->header( "Warn", "299 {$deprecated}" );
+		$response->header( 'Warn', "299 {$deprecated}" );
 
 		return $response;
 	}
@@ -256,11 +257,13 @@ class AttachmentsController extends ControllerAbstract {
 			return rest_ensure_response( [ 'error' => true ] );
 		}
 
-		$attachment = $this->attachments->restore($id, $this->transformer);
+		$attachment = $this->attachments->restore( $id, $this->transformer );
 
-		return rest_ensure_response( [
-			'success' => true,
-			"data"    => $attachment
-		] );
+		return rest_ensure_response(
+			[
+				'success' => true,
+				'data'    => $attachment,
+			]
+		);
 	}
 }

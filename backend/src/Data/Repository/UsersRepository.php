@@ -13,10 +13,10 @@ class UsersRepository extends RepositoryAbstract {
 
 	public function query( array $args = [], callable $transform = null ) {
 		$defaults = [
-			"number" => 20,
-			"offset" => 0
+			'number' => 20,
+			'offset' => 0,
 		];
-		$args = array_merge($defaults, $args);
+		$args = array_merge( $defaults, $args );
 		return new \WP_User_Query( $args );
 	}
 
@@ -42,7 +42,7 @@ class UsersRepository extends RepositoryAbstract {
 	 *
 	 * @return array
 	 */
-	public function findWhere( array $args = [], callable $transform = null ) {
+	public function find_where( array $args = [], callable $transform = null ) {
 		$users = $this->query( $args )->get_results();
 		if ( ! is_null( $transform ) ) {
 			$users = array_map( $transform, $users );
@@ -56,14 +56,13 @@ class UsersRepository extends RepositoryAbstract {
 	 *
 	 * @return Pager
 	 */
-	public function paginate( array $args = [], callable $transform = null )
-	{
-		$query = $this->query($args);
+	public function paginate( array $args = [], callable $transform = null ) {
+		$query = $this->query( $args );
 
 		$pager = new Pager(
 			$query->get_results(),
 			$query->get_total(),
-			$query->get('number'),
+			$query->get( 'number' ),
 			$query->get( 'offset' )
 		);
 

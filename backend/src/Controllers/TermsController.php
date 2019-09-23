@@ -19,7 +19,7 @@ class TermsController extends ControllerAbstract {
 	protected $posts;
 	protected $transformer;
 
-	public function __construct(TermsRepository $terms, PostsRepository $posts, TermsTransformer $transformer) {
+	public function __construct( TermsRepository $terms, PostsRepository $posts, TermsTransformer $transformer ) {
 		$this->terms = $terms;
 		$this->posts = $posts;
 		$this->transformer = $transformer;
@@ -119,29 +119,10 @@ class TermsController extends ControllerAbstract {
 	 */
 	public function terms( WP_REST_Request $request ) {
 
-		return $this->terms->paginate($request->get_params())
-			->apply_transform($this->transformer)
+		return $this->terms->paginate( $request->get_params() )
+			->apply_transform( $this->transformer )
 			->to_rest_response();
 	}
-
-	/**
-	 * Returns an array of response data for a single term.
-	 */
-//	public function get_term_response_data( $term ) {
-//		$response = [
-//			'description'    => $term->description,
-//			'editUrl'        => get_edit_term_link( $term->term_id, $term->taxonomy ),
-//			'id'             => $term->term_id,
-//			'isHierarchical' => is_taxonomy_hierarchical( $term->taxonomy ),
-//			'parent'         => $term->parent,
-//			'slug'           => $term->slug,
-//			'taxonomy'       => $term->taxonomy,
-//			'title'          => $term->name,
-//			'url'            => get_term_link( $term ),
-//		];
-//
-//		return $response;
-//	}
 
 	/**
 	 * Returns an array of terms and related data
@@ -154,7 +135,7 @@ class TermsController extends ControllerAbstract {
 		$response = [];
 		$children = [];
 		$params   = $request->get_params();
-		$terms    = $this->terms->findWhere($params, $this->transformer);
+		$terms    = $this->terms->find_where( $params, $this->transformer );
 
 		foreach ( $terms as $term ) {
 			if ( $term->parent ) {
@@ -168,7 +149,7 @@ class TermsController extends ControllerAbstract {
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
 				$parent             = $term;
-				$parent['children'] = $this->terms->get_child_terms( $term, $children , $this->transformer);
+				$parent['children'] = $this->terms->get_child_terms( $term, $children, $this->transformer );
 				$response[]         = $parent;
 			}
 		}
@@ -201,7 +182,7 @@ class TermsController extends ControllerAbstract {
 	 */
 	public function term( WP_REST_Request $request ) {
 		$id       = $request->get_param( 'id' );
-		$term     = $this->terms->find($id, $this->transformer);
+		$term     = $this->terms->find( $id, $this->transformer );
 		return rest_ensure_response( $term );
 	}
 
@@ -234,8 +215,8 @@ class TermsController extends ControllerAbstract {
 			];
 		}
 
-		$term = call_user_func($this->transformer, get_term( $id['term_id'], $data['taxonomy'] ) );
-		return rest_ensure_response($term);
+		$term = call_user_func( $this->transformer, get_term( $id['term_id'], $data['taxonomy'] ) );
+		return rest_ensure_response( $term );
 	}
 
 	/**

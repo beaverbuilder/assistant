@@ -2,45 +2,39 @@
 
 namespace FL\Assistant\System\Container;
 
-class StandardReflector implements Reflector
-{
-    public function getClass($class)
-    {
-        return new \ReflectionClass($class);
-    }
+class StandardReflector implements Reflector {
 
-    public function getCtor($class)
-    {
-        $reflectionClass = new \ReflectionClass($class);
+	public function getClass( $class ) {
+		return new \ReflectionClass( $class );
+	}
 
-        return $reflectionClass->getConstructor();
-    }
+	public function getCtor( $class ) {
+		$reflectionClass = new \ReflectionClass( $class );
 
-    public function getCtorParams($class)
-    {
-        return ($reflectedCtor = $this->getCtor($class))
-            ? $reflectedCtor->getParameters()
-            : null;
-    }
+		return $reflectionClass->getConstructor();
+	}
 
-    public function getParamTypeHint(\ReflectionFunctionAbstract $function, \ReflectionParameter $param)
-    {
-        return ($reflectionClass = $param->getClass())
-            ? $reflectionClass->getName()
-            : null;
-    }
+	public function getCtorParams( $class ) {
+		return ( $reflectedCtor = $this->getCtor( $class ) )
+			? $reflectedCtor->getParameters()
+			: null;
+	}
 
-    public function getFunction($functionName)
-    {
-        return new \ReflectionFunction($functionName);
-    }
+	public function getParamTypeHint( \ReflectionFunctionAbstract $function, \ReflectionParameter $param ) {
+		return ( $reflectionClass = $param->getClass() )
+			? $reflectionClass->getName()
+			: null;
+	}
 
-    public function getMethod($classNameOrInstance, $methodName)
-    {
-        $className = is_string($classNameOrInstance)
-            ? $classNameOrInstance
-            : get_class($classNameOrInstance);
+	public function getFunction( $functionName ) {
+		return new \ReflectionFunction( $functionName );
+	}
 
-        return new \ReflectionMethod($className, $methodName);
-    }
+	public function getMethod( $classNameOrInstance, $methodName ) {
+		$className = is_string( $classNameOrInstance )
+			? $classNameOrInstance
+			: get_class( $classNameOrInstance );
+
+		return new \ReflectionMethod( $className, $methodName );
+	}
 }

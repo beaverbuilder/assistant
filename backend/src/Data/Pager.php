@@ -53,11 +53,11 @@ class Pager {
 	public function __construct( array $items = [], $total = 0, $limit = 20, $offset = 0 ) {
 
 		$this->items     = $items;
-		$this->total     = intval($total);
-		$this->limit     = intval($limit);
-		$this->offset    = intval($offset);
+		$this->total     = intval( $total );
+		$this->limit     = intval( $limit );
+		$this->offset    = intval( $offset );
 
-		if ( count( $items ) === 0 || $this->total == 0 || $this->limit == 0) {
+		if ( 0 === count( $items ) || 0 === $this->total || 0 === $this->limit ) {
 			$this->last_page = 1;
 			$this->current_page = 1;
 			$this->has_more = false;

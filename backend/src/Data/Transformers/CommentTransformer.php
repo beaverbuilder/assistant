@@ -5,7 +5,7 @@ namespace FL\Assistant\Data\Transformers;
 
 
 class CommentTransformer {
-	public function __invoke(\WP_Comment $comment) {
+	public function __invoke( \WP_Comment $comment ) {
 		$post = get_post( $comment->comment_post_ID );
 		$date = mysql2date( get_option( 'date_format' ), $comment->comment_date );
 		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );

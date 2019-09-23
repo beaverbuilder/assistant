@@ -19,7 +19,7 @@ class PostsRepository extends RepositoryAbstract {
 	 *
 	 * @return array|mixed|\WP_Post|null
 	 */
-	public function find( $id, callable $transform = null  ) {
+	public function find( $id, callable $transform = null ) {
 		$post = get_post( $id );
 
 		if ( ! is_null( $transform ) ) {
@@ -35,7 +35,7 @@ class PostsRepository extends RepositoryAbstract {
 	 *
 	 * @return array
 	 */
-	public function findWhere( array $args = [], callable $transform = null ) {
+	public function find_where( array $args = [], callable $transform = null ) {
 		$posts = $this->query( $args )->posts;
 
 		if ( ! is_null( $transform ) ) {
@@ -57,7 +57,6 @@ class PostsRepository extends RepositoryAbstract {
 	public function paginate( array $args = [], callable $transform = null ) {
 		$query = $this->query( $args );
 
-
 		$pager = new Pager(
 			$query->posts,
 			$query->found_posts,
@@ -65,14 +64,9 @@ class PostsRepository extends RepositoryAbstract {
 			$query->get( 'offset' )
 		);
 
-
-
-		if(!is_null($transform) && $pager->total() > 0) {
-			$pager->apply_transform($transform);
+		if ( ! is_null( $transform ) && $pager->total() > 0 ) {
+			$pager->apply_transform( $transform );
 		}
-
-
-
 
 		return $pager;
 	}

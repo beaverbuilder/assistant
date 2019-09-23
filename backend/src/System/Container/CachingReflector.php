@@ -2,107 +2,100 @@
 
 namespace FL\Assistant\System\Container;
 
-class CachingReflector implements Reflector
-{
-    const CACHE_KEY_CLASSES = 'auryn.refls.classes.';
-    const CACHE_KEY_CTORS = 'auryn.refls.ctors.';
-    const CACHE_KEY_CTOR_PARAMS = 'auryn.refls.ctor-params.';
-    const CACHE_KEY_FUNCS = 'auryn.refls.funcs.';
-    const CACHE_KEY_METHODS = 'auryn.refls.methods.';
+class CachingReflector implements Reflector {
 
-    private $reflector;
-    private $cache;
+	const CACHE_KEY_CLASSES = 'auryn.refls.classes.';
+	const CACHE_KEY_CTORS = 'auryn.refls.ctors.';
+	const CACHE_KEY_CTOR_PARAMS = 'auryn.refls.ctor-params.';
+	const CACHE_KEY_FUNCS = 'auryn.refls.funcs.';
+	const CACHE_KEY_METHODS = 'auryn.refls.methods.';
 
-    public function __construct(Reflector $reflector = null, ReflectionCache $cache = null)
-    {
-        $this->reflector = $reflector ?: new StandardReflector;
-        $this->cache = $cache ?: new ReflectionCacheArray;
-    }
+	private $reflector;
+	private $cache;
 
-    public function getClass($class)
-    {
-        $cacheKey = self::CACHE_KEY_CLASSES . strtolower($class);
+	public function __construct( Reflector $reflector = null, ReflectionCache $cache = null ) {
+		$this->reflector = $reflector ?: new StandardReflector;
+		$this->cache = $cache ?: new ReflectionCacheArray;
+	}
 
-        if (($reflectionClass = $this->cache->fetch($cacheKey)) === false) {
-            $this->cache->store($cacheKey, $reflectionClass = $this->reflector->getClass($class));
-        }
+	public function getClass( $class ) {
+		$cacheKey = self::CACHE_KEY_CLASSES . strtolower( $class );
 
-        return $reflectionClass;
-    }
+		if ( ( $reflectionClass = $this->cache->fetch( $cacheKey ) ) === false ) {
+			$this->cache->store( $cacheKey, $reflectionClass = $this->reflector->getClass( $class ) );
+		}
 
-    public function getCtor($class)
-    {
-        $cacheKey = self::CACHE_KEY_CTORS . strtolower($class);
+		return $reflectionClass;
+	}
 
-        if (($reflectedCtor = $this->cache->fetch($cacheKey)) === false) {
-            $this->cache->store($cacheKey, $reflectedCtor = $this->reflector->getCtor($class));
-        }
+	public function getCtor( $class ) {
+		$cacheKey = self::CACHE_KEY_CTORS . strtolower( $class );
 
-        return $reflectedCtor;
-    }
+		if ( ( $reflectedCtor = $this->cache->fetch( $cacheKey ) ) === false ) {
+			$this->cache->store( $cacheKey, $reflectedCtor = $this->reflector->getCtor( $class ) );
+		}
 
-    public function getCtorParams($class)
-    {
-        $cacheKey = self::CACHE_KEY_CTOR_PARAMS . strtolower($class);
+		return $reflectedCtor;
+	}
 
-        if (($reflectedCtorParams = $this->cache->fetch($cacheKey)) === false) {
-            $this->cache->store($cacheKey, $reflectedCtorParams = $this->reflector->getCtorParams($class));
-        }
+	public function getCtorParams( $class ) {
+		$cacheKey = self::CACHE_KEY_CTOR_PARAMS . strtolower( $class );
 
-        return $reflectedCtorParams;
-    }
+		if ( ( $reflectedCtorParams = $this->cache->fetch( $cacheKey ) ) === false ) {
+			$this->cache->store( $cacheKey, $reflectedCtorParams = $this->reflector->getCtorParams( $class ) );
+		}
 
-    public function getParamTypeHint(\ReflectionFunctionAbstract $function, \ReflectionParameter $param)
-    {
-        $lowParam = strtolower($param->name);
+		return $reflectedCtorParams;
+	}
 
-        if ($function instanceof \ReflectionMethod) {
-            $lowClass = strtolower($function->class);
-            $lowMethod = strtolower($function->name);
-            $paramCacheKey = self::CACHE_KEY_CLASSES . "{$lowClass}.{$lowMethod}.param-{$lowParam}";
-        } else {
-            $lowFunc = strtolower($function->name);
-            $paramCacheKey = (strpos($lowFunc, '{closure}') === false)
-                ? self::CACHE_KEY_FUNCS . ".{$lowFunc}.param-{$lowParam}"
-                : null;
-        }
+	public function getParamTypeHint( \ReflectionFunctionAbstract $function, \ReflectionParameter $param ) {
+		$lowParam = strtolower( $param->name );
 
-        $typeHint = ($paramCacheKey === null) ? false : $this->cache->fetch($paramCacheKey);
+		if ( $function instanceof \ReflectionMethod ) {
+			$lowClass = strtolower( $function->class );
+			$lowMethod = strtolower( $function->name );
+			$paramCacheKey = self::CACHE_KEY_CLASSES . "{$lowClass}.{$lowMethod}.param-{$lowParam}";
+		} else {
+			$lowFunc = strtolower( $function->name );
+			$paramCacheKey = ( strpos( $lowFunc, '{closure}' ) === false )
+				? self::CACHE_KEY_FUNCS . ".{$lowFunc}.param-{$lowParam}"
+				: null;
+		}
 
-        if (false === $typeHint) {
-            $typeHint = $this->reflector->getParamTypeHint($function, $param);
-            if ($paramCacheKey !== null) {
-                $this->cache->store($paramCacheKey, $typeHint);
-            }
-        }
+		$typeHint = ( $paramCacheKey === null ) ? false : $this->cache->fetch( $paramCacheKey );
 
-        return $typeHint;
-    }
+		if ( false === $typeHint ) {
+			$typeHint = $this->reflector->getParamTypeHint( $function, $param );
+			if ( $paramCacheKey !== null ) {
+				$this->cache->store( $paramCacheKey, $typeHint );
+			}
+		}
 
-    public function getFunction($functionName)
-    {
-        $lowFunc = strtolower($functionName);
-        $cacheKey = self::CACHE_KEY_FUNCS . $lowFunc;
+		return $typeHint;
+	}
 
-        if (($reflectedFunc = $this->cache->fetch($cacheKey)) === false) {
-            $this->cache->store($cacheKey, $reflectedFunc = $this->reflector->getFunction($functionName));
-        }
+	public function getFunction( $functionName ) {
+		$lowFunc = strtolower( $functionName );
+		$cacheKey = self::CACHE_KEY_FUNCS . $lowFunc;
 
-        return $reflectedFunc;
-    }
+		if ( ( $reflectedFunc = $this->cache->fetch( $cacheKey ) ) === false ) {
+			$this->cache->store( $cacheKey, $reflectedFunc = $this->reflector->getFunction( $functionName ) );
+		}
 
-    public function getMethod($classNameOrInstance, $methodName)
-    {
-        $className = is_string($classNameOrInstance)
-            ? $classNameOrInstance
-            : get_class($classNameOrInstance);
+		return $reflectedFunc;
+	}
 
-        $cacheKey = self::CACHE_KEY_METHODS . strtolower($className) . '.' . strtolower($methodName);
+	public function getMethod( $classNameOrInstance, $methodName ) {
+		$className = is_string( $classNameOrInstance )
+			? $classNameOrInstance
+			: get_class( $classNameOrInstance );
 
-        if (($reflectedMethod = $this->cache->fetch($cacheKey)) === false) {
-            $this->cache->store($cacheKey, $reflectedMethod = $this->reflector->getMethod($classNameOrInstance, $methodName));
-        }
+		$cacheKey = self::CACHE_KEY_METHODS . strtolower( $className ) . '.' . strtolower( $methodName );
 
-        return $reflectedMethod;
-    }
+		if ( ( $reflectedMethod = $this->cache->fetch( $cacheKey ) ) === false ) {
+			$this->cache->store( $cacheKey, $reflectedMethod = $this->reflector->getMethod( $classNameOrInstance, $methodName ) );
+		}
+
+		return $reflectedMethod;
+	}
 }
