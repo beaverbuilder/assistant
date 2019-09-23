@@ -4,7 +4,6 @@
 namespace FL\Assistant\Data\Transformers;
 
 use FL\Assistant\Data\Repository\NotationsRepository;
-use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\System\Integrations\BeaverBuilder;
 
 

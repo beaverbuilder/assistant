@@ -4,15 +4,19 @@
 namespace FL\Assistant\Providers;
 
 
-use FL\Assistant\Data\Repository\NotationsRepository;
+use FL\Assistant\Data\Transformers\PluginUpdatesTransformer;
+use FL\Assistant\Data\Transformers\TermsTransformer;
 use FL\Assistant\Data\Repository\AttachmentsRepository;
 use FL\Assistant\Data\Repository\CommentsRepository;
+use FL\Assistant\Data\Repository\NotationsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Repository\TermsRepository;
 use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\AttachmentTransform;
+use FL\Assistant\Data\Transformers\CommentTransformer;
 use FL\Assistant\Data\Transformers\PostTransformer;
+use FL\Assistant\Data\Transformers\ThemeUpdatesTransformer;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 use FL\Assistant\System\Integrations\BeaverBuilder;
@@ -21,7 +25,8 @@ use FL\Assistant\System\Integrations\BeaverBuilder;
  * Class DataServiceProvider
  * @package FL\Assistant\Providers\
  */
-class DataServiceProvider extends ServiceProviderAbstract {
+class DataServiceProvider extends ServiceProviderAbstract
+{
 
 	protected $repository = [
 		UsersRepository::class,
@@ -36,33 +41,40 @@ class DataServiceProvider extends ServiceProviderAbstract {
 		UserTransformer::class,
 		PostTransformer::class,
 		AttachmentTransform::class,
+		TermsTransformer::class,
+		CommentTransformer::class,
+		PluginUpdatesTransformer::class,
+		ThemeUpdatesTransformer::class,
 	];
 
 	/**
 	 * Inject all data sources
 	 * @throws \FL\Assistant\System\Container\InjectionException
 	 */
-	public function bootstrap() {
+	public function bootstrap()
+	{
 		// data
-		$this->injector->define( Site::class, [] );
+		$this->injector->define(Site::class, []);
 		// integrations
-		$this->injector->define( BeaverBuilder::class, [] );
+		$this->injector->define(BeaverBuilder::class, []);
 
 		$this->register_repositories();
 		$this->register_transformers();
 
 	}
 
-	public function register_repositories() {
-		foreach($this->repository as $repository_name) {
+	public function register_repositories()
+	{
+		foreach ($this->repository as $repository_name) {
 			$this->injector->define($repository_name, []);
 		}
 	}
 
-	public function register_transformers() {
+	public function register_transformers()
+	{
 
-		foreach ( $this->transformers as $transformer_class ) {
-			$this->injector->define( $transformer_class, []);
+		foreach ($this->transformers as $transformer_class) {
+			$this->injector->define($transformer_class, []);
 		}
 	}
 }
