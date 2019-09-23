@@ -43,6 +43,7 @@ class TermsRepository extends RepositoryAbstract {
 
 	/**
 	 * @param array $args
+	 * @param callable|null $transform
 	 *
 	 * @return Pager
 	 */
@@ -62,6 +63,28 @@ class TermsRepository extends RepositoryAbstract {
 		}
 
 		return $pager;
+	}
+
+	/**
+	 * Returns an array of child terms for the given term.
+	 * A $children array must be passed to search for children.
+	 * @param $term
+	 * @param $children
+	 * @param callable $transformer
+	 * @return array
+	 */
+	public function get_child_terms( $term, $children , callable $transformer) {
+		if ( isset( $children[ $term->term_id ] ) ) {
+			$term_children = $children[ $term->term_id ];
+			foreach ( $term_children as $i => $child ) {
+				$term_children[ $i ]             = call_user_func($transformer, $child);
+				$term_children[ $i ]['children'] = $this->get_child_terms( $child, $children );
+			}
+
+			return $term_children;
+		}
+
+		return [];
 	}
 
 	/**

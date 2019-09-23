@@ -2,10 +2,12 @@
 
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Data\Transformers\TermsTransformer;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Repository\TermsRepository;
-use FL\Assistant\Pagination\TermsPaginator;
 use FL\Assistant\System\Contracts\ControllerAbstract;
+use WP_REST_Request;
+use WP_REST_Response;
 use WP_REST_Server;
 
 /**
@@ -14,10 +16,13 @@ use WP_REST_Server;
 class TermsController extends ControllerAbstract {
 
 	protected $terms;
+	protected $posts;
+	protected $transformer;
 
-	public function __construct(TermsRepository $terms, PostsRepository $posts) {
+	public function __construct(TermsRepository $terms, PostsRepository $posts, TermsTransformer $transformer) {
 		$this->terms = $terms;
 		$this->posts = $posts;
+		$this->transformer = $transformer;
 	}
 	/**
 	 * Register routes.
@@ -109,43 +114,47 @@ class TermsController extends ControllerAbstract {
 
 	/**
 	 * Returns an array of terms and related data.
+	 * @param WP_REST_Request $request
+	 * @return mixed|WP_REST_Response
 	 */
-	public function terms( \WP_REST_Request $request ) {
+	public function terms( WP_REST_Request $request ) {
 
-		$pager = $this->terms->paginate($request->get_params());
-
-		return rest_ensure_response( $pager->to_array() );
+		return $this->terms->paginate($request->get_params())
+			->apply_transform($this->transformer)
+			->to_rest_response();
 	}
 
 	/**
 	 * Returns an array of response data for a single term.
 	 */
-	public function get_term_response_data( $term ) {
-		$response = [
-			'description'    => $term->description,
-			'editUrl'        => get_edit_term_link( $term->term_id, $term->taxonomy ),
-			'id'             => $term->term_id,
-			'isHierarchical' => is_taxonomy_hierarchical( $term->taxonomy ),
-			'parent'         => $term->parent,
-			'slug'           => $term->slug,
-			'taxonomy'       => $term->taxonomy,
-			'title'          => $term->name,
-			'url'            => get_term_link( $term ),
-		];
-
-		return $response;
-	}
+//	public function get_term_response_data( $term ) {
+//		$response = [
+//			'description'    => $term->description,
+//			'editUrl'        => get_edit_term_link( $term->term_id, $term->taxonomy ),
+//			'id'             => $term->term_id,
+//			'isHierarchical' => is_taxonomy_hierarchical( $term->taxonomy ),
+//			'parent'         => $term->parent,
+//			'slug'           => $term->slug,
+//			'taxonomy'       => $term->taxonomy,
+//			'title'          => $term->name,
+//			'url'            => get_term_link( $term ),
+//		];
+//
+//		return $response;
+//	}
 
 	/**
 	 * Returns an array of terms and related data
 	 * with child terms contained in the parent
 	 * term's data array.
+	 * @param WP_REST_Request $request
+	 * @return mixed|WP_REST_Response
 	 */
-	public function hierarchical_terms( $request ) {
+	public function hierarchical_terms( WP_REST_Request $request ) {
 		$response = [];
 		$children = [];
 		$params   = $request->get_params();
-		$terms    = get_terms( $params );
+		$terms    = $this->terms->findWhere($params, $this->transformer);
 
 		foreach ( $terms as $term ) {
 			if ( $term->parent ) {
@@ -158,8 +167,8 @@ class TermsController extends ControllerAbstract {
 
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
-				$parent             = $this->get_term_response_data( $term );
-				$parent['children'] = $this->get_child_terms( $term, $children );
+				$parent             = $term;
+				$parent['children'] = $this->terms->get_child_terms( $term, $children , $this->transformer);
 				$response[]         = $parent;
 			}
 		}
@@ -167,28 +176,12 @@ class TermsController extends ControllerAbstract {
 		return rest_ensure_response( $response );
 	}
 
-	/**
-	 * Returns an array of child terms for the given term.
-	 * A $children array must be passed to search for children.
-	 */
-	public function get_child_terms( $term, $children ) {
-		if ( isset( $children[ $term->term_id ] ) ) {
-			$term_children = $children[ $term->term_id ];
-			foreach ( $term_children as $i => $child ) {
-				$term_children[ $i ]             = $this->get_term_response_data( $child );
-				$term_children[ $i ]['children'] = $this->get_child_terms( $child, $children );
-			}
-
-			return $term_children;
-		}
-
-		return [];
-	}
 
 	/**
 	 * Returns an array of counts by taxonomy type.
+	 * @return mixed|WP_REST_Response
 	 */
-	public function terms_count( $request ) {
+	public function terms_count() {
 
 		$taxonomies = $this->posts->get_taxononies();
 		$response   = [];
@@ -203,19 +196,21 @@ class TermsController extends ControllerAbstract {
 
 	/**
 	 * Returns data for a single term.
+	 * @param WP_REST_Request $request
+	 * @return mixed|WP_REST_Response
 	 */
-	public function term( $request ) {
+	public function term( WP_REST_Request $request ) {
 		$id       = $request->get_param( 'id' );
-		$term     = get_term( $id );
-		$response = $this->get_term_response_data( $term );
-
-		return rest_ensure_response( $response );
+		$term     = $this->terms->find($id, $this->transformer);
+		return rest_ensure_response( $term );
 	}
 
 	/**
 	 * Creates a single term.
+	 * @param WP_REST_Request $request
+	 * @return array|mixed|WP_REST_Response
 	 */
-	public function create_term( $request ) {
+	public function create_term( WP_REST_Request $request ) {
 		$data = array_map( 'sanitize_text_field', $request->get_params() );
 		$id   = wp_insert_term(
 			$data['name'],
@@ -239,13 +234,16 @@ class TermsController extends ControllerAbstract {
 			];
 		}
 
-		return $this->get_term_response_data( get_term( $id['term_id'], $data['taxonomy'] ) );
+		$term = call_user_func($this->transformer, get_term( $id['term_id'], $data['taxonomy'] ) );
+		return rest_ensure_response($term);
 	}
 
 	/**
 	 * Updates a single term based on the specified action.
+	 * @param WP_REST_Request $request
+	 * @return mixed|WP_REST_Response
 	 */
-	public function update_term( $request ) {
+	public function update_term( WP_REST_Request $request ) {
 		$id     = $request->get_param( 'id' );
 		$action = $request->get_param( 'action' );
 		$term   = get_term( $id );

@@ -2,32 +2,58 @@
 
 namespace FL\Assistant\Controllers;
 
-use FL\Assistant\Pagination\UpdatesPaginator;
+require_once ABSPATH . 'wp-admin/includes/update.php';
+
+use FL\Assistant\Data\Transformers\PluginUpdatesTransformer;
+use FL\Assistant\Data\Transformers\ThemeUpdatesTransformer;
+
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Server;
+
 
 /**
  * REST API logic for updates.
  */
-class UpdatesController extends ControllerAbstract {
+class UpdatesController extends ControllerAbstract
+{
+	/**
+	 * @var ThemeUpdatesTransformer
+	 */
+	protected $themeUpdatesTransformer;
+	/**
+	 * @var PluginUpdatesTransformer
+	 */
+	protected $pluginUpdatesTransformer;
+
+	/**
+	 * UpdatesController constructor.
+	 * @param PluginUpdatesTransformer $pluginUpdatesTransformer
+	 * @param ThemeUpdatesTransformer $themeUpdatesTransformer
+	 */
+	public function __construct(PluginUpdatesTransformer $pluginUpdatesTransformer, ThemeUpdatesTransformer $themeUpdatesTransformer)
+	{
+		$this->pluginUpdatesTransformer = $pluginUpdatesTransformer;
+		$this->themeUpdatesTransformer = $themeUpdatesTransformer;
+	}
 
 	/**
 	 * Register routes.
 	 */
-	public function register_routes() {
+	public function register_routes()
+	{
 		$this->route(
 			'/updates', [
 				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'updates' ],
-					'args'                => [
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => [$this, 'updatesV2'],
+					'args' => [
 						'type' => [
 							'required' => false,
-							'type'     => 'string',
+							'type' => 'string',
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
+						return current_user_can('update_plugins') && current_user_can('update_themes');
 					},
 				],
 			]
@@ -36,154 +62,74 @@ class UpdatesController extends ControllerAbstract {
 		$this->route(
 			'/updates/count', [
 				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'updates_count' ],
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => [$this, 'updates_count'],
 					'permission_callback' => function () {
-						return current_user_can( 'update_plugins' ) && current_user_can( 'update_themes' );
+						return current_user_can('update_plugins') && current_user_can('update_themes');
 					},
 				],
 			]
 		);
 	}
 
+
 	/**
 	 * Returns an array of updates and related data.
+	 * @param \WP_REST_Request $request
+	 * @return mixed|\WP_REST_Response
 	 */
-	public function updates( $request ) {
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	public function updatesV2(\WP_REST_Request $request)
+	{
 
-		wp_update_plugins();
-		wp_update_themes();
+		$plugins = get_plugin_updates();
+		$themes = get_theme_updates();
 
-		$response       = [];
-		$update_plugins = get_site_transient( 'update_plugins' );
-		$update_themes  = get_site_transient( 'update_themes' );
-		$type           = $request->get_param( 'type' );
+		$type = $request->get_param('type');
+		$response = [];
 
-		if ( ! $type || 'all' === $type || 'plugins' === $type ) {
-			//          if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
-
-			foreach ( $update_plugins->response as $key => $update ) {
-				$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $key );
-				if ( version_compare( $update->new_version, $plugin['Version'], '>' ) ) {
-					$response[] = $this->get_plugin_response_data( $update, $plugin );
-				}
+		if (!$type || 'all' === $type || 'plugins' === $type) {
+			foreach ($plugins as $key => $plugin) {
+				$response[] = call_user_func($this->pluginUpdatesTransformer, $plugin);
 			}
-			//          }
 		}
 
-		if ( ! $type || 'all' === $type || 'themes' === $type ) {
-			//          if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
-
-			foreach ( $update_themes->response as $key => $update ) {
-				$theme = wp_get_theme( $key );
-				if ( version_compare( $update['new_version'], $theme->Version, '>' ) ) {
-					$response[] = $this->get_theme_response_data( $update, $theme );
-				}
+		if (!$type || 'all' === $type || 'themes' === $type) {
+			foreach ($themes as $key => $theme) {
+				$response[] = call_user_func($this->themeUpdatesTransformer, $theme);
 			}
-			//          }
 		}
 
-		$p = $this->paginate_array($response, count($response),  0);
 
-		return rest_ensure_response( $p->to_array() );
+		$p = $this->paginate_array($response, count($response), 0);
+
+		return rest_ensure_response($p->to_array());
 	}
 
-	/**
-	 * Returns an array of response data for a single plugin.
-	 */
-	public function get_plugin_response_data( $update, $plugin ) {
-		$thumbnail = null;
-		$banner    = null;
-
-		if ( isset( $update->icons ) ) {
-			if ( isset( $update->icons['2x'] ) ) {
-				$thumbnail = $update->icons['2x'];
-			} elseif ( isset( $update->icons['1x'] ) ) {
-				$thumbnail = $update->icons['1x'];
-			}
-		}
-
-		if ( isset( $update->banners ) ) {
-			if ( isset( $update->banners['2x'] ) ) {
-				$banner = $update->banners['2x'];
-			} elseif ( isset( $update->banners['1x'] ) ) {
-				$banner = $update->banners['1x'];
-			}
-		}
-
-		return [
-			'author'      => $plugin['AuthorName'],
-			'banner'      => $banner,
-			'content'     => $plugin['Description'],
-			'id'          => $update->plugin,
-			'meta'        => $plugin['Version'] . ' by ' . $plugin['AuthorName'],
-			'metaUpdated' => $update->new_version . ' by ' . $plugin['AuthorName'],
-			'plugin'      => $update->plugin,
-			'thumbnail'   => $thumbnail,
-			'title'       => $plugin['Name'],
-			'type'        => 'plugin',
-			'version'     => $plugin['Version'],
-		];
-	}
-
-	/**
-	 * Returns an array of response data for a single theme.
-	 */
-	public function get_theme_response_data( $update, $theme ) {
-		$thumbnail = null;
-
-		if ( isset( $update->icons ) ) {
-			if ( isset( $update->icons['2x'] ) ) {
-				$thumbnail = $update->icons['2x'];
-			} elseif ( isset( $update->icons['1x'] ) ) {
-				$thumbnail = $update->icons['1x'];
-			}
-		}
-
-		return [
-			'author'       => strip_tags( $theme->Author ),
-			'banner'       => $theme->get_screenshot(),
-			'content'      => $theme->Description,
-			'id'           => $update['theme'],
-			'meta'         => $theme->Version . ' by ' . strip_tags( $theme->Author ),
-			'meta_updated' => $update['new_version'] . ' by ' . strip_tags( $theme->Author ),
-			'theme'        => $update['theme'],
-			'thumbnail'    => $theme->get_screenshot(),
-			'title'        => $theme->Name,
-			'type'         => 'theme',
-			'version'      => $theme->Version,
-		];
-	}
 
 	/**
 	 * Returns the number of updates found.
 	 */
-	public function updates_count( $request ) {
-		wp_update_plugins();
-		wp_update_themes();
+	public function updates_count($request)
+	{
+		$count = 0;
+		$plugins = 0;
+		$themes = 0;
 
-		$count          = 0;
-		$plugins        = 0;
-		$themes         = 0;
-		$update_plugins = get_site_transient( 'update_plugins' );
-		$update_themes  = get_site_transient( 'update_themes' );
-
-		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
-			$plugins = count( $update_plugins->response );
-			$count   += $plugins;
+		if (current_user_can('update_plugins') && !empty($update_plugins->response)) {
+			$plugins = count(get_plugin_updates());
+			$count += $plugins;
 		}
 
-		if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
-			$themes = count( $update_themes->response );
-			$count  += $themes;
+		if (current_user_can('update_themes') && !empty($update_themes->response)) {
+			$themes = count(get_theme_updates());
+			$count += $themes;
 		}
 
 		return rest_ensure_response(
 			[
 				'plugins' => $plugins,
-				'themes'  => $themes,
-				'total'   => $count,
+				'themes' => $themes,
+				'total' => $count,
 			]
 		);
 	}

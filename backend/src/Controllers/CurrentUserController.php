@@ -28,7 +28,7 @@ class CurrentUserController extends ControllerAbstract {
 					},
 				],
 			]
-		);// TODO: Implement register_routes() method.
+		);
 	}
 
 	/**
