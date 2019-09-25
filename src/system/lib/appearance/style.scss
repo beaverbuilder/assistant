@@ -152,6 +152,12 @@
         border-radius: 2px;
         margin: 0;
 
+        &.fl-asst-divider::before,
+        &.fl-asst-divider::after {
+            display:none !important;
+            content: '' !important;
+        }
+
         &.fl-asst-shortie-divider {
             height: 3px;
             width: 100px;
@@ -159,11 +165,11 @@
             border-radius: 3px;
         }
     }
-    .fl-asst-horizontal-divider {
+    .fl-asst-divider.fl-asst-horizontal-divider {
         box-sizing: border-box;
         background: var(--fl-asst-surface-background);
     }
-    .fl-asst-vertical-divider {
+    .fl-asst-divider.fl-asst-vertical-divider {
         box-sizing: border-box;
         background: var(--fl-asst-surface-background);
         width: 2px;
