@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import classnames from 'classnames'
+import classnames from 'fl-classnames'
 
 export const Panel = ( props ) => {
 

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'fl-react'
 import { withRouter } from 'fl-react-router-dom'
-import classname from 'classnames'
+import classname from 'fl-classnames'
 import { __ } from 'assistant/i18n'
 import { Page, Nav, Error } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'

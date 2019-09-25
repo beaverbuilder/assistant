@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'fl-react'
+import React, { createContext, useContext } from 'fl-react'
 import classname from 'classnames'
 
 import './reset.scss'
@@ -7,8 +7,8 @@ import './forms.scss'
 
 export const Appearance = ( {
 	className,
-	brightness, // 'light' or 'dark'
-	size, // 'normal' or 'compact'
+	brightness,
+	size,
 	...rest,
 } ) => {
 	const parentContext = useContext( Appearance.Context )
@@ -38,41 +38,3 @@ Appearance.defaults = {
 
 Appearance.Context = createContext( Appearance.defaults )
 Appearance.Context.displayName = 'Appearance.Context'
-
-Appearance.useAppearance = ( options = Appearance.defaults ) => {
-	const [ appearance, setAppearance ] = useState( { ...Appearance.defaults, ...options } )
-
-	const setAttribute = ( key = '', value = '' ) => {
-		if ( key in Appearance.defaults ) {
-			setAppearance( {
-				...appearance,
-				[key]: value,
-			} )
-		}
-		return false
-	}
-
-	const toggleBrightness = () => {
-		const attr = 'brightness'
-		if ( 'light' === appearance.brightness ) {
-			setAttribute( attr, 'dark' )
-		} else {
-			setAttribute( attr, 'light' )
-		}
-	}
-
-	return {
-		set: options => setAppearance( { ...appearance, ...options } ),
-		setAttribute,
-		appearance,
-		toggleBrightness,
-	}
-}
-
-Appearance.TestSheet = () => {
-	return (
-		<div>
-
-		</div>
-	)
-}
