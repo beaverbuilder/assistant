@@ -301,7 +301,7 @@ const WindowPanel = ( {
 
 	const labelStyle = { marginLeft: 'var(--fl-asst-tiny-space)' }
 
-	const GrabBar = ({ ...rest }) => {
+	const GrabBar = ( { ...rest } ) => {
 		const styles = {
 			display: 'flex',
 			paddingTop: 4,
@@ -315,7 +315,7 @@ const WindowPanel = ( {
 			right: 0,
 		}
 		return (
-			<div style={styles} {...rest}>
+			<div style={ styles } { ...rest }>
 				<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
 				</svg>
