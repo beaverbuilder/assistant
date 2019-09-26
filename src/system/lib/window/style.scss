@@ -97,7 +97,7 @@
         width: 60px;
         height: 60px;
         border-radius: 30px;
-        background: var(--fl-asst-surface-background);
+        background: var(--fl-asst-surface-background) !important;
         overflow: hidden;
         padding:0;
         pointer-events: auto;

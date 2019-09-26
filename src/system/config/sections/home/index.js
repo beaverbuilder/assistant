@@ -11,7 +11,7 @@ registerSection( 'fl-home-search', {
 	},
 	render: () => {
 		return (
-			<Nav.ButtonLink to="/fl-search">{__( 'Search' )}</Nav.ButtonLink>
+			<Nav.ButtonLink to="/fl-search" style={{ background: 'var(--fl-asst-secondary-surface-background)' }}>{__( 'Search' )}</Nav.ButtonLink>
 		)
 	},
 } )
