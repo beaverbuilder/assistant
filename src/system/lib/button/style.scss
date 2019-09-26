@@ -7,8 +7,9 @@
         text-align: center;
         flex: 0 0 auto;
         padding: 0 10px;
-        background: var(--fl-asst-secondary-surface-background);
+        background: var(--fl-asst-surface-background);
         color: var(--fl-asst-secondary-surface-color);
+        box-shadow:inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background);
         min-height: var(--fl-asst-target-size);
         text-decoration: none;
         font-weight: 500;
@@ -111,6 +112,38 @@
 
                 &:last-child {
                     margin-right: 0;
+                }
+            }
+        }
+
+        &.fl-asst-button-group-appearance-tabs {
+            flex: 1 1 auto;
+            background: transparent;
+            padding: 0;
+            min-height: var(--fl-asst-target-size);
+            box-shadow: inset 0px -2px 0px 0px var(--fl-asst-secondary-surface-background);
+            border-radius: 0;
+            overflow: auto;
+            justify-content: center;
+            padding-bottom: 2px;
+
+            .fl-asst-button {
+                margin: 0;
+                background: transparent;
+                border-radius: 0;
+                box-shadow: none;
+
+                &.fl-asst-is-selected {
+                    box-shadow: 0px 2px 0px 0px currentColor;
+                }
+
+                &:focus {
+                    box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background);
+
+                    &.fl-asst-is-selected {
+                        box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background),
+                                    0px 2px 0px 0px currentColor;
+                    }
                 }
             }
         }

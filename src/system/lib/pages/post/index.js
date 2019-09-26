@@ -202,8 +202,8 @@ export const Post = ( { location, match, history } ) => {
 			<Page.TitleCard title={ values.title } />
 
 			{ useMemo( () => (
-				<Page.Pad style={ { display: 'flex', justifyContent: 'center' } } bottom={ false }>
-					<Button.Group>
+				<Page.Pad style={ { display: 'flex', justifyContent: 'center' } } bottom={ false } sides={ false }>
+					<Button.Group appearance="tabs">
 						{ tabs.map( ( { label, path }, i ) => (
 							<Button key={ i }
 								onClick={ () => setTab( path ) }

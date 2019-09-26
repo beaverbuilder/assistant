@@ -170,8 +170,8 @@ export const User = ( { location, match, history } ) => {
 
 	// Don't show tab buttons for only 1 tab
 	const TabButtons = () => useMemo( () =>  1 < tabs.length && (
-		<Page.Pad style={ { display: 'flex', justifyContent: 'center' } } bottom={ false }>
-			<Button.Group>
+		<Page.Pad style={ { display: 'flex', justifyContent: 'center' } } bottom={ false } sides={ false }>
+			<Button.Group appearance="tabs">
 				{tabs.map( ( { label, path, shouldInclude = true }, i ) => shouldInclude && (
 					<Button key={ i }
 						onClick={ () => setTab( path ) }
