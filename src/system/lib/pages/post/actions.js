@@ -3,10 +3,11 @@ import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
 
 export const getPostActions = ( key, values, setValue ) => {
-	const { currentUser, emptyTrashDays } = getSystemConfig()
+	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
 	const {
 		id,
+		type,
 		url,
 		editUrl,
 		status,
@@ -54,7 +55,7 @@ export const getPostActions = ( key, values, setValue ) => {
 
 	return [
 		{
-			label: __( 'View Post' ),
+			label: contentTypes[ type ].labels.viewItem,
 			href: url,
 		},
 		{
