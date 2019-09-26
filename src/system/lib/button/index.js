@@ -87,6 +87,9 @@ Button.Group = ( {
 	let childWidths = []
 
 	allChildren = Children.map( children, ( child, i ) => {
+
+		if ( !child ) return null
+
 		const isFirst = 0 === i
 		const shouldInsertDivider = ! isFirst && shouldInsertDividers
 		const shouldHideDivider = child.props.isSelected
