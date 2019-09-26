@@ -141,18 +141,6 @@
         }
     }
 
-	.fl-asst-more-button,
-	.fl-asst-more-button-divider {
-		visibility: hidden;
-	}
-
-	.fl-asst-button-group-has-more {
-		.fl-asst-more-button,
-		.fl-asst-more-button-divider {
-			visibility: visible;
-		}
-	}
-
     .fl-asst-more-menu {
         background: var(--fl-asst-secondary-surface-background);
         color: var(--fl-asst-secondary-surface-color);

@@ -75,6 +75,7 @@ Button.Group = ( {
 } ) => {
 	const [ visibleChildren, setVisibleChildren ] = useState( [] )
 	const [ moreChildren, setMoreChildren ] = useState( [] )
+	const [ shouldShowMoreBtn, setShouldShowMoreBtn ] = useState( true )
 	const [ shouldShowMoreMenu, setShouldShowMoreMenu ] = useState( false )
 	const wrapRef = useRef()
 	const moreBtnRef = useRef()
@@ -104,6 +105,7 @@ Button.Group = ( {
 
 	useLayoutEffect( () => {
 		if ( ! shouldHandleOverflow ) {
+			setShouldShowMoreBtn( false )
 			return
 		}
 
@@ -124,13 +126,13 @@ Button.Group = ( {
 
 		setVisibleChildren( visibleChildren )
 		setMoreChildren( moreChildren )
+		setShouldShowMoreBtn( moreChildren.length > 0 )
 	}, [] )
 
 	const classes = classname( {
 		'fl-asst-button-group': true,
 		[`fl-asst-button-group-${direction}`]: direction,
 		[`fl-asst-button-group-appearance-${appearance}`]: appearance,
-		'fl-asst-button-group-has-more': moreChildren.length > 0,
 	}, className )
 
 	const props = {
@@ -169,7 +171,7 @@ Button.Group = ( {
 			{ label && <label>{label}</label> }
 			<div { ...props }>
 				{ 0 === visibleChildren.length ? allChildren : visibleChildren }
-				<MoreBtn />
+				{ shouldShowMoreBtn && <MoreBtn /> }
 				{ shouldShowMoreMenu && moreChildren.length > 0 && <MoreMenu /> }
 			</div>
 		</>
