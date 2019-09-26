@@ -47,16 +47,13 @@
 
     .fl-asst-page-footer {
         flex: 0 0 auto;
-        padding: 3px;
+        border-top: 2px solid var(--fl-asst-surface-background);
 
         .fl-asst-page-footer-content {
             display: flex;
             flex-direction: column;
 
-            border-radius: 15px;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            padding: var(--fl-asst-inner-space) 0;
+            padding: 10px 0;
         }
     }
 }

@@ -6,7 +6,6 @@ import { __ } from '@wordpress/i18n'
 const { registerSection } = getSystemActions()
 
 registerSection( 'fl-user-info', {
-	label: __( 'Basic Info' ),
 	location: {
 		type: 'user',
 	},
