@@ -1,5 +1,6 @@
 import React, { useState } from 'fl-react'
 import { CancelToken, isCancel } from 'axios'
+import { __, sprintf } from 'assistant/i18n'
 import { Page, List } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getRequestConfig, getListItemConfig } from '../config'
@@ -14,7 +15,7 @@ export const ViewAll = ( { match, location } ) => {
 	const source = CancelToken.source()
 
 	return (
-		<Page title={ label } shouldPadSides={ false }>
+		<Page title={ sprintf( __( '%s matching "%s"' ), label, keyword ) } shouldPadSides={ false }>
 			<List.Scroller
 				items={ items }
 				getItemProps={ ( item, defaultProps ) => {
