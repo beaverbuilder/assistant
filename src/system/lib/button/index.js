@@ -172,8 +172,8 @@ Button.Group = ( {
 			<div { ...props }>
 				{ 0 === visibleChildren.length ? allChildren : visibleChildren }
 				{ shouldShowMoreBtn && <MoreBtn /> }
-				{ shouldShowMoreMenu && moreChildren.length > 0 && <MoreMenu /> }
 			</div>
+			{ shouldShowMoreMenu && moreChildren.length > 0 && <MoreMenu /> }
 		</>
 	)
 }
