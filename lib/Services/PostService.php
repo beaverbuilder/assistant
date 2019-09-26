@@ -72,6 +72,7 @@ class PostService {
 					'plural'   => esc_html( $type->labels->name ),
 					'newItem'  => esc_html( $type->labels->new_item ),
 					'editItem' => esc_html( $type->labels->edit_item ),
+					'viewItem' => esc_html( $type->labels->view_item ),
 				],
 			];
 		}
