@@ -14,8 +14,15 @@ export const ViewAll = ( { match, location } ) => {
 	const wp = getWpRest()
 	const source = CancelToken.source()
 
+	const getPageTitle = () => {
+		if ( '' === keyword ) {
+			return label
+		}
+		return sprintf( __( '%s matching "%s"' ), label, keyword )
+	}
+
 	return (
-		<Page title={ sprintf( __( '%s matching "%s"' ), label, keyword ) } shouldPadSides={ false }>
+		<Page title={ getPageTitle() } shouldPadSides={ false }>
 			<List.Scroller
 				items={ items }
 				getItemProps={ ( item, defaultProps ) => {
