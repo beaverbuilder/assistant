@@ -69,7 +69,7 @@ Button.Group = ( {
 	className,
 	direction = 'row',
 	appearance = 'normal',
-	shouldHandleOverflow = true,
+	shouldHandleOverflow = false,
 	label,
 	...rest
 } ) => {

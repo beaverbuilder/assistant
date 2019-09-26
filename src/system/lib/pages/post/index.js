@@ -173,7 +173,6 @@ export const Post = ( { location, match, history } ) => {
 	const sectionData = {
 		post: item,
 		useForm: useFormContext, // Rename
-		actions: [],
 	}
 
 	const Footer = () => {
