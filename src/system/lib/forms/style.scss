@@ -203,9 +203,6 @@
     select {
         height: var(--fl-asst-target-size);
         background-color: var(--fl-asst-secondary-surface-background);
-        background-repeat: no-repeat;
-        background-position: right 14px center;
-        padding-right: var(--fl-asst-target-size);
 
         &:-moz-focusring {
             color: transparent;
