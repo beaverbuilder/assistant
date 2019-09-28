@@ -5,7 +5,7 @@ import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
 import { AppRouting } from '../app'
 import { Annoucements } from '../announcements'
 
-export const Main = () => {
+export const Assistant = () => {
 	const { appearance, window } = useSystemState()
 	const { brightness = 'light' } = appearance
 	const { size } = window
