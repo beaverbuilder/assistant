@@ -19,11 +19,6 @@ export const Main = ( { match } ) => {
 	let source = CancelToken.source()
 
 	useEffect( () => {
-		if ( '' === keyword ) {
-			setResults( null )
-			return
-		}
-
 		source.cancel()
 		source = CancelToken.source()
 		setLoading( true )
@@ -48,7 +43,7 @@ export const Main = ( { match } ) => {
 				} )
 			} )
 
-			if ( results.length ) {
+			if ( results.length && '' !== keyword ) {
 				setSearchHistory( keyword )
 			}
 
