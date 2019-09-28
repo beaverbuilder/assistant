@@ -8,7 +8,6 @@ use FL\Assistant\Hooks\Actions\OnEditUserProfile;
 use FL\Assistant\Hooks\Actions\OnEnqueueScripts;
 use FL\Assistant\Hooks\Actions\OnPersonalOptionsUpdate;
 use FL\Assistant\Hooks\Actions\OnWPBeforeAdminBarRender;
-use FL\Assistant\Hooks\Actions\RegisterNotationsPostType;
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 
@@ -18,7 +17,6 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 	 * @throws \FL\Assistant\System\Container\InjectionException
 	 */
 	public function bootstrap() {
-		add_action( 'init', $this->injector->make( RegisterNotationsPostType::class ) );
 
 		// Enqueue Assistant frontend
 		$enqueue_scripts = $this->injector->make( OnEnqueueScripts::class );

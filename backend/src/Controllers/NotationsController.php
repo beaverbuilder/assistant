@@ -2,6 +2,7 @@
 
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Data\Repository\NotationsRepository;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Server;
 
@@ -9,6 +10,20 @@ use WP_REST_Server;
  * REST API logic for notations.
  */
 class NotationsController extends ControllerAbstract {
+
+	/**
+	 * @var NotationsRepository
+	 */
+	protected $notations;
+
+	/**
+	 * NotationsController constructor.
+	 *
+	 * @param NotationsRepository $notations
+	 */
+	public function __construct( NotationsRepository $notations ) {
+		$this->notations = $notations;
+	}
 
 	/**
 	 * Register routes.
@@ -29,11 +44,14 @@ class NotationsController extends ControllerAbstract {
 
 	/**
 	 * Deletes notations.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return mixed|\WP_REST_Response
 	 */
-	public function delete_notation( $request ) {
-		$meta              = $request->get_params();
-		$notations_service = $this->service( 'notations' );
-		$notations         = $notations_service->get_by_meta( $meta );
+	public function delete_notation( \WP_REST_Request $request ) {
+		$meta      = $request->get_params();
+		$notations = $this->notations->get_by_meta( $meta );
 
 		foreach ( $notations as $notation ) {
 			if ( ! current_user_can( 'edit_post', $notation->ID ) ) {

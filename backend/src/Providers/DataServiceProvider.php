@@ -27,7 +27,6 @@ use FL\Assistant\System\Integrations\BeaverBuilder;
  */
 class DataServiceProvider extends ServiceProviderAbstract {
 
-
 	protected $repository = [
 		UsersRepository::class,
 		PostsRepository::class,

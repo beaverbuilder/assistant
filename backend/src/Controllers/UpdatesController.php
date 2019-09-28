@@ -111,12 +111,12 @@ class UpdatesController extends ControllerAbstract {
 		$plugins = 0;
 		$themes = 0;
 
-		if ( current_user_can( 'update_plugins' ) && ! empty( $update_plugins->response ) ) {
+		if ( current_user_can( 'update_plugins' ) ) {
 			$plugins = count( get_plugin_updates() );
 			$count += $plugins;
 		}
 
-		if ( current_user_can( 'update_themes' ) && ! empty( $update_themes->response ) ) {
+		if ( current_user_can( 'update_themes' ) ) {
 			$themes = count( get_theme_updates() );
 			$count += $themes;
 		}

@@ -2,6 +2,8 @@
   "name": "beaverbuilder/assistant",
   "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
   "type": "wordpress-plugin",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "FL\\Assistant\\": "backend/src/",
@@ -9,6 +11,7 @@
     }
   },
   "require": {
+    "symfony/finder": "^4.3"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.4",

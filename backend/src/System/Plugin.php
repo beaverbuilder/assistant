@@ -8,11 +8,10 @@ use FL\Assistant\Providers\HooksServiceProvider;
 use FL\Assistant\Providers\RestServiceProvider;
 use FL\Assistant\Providers\ViewServiceProvider;
 use FL\Assistant\System\Util\PhpVersionCheck;
+use FL\Assistant\Providers\PostTypeServiceProvider;
 
 // Alias the injector - its our DI container.
 use FL\Assistant\System\Container\Injector as Container;
-
-
 
 /**
  * Class Plugin
@@ -32,14 +31,11 @@ class Plugin {
 	public $providers = [
 		ViewServiceProvider::class,
 		DataServiceProvider::class,
+		PostTypeServiceProvider::class,
 		HooksServiceProvider::class,
 		RestServiceProvider::class,
 		CloudServiceProvider::class,
 	];
-	/**
-	 * @var array
-	 */
-	protected $plugin_data;
 
 	/**
 	 * Plugin constructor.
@@ -49,7 +45,6 @@ class Plugin {
 	 * @throws \FL\Assistant\System\Container\InjectionException
 	 */
 	public function __construct( $plugin_file ) {
-		$this->plugin_data = get_plugin_data( $plugin_file );
 		$this->check_minimum_php_requirements();
 		$this->register_providers();
 
@@ -67,7 +62,8 @@ class Plugin {
 
 
 	/**
-	 * @throws \FL\Assistant\System\Container\InjectionException
+	 * @throws Container\InjectionException
+	 * @throws \Auryn\InjectionException
 	 */
 	public function register_providers() {
 		$this->container = new Container();
