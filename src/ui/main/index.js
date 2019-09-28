@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemActions, useSystemState } from 'assistant/store'
 import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
 import { AppRouting } from '../app'
+import { Annoucements } from '../announcements'
 
 export const Main = () => {
 	const { appearance, window } = useSystemState()
@@ -40,6 +41,7 @@ const MainWindow = () => {
 		>
 			<Error.Boundary alternate={ WindowError }>
 				<AppRouting />
+				{ /* <Annoucements /> */ }
 			</Error.Boundary>
 		</Window>
 	)

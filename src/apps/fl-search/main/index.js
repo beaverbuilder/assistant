@@ -109,7 +109,11 @@ export const Main = ( { match } ) => {
 				<>
 				{ 0 < searchHistory.length &&
 					<Page.Pad>
-						<Button.Group label={ __( 'Recent Searches' ) } shouldHandleOverflow={true}>
+						<Button.Group
+							label={ __( 'Recent Searches' ) }
+							appearance="buttons"
+							shouldHandleOverflow={true}
+						>
 							{ searchHistory.map( ( keyword, key ) =>
 								<Button
 									key={ key }
