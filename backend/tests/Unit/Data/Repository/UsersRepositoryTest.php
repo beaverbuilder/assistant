@@ -44,7 +44,6 @@ class UsersRepositoryTest extends BaseTestCase {
 		$repo = new UsersRepository();
 		$users = $repo->find_where( [] );
 
-		var_dump( $users );
 		$this->assertIsArray( $users );
 		$this->assertIsObject( $users[1] );
 		$this->assertObjectHasAttribute( 'ID', $users[1] );

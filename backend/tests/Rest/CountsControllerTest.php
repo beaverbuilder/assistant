@@ -13,6 +13,11 @@ class CountsControllerTest extends RestTestCase {
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
 
-		print_r( $data );
+		$this->assertIsArray( $data );
+		$this->assertArrayHasKey( 'content/post', $data );
+		$this->assertArrayHasKey( 'content/page', $data );
+		$this->assertArrayHasKey( 'taxonomy/category', $data );
+
+		// @todo - assert the rest of the key
 	}
 }

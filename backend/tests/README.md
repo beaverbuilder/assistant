@@ -10,23 +10,23 @@ Steps:
 
     `mysqladmin -u root -p create wptests`
     
-2. Install the WordPress unit testing framework
-
-    `bin/install-wp-tests.sh <test_db_name> <test_db_user> <test_db_pass>`
+2.  Copy `tests/wp-config.php.example` to `tests/wp-config.php`
     
 3. Install composer dependencies
 
-    `composer install`
+    `composer install` 
 
 4. Run tests
 
     For automated test runners: 
     
-    `vendor/bin/phpunit`
+    `vendor/bin/phpunit --config=phpunit.xml`
     
     For user friendly console output use the `--testdox` flag:
     
-    `vendor/bin/phpunit --testdox`
+    `vendor/bin/phpunit --config=phpunit.xml --testdox` 
+    or 
+    `composer run tests`
 
     On the console you should see output that looks like this:
 

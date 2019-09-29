@@ -26,6 +26,6 @@
   "scripts": {
     "lint": "vendor/bin/phpcs --standard=phpcs.xml",
     "fix": "vendor/bin/phpcbf --standard=phpcs.xml",
-    "test": "vendor/bin/phpunit --config=phpunit.xml"
+    "tests": "vendor/bin/phpunit --config=phpunit.xml --testdox"
   }
 }
