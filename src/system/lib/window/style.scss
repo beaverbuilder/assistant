@@ -1,6 +1,6 @@
 .fl-asst {
     .fl-asst-window {
-        --fl-asst-window-size: 400px;
+        --fl-asst-window-size: 360px;
         --fl-asst-window-toolbar-height: 38px;
 
         box-sizing: border-box;
@@ -28,7 +28,7 @@
             border-radius: var(--fl-asst-medium-space);
         }
         &.fl-asst-window-normal {
-            --fl-asst-window-size: 430px;
+            --fl-asst-window-size: 390px;
             height: 100%;
         }
 
@@ -46,8 +46,7 @@
             align-items: center;
             cursor: move;
             user-select:none;
-            padding: 0 12px;
-            padding-right: 5px;
+            padding: 0 5px;
             -webkit-user-select: none;
             user-select:none;
 
@@ -98,7 +97,7 @@
         width: 60px;
         height: 60px;
         border-radius: 30px;
-        background: var(--fl-asst-surface-background);
+        background: var(--fl-asst-surface-background) !important;
         overflow: hidden;
         padding:0;
         pointer-events: auto;

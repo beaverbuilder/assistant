@@ -54,7 +54,7 @@ const entry = {
     ui: './src/ui',
     api: './src/system',
     apps: './src/apps',
-    vendors: './packages/fl-vendors',
+    vendors: './src/vendors',
 }
 
 const config = {

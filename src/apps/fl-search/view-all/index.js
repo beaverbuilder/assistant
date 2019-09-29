@@ -1,5 +1,6 @@
 import React, { useState } from 'fl-react'
 import { CancelToken, isCancel } from 'axios'
+import { __, sprintf } from 'assistant/i18n'
 import { Page, List } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getRequestConfig, getListItemConfig } from '../config'
@@ -13,8 +14,15 @@ export const ViewAll = ( { match, location } ) => {
 	const wp = getWpRest()
 	const source = CancelToken.source()
 
+	const getPageTitle = () => {
+		if ( '' === keyword ) {
+			return label
+		}
+		return sprintf( __( '%s matching "%s"' ), label, keyword )
+	}
+
 	return (
-		<Page title={ label } shouldPadSides={ false }>
+		<Page title={ getPageTitle() } shouldPadSides={ false }>
 			<List.Scroller
 				items={ items }
 				getItemProps={ ( item, defaultProps ) => {

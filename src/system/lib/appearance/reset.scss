@@ -9,8 +9,11 @@
         user-select: none;
         cursor: pointer;
 
+        &:hover {
+            background-color: transparent;
+        }
         &:focus {
-            background: none;
+            background-color: transparent;
         }
     }
     a {

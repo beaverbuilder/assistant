@@ -49,8 +49,8 @@ export const Button = forwardRef( ( props, ref ) => {
 	)
 } )
 
-const Rule = ( { direction: dir = 'horizontal', isHidden = false } ) => {
-	const classes = classname( {
+const Rule = ( { className, direction: dir = 'horizontal', isHidden = false } ) => {
+	const classes = classname( className, {
 		'fl-asst-divider': true,
 		'fl-asst-vertical-divider': 'vertical' === dir,
 		'fl-asst-horizontal-divider': 'horizontal' === dir,
@@ -65,7 +65,7 @@ const Rule = ( { direction: dir = 'horizontal', isHidden = false } ) => {
  * Button.Group
  */
 Button.Group = ( {
-	children: passedChildren,
+	children,
 	className,
 	direction = 'row',
 	appearance = 'normal',
@@ -73,98 +73,64 @@ Button.Group = ( {
 	label,
 	...rest
 } ) => {
-	const [ needsOverflow, setNeedsOverflow ] = useState( false )
-	const [ availableSpace, setAvailableSpace ] = useState( null )
+	const [ visibleChildren, setVisibleChildren ] = useState( [] )
+	const [ moreChildren, setMoreChildren ] = useState( [] )
+	const [ shouldShowMoreBtn, setShouldShowMoreBtn ] = useState( true )
 	const [ shouldShowMoreMenu, setShouldShowMoreMenu ] = useState( false )
-
 	const wrapRef = useRef()
 	const moreBtnRef = useRef()
 
-	let children = passedChildren
-	let ejected = []
 	const shouldInsertDividers = 'normal' === appearance
 	const dividerDirection = 'row' === direction ? 'vertical' : 'horizontal'
 
-	// First Pass - Is the scroll width greater than the width of the container?
-	useLayoutEffect( () => {
+	let allChildren = []
+	let childWidths = []
 
+	allChildren = Children.map( children, ( child, i ) => {
+
+		if ( !child ) return null
+
+		const isFirst = 0 === i
+		const shouldInsertDivider = ! isFirst && shouldInsertDividers
+		const shouldHideDivider = child.props.isSelected
+		const childRef = el => {
+			if ( el ) {
+				childWidths.push( el.clientWidth + ( isFirst ? 0 : 2 ) )
+			}
+		}
+		return (
+			<>
+				{ shouldInsertDivider && <Rule direction={ dividerDirection } isHidden={ shouldHideDivider } /> }
+				{ cloneElement( child, { ref: childRef } ) }
+			</>
+		)
+	} )
+
+	useLayoutEffect( () => {
 		if ( ! shouldHandleOverflow ) {
-			if ( needsOverflow ) {
-				setNeedsOverflow( false )
-			}
+			setShouldShowMoreBtn( false )
 			return
 		}
 
-		if ( wrapRef.current ) {
-			const wrap = wrapRef.current
-			const hasScroll = wrap.scrollWidth > wrap.clientWidth
+		const wrapWidth = wrapRef.current.clientWidth
+		const moreBtnWidth = moreBtnRef.current.offsetWidth
+		let totalChildWidths = 0
+		let visibleChildren = []
+		let moreChildren = []
 
-			// Did the value change?
-			if ( needsOverflow !== hasScroll ) {
-				setNeedsOverflow( hasScroll )
+		childWidths.map( ( width, i ) => {
+			totalChildWidths += width
+			if ( totalChildWidths + moreBtnWidth < wrapWidth ) {
+				visibleChildren.push( allChildren[ i ] )
+			} else {
+				moreChildren.push( allChildren[ i ] )
 			}
-		}
-
-	} ) // always
-
-	// Second Pass - Determine how much available space there is after more button is added.
-	useLayoutEffect( () => {
-		if ( ! needsOverflow ) {
-			return
-		}
-
-		const wrap = wrapRef.current
-		const more = moreBtnRef.current
-
-		if ( needsOverflow && wrap && more ) {
-			setAvailableSpace( wrap.clientWidth - ( more.clientWidth + 2 ) )
-		}
-
-	}, [ needsOverflow ] )
-
-
-	// Process children
-	if ( children ) {
-		let accruedWidth = 0
-
-		children = Children.map( passedChildren, ( child, i ) => {
-
-			if ( ! child ) {
-				return null
-			}
-
-			let shouldEject = false
-			const isFirst = 0 === i
-			const shouldInsertDivider = ! isFirst && shouldInsertDividers
-			const shouldHideDivider = child.props.isSelected
-
-			const childRef = el => {
-				if ( ! shouldHandleOverflow ) {
-					return
-				}
-
-				if ( el && availableSpace ) {
-					accruedWidth += el.clientWidth + ( isFirst ? 0 : 2 )
-
-					if ( accruedWidth > availableSpace ) {
-
-						// Do something here
-					}
-				}
-			}
-
-			if ( shouldEject ) {
-				return null
-			}
-
-			return (
-                <>
-                    { shouldInsertDivider && <Rule direction={ dividerDirection } isHidden={ shouldHideDivider } /> }
-                    { cloneElement( child, { ref: childRef } ) }
-                </>
-			)
 		} )
-	}
+
+		setVisibleChildren( visibleChildren )
+		setMoreChildren( moreChildren )
+		setShouldShowMoreBtn( moreChildren.length > 0 )
+	}, [] )
 
 	const classes = classname( {
 		'fl-asst-button-group': true,
@@ -181,30 +147,37 @@ Button.Group = ( {
 
 	const MoreBtn = () => {
 		return (
-			<Button ref={ moreBtnRef } onClick={ () => setShouldShowMoreMenu( ! shouldShowMoreMenu ) }>{__( 'More' )}</Button>
+			<>
+				<Rule
+					className='fl-asst-more-button-divider'
+					direction={ dividerDirection }
+				/>
+				<Button
+					ref={ moreBtnRef }
+					className='fl-asst-more-button'
+					onClick={ () => setShouldShowMoreMenu( ! shouldShowMoreMenu ) }
+				>
+						{__( 'More' )}
+				</Button>
+			</>
+		)
+	}
+
+	const MoreMenu = () => {
+		return (
+			<div className="fl-asst-more-menu">{ moreChildren }</div>
 		)
 	}
 
 	return (
-			<>
-				{ label && <label>{label}</label> }
-				<div { ...props }>
-					{ children }
-					{ needsOverflow && (
-					<>
-						<Rule direction={ dividerDirection } />
-						<MoreBtn />
-					</>
-					) }
-				</div>
-				{ shouldShowMoreMenu && needsOverflow && <MoreMenu>{ejected}</MoreMenu> }
-			</>
-	)
-}
-
-const MoreMenu = ( { children } ) => {
-	return (
-		<div className="fl-asst-more-menu">{children}</div>
+		<>
+			{ label && <label>{label}</label> }
+			<div { ...props }>
+				{ 0 === visibleChildren.length ? allChildren : visibleChildren }
+				{ shouldShowMoreBtn && <MoreBtn /> }
+			</div>
+			{ shouldShowMoreMenu && moreChildren.length > 0 && <MoreMenu /> }
+		</>
 	)
 }
 

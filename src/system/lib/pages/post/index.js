@@ -1,6 +1,7 @@
 import React, { useMemo } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, Button, Form } from 'lib'
+import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
 import { getPostActions } from './actions'
 
@@ -71,6 +72,7 @@ const getConfig = () => {
 }
 
 export const Post = ( { location, match, history } ) => {
+	const { contentTypes } = getSystemConfig()
 
 	const defaultItem = {
 		author: null,
@@ -194,7 +196,7 @@ export const Post = ( { location, match, history } ) => {
 
 	return (
 		<Page
-			title={ __( 'Edit Post' ) }
+			title={ contentTypes[ item.type ].labels.editItem }
 			shouldPadSides={ false }
 			footer={ hasChanges && <Footer /> }
 		>
@@ -202,8 +204,8 @@ export const Post = ( { location, match, history } ) => {
 			<Page.TitleCard title={ values.title } />
 
 			{ useMemo( () => (
-				<Page.Pad style={ { display: 'flex', justifyContent: 'center' } } bottom={ false }>
-					<Button.Group>
+				<Page.Pad style={ { display: 'flex', justifyContent: 'center', flexShrink: 0 } } bottom={ false } sides={ false }>
+					<Button.Group appearance="tabs">
 						{ tabs.map( ( { label, path }, i ) => (
 							<Button key={ i }
 								onClick={ () => setTab( path ) }

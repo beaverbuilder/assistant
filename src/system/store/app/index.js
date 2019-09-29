@@ -1,7 +1,7 @@
 import { useContext } from 'fl-react'
 import { App } from 'lib'
 import { getCache, setCache } from 'shared-utils/cache'
-import { registerStore, useStore, getStore, getDispatch, getSelectors } from 'shared-utils/store'
+import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
 import {
 	defaultState,
 	defaultActions,

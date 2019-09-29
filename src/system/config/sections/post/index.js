@@ -10,28 +10,15 @@ registerSection( 'fl-post-title', {
 		type: 'post',
 	},
 	render: ( { useForm } ) => {
-		const { title, slug } = useForm()
+		const { title, slug, url } = useForm()
 
 		return (
 			<>
 				<Form.TextItem { ...title } />
 				<Form.TextItem { ...slug } />
-			</>
-		)
-	},
-} )
-
-registerSection( 'fl-post-permalink', {
-	label: __( 'Permalink' ),
-	location: {
-		type: 'post',
-	},
-	render: ( { useForm } ) => {
-		const { url } = useForm()
-		return (
-			<>
-				<Form.Item>
+				<Form.Item label={ url.label }>
 					<Control.URL
+						id={ url.id }
 						value={ url.value }
 					/>
 				</Form.Item>

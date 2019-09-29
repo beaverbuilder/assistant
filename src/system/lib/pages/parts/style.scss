@@ -89,7 +89,7 @@
             flex: 1 1 auto;
             padding: var(--fl-asst-outer-space) 0 var(--fl-asst-inner-space);
             display: grid;
-            grid-row-gap: var(--fl-asst-outer-space);
+            grid-row-gap: var(--fl-asst-small-space);
         }
         &.fl-asst-section-pad-sides .fl-asst-section-content,
         &.fl-asst-section-pad-sides .fl-asst-section-footer {

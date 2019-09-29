@@ -31,6 +31,9 @@
     --fl-asst-small-space: 10px;
     --fl-asst-tiny-space: 5px;
 
+    --fl-asst-outer-space: 20px;
+    --fl-asst-inner-space: 15px;
+
     // Typograpy
     --fl-asst-base-text-size: 14px;
     --fl-asst-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -149,6 +152,12 @@
         border-radius: 2px;
         margin: 0;
 
+        &.fl-asst-divider::before,
+        &.fl-asst-divider::after {
+            display:none !important;
+            content: '' !important;
+        }
+
         &.fl-asst-shortie-divider {
             height: 3px;
             width: 100px;
@@ -156,11 +165,11 @@
             border-radius: 3px;
         }
     }
-    .fl-asst-horizontal-divider {
+    .fl-asst-divider.fl-asst-horizontal-divider {
         box-sizing: border-box;
         background: var(--fl-asst-surface-background);
     }
-    .fl-asst-vertical-divider {
+    .fl-asst-divider.fl-asst-vertical-divider {
         box-sizing: border-box;
         background: var(--fl-asst-surface-background);
         width: 2px;
@@ -173,16 +182,6 @@
     .fl-asst-rounded { border-radius: var(--fl-asst-base-radius); }
 
     .fl-asst-padded { padding: var(--fl-asst-outer-space); }
-
-    // Sizing
-    .fl-asst-size-compact {
-        --fl-asst-outer-space: 20px;
-        --fl-asst-inner-space: 15px;
-    }
-    .fl-asst-size-normal {
-        --fl-asst-outer-space: 20px;
-        --fl-asst-inner-space: 15px;
-    }
 
     // Brightness Setups
     .fl-asst-appearance {
