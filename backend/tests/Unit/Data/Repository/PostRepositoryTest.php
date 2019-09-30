@@ -4,7 +4,7 @@
 namespace FL\Assistant\Tests\Unit\Data;
 
 use FL\Assistant\Data\Repository\PostsRepository;
-use FL\Assistant\Tests\BaseTestCase;
+use FL\Assistant\Tests\Unit\BaseTestCase;
 
 class PostRepositoryTest extends BaseTestCase {
 

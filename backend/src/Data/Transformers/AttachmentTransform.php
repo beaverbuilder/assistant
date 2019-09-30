@@ -11,8 +11,6 @@ class AttachmentTransform {
 		$meta  = wp_prepare_attachment_for_js( $attachment->ID );
 		$thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )[0];
 
-		print_r( $meta );
-
 		return [
 			'alt'             => $meta['title'],
 			'author'          => get_the_author_meta( 'display_name', $attachment->post_author ),

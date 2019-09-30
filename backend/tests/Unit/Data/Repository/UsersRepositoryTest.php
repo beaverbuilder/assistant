@@ -5,7 +5,7 @@ namespace FL\Assistant\Tests\Unit\Data\Repository;
 
 
 use FL\Assistant\Data\Repository\UsersRepository;
-use FL\Assistant\Tests\BaseTestCase;
+use FL\Assistant\Tests\Unit\BaseTestCase;
 
 class UsersRepositoryTest extends BaseTestCase {
 

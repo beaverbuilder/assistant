@@ -1,14 +1,11 @@
 <?php
 
 
-namespace FL\Assistant\Tests\Rest;
+namespace FL\Assistant\Tests\Unit;
 
-
-use FL\Assistant\Tests\BaseTestCase;
 use WP_REST_Server;
 
-class RestTestCase extends BaseTestCase {
-
+class ControllerTestCase extends BaseTestCase {
 
 	public $server;
 

@@ -1,7 +1,9 @@
 <?php
-namespace FL\Assistant\Tests\Rest;
+namespace FL\Assistant\Tests\Unit\Controllers;
 
-class AttachmentsControllerTest extends RestTestCase {
+use FL\Assistant\Tests\Unit\ControllerTestCase;
+
+class AttachmentsControllerTest extends ControllerTestCase {
 
 	public function test_can_get_attachments() {
 		wp_set_current_user( 1 );
@@ -31,19 +33,17 @@ class AttachmentsControllerTest extends RestTestCase {
 
 		$attachment_id = $this->factory()
 			->attachment
-			->create_upload_object( __DIR__ . '/../resources/mountains.jpg' );
+			->create_upload_object( __DIR__ . '/../../resources/mountains.jpg' );
 
 		$route    = sprintf( '/fl-assistant/v1/attachments/%d', $attachment_id );
 		$request  = new \WP_REST_Request( 'GET', $route );
 		$response = $this->server->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
-//		var_dump( $data );
 		$this->assertIsArray( $data );
 		$this->assertArrayHasKey( 'id', $data );
 		$this->assertArrayHasKey( 'title', $data );
 		$this->assertArrayHasKey( 'thumbnail', $data );
-//		$this->assertEquals( $data['filename'], 'mountains-26.jpg' );
 	}
 
 	public function test_can_trash_attachment() {
@@ -51,7 +51,7 @@ class AttachmentsControllerTest extends RestTestCase {
 
 		$attachment_id = $this->factory()
 			->attachment
-			->create_upload_object( __DIR__ . '/../resources/mountains.jpg' );
+			->create_upload_object( __DIR__ . '/../../resources/mountains.jpg' );
 
 		$route = sprintf( '/fl-assistant/v1/attachments/%d', $attachment_id );
 
@@ -66,6 +66,5 @@ class AttachmentsControllerTest extends RestTestCase {
 		$response = $this->server->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
-
 	}
 }

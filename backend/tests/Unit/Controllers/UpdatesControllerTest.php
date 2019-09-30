@@ -1,10 +1,11 @@
 <?php
 
 
-namespace FL\Assistant\Tests\Rest;
+namespace FL\Assistant\Tests\Unit\Controllers;
 
+use FL\Assistant\Tests\Unit\ControllerTestCase;
 
-class UpdatesControllerTest extends RestTestCase {
+class UpdatesControllerTest extends ControllerTestCase {
 
 	public function test_can_list_updates() {
 		wp_set_current_user( 1 );
