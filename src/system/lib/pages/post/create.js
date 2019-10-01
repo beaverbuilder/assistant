@@ -23,19 +23,22 @@ export const CreatePost = () => {
 		return options
 	}
 
-	const { form, useFormContext, submitForm } = Form.useForm( {
+	const { values, form, useFormContext, submitForm } = Form.useForm( {
 		type: {
 			label: __( 'Type' ),
 			options: getTypeOptions(),
+			id: 'post_type',
 		},
 		title: {
 			label: __( 'Title' ),
 			placeholder: __( 'TItle' ),
+			id: 'post_title',
 		},
 		slug: {
 			label: __( 'Slug' ),
 			placeholder: __( 'my-post-slug' ),
 			sanitize: createSlug,
+			id: 'post_name',
 		},
 		parent: {
 			label: __( 'Parent' ),
@@ -45,9 +48,20 @@ export const CreatePost = () => {
 		},
 	}, {
 		onSubmit: ( changes, ids ) => {
-			// const { name } = e.currentTarget
-			// setCreating( true )
-			// createPost( post, response => {
+			const data = {}
+			const keyMap = ids
+			for ( let key in initial ) {
+				if ( ! keyMap[ key ] ) {
+					continue
+				}
+				if ( ! changes[ key ] ) {
+					data[ keyMap[ key ] ] = initial[ key ]
+				} else {
+					data[ keyMap[ key ] ] = changes[ key ]
+				}
+			}
+			// const wpRest = getWpRest()
+			// wpRest.posts().create( post, response => {
 			// 	setCreating( false )
 			// 	if ( response.error ) {
 			// 		createError()
