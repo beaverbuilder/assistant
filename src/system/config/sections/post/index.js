@@ -93,11 +93,13 @@ registerSection( 'fl-new-post-title', {
 		type: 'create-post',
 	},
 	render: ( { useForm } ) => {
-		const { title, slug } = useForm()
+		const { type, title, slug, parent } = useForm()
 		return (
 			<>
+				<Form.SelectItem { ...type } />
 				<Form.TextItem { ...title } />
 				<Form.TextItem { ...slug } />
+				<Form.SelectItem { ...parent } />
 			</>
 		)
 	},
