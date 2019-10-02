@@ -3,13 +3,8 @@ import { __ } from '@wordpress/i18n'
 import { Page, Nav, Button, Form } from 'lib'
 import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
+import { createSlug } from 'shared-utils/url'
 import { getPostActions } from './actions'
-
-const slugify = value => {
-	return value.replace( ' ', '-' )
-		.replace( '_', '-' )
-		.trim()
-}
 
 const getConfig = () => {
 	return {
@@ -23,7 +18,7 @@ const getConfig = () => {
 		slug: {
 			label: __( 'Slug' ),
 			id: 'post_name',
-			sanitize: slugify,
+			sanitize: createSlug,
 		},
 		url: {
 			label: __( 'URL' ),
@@ -228,54 +223,6 @@ export const Post = ( { location, match, history } ) => {
 				), [] )}
 			</Form>
 
-		</Page>
-	)
-}
-
-
-export const CreatePost = () => {
-
-	const initial = {
-		title: '',
-		slug: '',
-	}
-
-	const { form, useFormContext, submitForm } = Form.useForm( {
-		title: {
-			label: __( 'Title' ),
-			placeholder: __( 'TItle' ),
-		},
-		slug: {
-			label: __( 'Slug' ),
-			placeholder: __( 'my-post-slug' ),
-			sanitize: slugify,
-		},
-		url: {
-
-			/* This needs to be a derived value */
-		}
-	}, {}, initial )
-
-	const Footer = () => {
-		return (
-            <>
-				<Page.Toolbar>
-					<Button type="submit" onClick={ submitForm } >{__( 'Create' )}</Button>
-				</Page.Toolbar>
-            </>
-		)
-	}
-
-	return (
-		<Page title={ __( 'Create New' ) } shouldPadSides={ false } footer={ <Footer /> }>
-			<Form { ...form }>
-				<Page.RegisteredSections
-					location={ { type: 'create-post' } }
-					data={ {
-						useForm: useFormContext
-					} }
-				/>
-			</Form>
 		</Page>
 	)
 }

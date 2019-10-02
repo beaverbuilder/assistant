@@ -78,7 +78,7 @@ export const Main = ( { match } ) => {
 						ref={ inputRef }
 					/>
 					{ '' !== keyword && <Button appearance="transparent" onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
-					{ loading &&
+					{ '' !== keyword && loading &&
 						<div className='fl-asst-search-spinner'>
 							<Icon.SmallSpinner/>
 						</div>
