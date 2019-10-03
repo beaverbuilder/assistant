@@ -23,7 +23,13 @@ export const CreatePost = () => {
 		return options
 	}
 
-	const { form, useFormContext, submitForm } = Form.useForm( {
+	const {
+		form,
+		useFormContext,
+		submitForm,
+		isSubmitting,
+		setIsSubmitting,
+	} = Form.useForm( {
 		type: {
 			label: __( 'Type' ),
 			options: getTypeOptions(),
@@ -63,6 +69,8 @@ export const CreatePost = () => {
 			} ).catch( ( error ) => {
 				alert( __( 'Error: Post not created! Please try again.' ) );
 				console.log( error ) // eslint-disable-line no-console
+			} ).finally( () => {
+				setIsSubmitting( false )
 			} )
 		}
 	}, defaults )
@@ -71,7 +79,8 @@ export const CreatePost = () => {
 		return (
             <>
 				<Page.Toolbar>
-					<Button type="submit" onClick={ submitForm } >{__( 'Create Draft' )}</Button>
+					{ isSubmitting && <Button.Loading>{__( 'Creating' )}</Button.Loading> }
+					{ ! isSubmitting && <Button type="submit" onClick={ submitForm } >{__( 'Create Draft' )}</Button> }
 				</Page.Toolbar>
             </>
 		)

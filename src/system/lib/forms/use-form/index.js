@@ -1,4 +1,4 @@
-import { useContext, useReducer } from 'fl-react'
+import { useContext, useReducer, useState } from 'fl-react'
 import { Form } from '../'
 
 const hook = () => {
@@ -281,7 +281,6 @@ export const useForm = (
 
 	const values = selectValues( state )
 
-
 	const changed = selectChanged( state )
 	const fields = selectFields( state, values )
 	const ids = selectIDs( state )
@@ -289,6 +288,8 @@ export const useForm = (
 	const hasChanges = 0 < Object.keys( changed ).length
 
 	const context = { values, fields }
+
+	const [ isSubmitting, setIsSubmitting ] = useState( false )
 
 	const args = {
 		state,
@@ -309,6 +310,10 @@ export const useForm = (
 	}
 
 	const submitForm = () => {
+		if ( isSubmitting ) {
+			return
+		}
+		setIsSubmitting( true )
 		dispatch( {
 			type: 'COMMIT_ALL'
 		} )
@@ -329,6 +334,8 @@ export const useForm = (
 		hasChanges,
 		resetForm,
 		submitForm,
+		isSubmitting,
+		setIsSubmitting,
 		setValues,
 	}
 	return result
