@@ -107,7 +107,7 @@ export const Main = ( { match } ) => {
 						<Button.Group
 							label={ __( 'Recent Searches' ) }
 							appearance="buttons"
-							shouldHandleOverflow={true}
+							shouldHandleOverflow={ true }
 						>
 							{ searchHistory.map( ( keyword, key ) =>
 								<Button

@@ -195,16 +195,16 @@ export const useForm = (
 		for ( let key in state ) {
 			const value = state[key].value
 
-			obj = Object.defineProperty( obj, key, {
-				get() {
-					if ( 'function' === typeof value ) {
-						return value( key, staticValues, setValue )
+			if ( 'function' === typeof value ) {
+				obj = Object.defineProperty( obj, key, {
+					get() {
+						return value({ key, staticValues, setValue })
 					}
-					return value
-				}
-			} )
+				} )
+			} else {
+				obj[key] = staticValues[key]
+			}
 		}
-
 		return obj
 	}
 
@@ -283,6 +283,8 @@ export const useForm = (
 	}
 
 	const values = selectValues( state )
+
+
 	const changed = selectChanged( state )
 	const fields = selectFields( state, values )
 	const ids = selectIDs( state )
@@ -290,6 +292,15 @@ export const useForm = (
 	const hasChanges = 0 < Object.keys( changed ).length
 
 	const context = { values, fields }
+
+	const args = {
+		state,
+		changed,
+		ids,
+		values,
+		setValue,
+		setValues,
+	}
 
 	const resetForm = () => {
 		dispatch( {
@@ -305,7 +316,7 @@ export const useForm = (
 			type: 'COMMIT_ALL'
 		} )
 		if ( 'function' === typeof options.onSubmit ) {
-			options.onSubmit( changed, ids, values )
+			options.onSubmit( args )
 		}
 	}
 

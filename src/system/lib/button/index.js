@@ -88,7 +88,9 @@ Button.Group = ( {
 
 	allChildren = Children.map( children, ( child, i ) => {
 
-		if ( !child ) return null
+		if ( ! child ) {
+			return null
+		}
 
 		const isFirst = 0 === i
 		const shouldInsertDivider = ! isFirst && shouldInsertDividers
@@ -129,7 +131,7 @@ Button.Group = ( {
 
 		setVisibleChildren( visibleChildren )
 		setMoreChildren( moreChildren )
-		setShouldShowMoreBtn( moreChildren.length > 0 )
+		setShouldShowMoreBtn( 0 < moreChildren.length )
 	}, [] )
 
 	const classes = classname( {
@@ -157,7 +159,7 @@ Button.Group = ( {
 					className='fl-asst-more-button'
 					onClick={ () => setShouldShowMoreMenu( ! shouldShowMoreMenu ) }
 				>
-						{__( 'More' )}
+					{__( 'More' )}
 				</Button>
 			</>
 		)
@@ -176,7 +178,7 @@ Button.Group = ( {
 				{ 0 === visibleChildren.length ? allChildren : visibleChildren }
 				{ shouldShowMoreBtn && <MoreBtn /> }
 			</div>
-			{ shouldShowMoreMenu && moreChildren.length > 0 && <MoreMenu /> }
+			{ shouldShowMoreMenu && 0 < moreChildren.length && <MoreMenu /> }
 		</>
 	)
 }

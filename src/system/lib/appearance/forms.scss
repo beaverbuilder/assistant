@@ -39,15 +39,15 @@
 
         // Yes, these have to be separate rules.
         &::-webkit-input-placeholder{
-            text-align: center;
+            text-align: left;
             color: var(--fl-asst-dim-text);
         }
         &::-ms-input-placeholder{
-            text-align: center;
+            text-align: left;
             color: var(--fl-asst-dim-text);
         }
         &::placeholder {
-            text-align: center;
+            text-align: left;
             color: var(--fl-asst-dim-text);
         }
 

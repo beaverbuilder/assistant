@@ -6,7 +6,7 @@ import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 import { getPostActions } from './actions'
 
-const getConfig = () => {
+const getFormConfig = () => {
 	return {
 		id: {
 			label: __( 'ID' ),
@@ -62,6 +62,16 @@ const getConfig = () => {
 		},
 		actions: {
 			value: getPostActions,
+		},
+		labels: {
+			label: __( 'Labels' ),
+			id: 'postLabels',
+			value: () => [
+				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
+				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
+				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
+				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
+			],
 		}
 	}
 }
@@ -97,46 +107,38 @@ export const Post = ( { location, match, history } ) => {
 		item = { ...defaultItem, ...location.state.item }
 	}
 
-	// Setup Form Handler & Context
+	// Setup Form Hook
 	const {
 		values,
-		form,
+		form, // Spread this into the <Form> component
 		useFormContext,
 		hasChanges,
-		resetForm,
+		resetForm, // Function to revert back to last committed values
 		submitForm,
-		fields,
-	} = Form.useForm( {
 
-		...getConfig(),
-
-		labels: {
-			label: __( 'Labels' ),
-			id: 'postLabels',
-			value: () => [
-				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
-				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
-				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
-				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
-			],
-		}
-	}, {
-		onSubmit: ( changes, ids ) => {
-
-			const wpRest = getWpRest()
-			const data = {}
-			const keyMap = ids
-			for ( let key in changes ) {
-				if ( ! keyMap[ key ] ) {
-					continue
-				}
-				data[ keyMap[ key ] ] = changes[ key ]
-			}
-			wpRest.posts().update( item.id, 'data', data ).then( () => {
-				alert( 'Changes Published!' )
-			} )
+	} = Form.useForm(
+		{
+			...getFormConfig()
 		},
-	}, item )
+		{
+			onSubmit: ( changes, ids ) => {
+
+				const wpRest = getWpRest()
+				const data = {}
+				const keyMap = ids
+				for ( let key in changes ) {
+					if ( ! keyMap[ key ] ) {
+						continue
+					}
+					data[ keyMap[ key ] ] = changes[ key ]
+				}
+				wpRest.posts().update( item.id, 'data', data ).then( () => {
+					alert( 'Changes Published!' )
+				} )
+			},
+		},
+		item,
+	)
 
 
 	// Setup Tab Handling
@@ -198,9 +200,9 @@ export const Post = ( { location, match, history } ) => {
 
 			<Page.TitleCard
 				title={ values.title }
-				style={{
+				style={ {
 					marginBottom: 'var(--fl-asst-inner-space)'
-				}}
+				} }
 			/>
 
 			{ useMemo( () => (

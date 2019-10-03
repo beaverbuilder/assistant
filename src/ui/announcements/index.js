@@ -3,11 +3,10 @@ import './style.scss'
 
 export const Annoucements = () => {
 
-    
 
-    return (
-        <div className="fl-asst-annoucements">
+	return (
+		<div className="fl-asst-annoucements">
 
-        </div>
-    )
+		</div>
+	)
 }

@@ -23,7 +23,7 @@ export const CreatePost = () => {
 		return options
 	}
 
-	const { values, form, useFormContext, submitForm } = Form.useForm( {
+	const { form, useFormContext, submitForm } = Form.useForm( {
 		type: {
 			label: __( 'Type' ),
 			options: getTypeOptions(),
@@ -47,19 +47,22 @@ export const CreatePost = () => {
 			},
 		},
 	}, {
-		onSubmit: ( changes, ids ) => {
+		onSubmit: args => {
+
+			const { values, ids } = args
 			const data = {}
 			const keyMap = ids
 			for ( let key in initial ) {
 				if ( ! keyMap[ key ] ) {
 					continue
 				}
-				if ( ! changes[ key ] ) {
+				if ( ! values[ key ] ) {
 					data[ keyMap[ key ] ] = initial[ key ]
 				} else {
-					data[ keyMap[ key ] ] = changes[ key ]
+					data[ keyMap[ key ] ] = values[ key ]
 				}
 			}
+
 			// const wpRest = getWpRest()
 			// wpRest.posts().create( post, response => {
 			// 	setCreating( false )

@@ -188,6 +188,7 @@ const WindowLayer = ( {
 		const reset = { x: 0, y: 0 }
 		setInitialPos( reset )
 		setCurrentPos( reset )
+
 		//setOffset( reset )
 		setIsDragging( false )
 		setCurrentOrigin( [ x, y ] )
