@@ -8,7 +8,7 @@ import { createSlug } from 'shared-utils/url'
 export const CreatePost = () => {
 	const { contentTypes } = getSystemConfig()
 
-	const initial = {
+	const defaults = {
 		type: 'post',
 		title: '',
 		slug: '',
@@ -48,47 +48,24 @@ export const CreatePost = () => {
 		},
 	}, {
 		onSubmit: args => {
-
 			const { values, ids } = args
 			const data = {}
-			const keyMap = ids
-			for ( let key in initial ) {
-				if ( ! keyMap[ key ] ) {
-					continue
-				}
-				if ( ! values[ key ] ) {
-					data[ keyMap[ key ] ] = initial[ key ]
-				} else {
-					data[ keyMap[ key ] ] = values[ key ]
+			const wpRest = getWpRest()
+
+			for ( let key in values ) {
+				if ( ids[ key ] ) {
+					data[ ids[ key ] ] = values[ key ]
 				}
 			}
 
-			// const wpRest = getWpRest()
-			// wpRest.posts().create( post, response => {
-			// 	setCreating( false )
-			// 	if ( response.error ) {
-			// 		createError()
-			// 	} else {
-			// 		presentNotification( sprintf( _x( '%s Created!', 'Singular post type label.' ), labels.singular ) )
-			// 		refreshList()
-			// 		if ( 'create-edit' === name ) {
-			// 			window.open( response.editUrl )
-			// 		} else {
-			// 			replace( {
-			// 				label: contentTypes[ type ].labels.editItem,
-			// 				content: <PostListDetail />,
-			// 				appearance: 'form',
-			// 				shouldShowTitle: false,
-			// 				context: {
-			// 					refreshList,
-			// 					...response,
-			// 				},
-			// 			}, index )
-			// 		}
-			// 	}
-			// }, createError )
+			wpRest.posts().create( data ).then( response => {
+				console.log( response )
+			} ).catch( ( error ) => {
+				alert( __( 'Error: Post not created! Please try again.' ) );
+				console.log( error ) // eslint-disable-line no-console
+			} )
 		}
-	}, initial )
+	}, defaults )
 
 	const Footer = () => {
 		return (
