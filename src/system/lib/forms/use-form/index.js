@@ -196,7 +196,7 @@ export const useForm = (
 			const value = state[key].value
 
 			if ( 'function' === typeof value ) {
-				obj[key] = value({ key, staticValues, setValue })
+				obj[key] = value( { key, staticValues, setValue } )
 			} else {
 				obj[key] = staticValues[key]
 			}
