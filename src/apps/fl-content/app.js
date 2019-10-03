@@ -36,9 +36,15 @@ const Main = ( { match } ) => {
 	}
 
 	const Actions = ( { baseUrl } ) => {
+		const to = {
+			pathname: `${baseUrl}/post/new`,
+			state: {
+				detailBaseUrl: `${baseUrl}/post`
+			}
+		}
 		return (
 			<>
-				<Nav.ButtonLink to={ `${baseUrl}/post/new` } appearance="transparent">
+				<Nav.ButtonLink to={ to } appearance="transparent">
 					<Icon.Plus />
 				</Nav.ButtonLink>
 			</>
