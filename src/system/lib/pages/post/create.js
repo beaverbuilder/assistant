@@ -1,4 +1,4 @@
-import React, { useContext } from 'fl-react'
+import React, { useContext, useEffect, useState } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Form } from 'lib'
 import { getSystemConfig } from 'store'
@@ -6,9 +6,12 @@ import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 
 export const CreatePost = ( { history, location } ) => {
+	const [ type, setType ] = useState( 'post' )
+	const [ parents, setParents ] = useState( [] )
+	const { contentTypes } = getSystemConfig()
+	const wpRest = getWpRest()
 	const state = location.state ? location.state : {}
 	const { detailBaseUrl } = state
-	const { contentTypes } = getSystemConfig()
 
 	const defaults = {
 		type: 'post',
@@ -25,17 +28,33 @@ export const CreatePost = ( { history, location } ) => {
 		return options
 	}
 
+	useEffect( () => {
+		if ( contentTypes[ type ].isHierarchical ) {
+			setParents( [] )
+		} else {
+			wpRest.posts().hierarchical( {
+				hide_empty: 0,
+				post_type: type,
+				posts_per_page: -1,
+			} ).then( response => {
+				setParents( response.data )
+			} )
+		}
+	}, [ type ] )
+
 	const {
 		form,
 		useFormContext,
 		submitForm,
 		isSubmitting,
 		setIsSubmitting,
+		values,
 	} = Form.useForm( {
 		type: {
 			label: __( 'Type' ),
 			options: getTypeOptions(),
 			id: 'post_type',
+			onChange: ( { value } ) => setType( value )
 		},
 		title: {
 			label: __( 'Title' ),
@@ -60,10 +79,8 @@ export const CreatePost = ( { history, location } ) => {
 			},
 		},
 	}, {
-		onSubmit: args => {
-			const { values, ids } = args
+		onSubmit: ( { values, ids } ) => {
 			const data = {}
-			const wpRest = getWpRest()
 
 			for ( let key in values ) {
 				if ( ids[ key ] ) {
