@@ -121,7 +121,7 @@ export const Post = ( { location, match, history } ) => {
 			...getFormConfig()
 		},
 		{
-			onSubmit: ( changes, ids ) => {
+			onSubmit: ({ changes, ids }) => {
 
 				const wpRest = getWpRest()
 				const data = {}
