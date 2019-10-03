@@ -9,14 +9,15 @@
         padding: 0 10px;
         background: var(--fl-asst-surface-background);
         color: var(--fl-asst-surface-color);
-        box-shadow:inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background);
+        border: 2px solid var(--fl-asst-secondary-surface-background);
         min-height: var(--fl-asst-target-size);
         text-decoration: none;
         font-weight: 500;
 
         &:hover {
-            background: var(--fl-asst-secondary-surface-background);
+            background: transparent;
             text-decoration: none;
+            border: 2px solid var(--fl-asst-accent-color);
         }
 
         &:focus {
@@ -135,8 +136,10 @@
                 background: transparent;
                 border-radius: 0;
                 box-shadow: none;
+                border: none;
 
                 &.fl-asst-is-selected {
+                    color: var(--fl-asst-surface-color);
                     box-shadow: 0px 2px 0px 0px currentColor;
                 }
 

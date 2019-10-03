@@ -295,14 +295,18 @@ export const useForm = (
 		dispatch( {
 			type: 'REVERT_ALL'
 		} )
-		options.onReset( changed, ids, values )
+		if ( 'function' === typeof options.onReset ) {
+			options.onReset( changed, ids, values )
+		}
 	}
 
 	const submitForm = () => {
 		dispatch( {
 			type: 'COMMIT_ALL'
 		} )
-		options.onSubmit( changed, ids, values )
+		if ( 'function' === typeof options.onSubmit ) {
+			options.onSubmit( changed, ids, values )
+		}
 	}
 
 	const result = {

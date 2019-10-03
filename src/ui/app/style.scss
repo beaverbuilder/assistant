@@ -162,3 +162,9 @@
 		display: none;
 	}
 }
+
+@media print {
+    .fl-asst {
+        display: none;
+    }
+}

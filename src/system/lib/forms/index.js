@@ -2,6 +2,7 @@ import React, { createContext } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { Icon, Control, Page } from 'lib'
+import { ValuesTable } from './tests'
 
 // Deprecated
 import { useFormState } from './use-form-data'
@@ -90,6 +91,9 @@ Form.SelectItem.displayName = 'Form.SelectItem'
 
 Form.CheckboxItem = CheckboxItem
 Form.CheckboxItem.displayName = 'Form.CheckboxItem'
+
+Form.ValuesTable = ValuesTable
+Form.ValuesTable.displayName = 'Form.ValuesTable'
 
 Form.Test = () => {
 	return (

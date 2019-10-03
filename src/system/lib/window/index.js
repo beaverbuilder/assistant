@@ -126,7 +126,7 @@ const WindowLayer = ( {
 	const [ initialPos, setInitialPos ] = useState( { x: null, y: null } )
 	const [ currentPos, setCurrentPos ] = useState( { x: null, y: null } )
 	const [ currentOrigin, setCurrentOrigin ] = useState( position ) // Tracks the origin while dragging
-	const [ offset, setOffset ] = useState( { x: 0, y: 0 } )
+	const [ offset ] = useState( { x: 0, y: 0 } )
 
 	const dragStart = e => {
 
@@ -188,7 +188,7 @@ const WindowLayer = ( {
 		const reset = { x: 0, y: 0 }
 		setInitialPos( reset )
 		setCurrentPos( reset )
-		setOffset( reset )
+		//setOffset( reset )
 		setIsDragging( false )
 		setCurrentOrigin( [ x, y ] )
 		setPosition( [ x, y ] )
@@ -307,7 +307,6 @@ const WindowPanel = ( {
 			paddingTop: 4,
 			alignItems: 'center',
 			justifyContent: 'center',
-			opacity: .5,
 			pointerEvents: 'none',
 			position: 'absolute',
 			top: 0,
@@ -315,7 +314,7 @@ const WindowPanel = ( {
 			right: 0,
 		}
 		return (
-			<div style={ styles } { ...rest }>
+			<div className="fl-asst-window-grab-bar" style={ styles } { ...rest }>
 				<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
 				</svg>

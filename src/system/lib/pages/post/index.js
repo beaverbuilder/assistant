@@ -105,6 +105,7 @@ export const Post = ( { location, match, history } ) => {
 		hasChanges,
 		resetForm,
 		submitForm,
+		fields,
 	} = Form.useForm( {
 
 		...getConfig(),
@@ -195,15 +196,23 @@ export const Post = ( { location, match, history } ) => {
 			footer={ hasChanges && <Footer /> }
 		>
 
-			<Page.TitleCard title={ values.title } />
+			<Page.TitleCard
+				title={ values.title }
+				style={{
+					marginBottom: 'var(--fl-asst-inner-space)'
+				}}
+			/>
 
 			{ useMemo( () => (
-				<Page.Pad style={ {
-					display: 'flex',
-					justifyContent: 'center',
-					flexShrink: 0,
-					padding: 'var(--fl-asst-small-space) 0 0',
-				} }>
+				<Page.Pad
+					className="fl-asst-stick-to-top"
+					style={ {
+						display: 'flex',
+						justifyContent: 'center',
+						flexShrink: 0,
+						padding: 0,
+					} }
+				>
 					<Button.Group appearance="tabs">
 						{ tabs.map( ( { label, path }, i ) => (
 							<Button key={ i }
@@ -216,6 +225,7 @@ export const Post = ( { location, match, history } ) => {
 			), [ location.pathname ] )}
 
 			<Form { ...form }>
+
 				{ useMemo( () => (
 					<Nav.Switch>
 						{ tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> ) }

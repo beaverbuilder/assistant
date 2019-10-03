@@ -67,7 +67,7 @@ const WindowToolbar = () => {
 			{ isRoot && <span style={ labelStyle }>{__( 'Assistant' )}</span> }
 
 			{ ! isRoot && <>
-				<button onClick={ goToRoot } style={ { textDecoration: 'underline' } }>{__( 'Assistant' )}</button>
+				<button onClick={ goToRoot } style={ { pointerEvents: 'auto', textDecoration: 'underline' } }>{__( 'Assistant' )}</button>
 				<span style={ iconWrapStyle }><Icon.BreadcrumbArrow /></span>
 				<span style={ labelStyle }>{label}</span>
 			</> }

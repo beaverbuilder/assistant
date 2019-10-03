@@ -1,5 +1,4 @@
-.fl-asst {
-
+:root {
     // Light Colors
     --fl-asst-light-1: white;
     --fl-asst-light-2: hsl(214, 3%, 98%);
@@ -37,7 +36,9 @@
     // Typograpy
     --fl-asst-base-text-size: 14px;
     --fl-asst-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
 
+.fl-asst {
     font-family: var(--fl-asst-font-family);
     font-size: var(--fl-asst-base-text-size);
 
@@ -81,11 +82,13 @@
             background: transparent;
         }
         &:focus {
+            color: inherit;
             top:0;
             border: none;
         }
 
         &[disabled] {
+            color: inherit;
             opacity: .5;
             pointer-events: none;
         }
