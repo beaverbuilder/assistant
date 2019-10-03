@@ -52,8 +52,10 @@ export const CreatePost = ( { history, location } ) => {
 		},
 		parent: {
 			label: __( 'Parent' ),
-			options: {
-				'0': __( 'None' ),
+			options: ({ key, state }) => {
+				return {
+					'0': __( 'None' ),
+				}
 			},
 		},
 	}, {
