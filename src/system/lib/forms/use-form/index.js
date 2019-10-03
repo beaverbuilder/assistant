@@ -1,4 +1,4 @@
-import { useContext, useReducer } from 'fl-react'
+import { useContext, useReducer, useState } from 'fl-react'
 import { Form } from '../'
 
 const hook = () => {
@@ -195,14 +195,11 @@ export const useForm = (
 		for ( let key in state ) {
 			const value = state[key].value
 
-			obj = Object.defineProperty( obj, key, {
-				get() {
-					if ( 'function' === typeof value ) {
-						return value( key, staticValues, setValue )
-					}
-					return value
-				}
-			} )
+			if ( 'function' === typeof value ) {
+				obj[key] = value( { key, staticValues, setValue } )
+			} else {
+				obj[key] = staticValues[key]
+			}
 		}
 
 		return obj
@@ -250,13 +247,20 @@ export const useForm = (
 				onChange: v => {
 					setValue( key, v )
 
+					const args = {
+						key,
+						value: v,
+						setValue,
+						state
+					}
+
 					// call onChange from field config
 					if ( 'function' === typeof field.onChange ) {
-						field.onChange( v )
+						field.onChange( args )
 					}
 
 					// call options onChange handler
-					options.onChange( key, v )
+					options.onChange( args )
 				}
 			}
 
@@ -264,10 +268,15 @@ export const useForm = (
 			if ( 'undefined' !== typeof obj[key].options ) {
 				const value = obj[key].options
 
+				const args = {
+					key,
+					state
+				}
+
 				obj[key] = Object.defineProperty( obj[key], 'options', {
 					get() {
 						if ( 'function' === typeof value ) {
-							return value( key, state )
+							return value( args )
 						}
 						return value
 					}
@@ -283,6 +292,7 @@ export const useForm = (
 	}
 
 	const values = selectValues( state )
+
 	const changed = selectChanged( state )
 	const fields = selectFields( state, values )
 	const ids = selectIDs( state )
@@ -291,18 +301,37 @@ export const useForm = (
 
 	const context = { values, fields }
 
+	const [ isSubmitting, setIsSubmitting ] = useState( false )
+
+	const args = {
+		state,
+		changed,
+		ids,
+		values,
+		setValue,
+		setValues,
+	}
+
 	const resetForm = () => {
 		dispatch( {
 			type: 'REVERT_ALL'
 		} )
-		options.onReset( changed, ids, values )
+		if ( 'function' === typeof options.onReset ) {
+			options.onReset( changed, ids, values )
+		}
 	}
 
 	const submitForm = () => {
+		if ( isSubmitting ) {
+			return
+		}
+		setIsSubmitting( true )
 		dispatch( {
 			type: 'COMMIT_ALL'
 		} )
-		options.onSubmit( changed, ids, values )
+		if ( 'function' === typeof options.onSubmit ) {
+			options.onSubmit( args )
+		}
 	}
 
 	const result = {
@@ -317,6 +346,8 @@ export const useForm = (
 		hasChanges,
 		resetForm,
 		submitForm,
+		isSubmitting,
+		setIsSubmitting,
 		setValues,
 	}
 	return result

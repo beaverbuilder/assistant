@@ -4,7 +4,7 @@ import { getSystemActions, useSystemState } from 'assistant/store'
 import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
 import { AppRouting } from '../app'
 
-export const Main = () => {
+export const Assistant = () => {
 	const { appearance, window } = useSystemState()
 	const { brightness = 'light' } = appearance
 	const { size } = window
@@ -65,7 +65,7 @@ const WindowToolbar = () => {
 			{ isRoot && <span style={ labelStyle }>{__( 'Assistant' )}</span> }
 
 			{ ! isRoot && <>
-				<button onClick={ goToRoot } style={ { textDecoration: 'underline' } }>{__( 'Assistant' )}</button>
+				<button onClick={ goToRoot } style={ { pointerEvents: 'auto', textDecoration: 'underline' } }>{__( 'Assistant' )}</button>
 				<span style={ iconWrapStyle }><Icon.BreadcrumbArrow /></span>
 				<span style={ labelStyle }>{label}</span>
 			</> }

@@ -20,20 +20,20 @@
         }
     }
 
-
     .fl-asst-grid-list {
         display: grid;
         grid-gap: 5px;
         grid-template-columns: auto auto;
+        padding: var(--fl-asst-outer-space);
 
         .fl-asst-grid-list-item {
             background: var(--fl-asst-secondary-surface-background);
             width: 100%;
-            height: 200px;
-            
+            height: 170px;
+
             img {
                 width: 100%;
-                height: 200px;
+                height: 170px;
             }
         }
     }

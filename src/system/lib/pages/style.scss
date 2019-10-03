@@ -56,4 +56,10 @@
             padding: 10px 0;
         }
     }
+
+    .fl-asst-stick-to-top {
+        position: sticky;
+        top:0;
+        background: var(--fl-asst-surface-background);
+    }
 }

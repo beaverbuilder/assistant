@@ -59,11 +59,12 @@
             flex: 0 0 auto;
             display: flex;
             flex-direction: row;
-            align-items: center;
-            padding: 3px var(--fl-asst-outer-space) 0;
+            align-items: flex-end;
+            padding: 9px var(--fl-asst-outer-space) 0;
             text-transform: uppercase;
             background-color: var(--fl-asst-surface-background);
             border-bottom: 2px solid var(--fl-asst-secondary-surface-background);
+            min-height: var(--fl-asst-target-size);
 
             // Yea, all this for sticky headers
             position: -webkit-sticky;
@@ -76,8 +77,6 @@
 
             .fl-asst-section-title-text {
                 display: inline-flex;
-                align-items: center;
-                min-height: var(--fl-asst-target-size);
                 max-width: 70%;
                 box-shadow: 0px 2px 0px 0px currentColor;
                 align-items: flex-end;

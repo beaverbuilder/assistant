@@ -3,9 +3,9 @@ import { __ } from '@wordpress/i18n'
 import { Page, Form } from 'lib'
 import { getSrcSet } from 'utils/image'
 
-const getItemActions = ( key, values ) => {
+const getItemActions = ({ staticValues }) => {
 
-	const { url, editUrl } = values
+	const { url, editUrl } = staticValues
 
 	return [
 		{

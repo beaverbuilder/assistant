@@ -154,7 +154,6 @@
     input[type="datetime"],
     input[type="datetime-local"],
     input[type="color"],
-    select,
     textarea {
         --fl-asst-highlight-color: var(--fl-asst-accent-color);
 
@@ -203,9 +202,7 @@
 
     select {
         height: var(--fl-asst-target-size);
-        background-repeat: no-repeat;
-        background-position: right 14px center;
-        padding-right: var(--fl-asst-target-size);
+        background-color: var(--fl-asst-secondary-surface-background);
 
         &:-moz-focusring {
             color: transparent;
@@ -234,8 +231,6 @@
         input[type="button"],
         input[type="submit"] {
             box-sizing: border-box;
-            font-family: var(--fl-asst-base-font-family);
-            font-size: var(--fl-asst-base-text-size);
             font-weight: 500;
             line-height: 1.2;
             text-transform: none;

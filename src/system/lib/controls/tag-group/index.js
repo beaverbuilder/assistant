@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import classname from 'fl-classnames'
-import { Button, Color } from 'lib'
+import { Button, Color, Icon } from 'lib'
 import './style.scss'
 
 export const TagGroup = ( { value: tags, disabled = false, className } ) => {
@@ -38,7 +38,9 @@ export const Tag = ( {
 		<div className={ classes }>
 			{ color && <div className="fl-asst-tag-color" style={ { background: tagColor } } /> }
 			{ label && <div className="fl-asst-tag-label">{label}</div> }
-			<Button className="fl-asst-tag-remove-btn" appearance="transparent" onClick={ onRemove }>X</Button>
+			<Button className="fl-asst-tag-remove-btn" appearance="transparent" onClick={ onRemove }>
+				<Icon.CloseCompact />
+			</Button>
 		</div>
 	)
 }

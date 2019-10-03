@@ -39,15 +39,15 @@
 
         // Yes, these have to be separate rules.
         &::-webkit-input-placeholder{
-            text-align: center;
+            text-align: left;
             color: var(--fl-asst-dim-text);
         }
         &::-ms-input-placeholder{
-            text-align: center;
+            text-align: left;
             color: var(--fl-asst-dim-text);
         }
         &::placeholder {
-            text-align: center;
+            text-align: left;
             color: var(--fl-asst-dim-text);
         }
 
@@ -72,6 +72,7 @@
     input[disabled],
     select[disabled],
     textarea[disabled],
+    [aria-disabled=true]
     .fl-asst-is-disabled {
         pointer-events: none;
         opacity: .5;
@@ -79,8 +80,9 @@
         color: var(--fl-asst-dim-text);
     }
 
-    @supports(-webkit-appearance: none) {
+    @supports( -webkit-appearance: none ) {
         input[type="checkbox"] {
+            -moz-appearace: none;
             -webkit-appearance: none;
             width: 18px;
             height: 18px;
@@ -117,7 +119,22 @@
         }
 
         select {
+            -moz-appearance: none;
             -webkit-appearance: none;
+
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E');
+
+        	background-repeat: no-repeat;
+        	// arrow icon position (1em from the right, 50% vertical) , then gradient position
+        	background-position: right 10px center;
+        	// icon size, then gradient
+        	background-size: 14px;
+            padding-right: 30px;
+        }
+
+        // Hide arrow in IE
+        select::-ms-expand {
+        	display: none;
         }
     }
 }

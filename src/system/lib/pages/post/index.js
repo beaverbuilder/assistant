@@ -6,7 +6,7 @@ import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 import { getPostActions } from './actions'
 
-const getConfig = () => {
+const getFormConfig = () => {
 	return {
 		id: {
 			label: __( 'ID' ),
@@ -62,6 +62,16 @@ const getConfig = () => {
 		},
 		actions: {
 			value: getPostActions,
+		},
+		labels: {
+			label: __( 'Labels' ),
+			id: 'postLabels',
+			value: () => [
+				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
+				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
+				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
+				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
+			],
 		}
 	}
 }
@@ -97,45 +107,38 @@ export const Post = ( { location, match, history } ) => {
 		item = { ...defaultItem, ...location.state.item }
 	}
 
-	// Setup Form Handler & Context
+	// Setup Form Hook
 	const {
 		values,
-		form,
+		form, // Spread this into the <Form> component
 		useFormContext,
 		hasChanges,
-		resetForm,
+		resetForm, // Function to revert back to last committed values
 		submitForm,
-	} = Form.useForm( {
 
-		...getConfig(),
-
-		labels: {
-			label: __( 'Labels' ),
-			id: 'postLabels',
-			value: () => [
-				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
-				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
-				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
-				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
-			],
-		}
-	}, {
-		onSubmit: ( changes, ids ) => {
-
-			const wpRest = getWpRest()
-			const data = {}
-			const keyMap = ids
-			for ( let key in changes ) {
-				if ( ! keyMap[ key ] ) {
-					continue
-				}
-				data[ keyMap[ key ] ] = changes[ key ]
-			}
-			wpRest.posts().update( item.id, 'data', data ).then( () => {
-				alert( 'Changes Published!' )
-			} )
+	} = Form.useForm(
+		{
+			...getFormConfig()
 		},
-	}, item )
+		{
+			onSubmit: ( { changes, ids } ) => {
+
+				const wpRest = getWpRest()
+				const data = {}
+				const keyMap = ids
+				for ( let key in changes ) {
+					if ( ! keyMap[ key ] ) {
+						continue
+					}
+					data[ keyMap[ key ] ] = changes[ key ]
+				}
+				wpRest.posts().update( item.id, 'data', data ).then( () => {
+					alert( 'Changes Published!' )
+				} )
+			},
+		},
+		item,
+	)
 
 
 	// Setup Tab Handling
@@ -170,7 +173,6 @@ export const Post = ( { location, match, history } ) => {
 	const sectionData = {
 		post: item,
 		useForm: useFormContext, // Rename
-		actions: [],
 	}
 
 	const Footer = () => {
@@ -196,10 +198,23 @@ export const Post = ( { location, match, history } ) => {
 			footer={ hasChanges && <Footer /> }
 		>
 
-			<Page.TitleCard title={ values.title } />
+			<Page.TitleCard
+				title={ values.title }
+				style={ {
+					marginBottom: 'var(--fl-asst-inner-space)'
+				} }
+			/>
 
 			{ useMemo( () => (
-				<Page.Pad style={ { display: 'flex', justifyContent: 'center', flexShrink: 0 } } bottom={ false } sides={ false }>
+				<Page.Pad
+					className="fl-asst-stick-to-top"
+					style={ {
+						display: 'flex',
+						justifyContent: 'center',
+						flexShrink: 0,
+						padding: 0,
+					} }
+				>
 					<Button.Group appearance="tabs">
 						{ tabs.map( ( { label, path }, i ) => (
 							<Button key={ i }
@@ -212,6 +227,7 @@ export const Post = ( { location, match, history } ) => {
 			), [ location.pathname ] )}
 
 			<Form { ...form }>
+
 				{ useMemo( () => (
 					<Nav.Switch>
 						{ tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> ) }

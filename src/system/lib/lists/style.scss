@@ -22,6 +22,8 @@
             flex-direction: row;
             transition-property: background;
             transition-duration: .15s;
+            -moz-user-select: none;
+            user-select: none;
 
             &:hover {
                 background-color: var(--fl-asst-secondary-surface-background);
