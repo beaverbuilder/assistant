@@ -5,7 +5,8 @@ import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 
-export const CreatePost = () => {
+export const CreatePost = ( { history, location } ) => {
+	const { detailBaseUrl } = location.state
 	const { contentTypes } = getSystemConfig()
 
 	const defaults = {
@@ -64,13 +65,23 @@ export const CreatePost = () => {
 				}
 			}
 
-			wpRest.posts().create( data ).then( response => {
-				console.log( response )
-			} ).catch( ( error ) => {
-				alert( __( 'Error: Post not created! Please try again.' ) );
-				console.log( error ) // eslint-disable-line no-console
-			} ).finally( () => {
+			const handleError = error => {
 				setIsSubmitting( false )
+				alert( __( 'Error: Post not created! Please try again.' ) );
+				if ( error ) {
+					console.log( error ) // eslint-disable-line no-console
+				}
+			}
+
+			wpRest.posts().create( data ).then( response => {
+				const { data } = response
+				if ( data.error ) {
+					handleError()
+				} else {
+					history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
+				}
+			} ).catch( error => {
+				handleError( error )
 			} )
 		}
 	}, defaults )
