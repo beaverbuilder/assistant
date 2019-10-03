@@ -6,7 +6,8 @@ import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 
 export const CreatePost = ( { history, location } ) => {
-	const { detailBaseUrl } = location.state
+	const state = location.state ? location.state : {}
+	const { detailBaseUrl } = state
 	const { contentTypes } = getSystemConfig()
 
 	const defaults = {
@@ -80,8 +81,11 @@ export const CreatePost = ( { history, location } ) => {
 				const { data } = response
 				if ( data.error ) {
 					handleError()
-				} else {
+				} else if ( detailBaseUrl ) {
 					history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
+				} else {
+					setIsSubmitting( false )
+					alert( __( 'Post not created!' ) );
 				}
 			} ).catch( error => {
 				handleError( error )
