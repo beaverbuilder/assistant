@@ -247,13 +247,20 @@ export const useForm = (
 				onChange: v => {
 					setValue( key, v )
 
+					const args = {
+						key,
+						value: v,
+						setValue,
+						state
+					}
+
 					// call onChange from field config
 					if ( 'function' === typeof field.onChange ) {
-						field.onChange( v )
+						field.onChange( args )
 					}
 
 					// call options onChange handler
-					options.onChange( key, v )
+					options.onChange( args )
 				}
 			}
 

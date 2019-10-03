@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React, { useContext } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Form } from 'lib'
 import { getSystemConfig } from 'store'
@@ -39,6 +39,9 @@ export const CreatePost = () => {
 			label: __( 'Title' ),
 			placeholder: __( 'TItle' ),
 			id: 'post_title',
+			onChange: ({ value, setValue }) => {
+				setValue( 'slug', value )
+			}
 		},
 		slug: {
 			label: __( 'Slug' ),
