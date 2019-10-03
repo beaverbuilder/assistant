@@ -268,10 +268,15 @@ export const useForm = (
 			if ( 'undefined' !== typeof obj[key].options ) {
 				const value = obj[key].options
 
+				const args = {
+					key,
+					state
+				}
+
 				obj[key] = Object.defineProperty( obj[key], 'options', {
 					get() {
 						if ( 'function' === typeof value ) {
-							return value( key, state )
+							return value( args )
 						}
 						return value
 					}
