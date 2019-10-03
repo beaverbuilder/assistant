@@ -70,6 +70,12 @@ class OnEnqueueScripts {
 
 		$user_state = UserState::get();
 
+		// Always show in admin bar and hidden in wp-admin.
+		if ( is_admin() ) {
+			$user_state['window']['isHidden'] = true;
+			$user_state['window']['hiddenAppearance'] = 'admin_bar';
+		}
+
 		return [
 			'appOrder'           => $user_state['appOrder'],
 			'counts'             => $this->get_counts(),

@@ -31,7 +31,8 @@ class OnEditUserProfile {
 	 */
 	public function __invoke( $user ) {
 
-		$state  = get_user_meta( $user->ID, UserState::FL_ASSISTANT_STATE, true );
+		$state = get_user_meta( $user->ID, UserState::FL_ASSISTANT_STATE, true );
+		$state = $state ? $state : UserState::$default_state;
 		$window = $state['window'];
 
 		$this->view->render(
