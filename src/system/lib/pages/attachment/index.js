@@ -9,7 +9,7 @@ const getItemActions = ( { staticValues } ) => {
 
 	return [
 		{
-			label: __( 'View Attachment Page' ),
+			label: __( 'View Attachment' ),
 			href: url,
 		},
 		{
