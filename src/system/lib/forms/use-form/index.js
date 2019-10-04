@@ -20,6 +20,7 @@ const init = ( { config, initialValues } ) => {
 		id: null,
 		disabled: false,
 		required: false,
+		isVisible: true,
 		sanitize,
 		onChange: () => {},
 
@@ -152,6 +153,15 @@ export const useForm = (
 				}
 			}
 
+		case 'SET_IS_VISIBLE':
+			return {
+				...state,
+				[action.key]: {
+					...state[action.key],
+					isVisible: action.isVisible ? true : false
+				}
+			}
+
 		default:
 			return state
 		}
@@ -192,6 +202,14 @@ export const useForm = (
 			type: 'SET_OPTIONS',
 			key,
 			options,
+		} )
+	}
+
+	const setIsVisible = ( key = '', isVisible = true ) => {
+		dispatch( {
+			type: 'SET_IS_VISIBLE',
+			key,
+			isVisible
 		} )
 	}
 
@@ -269,6 +287,7 @@ export const useForm = (
 						value: v,
 						setValue,
 						setOptions,
+						setIsVisible,
 						state
 					}
 

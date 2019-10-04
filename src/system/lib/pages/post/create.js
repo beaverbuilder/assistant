@@ -62,9 +62,13 @@ export const CreatePost = ( { history, location } ) => {
 	} = Form.useForm( {
 		type: {
 			label: __( 'Type' ),
+			labelPlacement: 'beside',
 			options: getTypeOptions(),
 			id: 'post_type',
-			onChange: ( { value, setOptions } ) => {
+			onChange: ( { value, setOptions, setIsVisible } ) => {
+
+				setIsVisible( 'parent', contentTypes[ value ].isHierarchical )
+
 				setParentOptions( value, setOptions )
 			}
 		},
@@ -87,6 +91,7 @@ export const CreatePost = ( { history, location } ) => {
 			options: ( { state, setOptions } ) => {
 				return setParentOptions( state.type.value, setOptions )
 			},
+			isVisible: contentTypes[ defaults.type ].isHierarchical
 		},
 	}, {
 		onSubmit: ( { values, ids } ) => {
