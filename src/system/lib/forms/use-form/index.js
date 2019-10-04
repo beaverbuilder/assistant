@@ -143,6 +143,15 @@ export const useForm = (
 			}
 			return obj
 
+		case 'SET_OPTIONS':
+			return {
+				...state,
+				[action.key]: {
+					...state[action.key],
+					options: action.options,
+				}
+			}
+
 		default:
 			return state
 		}
@@ -170,11 +179,19 @@ export const useForm = (
 	/**
 	 * Set some or all values with a given object of key/val pairs
 	 */
-	const setValues = ( values, shouldCommit = true ) => {
+	const setValues = ( values = {}, shouldCommit = true ) => {
 		dispatch( {
 			type: 'SET_VALUES',
 			values,
 			shouldCommit,
+		} )
+	}
+
+	const setOptions = ( key = '', options = {} ) => {
+		dispatch( {
+			type: 'SET_OPTIONS',
+			key,
+			options,
 		} )
 	}
 
@@ -251,6 +268,7 @@ export const useForm = (
 						key,
 						value: v,
 						setValue,
+						setOptions,
 						state
 					}
 
@@ -270,7 +288,9 @@ export const useForm = (
 
 				const args = {
 					key,
-					state
+					state,
+					setOptions,
+					values,
 				}
 
 				obj[key] = Object.defineProperty( obj[key], 'options', {

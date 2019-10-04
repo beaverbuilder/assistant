@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'fl-react'
+import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Form } from 'lib'
 import { getSystemConfig } from 'store'
@@ -6,8 +6,6 @@ import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 
 export const CreatePost = ( { history, location } ) => {
-	const [ type, setType ] = useState( 'post' )
-	const [ , setParents ] = useState( [] )
 	const { contentTypes } = getSystemConfig()
 	const wpRest = getWpRest()
 	const state = location.state ? location.state : {}
@@ -28,19 +26,32 @@ export const CreatePost = ( { history, location } ) => {
 		return options
 	}
 
-	useEffect( () => {
-		if ( contentTypes[ type ].isHierarchical ) {
-			setParents( [] )
-		} else {
-			wpRest.posts().hierarchical( {
-				hide_empty: 0,
-				post_type: type,
-				posts_per_page: -1,
-			} ).then( response => {
-				setParents( response.data )
-			} )
+	const setParentOptions = ( type, set ) => {
+		wpRest.posts().hierarchical( {
+			hide_empty: 0,
+			post_type: type,
+			posts_per_page: -1,
+		} ).then( response => {
+			if (
+				'undefined' !== typeof response.data &&
+				Array.isArray( response.data )
+			) {
+				const options = {}
+				response.data.map( post => {
+					options[post.id] = post.title
+				})
+				set( 'parent', {
+					0 : __( 'None' ),
+					...options,
+				} )
+			}
+		} )
+
+		// Initial
+		return {
+			0 : __( 'None' ),
 		}
-	}, [ type ] )
+	}
 
 	const {
 		form,
@@ -53,7 +64,9 @@ export const CreatePost = ( { history, location } ) => {
 			label: __( 'Type' ),
 			options: getTypeOptions(),
 			id: 'post_type',
-			onChange: ( { value } ) => setType( value )
+			onChange: ( { value, setOptions } ) => {
+				setParentOptions( value, setOptions )
+			}
 		},
 		title: {
 			label: __( 'Title' ),
@@ -71,10 +84,8 @@ export const CreatePost = ( { history, location } ) => {
 		},
 		parent: {
 			label: __( 'Parent' ),
-			options: () => {
-				return {
-					'0': __( 'None' ),
-				}
+			options: ({ state, setOptions }) => {
+				return setParentOptions( state.type.value, setOptions )
 			},
 		},
 	}, {
