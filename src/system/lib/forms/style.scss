@@ -90,11 +90,6 @@
                 }
             }
 
-            &.fl-asst-form-item-has-changes {
-                box-shadow: inset 2px 0px 0px 0px var(--fl-asst-blue);
-                background: var(--fl-asst-selected-color);
-            }
-
             .fl-asst-form-item-content {
                 justify-self: end;
                 display: flex;
@@ -116,6 +111,13 @@
 
         .fl-asst-form-item:focus-within {
             box-shadow: inset 2px 0px 0px 0px var(--fl-asst-accent-color);
+        }
+
+        &.fl-asst-highlight-changes {
+            .fl-asst-form-item-has-changes {
+                box-shadow: inset 2px 0px 0px 0px var(--fl-asst-blue);
+                background: var(--fl-asst-selected-color);
+            }
         }
     } // form
 

@@ -66,9 +66,7 @@ export const CreatePost = ( { history, location } ) => {
 			options: getTypeOptions(),
 			id: 'post_type',
 			onChange: ( { value, setOptions, setIsVisible } ) => {
-
 				setIsVisible( 'parent', contentTypes[ value ].isHierarchical )
-
 				setParentOptions( value, setOptions )
 			}
 		},
@@ -94,6 +92,7 @@ export const CreatePost = ( { history, location } ) => {
 			isVisible: contentTypes[ defaults.type ].isHierarchical
 		},
 	}, {
+		shouldHighlightChanges: false,
 		onSubmit: ( { values, ids } ) => {
 			const data = {}
 

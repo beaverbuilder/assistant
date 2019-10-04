@@ -1,4 +1,5 @@
 import { useContext, useReducer, useState } from 'fl-react'
+import classname from 'fl-classnames'
 import { Form } from '../'
 
 const hook = () => {
@@ -63,6 +64,7 @@ const init = ( { config, initialValues } ) => {
 }
 
 const defaultOptions = {
+	shouldHighlightChanges: true,
 	onSubmit: () => {},
 	onChange: () => {},
 	onReset: () => {},
@@ -377,6 +379,9 @@ export const useForm = (
 		values,
 		changed,
 		form: {
+			additionalClasses: classname( {
+				'fl-asst-highlight-changes': options.shouldHighlightChanges
+			} ),
 			onSubmit: e => e.preventDefault(),
 			context,
 		},
