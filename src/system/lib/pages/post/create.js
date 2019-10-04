@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'fl-react'
+import React, { useEffect, useState } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Form } from 'lib'
 import { getSystemConfig } from 'store'
@@ -7,7 +7,7 @@ import { createSlug } from 'shared-utils/url'
 
 export const CreatePost = ( { history, location } ) => {
 	const [ type, setType ] = useState( 'post' )
-	const [ parents, setParents ] = useState( [] )
+	const [ , setParents ] = useState( [] )
 	const { contentTypes } = getSystemConfig()
 	const wpRest = getWpRest()
 	const state = location.state ? location.state : {}
@@ -48,7 +48,6 @@ export const CreatePost = ( { history, location } ) => {
 		submitForm,
 		isSubmitting,
 		setIsSubmitting,
-		values,
 	} = Form.useForm( {
 		type: {
 			label: __( 'Type' ),
@@ -60,7 +59,7 @@ export const CreatePost = ( { history, location } ) => {
 			label: __( 'Title' ),
 			placeholder: __( 'TItle' ),
 			id: 'post_title',
-			onChange: ({ value, setValue }) => {
+			onChange: ( { value, setValue } ) => {
 				setValue( 'slug', value )
 			}
 		},
@@ -72,7 +71,7 @@ export const CreatePost = ( { history, location } ) => {
 		},
 		parent: {
 			label: __( 'Parent' ),
-			options: ({ key, state }) => {
+			options: () => {
 				return {
 					'0': __( 'None' ),
 				}
@@ -90,7 +89,7 @@ export const CreatePost = ( { history, location } ) => {
 
 			const handleError = error => {
 				setIsSubmitting( false )
-				alert( __( 'Error: Post not created! Please try again.' ) );
+				alert( __( 'Error: Post not created! Please try again.' ) )
 				if ( error ) {
 					console.log( error ) // eslint-disable-line no-console
 				}
@@ -104,7 +103,7 @@ export const CreatePost = ( { history, location } ) => {
 					history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
 				} else {
 					setIsSubmitting( false )
-					alert( __( 'Post not created!' ) );
+					alert( __( 'Post not created!' ) )
 				}
 			} ).catch( error => {
 				handleError( error )

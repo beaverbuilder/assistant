@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Page, Form } from 'lib'
 import { getSrcSet } from 'utils/image'
 
-const getItemActions = ({ staticValues }) => {
+const getItemActions = ( { staticValues } ) => {
 
 	const { url, editUrl } = staticValues
 
