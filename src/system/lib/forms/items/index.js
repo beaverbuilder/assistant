@@ -14,7 +14,9 @@ export const TextItem = ( {
 	...rest,
 } ) => {
 
-	if ( !isVisible ) return null
+	if ( ! isVisible ) {
+		return null
+	}
 
 	const isTextArea = 'textarea' === type
 
@@ -62,7 +64,9 @@ export const SelectItem = ( {
 	...rest,
 } ) => {
 
-	if ( !isVisible ) return null
+	if ( ! isVisible ) {
+		return null
+	}
 
 	return (
 		<Form.Item
@@ -100,7 +104,9 @@ export const CheckboxItem = ( {
 	...rest,
 } ) => {
 
-	if ( !isVisible ) return null
+	if ( ! isVisible ) {
+		return null
+	}
 
 	return (
 		<Form.Item
