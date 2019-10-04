@@ -39,9 +39,9 @@ export const CreatePost = ( { history, location } ) => {
 				const options = {}
 				response.data.map( post => {
 					options[post.id] = post.title
-				})
+				} )
 				set( 'parent', {
-					0 : __( 'None' ),
+					0: __( 'None' ),
 					...options,
 				} )
 			}
@@ -49,7 +49,7 @@ export const CreatePost = ( { history, location } ) => {
 
 		// Initial
 		return {
-			0 : __( 'None' ),
+			0: __( 'None' ),
 		}
 	}
 
@@ -84,7 +84,7 @@ export const CreatePost = ( { history, location } ) => {
 		},
 		parent: {
 			label: __( 'Parent' ),
-			options: ({ state, setOptions }) => {
+			options: ( { state, setOptions } ) => {
 				return setParentOptions( state.type.value, setOptions )
 			},
 		},
