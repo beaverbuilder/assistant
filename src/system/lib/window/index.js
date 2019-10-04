@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { Icon, Nav } from 'lib'
-import { useSystemState, getSystemActions, getSystemConfig } from 'store'
+import { getSystemConfig } from 'store'
 import './style.scss'
 
 const transition = {
@@ -275,11 +275,6 @@ const WindowPanel = ( {
 	const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
 	const { isRoot } = useContext( Nav.Context )
 
-	const { appearance } = useSystemState()
-	const { setBrightness } = getSystemActions()
-	const toggleBrightness = () => 'light' === appearance.brightness ? setBrightness( 'dark' ) : setBrightness( 'light' )
-
-
 	const classes = classname( {
 		'fl-asst-window': true,
 		[`fl-asst-window-${size}`]: size,
@@ -335,12 +330,6 @@ const WindowPanel = ( {
 					{ 'function' === typeof TopBar && <TopBar /> }
 
 					<span { ...stopEvts } style={ { marginLeft: 'auto' } } >
-
-						{ /* Brightness */ }
-						<button onClick={ toggleBrightness }>
-							<Icon.Brightness />
-							{ shouldShowLabels && <span style={ labelStyle }>{__( 'Brightness' )}</span> }
-						</button>
 
 						{ /* Window Size */ }
 						<button onClick={ toggleSize }>
