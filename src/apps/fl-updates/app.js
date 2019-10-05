@@ -27,6 +27,9 @@ const UpdatesMain = () => {
 	const { getContent } = getWpRest()
 	const { counts } = useSystemState()
 
+	const totalUpdates = counts['update/plugins'] + counts['update/themes']
+	const hasUpdates = 0 !== totalUpdates
+
 	const updateAll = () => {
 		setUpdatingAll( true )
 		getContent( 'updates' ).then( response => {
@@ -53,6 +56,11 @@ const UpdatesMain = () => {
 	}, [] )
 
 	const HeaderActions = () => {
+
+		if ( ! hasUpdates ) {
+			return null
+		}
+
 		if ( updatingAll ) {
 			return (
 				<Button.Loading>
@@ -69,6 +77,15 @@ const UpdatesMain = () => {
 
 	return (
 		<Page shouldPadSides={ false } headerActions={ <HeaderActions /> }>
+
+			{ ! hasUpdates &&
+		<Page.Empty>
+			{__( 'You have no updates.' )}
+		</Page.Empty>
+			}
+
+			{ hasUpdates &&
+		<>
 			<Page.Toolbar>
 				<Button.Group>
 					<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
@@ -86,6 +103,8 @@ const UpdatesMain = () => {
 					}
 				} }
 			/>
+		</>
+			}
 		</Page>
 	)
 }

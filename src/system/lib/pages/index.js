@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App } from 'lib'
 
-import { Pad, Toolbar, TitleCard, ExpandedContent, Section, RegisteredSections } from './parts'
+import { Pad, Toolbar, TitleCard, ExpandedContent, Section, RegisteredSections, Empty } from './parts'
 import { Post } from './post'
 import { CreatePost } from './post/create'
 import { User } from './user'
@@ -197,3 +197,6 @@ Page.Plugin.displayName = 'Page.Plugin'
 
 Page.Theme = Theme
 Page.Theme.displayName = 'Page.Theme'
+
+Page.Empty = Empty
+Page.Empty.displayName = 'Page.Empty'

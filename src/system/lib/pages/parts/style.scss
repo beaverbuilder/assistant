@@ -101,4 +101,12 @@
             padding: 0 0 var(--fl-asst-inner-space);
         }
     }
+
+    .fl-asst-empty-page-message {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: center;
+    }
 }
