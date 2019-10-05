@@ -4,12 +4,13 @@ const path = require( 'path' )
 const toDirName = 'assistant'
 const fromDir = path.resolve( __dirname, '../' )
 
-// Copies into /wp-content/builds/
-const toDir = path.resolve( __dirname, `../../../builds/${toDirName}` )
+// Copies into /wp-content/dist/
+const toDir = path.resolve( __dirname, `../../../dist/${toDirName}` )
 
 const filterFiles = src => {
 
-    const removes = [
+    // Get paths to ignore
+    const ignores = [
         '.DS_Store',
         '.git',
         'bin',
@@ -33,11 +34,10 @@ const filterFiles = src => {
         'README.md',
         'webpack.config.js',
         'lib/README.md',
-    ]
+    ].map( name => `${fromDir}/${name}` )
 
-    for( let i in removes ) {
-        const name = removes[i]
-        const path = fromDir + '/' + name
+    for( let i in ignores ) {
+        const path = ignores[i]
         if ( src.startsWith( path ) ) {
             return false
         }
