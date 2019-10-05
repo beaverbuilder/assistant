@@ -9,6 +9,10 @@
         .fl-asst-title {
             font-size: 20px;
             font-weight: 600;
+            margin-bottom: 10px;
+        }
+        :last-child {
+            margin: 0;
         }
     }
 

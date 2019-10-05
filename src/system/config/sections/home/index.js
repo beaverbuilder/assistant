@@ -54,7 +54,7 @@ registerSection( 'fl-home-currently-viewing', {
 			<>
 				<div className="fl-asst-currently-viewing-summary">
 					{ type && <div className="fl-asst-pretitle">{type}</div> }
-					<div className="fl-asst-title" style={ { marginBottom: 10 } }>{name}</div>
+					<div className="fl-asst-title">{name}</div>
 					{ Array.isArray( actions ) && 0 < actions.length &&
 					<Button.Group appearance="buttons">{ Button.renderActions( actions ) }</Button.Group> }
 				</div>
