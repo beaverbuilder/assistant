@@ -62,8 +62,8 @@ class Plugin {
 
 
 	/**
+	 *
 	 * @throws Container\InjectionException
-	 * @throws \Auryn\InjectionException
 	 */
 	public function register_providers() {
 		$this->container = new Container();

@@ -25,10 +25,12 @@ class OnWPBeforeAdminBarRender {
 		}
 
 		if ( $show_toolbar_item ) {
-			$wp_admin_bar->add_menu( [
-				'id'    => 'fl_assistant_toggle_ui',
-				'title' => __( 'Assistant', 'fl-assistant' ),
-			] );
+			$wp_admin_bar->add_menu(
+				[
+					'id'    => 'fl_assistant_toggle_ui',
+					'title' => __( 'Assistant', 'fl-assistant' ),
+				]
+			);
 		}
 	}
 }

@@ -18,7 +18,7 @@ class PostTypeServiceProvider extends ServiceProviderAbstract {
 	 * @throws \FL\Assistant\System\Container\InjectionException
 	 */
 	public function bootstrap() {
-		add_action("init", [$this, "on_wordpress_init"]);
+		add_action( 'init', [ $this, 'on_wordpress_init' ] );
 	}
 
 	public function on_wordpress_init() {

@@ -9,7 +9,7 @@ namespace FL\Assistant\Data\Transformers;
  *
  * Convert a WP_User object to array suitable for REST output
  *
- * @package FL\Assistant\RestApi\Transformers
+ * @package FL\Assistant\Transformers
  */
 class UserTransformer {
 
