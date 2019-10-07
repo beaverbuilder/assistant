@@ -1,10 +1,11 @@
 const fs = require('fs-extra')
 const path = require( 'path' )
 
-const toDirName = 'assistant'
+// Copies plugin folder
 const fromDir = path.resolve( __dirname, '../' )
 
 // Copies into /wp-content/dist/
+const toDirName = 'assistant'
 const toDir = path.resolve( __dirname, `../../../dist/${toDirName}` )
 
 const filterFiles = src => {
