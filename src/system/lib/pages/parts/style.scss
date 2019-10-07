@@ -35,6 +35,11 @@
         }
     }
 
+    .fl-asst-page-header {
+        display: flex;
+        flex-direction: column;
+    }
+
     .fl-asst-card {
         border-radius: 15px;
         padding: var(--fl-asst-outer-space);
@@ -54,6 +59,7 @@
         background: var(--fl-asst-surface-background);
         display: flex;
         flex-direction: column;
+        flex: 0 0 auto;
 
         .fl-asst-section-title {
             flex: 0 0 auto;
@@ -85,7 +91,7 @@
             }
         }
         .fl-asst-section-content {
-            flex: 1 1 auto;
+            flex: 1 0 auto;
             padding: var(--fl-asst-outer-space) 0 var(--fl-asst-inner-space);
             display: grid;
             grid-row-gap: var(--fl-asst-small-space);

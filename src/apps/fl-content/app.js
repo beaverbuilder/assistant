@@ -52,7 +52,7 @@ const Main = ( { match } ) => {
 	}
 
 	return (
-		<Page shouldPadSides={ false } toolbar={ <Toolbar /> } headerActions={ <Actions baseUrl={ match.url } /> }>
+		<Page shouldPadSides={ false } header={ <Toolbar /> } headerActions={ <Actions baseUrl={ match.url } /> }>
 			<List.Posts
 				query={ query }
 				getItemProps={ ( item, defaultProps ) => {

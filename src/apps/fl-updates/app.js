@@ -48,7 +48,7 @@ const UpdatesMain = () => {
 			setUpdatingAll( false )
 		}
 	}
-
+	
 	useEffect( () => {
 		maybeSetUpdatingAll()
 		const unsubscribe = updater.subscribe( maybeSetUpdatingAll )
@@ -75,35 +75,36 @@ const UpdatesMain = () => {
 		)
 	}
 
+	const Header = () => (
+		<Button.Group appearance="tabs">
+			<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
+			<Button>{ counts['update/themes'] } { __( 'Themes' ) }</Button>
+		</Button.Group>
+	)
+
 	return (
-		<Page shouldPadSides={ false } headerActions={ <HeaderActions /> }>
+		<Page shouldPadSides={ false } header={ <Header /> } headerActions={ <HeaderActions /> }>
 
 			{ ! hasUpdates &&
-		<Page.Empty>
-			{__( 'You have no updates.' )}
-		</Page.Empty>
+			<Page.Empty>
+				{__( 'You have no updates.' )}
+			</Page.Empty>
 			}
 
 			{ hasUpdates &&
-		<>
-			<Page.Toolbar>
-				<Button.Group>
-					<Button>{ counts['update/plugins'] } { __( 'Plugins' ) }</Button>
-					<Button>{ counts['update/themes'] } { __( 'Themes' ) }</Button>
-				</Button.Group>
-			</Page.Toolbar>
-			<List.Updates
-				getItemProps={ ( item, defaultProps ) => {
-					return {
-						...defaultProps,
-						to: {
-							pathname: `/${handle}/${item.type}/${item.id}`,
-							state: { item }
-						},
-					}
-				} }
-			/>
-		</>
+			<>
+				<List.Updates
+					getItemProps={ ( item, defaultProps ) => {
+						return {
+							...defaultProps,
+							to: {
+								pathname: `/${handle}/${item.type}/${item.id}`,
+								state: { item }
+							},
+						}
+					} }
+				/>
+			</>
 			}
 		</Page>
 	)
