@@ -130,7 +130,7 @@ export const Post = ( { location, match, history } ) => {
 		hasChanges,
 		resetForm, // Function to revert back to last committed values
 		submitForm,
-
+		setIsSubmitting,
 	} = Form.useForm(
 		{
 			...getFormConfig( item )
@@ -148,8 +148,40 @@ export const Post = ( { location, match, history } ) => {
 					data[ keyMap[ key ] ] = changed[ key ]
 				}
 
-				wpRest.posts().update( item.id, 'data', data ).then( () => {
-					alert( 'Changes Published!' )
+				if ( data.post_visibility ) {
+				    switch ( data.post_visibility ) {
+				        case 'public':
+				            data['post_status'] = 'publish'
+				            data['post_password'] = ''
+				            break;
+				        case 'private':
+				            data['post_status'] = 'private'
+				            data['post_password'] = ''
+				            break;
+				        case 'protected':
+				            data['post_status'] = 'publish'
+				            break
+				    }
+				}
+
+				const handleError = error => {
+					setIsSubmitting( false )
+					alert( __( 'Error: Changes not published! Please try again.' ) )
+					if ( error ) {
+						console.log( error ) // eslint-disable-line no-console
+					}
+				}
+
+				wpRest.posts().update( item.id, 'data', data ).then( response => {
+					const { data } = response
+					if ( data.error ) {
+						handleError()
+					} else {
+						setIsSubmitting( false )
+						alert( __( 'Changes published!' ) )
+					}
+				} ).catch( error => {
+					handleError( error )
 				} )
 			},
 		},
