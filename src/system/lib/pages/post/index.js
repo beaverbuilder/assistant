@@ -16,6 +16,9 @@ const getFormConfig = ( item ) => {
 		title: {
 			label: __( 'Title' ),
 			id: 'post_title',
+			onChange: ( { value, setValue } ) => {
+				setValue( 'slug', value )
+			}
 		},
 		slug: {
 			label: __( 'Slug' ),
