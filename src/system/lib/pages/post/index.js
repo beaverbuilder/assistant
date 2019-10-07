@@ -148,6 +148,22 @@ export const Post = ( { location, match, history } ) => {
 					data[ keyMap[ key ] ] = changed[ key ]
 				}
 
+				if ( data.post_visibility ) {
+				    switch ( data.post_visibility ) {
+				        case 'public':
+				            data['post_status'] = 'publish'
+				            data['post_password'] = ''
+				            break;
+				        case 'private':
+				            data['post_status'] = 'private'
+				            data['post_password'] = ''
+				            break;
+				        case 'protected':
+				            data['post_status'] = 'publish'
+				            break
+				    }
+				}
+
 				wpRest.posts().update( item.id, 'data', data ).then( () => {
 					alert( 'Changes Published!' )
 				} )
