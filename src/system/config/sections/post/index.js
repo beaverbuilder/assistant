@@ -33,11 +33,12 @@ registerSection( 'fl-post-publish', {
 		type: 'post',
 	},
 	render: ( { useForm } ) => {
-		const { status, visibility, parent } = useForm()
+		const { status, visibility, password, parent } = useForm()
 		return (
 			<>
 				<Form.SelectItem { ...status } />
 				<Form.SelectItem { ...visibility } />
+				<Form.TextItem { ...password } />
 				<Form.SelectItem { ...parent } />
 			</>
 		)

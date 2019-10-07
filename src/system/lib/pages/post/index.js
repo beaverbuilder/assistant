@@ -27,7 +27,7 @@ const getFormConfig = ( item ) => {
 		},
 		url: {
 			label: __( 'URL' ),
-			id: 'postURL',
+			id: 'post_url',
 		},
 		status: {
 			label: __( 'Publish Status' ),
@@ -41,18 +41,27 @@ const getFormConfig = ( item ) => {
 		},
 		visibility: {
 			label: __( 'Visibility' ),
-			id: 'postVisibility',
+			labelPlacement: 'beside',
+			id: 'post_visibility',
 			options: {
 				'public': __( 'Public' ),
 				'private': __( 'Private' ),
 				'protected': __( 'Protected' ),
 			},
+			onChange: ( { value, setOptions, setIsVisible } ) => {
+				setIsVisible( 'password', value == 'protected' )
+			}
+		},
+		password: {
+			label: __( 'Password' ),
 			labelPlacement: 'beside',
+			id: 'post_password',
+			isVisible: item.visibility == 'protected',
 		},
 		parent: {
 			label: __( 'Parent' ),
-			id: 'postParent',
 			labelPlacement: 'beside',
+			id: 'post_parent',
 			isVisible: contentTypes[ item.type ].isHierarchical,
 			options: ( { state, setOptions } ) => {
 				return setParentOptions( item.type, setOptions )
@@ -71,7 +80,7 @@ const getFormConfig = ( item ) => {
 		},
 		labels: {
 			label: __( 'Labels' ),
-			id: 'postLabels',
+			id: 'post_labels',
 			value: () => [
 				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
 				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
@@ -127,17 +136,18 @@ export const Post = ( { location, match, history } ) => {
 			...getFormConfig( item )
 		},
 		{
-			onSubmit: ( { changes, ids } ) => {
-
+			onSubmit: ( { changed, ids } ) => {
 				const wpRest = getWpRest()
 				const data = {}
 				const keyMap = ids
-				for ( let key in changes ) {
+
+				for ( let key in changed ) {
 					if ( ! keyMap[ key ] ) {
 						continue
 					}
-					data[ keyMap[ key ] ] = changes[ key ]
+					data[ keyMap[ key ] ] = changed[ key ]
 				}
+
 				wpRest.posts().update( item.id, 'data', data ).then( () => {
 					alert( 'Changes Published!' )
 				} )

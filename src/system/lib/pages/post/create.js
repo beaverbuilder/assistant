@@ -46,7 +46,7 @@ export const CreatePost = ( { history, location } ) => {
 		},
 		title: {
 			label: __( 'Title' ),
-			placeholder: __( 'TItle' ),
+			placeholder: __( 'Title' ),
 			id: 'post_title',
 			onChange: ( { value, setValue } ) => {
 				setValue( 'slug', value )
@@ -55,15 +55,16 @@ export const CreatePost = ( { history, location } ) => {
 		slug: {
 			label: __( 'Slug' ),
 			placeholder: __( 'my-post-slug' ),
-			sanitize: createSlug,
 			id: 'post_name',
+			sanitize: createSlug,
 		},
 		parent: {
 			label: __( 'Parent' ),
+			id: 'post_parent',
+			isVisible: contentTypes[ defaults.type ].isHierarchical,
 			options: ( { state, setOptions } ) => {
 				return setParentOptions( state.type.value, setOptions )
 			},
-			isVisible: contentTypes[ defaults.type ].isHierarchical
 		},
 	}, {
 		shouldHighlightChanges: false,
