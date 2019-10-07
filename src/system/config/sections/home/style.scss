@@ -1,0 +1,26 @@
+.fl-asst {
+    .fl-asst-quick-actions-section {
+        .fl-asst-section-content {
+            padding: 15px 0 10px;
+        }
+    }
+    .fl-asst-quick-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .fl-asst-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+
+            .dashicons-wordpress-alt {
+                font-size: 23px;
+                width: 23px;
+                height: 23px;
+                line-height: 1;
+            }
+        }
+    }
+}

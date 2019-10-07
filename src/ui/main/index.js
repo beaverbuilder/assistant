@@ -60,8 +60,16 @@ const WindowToolbar = () => {
 	const labelStyle = { padding: '2px 10px' }
 	const iconWrapStyle = { display: 'inline-flex', transform: 'translateY(2px)' }
 
+	const style = {
+		pointerEvents: 'none',
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+	}
+
 	return (
-		<span style={ { pointerEvents: 'none' } }>
+		<span style={ style }>
 			{ isRoot && <span style={ labelStyle }>{__( 'Assistant' )}</span> }
 
 			{ ! isRoot && <>

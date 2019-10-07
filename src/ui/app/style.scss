@@ -50,13 +50,13 @@
 
     .fl-asst-app-header-name {
         flex: 1 1 auto;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 600;
         display: flex;
         flex-direction: column;
 
         &.fl-asst-app-small-title {
-            font-size: 14px;
+            font-size: 16px;
             border-left: 2px solid var(--fl-asst-dim-text);
             padding-left: var(--fl-asst-inner-space);
         }

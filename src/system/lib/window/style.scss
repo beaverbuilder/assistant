@@ -3,6 +3,7 @@
         --fl-asst-window-size: 360px;
         --fl-asst-window-toolbar-height: 38px;
 
+        position: relative;
         box-sizing: border-box;
         width: var(--fl-asst-window-size);
         max-width: 100vw;

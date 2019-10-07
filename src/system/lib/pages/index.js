@@ -4,15 +4,14 @@ import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App } from 'lib'
 
-import { Pad, Toolbar, TitleCard, ExpandedContent, Section, RegisteredSections } from './parts'
+import { Pad, Toolbar, TitleCard, ExpandedContent, Section, RegisteredSections, Empty } from './parts'
 import { Post } from './post'
 import { CreatePost } from './post/create'
 import { User } from './user'
 import { Term } from './term'
 import { Attachment } from './attachment'
-import { Plugin } from './plugin'
+import { Plugin, Theme } from './themes-plugins'
 import { Comment } from './comment'
-import { Update } from './update'
 
 import './style.scss'
 
@@ -178,9 +177,6 @@ Page.RegisteredSections.displayName = 'Page.RegisteredSections'
 Page.Comment = Comment
 Page.Comment.displayName = 'Page.Comment'
 
-Page.Update = Update
-Page.Update.displayName = 'Page.Update'
-
 Page.Post = Post
 Page.Post.displayName = 'Page.Post'
 
@@ -198,3 +194,9 @@ Page.User.displayName = 'Page.User'
 
 Page.Plugin = Plugin
 Page.Plugin.displayName = 'Page.Plugin'
+
+Page.Theme = Theme
+Page.Theme.displayName = 'Page.Theme'
+
+Page.Empty = Empty
+Page.Empty.displayName = 'Page.Empty'

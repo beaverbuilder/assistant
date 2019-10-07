@@ -10,8 +10,13 @@ export const TextItem = ( {
 	hasChanges = false,
 	isRequired = false,
 	onChange = () => {},
+	isVisible = true,
 	...rest,
 } ) => {
+
+	if ( ! isVisible ) {
+		return null
+	}
 
 	const isTextArea = 'textarea' === type
 
@@ -55,8 +60,13 @@ export const SelectItem = ( {
 	isRequired = false,
 	hasChanges = false,
 	onChange = () => {},
+	isVisible = true,
 	...rest,
 } ) => {
+
+	if ( ! isVisible ) {
+		return null
+	}
 
 	return (
 		<Form.Item
@@ -90,8 +100,13 @@ export const CheckboxItem = ( {
 	hasChanges = false,
 	onChange = () => {},
 	content,
+	isVisible = true,
 	...rest,
 } ) => {
+
+	if ( ! isVisible ) {
+		return null
+	}
 
 	return (
 		<Form.Item

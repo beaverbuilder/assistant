@@ -5,8 +5,10 @@ import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 import { getPostActions } from './actions'
+import { setParentOptions } from './parent'
 
-const getFormConfig = () => {
+const getFormConfig = ( item ) => {
+	const { contentTypes } = getSystemConfig()
 	return {
 		id: {
 			label: __( 'ID' ),
@@ -14,6 +16,9 @@ const getFormConfig = () => {
 		title: {
 			label: __( 'Title' ),
 			id: 'post_title',
+			onChange: ( { value, setValue } ) => {
+				setValue( 'slug', value )
+			}
 		},
 		slug: {
 			label: __( 'Slug' ),
@@ -22,7 +27,7 @@ const getFormConfig = () => {
 		},
 		url: {
 			label: __( 'URL' ),
-			id: 'postURL',
+			id: 'post_url',
 		},
 		status: {
 			label: __( 'Publish Status' ),
@@ -36,21 +41,31 @@ const getFormConfig = () => {
 		},
 		visibility: {
 			label: __( 'Visibility' ),
-			id: 'postVisibility',
+			labelPlacement: 'beside',
+			id: 'post_visibility',
 			options: {
 				'public': __( 'Public' ),
 				'private': __( 'Private' ),
 				'protected': __( 'Protected' ),
 			},
+			onChange: ( { value, setOptions, setIsVisible } ) => {
+				setIsVisible( 'password', value == 'protected' )
+			}
+		},
+		password: {
+			label: __( 'Password' ),
 			labelPlacement: 'beside',
+			id: 'post_password',
+			isVisible: item.visibility == 'protected',
 		},
 		parent: {
 			label: __( 'Parent' ),
-			id: 'postParent',
-			options: () => ( {
-				0: __( 'None' )
-			} ),
 			labelPlacement: 'beside',
+			id: 'post_parent',
+			isVisible: contentTypes[ item.type ].isHierarchical,
+			options: ( { state, setOptions } ) => {
+				return setParentOptions( item.type, setOptions )
+			},
 		},
 		tags: {
 			label: __( 'Tags' ),
@@ -65,7 +80,7 @@ const getFormConfig = () => {
 		},
 		labels: {
 			label: __( 'Labels' ),
-			id: 'postLabels',
+			id: 'post_labels',
 			value: () => [
 				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
 				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
@@ -118,20 +133,21 @@ export const Post = ( { location, match, history } ) => {
 
 	} = Form.useForm(
 		{
-			...getFormConfig()
+			...getFormConfig( item )
 		},
 		{
-			onSubmit: ( { changes, ids } ) => {
-
+			onSubmit: ( { changed, ids } ) => {
 				const wpRest = getWpRest()
 				const data = {}
 				const keyMap = ids
-				for ( let key in changes ) {
+
+				for ( let key in changed ) {
 					if ( ! keyMap[ key ] ) {
 						continue
 					}
-					data[ keyMap[ key ] ] = changes[ key ]
+					data[ keyMap[ key ] ] = changed[ key ]
 				}
+
 				wpRest.posts().update( item.id, 'data', data ).then( () => {
 					alert( 'Changes Published!' )
 				} )

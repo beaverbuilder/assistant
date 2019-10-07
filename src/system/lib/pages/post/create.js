@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from 'fl-react'
+import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Form } from 'lib'
 import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
+import { setParentOptions } from './parent'
 
 export const CreatePost = ( { history, location } ) => {
-	const [ type, setType ] = useState( 'post' )
-	const [ parents, setParents ] = useState( [] )
 	const { contentTypes } = getSystemConfig()
 	const wpRest = getWpRest()
 	const state = location.state ? location.state : {}
@@ -28,57 +27,47 @@ export const CreatePost = ( { history, location } ) => {
 		return options
 	}
 
-	useEffect( () => {
-		if ( contentTypes[ type ].isHierarchical ) {
-			setParents( [] )
-		} else {
-			wpRest.posts().hierarchical( {
-				hide_empty: 0,
-				post_type: type,
-				posts_per_page: -1,
-			} ).then( response => {
-				setParents( response.data )
-			} )
-		}
-	}, [ type ] )
-
 	const {
 		form,
 		useFormContext,
 		submitForm,
 		isSubmitting,
 		setIsSubmitting,
-		values,
 	} = Form.useForm( {
 		type: {
 			label: __( 'Type' ),
+			labelPlacement: 'beside',
 			options: getTypeOptions(),
 			id: 'post_type',
-			onChange: ( { value } ) => setType( value )
+			onChange: ( { value, setOptions, setIsVisible } ) => {
+				setIsVisible( 'parent', contentTypes[ value ].isHierarchical )
+				setParentOptions( value, setOptions )
+			}
 		},
 		title: {
 			label: __( 'Title' ),
-			placeholder: __( 'TItle' ),
+			placeholder: __( 'Title' ),
 			id: 'post_title',
-			onChange: ({ value, setValue }) => {
+			onChange: ( { value, setValue } ) => {
 				setValue( 'slug', value )
 			}
 		},
 		slug: {
 			label: __( 'Slug' ),
 			placeholder: __( 'my-post-slug' ),
-			sanitize: createSlug,
 			id: 'post_name',
+			sanitize: createSlug,
 		},
 		parent: {
 			label: __( 'Parent' ),
-			options: ({ key, state }) => {
-				return {
-					'0': __( 'None' ),
-				}
+			id: 'post_parent',
+			isVisible: contentTypes[ defaults.type ].isHierarchical,
+			options: ( { state, setOptions } ) => {
+				return setParentOptions( state.type.value, setOptions )
 			},
 		},
 	}, {
+		shouldHighlightChanges: false,
 		onSubmit: ( { values, ids } ) => {
 			const data = {}
 
@@ -88,9 +77,13 @@ export const CreatePost = ( { history, location } ) => {
 				}
 			}
 
+			if ( data.parent ) {
+				data.parent = data.parent.split( ':' ).pop()
+			}
+
 			const handleError = error => {
 				setIsSubmitting( false )
-				alert( __( 'Error: Post not created! Please try again.' ) );
+				alert( __( 'Error: Post not created! Please try again.' ) )
 				if ( error ) {
 					console.log( error ) // eslint-disable-line no-console
 				}
@@ -104,7 +97,7 @@ export const CreatePost = ( { history, location } ) => {
 					history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
 				} else {
 					setIsSubmitting( false )
-					alert( __( 'Post not created!' ) );
+					alert( __( 'Post not created!' ) )
 				}
 			} ).catch( error => {
 				handleError( error )

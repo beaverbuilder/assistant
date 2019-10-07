@@ -87,7 +87,7 @@ export const User = ( { location, match, history } ) => {
 				'': __( 'Button (Default)' ),
 				'admin_bar': __( 'Admin Bar Item' )
 			},
-			onChange: ({ value }) => {
+			onChange: ( { value } ) => {
 				if ( value !== window.hiddenAppearance ) {
 					setWindow( { ...window, hiddenAppearance: value } )
 				}

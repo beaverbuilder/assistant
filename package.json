@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "NODE_ENV=production webpack",
+    "build:dist": "NODE_ENV=production webpack && node bin/build-dist.js",
     "dev": "webpack --watch",
     "fix": "eslint src --fix",
     "test": "jest && eslint src"
@@ -63,6 +64,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "expose-loader": "^0.7.5",
+    "fs-extra": "^8.1.0",
     "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.12.0",

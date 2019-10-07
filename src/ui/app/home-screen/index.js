@@ -35,7 +35,7 @@ registerSection( 'fl-home-apps', {
 					const style = {}
 					if ( 'undefined' !== typeof app.accent ) {
 						style['--fl-asst-accent-color'] = app.accent.color
-						style.backgroundColor = 'var(--fl-asst-accent-color)'
+						style.color = 'var(--fl-asst-accent-color)'
 					}
 
 					let ref = null

@@ -18,13 +18,14 @@
             background: transparent;
             text-decoration: none;
             border: 2px solid var(--fl-asst-accent-color);
+            box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background);
         }
 
         &:focus {
             z-index: 2; // ensure box shadow doesn't get obscured
             outline: none;
             color: var(--fl-asst-surface-color);
-            box-shadow: 0px 0px 0px 2px var(--fl-asst-accent-color);
+            border: 2px solid var(--fl-asst-accent-color);
             background: var(--fl-asst-secondary-surface-background);
         }
 
@@ -129,6 +130,7 @@
             border-radius: 0;
             overflow: auto;
             justify-content: center;
+            align-self: stretch;
             padding-bottom: 2px;
 
             .fl-asst-button {

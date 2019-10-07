@@ -10,6 +10,7 @@ const { contentTypes, taxonomies } = getSystemConfig()
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: Content,
+	icon: Content.Icon,
 	accent: {
 		color: '#16C8E1'
 	},

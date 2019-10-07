@@ -1,4 +1,5 @@
 import { useContext, useReducer, useState } from 'fl-react'
+import classname from 'fl-classnames'
 import { Form } from '../'
 
 const hook = () => {
@@ -20,6 +21,7 @@ const init = ( { config, initialValues } ) => {
 		id: null,
 		disabled: false,
 		required: false,
+		isVisible: true,
 		sanitize,
 		onChange: () => {},
 
@@ -62,6 +64,7 @@ const init = ( { config, initialValues } ) => {
 }
 
 const defaultOptions = {
+	shouldHighlightChanges: true,
 	onSubmit: () => {},
 	onChange: () => {},
 	onReset: () => {},
@@ -143,6 +146,24 @@ export const useForm = (
 			}
 			return obj
 
+		case 'SET_OPTIONS':
+			return {
+				...state,
+				[action.key]: {
+					...state[action.key],
+					options: action.options,
+				}
+			}
+
+		case 'SET_IS_VISIBLE':
+			return {
+				...state,
+				[action.key]: {
+					...state[action.key],
+					isVisible: action.isVisible ? true : false
+				}
+			}
+
 		default:
 			return state
 		}
@@ -170,11 +191,27 @@ export const useForm = (
 	/**
 	 * Set some or all values with a given object of key/val pairs
 	 */
-	const setValues = ( values, shouldCommit = true ) => {
+	const setValues = ( values = {}, shouldCommit = true ) => {
 		dispatch( {
 			type: 'SET_VALUES',
 			values,
 			shouldCommit,
+		} )
+	}
+
+	const setOptions = ( key = '', options = {} ) => {
+		dispatch( {
+			type: 'SET_OPTIONS',
+			key,
+			options,
+		} )
+	}
+
+	const setIsVisible = ( key = '', isVisible = true ) => {
+		dispatch( {
+			type: 'SET_IS_VISIBLE',
+			key,
+			isVisible
 		} )
 	}
 
@@ -251,6 +288,8 @@ export const useForm = (
 						key,
 						value: v,
 						setValue,
+						setOptions,
+						setIsVisible,
 						state
 					}
 
@@ -270,7 +309,9 @@ export const useForm = (
 
 				const args = {
 					key,
-					state
+					state,
+					setOptions,
+					values,
 				}
 
 				obj[key] = Object.defineProperty( obj[key], 'options', {
@@ -338,6 +379,9 @@ export const useForm = (
 		values,
 		changed,
 		form: {
+			additionalClasses: classname( {
+				'fl-asst-highlight-changes': options.shouldHighlightChanges
+			} ),
 			onSubmit: e => e.preventDefault(),
 			context,
 		},

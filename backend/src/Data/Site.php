@@ -172,6 +172,8 @@ class Site {
 	public function get_admin_urls() {
 		$urls = [];
 
+		$urls['dashboard'] = admin_url();
+
 		$urls['createPost'] = admin_url( 'post-new.php' );
 
 		$url = static::get_customize_url();

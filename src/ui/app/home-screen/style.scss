@@ -7,8 +7,12 @@
             margin-bottom: 3px;
         }
         .fl-asst-title {
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
+            margin-bottom: 10px;
+        }
+        :last-child {
+            margin: 0;
         }
     }
 
@@ -29,14 +33,17 @@
             border-radius: var(--fl-asst-base-radius);
             min-height: 100px;
 
+            &:hover {
+                background: var(--fl-asst-secondary-surface-background);
+            }
+
             &:focus {
                 outline: none;
                 box-shadow: none;
 
                 .fl-asst-app-icon {
                     overflow: hidden;
-                    box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
-                                0px 0px 0px 2px var(--fl-asst-accent-color);
+                    box-shadow: 0px 0px 0px 3px var(--fl-asst-accent-color);
                 }
             }
 
@@ -44,11 +51,14 @@
                 width: 50px;
                 height: 50px;
                 border-radius: 7px;
-                background-color: #16191c;
-                color:white;
+                color: var(--fl-asst-accent-color);
+                background-color: transparent;
+                box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                transition-property: box-shadow;
+                transition-duration: .25s;
             }
 
             label {
@@ -67,18 +77,5 @@
     .fl-asst-window-normal .fl-asst-app-grid .fl-asst-app-grid-item .fl-asst-app-icon {
         width: 60px;
         height: 60px;
-    }
-}
-
-@supports( display: grid ) {
-    .fl-asst-app-grid {
-        display: grid;
-        grid-template-columns: repeat( auto-fit, minmax(110px, 1fr) );
-        grid-gap: 10px;
-        align-items: center;
-
-        .fl-asst-app-grid-item {
-            margin:0;
-        }
     }
 }
