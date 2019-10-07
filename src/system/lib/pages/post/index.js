@@ -5,8 +5,10 @@ import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 import { getPostActions } from './actions'
+import { setParentOptions } from './parent'
 
-const getFormConfig = () => {
+const getFormConfig = ( item ) => {
+	const { contentTypes } = getSystemConfig()
 	return {
 		id: {
 			label: __( 'ID' ),
@@ -47,10 +49,11 @@ const getFormConfig = () => {
 		parent: {
 			label: __( 'Parent' ),
 			id: 'postParent',
-			options: () => ( {
-				0: __( 'None' )
-			} ),
 			labelPlacement: 'beside',
+			isVisible: contentTypes[ item.type ].isHierarchical,
+			options: ( { state, setOptions } ) => {
+				return setParentOptions( item.type, setOptions )
+			},
 		},
 		tags: {
 			label: __( 'Tags' ),
@@ -118,7 +121,7 @@ export const Post = ( { location, match, history } ) => {
 
 	} = Form.useForm(
 		{
-			...getFormConfig()
+			...getFormConfig( item )
 		},
 		{
 			onSubmit: ( { changes, ids } ) => {
