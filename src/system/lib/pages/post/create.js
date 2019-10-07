@@ -38,7 +38,8 @@ export const CreatePost = ( { history, location } ) => {
 			) {
 				const options = {}
 				response.data.map( post => {
-					options[post.id] = post.title
+					options[ 'parent:' + post.id ] = post.title
+					setParentChildOptions( options, post.children )
 				} )
 				set( 'parent', {
 					0: __( 'None' ),
@@ -51,6 +52,14 @@ export const CreatePost = ( { history, location } ) => {
 		return {
 			0: __( 'None' ),
 		}
+	}
+
+	const setParentChildOptions = ( options, children, depth = 1 ) => {
+		const prefix = '-'.repeat( depth ) + ' '
+		children.map( child => {
+			options[ 'parent:' + child.id ] = prefix + child.title
+			setParentChildOptions( options, child.children, depth + 1 )
+		} )
 	}
 
 	const {
@@ -100,6 +109,10 @@ export const CreatePost = ( { history, location } ) => {
 				if ( ids[ key ] ) {
 					data[ ids[ key ] ] = values[ key ]
 				}
+			}
+
+			if ( data.parent ) {
+				data.parent = data.parent.split( ':' ).pop()
 			}
 
 			const handleError = error => {
