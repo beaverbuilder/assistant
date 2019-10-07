@@ -59,6 +59,7 @@ class PostTransformer {
 			'id'              => $post->ID,
 			'meta'            => $author . ' - ' . $date,
 			'parent'          => $post->post_parent,
+			'password'        => $post->post_password,
 			'slug'            => $post->post_name,
 			'status'          => $post->post_status,
 			'thumbnail'       => get_the_post_thumbnail_url( $post, 'thumbnail' ),
@@ -66,14 +67,14 @@ class PostTransformer {
 			'trashedStatus'   => get_post_meta( $post->ID, '_wp_trash_meta_status', true ),
 			'type'            => $post->post_type,
 			'url'             => get_permalink( $post ),
-			'visibility'      => __( 'Public', 'fl-assistant' ),
+			'visibility'      => 'public',
 		];
 
 		// Post visibility.
 		if ( 'private' === $post->post_status ) {
-			$response['visibility'] = __( 'Private', 'fl-assistant' );
+			$response['visibility'] = 'private';
 		} elseif ( ! empty( $post->post_password ) ) {
-			$response['visibility'] = __( 'Password Protected', 'fl-assistant' );
+			$response['visibility'] = 'protected';
 		}
 
 		// Beaver Builder data.
