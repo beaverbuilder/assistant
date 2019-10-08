@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'store'
 import { getWpRest } from 'shared-utils/wordpress'
 
-export const getPostActions = ( { staticValues, setValue } ) => {
+export const getPostActions = ( { history, staticValues, setValue } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
 
@@ -40,6 +40,7 @@ export const getPostActions = ( { staticValues, setValue } ) => {
 				wpRest.posts().update( id, 'trash' ).then( () => {
 					alert( 'Post permanently deleted!' )
 				} )
+				history.goBack()
 			}
 		} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
 			wpRest.posts().update( id, 'trash' )

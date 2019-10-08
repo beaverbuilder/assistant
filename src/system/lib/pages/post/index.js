@@ -7,9 +7,38 @@ import { createSlug } from 'shared-utils/url'
 import { getPostActions } from './actions'
 import { setParentOptions } from './parent'
 
-const getFormConfig = ( item ) => {
+export const Post = ( { location, match, history } ) => {
 	const { contentTypes, contentStatus } = getSystemConfig()
-	return {
+
+	const defaultItem = {
+		author: null,
+		bbBranding: null,
+		bbCanEdit: true,
+		bbEditUrl: null,
+		bbIsEnabled: null,
+		isFavorite: false,
+		commentsAllowed: null,
+		content: null,
+		date: null,
+		editUrl: null,
+		id: null,
+		meta: null,
+		parent: 0,
+		slug: null,
+		status: null,
+		thumbnail: null,
+		title: null,
+		type: 'post',
+		url: null,
+		visibility: 'Public',
+	}
+
+	let item = defaultItem
+	if ( 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ) {
+		item = { ...defaultItem, ...location.state.item }
+	}
+
+	const config = {
 		id: {
 			label: __( 'ID' ),
 		},
@@ -108,7 +137,7 @@ const getFormConfig = ( item ) => {
 			id: 'menu_order',
 		},
 		actions: {
-			value: getPostActions,
+			value: args => getPostActions( { history, ...args } ),
 		},
 		labels: {
 			label: __( 'Labels' ),
@@ -121,37 +150,55 @@ const getFormConfig = ( item ) => {
 			],
 		}
 	}
-}
 
-export const Post = ( { location, match, history } ) => {
-	const { contentTypes } = getSystemConfig()
+	const onSubmit = ( { changed, ids, setValue } ) => {
+		const wpRest = getWpRest()
+		const data = {}
+		const keyMap = ids
 
-	const defaultItem = {
-		author: null,
-		bbBranding: null,
-		bbCanEdit: true,
-		bbEditUrl: null,
-		bbIsEnabled: null,
-		isFavorite: false,
-		commentsAllowed: null,
-		content: null,
-		date: null,
-		editUrl: null,
-		id: null,
-		meta: null,
-		parent: 0,
-		slug: null,
-		status: null,
-		thumbnail: null,
-		title: null,
-		type: 'post',
-		url: null,
-		visibility: 'Public',
-	}
+		for ( let key in changed ) {
+			if ( ! keyMap[ key ] ) {
+				continue
+			}
+			data[ keyMap[ key ] ] = changed[ key ]
+		}
 
-	let item = defaultItem
-	if ( 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ) {
-		item = { ...defaultItem, ...location.state.item }
+		if ( data.post_visibility ) {
+			switch ( data.post_visibility ) {
+				case 'public':
+					data['post_status'] = 'publish'
+					data['post_password'] = ''
+					break;
+				case 'private':
+					data['post_status'] = 'private'
+					data['post_password'] = ''
+					break;
+				case 'protected':
+					data['post_status'] = 'publish'
+					break
+			}
+		}
+
+		const handleError = error => {
+			setIsSubmitting( false )
+			alert( __( 'Error: Changes not published! Please try again.' ) )
+			if ( error ) {
+				console.log( error ) // eslint-disable-line no-console
+			}
+		}
+
+		wpRest.posts().update( item.id, 'data', data ).then( response => {
+			const { data } = response
+			if ( data.error ) {
+				handleError()
+			} else {
+				setValue( 'url', data.post.url )
+				setIsSubmitting( false )
+				alert( __( 'Changes published!' ) )
+			}
+		} ).catch( error => {
+			handleError( error )
+		} )
 	}
 
 	// Setup Form Hook
@@ -163,64 +210,7 @@ export const Post = ( { location, match, history } ) => {
 		resetForm, // Function to revert back to last committed values
 		submitForm,
 		setIsSubmitting,
-	} = Form.useForm(
-		{
-			...getFormConfig( item )
-		},
-		{
-			onSubmit: ( { changed, ids, setValue } ) => {
-				const wpRest = getWpRest()
-				const data = {}
-				const keyMap = ids
-
-				for ( let key in changed ) {
-					if ( ! keyMap[ key ] ) {
-						continue
-					}
-					data[ keyMap[ key ] ] = changed[ key ]
-				}
-
-				if ( data.post_visibility ) {
-				    switch ( data.post_visibility ) {
-				        case 'public':
-				            data['post_status'] = 'publish'
-				            data['post_password'] = ''
-				            break;
-				        case 'private':
-				            data['post_status'] = 'private'
-				            data['post_password'] = ''
-				            break;
-				        case 'protected':
-				            data['post_status'] = 'publish'
-				            break
-				    }
-				}
-
-				const handleError = error => {
-					setIsSubmitting( false )
-					alert( __( 'Error: Changes not published! Please try again.' ) )
-					if ( error ) {
-						console.log( error ) // eslint-disable-line no-console
-					}
-				}
-
-				wpRest.posts().update( item.id, 'data', data ).then( response => {
-					const { data } = response
-					if ( data.error ) {
-						handleError()
-					} else {
-						setValue( 'url', data.post.url )
-						setIsSubmitting( false )
-						alert( __( 'Changes published!' ) )
-					}
-				} ).catch( error => {
-					handleError( error )
-				} )
-			},
-		},
-		item,
-	)
-
+	} = Form.useForm( config, { onSubmit }, item )
 
 	// Setup Tab Handling
 	const tabs = [
