@@ -43,7 +43,16 @@ const getFormConfig = ( item ) => {
 				'private': __( 'Private' ),
 				'protected': __( 'Protected' ),
 			},
-			onChange: ( { value, setOptions, setIsVisible } ) => {
+			onChange: ( { value, setValue, setIsVisible } ) => {
+				switch ( value ) {
+					case 'public':
+					case 'protected':
+						setValue( 'status', 'publish' )
+						break
+					case 'private':
+						setValue( 'status', 'private' )
+						break
+				}
 				setIsVisible( 'password', value == 'protected' )
 			}
 		},
