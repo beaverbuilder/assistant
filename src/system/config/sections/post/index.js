@@ -80,6 +80,22 @@ registerSection( 'fl-post-attributes', {
 	},
 } )
 
+registerSection( 'fl-post-discussion', {
+	label: __( 'Discussion' ),
+	location: {
+		type: 'post',
+	},
+	render: ( { useForm } ) => {
+		const { commentsAllowed, pingbacksAllowed } = useForm()
+		return (
+			<>
+				<Form.CheckboxItem { ...commentsAllowed } />
+				<Form.CheckboxItem { ...pingbacksAllowed } />
+			</>
+		)
+	},
+} )
+
 registerSection( 'fl-post-comments', {
 	label: 'Comments',
 	location: {

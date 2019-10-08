@@ -66,6 +66,22 @@ const getFormConfig = ( item ) => {
 			label: __( 'Publish Date' ),
 			labelPlacement: 'beside',
 		},
+		tags: {
+			label: __( 'Tags' ),
+			value: [
+				{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
+				{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
+				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
+			]
+		},
+		commentsAllowed: {
+			label: __( 'Allow Comments' ),
+			labelPlacement: 'beside',
+		},
+		pingbacksAllowed: {
+			label: __( 'Allow Pingbacks' ),
+			labelPlacement: 'beside',
+		},
 		template: {
 			label: __( 'Template' ),
 			labelPlacement: 'beside',
@@ -86,14 +102,6 @@ const getFormConfig = ( item ) => {
 			label: __( 'Order' ),
 			labelPlacement: 'beside',
 			id: 'menu_order',
-		},
-		tags: {
-			label: __( 'Tags' ),
-			value: [
-				{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
-				{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
-				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
-			]
 		},
 		actions: {
 			value: getPostActions,
