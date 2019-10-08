@@ -32,7 +32,7 @@ const getFormConfig = ( item ) => {
 		status: {
 			label: __( 'Status' ),
 			labelPlacement: 'beside',
-			sanitize: value => contentStatus[ value ],
+			sanitize: value => contentStatus[ value ] ? contentStatus[ value ] : value,
 		},
 		visibility: {
 			label: __( 'Visibility' ),
