@@ -9,7 +9,7 @@ const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 const cacheHelper = new CacheHelper( 'fl-assistant-wp-rest', {
 
 	// Changing this to true will send alot of output to the console
-	debug: true,
+	debug: false,
 	ignoreCache: true,
 
 	// Set cache timeout - 15 minutes
