@@ -8,7 +8,7 @@ import { getPostActions } from './actions'
 import { setParentOptions } from './parent'
 
 const getFormConfig = ( item ) => {
-	const { contentTypes } = getSystemConfig()
+	const { contentTypes, contentStatus } = getSystemConfig()
 	return {
 		id: {
 			label: __( 'ID' ),
@@ -30,14 +30,9 @@ const getFormConfig = ( item ) => {
 			id: 'post_url',
 		},
 		status: {
-			label: __( 'Publish Status' ),
-			id: 'post_status',
-			options: {
-				'publish': __( 'Published' ),
-				'pending': __( 'Pending Review' ),
-				'draft': __( 'Drafted' ),
-			},
+			label: __( 'Status' ),
 			labelPlacement: 'beside',
+			sanitize: value => contentStatus[ value ],
 		},
 		visibility: {
 			label: __( 'Visibility' ),

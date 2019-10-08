@@ -36,7 +36,7 @@ registerSection( 'fl-post-publish', {
 		const { status, visibility, password, parent } = useForm()
 		return (
 			<>
-				<Form.SelectItem { ...status } />
+				<Form.PlainTextItem { ...status } />
 				<Form.SelectItem { ...visibility } />
 				<Form.TextItem { ...password } />
 				<Form.SelectItem { ...parent } />

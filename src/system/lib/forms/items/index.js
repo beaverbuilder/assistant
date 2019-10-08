@@ -1,6 +1,30 @@
 import React from 'fl-react'
 import { Form } from '../'
 
+export const PlainTextItem = ( {
+	label,
+	labelPlacement,
+	id,
+	value,
+	isVisible = true,
+	...rest,
+} ) => {
+
+	if ( ! isVisible ) {
+		return null
+	}
+
+	return (
+		<Form.Item
+			label={ label }
+			placement={ labelPlacement }
+			labelFor={ id }
+		>
+			<div key={ id } id={ id }>{ value }</div>
+		</Form.Item>
+	)
+}
+
 export const TextItem = ( {
 	label,
 	labelPlacement,
