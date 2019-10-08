@@ -33,13 +33,13 @@ registerSection( 'fl-post-publish', {
 		type: 'post',
 	},
 	render: ( { useForm } ) => {
-		const { status, visibility, password, parent } = useForm()
+		const { status, visibility, password, date } = useForm()
 		return (
 			<>
-				<Form.SelectItem { ...status } />
+				<Form.PlainTextItem { ...status } />
 				<Form.SelectItem { ...visibility } />
 				<Form.TextItem { ...password } />
-				<Form.SelectItem { ...parent } />
+				<Form.PlainTextItem { ...date } />
 			</>
 		)
 	},
@@ -58,6 +58,54 @@ registerSection( 'fl-post-cats-tags', {
 				<Form.Item label={ tags.label } labelForm={ tags.id }>
 					<Control.TagGroup value={ tags.value } />
 				</Form.Item>
+			</>
+		)
+	},
+} )
+
+registerSection( 'fl-post-excerpt', {
+	label: __( 'Excerpt' ),
+	location: {
+		type: 'post',
+	},
+	render: ( { useForm } ) => {
+		const { excerpt } = useForm()
+		return (
+			<>
+				<Form.TextItem { ...excerpt } />
+			</>
+		)
+	},
+} )
+
+registerSection( 'fl-post-attributes', {
+	label: __( 'Attributes' ),
+	location: {
+		type: 'post',
+	},
+	render: ( { useForm } ) => {
+		const { parent, template, order } = useForm()
+		return (
+			<>
+				<Form.SelectItem { ...template } />
+				<Form.SelectItem { ...parent } />
+				<Form.TextItem { ...order } />
+			</>
+		)
+	},
+} )
+
+registerSection( 'fl-post-discussion', {
+	label: __( 'Discussion' ),
+	location: {
+		type: 'post',
+	},
+	render: ( { useForm } ) => {
+		const { commentsAllowed, pingbacksAllowed } = useForm()
+		return (
+			<>
+				<Form.CheckboxItem { ...commentsAllowed } />
+				<Form.CheckboxItem { ...pingbacksAllowed } />
 			</>
 		)
 	},

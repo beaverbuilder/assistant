@@ -77,8 +77,8 @@ export const getPostActions = ( { staticValues, setValue } ) => {
 			onClick: favoritePost,
 		},
 		{
-			label: 'trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
-			onClick: 'trash' === status ? untrashPost : trashPost,
+			label: 'Trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
+			onClick: 'Trash' === status ? untrashPost : trashPost,
 		}
 	]
 }

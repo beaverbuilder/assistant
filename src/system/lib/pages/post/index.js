@@ -8,7 +8,7 @@ import { getPostActions } from './actions'
 import { setParentOptions } from './parent'
 
 const getFormConfig = ( item ) => {
-	const { contentTypes } = getSystemConfig()
+	const { contentTypes, contentStatus } = getSystemConfig()
 	return {
 		id: {
 			label: __( 'ID' ),
@@ -30,14 +30,9 @@ const getFormConfig = ( item ) => {
 			id: 'post_url',
 		},
 		status: {
-			label: __( 'Publish Status' ),
-			id: 'post_status',
-			options: {
-				'publish': __( 'Published' ),
-				'pending': __( 'Pending Review' ),
-				'draft': __( 'Drafted' ),
-			},
+			label: __( 'Status' ),
 			labelPlacement: 'beside',
+			sanitize: value => contentStatus[ value ] ? contentStatus[ value ] : value,
 		},
 		visibility: {
 			label: __( 'Visibility' ),
@@ -48,7 +43,16 @@ const getFormConfig = ( item ) => {
 				'private': __( 'Private' ),
 				'protected': __( 'Protected' ),
 			},
-			onChange: ( { value, setOptions, setIsVisible } ) => {
+			onChange: ( { value, setValue, setIsVisible } ) => {
+				switch ( value ) {
+					case 'public':
+					case 'protected':
+						setValue( 'status', 'publish' )
+						break
+					case 'private':
+						setValue( 'status', 'private' )
+						break
+				}
 				setIsVisible( 'password', value == 'protected' )
 			}
 		},
@@ -57,6 +61,37 @@ const getFormConfig = ( item ) => {
 			labelPlacement: 'beside',
 			id: 'post_password',
 			isVisible: item.visibility == 'protected',
+		},
+		date: {
+			label: __( 'Publish Date' ),
+			labelPlacement: 'beside',
+		},
+		tags: {
+			label: __( 'Tags' ),
+			value: [
+				{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
+				{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
+				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
+			]
+		},
+		excerpt: {
+			id: 'post_excerpt',
+			type: 'textarea',
+		},
+		commentsAllowed: {
+			label: __( 'Allow Comments' ),
+			labelPlacement: 'beside',
+		},
+		pingbacksAllowed: {
+			label: __( 'Allow Pingbacks' ),
+			labelPlacement: 'beside',
+		},
+		template: {
+			label: __( 'Template' ),
+			labelPlacement: 'beside',
+			options: {
+				'default': 'Default',
+			},
 		},
 		parent: {
 			label: __( 'Parent' ),
@@ -67,13 +102,10 @@ const getFormConfig = ( item ) => {
 				return setParentOptions( item.type, setOptions )
 			},
 		},
-		tags: {
-			label: __( 'Tags' ),
-			value: [
-				{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
-				{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
-				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
-			]
+		order: {
+			label: __( 'Order' ),
+			labelPlacement: 'beside',
+			id: 'menu_order',
 		},
 		actions: {
 			value: getPostActions,

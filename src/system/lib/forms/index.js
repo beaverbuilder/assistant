@@ -9,7 +9,7 @@ import { useFormState } from './use-form-data'
 // New Form Handler
 import { useForm } from './use-form'
 
-import { TextItem, SelectItem, CheckboxItem } from './items'
+import { PlainTextItem, TextItem, SelectItem, CheckboxItem } from './items'
 import './style.scss'
 
 
@@ -82,6 +82,9 @@ Form.Footer = props => {
 }
 
 Form.useFormState = useFormState
+
+Form.PlainTextItem = PlainTextItem
+Form.PlainTextItem.displayName = 'Form.PlainTextItem'
 
 Form.TextItem = TextItem
 Form.TextItem.displayName = 'Form.TextItem'
