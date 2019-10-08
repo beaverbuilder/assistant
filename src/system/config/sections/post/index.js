@@ -63,6 +63,21 @@ registerSection( 'fl-post-cats-tags', {
 	},
 } )
 
+registerSection( 'fl-post-excerpt', {
+	label: __( 'Excerpt' ),
+	location: {
+		type: 'post',
+	},
+	render: ( { useForm } ) => {
+		const { excerpt } = useForm()
+		return (
+			<>
+				<Form.TextItem { ...excerpt } />
+			</>
+		)
+	},
+} )
+
 registerSection( 'fl-post-attributes', {
 	label: __( 'Attributes' ),
 	location: {

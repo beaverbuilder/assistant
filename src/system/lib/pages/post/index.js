@@ -74,6 +74,10 @@ const getFormConfig = ( item ) => {
 				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
 			]
 		},
+		excerpt: {
+			id: 'post_excerpt',
+			type: 'textarea',
+		},
 		commentsAllowed: {
 			label: __( 'Allow Comments' ),
 			labelPlacement: 'beside',
