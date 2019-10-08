@@ -62,6 +62,10 @@ const getFormConfig = ( item ) => {
 			id: 'post_password',
 			isVisible: item.visibility == 'protected',
 		},
+		date: {
+			label: __( 'Publish Date' ),
+			labelPlacement: 'beside',
+		},
 		parent: {
 			label: __( 'Parent' ),
 			labelPlacement: 'beside',
