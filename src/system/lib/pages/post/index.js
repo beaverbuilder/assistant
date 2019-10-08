@@ -168,7 +168,7 @@ export const Post = ( { location, match, history } ) => {
 			...getFormConfig( item )
 		},
 		{
-			onSubmit: ( { changed, ids } ) => {
+			onSubmit: ( { changed, ids, setValue } ) => {
 				const wpRest = getWpRest()
 				const data = {}
 				const keyMap = ids
@@ -209,6 +209,7 @@ export const Post = ( { location, match, history } ) => {
 					if ( data.error ) {
 						handleError()
 					} else {
+						setValue( 'url', data.post.url )
 						setIsSubmitting( false )
 						alert( __( 'Changes published!' ) )
 					}

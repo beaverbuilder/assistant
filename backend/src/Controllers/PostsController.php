@@ -353,9 +353,12 @@ class PostsController extends ControllerAbstract {
 				break;
 		}
 
+		$updated_post = get_post( $id );
+
 		return rest_ensure_response(
 			[
 				'success' => true,
+				'post' => $updated_post ? $this->transform( $updated_post ) : null,
 			]
 		);
 	}
