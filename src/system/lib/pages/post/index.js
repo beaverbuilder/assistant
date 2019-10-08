@@ -66,6 +66,13 @@ const getFormConfig = ( item ) => {
 			label: __( 'Publish Date' ),
 			labelPlacement: 'beside',
 		},
+		template: {
+			label: __( 'Template' ),
+			labelPlacement: 'beside',
+			options: {
+				'default': 'Default',
+			},
+		},
 		parent: {
 			label: __( 'Parent' ),
 			labelPlacement: 'beside',
@@ -74,6 +81,11 @@ const getFormConfig = ( item ) => {
 			options: ( { state, setOptions } ) => {
 				return setParentOptions( item.type, setOptions )
 			},
+		},
+		order: {
+			label: __( 'Order' ),
+			labelPlacement: 'beside',
+			id: 'menu_order',
 		},
 		tags: {
 			label: __( 'Tags' ),

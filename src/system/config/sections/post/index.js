@@ -45,21 +45,6 @@ registerSection( 'fl-post-publish', {
 	},
 } )
 
-registerSection( 'fl-post-attributes', {
-	label: __( 'Attributes' ),
-	location: {
-		type: 'post',
-	},
-	render: ( { useForm } ) => {
-		const { parent } = useForm()
-		return (
-			<>
-				<Form.SelectItem { ...parent } />
-			</>
-		)
-	},
-} )
-
 registerSection( 'fl-post-cats-tags', {
 	label: __( 'Categories & Tags' ),
 	location: {
@@ -73,6 +58,23 @@ registerSection( 'fl-post-cats-tags', {
 				<Form.Item label={ tags.label } labelForm={ tags.id }>
 					<Control.TagGroup value={ tags.value } />
 				</Form.Item>
+			</>
+		)
+	},
+} )
+
+registerSection( 'fl-post-attributes', {
+	label: __( 'Attributes' ),
+	location: {
+		type: 'post',
+	},
+	render: ( { useForm } ) => {
+		const { parent, template, order } = useForm()
+		return (
+			<>
+				<Form.SelectItem { ...template } />
+				<Form.SelectItem { ...parent } />
+				<Form.TextItem { ...order } />
 			</>
 		)
 	},
