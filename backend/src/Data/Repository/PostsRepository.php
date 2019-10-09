@@ -117,14 +117,14 @@ class PostsRepository extends RepositoryAbstract {
 				'canExport'      => $type->can_export,
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,
-				'templates'		 => get_page_templates( null, $slug ),
-				'taxonomies'	 => [],
+				'templates'      => get_page_templates( null, $slug ),
+				'taxonomies'     => [],
 				'supports'       => [
-					'comments' 		=> post_type_supports( $slug, 'comments' ),
-					'trackbacks' 	=> post_type_supports( $slug, 'trackbacks' ),
-					'excerpt' 		=> post_type_supports( $slug, 'excerpt' ),
-					'thumbnail' 	=> post_type_supports( $slug, 'thumbnail' ),
-					'order' 		=> post_type_supports( $slug, 'page-attributes' ),
+					'comments'   => post_type_supports( $slug, 'comments' ),
+					'trackbacks' => post_type_supports( $slug, 'trackbacks' ),
+					'excerpt'    => post_type_supports( $slug, 'excerpt' ),
+					'thumbnail'  => post_type_supports( $slug, 'thumbnail' ),
+					'order'      => post_type_supports( $slug, 'page-attributes' ),
 				],
 				'labels'         => [
 					'singular' => esc_html( $type->labels->singular_name ),
@@ -143,7 +143,7 @@ class PostsRepository extends RepositoryAbstract {
 				}
 				$data[ $slug ]['taxonomies'][ $tax_slug ] = [
 					'isHierarchical' => $tax->hierarchical,
-					'labels' => [
+					'labels'         => [
 						'singular' => esc_html( $tax->labels->singular_name ),
 						'plural'   => esc_html( $type->labels->name ),
 					],
