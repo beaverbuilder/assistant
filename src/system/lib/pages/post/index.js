@@ -8,7 +8,6 @@ import { getPostActions } from './actions'
 import { setParentOptions } from './parent'
 
 export const Post = ( { location, match, history } ) => {
-	const { contentTypes, contentStatus } = getSystemConfig()
 
 	const defaultItem = {
 		author: null,
@@ -37,6 +36,9 @@ export const Post = ( { location, match, history } ) => {
 	if ( 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ) {
 		item = { ...defaultItem, ...location.state.item }
 	}
+
+	const { contentTypes, contentStatus } = getSystemConfig()
+	const { isHierarchical, labels, supports, templates, taxonomies } = contentTypes[ item.type ]
 
 	const config = {
 		id: {
@@ -105,24 +107,23 @@ export const Post = ( { location, match, history } ) => {
 		excerpt: {
 			id: 'post_excerpt',
 			type: 'textarea',
-			isVisible: contentTypes[ item.type ].supports.excerpt,
+			isVisible: supports.excerpt,
 		},
 		commentsAllowed: {
 			label: __( 'Allow Comments' ),
 			labelPlacement: 'beside',
-			isVisible: contentTypes[ item.type ].supports.comments,
+			isVisible: supports.comments,
 		},
 		pingbacksAllowed: {
 			label: __( 'Allow Pingbacks' ),
 			labelPlacement: 'beside',
-			isVisible: contentTypes[ item.type ].supports.trackbacks,
+			isVisible: supports.trackbacks,
 		},
 		template: {
 			label: __( 'Template' ),
 			labelPlacement: 'beside',
-			isVisible: !! Object.keys( contentTypes[ item.type ].templates ).length,
+			isVisible: !! Object.keys( templates ).length,
 			options: () => {
-				const templates = contentTypes[ item.type ].templates
 				const options = {
 					'default': __( 'Default' ),
 				}
@@ -136,7 +137,7 @@ export const Post = ( { location, match, history } ) => {
 			label: __( 'Parent' ),
 			labelPlacement: 'beside',
 			id: 'post_parent',
-			isVisible: contentTypes[ item.type ].isHierarchical,
+			isVisible: isHierarchical,
 			options: ( { setOptions } ) => {
 				return setParentOptions( item.type, setOptions )
 			},
@@ -145,7 +146,7 @@ export const Post = ( { location, match, history } ) => {
 			label: __( 'Order' ),
 			labelPlacement: 'beside',
 			id: 'menu_order',
-			isVisible: contentTypes[ item.type ].supports.order,
+			isVisible: supports.order,
 		},
 		actions: {
 			value: args => getPostActions( { history, ...args } ),
@@ -161,6 +162,11 @@ export const Post = ( { location, match, history } ) => {
 			],
 		}
 	}
+
+	Object.keys( taxonomies ).map( key => {
+
+		// Do something magical...
+	} )
 
 	const onSubmit = ( { changed, ids, setValue } ) => {
 		const wpRest = getWpRest()
@@ -283,7 +289,7 @@ export const Post = ( { location, match, history } ) => {
 
 	return (
 		<Page
-			title={ contentTypes[ item.type ].labels.editItem }
+			title={ labels.editItem }
 			shouldPadSides={ false }
 			footer={ hasChanges && <Footer /> }
 		>
