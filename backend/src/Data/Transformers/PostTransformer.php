@@ -4,6 +4,7 @@
 namespace FL\Assistant\Data\Transformers;
 
 use FL\Assistant\Data\Repository\NotationsRepository;
+use FL\Assistant\Data\Repository\TermsRepository;
 use FL\Assistant\System\Integrations\BeaverBuilder;
 
 
@@ -17,6 +18,7 @@ use FL\Assistant\System\Integrations\BeaverBuilder;
 class PostTransformer {
 
 	protected $notations;
+	protected $terms;
 	protected $beaver_builder;
 
 	/**
@@ -25,8 +27,13 @@ class PostTransformer {
 	 * @param NotationsRepository $notations
 	 * @param BeaverBuilder $beaver_builder
 	 */
-	public function __construct( NotationsRepository $notations, BeaverBuilder $beaver_builder ) {
+	public function __construct(
+		NotationsRepository $notations,
+		TermsRepository $terms,
+		BeaverBuilder $beaver_builder
+	) {
 		$this->notations = $notations;
+		$this->terms = $terms;
 		$this->beaver_builder = $beaver_builder;
 	}
 
@@ -64,6 +71,7 @@ class PostTransformer {
 			'slug'            	=> $post->post_name,
 			'status'          	=> $post->post_status,
 			'template'		  	=> get_post_meta( $post->ID, '_wp_page_template', true ),
+			'terms'				=> [],
 			'thumbnail'       	=> get_the_post_thumbnail_url( $post, 'thumbnail' ),
 			'title'           	=> empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
 			'trashedStatus'   	=> get_post_meta( $post->ID, '_wp_trash_meta_status', true ),
@@ -81,7 +89,6 @@ class PostTransformer {
 
 		// Beaver Builder data.
 		if ( $this->beaver_builder->is_installed() ) {
-
 			$response['bbCanEdit']   = $this->beaver_builder->can_edit_post( $post->ID );
 			$response['bbIsEnabled'] = \FLBuilderModel::is_builder_enabled( $post->ID );
 			$response['bbBranding']  = \FLBuilderModel::get_branding();
@@ -91,6 +98,22 @@ class PostTransformer {
 		// Favorites
 		$favorites = $this->notations->get_favorites( 'post', $post->ID, get_current_user_id() );
 		$response['isFavorite'] = ! ! count( $favorites );
+
+		// Terms
+		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
+
+		foreach ( $taxonomies as $tax_slug => $tax ) {
+			if ( ! $tax->public || ! $tax->show_ui ) {
+				continue;
+			}
+			$response['terms'][ $tax_slug ] = $this->terms->find_where( [
+				'taxonomy' 		=> $tax_slug,
+				'object_ids'	=> [ $post->ID ],
+				'orderby'		=> 'name',
+				'order'			=> 'ASC',
+				'fields'		=> 'ids',
+			] );
+		}
 
 		return $response;
 	}

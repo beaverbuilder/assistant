@@ -45,8 +45,8 @@ registerSection( 'fl-post-publish', {
 	},
 } )
 
-registerSection( 'fl-post-cats-tags', {
-	label: __( 'Categories & Tags' ),
+registerSection( 'fl-post-taxonomies', {
+	label: __( 'Taxonomies' ),
 	location: {
 		type: 'post',
 	},

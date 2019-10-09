@@ -141,13 +141,7 @@ class PostsRepository extends RepositoryAbstract {
 				if ( ! $tax->public || ! $tax->show_ui ) {
 					continue;
 				}
-				$data[ $slug ]['taxonomies'][ $tax_slug ] = [
-					'isHierarchical' => $tax->hierarchical,
-					'labels' => [
-						'singular' => esc_html( $tax->labels->singular_name ),
-						'plural'   => esc_html( $type->labels->name ),
-					],
-				];
+				$data[ $slug ]['taxonomies'][] = $tax_slug;
 			}
 		}
 
