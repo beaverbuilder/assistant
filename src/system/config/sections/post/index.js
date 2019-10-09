@@ -1,5 +1,5 @@
 import React from 'fl-react'
-import { getSystemActions } from 'store'
+import { getSystemActions, getSystemConfig } from 'store'
 import { Form, Control, List } from 'lib'
 import { __ } from '@wordpress/i18n'
 
@@ -51,15 +51,45 @@ registerSection( 'fl-post-taxonomies', {
 		type: 'post',
 	},
 	render: ( { useForm } ) => {
-		const { tags } = useForm()
+		const { taxonomies } = getSystemConfig()
+		const { terms } = useForm()
 
-		return (
-			<>
-				<Form.Item label={ tags.label } labelForm={ tags.id }>
-					<Control.TagGroup value={ tags.value } />
-				</Form.Item>
-			</>
-		)
+		const fields = Object.keys( terms.value ).map( ( slug, key ) => {
+			const tax = taxonomies[ slug ]
+
+			if ( tax.isHierarchical ) {
+				return (
+					<Form.SelectItem
+						key={ key }
+						label={ tax.labels.plural }
+						selectMultiple={ true }
+						options={ {
+							a: 1,
+							b: 2,
+							c: 3,
+							d: 4,
+						} }
+					/>
+				)
+			} else {
+				const val = [
+					{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
+					{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
+					{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
+				]
+				return (
+					<Form.Item
+						key={ key }
+						label={ tax.labels.plural }
+						labelForm={ `taxonomy-${ slug }` }
+					>
+						<Control.TagGroup value={ val } />
+					</Form.Item>
+				)
+			}
+		} )
+
+		return fields
 	},
 } )
 

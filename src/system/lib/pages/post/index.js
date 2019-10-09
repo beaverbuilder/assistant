@@ -96,14 +96,6 @@ export const Post = ( { location, match, history } ) => {
 			label: __( 'Publish Date' ),
 			labelPlacement: 'beside',
 		},
-		tags: {
-			label: __( 'Tags' ),
-			value: [
-				{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
-				{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
-				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
-			]
-		},
 		excerpt: {
 			id: 'post_excerpt',
 			type: 'textarea',
@@ -160,7 +152,8 @@ export const Post = ( { location, match, history } ) => {
 				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
 				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
 			],
-		}
+		},
+		terms: {},
 	}
 
 	Object.keys( taxonomies ).map( key => {
