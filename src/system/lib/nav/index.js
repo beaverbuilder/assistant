@@ -12,7 +12,6 @@ Nav.Provider = ( { children } ) => {
 
 	const routerProps = {
 		initialIndex: history.index,
-
 		/* do NOT include a default for initialEntries */
 	}
 	if ( history.entries && history.entries.length ) {
@@ -115,7 +114,10 @@ Nav.Tabs = ( { tabs = [] } ) => {
 						<Button
 							key={ i }
 							isSelected={ path === tab.path }
-							onClick={ () => history.replace( tab.path, location.state ) }
+							onClick={ () => {
+								console.log('replace', tab.path )
+								history.replace( tab.path, {} )
+							} }
 						>
 							{ tab.label }
 						</Button>

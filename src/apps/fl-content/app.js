@@ -6,7 +6,7 @@ import { SummaryTab, PostTypeTab } from './tabs'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+		<Nav.Route exact path={ `${match.url}` } component={ Main } />
 		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
 		<Nav.Route path={ `${match.url}/post/new` } component={ Page.CreatePost } />
 		<Nav.Route path={ `${match.url}/post/:id` } component={ Page.Post } />
@@ -21,7 +21,7 @@ const Main = ( { match } ) => {
 			{
 				handle: 'summary',
 				label: __( 'Summary' ),
-				path: match.url,
+				path: '/fl-content/',
 				component: SummaryTab,
 				exact: true,
 			}
@@ -30,9 +30,9 @@ const Main = ( { match } ) => {
 			const type = contentTypes[key]
 			tabs.push( {
 				handle: key,
-				path: match.url + '/tab/' + key,
+				path: '/fl-content/tab/' + key,
 				label: type.labels.singular,
-				component: props => <PostTypeTab type={ key } { ...props } />,
+				component: () => <PostTypeTab type={key} />,
 			} )
 		} )
 		return tabs
