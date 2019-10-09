@@ -118,6 +118,7 @@ class PostsRepository extends RepositoryAbstract {
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,
 				'templates'		 => get_page_templates( null, $slug ),
+				'taxonomies'	 => [],
 				'supports'       => [
 					'comments' 		=> post_type_supports( $slug, 'comments' ),
 					'trackbacks' 	=> post_type_supports( $slug, 'trackbacks' ),
@@ -133,6 +134,21 @@ class PostsRepository extends RepositoryAbstract {
 					'viewItem' => esc_html( $type->labels->view_item ),
 				],
 			];
+
+			$taxonomies = get_object_taxonomies( $slug, 'objects' );
+
+			foreach ( $taxonomies as $tax_slug => $tax ) {
+				if ( ! $tax->public || ! $tax->show_ui ) {
+					continue;
+				}
+				$data[ $slug ]['taxonomies'][ $tax_slug ] = [
+					'isHierarchical' => $tax->hierarchical,
+					'labels' => [
+						'singular' => esc_html( $tax->labels->singular_name ),
+						'plural'   => esc_html( $type->labels->name ),
+					],
+				];
+			}
 		}
 
 		return $data;
