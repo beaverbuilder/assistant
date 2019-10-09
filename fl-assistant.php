@@ -18,9 +18,9 @@ define( 'FL_ASSISTANT_FILE', trailingslashit( __FILE__ ) );
 define( 'FL_ASSISTANT_DIR', plugin_dir_path( FL_ASSISTANT_FILE ) );
 define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
 
-require_once( __DIR__ . '/vendor/autoload.php' );
+require_once( __DIR__ . '/backend/autoloader.php' );
 
-new FL\Assistant\System\Plugin(__FILE__);
+new FL\Assistant\System\Plugin( __FILE__ );
 
 
 
