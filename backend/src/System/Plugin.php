@@ -12,6 +12,7 @@ use FL\Assistant\Providers\PostTypeServiceProvider;
 
 // Alias the injector - its our DI container.
 use FL\Assistant\System\Container\Injector as Container;
+use FL\Assistant\System\Util\Psr4Autoloader;
 
 /**
  * Class Plugin
@@ -46,6 +47,7 @@ class Plugin {
 	 */
 	public function __construct( $plugin_file ) {
 		$this->check_minimum_php_requirements();
+
 		$this->register_providers();
 
 		// notify assistant was loaded
@@ -60,11 +62,6 @@ class Plugin {
 		$php_version_check->check();
 	}
 
-
-	/**
-	 *
-	 * @throws Container\InjectionException
-	 */
 	public function register_providers() {
 		$this->container = new Container();
 		foreach ( $this->providers as $provider_class ) {
