@@ -7,92 +7,8 @@ import { createSlug } from 'shared-utils/url'
 import { getPostActions } from './actions'
 import { setParentOptions } from './parent'
 
-const getFormConfig = ( item ) => {
-	const { contentTypes } = getSystemConfig()
-	return {
-		id: {
-			label: __( 'ID' ),
-		},
-		title: {
-			label: __( 'Title' ),
-			id: 'post_title',
-			onChange: ( { value, setValue } ) => {
-				setValue( 'slug', value )
-			}
-		},
-		slug: {
-			label: __( 'Slug' ),
-			id: 'post_name',
-			sanitize: createSlug,
-		},
-		url: {
-			label: __( 'URL' ),
-			id: 'post_url',
-		},
-		status: {
-			label: __( 'Publish Status' ),
-			id: 'post_status',
-			options: {
-				'publish': __( 'Published' ),
-				'pending': __( 'Pending Review' ),
-				'draft': __( 'Drafted' ),
-			},
-			labelPlacement: 'beside',
-		},
-		visibility: {
-			label: __( 'Visibility' ),
-			labelPlacement: 'beside',
-			id: 'post_visibility',
-			options: {
-				'public': __( 'Public' ),
-				'private': __( 'Private' ),
-				'protected': __( 'Protected' ),
-			},
-			onChange: ( { value, setIsVisible } ) => {
-				setIsVisible( 'password', 'protected' == value )
-			}
-		},
-		password: {
-			label: __( 'Password' ),
-			labelPlacement: 'beside',
-			id: 'post_password',
-			isVisible: 'protected' == item.visibility,
-		},
-		parent: {
-			label: __( 'Parent' ),
-			labelPlacement: 'beside',
-			id: 'post_parent',
-			isVisible: contentTypes[ item.type ].isHierarchical,
-			options: ( { setOptions } ) => {
-				return setParentOptions( item.type, setOptions )
-			},
-		},
-		tags: {
-			label: __( 'Tags' ),
-			value: [
-				{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
-				{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
-				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
-			]
-		},
-		actions: {
-			value: getPostActions,
-		},
-		labels: {
-			label: __( 'Labels' ),
-			id: 'post_labels',
-			value: () => [
-				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
-				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
-				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
-				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
-			],
-		}
-	}
-}
-
 export const Post = ( { location, match, history } ) => {
-	const { contentTypes } = getSystemConfig()
+	const { contentTypes, contentStatus } = getSystemConfig()
 
 	const defaultItem = {
 		author: null,
@@ -122,6 +38,169 @@ export const Post = ( { location, match, history } ) => {
 		item = { ...defaultItem, ...location.state.item }
 	}
 
+	const config = {
+		id: {
+			label: __( 'ID' ),
+		},
+		title: {
+			label: __( 'Title' ),
+			id: 'post_title',
+			onChange: ( { value, setValue } ) => {
+				setValue( 'slug', value )
+			}
+		},
+		slug: {
+			label: __( 'Slug' ),
+			id: 'post_name',
+			sanitize: createSlug,
+		},
+		url: {
+			label: __( 'URL' ),
+			id: 'post_url',
+		},
+		status: {
+			label: __( 'Status' ),
+			labelPlacement: 'beside',
+			sanitize: value => contentStatus[ value ] ? contentStatus[ value ] : value,
+		},
+		visibility: {
+			label: __( 'Visibility' ),
+			labelPlacement: 'beside',
+			id: 'post_visibility',
+			options: {
+				'public': __( 'Public' ),
+				'private': __( 'Private' ),
+				'protected': __( 'Protected' ),
+			},
+			onChange: ( { value, setValue, setIsVisible } ) => {
+				switch ( value ) {
+					case 'public':
+					case 'protected':
+						setValue( 'status', 'publish' )
+						break
+					case 'private':
+						setValue( 'status', 'private' )
+						break
+				}
+				setIsVisible( 'password', value == 'protected' )
+			}
+		},
+		password: {
+			label: __( 'Password' ),
+			labelPlacement: 'beside',
+			id: 'post_password',
+			isVisible: 'protected' == item.visibility,
+		},
+		date: {
+			label: __( 'Publish Date' ),
+			labelPlacement: 'beside',
+		},
+		tags: {
+			label: __( 'Tags' ),
+			value: [
+				{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
+				{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
+				{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
+			]
+		},
+		excerpt: {
+			id: 'post_excerpt',
+			type: 'textarea',
+		},
+		commentsAllowed: {
+			label: __( 'Allow Comments' ),
+			labelPlacement: 'beside',
+		},
+		pingbacksAllowed: {
+			label: __( 'Allow Pingbacks' ),
+			labelPlacement: 'beside',
+		},
+		template: {
+			label: __( 'Template' ),
+			labelPlacement: 'beside',
+			options: {
+				'default': 'Default',
+			},
+		},
+		parent: {
+			label: __( 'Parent' ),
+			labelPlacement: 'beside',
+			id: 'post_parent',
+			isVisible: contentTypes[ item.type ].isHierarchical,
+			options: ( { state, setOptions } ) => {
+				return setParentOptions( item.type, setOptions )
+			},
+		},
+		order: {
+			label: __( 'Order' ),
+			labelPlacement: 'beside',
+			id: 'menu_order',
+		},
+		actions: {
+			value: args => getPostActions( { history, ...args } ),
+		},
+		labels: {
+			label: __( 'Labels' ),
+			id: 'post_labels',
+			value: () => [
+				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
+				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
+				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
+				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
+			],
+		}
+	}
+
+	const onSubmit = ( { changed, ids, setValue } ) => {
+		const wpRest = getWpRest()
+		const data = {}
+		const keyMap = ids
+
+		for ( let key in changed ) {
+			if ( ! keyMap[ key ] ) {
+				continue
+			}
+			data[ keyMap[ key ] ] = changed[ key ]
+		}
+
+		if ( data.post_visibility ) {
+			switch ( data.post_visibility ) {
+				case 'public':
+					data['post_status'] = 'publish'
+					data['post_password'] = ''
+					break;
+				case 'private':
+					data['post_status'] = 'private'
+					data['post_password'] = ''
+					break;
+				case 'protected':
+					data['post_status'] = 'publish'
+					break
+			}
+		}
+
+		const handleError = error => {
+			setIsSubmitting( false )
+			alert( __( 'Error: Changes not published! Please try again.' ) )
+			if ( error ) {
+				console.log( error ) // eslint-disable-line no-console
+			}
+		}
+
+		wpRest.posts().update( item.id, 'data', data ).then( response => {
+			const { data } = response
+			if ( data.error ) {
+				handleError()
+			} else {
+				setValue( 'url', data.post.url )
+				setIsSubmitting( false )
+				alert( __( 'Changes published!' ) )
+			}
+		} ).catch( error => {
+			handleError( error )
+		} )
+	}
+
 	// Setup Form Hook
 	const {
 		values,
@@ -131,63 +210,7 @@ export const Post = ( { location, match, history } ) => {
 		resetForm, // Function to revert back to last committed values
 		submitForm,
 		setIsSubmitting,
-	} = Form.useForm(
-		{
-			...getFormConfig( item )
-		},
-		{
-			onSubmit: ( { changed, ids } ) => {
-				const wpRest = getWpRest()
-				const data = {}
-				const keyMap = ids
-
-				for ( let key in changed ) {
-					if ( ! keyMap[ key ] ) {
-						continue
-					}
-					data[ keyMap[ key ] ] = changed[ key ]
-				}
-
-				if ( data.post_visibility ) {
-				    switch ( data.post_visibility ) {
-				        case 'public':
-				            data['post_status'] = 'publish'
-				            data['post_password'] = ''
-				            break
-				        case 'private':
-				            data['post_status'] = 'private'
-				            data['post_password'] = ''
-				            break
-				        case 'protected':
-				            data['post_status'] = 'publish'
-				            break
-				    }
-				}
-
-				const handleError = error => {
-					setIsSubmitting( false )
-					alert( __( 'Error: Changes not published! Please try again.' ) )
-					if ( error ) {
-						console.log( error ) // eslint-disable-line no-console
-					}
-				}
-
-				wpRest.posts().update( item.id, 'data', data ).then( response => {
-					const { data } = response
-					if ( data.error ) {
-						handleError()
-					} else {
-						setIsSubmitting( false )
-						alert( __( 'Changes published!' ) )
-					}
-				} ).catch( error => {
-					handleError( error )
-				} )
-			},
-		},
-		item,
-	)
-
+	} = Form.useForm( config, { onSubmit }, item )
 
 	// Setup Tab Handling
 	const tabs = [

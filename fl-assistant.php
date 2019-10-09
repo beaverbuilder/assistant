@@ -11,13 +11,16 @@
  * Copyright: (c) 2019 Beaver Builder
 */
 
-
-
 defined( 'ABSPATH' ) || die();
 
-require_once( __DIR__ . '/lib/autoloader.php' );
+define( 'FL_ASSISTANT_VERSION', '0.3' );
+define( 'FL_ASSISTANT_FILE', trailingslashit( __FILE__ ) );
+define( 'FL_ASSISTANT_DIR', plugin_dir_path( FL_ASSISTANT_FILE ) );
+define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
 
-FL\Assistant\Core\Plugin::init(__FILE__);
+require_once( __DIR__ . '/vendor/autoload.php' );
+
+new FL\Assistant\System\Plugin(__FILE__);
 
 
 
