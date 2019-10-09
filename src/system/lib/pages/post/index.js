@@ -120,10 +120,17 @@ export const Post = ( { location, match, history } ) => {
 		template: {
 			label: __( 'Template' ),
 			labelPlacement: 'beside',
-			options: {
-				'default': 'Default',
+			isVisible: !! Object.keys( contentTypes[ item.type ].templates ).length,
+			options: ( { setOptions } ) => {
+				const templates = contentTypes[ item.type ].templates
+				const options = {
+					'default': __( 'Default' ),
+				}
+				Object.keys( templates ).map( ( key ) => {
+					options[ templates[ key ] ] = key
+				} )
+				return options
 			},
-			isVisible: !! contentTypes[ item.type ].templates.length,
 		},
 		parent: {
 			label: __( 'Parent' ),
@@ -157,7 +164,7 @@ export const Post = ( { location, match, history } ) => {
 
 	const onSubmit = ( { changed, ids, setValue } ) => {
 		const wpRest = getWpRest()
-		const data = {}
+		const data = { meta: {} }
 
 		for ( let key in changed ) {
 			if ( ! ids[ key ] ) {
@@ -169,23 +176,26 @@ export const Post = ( { location, match, history } ) => {
 		if ( 'visibility' in changed ) {
 			switch ( changed.visibility ) {
 			case 'public':
-				data['post_status'] = 'publish'
-				data['post_password'] = ''
+				data.post_status = 'publish'
+				data.post_password = ''
 				break
 			case 'private':
-				data['post_status'] = 'private'
-				data['post_password'] = ''
+				data.post_status = 'private'
+				data.post_password = ''
 				break
 			case 'protected':
-				data['post_status'] = 'publish'
+				data.post_status = 'publish'
 				break
 			}
 		}
 		if ( 'commentsAllowed' in changed ) {
-			data['comment_status'] = changed.commentsAllowed ? 'open' : 'closed'
+			data.comment_status = changed.commentsAllowed ? 'open' : 'closed'
 		}
 		if ( 'pingbacksAllowed' in changed ) {
-			data['ping_status'] = changed.pingbacksAllowed ? 'open' : 'closed'
+			data.ping_status = changed.pingbacksAllowed ? 'open' : 'closed'
+		}
+		if ( 'template' in changed ) {
+			data.meta['_wp_page_template'] = changed.template
 		}
 
 		const handleError = error => {
