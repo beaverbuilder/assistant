@@ -66,7 +66,6 @@ export const Post = ( { location, match, history } ) => {
 		visibility: {
 			label: __( 'Visibility' ),
 			labelPlacement: 'beside',
-			id: 'post_visibility',
 			options: {
 				'public': __( 'Public' ),
 				'private': __( 'Private' ),
@@ -106,14 +105,17 @@ export const Post = ( { location, match, history } ) => {
 		excerpt: {
 			id: 'post_excerpt',
 			type: 'textarea',
+			isVisible: contentTypes[ item.type ].supports.excerpt,
 		},
 		commentsAllowed: {
 			label: __( 'Allow Comments' ),
 			labelPlacement: 'beside',
+			isVisible: contentTypes[ item.type ].supports.comments,
 		},
 		pingbacksAllowed: {
 			label: __( 'Allow Pingbacks' ),
 			labelPlacement: 'beside',
+			isVisible: contentTypes[ item.type ].supports.trackbacks,
 		},
 		template: {
 			label: __( 'Template' ),
@@ -135,6 +137,7 @@ export const Post = ( { location, match, history } ) => {
 			label: __( 'Order' ),
 			labelPlacement: 'beside',
 			id: 'menu_order',
+			isVisible: contentTypes[ item.type ].supports.order,
 		},
 		actions: {
 			value: args => getPostActions( { history, ...args } ),
@@ -154,17 +157,16 @@ export const Post = ( { location, match, history } ) => {
 	const onSubmit = ( { changed, ids, setValue } ) => {
 		const wpRest = getWpRest()
 		const data = {}
-		const keyMap = ids
 
 		for ( let key in changed ) {
-			if ( ! keyMap[ key ] ) {
+			if ( ! ids[ key ] ) {
 				continue
 			}
-			data[ keyMap[ key ] ] = changed[ key ]
+			data[ ids[ key ] ] = changed[ key ]
 		}
 
-		if ( data.post_visibility ) {
-			switch ( data.post_visibility ) {
+		if ( 'visibility' in changed ) {
+			switch ( changed.visibility ) {
 			case 'public':
 				data['post_status'] = 'publish'
 				data['post_password'] = ''
@@ -177,6 +179,12 @@ export const Post = ( { location, match, history } ) => {
 				data['post_status'] = 'publish'
 				break
 			}
+		}
+		if ( 'commentsAllowed' in changed ) {
+			data['comment_status'] = changed.commentsAllowed ? 'open' : 'closed'
+		}
+		if ( 'pingbacksAllowed' in changed ) {
+			data['ping_status'] = changed.pingbacksAllowed ? 'open' : 'closed'
 		}
 
 		const handleError = error => {

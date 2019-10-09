@@ -114,7 +114,11 @@ class PostsRepository extends RepositoryAbstract {
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,
 				'supports'       => [
-					'excerpt' => post_type_supports( $slug, 'excerpt' ),
+					'comments' 		=> post_type_supports( $slug, 'comments' ),
+					'trackbacks' 	=> post_type_supports( $slug, 'trackbacks' ),
+					'excerpt' 		=> post_type_supports( $slug, 'excerpt' ),
+					'thumbnail' 	=> post_type_supports( $slug, 'thumbnail' ),
+					'order' 		=> post_type_supports( $slug, 'page-attributes' ),
 				],
 				'labels'         => [
 					'singular' => esc_html( $type->labels->singular_name ),
