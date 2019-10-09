@@ -48,7 +48,7 @@ const UpdatesMain = () => {
 			setUpdatingAll( false )
 		}
 	}
-	
+
 	useEffect( () => {
 		maybeSetUpdatingAll()
 		const unsubscribe = updater.subscribe( maybeSetUpdatingAll )

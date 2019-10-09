@@ -1,21 +1,46 @@
-import React, { useContext } from 'fl-react'
+import React from 'fl-react'
+import { __ } from '@wordpress/i18n'
 import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
-import { App, Button, List, Page, Nav, Icon } from 'assistant/ui'
+import { Page, Nav, Icon } from 'assistant/ui'
+import { SummaryTab, PostTypeTab } from './tabs'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
 		<Nav.Route path={ `${match.url}/post/new` } component={ Page.CreatePost } />
 		<Nav.Route path={ `${match.url}/post/:id` } component={ Page.Post } />
 	</Nav.Switch>
 )
 
 const Main = ( { match } ) => {
-	const { handle } = useContext( App.Context )
 	const { contentTypes } = getSystemConfig()
 	const { query } = useAppState( 'fl-content' )
 	const { setQuery } = getAppActions( 'fl-content' )
 
+	const getTabs = () => {
+		let tabs = [
+			{
+				handle: 'summary',
+				label: __( 'Summary' ),
+				path: match.url,
+				component: SummaryTab,
+				exact: true,
+			}
+		]
+		Object.keys( contentTypes ).map( key => {
+			const type = contentTypes[key]
+			tabs.push( {
+				handle: key,
+				path: match.url + '/tab/' + key,
+				label: type.labels.singular,
+				component: props => <PostTypeTab type={ key } { ...props } />,
+			} )
+		} )
+		return tabs
+	}
+
+	/*
 	const Toolbar = () => {
 		return (
 			<Button.Group appearance="tabs">
@@ -33,7 +58,7 @@ const Main = ( { match } ) => {
 				) }
 			</Button.Group>
 		)
-	}
+	}*/
 
 	const Actions = ( { baseUrl } ) => {
 		const to = {
@@ -51,23 +76,15 @@ const Main = ( { match } ) => {
 		)
 	}
 
+	const tabs = getTabs()
+
 	return (
-		<Page shouldPadSides={ false } header={ <Toolbar /> } headerActions={ <Actions baseUrl={ match.url } /> }>
-			<List.Posts
-				query={ query }
-				getItemProps={ ( item, defaultProps ) => {
-					if ( item.id ) {
-						return {
-							...defaultProps,
-							to: {
-								pathname: `/${handle}/post/${item.id}`,
-								state: { item }
-							},
-						}
-					}
-					return defaultProps
-				} }
-			/>
+		<Page
+			shouldPadSides={ false }
+			header={ <Nav.Tabs tabs={ tabs } /> }
+			headerActions={ <Actions baseUrl={ match.url } /> }
+		>
+			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
 	)
 }

@@ -21,7 +21,6 @@ export const User = ( { location, match, history } ) => {
 		showAdminBar: true,
 		showInAdmin: true,
 		showWhenHidden: 'undefined' !== typeof window.hiddenAppearance ? window.hiddenAppearance : '',
-
 		content: '',
 		date: new Date(),
 		displayName: '',
@@ -53,7 +52,7 @@ export const User = ( { location, match, history } ) => {
 	const isYou = currentUser.id === user.id
 
 
-	const { form, useFormContext, setValues } = Form.useForm( {
+	const { form, useFormContext } = Form.useForm( {
 		firstName: {
 			label: __( 'First Name' ),
 			labelPlacement: 'beside',

@@ -13,6 +13,7 @@ export const Assistant = () => {
 		<Nav.Provider>
 			<App.Provider>
 				<Appearance brightness={ brightness } size={ 'mini' === size ? 'compact' : 'normal' }>
+					<div>HERE</div>
 					<MainWindow />
 				</Appearance>
 			</App.Provider>

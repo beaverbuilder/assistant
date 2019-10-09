@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect } from 'fl-react'
 import classname from 'fl-classnames'
 import { withRouter, MemoryRouter, Link, Switch, Route } from 'fl-react-router-dom'
 import { useSystemState, getSystemActions } from 'store'
+import { Button, Icon } from 'lib'
 
 export const Nav = () => {}
 
@@ -99,3 +100,46 @@ Nav.AppLink = ( { to, ...rest } ) => {
 	return <Link to={ to } { ...rest } />
 }
 Nav.AppLink.displayName = 'Nav.AppLink'
+
+Nav.useTabs = () => {
+	return {}
+}
+
+Nav.Tabs = ( { tabs = [] } ) => {
+	const { path, history, location } = useContext( Nav.Context )
+	return (
+		<>
+			<Button.Group appearance="tabs" className="fl-asst-tabs">
+				{ tabs.map( ( tab, i ) => {
+					return (
+						<Button
+							key={ i }
+							isSelected={ path === tab.path }
+							onClick={ () => history.replace( tab.path, location.state ) }
+						>
+							{ tab.label }
+						</Button>
+					)
+				} ) }
+				<Button className="fl-asst-more-btn">
+					<Icon.More />
+				</Button>
+			</Button.Group>
+		</>
+	)
+}
+Nav.Tabs.displayName = 'Nav.Tabs'
+
+Nav.CurrentTab = ( { tabs = [] } ) => {
+	return (
+		<Nav.Switch>
+			{ tabs.map( ( tab, i ) => {
+				const { exact = false, path, component } = tab
+				return (
+					<Nav.Route key={ i } exact={ exact } path={ path } component={ component }  />
+				)
+			} )}
+		</Nav.Switch>
+	)
+}
+Nav.CurrentTab.displayName = 'Nav.CurrentTab'

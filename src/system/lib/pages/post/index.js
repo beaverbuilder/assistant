@@ -48,22 +48,22 @@ const getFormConfig = ( item ) => {
 				'private': __( 'Private' ),
 				'protected': __( 'Protected' ),
 			},
-			onChange: ( { value, setOptions, setIsVisible } ) => {
-				setIsVisible( 'password', value == 'protected' )
+			onChange: ( { value, setIsVisible } ) => {
+				setIsVisible( 'password', 'protected' == value )
 			}
 		},
 		password: {
 			label: __( 'Password' ),
 			labelPlacement: 'beside',
 			id: 'post_password',
-			isVisible: item.visibility == 'protected',
+			isVisible: 'protected' == item.visibility,
 		},
 		parent: {
 			label: __( 'Parent' ),
 			labelPlacement: 'beside',
 			id: 'post_parent',
 			isVisible: contentTypes[ item.type ].isHierarchical,
-			options: ( { state, setOptions } ) => {
+			options: ( { setOptions } ) => {
 				return setParentOptions( item.type, setOptions )
 			},
 		},
@@ -153,11 +153,11 @@ export const Post = ( { location, match, history } ) => {
 				        case 'public':
 				            data['post_status'] = 'publish'
 				            data['post_password'] = ''
-				            break;
+				            break
 				        case 'private':
 				            data['post_status'] = 'private'
 				            data['post_password'] = ''
-				            break;
+				            break
 				        case 'protected':
 				            data['post_status'] = 'publish'
 				            break
