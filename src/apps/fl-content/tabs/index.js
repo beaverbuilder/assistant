@@ -29,7 +29,7 @@ export const SummaryTab = () => {
 	)
 }
 
-export const PostTypeTab = ({ type = 'post' }) => {
+export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { query } = useAppState( 'fl-content' )
 	return (

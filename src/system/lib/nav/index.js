@@ -12,6 +12,7 @@ Nav.Provider = ( { children } ) => {
 
 	const routerProps = {
 		initialIndex: history.index,
+
 		/* do NOT include a default for initialEntries */
 	}
 	if ( history.entries && history.entries.length ) {
@@ -105,7 +106,7 @@ Nav.useTabs = () => {
 }
 
 Nav.Tabs = ( { tabs = [] } ) => {
-	const { path, history, location } = useContext( Nav.Context )
+	const { path, history } = useContext( Nav.Context )
 	return (
 		<>
 			<Button.Group appearance="tabs" className="fl-asst-tabs">
@@ -114,10 +115,7 @@ Nav.Tabs = ( { tabs = [] } ) => {
 						<Button
 							key={ i }
 							isSelected={ path === tab.path }
-							onClick={ () => {
-								console.log('replace', tab.path )
-								history.replace( tab.path, {} )
-							} }
+							onClick={ () => history.replace( tab.path, {} ) }
 						>
 							{ tab.label }
 						</Button>

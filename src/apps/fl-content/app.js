@@ -32,7 +32,7 @@ const Main = ( { match } ) => {
 				handle: key,
 				path: '/fl-content/tab/' + key,
 				label: type.labels.singular,
-				component: () => <PostTypeTab type={key} />,
+				component: () => <PostTypeTab type={ key } />,
 			} )
 		} )
 		return tabs
