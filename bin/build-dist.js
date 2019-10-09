@@ -33,6 +33,7 @@ const filterFiles = src => {
         'phpcs.xml',
         'phpunit.xml',
         'README.md',
+        'scoper.inc.php',
         'webpack.config.js',
         'lib/README.md',
     ].map( name => `${fromDir}/${name}` )
