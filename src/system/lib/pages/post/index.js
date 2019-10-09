@@ -121,7 +121,7 @@ export const Post = ( { location, match, history } ) => {
 			label: __( 'Template' ),
 			labelPlacement: 'beside',
 			isVisible: !! Object.keys( contentTypes[ item.type ].templates ).length,
-			options: ( { setOptions } ) => {
+			options: () => {
 				const templates = contentTypes[ item.type ].templates
 				const options = {
 					'default': __( 'Default' ),
@@ -195,7 +195,7 @@ export const Post = ( { location, match, history } ) => {
 			data.ping_status = changed.pingbacksAllowed ? 'open' : 'closed'
 		}
 		if ( 'template' in changed ) {
-			data.meta['_wp_page_template'] = changed.template
+			data.meta._wp_page_template = changed.template
 		}
 
 		const handleError = error => {
