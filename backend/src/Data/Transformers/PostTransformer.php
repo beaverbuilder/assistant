@@ -57,7 +57,6 @@ class PostTransformer {
 			'date'            	=> $date,
 			'editUrl'         	=> get_edit_post_link( $post->ID, '' ),
 			'id'              	=> $post->ID,
-			'meta'            	=> $author . ' - ' . $date,
 			'order'				=> $post->menu_order,
 			'parent'          	=> $post->post_parent,
 			'password'        	=> $post->post_password,
