@@ -333,6 +333,10 @@ class PostsController extends ControllerAbstract {
 		switch ( $action ) {
 			case 'data':
 				$data = (array) $request->get_param( 'data' );
+				if ( isset( $data['meta'] ) ) {
+					$this->update_post_meta( $id, $data['meta'] );
+					unset( $data['meta'] );
+				}
 				wp_update_post(
 					array_merge(
 						$data, [
@@ -340,6 +344,10 @@ class PostsController extends ControllerAbstract {
 						]
 					)
 				);
+				break;
+			case 'meta':
+				$data = (array) $request->get_param( 'data' );
+				$this->update_post_meta( $id, $data );
 				break;
 			case 'trash':
 				if ( ! EMPTY_TRASH_DAYS ) {
@@ -361,6 +369,15 @@ class PostsController extends ControllerAbstract {
 				'post' => $updated_post ? $this->transform( $updated_post ) : null,
 			]
 		);
+	}
+
+	/**
+	 * Updates post meta values for a post.
+	 */
+	public function update_post_meta( $id, $meta ) {
+		foreach ( $meta as $key => $value ) {
+			update_post_meta( $id, $key, $value );
+		}
 	}
 
 	/**

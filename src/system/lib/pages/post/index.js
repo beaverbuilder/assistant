@@ -123,6 +123,7 @@ export const Post = ( { location, match, history } ) => {
 			options: {
 				'default': 'Default',
 			},
+			isVisible: !! contentTypes[ item.type ].templates.length,
 		},
 		parent: {
 			label: __( 'Parent' ),

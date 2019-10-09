@@ -109,10 +109,15 @@ class PostsRepository extends RepositoryAbstract {
 			if ( 'attachment' === $slug ) {
 				continue;
 			}
+			if ( ! function_exists( 'get_page_templates' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/theme.php';
+			}
+
 			$data[ $slug ] = [
 				'canExport'      => $type->can_export,
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,
+				'templates'		 => get_page_templates( null, $slug ),
 				'supports'       => [
 					'comments' 		=> post_type_supports( $slug, 'comments' ),
 					'trackbacks' 	=> post_type_supports( $slug, 'trackbacks' ),
