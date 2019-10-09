@@ -1,15 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'fl-react'
+import React, { useState, useMemo } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig, useSystemState, getSystemActions } from 'assistant/data'
 import { Page, Form, Button, Nav } from 'assistant/ui'
-import { getWpRest } from 'assistant/utils/wordpress'
-import { CancelToken } from 'axios'
+
+//import { CancelToken } from 'axios'
 
 import { Summary } from '../components/user/summary'
-
-// Original Tabs
-//import { GeneralTab } from '../components/user/general'
-//import { PreferencesTab } from '../components/user/preferences'
 import { PostsTab } from '../components/user/posts'
 
 export const User = ( { location, match, history } ) => {
@@ -46,8 +42,8 @@ export const User = ( { location, match, history } ) => {
 
 	const { currentUser } = getSystemConfig()
 
-	const [ loading, setLoading ] = useState( false )
-	const [ user, setUser ] = useState( item )
+	const [ loading ] = useState( false )
+	const [ user ] = useState( item )
 
 	const isYou = currentUser.id === user.id
 
@@ -96,7 +92,7 @@ export const User = ( { location, match, history } ) => {
 	{}, user )
 
 
-	const source = CancelToken.source()
+	//const source = CancelToken.source()
 
 	/**
 	 * TODO: Revisit this when we look at dynamically loading detail data.

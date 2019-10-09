@@ -19,6 +19,7 @@ export const PlainTextItem = ( {
 			label={ label }
 			placement={ labelPlacement }
 			labelFor={ id }
+			{ ...rest }
 		>
 			<div key={ id } id={ id }>{ value }</div>
 		</Form.Item>

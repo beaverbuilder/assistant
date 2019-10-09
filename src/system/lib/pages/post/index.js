@@ -74,15 +74,15 @@ export const Post = ( { location, match, history } ) => {
 			},
 			onChange: ( { value, setValue, setIsVisible } ) => {
 				switch ( value ) {
-					case 'public':
-					case 'protected':
-						setValue( 'status', 'publish' )
-						break
-					case 'private':
-						setValue( 'status', 'private' )
-						break
+				case 'public':
+				case 'protected':
+					setValue( 'status', 'publish' )
+					break
+				case 'private':
+					setValue( 'status', 'private' )
+					break
 				}
-				setIsVisible( 'password', value == 'protected' )
+				setIsVisible( 'password', 'protected' == value )
 			}
 		},
 		password: {
@@ -127,7 +127,7 @@ export const Post = ( { location, match, history } ) => {
 			labelPlacement: 'beside',
 			id: 'post_parent',
 			isVisible: contentTypes[ item.type ].isHierarchical,
-			options: ( { state, setOptions } ) => {
+			options: ( { setOptions } ) => {
 				return setParentOptions( item.type, setOptions )
 			},
 		},
@@ -165,17 +165,17 @@ export const Post = ( { location, match, history } ) => {
 
 		if ( data.post_visibility ) {
 			switch ( data.post_visibility ) {
-				case 'public':
-					data['post_status'] = 'publish'
-					data['post_password'] = ''
-					break;
-				case 'private':
-					data['post_status'] = 'private'
-					data['post_password'] = ''
-					break;
-				case 'protected':
-					data['post_status'] = 'publish'
-					break
+			case 'public':
+				data['post_status'] = 'publish'
+				data['post_password'] = ''
+				break
+			case 'private':
+				data['post_status'] = 'private'
+				data['post_password'] = ''
+				break
+			case 'protected':
+				data['post_status'] = 'publish'
+				break
 			}
 		}
 

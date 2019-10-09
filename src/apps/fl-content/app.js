@@ -1,6 +1,6 @@
 import React from 'fl-react'
 import { __ } from '@wordpress/i18n'
-import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
+import { getSystemConfig } from 'assistant/data'
 import { Page, Nav, Icon } from 'assistant/ui'
 import { SummaryTab, PostTypeTab } from './tabs'
 
@@ -15,8 +15,6 @@ export const Content = ( { match } ) => (
 
 const Main = ( { match } ) => {
 	const { contentTypes } = getSystemConfig()
-	const { query } = useAppState( 'fl-content' )
-	const { setQuery } = getAppActions( 'fl-content' )
 
 	const getTabs = () => {
 		let tabs = [
