@@ -58,12 +58,9 @@ registerSection( 'fl-post-taxonomies', {
 		const wpRest = getWpRest()
 
 		const requestOptions = ( slug ) => {
-			const tax = taxonomies[ slug ]
-
 			if ( ! ( slug in options ) ) {
 				options[ slug ] = {}
 				setOptions( { ...options } )
-
 				wpRest.terms().hierarchical( {
 					taxonomy: slug,
 					hide_empty: 0,
@@ -108,7 +105,6 @@ registerSection( 'fl-post-taxonomies', {
 					/>
 				)
 			} else {
-				const val = []
 				return (
 					<Form.Item
 						key={ key }

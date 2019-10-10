@@ -38,7 +38,7 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	const { contentTypes, contentStatus } = getSystemConfig()
-	const { isHierarchical, labels, supports, templates, taxonomies } = contentTypes[ item.type ]
+	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 
 	const config = {
 		id: {
