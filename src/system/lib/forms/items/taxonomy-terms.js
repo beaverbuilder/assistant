@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'fl-react'
+import { __, sprintf } from '@wordpress/i18n'
 import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 import { getSystemConfig } from 'store'
-import { Form, Control } from 'lib'
+import { Button, Form, Control } from 'lib'
 
 export const TaxonomyTermsItem = ( {
 	taxonomy,
@@ -37,7 +38,7 @@ export const TaxonomyTermsItem = ( {
 		return flattened
 	}
 
-	const getHierarchicalOptions = ( terms, options = [], depth = 0 ) => {
+	const getHierarchicalOptions = ( terms = data.terms, options = [], depth = 0 ) => {
 		terms.map( term => {
 			options[ term.slug ] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title
 			if ( term.children.length ) {
@@ -47,21 +48,104 @@ export const TaxonomyTermsItem = ( {
 		return options
 	}
 
+	const addNewTerm = ( title = '', parent = '' ) => {
+		if ( ! title ) {
+			return
+		}
+
+		const slug = createSlug( title )
+		const key = data.terms.length
+
+		if ( slug in data.idsBySlug ) {
+			const id = data.idsBySlug[ slug ]
+			if ( ! value.includes( id ) ) {
+				value.push( id )
+				onChange( value )
+			}
+			return
+		}
+
+		data.terms.push( { title, slug, id: slug, children: [] } )
+		data.idsBySlug[ slug ] = slug
+		data.slugsById[ slug ] = slug
+		value.push( slug )
+		onChange( value )
+
+		wpRest.terms().create( {
+			taxonomy,
+			slug,
+			name: title,
+			parent: parent ? data.idsBySlug[ parent ] : '0',
+			description: '',
+		} ).then( response => {
+			data.terms[ key ] = response.data
+			data.idsBySlug[ slug ] = response.data.id
+			data.slugsById[ response.data.id ] = slug
+			delete data.slugsById[ slug ]
+			if ( value.includes( slug ) ) {
+				value.splice( value.indexOf( slug ), 1, response.data.id )
+				onChange( value )
+			}
+		} )
+	}
+
 	const tax = taxonomies[ taxonomy ]
-	const options = getHierarchicalOptions( data.terms )
+	const options = getHierarchicalOptions()
 	const values = value.map( id => data.slugsById[ id ] )
+	const [ addingNew, setAddingNew ] = useState( false )
+	const [ newTerm, setNewTerm ] = useState( '' )
+	const [ newTermParent, setNewTermParent ] = useState( '' )
 
 	if ( tax.isHierarchical ) {
 		return (
-			<Form.SelectItem
-				label={ tax.labels.plural }
-				selectMultiple={ true }
-				options={ options }
-				value={ values }
-				onChange={ slugs => {
-					onChange( slugs.map( slug => data.idsBySlug[ slug ] ) )
-				} }
-			/>
+			<>
+				<Form.SelectItem
+					label={ tax.labels.plural }
+					selectMultiple={ true }
+					options={ options }
+					value={ values }
+					onChange={ slugs => {
+						onChange( slugs.map( slug => data.idsBySlug[ slug ] ) )
+					} }
+				/>
+				{ addingNew &&
+					<>
+						<Form.TextItem
+							label={ sprintf( __( 'New %s Name' ), tax.labels.singular ) }
+							value={ newTerm }
+							onChange={ name => setNewTerm( name ) }
+						/>
+						<Form.SelectItem
+							label={ sprintf( __( 'New %s Parent' ), tax.labels.singular ) }
+							options={ {
+								'': __( 'None' ),
+								...getHierarchicalOptions(),
+							} }
+							value={ newTermParent }
+							onChange={ v => setNewTermParent( v ) }
+						/>
+						<Button
+							onClick={ () => {
+								setAddingNew( false )
+								addNewTerm( newTerm, newTermParent )
+							} }
+						>
+							{ tax.labels.addNewItem }
+						</Button>
+					</>
+				}
+				{ ! addingNew &&
+					<Button
+						onClick={ () => {
+							setNewTerm( '' )
+							setNewTermParent( '' )
+							setAddingNew( true )
+						} }
+					>
+						{ tax.labels.newItem }
+					</Button>
+				}
+			</>
 		)
 	}
 
@@ -77,42 +161,7 @@ export const TaxonomyTermsItem = ( {
 					value.splice( i, 1 )
 					onChange( value )
 				} }
-				onAdd={ title => {
-					const slug = createSlug( title )
-					const key = data.terms.length
-
-					if ( slug in data.idsBySlug ) {
-						const id = data.idsBySlug[ slug ]
-						if ( ! value.includes( id ) ) {
-							value.push( id )
-							onChange( value )
-						}
-						return
-					}
-
-					data.terms.push( { title, slug, id: slug, children: [] } )
-					data.idsBySlug[ slug ] = slug
-					data.slugsById[ slug ] = slug
-					value.push( slug )
-					onChange( value )
-
-					wpRest.terms().create( {
-						taxonomy,
-						slug,
-						name: title,
-						parent: '0',
-						description: '',
-					} ).then( response => {
-						data.terms[ key ] = response.data
-						data.idsBySlug[ slug ] = response.data.id
-						data.slugsById[ response.data.id ] = slug
-						delete data.slugsById[ slug ]
-						if ( value.includes( slug ) ) {
-							value.splice( value.indexOf( slug ), 1, response.data.id )
-							onChange( value )
-						}
-					} )
-				} }
+				onAdd={ title => addNewTerm( title ) }
 			/>
 		</Form.Item>
 	)
