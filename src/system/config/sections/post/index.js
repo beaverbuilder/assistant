@@ -1,6 +1,7 @@
 import React, { useState } from 'fl-react'
 import { __ } from '@wordpress/i18n'
 import { getWpRest } from 'shared-utils/wordpress'
+import { createSlug } from 'shared-utils/url'
 import { getSystemActions, getSystemConfig } from 'store'
 import { Form, Control, List } from 'lib'
 
@@ -116,6 +117,20 @@ registerSection( 'fl-post-taxonomies', {
 							value={ values }
 							onRemove={ ( value, index ) => {
 								terms.value[ slug ].splice( index, 1 )
+								terms.onChange( { ...terms.value } )
+							} }
+							onAdd={ value => {
+								const termSlug = createSlug( value )
+								wpRest.terms().create( {
+									name: value,
+									slug: termSlug,
+									taxonomy: slug,
+									parent: '0',
+									description: '',
+								} )
+								options[ slug ][ `term:${ termSlug }` ] = value
+								setOptions( { ...options } )
+								terms.value[ slug ].push( value )
 								terms.onChange( { ...terms.value } )
 							} }
 						/>

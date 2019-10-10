@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React, { useState, useRef } from 'fl-react'
 import classname from 'fl-classnames'
 import { Button, Color, Icon } from 'lib'
 import './style.scss'
@@ -6,10 +6,13 @@ import './style.scss'
 export const TagGroup = ( {
 	className,
 	disabled = false,
-	onRemove = () => {},
 	options = [],
 	value = [],
+	onRemove = () => {},
+	onAdd = () => {},
 } ) => {
+	const [ inputValue, setInputValue ] = useState( '' )
+	const inputRef = useRef()
 
 	const classes = classname( {
 		'fl-asst-tag-group': true,
@@ -17,7 +20,9 @@ export const TagGroup = ( {
 	}, className )
 
 	return (
-		<div className={ classes }>
+		<div className={ classes }
+			onClick={ () => inputRef.current.focus() }
+		>
 			{ value.map( ( v, i ) => {
 				if ( v in options ) {
 					return (
@@ -28,8 +33,21 @@ export const TagGroup = ( {
 						/>
 					)
 				}
-				return null
 			} )}
+			<input
+				type='text'
+				ref={ inputRef }
+				value={ inputValue }
+				size={ inputValue.length + 1 }
+				onChange={ e => setInputValue( e.target.value ) }
+				onKeyDown={ e => {
+					if ( 13 === e.keyCode ) {
+						e.preventDefault()
+						onAdd( inputValue )
+						setInputValue( '' )
+					}
+				} }
+			/>
 		</div>
 	)
 }
