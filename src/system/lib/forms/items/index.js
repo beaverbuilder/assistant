@@ -106,8 +106,14 @@ export const SelectItem = ( {
 				key={ id }
 				id={ id }
 				value={ value }
-				onChange={ e => onChange( e.target.value, e ) }
 				multiple={ selectMultiple }
+				onChange={ e => {
+					if ( selectMultiple ) {
+						onChange( Array.from( e.target.selectedOptions, option => option.value ), e )
+					} else {
+						onChange( e.target.value, e )
+					}
+				} }
 				{ ...rest }
 			>
 				{ Object.entries( options ).map( ( [ value, label ] ) => (

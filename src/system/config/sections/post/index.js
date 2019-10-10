@@ -82,6 +82,7 @@ registerSection( 'fl-post-taxonomies', {
 						label={ tax.labels.plural }
 						selectMultiple={ true }
 						options={ options[ slug ] }
+						onChange={ values => console.log( values ) }
 					/>
 				)
 			} else {
