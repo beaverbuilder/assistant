@@ -73,12 +73,16 @@ class TermsRepository extends RepositoryAbstract {
 	 * @param callable $transformer
 	 * @return array
 	 */
-	public function get_child_terms( $term, $children, callable $transformer ) {
+	public function get_child_terms( $term, $children, callable $transformer = null ) {
 		if ( isset( $children[ $term->term_id ] ) ) {
 			$term_children = $children[ $term->term_id ];
+
 			foreach ( $term_children as $i => $child ) {
-				$term_children[ $i ]             = call_user_func( $transformer, $child );
-				$term_children[ $i ]['children'] = $this->get_child_terms( $child, $children );
+				$term_children[ $i ]->children = $this->get_child_terms( $child, $children, $transformer );
+			}
+
+			if ( ! is_null( $transformer ) ) {
+				$term_children = array_map( $transformer, $term_children );
 			}
 
 			return $term_children;

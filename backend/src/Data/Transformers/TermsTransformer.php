@@ -7,6 +7,7 @@ class TermsTransformer {
 
 	public function __invoke( \WP_Term $term ) {
 		return [
+			'children'       => isset( $term->children ) ? $term->children : [],
 			'description'    => $term->description,
 			'editUrl'        => get_edit_term_link( $term->term_id, $term->taxonomy ),
 			'id'             => $term->term_id,

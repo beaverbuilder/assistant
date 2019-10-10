@@ -57,6 +57,19 @@ registerSection( 'fl-post-taxonomies', {
 		const { terms } = useForm()
 		const wpRest = getWpRest()
 
+		const getHierarchicalOptions = ( options, terms, depth = 0 ) => {
+			terms.map( term => {
+				options[ `term:${ term.id }` ] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title
+				if ( term.children ) {
+					options = {
+						...options,
+						...getHierarchicalOptions( options, term.children, depth + 1 ),
+					}
+				}
+			} )
+			return options
+		}
+
 		const fields = Object.keys( terms.value ).map( ( slug, key ) => {
 			const tax = taxonomies[ slug ]
 
@@ -66,13 +79,11 @@ registerSection( 'fl-post-taxonomies', {
 					setOptions( { ...options } )
 					wpRest.terms().hierarchical( {
 						taxonomy: slug,
-						hide_empty: false,
+						hide_empty: 0,
 						orderby: 'name',
 						order: 'ASC',
 					} ).then( response => {
-						response.data.map( term => {
-							options[ slug ][ term.id ] = term.title
-						} )
+						options[ slug ] = getHierarchicalOptions( options[ slug ], response.data )
 						setOptions( { ...options } )
 					} )
 				}
@@ -82,9 +93,9 @@ registerSection( 'fl-post-taxonomies', {
 						label={ tax.labels.plural }
 						selectMultiple={ true }
 						options={ options[ slug ] }
-						value={ terms.value[ slug ] }
+						value={ terms.value[ slug ].map( v => `term:${ v }` ) }
 						onChange={ values => {
-							terms.value[ slug ] = values
+							terms.value[ slug ] = values.map( v => parseInt( v.replace( 'term:', '' ) ) )
 							terms.onChange( { ...terms.value } )
 						} }
 					/>

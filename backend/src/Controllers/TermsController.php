@@ -135,7 +135,7 @@ class TermsController extends ControllerAbstract {
 		$response = [];
 		$children = [];
 		$params   = $request->get_params();
-		$terms    = $this->terms->find_where( $params, $this->transformer );
+		$terms    = $this->terms->find_where( $params );
 
 		foreach ( $terms as $term ) {
 			if ( $term->parent ) {
@@ -148,13 +148,12 @@ class TermsController extends ControllerAbstract {
 
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
-				$parent             = $term;
-				$parent['children'] = $this->terms->get_child_terms( $term, $children, $this->transformer );
-				$response[]         = $parent;
+				$term->children = $this->terms->get_child_terms( $term, $children, $this->transformer );
+				$response[] 	= $term;
 			}
 		}
 
-		return rest_ensure_response( $response );
+		return rest_ensure_response( array_map( $this->transformer, $response ) );
 	}
 
 
