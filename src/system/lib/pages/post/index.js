@@ -153,7 +153,6 @@ export const Post = ( { location, match, history } ) => {
 				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
 			],
 		},
-		terms: {},
 	}
 
 	Object.keys( taxonomies ).map( key => {

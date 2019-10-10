@@ -1,7 +1,8 @@
-import React from 'fl-react'
+import React, { useState } from 'fl-react'
+import { __ } from '@wordpress/i18n'
+import { getWpRest } from 'shared-utils/wordpress'
 import { getSystemActions, getSystemConfig } from 'store'
 import { Form, Control, List } from 'lib'
-import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
 
@@ -51,24 +52,36 @@ registerSection( 'fl-post-taxonomies', {
 		type: 'post',
 	},
 	render: ( { useForm } ) => {
+		const [ options, setOptions ] = useState( {} )
 		const { taxonomies } = getSystemConfig()
 		const { terms } = useForm()
+		const wpRest = getWpRest()
 
 		const fields = Object.keys( terms.value ).map( ( slug, key ) => {
 			const tax = taxonomies[ slug ]
 
 			if ( tax.isHierarchical ) {
+				if ( ! ( slug in options ) ) {
+					options[ slug ] = {}
+					setOptions( { ...options } )
+					wpRest.terms().hierarchical( {
+						taxonomy: slug,
+						hide_empty: false,
+						orderby: 'name',
+						order: 'ASC',
+					} ).then( response => {
+						response.data.map( term => {
+							options[ slug ][ term.id ] = term.title
+						} )
+						setOptions( { ...options } )
+					} )
+				}
 				return (
 					<Form.SelectItem
 						key={ key }
 						label={ tax.labels.plural }
 						selectMultiple={ true }
-						options={ {
-							a: 1,
-							b: 2,
-							c: 3,
-							d: 4,
-						} }
+						options={ options[ slug ] }
 					/>
 				)
 			} else {
