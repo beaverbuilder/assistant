@@ -10,6 +10,7 @@ import { useFormState } from './use-form-data'
 import { useForm } from './use-form'
 
 import { PlainTextItem, TextItem, SelectItem, CheckboxItem } from './items'
+import { TaxonomyTermsItem } from './items/taxonomy-terms'
 import './style.scss'
 
 
@@ -94,6 +95,9 @@ Form.SelectItem.displayName = 'Form.SelectItem'
 
 Form.CheckboxItem = CheckboxItem
 Form.CheckboxItem.displayName = 'Form.CheckboxItem'
+
+Form.TaxonomyTermsItem = TaxonomyTermsItem
+Form.TaxonomyTermsItem.displayName = 'Form.TaxonomyTermsItem'
 
 Form.Test = () => {
 	return (
