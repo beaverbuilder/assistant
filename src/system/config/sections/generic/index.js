@@ -25,7 +25,7 @@ registerSection( 'fl-screen-labels', {
 				</Form.Item>
 
 				<Form.Item label={ labels.label }>
-					<Control.TagGroup value={ labels.value } />
+					<Control.TagGroup value={ [] } />
 				</Form.Item>
 			</>
 		)

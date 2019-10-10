@@ -3,7 +3,13 @@ import classname from 'fl-classnames'
 import { Button, Color, Icon } from 'lib'
 import './style.scss'
 
-export const TagGroup = ( { value: tags, disabled = false, className } ) => {
+export const TagGroup = ( {
+	className,
+	disabled = false,
+	onRemove = () => {},
+	options = [],
+	value = [],
+} ) => {
 
 	const classes = classname( {
 		'fl-asst-tag-group': true,
@@ -12,7 +18,18 @@ export const TagGroup = ( { value: tags, disabled = false, className } ) => {
 
 	return (
 		<div className={ classes }>
-			{ Object.values( tags ).map( ( tag, i ) => <Tag key={ i } { ...tag } /> )}
+			{ value.map( ( v, i ) => {
+				if ( v in options ) {
+					return (
+						<Tag
+							key={ i }
+							label={ options[ v ] }
+							onRemove={ e => onRemove( v, i ) }
+						/>
+					)
+				}
+				return null
+			} )}
 		</div>
 	)
 }

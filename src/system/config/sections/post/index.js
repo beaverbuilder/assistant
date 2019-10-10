@@ -57,10 +57,29 @@ registerSection( 'fl-post-taxonomies', {
 		const { terms } = useForm()
 		const wpRest = getWpRest()
 
+		const requestOptions = ( slug ) => {
+			const tax = taxonomies[ slug ]
+
+			if ( ! ( slug in options ) ) {
+				options[ slug ] = {}
+				setOptions( { ...options } )
+
+				wpRest.terms().hierarchical( {
+					taxonomy: slug,
+					hide_empty: 0,
+					orderby: 'name',
+					order: 'ASC',
+				} ).then( response => {
+					options[ slug ] = getHierarchicalOptions( options[ slug ], response.data )
+					setOptions( { ...options } )
+				} )
+			}
+		}
+
 		const getHierarchicalOptions = ( options, terms, depth = 0 ) => {
 			terms.map( term => {
 				options[ `term:${ term.id }` ] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title
-				if ( term.children ) {
+				if ( term.children.length ) {
 					options = {
 						...options,
 						...getHierarchicalOptions( options, term.children, depth + 1 ),
@@ -70,30 +89,18 @@ registerSection( 'fl-post-taxonomies', {
 			return options
 		}
 
-		const fields = Object.keys( terms.value ).map( ( slug, key ) => {
+		const renderField = ( slug, key ) => {
 			const tax = taxonomies[ slug ]
+			const values = terms.value[ slug ].map( v => `term:${ v }` )
 
 			if ( tax.isHierarchical ) {
-				if ( ! ( slug in options ) ) {
-					options[ slug ] = {}
-					setOptions( { ...options } )
-					wpRest.terms().hierarchical( {
-						taxonomy: slug,
-						hide_empty: 0,
-						orderby: 'name',
-						order: 'ASC',
-					} ).then( response => {
-						options[ slug ] = getHierarchicalOptions( options[ slug ], response.data )
-						setOptions( { ...options } )
-					} )
-				}
 				return (
 					<Form.SelectItem
 						key={ key }
 						label={ tax.labels.plural }
 						selectMultiple={ true }
 						options={ options[ slug ] }
-						value={ terms.value[ slug ].map( v => `term:${ v }` ) }
+						value={ values }
 						onChange={ values => {
 							terms.value[ slug ] = values.map( v => parseInt( v.replace( 'term:', '' ) ) )
 							terms.onChange( { ...terms.value } )
@@ -101,24 +108,30 @@ registerSection( 'fl-post-taxonomies', {
 					/>
 				)
 			} else {
-				const val = [
-					{ id: 4, label: __( 'WordPress' ), onRemove: () => {} },
-					{ id: 5, label: __( 'Best Posts' ), onRemove: () => {} },
-					{ id: 6, label: __( 'Hot Dogs' ), onRemove: () => {} },
-				]
+				const val = []
 				return (
 					<Form.Item
 						key={ key }
 						label={ tax.labels.plural }
 						labelForm={ `taxonomy-${ slug }` }
 					>
-						<Control.TagGroup value={ val } />
+						<Control.TagGroup
+							options={ options[ slug ] }
+							value={ values }
+							onRemove={ ( value, index ) => {
+								terms.value[ slug ].splice( index, 1 )
+								terms.onChange( { ...terms.value } )
+							} }
+						/>
 					</Form.Item>
 				)
 			}
-		} )
+		}
 
-		return fields
+		return Object.keys( terms.value ).map( ( slug, key ) => {
+			requestOptions( slug )
+			return renderField( slug, key )
+		} )
 	},
 } )
 

@@ -12,7 +12,6 @@
     .fl-asst-tag {
         display: inline-flex;
         flex-direction: row;
-        flex: 0 0 auto;
         justify-content: center;
         align-items: center;
         background: var(--fl-asst-surface-background);
@@ -20,6 +19,7 @@
         padding: var(--fl-asst-tiny-space) 6px;
         margin: var(--fl-asst-tiny-space);
         min-height: 26px;
+	    max-width: 100%;
         box-shadow: 0 2px 4px 0 #D2DAE3;
         font-size: 13px;
         font-weight: 500;
