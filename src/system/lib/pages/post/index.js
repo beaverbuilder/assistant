@@ -96,6 +96,9 @@ export const Post = ( { location, match, history } ) => {
 			label: __( 'Publish Date' ),
 			labelPlacement: 'beside',
 		},
+		terms: {
+			label: __( 'Terms' ),
+		},
 		excerpt: {
 			id: 'post_excerpt',
 			type: 'textarea',
@@ -155,14 +158,12 @@ export const Post = ( { location, match, history } ) => {
 		},
 	}
 
-	Object.keys( taxonomies ).map( key => {
-
-		// Do something magical...
-	} )
-
 	const onSubmit = ( { changed, ids, setValue } ) => {
 		const wpRest = getWpRest()
-		const data = { meta: {} }
+		const data = {
+			meta: {},
+			terms: {},
+		}
 
 		for ( let key in changed ) {
 			if ( ! ids[ key ] ) {
@@ -194,6 +195,9 @@ export const Post = ( { location, match, history } ) => {
 		}
 		if ( 'template' in changed ) {
 			data.meta._wp_page_template = changed.template
+		}
+		if ( 'terms' in changed ) {
+			data.terms = changed.terms
 		}
 
 		const handleError = error => {

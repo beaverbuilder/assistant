@@ -337,6 +337,10 @@ class PostsController extends ControllerAbstract {
 					$this->update_post_meta( $id, $data['meta'] );
 					unset( $data['meta'] );
 				}
+				if ( isset( $data['terms'] ) ) {
+					$this->update_post_terms( $id, $data['terms'] );
+					unset( $data['terms'] );
+				}
 				wp_update_post(
 					array_merge(
 						$data, [
@@ -348,6 +352,10 @@ class PostsController extends ControllerAbstract {
 			case 'meta':
 				$data = (array) $request->get_param( 'data' );
 				$this->update_post_meta( $id, $data );
+				break;
+			case 'terms':
+				$data = (array) $request->get_param( 'data' );
+				$this->update_post_terms( $id, $data );
 				break;
 			case 'trash':
 				if ( ! EMPTY_TRASH_DAYS ) {
@@ -377,6 +385,15 @@ class PostsController extends ControllerAbstract {
 	public function update_post_meta( $id, $meta ) {
 		foreach ( $meta as $key => $value ) {
 			update_post_meta( $id, $key, $value );
+		}
+	}
+
+	/**
+	 * Updates terms for a post.
+	 */
+	public function update_post_terms( $id, $terms ) {
+		foreach ( $terms as $taxonomy => $ids ) {
+			wp_set_post_terms( $id, $ids, $taxonomy, false );
 		}
 	}
 
