@@ -53,43 +53,54 @@ registerSection( 'fl-post-taxonomies', {
 		type: 'post',
 	},
 	render: ( { useForm } ) => {
-		const [ options, setOptions ] = useState( {} )
+		const [ data, setData ] = useState( {} )
+		const [ creating, setCreating ] = useState( {} )
 		const { taxonomies } = getSystemConfig()
 		const { terms } = useForm()
 		const wpRest = getWpRest()
 
-		const requestOptions = ( slug ) => {
-			if ( ! ( slug in options ) ) {
-				options[ slug ] = {}
-				setOptions( { ...options } )
+		const requestData = ( taxonomy ) => {
+			if ( ! ( taxonomy in data ) ) {
+				data[ taxonomy ] = { terms: [], idsBySlug: {}, slugsById: {} }
+				setData( { ...data } )
 				wpRest.terms().hierarchical( {
-					taxonomy: slug,
+					taxonomy,
 					hide_empty: 0,
 					orderby: 'name',
 					order: 'ASC',
 				} ).then( response => {
-					options[ slug ] = getHierarchicalOptions( options[ slug ], response.data )
-					setOptions( { ...options } )
+					data[ taxonomy ].terms = response.data
+					data[ taxonomy ] = flattenResponseData( response.data, data[ taxonomy ] )
+					setData( { ...data } )
 				} )
 			}
 		}
 
-		const getHierarchicalOptions = ( options, terms, depth = 0 ) => {
-			terms.map( term => {
-				options[ `term:${ term.id }` ] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title
+		const flattenResponseData = ( data, flattened ) => {
+			data.map( term => {
+				flattened.slugsById[ term.id ] = term.slug
+				flattened.idsBySlug[ term.slug ] = term.id
 				if ( term.children.length ) {
-					options = {
-						...options,
-						...getHierarchicalOptions( options, term.children, depth + 1 ),
-					}
+					flattened = flattenResponseData( term.children, flattened )
+				}
+			} )
+			return flattened
+		}
+
+		const getHierarchicalOptions = ( terms, options = [], depth = 0 ) => {
+			terms.map( term => {
+				options[ term.slug ] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title
+				if ( term.children.length ) {
+					options = getHierarchicalOptions( term.children, options, depth + 1 )
 				}
 			} )
 			return options
 		}
 
-		const renderField = ( slug, key ) => {
-			const tax = taxonomies[ slug ]
-			const values = terms.value[ slug ].map( v => `term:${ v }` )
+		const renderField = ( taxonomy, key ) => {
+			const tax = taxonomies[ taxonomy ]
+			const options = getHierarchicalOptions( data[ taxonomy ].terms )
+			const values = terms.value[ taxonomy ].map( id => data[ taxonomy ].slugsById[ id ] )
 
 			if ( tax.isHierarchical ) {
 				return (
@@ -97,10 +108,10 @@ registerSection( 'fl-post-taxonomies', {
 						key={ key }
 						label={ tax.labels.plural }
 						selectMultiple={ true }
-						options={ options[ slug ] }
+						options={ options }
 						value={ values }
 						onChange={ values => {
-							terms.value[ slug ] = values.map( v => parseInt( v.replace( 'term:', '' ) ) )
+							terms.value[ taxonomy ] = values.map( value => data[ taxonomy ].idsBySlug[ value ] )
 							terms.onChange( { ...terms.value } )
 						} }
 					/>
@@ -110,28 +121,59 @@ registerSection( 'fl-post-taxonomies', {
 					<Form.Item
 						key={ key }
 						label={ tax.labels.plural }
-						labelForm={ `taxonomy-${ slug }` }
+						labelForm={ `taxonomy-${ taxonomy }` }
 					>
 						<Control.TagGroup
-							options={ options[ slug ] }
+							options={ options }
 							value={ values }
 							onRemove={ ( value, index ) => {
-								terms.value[ slug ].splice( index, 1 )
+								terms.value[ taxonomy ].splice( index, 1 )
 								terms.onChange( { ...terms.value } )
 							} }
 							onAdd={ value => {
-								const termSlug = createSlug( value )
+								const slug = createSlug( value )
+								const key = data[ taxonomy ].terms.length
+
+								if ( slug in data[ taxonomy ].idsBySlug ) {
+									const id = data[ taxonomy ].idsBySlug[ slug ]
+									if ( ! terms.value[ taxonomy ].includes( id ) ) {
+										terms.value[ taxonomy ].push( id )
+										terms.onChange( { ...terms.value } )
+									}
+									return
+								}
+
+								data[ taxonomy ].terms.push( {
+									slug,
+									id: slug,
+									title: value,
+									children: [],
+								} )
+
+								data[ taxonomy ].idsBySlug[ slug ] = slug
+								data[ taxonomy ].slugsById[ slug ] = slug
+
+								terms.value[ taxonomy ].push( slug )
+								terms.onChange( { ...terms.value } )
+
 								wpRest.terms().create( {
+									taxonomy,
+									slug,
 									name: value,
-									slug: termSlug,
-									taxonomy: slug,
 									parent: '0',
 									description: '',
+								} ).then( response => {
+									data[ taxonomy ].terms[ key ] = response.data
+									data[ taxonomy ].idsBySlug[ slug ] = response.data.id
+									data[ taxonomy ].slugsById[ response.data.id ] = slug
+									delete data[ taxonomy ].slugsById[ slug ]
+
+									if ( terms.value[ taxonomy ].includes( slug ) ) {
+										const index = terms.value[ taxonomy ].indexOf( slug )
+										terms.value[ taxonomy ].splice( index, 1, response.data.id )
+										terms.onChange( { ...terms.value } )
+									}
 								} )
-								options[ slug ][ `term:${ termSlug }` ] = value
-								setOptions( { ...options } )
-								terms.value[ slug ].push( value )
-								terms.onChange( { ...terms.value } )
 							} }
 						/>
 					</Form.Item>
@@ -139,9 +181,9 @@ registerSection( 'fl-post-taxonomies', {
 			}
 		}
 
-		return Object.keys( terms.value ).map( ( slug, key ) => {
-			requestOptions( slug )
-			return renderField( slug, key )
+		return Object.keys( terms.value ).map( ( taxonomy, key ) => {
+			requestData( taxonomy )
+			return renderField( taxonomy, key )
 		} )
 	},
 } )
