@@ -53,8 +53,13 @@ export const TaxonomyTermsItem = ( {
 			return
 		}
 
-		const slug = createSlug( title )
-		const key = data.terms.length
+		let slug = createSlug( title )
+		let usingTempSlug = false
+
+		if ( ! slug ) {
+			slug = new Date().getTime()
+			usingTempSlug = true
+		}
 
 		if ( slug in data.idsBySlug ) {
 			const id = data.idsBySlug[ slug ]
@@ -65,6 +70,7 @@ export const TaxonomyTermsItem = ( {
 			return
 		}
 
+		const key = data.terms.length
 		data.terms.push( { title, slug, id: slug, children: [] } )
 		data.idsBySlug[ slug ] = slug
 		data.slugsById[ slug ] = slug
@@ -73,15 +79,16 @@ export const TaxonomyTermsItem = ( {
 
 		wpRest.terms().create( {
 			taxonomy,
-			slug,
 			name: title,
+			slug: usingTempSlug ? '' : slug,
 			parent: parent ? data.idsBySlug[ parent ] : '0',
 			description: '',
 		} ).then( response => {
-			data.terms[ key ] = response.data
-			data.idsBySlug[ slug ] = response.data.id
-			data.slugsById[ response.data.id ] = slug
+			delete data.idsBySlug[ slug ]
 			delete data.slugsById[ slug ]
+			data.terms[ key ] = response.data
+			data.idsBySlug[ response.data.slug ] = response.data.id
+			data.slugsById[ response.data.id ] = response.data.slug
 			if ( value.includes( slug ) ) {
 				value.splice( value.indexOf( slug ), 1, response.data.id )
 				onChange( value )
