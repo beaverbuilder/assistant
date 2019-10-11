@@ -10,7 +10,11 @@ export const TaxonomyTermsItem = ( {
 	value,
 	onChange,
 } ) => {
-	const [ data, setData ] = useState( { terms: [], idsBySlug: {}, slugsById: {} } )
+	const [ data, setData ] = useState( {
+		terms: [],
+		idsBySlug: {},
+		slugsById: {}
+	} )
 	const { taxonomies } = getSystemConfig()
 	const wpRest = getWpRest()
 

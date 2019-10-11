@@ -4,6 +4,7 @@
         display: flex;
         flex: 0 0 100%;
         flex-wrap: wrap;
+		position: relative;
 
         padding: var(--fl-asst-tiny-space);
         background: var(--fl-asst-secondary-surface-background);
@@ -76,4 +77,28 @@
         background: var(--fl-asst-dark-3);
         box-shadow: none;
     }
+
+	.fl-asst-tag-group-suggest {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 100%;
+		z-index: 100;
+		max-height: 150px;
+	    overflow: scroll;
+		padding: var(--fl-asst-tiny-space);
+		background: var(--fl-asst-surface-background);
+		border-radius: var(--fl-asst-base-radius);
+		box-shadow: 0 0 10px rgba(0, 0, 0, .20);
+	}
+
+	.fl-asst-tag-group-suggest-item {
+		cursor: pointer;
+		padding: var(--fl-asst-tiny-space);
+		border-radius: var(--fl-asst-base-radius);
+
+		&:hover {
+			background: var(--fl-asst-secondary-surface-background);
+		}
+	}
 }

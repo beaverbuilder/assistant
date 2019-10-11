@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'fl-react'
+import React, { useEffect, useState, useRef } from 'fl-react'
 import classname from 'fl-classnames'
 import { Button, Color, Icon } from 'lib'
 import './style.scss'
@@ -11,6 +11,7 @@ export const TagGroup = ( {
 	onRemove = () => {},
 	onAdd = () => {},
 } ) => {
+	const [ suggestOptions, setSuggestOptions ] = useState( null )
 	const [ inputValue, setInputValue ] = useState( '' )
 	const inputRef = useRef()
 
@@ -18,6 +19,20 @@ export const TagGroup = ( {
 		'fl-asst-tag-group': true,
 		'fl-asst-is-disabled': disabled,
 	}, className )
+
+	useEffect( () => {
+		if ( 2 > inputValue.length ) {
+			setSuggestOptions( null )
+			return
+		}
+		const newOptions = []
+		Object.keys( options ).map( key => {
+			if ( options[ key ].includes( inputValue ) ) {
+				newOptions[ key ] = options[ key ]
+			}
+		} )
+		setSuggestOptions( Object.keys( newOptions ).length ? newOptions : null )
+	}, [ inputValue ] )
 
 	return (
 		<div className={ classes }
@@ -48,6 +63,24 @@ export const TagGroup = ( {
 					}
 				} }
 			/>
+			{ suggestOptions &&
+				<div className='fl-asst-tag-group-suggest'>
+					{ Object.keys( suggestOptions ).map( ( key, i ) => {
+						return (
+							<div
+								key={ i }
+								className='fl-asst-tag-group-suggest-item'
+								onClick={ () => {
+									onAdd( suggestOptions[ key ] )
+									setInputValue( '' )
+								} }
+							>
+								{ suggestOptions[ key ] }
+							</div>
+						)
+					} ) }
+				</div>
+			}
 		</div>
 	)
 }
