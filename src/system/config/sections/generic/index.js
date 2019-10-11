@@ -12,22 +12,12 @@ registerSection( 'fl-screen-labels', {
 	},
 	render: ( { useForm } ) => {
 
-		const { labels, isFavorite } = useForm()
+		const { labels } = useForm()
 
 		return (
-			<>
-				<Form.Item label={ __( 'Mark as Favorite' ) } placement="beside">
-					<Button onClick={ () => {
-						isFavorite.onChange( ! isFavorite.value )
-					} }>
-						{ isFavorite.value ? __( 'Favorite' ) : __( 'Not Your Favorite' ) }
-					</Button>
-				</Form.Item>
-
-				<Form.Item label={ labels.label }>
-					<Control.TagGroup value={ [] } />
-				</Form.Item>
-			</>
+			<Form.Item label={ labels.label }>
+				<Control.TagGroup value={ [] } />
+			</Form.Item>
 		)
 	},
 } )
