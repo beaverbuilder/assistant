@@ -1,7 +1,8 @@
-import React from 'fl-react'
+import React, { useEffect, useState } from 'fl-react'
+import { __ } from '@wordpress/i18n'
+import { getWpRest } from 'shared-utils/wordpress'
 import { getSystemActions } from 'store'
 import { Form, Button, Control } from 'lib'
-import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()
 
@@ -11,12 +12,22 @@ registerSection( 'fl-screen-labels', {
 		type: [ 'post' ],
 	},
 	render: ( { useForm } ) => {
-
+		const [ options, setOptions ] = useState( {} )
 		const { labels } = useForm()
+		const wpRest = getWpRest()
+
+		useEffect( () => {
+			wpRest.labels().findWhere( {} ).then( response => {
+				response.data.map( label => {
+					options[ label.slug ] = label.label
+				} )
+				setOptions( { ...options } )
+			} )
+		}, [] )
 
 		return (
 			<Form.Item label={ labels.label }>
-				<Control.TagGroup value={ [] } />
+				<Control.TagGroup options={ options } value={ [ 'red', 'blue', 'green' ] } />
 			</Form.Item>
 		)
 	},
