@@ -43,17 +43,7 @@ export const WordPress = ( {
 
 	useEffect( () => {
 		if ( ! paginate ) {
-			getPagedContent( type, query, items.length, {
-				cancelToken: source.token,
-			} ).then( response  => {
-				setItems( items.concat( response.data.items ) )
-				setHasMoreItems( false )
-				onItemsLoaded( response )
-			} ).catch( ( error ) => {
-				if ( ! isCancel( error ) ) {
-					console.log( error ) // eslint-disable-line no-console
-				}
-			} )
+			loadItems()
 		}
 	}, [] )
 
