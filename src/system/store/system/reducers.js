@@ -160,6 +160,7 @@ export const history = ( state = defaultHistory, action ) => {
 export const searchHistory = ( state = [], action ) => {
 	switch ( action.type ) {
 	case 'SET_SEARCH_HISTORY':
+		state.splice( 7, state.length - 7 )
 		return [ action.keyword, ...state.filter( item => item !== action.keyword ) ]
 	default:
 		return state

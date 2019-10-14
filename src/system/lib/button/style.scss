@@ -58,6 +58,7 @@
         box-sizing: border-box;
         display: inline-flex;
         flex-direction: row;
+	    flex-wrap: wrap;
         background: var(--fl-asst-secondary-surface-background);
         color: var(--fl-asst-secondary-surface-color);
         border-radius: var(--fl-asst-base-radius);
@@ -114,6 +115,7 @@
 
             .fl-asst-button {
                 margin-right: var(--fl-asst-tiny-space);
+				margin-bottom: var(--fl-asst-tiny-space);
 
                 &:last-child {
                     margin-right: 0;
