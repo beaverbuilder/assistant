@@ -20,5 +20,12 @@ class NotationsPostType extends PostTypeAbstract {
 				'public' => false,
 			]
 		);
+
+		register_taxonomy( 'fl_asst_label', [ 'fl_asst_notation' ], [
+			'label'             => _x( 'Label', 'Custom taxonomy label.', 'fl-assistant' ),
+			'hierarchical'      => false,
+			'public'            => false,
+			'show_admin_column' => false,
+		] );
 	}
 }
