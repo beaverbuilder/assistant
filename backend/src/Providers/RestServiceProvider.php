@@ -7,6 +7,7 @@ use FL\Assistant\Controllers\AttachmentsController;
 use FL\Assistant\Controllers\CommentsController;
 use FL\Assistant\Controllers\CountsController;
 use FL\Assistant\Controllers\CurrentUserController;
+use FL\Assistant\Controllers\LabelsController;
 use FL\Assistant\Controllers\NotationsController;
 use FL\Assistant\Controllers\NotificationsController;
 use FL\Assistant\Controllers\PostsController;
@@ -31,6 +32,7 @@ class RestServiceProvider extends ServiceProviderAbstract {
 		AttachmentsController::class,
 		CommentsController::class,
 		CountsController::class,
+		LabelsController::class,
 		NotationsController::class,
 		NotificationsController::class,
 		PostsController::class,

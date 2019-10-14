@@ -3,7 +3,6 @@
 namespace FL\Assistant\Hooks\Actions;
 
 use FL\Assistant\Data\Repository\PostsRepository;
-use FL\Assistant\Data\Repository\TermsRepository;
 use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;

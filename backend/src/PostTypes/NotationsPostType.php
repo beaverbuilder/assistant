@@ -3,7 +3,7 @@
 namespace FL\Assistant\PostTypes;
 
 use FL\Assistant\System\Contracts\PostTypeAbstract;
-use FL\Assistant\Data\Repository\NotationsRepository;
+use FL\Assistant\Data\Repository\LabelsRepository;
 
 /**
  * Class NotationsPostType
@@ -11,10 +11,10 @@ use FL\Assistant\Data\Repository\NotationsRepository;
  */
 class NotationsPostType extends PostTypeAbstract {
 
-	protected $notations;
+	protected $labels;
 
-	public function __construct( NotationsRepository $notations ) {
-		$this->notations = $notations;
+	public function __construct( LabelsRepository $labels ) {
+		$this->labels = $labels;
 	}
 
 	/**
@@ -35,6 +35,6 @@ class NotationsPostType extends PostTypeAbstract {
 			'show_admin_column' => false,
 		] );
 
-		$this->notations->save_default_labels();
+		$this->labels->save_defaults();
 	}
 }

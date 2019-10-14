@@ -8,6 +8,7 @@ use FL\Assistant\Data\Transformers\PluginUpdatesTransformer;
 use FL\Assistant\Data\Transformers\TermsTransformer;
 use FL\Assistant\Data\Repository\AttachmentsRepository;
 use FL\Assistant\Data\Repository\CommentsRepository;
+use FL\Assistant\Data\Repository\LabelsRepository;
 use FL\Assistant\Data\Repository\NotationsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Repository\TermsRepository;
@@ -34,6 +35,7 @@ class DataServiceProvider extends ServiceProviderAbstract {
 		CommentsRepository::class,
 		TermsRepository::class,
 		NotationsRepository::class,
+		LabelsRepository::class,
 	];
 
 	protected $transformers = [
