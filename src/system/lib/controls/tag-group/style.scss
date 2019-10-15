@@ -1,6 +1,5 @@
 .fl-asst {
     .fl-asst-tag-group {
-		cursor: text;
         display: flex;
         flex: 0 0 100%;
         flex-wrap: wrap;
@@ -13,7 +12,6 @@
     }
 
     .fl-asst-tag {
-		cursor: pointer;
         display: inline-flex;
         flex-direction: row;
         justify-content: center;

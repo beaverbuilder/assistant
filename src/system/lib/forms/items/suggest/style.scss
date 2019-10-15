@@ -3,6 +3,14 @@
 	.fl-asst-tag-group-suggest {
 		width: 100%;
 
+		.fl-asst-tag-group {
+			cursor: text;
+	    }
+
+	    .fl-asst-tag {
+			cursor: pointer;
+		}
+
 		input[type="text"] {
 		    flex: none;
 			display: inline-block;

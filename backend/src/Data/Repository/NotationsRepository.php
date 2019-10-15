@@ -46,7 +46,7 @@ class NotationsRepository extends PostsRepository {
 	}
 
 	/**
-	 * Get array of notations with the corresponding meta values.
+	 * Get an array of favorites for the given object.
 	 * @return array
 	 */
 	public function get_favorites( $object_type, $object_id, $user_id ) {
@@ -56,6 +56,20 @@ class NotationsRepository extends PostsRepository {
 				'fl_asst_notation_object_type' => $object_type,
 				'fl_asst_notation_object_id'   => (int) $object_id,
 				'fl_asst_notation_user_id'     => (int) $user_id,
+			]
+		);
+	}
+
+	/**
+	 * Get an array of labels for the given object.
+	 * @return array
+	 */
+	public function get_labels( $object_type, $object_id ) {
+		return $this->get_by_meta(
+			[
+				'fl_asst_notation_type'        => 'label',
+				'fl_asst_notation_object_type' => $object_type,
+				'fl_asst_notation_object_id'   => (int) $object_id,
 			]
 		);
 	}

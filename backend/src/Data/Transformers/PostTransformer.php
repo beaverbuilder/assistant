@@ -64,6 +64,7 @@ class PostTransformer {
 			'date'            	=> $date,
 			'editUrl'         	=> get_edit_post_link( $post->ID, '' ),
 			'id'              	=> $post->ID,
+			'labels'			=> $this->notations->get_labels( 'post', $post->ID ),
 			'order'				=> $post->menu_order,
 			'parent'          	=> $post->post_parent,
 			'password'        	=> $post->post_password,
@@ -101,7 +102,6 @@ class PostTransformer {
 
 		// Terms
 		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );
-
 		foreach ( $taxonomies as $tax_slug => $tax ) {
 			if ( ! $tax->public || ! $tax->show_ui ) {
 				continue;

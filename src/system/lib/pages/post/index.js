@@ -148,13 +148,6 @@ export const Post = ( { location, match, history } ) => {
 		},
 		labels: {
 			label: __( 'Labels' ),
-			id: 'post_labels',
-			value: () => [
-				{ id: 4, label: __( 'Red' ), color: 'red', onRemove: () => {} },
-				{ id: 5, label: __( 'Blue' ), color: 'blue', onRemove: () => {} },
-				{ id: 6, label: __( 'Needs SEO' ), color: 'green', onRemove: () => {} },
-				{ id: 7, label: __( 'This is Stupid' ), color: 'orange', onRemove: () => {} },
-			],
 		},
 	}
 

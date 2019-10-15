@@ -18,7 +18,7 @@ class LabelsTransformer {
 			'id' => $term->term_id,
 			'label' => $term->name,
 			'slug' => $term->slug,
-			'color' => get_term_meta( $term->term_id, $this->labels::FL_ASST_NOTATION_COLOR ),
+			'color' => get_term_meta( $term->term_id, $this->labels::FL_ASST_NOTATION_COLOR, true ),
 		];
 	}
 }

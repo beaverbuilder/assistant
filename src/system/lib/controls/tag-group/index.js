@@ -22,8 +22,8 @@ export const TagGroup = ( {
 				return (
 					<Tag
 						key={ i }
-						label={ v.label }
 						onRemove={ () => onRemove( v, i ) }
+						{ ...v }
 					/>
 				)
 			} )}

@@ -24,14 +24,14 @@ class NotationsPostType extends PostTypeAbstract {
 		register_post_type(
 			'fl_asst_notation', [
 				'label'  => __( 'Assistant Notation', 'fl-assistant' ),
-				'public' => true,
+				'public' => false,
 			]
 		);
 
 		register_taxonomy( 'fl_asst_label', [ 'fl_asst_notation' ], [
 			'label'             => _x( 'Label', 'Custom taxonomy label.', 'fl-assistant' ),
 			'hierarchical'      => false,
-			'public'            => true,
+			'public'            => false,
 			'show_admin_column' => false,
 		] );
 

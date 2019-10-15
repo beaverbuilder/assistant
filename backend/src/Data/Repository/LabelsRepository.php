@@ -37,11 +37,11 @@ class LabelsRepository extends TermsRepository {
 		}
 
 		$default_labels = [
-			'F8345A' => __( 'Red', 'fl-assistant' ),
-			'FE9600' => __( 'Orange', 'fl-assistant' ),
-			'FFCF00' => __( 'Yellow', 'fl-assistant' ),
-			'01D281' => __( 'Green', 'fl-assistant' ),
-			'18AEFA' => __( 'Blue', 'fl-assistant' ),
+			'#F8345A' => __( 'Red', 'fl-assistant' ),
+			'#FE9600' => __( 'Orange', 'fl-assistant' ),
+			'#FFCF00' => __( 'Yellow', 'fl-assistant' ),
+			'#01D281' => __( 'Green', 'fl-assistant' ),
+			'#18AEFA' => __( 'Blue', 'fl-assistant' ),
 		];
 
 		foreach ( $default_labels as $color => $label ) {

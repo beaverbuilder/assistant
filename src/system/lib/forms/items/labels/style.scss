@@ -1,0 +1,10 @@
+.fl-asst {
+
+	.fl-asst-add-label {
+		display: flex;
+
+		select {
+			margin-right: var(--fl-asst-tiny-space);
+		}
+	}
+}
