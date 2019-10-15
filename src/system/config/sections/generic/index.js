@@ -15,6 +15,16 @@ registerSection( 'fl-screen-labels', {
 		const [ options, setOptions ] = useState( {} )
 		const { labels } = useForm()
 		const wpRest = getWpRest()
+		const value = [ {
+			id: 'red',
+			label: 'Red',
+		}, {
+			id: 'green',
+			label: 'Green',
+		}, {
+			id: 'blue',
+			label: 'Blue',
+		} ]
 
 		useEffect( () => {
 			wpRest.labels().findWhere( {} ).then( response => {
@@ -27,7 +37,7 @@ registerSection( 'fl-screen-labels', {
 
 		return (
 			<Form.Item label={ labels.label }>
-				<Control.TagGroup options={ options } value={ [ 'red', 'blue', 'green' ] } />
+				<Control.TagGroup value={ value } />
 			</Form.Item>
 		)
 	},

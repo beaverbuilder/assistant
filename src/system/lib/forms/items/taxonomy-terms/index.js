@@ -3,7 +3,7 @@ import { __, sprintf } from '@wordpress/i18n'
 import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'
 import { getSystemConfig } from 'store'
-import { Button, Form, Control } from 'lib'
+import { Button, Form } from 'lib'
 
 export const TaxonomyTermsItem = ( {
 	taxonomy,
@@ -161,19 +161,16 @@ export const TaxonomyTermsItem = ( {
 	}
 
 	return (
-		<Form.Item
+		<Form.SuggestItem
 			label={ tax.labels.plural }
-			labelForm={ `taxonomy-${ taxonomy }` }
-		>
-			<Control.TagGroup
-				options={ options }
-				value={ values }
-				onRemove={ ( v, i ) => {
-					value.splice( i, 1 )
-					onChange( value )
-				} }
-				onAdd={ title => addNewTerm( title ) }
-			/>
-		</Form.Item>
+			id={ `taxonomy-${ taxonomy }` }
+			options={ options }
+			value={ values }
+			onRemove={ ( v, i ) => {
+				value.splice( i, 1 )
+				onChange( value )
+			} }
+			onAdd={ title => addNewTerm( title ) }
+		/>
 	)
 }

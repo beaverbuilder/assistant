@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'fl-react'
-import classname from 'fl-classnames'
-import { Button, Color, Icon } from 'lib'
+import { Control, Form } from 'lib'
 import './style.scss'
 
 export const SuggestItem = ( {
@@ -14,7 +13,6 @@ export const SuggestItem = ( {
 	value = [],
 	onRemove = () => {},
 	onAdd = () => {},
-	...rest,
 } ) => {
 
 	if ( ! isVisible ) {
@@ -49,6 +47,7 @@ export const SuggestItem = ( {
 				} )
 			}
 		} )
+		return tags
 	}
 
 	return (
@@ -59,48 +58,52 @@ export const SuggestItem = ( {
 			isRequired={ isRequired }
 			hasChanges={ hasChanges }
 		>
-			<div onClick={ () => inputRef.current.focus() }>
+			<div
+				key={ id }
+				id={ id }
+				className='fl-asst-tag-group-suggest'
+				onClick={ () => inputRef.current.focus() }
+			>
 				<Control.TagGroup
-					key={ id }
-					id={ id }
 					value={ getTags() }
 					onRemove={ ( v, i ) => {
 						value.splice( i, 1 )
 						onRemove( value )
 					} }
-				/>
-				<input
-					type='text'
-					ref={ inputRef }
-					value={ inputValue }
-					size={ inputValue.length + 1 }
-					onChange={ e => setInputValue( e.target.value ) }
-					onKeyDown={ e => {
-						if ( 13 === e.keyCode ) {
-							e.preventDefault()
-							onAdd( inputValue )
-							setInputValue( '' )
-						}
-					} }
-				/>
-				{ suggestOptions &&
-					<div className='fl-asst-tag-group-suggest'>
-						{ Object.keys( suggestOptions ).map( ( key, i ) => {
-							return (
-								<div
-									key={ i }
-									className='fl-asst-tag-group-suggest-item'
-									onClick={ () => {
-										onAdd( suggestOptions[ key ] )
-										setInputValue( '' )
-									} }
-								>
-									{ suggestOptions[ key ] }
-								</div>
-							)
-						} ) }
-					</div>
-				}
+				>
+					<input
+						type='text'
+						ref={ inputRef }
+						value={ inputValue }
+						size={ inputValue.length + 1 }
+						onChange={ e => setInputValue( e.target.value ) }
+						onKeyDown={ e => {
+							if ( 13 === e.keyCode ) {
+								e.preventDefault()
+								onAdd( inputValue )
+								setInputValue( '' )
+							}
+						} }
+					/>
+					{ suggestOptions &&
+						<div className='fl-asst-tag-group-suggest-menu'>
+							{ Object.keys( suggestOptions ).map( ( key, i ) => {
+								return (
+									<div
+										key={ i }
+										className='fl-asst-tag-group-suggest-item'
+										onClick={ () => {
+											onAdd( suggestOptions[ key ] )
+											setInputValue( '' )
+										} }
+									>
+										{ suggestOptions[ key ] }
+									</div>
+								)
+							} ) }
+						</div>
+					}
+				</Control.TagGroup>
 			</div>
 		</Form.Item>
 	)
