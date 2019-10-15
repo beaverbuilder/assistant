@@ -8,7 +8,7 @@ export const Table = ( {
 } ) => {
 	return (
 		<div className='fl-asst-table'>
-			{ headings.length > 0 &&
+			{ 0 < headings.length &&
 				<div className='fl-asst-table-row fl-asst-table-header'>
 					{ Object.keys( headings ).map( key =>
 						<div key={ key } className='fl-asst-table-cell fl-asst-table-heading'>

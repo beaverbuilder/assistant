@@ -1,4 +1,4 @@
-import React, { useState } from 'fl-react'
+import React from 'fl-react'
 import classname from 'fl-classnames'
 import { Color } from 'lib'
 import './style.scss'

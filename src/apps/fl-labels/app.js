@@ -179,7 +179,7 @@ export const App = () => {
 	}
 
 	return (
-		<Page shouldPadSides={false}>
+		<Page shouldPadSides={ false }>
 			<Page.Section
 				label={ __( 'Edit Labels' ) }
 				className='fl-asst-edit-labels'
