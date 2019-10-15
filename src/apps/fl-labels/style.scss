@@ -3,6 +3,8 @@
 	.fl-asst-table-cell {
 		align-items: center;
 		display: flex;
+		flex-wrap: wrap;
+
 		&:first-child {
 			flex: 0;
 		}
@@ -15,6 +17,14 @@
 	    height: 12px;
 	    width: 12px;
 	    border-radius: 100%;
+	}
+
+	.fl-asst-table-cell-edit {
+
+		.fl-asst-circle-picker {
+			padding-top: var(--fl-asst-tiny-space);
+			padding-bottom: var(--fl-asst-tiny-space);
+		}
 	}
 
 	.fl-asst-add-new-label {
