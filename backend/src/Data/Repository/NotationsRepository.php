@@ -2,8 +2,15 @@
 
 namespace FL\Assistant\Data\Repository;
 
+use FL\Assistant\Data\Transformers\NotationsTransformer;
 
 class NotationsRepository extends PostsRepository {
+
+	protected $transformer;
+
+	public function __construct( NotationsTransformer $transformer ) {
+		$this->transformer = $transformer;
+	}
 
 	/**
 	 * @param array $args
@@ -17,7 +24,7 @@ class NotationsRepository extends PostsRepository {
 			]
 		);
 
-		return parent::query( $args );
+		return $this->transformer->transform_array( parent::query( $args ) );
 	}
 
 	/**
@@ -42,7 +49,7 @@ class NotationsRepository extends PostsRepository {
 			]
 		);
 
-		return $query->posts;
+		return $this->transformer->transform_array( $query->posts );
 	}
 
 	/**

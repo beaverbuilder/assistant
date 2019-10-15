@@ -54,14 +54,14 @@ class NotationsController extends ControllerAbstract {
 		$notations = $this->notations->get_by_meta( $meta );
 
 		foreach ( $notations as $notation ) {
-			if ( ! current_user_can( 'edit_post', $notation->ID ) ) {
+			if ( ! current_user_can( 'edit_post', $notation['id'] ) ) {
 				return rest_ensure_response(
 					[
 						'error' => true,
 					]
 				);
 			}
-			wp_delete_post( $notation->ID );
+			wp_delete_post( $notation['id'] );
 		}
 
 		return rest_ensure_response(
