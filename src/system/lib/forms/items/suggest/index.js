@@ -67,10 +67,7 @@ export const SuggestItem = ( {
 			>
 				<Control.TagGroup
 					value={ getTags() }
-					onRemove={ ( v, i ) => {
-						value.splice( i, 1 )
-						onRemove( value )
-					} }
+					onRemove={ ( tag ) => onRemove( tag.id ) }
 				>
 					<input
 						type='text'

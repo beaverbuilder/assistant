@@ -21,7 +21,8 @@ export const LabelsItem = ( {
 		} )
 	}, [] )
 
-	const removeLabel = ( option, i ) => {
+	const removeLabel = ( option ) => {
+		const i = value.indexOf( option.id )
 		value.splice( i, 1 )
 		onChange( [ ...value ] )
 		onRemove( option )

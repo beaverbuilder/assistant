@@ -167,7 +167,8 @@ export const TaxonomyTermsItem = ( {
 			id={ `taxonomy-${ taxonomy }` }
 			options={ options }
 			value={ values }
-			onRemove={ ( v, i ) => {
+			onRemove={ ( v ) => {
+				const i = values.indexOf( v )
 				value.splice( i, 1 )
 				onChange( value )
 			} }
