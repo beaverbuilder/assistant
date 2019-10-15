@@ -6,7 +6,7 @@ import { Color, Control, Page, Table, Button, Icon } from 'assistant/ui'
 import './style.scss'
 
 export const App = () => {
-	const [ loading, setLoading ] = useState( false )
+	const [ loading, setLoading ] = useState( true )
 	const [ labels, setLabels ] = useState( [] )
 	const [ editingLabel, setEditingLabel ] = useState( null )
 	const [ newLabel, setNewLabel ] = useState( '' )
@@ -14,7 +14,6 @@ export const App = () => {
 	const wpRest = getWpRest()
 
 	useEffect( () => {
-		setLoading( true )
 		wpRest.labels().findWhere().then( response => {
 			setLoading( false )
 			setLabels( [ ...response.data ] )
@@ -189,6 +188,9 @@ export const App = () => {
 				</InnerSection>
 				{ loading &&
 					<InnerSection>{ __( 'Loading...' ) }</InnerSection>
+				}
+				{ ! loading && 0 === labels.length &&
+					<InnerSection>{ __( 'No labels found.' ) }</InnerSection>
 				}
 				<Table rows={ rows } />
 			</Page.Section>
