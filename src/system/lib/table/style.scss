@@ -1,0 +1,11 @@
+.fl-asst {
+
+	.fl-asst-table-row {
+	    display: flex;
+	}
+
+	.fl-asst-table-cell {
+		flex: 1;
+		padding: var(--fl-asst-tiny-space);
+	}
+}
