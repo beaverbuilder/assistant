@@ -55,19 +55,37 @@ export const App = () => {
 		const slug = createSlug( newLabel )
 		let exists = false
 
-		labels.map( ( label, key ) => {
+		labels.map( label => {
 			if ( slug === label.slug ) {
 				exists = true
 			}
 		} )
 
 		if ( ! exists ) {
+			wpRest.terms().create( {
+				taxonomy: 'fl_asst_label',
+				name: newLabel,
+				slug: slug,
+				parent: '0',
+				description: '',
+				meta: {
+					fl_asst_notation_color: newColor,
+				},
+			} ).then( response => {
+				labels.map( ( label, key ) => {
+					if ( slug === label.id ) {
+						labels[ key ].id = response.data.id
+					}
+				} )
+			} )
+
 			labels.push( {
 				slug,
 				id: slug,
 				label: newLabel,
 				color: newColor ? newColor : getDefaultColor(),
 			} )
+
 			setLabels( [ ...labels ] )
 		}
 

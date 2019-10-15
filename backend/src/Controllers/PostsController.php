@@ -38,6 +38,13 @@ class PostsController extends ControllerAbstract {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'create_post' ],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_published_posts' );
+					},
+				],
 			]
 		);
 
@@ -58,18 +65,6 @@ class PostsController extends ControllerAbstract {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts_count' ],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
-					},
-				],
-			]
-		);
-
-		$this->route(
-			'/posts', [
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'create_post' ],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},

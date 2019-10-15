@@ -37,6 +37,13 @@ class TermsController extends ControllerAbstract {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'create_term' ],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_published_posts' );
+					},
+				],
 			]
 		);
 
@@ -92,18 +99,6 @@ class TermsController extends ControllerAbstract {
 							'type'     => 'string',
 						],
 					],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
-					},
-				],
-			]
-		);
-
-		$this->route(
-			'/terms', [
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'create_term' ],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -191,7 +186,15 @@ class TermsController extends ControllerAbstract {
 	 * @return array|mixed|WP_REST_Response
 	 */
 	public function create_term( WP_REST_Request $request ) {
-		$data = array_map( 'sanitize_text_field', $request->get_params() );
+		$data = $request->get_params();
+		$meta = null;
+
+		if ( isset( $data['meta'] ) ) {
+			$meta = $data['meta'];
+			unset( $data['meta'] );
+		}
+
+		$data = array_map( 'sanitize_text_field', $data );
 		$id   = wp_insert_term(
 			$data['name'],
 			$data['taxonomy'],
@@ -212,6 +215,12 @@ class TermsController extends ControllerAbstract {
 			return [
 				'error' => true,
 			];
+		}
+
+		if ( $meta ) {
+			foreach ( $meta as $key => $value ) {
+				update_term_meta( $id['term_id'], $key, $value );
+			}
 		}
 
 		$term = call_user_func( $this->transformer, get_term( $id['term_id'], $data['taxonomy'] ) );
