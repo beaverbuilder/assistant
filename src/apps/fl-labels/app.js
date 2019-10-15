@@ -21,28 +21,6 @@ export const App = () => {
 		} )
 	}, [] )
 
-	const saveEditingLabel = () => {
-		if ( '' !== editingLabel.label ) {
-			labels.map( ( label, key ) => {
-				if ( editingLabel.id === label.id ) {
-					labels[ key ] = editingLabel
-					setLabels( [ ...labels ] )
-				}
-			} )
-		}
-		setEditingLabel( null )
-	}
-
-	const deleteLabel = ( id ) => {
-		labels.map( ( label, key ) => {
-			if ( id === label.id ) {
-				wpRest.terms().update( id, 'trash' )
-				labels.splice( key, 1 )
-				setLabels( [ ...labels ] )
-			}
-		} )
-	}
-
 	const getDefaultColor = () => {
 		const key = Object.keys( Color.knownColors ).shift()
 		return Color.knownColors[ key ]
@@ -94,6 +72,50 @@ export const App = () => {
 		setNewColor( '' )
 	}
 
+	const saveLabel = () => {
+		if ( '' === editingLabel.label ) {
+			setEditingLabel( null )
+			return
+		}
+
+		const slug = createSlug( editingLabel.label )
+		let exists = false
+
+		labels.map( label => {
+			if ( slug === label.slug && editingLabel.id !== label.id ) {
+				exists = true
+			}
+		} )
+
+		if ( ! exists ) {
+			labels.map( ( label, key ) => {
+				if ( editingLabel.id === label.id ) {
+					wpRest.terms().update( editingLabel.id, 'data', {
+						name: editingLabel.label,
+						slug: slug,
+						meta: {
+							fl_asst_notation_color: editingLabel.color,
+						},
+					} )
+					labels[ key ] = editingLabel
+					setLabels( [ ...labels ] )
+				}
+			} )
+		}
+
+		setEditingLabel( null )
+	}
+
+	const deleteLabel = ( id ) => {
+		labels.map( ( label, key ) => {
+			if ( id === label.id ) {
+				wpRest.terms().update( id, 'trash' )
+				labels.splice( key, 1 )
+				setLabels( [ ...labels ] )
+			}
+		} )
+	}
+
 	const rows = labels.map( label => {
 		if ( editingLabel && editingLabel.id === label.id ) {
 			return {
@@ -119,7 +141,7 @@ export const App = () => {
 							} }
 						/>
 						<Button.Group>
-							<Button onClick={ saveEditingLabel }>{ __( 'Save' ) }</Button>
+							<Button onClick={ saveLabel }>{ __( 'Save' ) }</Button>
 							<Button onClick={ () => setEditingLabel( null ) }>{ __( 'Cancel' ) }</Button>
 						</Button.Group>
 					</>
