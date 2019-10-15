@@ -27,7 +27,7 @@ export const ProfileCard = ( props ) => {
 					</div>
 				</div>
 
-				<Page.Toolbar style={ { padding: 'var(--fl-asst-inner-space) 0 0' } }>
+				<Page.Toolbar style={ { padding: 'var(--fl-asst-inner-space) 0 0', justifyContent: 'flex-start' } }>
 					<Button to={ to }>{__( 'Edit' )}</Button>
 					<Button href={ user.url }>{__( 'Author Page' )}</Button>
 					<Button href={ user.editUrl }>{__( 'Edit in Admin' )}</Button>
