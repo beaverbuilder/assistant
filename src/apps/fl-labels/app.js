@@ -36,6 +36,7 @@ export const App = () => {
 	const deleteLabel = ( id ) => {
 		labels.map( ( label, key ) => {
 			if ( id === label.id ) {
+				wpRest.terms().update( id, 'trash' )
 				labels.splice( key, 1 )
 				setLabels( [ ...labels ] )
 			}
