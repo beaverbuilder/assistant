@@ -11,6 +11,7 @@ export const SuggestItem = ( {
 	isVisible = true,
 	options = [],
 	value = [],
+	placeholder = '',
 	onRemove = () => {},
 	onAdd = () => {},
 } ) => {
@@ -75,7 +76,8 @@ export const SuggestItem = ( {
 						type='text'
 						ref={ inputRef }
 						value={ inputValue }
-						size={ inputValue.length + 1 }
+						size={ inputValue.length ? inputValue.length + 1 : placeholder.length + 1 }
+						placeholder={ placeholder }
 						onChange={ e => setInputValue( e.target.value ) }
 						onKeyDown={ e => {
 							if ( 13 === e.keyCode ) {

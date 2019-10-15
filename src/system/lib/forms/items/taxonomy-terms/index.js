@@ -163,6 +163,7 @@ export const TaxonomyTermsItem = ( {
 	return (
 		<Form.SuggestItem
 			label={ tax.labels.plural }
+			placeholder={ tax.labels.newItem }
 			id={ `taxonomy-${ taxonomy }` }
 			options={ options }
 			value={ values }
