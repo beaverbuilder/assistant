@@ -36,12 +36,18 @@ class LabelsRepository extends TermsRepository {
 			return;
 		}
 
+		/**
+		 * Note: Colors changed here need to be changed in
+		 * Color.knownColors on the frontend as well.
+		 *
+		 * TODO: Load from server config.
+		 */
 		$default_labels = [
-			'#F8345A' => __( 'Red', 'fl-assistant' ),
-			'#FE9600' => __( 'Orange', 'fl-assistant' ),
-			'#FFCF00' => __( 'Yellow', 'fl-assistant' ),
-			'#01D281' => __( 'Green', 'fl-assistant' ),
-			'#18AEFA' => __( 'Blue', 'fl-assistant' ),
+			'#FF305C' => __( 'Red', 'fl-assistant' ),
+			'#FF9500' => __( 'Orange', 'fl-assistant' ),
+			'#FFD000' => __( 'Yellow', 'fl-assistant' ),
+			'#00D281' => __( 'Green', 'fl-assistant' ),
+			'#1BADF8' => __( 'Blue', 'fl-assistant' ),
 		];
 
 		foreach ( $default_labels as $color => $label ) {

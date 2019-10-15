@@ -37,6 +37,13 @@ class TermsController extends ControllerAbstract {
 						return current_user_can( 'edit_published_posts' );
 					},
 				],
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'create_term' ],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_published_posts' );
+					},
+				],
 			]
 		);
 
@@ -92,18 +99,6 @@ class TermsController extends ControllerAbstract {
 							'type'     => 'string',
 						],
 					],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
-					},
-				],
-			]
-		);
-
-		$this->route(
-			'/terms', [
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'create_term' ],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -191,7 +186,15 @@ class TermsController extends ControllerAbstract {
 	 * @return array|mixed|WP_REST_Response
 	 */
 	public function create_term( WP_REST_Request $request ) {
-		$data = array_map( 'sanitize_text_field', $request->get_params() );
+		$data = $request->get_params();
+		$meta = [];
+
+		if ( isset( $data['meta'] ) ) {
+			$meta = $data['meta'];
+			unset( $data['meta'] );
+		}
+
+		$data = array_map( 'sanitize_text_field', $data );
 		$id   = wp_insert_term(
 			$data['name'],
 			$data['taxonomy'],
@@ -214,6 +217,7 @@ class TermsController extends ControllerAbstract {
 			];
 		}
 
+		$this->update_term_meta( $id['term_id'], $meta );
 		$term = call_user_func( $this->transformer, get_term( $id['term_id'], $data['taxonomy'] ) );
 		return rest_ensure_response( $term );
 	}
@@ -239,7 +243,15 @@ class TermsController extends ControllerAbstract {
 		switch ( $action ) {
 			case 'data':
 				$data = (array) $request->get_param( 'data' );
+				if ( isset( $data['meta'] ) ) {
+					$this->update_term_meta( $id, $data['meta'] );
+					unset( $data['meta'] );
+				}
 				wp_update_term( $id, $term->taxonomy, $data );
+				break;
+			case 'meta':
+				$data = (array) $request->get_param( 'data' );
+				$this->update_term_meta( $id, $data );
 				break;
 			case 'trash':
 				wp_delete_term( $id, $term->taxonomy );
@@ -251,5 +263,14 @@ class TermsController extends ControllerAbstract {
 				'success' => true,
 			]
 		);
+	}
+
+	/**
+	 * Updates meta values for a term.
+	 */
+	public function update_term_meta( $id, $meta ) {
+		foreach ( $meta as $key => $value ) {
+			update_term_meta( $id, $key, $value );
+		}
 	}
 }

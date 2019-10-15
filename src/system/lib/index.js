@@ -10,6 +10,7 @@ import { Window } from './window'
 import { Error } from './errors'
 import { Control } from './controls'
 import { Form } from './forms'
+import { Table } from './table'
 
 // Export for use inside system bundle - import from 'lib'
 export * from './app'
@@ -23,6 +24,7 @@ export * from './art'
 export * from './errors'
 export * from './controls'
 export * from './forms'
+export * from './table'
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
 export const api = {
@@ -38,4 +40,5 @@ export const api = {
 	Page,
 	Error,
 	Nav,
+	Table,
 }

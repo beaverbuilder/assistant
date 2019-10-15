@@ -1,6 +1,13 @@
 import './style.scss'
 
 export const Color = {
+
+	/**
+	 * Note: Colors changed here need to be changed in
+	 * LabelsRepository on the backend as well.
+	 *
+	 * TODO: Load from server config.
+	 */
 	knownColors: {
 		red: '#FF305C',
 		blue: '#1BADF8',
