@@ -7,7 +7,10 @@ export const SummaryTab = () => {
 	const { handle } = useContext( App.Context )
 	return (
 		<>
-			<Page.Section>Stats</Page.Section>
+			<Page.Section>
+				Stats.
+			</Page.Section>
+
 			<Page.Section label={ __( 'Latest Posts' ) } shouldPadSides={ false }>
 				<List.Posts
 					query={ { post_type: 'post', posts_per_page: 5 } }
@@ -16,6 +19,8 @@ export const SummaryTab = () => {
 						if ( item.id ) {
 							return {
 								...defaultProps,
+								description: null,
+								thumbnailSize: 'sm',
 								to: {
 									pathname: `/${handle}/post/${item.id}`,
 									state: { item }

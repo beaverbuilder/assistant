@@ -58,8 +58,14 @@ const WindowError = () => {
 const WindowToolbar = () => {
 	const { isRoot, goToRoot } = useContext( Nav.Context )
 	const { label } = useContext( App.Context )
-	const labelStyle = { padding: '2px 10px' }
-	const iconWrapStyle = { display: 'inline-flex', transform: 'translateY(2px)' }
+	const labelStyle = {
+		padding: '2px 10px'
+	}
+	const iconWrapStyle = {
+		display: 'inline-flex',
+		transform: 'translateY(2px)',
+		paddingBottom: 4
+	}
 
 	const style = {
 		pointerEvents: 'none',
@@ -74,7 +80,11 @@ const WindowToolbar = () => {
 			{ isRoot && <span style={ labelStyle }>{__( 'Assistant' )}</span> }
 
 			{ ! isRoot && <>
-				<button onClick={ goToRoot } style={ { pointerEvents: 'auto', textDecoration: 'underline' } }>{__( 'Assistant' )}</button>
+				<button onClick={ goToRoot } style={ {
+					pointerEvents: 'auto',
+					textDecoration: 'underline',
+					padding: '0 10px',
+				} }>{__( 'Assistant' )}</button>
 				<span style={ iconWrapStyle }><Icon.BreadcrumbArrow /></span>
 				<span style={ labelStyle }>{label}</span>
 			</> }

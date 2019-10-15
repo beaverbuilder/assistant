@@ -159,7 +159,7 @@ export const App = () => {
 			),
 			label: label.label,
 			actions: (
-				<Button.Group>
+				<Button.Group appearance="buttons">
 					<Button onClick={ () => setEditingLabel( label ) }>{ __( 'Edit' ) }</Button>
 					<Button onClick={ () => deleteLabel( label.id ) } className="fl-asst-destructive">
 						<Icon.Trash />
@@ -180,12 +180,11 @@ export const App = () => {
 	return (
 		<Page shouldPadSides={ false }>
 			<Page.Section
-				label={ __( 'Edit Labels' ) }
 				className='fl-asst-edit-labels'
 			>
-				<InnerSection>
+				<div>
 					{ __( 'Labels allow you to mark posts for organization and collaborate with other users. Below you can add more labels and change the name of existing ones.' ) }
-				</InnerSection>
+				</div>
 				{ loading &&
 					<InnerSection>{ __( 'Loading...' ) }</InnerSection>
 				}

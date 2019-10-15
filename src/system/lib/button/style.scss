@@ -76,7 +76,10 @@
         }
 
         .fl-asst-button {
+            border: none;
+            
             &:hover {
+                box-shadow: none;
                 color: var(--fl-asst-surface-color);
             }
 

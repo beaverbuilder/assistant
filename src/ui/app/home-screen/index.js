@@ -1,7 +1,7 @@
 import React from 'fl-react'
 import { __ } from 'assistant/i18n'
 import { useSystemState, getSystemActions } from 'assistant/data'
-import { Page, Nav } from 'assistant/ui'
+import { Page, Nav, Icon } from 'assistant/ui'
 import { useInitialFocus } from 'assistant/utils/react'
 import './style.scss'
 
@@ -23,6 +23,11 @@ registerSection( 'fl-home-apps', {
 				{ appOrder.map( ( handle, i ) => {
 					const app = apps[handle]
 
+					let icon = Icon.DefaultApp
+					if ( 'function' === typeof app.icon ) {
+						icon = app.icon
+					}
+
 					if ( 'undefined' === typeof app || ! app.shouldShowInAppList ) {
 						return
 					}
@@ -32,7 +37,9 @@ registerSection( 'fl-home-apps', {
 						state: app,
 					}
 
-					const style = {}
+					const style = {
+						color: 'var(--fl-asst-secondary-surface-background)'
+					}
 					if ( 'undefined' !== typeof app.accent ) {
 						style['--fl-asst-accent-color'] = app.accent.color
 						style.color = 'var(--fl-asst-accent-color)'
@@ -55,7 +62,7 @@ registerSection( 'fl-home-apps', {
 					return (
 						<Nav.Link to={ location } className="fl-asst-app-grid-item" key={ i } innerRef={ ref }>
 							<div className="fl-asst-app-icon" style={ style }>
-								{ 'function' === typeof app.icon && app.icon( iconProps ) }
+								{ 'function' === typeof icon && icon( iconProps ) }
 							</div>
 							<label>{app.label}</label>
 						</Nav.Link>
@@ -69,7 +76,6 @@ registerSection( 'fl-home-apps', {
 export const HomeScreen = () => {
 	return (
 		<Page shouldPadSides={ false } shouldShowHeader={ false }>
-
 			<Page.RegisteredSections
 				location={ { type: 'home' } }
 				data={ {} }
