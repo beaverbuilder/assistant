@@ -106,6 +106,10 @@ export const App = () => {
 	}
 
 	const deleteLabel = ( id ) => {
+		const warning = __( 'Delete this label? It will be deleted from everywhere it is used.' )
+		if ( ! confirm( warning ) ) {
+			return
+		}
 		labels.map( ( label, key ) => {
 			if ( id === label.id ) {
 				wpRest.terms().update( id, 'trash' )
