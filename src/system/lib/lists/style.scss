@@ -92,7 +92,8 @@
         display: flex;
         flex-direction: column;
         min-height: 36px;
-        padding: 10px 0;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--fl-asst-secondary-surface-background);
 
         .fl-asst-list-item-default-content-row {
             display: flex;
@@ -225,6 +226,38 @@
 			color: var(--fl-asst-bookmark-color);
 		}
     }
+
+    // Marks
+    .fl-asst-list-item-marks {
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        height: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 7px;
+        pointer-events: none;
+
+        .fl-asst-list-item-mark {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 0 5px;
+
+            .fl-asst-list-item-color-mark {
+                display: flex;
+                flex: 0 0 auto;
+                height: 9px;
+                width: 9px;
+                background: var(--fl-asst-blue);
+                border-radius: 50%;
+            }
+        }
+    }
+
     .fl-asst-list-item:hover,
     .fl-asst-list-item:focus,
     .fl-asst-list-item:focus-within {

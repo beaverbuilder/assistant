@@ -83,6 +83,7 @@ const InfoItem = ( {
 	className,
 	extras,
 	accessory,
+	marks = []
 } ) => {
 	const classes = classname( {
 		'fl-asst-list-item-content-info': true,
@@ -112,6 +113,12 @@ const InfoItem = ( {
 	const accessories = 'function' === typeof accessory ? accessory( {} ) : null
 	const stopProp = e => e.stopPropagation()
 
+	const renderMarks = marks => marks.map( (mark, i) => {
+		return (
+			<span key={i} className="fl-asst-list-item-mark">{mark}</span>
+		)
+	})
+
 	return (
 		<Tag className={ classes } { ...newProps }>
 			<div className="fl-asst-list-item-default-content-row">
@@ -128,6 +135,10 @@ const InfoItem = ( {
 				{ accessories && <div className="fl-asst-list-item-accessory" onClick={ stopProp }>{accessories}</div>}
 			</div>
 			{ itemExtras && <div className="fl-asst-list-item-extras" onClick={ stopProp }>{itemExtras}</div> }
+
+			{ marks.length > 0 && <div className="fl-asst-list-item-marks">
+				{ renderMarks( marks ) }
+			</div> }
 		</Tag>
 	)
 }

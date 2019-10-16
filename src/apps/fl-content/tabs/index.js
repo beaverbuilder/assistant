@@ -13,7 +13,10 @@ export const SummaryTab = () => {
 
 			<Page.Section label={ __( 'Latest Posts' ) } shouldPadSides={ false }>
 				<List.Posts
-					query={ { post_type: 'post', posts_per_page: 5 } }
+					query={ {
+						post_type: 'post',
+						posts_per_page: 5
+					} }
 					paginate={ false }
 					getItemProps={ ( item, defaultProps ) => {
 						if ( item.id ) {

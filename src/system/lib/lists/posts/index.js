@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React, { useState, useEffect } from 'fl-react'
 import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon } from 'lib'
@@ -13,6 +13,22 @@ export const Posts = ( {
 } ) => {
 	const wpRest = getWpRest()
 	const { currentUser, emptyTrashDays } = getSystemConfig()
+	const [labels, setLabels] = useState({})
+
+	useEffect( () => {
+
+		// Get the color labels references
+		wpRest.labels().findWhere().then( response => {
+			const items = {}
+		    if ( 'data' in response ) {
+				for( let i in response.data ) {
+					const { id, ...rest } = response.data[i]
+					items[id] = rest
+				}
+				setLabels( items )
+			}
+		} )
+	}, [])
 
 	return (
 		<List.WordPress
@@ -151,13 +167,48 @@ export const Posts = ( {
 						return (
 							<>
 								{item.title}
-								<span style={ { marginLeft: 10, color: 'var(--fl-asst-bookmark-color)' } }>
-									<Icon.FavoriteSolid />
-								</span>
 							</>
 						)
 					}
 					return item.title
+				}
+
+				const getMarks = item => {
+					let marks = []
+
+					if ( item.isTrashing || item.isTrashed || item.isRestoring ) {
+						return []
+					}
+
+					if ( 'draft' === item.status ) {
+						marks.push( "DRAFT" )
+					}
+
+					if ( 'labels' in item && item.labels.length > 0 ) {
+
+						item.labels.map( id => {
+							if ( id in labels ) {
+								const { color, label } = labels[id]
+								marks.push(
+									<span
+										className="fl-asst-list-item-color-mark"
+										style={{ background: color }}
+										title={label}
+									></span>
+								)
+							}
+						})
+					}
+
+					if ( item.isFavorite ) {
+						marks.push(
+							<span style={{ color: 'var(--fl-asst-pink)'}}>
+								<Icon.FavoriteSolid />
+							</span>
+						)
+					}
+
+					return marks
 				}
 
 				return getItemProps( item, {
@@ -174,7 +225,8 @@ export const Posts = ( {
 						'fl-asst-is-restoring': item.isRestoring,
 						'fl-asst-is-isCloning': item.isCloning,
 						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring )
-					}, defaultProps.className )
+					}, defaultProps.className ),
+					marks: getMarks( item )
 				} )
 			} }
 			{ ...rest }
