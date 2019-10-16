@@ -6,7 +6,6 @@ import { Form, Button } from 'lib'
 const { registerSection } = getSystemActions()
 
 registerSection( 'fl-screen-labels', {
-	label: __( 'Labels' ),
 	location: {
 		type: [ 'post' ],
 	},

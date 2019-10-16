@@ -8,6 +8,7 @@ const { registerSection } = getSystemActions()
 registerSection( 'fl-post-title', {
 	location: {
 		type: 'post',
+		tab: 'edit',
 	},
 	render: ( { useForm } ) => {
 		const { title, slug, url } = useForm()
@@ -31,6 +32,7 @@ registerSection( 'fl-post-publish', {
 	label: __( 'Publish Settings' ),
 	location: {
 		type: 'post',
+		tab: 'edit',
 	},
 	render: ( { useForm } ) => {
 		const { status, visibility, password, date } = useForm()
@@ -49,6 +51,7 @@ registerSection( 'fl-post-taxonomies', {
 	label: __( 'Taxonomies' ),
 	location: {
 		type: 'post',
+		tab: 'edit',
 	},
 	render: ( { useForm } ) => {
 		const { terms } = useForm()
@@ -72,6 +75,7 @@ registerSection( 'fl-post-excerpt', {
 	label: __( 'Excerpt' ),
 	location: {
 		type: 'post',
+		tab: 'edit',
 	},
 	render: ( { useForm } ) => {
 		const { excerpt } = useForm()
@@ -87,6 +91,7 @@ registerSection( 'fl-post-attributes', {
 	label: __( 'Attributes' ),
 	location: {
 		type: 'post',
+		tab: 'edit',
 	},
 	render: ( { useForm } ) => {
 		const { parent, template, order } = useForm()
@@ -104,6 +109,7 @@ registerSection( 'fl-post-discussion', {
 	label: __( 'Discussion' ),
 	location: {
 		type: 'post',
+		tab: 'edit',
 	},
 	render: ( { useForm } ) => {
 		const { commentsAllowed, pingbacksAllowed } = useForm()

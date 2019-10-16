@@ -104,6 +104,7 @@ export const Post = ( { location, match, history } ) => {
 			id: 'post_excerpt',
 			type: 'textarea',
 			isVisible: supports.excerpt,
+			rows: 5,
 		},
 		commentsAllowed: {
 			label: __( 'Allow Comments' ),
@@ -242,6 +243,16 @@ export const Post = ( { location, match, history } ) => {
 			component: () => (
 				<Page.RegisteredSections
 					location={ { type: 'post' } }
+					data={ sectionData }
+				/>
+			),
+		},
+		{
+			path: match.url + '/edit',
+			label: __( 'Edit' ),
+			component: () => (
+				<Page.RegisteredSections
+					location={ { type: 'post', tab: 'edit' } }
 					data={ sectionData }
 				/>
 			),
