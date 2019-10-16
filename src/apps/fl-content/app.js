@@ -38,31 +38,11 @@ const Main = ( { match } ) => {
 		return tabs
 	}
 
-	/*
-	const Toolbar = () => {
-		return (
-			<Button.Group appearance="tabs">
-				{ Object.keys( contentTypes ).map( ( type, i ) =>
-					<Button
-						key={ i }
-						isSelected={ type === query.post_type }
-						onClick={ () => {
-							query.post_type = type
-							setQuery( { ...query } )
-						} }
-					>
-						{ contentTypes[ type ].labels.plural }
-					</Button>
-				) }
-			</Button.Group>
-		)
-	}*/
-
-	const Actions = ( { baseUrl } ) => {
+	const Actions = () => {
 		const to = {
-			pathname: `${baseUrl}/post/new`,
+			pathname: `/fl-content/post/new`,
 			state: {
-				detailBaseUrl: `${baseUrl}/post`
+				detailBaseUrl: `/fl-content/post`
 			}
 		}
 		return (
@@ -80,7 +60,7 @@ const Main = ( { match } ) => {
 		<Page
 			shouldPadSides={ false }
 			header={ <Nav.Tabs tabs={ tabs } /> }
-			headerActions={ <Actions baseUrl={ match.url } /> }
+			headerActions={ <Actions /> }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
