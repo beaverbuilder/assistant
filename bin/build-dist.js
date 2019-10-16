@@ -36,6 +36,8 @@ const filterFiles = src => {
         'scoper.inc.php',
         'webpack.config.js',
         'lib/README.md',
+        'vendor',
+        'backend/tests',
     ].map( name => `${fromDir}/${name}` )
 
     for( let i in ignores ) {
