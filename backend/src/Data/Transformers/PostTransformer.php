@@ -64,7 +64,7 @@ class PostTransformer {
 			'date'            	=> $date,
 			'editUrl'         	=> get_edit_post_link( $post->ID, '' ),
 			'id'              	=> $post->ID,
-			'labels'			=> $this->notations->get_labels( 'post', $post->ID ),
+			'labels'			=> [],
 			'order'				=> $post->menu_order,
 			'parent'          	=> $post->post_parent,
 			'password'        	=> $post->post_password,
@@ -99,6 +99,12 @@ class PostTransformer {
 		// Favorites
 		$favorites = $this->notations->get_favorites( 'post', $post->ID, get_current_user_id() );
 		$response['isFavorite'] = ! ! count( $favorites );
+
+		// Labels
+		$labels = $this->notations->get_labels( 'post', $post->ID );
+		foreach ( $labels as $label ) {
+			$response['labels'][] = $label['label_id'];
+		}
 
 		// Terms
 		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );

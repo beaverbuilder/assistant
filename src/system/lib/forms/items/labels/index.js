@@ -7,7 +7,9 @@ import './style.scss'
 export const LabelsItem = ( {
 	label,
 	value,
-	onChange,
+	onChange = () => {},
+	onAdd = () => {},
+	onRemove = () => {},
 } ) => {
 	const [ options, setOptions ] = useState( [] )
 	const [ selectedLabel, setSelectedLabel ] = useState( '' )
@@ -19,9 +21,11 @@ export const LabelsItem = ( {
 		} )
 	}, [] )
 
-	const removeLabel = ( option, i ) => {
+	const removeLabel = ( option ) => {
+		const i = value.indexOf( option.id )
 		value.splice( i, 1 )
 		onChange( [ ...value ] )
+		onRemove( option )
 	}
 
 	const addLabel = () => {
@@ -33,6 +37,7 @@ export const LabelsItem = ( {
 			if ( option.id === Number( selectedLabel ) && ! value.includes( option.id ) ) {
 				value.push( option.id )
 				onChange( [ ...value ] )
+				onAdd( option )
 			}
 		} )
 

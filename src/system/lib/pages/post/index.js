@@ -39,6 +39,7 @@ export const Post = ( { location, match, history } ) => {
 
 	const { contentTypes, contentStatus } = getSystemConfig()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
+	const wpRest = getWpRest()
 
 	const config = {
 		id: {
@@ -143,16 +144,22 @@ export const Post = ( { location, match, history } ) => {
 			id: 'menu_order',
 			isVisible: supports.order,
 		},
-		actions: {
-			value: args => getPostActions( { history, ...args } ),
-		},
 		labels: {
 			label: __( 'Labels' ),
+			alwaysCommit: true,
+			onAdd: label => {
+				wpRest.notations().createLabel( 'post', item.id, label.id )
+			},
+			onRemove: label => {
+				wpRest.notations().deleteLabel( 'post', item.id, label.id )
+			},
+		},
+		actions: {
+			value: args => getPostActions( { history, ...args } ),
 		},
 	}
 
 	const onSubmit = ( { changed, ids, setValue } ) => {
-		const wpRest = getWpRest()
 		const data = {
 			meta: {},
 			terms: {},
