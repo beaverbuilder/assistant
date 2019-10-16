@@ -17,7 +17,7 @@ class OnDeleteTerm {
 	}
 
 	public function __invoke( $term_id ) {
-		$results = $this->notations->get_labels_by_id( $term_id );
+		$results = $this->notations->get_labels_by_id( 'post', $term_id );
 
 		foreach ( $results as $label ) {
 			wp_delete_post( $label['id'] );

@@ -2,7 +2,6 @@
 
 namespace FL\Assistant\Controllers;
 
-use FL\Assistant\Data\Repository\NotationsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\System\Integrations\BeaverBuilder;
@@ -22,8 +21,6 @@ class PostsController extends ControllerAbstract {
 		$this->posts = $posts;
 		$this->transformer = $transformer;
 	}
-
-
 
 	/**
 	 * Register routes.

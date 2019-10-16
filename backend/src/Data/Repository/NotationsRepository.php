@@ -4,7 +4,7 @@ namespace FL\Assistant\Data\Repository;
 
 use FL\Assistant\Data\Transformers\NotationsTransformer;
 
-class NotationsRepository extends PostsRepository {
+class NotationsRepository {
 
 	protected $transformer;
 
@@ -24,7 +24,8 @@ class NotationsRepository extends PostsRepository {
 			]
 		);
 
-		return $this->transformer->transform_array( parent::query( $args )->posts );
+		$query = new \WP_Query( $args );
+		return $this->transformer->transform_array( $query->posts );
 	}
 
 	/**
@@ -98,10 +99,12 @@ class NotationsRepository extends PostsRepository {
 	 * Get an array of label notations for the given label ID.
 	 * @return array
 	 */
-	public function get_labels_by_id( $label_id ) {
+	public function get_labels_by_id( $object_type, $label_id ) {
 		return $this->get_by_meta(
 			[
-				'fl_asst_notation_label_id'   => (int) $label_id,
+				'fl_asst_notation_type'        => 'label',
+				'fl_asst_notation_object_type' => $object_type,
+				'fl_asst_notation_label_id'    => (int) $label_id,
 			]
 		);
 	}

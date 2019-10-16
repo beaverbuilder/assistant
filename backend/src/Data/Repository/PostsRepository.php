@@ -4,6 +4,7 @@ namespace FL\Assistant\Data\Repository;
 
 use FL\Assistant\Data\Pager;
 use FL\Assistant\System\Contracts\RepositoryAbstract;
+use FL\Assistant\Data\Repository\NotationsRepository;
 
 
 /**
@@ -12,6 +13,11 @@ use FL\Assistant\System\Contracts\RepositoryAbstract;
  */
 class PostsRepository extends RepositoryAbstract {
 
+	protected $notations;
+
+	public function __construct( NotationsRepository $notations ) {
+		$this->notations = $notations;
+	}
 
 	/**
 	 * @param $id
@@ -36,6 +42,33 @@ class PostsRepository extends RepositoryAbstract {
 	 * @return array
 	 */
 	public function find_where( array $args = [], callable $transform = null ) {
+		$posts = $this->query( $args )->posts;
+
+		if ( ! is_null( $transform ) ) {
+			$posts = array_map( $transform, $posts );
+		}
+
+		return $posts;
+	}
+
+	/**
+	 * @param int $label_id
+	 * @param callable|null $transform
+	 *
+	 * @return array
+	 */
+	public function find_by_label( int $label_id, callable $transform = null ) {
+		$labels = $this->notations->get_labels_by_id( 'post', $label_id );
+		$post_ids = [];
+
+		foreach ( $labels as $label ) {
+			$post_ids[] = $label['object_id'];
+		}
+
+		$args = [
+			'post__in' => $post_ids,
+		];
+
 		$posts = $this->query( $args )->posts;
 
 		if ( ! is_null( $transform ) ) {
