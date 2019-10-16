@@ -10,7 +10,8 @@ export const App = () => {
 	const [ labels, setLabels ] = useState( [] )
 	const [ editingLabel, setEditingLabel ] = useState( null )
 	const [ newLabel, setNewLabel ] = useState( '' )
-	const [ newColor, setNewColor ] = useState( '' )
+	const firstColor = 'var(--fl-asst-blue)'
+	const [ newColor, setNewColor ] = useState( firstColor )
 	const wpRest = getWpRest()
 
 	useEffect( () => {
@@ -68,7 +69,7 @@ export const App = () => {
 		}
 
 		setNewLabel( '' )
-		setNewColor( '' )
+		setNewColor( firstColor )
 	}
 
 	const saveLabel = () => {
@@ -143,9 +144,9 @@ export const App = () => {
 								} )
 							} }
 						/>
-						<div style={{ display: 'flex', flex: '1 1 auto' }}>
+						<div style={ { display: 'flex', flex: '1 1 auto' } }>
 							<Button onClick={ () => setEditingLabel( null ) }>{ __( 'Cancel' ) }</Button>
-							<Button onClick={ saveLabel } style={{ marginLeft: 'auto' }}>{ __( 'Save' ) }</Button>
+							<Button onClick={ saveLabel } style={ { marginLeft: 'auto' } }>{ __( 'Save' ) }</Button>
 						</div>
 					</>
 				)
@@ -185,7 +186,7 @@ export const App = () => {
 		<Page shouldPadSides={ false }>
 			<Page.Section
 				className='fl-asst-edit-labels'
-				contentStyle={{ paddingTop: 0 }}
+				contentStyle={ { paddingTop: 0 } }
 			>
 				<div>
 					{ __( 'Labels allow you to mark posts for organization and collaborate with other users. Below you can add more labels and change the name of existing ones.' ) }
@@ -210,7 +211,7 @@ export const App = () => {
 				/>
 				<Control.CirclePicker
 					value={ newColor }
-					onChange={ value => setNewColor( value ) }
+					onChange={ value => setNewColor( value )}
 				/>
 				<Button onClick={ addLabel }>{ __( 'Add New Label' ) }</Button>
 			</Page.Section>

@@ -16,7 +16,7 @@ export const Color = {
 		red: 'var(--fl-asst-red)',
 		pink: 'var(--fl-asst-pink)',
 		purple: 'var(--fl-asst-purple)',
-		
+
 		lightBlue: '#EBF8FF',
 	},
 
