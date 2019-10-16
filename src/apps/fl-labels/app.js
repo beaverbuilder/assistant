@@ -163,7 +163,7 @@ export const App = () => {
 			),
 			label: label.label,
 			actions: (
-				<Button.Group>
+				<Button.Group appearance="buttons">
 					<Button onClick={ () => setEditingLabel( label ) }>{ __( 'Edit' ) }</Button>
 					<Button onClick={ () => deleteLabel( label.id ) } className="fl-asst-destructive">
 						<Icon.Trash />
@@ -185,6 +185,7 @@ export const App = () => {
 		<Page shouldPadSides={ false }>
 			<Page.Section
 				className='fl-asst-edit-labels'
+				contentStyle={{ paddingTop: 0 }}
 			>
 				<div>
 					{ __( 'Labels allow you to mark posts for organization and collaborate with other users. Below you can add more labels and change the name of existing ones.' ) }

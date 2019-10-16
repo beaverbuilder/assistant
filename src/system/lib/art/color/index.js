@@ -9,23 +9,24 @@ export const Color = {
 	 * TODO: Load from server config.
 	 */
 	knownColors: {
-		red: '#FF5335',
-		blue: '#1BADF8',
-		green: '#00D281',
-		yellow: '#FFD000',
-		orange: '#FF9500',
-		purple: '#CC73E1',
-		pink: '#FF2968',
+		blue: 'var(--fl-asst-blue)',
+		green: 'var(--fl-asst-green)',
+		yellow: 'var(--fl-asst-yellow)',
+		orange: 'var(--fl-asst-orange)',
+		red: 'var(--fl-asst-red)',
+		pink: 'var(--fl-asst-pink)',
+		purple: 'var(--fl-asst-purple)',
+		
 		lightBlue: '#EBF8FF',
 	},
 
 	labelColors: {
-		red: '#FF5335',
-		blue: '#1BADF8',
-		green: '#00D281',
-		yellow: '#FFD000',
-		orange: '#FF9500',
-		purple: '#CC73E1',
-		pink: '#FF2968',
+		blue: 'var(--fl-asst-blue)',
+		green: 'var(--fl-asst-green)',
+		yellow: 'var(--fl-asst-yellow)',
+		orange: 'var(--fl-asst-orange)',
+		red: 'var(--fl-asst-red)',
+		pink: 'var(--fl-asst-pink)',
+		purple: 'var(--fl-asst-purple)',
 	},
 }
