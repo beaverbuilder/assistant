@@ -77,7 +77,7 @@
 
         .fl-asst-button {
             border: none;
-            
+
             &:hover {
                 box-shadow: none;
                 color: var(--fl-asst-surface-color);
@@ -93,7 +93,6 @@
         &.fl-asst-button-group-appearance-normal {
             .fl-asst-button {
                 background: transparent;
-                color: var(--fl-asst-secondary-surface-color);
                 border-radius: 4px;
                 z-index:1;
                 white-space: nowrap;

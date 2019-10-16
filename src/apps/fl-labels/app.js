@@ -21,8 +21,8 @@ export const App = () => {
 	}, [] )
 
 	const getDefaultColor = () => {
-		const key = Object.keys( Color.knownColors ).shift()
-		return Color.knownColors[ key ]
+		const key = Object.keys( Color.labelColors ).shift()
+		return Color.labelColors[ key ]
 	}
 
 	const addLabel = () => {
@@ -139,10 +139,10 @@ export const App = () => {
 								} )
 							} }
 						/>
-						<Button.Group>
-							<Button onClick={ saveLabel }>{ __( 'Save' ) }</Button>
+						<div style={{ display: 'flex', flex: '1 1 auto' }}>
 							<Button onClick={ () => setEditingLabel( null ) }>{ __( 'Cancel' ) }</Button>
-						</Button.Group>
+							<Button onClick={ saveLabel } style={{ marginLeft: 'auto' }}>{ __( 'Save' ) }</Button>
+						</div>
 					</>
 				)
 			}
@@ -159,7 +159,7 @@ export const App = () => {
 			),
 			label: label.label,
 			actions: (
-				<Button.Group appearance="buttons">
+				<Button.Group>
 					<Button onClick={ () => setEditingLabel( label ) }>{ __( 'Edit' ) }</Button>
 					<Button onClick={ () => deleteLabel( label.id ) } className="fl-asst-destructive">
 						<Icon.Trash />
@@ -195,12 +195,11 @@ export const App = () => {
 			</Page.Section>
 
 			<Page.Section
-				label={ __( 'Add Label' ) }
 				className='fl-asst-add-label'
 			>
 				<input
 					type='text'
-					placeholder={ __( 'Label' ) }
+					placeholder={ __( 'Add Label' ) }
 					value={ newLabel }
 					onChange={ e => setNewLabel( e.target.value ) }
 				/>
@@ -208,9 +207,7 @@ export const App = () => {
 					value={ newColor }
 					onChange={ value => setNewColor( value ) }
 				/>
-				<Button onClick={ addLabel }>
-					{ __( 'Add New Label' ) }
-				</Button>
+				<Button onClick={ addLabel }>{ __( 'Add New Label' ) }</Button>
 			</Page.Section>
 
 			<Page.Section label={ __( 'Bookmarks' ) }>

@@ -4,8 +4,8 @@ import { Color } from 'lib'
 import './style.scss'
 
 const getDefaultColors = () => {
-	return Object.keys( Color.knownColors ).map( key => {
-		return Color.knownColors[ key ]
+	return Object.keys( Color.labelColors ).map( key => {
+		return Color.labelColors[ key ]
 	} )
 }
 

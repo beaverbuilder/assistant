@@ -7,9 +7,11 @@
 
 		&:first-child {
 			flex: 0;
+			padding-left:0;
 		}
 		&:last-child {
 			flex: 0 1 auto;
+			padding-right:0;
 		}
 	}
 
@@ -20,6 +22,7 @@
 	}
 
 	.fl-asst-table-cell-edit {
+		padding: var(--fl-asst-outer-space) 0;
 
 		.fl-asst-circle-picker {
 			padding-top: var(--fl-asst-tiny-space);

@@ -9,7 +9,7 @@ export const Color = {
 	 * TODO: Load from server config.
 	 */
 	knownColors: {
-		red: '#FF305C',
+		red: '#FF5335',
 		blue: '#1BADF8',
 		green: '#00D281',
 		yellow: '#FFD000',
@@ -17,5 +17,15 @@ export const Color = {
 		purple: '#CC73E1',
 		pink: '#FF2968',
 		lightBlue: '#EBF8FF',
+	},
+
+	labelColors: {
+		red: '#FF5335',
+		blue: '#1BADF8',
+		green: '#00D281',
+		yellow: '#FFD000',
+		orange: '#FF9500',
+		purple: '#CC73E1',
+		pink: '#FF2968',
 	},
 }

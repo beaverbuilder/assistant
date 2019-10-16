@@ -1,7 +1,9 @@
 .fl-asst {
 
 	.fl-asst-circle-picker {
+		flex: 1 1 auto;
 		display: flex;
+		justify-content: space-evenly;
 	}
 
 	.fl-asst-circle-picker-item {
