@@ -13,22 +13,22 @@ export const Posts = ( {
 } ) => {
 	const wpRest = getWpRest()
 	const { currentUser, emptyTrashDays } = getSystemConfig()
-	const [labels, setLabels] = useState({})
+	const [ labels, setLabels ] = useState( {} )
 
 	useEffect( () => {
 
 		// Get the color labels references
 		wpRest.labels().findWhere().then( response => {
 			const items = {}
-		    if ( 'data' in response ) {
-				for( let i in response.data ) {
+			if ( 'data' in response ) {
+				for ( let i in response.data ) {
 					const { id, ...rest } = response.data[i]
 					items[id] = rest
 				}
 				setLabels( items )
 			}
 		} )
-	}, [])
+	}, [] )
 
 	return (
 		<List.WordPress
@@ -181,10 +181,10 @@ export const Posts = ( {
 					}
 
 					if ( 'draft' === item.status ) {
-						marks.push( "DRAFT" )
+						marks.push( 'DRAFT' )
 					}
 
-					if ( 'labels' in item && item.labels.length > 0 ) {
+					if ( 'labels' in item && 0 < item.labels.length ) {
 
 						item.labels.map( id => {
 							if ( id in labels ) {
@@ -192,17 +192,17 @@ export const Posts = ( {
 								marks.push(
 									<span
 										className="fl-asst-list-item-color-mark"
-										style={{ background: color }}
-										title={label}
+										style={ { background: color } }
+										title={ label }
 									></span>
 								)
 							}
-						})
+						} )
 					}
 
 					if ( item.isFavorite ) {
 						marks.push(
-							<span style={{ color: 'var(--fl-asst-pink)'}}>
+							<span style={ { color: 'var(--fl-asst-pink)' } }>
 								<Icon.FavoriteSolid />
 							</span>
 						)

@@ -13,7 +13,7 @@ export const Content = ( { match } ) => (
 	</Nav.Switch>
 )
 
-const Main = ( { match } ) => {
+const Main = () => {
 	const { contentTypes } = getSystemConfig()
 
 	const getTabs = () => {
@@ -40,9 +40,9 @@ const Main = ( { match } ) => {
 
 	const Actions = () => {
 		const to = {
-			pathname: `/fl-content/post/new`,
+			pathname: '/fl-content/post/new',
 			state: {
-				detailBaseUrl: `/fl-content/post`
+				detailBaseUrl: '/fl-content/post'
 			}
 		}
 		return (

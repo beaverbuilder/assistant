@@ -171,7 +171,7 @@
                 }
 
                 &:focus {
-                    box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background);
+                    box-shadow: 0px 0px 0px 2px var(--fl-asst-secondary-surface-background);
 
                     &.fl-asst-is-selected {
                         box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background),

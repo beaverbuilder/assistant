@@ -211,7 +211,7 @@ export const App = () => {
 				/>
 				<Control.CirclePicker
 					value={ newColor }
-					onChange={ value => setNewColor( value )}
+					onChange={ value => setNewColor( value ) }
 				/>
 				<Button onClick={ addLabel }>{ __( 'Add New Label' ) }</Button>
 			</Page.Section>

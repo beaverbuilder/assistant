@@ -233,12 +233,12 @@
         top:0;
         left:0;
         right:0;
-        height: 20px;
+        height: 25px;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
-        padding: 0 7px;
+        padding: 0 2px;
         pointer-events: none;
 
         .fl-asst-list-item-mark {
@@ -254,6 +254,7 @@
                 width: 9px;
                 background: var(--fl-asst-blue);
                 border-radius: 50%;
+                pointer-events: auto;
             }
         }
     }

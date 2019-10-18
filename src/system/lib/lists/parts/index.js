@@ -113,11 +113,11 @@ const InfoItem = ( {
 	const accessories = 'function' === typeof accessory ? accessory( {} ) : null
 	const stopProp = e => e.stopPropagation()
 
-	const renderMarks = marks => marks.map( (mark, i) => {
+	const renderMarks = marks => marks.map( ( mark, i ) => {
 		return (
-			<span key={i} className="fl-asst-list-item-mark">{mark}</span>
+			<span key={ i } className="fl-asst-list-item-mark">{mark}</span>
 		)
-	})
+	} )
 
 	return (
 		<Tag className={ classes } { ...newProps }>
@@ -136,7 +136,7 @@ const InfoItem = ( {
 			</div>
 			{ itemExtras && <div className="fl-asst-list-item-extras" onClick={ stopProp }>{itemExtras}</div> }
 
-			{ marks.length > 0 && <div className="fl-asst-list-item-marks">
+			{ 0 < marks.length && <div className="fl-asst-list-item-marks">
 				{ renderMarks( marks ) }
 			</div> }
 		</Tag>
