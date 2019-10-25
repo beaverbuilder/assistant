@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'fl-react'
+import { useEffect, useRef } from 'react'
 
 /**
  * Check if a given prop (most likely children) is a function to be rendered.

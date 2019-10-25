@@ -1,4 +1,4 @@
-import { useEffect } from 'fl-react'
+import { useEffect } from 'react'
 import { addLeadingSlash } from 'shared-utils/url'
 
 /**

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'fl-react'
+import { useEffect, useState } from 'react'
 import { createStore, bindActionCreators } from 'fl-redux'
 import { createActions } from './actions'
 import { createReducers } from './reducers'
