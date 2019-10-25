@@ -1,4 +1,4 @@
-import React, { Fragment } from 'fl-react'
+import React, { Fragment } from 'react'
 
 export const Buttons = () => {
 	return (

@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { Page, Form, Control } from 'lib'
 

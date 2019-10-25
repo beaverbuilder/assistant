@@ -1,6 +1,4 @@
 import {
-	React,
-	ReactDOM,
 	ReactRouter,
 	Redux,
 	PropTypes,
@@ -12,8 +10,6 @@ const existingVendors = api.vendors || {}
 
 const vendors = {
 	...existingVendors,
-	React,
-	ReactDOM,
 	ReactRouter,
 	Redux,
 	PropTypes,

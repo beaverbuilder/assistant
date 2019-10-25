@@ -1,4 +1,4 @@
-import { Component, createElement } from 'fl-react'
+import { Component, createElement } from 'react'
 
 export const Error = props => props.children
 

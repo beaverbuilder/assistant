@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'fl-react'
+import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'store'
 import { List, Button } from 'lib'

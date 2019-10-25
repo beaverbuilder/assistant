@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'fl-react'
+import React, { useState, useEffect } from 'react'
 import classname from 'fl-classnames'
 import './style.scss'
 

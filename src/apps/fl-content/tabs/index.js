@@ -1,4 +1,4 @@
-import React, { useContext } from 'fl-react'
+import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, App, Page } from 'assistant/ui'
 import { useAppState } from 'assistant/data'

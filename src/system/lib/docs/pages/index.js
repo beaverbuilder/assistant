@@ -1,4 +1,4 @@
-import React, { Fragment } from 'fl-react'
+import React, { Fragment } from 'react'
 import { MemoryRouter, Switch, Route, NavLink } from 'react-router-dom'
 import { Buttons } from './buttons'
 import './style.scss'

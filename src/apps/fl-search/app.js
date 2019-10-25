@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { Nav } from 'assistant/ui'
 import { Main } from './main'
 import { ViewAll } from './view-all'

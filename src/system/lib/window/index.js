@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef, createContext, useContext } from 'fl-react'
+import React, { useState, useEffect, createRef, createContext, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'

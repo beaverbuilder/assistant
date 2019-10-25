@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'fl-react'
+import React, { useState, useEffect, useRef } from 'react'
 import { List } from '../'
 
 const hasReachedBounds = e => {

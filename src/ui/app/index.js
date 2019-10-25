@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'fl-react'
+import React, { forwardRef } from 'react'
 import { withRouter } from 'fl-react-router-dom'
 import classname from 'fl-classnames'
 import { __ } from 'assistant/i18n'

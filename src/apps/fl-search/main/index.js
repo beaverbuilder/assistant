@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'fl-react'
+import React, { useEffect, useState, useRef } from 'react'
 import { __ } from 'assistant/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'

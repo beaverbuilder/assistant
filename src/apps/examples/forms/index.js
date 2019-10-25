@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { Form, Page } from 'assistant/ui'
 
 export const FormExamples = () => {

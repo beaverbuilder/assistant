@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { ToggleControl } from './toggle'
 import { URLControl } from './url'
 import { NextPrev } from './prev-next'

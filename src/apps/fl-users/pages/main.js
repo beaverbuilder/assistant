@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'fl-react'
+import React, { useState, useEffect } from 'react'
 import { Page } from 'assistant/lib'
 import { __ } from '@wordpress/i18n'
 

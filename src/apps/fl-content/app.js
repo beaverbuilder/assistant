@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 import { Page, Nav, Icon } from 'assistant/ui'

@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 
 export const Icon = () => {
 	return null

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'fl-react'
+import React, { useEffect, useState } from 'react'
 import { CancelToken, isCancel } from 'axios'
 import { getWpRest } from 'shared-utils/wordpress'
 import { List } from 'lib'

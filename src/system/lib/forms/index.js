@@ -1,4 +1,4 @@
-import React, { createContext } from 'fl-react'
+import React, { createContext } from 'react'
 import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { Icon, Control, Page } from 'lib'

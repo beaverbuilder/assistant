@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import classnames from 'classnames'
 
 export const Well = ( { className, style: initialStyles, ...rest } ) => {

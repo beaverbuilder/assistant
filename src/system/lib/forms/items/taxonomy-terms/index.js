@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'fl-react'
+import React, { useEffect, useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { getWpRest } from 'shared-utils/wordpress'
 import { createSlug } from 'shared-utils/url'

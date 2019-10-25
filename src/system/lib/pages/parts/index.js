@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'fl-react'
+import React, { useContext, useMemo } from 'react'
 import classname from 'fl-classnames'
 import { Window } from 'lib'
 import { getSystemSelectors } from 'store'

@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { Nav, Page } from 'assistant/lib'
 
 import { Main } from './pages/main'

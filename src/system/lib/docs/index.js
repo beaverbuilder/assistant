@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { __ } from 'assistant'
 import { Docs as DocPages } from './pages'
 

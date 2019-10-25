@@ -191,6 +191,8 @@ class OnEnqueueScripts {
 
 			// API - loaded in header
 			$js_deps = [
+				'react',
+				'react-dom',
 				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',

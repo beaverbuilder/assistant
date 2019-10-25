@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n'
-import React, { useContext, useState } from 'fl-react'
+import React, { useContext, useState } from 'react'
 import { App, Page, List } from 'assistant/lib'
 
 export const Search = () => {

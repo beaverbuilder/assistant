@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import classname from 'classnames'
 import { TestSheet } from './examples'
 import { Item, Loading, NoResultsMessage } from './parts'

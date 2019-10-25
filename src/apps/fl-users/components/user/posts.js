@@ -1,4 +1,4 @@
-import React, { useContext } from 'fl-react'
+import React, { useContext } from 'react'
 import { sprintf } from '@wordpress/i18n'
 import { Form, List, App } from 'assistant/lib'
 

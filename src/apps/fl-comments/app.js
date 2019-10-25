@@ -1,4 +1,4 @@
-import React, { useContext } from 'fl-react'
+import React, { useContext } from 'react'
 import { App, Page, List, Nav } from 'assistant/ui'
 
 export const CommentsApp = ( { match } ) => (

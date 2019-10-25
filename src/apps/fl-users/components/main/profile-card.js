@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { Button, Page } from 'assistant/lib'
 import { __ } from '@wordpress/i18n'
 import { Well } from '../well'

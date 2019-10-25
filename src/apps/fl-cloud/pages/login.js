@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'fl-react'
+import React, { useState, Fragment } from 'react'
 import { __ } from '@wordpress/i18n'
 import PropTypes from 'prop-types'
 import { Button, Icon, Form } from 'assistant/ui'

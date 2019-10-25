@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { Form, Control } from 'lib'
 import { getSystemActions } from 'store'
 import { __ } from '@wordpress/i18n'

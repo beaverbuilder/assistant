@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { __ } from 'assistant/i18n'
 import { useSystemState, getSystemActions } from 'assistant/data'
 import { Page, Nav, Icon } from 'assistant/ui'

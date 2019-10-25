@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n'
-import React, { useEffect } from 'fl-react'
+import React, { useEffect } from 'react'
 import { Form } from 'assistant/lib'
 import { isEmpty } from 'lodash'
 

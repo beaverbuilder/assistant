@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { __ } from 'assistant/i18n'
 import { Button, Page } from 'assistant/ui'
 import './summary.scss'

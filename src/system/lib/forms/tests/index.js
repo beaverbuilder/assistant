@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import './style.scss'
 
 export const ValuesTable = ( { fields } ) => {

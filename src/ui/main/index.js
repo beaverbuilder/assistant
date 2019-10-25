@@ -1,4 +1,4 @@
-import React, { useContext } from 'fl-react'
+import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions, useSystemState } from 'assistant/store'
 import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
@@ -13,7 +13,6 @@ export const Assistant = () => {
 		<Nav.Provider>
 			<App.Provider>
 				<Appearance brightness={ brightness } size={ 'mini' === size ? 'compact' : 'normal' }>
-					<div>HERE</div>
 					<MainWindow />
 				</Appearance>
 			</App.Provider>

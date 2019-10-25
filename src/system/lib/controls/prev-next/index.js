@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import classname from 'fl-classnames'
 import { Button, Icon } from 'lib'
 

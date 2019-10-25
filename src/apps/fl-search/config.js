@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { Nav, Page } from 'assistant/ui'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSystemStore } from 'assistant/data'

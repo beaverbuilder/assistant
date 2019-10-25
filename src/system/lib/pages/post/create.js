@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Form } from 'lib'
 import { getSystemConfig } from 'store'

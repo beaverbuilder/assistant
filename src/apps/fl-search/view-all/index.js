@@ -1,4 +1,4 @@
-import React, { useState } from 'fl-react'
+import React, { useState } from 'react'
 import { CancelToken, isCancel } from 'axios'
 import { __, sprintf } from 'assistant/i18n'
 import { Page, List } from 'assistant/ui'

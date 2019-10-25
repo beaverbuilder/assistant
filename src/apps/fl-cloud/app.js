@@ -1,4 +1,4 @@
-import React from 'fl-react'
+import React from 'react'
 import { useSystemState, getSystemActions } from 'assistant/store'
 import { Page } from 'assistant/lib'
 
