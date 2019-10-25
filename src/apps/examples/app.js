@@ -3,14 +3,12 @@ import { __ } from '@wordpress/i18n'
 import { Page, Button, Nav } from 'assistant/ui'
 import './style.scss'
 
-import { UnsplashExample } from './unsplash'
 import { ListExamples } from './lists'
 import { FormExamples } from './forms'
 
 export const App = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-		<Nav.Route path={ `${match.url}/unsplash` } component={ UnsplashExample } />
 		<Nav.Route path={ `${match.url}/lists` } component={ ListExamples } />
 		<Nav.Route path={ `${match.url}/forms` } component={ FormExamples } />
 	</Nav.Switch>
@@ -20,7 +18,6 @@ const Main = ( { match } ) => {
 	return (
 		<Page>
 			<Button.Group direction='column'>
-				<Button to={ `${match.url}/unsplash` }>{__( 'Unsplash Example' )}</Button>
 				<Button to={ `${match.url}/lists` }>{__( 'List Examples' )}</Button>
 				<Button to={ `${match.url}/forms` }>{__( 'Form Examples' )}</Button>
 			</Button.Group>

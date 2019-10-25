@@ -13,8 +13,19 @@ const alias = {
 }
 
 const externals = {
+    /* WordPress included vendors */
     'react'                         : 'React',
     'react-dom'                     : 'ReactDOM',
+    'lodash'                        : 'lodash',
+
+    /* wp */
+    '@wordpress/i18n'               : 'wp.i18n',
+    '@wordpress/keycodes'           : 'wp.keycodes',
+    '@wordpress/dom'                : 'wp.dom',
+    '@wordpress/element'            : 'wp.element',
+    '@wordpress/components'         : 'wp.components',
+    '@wordpress/heartbeat'          : 'wp.heartbeat',
+    '@wordpress/hooks'              : 'wp.hooks',
 
     /* fl-vendor */
     'fl-react'              		: 'React',
@@ -40,16 +51,7 @@ const externals = {
     // I'd be great not to need these
     'assistant/utils/react'   		: 'FL.Assistant.utils.react',
     'assistant/utils/url'   		: 'FL.Assistant.utils.url',
-    'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress',
-
-    /* wp */
-    '@wordpress/i18n'               : 'wp.i18n',
-    '@wordpress/keycodes'           : 'wp.keycodes',
-    '@wordpress/dom'                : 'wp.dom',
-    '@wordpress/element'            : 'wp.element',
-    '@wordpress/components'         : 'wp.components',
-    '@wordpress/heartbeat'          : 'wp.heartbeat',
-    '@wordpress/hooks'              : 'wp.hooks',
+    'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress'
 }
 
 const entry = {

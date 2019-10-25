@@ -193,6 +193,7 @@ class OnEnqueueScripts {
 			$js_deps = [
 				'react',
 				'react-dom',
+				'lodash',
 				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',

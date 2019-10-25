@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
 import { Button } from 'assistant/lib'
-
 import PropTypes from 'prop-types'
-
 
 export const ProfilePage = ( props ) => {
 
@@ -29,4 +27,3 @@ ProfilePage.propTypes = {
 	token: PropTypes.object,
 	user: PropTypes.object
 }
-
