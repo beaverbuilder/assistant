@@ -7,6 +7,7 @@ use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
+use FLBuilderModel;
 use WP_REST_Request;
 
 /**
@@ -182,7 +183,7 @@ class OnEnqueueScripts {
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
-		wp_register_script( 'fl-vendors', $url . 'build/fl-assistant-vendors.bundle.js', false, $ver, false );
+		wp_register_script( 'fl-fluid', $url . 'build/fluid.js', false, $ver, false );
 
 		if ( $this->should_enqueue() ) {
 
@@ -197,7 +198,8 @@ class OnEnqueueScripts {
 				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',
-				'fl-vendors',
+				'wp-dom-ready',
+				'fl-fluid',
 			];
 
 			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.css', [], $ver, null );
@@ -210,9 +212,17 @@ class OnEnqueueScripts {
 			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
 
-			// UI - loaded in footer
-			wp_enqueue_style( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.css', [], $ver, null );
-			wp_enqueue_script( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.js', $js_deps, $ver, true );
+			if ( ! class_exists( 'FLBuilderModel' ) ||
+				( class_exists( 'FLBuilderModel' ) && ! FLBuilderModel::is_builder_active() ) ) {
+
+				// UI - loaded in footer
+				wp_enqueue_style( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.css', [], $ver, null );
+				wp_enqueue_script( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.js', $js_deps, $ver, true );
+			} else {
+				// UI - loaded in footer
+				wp_enqueue_style( 'fl-assistant-builder', $url . 'build/fl-assistant-builder.bundle.css', [], $ver, null );
+				wp_enqueue_script( 'fl-assistant-builder', $url . 'build/fl-assistant-builder.bundle.js', $js_deps, $ver, true );
+			}
 
 			do_action( 'fl_assistant_enqueue' );
 		}

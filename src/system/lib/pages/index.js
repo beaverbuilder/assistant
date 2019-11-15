@@ -12,6 +12,7 @@ import { Term } from './term'
 import { Attachment } from './attachment'
 import { Plugin, Theme } from './themes-plugins'
 import { Comment } from './comment'
+import { PageNotFound } from './not-found'
 
 import './style.scss'
 
@@ -200,3 +201,6 @@ Page.Theme.displayName = 'Page.Theme'
 
 Page.Empty = Empty
 Page.Empty.displayName = 'Page.Empty'
+
+Page.NotFound = PageNotFound
+Page.NotFound.displayName = 'Page.NotFound'

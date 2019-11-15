@@ -12,7 +12,7 @@ export const AppRouting = withRouter(  ( { location } ) => {
 		<Nav.Switch location={ location }>
 			<Nav.Route exact path="/" component={ HomeScreen } />
 			<Nav.Route path="/:app" component={ AppContent } />
-			<Nav.Route component={ NoApp } />
+			<Nav.Route component={ Page.NotFound } />
 		</Nav.Switch>
 	)
 } )
@@ -82,11 +82,3 @@ const ScreenCard = forwardRef( ( { className, children, ...rest }, ref ) => {
 		</div>
 	)
 } )
-
-const NoApp = () => {
-	return (
-		<Page>
-			<h1>{__( 'Could not find page' )}</h1>
-		</Page>
-	)
-}

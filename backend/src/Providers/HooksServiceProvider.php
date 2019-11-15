@@ -11,6 +11,7 @@ use FL\Assistant\Hooks\Actions\OnWPBeforeAdminBarRender;
 use FL\Assistant\Hooks\Actions\OnBeforeDeletePost;
 use FL\Assistant\Hooks\Actions\OnDeleteTerm;
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
+use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 
 class HooksServiceProvider extends ServiceProviderAbstract {
@@ -56,5 +57,7 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 		// setup heartbeat
 		add_filter( 'heartbeat_received', $this->injector->make( OnHeartbeatReceived::class ), 11, 2 );
+
+		add_filter( 'fl_builder_ui_bar_buttons', $this->injector->make( OnFLBuilderUIBarButtons::class ) );
 	}
 }

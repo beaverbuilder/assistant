@@ -9,11 +9,11 @@ const alias = {
     store: path.resolve( __dirname, './src/system/store'),
     utils: path.resolve( __dirname, './src/system/utils' ),
     config: path.resolve( __dirname, './src/system/config'),
-    'shared-utils': path.resolve( __dirname, './packages/shared-utils/src/' ),
+    'shared-utils': path.resolve( __dirname, './src/shared-utils/src/' ),
 }
 
 const externals = {
-    /* WordPress included vendors */
+    /* WordPress included (hopefully) vendors */
     'react'                         : 'React',
     'react-dom'                     : 'ReactDOM',
     'lodash'                        : 'lodash',
@@ -26,25 +26,23 @@ const externals = {
     '@wordpress/components'         : 'wp.components',
     '@wordpress/heartbeat'          : 'wp.heartbeat',
     '@wordpress/hooks'              : 'wp.hooks',
+    '@wordpress/dom-ready'          : 'wp.domReady',
 
     /* fl-vendor */
-    'fl-react'              		: 'React',
-    'fl-react-dom'          		: 'ReactDOM',
     'fl-react-router-dom'   		: 'FL.vendors.ReactRouter',
     'fl-redux'              		: 'FL.vendors.Redux',
     'fl-prop-types'         		: 'FL.vendors.PropTypes',
     'fl-classnames'         		: 'FL.vendors.classnames',
 
+    'fluid'                         : 'FL.UID',
+
     /* system bundle */
     'assistant'             		: 'FL.Assistant',
     'assistant/store'       		: 'FL.Assistant.data', // TODO: Delete = data replaces store
     'assistant/data'        		: 'FL.Assistant.data',
-
     'assistant/lib'         		: 'FL.Assistant.ui', // TODO: delete - ui replaces lib
     'assistant/ui'          		: 'FL.Assistant.ui',
-
     'assistant/cloud'               : 'FL.Assistant.cloud',
-
     'assistant/i18n'        		: 'FL.Assistant.i18n',
     'assistant/utils'       		: 'FL.Assistant.utils',
 
@@ -58,7 +56,8 @@ const entry = {
     ui: './src/ui',
     api: './src/system',
     apps: './src/apps',
-    vendors: './src/vendors',
+    fluid: './src/fluid',
+    builder: './src/ui-builder',
 }
 
 const config = {
@@ -69,10 +68,15 @@ const config = {
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
-        filename: `fl-assistant-[name].bundle.js`,
+        filename: data => {
+
+            if ( 'fluid' === data.chunk.name ) return '[name].js'
+
+            return `fl-assistant-[name].bundle.js`
+        }
     },
     resolve: { alias },
-    devtool: production ? '' : 'source-map',
+    devtool: 'source-map',
     module: {
         rules: [
             {
@@ -117,6 +121,7 @@ if ( production ) {
 	config.mode = 'production'
 	config.stats = false
 	config.watch = false
+    config.devtool = 'none'
 	config.plugins.push(
 		new OptimizeCSSAssets( {
 			cssProcessorOptions: {

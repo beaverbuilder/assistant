@@ -20,3 +20,7 @@ window.FL = {
 	...api,
 	vendors,
 }
+
+
+// TEMP - Import FL.UID Library
+import '@beaverbuilder/fluid'
