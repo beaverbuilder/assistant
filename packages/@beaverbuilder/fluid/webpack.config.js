@@ -14,6 +14,12 @@ const config = {
         libraryTarget: 'umd',
         libraryExport: 'default',
     },
+    resolve: {
+        alias: {
+            ui: path.resolve(__dirname, './src/ui'),
+            store: path.resolve(__dirname, './src/store'),
+        }
+    },
     externals: {
         'react'            : 'React',
     	'react-dom'        : 'ReactDOM',

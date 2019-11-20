@@ -1,12 +1,11 @@
 import React, { createContext, useContext, useEffect } from 'react'
-import classname from 'fl-classnames'
-import { withRouter, MemoryRouter, Link, Switch, Route } from 'fl-react-router-dom'
+import classname from 'classnames'
 import { useSystemState, getSystemActions } from 'store'
 import { Button, Icon } from 'lib'
+import { Nav } from 'fluid/ui'
 
-export const Nav = () => {}
 
-Nav.Provider = ( { children } ) => {
+const Provider = ( { children } ) => {
 	const { history } = useSystemState()
 	const { setHistory } = getSystemActions()
 
@@ -24,27 +23,13 @@ Nav.Provider = ( { children } ) => {
 	}
 
 	return (
-		<MemoryRouter { ...routerProps }>
+		<Nav.MemoryRouter { ...routerProps }>
 			<NavManager onChange={ handleChange }>{children}</NavManager>
-		</MemoryRouter>
+		</Nav.MemoryRouter>
 	)
 }
-Nav.Provider.displayName = 'Nav.Provider'
 
-Nav.defaults = {
-	location: null,
-	match: null,
-	history: null,
-	path: null,
-	isRoot: false,
-	isAppRoot: false,
-	goToRoot: () => {}
-}
-
-Nav.Context = createContext( Nav.defaults )
-Nav.Context.displayName = 'Nav.Context'
-
-const NavManager = withRouter( ( { children, location, match, history, onChange = () => {} } ) => {
+const NavManager = Nav.withRouter( ( { children, location, match, history, onChange = () => {} } ) => {
 
 	useEffect( () => {
 		if ( 'function' === typeof onChange ) {
@@ -69,11 +54,8 @@ const NavManager = withRouter( ( { children, location, match, history, onChange 
 	)
 } )
 
-Nav.Link = Link
 
-Nav.Switch = Switch
 
-Nav.Route = Route
 
 Nav.ButtonLink = ( { className, appearance, ...rest } ) => {
 	const classes = classname( {
@@ -91,19 +73,15 @@ Nav.ButtonLink = ( { className, appearance, ...rest } ) => {
 Nav.SubLink = ( { to, ...rest } ) => {
 	const { path } = useContext( Nav.Context )
 	return (
-		<Link to={ path + to } { ...rest } />
+		<Nav.Link to={ path + to } { ...rest } />
 	)
 }
 Nav.AppLink = ( { to, ...rest } ) => {
 
 	//const { path } = useContext( Nav.Context )
-	return <Link to={ to } { ...rest } />
+	return <Nav.Link to={ to } { ...rest } />
 }
 Nav.AppLink.displayName = 'Nav.AppLink'
-
-Nav.useTabs = () => {
-	return {}
-}
 
 Nav.Tabs = ( { tabs = [] } ) => {
 	const { path, history } = useContext( Nav.Context )
@@ -143,3 +121,5 @@ Nav.CurrentTab = ( { tabs = [] } ) => {
 	)
 }
 Nav.CurrentTab.displayName = 'Nav.CurrentTab'
+
+export { Nav }

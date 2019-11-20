@@ -1,26 +1,72 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions, useSystemState } from 'assistant/store'
-import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
-import { AppRouting } from '../app'
 
-export const Assistant = () => {
-	const { appearance, window } = useSystemState()
+import {
+	Appearance,
+	App,
+	Icon,
+	Window,
+	Error,
+	Page,
+	Nav
+} from 'assistant/lib'
+
+import AppMain from '../app'
+
+import { App as FLUID_Root } from 'fluid/ui'
+
+/**
+ * The Root Component
+ */
+export const Assistant = ({
+	frame: Frame = MainWindow
+}) => {
+	const { appearance, history } = useSystemState()
+	const { setHistory } = getSystemActions()
 	const { brightness = 'light' } = appearance
-	const { size } = window
+
+	const routerProps = {
+		initialIndex: history.index,
+		/* do NOT include a default for initialEntries */
+	}
+	if ( history.entries && history.entries.length ) {
+		routerProps.initialEntries = history.entries
+	}
+
+	const onHistoryChanged = history => setHistory( history.index, history.entries )
 
 	return (
-		<Nav.Provider>
+		<FLUID_Root
+			routerProps={routerProps}
+			onHistoryChanged={onHistoryChanged}
+			colorScheme={brightness}
+		>
 			<App.Provider>
-				<Appearance brightness={ brightness } size={ 'mini' === size ? 'compact' : 'normal' }>
-					<MainWindow />
+				<Appearance brightness={ brightness }>
+					<Frame>
+						<AppMain />
+					</Frame>
 				</Appearance>
 			</App.Provider>
-		</Nav.Provider>
+		</FLUID_Root>
 	)
 }
 
-const MainWindow = () => {
+export const AssistantCore = () => {
+	const { appearance } = useSystemState()
+	return (
+		<FLUID_Root colorScheme={ appearance.brightness } >
+			<App.Provider>
+				<Appearance brightness={ appearance.brightness }>
+					<AppMain />
+				</Appearance>
+			</App.Provider>
+		</FLUID_Root>
+	)
+}
+
+const MainWindow = ({ children }) => {
 	const { window: mainWindow, shouldShowLabels } = useSystemState()
 	const { size, origin, isHidden, hiddenAppearance } = mainWindow
 	const { setWindow } = getSystemActions()
@@ -39,7 +85,7 @@ const MainWindow = () => {
 			toolbar={ WindowToolbar }
 		>
 			<Error.Boundary alternate={ WindowError }>
-				<AppRouting />
+				{children}
 			</Error.Boundary>
 		</Window>
 	)

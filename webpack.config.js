@@ -17,6 +17,17 @@ const externals = {
     'react'                         : 'React',
     'react-dom'                     : 'ReactDOM',
     'lodash'                        : 'lodash',
+    'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
+    'redux'              		    : 'FL.UID.vendors.Redux',
+    'classnames'         	        : 'FL.UID.vendors.classnames',
+
+    /* FLUID environment */
+    'fluid'                         : 'FL.UID',
+    'fluid/ui'                      : 'FL.UID.ui',
+    'fluid/store'                   : 'FL.UID.store',
+    'fl-react-router-dom'   		: 'FL.UID.vendors.ReactRouter',
+    'fl-redux'              		: 'FL.UID.vendors.Redux',
+    'fl-classnames'         		: 'FL.UID.vendors.classnames',
 
     /* wp */
     '@wordpress/i18n'               : 'wp.i18n',
@@ -27,14 +38,6 @@ const externals = {
     '@wordpress/heartbeat'          : 'wp.heartbeat',
     '@wordpress/hooks'              : 'wp.hooks',
     '@wordpress/dom-ready'          : 'wp.domReady',
-
-    /* fl-vendor */
-    'fl-react-router-dom'   		: 'FL.vendors.ReactRouter',
-    'fl-redux'              		: 'FL.vendors.Redux',
-    'fl-prop-types'         		: 'FL.vendors.PropTypes',
-    'fl-classnames'         		: 'FL.vendors.classnames',
-
-    'fluid'                         : 'FL.UID',
 
     /* system bundle */
     'assistant'             		: 'FL.Assistant',
@@ -57,7 +60,6 @@ const entry = {
     api: './src/system',
     apps: './src/apps',
     fluid: './src/fluid',
-    builder: './src/ui-builder',
 }
 
 const config = {

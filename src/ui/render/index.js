@@ -1,10 +1,56 @@
 import React from 'react'
-import { render } from 'react-dom'
-import { Assistant } from '../main'
+import { render, unmountComponentAtNode } from 'react-dom'
+import { Assistant, AssistantCore } from '../main'
 
-// Render App into the document
-const root = document.createElement( 'div' )
-root.classList.add( 'fl-asst' )
-document.body.appendChild( root )
+let mountNode = undefined
 
-render( <Assistant />, root )
+const renderNormal = () => {
+
+    if ( 'undefined' === typeof mountNode ) {
+        mountNode = document.createElement( 'div' )
+        mountNode.classList.add( 'fl-asst', 'fl-asst-mount-node' )
+        document.body.appendChild( mountNode )
+    }
+
+    render( <Assistant />, mountNode )
+}
+
+const unmountAssistant = () => {
+    if ( 'undefined' !== typeof mountNode ) {
+        unmountComponentAtNode( mountNode )
+    }
+}
+
+if ( 'FLBuilder' in window ) {
+
+    if ( 'domReady' in wp ) {
+        wp.domReady( () => {
+
+            // Listen for BB publish out (without refresh)
+            FLBuilder.addHook('endEditingSession', renderNormal )
+
+            // Listen for BB re-enter editing
+            FLBuilder.addHook('restartEditingSession', unmountAssistant )
+
+            // Setup Builder Panel
+            if ( 'Builder' in FL && 'registerPanel' in FL.Builder && 'togglePanel' in FL.Builder ) {
+
+                const { registerPanel, togglePanel } = FL.Builder
+
+                registerPanel( 'fl/assistant', {
+                    className: 'fl-asst',
+                    render: () => <AssistantCore />
+                })
+
+                // Setup Trigger Button
+                const button = document.querySelector('.fl-builder-fl-assistant-button')
+
+                button.addEventListener( 'click', () => togglePanel( 'fl/assistant' ) )
+            }
+
+        })
+    }
+} else {
+    // Render the standard Assistant app - We're not in Beaver Builder
+    renderNormal()
+}

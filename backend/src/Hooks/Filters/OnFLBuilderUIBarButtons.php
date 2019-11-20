@@ -12,7 +12,8 @@ class OnFLBuilderUIBarButtons {
     */
     public function __invoke( $buttons ) {
         $buttons['fl-assistant'] = [
-            'label' => 'Asst',
+            'label' => 'Assistant',
+            'class' => 'fl-builder-button-silent',
         ];
         return $buttons;
     }

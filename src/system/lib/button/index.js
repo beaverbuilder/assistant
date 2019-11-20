@@ -1,6 +1,6 @@
 import React, { forwardRef, Children, cloneElement, useState, useLayoutEffect, useRef } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Link } from 'fl-react-router-dom'
+import { Link } from 'react-router-dom'
 import classname from 'fl-classnames'
 import { Icon } from 'lib'
 import './style.scss'
