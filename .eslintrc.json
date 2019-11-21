@@ -31,7 +31,9 @@
       "expect": "readable",
       "it": "readable",
       "FL_ASSISTANT_INITIAL_STATE": "readable",
-      "FL_ASSISTANT_CONFIG": "readable"
+      "FL_ASSISTANT_CONFIG": "readable",
+      "FL": "readable",
+      "FLBuilder": "readable"
     },
     "rules": {
         "camelcase": [
