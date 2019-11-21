@@ -275,6 +275,8 @@ const WindowPanel = ( {
 	const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
 	const { isRoot } = useContext( Nav.Context )
 
+	console.log('root', isRoot )
+
 	const classes = classname( {
 		'fl-asst-window': true,
 		[`fl-asst-window-${size}`]: size,

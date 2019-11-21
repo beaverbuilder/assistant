@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 /**
  * Check if a given prop (most likely children) is a function to be rendered.
  */
-export const isRenderProp = children => typeof children === "function"
+export const isRenderProp = children => 'function' === typeof children
 
 /**
  * Like useEffect but only fires on component update.
@@ -33,7 +33,7 @@ export const useInitialFocus = ( callback = () => {} ) => {
 				ref.current.focus()
 			}
 		}
-	}, [ref])
+	}, [ ref ] )
 
 	return ref
 }

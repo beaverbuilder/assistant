@@ -1,8 +1,8 @@
 import Promise from 'promise'
 import axios from 'axios'
-import CacheHelper  from "./cache-helper"
+import CacheHelper  from './cache-helper'
 import { setupCache } from 'axios-cache-adapter'
-import localforage from "localforage"
+import localforage from 'localforage'
 
 const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 
@@ -351,19 +351,19 @@ const updates = () => {
  * @returns {*|Promise<*>|*|Promise<*>|Promise<*>|*}
  */
 const getContent = ( type, params, config = {} ) => {
-	switch (type) {
-		case 'posts':
-			return posts().findWhere( params, config )
-		case 'terms':
-			return terms().findWhere( params, config )
-		case 'attachments':
-			return attachments().findWhere( params, config )
-		case 'comments':
-			return comments().findWhere( params, config )
-		case 'users':
-			return users().findWhere( params, config )
-		case 'updates':
-			return updates().findWhere( params, config )
+	switch ( type ) {
+	case 'posts':
+		return posts().findWhere( params, config )
+	case 'terms':
+		return terms().findWhere( params, config )
+	case 'attachments':
+		return attachments().findWhere( params, config )
+	case 'comments':
+		return comments().findWhere( params, config )
+	case 'users':
+		return users().findWhere( params, config )
+	case 'updates':
+		return updates().findWhere( params, config )
 	}
 }
 
@@ -379,21 +379,21 @@ const getPagedContent = async( type, params, offset = 0, config = {} ) => {
 	let paged = Object.assign( { offset }, params )
 	let perPage = 20
 
-	switch (type) {
-		case 'posts':
-		case 'attachments':
-			paged.posts_per_page = paged.posts_per_page ? paged.posts_per_page : perPage
-			perPage = paged.posts_per_page
-			break
-		default:
-			paged.number = paged.number ? paged.number : perPage
-			perPage = paged.number
-			break
+	switch ( type ) {
+	case 'posts':
+	case 'attachments':
+		paged.posts_per_page = paged.posts_per_page ? paged.posts_per_page : perPage
+		perPage = paged.posts_per_page
+		break
+	default:
+		paged.number = paged.number ? paged.number : perPage
+		perPage = paged.number
+		break
 	}
 
 	try {
 		return await getContent( type, paged, config )
-	} catch (error) {
+	} catch ( error ) {
 		return Promise.reject( error )
 	}
 }

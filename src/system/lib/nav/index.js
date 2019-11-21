@@ -55,8 +55,6 @@ const NavManager = Nav.withRouter( ( { children, location, match, history, onCha
 } )
 
 
-
-
 Nav.ButtonLink = ( { className, appearance, ...rest } ) => {
 	const classes = classname( {
 		'fl-asst-button': true,

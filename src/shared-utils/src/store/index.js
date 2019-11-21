@@ -6,6 +6,7 @@ import { createSelectors } from './selectors'
 import { createEnhancers } from './middleware'
 
 export const createStoreRegistry = () => {
+
 	/**
 	 * The main registry object. Holds all stores
 	 * that have been registered.
@@ -16,6 +17,7 @@ export const createStoreRegistry = () => {
 	  * Functions for working with the registry.
 	  */
 	return {
+
 		/**
 		  * Addes a new store to the registry.
 		  *

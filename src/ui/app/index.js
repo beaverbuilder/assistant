@@ -23,7 +23,9 @@ const AppContent = props => {
 	const { params: { app: appName } } = match
 	const app = apps[appName]
 
-	if ( 'undefined' === typeof app ) return null
+	if ( 'undefined' === typeof app ) {
+		return null
+	}
 
 	const appProps = { ...props, ...app }
 

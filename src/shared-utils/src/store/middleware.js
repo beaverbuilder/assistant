@@ -7,7 +7,7 @@ import { applyMiddleware, compose } from 'fl-redux'
 export const createEnhancers = ( name, effects ) => {
 	const devToolsCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 	const composeEnhancers = devToolsCompose ? devToolsCompose( { name } ) : compose
-	return composeEnhancers( applyMiddleware( applyEffects( effects )) )
+	return composeEnhancers( applyMiddleware( applyEffects( effects ) ) )
 }
 
 /**
