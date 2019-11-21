@@ -4,6 +4,7 @@ import * as ui from './ui'
 import * as ReactRouter from 'react-router-dom'
 import * as Redux from 'redux'
 import * as classnames from 'classnames'
+import * as camelcase from 'camelcase'
 
 const FLUID = {
     store,
@@ -11,7 +12,8 @@ const FLUID = {
     vendors: {
         ReactRouter,
         Redux,
-        classnames
+        classnames,
+        camelcase,
     }
 }
 

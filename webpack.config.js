@@ -20,6 +20,7 @@ const externals = {
     'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
     'redux'              		    : 'FL.UID.vendors.Redux',
     'classnames'         	        : 'FL.UID.vendors.classnames',
+    'camelcase'						: 'FL.UID.vendors.camelcase',
 
     /* FLUID environment */
     'fluid'                         : 'FL.UID',

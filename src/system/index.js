@@ -7,8 +7,8 @@ import * as cloud from 'shared-utils/cloud'
 // After everything is imported
 import './config'
 
-const fl = window.FL || {}
-const asst = fl.Assistant || {}
+const api = window.FL || {}
+const asst = FL.Assistant || {}
 const {
 	registerApp,
 	toggleIsShowingUI,
@@ -27,6 +27,6 @@ const Assistant = {
 }
 
 window.FL = {
-	...fl,
+	...api,
 	Assistant,
 }
