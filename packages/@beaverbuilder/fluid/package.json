@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A common UI environment for Beaver Builder and Assistant projects.",
     "main": "dist/fluid.js",
     "module": "dist/fluid.js",

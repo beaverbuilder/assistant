@@ -6,7 +6,7 @@ export const Comments = ( {
 	query = {
 		commentStatus: 'all',
 	},
-	...rest,
+	...rest
 } ) => {
 	return (
 		<List.WordPress

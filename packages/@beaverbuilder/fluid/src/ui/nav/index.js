@@ -28,7 +28,7 @@ const Provider = withRouter( ( { children, location, match, history, onChange } 
 		if ( 'function' === typeof onChange ) {
 			onChange( history, location, match )
 		}
-	}, [ history.index, history.entries ] )
+	}, [ location ] )
 
     const context = {
         ...Nav.defaults,

@@ -9,7 +9,7 @@ import { getSystemConfig } from 'store'
 export const Posts = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {},
-	...rest,
+	...rest
 } ) => {
 	const wpRest = getWpRest()
 	const { currentUser, emptyTrashDays } = getSystemConfig()
