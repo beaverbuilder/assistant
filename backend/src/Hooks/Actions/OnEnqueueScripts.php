@@ -7,6 +7,7 @@ use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
+use FLBuilderModel;
 use WP_REST_Request;
 
 /**
@@ -182,7 +183,7 @@ class OnEnqueueScripts {
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
-		wp_register_script( 'fl-vendors', $url . 'build/fl-assistant-vendors.bundle.js', false, $ver, false );
+		wp_register_script( 'fl-fluid', $url . 'build/fluid.js', [ 'react', 'react-dom' ], $ver, false );
 
 		if ( $this->should_enqueue() ) {
 
@@ -191,13 +192,12 @@ class OnEnqueueScripts {
 
 			// API - loaded in header
 			$js_deps = [
-				'react',
-				'react-dom',
+				'fl-fluid',
 				'lodash',
 				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',
-				'fl-vendors',
+				'wp-dom-ready',
 			];
 
 			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.css', [], $ver, null );

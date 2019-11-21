@@ -1,5 +1,5 @@
 import React, { createContext } from 'react'
-import { withRouter } from 'fl-react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { useSystemState } from 'store'
 
 export const App = ( { children, ...rest } ) => {

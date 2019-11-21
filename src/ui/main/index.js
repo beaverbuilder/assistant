@@ -1,26 +1,84 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getSystemActions, useSystemState } from 'assistant/store'
-import { Appearance, App, Icon, Window, Error, Page, Nav } from 'assistant/lib'
-import { AppRouting } from '../app'
+import { getSystemActions, useSystemState, getSystemStore } from 'assistant/store'
 
+import {
+	Appearance,
+	App,
+	Icon,
+	Window,
+	Error,
+	Page,
+	Nav
+} from 'assistant/lib'
+
+import AppMain from '../app'
+
+import { App as FLUID_Root } from 'fluid/ui'
+
+const getRouterProps = history => {
+	const props = {
+		initialIndex: history.index,
+
+		/* do NOT include a default for initialEntries */
+	}
+	if ( history.entries && history.entries.length ) {
+		props.initialEntries = history.entries
+	}
+	return props
+}
+
+/**
+ * The Root Component
+ */
 export const Assistant = () => {
-	const { appearance, window } = useSystemState()
+	const { appearance, history } = useSystemState()
+	const { setHistory } = getSystemActions()
 	const { brightness = 'light' } = appearance
-	const { size } = window
+
+	const onHistoryChanged = history => setHistory( history.index, history.entries )
 
 	return (
-		<Nav.Provider>
+		<FLUID_Root
+			routerProps={ getRouterProps( history ) }
+			onHistoryChanged={ onHistoryChanged }
+			colorScheme={ brightness }
+		>
 			<App.Provider>
-				<Appearance brightness={ brightness } size={ 'mini' === size ? 'compact' : 'normal' }>
-					<MainWindow />
+				<Appearance brightness={ brightness }>
+					<MainWindow>
+						<AppMain />
+					</MainWindow>
 				</Appearance>
 			</App.Provider>
-		</Nav.Provider>
+		</FLUID_Root>
 	)
 }
 
-const MainWindow = () => {
+// Used for Beaver Builder panel - doesn't have Window Frame or FLUID root.
+export const AssistantCore = () => {
+	const { appearance } = useSystemState()
+	return (
+		<App.Provider>
+			<Appearance brightness={ appearance.brightness }>
+				<AppMain />
+			</Appearance>
+		</App.Provider>
+	)
+}
+
+export const getAssistantBBPanelConfig = () => {
+	const { history } = getSystemStore().getState()
+	const { setHistory } = getSystemActions()
+	return {
+		className: 'fl-asst',
+		render: () => <AssistantCore />,
+		routerProps: getRouterProps( history ),
+		onHistoryChanged: history => setHistory( history.index, history.entries )
+	}
+}
+
+const MainWindow = ( { children } ) => {
 	const { window: mainWindow, shouldShowLabels } = useSystemState()
 	const { size, origin, isHidden, hiddenAppearance } = mainWindow
 	const { setWindow } = getSystemActions()
@@ -39,7 +97,7 @@ const MainWindow = () => {
 			toolbar={ WindowToolbar }
 		>
 			<Error.Boundary alternate={ WindowError }>
-				<AppRouting />
+				{children}
 			</Error.Boundary>
 		</Window>
 	)
