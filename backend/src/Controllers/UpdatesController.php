@@ -3,6 +3,7 @@
 namespace FL\Assistant\Controllers;
 
 require_once ABSPATH . 'wp-admin/includes/update.php';
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 use FL\Assistant\Data\Transformers\PluginUpdatesTransformer;
 use FL\Assistant\Data\Transformers\ThemeUpdatesTransformer;
