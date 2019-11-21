@@ -4,7 +4,15 @@ import { __ } from '@wordpress/i18n'
 import { useSystemState } from '../../store'
 import { Nav, Icon, App } from 'lib'
 
-import { Pad, Toolbar, TitleCard, ExpandedContent, Section, RegisteredSections, Empty } from './parts'
+import {
+	Pad,
+	Toolbar,
+	TitleCard,
+	ExpandedContent,
+	Section,
+	RegisteredSections,
+	Empty
+} from './parts'
 import { Post } from './post'
 import { CreatePost } from './post/create'
 import { User } from './user'
@@ -89,7 +97,9 @@ Page.Header = ( { icon, label, actions } ) => {
 	const app = useContext( App.Context )
 	const { label: appLabel, icon: appIcon } = app
 
-	const { history, isRoot, isAppRoot } = useContext( Nav.Context )
+	const { history, isRoot } = useContext( Nav.Context )
+
+	const isAppRoot = 1 === history.index
 
 	let visual = icon
 	if ( 'function' !== typeof visual ) {
