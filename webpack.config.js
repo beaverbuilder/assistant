@@ -71,12 +71,7 @@ const config = {
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
-        filename: data => {
-
-            if ( 'fluid' === data.chunk.name ) return '[name].js'
-
-            return `fl-assistant-[name].bundle.js`
-        }
+        filename: `fl-assistant-[name].bundle.js`
     },
     resolve: { alias },
     devtool: 'source-map',
