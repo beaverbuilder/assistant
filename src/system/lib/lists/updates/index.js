@@ -8,7 +8,7 @@ export const Updates = ( {
 	query = {
 		updateType: 'all',
 	},
-	...rest,
+	...rest
 } ) => {
 	return (
 		<List.WordPress

@@ -1,7 +1,7 @@
 import classname from 'classnames'
 import Error from '../error'
 import Nav from '../nav'
-//import './style.scss'
+import './style.scss'
 
 const App = ({
     children,

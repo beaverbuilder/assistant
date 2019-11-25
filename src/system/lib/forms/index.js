@@ -21,7 +21,7 @@ export const Form = ( {
 	context = Form.defaults,
 	onSubmit = e => e.preventDefault(),
 	additionalClasses, /* used by form hook */
-	...rest,
+	...rest
 } ) => {
 
 	const classes = classname( {

@@ -7,7 +7,7 @@ export const PlainTextItem = ( {
 	id,
 	value,
 	isVisible = true,
-	...rest,
+	...rest
 } ) => {
 
 	if ( ! isVisible ) {
@@ -36,7 +36,7 @@ export const TextItem = ( {
 	isRequired = false,
 	onChange = () => {},
 	isVisible = true,
-	...rest,
+	...rest
 } ) => {
 
 	if ( ! isVisible ) {
@@ -87,7 +87,7 @@ export const SelectItem = ( {
 	hasChanges = false,
 	onChange = () => {},
 	isVisible = true,
-	...rest,
+	...rest
 } ) => {
 
 	if ( ! isVisible ) {
@@ -134,7 +134,7 @@ export const CheckboxItem = ( {
 	onChange = () => {},
 	content,
 	isVisible = true,
-	...rest,
+	...rest
 } ) => {
 
 	if ( ! isVisible ) {

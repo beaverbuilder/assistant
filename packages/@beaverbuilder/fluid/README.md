@@ -5,3 +5,9 @@ This is a design language and set of shared components for the Beaver Builder te
 ## Peer Dependencies
 * React
 * ReactDOM
+
+## Included Libraries
+* React Router DOM
+* Redux
+* classnames
+* camelcase

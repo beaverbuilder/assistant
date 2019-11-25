@@ -1,36 +1,42 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.0.3",
+    "version": "0.0.6",
     "description": "A common UI environment for Beaver Builder and Assistant projects.",
-    "main": "dist/fluid.js",
-    "module": "dist/fluid.js",
+    "author": "The Beaver Builder Team",
+    "license": "GPL-2.0+",
+    "main": "dist/index.js",
+    "module": "dist/index.es.js",
     "scripts": {
-        "build": "NODE_ENV=production webpack",
-        "dev": "webpack --watch"
+        "build": "rollup -c",
+        "dev": "rollup -c -w"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/beaverbuilder/assistant.git",
         "directory": "packages/@beaverbuilder/fluid"
     },
-    "author": "The Beaver Builder Team",
-    "license": "GPL-2.0+",
+    "peerDependencies": {
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0"
+    },
     "dependencies": {
         "camelcase": "^5.3.1",
         "classnames": "^2.2.6",
-        "react": "^16.11.0",
-        "react-dom": "^16.11.0",
         "react-router-dom": "^5.1.2",
         "redux": "^4.0.4"
     },
     "devDependencies": {
         "@babel/core": "^7.7.2",
+        "@babel/plugin-external-helpers": "^7.2.0",
         "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
         "@babel/preset-env": "^7.7.1",
         "@babel/preset-react": "^7.7.0",
-        "babel-loader": "^8.0.6",
-        "babel-plugin-add-module-exports": "^1.0.2",
-        "webpack": "^4.41.2",
-        "webpack-cli": "^3.3.10"
+        "rollup": "^1.27.3",
+        "rollup-plugin-babel": "^4.3.3",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-peer-deps-external": "^2.2.0",
+        "rollup-plugin-postcss": "^2.0.3",
+        "rollup-plugin-url": "^3.0.0"
     }
 }

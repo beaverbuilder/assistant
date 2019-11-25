@@ -68,12 +68,17 @@ export const AssistantCore = () => {
 }
 
 export const getAssistantBBPanelConfig = () => {
-	const { history } = getSystemStore().getState()
 	const { setHistory } = getSystemActions()
+
+	const getProps = () => {
+		const { history } = getSystemStore().getState()
+		return getRouterProps( history )
+	}
+
 	return {
 		className: 'fl-asst',
 		render: () => <AssistantCore />,
-		routerProps: getRouterProps( history ),
+		routerProps: getProps,
 		onHistoryChanged: history => setHistory( history.index, history.entries )
 	}
 }

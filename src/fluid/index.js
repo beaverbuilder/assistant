@@ -1,2 +1,7 @@
+import FLUID from '@beaverbuilder/fluid'
+import '@beaverbuilder/fluid/dist/index.css'
 
-import '@beaverbuilder/fluid'
+// Ensure FL exists
+window.FL = window.FL || {}
+
+FL.UID = FLUID

@@ -1,10 +1,10 @@
-import * as store from './store'
-import * as ui from './ui'
-
 import * as ReactRouter from 'react-router-dom'
 import * as Redux from 'redux'
-import * as classnames from 'classnames'
-import * as camelcase from 'camelcase'
+import classnames from 'classnames'
+import camelcase from 'camelcase'
+
+import * as store from './store'
+import * as ui from './ui'
 
 const FLUID = {
     store,

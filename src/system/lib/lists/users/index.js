@@ -4,7 +4,7 @@ import { List } from 'lib'
 export const Users = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {},
-	...rest,
+	...rest
 } ) => {
 	return (
 		<List.WordPress

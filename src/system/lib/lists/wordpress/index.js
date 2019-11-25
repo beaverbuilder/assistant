@@ -10,7 +10,7 @@ export const WordPress = ( {
 	onItemsLoaded = () => {},
 	query = {},
 	paginate = true,
-	...rest,
+	...rest
 } ) => {
 	const [ hasMoreItems, setHasMoreItems ] = useState( true )
 	const { items, setItems, updateItem, removeItem, cloneItem } = List.useListItems()

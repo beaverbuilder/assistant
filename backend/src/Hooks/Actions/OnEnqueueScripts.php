@@ -183,7 +183,8 @@ class OnEnqueueScripts {
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
-		wp_register_script( 'fl-fluid', $url . 'build/fluid.js', [ 'react', 'react-dom' ], $ver, false );
+		wp_register_script( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.js', [ 'react', 'react-dom' ], $ver, false );
+		wp_register_style( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.css', [], $ver, null );
 
 		if ( $this->should_enqueue() ) {
 
@@ -200,7 +201,7 @@ class OnEnqueueScripts {
 				'wp-dom-ready',
 			];
 
-			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.css', [], $ver, null );
+			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.css', [ 'fl-fluid' ], $ver, null );
 			wp_enqueue_script( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.js', $js_deps, $ver, false );
 
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_CONFIG', $config );

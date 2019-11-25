@@ -8,7 +8,7 @@ import './forms.scss'
 export const Appearance = ( {
 	className,
 	brightness,
-	...rest,
+	...rest
 } ) => {
 
 	const classes = classname( {
