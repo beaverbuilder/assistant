@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
 import { Button, Icon } from 'lib'
-import { Nav } from 'fluid/ui'
+import { Nav as FLUID_Nav } from 'fluid/ui'
+
+const Nav = { ...FLUID_Nav }
 
 Nav.ButtonLink = ( { className, appearance, ...rest } ) => {
 	const classes = classname( {
