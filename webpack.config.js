@@ -42,10 +42,9 @@ const externals = {
     /* system bundle */
     'assistant'             		: 'FL.Assistant',
     'assistant/store'       		: 'FL.Assistant.data',
-    'assistant/data'        		: 'FL.Assistant.data',
+    'assistant/data'        		: 'FL.Assistant.data', // deprecate?
     'assistant/lib'         		: 'FL.Assistant.ui',
-    'assistant/ui'          		: 'FL.Assistant.ui',
-    'assistant/cloud'               : 'FL.Assistant.cloud',
+    'assistant/ui'          		: 'FL.Assistant.ui', // deprecate?
     'assistant/utils'       		: 'FL.Assistant.utils',
 
     // I'd be great not to need these
