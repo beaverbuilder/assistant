@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Page } from 'assistant/lib'
+import { Button, Page } from 'assistant/ui'
 import { __ } from '@wordpress/i18n'
 import { Well } from '../well'
 import './profile-card.scss'

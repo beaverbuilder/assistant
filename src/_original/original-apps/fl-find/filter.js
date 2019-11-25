@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
-import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'store'
+import { useAppState, getAppActions, getSystemConfig, useSystemState } from 'data'
 import {
 	CreatePost,
 	CreateTerm,

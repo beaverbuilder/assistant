@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { animated, useSpring, config } from 'react-spring'
 import classname from 'classnames'
-import { useSystemState } from 'store'
+import { useSystemState } from 'data'
 import './style.scss'
 
 export const ToggleControl = props => {

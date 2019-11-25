@@ -8,7 +8,7 @@ import {
 	getSystemConfig,
 	useAppState,
 	getAppActions,
-} from 'store'
+} from 'data'
 
 import { useAppFrame, AppErrorBoundary } from 'system'
 import { render } from 'shared-utils/react'

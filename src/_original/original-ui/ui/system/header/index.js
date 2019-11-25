@@ -6,7 +6,7 @@ import {
 	Icon,
 	Button,
 } from 'components'
-import { useAppState, getAppActions } from 'store'
+import { useAppState, getAppActions } from 'data'
 import classname from 'classnames'
 import './style.scss'
 

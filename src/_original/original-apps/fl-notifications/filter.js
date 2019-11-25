@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
-import { useAppState, getAppActions, useSystemState } from 'store'
+import { useAppState, getAppActions, useSystemState } from 'data'
 import { currentUserCan } from 'shared-utils/wordpress'
 import {
 	NavBar,

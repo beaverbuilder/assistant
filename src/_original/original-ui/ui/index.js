@@ -11,7 +11,7 @@ import { NotificationsAppButton } from 'apps/fl-notifications/button'
 import { App, useAppsMenu, AppFrame, AppHeader, OuterErrorBoundary } from 'system'
 import { useWindowSize } from 'shared-utils/window'
 import { render } from 'shared-utils/react'
-import { useSystemState } from 'store'
+import { useSystemState } from 'data'
 import './style.scss'
 
 /**

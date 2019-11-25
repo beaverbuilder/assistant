@@ -13,7 +13,7 @@ import {
 	useImageData,
 } from 'components'
 import { updatePost } from 'shared-utils/wordpress'
-import { getSystemActions } from 'store'
+import { getSystemActions } from 'data'
 
 export const MediaDetail = () => {
 	const { dismiss } = useContext( StackContext )

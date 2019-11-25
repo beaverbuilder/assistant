@@ -1,6 +1,6 @@
 import React from 'react'
-import { getSystemActions, getSystemConfig, useSystemState } from 'store'
-import { Nav, Button, Icon } from 'lib'
+import { getSystemActions, getSystemConfig, useSystemState } from 'data'
+import { Nav, Button, Icon } from 'ui'
 import { __ } from '@wordpress/i18n'
 import { useInitialFocus } from 'utils/react'
 import './style.scss'

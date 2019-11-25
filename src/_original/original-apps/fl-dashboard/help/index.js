@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { getSystemConfig, useSystemState } from 'store'
+import { getSystemConfig, useSystemState } from 'data'
 import {
 	Padding,
 	Heading,

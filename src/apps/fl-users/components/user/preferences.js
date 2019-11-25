@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Control, Button } from 'assistant/lib'
+import { Form, Control, Button } from 'assistant/ui'
 import { __ } from '@wordpress/i18n'
 
 export const PreferencesTab = () => {

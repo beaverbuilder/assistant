@@ -5,7 +5,7 @@ import {
 	Button,
 	BackForwardControl,
 } from 'components'
-import { getSystemConfig } from 'store'
+import { getSystemConfig } from 'data'
 import './style.scss'
 
 export const WayfinderWidget = () => {

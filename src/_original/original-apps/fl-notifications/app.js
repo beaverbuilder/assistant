@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { useAppState } from 'store'
+import { useAppState } from 'data'
 import { CommentList, UpdateList, Title, Padding } from 'components'
 import { NotificationsFilter } from './filter'
 

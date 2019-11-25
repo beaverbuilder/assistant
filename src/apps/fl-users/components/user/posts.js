@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { sprintf } from '@wordpress/i18n'
-import { Form, List, App } from 'assistant/lib'
+import { Form, List, App } from 'assistant/ui'
 
 export const PostsTab = ( { user } ) => {
 	const { handle } = useContext( App.Context )

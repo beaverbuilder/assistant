@@ -6,7 +6,7 @@ import {
 	Widget,
 } from 'components'
 import Truncate from 'react-truncate'
-import { useSystemState } from 'store'
+import { useSystemState } from 'data'
 import './style.scss'
 
 export const TilesWidget = () => {

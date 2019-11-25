@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nav, Page } from 'assistant/lib'
+import { Nav, Page } from 'assistant/ui'
 
 import { Main } from './pages/main'
 import { User } from './pages/user'

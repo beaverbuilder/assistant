@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import React, { useEffect } from 'react'
-import { Form } from 'assistant/lib'
+import { Form } from 'assistant/ui'
 import { isEmpty } from 'lodash'
 
 export const GeneralTab = ( props ) => {

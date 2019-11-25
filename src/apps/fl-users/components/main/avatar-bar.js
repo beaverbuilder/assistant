@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import React from 'react'
-import { Button, Nav, Icon } from 'assistant/lib'
+import { Button, Nav, Icon } from 'assistant/ui'
 import './avatar-bar.scss'
 
 export const AvatarBar = ( props ) => {

@@ -5,10 +5,9 @@ const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const production = 'production' === process.env.NODE_ENV
 
 const alias = {
-    lib: path.resolve( __dirname, './src/system/lib/'),
-    store: path.resolve( __dirname, './src/system/store'),
+    ui: path.resolve( __dirname, './src/system/ui/'),
+    data: path.resolve( __dirname, './src/system/data'),
     utils: path.resolve( __dirname, './src/system/utils' ),
-    config: path.resolve( __dirname, './src/system/config'),
 }
 
 const externals = {
@@ -38,10 +37,8 @@ const externals = {
 
     /* system bundle */
     'assistant'             		: 'FL.Assistant',
-    'assistant/store'       		: 'FL.Assistant.data',
-    'assistant/data'        		: 'FL.Assistant.data', // deprecate?
-    'assistant/lib'         		: 'FL.Assistant.ui',
-    'assistant/ui'          		: 'FL.Assistant.ui', // deprecate?
+    'assistant/data'        		: 'FL.Assistant.data',
+    'assistant/ui'          		: 'FL.Assistant.ui',
     'assistant/utils'       		: 'FL.Assistant.utils',
 
     // I'd be great not to need these

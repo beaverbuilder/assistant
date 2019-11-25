@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { autop } from '@wordpress/autop'
 import { __ } from '@wordpress/i18n'
 import striptags from 'striptags'
-import { getSystemActions } from 'store'
+import { getSystemActions } from 'data'
 import { updateComment, replyToComment } from 'shared-utils/wordpress'
 import {
 	Button,

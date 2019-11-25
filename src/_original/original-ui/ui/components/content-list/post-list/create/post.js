@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState } from 'react'
 import { __, _x, sprintf } from '@wordpress/i18n'
 import { createSlug } from 'shared-utils/url'
 import { createPost } from 'shared-utils/wordpress'
-import { getSystemConfig } from 'store'
+import { getSystemConfig } from 'data'
 import { Button, Form, Icon, UIContext, StackContext, ViewContext } from 'components'
 import { PostListDetail, PostParentSelect } from '../detail'
 

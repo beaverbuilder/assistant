@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import React from 'react'
-import { Page, Form, Button, Control } from 'assistant/lib'
+import { Page, Form, Button, Control } from 'assistant/ui'
 import { Avatar } from '../components/avatar'
 import './invite.scss'
 

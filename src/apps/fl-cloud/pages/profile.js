@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Button } from 'assistant/lib'
+import { Button } from 'assistant/ui'
 import PropTypes from 'prop-types'
 
 export const ProfilePage = ( props ) => {

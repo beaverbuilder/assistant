@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import React, { useContext, useState } from 'react'
-import { App, Page, List } from 'assistant/lib'
+import { App, Page, List } from 'assistant/ui'
 
 export const Search = () => {
 	const { handle } = useContext( App.Context )

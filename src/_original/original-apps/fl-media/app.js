@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAppState } from 'store'
+import { useAppState } from 'data'
 import {
 	MediaList,
 	MediaDropUploader,

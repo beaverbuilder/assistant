@@ -1,5 +1,5 @@
-import { api as data } from 'store'
-import { api as ui } from 'lib'
+import { api as data } from 'data'
+import { api as ui } from 'ui'
 import utils from './utils'
 
 const api = window.FL || {}

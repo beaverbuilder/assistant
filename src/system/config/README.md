@@ -13,7 +13,7 @@ You can import the function either from `store` if you're within the system bund
 
 ```
 // From within the system bundle, you can import directly from store.
-import { getSystemActions } from 'store'
+import { getSystemActions } from 'data'
 const { registerSection } = getSystemActions()
 
 // OR

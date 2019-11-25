@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { updater } from 'shared-utils/wordpress'
-import { getSystemActions } from 'store'
+import { getSystemActions } from 'data'
 import { Button, ContentListItem, Icon, ItemContext, StackContext } from 'components'
 import { UpdateDetail } from './detail'
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { redirect } from 'shared-utils/location'
-import { getSystemConfig } from 'store'
+import { getSystemConfig } from 'data'
 import { Button, ContentListItem, Icon, ItemContext, StackContext } from 'components'
 import { PostListDetail, TermListDetail } from './detail'
 

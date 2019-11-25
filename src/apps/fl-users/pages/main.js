@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Page } from 'assistant/lib'
+import { Page } from 'assistant/ui'
 import { __ } from '@wordpress/i18n'
 
 import { getWpRest } from 'assistant/utils/wordpress'

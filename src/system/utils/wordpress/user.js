@@ -1,4 +1,4 @@
-import { getSystemConfig } from 'store'
+import { getSystemConfig } from 'data'
 
 export const currentUserCan = ( cap ) => {
 	const { currentUser } = getSystemConfig()

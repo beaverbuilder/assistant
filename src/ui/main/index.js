@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getSystemActions, useSystemState, getSystemStore } from 'assistant/store'
+import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
 
 import {
 	Appearance,
@@ -10,7 +10,7 @@ import {
 	Error,
 	Page,
 	Nav
-} from 'assistant/lib'
+} from 'assistant/ui'
 
 import AppMain from '../app'
 

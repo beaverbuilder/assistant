@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { AppRoute, AppLink } from 'lib'
+import { AppRoute, AppLink } from 'ui'
 
 export const NewApp = () => {
 	return (

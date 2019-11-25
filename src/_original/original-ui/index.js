@@ -14,7 +14,7 @@ import {
 	getSystemStore,
 	getSystemActions,
 	useSystemState
-} from 'store'
+} from 'data'
 import { redirect } from 'shared-utils/location'
 
 Provider.displayName = 'StoreProvider'

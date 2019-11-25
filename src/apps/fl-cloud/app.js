@@ -1,6 +1,6 @@
 import React from 'react'
-import { useSystemState, getSystemActions } from 'assistant/store'
-import { Page } from 'assistant/lib'
+import { useSystemState, getSystemActions } from 'assistant/data'
+import { Page } from 'assistant/ui'
 
 import { ProfilePage, LoginPage } from './pages'
 

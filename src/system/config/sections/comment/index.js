@@ -1,6 +1,6 @@
 import React from 'react'
-import { getSystemActions } from 'store'
-import { Form } from 'lib'
+import { getSystemActions } from 'data'
+import { Form } from 'ui'
 import { __ } from '@wordpress/i18n'
 
 const { registerSection } = getSystemActions()

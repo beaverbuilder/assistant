@@ -1,6 +1,6 @@
 import React, { Fragment, useLayoutEffect } from 'react'
 import { currentUserCan } from 'shared-utils/wordpress'
-import { useAppState, getAppActions } from 'store'
+import { useAppState, getAppActions } from 'data'
 import {
 	Separator,
 	Header

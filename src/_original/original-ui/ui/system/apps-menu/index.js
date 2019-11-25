@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import { __ } from '@wordpress/i18n'
-import { useSystemState, getSystemActions } from 'store'
+import { useSystemState, getSystemActions } from 'data'
 import { Title, Icon, UIContext, Button } from 'components'
 import { render } from 'shared-utils/react'
 import './style.scss'
