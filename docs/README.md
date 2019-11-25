@@ -115,15 +115,19 @@ In addition to managing your app's state, the app store will also be saved to lo
 The system bundle is the headless foundation for the Assistant application. It is responsible for exposing the public API for registering apps. This public API is available in the global space at `FL.Assistant`. This bundle contains the following directories...
 
 **config**
+
 The config directory contains any configuration code for the system. It currently contains `sections` which are used to register the various page and form sections in the apps.
 
 **lib**
+
 The lib directory contains all of the React components available to Assistant apps. These can be anything from basic buttons to complex form hooks. These can be imported outside of the system bundle (e.g. in your apps) using `import from 'assistant/ui'`. If you create a component in your app and feel like the entire system could benefit from it, move it here!
 
 **store**
+
 The store directory contains all of the Redux data stores for the Assistant system. Please see each store's index file for a list of functions for working with the stores. Remember, `app` stores are created for you when you register state for your app.
 
 **utils**
+
 The utils directory contains everything else that isn't a system component or data store. Utils can be anything from simple functions to full blown registries like our Redux store registry.
 
 ### src/ui
