@@ -148,31 +148,31 @@ This will import the copy of classnames found at `FL.UID.vendors.classnames`.
 The render bundle renders the overall Assistant application into the page. It also registers an alternate version of Assistant as a Beaver Builder panel when inside the BB editing UI. Most developers building apps or components won't need to touch this code.
 
 ## Backend Code
-...
+All backend PHP code should use the `FL\Assistant` namespace and follow the WordPress coding standards. Be sure to run PHPCS and PHPCBF before pushing to be sure your code follows those standards.
 
 ### backend/src/Controllers
-...
+The Controllers directory contains classes for working with the WordPress REST API.
 
 ### backend/src/Data
-...
+The Data directory contains classes for retrieving and transforming data. If you introduce a new type of data, please create the relevant Repository and Transformer as needed.
 
 ### backend/src/Hooks
-...
+The Hooks directory contains classes for working with WordPress actions and filters. If you need a new hook, create a class for it here and register it in the provider as shown below.
 
 ### backend/src/PostTypes
-...
+The PostTypes directory contains classes for registering new WordPress post types.
 
 ### backend/src/Providers
-...
+The Providers directory contains classes for bootstrapping different parts of the system such as data or hooks. For example, after you create a new hook class, you can register it in the `HooksServiceProvider`.
 
 ### backend/src/System
-...
+The System directory contains many of the base classes for Assistant's backend. It is also where the main plugin setup begins. Most of the time you will not need to touch this directory.
 
 ### backend/templates
-...
+The templates directory contains PHP templates for outputting HTML in your classes.
 
 ### backend/tests
-...
+The tests directory contains PHP unit tests for Assistant's backend.
 
 ## Translation
 All frontend code should be translated when appropriate using the functions provided in the `@wordpress/i18n` package. All backend code should be translated using core WordPress translation functions.
