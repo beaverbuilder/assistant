@@ -3,19 +3,19 @@
 - [Installation](#installation)
 - [NPM Commands](#npm-commands)
 - [Frontend Code](#frontend-code)
-    - [src/apps](#src-apps)
-    - [src/system](#src-system)
-    - [src/ui](#src-ui)
-    - [src/fluid](#src-fluid)
+    - [src/apps](#srcapps)
+    - [src/system](#srcsystem)
+    - [src/ui](#srcui)
+    - [src/fluid](#srcfluid)
 - [Backend Code](#backend-code)
-    - [backend/src/Controllers](#backend-src-controllers)
-    - [backend/src/Data](#backend-src-data)
-    - [backend/src/Hooks](#backend-src-hooks)
-    - [backend/src/PostTypes](#backend-src-posttypes)
-    - [backend/src/Providers](#backend-src-providers)
-    - [backend/src/System](#backend-src-system)
-    - [backend/templates](#backend-templates)
-    - [backend/tests](#backend-tests)
+    - [backend/src/Controllers](#backendsrccontrollers)
+    - [backend/src/Data](#backendsrcdata)
+    - [backend/src/Hooks](#backendsrchooks)
+    - [backend/src/PostTypes](#backendsrcposttypes)
+    - [backend/src/Providers](#backendsrcproviders)
+    - [backend/src/System](#backendsrcsystem)
+    - [backend/templates](#backendtemplates)
+    - [backend/tests](#backendtests)
 - [Translation](#translation)
 
 ## Installation
@@ -112,10 +112,22 @@ As shown above, each app can have its own state, actions, reducers, selectors, a
 In addition to managing your app's state, the app store will also be saved to local storage allowing data to persist between page views.
 
 ### src/system
-The system bundle is the headless foundation for the Assistant application. It is responsible for exposing the public API for registering apps. This public API is available in the global space at `FL.Assistant`.
+The system bundle is the headless foundation for the Assistant application. It is responsible for exposing the public API for registering apps. This public API is available in the global space at `FL.Assistant`. This bundle contains the following directories...
+
+**config**
+The config directory contains any configuration code for the system. It currently contains `sections` which are used to register the various page and form sections in the apps.
+
+**lib**
+The lib directory contains all of the React components available to Assistant apps. These can be anything from basic buttons to complex form hooks. These can be imported outside of the system bundle (e.g. in your apps) using `import from 'assistant/ui'`. If you create a component in your app and feel like the entire system could benefit from it, move it here!
+
+**store**
+The store directory contains all of the Redux data stores for the Assistant system. Please see each store's index file for a list of functions for working with the stores. Remember, `app` stores are created for you when you register state for your app.
+
+**utils**
+The utils directory contains everything else that isn't a system component or data store. Utils can be anything from simple functions to full blown registries like our Redux store registry.
 
 ### src/ui
-The UI bundle renders the overall Assistant application into the page. It also registers an alternate version of Assistant as a Beaver Builder panel when inside the BB editing UI.
+The UI bundle renders the overall Assistant application into the page. It also registers an alternate version of Assistant as a Beaver Builder panel when inside the BB editing UI. Most developers building apps or components won't need to touch this code.
 
 ### src/fluid
 The FLUID endpoint creates a bundle from the @beaverbuilder/fluid package. This is a library of components and data helpers being shared between Assistant and Beaver Builder. Both contain a copy so they can function separately but when both are present they share one copy. The fluid library can be accessed on the global `FL.UID` object. The fluid library provides several vendor libraries.
@@ -131,7 +143,7 @@ import classname from 'classnames'
 ```
 This will import the copy of classnames found at `FL.UID.vendors.classnames`.
 
-##Backend Code
+## Backend Code
 ...
 
 ### backend/src/Controllers
