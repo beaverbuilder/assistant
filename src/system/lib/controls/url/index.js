@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import classname from 'fl-classnames'
+import classname from 'classnames'
 import Clipboard from 'react-clipboard.js'
 import './style.scss'
 

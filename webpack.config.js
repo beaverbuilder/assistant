@@ -24,10 +24,9 @@ const externals = {
     /* FLUID environment */
     'fluid'                         : 'FL.UID',
     'fluid/ui'                      : 'FL.UID.ui',
-    'fluid/store'                   : 'FL.UID.store',
+    'fluid/data'                    : 'FL.UID.data',
     'fl-react-router-dom'   		: 'FL.UID.vendors.ReactRouter',
     'fl-redux'              		: 'FL.UID.vendors.Redux',
-    'fl-classnames'         		: 'FL.UID.vendors.classnames',
 
     /* wp */
     '@wordpress/i18n'               : 'wp.i18n',
@@ -52,7 +51,7 @@ const externals = {
     'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress'
 }
 
-const entry = {
+const entry = { // if you change a key here, you need to update the enqueue url to match
     ui: './src/ui',
     api: './src/system',
     apps: './src/apps',

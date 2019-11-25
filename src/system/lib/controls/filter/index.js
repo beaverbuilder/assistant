@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import classname from 'fl-classnames'
+import classname from 'classnames'
 import { Manager, Reference, Popper } from 'react-popper'
 import './style.scss'
 

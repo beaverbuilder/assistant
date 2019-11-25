@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import classname from 'fl-classnames'
+import classname from 'classnames'
 import './style.scss'
 
 export const ToggleControl = props => {

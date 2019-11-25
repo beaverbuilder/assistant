@@ -3,11 +3,11 @@ import * as Redux from 'redux'
 import classnames from 'classnames'
 import camelcase from 'camelcase'
 
-import * as store from './store'
+import * as data from './data'
 import * as ui from './ui'
 
 const FLUID = {
-    store,
+    data,
     ui,
     vendors: {
         ReactRouter,

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import classname from 'fl-classnames'
+import classname from 'classnames'
 import { Nav, Page } from '../../'
 import { isColor } from 'utils/color'
 import { isURL } from 'utils/url'

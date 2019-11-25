@@ -1,5 +1,5 @@
 import React from 'react'
-import classname from 'fl-classnames'
+import classname from 'classnames'
 import { Button, Icon } from 'lib'
 
 export const NextPrev = ( {

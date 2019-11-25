@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react'
-import classname from 'fl-classnames'
+import classname from 'classnames'
 import { Window } from 'lib'
 import { getSystemSelectors } from 'store'
 import './style.scss'

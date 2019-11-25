@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import classname from 'fl-classnames'
+import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon } from 'lib'
 import Clipboard from 'react-clipboard.js'

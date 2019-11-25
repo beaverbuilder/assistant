@@ -1,5 +1,5 @@
 import React from 'react'
-import classname from 'fl-classnames'
+import classname from 'classnames'
 import { Button, Color, Icon } from 'lib'
 import './style.scss'
 
