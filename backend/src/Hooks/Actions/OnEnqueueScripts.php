@@ -201,19 +201,19 @@ class OnEnqueueScripts {
 				'wp-dom-ready',
 			];
 
-			wp_enqueue_style( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.css', [ 'fl-fluid' ], $ver, null );
-			wp_enqueue_script( 'fl-assistant', $url . 'build/fl-assistant-api.bundle.js', $js_deps, $ver, false );
+			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid' ], $ver, null );
+			wp_enqueue_script( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.js', $js_deps, $ver, false );
 
-			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_CONFIG', $config );
-			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_INITIAL_STATE', $state );
+			wp_localize_script( 'fl-assistant-system', 'FL_ASSISTANT_CONFIG', $config );
+			wp_localize_script( 'fl-assistant-system', 'FL_ASSISTANT_INITIAL_STATE', $state );
 
 			// Apps - loaded in header
 			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
 
-			// UI - loaded in footer
-			wp_enqueue_style( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.css', [], $ver, null );
-			wp_enqueue_script( 'fl-assistant-ui', $url . 'build/fl-assistant-ui.bundle.js', $js_deps, $ver, true );
+			// UI Render - loaded in footer
+			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
+			wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.js', $js_deps, $ver, true );
 
 			do_action( 'fl_assistant_enqueue' );
 		}
