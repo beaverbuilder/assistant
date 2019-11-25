@@ -5,8 +5,8 @@
 - [Frontend Code](#frontend-code)
     - [src/apps](#srcapps)
     - [src/system](#srcsystem)
-    - [src/ui](#srcui)
     - [src/fluid](#srcfluid)
+    - [src/render](#srcrender)
 - [Backend Code](#backend-code)
     - [backend/src/Controllers](#backendsrccontrollers)
     - [backend/src/Data](#backendsrcdata)
@@ -118,20 +118,17 @@ The system bundle is the headless foundation for the Assistant application. It i
 
 The config directory contains any configuration code for the system. It currently contains `sections` which are used to register the various page and form sections in the apps.
 
-**lib**
+**data**
 
-The lib directory contains all of the React components available to Assistant apps. These can be anything from basic buttons to complex form hooks. These can be imported outside of the system bundle (e.g. in your apps) using `import from 'assistant/ui'`. If you create a component in your app and feel like the entire system could benefit from it, move it here!
+The data directory contains all of the Redux data stores for the Assistant system. Please see each store's index file for a list of functions for working with the stores. Remember, `app` stores are created for you when you register state for your app. Data functions exposed on the global namespace can be accessed outside of Assistant using `FL.Assistant.data`.
 
-**store**
+**ui**
 
-The store directory contains all of the Redux data stores for the Assistant system. Please see each store's index file for a list of functions for working with the stores. Remember, `app` stores are created for you when you register state for your app.
+The ui directory contains all of the React components available to Assistant apps. These can be anything from basic buttons to complex form hooks. These can be imported outside of the system bundle (e.g. in your apps) using `import from 'assistant/ui'`. If you create a component in your app and feel like the entire system could benefit from it, move it here! Components exposed on the global namespace can be accessed outside of Assistant using `FL.Assistant.ui`.
 
 **utils**
 
-The utils directory contains everything else that isn't a system component or data store. Utils can be anything from simple functions to full blown registries like our Redux store registry.
-
-### src/ui
-The UI bundle renders the overall Assistant application into the page. It also registers an alternate version of Assistant as a Beaver Builder panel when inside the BB editing UI. Most developers building apps or components won't need to touch this code.
+The utils directory contains everything else that isn't a system component or data store. Utils can be anything from simple functions to full blown registries like our Redux store registry. Utils exposed on the global namespace can be accessed outside of Assistant using `FL.Assistant.utils`.
 
 ### src/fluid
 The FLUID endpoint creates a bundle from the @beaverbuilder/fluid package. This is a library of components and data helpers being shared between Assistant and Beaver Builder. Both contain a copy so they can function separately but when both are present they share one copy. The fluid library can be accessed on the global `FL.UID` object. The fluid library provides several vendor libraries.
@@ -146,6 +143,9 @@ These vendor libraries are available at `FL.UID.vendors` and are mapped to their
 import classname from 'classnames'
 ```
 This will import the copy of classnames found at `FL.UID.vendors.classnames`.
+
+### src/render
+The render bundle renders the overall Assistant application into the page. It also registers an alternate version of Assistant as a Beaver Builder panel when inside the BB editing UI. Most developers building apps or components won't need to touch this code.
 
 ## Backend Code
 ...
