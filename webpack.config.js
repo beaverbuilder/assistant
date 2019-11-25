@@ -9,7 +9,6 @@ const alias = {
     store: path.resolve( __dirname, './src/system/store'),
     utils: path.resolve( __dirname, './src/system/utils' ),
     config: path.resolve( __dirname, './src/system/config'),
-    'shared-utils': path.resolve( __dirname, './src/shared-utils/src/' ),
 }
 
 const externals = {
@@ -51,7 +50,6 @@ const externals = {
     'assistant/utils'       		: 'FL.Assistant.utils',
 
     // I'd be great not to need these
-    'assistant/utils/react'   		: 'FL.Assistant.utils.react',
     'assistant/utils/url'   		: 'FL.Assistant.utils.url',
     'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress'
 }

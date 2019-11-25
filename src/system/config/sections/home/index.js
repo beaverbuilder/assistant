@@ -2,7 +2,7 @@ import React from 'react'
 import { getSystemActions, getSystemConfig, useSystemState } from 'store'
 import { Nav, Button, Icon } from 'lib'
 import { __ } from '@wordpress/i18n'
-import { useInitialFocus } from 'shared-utils/react'
+import { useInitialFocus } from 'utils/react'
 import './style.scss'
 
 const { registerSection } = getSystemActions()

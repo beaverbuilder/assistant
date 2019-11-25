@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getWpRest } from 'shared-utils/wordpress'
+import { getWpRest } from 'utils/wordpress'
 import { Form, Button, Control } from 'lib'
 import './style.scss'
 

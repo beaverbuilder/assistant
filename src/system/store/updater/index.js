@@ -1,6 +1,6 @@
-import { setCache } from 'shared-utils/cache'
+import { setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
-import { updatePlugin, updateTheme } from 'shared-utils/wordpress'
+import { updatePlugin, updateTheme } from 'utils/wordpress'
 import { getSystemActions } from '../system'
 import { state } from './state'
 import { actions } from './actions'

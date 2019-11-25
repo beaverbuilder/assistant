@@ -1,5 +1,5 @@
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
-import cloud from 'shared-utils/cloud'
+import cloud from 'utils/cloud'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'

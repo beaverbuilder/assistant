@@ -1,4 +1,4 @@
-import { createStoreRegistry } from 'shared-utils/store'
+import { createStoreRegistry } from 'utils/store'
 
 export const {
 	registerStore,

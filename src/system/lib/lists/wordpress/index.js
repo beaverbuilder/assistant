@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CancelToken, isCancel } from 'axios'
-import { getWpRest } from 'shared-utils/wordpress'
+import { getWpRest } from 'utils/wordpress'
 import { List } from 'lib'
 
 export const WordPress = ( {

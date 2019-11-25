@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { App } from 'lib'
-import { getCache, setCache } from 'shared-utils/cache'
+import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
 import {
 	defaultState,

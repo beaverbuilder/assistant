@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'store'
-import { getWpRest } from 'shared-utils/wordpress'
+import { getWpRest } from 'utils/wordpress'
 
 export const getPostActions = ( { history, staticValues, setValue } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()

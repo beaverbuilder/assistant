@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n'
-import { getWpRest } from 'shared-utils/wordpress'
+import { getWpRest } from 'utils/wordpress'
 
 export const setParentOptions = ( type, set ) => {
 	const wpRest = getWpRest()

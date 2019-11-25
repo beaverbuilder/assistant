@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import classname from 'fl-classnames'
 import { Nav, Page } from '../../'
 import { isColor } from 'utils/color'
-import { isURL } from 'shared-utils/url'
+import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
 

@@ -11,7 +11,7 @@ import { Users } from './users'
 import { Updates } from './updates'
 import './style.scss'
 
-import { isRenderProp } from 'shared-utils/react'
+import { isRenderProp } from 'utils/react'
 
 import {
 	defaultItemProps, // eslint-disable-line no-unused-vars

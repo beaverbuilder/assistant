@@ -3,7 +3,7 @@ import classname from 'fl-classnames'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon } from 'lib'
 import Clipboard from 'react-clipboard.js'
-import { getWpRest } from 'shared-utils/wordpress'
+import { getWpRest } from 'utils/wordpress'
 import { getSystemConfig } from 'store'
 
 export const Posts = ( {

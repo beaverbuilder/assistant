@@ -1,4 +1,4 @@
-import { getCache } from 'shared-utils/cache'
+import { getCache } from 'utils/cache'
 
 const cache = getCache( 'updater', 'queue' )
 

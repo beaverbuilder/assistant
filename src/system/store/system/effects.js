@@ -1,6 +1,6 @@
 import { registerAppStore } from '../app'
-import { getWpRest } from 'shared-utils/wordpress'
-import cloud from 'shared-utils/cloud'
+import { getWpRest } from 'utils/wordpress'
+import cloud from 'utils/cloud'
 
 import {
 	fetchCurrentUser,

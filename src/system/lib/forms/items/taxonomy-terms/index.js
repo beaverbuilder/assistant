@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { getWpRest } from 'shared-utils/wordpress'
-import { createSlug } from 'shared-utils/url'
+import { getWpRest } from 'utils/wordpress'
+import { createSlug } from 'utils/url'
 import { getSystemConfig } from 'store'
 import { Button, Form } from 'lib'
 

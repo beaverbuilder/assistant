@@ -2,8 +2,8 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Form } from 'lib'
 import { getSystemConfig } from 'store'
-import { getWpRest } from 'shared-utils/wordpress'
-import { createSlug } from 'shared-utils/url'
+import { getWpRest } from 'utils/wordpress'
+import { createSlug } from 'utils/url'
 import { setParentOptions } from './parent'
 
 export const CreatePost = ( { history, location } ) => {
