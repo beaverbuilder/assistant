@@ -43,7 +43,7 @@ Use the following npm commands after cloning the repo to work on the project:
 ## Frontend Code
 Frontend Assistant code makes heavy use of React, Redux, and React Router. Whenever possible, React hooks and function components are preferred over class components.
 
-As Assistant is designed as an app platform, the following directories are built to be standalone bundles. This is important to keep in mind when importing from one bundle to another. For example, in the system bundle you can import using `import from 'lib'` because `lib` is in the system bundle. However, when creating an app you would instead import using `import from 'assistant/ui'` because you are in the `apps` bundle. Please see the webpack config for a complete list of entry points and paths.
+As Assistant is designed as an app platform, the following directories are built to be standalone bundles. This is important to keep in mind when importing from one bundle to another. For example, in the system bundle you can import using `import from 'ui'` because `ui` is in the system bundle. However, when creating an app you would instead import using `import from 'assistant/ui'` because you are in the `apps` bundle. Please see the webpack config for a complete list of entry points and paths.
 
 ### src/apps
 The apps directory is where all core apps live. To create an app, create a new directory and import it in the apps index file.
