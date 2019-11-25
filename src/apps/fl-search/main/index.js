@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { __ } from 'assistant/i18n'
+import { __ } from '@wordpress/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { Page, List, Icon, Button } from 'assistant/ui'

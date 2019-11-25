@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { CancelToken, isCancel } from 'axios'
-import { __, sprintf } from 'assistant/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { Page, List } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getRequestConfig, getListItemConfig } from '../config'

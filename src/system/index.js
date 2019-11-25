@@ -18,8 +18,6 @@ const Assistant = {
 	...asst,
 	registerApp,
 	toggleUI: toggleIsShowingUI,
-
-	i18n,
 	data,
 	ui,
 	utils,

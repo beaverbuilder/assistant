@@ -41,12 +41,11 @@ const externals = {
 
     /* system bundle */
     'assistant'             		: 'FL.Assistant',
-    'assistant/store'       		: 'FL.Assistant.data', // TODO: Delete = data replaces store
+    'assistant/store'       		: 'FL.Assistant.data',
     'assistant/data'        		: 'FL.Assistant.data',
-    'assistant/lib'         		: 'FL.Assistant.ui', // TODO: delete - ui replaces lib
+    'assistant/lib'         		: 'FL.Assistant.ui',
     'assistant/ui'          		: 'FL.Assistant.ui',
     'assistant/cloud'               : 'FL.Assistant.cloud',
-    'assistant/i18n'        		: 'FL.Assistant.i18n',
     'assistant/utils'       		: 'FL.Assistant.utils',
 
     // I'd be great not to need these

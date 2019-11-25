@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { __ } from 'assistant/i18n'
+import { __ } from '@wordpress/i18n'
 import { App, Page, Button, List, Nav } from 'assistant/ui'
 import {
 	useSystemState,
