@@ -11,48 +11,56 @@ const alias = {
     config: path.resolve( __dirname, './src/system/config'),
 }
 
-const externals = {
-    /* WordPress included (hopefully) vendors */
-    'react'                         : 'React',
-    'react-dom'                     : 'ReactDOM',
-    'lodash'                        : 'lodash',
-    'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
-    'redux'              		    : 'FL.UID.vendors.Redux',
-    'classnames'         	        : 'FL.UID.vendors.classnames',
-    'camelcase'						: 'FL.UID.vendors.camelcase',
+const externals = [
+	{
+	    /* WordPress included (hopefully) vendors */
+	    'react'                         : 'React',
+	    'react-dom'                     : 'ReactDOM',
+	    'lodash'                        : 'lodash',
+	    'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
+	    'redux'              		    : 'FL.UID.vendors.Redux',
+	    'classnames'         	        : 'FL.UID.vendors.classnames',
+	    'camelcase'						: 'FL.UID.vendors.camelcase',
 
-    /* FLUID environment */
-    'fluid'                         : 'FL.UID',
-    'fluid/ui'                      : 'FL.UID.ui',
-    'fluid/store'                   : 'FL.UID.store',
-    'fl-react-router-dom'   		: 'FL.UID.vendors.ReactRouter',
-    'fl-redux'              		: 'FL.UID.vendors.Redux',
-    'fl-classnames'         		: 'FL.UID.vendors.classnames',
+	    /* FLUID environment */
+	    'fluid'                         : 'FL.UID',
+	    'fluid/ui'                      : 'FL.UID.ui',
+	    'fluid/store'                   : 'FL.UID.store',
+	    'fl-react-router-dom'   		: 'FL.UID.vendors.ReactRouter',
+	    'fl-redux'              		: 'FL.UID.vendors.Redux',
+	    'fl-classnames'         		: 'FL.UID.vendors.classnames',
 
-    /* wp */
-    '@wordpress/i18n'               : 'wp.i18n',
-    '@wordpress/keycodes'           : 'wp.keycodes',
-    '@wordpress/dom'                : 'wp.dom',
-    '@wordpress/element'            : 'wp.element',
-    '@wordpress/components'         : 'wp.components',
-    '@wordpress/heartbeat'          : 'wp.heartbeat',
-    '@wordpress/hooks'              : 'wp.hooks',
-    '@wordpress/dom-ready'          : 'wp.domReady',
+	    /* wp */
+	    '@wordpress/i18n'               : 'wp.i18n',
+	    '@wordpress/keycodes'           : 'wp.keycodes',
+	    '@wordpress/dom'                : 'wp.dom',
+	    '@wordpress/element'            : 'wp.element',
+	    '@wordpress/components'         : 'wp.components',
+	    '@wordpress/heartbeat'          : 'wp.heartbeat',
+	    '@wordpress/hooks'              : 'wp.hooks',
+	    '@wordpress/dom-ready'          : 'wp.domReady',
 
-    /* system bundle */
-    'assistant'             		: 'FL.Assistant',
-    'assistant/store'       		: 'FL.Assistant.data', // TODO: Delete = data replaces store
-    'assistant/data'        		: 'FL.Assistant.data',
-    'assistant/lib'         		: 'FL.Assistant.ui', // TODO: delete - ui replaces lib
-    'assistant/ui'          		: 'FL.Assistant.ui',
-    'assistant/cloud'               : 'FL.Assistant.cloud',
-    'assistant/i18n'        		: 'FL.Assistant.i18n',
-    'assistant/utils'       		: 'FL.Assistant.utils',
-
-    // I'd be great not to need these
-    'assistant/utils/url'   		: 'FL.Assistant.utils.url',
-    'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress'
-}
+	    /* system bundle */
+	    'assistant'             		: 'FL.Assistant',
+	    'assistant/store'       		: 'FL.Assistant.data', // TODO: Delete = data replaces store
+	    'assistant/data'        		: 'FL.Assistant.data',
+	    'assistant/lib'         		: 'FL.Assistant.ui', // TODO: delete - ui replaces lib
+	    'assistant/ui'          		: 'FL.Assistant.ui',
+	    'assistant/cloud'               : 'FL.Assistant.cloud',
+	    'assistant/i18n'        		: 'FL.Assistant.i18n',
+	    'assistant/utils'       		: 'FL.Assistant.utils',
+	},
+	function( context, request, callback ) {
+		/* Nested util imports */
+		if ( /assistant\/utils/.test( request ) ){
+			const parts = request.split( '/' )
+			if ( 3 === parts.length ) {
+				return callback( null, 'FL.Assistant.utils.' + parts.pop() )
+			}
+		}
+		callback()
+	},
+]
 
 const entry = {
     ui: './src/ui',
