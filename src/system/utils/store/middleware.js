@@ -1,4 +1,4 @@
-import { applyMiddleware, compose } from 'fl-redux'
+import { applyMiddleware, compose } from 'redux'
 
 /**
  * Creates all enhancers for a new store with support
