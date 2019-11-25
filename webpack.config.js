@@ -25,7 +25,6 @@ const externals = {
     'fluid'                         : 'FL.UID',
     'fluid/ui'                      : 'FL.UID.ui',
     'fluid/data'                    : 'FL.UID.data',
-    'fl-react-router-dom'   		: 'FL.UID.vendors.ReactRouter',
 
     /* wp */
     '@wordpress/i18n'               : 'wp.i18n',
