@@ -10,41 +10,49 @@ const alias = {
     utils: path.resolve( __dirname, './src/system/utils' ),
 }
 
-const externals = {
-    /* WordPress included (hopefully) vendors */
-    'react'                         : 'React',
-    'react-dom'                     : 'ReactDOM',
-    'lodash'                        : 'lodash',
-    'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
-    'redux'              		    : 'FL.UID.vendors.Redux',
-    'classnames'         	        : 'FL.UID.vendors.classnames',
-    'camelcase'						: 'FL.UID.vendors.camelcase',
+const externals = [
+	{
+	    /* WordPress included (hopefully) vendors */
+	    'react'                         : 'React',
+	    'react-dom'                     : 'ReactDOM',
+	    'lodash'                        : 'lodash',
+	    'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
+	    'redux'              		    : 'FL.UID.vendors.Redux',
+	    'classnames'         	        : 'FL.UID.vendors.classnames',
+	    'camelcase'						: 'FL.UID.vendors.camelcase',
 
-    /* FLUID environment */
-    'fluid'                         : 'FL.UID',
-    'fluid/ui'                      : 'FL.UID.ui',
-    'fluid/data'                    : 'FL.UID.data',
+        /* FLUID environment */
+        'fluid'                         : 'FL.UID',
+        'fluid/ui'                      : 'FL.UID.ui',
+        'fluid/data'                    : 'FL.UID.data',
 
-    /* wp */
-    '@wordpress/i18n'               : 'wp.i18n',
-    '@wordpress/keycodes'           : 'wp.keycodes',
-    '@wordpress/dom'                : 'wp.dom',
-    '@wordpress/element'            : 'wp.element',
-    '@wordpress/components'         : 'wp.components',
-    '@wordpress/heartbeat'          : 'wp.heartbeat',
-    '@wordpress/hooks'              : 'wp.hooks',
-    '@wordpress/dom-ready'          : 'wp.domReady',
+	    /* wp */
+	    '@wordpress/i18n'               : 'wp.i18n',
+	    '@wordpress/keycodes'           : 'wp.keycodes',
+	    '@wordpress/dom'                : 'wp.dom',
+	    '@wordpress/element'            : 'wp.element',
+	    '@wordpress/components'         : 'wp.components',
+	    '@wordpress/heartbeat'          : 'wp.heartbeat',
+	    '@wordpress/hooks'              : 'wp.hooks',
+	    '@wordpress/dom-ready'          : 'wp.domReady',
 
-    /* system bundle */
-    'assistant'             		: 'FL.Assistant',
-    'assistant/data'        		: 'FL.Assistant.data',
-    'assistant/ui'          		: 'FL.Assistant.ui',
-    'assistant/utils'       		: 'FL.Assistant.utils',
-
-    // I'd be great not to need these
-    'assistant/utils/url'   		: 'FL.Assistant.utils.url',
-    'assistant/utils/wordpress'   	: 'FL.Assistant.utils.wordpress'
-}
+        /* system bundle */
+        'assistant'             		: 'FL.Assistant',
+        'assistant/data'        		: 'FL.Assistant.data',
+        'assistant/ui'          		: 'FL.Assistant.ui',
+        'assistant/utils'       		: 'FL.Assistant.utils',
+	},
+	function( context, request, callback ) {
+		/* Nested util imports */
+		if ( /assistant\/utils/.test( request ) ){
+			const parts = request.split( '/' )
+			if ( 3 === parts.length ) {
+				return callback( null, 'FL.Assistant.utils.' + parts.pop() )
+			}
+		}
+		callback()
+	},
+]
 
 const entry = { // if you change a key here, you need to update the enqueue url to match
     ui: './src/ui',
