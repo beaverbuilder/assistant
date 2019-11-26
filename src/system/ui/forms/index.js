@@ -8,6 +8,7 @@ import { useFormState } from './use-form-data'
 
 // New Form Handler
 import { useForm } from './use-form'
+import { useFormRenderer } from './use-form-renderer'
 
 import { PlainTextItem, TextItem, SelectItem, CheckboxItem } from './items'
 import { LabelsItem } from './items/labels'
@@ -41,7 +42,8 @@ Form.Context = createContext( Form.defaults )
 Form.Context.displayName = 'Form.Context'
 
 Form.useForm = useForm
-
+Form.useFormRenderer = useFormRenderer
+Form.useFormState = useFormState
 
 Form.Item = props => {
 	const {
@@ -72,6 +74,7 @@ Form.Item = props => {
 		</div>
 	)
 }
+
 Form.Section = props => <Page.Section className="fl-asst-form-section" { ...props } />
 
 Form.Footer = props => {
@@ -83,8 +86,6 @@ Form.Footer = props => {
 		<div className={ classes }>{children}</div>
 	)
 }
-
-Form.useFormState = useFormState
 
 Form.PlainTextItem = PlainTextItem
 Form.PlainTextItem.displayName = 'Form.PlainTextItem'
