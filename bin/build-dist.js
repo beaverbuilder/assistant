@@ -38,6 +38,7 @@ const filterFiles = src => {
         'lib/README.md',
         'vendor',
         'backend/tests',
+        'docs',
     ].map( name => `${fromDir}/${name}` )
 
     for( let i in ignores ) {

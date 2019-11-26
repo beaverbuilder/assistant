@@ -86,20 +86,20 @@ const config = {
                     {
                         loader: 'style-loader',
                         options: {
-                            sourceMap: true
+                            sourceMap: production ? false : true
                         }
                     },
                     MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
-                            sourceMap: true
+                            sourceMap: production ? false : true
                         }
                     },
                     {
                         loader: 'sass-loader',
                         options: {
-                            sourceMap: true
+                            sourceMap: production ? false : true
                         }
                     },
                 ],
@@ -117,7 +117,7 @@ if ( production ) {
 	config.mode = 'production'
 	config.stats = false
 	config.watch = false
-    config.devtool = 'none'
+    config.devtool = false
 	config.plugins.push(
 		new OptimizeCSSAssets( {
 			cssProcessorOptions: {
