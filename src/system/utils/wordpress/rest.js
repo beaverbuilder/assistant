@@ -1,8 +1,9 @@
 import Promise from 'promise'
 import axios from 'axios'
 import CacheHelper  from './cache-helper'
-import { setupCache } from 'axios-cache-adapter'
-import localforage from 'localforage'
+
+// import { setupCache } from 'axios-cache-adapter'
+// import localforage from 'localforage'
 
 const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 

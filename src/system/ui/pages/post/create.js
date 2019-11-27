@@ -99,24 +99,24 @@ export const CreatePost = ( { history, location } ) => {
 	}
 
 	const {
-	    renderForm,
+		renderForm,
 		submitForm,
 		isSubmitting,
 		setIsSubmitting,
 	} = Form.useFormRenderer( {
-	    sections: [
-	        {
-	            location: {
-	                type: 'create-post',
-	            },
-	        },
-	    ],
-	    options: {
+		sections: [
+			{
+				location: {
+					type: 'create-post',
+				},
+			},
+		],
+		options: {
 			onSubmit,
-	        shouldHighlightChanges: false,
-	    },
-	    config,
-	    values: defaults,
+			shouldHighlightChanges: false,
+		},
+		config,
+		values: defaults,
 	} )
 
 	const Footer = () => {

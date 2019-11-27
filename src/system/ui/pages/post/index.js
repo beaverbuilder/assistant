@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, Button, Form } from 'ui'
+import { Page, Button, Form } from 'ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'

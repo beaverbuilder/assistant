@@ -39,7 +39,7 @@ export const getUser = () => {
 		const user = localStorage.getItem( FL_CLOUD_USER_KEY )
 		return JSON.parse( user )
 	} catch ( error ) {
-		console.log( 'Error getting user from localStorage', error )
+		console.log( 'Error getting user from localStorage', error ) // eslint-disable-line no-console
 		return null
 	}
 }
@@ -56,5 +56,3 @@ export const hasUser = () => {
 	const user = getUser()
 	return isValidUser( user )
 }
-
-

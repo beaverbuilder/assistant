@@ -136,7 +136,6 @@ export const refresh = ( config = {} ) => {
 
 	// Wrap axios promise in our own promise
 	return new Promise( ( resolve, reject ) => {
-		console.log( 'refreshing token' )
 
 		// attempt to refresh JWT
 		http.post( '/auth/refresh', {}, config )
@@ -171,11 +170,11 @@ export const logout = ( config = {} ) => {
 
 	return new Promise( ( resolve, reject ) => {
 		http.post( '/auth/logout', {}, config )
-			.then( ( response ) => {
+			.then( () => {
 				resolve()
 			} )
 			.catch( ( error ) => {
-				console.log( 'could not invalidate token on the server', error.message )
+				console.log( 'could not invalidate token on the server', error.message ) // eslint-disable-line no-console
 				reject( error )
 			} )
 			.finally( () => {
@@ -192,5 +191,3 @@ export const logout = ( config = {} ) => {
 export const isConnected = () => {
 	return session.hasToken() && session.hasUser()
 }
-
-
