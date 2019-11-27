@@ -223,60 +223,69 @@ export const Post = ( { location, match, history } ) => {
 		} )
 	}
 
-	// Setup Form Hook
-	const {
-		values,
-		form, // Spread this into the <Form> component
-		useFormContext,
-		hasChanges,
-		resetForm, // Function to revert back to last committed values
-		submitForm,
-		setIsSubmitting,
-	} = Form.useForm( config, { onSubmit }, item )
-
-	// Setup Tab Handling
 	const tabs = [
 		{
-			path: match.url,
 			label: __( 'General' ),
+			path: match.url,
 			exact: true,
-			component: () => (
-				<Page.RegisteredSections
-					location={ { type: 'post' } }
-					data={ sectionData }
-				/>
-			),
+			sections: [
+				{
+					location: {
+						type: 'post'
+					},
+					data: {
+						post: item,
+					}
+				}
+			],
 		},
 		{
-			path: match.url + '/edit',
 			label: __( 'Edit' ),
-			component: () => (
-				<Page.RegisteredSections
-					location={ { type: 'post', tab: 'edit' } }
-					data={ sectionData }
-				/>
-			),
+			path: match.url + '/edit',
+			sections: [
+				{
+					location: {
+						type: 'post',
+						tab: 'edit',
+					},
+					data: {
+						post: item,
+					}
+				}
+			],
 		},
 		{
-			path: match.url + '/comments',
 			label: __( 'Comments' ),
-			component: () => (
-				<Page.RegisteredSections
-					location={ { type: 'post', tab: 'comments' } }
-					data={ sectionData }
-				/>
-			),
+			path: match.url + '/comments',
+			sections: [
+				{
+					location: {
+						type: 'post',
+						tab: 'comments',
+					},
+					data: {
+						post: item,
+					}
+				}
+			],
 		},
 	]
-	const setTab = path => history.replace( path, location.state )
 
-	/*
-	This stuff only gets passed to each section once. Sections are memo-ized so they only render on mount. After that, use Form.Context to update section content.
-	*/
-	const sectionData = {
-		post: item,
-		useForm: useFormContext, // Rename
-	}
+	const {
+		renderForm,
+		resetForm,
+		submitForm,
+		setIsSubmitting,
+		values,
+		hasChanges,
+	} = Form.useFormRenderer( {
+		tabs,
+		config,
+		options: {
+			onSubmit,
+		},
+		values: item,
+	} )
 
 	const Footer = () => {
 		return (
@@ -285,9 +294,7 @@ export const Post = ( { location, match, history } ) => {
 					<Button
 						onClick={ resetForm }
 					>{__( 'Cancel' )}</Button>
-
 					<div style={ { flex: '1 1 auto', margin: 'auto' } } />
-
 					<Button type="submit" onClick={ submitForm } >{__( 'Publish' )}</Button>
 				</Page.Toolbar>
             </>
@@ -300,44 +307,13 @@ export const Post = ( { location, match, history } ) => {
 			shouldPadSides={ false }
 			footer={ hasChanges && <Footer /> }
 		>
-
 			<Page.TitleCard
 				title={ values.title }
 				style={ {
 					marginBottom: 'var(--fl-asst-inner-space)'
 				} }
 			/>
-
-			{ useMemo( () => (
-				<Page.Pad
-					className="fl-asst-stick-to-top"
-					style={ {
-						display: 'flex',
-						justifyContent: 'center',
-						flexShrink: 0,
-						padding: 0,
-					} }
-				>
-					<Button.Group appearance="tabs">
-						{ tabs.map( ( { label, path }, i ) => (
-							<Button key={ i }
-								onClick={ () => setTab( path ) }
-								isSelected={ path === location.pathname }
-							>{label}</Button>
-						) )}
-					</Button.Group>
-				</Page.Pad>
-			), [ location.pathname ] )}
-
-			<Form { ...form }>
-
-				{ useMemo( () => (
-					<Nav.Switch>
-						{ tabs.map( ( tab, i ) => <Nav.Route key={ i } { ...tab } /> ) }
-					</Nav.Switch>
-				), [] )}
-			</Form>
-
+			{ renderForm() }
 		</Page>
 	)
 }

@@ -18,7 +18,7 @@ export const useFormRenderer = ( {
 				key={ i }
 				location={ section.location }
 				data={ {
-					...section.data,
+					...section.data ? section.data : {},
 					useForm: useFormContext,
 				} }
 			/>

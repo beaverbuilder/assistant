@@ -27,13 +27,7 @@ export const CreatePost = ( { history, location } ) => {
 		return options
 	}
 
-	const {
-		form,
-		useFormContext,
-		submitForm,
-		isSubmitting,
-		setIsSubmitting,
-	} = Form.useForm( {
+	const config = {
 		type: {
 			label: __( 'Type' ),
 			labelPlacement: 'beside',
@@ -66,44 +60,64 @@ export const CreatePost = ( { history, location } ) => {
 				return setParentOptions( state.type.value, setOptions )
 			},
 		},
-	}, {
-		shouldHighlightChanges: false,
-		onSubmit: ( { values, ids } ) => {
-			const data = {}
+	}
 
-			for ( let key in values ) {
-				if ( ids[ key ] ) {
-					data[ ids[ key ] ] = values[ key ]
-				}
+	const onSubmit = ( { values, ids } ) => {
+		const data = {}
+
+		for ( let key in values ) {
+			if ( ids[ key ] ) {
+				data[ ids[ key ] ] = values[ key ]
 			}
-
-			if ( data.parent ) {
-				data.parent = data.parent.split( ':' ).pop()
-			}
-
-			const handleError = error => {
-				setIsSubmitting( false )
-				alert( __( 'Error: Post not created! Please try again.' ) )
-				if ( error ) {
-					console.log( error ) // eslint-disable-line no-console
-				}
-			}
-
-			wpRest.posts().create( data ).then( response => {
-				const { data } = response
-				if ( data.error ) {
-					handleError()
-				} else if ( detailBaseUrl ) {
-					history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
-				} else {
-					setIsSubmitting( false )
-					alert( __( 'Post not created!' ) )
-				}
-			} ).catch( error => {
-				handleError( error )
-			} )
 		}
-	}, defaults )
+
+		if ( data.parent ) {
+			data.parent = data.parent.split( ':' ).pop()
+		}
+
+		const handleError = error => {
+			setIsSubmitting( false )
+			alert( __( 'Error: Post not created! Please try again.' ) )
+			if ( error ) {
+				console.log( error ) // eslint-disable-line no-console
+			}
+		}
+
+		wpRest.posts().create( data ).then( response => {
+			const { data } = response
+			if ( data.error ) {
+				handleError()
+			} else if ( detailBaseUrl ) {
+				history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
+			} else {
+				setIsSubmitting( false )
+				alert( __( 'Post not created!' ) )
+			}
+		} ).catch( error => {
+			handleError( error )
+		} )
+	}
+
+	const {
+	    renderForm,
+		submitForm,
+		isSubmitting,
+		setIsSubmitting,
+	} = Form.useFormRenderer( {
+	    sections: [
+	        {
+	            location: {
+	                type: 'create-post',
+	            },
+	        },
+	    ],
+	    options: {
+			onSubmit,
+	        shouldHighlightChanges: false,
+	    },
+	    config,
+	    values: defaults,
+	} )
 
 	const Footer = () => {
 		return (
@@ -118,14 +132,7 @@ export const CreatePost = ( { history, location } ) => {
 
 	return (
 		<Page title={ __( 'Create New' ) } shouldPadSides={ false } footer={ <Footer /> }>
-			<Form { ...form }>
-				<Page.RegisteredSections
-					location={ { type: 'create-post' } }
-					data={ {
-						useForm: useFormContext
-					} }
-				/>
-			</Form>
+			{ renderForm() }
 		</Page>
 	)
 }
