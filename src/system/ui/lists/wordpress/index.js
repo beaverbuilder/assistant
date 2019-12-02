@@ -45,6 +45,7 @@ export const WordPress = ( {
 		if ( ! paginate ) {
 			loadItems()
 		}
+		return () => source.cancel()
 	}, [] )
 
 	useEffect( () => {
