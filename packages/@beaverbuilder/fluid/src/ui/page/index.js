@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import classname from 'classnames'
-import { Nav, Button } from '../'
+import Nav from '../nav'
+import Button from '../button'
 import './style.scss'
 
 const Page = ({

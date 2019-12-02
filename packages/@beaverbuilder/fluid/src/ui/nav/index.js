@@ -6,7 +6,8 @@ import {
     Route,
     Link
 } from 'react-router-dom'
-import { Button, Icon } from '../'
+import Button from '../button'
+import { Icon } from '../art'
 
 const Nav = () => {}
 
