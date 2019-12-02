@@ -29,7 +29,10 @@ const Page = ({
         if ( ! children ) return null
         const isString = 'string' === typeof children
 
-        const style = {}
+        const style = {
+            transformOrigin: '0 0',
+            transform: 'translateZ(-2px) scale(3)'
+        }
 
         return (
             <div style={style}>
