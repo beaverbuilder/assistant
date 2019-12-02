@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
+import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon } from 'ui'
 import Clipboard from 'react-clipboard.js'
@@ -11,14 +12,17 @@ export const Posts = ( {
 	query = {},
 	...rest
 } ) => {
-	const wpRest = getWpRest()
-	const { currentUser, emptyTrashDays } = getSystemConfig()
 	const [ labels, setLabels ] = useState( {} )
+	const { currentUser, emptyTrashDays } = getSystemConfig()
+	const wpRest = getWpRest()
+	const source = CancelToken.source()
 
 	useEffect( () => {
 
 		// Get the color labels references
-		wpRest.labels().findWhere().then( response => {
+		wpRest.labels().findWhere( {}, {
+			cancelToken: source.token,
+		} ).then( response => {
 			const items = {}
 			if ( 'data' in response ) {
 				for ( let i in response.data ) {
@@ -27,7 +31,13 @@ export const Posts = ( {
 				}
 				setLabels( items )
 			}
+		} ).catch( ( error ) => {
+			if ( ! isCancel( error ) ) {
+				console.log( error ) // eslint-disable-line no-console
+			}
 		} )
+
+		return () => source.cancel()
 	}, [] )
 
 	return (
