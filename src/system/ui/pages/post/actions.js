@@ -67,7 +67,7 @@ export const getPostActions = ( { history, staticValues, setValue } ) => {
 		{
 			label: bbBranding,
 			href: bbEditUrl,
-			shouldRender: bbCanEdit,
+			shouldRender: bbEditUrl && bbCanEdit,
 		},
 		{
 			label: __( 'Duplicate' ),
