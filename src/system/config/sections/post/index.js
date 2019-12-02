@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { getSystemActions } from 'data'
+import { getSystemConfig, getSystemActions } from 'data'
 import { Form, Control, List } from 'ui'
 
 const { registerSection } = getSystemActions()
@@ -53,6 +53,10 @@ registerSection( 'fl-post-taxonomies', {
 		type: 'post',
 		tab: 'edit',
 	},
+	isEnabled: ( { useForm } ) => {
+		const { terms } = useForm()
+		return terms.value.length
+	},
 	render: ( { useForm } ) => {
 		const { terms } = useForm()
 		return Object.keys( terms.value ).map( ( taxonomy, key ) => {
@@ -77,6 +81,11 @@ registerSection( 'fl-post-excerpt', {
 		type: 'post',
 		tab: 'edit',
 	},
+	isEnabled: ( { post } ) => {
+		const { contentTypes } = getSystemConfig()
+		const { supports } = contentTypes[ post.type ]
+		return supports.excerpt
+	},
 	render: ( { useForm } ) => {
 		const { excerpt } = useForm()
 		return (
@@ -92,6 +101,12 @@ registerSection( 'fl-post-attributes', {
 	location: {
 		type: 'post',
 		tab: 'edit',
+	},
+	isEnabled: ( { post } ) => {
+		const { contentTypes } = getSystemConfig()
+		const { supports, templates, isHierarchical } = contentTypes[ post.type ]
+		const hasTemplates = !! Object.keys( templates ).length
+		return hasTemplates || isHierarchical || supports.order
 	},
 	render: ( { useForm } ) => {
 		const { parent, template, order } = useForm()
@@ -110,6 +125,11 @@ registerSection( 'fl-post-discussion', {
 	location: {
 		type: 'post',
 		tab: 'edit',
+	},
+	isEnabled: ( { post } ) => {
+		const { contentTypes } = getSystemConfig()
+		const { supports } = contentTypes[ post.type ]
+		return supports.comments || supports.trackbacks
 	},
 	render: ( { useForm } ) => {
 		const { commentsAllowed, pingbacksAllowed } = useForm()
