@@ -56,6 +56,13 @@ export const toggleIsShowingUI = () => {
 	}
 }
 
+export const setOverlayToolbar = value => {
+	return {
+		type: 'SET_OVERLAY_TOOLBAR',
+		value,
+	}
+}
+
 export const setBrightness = brightness => {
 	return {
 		type: 'SET_BRIGHTNESS',

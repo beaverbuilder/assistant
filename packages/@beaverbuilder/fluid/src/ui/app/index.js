@@ -14,6 +14,8 @@ const App = ({
 }) => {
     const classes = classname({
         'fluid' : true,
+        'fl' : true,
+        'uid' : true,
         [`fluid-color-scheme-${colorScheme}`] : colorScheme
     }, className )
 

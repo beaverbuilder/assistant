@@ -1,4 +1,4 @@
-import { createContext, useEffect } from 'react'
+import { createContext, useEffect, useContext } from 'react'
 import {
     withRouter,
     MemoryRouter,
@@ -6,6 +6,7 @@ import {
     Route,
     Link
 } from 'react-router-dom'
+import { Button, Icon } from '../'
 
 const Nav = () => {}
 
@@ -72,5 +73,14 @@ Nav.Link = Link
 Nav.Link.displayName = 'Nav.Link'
 
 Nav.withRouter = withRouter
+
+Nav.BackButton = () => {
+    const { history } = useContext( Nav.Context )
+    return (
+        <Button onClick={history.goBack}>
+            <Icon.BackArrow />
+        </Button>
+    )
+}
 
 export default Nav

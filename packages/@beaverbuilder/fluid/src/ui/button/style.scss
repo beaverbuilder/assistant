@@ -1,0 +1,32 @@
+.fl.uid {
+    .fluid-button {
+        box-sizing: border-box;
+        flex: 0 0 auto;
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background: var(--fluid-box-background);
+        color: var(--fluid-box-color);
+        border-radius: var(--fluid-radius);
+        min-height: var(--fluid-target-size);
+        padding: 0 var(--fluid-med-space);
+
+        &:hover,
+        &.is-hovering {
+            background: var(--fluid-box-hover-background);
+        }
+
+        &:focus,
+        &.is-focused {
+            box-shadow: inset 0px 0px 0px 2px white,
+                        0px 0px 0px 2px var(--fluid-accent);
+        }
+
+        &.fluid-appearance-elevator {
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+        }
+    }
+}

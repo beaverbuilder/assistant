@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { Icon, Nav } from 'ui'
-import { getSystemConfig } from 'data'
+import { getSystemConfig, useSystemState } from 'data'
 import './style.scss'
 
 const transition = {
@@ -37,6 +37,8 @@ export const Window = ( {
 	toolbar: topbar,
 	...rest
 } ) => {
+
+	const { overlayToolbar } = useSystemState()
 
 	const handleChange = config => {
 		const state = {
@@ -78,6 +80,7 @@ export const Window = ( {
 	const context = {
 		isHidden,
 		toggleIsHidden,
+		overlayToolbar,
 
 		size,
 		toggleSize,
@@ -106,6 +109,7 @@ Window.defaults = {
 	size: 'mini',
 	position: [ 1, 1 ],
 	shouldShowLabels: true,
+	overlayToolbar: false,
 }
 
 Window.Context = createContext( Window.defaults )
@@ -272,14 +276,12 @@ const WindowPanel = ( {
 	topbar: TopBar,
 	...rest
 } ) => {
-	const { toggleIsHidden, toggleSize, size, shouldShowLabels } = useContext( Window.Context )
-	const { isRoot } = useContext( Nav.Context )
+	const { toggleIsHidden, toggleSize, size, shouldShowLabels, overlayToolbar } = useContext( Window.Context )
 
 	const classes = classname( {
 		'fl-asst-window': true,
 		[`fl-asst-window-${size}`]: size,
-		'fl-asst-primary-content': isRoot,
-		'fl-asst-secondary-content': ! isRoot,
+		'fl-asst-primary-content': true,
 	}, className )
 
 	const stopProp = e => e.stopPropagation()
@@ -318,6 +320,12 @@ const WindowPanel = ( {
 		)
 	}
 
+	const toolbarClasses = classname( {
+		'fl-asst-window-toolbar': true,
+		'fl-asst-window-drag-handle' : true,
+		'fl-asst-window-overlay-toolbar' : overlayToolbar,
+	})
+
 	return (
 		<Flipped flipId="window" spring={ transition }>
 			<div className={ classes } style={ styles } { ...rest }>
@@ -325,7 +333,7 @@ const WindowPanel = ( {
 				<GrabBar />
 
 				{ /* Toolbar */ }
-				<div className="fl-asst-window-toolbar fl-asst-window-drag-handle">
+				<div className={toolbarClasses}>
 
 					{ 'function' === typeof TopBar && <TopBar /> }
 

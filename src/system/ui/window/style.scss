@@ -33,10 +33,6 @@
             height: 100%;
         }
 
-        &.fl-asst-secondary-content {
-            background: var(--fl-asst-secondary-surface-background);
-        }
-
         .fl-asst-window-toolbar {
             box-sizing: border-box;
             flex: 0 0 var(--fl-asst-window-toolbar-height);
@@ -50,6 +46,17 @@
             padding: 0 5px;
             -webkit-user-select: none;
             user-select:none;
+
+            &.fl-asst-window-overlay-toolbar {
+                position: absolute;
+                top:0;
+                left:0;
+                right:0;
+                margin: 5px;
+                border-radius: 7px;
+                background:white;
+                z-index: 9;
+            }
 
             button {
                 color: inherit;

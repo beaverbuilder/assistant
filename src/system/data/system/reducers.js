@@ -97,6 +97,7 @@ const windowDefaults = {
 	size: 'mini',
 	isHidden: false,
 	hiddenAppearance: '',
+	overlayToolbar: false,
 }
 export const window = ( state = windowDefaults, action ) => {
 	switch ( action.type ) {
@@ -106,12 +107,18 @@ export const window = ( state = windowDefaults, action ) => {
 			size: state.size,
 			isHidden: state.isHidden,
 			hiddenAppearance: state.hiddenAppearance,
+			overlayToolbar: state.overlayToolbar,
 			...action.config,
 		}
 	case 'TOGGLE_IS_SHOWING_UI':
 		return {
 			...state,
 			isHidden: ! state.isHidden,
+		}
+	case 'SET_OVERLAY_TOOLBAR':
+		return {
+			...state,
+			overlayToolbar: action.value ? true : false
 		}
 	default:
 		return state
