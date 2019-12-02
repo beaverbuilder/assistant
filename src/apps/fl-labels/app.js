@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
@@ -13,12 +14,20 @@ export const App = () => {
 	const firstColor = 'var(--fl-asst-blue)'
 	const [ newColor, setNewColor ] = useState( firstColor )
 	const wpRest = getWpRest()
+	const source = CancelToken.source()
 
 	useEffect( () => {
-		wpRest.labels().findWhere().then( response => {
+		wpRest.labels().findWhere( {}, {
+			cancelToken: source.token,
+		} ).then( response => {
 			setLoading( false )
 			setLabels( [ ...response.data ] )
+		} ).catch( ( error ) => {
+			if ( ! isCancel( error ) ) {
+				console.log( error ) // eslint-disable-line no-console
+			}
 		} )
+		return () => source.cancel()
 	}, [] )
 
 	const getDefaultColor = () => {

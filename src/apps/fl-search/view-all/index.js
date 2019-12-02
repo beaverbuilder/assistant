@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CancelToken, isCancel } from 'axios'
 import { __, sprintf } from '@wordpress/i18n'
 import { Page, List } from 'assistant/ui'
@@ -13,6 +13,10 @@ export const ViewAll = ( { match, location } ) => {
 	const route = routes[ configKey ]
 	const wp = getWpRest()
 	const source = CancelToken.source()
+
+	useEffect( () => {
+		return () => source.cancel()
+	}, [] )
 
 	const getPageTitle = () => {
 		if ( '' === keyword ) {

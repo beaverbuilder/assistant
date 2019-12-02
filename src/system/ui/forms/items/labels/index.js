@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { getWpRest } from 'utils/wordpress'
 import { Form, Button, Control } from 'ui'
@@ -14,11 +15,19 @@ export const LabelsItem = ( {
 	const [ options, setOptions ] = useState( [] )
 	const [ selectedLabel, setSelectedLabel ] = useState( '' )
 	const wpRest = getWpRest()
+	const source = CancelToken.source()
 
 	useEffect( () => {
-		wpRest.labels().findWhere( {} ).then( response => {
+		wpRest.labels().findWhere( {}, {
+			cancelToken: source.token,
+		} ).then( response => {
 			setOptions( [ ...response.data ] )
+		} ).catch( ( error ) => {
+			if ( ! isCancel( error ) ) {
+				console.log( error ) // eslint-disable-line no-console
+			}
 		} )
+		return () => source.cancel()
 	}, [] )
 
 	const removeLabel = ( option ) => {
