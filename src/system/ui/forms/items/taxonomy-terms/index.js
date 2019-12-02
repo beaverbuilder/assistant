@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { CancelToken, isCancel } from 'axios'
 import { __, sprintf } from '@wordpress/i18n'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
@@ -17,6 +18,7 @@ export const TaxonomyTermsItem = ( {
 	} )
 	const { taxonomies } = getSystemConfig()
 	const wpRest = getWpRest()
+	const source = CancelToken.source()
 
 	useEffect( () => {
 		wpRest.terms().hierarchical( {
@@ -24,11 +26,18 @@ export const TaxonomyTermsItem = ( {
 			hide_empty: 0,
 			orderby: 'name',
 			order: 'ASC',
+		}, {
+			cancelToken: source.token,
 		} ).then( response => {
 			data.terms = response.data
 			flattenResponseData( response.data, data )
 			setData( { ...data } )
+		} ).catch( ( error ) => {
+			if ( ! isCancel( error ) ) {
+				console.log( error ) // eslint-disable-line no-console
+			}
 		} )
+		return () => source.cancel()
 	}, [] )
 
 	const flattenResponseData = ( data, flattened ) => {
