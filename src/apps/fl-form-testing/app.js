@@ -87,6 +87,10 @@ const Main = ( { match } ) => {
 					onChange: ( { value } ) => {
 						console.log( value )
 					}
+				},
+				fieldThree: {
+					label: __( 'Field Three' ),
+					component: Form.TextItem,
 				}
 			},
 		},
@@ -109,6 +113,10 @@ const Main = ( { match } ) => {
 			onChange: ( { value } ) => {
 				console.log( value )
 			}
+		},
+		fieldThree: {
+			label: __( 'Field Three' ),
+			component: Form.TextItem,
 		}
 	}
 
