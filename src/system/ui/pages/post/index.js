@@ -9,27 +9,6 @@ import { setParentOptions } from './parent'
 
 export const Post = ( { location, match, history } ) => {
 
-	Form.useForm( {
-		tabs: {
-			general: {
-				label: __( 'General' ),
-				path: match.url,
-				exact: true,
-				sections: {
-					info: {
-						label: __( 'Info' ),
-						fields: {
-							name: {
-								label: __( 'Name' ),
-								type: 'text',
-							}
-						},
-					},
-				},
-			},
-		},
-	} )
-
 	const defaultItem = {
 		author: null,
 		bbBranding: null,
