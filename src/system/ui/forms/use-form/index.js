@@ -33,7 +33,9 @@ export const useForm = ( {
 	} else {
 		data.FormContent = () => (
 			<Form { ...form }>
-				<Fields config={ fields } data={ data } />
+				<Page.Section>
+					<Fields config={ fields } data={ data } />
+				</Page.Section>
 			</Form>
 		)
 	}
@@ -141,7 +143,7 @@ const getFieldConfig = ( tabs, sections, fields ) => {
 	if ( Object.entries( tabs ).length ) {
 		config = Object.assign( config, getTabsFieldConfig( tabs ) )
 	} else if ( Object.entries( sections ).length ) {
-		config = Object.assign( config, getSectionsFieldConfig( tabs ) )
+		config = Object.assign( config, getSectionsFieldConfig( sections ) )
 	} else {
 		config = fields
 	}

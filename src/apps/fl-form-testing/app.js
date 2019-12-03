@@ -62,6 +62,56 @@ const Main = ( { match } ) => {
 		},
 	}
 
+	const sections = {
+		sectionOne: {
+			label: __( 'Section One' ),
+			fields: {
+				fieldOne: {
+					label: __( 'Field One' ),
+					component: Form.TextItem,
+				}
+			},
+		},
+		sectionTwo: {
+			label: __( 'Section Two' ),
+			fields: {
+				fieldTwo: {
+					label: __( 'Field Two' ),
+					labelPlacement: 'beside',
+					component: Form.SelectItem,
+					options: {
+						'test-1': __( 'Test 1' ),
+						'test-2': __( 'Test 2' ),
+						'test-3': __( 'Test 3' ),
+					},
+					onChange: ( { value } ) => {
+						console.log( value )
+					}
+				}
+			},
+		},
+	}
+
+	const fields = {
+		fieldOne: {
+			label: __( 'Field One' ),
+			component: Form.TextItem,
+		},
+		fieldTwo: {
+			label: __( 'Field Two' ),
+			labelPlacement: 'beside',
+			component: Form.SelectItem,
+			options: {
+				'test-1': __( 'Test 1' ),
+				'test-2': __( 'Test 2' ),
+				'test-3': __( 'Test 3' ),
+			},
+			onChange: ( { value } ) => {
+				console.log( value )
+			}
+		}
+	}
+
 	const defaults = {
 		fieldOne: '',
 		fieldTwo: '',
@@ -77,7 +127,9 @@ const Main = ( { match } ) => {
 		isSubmitting,
 		setIsSubmitting,
 	} = Form.useForm( {
-		tabs,
+		//tabs,
+		//sections,
+		fields,
 		defaults,
 	} )
 
