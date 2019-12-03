@@ -1,4 +1,34 @@
 :root {
-    --fluid-background-color: white;
+    --fluid-background: white;
     --fluid-color: black;
+    --fluid-box-background: #F1F5F9;
+    --fluid-box-color: black;
+    --fluid-box-hover-background: #E3EBF2;
+    --fluid-accent: #0075DB;
+
+    --fluid-sm-space: 5px;
+    --fluid-med-space: 10px;
+    --fluid-lg-space: 20px;
+    --fluid-radius: 7px;
+    --fluid-target-size: 32px;
+}
+
+.fl.uid {
+    .fluid-status-primary {
+        --fluid-box-background: #F0F8FF;
+        --fluid-box-color: #005DBA;
+        --fluid-box-hover-background: #D8ECFF;
+    }
+    .fluid-status-alert {
+        --fluid-box-background: #FFF4E9;
+        --fluid-box-color: #914B01;
+        --fluid-box-hover-background: #FFEBD6;
+        --fluid-accent: #FFA03D;
+    }
+    .fluid-status-destructive {
+        --fluid-box-background: #FFF1F2;
+        --fluid-box-color: #BC0013;
+        --fluid-box-hover-background: #FFE1E4;
+        --fluid-accent: #FF5163;
+    }
 }

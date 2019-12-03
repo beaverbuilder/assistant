@@ -1,4 +1,4 @@
-import { createStoreRegistry } from 'utils/store'
+import { createStoreRegistry } from 'fluid/data'
 
 export const {
 	registerStore,

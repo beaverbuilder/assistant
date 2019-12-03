@@ -1,0 +1,91 @@
+.fluid {
+
+    @mixin flex_column {
+        box-sizing: border-box;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height:0;
+        max-height:100%;
+    }
+
+    .fluid-scroller {
+        @include flex_column;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .fluid-toolbar {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .fluid-pad {
+        @include flex_column;
+        padding: 20px;
+    }
+
+    .fluid-page {
+        --fluid-top-inset: 0;
+
+        position: relative;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+
+        .fluid-sticky-element {
+            // Yea, all this for sticky headers
+            position: -webkit-sticky;
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+            position: sticky;
+            top: var(--fluid-top-inset);
+            background: var(--fluid-background);
+        }
+
+        .fluid-page-toolbar-content {
+            position:static;
+            padding: 0 var(--fluid-med-space);
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .fluid-page-headline {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .fluid-page-content {
+            box-sizing: border-box;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            background: var(--fluid-background);
+            z-index: 1;
+        }
+
+        .fluid-page-footer {
+            box-sizing: border-box;
+            min-height: 50px;
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: center;
+            background: var(--fluid-background);
+            border-top: 2px solid var(--fluid-box-background);
+            z-index: 2;
+            padding: 5px;
+        }
+    }
+}
