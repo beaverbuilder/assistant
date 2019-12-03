@@ -15,38 +15,40 @@ export const useForm = ( {
 	const data = useFormData( config, options, defaults )
 	const { form } = data
 
-	if ( Object.entries( tabs ).length ) {
-		data.FormContent = () => (
-			<>
-				<Tabs config={ tabs } />
+	const renderForm = () => {
+		if ( Object.entries( tabs ).length ) {
+			return (
+				<>
+					<Tabs config={ tabs } />
+					<Form { ...form }>
+						<TabsContent config={ tabs } data={ data } />
+					</Form>
+				</>
+			)
+		} else if ( Object.entries( sections ).length ) {
+			return (
 				<Form { ...form }>
-					<TabsContent config={ tabs } data={ data } />
+					<Sections config={ sections } data={ data } />
 				</Form>
-			</>
-		)
-	} else if ( Object.entries( sections ).length ) {
-		data.FormContent = () => (
-			<Form { ...form }>
-				<Sections config={ sections } data={ data } />
-			</Form>
-		)
-	} else {
-		data.FormContent = () => (
-			<Form { ...form }>
-				<Page.Section>
-					<Fields config={ fields } data={ data } />
-				</Page.Section>
-			</Form>
-		)
+			)
+		} else {
+			return (
+				<Form { ...form }>
+					<Page.Section>
+						<Fields config={ fields } data={ data } />
+					</Page.Section>
+				</Form>
+			)
+		}
 	}
 
-	return data
+	return { renderForm, ...data }
 }
 
 const Tabs = ( { config } ) => {
 	const { history, location, match } = useContext( Nav.Context )
 	const setTab = path => history.replace( path, location.state )
-	return useMemo( () => (
+	return (
 		<Page.Pad className="fl-asst-form-tabs fl-asst-stick-to-top">
 			<Button.Group appearance="tabs">
 				{ Object.entries( config ).map( ( [ key, tab ], i ) => {
@@ -65,12 +67,12 @@ const Tabs = ( { config } ) => {
 				} ) }
 			</Button.Group>
 		</Page.Pad>
-	), [ location.pathname ] )
+	)
 }
 
 const TabsContent = ( { config, data } ) => {
 	const { match } = useContext( Nav.Context )
-	return useMemo( () => (
+	return (
 		<Nav.Switch>
 			{ Object.entries( config ).map( ( [ key, tab ], i ) => {
 				const { isVisible, path, exact, sections } = tab
@@ -82,12 +84,12 @@ const TabsContent = ( { config, data } ) => {
 						key={ i }
 						path={ path ? path : match.url }
 						exact={ exact }
-						component={ () => <Sections config={ sections } data={ data } /> }
+						render={ () => <Sections config={ sections } data={ data } /> }
 					/>
 				)
 			} ) }
 		</Nav.Switch>
-	), [] )
+	)
 }
 
 const Sections = ( { config, data } ) => {

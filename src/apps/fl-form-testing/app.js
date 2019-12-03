@@ -127,7 +127,7 @@ const Main = ( { match } ) => {
 	}
 
 	const {
-		FormContent,
+		renderForm,
 		resetForm,
 		submitForm,
 		values,
@@ -135,11 +135,11 @@ const Main = ( { match } ) => {
 		isSubmitting,
 		setIsSubmitting,
 	} = Form.useForm( {
-		//tabs,
+		tabs,
 		//sections,
-		fields,
+		//fields,
 		defaults,
 	} )
 
-	return <FormContent />
+	return renderForm()
 }
