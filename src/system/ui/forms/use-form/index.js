@@ -8,32 +8,32 @@ export const useForm = ( {
 	tabs = {},
 	sections = {},
 	fields = {},
-	values = {},
+	defaults = {},
 	...options // See useFormData
 } ) => {
 	const config = getFieldConfig( tabs, sections, fields )
-	const data = useFormData( config, options, values )
+	const data = useFormData( config, options, defaults )
 	const { form } = data
 
 	if ( Object.entries( tabs ).length ) {
 		data.FormTabs = () => (
 			<>
-				<Tabs tabs={ tabs } />
+				<Tabs config={ tabs } />
 				<Form { ...form }>
-					<TabsContent tabs={ tabs } />
+					<TabsContent config={ tabs } data={ data } />
 				</Form>
 			</>
 		)
 	} else if ( Object.entries( sections ).length ) {
 		data.FormSections = () => (
 			<Form { ...form }>
-				<Sections sections={ sections } />
+				<Sections config={ sections } data={ data } />
 			</Form>
 		)
 	} else {
 		data.FormFields = () => (
 			<Form { ...form }>
-				<Fields fields={ fields } />
+				<Fields config={ fields } data={ data } />
 			</Form>
 		)
 	}
@@ -41,51 +41,76 @@ export const useForm = ( {
 	return data
 }
 
-const Tabs = ( { tabs } ) => {
+const Tabs = ( { config } ) => {
 	const { history, location, match } = useContext( Nav.Context )
 	const setTab = path => history.replace( path, location.state )
-	return (
-		useMemo( () => (
-			<Page.Pad className="fl-asst-form-tabs fl-asst-stick-to-top">
-				<Button.Group appearance="tabs">
-					{ Object.entries( tabs ).map( ( [ key, tab ], i ) => (
+	return useMemo( () => (
+		<Page.Pad className="fl-asst-form-tabs fl-asst-stick-to-top">
+			<Button.Group appearance="tabs">
+				{ Object.entries( config ).map( ( [ key, tab ], i ) => {
+					const { isVisible, label, path } = tab
+					if ( undefined !== isVisible && ! isVisible ) {
+						return
+					}
+					return (
 						<Button key={ i }
-							onClick={ () => setTab( tab.path ? tab.path : match.url ) }
-							isSelected={ tab.path === location.pathname }
+							onClick={ () => setTab( path ? path : match.url ) }
+							isSelected={ path === location.pathname }
 						>
-							{ tab.label }
+							{ label }
 						</Button>
-					) ) }
-				</Button.Group>
-			</Page.Pad>
-		), [ location.pathname ] )
-	)
+					)
+				} ) }
+			</Button.Group>
+		</Page.Pad>
+	), [ location.pathname ] )
 }
 
-const TabsContent = ( { tabs } ) => {
+const TabsContent = ( { config, data } ) => {
 	const { match } = useContext( Nav.Context )
-	return (
-		useMemo( () => (
-			<Nav.Switch>
-				{ Object.entries( tabs ).map( ( [ key, tab ], i ) => (
+	return useMemo( () => (
+		<Nav.Switch>
+			{ Object.entries( config ).map( ( [ key, tab ], i ) => {
+				const { isVisible, path, exact, sections } = tab
+				if ( undefined !== isVisible && ! isVisible ) {
+					return
+				}
+				return (
 					<Nav.Route
 						key={ i }
-						path={ tab.path ? tab.path : match.url }
-						exact={ tab.exact }
-						component={ () => <p>Tab!</p> }
+						path={ path ? path : match.url }
+						exact={ exact }
+						component={ () => <Sections config={ sections } data={ data } /> }
 					/>
-				) ) }
-			</Nav.Switch>
-		), [] )
-	)
+				)
+			} ) }
+		</Nav.Switch>
+	), [] )
 }
 
-const Sections = ( { sections } ) => {
-	return null
+const Sections = ( { config, data } ) => {
+	return Object.entries( config ).map( ( [ key, section ], i ) => {
+		const { isVisible, label, fields } = section
+		if ( undefined !== isVisible && ! isVisible ) {
+			return
+		}
+		return (
+			<Page.Section key={ i } handle={ key } label={ label }>
+				<Fields config={ fields } data={ data } />
+			</Page.Section>
+		)
+	} )
 }
 
-const Fields = ( { fields } ) => {
-	return null
+const Fields = ( { config, data } ) => {
+	return Object.entries( config ).map( ( [ key ], i ) => {
+		const { isVisible, component, ...rest } = data.fields[ key ]
+		const Field = component ? component : Form.TextItem
+		if ( undefined !== isVisible && ! isVisible ) {
+			return
+		}
+		return <Field key={ i } { ...rest } />
+	} )
 }
 
 const getTabsFieldConfig = tabs => {

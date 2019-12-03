@@ -10,40 +10,75 @@ export const App = ( { match } ) => (
 )
 
 const Main = ( { match } ) => {
-	const { FormTabs } = Form.useForm( {
-		tabs: {
-			general: {
-				label: __( 'General' ),
-				path: match.url,
-				exact: true,
-				sections: {
-					info: {
-						label: __( 'Info' ),
-						fields: {
-							name: {
-								label: __( 'Name' ),
-								type: 'text',
-							}
-						},
+	const tabs = {
+		tabOne: {
+			label: __( 'Tab One' ),
+			path: match.url,
+			exact: true,
+			sections: {
+				sectionOne: {
+					label: __( 'Section One' ),
+					fields: {
+						fieldOne: {
+							label: __( 'Field One' ),
+							component: Form.TextItem,
+						}
 					},
 				},
-			},
-			edit: {
-				label: __( 'Edit' ),
-				path: `${ match.url }/edit`,
-				sections: {
-					test: {
-						label: __( 'Test' ),
-						fields: {
-							email: {
-								label: __( 'Email' ),
-								type: 'text',
+				sectionTwo: {
+					label: __( 'Section Two' ),
+					fields: {
+						fieldTwo: {
+							label: __( 'Field Two' ),
+							labelPlacement: 'beside',
+							component: Form.SelectItem,
+							options: {
+								'test-1': __( 'Test 1' ),
+								'test-2': __( 'Test 2' ),
+								'test-3': __( 'Test 3' ),
+							},
+							onChange: ( { value } ) => {
+								console.log( value )
 							}
-						},
+						}
 					},
 				},
 			},
 		},
+		tabTwo: {
+			label: __( 'Tab Two' ),
+			path: `${ match.url }/tab-two`,
+			sections: {
+				sectionThree: {
+					label: __( 'Section Three' ),
+					fields: {
+						fieldThree: {
+							label: __( 'Field Three' ),
+							component: Form.TextItem,
+						}
+					},
+				},
+			},
+		},
+	}
+
+	const defaults = {
+		fieldOne: '',
+		fieldTwo: '',
+		fieldThree: '',
+	}
+
+	const {
+		FormTabs,
+		resetForm,
+		submitForm,
+		values,
+		hasChanges,
+		isSubmitting,
+		setIsSubmitting,
+	} = Form.useForm( {
+		tabs,
+		defaults,
 	} )
 
 	return <FormTabs />
