@@ -69,7 +69,7 @@ const Main = ( { match } ) => {
 	}
 
 	const {
-		FormTabs,
+		FormContent,
 		resetForm,
 		submitForm,
 		values,
@@ -81,5 +81,5 @@ const Main = ( { match } ) => {
 		defaults,
 	} )
 
-	return <FormTabs />
+	return <FormContent />
 }

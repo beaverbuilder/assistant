@@ -16,7 +16,7 @@ export const useForm = ( {
 	const { form } = data
 
 	if ( Object.entries( tabs ).length ) {
-		data.FormTabs = () => (
+		data.FormContent = () => (
 			<>
 				<Tabs config={ tabs } />
 				<Form { ...form }>
@@ -25,13 +25,13 @@ export const useForm = ( {
 			</>
 		)
 	} else if ( Object.entries( sections ).length ) {
-		data.FormSections = () => (
+		data.FormContent = () => (
 			<Form { ...form }>
 				<Sections config={ sections } data={ data } />
 			</Form>
 		)
 	} else {
-		data.FormFields = () => (
+		data.FormContent = () => (
 			<Form { ...form }>
 				<Fields config={ fields } data={ data } />
 			</Form>
