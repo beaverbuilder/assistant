@@ -10,8 +10,8 @@ registerSection( 'fl-post-title', {
 		type: 'post',
 		tab: 'edit',
 	},
-	render: ( { useForm } ) => {
-		const { title, slug, url } = useForm()
+	render: ( { useFormData } ) => {
+		const { title, slug, url } = useFormData()
 
 		return (
 			<>
@@ -34,8 +34,8 @@ registerSection( 'fl-post-publish', {
 		type: 'post',
 		tab: 'edit',
 	},
-	render: ( { useForm } ) => {
-		const { status, visibility, password, date } = useForm()
+	render: ( { useFormData } ) => {
+		const { status, visibility, password, date } = useFormData()
 		return (
 			<>
 				<Form.PlainTextItem { ...status } />
@@ -53,12 +53,12 @@ registerSection( 'fl-post-taxonomies', {
 		type: 'post',
 		tab: 'edit',
 	},
-	isEnabled: ( { useForm } ) => {
-		const { terms } = useForm()
+	isEnabled: ( { useFormData } ) => {
+		const { terms } = useFormData()
 		return terms.value.length
 	},
-	render: ( { useForm } ) => {
-		const { terms } = useForm()
+	render: ( { useFormData } ) => {
+		const { terms } = useFormData()
 		return Object.keys( terms.value ).map( ( taxonomy, key ) => {
 			return (
 				<Form.TaxonomyTermsItem
@@ -86,8 +86,8 @@ registerSection( 'fl-post-excerpt', {
 		const { supports } = contentTypes[ post.type ]
 		return supports.excerpt
 	},
-	render: ( { useForm } ) => {
-		const { excerpt } = useForm()
+	render: ( { useFormData } ) => {
+		const { excerpt } = useFormData()
 		return (
 			<>
 				<Form.TextItem { ...excerpt } />
@@ -108,8 +108,8 @@ registerSection( 'fl-post-attributes', {
 		const hasTemplates = !! Object.keys( templates ).length
 		return hasTemplates || isHierarchical || supports.order
 	},
-	render: ( { useForm } ) => {
-		const { parent, template, order } = useForm()
+	render: ( { useFormData } ) => {
+		const { parent, template, order } = useFormData()
 		return (
 			<>
 				<Form.SelectItem { ...template } />
@@ -131,8 +131,8 @@ registerSection( 'fl-post-discussion', {
 		const { supports } = contentTypes[ post.type ]
 		return supports.comments || supports.trackbacks
 	},
-	render: ( { useForm } ) => {
-		const { commentsAllowed, pingbacksAllowed } = useForm()
+	render: ( { useFormData } ) => {
+		const { commentsAllowed, pingbacksAllowed } = useFormData()
 		return (
 			<>
 				<Form.CheckboxItem { ...commentsAllowed } />
@@ -172,8 +172,8 @@ registerSection( 'fl-new-post-title', {
 	location: {
 		type: 'create-post',
 	},
-	render: ( { useForm } ) => {
-		const { type, title, slug, parent } = useForm()
+	render: ( { useFormData } ) => {
+		const { type, title, slug, parent } = useFormData()
 		return (
 			<>
 				<Form.SelectItem { ...type } />

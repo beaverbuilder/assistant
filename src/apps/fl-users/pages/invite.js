@@ -25,7 +25,7 @@ export const Invite = ( ) => {
 		fields,
 		submitForm,
 		resetForm,
-	} = Form.useForm( {
+	} = Form.useFormData( {
 		username: {
 			label: __( 'Username' ),
 			id: 'username',

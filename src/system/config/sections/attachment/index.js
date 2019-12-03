@@ -10,9 +10,9 @@ registerSection( 'fl-media-details', {
 	location: {
 		type: 'attachment',
 	},
-	render: ( { useForm } ) => {
+	render: ( { useFormData } ) => {
 
-		const { title, alt, caption, description } = useForm()
+		const { title, alt, caption, description } = useFormData()
 
 		return (
             <>
@@ -30,9 +30,9 @@ registerSection( 'fl-media-links', {
 	location: {
 		type: 'attachment',
 	},
-	render: ( { attachment, useForm } ) => {
+	render: ( { attachment, useFormData } ) => {
 
-		const { url } = useForm()
+		const { url } = useFormData()
 
 		let hasFullURL = false
 		if ( 'undefined' !== typeof attachment.sizes.full ) {

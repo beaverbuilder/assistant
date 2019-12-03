@@ -10,8 +10,8 @@ registerSection( 'fl-term-details', {
 	location: {
 		type: 'term',
 	},
-	render: ( { useForm } ) => {
-		const { title, slug, parent, description } = useForm()
+	render: ( { useFormData } ) => {
+		const { title, slug, parent, description } = useFormData()
 
 		return (
             <>

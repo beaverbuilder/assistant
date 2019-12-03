@@ -48,7 +48,7 @@ export const User = ( { location, match, history } ) => {
 	const isYou = currentUser.id === user.id
 
 
-	const { form, useFormContext } = Form.useForm( {
+	const { form, useFormContext } = Form.useFormData( {
 		firstName: {
 			label: __( 'First Name' ),
 			labelPlacement: 'beside',

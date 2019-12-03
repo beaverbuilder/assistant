@@ -19,7 +19,7 @@ export const Term = ( { location } ) => {
 		term = { ...defaultItem, ...location.state.item }
 	}
 
-	const { form, useFormContext } = Form.useForm( {
+	const { form, useFormContext } = Form.useFormData( {
 		title: {
 			label: __( 'Name' ),
 			labelPlacement: 'beside',
@@ -47,7 +47,7 @@ export const Term = ( { location } ) => {
 			<Form { ...form }>
 				<Page.RegisteredSections
 					location={ { type: 'term' } }
-					data={ { useForm: useFormContext } }
+					data={ { useFormData: useFormContext } }
 				/>
 			</Form>
 		</Page>

@@ -33,7 +33,7 @@ export const CreatePost = ( { history, location } ) => {
 		submitForm,
 		isSubmitting,
 		setIsSubmitting,
-	} = Form.useForm( {
+	} = Form.useFormData( {
 		type: {
 			label: __( 'Type' ),
 			labelPlacement: 'beside',
@@ -122,7 +122,7 @@ export const CreatePost = ( { history, location } ) => {
 				<Page.RegisteredSections
 					location={ { type: 'create-post' } }
 					data={ {
-						useForm: useFormContext
+						useFormData: useFormContext
 					} }
 				/>
 			</Form>

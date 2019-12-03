@@ -36,7 +36,7 @@ export const Attachment = ( { location } ) => {
 	const srcSet = getSrcSet( item.sizes )
 
 	// Form Handler
-	const { form, useFormContext } = Form.useForm( {
+	const { form, useFormContext } = Form.useFormData( {
 		title: {
 			label: __( 'Title' ),
 			labelPlacement: 'beside',
@@ -67,7 +67,7 @@ export const Attachment = ( { location } ) => {
 	const sectionData = {
 		attachment: item,
 
-		useForm: useFormContext,
+		useFormData: useFormContext,
 
 		actions: [
 			{

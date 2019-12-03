@@ -4,10 +4,10 @@ import { __ } from '@wordpress/i18n'
 import { Icon, Control, Page } from 'ui'
 
 // Deprecated
-import { useFormState } from './use-form-data'
+import { useFormState } from './use-form-state'
 
 // New Form Handler
-import { useForm } from './use-form'
+import { useFormData } from './use-form-data'
 
 import { PlainTextItem, TextItem, SelectItem, CheckboxItem } from './items'
 import { LabelsItem } from './items/labels'
@@ -40,7 +40,7 @@ Form.defaults = {}
 Form.Context = createContext( Form.defaults )
 Form.Context.displayName = 'Form.Context'
 
-Form.useForm = useForm
+Form.useFormData = useFormData
 
 
 Form.Item = props => {

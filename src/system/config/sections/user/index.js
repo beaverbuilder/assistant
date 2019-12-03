@@ -9,9 +9,9 @@ registerSection( 'fl-user-info', {
 	location: {
 		type: 'user',
 	},
-	render: ( { useForm } ) => {
+	render: ( { useFormData } ) => {
 
-		const { firstName, lastName, email, displayName } = useForm()
+		const { firstName, lastName, email, displayName } = useFormData()
 
 		return (
 			<>
@@ -45,9 +45,9 @@ registerSection( 'fl-user-prefs', {
 		tab: 'preferences',
 	},
 	isEnabled: ( { isYou } ) => isYou,
-	render: ( { useForm } ) => {
+	render: ( { useFormData } ) => {
 
-		const { showAdminBar } = useForm()
+		const { showAdminBar } = useFormData()
 
 		return (
 			<>
@@ -65,9 +65,9 @@ registerSection( 'fl-user-assistant-prefs', {
 		tab: 'preferences',
 	},
 	isEnabled: ( { isYou } ) => isYou,
-	render: ( { useForm } ) => {
+	render: ( { useFormData } ) => {
 
-		const { showInAdmin, showWhenHidden } = useForm()
+		const { showInAdmin, showWhenHidden } = useFormData()
 
 		return (
 			<>

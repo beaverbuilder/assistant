@@ -232,7 +232,7 @@ export const Post = ( { location, match, history } ) => {
 		resetForm, // Function to revert back to last committed values
 		submitForm,
 		setIsSubmitting,
-	} = Form.useForm( config, { onSubmit }, item )
+	} = Form.useFormData( config, { onSubmit }, item )
 
 	// Setup Tab Handling
 	const tabs = [
@@ -275,7 +275,7 @@ export const Post = ( { location, match, history } ) => {
 	*/
 	const sectionData = {
 		post: item,
-		useForm: useFormContext, // Rename
+		useFormData: useFormContext, // Rename
 	}
 
 	const Footer = () => {

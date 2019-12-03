@@ -9,8 +9,8 @@ registerSection( 'fl-screen-labels', {
 	location: {
 		type: [ 'post' ],
 	},
-	render: ( { useForm } ) => {
-		const { labels } = useForm()
+	render: ( { useFormData } ) => {
+		const { labels } = useFormData()
 		return (
 			<Form.LabelsItem { ...labels } />
 		)
@@ -22,13 +22,13 @@ registerSection( 'fl-screen-actions', {
 	location: {
 		type: [ 'post', 'attachment' ],
 	},
-	render: ( { useForm } ) => {
+	render: ( { useFormData } ) => {
 
-		if ( 'undefined' === typeof useForm ) {
+		if ( 'undefined' === typeof useFormData ) {
 			return null
 		}
 
-		const { actions } = useForm()
+		const { actions } = useFormData()
 
 		if ( 'undefined' === typeof actions || 1 > actions.length ) {
 			return (

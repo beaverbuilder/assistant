@@ -16,7 +16,7 @@ export const User = ( { location } ) => {
 	const { currentUser } = getSystemConfig()
 	const isYou = currentUser.id === id
 
-	const { form, useFormContext } = Form.useForm()
+	const { form, useFormContext } = Form.useFormData()
 
 	return (
 		<Page
@@ -35,7 +35,7 @@ export const User = ( { location } ) => {
 					data={ {
 						user: item,
 						isYou,
-						useForm: useFormContext
+						useFormData: useFormContext
 					} }
 				/>
 			</Form>
