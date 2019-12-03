@@ -7,6 +7,7 @@ import { Icon, Control, Page } from 'ui'
 import { useFormState } from './use-form-state'
 
 // New Form Handler
+import { useForm } from './use-form'
 import { useFormData } from './use-form-data'
 
 import { PlainTextItem, TextItem, SelectItem, CheckboxItem } from './items'
@@ -40,6 +41,7 @@ Form.defaults = {}
 Form.Context = createContext( Form.defaults )
 Form.Context.displayName = 'Form.Context'
 
+Form.useForm = useForm
 Form.useFormData = useFormData
 
 
