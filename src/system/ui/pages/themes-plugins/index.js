@@ -37,7 +37,7 @@ export const Plugin = ( { location = {} } ) => {
 	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Plugin' ) }>
+		<Page title={ __( 'Plugin' ) }>
 			{ banner && <img src={ banner } /> }
 
 			<Form>

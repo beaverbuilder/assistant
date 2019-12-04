@@ -69,7 +69,7 @@ export const Comment = ( { location, match, history } ) => {
 	}
 
 	return (
-		<Page title={ __( 'Edit Comment' ) } shouldPadSides={ false } headerActions={ <Actions /> }>
+		<Page title={ __( 'Edit Comment' ) } headerActions={ <Actions /> }>
 
 			<Page.TitleCard>
 				<h2>{sprintf( '%s Said:', author )}</h2>

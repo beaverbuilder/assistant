@@ -141,5 +141,9 @@ const Main = ( { match } ) => {
 		defaults,
 	} )
 
-	return renderForm()
+	return (
+		<Page>
+			{renderForm()}
+		</Page>
+	)
 }

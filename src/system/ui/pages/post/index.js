@@ -297,7 +297,6 @@ export const Post = ( { location, match, history } ) => {
 	return (
 		<Page
 			title={ labels.editItem }
-			shouldPadSides={ false }
 			footer={ hasChanges && <Footer /> }
 		>
 

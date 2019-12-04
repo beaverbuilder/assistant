@@ -131,7 +131,7 @@ export const CreatePost = ( { history, location } ) => {
 	}
 
 	return (
-		<Page title={ __( 'Create New' ) } shouldPadSides={ false } footer={ <Footer /> }>
+		<Page title={ __( 'Create New' ) } footer={ <Footer /> }>
 			{ renderForm() }
 		</Page>
 	)

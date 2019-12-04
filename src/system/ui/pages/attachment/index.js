@@ -94,7 +94,7 @@ export const Attachment = ( { location } ) => {
 	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'Attachment' ) }>
+		<Page title={ __( 'Attachment' ) }>
 
 			<img src={ item.thumbnail } srcSet={ srcSet } />
 
