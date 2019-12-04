@@ -1,5 +1,4 @@
-import React, { useContext, useMemo } from 'react'
-import { __ } from '@wordpress/i18n'
+import React, { useContext } from 'react'
 import { Button, Form, Nav, Page } from 'ui'
 import { useFormData } from '../use-form-data'
 import './style.scss'
@@ -51,7 +50,7 @@ const Tabs = ( { config } ) => {
 	return (
 		<Page.Pad className="fl-asst-form-tabs fl-asst-stick-to-top">
 			<Button.Group appearance="tabs">
-				{ Object.entries( config ).map( ( [ key, tab ], i ) => {
+				{ Object.entries( config ).map( ( [ , tab ], i ) => {
 					const { isVisible, label, path } = tab
 					if ( undefined !== isVisible && ! isVisible ) {
 						return
@@ -74,7 +73,7 @@ const TabsContent = ( { config, data } ) => {
 	const { match } = useContext( Nav.Context )
 	return (
 		<Nav.Switch>
-			{ Object.entries( config ).map( ( [ key, tab ], i ) => {
+			{ Object.entries( config ).map( ( [ , tab ], i ) => {
 				const { isVisible, path, exact, sections } = tab
 				if ( undefined !== isVisible && ! isVisible ) {
 					return

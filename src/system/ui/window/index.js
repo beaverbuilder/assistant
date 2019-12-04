@@ -2,7 +2,7 @@ import React, { useState, useEffect, createRef, createContext, useContext } from
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
-import { Icon, Nav } from 'ui'
+import { Icon } from 'ui'
 import { getSystemConfig, useSystemState } from 'data'
 import './style.scss'
 
@@ -322,9 +322,9 @@ const WindowPanel = ( {
 
 	const toolbarClasses = classname( {
 		'fl-asst-window-toolbar': true,
-		'fl-asst-window-drag-handle' : true,
-		'fl-asst-window-overlay-toolbar' : overlayToolbar,
-	})
+		'fl-asst-window-drag-handle': true,
+		'fl-asst-window-overlay-toolbar': overlayToolbar,
+	} )
 
 	return (
 		<Flipped flipId="window" spring={ transition }>
@@ -333,7 +333,7 @@ const WindowPanel = ( {
 				<GrabBar />
 
 				{ /* Toolbar */ }
-				<div className={toolbarClasses}>
+				<div className={ toolbarClasses }>
 
 					{ 'function' === typeof TopBar && <TopBar /> }
 

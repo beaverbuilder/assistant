@@ -5,7 +5,6 @@ export const UrlItem = ( {
 	label,
 	id,
 	value,
-	options = [],
 } ) => {
 
 	return (
