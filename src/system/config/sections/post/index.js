@@ -164,23 +164,3 @@ registerSection( 'fl-post-comments', {
 		)
 	},
 } )
-
-
-// Create Post Screen
-registerSection( 'fl-new-post-title', {
-	label: 'Basic Info',
-	location: {
-		type: 'create-post',
-	},
-	render: ( { useFormData } ) => {
-		const { type, title, slug, parent } = useFormData()
-		return (
-			<>
-				<Form.SelectItem { ...type } />
-				<Form.TextItem { ...title } />
-				<Form.TextItem { ...slug } />
-				<Form.SelectItem { ...parent } />
-			</>
-		)
-	},
-} )

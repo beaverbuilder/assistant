@@ -20,6 +20,13 @@ export const CreatePost = ( { history, location } ) => {
 		return options
 	}
 
+	const defaults = {
+		type: 'post',
+		title: '',
+		slug: '',
+		parent: 0,
+	}
+
 	const sections = {
 		info: {
 			label: __( 'Basic Info' ),
@@ -98,13 +105,6 @@ export const CreatePost = ( { history, location } ) => {
 		} ).catch( error => {
 			handleError( error )
 		} )
-	}
-
-	const defaults = {
-		type: 'post',
-		title: '',
-		slug: '',
-		parent: 0,
 	}
 
 	const {

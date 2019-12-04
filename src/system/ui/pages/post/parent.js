@@ -1,22 +1,13 @@
-import { useEffect } from 'react'
-import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { getWpRest } from 'utils/wordpress'
 
 export const setParentOptions = ( type, set ) => {
 	const wpRest = getWpRest()
-	const source = CancelToken.source()
-
-	useEffect( () => {
-		return () => source.cancel()
-	}, [] )
 
 	wpRest.posts().hierarchical( {
 		hide_empty: 0,
 		post_type: type,
 		posts_per_page: -1,
-	}, {
-		cancelToken: source.token,
 	} ).then( response => {
 		if (
 			'undefined' !== typeof response.data &&
@@ -31,10 +22,6 @@ export const setParentOptions = ( type, set ) => {
 				0: __( 'None' ),
 				...options,
 			} )
-		}
-	} ).catch( ( error ) => {
-		if ( ! isCancel( error ) ) {
-			console.log( error ) // eslint-disable-line no-console
 		}
 	} )
 
