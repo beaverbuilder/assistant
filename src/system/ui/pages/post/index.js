@@ -148,8 +148,23 @@ export const Post = ( { location, match, history } ) => {
 				},
 				taxonomies: {
 					label: __( 'Taxonomies' ),
+					isVisible: !! item.terms.length,
 					fields: {
-
+						terms: {
+							component: ( { value, onChange } ) => (
+								Object.keys( value ).map( ( taxonomy, key ) => (
+									<Form.TaxonomyTermsItem
+										key={ key }
+										taxonomy={ taxonomy }
+										value={ value[ taxonomy ] }
+										onChange={ newValue => {
+											value[ taxonomy ] = newValue
+											onChange( { ...value } )
+										} }
+									/>
+								) )
+							),
+						},
 					},
 				},
 				excerpt: {
@@ -167,6 +182,7 @@ export const Post = ( { location, match, history } ) => {
 				},
 				attributes: {
 					label: __( 'Attributes' ),
+					isVisible: !! Object.keys( templates ).length || isHierarchical || supports.order,
 					fields: {
 						template: {
 							label: __( 'Template' ),
