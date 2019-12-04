@@ -11,6 +11,7 @@ import { useForm } from './use-form'
 import { useFormData } from './use-form-data'
 
 import { PlainTextItem, TextItem, SelectItem, CheckboxItem } from './items'
+import { ActionsItem } from './items/actions'
 import { LabelsItem } from './items/labels'
 import { SuggestItem } from './items/suggest'
 import { TaxonomyTermsItem } from './items/taxonomy-terms'
@@ -99,6 +100,9 @@ Form.SelectItem.displayName = 'Form.SelectItem'
 
 Form.CheckboxItem = CheckboxItem
 Form.CheckboxItem.displayName = 'Form.CheckboxItem'
+
+Form.ActionsItem = ActionsItem
+Form.ActionsItem.displayName = 'Form.ActionsItem'
 
 Form.LabelsItem = LabelsItem
 Form.LabelsItem.displayName = 'Form.LabelsItem'

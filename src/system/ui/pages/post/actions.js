@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 
-export const getPostActions = ( { history, staticValues, setValue } ) => {
+export const getPostActions = ( { history, values, setValue } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
 
@@ -17,7 +17,7 @@ export const getPostActions = ( { history, staticValues, setValue } ) => {
 		bbCanEdit,
 		bbBranding,
 		bbEditUrl
-	} = staticValues
+	} = values
 
 	const favoritePost = () => {
 		if ( isFavorite ) {

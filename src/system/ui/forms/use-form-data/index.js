@@ -311,6 +311,7 @@ export const useFormData = (
 					key,
 					state,
 					setOptions,
+					setValue,
 					values,
 				}
 

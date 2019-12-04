@@ -1,7 +1,13 @@
 .fl-asst {
 
+	.fl-asst-selected-labels {
+		margin-bottom: var(--fl-asst-tiny-space);
+		width: 100%;
+	}
+
 	.fl-asst-add-label {
 		display: flex;
+		width: 100%;
 
 		select {
 			margin-right: var(--fl-asst-tiny-space);

@@ -64,14 +64,14 @@ export const LabelsItem = ( {
 	} )
 
 	return (
-		<>
+		<Form.Item label={ label }>
 			{ 0 < value.length &&
-				<Form.Item label={ label }>
+				<div className='fl-asst-selected-labels'>
 					<Control.TagGroup
 						value={ tags }
 						onRemove={ removeLabel }
 					/>
-				</Form.Item>
+				</div>
 			}
 			{ 0 < filteredOptions.length &&
 				<div className='fl-asst-add-label'>
@@ -84,6 +84,6 @@ export const LabelsItem = ( {
 					<Button onClick={ addLabel }>{ __( 'Add Label' ) }</Button>
 				</div>
 			}
-		</>
+		</Form.Item>
 	)
 }
