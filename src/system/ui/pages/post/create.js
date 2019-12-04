@@ -12,13 +12,6 @@ export const CreatePost = ( { history, location } ) => {
 	const state = location.state ? location.state : {}
 	const { detailBaseUrl } = state
 
-	const defaults = {
-		type: 'post',
-		title: '',
-		slug: '',
-		parent: 0,
-	}
-
 	const getTypeOptions = () => {
 		const options = {}
 		Object.keys( contentTypes ).map( ( key ) => {
@@ -27,83 +20,104 @@ export const CreatePost = ( { history, location } ) => {
 		return options
 	}
 
+	const sections = {
+		info: {
+			label: __( 'Basic Info' ),
+			fields: {
+				type: {
+					label: __( 'Type' ),
+					labelPlacement: 'beside',
+					component: Form.SelectItem,
+					options: getTypeOptions(),
+					id: 'post_type',
+					onChange: ( { value, setOptions, setIsVisible } ) => {
+						setIsVisible( 'parent', contentTypes[ value ].isHierarchical )
+						setParentOptions( value, setOptions )
+					}
+				},
+				title: {
+					label: __( 'Title' ),
+					placeholder: __( 'Title' ),
+					component: Form.TextItem,
+					id: 'post_title',
+					onChange: ( { value, setValue } ) => {
+						setValue( 'slug', value )
+					}
+				},
+				slug: {
+					label: __( 'Slug' ),
+					component: Form.TextItem,
+					placeholder: __( 'my-post-slug' ),
+					id: 'post_name',
+					sanitize: createSlug,
+				},
+				parent: {
+					label: __( 'Parent' ),
+					component: Form.SelectItem,
+					id: 'post_parent',
+					isVisible: contentTypes[ defaults.type ].isHierarchical,
+					options: ( { state, setOptions } ) => {
+						return setParentOptions( state.type.value, setOptions )
+					},
+				}
+			}
+		}
+	}
+
+	const onSubmit = ( { values, ids } ) => {
+		const data = {}
+
+		for ( let key in values ) {
+			if ( ids[ key ] ) {
+				data[ ids[ key ] ] = values[ key ]
+			}
+		}
+
+		if ( data.parent ) {
+			data.parent = data.parent.split( ':' ).pop()
+		}
+
+		const handleError = error => {
+			setIsSubmitting( false )
+			alert( __( 'Error: Post not created! Please try again.' ) )
+			if ( error ) {
+				console.log( error ) // eslint-disable-line no-console
+			}
+		}
+
+		wpRest.posts().create( data ).then( response => {
+			const { data } = response
+			if ( data.error ) {
+				handleError()
+			} else if ( detailBaseUrl ) {
+				history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
+			} else {
+				setIsSubmitting( false )
+				alert( __( 'Post not created!' ) )
+			}
+		} ).catch( error => {
+			handleError( error )
+		} )
+	}
+
+	const defaults = {
+		type: 'post',
+		title: '',
+		slug: '',
+		parent: 0,
+	}
+
 	const {
-		form,
-		useFormContext,
+		renderForm,
 		submitForm,
 		isSubmitting,
 		setIsSubmitting,
-	} = Form.useFormData( {
-		type: {
-			label: __( 'Type' ),
-			labelPlacement: 'beside',
-			options: getTypeOptions(),
-			id: 'post_type',
-			onChange: ( { value, setOptions, setIsVisible } ) => {
-				setIsVisible( 'parent', contentTypes[ value ].isHierarchical )
-				setParentOptions( value, setOptions )
-			}
-		},
-		title: {
-			label: __( 'Title' ),
-			placeholder: __( 'Title' ),
-			id: 'post_title',
-			onChange: ( { value, setValue } ) => {
-				setValue( 'slug', value )
-			}
-		},
-		slug: {
-			label: __( 'Slug' ),
-			placeholder: __( 'my-post-slug' ),
-			id: 'post_name',
-			sanitize: createSlug,
-		},
-		parent: {
-			label: __( 'Parent' ),
-			id: 'post_parent',
-			isVisible: contentTypes[ defaults.type ].isHierarchical,
-			options: ( { state, setOptions } ) => {
-				return setParentOptions( state.type.value, setOptions )
-			},
-		},
-	}, {
+	} = Form.useForm( {
+		sections,
+		defaults,
+		onSubmit,
 		shouldHighlightChanges: false,
-		onSubmit: ( { values, ids } ) => {
-			const data = {}
-
-			for ( let key in values ) {
-				if ( ids[ key ] ) {
-					data[ ids[ key ] ] = values[ key ]
-				}
-			}
-
-			if ( data.parent ) {
-				data.parent = data.parent.split( ':' ).pop()
-			}
-
-			const handleError = error => {
-				setIsSubmitting( false )
-				alert( __( 'Error: Post not created! Please try again.' ) )
-				if ( error ) {
-					console.log( error ) // eslint-disable-line no-console
-				}
-			}
-
-			wpRest.posts().create( data ).then( response => {
-				const { data } = response
-				if ( data.error ) {
-					handleError()
-				} else if ( detailBaseUrl ) {
-					history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
-				} else {
-					setIsSubmitting( false )
-					alert( __( 'Post not created!' ) )
-				}
-			} ).catch( error => {
-				handleError( error )
-			} )
-		}
-	}, defaults )
+	} )
 
 	const Footer = () => {
 		return (
@@ -118,14 +132,7 @@ export const CreatePost = ( { history, location } ) => {
 
 	return (
 		<Page title={ __( 'Create New' ) } shouldPadSides={ false } footer={ <Footer /> }>
-			<Form { ...form }>
-				<Page.RegisteredSections
-					location={ { type: 'create-post' } }
-					data={ {
-						useFormData: useFormContext
-					} }
-				/>
-			</Form>
+			{ renderForm() }
 		</Page>
 	)
 }
