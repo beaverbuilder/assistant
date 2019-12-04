@@ -104,7 +104,46 @@ export const Post = ( { location, match, history } ) => {
 				publish: {
 					label: __( 'Publish Settings' ),
 					fields: {
-
+						status: {
+							label: __( 'Status' ),
+							labelPlacement: 'beside',
+							component: Form.PlainTextItem,
+							sanitize: value => contentStatus[ value ] ? contentStatus[ value ] : value,
+						},
+						visibility: {
+							label: __( 'Visibility' ),
+							labelPlacement: 'beside',
+							component: Form.SelectItem,
+							options: {
+								'public': __( 'Public' ),
+								'private': __( 'Private' ),
+								'protected': __( 'Protected' ),
+							},
+							onChange: ( { value, setValue, setIsVisible } ) => {
+								switch ( value ) {
+								case 'public':
+								case 'protected':
+									setValue( 'status', 'publish' )
+									break
+								case 'private':
+									setValue( 'status', 'private' )
+									break
+								}
+								setIsVisible( 'password', 'protected' == value )
+							}
+						},
+						password: {
+							label: __( 'Password' ),
+							labelPlacement: 'beside',
+							component: Form.TextItem,
+							id: 'post_password',
+							isVisible: 'protected' == item.visibility,
+						},
+						date: {
+							label: __( 'Publish Date' ),
+							labelPlacement: 'beside',
+							component: Form.PlainTextItem,
+						},
 					},
 				},
 				taxonomies: {
@@ -117,21 +156,68 @@ export const Post = ( { location, match, history } ) => {
 					label: __( 'Excerpt' ),
 					isVisible: supports.excerpt,
 					fields: {
-
+						excerpt: {
+							component: Form.TextItem,
+							id: 'post_excerpt',
+							type: 'textarea',
+							isVisible: supports.excerpt,
+							rows: 5,
+						},
 					},
 				},
 				attributes: {
 					label: __( 'Attributes' ),
-					isVisible: supports.excerpt,
 					fields: {
-
+						template: {
+							label: __( 'Template' ),
+							labelPlacement: 'beside',
+							component: Form.SelectItem,
+							isVisible: !! Object.keys( templates ).length,
+							options: () => {
+								const options = {
+									'default': __( 'Default' ),
+								}
+								Object.keys( templates ).map( ( key ) => {
+									options[ templates[ key ] ] = key
+								} )
+								return options
+							},
+						},
+						parent: {
+							label: __( 'Parent' ),
+							labelPlacement: 'beside',
+							component: Form.SelectItem,
+							id: 'post_parent',
+							isVisible: isHierarchical,
+							options: ( { setOptions } ) => {
+								return setParentOptions( item.type, setOptions )
+							},
+						},
+						order: {
+							label: __( 'Order' ),
+							labelPlacement: 'beside',
+							component: Form.TextItem,
+							id: 'menu_order',
+							isVisible: supports.order,
+						},
 					},
 				},
 				discussion: {
 					label: __( 'Discussion' ),
 					isVisible: supports.comments || supports.trackbacks,
 					fields: {
-
+						commentsAllowed: {
+							label: __( 'Allow Comments' ),
+							labelPlacement: 'beside',
+							component: Form.CheckboxItem,
+							isVisible: supports.comments,
+						},
+						pingbacksAllowed: {
+							label: __( 'Allow Pingbacks' ),
+							labelPlacement: 'beside',
+							component: Form.CheckboxItem,
+							isVisible: supports.trackbacks,
+						},
 					},
 				},
 			},
