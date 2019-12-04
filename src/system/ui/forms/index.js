@@ -15,6 +15,7 @@ import { ActionsItem } from './items/actions'
 import { LabelsItem } from './items/labels'
 import { SuggestItem } from './items/suggest'
 import { TaxonomyTermsItem } from './items/taxonomy-terms'
+import { UrlItem } from './items/url'
 import './style.scss'
 
 
@@ -112,6 +113,9 @@ Form.SuggestItem.displayName = 'Form.SuggestItem'
 
 Form.TaxonomyTermsItem = TaxonomyTermsItem
 Form.TaxonomyTermsItem.displayName = 'Form.TaxonomyTermsItem'
+
+Form.UrlItem = UrlItem
+Form.UrlItem.displayName = 'Form.UrlItem'
 
 Form.Test = () => {
 	return (

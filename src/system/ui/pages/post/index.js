@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, Button, Form } from 'ui'
+import { Page, Nav, Button, Form, List } from 'ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
@@ -73,21 +73,95 @@ export const Post = ( { location, match, history } ) => {
 				}
 			},
 		},
-		// edit: {
-		// 	label: __( 'Edit' ),
-		// 	path: match.url + '/edit',
-		// 	sections: {
-		//
-		// 	},
-		// },
-		// comments: {
-		// 	label: __( 'Comments' ),
-		// 	path: match.url + '/comments',
-		// 	isVisible: supports.comments,
-		// 	sections: {
-		//
-		// 	},
-		// },
+		edit: {
+			label: __( 'Edit' ),
+			path: match.url + '/edit',
+			sections: {
+				general: {
+					label: __( 'General' ),
+					fields: {
+						title: {
+							label: __( 'Title' ),
+							component: Form.TextItem,
+							id: 'post_title',
+							onChange: ( { value, setValue } ) => {
+								setValue( 'slug', value )
+							}
+						},
+						slug: {
+							label: __( 'Slug' ),
+							component: Form.TextItem,
+							id: 'post_name',
+							sanitize: createSlug,
+						},
+						url: {
+							label: __( 'URL' ),
+							component: Form.UrlItem,
+							id: 'post_url',
+						},
+					}
+				},
+				publish: {
+					label: __( 'Publish Settings' ),
+					fields: {
+
+					},
+				},
+				taxonomies: {
+					label: __( 'Taxonomies' ),
+					fields: {
+
+					},
+				},
+				excerpt: {
+					label: __( 'Excerpt' ),
+					isVisible: supports.excerpt,
+					fields: {
+
+					},
+				},
+				attributes: {
+					label: __( 'Attributes' ),
+					isVisible: supports.excerpt,
+					fields: {
+
+					},
+				},
+				discussion: {
+					label: __( 'Discussion' ),
+					isVisible: supports.comments || supports.trackbacks,
+					fields: {
+
+					},
+				},
+			},
+		},
+		comments: {
+			label: __( 'Comments' ),
+			path: match.url + '/comments',
+			isVisible: supports.comments,
+			sections: {
+				comments: {
+					label: __( 'Comments' ),
+					fields: {
+						comments: {
+							component: () => (
+								<List.Comments
+									query={ { post__in: [ item.id ] } }
+									getItemProps={ ( item, defaultProps ) => ( {
+										...defaultProps,
+										to: {
+											pathname: `/fl-comments/comment/${ item.id }`,
+											state: { item }
+										},
+									} ) }
+								/>
+							)
+						}
+					}
+				}
+			},
+		},
 	}
 
 	const onSubmit = ( { changed, ids, setValue } ) => {

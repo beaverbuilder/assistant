@@ -155,9 +155,9 @@ export const Post = ( { location, match, history } ) => {
 				wpRest.notations().deleteLabel( 'post', item.id, label.id )
 			},
 		},
-		actions: {
-			value: args => getPostActions( { history, ...args } ),
-		},
+		// actions: {
+		// 	value: args => getPostActions( { history, ...args } ),
+		// },
 	}
 
 	const onSubmit = ( { changed, ids, setValue } ) => {
