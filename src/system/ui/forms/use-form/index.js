@@ -10,7 +10,7 @@ export const useForm = ( {
 	defaults = {},
 	...options // See useFormData
 } ) => {
-	const config = getFieldConfig( tabs, sections, fields )
+	const config = getFieldConfig( tabs, sections, fields, defaults )
 	const data = useFormData( config, options, defaults )
 	const { form } = data
 
@@ -191,7 +191,7 @@ const getSectionsFieldConfig = sections => {
 	return config
 }
 
-const getFieldConfig = ( tabs, sections, fields ) => {
+const getFieldConfig = ( tabs, sections, fields, defaults ) => {
 	let config = {}
 
 	if ( Object.entries( tabs ).length ) {
@@ -201,6 +201,12 @@ const getFieldConfig = ( tabs, sections, fields ) => {
 	} else if ( 'function' !== typeof fields ) {
 		config = fields
 	}
+
+	Object.keys( defaults ).map( key => {
+		if ( ! config[ key ] ) {
+			config[ key ] = {}
+		}
+	} )
 
 	return config
 }
