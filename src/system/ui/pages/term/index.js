@@ -3,22 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Page, Form } from 'ui'
 
 export const Term = ( { location } ) => {
-
-	const defaultItem = {
-		title: '',
-		slug: '',
-		parent: '',
-		description: '',
-		taxonomy: '',
-	}
-	let term = defaultItem
-
-	if ( 'undefined' !== typeof location.state &&
-		'undefined' !== typeof location.state.item ) {
-
-		term = { ...defaultItem, ...location.state.item }
-	}
-
+	const { item } = location.state
 	const { form, useFormContext } = Form.useFormData( {
 		title: {
 			label: __( 'Name' ),
@@ -40,7 +25,7 @@ export const Term = ( { location } ) => {
 			type: 'textarea',
 			rows: 4,
 		},
-	}, {}, term )
+	}, {}, item )
 
 	return (
 		<Page title={ __( 'Edit Term' ) } shouldPadSides={ false }>

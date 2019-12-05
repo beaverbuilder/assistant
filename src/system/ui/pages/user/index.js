@@ -4,18 +4,10 @@ import { getSystemConfig } from 'data'
 import { Page, Form } from 'ui'
 
 export const User = ( { location } ) => {
-	const defaultItem = {
-		id: null,
-		url: '',
-		displayName: '',
-		email: '',
-	}
-	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
+	const { item } = location.state
 	const { id } = item
-
 	const { currentUser } = getSystemConfig()
 	const isYou = currentUser.id === id
-
 	const { form, useFormContext } = Form.useFormData()
 
 	return (

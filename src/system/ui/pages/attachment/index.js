@@ -20,19 +20,7 @@ const getItemActions = ( { staticValues } ) => {
 }
 
 export const Attachment = ( { location } ) => {
-	const defaultItem = {
-		url: '',
-		sizes: {},
-		caption: '',
-		description: '',
-		alt: '',
-		title: '',
-		filesize: '',
-	}
-	const item = 'undefined' !== typeof location.state.item ?
-		{ ...defaultItem, ...location.state.item } :
-		defaultItem
-
+	const { item } = location.state
 	const srcSet = getSrcSet( item.sizes )
 
 	// Form Handler
