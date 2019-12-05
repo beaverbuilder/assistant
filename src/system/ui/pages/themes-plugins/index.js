@@ -1,6 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form } from 'ui'
+import { Form } from 'ui'
+import { Page } from 'fluid/ui'
 
 export const Plugin = ( { location = {} } ) => {
 
@@ -18,9 +19,9 @@ export const Plugin = ( { location = {} } ) => {
 		version: null,
 	}
 
-	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
+	const item = undefined !== location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
 
-	const { banner } = item
+	const { banner, title, version, content } = item
 
 	const sectionData = {
 		plugin: item,
@@ -36,16 +37,27 @@ export const Plugin = ( { location = {} } ) => {
 		]
 	}
 
-	return (
-		<Page title={ __( 'Plugin' ) }>
-			{ banner && <img src={ banner } /> }
+	const { renderForm } = Form.useForm({
+		sections: {
+			details: {
+				label: __('Details'),
+				fields: {
+					version: {
+						label: __( 'Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+						value: version,
+					}
+				}
+			}
+		}
+	})
 
-			<Form>
-				<Page.RegisteredSections
-					location={ { type: 'plugin' } }
-					data={ sectionData }
-				/>
-			</Form>
+	return (
+		<Page title={ __( 'Plugin' ) } hero={banner}>
+			<Page.Headline>{title}</Page.Headline>
+			<div dangerouslySetInnerHTML={{ __html: content }} />
+			{renderForm()}
 		</Page>
 	)
 }
@@ -62,13 +74,13 @@ export const Theme = ( { location = {} } ) => {
 		plugin: null,
 		thumbnail: null,
 		title: null,
-		type: 'plugin',
+		type: 'theme',
 		version: null,
 	}
 
 	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
 
-	const { banner } = item
+	const { banner, title, content, version } = item
 
 	const sectionData = {
 		plugin: item,
@@ -84,16 +96,27 @@ export const Theme = ( { location = {} } ) => {
 		]
 	}
 
-	return (
-		<Page shouldPadSides={ false } title={ __( 'Theme' ) }>
-			{ banner && <img src={ banner } /> }
+	const { renderForm } = Form.useForm({
+		sections: {
+			details: {
+				label: __('Details'),
+				fields: {
+					version: {
+						label: __( 'Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+						value: version,
+					}
+				}
+			}
+		}
+	})
 
-			<Form>
-				<Page.RegisteredSections
-					location={ { type: 'plugin' } }
-					data={ sectionData }
-				/>
-			</Form>
+	return (
+		<Page title={ __( 'Plugin' ) } hero={banner}>
+			<Page.Headline>{title}</Page.Headline>
+			<div dangerouslySetInnerHTML={{ __html: content }} />
+			{renderForm()}
 		</Page>
 	)
 }

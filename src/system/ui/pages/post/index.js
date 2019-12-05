@@ -355,12 +355,7 @@ export const Post = ( { location, match, history } ) => {
 			title={ labels.editItem }
 			footer={ hasChanges && <Footer /> }
 		>
-			<Page.TitleCard
-				title={ values.title }
-				style={ {
-					marginBottom: 'var(--fl-asst-inner-space)'
-				} }
-			/>
+			<Page.TitleCard title={ values.title } />
 			{ renderForm() }
 		</Page>
 	)

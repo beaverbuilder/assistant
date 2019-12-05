@@ -43,12 +43,10 @@
     .fl-asst-card {
         border-radius: 15px;
         padding: var(--fl-asst-outer-space);
-        margin: 0 var(--fl-asst-outer-space);
         display: grid;
         grid-gap: var(--fl-asst-tiny-space);
 
         .fl-asst-card-title {
-            margin: var(--fl-asst-outer-space) 0 0;
             font-size: 24px;
             font-weight: 700;
             line-height: 1.2;
