@@ -127,7 +127,7 @@ const Fields = ( { config, data } ) => {
 			hasChanges,
 			...rest
 		} = data.fields[ key ]
-		const Field = component ? component : Form.TextItem
+		const Field = getFieldComponent( component )
 		return (
 			<Form.Item
 				key={ i }
@@ -142,6 +142,30 @@ const Fields = ( { config, data } ) => {
 			</Form.Item>
 		)
 	} )
+}
+
+const getFieldComponent = key => {
+	const map = {
+		'actions': Form.ActionsItem,
+		'checkbox': Form.CheckboxItem,
+		'labels': Form.LabelsItem,
+		'plain-text': Form.PlainTextItem,
+		'select': Form.SelectItem,
+		'suggest': Form.SuggestItem,
+		'taxonomy-terms': Form.TaxonomyTermsItem,
+		'text': Form.TextItem,
+		'textarea': Form.TextareaItem,
+		'url': Form.UrlItem,
+	}
+	let Component = Form.TextItem
+
+	if ( 'function' === typeof key ) {
+		Component = key
+	} else if ( map[ key ] ) {
+		Component = map[ key ]
+	}
+
+	return Component
 }
 
 const getTabsFieldConfig = tabs => {

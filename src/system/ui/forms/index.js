@@ -16,6 +16,7 @@ import {
 	SuggestItem,
 	TaxonomyTermsItem,
 	TextItem,
+	TextareaItem,
 	UrlItem
 } from './items'
 
@@ -86,6 +87,9 @@ Form.TaxonomyTermsItem.displayName = 'Form.TaxonomyTermsItem'
 
 Form.TextItem = TextItem
 Form.TextItem.displayName = 'Form.TextItem'
+
+Form.TextareaItem = TextareaItem
+Form.TextareaItem.displayName = 'Form.TextareaItem'
 
 Form.UrlItem = UrlItem
 Form.UrlItem.displayName = 'Form.UrlItem'

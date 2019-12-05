@@ -1,15 +1,13 @@
 import React from 'react'
 
-export const TextItem = ( {
-	type = 'text',
+export const TextareaItem = ( {
 	id,
 	value,
 	onChange = () => {},
 	...rest
 } ) => {
 	return (
-		<input
-			type={ type }
+		<textarea
 			key={ id }
 			id={ id }
 			value={ value }

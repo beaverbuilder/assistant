@@ -34,7 +34,7 @@ export const CreatePost = ( { history, location } ) => {
 				type: {
 					label: __( 'Type' ),
 					labelPlacement: 'beside',
-					component: Form.SelectItem,
+					component: 'select',
 					options: getTypeOptions(),
 					id: 'post_type',
 					onChange: ( { value, setOptions, setIsVisible } ) => {
@@ -45,7 +45,7 @@ export const CreatePost = ( { history, location } ) => {
 				title: {
 					label: __( 'Title' ),
 					placeholder: __( 'Title' ),
-					component: Form.TextItem,
+					component: 'text',
 					id: 'post_title',
 					onChange: ( { value, setValue } ) => {
 						setValue( 'slug', value )
@@ -53,14 +53,14 @@ export const CreatePost = ( { history, location } ) => {
 				},
 				slug: {
 					label: __( 'Slug' ),
-					component: Form.TextItem,
+					component: 'text',
 					placeholder: __( 'my-post-slug' ),
 					id: 'post_name',
 					sanitize: createSlug,
 				},
 				parent: {
 					label: __( 'Parent' ),
-					component: Form.SelectItem,
+					component: 'select',
 					id: 'post_parent',
 					isVisible: contentTypes[ defaults.type ].isHierarchical,
 					options: ( { state, setOptions } ) => {

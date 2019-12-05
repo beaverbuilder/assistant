@@ -51,7 +51,7 @@ export const Post = ( { location, match, history } ) => {
 					label: __( 'Labels' ),
 					fields: {
 						labels: {
-							component: Form.LabelsItem,
+							component: 'labels',
 							alwaysCommit: true,
 							onAdd: label => {
 								wpRest.notations().createLabel( 'post', item.id, label.id )
@@ -66,7 +66,7 @@ export const Post = ( { location, match, history } ) => {
 					label: __( 'Actions' ),
 					fields: {
 						actions: {
-							component: Form.ActionsItem,
+							component: 'actions',
 							options: args => getPostActions( { history, ...args } ),
 						}
 					}
@@ -82,7 +82,7 @@ export const Post = ( { location, match, history } ) => {
 					fields: {
 						title: {
 							label: __( 'Title' ),
-							component: Form.TextItem,
+							component: 'text',
 							id: 'post_title',
 							onChange: ( { value, setValue } ) => {
 								setValue( 'slug', value )
@@ -90,13 +90,13 @@ export const Post = ( { location, match, history } ) => {
 						},
 						slug: {
 							label: __( 'Slug' ),
-							component: Form.TextItem,
+							component: 'text',
 							id: 'post_name',
 							sanitize: createSlug,
 						},
 						url: {
 							label: __( 'URL' ),
-							component: Form.UrlItem,
+							component: 'url',
 							id: 'post_url',
 						},
 					}
@@ -107,13 +107,13 @@ export const Post = ( { location, match, history } ) => {
 						status: {
 							label: __( 'Status' ),
 							labelPlacement: 'beside',
-							component: Form.PlainTextItem,
+							component: 'plain-text',
 							sanitize: value => contentStatus[ value ] ? contentStatus[ value ] : value,
 						},
 						visibility: {
 							label: __( 'Visibility' ),
 							labelPlacement: 'beside',
-							component: Form.SelectItem,
+							component: 'select',
 							options: {
 								'public': __( 'Public' ),
 								'private': __( 'Private' ),
@@ -135,14 +135,14 @@ export const Post = ( { location, match, history } ) => {
 						password: {
 							label: __( 'Password' ),
 							labelPlacement: 'beside',
-							component: Form.TextItem,
+							component: 'text',
 							id: 'post_password',
 							isVisible: 'protected' == item.visibility,
 						},
 						date: {
 							label: __( 'Publish Date' ),
 							labelPlacement: 'beside',
-							component: Form.PlainTextItem,
+							component: 'plain-text',
 						},
 					},
 				},
@@ -173,9 +173,8 @@ export const Post = ( { location, match, history } ) => {
 					isVisible: supports.excerpt,
 					fields: {
 						excerpt: {
-							component: Form.TextItem,
+							component: 'textarea',
 							id: 'post_excerpt',
-							type: 'textarea',
 							isVisible: supports.excerpt,
 							rows: 5,
 						},
@@ -188,7 +187,7 @@ export const Post = ( { location, match, history } ) => {
 						template: {
 							label: __( 'Template' ),
 							labelPlacement: 'beside',
-							component: Form.SelectItem,
+							component: 'select',
 							isVisible: !! Object.keys( templates ).length,
 							options: () => {
 								const options = {
@@ -203,7 +202,7 @@ export const Post = ( { location, match, history } ) => {
 						parent: {
 							label: __( 'Parent' ),
 							labelPlacement: 'beside',
-							component: Form.SelectItem,
+							component: 'select',
 							id: 'post_parent',
 							isVisible: isHierarchical,
 							options: ( { setOptions } ) => {
@@ -213,7 +212,7 @@ export const Post = ( { location, match, history } ) => {
 						order: {
 							label: __( 'Order' ),
 							labelPlacement: 'beside',
-							component: Form.TextItem,
+							component: 'text',
 							id: 'menu_order',
 							isVisible: supports.order,
 						},
@@ -226,13 +225,13 @@ export const Post = ( { location, match, history } ) => {
 						commentsAllowed: {
 							label: __( 'Allow Comments' ),
 							labelPlacement: 'beside',
-							component: Form.CheckboxItem,
+							component: 'checkbox',
 							isVisible: supports.comments,
 						},
 						pingbacksAllowed: {
 							label: __( 'Allow Pingbacks' ),
 							labelPlacement: 'beside',
-							component: Form.CheckboxItem,
+							component: 'checkbox',
 							isVisible: supports.trackbacks,
 						},
 					},
