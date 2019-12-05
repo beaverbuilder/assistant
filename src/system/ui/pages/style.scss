@@ -65,7 +65,7 @@
 
     .fl-asst-content-area {
         margin: var(--fl-asst-outer-space) calc( 0px - var(--fl-asst-outer-space) );
-        padding: 0 calc( var(--fl-asst-outer-space) - 2px );
+        padding: 0 var(--fl-asst-outer-space);
         box-shadow: inset 2px 0px 0px 0px var(--fl-asst-accent-color);
         font-size: 16px;
 
