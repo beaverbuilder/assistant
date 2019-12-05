@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Button, Form, Nav, Page } from 'ui'
 import { useFormData } from '../use-form-data'
 import './style.scss'
@@ -10,38 +10,41 @@ export const useForm = ( {
 	defaults = {},
 	...options // See useFormData
 } ) => {
-	const config = getFieldConfig( tabs, sections, fields, defaults )
-	const data = useFormData( config, options, defaults )
-	const { form } = data
+	const tabData = useMemo( () => tabs, [ JSON.stringify( tabs ) ] )
+	const sectionData = useMemo( () => sections, [ JSON.stringify( sections ) ] )
+	const fieldData = useMemo( () => fields, [ JSON.stringify( fields ) ] )
+	const fieldConfig = getFieldConfig( tabData, sectionData, fieldData, defaults )
+	const formData = useFormData( fieldConfig, options, defaults )
+	const { form } = formData
 
 	const renderForm = () => {
-		if ( Object.entries( tabs ).length ) {
+		if ( Object.entries( tabData ).length ) {
 			return (
 				<>
-					<Tabs config={ tabs } />
+					<Tabs config={ tabData } />
 					<Form { ...form }>
-						<TabsContent config={ tabs } data={ data } />
+						<TabsContent config={ tabData } data={ formData } />
 					</Form>
 				</>
 			)
-		} else if ( Object.entries( sections ).length ) {
+		} else if ( Object.entries( sectionData ).length ) {
 			return (
 				<Form { ...form }>
-					<Sections config={ sections } data={ data } />
+					<Sections config={ sectionData } data={ formData } />
 				</Form>
 			)
 		} else {
 			return (
 				<Form { ...form }>
 					<Page.Section>
-						<Fields config={ fields } data={ data } />
+						<Fields config={ fieldData } data={ formData } />
 					</Page.Section>
 				</Form>
 			)
 		}
 	}
 
-	return { renderForm, ...data }
+	return { renderForm, ...formData }
 }
 
 const Tabs = ( { config } ) => {
