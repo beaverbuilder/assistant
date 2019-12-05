@@ -148,7 +148,7 @@ export const Post = ( { location, match, history } ) => {
 				},
 				taxonomies: {
 					label: __( 'Taxonomies' ),
-					isVisible: !! item.terms.length,
+					isVisible: !! Object.keys( item.terms ).length,
 					fields: {
 						terms: {
 							component: ( { value, onChange } ) => (
