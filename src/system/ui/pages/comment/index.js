@@ -27,8 +27,9 @@ export const Comment = ( { location } ) => {
 		url: null,
 	}
 
-	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
-	const { author, date, authorEmail, authorIP } = item
+	const item = undefined !== location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
+	const { author, date, authorEmail, authorIP, content } = item
+
 	const hero = `${pluginURL}img/comment-hero-a.jpg`
 
 	const { renderForm } = Form.useForm( {
@@ -81,15 +82,20 @@ export const Comment = ( { location } ) => {
 			<Page.Headline>{author}</Page.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
 
+			<div className="fl-asst-content-area" dangerouslySetInnerHTML={{ __html: content }}/>
+
 			<div style={ { display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 30, marginBottom: 20 } }>
-				<Button appearance="elevator">
-					<Icon.Trash />
-				</Button>
 				<Button appearance="elevator" status="primary">
-					<Icon.Trash />
+					<Icon.Approve />
 				</Button>
 				<Button appearance="elevator" status="alert">
-					<Icon.Trash />
+					<Icon.Reject />
+				</Button>
+				<Button appearance="elevator">
+					<Icon.Reply />
+				</Button>
+				<Button appearance="elevator">
+					<Icon.Edit />
 				</Button>
 				<Button appearance="elevator" status="destructive">
 					<Icon.Trash />

@@ -62,4 +62,31 @@
         top:0;
         background: var(--fl-asst-surface-background);
     }
+
+    .fl-asst-content-area {
+        margin: var(--fl-asst-outer-space) calc( 0px - var(--fl-asst-outer-space) );
+        padding: 0 calc( var(--fl-asst-outer-space) - 2px );
+        box-shadow: inset 2px 0px 0px 0px var(--fl-asst-accent-color);
+        font-size: 16px;
+
+        & > :first-child {
+            margin-top:0;
+        }
+
+        & > :last-child {
+            margin-bottom:0;
+        }
+
+        p {
+            font-size: inherit;
+        }
+
+        blockquote {
+            font-size: inherit;
+            border: none;
+            padding: 0;
+            font-style: italic;
+            line-height: 1.5;
+        }
+    }
 }
