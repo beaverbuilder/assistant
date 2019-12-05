@@ -4,7 +4,7 @@ import { Form, Icon } from 'ui'
 import { Page, Button } from 'fluid/ui'
 import { getSystemConfig } from 'data'
 
-export const Comment = ( { location, match, history } ) => {
+export const Comment = ( { location } ) => {
 	const { pluginURL } = getSystemConfig()
 
 	const defaultItem = {
@@ -28,78 +28,45 @@ export const Comment = ( { location, match, history } ) => {
 	}
 
 	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
-	const { content, author, date, authorEmail, authorIP } = item
-	const html = { __html: content }
-
-	const sectionData = {
-		comment: item,
-		actions: [
-			{
-				label: __( 'View Post' ),
-				href: '#',
-			},
-			{
-				label: __( 'Edit Comment' ),
-				onClick: () => {},
-			},
-			{
-				label: __( 'Reply to Comment' ),
-				onClick: () => {},
-			},
-			{
-				label: __( 'Approve Comment' ),
-				onClick: () => {},
-			},
-			{
-				label: __( 'Mark as Spam' ),
-				onClick: () => {},
-			},
-			{
-				label: __( 'Move to Trash' ),
-				onClick: () => {},
-			},
-		],
-		nav: { history, location, match }
-	}
-
+	const { author, date, authorEmail, authorIP } = item
 	const hero = `${pluginURL}img/comment-hero-a.jpg`
 
 	const { renderForm } = Form.useForm( {
 		sections: {
 			details: {
-				label: __('Details'),
+				label: __( 'Details' ),
 				fields: {
 					email: {
-						label: __('Email Address'),
+						label: __( 'Email Address' ),
 						labelPlacement: 'beside',
 						type: 'text',
 						value: authorEmail,
-						component: Form.PlainTextItem,
+						component: 'plain-text',
 					},
 					IPAddress: {
-						label: __('IP Address'),
+						label: __( 'IP Address' ),
 						labelPlacement: 'beside',
 						type: 'text',
 						value: authorIP,
-						component: Form.PlainTextItem,
+						component: 'plain-text',
 					},
 					date: {
-						label: __('Submitted On'),
+						label: __( 'Submitted On' ),
 						labelPlacement: 'beside',
 						type: 'text',
 						value: date,
-						component: Form.PlainTextItem,
+						component: 'plain-text',
 					}
 				},
 			},
 			actions: {
-				label: __('Actions'),
+				label: __( 'Actions' ),
 				fields: {
 					actions: {
-						component: Form.ActionsItem,
+						component: 'actions',
 						options: [
-							{ label: "Test" },
-							{ label: "Test Again"}
+							{ label: 'Test' },
+							{ label: 'Test Again' }
 						]
 					}
 				},
@@ -109,12 +76,12 @@ export const Comment = ( { location, match, history } ) => {
 	} )
 
 	return (
-		<Page title={ __( 'Edit Comment' ) } hero={hero}>
+		<Page title={ __( 'Edit Comment' ) } hero={ hero }>
 
 			<Page.Headline>{author}</Page.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
 
-			<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 30, marginBottom: 20 }}>
+			<div style={ { display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 30, marginBottom: 20 } }>
 				<Button appearance="elevator">
 					<Icon.Trash />
 				</Button>

@@ -1,4 +1,6 @@
 import React from 'react'
+import { __ } from '@wordpress/i18n'
+import { Control, Form } from 'ui'
 import './style.scss'
 
 export const Test = () => {

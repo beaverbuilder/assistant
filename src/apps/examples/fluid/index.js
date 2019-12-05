@@ -1,3 +1,4 @@
+import React from 'react'
 import { Page, Button, Icon } from 'fluid/ui'
 import { getSystemConfig } from 'assistant/data'
 
