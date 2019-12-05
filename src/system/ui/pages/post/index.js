@@ -33,7 +33,10 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	let item = defaultItem
-	if ( 'undefined' !== typeof location.state && 'undefined' !== typeof location.state.item ) {
+	if (
+		'undefined' !== typeof location.state &&
+		'undefined' !== typeof location.state.item
+	) {
 		item = { ...defaultItem, ...location.state.item }
 	}
 

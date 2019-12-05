@@ -10,6 +10,7 @@ const Page = ({
     hero,
     title,
     actions,
+    footer,
     ...rest
 }) => {
     const { isRoot } = useContext( Nav.Context )
@@ -57,11 +58,9 @@ const Page = ({
                 </div>
                 <div className="fluid-pad">{children}</div>
             </div>
-            <div className="fluid-page-footer">
-                <Button>Cancel</Button>
-                <div style={{ flex: '1 1 auto' }}></div>
-                <Button status="primary">Publish Changes</Button>
-            </div>
+            { footer && <div className="fluid-page-footer">
+                {footer}
+            </div> }
         </div>
     )
 }
