@@ -37,7 +37,7 @@ export const Post = ( { location, match, history } ) => {
 		item = { ...defaultItem, ...location.state.item }
 	}
 
-	const { contentTypes, contentStatus } = getSystemConfig()
+	const { contentTypes, contentStatus, taxonomies } = getSystemConfig()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const wpRest = getWpRest()
 
@@ -149,22 +149,23 @@ export const Post = ( { location, match, history } ) => {
 				taxonomies: {
 					label: __( 'Taxonomies' ),
 					isVisible: !! Object.keys( item.terms ).length,
-					fields: {
-						terms: {
-							component: ( { value, onChange } ) => (
-								Object.keys( value ).map( ( taxonomy, key ) => (
-									<Form.TaxonomyTermsItem
-										key={ key }
-										taxonomy={ taxonomy }
-										value={ value[ taxonomy ] }
-										onChange={ newValue => {
-											value[ taxonomy ] = newValue
-											onChange( { ...value } )
-										} }
-									/>
-								) )
-							),
-						},
+					fields: ( { fields } ) => {
+						const { value, onChange } = fields.terms
+						return Object.keys( value ).map( ( taxonomy, key ) => (
+							<Form.Item
+								key={ key }
+								label={ taxonomies[ taxonomy ].labels.plural }
+							>
+								<Form.TaxonomyTermsItem
+									taxonomy={ taxonomy }
+									value={ value[ taxonomy ] }
+									onChange={ newValue => {
+										value[ taxonomy ] = newValue
+										onChange( { ...value } )
+									} }
+								/>
+							</Form.Item>
+						) )
 					},
 				},
 				excerpt: {
@@ -242,27 +243,18 @@ export const Post = ( { location, match, history } ) => {
 			label: __( 'Comments' ),
 			path: match.url + '/comments',
 			isVisible: supports.comments,
-			sections: {
-				comments: {
-					label: __( 'Comments' ),
-					fields: {
-						comments: {
-							component: () => (
-								<List.Comments
-									query={ { post__in: [ item.id ] } }
-									getItemProps={ ( item, defaultProps ) => ( {
-										...defaultProps,
-										to: {
-											pathname: `/fl-comments/comment/${ item.id }`,
-											state: { item }
-										},
-									} ) }
-								/>
-							)
-						}
-					}
-				}
-			},
+			sections: () => (
+				<List.Comments
+					query={ { post__in: [ item.id ] } }
+					getItemProps={ ( item, defaultProps ) => ( {
+						...defaultProps,
+						to: {
+							pathname: `/fl-comments/comment/${ item.id }`,
+							state: { item }
+						},
+					} ) }
+				/>
+			),
 		},
 	}
 

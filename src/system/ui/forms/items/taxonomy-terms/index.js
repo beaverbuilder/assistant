@@ -5,6 +5,7 @@ import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
 import { getSystemConfig } from 'data'
 import { Button, Form } from 'ui'
+import './style.scss'
 
 export const TaxonomyTermsItem = ( {
 	taxonomy,
@@ -120,7 +121,6 @@ export const TaxonomyTermsItem = ( {
 		return (
 			<>
 				<Form.SelectItem
-					label={ tax.labels.plural }
 					selectMultiple={ true }
 					options={ options }
 					value={ values }
@@ -128,50 +128,51 @@ export const TaxonomyTermsItem = ( {
 						onChange( slugs.map( slug => data.idsBySlug[ slug ] ) )
 					} }
 				/>
-				{ addingNew &&
-					<>
-						<Form.TextItem
-							label={ sprintf( __( 'New %s Name' ), tax.labels.singular ) }
-							value={ newTerm }
-							onChange={ name => setNewTerm( name ) }
-						/>
-						<Form.SelectItem
-							label={ sprintf( __( 'New %s Parent' ), tax.labels.singular ) }
-							options={ {
-								'': __( 'None' ),
-								...getHierarchicalOptions(),
-							} }
-							value={ newTermParent }
-							onChange={ v => setNewTermParent( v ) }
-						/>
+				<div className='fl-asst-new-term-form'>
+					{ addingNew &&
+						<>
+							<label>{ sprintf( __( 'New %s Name' ), tax.labels.singular ) }</label>
+							<Form.TextItem
+								value={ newTerm }
+								onChange={ name => setNewTerm( name ) }
+							/>
+							<label>{ sprintf( __( 'New %s Parent' ), tax.labels.singular ) }</label>
+							<Form.SelectItem
+								options={ {
+									'': __( 'None' ),
+									...getHierarchicalOptions(),
+								} }
+								value={ newTermParent }
+								onChange={ v => setNewTermParent( v ) }
+							/>
+							<Button
+								onClick={ () => {
+									setAddingNew( false )
+									addNewTerm( newTerm, newTermParent )
+								} }
+							>
+								{ tax.labels.addNewItem }
+							</Button>
+						</>
+					}
+					{ ! addingNew &&
 						<Button
 							onClick={ () => {
-								setAddingNew( false )
-								addNewTerm( newTerm, newTermParent )
+								setNewTerm( '' )
+								setNewTermParent( '' )
+								setAddingNew( true )
 							} }
 						>
-							{ tax.labels.addNewItem }
+							{ tax.labels.newItem }
 						</Button>
-					</>
-				}
-				{ ! addingNew &&
-					<Button
-						onClick={ () => {
-							setNewTerm( '' )
-							setNewTermParent( '' )
-							setAddingNew( true )
-						} }
-					>
-						{ tax.labels.newItem }
-					</Button>
-				}
+					}
+				</div>
 			</>
 		)
 	}
 
 	return (
 		<Form.SuggestItem
-			label={ tax.labels.plural }
 			placeholder={ tax.labels.newItem }
 			id={ `taxonomy-${ taxonomy }` }
 			options={ options }

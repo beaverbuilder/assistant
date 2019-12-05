@@ -83,7 +83,13 @@ const TabsContent = ( { config, data } ) => {
 						key={ i }
 						path={ path ? path : match.url }
 						exact={ exact }
-						render={ () => <Sections config={ sections } data={ data } /> }
+						render={ () => {
+							if ( 'function' === typeof sections ) {
+								const Component = sections
+								return <Component { ...data } />
+							}
+							return <Sections config={ sections } data={ data } />
+						} }
 					/>
 				)
 			} ) }
@@ -106,13 +112,35 @@ const Sections = ( { config, data } ) => {
 }
 
 const Fields = ( { config, data } ) => {
+	if ( 'function' === typeof config ) {
+		const Component = config
+		return <Component { ...data } />
+	}
 	return Object.entries( config ).map( ( [ key ], i ) => {
-		const { isVisible, component, ...rest } = data.fields[ key ]
+		const {
+			component,
+			label,
+			labelPlacement,
+			id,
+			isRequired,
+			isVisible,
+			hasChanges,
+			...rest
+		} = data.fields[ key ]
 		const Field = component ? component : Form.TextItem
-		if ( undefined !== isVisible && ! isVisible ) {
-			return
-		}
-		return <Field key={ i } { ...rest } />
+		return (
+			<Form.Item
+				key={ i }
+				label={ label }
+				labelPlacement={ labelPlacement }
+				labelFor={ id }
+				isRequired={ isRequired }
+				isVisible={ isVisible }
+				hasChanges={ hasChanges }
+			>
+				<Field id={ id } { ...rest } />
+			</Form.Item>
+		)
 	} )
 }
 
@@ -132,8 +160,9 @@ const getSectionsFieldConfig = sections => {
 	Object.values( sections ).map( section => {
 		if ( ! section.fields ) {
 			return
+		} else if ( 'function' !== typeof section.fields ) {
+			config = Object.assign( config, section.fields )
 		}
-		config = Object.assign( config, section.fields )
 	} )
 	return config
 }
@@ -145,7 +174,7 @@ const getFieldConfig = ( tabs, sections, fields ) => {
 		config = Object.assign( config, getTabsFieldConfig( tabs ) )
 	} else if ( Object.entries( sections ).length ) {
 		config = Object.assign( config, getSectionsFieldConfig( sections ) )
-	} else {
+	} else if ( 'function' !== typeof fields ) {
 		config = fields
 	}
 

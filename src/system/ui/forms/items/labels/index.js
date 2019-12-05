@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { getWpRest } from 'utils/wordpress'
-import { Form, Button, Control } from 'ui'
+import { Button, Control } from 'ui'
 import './style.scss'
 
 export const LabelsItem = ( {
-	label,
 	value,
 	onChange = () => {},
 	onAdd = () => {},
@@ -64,7 +63,7 @@ export const LabelsItem = ( {
 	} )
 
 	return (
-		<Form.Item label={ label }>
+		<>
 			{ 0 < value.length &&
 				<div className='fl-asst-selected-labels'>
 					<Control.TagGroup
@@ -84,6 +83,6 @@ export const LabelsItem = ( {
 					<Button onClick={ addLabel }>{ __( 'Add Label' ) }</Button>
 				</div>
 			}
-		</Form.Item>
+		</>
 	)
 }
