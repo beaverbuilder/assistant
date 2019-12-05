@@ -129,7 +129,7 @@ export const User = ( { location, match, history } ) => {
 	const sectionProps = {
 		user,
 		isYou,
-		useForm: useFormContext,
+		useFormData: useFormContext,
 	}
 
 	const tabs = [
