@@ -1,8 +1,6 @@
 import React, { useState, useEffect, createRef, createContext, useContext } from 'react'
-import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
-import { Icon } from 'ui'
 import { getSystemConfig, useSystemState } from 'data'
 import './style.scss'
 
@@ -273,10 +271,9 @@ const WindowPanel = ( {
 	className,
 	children,
 	style,
-	topbar: TopBar,
 	...rest
 } ) => {
-	const { toggleIsHidden, toggleSize, size, shouldShowLabels, overlayToolbar } = useContext( Window.Context )
+	const { size } = useContext( Window.Context )
 
 	const classes = classname( {
 		'fl-asst-window': true,
@@ -284,20 +281,11 @@ const WindowPanel = ( {
 		'fl-asst-primary-content': true,
 	}, className )
 
-	const stopProp = e => e.stopPropagation()
-
-	const stopEvts = {
-		onMouseDown: stopProp,
-		onTouchStart: stopProp,
-	}
-
 	const styles = {
 		...style,
 		display: 'flex',
 		flexDirection: 'column',
 	}
-
-	const labelStyle = { marginLeft: 'var(--fl-asst-tiny-space)' }
 
 	const GrabBar = ( { ...rest } ) => {
 		const styles = {
@@ -310,6 +298,7 @@ const WindowPanel = ( {
 			top: 0,
 			left: 0,
 			right: 0,
+			zIndex: 1,
 		}
 		return (
 			<div className="fl-asst-window-grab-bar" style={ styles } { ...rest }>
@@ -320,45 +309,11 @@ const WindowPanel = ( {
 		)
 	}
 
-	const toolbarClasses = classname( {
-		'fl-asst-window-toolbar': true,
-		'fl-asst-window-drag-handle': true,
-		'fl-asst-window-overlay-toolbar': overlayToolbar,
-	} )
-
 	return (
 		<Flipped flipId="window" spring={ transition }>
 			<div className={ classes } style={ styles } { ...rest }>
-
 				<GrabBar />
-
-				{ /* Toolbar */ }
-				<div className={ toolbarClasses }>
-
-					{ 'function' === typeof TopBar && <TopBar /> }
-
-					<span { ...stopEvts } style={ { marginLeft: 'auto' } } >
-
-						{ /* Window Size */ }
-						<button onClick={ toggleSize }>
-							{ 'mini' === size && <Icon.Expand /> }
-							{ 'normal' === size && <Icon.Collapse /> }
-							{ shouldShowLabels && <span style={ labelStyle }>{
-								'mini' === size ?
-									__( 'Expand' ) : __( 'Compact' )
-							}</span> }
-						</button>
-
-						{ /* Hide Window */ }
-						<button onClick={ toggleIsHidden }>
-							<Icon.Close />
-							{ shouldShowLabels && <span style={ labelStyle }>{__( 'Hide' )}</span> }
-						</button>
-					</span>
-				</div>
-
-
-				<div className="fl-asst-window-content" { ...stopEvts }>{children}</div>
+				<div className="fl-asst-window-content">{children}</div>
 			</div>
 		</Flipped>
 	)

@@ -1,20 +1,16 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
-
+import AppMain from '../app'
+import { App as FLUID_Root } from 'fluid/ui'
 import {
 	Appearance,
 	App,
 	Icon,
 	Window,
 	Error,
-	Page,
-	Nav
+	Page
 } from 'assistant/ui'
-
-import AppMain from '../app'
-
-import { App as FLUID_Root } from 'fluid/ui'
 
 const getRouterProps = history => {
 	const props = {
@@ -26,6 +22,22 @@ const getRouterProps = history => {
 		props.initialEntries = history.entries
 	}
 	return props
+}
+
+// Top right buttons - only in standalone version
+const PanelActions = () => {
+	const { toggleIsHidden, toggleSize, size } = useContext( Window.Context )
+	return (
+		<>
+			<button onClick={ toggleSize }>
+				{ 'mini' === size && <Icon.Expand /> }
+				{ 'normal' === size && <Icon.Collapse /> }
+			</button>
+			<button onClick={ toggleIsHidden }>
+				<Icon.Close />
+			</button>
+		</>
+	)
 }
 
 /**
@@ -47,7 +59,7 @@ export const Assistant = () => {
 			<App.Provider>
 				<Appearance brightness={ brightness }>
 					<MainWindow>
-						<AppMain />
+						<AppMain actions={ <PanelActions /> } />
 					</MainWindow>
 				</Appearance>
 			</App.Provider>
@@ -99,7 +111,6 @@ const MainWindow = ( { children } ) => {
 			onChange={ onChanged }
 			shouldShowLabels={ shouldShowLabels }
 			shouldDisplayButton={ '' === hiddenAppearance }
-			toolbar={ WindowToolbar }
 		>
 			<Error.Boundary alternate={ WindowError }>
 				{children}
@@ -114,42 +125,5 @@ const WindowError = () => {
 			<h1>{__( 'We Have A Problem!' )}</h1>
 			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
 		</Page>
-	)
-}
-
-const WindowToolbar = () => {
-	const { isRoot, goToRoot } = useContext( Nav.Context )
-	const { label } = useContext( App.Context )
-	const labelStyle = {
-		padding: '2px 10px'
-	}
-	const iconWrapStyle = {
-		display: 'inline-flex',
-		transform: 'translateY(2px)',
-		paddingBottom: 4
-	}
-
-	const style = {
-		pointerEvents: 'none',
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-	}
-
-	return (
-		<span style={ style }>
-			{ isRoot && <span style={ labelStyle }>{__( 'Assistant' )}</span> }
-
-			{ ! isRoot && <>
-				<button onClick={ goToRoot } style={ {
-					pointerEvents: 'auto',
-					textDecoration: 'underline',
-					padding: '0 10px',
-				} }>{__( 'Assistant' )}</button>
-				<span style={ iconWrapStyle }><Icon.BreadcrumbArrow /></span>
-				<span style={ labelStyle }>{label}</span>
-			</> }
-		</span>
 	)
 }
