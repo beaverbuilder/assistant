@@ -76,10 +76,11 @@
 }
 
 .fl-asst-panel-toolbar {
+    flex: 0 0 auto;
     display: flex;
     flex-direction: row;
-    height: 36px;
-    padding: 0 5px;
+    min-height: 36px;
+    padding: 5px 5px 2px;
 
     .fl-asst-window-content & {
         cursor: move;

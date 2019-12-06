@@ -18,6 +18,6 @@ export const Appearance = ( {
 	}, className )
 
 	return (
-		<div className={ classes } { ...rest } />
+		<div className={ classes } { ...rest } style={{ maxHeight: '100%'}} />
 	)
 }
