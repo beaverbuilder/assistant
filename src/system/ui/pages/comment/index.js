@@ -5,31 +5,9 @@ import { Page, Button } from 'fluid/ui'
 import { getSystemConfig } from 'data'
 
 export const Comment = ( { location } ) => {
-	const { pluginURL } = getSystemConfig()
-
-	const defaultItem = {
-		approved: null,
-		author: null,
-		authorEmail: null,
-		authorIP: null,
-		content: null,
-		date: null,
-		editUrl: null,
-		id: null,
-		meta: null,
-		postId: null,
-		postTitle: null,
-		spam: false,
-		thumbnail: null,
-		time: null,
-		title: null,
-		trash: false,
-		url: null,
-	}
-
-	const item = undefined !== location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
+	const { item } = location.state
 	const { author, date, authorEmail, authorIP, content } = item
-
+	const { pluginURL } = getSystemConfig()
 	const hero = `${pluginURL}img/comment-hero-a.jpg`
 
 	const { renderForm } = Form.useForm( {

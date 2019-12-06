@@ -8,38 +8,7 @@ import { getPostActions } from './actions'
 import { setParentOptions } from './parent'
 
 export const Post = ( { location, match, history } ) => {
-
-	const defaultItem = {
-		author: null,
-		bbBranding: null,
-		bbCanEdit: true,
-		bbEditUrl: null,
-		bbIsEnabled: null,
-		isFavorite: false,
-		commentsAllowed: null,
-		content: null,
-		date: null,
-		editUrl: null,
-		id: null,
-		meta: null,
-		parent: 0,
-		slug: null,
-		status: null,
-		thumbnail: null,
-		title: null,
-		type: 'post',
-		url: null,
-		visibility: 'Public',
-	}
-
-	let item = defaultItem
-	if (
-		'undefined' !== typeof location.state &&
-		'undefined' !== typeof location.state.item
-	) {
-		item = { ...defaultItem, ...location.state.item }
-	}
-
+	const { item } = location.state
 	const { contentTypes, contentStatus, taxonomies } = getSystemConfig()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const wpRest = getWpRest()

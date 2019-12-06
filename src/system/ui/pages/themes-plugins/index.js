@@ -4,23 +4,7 @@ import { Form } from 'ui'
 import { Page } from 'fluid/ui'
 
 export const Plugin = ( { location = {} } ) => {
-
-	const defaultItem = {
-		author: null,
-		banner: null,
-		content: null,
-		key: null,
-		meta: null,
-		metaUpdated: null,
-		plugin: null,
-		thumbnail: null,
-		title: null,
-		type: 'plugin',
-		version: null,
-	}
-
-	const item = undefined !== location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
-
+	const { item } = location.state
 	const { banner, title, version, content } = item
 
 	const sectionData = {
@@ -63,23 +47,7 @@ export const Plugin = ( { location = {} } ) => {
 }
 
 export const Theme = ( { location = {} } ) => {
-
-	const defaultItem = {
-		author: null,
-		banner: null,
-		content: null,
-		key: null,
-		meta: null,
-		metaUpdated: null,
-		plugin: null,
-		thumbnail: null,
-		title: null,
-		type: 'theme',
-		version: null,
-	}
-
-	const item = 'undefined' !== typeof location.state.item ? { ...defaultItem, ...location.state.item } : defaultItem
-
+	const { item } = location.state
 	const { banner, title, content, version } = item
 
 	const sectionData = {
