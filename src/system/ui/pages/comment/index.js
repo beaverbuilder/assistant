@@ -60,7 +60,7 @@ export const Comment = ( { location } ) => {
 			<Page.Headline>{author}</Page.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
 
-			<div className="fl-asst-content-area" dangerouslySetInnerHTML={{ __html: content }}/>
+			<div className="fl-asst-content-area" dangerouslySetInnerHTML={ { __html: content } }/>
 
 			<div style={ { display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', margin: '10px 0 20px' } }>
 				<Button appearance="elevator" status="primary">

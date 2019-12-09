@@ -15,11 +15,7 @@ const renderNormal = () => {
 	render( <Assistant />, mountNode )
 }
 
-const unmountAssistant = () => {
-	if ( 'undefined' !== typeof mountNode ) {
-		unmountComponentAtNode( mountNode )
-	}
-}
+const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode( mountNode )
 
 if ( 'FLBuilder' in window ) {
 

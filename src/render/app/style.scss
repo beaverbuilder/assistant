@@ -5,23 +5,6 @@
         flex-direction: column;
         max-height: 100%;
         min-height: 0;
-
-        &.fl-asst-screen-card {
-            background: var(--fl-asst-surface-background);
-            color: var(--fl-asst-surface-color);
-            position: absolute;
-            bottom:0;
-            top:0;
-            width: 100%;
-            box-shadow: 0 0 40px rgba(0,0,0,.2);
-            transform-origin: top center;
-            overflow: auto;
-
-            &:first-child {
-                position: static;
-                box-shadow: none;
-            }
-        }
     }
     .fl-asst-window-size-mini .fl-asst-screen {
         border-bottom-left-radius: 15px;
@@ -92,69 +75,20 @@
     min-height: 0;
 }
 
+.fl-asst-panel-toolbar {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    min-height: 36px;
+    padding: 5px 5px 2px;
 
-
+    .fl-asst-window-content & {
+        cursor: move;
+    }
+}
 
 .fl-asst .remove-btn {
   margin-right: 0.5rem;
-}
-
-
-.fl-asst-transition-group {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    max-height: 100%;
-    min-height: 0;
-
-    .PUSH-enter {
-        transform: translateX(100%);
-    }
-    .PUSH-enter-active {
-        transition: transform 200ms ease-in;
-        transform: translateX(0%);
-    }
-    .PUSH-exit {
-        position: absolute;
-        top:0;
-        left:0;
-        width: 100%;
-        transform: translateX(0%);
-    }
-    .PUSH-exit-active {
-        position: absolute;
-        top:0;
-        left:0;
-        width: 100%;
-        transition: transform 200ms ease-in;
-        transform: translateX(-100%);
-    }
-
-    .POP-enter {
-
-        transform: translateX(-100%);
-    }
-    .POP-enter-active {
-
-        transition: transform 200ms ease-in;
-        transform: translateX(0%);
-    }
-    .POP-exit {
-        position: absolute;
-        top:0;
-        left:0;
-        width: 100%;
-        transform: translateX(0%);
-    }
-    .POP-exit-active {
-        position: absolute;
-        top:0;
-        left:0;
-        width: 100%;
-        transition: transform 200ms ease-in;
-        transform: translateX(-100%);
-    }
-
 }
 
 @media print {

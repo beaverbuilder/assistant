@@ -4,14 +4,12 @@ import { Page } from 'fluid/ui'
 import { Button, Nav } from 'assistant/ui'
 import './style.scss'
 
-import { ListExamples } from './lists'
 import { FormExamples } from './forms'
 import FLUIDExamples from './fluid'
 
 export const App = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-		<Nav.Route path={ `${match.url}/lists` } component={ ListExamples } />
 		<Nav.Route path={ `${match.url}/forms` } component={ FormExamples } />
 		<Nav.Route path={ `${match.url}/fluid` } component={ FLUIDExamples } />
 	</Nav.Switch>
@@ -21,7 +19,6 @@ const Main = ( { match } ) => {
 	return (
 		<Page title="App Examples">
 			<Button.Group direction='column'>
-				<Button to={ `${match.url}/lists` }>{__( 'List Examples' )}</Button>
 				<Button to={ `${match.url}/forms` }>{__( 'Form Examples' )}</Button>
 				<Button to={ `${match.url}/fluid` }>{__( 'FLUID Examples' )}</Button>
 			</Button.Group>

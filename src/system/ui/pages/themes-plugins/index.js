@@ -21,10 +21,10 @@ export const Plugin = ( { location = {} } ) => {
 		]
 	}
 
-	const { renderForm } = Form.useForm({
+	const { renderForm } = Form.useForm( {
 		sections: {
 			details: {
-				label: __('Details'),
+				label: __( 'Details' ),
 				fields: {
 					version: {
 						label: __( 'Version' ),
@@ -35,12 +35,12 @@ export const Plugin = ( { location = {} } ) => {
 				}
 			}
 		}
-	})
+	} )
 
 	return (
-		<Page title={ __( 'Plugin' ) } hero={banner}>
+		<Page title={ __( 'Plugin' ) } hero={ banner }>
 			<Page.Headline>{title}</Page.Headline>
-			<div dangerouslySetInnerHTML={{ __html: content }} />
+			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
 		</Page>
 	)
@@ -64,10 +64,10 @@ export const Theme = ( { location = {} } ) => {
 		]
 	}
 
-	const { renderForm } = Form.useForm({
+	const { renderForm } = Form.useForm( {
 		sections: {
 			details: {
-				label: __('Details'),
+				label: __( 'Details' ),
 				fields: {
 					version: {
 						label: __( 'Version' ),
@@ -78,12 +78,12 @@ export const Theme = ( { location = {} } ) => {
 				}
 			}
 		}
-	})
+	} )
 
 	return (
-		<Page title={ __( 'Plugin' ) } hero={banner}>
+		<Page title={ __( 'Plugin' ) } hero={ banner }>
 			<Page.Headline>{title}</Page.Headline>
-			<div dangerouslySetInnerHTML={{ __html: content }} />
+			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
 		</Page>
 	)

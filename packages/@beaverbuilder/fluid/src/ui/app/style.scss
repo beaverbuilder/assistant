@@ -14,6 +14,9 @@
 }
 
 .fl.uid {
+    color: var(--fluid-color);
+    font-size: 13px;
+
     .fluid-status-primary {
         --fluid-box-background: #F0F8FF;
         --fluid-box-color: #005DBA;
