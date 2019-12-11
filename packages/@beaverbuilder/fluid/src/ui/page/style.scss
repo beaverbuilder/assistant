@@ -1,4 +1,4 @@
-.fluid {
+.fl.uid {
 
     @mixin flex_column {
         box-sizing: border-box;
@@ -37,6 +37,8 @@
         flex: 1 1 auto;
         display: flex;
         flex-direction: column;
+        background-color: var(--fluid-background);
+        color: var(--fluid-color);
 
         .fluid-sticky-element {
             // Yea, all this for sticky headers

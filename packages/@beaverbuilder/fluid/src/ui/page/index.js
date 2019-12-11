@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import classname from 'classnames'
 import Nav from '../nav'
-import Button from '../button'
+import Section from './section'
 import './style.scss'
 
 const Page = ({
@@ -14,10 +14,7 @@ const Page = ({
     ...rest
 }) => {
     const { isRoot } = useContext( Nav.Context )
-
-    const classes = classname({
-        'fluid-page' : true
-    }, className )
+    const classes = classname( 'fluid-page', className )
 
     const style = {
         overflowX: 'hidden',
@@ -65,11 +62,17 @@ const Page = ({
     )
 }
 
+// Headline
 Page.Headline = ({ className, children, ...rest }) => {
     const classes = classname( 'fluid-page-headline', className )
     return (
         <div className={classes} role="heading" aria-level="2" {...rest}>{children}</div>
     )
 }
+Page.Headline.displayName = 'Page.Headline'
+
+// Section
+Page.Section = Section
+Page.Section.displayName = 'Page.Section'
 
 export default Page

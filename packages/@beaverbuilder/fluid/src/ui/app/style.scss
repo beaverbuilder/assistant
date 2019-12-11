@@ -59,4 +59,33 @@
         --fluid-box-hover-background: var(--fluid-destructive-hover-background);
         --fluid-accent: var(--fluid-destructive-color);
     }
+
+    &.fluid-color-scheme-dark {
+        --fluid-background: hsl(210, 13%, 16%);
+        --fluid-color: hsl(210, 15%, 90%);
+        --fluid-accent: red;
+
+        // Box Colors
+        --fluid-box-background: hsl(210, 17%, 5%);
+        --fluid-box-color: hsl(210, 11%, 65%);
+        --fluid-box-hover-background: hsl(210, 17%, 10%);
+
+        // Primary Colors
+        --fluid-primary-background: #EFF8FF;
+        --fluid-primary-color: #006AD4;
+        --fluid-primary-hover-background: #D8ECFF;
+
+        // Alert Colors
+        --fluid-alert-background: #FEF4EA;
+        --fluid-alert-color: #A95700;
+        --fluid-alert-hover-background: #FCE3CA;
+
+        // Destructive Colors
+        --fluid-destructive-background: #FEF3F1;
+        --fluid-destructive-color: #BC0A00;
+        --fluid-destructive-hover-background: #F9DAD4;
+
+        // Accent Color
+        --fluid-accent: #0075DB;
+    }
 }

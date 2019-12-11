@@ -19,7 +19,7 @@
 
         &:focus,
         &.is-focused {
-            box-shadow: inset 0px 0px 0px 2px white,
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
                         0px 0px 0px 2px var(--fluid-accent);
         }
 
