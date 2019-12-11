@@ -110,6 +110,9 @@ const config = {
         new MiniCssExtractPlugin( {
             filename: `fl-assistant-[name].bundle.css`,
         } ),
+		new webpack.DefinePlugin( {
+			__PRODUCTION__: production,
+		} ),
     ]
 }
 
