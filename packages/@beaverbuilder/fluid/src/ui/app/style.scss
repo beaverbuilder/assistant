@@ -1,37 +1,62 @@
 :root {
     --fluid-background: white;
     --fluid-color: black;
+
+    // Box Colors
     --fluid-box-background: #F1F5F9;
     --fluid-box-color: black;
     --fluid-box-hover-background: #E3EBF2;
+
+    // Primary Colors
+    --fluid-primary-background: #EFF8FF;
+    --fluid-primary-color: #006AD4;
+    --fluid-primary-hover-background: #D8ECFF;
+
+    // Alert Colors
+    --fluid-alert-background: #FEF4EA;
+    --fluid-alert-color: #A95700;
+    --fluid-alert-hover-background: #FCE3CA;
+
+    // Destructive Colors
+    --fluid-destructive-background: #FEF3F1;
+    --fluid-destructive-color: #BC0A00;
+    --fluid-destructive-hover-background: #F9DAD4;
+
+    // Accent Color
     --fluid-accent: #0075DB;
 
+    // Spacing
     --fluid-sm-space: 5px;
     --fluid-med-space: 10px;
     --fluid-lg-space: 20px;
+
+    // Base Sizes
+    --fluid-font-size: 13px;
     --fluid-radius: 7px;
-    --fluid-target-size: 32px;
+    --fluid-target-size: 32px; // Minimum click target
 }
 
 .fl.uid {
     color: var(--fluid-color);
-    font-size: 13px;
+    font-size: var(--fluid-font-size);
+    font-weight: normal;
+    line-height: 1.3;
 
     .fluid-status-primary {
-        --fluid-box-background: #F0F8FF;
-        --fluid-box-color: #005DBA;
-        --fluid-box-hover-background: #D8ECFF;
+        --fluid-box-background: var(--fluid-primary-background);
+        --fluid-box-color: var(--fluid-primary-color);
+        --fluid-box-hover-background: var(--fluid-primary-hover-background);
     }
     .fluid-status-alert {
-        --fluid-box-background: #FFF4E9;
-        --fluid-box-color: #914B01;
-        --fluid-box-hover-background: #FFEBD6;
-        --fluid-accent: #FFA03D;
+        --fluid-box-background: var(--fluid-alert-background);
+        --fluid-box-color: var(--fluid-alert-color);
+        --fluid-box-hover-background: var(--fluid-alert-hover-background);
+        --fluid-accent: var(--fluid-alert-color);
     }
     .fluid-status-destructive {
-        --fluid-box-background: #FFF1F2;
-        --fluid-box-color: #BC0013;
-        --fluid-box-hover-background: #FFE1E4;
-        --fluid-accent: #FF5163;
+        --fluid-box-background: var(--fluid-destructive-background);
+        --fluid-box-color: var(--fluid-destructive-color);
+        --fluid-box-hover-background: var(--fluid-destructive-hover-background);
+        --fluid-accent: var(--fluid-destructive-color);
     }
 }
