@@ -1,6 +1,6 @@
 import React from 'react'
-import { Page, Button } from 'fluid/ui'
-import { Icon } from 'assistant/ui'
+import { Page } from 'fluid/ui'
+import { Icon, Button } from 'assistant/ui'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 

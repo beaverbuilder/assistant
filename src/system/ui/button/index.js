@@ -1,11 +1,11 @@
 import React, { Children, cloneElement, useState, useLayoutEffect, useRef } from 'react'
 import { __ } from '@wordpress/i18n'
-
-//import { Link } from 'react-router-dom'
 import classname from 'classnames'
-import { Button } from 'fluid/ui'
+import { Button as FLUID_Button } from 'fluid/ui'
 import { Icon } from 'ui'
 import './style.scss'
+
+const Button = { ...FLUID_Button }
 
 const Rule = ( { className, direction: dir = 'horizontal', isHidden = false } ) => {
 	const classes = classname( className, {

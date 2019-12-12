@@ -1,7 +1,7 @@
 import React from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Form, Icon } from 'ui'
-import { Page, Button } from 'fluid/ui'
+import { Form, Icon, Button } from 'ui'
+import { Page } from 'fluid/ui'
 import { getSystemConfig } from 'data'
 
 export const Comment = ( { location } ) => {
