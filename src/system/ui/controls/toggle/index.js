@@ -15,7 +15,7 @@ export const ToggleControl = props => {
 	useEffect( () => setValue( initialValue ), [ initialValue ] )
 
 	const classes = classname( {
-		'fl-asst-button': true,
+		'fluid-button': true,
 		'fl-asst-form-control-toggle': true,
 	}, className )
 

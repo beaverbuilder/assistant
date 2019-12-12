@@ -151,7 +151,7 @@ export const Posts = ( {
 							<div className="fl-asst-item-extras-right">
 								<Clipboard
 									button-tabIndex={ '-1' }
-									button-className={ 'fl-asst-button fl-asst-button-appearance-normal' }
+									button-className={ 'fluid-button' }
 									data-clipboard-text={ item.url }
 								>
 									<Icon.Link />

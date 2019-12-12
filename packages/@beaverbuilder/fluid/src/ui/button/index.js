@@ -17,7 +17,6 @@ const Button = forwardRef( ( props, ref ) => {
 
 	const classes = classname( {
 		'fluid-button': true,
-		'fl-asst-button' : true, // TEMP
 		'is-selected': isSelected,
         [`fluid-status-${status}`] : status,
         [`fluid-appearance-${appearance}`] : appearance

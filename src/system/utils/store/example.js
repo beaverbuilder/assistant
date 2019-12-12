@@ -23,7 +23,7 @@ export const ExampleComponent1 = () => {
 	const { setFooBar } = getDispatch( STORE_KEY )
 
 	return (
-		<button onClick={ () => setFooBar( ! fooBar ) }  className='fl-asst-button'>
+		<button onClick={ () => setFooBar( ! fooBar ) }  className='fluid-button'>
 			{ fooBar ? 'Change us again!' : 'We share state. Change us!' }
 		</button>
 	)
@@ -34,7 +34,7 @@ export const ExampleComponent2 = () => {
 	const { setFooBar } = getDispatch( STORE_KEY )
 
 	return (
-		<button onClick={ () => setFooBar( ! fooBar ) }  className='fl-asst-button'>
+		<button onClick={ () => setFooBar( ! fooBar ) }  className='fluid-button'>
 			{ fooBar ? 'Change us again!' : 'We share state. Change us!' }
 		</button>
 	)
