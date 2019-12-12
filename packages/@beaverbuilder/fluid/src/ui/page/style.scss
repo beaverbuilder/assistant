@@ -49,6 +49,7 @@
             position: sticky;
             top: var(--fluid-top-inset);
             background: var(--fluid-background);
+            z-index: 9;
         }
 
         .fluid-page-toolbar-content {
@@ -75,19 +76,22 @@
             background: var(--fluid-background);
             z-index: 1;
         }
-
-        .fluid-page-footer {
-            box-sizing: border-box;
-            min-height: 50px;
-            flex: 0 0 auto;
-            display: flex;
-            flex-direction: row;
-            align-items: stretch;
-            justify-content: center;
-            background: var(--fluid-background);
-            border-top: 2px solid var(--fluid-box-background);
-            z-index: 2;
-            padding: 5px;
-        }
+    }
+    .fluid-page-footer {
+        position: absolute;
+        bottom:0;
+        left:0;
+        right:0;
+        box-sizing: border-box;
+        min-height: 50px;
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        background: var(--fluid-background);
+        border-top: 2px solid var(--fluid-box-background);
+        z-index: 9;
+        padding: 5px;
     }
 }

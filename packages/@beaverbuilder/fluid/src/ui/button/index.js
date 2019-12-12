@@ -17,6 +17,7 @@ const Button = forwardRef( ( props, ref ) => {
 
 	const classes = classname( {
 		'fluid-button': true,
+		'fl-asst-button' : true, // TEMP
 		'is-selected': isSelected,
         [`fluid-status-${status}`] : status,
         [`fluid-appearance-${appearance}`] : appearance
@@ -26,6 +27,7 @@ const Button = forwardRef( ( props, ref ) => {
 		...rest,
 		ref,
 		className: classes,
+		role: 'button',
 	}
 
 	// Determine the tag for this button based on props.

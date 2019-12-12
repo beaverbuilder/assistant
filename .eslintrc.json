@@ -33,7 +33,8 @@
       "FL_ASSISTANT_INITIAL_STATE": "readable",
       "FL_ASSISTANT_CONFIG": "readable",
       "FL": "readable",
-      "FLBuilder": "readable"
+      "FLBuilder": "readable",
+      "__PRODUCTION__": "readable"
     },
     "rules": {
         "camelcase": [

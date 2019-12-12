@@ -1,6 +1,6 @@
 import React from 'react'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
-import { Nav, Button, Icon } from 'ui'
+import { Button, Icon } from 'ui'
 import { __ } from '@wordpress/i18n'
 import { useInitialFocus } from 'utils/react'
 import './style.scss'
@@ -22,21 +22,21 @@ registerSection( 'fl-asst-quick-actions', {
 
 		return (
 			<div className="fl-asst-quick-actions">
-				<Nav.ButtonLink to="/fl-search">
+				<Button to="/fl-search">
 					<Icon.Search />
-				</Nav.ButtonLink>
+				</Button>
 				<Button href={ dashURL }>
 					<span className="dashicons dashicons-wordpress-alt"></span>
 				</Button>
 				<Button onClick={ toggleBrightness }>
 					<Icon.Brightness />
 				</Button>
-				<Nav.ButtonLink to={ {
+				<Button to={ {
 					pathname: '/fl-content/post/new',
 					state: { detailBaseUrl: '/fl-content/post' }
 				} }>
 					<Icon.Plus />
-				</Nav.ButtonLink>
+				</Button>
 			</div>
 		)
 	},
@@ -117,12 +117,18 @@ registerSection( 'fl-home-apps', {
 					}
 
 					return (
-						<Nav.Link to={ location } className="fl-asst-app-grid-item" key={ i } innerRef={ ref }>
+						<Button
+							to={ location }
+							className="fl-asst-app-grid-item"
+							key={ i }
+							innerRef={ ref }
+							appearance="transparent"
+						>
 							<div className="fl-asst-app-icon" style={ style }>
 								{ 'function' === typeof icon && icon( iconProps ) }
 							</div>
 							<label>{app.label}</label>
-						</Nav.Link>
+						</Button>
 					)
 				} )}
 			</div>

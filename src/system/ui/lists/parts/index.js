@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import classname from 'classnames'
-import { Nav, Page } from '../../'
+import { Nav, Page } from 'ui'
 import { isColor } from 'utils/color'
 import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'

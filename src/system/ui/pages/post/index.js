@@ -1,6 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Button, Form, List } from 'ui'
+import { Page } from 'fluid/ui'
+import { Button, Form, List } from 'ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
@@ -308,23 +309,18 @@ export const Post = ( { location, match, history } ) => {
 	const Footer = () => {
 		return (
             <>
-				<Page.Toolbar>
-					<Button
-						onClick={ resetForm }
-					>{__( 'Cancel' )}</Button>
-					<div style={ { flex: '1 1 auto', margin: 'auto' } } />
-					<Button type="submit" onClick={ submitForm } >{__( 'Publish' )}</Button>
-				</Page.Toolbar>
+			<Button
+				onClick={ resetForm }
+			>{__( 'Cancel' )}</Button>
+			<div style={ { flex: '1 1 auto', margin: 'auto' } } />
+			<Button type="submit" status="primary" onClick={ submitForm } >{__( 'Publish' )}</Button>
             </>
 		)
 	}
 
 	return (
-		<Page
-			title={ labels.editItem }
-			footer={ hasChanges && <Footer /> }
-		>
-			<Page.TitleCard title={ values.title } />
+		<Page title={ labels.editItem } footer={ hasChanges && <Footer /> } >
+			<Page.Headline>{values.title}</Page.Headline>
 			{ renderForm() }
 		</Page>
 	)

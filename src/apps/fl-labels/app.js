@@ -155,7 +155,11 @@ export const App = () => {
 						/>
 						<div style={ { display: 'flex', flex: '1 1 auto' } }>
 							<Button onClick={ () => setEditingLabel( null ) }>{ __( 'Cancel' ) }</Button>
-							<Button onClick={ saveLabel } style={ { marginLeft: 'auto' } }>{ __( 'Save' ) }</Button>
+							<Button
+								onClick={ saveLabel }
+								style={ { marginLeft: 'auto' } }
+								status="primary"
+							>{ __( 'Save' ) }</Button>
 						</div>
 					</>
 				)
@@ -174,8 +178,8 @@ export const App = () => {
 			label: label.label,
 			actions: (
 				<Button.Group appearance="buttons">
-					<Button onClick={ () => setEditingLabel( label ) }>{ __( 'Edit' ) }</Button>
-					<Button onClick={ () => deleteLabel( label.id ) } className="fl-asst-destructive">
+					<Button onClick={ () => setEditingLabel( label ) }><Icon.Edit /></Button>
+					<Button onClick={ () => deleteLabel( label.id ) } status="destructive">
 						<Icon.Trash />
 					</Button>
 				</Button.Group>

@@ -42,25 +42,34 @@ const Page = ({
         )
     }
 
-    return (
-        <div className={classes} style={style} {...rest}>
-            <Hero>{hero}</Hero>
+    const wrapStyle = {
+        flex: '1 1 auto',
+        position: 'relative',
+        minHeight: 0,
+        maxHeight: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+    }
 
-            <div className="fluid-page-content">
-                <div className="fluid-toolbar fluid-sticky-element">
-                    { !isRoot  && <Nav.BackButton /> }
-                    { title && <div className="fluid-page-toolbar-content">
-                        <span  role="heading" aria-level="1">{title}</span>
-                    </div> }
-                    {actions}
-                </div>
-                <div className="fluid-pad">
-                    <Error.Boundary>{children}</Error.Boundary>
+    return (
+        <div className="fluid-page-wrap" style={wrapStyle}>
+            <div className={classes} style={style} {...rest}>
+                <Hero>{hero}</Hero>
+
+                <div className="fluid-page-content">
+                    <div className="fluid-toolbar fluid-sticky-element">
+                        { !isRoot  && <Nav.BackButton /> }
+                        { title && <div className="fluid-page-toolbar-content">
+                            <span  role="heading" aria-level="1">{title}</span>
+                        </div> }
+                        {actions}
+                    </div>
+                    <div className="fluid-pad">
+                        <Error.Boundary>{children}</Error.Boundary>
+                    </div>
                 </div>
             </div>
-            { footer && <div className="fluid-page-footer">
-                {footer}
-            </div> }
+            { footer && <div className="fluid-page-footer">{footer}</div> }
         </div>
     )
 }

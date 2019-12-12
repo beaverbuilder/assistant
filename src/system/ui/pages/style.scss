@@ -57,12 +57,6 @@
         }
     }
 
-    .fl-asst-stick-to-top {
-        position: sticky;
-        top:0;
-        background: var(--fl-asst-surface-background);
-    }
-
     .fl-asst-content-area {
         margin: var(--fl-asst-outer-space) calc( 0px - var(--fl-asst-outer-space) );
         padding: 0 var(--fl-asst-outer-space);

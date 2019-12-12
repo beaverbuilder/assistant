@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
-import { Page, Nav, Icon } from 'assistant/ui'
+import { Page, Nav, Icon, Button } from 'assistant/ui'
 import { SummaryTab, PostTypeTab } from './tabs'
 
 export const Content = ( { match } ) => (
@@ -47,9 +47,9 @@ const Main = () => {
 		}
 		return (
 			<>
-				<Nav.ButtonLink to={ to } appearance="transparent">
+				<Button to={ to }>
 					<Icon.Plus />
-				</Nav.ButtonLink>
+				</Button>
 			</>
 		)
 	}

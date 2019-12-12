@@ -1,53 +1,11 @@
-import React, { forwardRef, Children, cloneElement, useState, useLayoutEffect, useRef } from 'react'
+import React, { Children, cloneElement, useState, useLayoutEffect, useRef } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Link } from 'react-router-dom'
+
+//import { Link } from 'react-router-dom'
 import classname from 'classnames'
+import { Button } from 'fluid/ui'
 import { Icon } from 'ui'
 import './style.scss'
-
-export const Button = forwardRef( ( props, ref ) => {
-	const {
-		className,
-		to,
-		href,
-		onClick,
-		isSelected = false,
-		appearance = 'normal',
-		...rest
-	} = props
-
-	const classes = classname( {
-		'fl-asst-button': true,
-		'fl-asst-is-selected': isSelected,
-		[`fl-asst-button-appearance-${appearance}`]: appearance,
-	}, className )
-
-	let newProps = {
-		...rest,
-		ref,
-		className: classes,
-	}
-
-	// Determine the tag for this button based on props.
-	let Tag = 'button'
-	if ( to || href ) {
-
-		// Routing Link
-		Tag = 'a'
-		if ( href ) {
-			newProps.href = href
-		} else {
-			Tag = Link
-			newProps.to = to
-		}
-	} else {
-		newProps.onClick = onClick
-	}
-
-	return (
-		<Tag { ...newProps } />
-	)
-} )
 
 const Rule = ( { className, direction: dir = 'horizontal', isHidden = false } ) => {
 	const classes = classname( className, {
@@ -221,3 +179,7 @@ Button.renderActions = actions => {
 		)
 	} )
 }
+
+export { Button }
+
+export default Button

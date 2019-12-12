@@ -1,58 +1,4 @@
 .fl-asst {
-    .fl-asst-button {
-        display: inline-flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        flex: 0 0 auto;
-        padding: 0 10px;
-        background: var(--fl-asst-surface-background);
-        color: var(--fl-asst-surface-color);
-        border: 2px solid var(--fl-asst-secondary-surface-background);
-        min-height: var(--fl-asst-target-size);
-        text-decoration: none;
-        font-weight: 500;
-
-        &:hover {
-            background: transparent;
-            text-decoration: none;
-            border: 2px solid var(--fl-asst-accent-color);
-            box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background);
-        }
-
-        &:focus {
-            z-index: 2; // ensure box shadow doesn't get obscured
-            outline: none;
-            color: var(--fl-asst-surface-color);
-            border: 2px solid var(--fl-asst-accent-color);
-            background: var(--fl-asst-secondary-surface-background);
-        }
-
-        &.fl-asst-destructive {
-            --fl-asst-accent-color: var(--fl-asst-red);
-            color: var(--fl-asst-red);
-        }
-
-        &.fl-asst-button-appearance-transparent {
-            background: transparent;
-            box-shadow: none;
-            border: none;
-            outline: none;
-        }
-    }
-
-    .fl-asst-secondary-surface {
-        .fl-asst-button,
-        .fl-asst-button-group {
-            background-color: var(--fl-asst-surface-background);
-            color: var(--fl-asst-surface-color);
-        }
-    }
-
-    .fl-asst-button-label {
-        margin-left: 8px;
-    }
 
     .fl-asst-button-group {
         box-sizing: border-box;
@@ -75,21 +21,8 @@
             flex-direction: column;
         }
 
-        .fl-asst-button {
-            border: none;
-
-            &:hover {
-                box-shadow: none;
-            }
-
-            &:focus {
-                box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
-                            0px 0px 0px 2px var(--fl-asst-accent-color);
-            }
-        }
-
         &.fl-asst-button-group-appearance-normal {
-            .fl-asst-button {
+            .fluid-button {
                 background: transparent;
                 border-radius: 4px;
                 z-index:1;
@@ -113,25 +46,9 @@
             padding: 2px;
             min-height: var(--fl-asst-target-size);
 
-            .fl-asst-button {
+            .fluid-button {
                 margin-right: var(--fl-asst-tiny-space);
 				margin-bottom: var(--fl-asst-tiny-space);
-                border: 2px solid var(--fl-asst-secondary-surface-background);
-
-                &:hover {
-                    background: transparent;
-                    text-decoration: none;
-                    border: 2px solid var(--fl-asst-accent-color);
-                    box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background);
-                }
-
-                &:focus {
-                    z-index: 2; // ensure box shadow doesn't get obscured
-                    outline: none;
-                    border: 2px solid var(--fl-asst-accent-color);
-                    background: var(--fl-asst-secondary-surface-background);
-                    box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background);
-                }
 
                 &:last-child {
                     margin-right: 0;
@@ -151,7 +68,7 @@
             align-self: stretch;
             padding-bottom: 2px;
 
-            .fl-asst-button {
+            .fluid-button {
                 margin: 0;
                 background: transparent;
                 border-radius: 0;
@@ -180,7 +97,7 @@
                 }
 
                 // See Nav.Tabs
-                &.fl-asst-button.fl-asst-more-btn {
+                &.fluid-button.fl-asst-more-btn {
                     margin-left:auto;
                 }
             }
@@ -207,10 +124,6 @@
             grid-gap: var(--fl-asst-tiny-space);
             grid-template-columns: 1fr 1fr;
             margin: -3px;
-
-            .fl-asst-button {
-                background: var(--fl-asst-secondary-surface-background);
-            }
         }
     }
 

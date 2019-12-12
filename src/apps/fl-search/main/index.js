@@ -77,12 +77,14 @@ export const Main = ( { match } ) => {
 						placeholder={ __( 'Search' ) }
 						ref={ inputRef }
 					/>
-					{ '' !== keyword && <Button appearance="transparent" onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
-					{ '' !== keyword && loading &&
+					<span style={ { marginLeft: 5 } }>
+						{ '' !== keyword && <Button onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
+						{ '' !== keyword && loading &&
 						<div className='fl-asst-search-spinner'>
 							<Icon.SmallSpinner/>
 						</div>
-					}
+						}
+					</span>
 				</div>
 			</Page.Pad>
 		)

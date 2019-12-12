@@ -1,19 +1,8 @@
 import React, { useContext } from 'react'
-import classname from 'classnames'
 import { Button, Icon } from 'ui'
 import { Nav as FLUID_Nav } from 'fluid/ui'
 
 const Nav = { ...FLUID_Nav }
-
-Nav.ButtonLink = ( { className, appearance, ...rest } ) => {
-	const classes = classname( {
-		'fl-asst-button': true,
-		[`fl-asst-button-appearance-${appearance}`]: appearance
-	}, className )
-	return (
-		<Nav.Link className={ classes } { ...rest } />
-	)
-}
 
 Nav.Tabs = ( { tabs = [] } ) => {
 	const { path, history } = useContext( Nav.Context )

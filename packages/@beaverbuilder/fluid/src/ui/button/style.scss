@@ -11,14 +11,21 @@
         border-radius: var(--fluid-radius);
         min-height: var(--fluid-target-size);
         padding: 0 var(--fluid-med-space);
+        text-decoration: none;
+        font-weight: normal;
 
         &:hover,
         &.is-hovering {
+            text-decoration: none;
             background: var(--fluid-box-hover-background);
         }
 
         &:focus,
         &.is-focused {
+            top:0;
+            z-index: 2; // ensure box shadow doesn't get obscured
+            outline: none;
+            text-decoration: none;
             box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
                         0px 0px 0px 2px var(--fluid-accent);
         }
@@ -27,6 +34,13 @@
             height: 45px;
             width: 45px;
             border-radius: 50%;
+        }
+
+        &.fluid-appearance-transparent {
+            background: transparent;
+            box-shadow: none;
+            border: none;
+            outline: none;
         }
     }
 }

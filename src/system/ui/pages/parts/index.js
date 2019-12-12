@@ -115,10 +115,4 @@ export const RegisteredSections = ( { location, data } ) => {
 	} )
 }
 
-export const Empty = ( { children } ) => {
-	return (
-		<div className="fl-asst-empty-page-message">
-			{children}
-		</div>
-	)
-}
+export const Empty = ( { children } ) => <div className="fl-asst-empty-page-message">{children}</div>

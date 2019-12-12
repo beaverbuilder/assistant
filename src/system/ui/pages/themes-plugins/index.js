@@ -7,20 +7,6 @@ export const Plugin = ( { location = {} } ) => {
 	const { item } = location.state
 	const { banner, title, version, content } = item
 
-	const sectionData = {
-		plugin: item,
-		actions: [
-			{
-				label: __( 'Update' ),
-				onClick: () => {},
-			},
-			{
-				label: __( 'Deactivate' ),
-				onClick: () => {},
-			},
-		]
-	}
-
 	const { renderForm } = Form.useForm( {
 		sections: {
 			details: {
@@ -49,20 +35,6 @@ export const Plugin = ( { location = {} } ) => {
 export const Theme = ( { location = {} } ) => {
 	const { item } = location.state
 	const { banner, title, content, version } = item
-
-	const sectionData = {
-		plugin: item,
-		actions: [
-			{
-				label: __( 'Update' ),
-				onClick: () => {},
-			},
-			{
-				label: __( 'Deactivate' ),
-				onClick: () => {},
-			},
-		]
-	}
 
 	const { renderForm } = Form.useForm( {
 		sections: {
