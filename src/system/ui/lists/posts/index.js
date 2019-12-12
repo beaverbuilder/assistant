@@ -157,7 +157,7 @@ export const Posts = ( {
 									<Icon.Link />
 								</Clipboard>
 								<Button onClick={ favoritePost } tabIndex="-1" className={ item.isFavorite ? 'fl-asst-is-favorite' : '' }>
-									{ item.isFavorite ? <Icon.FavoriteSolid /> : <Icon.Favorite /> }
+									{ item.isFavorite ? <Icon.BookmarkSolid /> : <Icon.Bookmark /> }
 								</Button>
 								<Button onClick={ clonePost } tabIndex="-1">
 									<Icon.Clone />
@@ -213,7 +213,7 @@ export const Posts = ( {
 					if ( item.isFavorite ) {
 						marks.push(
 							<span style={ { color: 'var(--fl-asst-pink)' } }>
-								<Icon.FavoriteSolid />
+								<Icon.BookmarkSolid />
 							</span>
 						)
 					}

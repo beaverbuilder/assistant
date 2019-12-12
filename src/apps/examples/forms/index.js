@@ -1,9 +1,10 @@
 import React from 'react'
-import { Form, Page } from 'assistant/ui'
+import { Page } from 'fluid/ui'
+import { Form } from 'assistant/ui'
 
 export const FormExamples = () => {
 	return (
-		<Page title="Form Examples" shouldPadSides={ false }>
+		<Page title="Form Examples">
 			<Form.Test />
 		</Page>
 	)

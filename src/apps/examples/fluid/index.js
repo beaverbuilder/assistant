@@ -41,7 +41,8 @@ const IconItem = ({ label, icon: Icon }) => {
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'center',
-			alignItems: 'center'
+			alignItems: 'center',
+			textAlign: 'center',
 		}}>
 			<div style={{ marginBottom: 10 }}><Icon /></div>
 			<div>{label}</div>
@@ -80,14 +81,14 @@ const App = () => {
 				<Button className="is-focused">Focused</Button>
 			</ButtonRow>
 			<ButtonRow title='Primary (status="primary")'>
-				<Button status="primary">{__('Button')}</Button>
-				<Button status="primary" className="is-hovering">Hovering</Button>
-				<Button status="primary" className="is-focused">Focused</Button>
+				<Button status="primary"><Icon.Link />&nbsp;&nbsp;{__('Button')}</Button>
+				<Button status="primary" className="is-hovering"><Icon.Edit />&nbsp;&nbsp;Hovering</Button>
+				<Button status="primary" className="is-focused"><Icon.Clone />&nbsp;&nbsp;Focused</Button>
 			</ButtonRow>
 			<ButtonRow title='Alert (status="alert")'>
-				<Button status="alert">{__('Button')}</Button>
-				<Button status="alert" className="is-hovering">Hovering</Button>
-				<Button status="alert" className="is-focused">Focused</Button>
+				<Button status="alert"><Icon.Spam />&nbsp;&nbsp;{__('Button')}</Button>
+				<Button status="alert" className="is-hovering"><Icon.Spam />&nbsp;&nbsp;Hovering</Button>
+				<Button status="alert" className="is-focused"><Icon.Spam />&nbsp;&nbsp;Focused</Button>
 			</ButtonRow>
 			<ButtonRow title='Destructive (status="destructive")'>
 				<Button status="destructive"><Icon.Trash />&nbsp;&nbsp;{__('Button')}</Button>
@@ -116,6 +117,10 @@ const App = () => {
 					<IconItem label={__('Reply')} icon={Icon.Reply} />
 					<IconItem label={__('Approve')} icon={Icon.Approve} />
 					<IconItem label={__('Reject')} icon={Icon.Reject} />
+					<IconItem label={__('Link')} icon={Icon.Link} />
+					<IconItem label={__('Clone')} icon={Icon.Clone} />
+					<IconItem label={__('Bookmark')} icon={Icon.Bookmark} />
+					<IconItem label={__('Bookmark - Solid')} icon={Icon.BookmarkSolid} />
 				</div>
 			</Page.Section>
 

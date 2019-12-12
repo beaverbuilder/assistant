@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import classname from 'classnames'
 import Nav from '../nav'
 import Section from './section'
+import Error from '../error'
 import './style.scss'
 
 const Page = ({
@@ -53,7 +54,9 @@ const Page = ({
                     </div> }
                     {actions}
                 </div>
-                <div className="fluid-pad">{children}</div>
+                <div className="fluid-pad">
+                    <Error.Boundary>{children}</Error.Boundary>
+                </div>
             </div>
             { footer && <div className="fluid-page-footer">
                 {footer}
