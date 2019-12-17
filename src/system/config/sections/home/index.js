@@ -22,19 +22,19 @@ registerSection( 'fl-asst-quick-actions', {
 
 		return (
 			<div className="fl-asst-quick-actions">
-				<Button to="/fl-search" title={ __( 'Search' ) }>
+				<Button to="/fl-search" appearance="elevator" title={ __( 'Search' ) }>
 					<Icon.Search />
 				</Button>
-				<Button href={ dashURL } title={ __( 'Go to Admin' ) }>
+				<Button href={ dashURL } appearance="elevator" title={ __( 'Go to Admin' ) }>
 					<span className="dashicons dashicons-wordpress-alt"></span>
 				</Button>
-				<Button onClick={ toggleBrightness } title={ __( 'Toggle UI Brightness' ) }>
+				<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
 					<Icon.Brightness />
 				</Button>
 				<Button to={ {
 					pathname: '/fl-content/post/new',
 					state: { detailBaseUrl: '/fl-content/post' }
-				} } title={ __( 'Create Post' ) }>
+				} } appearance="elevator" title={ __( 'Create Post' ) }>
 					<Icon.Plus />
 				</Button>
 			</div>
