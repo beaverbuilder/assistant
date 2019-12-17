@@ -9,7 +9,8 @@ import {
 	Icon,
 	Window,
 	Error,
-	Page
+	Page,
+	Button
 } from 'assistant/ui'
 
 const getRouterProps = history => {
@@ -27,15 +28,17 @@ const getRouterProps = history => {
 // Top right buttons - only in standalone version
 const PanelActions = () => {
 	const { toggleIsHidden, toggleSize, size } = useContext( Window.Context )
+
+	const toggleTitle = 'mini' === size ? __('Expand Panel') : __('Shrink Panel')
 	return (
 		<>
-			<button onClick={ toggleSize }>
+			<Button onClick={ toggleSize } title={toggleTitle} style={{ marginRight: 5 }}>
 				{ 'mini' === size && <Icon.Expand /> }
 				{ 'normal' === size && <Icon.Collapse /> }
-			</button>
-			<button onClick={ toggleIsHidden }>
+			</Button>
+			<Button onClick={ toggleIsHidden } title={__('Hide Assistant')}>
 				<Icon.Close />
-			</button>
+			</Button>
 		</>
 	)
 }

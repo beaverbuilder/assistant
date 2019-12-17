@@ -75,10 +75,10 @@ Nav.Link.displayName = 'Nav.Link'
 
 Nav.withRouter = withRouter
 
-Nav.BackButton = () => {
+Nav.BackButton = props => {
     const { history } = useContext( Nav.Context )
     return (
-        <Button onClick={history.goBack}>
+        <Button onClick={history.goBack} title="Back" {...props}>
             <Icon.BackArrow />
         </Button>
     )

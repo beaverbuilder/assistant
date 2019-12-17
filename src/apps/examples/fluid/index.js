@@ -53,7 +53,13 @@ const IconItem = ( { label, icon: Icon } ) => {
 const App = () => {
 	const { pluginURL } = getSystemConfig()
 
-	const Footer = () => <mark>This is the page footer</mark>
+	const Footer = () => (
+		<>
+			<Button className="Special-button">Button</Button>
+			<Button title="I'm a button" style={{ marginLeft: 'auto' }}>Button</Button>
+			<Button status="primary">Publish</Button>
+		</>
+	)
 	return (
 		<Page
 			title="FLUID Page Example"
@@ -64,24 +70,24 @@ const App = () => {
 			<div>Buttons and stuff</div>
 
 			<ButtonSpacedRow>
-				<Button appearance="elevator">
+				<Button title={__('Edit')} appearance="elevator">
 					<Icon.Edit />
 				</Button>
-				<Button appearance="elevator" status="primary">
+				<Button title={__('Restore')} appearance="elevator" status="primary">
 					<Icon.Restore />
 				</Button>
-				<Button appearance="elevator" status="alert">
+				<Button title={__('Mark as Spam')} appearance="elevator" status="alert">
 					<Icon.Spam />
 				</Button>
-				<Button appearance="elevator" status="destructive">
+				<Button title={__('Move to Trash')} appearance="elevator" status="destructive">
 					<Icon.Trash />
 				</Button>
 			</ButtonSpacedRow>
 
 			<ButtonRow title="Normal">
-				<Button>{__( 'Button' )}</Button>
-				<Button className="is-hovering">Hovering</Button>
-				<Button className="is-focused">Focused</Button>
+				<Button title="Standard Button">{__( 'Button' )}</Button>
+				<Button title="Hovering" className="is-hovering">Hovering</Button>
+				<Button title="Focused" className="is-focused">Focused</Button>
 			</ButtonRow>
 			<ButtonRow title='Primary (status="primary")'>
 				<Button status="primary"><Icon.Link />&nbsp;&nbsp;{__( 'Button' )}</Button>
@@ -94,7 +100,7 @@ const App = () => {
 				<Button status="alert" className="is-focused"><Icon.Spam />&nbsp;&nbsp;Focused</Button>
 			</ButtonRow>
 			<ButtonRow title='Destructive (status="destructive")'>
-				<Button status="destructive"><Icon.Trash />&nbsp;&nbsp;{__( 'Button' )}</Button>
+				<Button status="destructive" title="Sounds Trashy"><Icon.Trash />&nbsp;&nbsp;{__( 'Button' )}</Button>
 				<Button status="destructive" className="is-hovering"><Icon.Trash />&nbsp;&nbsp;Hovering</Button>
 				<Button status="destructive" className="is-focused"><Icon.Trash />&nbsp;&nbsp;Focused</Button>
 			</ButtonRow>

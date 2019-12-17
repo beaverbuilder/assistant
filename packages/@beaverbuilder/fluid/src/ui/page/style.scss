@@ -83,15 +83,24 @@
         left:0;
         right:0;
         box-sizing: border-box;
-        min-height: 50px;
+        min-height: 55px;
         flex: 0 0 auto;
         display: flex;
         flex-direction: row;
         align-items: stretch;
-        justify-content: center;
+        justify-content: flex-start;
         background: var(--fluid-background);
         border-top: 2px solid var(--fluid-box-background);
         z-index: 9;
-        padding: 5px;
+        padding: var(--fluid-sm-space);
+        padding-bottom: 15px;
+
+        & > .fluid-button {
+            margin-right: var(--fluid-sm-space);
+
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
     }
 }
