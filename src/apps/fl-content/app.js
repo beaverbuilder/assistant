@@ -47,7 +47,7 @@ const Main = () => {
 		}
 		return (
 			<>
-				<Button to={ to } title={__('Create New')}>
+				<Button to={ to } title={ __( 'Create New' ) }>
 					<Icon.Plus />
 				</Button>
 			</>

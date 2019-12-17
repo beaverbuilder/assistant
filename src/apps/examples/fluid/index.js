@@ -56,7 +56,7 @@ const App = () => {
 	const Footer = () => (
 		<>
 			<Button className="Special-button">Button</Button>
-			<Button title="I'm a button" style={{ marginLeft: 'auto' }}>Button</Button>
+			<Button title="I'm a button" style={ { marginLeft: 'auto' } }>Button</Button>
 			<Button status="primary">Publish</Button>
 		</>
 	)
@@ -70,16 +70,16 @@ const App = () => {
 			<div>Buttons and stuff</div>
 
 			<ButtonSpacedRow>
-				<Button title={__('Edit')} appearance="elevator">
+				<Button title={ __( 'Edit' ) } appearance="elevator">
 					<Icon.Edit />
 				</Button>
-				<Button title={__('Restore')} appearance="elevator" status="primary">
+				<Button title={ __( 'Restore' ) } appearance="elevator" status="primary">
 					<Icon.Restore />
 				</Button>
-				<Button title={__('Mark as Spam')} appearance="elevator" status="alert">
+				<Button title={ __( 'Mark as Spam' ) } appearance="elevator" status="alert">
 					<Icon.Spam />
 				</Button>
-				<Button title={__('Move to Trash')} appearance="elevator" status="destructive">
+				<Button title={ __( 'Move to Trash' ) } appearance="elevator" status="destructive">
 					<Icon.Trash />
 				</Button>
 			</ButtonSpacedRow>

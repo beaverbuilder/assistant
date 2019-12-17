@@ -29,14 +29,14 @@ const getRouterProps = history => {
 const PanelActions = () => {
 	const { toggleIsHidden, toggleSize, size } = useContext( Window.Context )
 
-	const toggleTitle = 'mini' === size ? __('Expand Panel') : __('Shrink Panel')
+	const toggleTitle = 'mini' === size ? __( 'Expand Panel' ) : __( 'Shrink Panel' )
 	return (
 		<>
-			<Button onClick={ toggleSize } title={toggleTitle} style={{ marginRight: 5 }}>
+			<Button onClick={ toggleSize } title={ toggleTitle } style={ { marginRight: 5 } }>
 				{ 'mini' === size && <Icon.Expand /> }
 				{ 'normal' === size && <Icon.Collapse /> }
 			</Button>
-			<Button onClick={ toggleIsHidden } title={__('Hide Assistant')}>
+			<Button onClick={ toggleIsHidden } title={ __( 'Hide Assistant' ) }>
 				<Icon.Close />
 			</Button>
 		</>
