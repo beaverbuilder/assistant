@@ -286,7 +286,7 @@ export const Post = ( { location, match, history } ) => {
 				handleError()
 			} else {
 				setCurrentHistoryState( { item: data.post } )
-				setValue( 'url', data.post.url )
+				setValue( 'url', data.post.url, true )
 				setIsSubmitting( false )
 				alert( __( 'Changes published!' ) )
 			}
