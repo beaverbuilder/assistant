@@ -31,17 +31,17 @@
     "react-clipboard.js": "^2.0.16",
     "react-flip-toolkit": "^6.6.9",
     "react-infinite-scroller": "^1.2.4",
-    "react-popper": "^1.3.4",
+    "react-popper": "^1.3.7",
     "react-redux": "^6.0.1",
     "resize-observer-polyfill": "^1.5.1",
     "striptags": "^3.1.1",
     "ua-parser-js": "^0.7.20"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/preset-react": "^7.7.0",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/preset-react": "^7.7.4",
     "@wordpress/babel-preset-default": "^3.0.2",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
@@ -49,7 +49,7 @@
     "eslint": "^5.16.0",
     "eslint-config-wordpress": "^2.0.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react": "^7.17.0",
     "expose-loader": "^0.7.5",
     "fs-extra": "^8.1.0",
     "jest": "^24.9.0",
@@ -60,7 +60,7 @@
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.3.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.41.2",
+    "webpack": "^4.41.3",
     "webpack-cli": "^3.3.10"
   }
 }

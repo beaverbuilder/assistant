@@ -11,7 +11,8 @@ use WP_REST_Server;
 /**
  * REST API logic for comments.
  */
-class CommentsController extends ControllerAbstract {
+class CommentsController extends ControllerAbstract
+{
 
 	protected $posts;
 
@@ -32,36 +33,40 @@ class CommentsController extends ControllerAbstract {
 	/**
 	 * Register routes.
 	 */
-	public function register_routes() {
+	public function register_routes()
+	{
 		$this->route(
-			'/comments', [
+			'/comments',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'index' ],
+					'callback'            => [$this, 'index'],
 					'permission_callback' => function () {
-						return current_user_can( 'moderate_comments' );
+						return current_user_can('moderate_comments');
 					},
 				],
 			]
 		);
 
 		$this->route(
-			'/comments/count', [
+			'/comments/count',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'comments_count' ],
+					'callback'            => [$this, 'comments_count'],
 					'permission_callback' => function () {
-						return current_user_can( 'moderate_comments' );
+						return current_user_can('moderate_comments');
 					},
 				],
 			]
 		);
 
 		$this->route(
-			'/comments/(?P<id>\d+)', [
+			'/comments/(?P<id>\d+)',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'read' ],
+					'callback'            => [$this, 'read'],
 					'args'                => [
 						'id' => [
 							'required' => true,
@@ -69,12 +74,12 @@ class CommentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'moderate_comments' );
+						return current_user_can('moderate_comments');
 					},
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'update' ],
+					'callback'            => [$this, 'update'],
 					'args'                => [
 						'id'     => [
 							'required' => true,
@@ -86,7 +91,7 @@ class CommentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'moderate_comments' );
+						return current_user_can('moderate_comments');
 					},
 				],
 			]
@@ -96,23 +101,24 @@ class CommentsController extends ControllerAbstract {
 	/**
 	 * Returns an array of comments and related data.
 	 */
-	public function index( $request ) {
+	public function index($request)
+	{
 		$params = $request->get_params();
 
-		$post_types = array_keys( $this->posts->get_types() );
-		$args       = array_merge( [ 'post_type' => $post_types ], $params );
+		$post_types = array_keys($this->posts->get_types());
+		$args       = array_merge(['post_type' => $post_types], $params);
 
-		return $this->comments->paginate( $args )
-							  ->apply_transform( $this->transformer )
-							  ->to_rest_response();
-
+		return $this->comments->paginate($args)
+			->apply_transform($this->transformer)
+			->to_rest_response();
 	}
 
 	/**
 	 * Returns the number of comments found given
 	 * the current args.
 	 */
-	public function comments_count( $request ) {
+	public function comments_count($request)
+	{
 		$counts = wp_count_comments();
 
 		return rest_ensure_response(
@@ -129,59 +135,62 @@ class CommentsController extends ControllerAbstract {
 	/**
 	 * Returns data for a single comment.
 	 */
-	public function read( $request ) {
-		$id       = $request->get_param( 'id' );
-		$comment  = $this->comments->find( $id, $this->transformer );
+	public function read($request)
+	{
+		$id       = $request->get_param('id');
+		$comment  = $this->comments->find($id, $this->transformer);
 
-		return rest_ensure_response( $comment );
+		return rest_ensure_response($comment);
 	}
 
 	/**
 	 * Updates a single comment based on the specified action.
 	 */
-	public function update( $request ) {
-		$id      = $request->get_param( 'id' );
-		$action  = $request->get_param( 'action' );
-		$comment = get_comment( $id );
+	public function update($request)
+	{
+		$id      = $request->get_param('id');
+		$action  = $request->get_param('action');
+		$comment = get_comment($id);
+		$data =  $request->get_param('data');
 
-		switch ( $action ) {
+		switch ($action) {
 			case 'approve':
-				wp_set_comment_status( $comment, 'approve' );
+				wp_set_comment_status($comment, 'approve');
 				break;
 			case 'unapprove':
-				wp_set_comment_status( $comment, 'hold' );
+				wp_set_comment_status($comment, 'hold');
 				break;
 			case 'spam':
-				wp_spam_comment( $comment );
+				wp_spam_comment($comment);
 				break;
 			case 'unspam':
-				wp_unspam_comment( $comment );
+				wp_unspam_comment($comment);
 				break;
 			case 'trash':
-				if ( ! EMPTY_TRASH_DAYS ) {
-					wp_delete_comment( $comment );
+				if (!EMPTY_TRASH_DAYS) {
+					wp_delete_comment($comment);
 				} else {
-					wp_trash_comment( $comment );
+					wp_trash_comment($comment);
 				}
 				break;
 			case 'untrash':
-				wp_untrash_comment( $comment );
+				wp_untrash_comment($comment);
 				break;
 			case 'content':
 				wp_update_comment(
 					[
 						'comment_ID'      => $id,
-						'comment_content' => $request->get_param( 'content' ),
+						'comment_content' => $data['content'],
 					]
 				);
 				break;
 		}
-
+		$comment = get_comment($id);
 		return rest_ensure_response(
 			[
 				'success' => true,
+				'commentData'    => $comment
 			]
 		);
 	}
 }
-
