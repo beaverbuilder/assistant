@@ -14,10 +14,11 @@ export const Comments = ( {
 			type={ 'comments' }
 			query={ query }
 			getItemProps={ ( item, defaultProps ) => {
+				
 				return getItemProps( item, {
 					...defaultProps,
 					label: <em><strong>{item.authorEmail}</strong> commented:</em>,
-					description: item.postTitle,
+					description: item.content,
 					thumbnail: item.thumbnail,
 				} )
 			} }
