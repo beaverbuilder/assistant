@@ -3,8 +3,9 @@ import { List } from 'ui'
 
 export const Comments = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
+	type = { type},
 	query = {
-		commentStatus: 'all',
+		status: type,
 	},
 	...rest
 } ) => {

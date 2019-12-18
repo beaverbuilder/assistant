@@ -5,10 +5,19 @@ import { Page, Button } from 'fluid/ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 
-
 export const Comment = ({ location }) => {
 	const { item } = location.state
-	const { id, approved, author, date, authorEmail, authorIP, content } = item
+	const {
+		id,
+		approved,
+		author,
+		date,
+		authorEmail,
+		authorIP,
+		content,
+		trash,
+		spam
+	} = item
 	const { pluginURL } = getSystemConfig()
 	const hero = `${pluginURL}img/comment-hero-a.jpg`
 	const comments = getWpRest()
@@ -18,6 +27,8 @@ export const Comment = ({ location }) => {
 		status: ''
 	})
 	const [commentStatus, set_commentStatus] = React.useState(approved)
+	const [trashStatus, set_trashStatus] = React.useState(trash)
+	const [spamStatus, set_spamStatus] = React.useState(spam)
 	const [editContent, setEditContent] = React.useState(content)
 
 	const { renderForm } = Form.useForm({
@@ -91,6 +102,32 @@ export const Comment = ({ location }) => {
 			})
 	}
 
+	const spamComment = () => {
+		comments
+			.comments()
+			.update(id, 'spam', item)
+			.then(response => {
+				set_responseMessage({
+					message: `Comment has been marked as spam!`,
+					status: 'destructive'
+				})
+				set_spamStatus(true)
+			})
+	}
+
+	const UnspamComment = () => {
+		comments
+			.comments()
+			.update(id, 'unspam', item)
+			.then(response => {
+				set_responseMessage({
+					message: `Comment has been restored from spam!`,
+					status: 'alert'
+				})
+				set_spamStatus(false)
+			})
+	}
+
 	const trashComment = () => {
 		comments
 			.comments()
@@ -101,7 +138,7 @@ export const Comment = ({ location }) => {
 						message: `Comment has been moved to trashed!`,
 						status: 'destructive'
 					})
-					set_commentStatus('trash')
+					set_trashStatus(true)
 				}
 			})
 	}
@@ -115,7 +152,7 @@ export const Comment = ({ location }) => {
 					message: `Comment has been Restored!`,
 					status: 'primary'
 				})
-				set_commentStatus(approved)
+				set_trashStatus(false)
 			})
 	}
 
@@ -162,7 +199,8 @@ export const Comment = ({ location }) => {
 					margin: '10px 0 20px'
 				}}
 			>
-				{commentStatus !== 'trash' &&
+				{trashStatus === false &&
+					spamStatus === false &&
 					commentStatus !== 'approve' &&
 					commentStatus == false && (
 						<Button
@@ -175,7 +213,7 @@ export const Comment = ({ location }) => {
 						</Button>
 					)}
 
-				{commentStatus !== 'trash' && (
+				{trashStatus === false && (
 					<Button
 						appearance='elevator'
 						status='alert'
@@ -185,12 +223,12 @@ export const Comment = ({ location }) => {
 						<Icon.Reject />
 					</Button>
 				)}
-				{commentStatus !== 'trash' && (
+				{trashStatus === false && spamStatus === false && (
 					<Button appearance='elevator' title='Reply'>
 						<Icon.Reply />
 					</Button>
 				)}
-				{commentStatus !== 'edit' && (
+				{commentStatus !== 'edit' && spamStatus === false && (
 					<Button appearance='elevator' title='Edit' onClick={editComment}>
 						<Icon.Edit />
 					</Button>
@@ -200,7 +238,28 @@ export const Comment = ({ location }) => {
 						Save
           </Button>
 				)}
-				{commentStatus !== 'trash' && (
+
+				{spamStatus === false && (
+					<Button
+						appearance='elevator'
+						status='alert'
+						title='Spam'
+						onClick={spamComment}
+					>
+						<Icon.Spam />
+					</Button>
+				)}
+				{spamStatus === true && (
+					<Button
+						appearance='elevator'
+						status='alert'
+						title='unspam'
+						onClick={UnspamComment}
+					>
+						<Icon.Spam />
+					</Button>
+				)}
+				{trashStatus === false && (
 					<Button
 						appearance='elevator'
 						status='destructive'
@@ -210,7 +269,7 @@ export const Comment = ({ location }) => {
 						<Icon.Trash />
 					</Button>
 				)}
-				{commentStatus == 'trash' && (
+				{trashStatus === true && (
 					<Button
 						appearance='elevator'
 						status='primary'

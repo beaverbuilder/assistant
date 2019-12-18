@@ -12,6 +12,8 @@ export const WordPress = ( {
 	paginate = true,
 	...rest
 } ) => {
+	console.log(type);
+	console.log(query)
 	const [ hasMoreItems, setHasMoreItems ] = useState( true )
 	const { items, setItems, updateItem, removeItem, cloneItem } = List.useListItems()
 	const { getPagedContent } = getWpRest()
