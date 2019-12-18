@@ -253,10 +253,10 @@ export const Comment = ({ location }) => {
 					<Button
 						appearance='elevator'
 						status='alert'
-						title='unspam'
+						title='Unspam'
 						onClick={UnspamComment}
 					>
-						<Icon.Spam />
+						<Icon.Unspam />
 					</Button>
 				)}
 				{trashStatus === false && (
