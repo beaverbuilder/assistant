@@ -35,7 +35,7 @@ const Main = () => {
 				component: () => <PostTypeTab type={ key } />,
 			} )
 		} )
-		console.log(tabs);
+		
 		return tabs
 	}
 
