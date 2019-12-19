@@ -53,9 +53,10 @@ class PostTransformer {
 	 * @return array
 	 */
 	public function transform( \WP_Post $post ) {
-
 		$author   = get_the_author_meta( 'display_name', $post->post_author );
 		$date     = get_the_date( '', $post );
+		$template = get_post_meta( $post->ID, '_wp_page_template', true );
+
 		$response = [
 			'author'          	=> $author,
 			'commentsAllowed' 	=> 'open' === $post->comment_status ? true : false,
@@ -70,7 +71,7 @@ class PostTransformer {
 			'pingbacksAllowed' 	=> 'open' === $post->ping_status ? true : false,
 			'slug'            	=> $post->post_name,
 			'status'          	=> $post->post_status,
-			'template'		  	=> get_post_meta( $post->ID, '_wp_page_template', true ),
+			'template'		  	=> empty( $template ) ? 'default' : $template,
 			'terms'				=> [],
 			'thumbnail'       	=> get_the_post_thumbnail_url( $post, 'thumbnail' ),
 			'title'           	=> empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
