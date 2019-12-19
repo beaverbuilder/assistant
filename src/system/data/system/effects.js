@@ -101,6 +101,11 @@ export const after = {
 		wpapi.users().updateState( { history } )
 	},
 
+	SET_CURRENT_HISTORY_STATE: ( action, store ) => {
+		const { history } = store.getState()
+		wpapi.users().updateState( { history } )
+	},
+
 	SET_SEARCH_HISTORY: ( action, store ) => {
 		const { searchHistory } = store.getState()
 		wpapi.users().updateState( { searchHistory } )

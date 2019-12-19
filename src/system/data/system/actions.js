@@ -85,6 +85,13 @@ export const setHistory = ( index = 0, entries = [] ) => {
 	}
 }
 
+export const setCurrentHistoryState = ( state ) => {
+	return {
+		type: 'SET_CURRENT_HISTORY_STATE',
+		state,
+	}
+}
+
 export const setSearchHistory = ( keyword ) => {
 	return {
 		type: 'SET_SEARCH_HISTORY',
