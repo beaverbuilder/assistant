@@ -159,6 +159,9 @@ export const history = ( state = defaultHistory, action ) => {
 			index: action.index,
 			entries: action.entries,
 		}
+	case 'SET_CURRENT_HISTORY_STATE':
+		state.entries[ state.index ].state = action.state
+		return state
 	default:
 		return state
 	}

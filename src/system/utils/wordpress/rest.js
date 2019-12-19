@@ -1,36 +1,41 @@
 import Promise from 'promise'
 import axios from 'axios'
-import CacheHelper  from './cache-helper'
-
-// import { setupCache } from 'axios-cache-adapter'
-// import localforage from 'localforage'
+import { setupCache } from 'axios-cache-adapter'
+import qs from 'qs'
 
 const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 
-const cacheHelper = new CacheHelper( 'fl-assistant-wp-rest', {
-
-	// Changing this to true will send alot of output to the console
+/**
+ * Cache adapter for axios requests.
+ *
+ * @type {Object}
+ */
+const cache = setupCache( {
 	debug: false,
-	ignoreCache: true,
-
-	// Set cache timeout - 15 minutes
 	maxAge: 15 * 60 * 1000,
+	exclude: {
+		query: false,
+	},
+	key: ( req ) => {
+		let key = req.url + qs.stringify( req.params, { addQueryPrefix: true } )
+		if ( req.cacheKey ) {
+			return `fl-cache-${ req.cacheKey }-${ key }`
+		}
+		return key
+	},
+	invalidate: ( config, req ) => {
+		const method = req.method.toLowerCase()
+		if ( req.cacheKey && 'get' !== method ) {
+			config.store.iterate( ( data, key ) => {
+				if ( key.startsWith( `fl-cache-${ req.cacheKey }` ) ) {
+					config.store.removeItem( key )
+				}
+			} )
+		} else if ( req.ignoreCache ) {
+			config.store.removeItem( config.uuid )
+		}
+	},
 } )
-
-// const cache = setupCache( {
-// 	debug: true,
-// 	exclude: { query: false },
-// 	// Set cache timeout - 15 minutes
-// 	maxAge: 15 * 60 * 1000,
-// 	store: localforage.createInstance( {
-// 		driver: [
-// 			localforage.LOCALSTORAGE,
-// 		],
-//
-// 		// Prefix all storage keys to prevent conflicts
-// 		name: "fl-assistant-rest"
-// 	})
-// } )
 
 /**
  * Create `axios` instance with pre-configured `axios-cache-adapter`
@@ -45,9 +50,12 @@ const http = axios.create( {
 			'X-WP-Nonce': nonce.api
 		}
 	},
-	adapter: cacheHelper.generateCacheAdapter()
+	adapter: cache.adapter,
 } )
 
+/**
+ * The main interface for making REST requests.
+ */
 export const getWpRest = () => {
 	return {
 		posts,
@@ -64,10 +72,8 @@ export const getWpRest = () => {
 	}
 }
 
-
 /**
- * Posts
- * @type {{findWhere(*=): *, findById(*): *, create(*=): *, update(*, *, *=): *}}
+ * Methods related to posts
  */
 const posts = () => {
 
@@ -80,6 +86,7 @@ const posts = () => {
 		 * @returns {Promise<AxiosResponse<T>>}
 		 */
 		hierarchical( params, config = {} ) {
+			config.cacheKey = 'posts'
 			config.params = params
 			return http.get( 'fl-assistant/v1/posts/hierarchical', config )
 		},
@@ -91,6 +98,7 @@ const posts = () => {
 		 * @returns {Promise<*>}
 		 */
 		findById( id, config = {} ) {
+			config.cacheKey = 'posts'
 			return http.get( `fl-assistant/v1/posts/${id}`, config )
 		},
 
@@ -100,6 +108,7 @@ const posts = () => {
 		 * @param config
 		 */
 		findWhere( params, config = {} ) {
+			config.cacheKey = 'posts'
 			config.params = params
 			return http.get( 'fl-assistant/v1/posts', config )
 		},
@@ -110,6 +119,7 @@ const posts = () => {
 		 * @param config
 		 */
 		create( data = {}, config = {} ) {
+			config.cacheKey = 'posts'
 			return http.post( 'fl-assistant/v1/posts', data, config )
 		},
 
@@ -121,6 +131,7 @@ const posts = () => {
 		 * @param config
 		 */
 		update( id, action, data = {}, config = {} ) {
+			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}`, {
 				action,
 				data,
@@ -133,6 +144,7 @@ const posts = () => {
 		 * @param config
 		 */
 		delete( id, config = {} ) {
+			config.cacheKey = 'posts'
 			return http.delete( `fl-assistant/v1/posts/${id}`, config )
 		},
 
@@ -142,6 +154,7 @@ const posts = () => {
 		 * @param config
 		 */
 		clone( id, config = {} ) {
+			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}/clone`, config )
 		},
 	}
@@ -159,6 +172,7 @@ const users = () => {
 		 * @param config
 		 */
 		findById( id, config = {} ) {
+			config.cacheKey = 'users'
 			return http.get( `fl-assistant/v1/users/${id}`, config )
 		},
 
@@ -168,6 +182,7 @@ const users = () => {
 		 * @param config
 		 */
 		findWhere( params, config = {} ) {
+			config.cacheKey = 'users'
 			config.params = params
 			return http.get( 'fl-assistant/v1/users', config )
 		},
@@ -195,6 +210,7 @@ const terms = () => {
 		 * @param config
 		 */
 		hierarchical( params, config = {} ) {
+			config.cacheKey = 'terms'
 			return http.get( 'fl-assistant/v1/terms/hierarchical', {
 				params,
 				...config
@@ -208,6 +224,7 @@ const terms = () => {
 		 * @returns {Promise<AxiosResponse<T>>}
 		 */
 		findById( id, config = {} ) {
+			config.cacheKey = 'terms'
 			return http.get( `fl-assistant/v1/terms/${id}`, config )
 		},
 
@@ -218,6 +235,7 @@ const terms = () => {
 		 * @returns {Promise<AxiosResponse<T>>}
 		 */
 		create( term, config = {} ) {
+			config.cacheKey = 'terms'
 			return http.post( 'fl-assistant/v1/terms', term, config )
 		},
 
@@ -229,6 +247,7 @@ const terms = () => {
 		 * @returns {Promise<AxiosResponse<T>>}
 		 */
 		update( id, action, data = {}, config = {} ) {
+			config.cacheKey = 'terms'
 			return http.post( `fl-assistant/v1/terms/${id}`, {
 				action,
 				data,
@@ -239,7 +258,6 @@ const terms = () => {
 
 /**
  * Methods related to comments
- * @type {{findWhere(*=): *, findById(*): *, update(*, *, *=): *}}
  */
 const comments = () => {
 
@@ -251,6 +269,7 @@ const comments = () => {
 		 * @returns {Promise<AxiosResponse<T>>}
 		 */
 		findById( id, config = {} ) {
+			config.cacheKey = 'comments'
 			return http.get( `fl-assistant/v1/comments/${id}`, config )
 		},
 
@@ -260,8 +279,8 @@ const comments = () => {
 		 * @returns {Promise<AxiosResponse<T>>}
 		 */
 		findWhere( params, config = {} ) {
+			config.cacheKey = 'comments'
 			config.params = params
-
 			return http.get( 'fl-assistant/v1/comments', config )
 		},
 
@@ -274,6 +293,7 @@ const comments = () => {
 		 * @returns {Promise<AxiosResponse<T>>}
 		 */
 		update( id, action, data = {}, config = {} ) {
+			config.cacheKey = 'comments'
 			return http.post( `fl-assistant/v1/comments/${id}`, {
 				action,
 				data,
@@ -284,7 +304,6 @@ const comments = () => {
 
 /**
  * Methods related to attachments
- * @type {{findWhere(*=): *, findById(*): *, update(*, *, *=): *}}
  */
 const attachments = () => {
 	return {
@@ -293,6 +312,7 @@ const attachments = () => {
 		 * Returns data for a single attachment.
 		 */
 		findById( id, config = {} ) {
+			config.cacheKey = 'attachments'
 			return http.get( `fl-assistant/v1/attachments/${id}`, config )
 		},
 
@@ -300,6 +320,7 @@ const attachments = () => {
 		 * Returns an array of attachments.
 		 */
 		findWhere( params, config = {} ) {
+			config.cacheKey = 'attachments'
 			return http.get( 'fl-assistant/v1/attachments', {
 				params,
 				...config
@@ -311,6 +332,7 @@ const attachments = () => {
 		 * REST method for a list of supported actions.
 		 */
 		update( id, action, data = {}, config = {} ) {
+			config.cacheKey = 'attachments'
 			return http.post( `fl-assistant/v1/attachments/${id}`, {
 				action,
 				data,
@@ -321,7 +343,6 @@ const attachments = () => {
 
 /**
  * Methods related to updates
- * @returns {Promise<AxiosResponse<T>>|{findWhere(*): *}}
  */
 const updates = () => {
 	return {
@@ -333,11 +354,8 @@ const updates = () => {
 		 * @returns {Promise<AxiosResponse<T>>}
 		 */
 		findWhere( params, config = {} ) {
+			config.ignoreCache = true
 			config.params = params
-
-			// disable cache for updates
-			config.cache = { ignoreCache: true }
-
 			return http.get( 'fl-assistant/v1/updates', config )
 		}
 	}
@@ -349,7 +367,7 @@ const updates = () => {
  * @param type
  * @param params
  * @param config
- * @returns {*|Promise<*>|*|Promise<*>|Promise<*>|*}
+ * @returns {Promise<AxiosResponse<T>>}
  */
 const getContent = ( type, params, config = {} ) => {
 	switch ( type ) {
@@ -375,6 +393,7 @@ const getContent = ( type, params, config = {} ) => {
  * @param params
  * @param offset
  * @param config
+ * @returns {Promise<AxiosResponse<T>>}
  */
 const getPagedContent = async( type, params, offset = 0, config = {} ) => {
 	let paged = Object.assign( { offset }, params )
@@ -402,14 +421,13 @@ const getPagedContent = async( type, params, offset = 0, config = {} ) => {
 /**
  * Search for pages, posts, users, or comments.
  *
- * Note that because search issues a POST request to the API, it will not be cached in the browser.
- *
  * @param keyword
  * @param routes
  * @param config
  * @returns {Promise<AxiosResponse<T>>}
  */
 const search = ( keyword, routes, config = {} ) => {
+	config.ignoreCache = true
 	return http.get( 'fl-assistant/v1/search', {
 		params: {
 			keyword,
@@ -426,6 +444,7 @@ const labels = () => {
 	return {
 
 		findWhere( params, config = {} ) {
+			config.cacheKey = 'labels'
 			config.params = params
 			return http.get( 'fl-assistant/v1/labels', config )
 		},

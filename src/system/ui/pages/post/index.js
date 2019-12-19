@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page } from 'fluid/ui'
 import { Button, Form, List } from 'ui'
-import { getSystemConfig } from 'data'
+import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
 import { getPostActions } from './actions'
@@ -10,6 +10,7 @@ import { setParentOptions } from './parent'
 
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
+	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes, contentStatus, taxonomies } = getSystemConfig()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const wpRest = getWpRest()
@@ -284,7 +285,8 @@ export const Post = ( { location, match, history } ) => {
 			if ( data.error ) {
 				handleError()
 			} else {
-				setValue( 'url', data.post.url )
+				setCurrentHistoryState( { item: data.post } )
+				setValue( 'url', data.post.url, true )
 				setIsSubmitting( false )
 				alert( __( 'Changes published!' ) )
 			}
