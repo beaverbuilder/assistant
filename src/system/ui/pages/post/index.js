@@ -125,17 +125,18 @@ export const Post = ( { location, match, history } ) => {
 					isVisible: !! Object.keys( item.terms ).length,
 					fields: ( { fields } ) => {
 						const { value, onChange } = fields.terms
-						return Object.keys( value ).map( ( taxonomy, key ) => (
+						const values = { ...value }
+						return Object.keys( values ).map( ( taxonomy, key ) => (
 							<Form.Item
 								key={ key }
 								label={ taxonomies[ taxonomy ].labels.plural }
 							>
 								<Form.TaxonomyTermsItem
 									taxonomy={ taxonomy }
-									value={ value[ taxonomy ] }
+									value={ [ ...values[ taxonomy ] ] }
 									onChange={ newValue => {
-										value[ taxonomy ] = newValue
-										onChange( { ...value } )
+										values[ taxonomy ] = newValue
+										onChange( { ...values } )
 									} }
 								/>
 							</Form.Item>
