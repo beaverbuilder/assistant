@@ -44,6 +44,7 @@
         max-height:100%;
         overflow-y: auto;
         overflow-x: hidden;
+        position: relative; // for tooltip positioning
     }
 
     .fl-asst-page-footer {
