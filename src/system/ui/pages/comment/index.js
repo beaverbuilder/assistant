@@ -5,53 +5,45 @@ import { Page, Button } from 'fluid/ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 
-export const Comment = ({ location }) => {
+
+export const Comment = ( { location } ) => {
 	const { item } = location.state
-	const {
-		id,
-		approved,
-		author,
-		date,
-		authorEmail,
-		authorIP,
-		content,
-		trash,
-		spam
-	} = item
+	const {id, approved, author, date, authorEmail, authorIP, content, trash, spam} = item
 	const { pluginURL } = getSystemConfig()
 	const hero = `${pluginURL}img/comment-hero-a.jpg`
 	const comments = getWpRest()
 
-	const [responseMessage, set_responseMessage] = React.useState({
+	const [ responseMessage, set_responseMessage ] = React.useState( {
 		message: '',
 		status: ''
-	})
-	const [commentStatus, set_commentStatus] = React.useState(approved)
-	const [trashStatus, set_trashStatus] = React.useState(trash)
-	const [spamStatus, set_spamStatus] = React.useState(spam)
-	const [editContent, setEditContent] = React.useState(content)
+	} )
+	const [ commentStatus, set_commentStatus ] = React.useState( approved )
+	const [ approveStatus, set_approveStatus ] = React.useState( approved )
+	const [ trashStatus, set_trashStatus ] = React.useState( trash )
+	const [ spamStatus, set_spamStatus ] = React.useState( spam )
+	const [ editContent, setEditContent ] = React.useState( content )
 
-	const { renderForm } = Form.useForm({
+	const { renderForm } = Form.useForm( {
 		sections: {
 			details: {
-				label: __('Details'),
+				label: __( 'Details' ),
 				fields: {
 					email: {
-						label: __('Email Address'),
+						label: __( 'Email Address' ),
 						labelPlacement: 'beside',
 						type: 'text',
 						value: authorEmail,
 						component: 'plain-text'
 					},
 					IPAddress: {
-						label: __('IP Address'),
+						label: __( 'IP Address' ),
 						labelPlacement: 'beside',
 						type: 'text',
 						value: authorIP,
 						component: 'plain-text'
 					},
 					date: {
-						label: __('Submitted On'),
+						label: __( 'Submitted On' ),
 						labelPlacement: 'beside',
 						type: 'text',
 						value: date,
@@ -60,221 +52,228 @@ export const Comment = ({ location }) => {
 				}
 			},
 			actions: {
-				label: __('Actions'),
+				label: __( 'Actions' ),
 				fields: {
 					actions: {
 						component: 'actions',
-						options: [{ label: 'Test' }, { label: 'Test Again' }]
+						options: [ { label: 'Test' }, { label: 'Test Again' } ]
 					}
 				}
 			}
 		},
 		defaults: item
-	})
+	} )
 
 	const approveComment = () => {
 		comments
 			.comments()
-			.update(id, 'approve', item)
-			.then(response => {
-				if (response.data.commentData.comment_approved == '1') {
-					set_responseMessage({
+			.update( id, 'approve', item )
+			.then( response => {
+				if ( '1' == response.data.commentData.comment_approved ) {
+					set_responseMessage( {
 						message: 'Comment Approved!',
 						status: 'alert'
-					})
-					set_commentStatus('approve')
+					} )
+					set_approveStatus( true )
+
 				}
-			})
+			} )
 	}
 
 	const unapproveComment = () => {
 		comments
 			.comments()
-			.update(id, 'unapprove', item)
-			.then(response => {
-				if (response.data.commentData.comment_approved == '0') {
-					set_responseMessage({
-						message: `Comment Un-Approved!`,
+			.update( id, 'unapprove', item )
+			.then( response => {
+				if ( '0' == response.data.commentData.comment_approved ) {
+					set_responseMessage( {
+						message: 'Comment Un-Approved!',
 						status: 'destructive'
-					})
-					set_commentStatus(false)
+					} )
+					set_approveStatus( false )
+
 				}
-			})
+			} )
 	}
 
 	const spamComment = () => {
 		comments
 			.comments()
-			.update(id, 'spam', item)
-			.then(response => {
-				set_responseMessage({
-					message: `Comment has been marked as spam!`,
+			.update( id, 'spam', item )
+			.then( () => {
+				set_responseMessage( {
+					message: 'Comment has been marked as spam!',
 					status: 'destructive'
-				})
-				set_spamStatus(true)
-			})
+				} )
+				set_spamStatus( true )
+
+			} )
 	}
 
 	const UnspamComment = () => {
 		comments
 			.comments()
-			.update(id, 'unspam', item)
-			.then(response => {
-				set_responseMessage({
-					message: `Comment has been restored from spam!`,
+			.update( id, 'unspam', item )
+			.then( () => {
+				set_responseMessage( {
+					message: 'Comment has been restored from spam!',
 					status: 'alert'
-				})
-				set_spamStatus(false)
-			})
+				} )
+				set_spamStatus( false )
+
+			} )
 	}
 
 	const trashComment = () => {
 		comments
 			.comments()
-			.update(id, 'trash', item)
-			.then(response => {
-				if (response.data.commentData.comment_approved == 'trash') {
-					set_responseMessage({
-						message: `Comment has been moved to trashed!`,
+			.update( id, 'trash', item )
+			.then( response => {
+				if ( 'trash' == response.data.commentData.comment_approved ) {
+					set_responseMessage( {
+						message: 'Comment has been moved to trashed!',
 						status: 'destructive'
-					})
-					set_trashStatus(true)
+					} )
+					set_trashStatus( true )
+
 				}
-			})
+			} )
 	}
 
 	const untrashComment = () => {
 		comments
 			.comments()
-			.update(id, 'untrash', item)
-			.then(response => {
-				set_responseMessage({
-					message: `Comment has been Restored!`,
+			.update( id, 'untrash', item )
+			.then( () => {
+				set_responseMessage( {
+					message: 'Comment has been Restored!',
 					status: 'primary'
-				})
-				set_trashStatus(false)
-			})
+				} )
+				set_trashStatus( false )
+
+			} )
 	}
 
-	const editComment = status => {
-		set_commentStatus('edit')
+	const editComment = () => {
+		set_commentStatus( 'edit' )
 	}
 
 	const updateContent = () => {
 		comments
 			.comments()
-			.update(id, 'content', { content: editContent })
-			.then(response => {
-				set_responseMessage({
-					message: `Comment has been updated!`,
+			.update( id, 'content', { content: editContent } )
+			.then( () => {
+				set_responseMessage( {
+					message: 'Comment has been updated!',
 					status: 'primary'
-				})
-				set_commentStatus('update')
-			})
+				} )
+				set_commentStatus( 'update' )
+
+			} )
 	}
 
 	return (
-		<Page title={__('Edit Comment')} hero={hero}>
+		<Page title={ __( 'Edit Comment' ) } hero={ hero }>
 			<Page.Headline>{author}</Page.Headline>
-			<div>{sprintf('commented on %s', date)}</div>
+			<div>{sprintf( 'commented on %s', date )}</div>
 
-			{commentStatus !== 'edit' && (
+			{'edit' !== commentStatus && (
 				<div
 					className='fl-asst-content-area'
-					dangerouslySetInnerHTML={{ __html: editContent }}
+					dangerouslySetInnerHTML={ { __html: editContent } }
 				/>
 			)}
-			{commentStatus == 'edit' && (
+			{'edit' == commentStatus && (
 				<textarea
-					value={editContent}
-					onChange={e => setEditContent(e.target.value)}
-					rows={2}
+					value={ editContent }
+					onChange={ e => setEditContent( e.target.value ) }
+					rows={ 2 }
 				/>
 			)}
 			<div
-				style={{
+				style={ {
 					display: 'flex',
 					flexDirection: 'row',
 					justifyContent: 'space-evenly',
 					margin: '10px 0 20px'
-				}}
+				} }
 			>
-				{trashStatus === false &&
-					spamStatus === false &&
-					commentStatus !== 'approve' &&
-					commentStatus == false && (
-						<Button
-							appearance='elevator'
-							status='primary'
-							title='Approve'
-							onClick={approveComment}
-						>
-							<Icon.Approve />
-						</Button>
-					)}
+				{false === trashStatus &&
+					false === spamStatus &&
+					false == approveStatus &&
+					(
+					<Button
+						appearance='elevator'
+						status='primary'
+						title='Approve'
+						onClick={ approveComment }
+					>
+						<Icon.Approve />
+					</Button>
+				)}
 
-				{trashStatus === false && (
+				{true === approveStatus && false === spamStatus && (
 					<Button
 						appearance='elevator'
 						status='alert'
 						title='Reject'
-						onClick={unapproveComment}
+						onClick={ unapproveComment }
 					>
 						<Icon.Reject />
 					</Button>
 				)}
-				{trashStatus === false && spamStatus === false && (
+				{false === trashStatus && false === spamStatus && (
 					<Button appearance='elevator' title='Reply'>
 						<Icon.Reply />
 					</Button>
 				)}
-				{commentStatus !== 'edit' && spamStatus === false && (
-					<Button appearance='elevator' title='Edit' onClick={editComment}>
+				{'edit' !== commentStatus && false === spamStatus && (
+					<Button appearance='elevator' title='Edit' onClick={ editComment }>
 						<Icon.Edit />
 					</Button>
 				)}
-				{commentStatus == 'edit' && (
-					<Button appearance='elevator' title='Save' onClick={updateContent}>
+				{'edit' == commentStatus && (
+					<Button appearance='elevator' title='Save' onClick={ updateContent }>
 						Save
-          </Button>
+					</Button>
 				)}
 
-				{spamStatus === false && (
+				{false === spamStatus && (
 					<Button
 						appearance='elevator'
 						status='alert'
 						title='Spam'
-						onClick={spamComment}
+						onClick={ spamComment }
 					>
 						<Icon.Spam />
 					</Button>
 				)}
-				{spamStatus === true && (
+				{true === spamStatus && (
 					<Button
 						appearance='elevator'
 						status='alert'
 						title='Unspam'
-						onClick={UnspamComment}
+						onClick={ UnspamComment }
 					>
 						<Icon.Unspam />
 					</Button>
 				)}
-				{trashStatus === false && (
+				{false === trashStatus && (
 					<Button
 						appearance='elevator'
 						status='destructive'
 						title='Trash'
-						onClick={trashComment}
+						onClick={ trashComment }
 					>
 						<Icon.Trash />
 					</Button>
 				)}
-				{trashStatus === true && (
+				{true === trashStatus && (
 					<Button
 						appearance='elevator'
 						status='primary'
 						title='UnTrash'
-						onClick={untrashComment}
+						onClick={ untrashComment }
 					>
 						<Icon.Restore />
 					</Button>
@@ -282,7 +281,7 @@ export const Comment = ({ location }) => {
 			</div>
 
 			{responseMessage.message && (
-				<Button status={responseMessage.status}>
+				<Button status={ responseMessage.status }>
 					{responseMessage.message}
 				</Button>
 			)}

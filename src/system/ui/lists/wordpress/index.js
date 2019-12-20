@@ -12,7 +12,7 @@ export const WordPress = ( {
 	paginate = true,
 	...rest
 } ) => {
-	
+
 	const [ hasMoreItems, setHasMoreItems ] = useState( true )
 	const { items, setItems, updateItem, removeItem, cloneItem } = List.useListItems()
 	const { getPagedContent } = getWpRest()

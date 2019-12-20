@@ -4,7 +4,7 @@ import { Nav as FLUID_Nav } from 'fluid/ui'
 
 const Nav = { ...FLUID_Nav }
 
-Nav.Tabs = ( { tabs = [] } ) => {
+Nav.Tabs = ( { tabs = [] , moreBtn = true} ) => {
 	const { path, history } = useContext( Nav.Context )
 	return (
 		<>
@@ -20,9 +20,11 @@ Nav.Tabs = ( { tabs = [] } ) => {
 						</Button>
 					)
 				} ) }
+				{moreBtn &&
 				<Button className="fl-asst-more-btn">
 					<Icon.More />
 				</Button>
+				}
 			</Button.Group>
 		</>
 	)

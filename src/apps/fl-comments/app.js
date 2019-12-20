@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
-import { App, Page, List, Nav } from 'assistant/ui'
-import { AllTab,TrashTab,CommentTypeTab } from './tabs'
-import { getSystemConfig } from 'assistant/data'
+import React from 'react'
+import { Page, Nav } from 'assistant/ui'
+import { AllTab, CommentTypeTab } from './tabs'
 import { __ } from '@wordpress/i18n'
 
 export const CommentsApp = ( { match } ) => (
@@ -13,74 +12,72 @@ export const CommentsApp = ( { match } ) => (
 )
 
 const Main = () => {
-	const { handle } = useContext( App.Context )
-	const { contentTypes } = getSystemConfig()
-	
+
 	const getTabs = () => {
 		let tabs = [
 			{
 				handle: 'all',
-				title:'All',
+				title: 'All',
 				label: __( 'All' ),
 				path: '/fl-comments/',
-				component:AllTab,
+				component: AllTab,
 				exact: true,
 			}
 		]
 		let tab = [
-			
+
 			{
 				handle: 'hold',
-				title:'Pending',
+				title: 'Pending',
 				label: __( 'Pending Comments' ),
 				path: '/fl-comments/',
-				
+
 			},
 			{
 				handle: 'approve',
-				title:'Approved',
+				title: 'Approved',
 				label: __( 'Approved Comments' ),
 				path: '/fl-comments/',
-				
+
 			},
 			{
 				handle: 'spam',
-				title:'Spam',
+				title: 'Spam',
 				label: __( 'Spam Comments' ),
 				path: '/fl-comments/',
-				
+
 			},
 			{
 				handle: 'trash',
-				title:'Trashed',
+				title: 'Trashed',
 				label: __( 'Trashed Comments' ),
 				path: '/fl-comments/',
-				
+
 			},
-			
+
 		]
 
 		Object.keys( tab ).map( key => {
 			const type = tab[key]
-			
+
 			tabs.push( {
 				handle: type.handle,
 				path: '/fl-comments/tab/' + type.handle,
 				label: type.title,
-				component: () => <CommentTypeTab type={ type.handle } label={type.label} />,
-				
+				component: () => <CommentTypeTab type={ type.handle } label={ type.label } />,
+
 			} )
 		} )
-	
+
 		return tabs
 	}
 	const tabs = getTabs()
 	return (
 		<Page
-			shouldPadSides={ false }
-			header={ <Nav.Tabs tabs={ tabs } /> }
+			shouldPadSides={ true }
+			header={ <Nav.Tabs tabs={ tabs } moreBtn={false} /> }
 		>
-			
+
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
 	)

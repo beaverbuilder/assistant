@@ -1,54 +1,54 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, App, Page } from 'assistant/ui'
-import { useAppState } from 'assistant/data'
+
 
 export const AllTab = () => {
-	
+
 	const { handle } = useContext( App.Context )
 
 	return (
 		<>
-			
+
 
 			<Page.Section label={ __( 'All Comments' ) } shouldPadSides={ false }>
-			<List.Comments
-				type ="all"
-				getItemProps={ ( item, defaultProps ) => ( {
-					...defaultProps,
-					to: {
-						pathname: `/${handle}/comment/${item.id}`,
-						state: { item }
-					},
-				} ) }
-			/>
+				<List.Comments
+					type ="all"
+					getItemProps={ ( item, defaultProps ) => ( {
+						...defaultProps,
+						to: {
+							pathname: `/${handle}/comment/${item.id}`,
+							state: { item }
+						},
+					} ) }
+				/>
 			</Page.Section>
 		</>
 	)
 }
 
-export const CommentTypeTab = ( { type = 'all', label='All Comments',getItemProps = ( item, defaultProps ) => defaultProps } ) => {
+export const CommentTypeTab = ( { type = 'all', label = 'All Comments' } ) => {
 	const { handle } = useContext( App.Context )
-	
-	
+
+
 	return (
 		<>
-			
-			<Page.Section label={ __(label) } shouldPadSides={ false }>
-			
-			<List.Comments
-				type ={type}
-				getItemProps={ ( item, defaultProps ) => ( {
-					...defaultProps,
-					to: {
-						pathname: `/${handle}/comment/${item.id}`,
-						state: { item }
-					},
-				} ) }
-			/>
-			
-			
-			</Page.Section>	
+
+			<Page.Section label={ __( label ) } shouldPadSides={ false }>
+
+				<List.Comments
+					type ={ type }
+					getItemProps={ ( item, defaultProps ) => ( {
+						...defaultProps,
+						to: {
+							pathname: `/${handle}/comment/${item.id}`,
+							state: { item }
+						},
+					} ) }
+				/>
+
+
+			</Page.Section>
 		</>
 	)
 }
