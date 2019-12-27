@@ -19,7 +19,7 @@ export const Comments = ( {
 				return getItemProps( item, {
 					...defaultProps,
 					label: <em><strong>{item.authorEmail}</strong> commented:</em>,
-					description: truncate(item.content.replace(/<\/?[^>]+(>|$)/g, ""),80),
+					description: truncate( item.content.replace( /<\/?[^>]+(>|$)/g, '' ), 80 ),
 					thumbnail: item.thumbnail,
 				} )
 			} }

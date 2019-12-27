@@ -11,6 +11,7 @@ import { Error } from './errors'
 import { Control } from './controls'
 import { Form } from './forms'
 import { Table } from './table'
+import { Message } from './message'
 
 // Export for use inside system bundle - import from 'ui'
 export * from './app'
@@ -25,6 +26,7 @@ export * from './errors'
 export * from './controls'
 export * from './forms'
 export * from './table'
+export * from './message'
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
 export const api = {
@@ -41,4 +43,5 @@ export const api = {
 	Error,
 	Nav,
 	Table,
+	Message
 }

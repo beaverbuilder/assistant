@@ -54,9 +54,11 @@ class LabelsController extends ControllerAbstract {
 	 */
 	public function get_labels( \WP_REST_Request $request ) {
 		$response = [];
-		$terms = $this->labels->query( [
-			'hide_empty' => false,
-		] )->get_terms();
+		$terms = $this->labels->query(
+			[
+				'hide_empty' => false,
+			]
+		)->get_terms();
 
 		foreach ( $terms as $term ) {
 			$response[] = call_user_func( $this->transformer, $term );

@@ -11,7 +11,7 @@ import {
 	ExpandedContent,
 	Section,
 	RegisteredSections,
-	Empty
+	Empty,
 } from './parts'
 import { Post } from './post'
 import { CreatePost } from './post/create'
@@ -162,6 +162,8 @@ Page.Header = ( { icon, label, actions } ) => {
 		</>
 	)
 }
+
+
 Page.Header.displayName = 'Page.Header'
 
 // Horizontal Toolbar - edge padding for controls

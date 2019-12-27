@@ -4,7 +4,7 @@ import { Nav as FLUID_Nav } from 'fluid/ui'
 
 const Nav = { ...FLUID_Nav }
 
-Nav.Tabs = ( { tabs = [] , moreBtn = true} ) => {
+Nav.Tabs = ( { tabs = [], moreBtn = true } ) => {
 	const { path, history } = useContext( Nav.Context )
 	return (
 		<>

@@ -37,7 +37,7 @@ class CommentsController extends ControllerAbstract {
 			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'index' ),
+					'callback'            => [ $this, 'index' ],
 					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -50,7 +50,7 @@ class CommentsController extends ControllerAbstract {
 			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'comments_count' ),
+					'callback'            => [ $this, 'comments_count' ],
 					'permission_callback' => function () {
 						return current_user_can( 'moderate_comments' );
 					},
@@ -63,7 +63,7 @@ class CommentsController extends ControllerAbstract {
 			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'read' ),
+					'callback'            => [ $this, 'read' ],
 					'args'                => [
 						'id' => [
 							'required' => true,
@@ -76,7 +76,7 @@ class CommentsController extends ControllerAbstract {
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'update' ),
+					'callback'            => [ $this, 'update' ],
 					'args'                => [
 						'id'     => [
 							'required' => true,
@@ -102,7 +102,7 @@ class CommentsController extends ControllerAbstract {
 		$params = $request->get_params();
 
 		$post_types = array_keys( $this->posts->get_types() );
-		$args       = array_merge( array( 'post_type' => $post_types ), $params );
+		$args       = array_merge( [ 'post_type' => $post_types ], $params );
 
 		return $this->comments->paginate( $args )
 			->apply_transform( $this->transformer )

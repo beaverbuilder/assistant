@@ -366,7 +366,7 @@ class PostsController extends ControllerAbstract {
 		return rest_ensure_response(
 			[
 				'success' => true,
-				'post' => $updated_post ? $this->transform( $updated_post ) : null,
+				'post'    => $updated_post ? $this->transform( $updated_post ) : null,
 			]
 		);
 	}
