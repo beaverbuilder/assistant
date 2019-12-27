@@ -4,6 +4,7 @@ import { App } from './app'
 import { Button } from './button'
 import { Icon, Color } from './art'
 import { List } from './lists'
+import Layout from './layout'
 import { Page } from './pages'
 import Nav from './nav'
 import { Window } from './window'
@@ -25,6 +26,7 @@ export * from './errors'
 export * from './controls'
 export * from './forms'
 export * from './table'
+export { Layout }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
 export const api = {
@@ -37,6 +39,7 @@ export const api = {
 	Form,
 	Control,
 	List,
+	Layout,
 	Page,
 	Error,
 	Nav,

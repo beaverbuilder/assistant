@@ -61,6 +61,12 @@
             &.fl-asst-is-clickable {
                 cursor: pointer;
             }
+
+            &.fl-asst-is-current-page {
+                background: var(--fluid-alert-background);
+                box-shadow: inset 3px 0px 0px var(--fluid-alert-color);
+                color: var(--fluid-alert-color);
+            }
         }
 
         &.fl-asst-user-list {
@@ -182,12 +188,11 @@
         flex-wrap: wrap;
         display: flex;
         justify-content: space-evenly;
-
+        pointer-events: none;
         z-index: 1;
 
         opacity: 0;
         height:0;
-        transform: translate( 32px, 0px );
 
         transition-property: opacity, height, transform;
         transition-delay: 0s;
@@ -206,26 +211,6 @@
                 background: var(--fl-asst-surface-background);
             }
         }
-
-        .fl-asst-item-extras-left {
-            flex: 1 1 auto;
-            display: inline-flex;
-            flex-direction: row;
-
-            button {
-                padding: 0 5px;
-            }
-        }
-        .fl-asst-item-extras-right {
-            flex: 0 0 auto;
-            display: inline-flex;
-            flex-direction: row;
-            align-self: flex-end;
-        }
-
-		.fl-asst-is-favorite {
-			color: var(--fl-asst-bookmark-color);
-		}
     }
 
     // Marks
@@ -270,7 +255,7 @@
         .fl-asst-item-extras {
             opacity: 1;
             height: 32px;
-            transform: translate(0,0)
+            pointer-events: auto;
         }
     }
     .fl-asst-list-item:hover {

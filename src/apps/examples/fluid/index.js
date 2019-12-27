@@ -104,6 +104,11 @@ const App = () => {
 				<Button status="destructive" className="is-hovering"><Icon.Trash />&nbsp;&nbsp;Hovering</Button>
 				<Button status="destructive" className="is-focused"><Icon.Trash />&nbsp;&nbsp;Focused</Button>
 			</ButtonRow>
+			<ButtonRow title="Transparent">
+				<Button appearance="transparent">Transparent</Button>
+				<Button appearance="transparent" className="is-hovering">Hover</Button>
+				<Button appearance="transparent" className="is-focused">Focused</Button>
+			</ButtonRow>
 
 			<Page.Section label={ __( 'Icons' ) }>
 				<div style={ {

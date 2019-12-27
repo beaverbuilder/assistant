@@ -9,10 +9,13 @@
         background: var(--fluid-box-background);
         color: var(--fluid-box-color);
         border-radius: var(--fluid-radius);
+        box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
         min-height: var(--fluid-target-size);
         padding: 0 var(--fluid-med-space);
         text-decoration: none;
         font-weight: normal;
+        transition-property: box-shadow;
+        transition-duration: .25s;
 
         &:hover,
         &.is-hovering {
@@ -41,6 +44,17 @@
             box-shadow: none;
             border: none;
             outline: none;
+
+            &:hover,
+            &.is-hovering {
+                background: var(--fluid-box-hover-background);
+            }
+
+            &:focus,
+            &.is-focused {
+                box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
+                            0px 0px 0px 2px var(--fluid-accent);
+            }
         }
     }
 }

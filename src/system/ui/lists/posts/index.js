@@ -144,12 +144,14 @@ export const Posts = ( {
 							<Button
 								title={__('View Post')}
 								tabIndex="-1"
+								href={item.url}
+								appearance="transparent"
 							>
 								<Icon.View />
 							</Button>
 							<Clipboard
 								button-tabIndex={ '-1' }
-								button-className={ 'fluid-button' }
+								button-className={ 'fluid-button fluid-appearance-transparent' }
 								data-clipboard-text={ item.url }
 							>
 								<Icon.Link />
@@ -157,8 +159,8 @@ export const Posts = ( {
 							<Button
 								onClick={ favoritePost }
 								tabIndex="-1"
-								className={ item.isFavorite ? 'fl-asst-is-favorite' : '' }
 								title={__('Mark as Favorite')}
+								appearance="transparent"
 							>
 								{ item.isFavorite ? <Icon.BookmarkSolid /> : <Icon.Bookmark /> }
 							</Button>
@@ -166,6 +168,7 @@ export const Posts = ( {
 								onClick={ clonePost }
 								tabIndex="-1"
 								title={__('Duplicate')}
+								appearance="transparent"
 							>
 								<Icon.Clone />
 							</Button>
@@ -173,6 +176,8 @@ export const Posts = ( {
 								onClick={ trashPost }
 								tabIndex="-1"
 								title={__('Move to Trash')}
+								status='destructive'
+								appearance="transparent"
 							>
 								<Icon.Trash />
 							</Button>
@@ -222,14 +227,16 @@ export const Posts = ( {
 
 					if ( item.isFavorite ) {
 						marks.push(
-							<span style={ { color: 'var(--fl-asst-pink)' } }>
-								<Icon.BookmarkSolid />
+							<span>
+								<Icon.Bookmark style={{ height: 12, width: 12, marginTop: 2 }} />
 							</span>
 						)
 					}
 
 					return marks
 				}
+
+				const isCurrentPage = () => item.url === location.href
 
 				return getItemProps( item, {
 					...defaultProps,
@@ -244,7 +251,8 @@ export const Posts = ( {
 						'fl-asst-is-trashed': item.isTrashed,
 						'fl-asst-is-restoring': item.isRestoring,
 						'fl-asst-is-isCloning': item.isCloning,
-						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring )
+						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring ),
+						'fl-asst-is-current-page' : isCurrentPage(),
 					}, defaultProps.className ),
 					marks: getMarks( item )
 				} )

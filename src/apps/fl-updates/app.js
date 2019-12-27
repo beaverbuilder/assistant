@@ -83,16 +83,18 @@ const UpdatesMain = () => {
 	)
 
 	return (
-		<Page shouldPadSides={ false } header={ <Header /> } headerActions={ <HeaderActions /> }>
+		<Page.NewPage
+			title={__('Updates')}
+			header={ <Header /> }
+			actions={ <HeaderActions /> }
+			padX={false}
+		>
 
-			{ ! hasUpdates &&
-			<Page.Empty>
-				{__( 'You have no updates.' )}
-			</Page.Empty>
-			}
+			{ ! hasUpdates && (
+				<Page.Empty>{__( 'You have no updates.' )}</Page.Empty>
+			)}
 
-			{ hasUpdates &&
-			<>
+			{ hasUpdates && (
 				<List.Updates
 					getItemProps={ ( item, defaultProps ) => {
 						return {
@@ -104,9 +106,8 @@ const UpdatesMain = () => {
 						}
 					} }
 				/>
-			</>
-			}
-		</Page>
+			)}
+		</Page.NewPage>
 	)
 }
 

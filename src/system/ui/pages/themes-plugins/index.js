@@ -1,7 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Form } from 'ui'
-import { Page } from 'fluid/ui'
+import { Form, Page, Layout } from 'ui'
 
 export const Plugin = ( { location = {} } ) => {
 	const { item } = location.state
@@ -24,11 +23,11 @@ export const Plugin = ( { location = {} } ) => {
 	} )
 
 	return (
-		<Page title={ __( 'Plugin' ) } hero={ banner }>
-			<Page.Headline>{title}</Page.Headline>
+		<Page.NewPage title={ __( 'Plugin' ) } hero={ banner }>
+			<Layout.Headline>{title}</Layout.Headline>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
-		</Page>
+		</Page.NewPage>
 	)
 }
 

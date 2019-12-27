@@ -32,11 +32,20 @@ const PanelActions = () => {
 	const toggleTitle = 'mini' === size ? __( 'Expand Panel' ) : __( 'Shrink Panel' )
 	return (
 		<>
-			<Button onClick={ toggleSize } title={ toggleTitle } style={ { marginRight: 5 } }>
+			<Button
+				onClick={ toggleSize }
+				title={ toggleTitle }
+				appearance="transparent"
+				style={ { marginRight: 5 } }
+			>
 				{ 'mini' === size && <Icon.Expand /> }
 				{ 'normal' === size && <Icon.Collapse /> }
 			</Button>
-			<Button onClick={ toggleIsHidden } title={ __( 'Hide Assistant' ) }>
+			<Button
+				onClick={ toggleIsHidden }
+				title={ __( 'Hide Assistant' ) }
+				appearance="transparent"
+			>
 				<Icon.Close />
 			</Button>
 		</>
