@@ -196,7 +196,7 @@ export const App = () => {
 	}
 
 	return (
-		<Page.NewPage padX={ false } title={__('Manage Labels')}>
+		<Page.NewPage padX={ false } title={ __( 'Manage Labels' ) }>
 			<Page.Section
 				className='fl-asst-edit-labels'
 				contentStyle={ { paddingTop: 0 } }
@@ -214,7 +214,7 @@ export const App = () => {
 			</Page.Section>
 
 			<Page.Section
-				label={__('Add New Label')}
+				label={ __( 'Add New Label' ) }
 				className='fl-asst-add-label'
 			>
 				<input

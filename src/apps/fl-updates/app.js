@@ -84,10 +84,10 @@ const UpdatesMain = () => {
 
 	return (
 		<Page.NewPage
-			title={__('Updates')}
+			title={ __( 'Updates' ) }
 			header={ <Header /> }
 			actions={ <HeaderActions /> }
-			padX={false}
+			padX={ false }
 		>
 
 			{ ! hasUpdates && (

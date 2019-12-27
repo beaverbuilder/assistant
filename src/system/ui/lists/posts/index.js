@@ -130,7 +130,7 @@ export const Posts = ( {
 
 				const Accessory = () => {
 					if ( item.isTrashed ) {
-						return <Button onClick={ restorePost } tabIndex="-1">{__('Restore')}</Button>
+						return <Button onClick={ restorePost } tabIndex="-1">{__( 'Restore' )}</Button>
 					}
 					return null
 				}
@@ -142,9 +142,9 @@ export const Posts = ( {
 					return (
 						<div className="fl-asst-item-extras">
 							<Button
-								title={__('View Post')}
+								title={ __( 'View Post' ) }
 								tabIndex="-1"
-								href={item.url}
+								href={ item.url }
 								appearance="transparent"
 							>
 								<Icon.View />
@@ -159,7 +159,7 @@ export const Posts = ( {
 							<Button
 								onClick={ favoritePost }
 								tabIndex="-1"
-								title={__('Mark as Favorite')}
+								title={ __( 'Mark as Favorite' ) }
 								appearance="transparent"
 							>
 								{ item.isFavorite ? <Icon.BookmarkSolid /> : <Icon.Bookmark /> }
@@ -167,7 +167,7 @@ export const Posts = ( {
 							<Button
 								onClick={ clonePost }
 								tabIndex="-1"
-								title={__('Duplicate')}
+								title={ __( 'Duplicate' ) }
 								appearance="transparent"
 							>
 								<Icon.Clone />
@@ -175,7 +175,7 @@ export const Posts = ( {
 							<Button
 								onClick={ trashPost }
 								tabIndex="-1"
-								title={__('Move to Trash')}
+								title={ __( 'Move to Trash' ) }
 								status='destructive'
 								appearance="transparent"
 							>
@@ -228,7 +228,7 @@ export const Posts = ( {
 					if ( item.isFavorite ) {
 						marks.push(
 							<span>
-								<Icon.Bookmark style={{ height: 12, width: 12, marginTop: 2 }} />
+								<Icon.Bookmark style={ { height: 12, width: 12, marginTop: 2 } } />
 							</span>
 						)
 					}
@@ -252,7 +252,7 @@ export const Posts = ( {
 						'fl-asst-is-restoring': item.isRestoring,
 						'fl-asst-is-isCloning': item.isCloning,
 						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring ),
-						'fl-asst-is-current-page' : isCurrentPage(),
+						'fl-asst-is-current-page': isCurrentPage(),
 					}, defaultProps.className ),
 					marks: getMarks( item )
 				} )

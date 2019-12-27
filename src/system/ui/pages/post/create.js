@@ -121,10 +121,10 @@ export const CreatePost = ( { history, location } ) => {
 
 	const Footer = () => {
 		return (
-            <span style={{ marginLeft: 'auto' }}>
+			<span style={ { marginLeft: 'auto' } }>
 				{ isSubmitting && <Button.Loading status="primary">{__( 'Creating' )}</Button.Loading> }
 				{ ! isSubmitting && <Button type="submit" onClick={ submitForm } status="primary" >{__( 'Create Draft' )}</Button> }
-            </span>
+			</span>
 		)
 	}
 

@@ -68,7 +68,7 @@ export const Main = ( { match } ) => {
 		}, [] )
 
 		return (
-			<div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'row' }}>
+			<div style={ { flex: '1 1 auto', display: 'flex', flexDirection: 'row' } }>
 				<div className='fl-asst-search-form-simple'>
 					<input
 						type="text"

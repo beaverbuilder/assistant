@@ -7,32 +7,31 @@ export const SummaryTab = () => {
 	const { handle } = useContext( App.Context )
 	const { counts } = useSystemState()
 	const { contentTypes } = getSystemConfig()
-	const config = getSystemConfig()
 	return (
 		<>
 			<Page.Section>
 
-				<div style={{
+				<div style={ {
 					display: 'grid',
 					gridTemplateColumns: 'repeat(3, 1fr)',
 					gap: 5
-				}}>
-				{ Object.entries(contentTypes).map( ( [key, item], i ) => {
-					const { labels } = item
-					return (
-						<div key={i} style={{
-							display: 'flex',
-							flexDirection: 'column',
-							background: 'var(--fluid-primary-background)',
-							color: 'var(--fluid-primary-color)',
-							borderRadius: 'var(--fluid-sm-space)',
-							padding: 'var(--fluid-med-space)'
-						}}>
-							{labels['plural']}
-							<span style={{ fontSize: 24, marginTop: 5, lineHeight: 1 }}>{counts[`content/${key}`]}</span>
-						</div>
-					)
-				})}
+				} }>
+					{ Object.entries( contentTypes ).map( ( [ key, item ], i ) => {
+						const { labels } = item
+						return (
+							<div key={ i } style={ {
+								display: 'flex',
+								flexDirection: 'column',
+								background: 'var(--fluid-primary-background)',
+								color: 'var(--fluid-primary-color)',
+								borderRadius: 'var(--fluid-sm-space)',
+								padding: 'var(--fluid-med-space)'
+							} }>
+								{labels.plural}
+								<span style={ { fontSize: 24, marginTop: 5, lineHeight: 1 } }>{counts[`content/${key}`]}</span>
+							</div>
+						)
+					} )}
 				</div>
 
 			</Page.Section>

@@ -320,8 +320,6 @@ export const Post = ( { location, match, history } ) => {
 		)
 	}
 
-	console.log(item)
-
 	return (
 		<Page.NewPage
 			title={ labels.editItem }

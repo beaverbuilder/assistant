@@ -58,7 +58,7 @@ const Main = () => {
 
 	return (
 		<Page.NewPage
-			title={__('Content')}
+			title={ __( 'Content' ) }
 			padX={ false }
 			padY={ false }
 			header={ <Nav.Tabs tabs={ tabs } /> }

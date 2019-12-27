@@ -28,7 +28,7 @@ const Main = ( { match } ) => {
 	}
 
 	return (
-		<Page.NewPage title={__('Media')} actions={ <Actions /> } padX={false} padY={false}>
+		<Page.NewPage title={ __( 'Media' ) } actions={ <Actions /> } padX={ false } padY={ false }>
 
 			{ '' === listStyle && <MediaList baseURL={ match.url } /> }
 			{ 'grid' === listStyle && <MediaGrid baseURL={ match.url } /> }
