@@ -1,7 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page } from 'fluid/ui'
-import { Button, Nav } from 'assistant/ui'
+import { Button, Nav, Page } from 'assistant/ui'
 import './style.scss'
 
 import { FormExamples } from './forms'
@@ -17,12 +16,12 @@ export const App = ( { match } ) => (
 
 const Main = ( { match } ) => {
 	return (
-		<Page title="App Examples">
+		<Page.NewPage title="App Examples">
 			<Button.Group direction='column'>
 				<Button to={ `${match.url}/fluid` }>{__( 'FLUID Examples' )}</Button>
 				<Button to={ `${match.url}/forms` }>{__( 'Form Examples' )}</Button>
 			</Button.Group>
-		</Page>
+		</Page.NewPage>
 	)
 }
 

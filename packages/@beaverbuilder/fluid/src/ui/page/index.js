@@ -15,6 +15,7 @@ const Page = ({
     className,
     hero,
     title,
+    toolbar,
     actions,
     header,
     footer,
@@ -80,13 +81,15 @@ const Page = ({
 
                 <div className="fluid-page-content">
                     <div className="fluid-sticky-element">
-                        <div className="fluid-toolbar">
-                            { !isRoot  && <Nav.BackButton /> }
-                            { title && <div className="fluid-page-toolbar-content">
-                                <span  role="heading" aria-level="1">{title}</span>
-                            </div> }
-                            { actions && <span className="fluid-page-actions">{actions}</span> }
-                        </div>
+                        { toolbar !== false  && (
+                            <div className="fluid-toolbar">
+                                { !isRoot  && <Nav.BackButton /> }
+                                { title && <div className="fluid-page-toolbar-content">
+                                    <span  role="heading" aria-level="1" style={{ flex: '1 1 auto' }}>{title}</span>
+                                </div> }
+                                { actions && <span className="fluid-page-actions">{actions}</span> }
+                            </div>
+                        )}
                         { header && <div className="fluid-toolbar fluid-page-header">{header}</div> }
                     </div>
                     <Layout.Box padX={padX} padY={padY} style={contentBoxStyle}>

@@ -10,7 +10,8 @@ import {
 	Window,
 	Error,
 	Page,
-	Button
+	Button,
+	Layout,
 } from 'assistant/ui'
 
 const getRouterProps = history => {
@@ -133,9 +134,9 @@ const MainWindow = ( { children } ) => {
 
 const WindowError = () => {
 	return (
-		<Page shouldPadTop={ true }>
-			<h1>{__( 'We Have A Problem!' )}</h1>
+		<Page.NewPage padY={ true }>
+			<Layout.Headline>{__( 'We Have A Problem!' )}</Layout.Headline>
 			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
-		</Page>
+		</Page.NewPage>
 	)
 }

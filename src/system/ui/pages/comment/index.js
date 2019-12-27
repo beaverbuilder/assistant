@@ -1,7 +1,6 @@
 import React from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Form, Icon, Button } from 'ui'
-import { Page } from 'fluid/ui'
+import { Form, Icon, Button, Page, Layout } from 'ui'
 import { getSystemConfig } from 'data'
 
 export const Comment = ( { location } ) => {
@@ -55,9 +54,9 @@ export const Comment = ( { location } ) => {
 	} )
 
 	return (
-		<Page title={ __( 'Edit Comment' ) } hero={ hero }>
+		<Page.NewPage title={ __( 'Edit Comment' ) } hero={ hero }>
 
-			<Page.Headline>{author}</Page.Headline>
+			<Layout.Headline>{author}</Layout.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
 
 			<div className="fl-asst-content-area" dangerouslySetInnerHTML={ { __html: content } }/>
@@ -81,6 +80,6 @@ export const Comment = ( { location } ) => {
 			</div>
 
 			{renderForm()}
-		</Page>
+		</Page.NewPage>
 	)
 }

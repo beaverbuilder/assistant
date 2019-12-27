@@ -1,7 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page } from 'fluid/ui'
-import { Button, Form, List } from 'ui'
+import { Button, Form, List, Page, Layout } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
@@ -321,10 +320,16 @@ export const Post = ( { location, match, history } ) => {
 		)
 	}
 
+	console.log(item)
+
 	return (
-		<Page title={ labels.editItem } footer={ hasChanges && <Footer /> } >
-			<Page.Headline>{values.title}</Page.Headline>
+		<Page.NewPage
+			title={ labels.editItem }
+			hero={ item.thumbnail ? item.thumbnail : null }
+			footer={ hasChanges && <Footer /> }
+		>
+			<Layout.Headline>{values.title}</Layout.Headline>
 			{ renderForm() }
-		</Page>
+		</Page.NewPage>
 	)
 }

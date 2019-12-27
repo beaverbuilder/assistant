@@ -36,7 +36,7 @@ export const Window = ( {
 	...rest
 } ) => {
 
-	const { overlayToolbar } = useSystemState()
+	const { overlayToolbar, shouldReduceMotion } = useSystemState()
 
 	const handleChange = config => {
 		const state = {
@@ -58,7 +58,6 @@ export const Window = ( {
 		handleChange( {
 			size: 'mini' === size ? 'normal' : 'mini'
 		} )
-		requestAnimate()
 	}
 
 	// Origin
@@ -67,10 +66,9 @@ export const Window = ( {
 	}
 
 	// Animation
-	const shouldAnimate = true
 	const [ needsAnimate, setNeedsAnimate ] = useState( 0 )
 	const requestAnimate = () => {
-		if ( shouldAnimate ) {
+		if ( ! shouldReduceMotion ) {
 			setNeedsAnimate( needsAnimate + 1 )
 		}
 	}

@@ -101,39 +101,4 @@ const AppContent = props => {
 	)
 }
 
-/*
-const ScreenCard = forwardRef( ( { className, children, ...rest }, ref ) => {
-	const classes = classname( {
-		'fl-asst-screen': true,
-		'fl-asst-screen-card': true,
-	}, className )
-
-	const style = {
-		maxHeight: '100%',
-		minHeight: 0,
-		flex: '1 1 auto',
-		display: 'flex',
-		flexDirection: 'column',
-	}
-	return (
-		<div className={ classes } { ...rest }>
-			<div className="fl-asst-screen-content" ref={ ref } style={ style }>
-				<Error.Boundary alternate={ CardError }>
-					{children}
-				</Error.Boundary>
-			</div>
-		</div>
-	)
-} )
-
-const CardError = () => {
-	return (
-		<Page shouldPadTop={ true } shouldShowHeader={ false }>
-			<h1>{__( 'We Have A Problem!' )}</h1>
-			<p>{__( 'There seems to be an issue inside the current card.' )}</p>
-		</Page>
-	)
-}
-*/
-
 export default AppMain

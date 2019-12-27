@@ -196,7 +196,7 @@ export const App = () => {
 	}
 
 	return (
-		<Page shouldPadSides={ false }>
+		<Page.NewPage padX={ false } title={__('Manage Labels')}>
 			<Page.Section
 				className='fl-asst-edit-labels'
 				contentStyle={ { paddingTop: 0 } }
@@ -214,6 +214,7 @@ export const App = () => {
 			</Page.Section>
 
 			<Page.Section
+				label={__('Add New Label')}
 				className='fl-asst-add-label'
 			>
 				<input
@@ -234,10 +235,8 @@ export const App = () => {
 					{ __( 'Bookmarks allow you to mark items privately. Only you will be able to see what items you’ve bookmarked.' ) }
 				</InnerSection>
 			</Page.Section>
-		</Page>
+		</Page.NewPage>
 	)
 }
 
-App.Icon = () => {
-	return null
-}
+App.Icon = () => null

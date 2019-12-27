@@ -11,8 +11,8 @@ export const User = ( { location } ) => {
 	const { form, useFormContext } = Form.useFormData()
 
 	return (
-		<Page
-			shouldPadSides={ false }
+		<Page.NewPage
+			padX={ false }
 			title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }
 		>
 			<Page.TitleCard title={ item.displayName }>
@@ -31,6 +31,6 @@ export const User = ( { location } ) => {
 					} }
 				/>
 			</Form>
-		</Page>
+		</Page.NewPage>
 	)
 }

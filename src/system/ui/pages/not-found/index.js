@@ -1,11 +1,11 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page } from 'fluid/ui'
+import { Page, Layout } from 'ui'
 
 export const PageNotFound = () => {
 	return (
-		<Page title={ __( 'Page Not Found' ) }>
-			<h1>{__( 'Could not find page' )}</h1>
-		</Page>
+		<Page.NewPage title={ __( 'Page Not Found' ) }>
+			<Layout.Headline>{__( 'Could not find page' )}</Layout.Headline>
+		</Page.NewPage>
 	)
 }

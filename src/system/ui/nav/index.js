@@ -8,7 +8,7 @@ Nav.Tabs = ( { tabs = [] } ) => {
 	const { path, history } = useContext( Nav.Context )
 	return (
 		<>
-			<Button.Group appearance="tabs" className="fl-asst-tabs">
+			<Button.Group appearance="buttons">
 				{ tabs.map( ( tab, i ) => {
 					return (
 						<Button
@@ -20,9 +20,6 @@ Nav.Tabs = ( { tabs = [] } ) => {
 						</Button>
 					)
 				} ) }
-				<Button className="fl-asst-more-btn">
-					<Icon.More />
-				</Button>
 			</Button.Group>
 		</>
 	)

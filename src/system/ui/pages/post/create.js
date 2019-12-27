@@ -121,18 +121,16 @@ export const CreatePost = ( { history, location } ) => {
 
 	const Footer = () => {
 		return (
-            <>
-				<Page.Toolbar>
-					{ isSubmitting && <Button.Loading>{__( 'Creating' )}</Button.Loading> }
-					{ ! isSubmitting && <Button type="submit" onClick={ submitForm } >{__( 'Create Draft' )}</Button> }
-				</Page.Toolbar>
-            </>
+            <span style={{ marginLeft: 'auto' }}>
+				{ isSubmitting && <Button.Loading status="primary">{__( 'Creating' )}</Button.Loading> }
+				{ ! isSubmitting && <Button type="submit" onClick={ submitForm } status="primary" >{__( 'Create Draft' )}</Button> }
+            </span>
 		)
 	}
 
 	return (
-		<Page title={ __( 'Create New' ) } footer={ <Footer /> }>
+		<Page.NewPage title={ __( 'Create New' ) } footer={ <Footer /> }>
 			{ renderForm() }
-		</Page>
+		</Page.NewPage>
 	)
 }

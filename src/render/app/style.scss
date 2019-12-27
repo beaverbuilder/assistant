@@ -96,3 +96,8 @@
         display: none;
     }
 }
+
+// Cause PopupMaker
+body #wpadminbar {
+    z-index: 99999;
+}

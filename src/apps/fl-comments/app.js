@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { App, Page, List, Nav } from 'assistant/ui'
+import { __ } from '@wordpress/i18n'
 
 export const CommentsApp = ( { match } ) => (
 	<Nav.Switch>
@@ -11,7 +12,7 @@ export const CommentsApp = ( { match } ) => (
 const Main = () => {
 	const { handle } = useContext( App.Context )
 	return (
-		<Page shouldPadSides={ false }>
+		<Page.NewPage padX={ false } title={__('Comments')}>
 			<List.Comments
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,
@@ -21,7 +22,7 @@ const Main = () => {
 					},
 				} ) }
 			/>
-		</Page>
+		</Page.NewPage>
 	)
 }
 
