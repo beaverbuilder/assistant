@@ -208,6 +208,9 @@ export const Posts = ( {
 					if ( 'draft' === item.status ) {
 						marks.push( 'DRAFT' )
 					}
+					if ( 'private' === item.status ) {
+						marks.push( 'PRIVATE' )
+					}
 
 					if ( 'labels' in item && 0 < item.labels.length ) {
 
