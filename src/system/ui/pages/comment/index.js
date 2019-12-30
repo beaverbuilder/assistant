@@ -6,7 +6,6 @@ import { getSystemConfig, getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
 
 
-
 export const Comment = ( { location } ) => {
 	const { item } = location.state
 	const {
@@ -88,7 +87,7 @@ export const Comment = ( { location } ) => {
 				} )
 				set_spamStatus( true )
 				item.spam = true
-					setCurrentHistoryState( { item } )
+				setCurrentHistoryState( { item } )
 			} )
 	}
 
@@ -104,7 +103,7 @@ export const Comment = ( { location } ) => {
 				} )
 				set_spamStatus( false )
 				item.spam = false
-					setCurrentHistoryState( { item } )
+				setCurrentHistoryState( { item } )
 			} )
 	}
 
@@ -138,7 +137,7 @@ export const Comment = ( { location } ) => {
 				} )
 				set_trashStatus( false )
 				item.trash = false
-					setCurrentHistoryState( { item } )
+				setCurrentHistoryState( { item } )
 			} )
 	}
 

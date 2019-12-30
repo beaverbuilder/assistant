@@ -6,8 +6,6 @@ export const Message = ( {
 	status,
 	icon: Icon,
 	children,
-
-	...rest
 } ) => {
 
 
