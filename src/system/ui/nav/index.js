@@ -5,15 +5,16 @@ import { Nav as FLUID_Nav } from 'fluid/ui'
 const Nav = { ...FLUID_Nav }
 
 Nav.Tabs = ( { tabs = [] } ) => {
-	const { path, history } = useContext( Nav.Context )
+	const nav = useContext( Nav.Context )
+	const { location, history } = useContext( Nav.Context )
 	return (
 		<>
-			<Button.Group appearance="buttons">
+			<Button.Group appearance="tabs">
 				{ tabs.map( ( tab, i ) => {
 					return (
 						<Button
 							key={ i }
-							isSelected={ path === tab.path }
+							isSelected={ location.pathname === tab.path }
 							onClick={ () => history.replace( tab.path, {} ) }
 						>
 							{ tab.label }

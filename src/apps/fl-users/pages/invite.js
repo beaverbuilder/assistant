@@ -99,8 +99,7 @@ export const Invite = ( ) => {
 	}
 
 	return (
-		<Page.NewPage
-			padX={ false }
+		<Page
 			title={ __( 'Invite New User' ) }
 			footer={ <Footer /> }
 		>
@@ -140,6 +139,6 @@ export const Invite = ( ) => {
 				</Page.Section>
 			</Form>
 
-		</Page.NewPage>
+		</Page>
 	)
 }

@@ -37,6 +37,7 @@ const Provider = withRouter( ( { children, location, match, history, onChange } 
         location,
         match,
         history,
+        path: location.pathname,
         isRoot: 0 === history.index,
         goToRoot: () => history.go( -history.index )
     }

@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react'
 import classname from 'classnames'
-import { Window } from 'ui'
+import { Window, Page } from 'ui'
 import { getSystemSelectors } from 'data'
 import './style.scss'
 
@@ -64,29 +64,6 @@ export const ExpandedContent = ( { children } ) => {
 	return null
 }
 
-export const Section = ( {
-	children,
-	className,
-	label,
-	handle,
-	shouldPadSides = true,
-	contentStyle = {},
-	...rest
-} ) => {
-	const classes = classname( {
-		'fl-asst-section': true,
-		[`${handle}-section`]: handle,
-		'fl-asst-section-pad-sides': shouldPadSides,
-	}, className )
-
-	return (
-		<div className={ classes } { ...rest }>
-			{ label && <div className="fl-asst-section-title"><span className="fl-asst-section-title-text">{label}</span></div> }
-			<div className="fl-asst-section-content" style={ contentStyle }>{children}</div>
-		</div>
-	)
-}
-
 export const RegisteredSections = ( { location, data } ) => {
 	const { querySections } = getSystemSelectors()
 	const sections = useMemo( () => querySections( location ), [ location ] )
@@ -110,7 +87,7 @@ export const RegisteredSections = ( { location, data } ) => {
 		}
 
 		return (
-			<Section key={ handle } handle={ handle } { ...rest }>{render( data )}</Section>
+			<Page.Section key={ handle } handle={ handle } { ...rest }>{render( data )}</Page.Section>
 		)
 	} )
 }

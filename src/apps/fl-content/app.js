@@ -21,7 +21,7 @@ const Main = () => {
 			{
 				handle: 'summary',
 				label: __( 'Summary' ),
-				path: '/fl-content/',
+				path: '/fl-content',
 				component: SummaryTab,
 				exact: true,
 			}
@@ -57,15 +57,14 @@ const Main = () => {
 	const tabs = getTabs()
 
 	return (
-		<Page.NewPage
+		<Page
 			title={ __( 'Content' ) }
-			padX={ false }
 			padY={ false }
 			header={ <Nav.Tabs tabs={ tabs } /> }
 			actions={ <Actions /> }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
-		</Page.NewPage>
+		</Page>
 	)
 }
 

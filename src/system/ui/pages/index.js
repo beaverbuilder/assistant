@@ -10,7 +10,6 @@ import {
 	Toolbar,
 	TitleCard,
 	ExpandedContent,
-	Section,
 	RegisteredSections,
 	Empty
 } from './parts'
@@ -26,7 +25,10 @@ import { PageNotFound } from './not-found'
 
 import './style.scss'
 
-export const Page = ( {
+const Page = FLUID_Page
+
+/*
+const Page = ( {
 	className,
 	shouldShowHeader = true,
 	shouldPadTop = false,
@@ -82,6 +84,7 @@ export const Page = ( {
 		</Page.Context.Provider>
 	)
 }
+*/
 
 // TEMP - Will replace Page.
 Page.NewPage = FLUID_Page
@@ -183,9 +186,6 @@ Page.Pad.displayName = 'Page.Pad'
 Page.TitleCard = TitleCard
 Page.TitleCard.displayName = 'Page.TitleCard'
 
-Page.Section = Section
-Page.Section.displayName = 'Page.Section'
-
 Page.RegisteredSections = RegisteredSections
 Page.RegisteredSections.displayName = 'Page.RegisteredSections'
 
@@ -219,3 +219,5 @@ Page.Empty.displayName = 'Page.Empty'
 
 Page.NotFound = PageNotFound
 Page.NotFound.displayName = 'Page.NotFound'
+
+export { Page }
