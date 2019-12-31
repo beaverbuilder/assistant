@@ -1,6 +1,7 @@
 import React from 'react'
 import { Icon, Button } from 'ui'
 import classname from 'classnames'
+import './style.scss'
 
 
 export const Message = ({
@@ -9,9 +10,9 @@ export const Message = ({
 	children,
 }) => {
 	const messageClassName = classname({
-		'fluid-button fluid-status-alert': (status == 'alert'),
-		'fluid-button fluid-status-destructive': (status == 'destructive'),
-		'fluid-button fluid-status-primary': (status == 'primary')
+		'fluid-message fluid-status-alert': (status == 'alert'),
+		'fluid-message fluid-status-destructive': (status == 'destructive'),
+		'fluid-message fluid-status-primary': (status == 'primary')
 	})
 
 	return (

@@ -146,6 +146,9 @@ export const Comment = ( { location } ) => {
 	}
 
 	const updateContent = () => {
+		if('' === editContent){
+			alert('Please type a comment!')
+			}else{
 		comments
 			.comments()
 			.update( id, 'content', { content: editContent } )
@@ -160,6 +163,7 @@ export const Comment = ( { location } ) => {
 				set_commentStatus( 'update' )
 
 			} )
+		}
 	}
 
 	const resetEdit = () => {
@@ -191,6 +195,9 @@ export const Comment = ( { location } ) => {
 	}
 
 	const ReplyCommentpost = () => {
+		if('' === replyValue){
+		alert('Please type a comment!')
+		}else{
 		const Rc = replyToComment( id, postId, replyValue, () => {} )
 		Rc.then( () => {
 			set_commentStatus( 'cancelReply' )
@@ -200,6 +207,7 @@ export const Comment = ( { location } ) => {
 				icon: Icon.Reply
 			} )
 		} )
+	}
 	}
 
 	const resetReply = () => {
@@ -301,20 +309,24 @@ export const Comment = ( { location } ) => {
 			)}
 			{'edit' == commentStatus && (
 				<div className='CmtTextWrap'>
+					<span className="edit-comment-title">Edit Comment</span>
 					<textarea
+						className="comment-text"
 						value={ editContent }
 						onChange={ e => setEditContent( e.target.value ) }
-						rows={ 2 }
+						rows={ 6 }
 					/>
 					<UpdateCommentBtn />
 				</div>
 			)}
 			{'reply' == commentStatus && (
 				<div className='CmtTextWrap'>
+				<span  className="edit-comment-title">Reply Comment</span>
 					<textarea
+						className="comment-text"
 						value={ replyValue }
 						onChange={ e => setreplyValue( e.target.value ) }
-						rows={ 2 }
+						rows={ 6 }
 					/>
 					<ReplyCommentBtn />
 				</div>
@@ -329,7 +341,8 @@ export const Comment = ( { location } ) => {
 			>
 				{false === trashStatus &&
           false === spamStatus &&
-          false == approveStatus && (
+		  false == approveStatus &&
+		  ('edit' !== commentStatus && 'reply' !== commentStatus) && (
 					<Button
 						appearance='elevator'
 						status='primary'
@@ -340,7 +353,7 @@ export const Comment = ( { location } ) => {
 					</Button>
 				)}
 
-				{true === approveStatus && false === spamStatus && (
+				{true === approveStatus && false === spamStatus &&  ('edit' !== commentStatus && 'reply' !== commentStatus) && (
 					<Button
 						appearance='elevator'
 						status='alert'
@@ -350,18 +363,18 @@ export const Comment = ( { location } ) => {
 						<Icon.Reject />
 					</Button>
 				)}
-				{false === trashStatus && false === spamStatus && (
+				{false === trashStatus && false === spamStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) && (
 					<Button appearance='elevator' title='Reply' onClick={ ReplyComment }>
 						<Icon.Reply />
 					</Button>
 				)}
-				{'edit' !== commentStatus && false === spamStatus && (
+				{'edit' !== commentStatus && false === spamStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
 					<Button appearance='elevator' title='Edit' onClick={ editComment }>
 						<Icon.Edit />
 					</Button>
 				)}
 
-				{false === spamStatus && (
+				{false === spamStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
 					<Button
 						appearance='elevator'
 						status='alert'
@@ -371,7 +384,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Spam />
 					</Button>
 				)}
-				{true === spamStatus && (
+				{true === spamStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
 					<Button
 						appearance='elevator'
 						status='alert'
@@ -381,7 +394,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Unspam />
 					</Button>
 				)}
-				{false === trashStatus && (
+				{false === trashStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
 					<Button
 						appearance='elevator'
 						status='destructive'
@@ -391,7 +404,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Trash />
 					</Button>
 				)}
-				{true === trashStatus && (
+				{true === trashStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
 					<Button
 						appearance='elevator'
 						status='primary'
