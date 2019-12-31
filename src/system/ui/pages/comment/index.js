@@ -146,23 +146,23 @@ export const Comment = ( { location } ) => {
 	}
 
 	const updateContent = () => {
-		if('' === editContent){
-			alert('Please type a comment!')
-			}else{
-		comments
-			.comments()
-			.update( id, 'content', { content: editContent } )
-			.then( () => {
-				set_responseMessage( {
-					message: 'Comment has been updated!',
-					status: 'primary',
-					icon: Icon.Update
-				} )
-				item.content = editContent
-				setCurrentHistoryState( { item } )
-				set_commentStatus( 'update' )
+		if ( '' === editContent ) {
+			alert( 'Please type a comment!' )
+		} else {
+			comments
+				.comments()
+				.update( id, 'content', { content: editContent } )
+				.then( () => {
+					set_responseMessage( {
+						message: 'Comment has been updated!',
+						status: 'primary',
+						icon: Icon.Update
+					} )
+					item.content = editContent
+					setCurrentHistoryState( { item } )
+					set_commentStatus( 'update' )
 
-			} )
+				} )
 		}
 	}
 
@@ -195,19 +195,19 @@ export const Comment = ( { location } ) => {
 	}
 
 	const ReplyCommentpost = () => {
-		if('' === replyValue){
-		alert('Please type a comment!')
-		}else{
-		const Rc = replyToComment( id, postId, replyValue, () => {} )
-		Rc.then( () => {
-			set_commentStatus( 'cancelReply' )
-			set_responseMessage( {
-				message: 'Reply Successfully posted!',
-				status: 'primary',
-				icon: Icon.Reply
+		if ( '' === replyValue ) {
+			alert( 'Please type a comment!' )
+		} else {
+			const Rc = replyToComment( id, postId, replyValue, () => { } )
+			Rc.then( () => {
+				set_commentStatus( 'cancelReply' )
+				set_responseMessage( {
+					message: 'Reply Successfully posted!',
+					status: 'primary',
+					icon: Icon.Reply
+				} )
 			} )
-		} )
-	}
+		}
 	}
 
 	const resetReply = () => {
@@ -321,7 +321,7 @@ export const Comment = ( { location } ) => {
 			)}
 			{'reply' == commentStatus && (
 				<div className='CmtTextWrap'>
-				<span  className="edit-comment-title">Reply Comment</span>
+					<span className="edit-comment-title">Reply Comment</span>
 					<textarea
 						className="comment-text"
 						value={ replyValue }
@@ -340,9 +340,9 @@ export const Comment = ( { location } ) => {
 				} }
 			>
 				{false === trashStatus &&
-          false === spamStatus &&
-		  false == approveStatus &&
-		  ('edit' !== commentStatus && 'reply' !== commentStatus) && (
+					false === spamStatus &&
+					false == approveStatus &&
+					( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='primary'
@@ -353,7 +353,7 @@ export const Comment = ( { location } ) => {
 					</Button>
 				)}
 
-				{true === approveStatus && false === spamStatus &&  ('edit' !== commentStatus && 'reply' !== commentStatus) && (
+				{true === approveStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='alert'
@@ -363,18 +363,18 @@ export const Comment = ( { location } ) => {
 						<Icon.Reject />
 					</Button>
 				)}
-				{false === trashStatus && false === spamStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) && (
+				{false === trashStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button appearance='elevator' title='Reply' onClick={ ReplyComment }>
 						<Icon.Reply />
 					</Button>
 				)}
-				{'edit' !== commentStatus && false === spamStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
+				{'edit' !== commentStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button appearance='elevator' title='Edit' onClick={ editComment }>
 						<Icon.Edit />
 					</Button>
 				)}
 
-				{false === spamStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
+				{false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='alert'
@@ -384,7 +384,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Spam />
 					</Button>
 				)}
-				{true === spamStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
+				{true === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='alert'
@@ -394,7 +394,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Unspam />
 					</Button>
 				)}
-				{false === trashStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
+				{false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='destructive'
@@ -404,7 +404,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Trash />
 					</Button>
 				)}
-				{true === trashStatus && ('edit' !== commentStatus && 'reply' !== commentStatus) &&(
+				{true === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='primary'

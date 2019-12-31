@@ -121,15 +121,15 @@ export const Comments = ( {
 				}
 
 				const Accessory = () => {
-					if ( item.isTrashed && type !== 'trash') {
+					if ( item.isTrashed && 'trash' !== type ) {
 						return <Button onClick={ untrashComment } tabIndex="-1">Restore</Button>
-					} else if ( false === item.isTrashed && type == 'trash') {
+					} else if ( false === item.isTrashed && 'trash' == type ) {
 						return <Button onClick={ trashComment } tabIndex="-1">Trash</Button>
 					}
-					if ( item.isSpam && type !== 'spam') {
+					if ( item.isSpam && 'spam' !== type ) {
 						return <Button onClick={ UnspamComment } tabIndex="-1">Restore</Button>
 					}
-					if ( item.isunSpam && type == 'spam') {
+					if ( item.isunSpam && 'spam' == type ) {
 						return <Button onClick={ spamComment } tabIndex="-1">Spam</Button>
 					}
 					return null
@@ -138,13 +138,13 @@ export const Comments = ( {
 
 				const Extras = () => {
 					if (
-						 item.isCloning ||
-						(item.isTrashing && type !== 'trash')  ||
-						(item.isTrashed  && type !== 'trash') ||
-						 item.isRestoring ||
-						(item.isSpam && type !== 'spam') ||
-						(item.isunSpam && type == 'spam') ||
-						(item.isrestore && type == 'trash')
+						item.isCloning ||
+						( item.isTrashing && 'trash' !== type ) ||
+						( item.isTrashed && 'trash' !== type ) ||
+						item.isRestoring ||
+						( item.isSpam && 'spam' !== type ) ||
+						( item.isunSpam && 'spam' == type ) ||
+						( item.isrestore && 'trash' == type )
 
 
 					) {
@@ -161,7 +161,7 @@ export const Comments = ( {
 									alignItems: 'center',
 								} }
 							>
-								<Button  href={ item.url } >
+								<Button href={ item.url } >
 									<Icon.View title="View" />
 								</Button>
 
@@ -180,7 +180,7 @@ export const Comments = ( {
 
 
 								{item.trash ? (
-									<Button  onClick={ untrashComment }><Icon.Restore /></Button>
+									<Button onClick={ untrashComment }><Icon.Restore /></Button>
 
 								) : (
 									<Button status="destructive" onClick={ trashComment }><Icon.Trash /></Button>
@@ -194,16 +194,16 @@ export const Comments = ( {
 
 				return getItemProps( item, {
 					...defaultProps,
-					label: (item.isTrashing && type !== 'trash') || (item.isSpam && type !== 'spam') || (item.isunSpam && type == 'spam') || (item.isrestore && type=='trash') ? item.title : (
+					label: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isrestore && 'trash' == type ) ? item.title : (
 						<em>
 							<strong>{item.authorEmail}</strong> commented:
 						</em>
 					),
-					description: (item.isTrashing && type !== 'trash') || (item.isSpam && type !== 'spam') || (item.isunSpam && type == 'spam') || (item.isrestore && type=='trash') ? '' : truncate(
+					description: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isrestore && 'trash' == type ) ? '' : truncate(
 						item.content.replace( /<\/?[^>]+(>|$)/g, '' ),
 						80
 					),
-					thumbnail: (item.isTrashing && type !== 'trash') || (item.isSpam && type !== 'spam') || (item.isunSpam && type == 'spam') || (item.isrestore && type=='trash') ? '' : item.thumbnail,
+					thumbnail: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isrestore && 'trash' == type ) ? '' : item.thumbnail,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
 
