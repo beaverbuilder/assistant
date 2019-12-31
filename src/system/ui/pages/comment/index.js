@@ -4,6 +4,7 @@ import { Form, Icon, Message } from 'ui'
 import { Button, Page } from 'fluid/ui'
 import { getSystemConfig, getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
+import { getCommentActions } from './actions'
 
 
 export const Comment = ( { location } ) => {
@@ -18,8 +19,6 @@ export const Comment = ( { location } ) => {
 		content,
 		trash,
 		spam,
-		editUrl,
-		url,
 		postId
 	} = item
 	const { pluginURL } = getSystemConfig()
@@ -266,29 +265,9 @@ export const Comment = ( { location } ) => {
 				fields: {
 					actions: {
 						component: 'actions',
-						options: [
-							{ label: 'View on Post', href: url },
-							{ label: 'View on Admin', href: editUrl },
-							{
-								label: 'Approve',
-								onClick: approveComment,
-								isEnabled: approveStatus
-							},
-							{
-								label: 'Reject',
-								onClick: unapproveComment,
-								isEnabled: ! approveStatus
-							},
-							{ label: 'Mark as Spam', onClick: spamComment },
-							{ label: 'UnSpam', onClick: UnspamComment },
-							{ label: 'Reply' },
-							{
-								label: 'Trash Comment',
-								status: 'destructive',
-								onClick: trashComment
-							},
-							{ label: 'Restore', onClick: untrashComment }
-						]
+						options: args => getCommentActions( { item,
+							set_approveStatus, set_responseMessage, set_spamStatus, set_trashStatus, set_commentStatus, ...args } ),
+
 					}
 				}
 			}
