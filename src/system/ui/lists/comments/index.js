@@ -15,6 +15,7 @@ export const Comments = ( {
 } ) => {
 	const comments = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
+
 	return (
 
 		<List.WordPress
@@ -120,15 +121,15 @@ export const Comments = ( {
 				}
 
 				const Accessory = () => {
-					if ( item.isTrashed ) {
+					if ( item.isTrashed && type !== 'trash') {
 						return <Button onClick={ untrashComment } tabIndex="-1">Restore</Button>
-					} else if ( false === item.isTrashed ) {
+					} else if ( false === item.isTrashed && type == 'trash') {
 						return <Button onClick={ trashComment } tabIndex="-1">Trash</Button>
 					}
-					if ( item.isSpam ) {
+					if ( item.isSpam && type !== 'spam') {
 						return <Button onClick={ UnspamComment } tabIndex="-1">Restore</Button>
 					}
-					if ( item.isunSpam ) {
+					if ( item.isunSpam && type == 'spam') {
 						return <Button onClick={ spamComment } tabIndex="-1">Spam</Button>
 					}
 					return null
@@ -137,13 +138,15 @@ export const Comments = ( {
 
 				const Extras = () => {
 					if (
-						item.isCloning ||
-						item.isTrashing ||
-						item.isTrashed ||
-						item.isRestoring ||
-						item.isSpam ||
-						item.isunSpam ||
-						item.isrestore
+						 item.isCloning ||
+						(item.isTrashing && type !== 'trash')  ||
+						(item.isTrashed  && type !== 'trash') ||
+						 item.isRestoring ||
+						(item.isSpam && type !== 'spam') ||
+						(item.isunSpam && type == 'spam') ||
+						(item.isrestore && type == 'trash')
+
+
 					) {
 						return null
 					}
@@ -191,16 +194,16 @@ export const Comments = ( {
 
 				return getItemProps( item, {
 					...defaultProps,
-					label: item.isTrashing || item.isSpam || item.isunSpam || item.isrestore ? item.title : (
+					label: (item.isTrashing && type !== 'trash') || (item.isSpam && type !== 'spam') || (item.isunSpam && type == 'spam') || (item.isrestore && type=='trash') ? item.title : (
 						<em>
 							<strong>{item.authorEmail}</strong> commented:
 						</em>
 					),
-					description: item.isTrashing || item.isSpam || item.isunSpam || item.isrestore ? '' : truncate(
+					description: (item.isTrashing && type !== 'trash') || (item.isSpam && type !== 'spam') || (item.isunSpam && type == 'spam') || (item.isrestore && type=='trash') ? '' : truncate(
 						item.content.replace( /<\/?[^>]+(>|$)/g, '' ),
 						80
 					),
-					thumbnail: item.isTrashing || item.isSpam || item.isunSpam || item.isrestore ? '' : item.thumbnail,
+					thumbnail: (item.isTrashing && type !== 'trash') || (item.isSpam && type !== 'spam') || (item.isunSpam && type == 'spam') || (item.isrestore && type=='trash') ? '' : item.thumbnail,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
 

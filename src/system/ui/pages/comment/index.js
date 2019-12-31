@@ -155,6 +155,8 @@ export const Comment = ( { location } ) => {
 					status: 'primary',
 					icon: Icon.Update
 				} )
+				item.content = editContent
+				setCurrentHistoryState( { item } )
 				set_commentStatus( 'update' )
 
 			} )
@@ -294,7 +296,7 @@ export const Comment = ( { location } ) => {
 			{'edit' !== commentStatus && (
 				<div
 					className='fl-asst-content-area'
-					dangerouslySetInnerHTML={ { __html: editContent } }
+					dangerouslySetInnerHTML={ { __html: item.content } }
 				/>
 			)}
 			{'edit' == commentStatus && (
