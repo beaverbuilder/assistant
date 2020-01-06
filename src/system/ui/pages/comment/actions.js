@@ -4,7 +4,8 @@ import { Icon } from 'ui'
 import { getSystemActions } from 'data'
 
 export const getCommentActions = ( {
-	set_approveStatus, set_responseMessage, set_spamStatus, set_trashStatus, set_commentStatus, item } ) => {
+	set_approveStatus, set_responseMessage, set_spamStatus, set_trashStatus, set_commentStatus,
+	approveStatus,spamStatus, trashStatus, commentStatus, item } ) => {
 
 	const {
 		id,
@@ -33,8 +34,8 @@ export const getCommentActions = ( {
 						icon: Icon.Approve
 					} )
 					set_approveStatus( true )
-					set_actionApprove( true )
 					item.approved = true
+					set_actionApprove( true )
 					setCurrentHistoryState( { item } )
 
 				}
@@ -143,10 +144,10 @@ export const getCommentActions = ( {
 		[
 			{ label: 'View on Post', href: url },
 			{ label: 'View on Admin', href: editUrl },
-			{ label: actionApprove ? 'Reject' : 'Approve', onClick: actionApprove ? unapproveComment : approveComment },
+			{ label: actionApprove ? 'Reject' : 'Approve', onClick: approved ? unapproveComment : approveComment },
 			{ label: actionSpam ? 'UnSpam' : 'Mark as Spam', onClick: actionSpam ? UnspamComment : spamComment },
 			{ label: 'Reply', onClick: ReplyComment },
-			{ label: actionTrash ? 'Restore' : 'Trash Comment', onClick: actionTrash ? untrashComment : trashComment, status: 'destructive' },
+			{ label: actionTrash ? 'Restore Comment' : 'Trash Comment', onClick: actionTrash ? untrashComment : trashComment, status: 'destructive' },
 
 		] )
 }

@@ -38,6 +38,7 @@ export const Comment = ( { location } ) => {
 	const [ editContent, setEditContent ] = React.useState( content )
 	const [ replyValue, setreplyValue ] = React.useState( '' )
 
+
 	const approveComment = () => {
 		comments
 			.comments()
@@ -266,7 +267,8 @@ export const Comment = ( { location } ) => {
 					actions: {
 						component: 'actions',
 						options: args => getCommentActions( { item,
-							set_approveStatus, set_responseMessage, set_spamStatus, set_trashStatus, set_commentStatus, ...args } ),
+							set_approveStatus, set_responseMessage, set_spamStatus, set_trashStatus, set_commentStatus,
+							approveStatus, responseMessage, spamStatus, trashStatus, commentStatus, ...args } ),
 
 					}
 				}

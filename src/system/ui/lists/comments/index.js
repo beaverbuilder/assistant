@@ -24,6 +24,9 @@ export const Comments = ( {
 
 			getItemProps={ ( item, defaultProps ) => {
 				const { updateItem } = defaultProps
+				const [ approveStatus, set_approveStatus ] = React.useState( item.approved )
+				const [ trashStatus, set_trashStatus ] = React.useState( item.trash )
+				const [ spamStatus, set_spamStatus ] = React.useState( item.spam )
 				const approveComment = () => {
 					comments
 						.comments()
@@ -31,6 +34,7 @@ export const Comments = ( {
 						.then( response => {
 							if ( '1' == response.data.commentData.comment_approved ) {
 								item.approved = true
+								set_approveStatus(true)
 								setCurrentHistoryState( { item } )
 							}
 						} )
@@ -43,6 +47,7 @@ export const Comments = ( {
 						.then( response => {
 							if ( '0' == response.data.commentData.comment_approved ) {
 								item.approved = false
+								set_approveStatus(false)
 								setCurrentHistoryState( { item } )
 							}
 						} )
@@ -54,6 +59,7 @@ export const Comments = ( {
 						.update( item.id, 'spam', item )
 						.then( () => {
 							item.spam = true
+							set_spamStatus(true)
 							setCurrentHistoryState( { item } )
 							updateItem( item.uuid, {
 								title: __( 'This item has been moved to the spam' ),
@@ -69,6 +75,7 @@ export const Comments = ( {
 						.update( item.id, 'unspam', item )
 						.then( () => {
 							item.spam = false
+							set_spamStatus(false)
 							setCurrentHistoryState( { item } )
 							updateItem( item.uuid, {
 								title: __( 'This item has been restored from spam' ),
@@ -88,6 +95,7 @@ export const Comments = ( {
 
 								if ( 'trash' == response.data.commentData.comment_approved ) {
 									item.trash = true
+									set_trashStatus(true)
 									setCurrentHistoryState( { item } )
 									updateItem( item.uuid, {
 										title: __( 'This item has been moved to the trash' ),
@@ -108,6 +116,7 @@ export const Comments = ( {
 						.then( () => {
 
 							item.trash = false
+							set_trashStatus(false)
 							setCurrentHistoryState( { item } )
 							updateItem( item.uuid, {
 								title: __( 'This item has been restored from trash' ),
@@ -165,21 +174,21 @@ export const Comments = ( {
 									<Icon.View title="View" />
 								</Button>
 
-								{item.approved ? (
+								{approveStatus ? (
 									<Button onClick={ unapproveComment }><Icon.Reject /></Button>
 								) : (
 									<Button onClick={ approveComment }><Icon.Approve /></Button>
 								)}
 
 
-								{item.spam ? (
+								{spamStatus ? (
 									<Button onClick={ UnspamComment }><Icon.Unspam /></Button>
 								) : (
 									<Button onClick={ spamComment }><Icon.Spam /></Button>
 								)}
 
 
-								{item.trash ? (
+								{trashStatus ? (
 									<Button onClick={ untrashComment }><Icon.Restore /></Button>
 
 								) : (
