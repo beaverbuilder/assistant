@@ -33,22 +33,21 @@ export const CommentTypeTab = ( { type = 'all', label = 'All Comments' } ) => {
 
 	return (
 		<>
+		<Page.Section label={ __( label ) } shouldPadSides={ false }>
 
-			<Page.Section label={ __( label ) } shouldPadSides={ false }>
-
-				<List.Comments
-					type ={ type }
-					getItemProps={ ( item, defaultProps ) => ( {
-						...defaultProps,
-						to: {
-							pathname: `/${handle}/comment/${item.id}`,
-							state: { item }
-						},
-					} ) }
-				/>
+			<List.Comments
+				type ={ type }
+				getItemProps={ ( item, defaultProps ) => ( {
+					...defaultProps,
+					to: {
+						pathname: `/${handle}/comment/${item.id}`,
+						state: { item }
+					},
+				} ) }
+			/>
 
 
-			</Page.Section>
+		</Page.Section>
 		</>
 	)
 }

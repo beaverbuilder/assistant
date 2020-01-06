@@ -2,7 +2,6 @@ import React from 'react'
 import { List, Button, Icon } from 'ui'
 import { truncate } from 'utils/text'
 import { __ } from '@wordpress/i18n'
-import { getSystemActions } from 'data'
 import { getWpRest } from 'utils/wordpress'
 export const Comments = ( {
 
@@ -14,8 +13,6 @@ export const Comments = ( {
 	...rest
 } ) => {
 	const comments = getWpRest()
-	const { setCurrentHistoryState } = getSystemActions()
-
 	return (
 
 		<List.WordPress
@@ -34,8 +31,7 @@ export const Comments = ( {
 						.then( response => {
 							if ( '1' == response.data.commentData.comment_approved ) {
 								item.approved = true
-								set_approveStatus(true)
-								setCurrentHistoryState( { item } )
+								set_approveStatus( true )
 							}
 						} )
 				}
@@ -47,8 +43,7 @@ export const Comments = ( {
 						.then( response => {
 							if ( '0' == response.data.commentData.comment_approved ) {
 								item.approved = false
-								set_approveStatus(false)
-								setCurrentHistoryState( { item } )
+								set_approveStatus( false )
 							}
 						} )
 				}
@@ -59,8 +54,7 @@ export const Comments = ( {
 						.update( item.id, 'spam', item )
 						.then( () => {
 							item.spam = true
-							set_spamStatus(true)
-							setCurrentHistoryState( { item } )
+							set_spamStatus( true )
 							updateItem( item.uuid, {
 								title: __( 'This item has been moved to the spam' ),
 								isSpam: true,
@@ -75,8 +69,7 @@ export const Comments = ( {
 						.update( item.id, 'unspam', item )
 						.then( () => {
 							item.spam = false
-							set_spamStatus(false)
-							setCurrentHistoryState( { item } )
+							set_spamStatus( false )
 							updateItem( item.uuid, {
 								title: __( 'This item has been restored from spam' ),
 								isSpam: false,
@@ -95,8 +88,7 @@ export const Comments = ( {
 
 								if ( 'trash' == response.data.commentData.comment_approved ) {
 									item.trash = true
-									set_trashStatus(true)
-									setCurrentHistoryState( { item } )
+									set_trashStatus( true )
 									updateItem( item.uuid, {
 										title: __( 'This item has been moved to the trash' ),
 										isTrashing: true,
@@ -116,8 +108,7 @@ export const Comments = ( {
 						.then( () => {
 
 							item.trash = false
-							set_trashStatus(false)
-							setCurrentHistoryState( { item } )
+							set_trashStatus( false )
 							updateItem( item.uuid, {
 								title: __( 'This item has been restored from trash' ),
 								isTrashing: false,

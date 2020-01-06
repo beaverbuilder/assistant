@@ -26,15 +26,15 @@ export const Comment = ( { location } ) => {
 	const comments = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 
-	const [ responseMessage, set_responseMessage ] = React.useState( {
+	const [ responseMessage, setResponseMessage ] = React.useState( {
 		message: '',
 		status: '',
 		icon: ''
 	} )
-	const [ commentStatus, set_commentStatus ] = React.useState( approved )
-	const [ approveStatus, set_approveStatus ] = React.useState( approved )
-	const [ trashStatus, set_trashStatus ] = React.useState( trash )
-	const [ spamStatus, set_spamStatus ] = React.useState( spam )
+	const [ commentStatus, setCommentStatus ] = React.useState( approved )
+	const [ approveStatus, setApproveStatus ] = React.useState( approved )
+	const [ trashStatus, setTrashStatus ] = React.useState( trash )
+	const [ spamStatus, setSpamStatus ] = React.useState( spam )
 	const [ editContent, setEditContent ] = React.useState( content )
 	const [ replyValue, setreplyValue ] = React.useState( '' )
 
@@ -45,12 +45,12 @@ export const Comment = ( { location } ) => {
 			.update( id, 'approve', item )
 			.then( response => {
 				if ( '1' == response.data.commentData.comment_approved ) {
-					set_responseMessage( {
+					setResponseMessage( {
 						message: 'Comment Approved!',
 						status: 'alert',
 						icon: Icon.Approve
 					} )
-					set_approveStatus( true )
+					setApproveStatus( true )
 					item.approved = true
 					setCurrentHistoryState( { item } )
 				}
@@ -63,12 +63,12 @@ export const Comment = ( { location } ) => {
 			.update( id, 'unapprove', item )
 			.then( response => {
 				if ( '0' == response.data.commentData.comment_approved ) {
-					set_responseMessage( {
+					setResponseMessage( {
 						message: 'Comment Un-Approved!',
 						status: 'destructive',
 						icon: Icon.Reject
 					} )
-					set_approveStatus( false )
+					setApproveStatus( false )
 					item.approved = false
 					setCurrentHistoryState( { item } )
 				}
@@ -80,12 +80,12 @@ export const Comment = ( { location } ) => {
 			.comments()
 			.update( id, 'spam', item )
 			.then( () => {
-				set_responseMessage( {
+				setResponseMessage( {
 					message: 'Comment has been marked as spam!',
 					status: 'destructive',
 					icon: Icon.Spam
 				} )
-				set_spamStatus( true )
+				setSpamStatus( true )
 				item.spam = true
 				setCurrentHistoryState( { item } )
 			} )
@@ -96,12 +96,12 @@ export const Comment = ( { location } ) => {
 			.comments()
 			.update( id, 'unspam', item )
 			.then( () => {
-				set_responseMessage( {
+				setResponseMessage( {
 					message: 'Comment has been restored from spam!',
 					status: 'alert',
 					icon: Icon.Unspam
 				} )
-				set_spamStatus( false )
+				setSpamStatus( false )
 				item.spam = false
 				setCurrentHistoryState( { item } )
 			} )
@@ -113,12 +113,12 @@ export const Comment = ( { location } ) => {
 			.update( id, 'trash', item )
 			.then( response => {
 				if ( 'trash' == response.data.commentData.comment_approved ) {
-					set_responseMessage( {
+					setResponseMessage( {
 						message: 'Comment has been moved to trashed!',
 						status: 'destructive',
 						icon: Icon.Trash
 					} )
-					set_trashStatus( true )
+					setTrashStatus( true )
 					item.trash = true
 					setCurrentHistoryState( { item } )
 				}
@@ -130,19 +130,19 @@ export const Comment = ( { location } ) => {
 			.comments()
 			.update( id, 'untrash', item )
 			.then( () => {
-				set_responseMessage( {
+				setResponseMessage( {
 					message: 'Comment has been Restored!',
 					status: 'primary',
 					icon: Icon.Restore
 				} )
-				set_trashStatus( false )
+				setTrashStatus( false )
 				item.trash = false
 				setCurrentHistoryState( { item } )
 			} )
 	}
 
 	const editComment = () => {
-		set_commentStatus( 'edit' )
+		setCommentStatus( 'edit' )
 	}
 
 	const updateContent = () => {
@@ -153,33 +153,33 @@ export const Comment = ( { location } ) => {
 				.comments()
 				.update( id, 'content', { content: editContent } )
 				.then( () => {
-					set_responseMessage( {
+					setResponseMessage( {
 						message: 'Comment has been updated!',
 						status: 'primary',
 						icon: Icon.Update
 					} )
 					item.content = editContent
 					setCurrentHistoryState( { item } )
-					set_commentStatus( 'update' )
+					setCommentStatus( 'update' )
 
 				} )
 		}
 	}
 
 	const resetEdit = () => {
-		set_commentStatus( 'cancelEdit' )
+		setCommentStatus( 'cancelEdit' )
 		setEditContent( content )
 	}
 
 	const UpdateCommentBtn = () => {
 		return (
-			<div className='CmtBtnWrap'>
-				<Button className='CmtCnclBtn' onClick={ resetEdit }>
+			<div className='cmt-btn-wrap'>
+				<Button className='cmt-cncl-btn' onClick={ resetEdit }>
 					{__( 'Cancel' )}
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button
-					className='CmtupdtBtn'
+					className='cmt-updt-btn'
 					type='submit'
 					status='primary'
 					onClick={ updateContent }
@@ -191,7 +191,7 @@ export const Comment = ( { location } ) => {
 	}
 
 	const ReplyComment = () => {
-		set_commentStatus( 'reply' )
+		setCommentStatus( 'reply' )
 	}
 
 	const ReplyCommentpost = () => {
@@ -200,8 +200,8 @@ export const Comment = ( { location } ) => {
 		} else {
 			const Rc = replyToComment( id, postId, replyValue, () => { } )
 			Rc.then( () => {
-				set_commentStatus( 'cancelReply' )
-				set_responseMessage( {
+				setCommentStatus( 'cancelReply' )
+				setResponseMessage( {
 					message: 'Reply Successfully posted!',
 					status: 'primary',
 					icon: Icon.Reply
@@ -211,18 +211,18 @@ export const Comment = ( { location } ) => {
 	}
 
 	const resetReply = () => {
-		set_commentStatus( 'cancelReply' )
+		setCommentStatus( 'cancelReply' )
 	}
 
 	const ReplyCommentBtn = () => {
 		return (
-			<div className='CmtBtnWrap'>
-				<Button className='CmtCnclBtn' onClick={ resetReply }>
+			<div className='cmt-btn-wrap'>
+				<Button className='cmt-cncl-btn' onClick={ resetReply }>
 					{__( 'Cancel' )}
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button
-					className='CmtupdtBtn'
+					className='cmt-updt-btn'
 					type='submit'
 					status='primary'
 					onClick={ ReplyCommentpost }
@@ -267,7 +267,7 @@ export const Comment = ( { location } ) => {
 					actions: {
 						component: 'actions',
 						options: args => getCommentActions( { item,
-							set_approveStatus, set_responseMessage, set_spamStatus, set_trashStatus, set_commentStatus,
+							setApproveStatus, setResponseMessage, setSpamStatus, setTrashStatus, setCommentStatus,
 							approveStatus, responseMessage, spamStatus, trashStatus, commentStatus, ...args } ),
 
 					}
@@ -289,7 +289,7 @@ export const Comment = ( { location } ) => {
 				/>
 			)}
 			{'edit' == commentStatus && (
-				<div className='CmtTextWrap'>
+				<div className='cmt-text-wrap'>
 					<span className="edit-comment-title">Edit Comment</span>
 					<textarea
 						className="comment-text"
@@ -301,7 +301,7 @@ export const Comment = ( { location } ) => {
 				</div>
 			)}
 			{'reply' == commentStatus && (
-				<div className='CmtTextWrap'>
+				<div className='cmt-text-wrap'>
 					<span className="edit-comment-title">Reply Comment</span>
 					<textarea
 						className="comment-text"

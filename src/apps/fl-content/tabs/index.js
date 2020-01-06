@@ -7,9 +7,9 @@ export const SummaryTab = () => {
 	const { handle } = useContext( App.Context )
 	return (
 		<>
-			<Page.Section>
+		<Page.Section>
 				Stats.
-			</Page.Section>
+		</Page.Section>
 
 			<Page.Section label={ __( 'Latest Posts' ) } shouldPadSides={ false }>
 				<List.Posts
