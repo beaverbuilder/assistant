@@ -19,7 +19,9 @@ export const Comment = ( { location } ) => {
 		content,
 		trash,
 		spam,
-		postId
+		postId,
+		url,
+		editUrl,
 	} = item
 	const { pluginURL } = getSystemConfig()
 	const hero = `${pluginURL}img/comment-hero-a.jpg`
@@ -131,7 +133,7 @@ export const Comment = ( { location } ) => {
 			.update( id, 'untrash', item )
 			.then( () => {
 				setResponseMessage( {
-					message: 'Comment has been Restored!',
+					message: 'Comment has been restored!',
 					status: 'primary',
 					icon: Icon.Restore
 				} )
@@ -266,10 +268,14 @@ export const Comment = ( { location } ) => {
 				fields: {
 					actions: {
 						component: 'actions',
-						options: args => getCommentActions( { item,
-							setApproveStatus, setResponseMessage, setSpamStatus, setTrashStatus, setCommentStatus,
-							approveStatus, responseMessage, spamStatus, trashStatus, commentStatus, ...args } ),
-
+						options: [
+							{ label: 'View on Post', href: url },
+							{ label: 'View in Admin', href: editUrl },
+							{ label: approveStatus ? 'Reject' : 'Approve', onClick: approveStatus ? unapprovecomment : approvecomment },
+							{ label: spamStatus ? 'UnSpam' : 'Mark as Spam', onClick: spamStatus ? unspamcomment : spamcomment },
+							{ label: 'Reply', onClick: replycomment },
+							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashcomment : trashcomment, status: 'destructive' },
+						]
 					}
 				}
 			}
