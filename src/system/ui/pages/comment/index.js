@@ -4,8 +4,6 @@ import { Form, Icon, Message } from 'ui'
 import { Button, Page } from 'fluid/ui'
 import { getSystemConfig, getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
-import { getCommentActions } from './actions'
-
 
 export const Comment = ( { location } ) => {
 	const { item } = location.state
