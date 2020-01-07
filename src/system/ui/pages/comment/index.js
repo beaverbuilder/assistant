@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { Form, Icon, Message } from 'ui'
 import { Button, Page } from 'fluid/ui'
@@ -26,20 +26,20 @@ export const Comment = ( { location } ) => {
 	const comments = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 
-	const [ responseMessage, setResponseMessage ] = React.useState( {
+	const [ responseMessage, setResponseMessage ] = useState( {
 		message: '',
 		status: '',
 		icon: ''
 	} )
-	const [ commentStatus, setCommentStatus ] = React.useState( approved )
-	const [ approveStatus, setApproveStatus ] = React.useState( approved )
-	const [ trashStatus, setTrashStatus ] = React.useState( trash )
-	const [ spamStatus, setSpamStatus ] = React.useState( spam )
-	const [ editContent, setEditContent ] = React.useState( content )
-	const [ replyValue, setreplyValue ] = React.useState( '' )
+	const [ commentStatus, setCommentStatus ] = useState( approved )
+	const [ approveStatus, setApproveStatus ] = useState( approved )
+	const [ trashStatus, setTrashStatus ] = useState( trash )
+	const [ spamStatus, setSpamStatus ] = useState( spam )
+	const [ editContent, setEditContent ] = useState( content )
+	const [ replyValue, setreplyValue ] = useState( '' )
 
 
-	const approveComment = () => {
+	const approvecomment = () => {
 		comments
 			.comments()
 			.update( id, 'approve', item )
@@ -57,7 +57,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const unapproveComment = () => {
+	const unapprovecomment = () => {
 		comments
 			.comments()
 			.update( id, 'unapprove', item )
@@ -75,7 +75,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const spamComment = () => {
+	const spamcomment = () => {
 		comments
 			.comments()
 			.update( id, 'spam', item )
@@ -91,7 +91,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const UnspamComment = () => {
+	const unspamcomment = () => {
 		comments
 			.comments()
 			.update( id, 'unspam', item )
@@ -107,7 +107,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const trashComment = () => {
+	const trashcomment = () => {
 		comments
 			.comments()
 			.update( id, 'trash', item )
@@ -125,7 +125,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const untrashComment = () => {
+	const untrashcomment = () => {
 		comments
 			.comments()
 			.update( id, 'untrash', item )
@@ -141,11 +141,11 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const editComment = () => {
+	const editcomment = () => {
 		setCommentStatus( 'edit' )
 	}
 
-	const updateContent = () => {
+	const updatecontent = () => {
 		if ( '' === editContent ) {
 			alert( 'Please type a comment!' )
 		} else {
@@ -166,15 +166,15 @@ export const Comment = ( { location } ) => {
 		}
 	}
 
-	const resetEdit = () => {
+	const resetedit = () => {
 		setCommentStatus( 'cancelEdit' )
 		setEditContent( content )
 	}
 
-	const UpdateCommentBtn = () => {
+	const Updatecommentbtn = () => {
 		return (
 			<div className='cmt-btn-wrap'>
-				<Button className='cmt-cncl-btn' onClick={ resetEdit }>
+				<Button className='cmt-cncl-btn' onClick={ resetedit }>
 					{__( 'Cancel' )}
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
@@ -182,7 +182,7 @@ export const Comment = ( { location } ) => {
 					className='cmt-updt-btn'
 					type='submit'
 					status='primary'
-					onClick={ updateContent }
+					onClick={ updatecontent }
 				>
 					{__( 'Save' )}
 				</Button>
@@ -190,11 +190,11 @@ export const Comment = ( { location } ) => {
 		)
 	}
 
-	const ReplyComment = () => {
+	const replycomment = () => {
 		setCommentStatus( 'reply' )
 	}
 
-	const ReplyCommentpost = () => {
+	const replycommentpost = () => {
 		if ( '' === replyValue ) {
 			alert( 'Please type a comment!' )
 		} else {
@@ -210,14 +210,14 @@ export const Comment = ( { location } ) => {
 		}
 	}
 
-	const resetReply = () => {
+	const resetreply = () => {
 		setCommentStatus( 'cancelReply' )
 	}
 
-	const ReplyCommentBtn = () => {
+	const Replycommentbtn = () => {
 		return (
 			<div className='cmt-btn-wrap'>
-				<Button className='cmt-cncl-btn' onClick={ resetReply }>
+				<Button className='cmt-cncl-btn' onClick={ resetreply }>
 					{__( 'Cancel' )}
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
@@ -225,7 +225,7 @@ export const Comment = ( { location } ) => {
 					className='cmt-updt-btn'
 					type='submit'
 					status='primary'
-					onClick={ ReplyCommentpost }
+					onClick={ replycommentpost }
 				>
 					{__( 'Reply' )}
 				</Button>
@@ -297,7 +297,7 @@ export const Comment = ( { location } ) => {
 						onChange={ e => setEditContent( e.target.value ) }
 						rows={ 6 }
 					/>
-					<UpdateCommentBtn />
+					<Updatecommentbtn />
 				</div>
 			)}
 			{'reply' == commentStatus && (
@@ -309,7 +309,7 @@ export const Comment = ( { location } ) => {
 						onChange={ e => setreplyValue( e.target.value ) }
 						rows={ 6 }
 					/>
-					<ReplyCommentBtn />
+					<Replycommentbtn />
 				</div>
 			)}
 			<div
@@ -328,7 +328,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='primary'
 						title='Approve'
-						onClick={ approveComment }
+						onClick={ approvecomment }
 					>
 						<Icon.Approve />
 					</Button>
@@ -339,18 +339,18 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='alert'
 						title='Reject'
-						onClick={ unapproveComment }
+						onClick={ unapprovecomment }
 					>
 						<Icon.Reject />
 					</Button>
 				)}
 				{false === trashStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button appearance='elevator' title='Reply' onClick={ ReplyComment }>
+					<Button appearance='elevator' title='Reply' onClick={ replycomment }>
 						<Icon.Reply />
 					</Button>
 				)}
 				{'edit' !== commentStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button appearance='elevator' title='Edit' onClick={ editComment }>
+					<Button appearance='elevator' title='Edit' onClick={ editcomment }>
 						<Icon.Edit />
 					</Button>
 				)}
@@ -360,7 +360,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='alert'
 						title='Spam'
-						onClick={ spamComment }
+						onClick={ spamcomment }
 					>
 						<Icon.Spam />
 					</Button>
@@ -370,7 +370,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='alert'
 						title='Unspam'
-						onClick={ UnspamComment }
+						onClick={ unspamcomment }
 					>
 						<Icon.Unspam />
 					</Button>
@@ -380,7 +380,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='destructive'
 						title='Trash'
-						onClick={ trashComment }
+						onClick={ trashcomment }
 					>
 						<Icon.Trash />
 					</Button>
@@ -390,7 +390,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='primary'
 						title='UnTrash'
-						onClick={ untrashComment }
+						onClick={ untrashcomment }
 					>
 						<Icon.Restore />
 					</Button>

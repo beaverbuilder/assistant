@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { getWpRest } from 'utils/wordpress'
 import { Icon } from 'ui'
 import { getSystemActions } from 'data'
@@ -17,9 +17,9 @@ export const getCommentActions = ( {
 	} = item
 	const comments = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
-	const [ actionApprove, setActionApprove ] = React.useState( approved )
-	const [ actionSpam, setActionSpam ] = React.useState( spam )
-	const [ actionTrash, setActionTrash ] = React.useState( trash )
+	const [ actionApprove, setActionApprove ] = useState( approved )
+	const [ actionSpam, setActionSpam ] = useState( spam )
+	const [ actionTrash, setActionTrash ] = useState( trash )
 
 
 	const approveComment = () => {

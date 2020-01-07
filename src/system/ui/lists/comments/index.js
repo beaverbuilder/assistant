@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { List, Button, Icon } from 'ui'
 import { truncate } from 'utils/text'
 import { __ } from '@wordpress/i18n'
@@ -21,10 +21,10 @@ export const Comments = ( {
 
 			getItemProps={ ( item, defaultProps ) => {
 				const { updateItem } = defaultProps
-				const [ approveStatus, set_approveStatus ] = React.useState( item.approved )
-				const [ trashStatus, set_trashStatus ] = React.useState( item.trash )
-				const [ spamStatus, set_spamStatus ] = React.useState( item.spam )
-				const approveComment = () => {
+				const [ approveStatus, set_approveStatus ] = useState( item.approved )
+				const [ trashStatus, set_trashStatus ] = useState( item.trash )
+				const [ spamStatus, set_spamStatus ] = useState( item.spam )
+				const approvecomment = () => {
 					comments
 						.comments()
 						.update( item.id, 'approve', item )
@@ -36,7 +36,7 @@ export const Comments = ( {
 						} )
 				}
 
-				const unapproveComment = () => {
+				const unapprovecomment = () => {
 					comments
 						.comments()
 						.update( item.id, 'unapprove', item )
@@ -48,7 +48,7 @@ export const Comments = ( {
 						} )
 				}
 
-				const spamComment = () => {
+				const spamcomment = () => {
 					comments
 						.comments()
 						.update( item.id, 'spam', item )
@@ -63,7 +63,7 @@ export const Comments = ( {
 						} )
 				}
 
-				const UnspamComment = () => {
+				const unspamcomment = () => {
 					comments
 						.comments()
 						.update( item.id, 'unspam', item )
@@ -78,7 +78,7 @@ export const Comments = ( {
 						} )
 				}
 
-				const trashComment = () => {
+				const trashcomment = () => {
 					if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
 
 						comments
@@ -101,7 +101,7 @@ export const Comments = ( {
 
 				}
 
-				const untrashComment = () => {
+				const untrashcomment = () => {
 					comments
 						.comments()
 						.update( item.id, 'untrash', item )
@@ -151,6 +151,7 @@ export const Comments = ( {
 						return null
 					}
 					return (
+
 						<div className="fl-asst-comment-extras fl-asst-item-extras">
 							<div
 								style={ {
@@ -161,29 +162,29 @@ export const Comments = ( {
 									alignItems: 'center',
 								} }
 							>
-								<Button href={ item.url } >
-									<Icon.View title="View" />
+								<Button href={ item.url } title="View" >
+									<Icon.View  />
 								</Button>
 
 								{approveStatus ? (
-									<Button onClick={ unapproveComment }><Icon.Reject /></Button>
+									<Button onClick={ unapprovecomment } title="Reject"><Icon.Reject /></Button>
 								) : (
-									<Button onClick={ approveComment }><Icon.Approve /></Button>
+									<Button onClick={ approvecomment } title="Approve"><Icon.Approve /></Button>
 								)}
 
 
 								{spamStatus ? (
-									<Button onClick={ UnspamComment }><Icon.Unspam /></Button>
+									<Button onClick={ unspamcomment } title="Unspam"><Icon.Unspam /></Button>
 								) : (
-									<Button onClick={ spamComment }><Icon.Spam /></Button>
+									<Button onClick={ spamcomment } title="Spam"><Icon.Spam /></Button>
 								)}
 
 
 								{trashStatus ? (
-									<Button onClick={ untrashComment }><Icon.Restore /></Button>
+									<Button onClick={ untrashcomment } title="Restore"><Icon.Restore /></Button>
 
 								) : (
-									<Button status="destructive" onClick={ trashComment }><Icon.Trash /></Button>
+									<Button status="destructive" onClick={ trashcomment } title="Trash"><Icon.Trash /></Button>
 								)}
 
 							</div>
