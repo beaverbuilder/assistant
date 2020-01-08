@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { Form, Icon, Message, Button, Page, Layout } from 'ui'
-import { Button, Page } from 'fluid/ui'
 import { getSystemConfig, getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
 
