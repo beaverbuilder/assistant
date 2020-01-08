@@ -53,7 +53,7 @@ const Page = ({
 
         return (
             <div style={style}>
-                { isString && <img src={children} /> }
+                { isString && <img src={children} style={{ width: '100%' }} /> }
                 { !isString && children }
             </div>
         )
@@ -102,16 +102,6 @@ const Page = ({
     )
 }
 
-// Headline
-Page.Headline = ({ className, children, ...rest }) => {
-    const classes = classname( 'fluid-page-headline', className )
-    return (
-        <div className={classes} role="heading" aria-level="2" {...rest}>{children}</div>
-    )
-}
-Page.Headline.displayName = 'Page.Headline'
-
-// Section
 Page.Section = Section
 Page.Section.displayName = 'Page.Section'
 

@@ -3,7 +3,6 @@
         display: flex;
         flex-direction: column;
         max-width: 100%;
-        margin: 0;
 
         &.fl-asst-horizontal-list {
             flex-direction: row;
@@ -49,10 +48,12 @@
             &.fl-asst-is-transitioning {
                 opacity: .8;
                 pointer-events: none;
-                background: var(--fl-asst-secondary-surface-background);
+                background: var(--fluid-alert-background);
+                box-shadow: inset 3px 0px 0px var(--fluid-alert-color);
             }
             &.fl-asst-is-trashed {
-                background: var(--fl-asst-secondary-surface-background);
+                background: var(--fluid-destructive-background);
+                box-shadow: inset 3px 0px 0px var(--fluid-destructive-color);
 
                 button {
                     background: var(--fl-asst-surface-background);

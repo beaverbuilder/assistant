@@ -11,6 +11,7 @@ registerSection( 'fl-asst-quick-actions', {
 	location: {
 		type: 'home',
 	},
+	padX: false,
 	render: () => {
 		const { adminURLs } = getSystemConfig()
 
@@ -69,7 +70,7 @@ registerSection( 'fl-home-apps', {
 	location: {
 		type: 'home',
 	},
-	shouldPadSides: false,
+	padX: false,
 	render: () => {
 		const { apps, appOrder, window } = useSystemState()
 		const focusRef = useInitialFocus()

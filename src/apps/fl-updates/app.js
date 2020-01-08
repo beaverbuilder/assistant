@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __ } from '@wordpress/i18n'
-import { App, Page, Button, List, Nav } from 'assistant/ui'
+import { App, Page, Button, List, Nav, Layout } from 'assistant/ui'
 import {
 	useSystemState,
 	useAppState,
@@ -83,11 +83,10 @@ const UpdatesMain = () => {
 	)
 
 	return (
-		<Page.NewPage
+		<Page
 			title={ __( 'Updates' ) }
 			header={ <Header /> }
 			actions={ <HeaderActions /> }
-			padX={ false }
 		>
 
 			{ ! hasUpdates && (
@@ -107,7 +106,7 @@ const UpdatesMain = () => {
 					} }
 				/>
 			)}
-		</Page.NewPage>
+		</Page>
 	)
 }
 

@@ -6,22 +6,19 @@ const Box = ({
     style,
     padX = true,
     padY = true,
+    outset = false,
     ...rest
 }) => {
 
     const classes = classname({
-        'fluid-pad-x' : padX,
+        'fluid-box' : true,
+        'fluid-pad-x' : padX && !outset,
         'fluid-pad-y' : padY,
+        'fluid-box-outset' : outset,
     }, className )
 
-    const boxStyles = {
-        display: 'flex',
-        flexDirection: 'column',
-        ...style,
-    }
-
     return (
-        <div className={classes} style={boxStyles} {...rest}>{children}</div>
+        <div className={classes} {...rest}>{children}</div>
     )
 }
 
