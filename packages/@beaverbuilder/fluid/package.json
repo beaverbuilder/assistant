@@ -1,13 +1,13 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A common UI environment for Beaver Builder and Assistant projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
     "main": "dist/index.js",
     "module": "dist/index.es.js",
     "scripts": {
-        "build": "rollup -c",
+        "build": "rollup -c --environment IS_PRODUCTION",
         "dev": "rollup -c -w"
     },
     "repository": {

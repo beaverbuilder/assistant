@@ -129,8 +129,8 @@ export const CreatePost = ( { history, location } ) => {
 	}
 
 	return (
-		<Page.NewPage title={ __( 'Create New' ) } footer={ <Footer /> }>
+		<Page title={ __( 'Create New' ) } footer={ <Footer /> }>
 			{ renderForm() }
-		</Page.NewPage>
+		</Page>
 	)
 }

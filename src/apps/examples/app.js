@@ -16,12 +16,12 @@ export const App = ( { match } ) => (
 
 const Main = ( { match } ) => {
 	return (
-		<Page.NewPage title="App Examples">
+		<Page title="App Examples">
 			<Button.Group direction='column'>
 				<Button to={ `${match.url}/fluid` }>{__( 'FLUID Examples' )}</Button>
 				<Button to={ `${match.url}/forms` }>{__( 'Form Examples' )}</Button>
 			</Button.Group>
-		</Page.NewPage>
+		</Page>
 	)
 }
 

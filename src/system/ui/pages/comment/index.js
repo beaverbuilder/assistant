@@ -54,7 +54,7 @@ export const Comment = ( { location } ) => {
 	} )
 
 	return (
-		<Page.NewPage title={ __( 'Edit Comment' ) } hero={ hero }>
+		<Page title={ __( 'Edit Comment' ) } hero={ hero }>
 
 			<Layout.Headline>{author}</Layout.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
@@ -80,6 +80,6 @@ export const Comment = ( { location } ) => {
 			</div>
 
 			{renderForm()}
-		</Page.NewPage>
+		</Page>
 	)
 }

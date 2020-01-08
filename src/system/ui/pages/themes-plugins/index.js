@@ -23,11 +23,11 @@ export const Plugin = ( { location = {} } ) => {
 	} )
 
 	return (
-		<Page.NewPage title={ __( 'Plugin' ) } hero={ banner }>
+		<Page title={ __( 'Plugin' ) } hero={ banner }>
 			<Layout.Headline>{title}</Layout.Headline>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
-		</Page.NewPage>
+		</Page>
 	)
 }
 
@@ -52,10 +52,10 @@ export const Theme = ( { location = {} } ) => {
 	} )
 
 	return (
-		<Page.NewPage title={ __( 'Theme' ) } hero={ banner }>
+		<Page title={ __( 'Theme' ) } hero={ banner }>
 			<Layout.Headline>{title}</Layout.Headline>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
-		</Page.NewPage>
+		</Page>
 	)
 }

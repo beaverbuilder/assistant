@@ -28,13 +28,13 @@ export const Term = ( { location } ) => {
 	}, {}, item )
 
 	return (
-		<Page.NewPage title={ __( 'Edit Term' ) } padX={ false }>
+		<Page title={ __( 'Edit Term' ) } padX={ false }>
 			<Form { ...form }>
 				<Page.RegisteredSections
 					location={ { type: 'term' } }
 					data={ { useFormData: useFormContext } }
 				/>
 			</Form>
-		</Page.NewPage>
+		</Page>
 	)
 }

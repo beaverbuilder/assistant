@@ -134,9 +134,9 @@ const MainWindow = ( { children } ) => {
 
 const WindowError = () => {
 	return (
-		<Page.NewPage padY={ true }>
+		<Page>
 			<Layout.Headline>{__( 'We Have A Problem!' )}</Layout.Headline>
 			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
-		</Page.NewPage>
+		</Page>
 	)
 }

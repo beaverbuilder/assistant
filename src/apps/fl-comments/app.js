@@ -12,7 +12,7 @@ export const CommentsApp = ( { match } ) => (
 const Main = () => {
 	const { handle } = useContext( App.Context )
 	return (
-		<Page.NewPage padX={ false } title={ __( 'Comments' ) }>
+		<Page padX={ false } title={ __( 'Comments' ) }>
 			<List.Comments
 				getItemProps={ ( item, defaultProps ) => ( {
 					...defaultProps,
@@ -22,7 +22,7 @@ const Main = () => {
 					},
 				} ) }
 			/>
-		</Page.NewPage>
+		</Page>
 	)
 }
 

@@ -5,7 +5,6 @@ import { Nav as FLUID_Nav } from 'fluid/ui'
 const Nav = { ...FLUID_Nav }
 
 Nav.Tabs = ( { tabs = [] } ) => {
-	const nav = useContext( Nav.Context )
 	const { location, history } = useContext( Nav.Context )
 	return (
 		<>
