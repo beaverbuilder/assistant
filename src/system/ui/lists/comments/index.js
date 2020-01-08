@@ -24,7 +24,7 @@ export const Comments = ( {
 				const [ approveStatus, set_approveStatus ] = useState( item.approved )
 				const [ trashStatus, set_trashStatus ] = useState( item.trash )
 				const [ spamStatus, set_spamStatus ] = useState( item.spam )
-				const approvecomment = () => {
+				const approveComment = () => {
 					comments
 						.comments()
 						.update( item.id, 'approve', item )
@@ -36,7 +36,7 @@ export const Comments = ( {
 						} )
 				}
 
-				const unapprovecomment = () => {
+				const unapproveComment = () => {
 					comments
 						.comments()
 						.update( item.id, 'unapprove', item )
@@ -48,7 +48,7 @@ export const Comments = ( {
 						} )
 				}
 
-				const spamcomment = () => {
+				const spamComment = () => {
 					comments
 						.comments()
 						.update( item.id, 'spam', item )
@@ -63,7 +63,7 @@ export const Comments = ( {
 						} )
 				}
 
-				const unspamcomment = () => {
+				const unspamComment = () => {
 					comments
 						.comments()
 						.update( item.id, 'unspam', item )
@@ -78,7 +78,7 @@ export const Comments = ( {
 						} )
 				}
 
-				const trashcomment = () => {
+				const trashComment = () => {
 					if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
 
 						comments
@@ -101,7 +101,7 @@ export const Comments = ( {
 
 				}
 
-				const untrashcomment = () => {
+				const untrashComment = () => {
 					comments
 						.comments()
 						.update( item.id, 'untrash', item )
@@ -127,7 +127,7 @@ export const Comments = ( {
 						return <Button onClick={ trashComment } tabIndex="-1">Trash</Button>
 					}
 					if ( item.isSpam && 'spam' !== type ) {
-						return <Button onClick={ UnspamComment } tabIndex="-1">Restore</Button>
+						return <Button onClick={ unspamComment } tabIndex="-1">Restore</Button>
 					}
 					if ( item.isunSpam && 'spam' == type ) {
 						return <Button onClick={ spamComment } tabIndex="-1">Spam</Button>
@@ -167,24 +167,24 @@ export const Comments = ( {
 								</Button>
 
 								{approveStatus ? (
-									<Button onClick={ unapprovecomment } title="Reject"><Icon.Reject /></Button>
+									<Button onClick={ unapproveComment } title="Reject"><Icon.Reject /></Button>
 								) : (
-									<Button onClick={ approvecomment } title="Approve"><Icon.Approve /></Button>
+									<Button onClick={ approveComment } title="Approve"><Icon.Approve /></Button>
 								)}
 
 
 								{spamStatus ? (
-									<Button onClick={ unspamcomment } title="Unspam"><Icon.Unspam /></Button>
+									<Button onClick={ unspamComment } title="Unspam"><Icon.Unspam /></Button>
 								) : (
-									<Button onClick={ spamcomment } title="Spam"><Icon.Spam /></Button>
+									<Button onClick={ spamComment } title="Spam"><Icon.Spam /></Button>
 								)}
 
 
 								{trashStatus ? (
-									<Button onClick={ untrashcomment } title="Restore"><Icon.Restore /></Button>
+									<Button onClick={ untrashComment } title="Restore"><Icon.Restore /></Button>
 
 								) : (
-									<Button status="destructive" onClick={ trashcomment } title="Trash"><Icon.Trash /></Button>
+									<Button status="destructive" onClick={ trashComment } title="Trash"><Icon.Trash /></Button>
 								)}
 
 							</div>
