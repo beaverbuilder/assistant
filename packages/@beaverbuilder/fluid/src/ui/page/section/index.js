@@ -28,7 +28,12 @@ const Section = ( {
 				padY={padY}
 				style={ contentStyle }
 			>{children}</Layout.Box>
-			{ footer && <Layout.Box padY={false} className="fluid-section-footer">{footer}</Layout.Box> }
+			{ footer && (
+				<Layout.Box
+					padY={false}
+					className="fluid-section-footer"
+				>{footer}</Layout.Box>
+			)}
 		</div>
 	)
 }

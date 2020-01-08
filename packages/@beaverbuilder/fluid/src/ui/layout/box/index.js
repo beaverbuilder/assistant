@@ -12,7 +12,7 @@ const Box = ({
 
     const classes = classname({
         'fluid-box' : true,
-        'fluid-pad-x' : padX,
+        'fluid-pad-x' : padX && !outset,
         'fluid-pad-y' : padY,
         'fluid-box-outset' : outset,
     }, className )
