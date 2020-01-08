@@ -76,7 +76,7 @@ const Main = () => {
 	const tabs = getTabs()
 	return (
 		<Page
-			shouldPadSides={ true }
+			padX={false}
 			header={ <Nav.Tabs tabs={ tabs } moreBtn={ false } /> }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
