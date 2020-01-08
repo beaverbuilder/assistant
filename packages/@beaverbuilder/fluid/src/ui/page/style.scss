@@ -27,7 +27,15 @@
 
     .fluid-pad {
         @include flex_column;
-        padding: 20px;
+        padding: var(--fluid-lg-space);
+    }
+    .fluid-pad-x {
+        padding-left: var(--fluid-lg-space);
+        padding-right: var(--fluid-lg-space);
+    }
+    .fluid-pad-y {
+        padding-top: var(--fluid-lg-space);
+        padding-bottom: var(--fluid-lg-space);
     }
 
     .fluid-page {
@@ -50,6 +58,10 @@
             top: var(--fluid-top-inset);
             background: var(--fluid-background);
             z-index: 9;
+        }
+
+        .fluid-page-actions {
+            margin-left: auto;
         }
 
         .fluid-page-toolbar-content {

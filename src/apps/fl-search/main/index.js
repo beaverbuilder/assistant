@@ -68,7 +68,7 @@ export const Main = ( { match } ) => {
 		}, [] )
 
 		return (
-			<Page.Pad>
+			<div style={ { flex: '1 1 auto', display: 'flex', flexDirection: 'row' } }>
 				<div className='fl-asst-search-form-simple'>
 					<input
 						type="text"
@@ -86,16 +86,15 @@ export const Main = ( { match } ) => {
 						}
 					</span>
 				</div>
-			</Page.Pad>
+			</div>
 		)
 	}
 
 	return (
-		<Page
-			shouldShowHeader={ false }
-			shouldPadTop={ false }
-			shouldPadSides={ false }
-			header={ <Header /> }
+		<Page.NewPage
+			padX={ false }
+			padY={ false }
+			title={ <Header /> }
 		>
 
 			{ null !== results && ! results.length &&
@@ -146,6 +145,6 @@ export const Main = ( { match } ) => {
 				/>
 			}
 
-		</Page>
+		</Page.NewPage>
 	)
 }

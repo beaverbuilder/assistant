@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Button, Icon } from 'ui'
+import { Button } from 'ui'
 import { Nav as FLUID_Nav } from 'fluid/ui'
 
 const Nav = { ...FLUID_Nav }
@@ -8,7 +8,7 @@ Nav.Tabs = ( { tabs = [], moreBtn = true } ) => {
 	const { path, history } = useContext( Nav.Context )
 	return (
 		<>
-			<Button.Group appearance="tabs" className="fl-asst-tabs">
+			<Button.Group appearance="buttons">
 				{ tabs.map( ( tab, i ) => {
 					return (
 						<Button

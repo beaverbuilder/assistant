@@ -1,6 +1,7 @@
 import React, { useRef, useContext, createContext } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
+import { Page as FLUID_Page } from 'fluid/ui'
 import { useSystemState } from 'data'
 import { Nav, Icon, App } from 'ui'
 
@@ -13,6 +14,7 @@ import {
 	RegisteredSections,
 	Empty,
 } from './parts'
+
 import { Post } from './post'
 import { CreatePost } from './post/create'
 import { User } from './user'
@@ -80,6 +82,9 @@ export const Page = ( {
 		</Page.Context.Provider>
 	)
 }
+
+// TEMP - Will replace Page.
+Page.NewPage = FLUID_Page
 
 
 /* ------ Page System Setup ------ */

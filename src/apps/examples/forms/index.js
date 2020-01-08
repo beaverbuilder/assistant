@@ -1,11 +1,10 @@
 import React from 'react'
-import { Page } from 'fluid/ui'
-import { Form } from 'assistant/ui'
+import { Form, Page } from 'assistant/ui'
 
 export const FormExamples = () => {
 	return (
-		<Page title="Form Examples">
-			<Form.Test />
-		</Page>
+		<Page.NewPage title="Form Examples">
+			Need to fix <code>Form.Test</code>
+		</Page.NewPage>
 	)
 }

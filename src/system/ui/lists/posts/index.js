@@ -130,7 +130,7 @@ export const Posts = ( {
 
 				const Accessory = () => {
 					if ( item.isTrashed ) {
-						return <Button onClick={ restorePost } tabIndex="-1">Restore</Button>
+						return <Button onClick={ restorePost } tabIndex="-1">{__( 'Restore' )}</Button>
 					}
 					return null
 				}
@@ -141,31 +141,46 @@ export const Posts = ( {
 					}
 					return (
 						<div className="fl-asst-item-extras">
-							<div className="fl-asst-item-extras-left">
-								<Button tabIndex="-1" href={ item.url }>{__( 'View' )}</Button>
-								<Button tabIndex="-1" href={ item.editUrl }>{__( 'Edit' )}</Button>
-								{ item.bbCanEdit &&
-									<Button tabIndex="-1" href={ item.bbEditUrl }>{ item.bbBranding }</Button>
-								}
-							</div>
-							<div className="fl-asst-item-extras-right">
-								<Clipboard
-									button-tabIndex={ '-1' }
-									button-className={ 'fluid-button' }
-									data-clipboard-text={ item.url }
-								>
-									<Icon.Link />
-								</Clipboard>
-								<Button onClick={ favoritePost } tabIndex="-1" className={ item.isFavorite ? 'fl-asst-is-favorite' : '' }>
-									{ item.isFavorite ? <Icon.BookmarkSolid /> : <Icon.Bookmark /> }
-								</Button>
-								<Button onClick={ clonePost } tabIndex="-1">
-									<Icon.Clone />
-								</Button>
-								<Button onClick={ trashPost } tabIndex="-1" className="fl-asst-destructive">
-									<Icon.Trash />
-								</Button>
-							</div>
+							<Button
+								title={ __( 'View Post' ) }
+								tabIndex="-1"
+								href={ item.url }
+								appearance="transparent"
+							>
+								<Icon.View />
+							</Button>
+							<Clipboard
+								button-tabIndex={ '-1' }
+								button-className={ 'fluid-button fluid-appearance-transparent' }
+								data-clipboard-text={ item.url }
+							>
+								<Icon.Link />
+							</Clipboard>
+							<Button
+								onClick={ favoritePost }
+								tabIndex="-1"
+								title={ __( 'Mark as Favorite' ) }
+								appearance="transparent"
+							>
+								{ item.isFavorite ? <Icon.BookmarkSolid /> : <Icon.Bookmark /> }
+							</Button>
+							<Button
+								onClick={ clonePost }
+								tabIndex="-1"
+								title={ __( 'Duplicate' ) }
+								appearance="transparent"
+							>
+								<Icon.Clone />
+							</Button>
+							<Button
+								onClick={ trashPost }
+								tabIndex="-1"
+								title={ __( 'Move to Trash' ) }
+								status='destructive'
+								appearance="transparent"
+							>
+								<Icon.Trash />
+							</Button>
 						</div>
 					)
 				}
@@ -212,14 +227,16 @@ export const Posts = ( {
 
 					if ( item.isFavorite ) {
 						marks.push(
-							<span style={ { color: 'var(--fl-asst-pink)' } }>
-								<Icon.BookmarkSolid />
+							<span>
+								<Icon.Bookmark style={ { height: 12, width: 12, marginTop: 2 } } />
 							</span>
 						)
 					}
 
 					return marks
 				}
+
+				const isCurrentPage = () => item.url === location.href
 
 				return getItemProps( item, {
 					...defaultProps,
@@ -234,7 +251,8 @@ export const Posts = ( {
 						'fl-asst-is-trashed': item.isTrashed,
 						'fl-asst-is-restoring': item.isRestoring,
 						'fl-asst-is-isCloning': item.isCloning,
-						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring )
+						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring ),
+						'fl-asst-is-current-page': isCurrentPage(),
 					}, defaultProps.className ),
 					marks: getMarks( item )
 				} )

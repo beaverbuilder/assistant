@@ -3,11 +3,11 @@ import { Page } from 'assistant/ui'
 
 export const HomeScreen = () => {
 	return (
-		<Page shouldPadSides={ false } shouldShowHeader={ false }>
+		<Page.NewPage padX={ false } padY={ false } toolbar={ false }>
 			<Page.RegisteredSections
 				location={ { type: 'home' } }
 				data={ {} }
 			/>
-		</Page>
+		</Page.NewPage>
 	)
 }

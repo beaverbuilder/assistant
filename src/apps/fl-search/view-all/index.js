@@ -26,7 +26,7 @@ export const ViewAll = ( { match, location } ) => {
 	}
 
 	return (
-		<Page title={ getPageTitle() } shouldPadSides={ false }>
+		<Page.NewPage title={ getPageTitle() } padX={ false }>
 			<List.Scroller
 				items={ items }
 				getItemProps={ ( item, defaultProps ) => {
@@ -52,6 +52,6 @@ export const ViewAll = ( { match, location } ) => {
 					} )
 				} }
 			/>
-		</Page>
+		</Page.NewPage>
 	)
 }

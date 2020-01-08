@@ -1,8 +1,9 @@
-import React from 'react'
-import { Page, Nav } from 'assistant/ui'
+import React, { useContext } from 'react'
+import { App, Page, List, Nav } from 'assistant/ui'
 import { AllTab, CommentTypeTab } from './tabs'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
+
 
 export const CommentsApp = ( { match } ) => (
 	<Nav.Switch>

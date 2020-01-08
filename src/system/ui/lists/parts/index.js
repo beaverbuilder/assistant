@@ -134,6 +134,7 @@ const InfoItem = ( {
 				</div>
 				{ accessories && <div className="fl-asst-list-item-accessory" onClick={ stopProp }>{accessories}</div>}
 			</div>
+
 			{ itemExtras && <div className="fl-asst-list-item-extras" onClick={ stopProp }>{itemExtras}</div> }
 
 			{ 0 < marks.length && <div className="fl-asst-list-item-marks">

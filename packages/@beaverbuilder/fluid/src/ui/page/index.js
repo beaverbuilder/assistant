@@ -1,21 +1,38 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import classname from 'classnames'
 import Nav from '../nav'
 import Section from './section'
 import Error from '../error'
+import Layout from '../layout'
 import './style.scss'
+
+const focusFirstElement = () => {
+
+}
 
 const Page = ({
     children,
     className,
     hero,
     title,
+    toolbar,
     actions,
+    header,
     footer,
+    onLoad = focusFirstElement,
+
+    // Passed to Layout.Box
+    padX = true,
+    padY = true,
+    contentWrapStyle = null,
+
     ...rest
 }) => {
     const { isRoot } = useContext( Nav.Context )
     const classes = classname( 'fluid-page', className )
+
+    // Handle initial loading, like focusing.
+    useEffect( onLoad, [] )
 
     const style = {
         overflowX: 'hidden',
@@ -51,22 +68,33 @@ const Page = ({
         flexDirection: 'column'
     }
 
+    const contentBoxStyle = {
+        flexGrow: 1,
+        flexShrink: 0,
+        ...contentWrapStyle,
+    }
+
     return (
         <div className="fluid-page-wrap" style={wrapStyle}>
             <div className={classes} style={style} {...rest}>
                 <Hero>{hero}</Hero>
 
                 <div className="fluid-page-content">
-                    <div className="fluid-toolbar fluid-sticky-element">
-                        { !isRoot  && <Nav.BackButton /> }
-                        { title && <div className="fluid-page-toolbar-content">
-                            <span  role="heading" aria-level="1">{title}</span>
-                        </div> }
-                        {actions}
+                    <div className="fluid-sticky-element">
+                        { toolbar !== false  && (
+                            <div className="fluid-toolbar">
+                                { !isRoot  && <Nav.BackButton /> }
+                                { title && <div className="fluid-page-toolbar-content">
+                                    <span  role="heading" aria-level="1" style={{ flex: '1 1 auto' }}>{title}</span>
+                                </div> }
+                                { actions && <span className="fluid-page-actions">{actions}</span> }
+                            </div>
+                        )}
+                        { header && <div className="fluid-toolbar fluid-page-header">{header}</div> }
                     </div>
-                    <div className="fluid-pad">
+                    <Layout.Box padX={padX} padY={padY} style={contentBoxStyle}>
                         <Error.Boundary>{children}</Error.Boundary>
-                    </div>
+                    </Layout.Box>
                 </div>
             </div>
             { footer && <div className="fluid-page-footer">{footer}</div> }

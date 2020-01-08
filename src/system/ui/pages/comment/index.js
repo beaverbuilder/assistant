@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Form, Icon, Message } from 'ui'
+import { Form, Icon, Message, Button, Page, Layout } from 'ui'
 import { Button, Page } from 'fluid/ui'
 import { getSystemConfig, getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
+
 
 export const Comment = ( { location } ) => {
 	const { item } = location.state
@@ -282,8 +283,9 @@ export const Comment = ( { location } ) => {
 	} )
 
 	return (
-		<Page title={ __( 'Edit Comment' ) } hero={ hero }>
-			<Page.Headline>{author}</Page.Headline>
+		<Page.NewPage title={ __( 'Edit Comment' ) } hero={ hero }>
+
+			<Layout.Headline>{author}</Layout.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
 
 			{'edit' !== commentStatus && (
@@ -408,6 +410,6 @@ export const Comment = ( { location } ) => {
 			)}
 
 			{renderForm()}
-		</Page>
+		</Page.NewPage>
 	)
 }

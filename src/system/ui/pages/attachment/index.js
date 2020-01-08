@@ -81,10 +81,10 @@ export const Attachment = ( { location } ) => {
 		],
 	}
 
-	return (
-		<Page title={ __( 'Attachment' ) }>
+	const Hero = () => <img src={ item.thumbnail } srcSet={ srcSet } />
 
-			<img src={ item.thumbnail } srcSet={ srcSet } />
+	return (
+		<Page.NewPage title={ __( 'Attachment' ) } hero={ <Hero /> }>
 
 			<Form { ...form }>
 				<Page.RegisteredSections
@@ -92,6 +92,6 @@ export const Attachment = ( { location } ) => {
 					data={ sectionData }
 				/>
 			</Form>
-		</Page>
+		</Page.NewPage>
 	)
 }

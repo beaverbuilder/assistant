@@ -1,7 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page } from 'fluid/ui'
-import { Button, Form, List } from 'ui'
+import { Button, Form, List, Page, Layout } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
@@ -125,17 +124,18 @@ export const Post = ( { location, match, history } ) => {
 					isVisible: !! Object.keys( item.terms ).length,
 					fields: ( { fields } ) => {
 						const { value, onChange } = fields.terms
-						return Object.keys( value ).map( ( taxonomy, key ) => (
+						const values = { ...value }
+						return Object.keys( values ).map( ( taxonomy, key ) => (
 							<Form.Item
 								key={ key }
 								label={ taxonomies[ taxonomy ].labels.plural }
 							>
 								<Form.TaxonomyTermsItem
 									taxonomy={ taxonomy }
-									value={ value[ taxonomy ] }
+									value={ [ ...values[ taxonomy ] ] }
 									onChange={ newValue => {
-										value[ taxonomy ] = newValue
-										onChange( { ...value } )
+										values[ taxonomy ] = newValue
+										onChange( { ...values } )
 									} }
 								/>
 							</Form.Item>
@@ -321,9 +321,13 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	return (
-		<Page title={ labels.editItem } footer={ hasChanges && <Footer /> } >
-			<Page.Headline>{values.title}</Page.Headline>
+		<Page.NewPage
+			title={ labels.editItem }
+			hero={ item.thumbnail ? item.thumbnail : null }
+			footer={ hasChanges && <Footer /> }
+		>
+			<Layout.Headline>{values.title}</Layout.Headline>
 			{ renderForm() }
-		</Page>
+		</Page.NewPage>
 	)
 }

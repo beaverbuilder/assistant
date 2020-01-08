@@ -216,7 +216,17 @@ export const useFormData = (
 	}
 
 	// Has a single field's value changed since last commit (or initialize)
-	const valueHasChanged = field => field.value !== field.lastCommittedValue
+	const valueHasChanged = field => {
+		let value = field.value
+		let lastValue = field.lastCommittedValue
+		if ( 'object' === typeof value ) {
+			value = JSON.stringify( value )
+		}
+		if ( 'object' === typeof lastValue ) {
+			lastValue = JSON.stringify( lastValue )
+		}
+		return value !== lastValue
+	}
 
 	// Values Selector - reduces state to just key/value pairs
 	const selectValues = state => {
@@ -261,7 +271,7 @@ export const useFormData = (
 				continue
 			}
 
-			if ( state[key].value !== state[key].lastCommittedValue ) {
+			if ( valueHasChanged( state[key] ) ) {
 				obj[key] = state[key].value
 			}
 		}

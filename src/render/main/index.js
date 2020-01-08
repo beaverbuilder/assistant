@@ -10,7 +10,8 @@ import {
 	Window,
 	Error,
 	Page,
-	Button
+	Button,
+	Layout,
 } from 'assistant/ui'
 
 const getRouterProps = history => {
@@ -32,11 +33,20 @@ const PanelActions = () => {
 	const toggleTitle = 'mini' === size ? __( 'Expand Panel' ) : __( 'Shrink Panel' )
 	return (
 		<>
-			<Button onClick={ toggleSize } title={ toggleTitle } style={ { marginRight: 5 } }>
+			<Button
+				onClick={ toggleSize }
+				title={ toggleTitle }
+				appearance="transparent"
+				style={ { marginRight: 5 } }
+			>
 				{ 'mini' === size && <Icon.Expand /> }
 				{ 'normal' === size && <Icon.Collapse /> }
 			</Button>
-			<Button onClick={ toggleIsHidden } title={ __( 'Hide Assistant' ) }>
+			<Button
+				onClick={ toggleIsHidden }
+				title={ __( 'Hide Assistant' ) }
+				appearance="transparent"
+			>
 				<Icon.Close />
 			</Button>
 		</>
@@ -124,9 +134,9 @@ const MainWindow = ( { children } ) => {
 
 const WindowError = () => {
 	return (
-		<Page shouldPadTop={ true }>
-			<h1>{__( 'We Have A Problem!' )}</h1>
+		<Page.NewPage padY={ true }>
+			<Layout.Headline>{__( 'We Have A Problem!' )}</Layout.Headline>
 			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
-		</Page>
+		</Page.NewPage>
 	)
 }

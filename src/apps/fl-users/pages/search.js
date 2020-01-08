@@ -12,7 +12,7 @@ export const Search = () => {
 	}
 
 	return (
-		<Page shouldPadSides={ false } title={ __( 'All Users' ) } shouldPadTop={ true }>
+		<Page.NewPage padX={ false } padY={ true } title={ __( 'All Users' ) }>
 			<Page.Toolbar>
 				<input type="text" placeholder={ __( 'Find User' ) }
 					value={ search }
@@ -28,6 +28,6 @@ export const Search = () => {
 					},
 				} ) }
 			/>
-		</Page>
+		</Page.NewPage>
 	)
 }

@@ -61,6 +61,12 @@
             &.fl-asst-is-clickable {
                 cursor: pointer;
             }
+
+            &.fl-asst-is-current-page {
+                background: var(--fluid-alert-background);
+                box-shadow: inset 3px 0px 0px var(--fluid-alert-color);
+                color: var(--fluid-alert-color);
+            }
         }
 
         &.fl-asst-user-list {
@@ -181,12 +187,12 @@
         flex-direction: row;
         flex-wrap: wrap;
         display: flex;
-
+        justify-content: space-evenly;
+        pointer-events: none;
         z-index: 1;
 
         opacity: 0;
         height:0;
-        transform: translate( 32px, 0px );
 
         transition-property: opacity, height, transform;
         transition-delay: 0s;
@@ -225,7 +231,7 @@
 		.fl-asst-is-favorite {
 			color: var(--fl-asst-bookmark-color);
 		}
-	}
+
 
     // Marks
     .fl-asst-list-item-marks {
@@ -269,7 +275,7 @@
         .fl-asst-item-extras {
             opacity: 1;
             height: 32px;
-            transform: translate(0,0)
+            pointer-events: auto;
         }
     }
     .fl-asst-list-item:hover {
@@ -292,4 +298,5 @@
 	.fl-asst-list-section-footer {
 		padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) var(--fl-asst-outer-space);
 	}
+}
 }
