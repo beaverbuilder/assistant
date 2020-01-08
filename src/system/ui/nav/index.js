@@ -21,11 +21,6 @@ Nav.Tabs = ( { tabs = [] } ) => {
 						</Button>
 					)
 				} ) }
-				{moreBtn &&
-				<Button className="fl-asst-more-btn">
-					<Icon.More />
-				</Button>
-				}
 			</Button.Group>
 		</>
 	)

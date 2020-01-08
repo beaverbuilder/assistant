@@ -19,9 +19,9 @@ const Main = () => {
 		let tabs = [
 			{
 				handle: 'all',
-				title: 'All',
+				title: __('All'),
 				label: __( 'All' ),
-				path: '/fl-comments/',
+				path: '/fl-comments',
 				component: AllTab,
 				exact: true,
 			}
@@ -30,31 +30,27 @@ const Main = () => {
 
 			{
 				handle: 'hold',
-				title: 'Pending',
+				title: __('Pending'),
 				label: __( 'Pending Comments' ),
 				path: '/fl-comments/',
-
 			},
 			{
 				handle: 'approve',
-				title: 'Approved',
+				title: __('Approved'),
 				label: __( 'Approved Comments' ),
 				path: '/fl-comments/',
-
 			},
 			{
 				handle: 'spam',
-				title: 'Spam',
+				title: __('Spam'),
 				label: __( 'Spam Comments' ),
 				path: '/fl-comments/',
-
 			},
 			{
 				handle: 'trash',
-				title: 'Trashed',
+				title: __('Trashed'),
 				label: __( 'Trashed Comments' ),
 				path: '/fl-comments/',
-
 			},
 
 		]
@@ -77,7 +73,9 @@ const Main = () => {
 	return (
 		<Page
 			padX={false}
-			header={ <Nav.Tabs tabs={ tabs } moreBtn={ false } /> }
+			padY={false}
+			title={__('Comments')}
+			header={ <Nav.Tabs tabs={ tabs } /> }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>

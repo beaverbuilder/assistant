@@ -76,6 +76,7 @@
             }
         }
     }
+
     .fl-asst-brightness-dark .fl-asst-list .fl-asst-list-item {
         --fl-asst-list-item-shadow-color: var(--fl-asst-secondary-surface-background);
 
@@ -233,6 +234,8 @@
 			color: var(--fl-asst-bookmark-color);
 		}
 
+    }
+
 
     // Marks
     .fl-asst-list-item-marks {
@@ -299,5 +302,5 @@
 	.fl-asst-list-section-footer {
 		padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) var(--fl-asst-outer-space);
 	}
-}
+
 }

@@ -8,21 +8,16 @@ export const AllTab = () => {
 	const { handle } = useContext( App.Context )
 
 	return (
-		<>
-<Page.NewPage padX={ false } title={ __( 'All Comments' ) }>
-	<List.Comments
-		type ="all"
-		getItemProps={ ( item, defaultProps ) => ( {
-			...defaultProps,
-			to: {
-				pathname: `/${handle}/comment/${item.id}`,
-				state: { item }
-			},
-		} ) }
-	/>
-</Page.NewPage>
-
-		</>
+		<List.Comments
+			type ="all"
+			getItemProps={ ( item, defaultProps ) => ( {
+				...defaultProps,
+				to: {
+					pathname: `/${handle}/comment/${item.id}`,
+					state: { item }
+				},
+			} ) }
+		/>
 	)
 }
 
@@ -31,21 +26,15 @@ export const CommentTypeTab = ( { type = 'all', label = 'All Comments' } ) => {
 
 
 	return (
-		<>
-		<Page.NewPage padX={ false } label={ __( label ) }>
-			<List.Comments
-				type ={ type }
-				getItemProps={ ( item, defaultProps ) => ( {
-					...defaultProps,
-					to: {
-						pathname: `/${handle}/comment/${item.id}`,
-						state: { item }
-					},
-				} ) }
-			/>
-		</Page.NewPage>
-		</>
+		<List.Comments
+			type ={ type }
+			getItemProps={ ( item, defaultProps ) => ( {
+				...defaultProps,
+				to: {
+					pathname: `/${handle}/comment/${item.id}`,
+					state: { item }
+				},
+			} ) }
+		/>
 	)
 }
-
-
