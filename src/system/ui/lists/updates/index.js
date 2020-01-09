@@ -42,7 +42,7 @@ export const Updates = ( {
 					useEffect( () => {
 						if ( getCompletedUpdate( item.id ) ) {
 							removeCompletedUpdate( item.id )
-							removeItem()
+							removeItem( item.uuid )
 						}
 						const unsubscribe = updater.subscribe( () => {
 							if ( getQueuedUpdate( item.id ) ) {

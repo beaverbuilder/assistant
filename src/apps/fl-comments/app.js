@@ -72,9 +72,8 @@ const Main = () => {
 	const tabs = getTabs()
 	return (
 		<Page
-			padX={false}
-			padY={false}
-			title={__('Comments')}
+			padX={ false }
+			title={ __( 'Comments' ) }
 			header={ <Nav.Tabs tabs={ tabs } /> }
 		>
 			<Nav.CurrentTab tabs={ tabs } />

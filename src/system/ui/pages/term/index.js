@@ -28,7 +28,7 @@ export const Term = ( { location } ) => {
 	}, {}, item )
 
 	return (
-		<Page title={ __( 'Edit Term' ) } shouldPadSides={ false }>
+		<Page title={ __( 'Edit Term' ) } padX={ false }>
 			<Form { ...form }>
 				<Page.RegisteredSections
 					location={ { type: 'term' } }
