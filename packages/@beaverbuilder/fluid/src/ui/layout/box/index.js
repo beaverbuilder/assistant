@@ -18,7 +18,7 @@ const Box = ({
     }, className )
 
     return (
-        <div className={classes} {...rest}>{children}</div>
+        <div className={classes} style={style} {...rest}>{children}</div>
     )
 }
 

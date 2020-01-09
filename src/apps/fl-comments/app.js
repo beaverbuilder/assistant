@@ -73,6 +73,7 @@ const Main = () => {
 	return (
 		<Page
 			padX={ false }
+			padY={ false }
 			title={ __( 'Comments' ) }
 			header={ <Nav.Tabs tabs={ tabs } /> }
 		>
