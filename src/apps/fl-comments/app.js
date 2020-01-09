@@ -1,27 +1,82 @@
-import React, { useContext } from 'react'
-import { App, Page, List, Nav } from 'assistant/ui'
+import React from 'react'
+import { Page, Nav } from 'assistant/ui'
+import { AllTab, CommentTypeTab } from './tabs'
 import { __ } from '@wordpress/i18n'
+import './style.scss'
+
 
 export const CommentsApp = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
 		<Nav.Route path={ `${match.url}/comment/:id` } component={ Page.Comment } />
 	</Nav.Switch>
 )
 
 const Main = () => {
-	const { handle } = useContext( App.Context )
+
+	const getTabs = () => {
+		let tabs = [
+			{
+				handle: 'all',
+				title: __('All'),
+				label: __( 'All' ),
+				path: '/fl-comments',
+				component: AllTab,
+				exact: true,
+			}
+		]
+		let tab = [
+
+			{
+				handle: 'hold',
+				title: __('Pending'),
+				label: __( 'Pending Comments' ),
+				path: '/fl-comments/',
+			},
+			{
+				handle: 'approve',
+				title: __('Approved'),
+				label: __( 'Approved Comments' ),
+				path: '/fl-comments/',
+			},
+			{
+				handle: 'spam',
+				title: __('Spam'),
+				label: __( 'Spam Comments' ),
+				path: '/fl-comments/',
+			},
+			{
+				handle: 'trash',
+				title: __('Trashed'),
+				label: __( 'Trashed Comments' ),
+				path: '/fl-comments/',
+			},
+
+		]
+
+		Object.keys( tab ).map( key => {
+			const type = tab[key]
+
+			tabs.push( {
+				handle: type.handle,
+				path: '/fl-comments/tab/' + type.handle,
+				label: type.title,
+				component: () => <CommentTypeTab type={ type.handle } label={ type.label } />,
+
+			} )
+		} )
+
+		return tabs
+	}
+	const tabs = getTabs()
 	return (
-		<Page padX={ false } title={ __( 'Comments' ) }>
-			<List.Comments
-				getItemProps={ ( item, defaultProps ) => ( {
-					...defaultProps,
-					to: {
-						pathname: `/${handle}/comment/${item.id}`,
-						state: { item }
-					},
-				} ) }
-			/>
+		<Page
+			padX={ false }
+			title={ __( 'Comments' ) }
+			header={ <Nav.Tabs tabs={ tabs } /> }
+		>
+			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
 	)
 }

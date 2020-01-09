@@ -15,9 +15,9 @@ class LabelsTransformer {
 
 	public function __invoke( \WP_Term $term ) {
 		return [
-			'id' => $term->term_id,
+			'id'    => $term->term_id,
 			'label' => $term->name,
-			'slug' => $term->slug,
+			'slug'  => $term->slug,
 			'color' => get_term_meta( $term->term_id, $this->labels::FL_ASST_NOTATION_COLOR, true ),
 		];
 	}

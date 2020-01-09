@@ -54,6 +54,7 @@ export const TitleCard = ( { className, title, children, ...rest } ) => {
 	)
 }
 
+
 export const ExpandedContent = ( { children } ) => {
 	const { size } = useContext( Window.Context )
 

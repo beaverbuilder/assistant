@@ -1,17 +1,16 @@
 <?php
-
 namespace FL\Assistant\Controllers;
-
 use FL\Assistant\Data\Repository\CommentsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Transformers\CommentTransformer;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Server;
 
-/**
+/**0
  * REST API logic for comments.
  */
 class CommentsController extends ControllerAbstract {
+
 
 	protected $posts;
 
@@ -34,7 +33,8 @@ class CommentsController extends ControllerAbstract {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/comments', [
+			'/comments',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'index' ],
@@ -46,7 +46,8 @@ class CommentsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/comments/count', [
+			'/comments/count',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'comments_count' ],
@@ -58,7 +59,8 @@ class CommentsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/comments/(?P<id>\d+)', [
+			'/comments/(?P<id>\d+)',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'read' ],
@@ -103,9 +105,8 @@ class CommentsController extends ControllerAbstract {
 		$args       = array_merge( [ 'post_type' => $post_types ], $params );
 
 		return $this->comments->paginate( $args )
-							  ->apply_transform( $this->transformer )
-							  ->to_rest_response();
-
+			->apply_transform( $this->transformer )
+			->to_rest_response();
 	}
 
 	/**
@@ -143,6 +144,7 @@ class CommentsController extends ControllerAbstract {
 		$id      = $request->get_param( 'id' );
 		$action  = $request->get_param( 'action' );
 		$comment = get_comment( $id );
+		$data = $request->get_param( 'data' );
 
 		switch ( $action ) {
 			case 'approve':
@@ -171,17 +173,17 @@ class CommentsController extends ControllerAbstract {
 				wp_update_comment(
 					[
 						'comment_ID'      => $id,
-						'comment_content' => $request->get_param( 'content' ),
+						'comment_content' => $data['content'],
 					]
 				);
 				break;
 		}
-
+		$comment = get_comment( $id );
 		return rest_ensure_response(
 			[
-				'success' => true,
+				'success'     => true,
+				'commentData' => $comment,
 			]
 		);
 	}
 }
-

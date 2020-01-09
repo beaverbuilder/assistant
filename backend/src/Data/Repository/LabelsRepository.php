@@ -28,9 +28,11 @@ class LabelsRepository extends TermsRepository {
 
 	public function save_defaults() {
 		$did_install = get_option( static::FL_ASST_INSTALLED_LABELS, false );
-		$existing = $this->query( [
-			'hide_empty' => false,
-		] )->get_terms();
+		$existing = $this->query(
+			[
+				'hide_empty' => false,
+			]
+		)->get_terms();
 
 		if ( $did_install || count( $existing ) > 0 ) {
 			return;
@@ -51,9 +53,11 @@ class LabelsRepository extends TermsRepository {
 		];
 
 		foreach ( $default_labels as $color => $label ) {
-			$result = wp_insert_term( $label, 'fl_asst_label', [
-				'slug' => sanitize_key( $label ),
-			] );
+			$result = wp_insert_term(
+				$label, 'fl_asst_label', [
+					'slug' => sanitize_key( $label ),
+				]
+			);
 
 			if ( ! is_wp_error( $result ) ) {
 				update_term_meta( $result['term_id'], static::FL_ASST_NOTATION_COLOR, $color );

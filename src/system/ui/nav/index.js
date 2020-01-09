@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Button } from 'ui'
+import { Button, Icon } from 'ui'
 import { Nav as FLUID_Nav } from 'fluid/ui'
 
 const Nav = { ...FLUID_Nav }

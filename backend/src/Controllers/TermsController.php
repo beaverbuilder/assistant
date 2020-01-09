@@ -144,7 +144,7 @@ class TermsController extends ControllerAbstract {
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
 				$term->children = $this->terms->get_child_terms( $term, $children, $this->transformer );
-				$response[] 	= $term;
+				$response[]     = $term;
 			}
 		}
 

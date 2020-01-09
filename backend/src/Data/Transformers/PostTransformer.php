@@ -112,13 +112,15 @@ class PostTransformer {
 			if ( ! $tax->public || ! $tax->show_ui ) {
 				continue;
 			}
-			$response['terms'][ $tax_slug ] = $this->terms->find_where( [
-				'taxonomy' 		=> $tax_slug,
-				'object_ids'	=> [ $post->ID ],
-				'orderby'		=> 'name',
-				'order'			=> 'ASC',
-				'fields'		=> 'ids',
-			] );
+			$response['terms'][ $tax_slug ] = $this->terms->find_where(
+				[
+					'taxonomy'   => $tax_slug,
+					'object_ids' => [ $post->ID ],
+					'orderby'    => 'name',
+					'order'      => 'ASC',
+					'fields'     => 'ids',
+				]
+			);
 		}
 
 		return $response;
