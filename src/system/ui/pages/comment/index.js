@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Form, Icon, Message, Button, Page, Layout } from 'ui'
+import { Form, Icon, Button, Page, Layout } from 'ui'
 import { getSystemConfig, getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
 
@@ -403,9 +403,9 @@ export const Comment = ( { location } ) => {
 			</div>
 
 			{responseMessage.message && (
-				<Message status={ responseMessage.status } icon={ responseMessage.icon }>
+				<Layout.Message status={ responseMessage.status } icon={ responseMessage.icon }>
 					{responseMessage.message}
-				</Message>
+				</Layout.Message>
 			)}
 
 			{renderForm()}

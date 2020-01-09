@@ -229,8 +229,8 @@ export const Comments = ( {
 						( item.isSpam && 'spam' !== type ) ||
 						( item.isunSpam && 'spam' == type ) ||
 						( item.isrestore && 'trash' == type ) ?
-							item.title
-						: (
+						item.title :
+						(
 							<em>
 								<strong>{item.authorEmail}</strong> commented:
 							</em>
@@ -239,17 +239,15 @@ export const Comments = ( {
 						( item.isSpam && 'spam' !== type ) ||
 						( item.isunSpam && 'spam' == type ) ||
 						( item.isrestore && 'trash' == type ) ?
-							''
-						:
-							truncate( item.content.replace( /<\/?[^>]+(>|$)/g, '' ), 80 )
-						,
+						''						:
+						truncate( item.content.replace( /<\/?[^>]+(>|$)/g, '' ), 80 ),
 					thumbnail: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isrestore && 'trash' == type ) ? '' : item.thumbnail,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
 
 					className: classname( {
-						'test-class-name' : true,
-						'fl-asst-list-item-alert' : ! approveStatus
+						'test-class-name': true,
+						'fl-asst-list-item-alert': ! approveStatus
 					}, defaultProps.className )
 				} )
 			} }

@@ -1,6 +1,6 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import classname from 'classnames'
-import { Window, Page } from 'ui'
+import { Page } from 'ui'
 import { getSystemSelectors } from 'data'
 import './style.scss'
 
