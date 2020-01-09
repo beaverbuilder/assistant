@@ -30,13 +30,13 @@ export const Main = () => {
 	}, [] )
 
 	return (
-		<Page.NewPage padX={ false } title={ __( 'People' ) }>
+		<Page title={ __( 'People' ) }>
 			<Page.Section label={ __( 'Your Profile' ) }>
 				<ProfileCard user={ currentUser }/>
 			</Page.Section>
 			<Page.Section label={ __( 'Users' ) }>
 				<AvatarBar user={ currentUser } users={ users }/>
 			</Page.Section>
-		</Page.NewPage>
+		</Page>
 	)
 }

@@ -1,6 +1,5 @@
 import React from 'react'
-import { Page } from 'fluid/ui'
-import { Icon, Button } from 'assistant/ui'
+import { Icon, Button, Page, Layout } from 'assistant/ui'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 
@@ -66,49 +65,51 @@ const App = () => {
 			hero={ `${pluginURL}img/fluid-hero.jpg` }
 			footer={ <Footer /> }
 		>
-			<Page.Headline>Design Elements</Page.Headline>
+			<Layout.Headline>Design Elements</Layout.Headline>
 			<div>Buttons and stuff</div>
 
-			<ButtonSpacedRow>
-				<Button title={ __( 'Edit' ) } appearance="elevator">
-					<Icon.Edit />
-				</Button>
-				<Button title={ __( 'Restore' ) } appearance="elevator" status="primary">
-					<Icon.Restore />
-				</Button>
-				<Button title={ __( 'Mark as Spam' ) } appearance="elevator" status="alert">
-					<Icon.Spam />
-				</Button>
-				<Button title={ __( 'Move to Trash' ) } appearance="elevator" status="destructive">
-					<Icon.Trash />
-				</Button>
-			</ButtonSpacedRow>
+			<Page.Section>
+				<ButtonSpacedRow>
+					<Button title={ __( 'Edit' ) } appearance="elevator">
+						<Icon.Edit />
+					</Button>
+					<Button title={ __( 'Restore' ) } appearance="elevator" status="primary">
+						<Icon.Restore />
+					</Button>
+					<Button title={ __( 'Mark as Spam' ) } appearance="elevator" status="alert">
+						<Icon.Spam />
+					</Button>
+					<Button title={ __( 'Move to Trash' ) } appearance="elevator" status="destructive">
+						<Icon.Trash />
+					</Button>
+				</ButtonSpacedRow>
 
-			<ButtonRow title="Normal">
-				<Button title="Standard Button">{__( 'Button' )}</Button>
-				<Button title="Hovering" className="is-hovering">Hovering</Button>
-				<Button title="Focused" className="is-focused">Focused</Button>
-			</ButtonRow>
-			<ButtonRow title='Primary (status="primary")'>
-				<Button status="primary"><Icon.Link />&nbsp;&nbsp;{__( 'Button' )}</Button>
-				<Button status="primary" className="is-hovering"><Icon.Edit />&nbsp;&nbsp;Hovering</Button>
-				<Button status="primary" className="is-focused"><Icon.Clone />&nbsp;&nbsp;Focused</Button>
-			</ButtonRow>
-			<ButtonRow title='Alert (status="alert")'>
-				<Button status="alert"><Icon.Spam />&nbsp;&nbsp;{__( 'Button' )}</Button>
-				<Button status="alert" className="is-hovering"><Icon.Spam />&nbsp;&nbsp;Hovering</Button>
-				<Button status="alert" className="is-focused"><Icon.Spam />&nbsp;&nbsp;Focused</Button>
-			</ButtonRow>
-			<ButtonRow title='Destructive (status="destructive")'>
-				<Button status="destructive" title="Sounds Trashy"><Icon.Trash />&nbsp;&nbsp;{__( 'Button' )}</Button>
-				<Button status="destructive" className="is-hovering"><Icon.Trash />&nbsp;&nbsp;Hovering</Button>
-				<Button status="destructive" className="is-focused"><Icon.Trash />&nbsp;&nbsp;Focused</Button>
-			</ButtonRow>
-			<ButtonRow title="Transparent">
-				<Button appearance="transparent">Transparent</Button>
-				<Button appearance="transparent" className="is-hovering">Hover</Button>
-				<Button appearance="transparent" className="is-focused">Focused</Button>
-			</ButtonRow>
+				<ButtonRow title="Normal">
+					<Button title="Standard Button">{__( 'Button' )}</Button>
+					<Button title="Hovering" className="is-hovering">Hovering</Button>
+					<Button title="Focused" className="is-focused">Focused</Button>
+				</ButtonRow>
+				<ButtonRow title='Primary (status="primary")'>
+					<Button status="primary"><Icon.Link />&nbsp;&nbsp;{__( 'Button' )}</Button>
+					<Button status="primary" className="is-hovering"><Icon.Edit />&nbsp;&nbsp;Hovering</Button>
+					<Button status="primary" className="is-focused"><Icon.Clone />&nbsp;&nbsp;Focused</Button>
+				</ButtonRow>
+				<ButtonRow title='Alert (status="alert")'>
+					<Button status="alert"><Icon.Spam />&nbsp;&nbsp;{__( 'Button' )}</Button>
+					<Button status="alert" className="is-hovering"><Icon.Spam />&nbsp;&nbsp;Hovering</Button>
+					<Button status="alert" className="is-focused"><Icon.Spam />&nbsp;&nbsp;Focused</Button>
+				</ButtonRow>
+				<ButtonRow title='Destructive (status="destructive")'>
+					<Button status="destructive" title="Sounds Trashy"><Icon.Trash />&nbsp;&nbsp;{__( 'Button' )}</Button>
+					<Button status="destructive" className="is-hovering"><Icon.Trash />&nbsp;&nbsp;Hovering</Button>
+					<Button status="destructive" className="is-focused"><Icon.Trash />&nbsp;&nbsp;Focused</Button>
+				</ButtonRow>
+				<ButtonRow title="Transparent">
+					<Button appearance="transparent">Transparent</Button>
+					<Button appearance="transparent" className="is-hovering">Hover</Button>
+					<Button appearance="transparent" className="is-focused">Focused</Button>
+				</ButtonRow>
+			</Page.Section>
 
 			<Page.Section label={ __( 'Icons' ) }>
 				<div style={ {

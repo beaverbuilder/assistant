@@ -92,7 +92,6 @@ export const Main = ( { match } ) => {
 
 	return (
 		<Page.NewPage
-			padX={ false }
 			padY={ false }
 			title={ <Header /> }
 		>
@@ -104,7 +103,7 @@ export const Main = ( { match } ) => {
 			{ ( '' === keyword || ( null !== results && ! results.length ) ) &&
 				<>
 				{ 0 < searchHistory.length &&
-					<Page.Pad>
+					<Page.Section>
 						<Button.Group
 							label={ __( 'Recent Searches' ) }
 							appearance="buttons"
@@ -118,7 +117,7 @@ export const Main = ( { match } ) => {
 								</Button>
 							) }
 						</Button.Group>
-					</Page.Pad>
+					</Page.Section>
 				}
 				</>
 			}

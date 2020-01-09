@@ -321,13 +321,13 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	return (
-		<Page.NewPage
+		<Page
 			title={ labels.editItem }
 			hero={ item.thumbnail ? item.thumbnail : null }
 			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
 			{ renderForm() }
-		</Page.NewPage>
+		</Page>
 	)
 }

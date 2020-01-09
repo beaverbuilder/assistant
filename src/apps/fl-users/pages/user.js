@@ -178,8 +178,7 @@ export const User = ( { location, match, history } ) => {
 	), [] )
 
 	return (
-		<Page.NewPage padX={ false }
-			title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }>
+		<Page title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }>
 
 			{ loading && <p>{__( 'Loading...' )}</p> }
 
@@ -195,6 +194,6 @@ export const User = ( { location, match, history } ) => {
 				), [] )}
 			</Form>
 
-		</Page.NewPage>
+		</Page>
 	)
 }

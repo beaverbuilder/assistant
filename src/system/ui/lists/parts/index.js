@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import classname from 'classnames'
-import { Nav, Page } from 'ui'
+import { Nav, Page, Layout } from 'ui'
 import { isColor } from 'utils/color'
 import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'
@@ -209,8 +209,21 @@ export const Item = ( {
 	)
 }
 
-const Section = ( { children, className, label, footer, ...rest } ) => {
+const Section = ( {
+	children,
+	className,
+	label,
+	footer,
+	...rest
+} ) => {
 	const classes = classname( 'fl-asst-section', 'fl-asst-list-section', className )
+
+	return (
+		<Page.Section label={label} padX={false} footer={footer}>
+		{children}
+		</Page.Section>
+	)
+
 	return (
 		<li className={ classes } { ...rest }>
 			<div className="fl-asst-section-title">
@@ -224,12 +237,12 @@ const Section = ( { children, className, label, footer, ...rest } ) => {
 
 export const Loading = () => {
 	return (
-		<Page.Pad>{__( 'Loading...' )}</Page.Pad>
+		<Layout.Box>{__( 'Loading...' )}</Layout.Box>
 	)
 }
 
 export const NoResultsMessage = () => {
 	return (
-		<Page.Pad>{__( 'Nothing found.' )}</Page.Pad>
+		<Layout.Box>{__( 'Nothing found.' )}</Layout.Box>
 	)
 }

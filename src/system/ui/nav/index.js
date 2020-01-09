@@ -4,27 +4,23 @@ import { Nav as FLUID_Nav } from 'fluid/ui'
 
 const Nav = { ...FLUID_Nav }
 
-Nav.Tabs = ( { tabs = [], moreBtn = true } ) => {
-	const { path, history } = useContext( Nav.Context )
+Nav.Tabs = ( { tabs = [] } ) => {
+	const nav = useContext( Nav.Context )
+	const { location, history } = useContext( Nav.Context )
 	return (
 		<>
-			<Button.Group appearance="buttons">
+			<Button.Group appearance="tabs">
 				{ tabs.map( ( tab, i ) => {
 					return (
 						<Button
 							key={ i }
-							isSelected={ path === tab.path }
+							isSelected={ location.pathname === tab.path }
 							onClick={ () => history.replace( tab.path, {} ) }
 						>
 							{ tab.label }
 						</Button>
 					)
 				} ) }
-				{moreBtn &&
-				<Button className="fl-asst-more-btn">
-					<Icon.More />
-				</Button>
-				}
 			</Button.Group>
 		</>
 	)

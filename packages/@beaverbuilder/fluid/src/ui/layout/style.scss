@@ -1,4 +1,13 @@
 .fluid {
+    .fluid-box {
+        display: flex;
+        flex-direction: column;
+
+        &.fluid-box-outset {
+            margin-left: calc( 0px - var(--fluid-lg-space) );
+            margin-right: calc( 0px - var(--fluid-lg-space) );
+        }
+    }
     .fluid-headline {
         font-size: 24px;
         font-weight: 600;
