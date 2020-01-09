@@ -54,17 +54,6 @@ export const TitleCard = ( { className, title, children, ...rest } ) => {
 	)
 }
 
-
-export const ExpandedContent = ( { children } ) => {
-	const { size } = useContext( Window.Context )
-
-	if ( 'normal' === size ) {
-		return children
-	}
-
-	return null
-}
-
 export const RegisteredSections = ( { location, data } ) => {
 	const { querySections } = getSystemSelectors()
 	const sections = useMemo( () => querySections( location ), [ location ] )

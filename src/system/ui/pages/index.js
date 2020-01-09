@@ -9,7 +9,6 @@ import {
 	Pad,
 	Toolbar,
 	TitleCard,
-	ExpandedContent,
 	RegisteredSections,
 	Empty,
 } from './parts'
@@ -115,9 +114,6 @@ Page.Header.displayName = 'Page.Header'
 // Horizontal Toolbar - edge padding for controls
 Page.Toolbar = Toolbar
 Page.Toolbar.displayName = 'Page.Toolbar'
-
-Page.ExpandedContent = ExpandedContent
-Page.ExpandedContent.displayName = 'Page.ExpandedContent'
 
 // Padded box
 Page.Pad = Pad
