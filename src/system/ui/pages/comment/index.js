@@ -39,7 +39,7 @@ export const Comment = ( { location } ) => {
 	const [ replyValue, setreplyValue ] = useState( '' )
 
 
-	const approvecomment = () => {
+	const approveComment = () => {
 		comments
 			.comments()
 			.update( id, 'approve', item )
@@ -57,7 +57,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const unapprovecomment = () => {
+	const unapproveComment = () => {
 		comments
 			.comments()
 			.update( id, 'unapprove', item )
@@ -75,7 +75,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const spamcomment = () => {
+	const spamComment = () => {
 		comments
 			.comments()
 			.update( id, 'spam', item )
@@ -91,7 +91,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const unspamcomment = () => {
+	const unspamComment = () => {
 		comments
 			.comments()
 			.update( id, 'unspam', item )
@@ -107,7 +107,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const trashcomment = () => {
+	const trashComment = () => {
 		comments
 			.comments()
 			.update( id, 'trash', item )
@@ -125,7 +125,7 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const untrashcomment = () => {
+	const untrashComment = () => {
 		comments
 			.comments()
 			.update( id, 'untrash', item )
@@ -141,11 +141,11 @@ export const Comment = ( { location } ) => {
 			} )
 	}
 
-	const editcomment = () => {
+	const editComment = () => {
 		setCommentStatus( 'edit' )
 	}
 
-	const updatecontent = () => {
+	const updateContent = () => {
 		if ( '' === editContent ) {
 			alert( 'Please type a comment!' )
 		} else {
@@ -166,15 +166,15 @@ export const Comment = ( { location } ) => {
 		}
 	}
 
-	const resetedit = () => {
+	const resetEdit = () => {
 		setCommentStatus( 'cancelEdit' )
 		setEditContent( content )
 	}
 
-	const Updatecommentbtn = () => {
+	const UpdateCommentBtn = () => {
 		return (
 			<div className='cmt-btn-wrap'>
-				<Button className='cmt-cncl-btn' onClick={ resetedit }>
+				<Button className='cmt-cncl-btn' onClick={ resetEdit }>
 					{__( 'Cancel' )}
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
@@ -182,7 +182,7 @@ export const Comment = ( { location } ) => {
 					className='cmt-updt-btn'
 					type='submit'
 					status='primary'
-					onClick={ updatecontent }
+					onClick={ updateContent }
 				>
 					{__( 'Save' )}
 				</Button>
@@ -190,11 +190,11 @@ export const Comment = ( { location } ) => {
 		)
 	}
 
-	const replycomment = () => {
+	const replyComment = () => {
 		setCommentStatus( 'reply' )
 	}
 
-	const replycommentpost = () => {
+	const replyCommentpost = () => {
 		if ( '' === replyValue ) {
 			alert( 'Please type a comment!' )
 		} else {
@@ -210,14 +210,14 @@ export const Comment = ( { location } ) => {
 		}
 	}
 
-	const resetreply = () => {
+	const resetReply = () => {
 		setCommentStatus( 'cancelReply' )
 	}
 
-	const Replycommentbtn = () => {
+	const ReplyCommentBtn = () => {
 		return (
 			<div className='cmt-btn-wrap'>
-				<Button className='cmt-cncl-btn' onClick={ resetreply }>
+				<Button className='cmt-cncl-btn' onClick={ resetReply }>
 					{__( 'Cancel' )}
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
@@ -225,7 +225,7 @@ export const Comment = ( { location } ) => {
 					className='cmt-updt-btn'
 					type='submit'
 					status='primary'
-					onClick={ replycommentpost }
+					onClick={ replyCommentpost }
 				>
 					{__( 'Reply' )}
 				</Button>
@@ -269,10 +269,10 @@ export const Comment = ( { location } ) => {
 						options: [
 							{ label: 'View on Post', href: url },
 							{ label: 'View in Admin', href: editUrl },
-							{ label: approveStatus ? 'Reject' : 'Approve', onClick: approveStatus ? unapprovecomment : approvecomment },
-							{ label: spamStatus ? 'UnSpam' : 'Mark as Spam', onClick: spamStatus ? unspamcomment : spamcomment },
-							{ label: 'Reply', onClick: replycomment },
-							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashcomment : trashcomment, status: 'destructive' },
+							{ label: approveStatus ? 'Reject' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment },
+							{ label: spamStatus ? 'UnSpam' : 'Mark as Spam', onClick: spamStatus ? unspamComment : spamComment },
+							{ label: 'Reply', onClick: replyComment },
+							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status: 'destructive' },
 						]
 					}
 				}
@@ -302,7 +302,7 @@ export const Comment = ( { location } ) => {
 						onChange={ e => setEditContent( e.target.value ) }
 						rows={ 6 }
 					/>
-					<Updatecommentbtn />
+					<UpdateCommentBtn />
 				</div>
 			)}
 			{'reply' == commentStatus && (
@@ -314,7 +314,7 @@ export const Comment = ( { location } ) => {
 						onChange={ e => setreplyValue( e.target.value ) }
 						rows={ 6 }
 					/>
-					<Replycommentbtn />
+					<ReplyCommentBtn />
 				</div>
 			)}
 			<div
@@ -333,7 +333,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='primary'
 						title='Approve'
-						onClick={ approvecomment }
+						onClick={ approveComment }
 					>
 						<Icon.Approve />
 					</Button>
@@ -344,18 +344,18 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='alert'
 						title='Reject'
-						onClick={ unapprovecomment }
+						onClick={ unapproveComment }
 					>
 						<Icon.Reject />
 					</Button>
 				)}
 				{false === trashStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button appearance='elevator' title='Reply' onClick={ replycomment }>
+					<Button appearance='elevator' title='Reply' onClick={ replyComment }>
 						<Icon.Reply />
 					</Button>
 				)}
 				{'edit' !== commentStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button appearance='elevator' title='Edit' onClick={ editcomment }>
+					<Button appearance='elevator' title='Edit' onClick={ editComment }>
 						<Icon.Edit />
 					</Button>
 				)}
@@ -365,7 +365,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='alert'
 						title='Spam'
-						onClick={ spamcomment }
+						onClick={ spamComment }
 					>
 						<Icon.Spam />
 					</Button>
@@ -375,7 +375,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='alert'
 						title='Unspam'
-						onClick={ unspamcomment }
+						onClick={ unspamComment }
 					>
 						<Icon.Unspam />
 					</Button>
@@ -385,7 +385,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='destructive'
 						title='Trash'
-						onClick={ trashcomment }
+						onClick={ trashComment }
 					>
 						<Icon.Trash />
 					</Button>
@@ -395,7 +395,7 @@ export const Comment = ( { location } ) => {
 						appearance='elevator'
 						status='primary'
 						title='UnTrash'
-						onClick={ untrashcomment }
+						onClick={ untrashComment }
 					>
 						<Icon.Restore />
 					</Button>
