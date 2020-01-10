@@ -211,27 +211,16 @@ export const Item = ( {
 
 const Section = ( {
 	children,
-	className,
 	label,
 	footer,
+	padX = false, /* Page.Section.padX defaults to true */
+	padY = false,
 	...rest
 } ) => {
-	const classes = classname( 'fl-asst-section', 'fl-asst-list-section', className )
-
 	return (
-		<Page.Section label={ label } padX={ false } footer={ footer }>
+		<Page.Section label={ label } padX={ padX } padY={ padY } footer={ footer } { ...rest }>
 			{children}
 		</Page.Section>
-	)
-
-	return (
-		<li className={ classes } { ...rest }>
-			<div className="fl-asst-section-title">
-				<span className="fl-asst-section-title-text">{label}</span>
-			</div>
-			<div className="fl-asst-section-content">{children}</div>
-			{ footer && <div className="fl-asst-section-footer">{footer}</div> }
-		</li>
 	)
 }
 

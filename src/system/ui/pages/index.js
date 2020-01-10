@@ -1,4 +1,4 @@
-import React, { useRef, useContext, createContext } from 'react'
+import React, { useContext, createContext } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { Page as FLUID_Page } from 'fluid/ui'
@@ -9,7 +9,6 @@ import {
 	Pad,
 	Toolbar,
 	TitleCard,
-	ExpandedContent,
 	RegisteredSections,
 	Empty,
 } from './parts'
@@ -26,68 +25,6 @@ import { PageNotFound } from './not-found'
 import './style.scss'
 
 const Page = FLUID_Page
-
-/*
-const Page = ( {
-	className,
-	shouldShowHeader = true,
-	shouldPadTop = false,
-	shouldPadSides = true,
-	shouldPadBottom = false,
-	title,
-	headerActions,
-	toolbar,
-	header,
-	headerAppearance,
-	footer,
-	icon,
-	children,
-	...rest
-} ) => {
-
-	const ref = useRef()
-
-	const classes = classname( {
-		'fl-asst-page-content': true,
-		'fl-asst-pad-top': shouldPadTop,
-		'fl-asst-pad-sides': shouldPadSides,
-		'fl-asst-pad-bottom': shouldPadBottom,
-	}, className )
-
-	const context = {
-		...Page.defaults,
-		scrollRef: ref,
-	}
-
-	const headerWrapClasses = classname( {
-		'fl-asst-page-header-wrap': true,
-		'fl-asst-header-appearance-feature': 'feature' === headerAppearance
-	} )
-
-	return (
-		<Page.Context.Provider value={ context }>
-			<div className="fl-asst-page">
-				<div className={ headerWrapClasses }>
-					{ shouldShowHeader && <Page.Header label={ title } icon={ icon } actions={ headerActions } /> }
-					{ toolbar && <Page.Toolbar shouldPadTop={ ! shouldShowHeader } shouldPadBottom={ true }>{toolbar}</Page.Toolbar> }
-					{ header && <div className="fl-asst-page-header">{header}</div> }
-				</div>
-				<div className="fl-asst-page-content-wrap" ref={ ref } { ...rest }>
-					<div className={ classes }>{children}</div>
-				</div>
-				{ footer && (
-					<div className="fl-asst-page-footer">
-						<div className="fl-asst-page-footer-content fl-asst-secondary-surface">{footer}</div>
-					</div>
-				)}
-			</div>
-		</Page.Context.Provider>
-	)
-}
-*/
-
-// TEMP - Will replace Page.
-Page.NewPage = FLUID_Page
 
 
 /* ------ Page System Setup ------ */
@@ -177,9 +114,6 @@ Page.Header.displayName = 'Page.Header'
 // Horizontal Toolbar - edge padding for controls
 Page.Toolbar = Toolbar
 Page.Toolbar.displayName = 'Page.Toolbar'
-
-Page.ExpandedContent = ExpandedContent
-Page.ExpandedContent.displayName = 'Page.ExpandedContent'
 
 // Padded box
 Page.Pad = Pad

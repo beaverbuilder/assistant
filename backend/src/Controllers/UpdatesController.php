@@ -11,12 +11,10 @@ use FL\Assistant\Data\Transformers\ThemeUpdatesTransformer;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Server;
 
-
 /**
  * REST API logic for updates.
  */
 class UpdatesController extends ControllerAbstract {
-
 
 	/**
 	 * @var ThemeUpdatesTransformer
@@ -72,17 +70,17 @@ class UpdatesController extends ControllerAbstract {
 		);
 	}
 
-
 	/**
 	 * Returns an array of updates and related data.
 	 * @param \WP_REST_Request $request
 	 * @return mixed|\WP_REST_Response
 	 */
 	public function updates( \WP_REST_Request $request ) {
+		wp_update_plugins();
+		wp_update_themes();
 
 		$plugins = get_plugin_updates();
 		$themes = get_theme_updates();
-
 		$type = $request->get_param( 'type' );
 		$response = [];
 
@@ -103,11 +101,13 @@ class UpdatesController extends ControllerAbstract {
 		return rest_ensure_response( $p->to_array() );
 	}
 
-
 	/**
 	 * Returns the number of updates found.
 	 */
 	public function updates_count( $request ) {
+		wp_update_plugins();
+		wp_update_themes();
+
 		$count = 0;
 		$plugins = 0;
 		$themes = 0;

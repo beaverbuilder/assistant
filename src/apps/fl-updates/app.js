@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __ } from '@wordpress/i18n'
-import { App, Page, Button, List, Nav, Layout } from 'assistant/ui'
+import { App, Page, Button, List, Nav } from 'assistant/ui'
 import {
 	useSystemState,
 	useAppState,
@@ -87,6 +87,7 @@ const UpdatesMain = () => {
 			title={ __( 'Updates' ) }
 			header={ <Header /> }
 			actions={ <HeaderActions /> }
+			padY={ false }
 		>
 
 			{ ! hasUpdates && (

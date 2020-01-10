@@ -91,7 +91,7 @@ export const Main = ( { match } ) => {
 	}
 
 	return (
-		<Page.NewPage
+		<Page
 			padY={ false }
 			title={ <Header /> }
 		>
@@ -144,6 +144,6 @@ export const Main = ( { match } ) => {
 				/>
 			}
 
-		</Page.NewPage>
+		</Page>
 	)
 }

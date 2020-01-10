@@ -196,7 +196,7 @@ export const App = () => {
 	}
 
 	return (
-		<Page.NewPage title={ __( 'Manage Labels' ) }>
+		<Page title={ __( 'Manage Labels' ) }>
 			<Page.Section
 				className='fl-asst-edit-labels'
 				contentStyle={ { paddingTop: 0 } }
@@ -235,7 +235,7 @@ export const App = () => {
 					{ __( 'Bookmarks allow you to mark items privately. Only you will be able to see what items you’ve bookmarked.' ) }
 				</InnerSection>
 			</Page.Section>
-		</Page.NewPage>
+		</Page>
 	)
 }
 

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
-import { __ } from '@wordpress/i18n'
-import { List, App, Page } from 'assistant/ui'
+import { List, App } from 'assistant/ui'
 
 
 export const AllTab = () => {
@@ -21,7 +20,7 @@ export const AllTab = () => {
 	)
 }
 
-export const CommentTypeTab = ( { type = 'all', label = 'All Comments' } ) => {
+export const CommentTypeTab = ( { type = 'all' } ) => {
 	const { handle } = useContext( App.Context )
 
 

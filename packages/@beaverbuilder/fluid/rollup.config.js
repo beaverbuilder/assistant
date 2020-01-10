@@ -6,18 +6,20 @@ import resolve from 'rollup-plugin-node-resolve'
 import url from 'rollup-plugin-url'
 import pkg from './package.json'
 
+const { IS_PRODUCTION } = process.env
+
 export default {
     input: 'src/index.js',
     output: [
         {
             file: pkg.main,
             format: 'cjs',
-            sourcemap: true
+            sourcemap: ! IS_PRODUCTION
         },
         {
             file: pkg.module,
             format: 'es',
-            sourcemap: true
+            sourcemap: ! IS_PRODUCTION
         }
     ],
     plugins: [
