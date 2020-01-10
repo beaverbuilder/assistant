@@ -219,8 +219,8 @@ const Section = ( {
 	const classes = classname( 'fl-asst-section', 'fl-asst-list-section', className )
 
 	return (
-		<Page.Section label={label} padX={false} footer={footer}>
-		{children}
+		<Page.Section label={ label } padX={ false } footer={ footer }>
+			{children}
 		</Page.Section>
 	)
 

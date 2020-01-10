@@ -15,6 +15,7 @@ import {
 	SelectItem,
 	SuggestItem,
 	TaxonomyTermsItem,
+	ParentTermItems,
 	TextItem,
 	TextareaItem,
 	UrlItem
@@ -93,6 +94,9 @@ Form.TextareaItem.displayName = 'Form.TextareaItem'
 
 Form.UrlItem = UrlItem
 Form.UrlItem.displayName = 'Form.UrlItem'
+
+Form.ParentTermItems = ParentTermItems
+Form.ParentTermItems.displayName = 'Form.ParentTermItems'
 
 /* ------ Form Testing Components ------ */
 Form.Test = Test
