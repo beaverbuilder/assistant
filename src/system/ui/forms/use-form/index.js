@@ -87,7 +87,7 @@ const TabsContent = ( { config, data } ) => {
 						key={ i }
 						path={ path ? path : match.url }
 						exact={ exact }
-						component={ () => {
+						render={ () => {
 							if ( 'function' === typeof sections ) {
 								const Component = sections
 								return <Component { ...data } />
