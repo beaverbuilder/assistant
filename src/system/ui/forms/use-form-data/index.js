@@ -208,6 +208,10 @@ export const useFormData = ( {
 		return config
 	}
 
+	const values = selectValues()
+	const changed = selectChangedValues()
+	const fieldConfig = getFieldConfig()
+
 	const callbackArgs = {
 		ids: getFieldIDs(),
 		changed,
@@ -234,10 +238,6 @@ export const useFormData = ( {
 		} )
 		onSubmit( callbackArgs )
 	}
-
-	const values = selectValues()
-	const changed = selectChangedValues()
-	const fieldConfig = getFieldConfig()
 
 	return {
 		form: {
