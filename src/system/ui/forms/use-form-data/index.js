@@ -127,8 +127,14 @@ export const useFormData = ( {
 	const valueHasChanged = ( fieldState ) => {
 		let value = fieldState.value
 		let lastValue = fieldState.lastCommittedValue
+		if ( 'number' === typeof value ) {
+			value = String( value )
+		}
 		if ( 'object' === typeof value ) {
 			value = JSON.stringify( value )
+		}
+		if ( 'number' === typeof lastValue ) {
+			lastValue = String( lastValue )
 		}
 		if ( 'object' === typeof lastValue ) {
 			lastValue = JSON.stringify( lastValue )
