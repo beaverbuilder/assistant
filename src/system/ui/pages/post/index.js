@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, List, Page, Layout } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
 import { getPostActions } from './actions'
-import { setParentOptions } from './parent'
+import { useParentOptions } from './parent'
 
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes, contentStatus, taxonomies } = getSystemConfig()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
+	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
+	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
 
 	const tabs = {
@@ -92,7 +94,7 @@ export const Post = ( { location, match, history } ) => {
 								'private': __( 'Private' ),
 								'protected': __( 'Protected' ),
 							},
-							onChange: ( { value, setValue, setIsVisible } ) => {
+							onChange: ( { value, setValue } ) => {
 								switch ( value ) {
 								case 'public':
 								case 'protected':
@@ -102,7 +104,7 @@ export const Post = ( { location, match, history } ) => {
 									setValue( 'status', 'private' )
 									break
 								}
-								setIsVisible( 'password', 'protected' == value )
+								setPasswordVisible( 'protected' === value )
 							}
 						},
 						password: {
@@ -110,7 +112,7 @@ export const Post = ( { location, match, history } ) => {
 							labelPlacement: 'beside',
 							component: 'text',
 							id: 'post_password',
-							isVisible: 'protected' == item.visibility,
+							isVisible: passwordVisible,
 						},
 						date: {
 							label: __( 'Publish Date' ),
@@ -179,9 +181,7 @@ export const Post = ( { location, match, history } ) => {
 							component: 'select',
 							id: 'post_parent',
 							isVisible: isHierarchical,
-							options: ( { setOptions } ) => {
-								return setParentOptions( item.type, setOptions )
-							},
+							options: parentOptions,
 						},
 						order: {
 							label: __( 'Order' ),
