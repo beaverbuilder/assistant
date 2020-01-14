@@ -38,9 +38,9 @@ const {
 	sections: {},
 	fields: {},
 	defaults: {},
+	onChange: ( { key, value, setValue, state } ) => {},
 	onSubmit: ( { values, changed, ids, setValue, setValues, state } ) => {},
-	onChange: ( { key, value, setValue, setOptions, setIsVisible, state } ) => {},
-	onReset: ( changed, ids, values ) => {},
+	onReset: ( { values, changed, ids, setValue, setValues, state } ) => {},
 	shouldHighlightChanges: true,
 } )
 ```
