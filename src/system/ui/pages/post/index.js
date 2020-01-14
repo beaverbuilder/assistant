@@ -268,6 +268,9 @@ export const Post = ( { location, match, history } ) => {
 		if ( 'template' in changed ) {
 			data.meta._wp_page_template = changed.template
 		}
+		if ( 'parent' in changed ) {
+			data.post_parent = changed.parent.split( ':' ).pop()
+		}
 		if ( 'terms' in changed ) {
 			data.terms = changed.terms
 		}
@@ -305,7 +308,10 @@ export const Post = ( { location, match, history } ) => {
 	} = Form.useForm( {
 		tabs,
 		onSubmit,
-		defaults: item,
+		defaults: {
+			...item,
+			parent: item.parent ? `parent:${ item.parent }` : 0,
+		},
 	} )
 
 	const Footer = () => {
