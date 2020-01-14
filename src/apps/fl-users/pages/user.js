@@ -48,7 +48,7 @@ export const User = ( { location, match, history } ) => {
 	const isYou = currentUser.id === user.id
 
 
-	const { form, useFormContext } = Form.useFormData( {
+	const { form, useFormContext } = Form.useFormData_Deprecated( {
 		firstName: {
 			label: __( 'First Name' ),
 			labelPlacement: 'beside',
@@ -129,7 +129,7 @@ export const User = ( { location, match, history } ) => {
 	const sectionProps = {
 		user,
 		isYou,
-		useFormData: useFormContext,
+		useFormData_Deprecated: useFormContext,
 	}
 
 	const tabs = [

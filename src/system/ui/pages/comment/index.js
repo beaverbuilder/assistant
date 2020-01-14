@@ -238,25 +238,22 @@ export const Comment = ( { location } ) => {
 			details: {
 				label: __( 'Details' ),
 				fields: {
-					email: {
+					authorEmail: {
 						label: __( 'Email Address' ),
 						labelPlacement: 'beside',
 						type: 'text',
-						value: authorEmail,
 						component: 'plain-text'
 					},
-					IPAddress: {
+					authorIP: {
 						label: __( 'IP Address' ),
 						labelPlacement: 'beside',
 						type: 'text',
-						value: authorIP,
 						component: 'plain-text'
 					},
 					date: {
 						label: __( 'Submitted On' ),
 						labelPlacement: 'beside',
 						type: 'text',
-						value: date,
 						component: 'plain-text'
 					}
 				}
@@ -270,7 +267,7 @@ export const Comment = ( { location } ) => {
 							{ label: 'View on Post', href: url },
 							{ label: 'View in Admin', href: editUrl },
 							{ label: approveStatus ? 'Reject' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment },
-							{ label: spamStatus ? 'UnSpam' : 'Mark as Spam', onClick: spamStatus ? unspamComment : spamComment },
+							{ label: spamStatus ? 'Unspam' : 'Mark as Spam', onClick: spamStatus ? unspamComment : spamComment },
 							{ label: 'Reply', onClick: replyComment },
 							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status: 'destructive' },
 						]
