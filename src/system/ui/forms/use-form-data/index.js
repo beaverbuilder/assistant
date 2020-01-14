@@ -65,7 +65,7 @@ export const useFormData = ( {
 					}
 				}
 			}
-			return state
+			return { ...state }
 
 		case 'COMMIT_VALUE':
 			return {
@@ -80,7 +80,7 @@ export const useFormData = ( {
 			for ( let key in state ) {
 				state[ key ].lastCommittedValue = state[ key ].value
 			}
-			return state
+			return { ...state }
 
 		case 'REVERT_VALUE':
 			return {
@@ -95,7 +95,7 @@ export const useFormData = ( {
 			for ( let key in state ) {
 				state[ key ].value = state[ key ].lastCommittedValue
 			}
-			return state
+			return { ...state }
 
 		default:
 			return state
