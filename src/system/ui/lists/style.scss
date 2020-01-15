@@ -244,6 +244,11 @@
             transition-duration: .25s;
         }
     }
+    .fl-asst-list-item:first-child {
+        .fl-asst-item-extras {
+            top: -10px;
+        }
+    }
 
 
     // Marks
