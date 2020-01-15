@@ -24,7 +24,7 @@ export const Attachment = ( { location } ) => {
 	const srcSet = getSrcSet( item.sizes )
 
 	// Form Handler
-	const { form, useFormContext } = Form.useFormData( {
+	const { form, useFormContext } = Form.useFormData_Deprecated( {
 		title: {
 			label: __( 'Title' ),
 			labelPlacement: 'beside',
@@ -55,7 +55,7 @@ export const Attachment = ( { location } ) => {
 	const sectionData = {
 		attachment: item,
 
-		useFormData: useFormContext,
+		useFormData_Deprecated: useFormContext,
 
 		actions: [
 			{

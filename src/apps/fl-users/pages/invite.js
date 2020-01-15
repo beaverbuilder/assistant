@@ -25,7 +25,7 @@ export const Invite = ( ) => {
 		fields,
 		submitForm,
 		resetForm,
-	} = Form.useFormData( {
+	} = Form.useFormData_Deprecated( {
 		username: {
 			label: __( 'Username' ),
 			id: 'username',
