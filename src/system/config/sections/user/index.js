@@ -9,9 +9,9 @@ registerSection( 'fl-user-info', {
 	location: {
 		type: 'user',
 	},
-	render: ( { useFormData } ) => {
+	render: ( { useFormData_Deprecated } ) => {
 
-		const { firstName, lastName, email, displayName } = useFormData()
+		const { firstName, lastName, email, displayName } = useFormData_Deprecated()
 
 		return (
 			<>
@@ -45,9 +45,9 @@ registerSection( 'fl-user-prefs', {
 		tab: 'preferences',
 	},
 	isEnabled: ( { isYou } ) => isYou,
-	render: ( { useFormData } ) => {
+	render: ( { useFormData_Deprecated } ) => {
 
-		const { showAdminBar } = useFormData()
+		const { showAdminBar } = useFormData_Deprecated()
 
 		return (
 			<>
@@ -65,9 +65,9 @@ registerSection( 'fl-user-assistant-prefs', {
 		tab: 'preferences',
 	},
 	isEnabled: ( { isYou } ) => isYou,
-	render: ( { useFormData } ) => {
+	render: ( { useFormData_Deprecated } ) => {
 
-		const { showInAdmin, showWhenHidden } = useFormData()
+		const { showInAdmin, showWhenHidden } = useFormData_Deprecated()
 
 		return (
 			<>

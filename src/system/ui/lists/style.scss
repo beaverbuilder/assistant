@@ -45,13 +45,14 @@
                 align-items: center;
             }
 
-            &.fl-asst-is-transitioning {
+            &.fl-asst-is-transitioning,
+            &.fl-asst-list-item-alert {
                 opacity: .8;
-                pointer-events: none;
                 background: var(--fluid-alert-background);
                 box-shadow: inset 3px 0px 0px var(--fluid-alert-color);
             }
-            &.fl-asst-is-trashed {
+            &.fl-asst-is-trashed,
+            &.fl-asst-list-item-destructive {
                 background: var(--fluid-destructive-background);
                 box-shadow: inset 3px 0px 0px var(--fluid-destructive-color);
 
@@ -188,15 +189,21 @@
         box-sizing: border-box;
         flex-direction: row;
         flex-wrap: wrap;
-        display: flex;
+        display: none; // Displays flex on hover/focus
         justify-content: space-evenly;
         pointer-events: none;
         z-index: 1;
+        position: absolute;
+        top: -20px;
+        right: var(--fluid-sm-space);
+        background: var(--fluid-background);
+        border-radius: 9px;
+        padding: 2px;
+        box-shadow: 0px 2px 4px rgba(0,0,0,.1),
+                    0px 0px 0px 2px var(--fluid-box-background);
+        z-index: 9;
 
-        opacity: 0;
-        height:0;
-
-        transition-property: opacity, height, transform;
+        transition-property: opacity;
         transition-delay: 0s;
         transition-duration: 0s;
 
@@ -214,26 +221,28 @@
             }
         }
 
-        .fl-asst-item-extras-left {
-            flex: 1 1 auto;
-            display: inline-flex;
-            flex-direction: row;
-
-            button {
-                padding: 0 5px;
-            }
-        }
-        .fl-asst-item-extras-right {
-            flex: 0 0 auto;
-            display: inline-flex;
-            flex-direction: row;
-            align-self: flex-end;
-        }
-
 		.fl-asst-is-favorite {
 			color: var(--fl-asst-bookmark-color);
 		}
 
+    }
+    .fl-asst-list-item:hover,
+    .fl-asst-list-item:focus,
+    .fl-asst-list-item:focus-within {
+
+        .fl-asst-list-item-thumbnail {
+            background-color: var(--fl-asst-surface-background);
+        }
+        .fl-asst-item-extras {
+            display: flex;
+            pointer-events: auto;
+        }
+    }
+    .fl-asst-list-item:hover {
+        .fl-asst-item-extras {
+            transition-delay: .5s;
+            transition-duration: .25s;
+        }
     }
 
 
@@ -266,26 +275,6 @@
                 border-radius: 50%;
                 pointer-events: auto;
             }
-        }
-    }
-
-    .fl-asst-list-item:hover,
-    .fl-asst-list-item:focus,
-    .fl-asst-list-item:focus-within {
-
-        .fl-asst-list-item-thumbnail {
-            background-color: var(--fl-asst-surface-background);
-        }
-        .fl-asst-item-extras {
-            opacity: 1;
-            height: 32px;
-            pointer-events: auto;
-        }
-    }
-    .fl-asst-list-item:hover {
-        .fl-asst-item-extras {
-            transition-delay: .75s;
-            transition-duration: .25s;
         }
     }
 

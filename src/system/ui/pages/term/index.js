@@ -4,7 +4,7 @@ import { Page, Form } from 'ui'
 
 export const Term = ( { location } ) => {
 	const { item } = location.state
-	const { form, useFormContext } = Form.useFormData( {
+	const { form, useFormContext } = Form.useFormData_Deprecated( {
 		title: {
 			label: __( 'Name' ),
 			labelPlacement: 'beside',
@@ -28,11 +28,11 @@ export const Term = ( { location } ) => {
 	}, {}, item )
 
 	return (
-		<Page title={ __( 'Edit Term' ) } shouldPadSides={ false }>
+		<Page title={ __( 'Edit Term' ) } padX={ false }>
 			<Form { ...form }>
 				<Page.RegisteredSections
 					location={ { type: 'term' } }
-					data={ { useFormData: useFormContext } }
+					data={ { useFormData_Deprecated: useFormContext } }
 				/>
 			</Form>
 		</Page>

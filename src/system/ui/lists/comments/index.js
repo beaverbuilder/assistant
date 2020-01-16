@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { List, Button, Icon } from 'ui'
 import { truncate } from 'utils/text'
 import { __ } from '@wordpress/i18n'
+import classname from 'classnames'
 import { getWpRest } from 'utils/wordpress'
 export const Comments = ( {
 
@@ -14,16 +15,16 @@ export const Comments = ( {
 } ) => {
 	const comments = getWpRest()
 	return (
-
 		<List.WordPress
 			type={ 'comments' }
 			query={ query }
-
 			getItemProps={ ( item, defaultProps ) => {
+
 				const { updateItem } = defaultProps
 				const [ approveStatus, set_approveStatus ] = useState( item.approved )
 				const [ trashStatus, set_trashStatus ] = useState( item.trash )
 				const [ spamStatus, set_spamStatus ] = useState( item.spam )
+
 				const approveComment = () => {
 					comments
 						.comments()
@@ -114,8 +115,6 @@ export const Comments = ( {
 								isTrashing: false,
 								isTrashed: false,
 								isrestore: true
-
-
 							} )
 						} )
 				}
@@ -138,76 +137,118 @@ export const Comments = ( {
 
 				const Extras = () => {
 					if (
-						item.isCloning ||
-						( item.isTrashing && 'trash' !== type ) ||
-						( item.isTrashed && 'trash' !== type ) ||
-						item.isRestoring ||
-						( item.isSpam && 'spam' !== type ) ||
-						( item.isunSpam && 'spam' == type ) ||
-						( item.isrestore && 'trash' == type )
-
-
+						item.isCloning || item.isTrashing || item.isRestoring
 					) {
 						return null
 					}
 					return (
-
-						<div className="fl-asst-comment-extras fl-asst-item-extras">
-							<div
-								style={ {
-									display: 'grid',
-									gridTemplateColumns: 'repeat(4, 1fr)',
-									gridAutoRows: 55,
-									justifyItems: 'center',
-									alignItems: 'center',
-								} }
+						<div className="fl-asst-item-extras">
+							<Button
+								href={ item.url }
+								title={ __( 'View Comment' ) }
+								tabIndex="-1"
+								appearance="transparent"
 							>
-								<Button href={ item.url } title="View" >
-									<Icon.View  />
+								<Icon.View  />
+							</Button>
+
+							{ approveStatus ? (
+								<Button
+									onClick={ unapproveComment }
+									title={ __( 'Reject Comment' ) }
+									tabIndex="-1"
+									appearance="transparent"
+									status="alert"
+								>
+									<Icon.Reject />
+								</Button>
+							) : (
+								<Button
+									onClick={ approveComment }
+									title={ __( 'Approve Comment' ) }
+									tabIndex="-1"
+									appearance="transparent"
+									status="primary"
+								>
+									<Icon.Approve />
+								</Button>
+							)}
+
+
+							{ spamStatus ? (
+								<Button
+									onClick={ unspamComment }
+									title={ __( 'Mark as not spam' ) }
+									tabIndex="-1"
+									appearance="transparent"
+									status="primary"
+								>
+									<Icon.Unspam />
+								</Button>
+							) : (
+								<Button
+									onClick={ spamComment }
+									title={ __( 'Mark as spam' ) }
+									tabIndex="-1"
+									appearance="transparent"
+									status="alert"
+								>
+									<Icon.Spam />
+								</Button>
+							)}
+
+
+							{ trashStatus ? (
+								<Button
+									onClick={ untrashComment }
+									title={ __( 'Restore from trash' ) }
+									tabIndex="-1"
+									appearance="transparent"
+								>
+									<Icon.Restore />
 								</Button>
 
-								{approveStatus ? (
-									<Button onClick={ unapproveComment } title="Reject"><Icon.Reject /></Button>
-								) : (
-									<Button onClick={ approveComment } title="Approve"><Icon.Approve /></Button>
-								)}
-
-
-								{spamStatus ? (
-									<Button onClick={ unspamComment } title="Unspam"><Icon.Unspam /></Button>
-								) : (
-									<Button onClick={ spamComment } title="Spam"><Icon.Spam /></Button>
-								)}
-
-
-								{trashStatus ? (
-									<Button onClick={ untrashComment } title="Restore"><Icon.Restore /></Button>
-
-								) : (
-									<Button status="destructive" onClick={ trashComment } title="Trash"><Icon.Trash /></Button>
-								)}
-
-							</div>
+							) : (
+								<Button
+									onClick={ trashComment }
+									title={ __( 'Move to trash' ) }
+									tabIndex="-1"
+									appearance="transparent"
+									status="destructive"
+								>
+									<Icon.Trash />
+								</Button>
+							)}
 						</div>
 					)
 				}
 
-
 				return getItemProps( item, {
 					...defaultProps,
-					label: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isrestore && 'trash' == type ) ? item.title : (
-						<em>
-							<strong>{item.authorEmail}</strong> commented:
-						</em>
-					),
-					description: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isrestore && 'trash' == type ) ? '' : truncate(
-						item.content.replace( /<\/?[^>]+(>|$)/g, '' ),
-						80
-					),
+					label: ( item.isTrashing && 'trash' !== type ) ||
+						( item.isSpam && 'spam' !== type ) ||
+						( item.isunSpam && 'spam' == type ) ||
+						( item.isrestore && 'trash' == type ) ?
+						item.title :
+						(
+							<em>
+								<strong>{item.authorEmail}</strong> commented:
+							</em>
+						),
+					description: ( item.isTrashing && 'trash' !== type ) ||
+						( item.isSpam && 'spam' !== type ) ||
+						( item.isunSpam && 'spam' == type ) ||
+						( item.isrestore && 'trash' == type ) ?
+						''						:
+						truncate( item.content.replace( /<\/?[^>]+(>|$)/g, '' ), 80 ),
 					thumbnail: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isrestore && 'trash' == type ) ? '' : item.thumbnail,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
 
+					className: classname( {
+						'test-class-name': true,
+						'fl-asst-list-item-alert': ! approveStatus
+					}, defaultProps.className )
 				} )
 			} }
 			{ ...rest }

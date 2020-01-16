@@ -5,8 +5,8 @@ import Button from '../base'
 
 const TooltipButton = forwardRef( ( props, ref ) => {
     const [isHovering, hoverProps] = useHover({
-        delayEnter: 0,
-        delayLeave: 50
+        delayEnter: 500,
+        delayLeave: 0
     })
     const [isFocused, focusProps] = useFocus()
 

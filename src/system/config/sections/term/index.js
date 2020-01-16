@@ -10,8 +10,8 @@ registerSection( 'fl-term-details', {
 	location: {
 		type: 'term',
 	},
-	render: ( { useFormData } ) => {
-		const { title, slug, parent, description } = useFormData()
+	render: ( { useFormData_Deprecated } ) => {
+		const { title, slug, parent, description } = useFormData_Deprecated()
 
 		return (
             <>

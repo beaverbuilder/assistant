@@ -2,96 +2,94 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Form } from 'ui'
 import { getSrcSet } from 'utils/image'
-
-const getItemActions = ( { staticValues } ) => {
-
-	const { url, editUrl } = staticValues
-
-	return [
-		{
-			label: __( 'View Attachment' ),
-			href: url,
-		},
-		{
-			label: __( 'Edit in Admin' ),
-			href: editUrl,
-		},
-	]
-}
+import { getWpRest } from 'utils/wordpress'
 
 export const Attachment = ( { location } ) => {
 	const { item } = location.state
 	const srcSet = getSrcSet( item.sizes )
+	const wpRest = getWpRest()
 
-	// Form Handler
-	const { form, useFormContext } = Form.useFormData( {
-		title: {
-			label: __( 'Title' ),
-			labelPlacement: 'beside',
+	const sections = {
+		labels: {
+			label: __( 'Labels' ),
+			fields: {
+				labels: {
+					component: 'labels',
+					alwaysCommit: true,
+					onAdd: label => {
+						wpRest.notations().createLabel( 'post', item.id, label.id )
+					},
+					onRemove: label => {
+						wpRest.notations().deleteLabel( 'post', item.id, label.id )
+					},
+				},
+			}
 		},
-		alt: {
-			label: __( 'Alternative Text' ),
-			labelPlacement: 'beside',
+		meta: {
+			label: __( 'Metadata' ),
+			fields: {
+				title: {
+					label: __( 'Title' ),
+				},
+				alt: {
+					label: __( 'Alternative Text' ),
+				},
+				description: {
+					label: __( 'Description' ),
+					component: 'textarea',
+					rows: 2,
+				},
+			},
 		},
-		description: {
-			type: 'textarea',
-			label: __( 'Description' ),
-			rows: 2,
-		},
-		caption: {
-			type: 'textarea',
-			label: __( 'Caption' ),
-			rows: 2,
-		},
-		url: {
-			label: __( 'URL' ),
+		links: {
+			label: __( 'Links' ),
+			fields: {
+				fileUrl: {
+					label: __( 'File URL' ),
+					component: 'url',
+					isVisible: !! item.sizes.full,
+				},
+				url: {
+					label: __( 'URL' ),
+					component: 'url',
+				},
+			},
 		},
 		actions: {
-			value: getItemActions,
-		},
-	},
-	{ /* options */ }, item )
-
-	const sectionData = {
-		attachment: item,
-
-		useFormData: useFormContext,
-
-		actions: [
-			{
-				label: __( 'View Attachment Page' ),
-				href: '#'
-			},
-			{
-				label: __( 'Edit in Admin' ),
-				href: '#'
-			},
-			{
-				label: __( 'Replace File' ),
-				onClick: () => {}
-			},
-			{
-				label: __( 'Refresh Thumbnails' ),
-				onClick: () => {}
-			},
-			{
-				label: __( 'Move to Trash' ),
-				onClick: () => {}
-			},
-		],
+			label: __( 'Actions' ),
+			fields: {
+				actions: {
+					component: 'actions',
+					options: [
+						{
+							label: __( 'View Attachment' ),
+							href: item.url,
+						},
+						{
+							label: __( 'Edit in Admin' ),
+							href: item.editUrl,
+						},
+					]
+				}
+			}
+		}
 	}
+
+	const defaults = {
+		...item,
+		fileUrl: !! item.sizes.full ? item.sizes.full.url : null,
+	}
+
+	const { renderForm } = Form.useForm( {
+		sections,
+		defaults,
+	} )
 
 	const Hero = () => <img src={ item.thumbnail } srcSet={ srcSet } />
 
 	return (
-		<Page.NewPage title={ __( 'Attachment' ) } hero={ <Hero /> }>
-
-			<Form { ...form }>
-				<Page.RegisteredSections
-					location={ { type: 'attachment' } }
-					data={ sectionData }
-				/>
-			</Form>
-		</Page.NewPage>
+		<Page title={ __( 'Attachment' ) } hero={ <Hero /> }>
+			{ renderForm() }
+		</Page>
 	)
 }

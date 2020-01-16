@@ -14,7 +14,8 @@ export const useForm = ( {
 	const sectionData = useMemo( () => sections, [ JSON.stringify( sections ) ] )
 	const fieldData = useMemo( () => fields, [ JSON.stringify( fields ) ] )
 	const fieldConfig = getFieldConfig( tabData, sectionData, fieldData, defaults )
-	const formData = useFormData( fieldConfig, options, defaults )
+	const defaultValues = getDefaultValues( fieldConfig, defaults )
+	const formData = useFormData( { fields: fieldConfig, defaults: defaultValues, ...options } )
 	const { form } = formData
 
 	const renderForm = () => {
@@ -212,4 +213,13 @@ const getFieldConfig = ( tabs, sections, fields, defaults ) => {
 	} )
 
 	return config
+}
+
+const getDefaultValues = ( fieldConfig, defaults ) => {
+	Object.entries( fieldConfig ).map( ( [ key, config ] ) => {
+		if ( undefined === defaults[ key ] ) {
+			defaults[ key ] = ''
+		}
+	} )
+	return defaults
 }

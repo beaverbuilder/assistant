@@ -1,6 +1,6 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import classname from 'classnames'
-import { Window, Page } from 'ui'
+import { Page } from 'ui'
 import { getSystemSelectors } from 'data'
 import './style.scss'
 
@@ -52,17 +52,6 @@ export const TitleCard = ( { className, title, children, ...rest } ) => {
 			{children}
 		</div>
 	)
-}
-
-
-export const ExpandedContent = ( { children } ) => {
-	const { size } = useContext( Window.Context )
-
-	if ( 'normal' === size ) {
-		return children
-	}
-
-	return null
 }
 
 export const RegisteredSections = ( { location, data } ) => {
