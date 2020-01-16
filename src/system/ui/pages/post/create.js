@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Form } from 'ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
-import { setParentOptions } from './parent'
+import { useParentOptions } from './parent'
 
 export const CreatePost = ( { history, location } ) => {
 	const { contentTypes } = getSystemConfig()
@@ -27,6 +27,10 @@ export const CreatePost = ( { history, location } ) => {
 		parent: 0,
 	}
 
+	const [ parentType, setParentType ] = useState( defaults.type )
+	const [ parentVisible, setParentVisible ] = useState( contentTypes[ defaults.type ].isHierarchical )
+	const parentOptions = useParentOptions( parentType )
+
 	const sections = {
 		info: {
 			label: __( 'Basic Info' ),
@@ -37,9 +41,9 @@ export const CreatePost = ( { history, location } ) => {
 					component: 'select',
 					options: getTypeOptions(),
 					id: 'post_type',
-					onChange: ( { value, setOptions, setIsVisible } ) => {
-						setIsVisible( 'parent', contentTypes[ value ].isHierarchical )
-						setParentOptions( value, setOptions )
+					onChange: ( { value } ) => {
+						setParentVisible( contentTypes[ value ].isHierarchical )
+						setParentType( value )
 					}
 				},
 				title: {
@@ -62,10 +66,8 @@ export const CreatePost = ( { history, location } ) => {
 					label: __( 'Parent' ),
 					component: 'select',
 					id: 'post_parent',
-					isVisible: contentTypes[ defaults.type ].isHierarchical,
-					options: ( { state, setOptions } ) => {
-						return setParentOptions( state.type.value, setOptions )
-					},
+					isVisible: parentVisible,
+					options: parentOptions,
 				}
 			}
 		}
@@ -80,8 +82,8 @@ export const CreatePost = ( { history, location } ) => {
 			}
 		}
 
-		if ( data.parent ) {
-			data.parent = data.parent.split( ':' ).pop()
+		if ( data.post_parent ) {
+			data.post_parent = data.post_parent.split( ':' ).pop()
 		}
 
 		const handleError = error => {

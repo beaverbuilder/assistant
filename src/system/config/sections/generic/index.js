@@ -9,8 +9,8 @@ registerSection( 'fl-screen-labels', {
 	location: {
 		type: [ 'post' ],
 	},
-	render: ( { useFormData } ) => {
-		const { labels } = useFormData()
+	render: ( { useFormData_Deprecated } ) => {
+		const { labels } = useFormData_Deprecated()
 		return (
 			<Form.LabelsItem { ...labels } />
 		)
@@ -22,13 +22,13 @@ registerSection( 'fl-screen-actions', {
 	location: {
 		type: [ 'post', 'attachment' ],
 	},
-	render: ( { useFormData } ) => {
+	render: ( { useFormData_Deprecated } ) => {
 
-		if ( 'undefined' === typeof useFormData ) {
+		if ( 'undefined' === typeof useFormData_Deprecated ) {
 			return null
 		}
 
-		const { actions } = useFormData()
+		const { actions } = useFormData_Deprecated()
 
 		if ( 'undefined' === typeof actions || 1 > actions.length ) {
 			return (

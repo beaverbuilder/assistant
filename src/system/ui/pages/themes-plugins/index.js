@@ -7,6 +7,7 @@ export const Plugin = ( { location = {} } ) => {
 	const { banner, title, version, content } = item
 
 	const { renderForm } = Form.useForm( {
+		defaults: item,
 		sections: {
 			details: {
 				label: __( 'Details' ),
@@ -15,7 +16,6 @@ export const Plugin = ( { location = {} } ) => {
 						label: __( 'Version' ),
 						labelPlacement: 'beside',
 						component: 'plain-text',
-						value: version,
 					}
 				}
 			}
@@ -36,6 +36,7 @@ export const Theme = ( { location = {} } ) => {
 	const { banner, title, content, version } = item
 
 	const { renderForm } = Form.useForm( {
+		defaults: item,
 		sections: {
 			details: {
 				label: __( 'Details' ),
@@ -44,7 +45,6 @@ export const Theme = ( { location = {} } ) => {
 						label: __( 'Version' ),
 						labelPlacement: 'beside',
 						component: 'plain-text',
-						value: version,
 					}
 				}
 			}

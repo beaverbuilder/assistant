@@ -8,7 +8,7 @@ export const User = ( { location } ) => {
 	const { id } = item
 	const { currentUser } = getSystemConfig()
 	const isYou = currentUser.id === id
-	const { form, useFormContext } = Form.useFormData()
+	const { form, useFormContext } = Form.useFormData_Deprecated()
 
 	return (
 		<Page title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }
@@ -25,7 +25,7 @@ export const User = ( { location } ) => {
 					data={ {
 						user: item,
 						isYou,
-						useFormData: useFormContext
+						useFormData_Deprecated: useFormContext
 					} }
 				/>
 			</Form>

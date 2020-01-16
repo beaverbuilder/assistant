@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 
-export const useFormState = ( initial = {}, onChange = () => {} ) => {
+export const useFormState_Deprecated = ( initial = {}, onChange = () => {} ) => {
 
 	const reducer = ( state, action ) => {
 		const newState = { ...state }

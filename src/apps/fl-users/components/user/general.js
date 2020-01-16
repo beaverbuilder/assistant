@@ -35,7 +35,7 @@ export const GeneralTab = ( props ) => {
 
 	const onFormChange = () => {}
 
-	const [ state, setValue ] = Form.useFormState( {
+	const [ state, setValue ] = Form.useFormState_Deprecated( {
 		content: '',
 		date: new Date(),
 		displayName: '',
