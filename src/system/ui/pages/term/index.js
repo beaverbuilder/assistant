@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Page, Form, Button } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions, getSystemConfig } from 'data'
-import { ParentTermItems } from '../../forms/items';
+
 
 export const Term = ( { location } ) => {
 	const { item } = location.state
