@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Form, Button } from 'ui'
 import { getWpRest } from 'utils/wordpress'
-import { getSystemActions, getSystemConfig } from 'data'
+import { getSystemActions } from 'data'
 
 
 export const Term = ( { location } ) => {
@@ -10,14 +10,12 @@ export const Term = ( { location } ) => {
 	const {
 		title,
 		description,
-		slug
+		slug,
+		parent
 	} = item
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
-	const { taxonomies } = getSystemConfig()
-	const ParentTerms = Form.ParentTermItems(item.id)
-
-
+	const ParentTerms = Form.ParentTermItems( item.id )
 
 	const onSubmit = ( { changed, ids } ) => {
 
@@ -38,6 +36,11 @@ export const Term = ( { location } ) => {
 		if ( 'title' in changed ) {
 			item.title = changed.title
 			data.name = changed.title
+		}
+
+		if ( 'parent' in changed ) {
+			item.parent = changed.parent
+			data.parent = changed.parent
 		}
 
 		if ( 'slug' in changed ) {
@@ -67,8 +70,7 @@ export const Term = ( { location } ) => {
 	}
 
 
-
-	const { hasChanges, resetForm, setIsSubmitting,submitForm, renderForm } = Form.useForm({
+	const { hasChanges, resetForm, setIsSubmitting, submitForm, renderForm } = Form.useForm( {
 
 
 		sections: {
@@ -78,8 +80,6 @@ export const Term = ( { location } ) => {
 					title: {
 						label: __( 'Name' ),
 						labelPlacement: 'above',
-						value: title,
-
 					},
 					slug: {
 						label: __( 'Slug' ),
@@ -89,7 +89,7 @@ export const Term = ( { location } ) => {
 					parent: {
 						label: __( 'Parent' ),
 						labelPlacement: 'above',
-						component:'select',
+						component: 'select',
 						options: ParentTerms,
 					},
 					description: {
@@ -102,8 +102,8 @@ export const Term = ( { location } ) => {
 
 				}
 			},
-		},onSubmit,
-		item })
+		}, onSubmit,
+		defaults: item } )
 
 	const Footer = () => {
 		return (
@@ -117,10 +117,10 @@ export const Term = ( { location } ) => {
 		)
 	}
 	return (
-		<Page.NewPage title={ __( 'Edit Term' ) } padX={ true } footer={ hasChanges && <Footer /> }>
+		<Page title={ __( 'Edit Term' ) } padX={ true } footer={ hasChanges && <Footer /> }>
 
 			{renderForm()}
 
-		</Page.NewPage >
+		</Page >
 	)
 }
