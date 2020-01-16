@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Form, Icon, Message, Button, Page, Layout } from 'ui'
+import { Form, Icon, Button, Page, Layout } from 'ui'
 import { getSystemConfig, getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
 
@@ -82,7 +82,7 @@ export const Comment = ( { location } ) => {
 			.then( () => {
 				setResponseMessage( {
 					message: 'Comment has been marked as spam!',
-					status: 'destructive',
+					status: 'alert',
 					icon: Icon.Spam
 				} )
 				setSpamStatus( true )
@@ -238,25 +238,22 @@ export const Comment = ( { location } ) => {
 			details: {
 				label: __( 'Details' ),
 				fields: {
-					email: {
+					authorEmail: {
 						label: __( 'Email Address' ),
 						labelPlacement: 'beside',
 						type: 'text',
-						value: authorEmail,
 						component: 'plain-text'
 					},
-					IPAddress: {
+					authorIP: {
 						label: __( 'IP Address' ),
 						labelPlacement: 'beside',
 						type: 'text',
-						value: authorIP,
 						component: 'plain-text'
 					},
 					date: {
 						label: __( 'Submitted On' ),
 						labelPlacement: 'beside',
 						type: 'text',
-						value: date,
 						component: 'plain-text'
 					}
 				}
@@ -267,12 +264,12 @@ export const Comment = ( { location } ) => {
 					actions: {
 						component: 'actions',
 						options: [
-							{ label: 'View on Post', href: url },
+							{ label: 'View on Post', href: url, disabled : trashStatus ? true : false },
 							{ label: 'View in Admin', href: editUrl },
-							{ label: approveStatus ? 'Reject' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment },
-							{ label: spamStatus ? 'UnSpam' : 'Mark as Spam', onClick: spamStatus ? unspamComment : spamComment },
-							{ label: 'Reply', onClick: replyComment },
-							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status: 'destructive' },
+							{ label: approveStatus ? 'Unapprove' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment, disabled : (trashStatus ? true : false) || (spamStatus ? true : false) },
+							{ label: 'Mark as Spam', onClick: spamComment, disabled : (trashStatus ? true : false) || (spamStatus ? true : false) },
+							{ label: 'Reply', onClick: replyComment, disabled : (trashStatus ? true : false) || (commentStatus === 'reply' ? true : false) },
+							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status:trashStatus ? 'primary' : 'destructive' },
 						]
 					}
 				}
@@ -282,7 +279,7 @@ export const Comment = ( { location } ) => {
 	} )
 
 	return (
-		<Page.NewPage title={ __( 'Edit Comment' ) } hero={ hero }>
+		<Page title={ __( 'Edit Comment' ) } hero={ hero }>
 
 			<Layout.Headline>{author}</Layout.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
@@ -354,11 +351,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Reply />
 					</Button>
 				)}
-				{'edit' !== commentStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button appearance='elevator' title='Edit' onClick={ editComment }>
-						<Icon.Edit />
-					</Button>
-				)}
+
 
 				{false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
@@ -370,14 +363,20 @@ export const Comment = ( { location } ) => {
 						<Icon.Spam />
 					</Button>
 				)}
-				{true === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+				{true === spamStatus && false === trashStatus &&( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
-						status='alert'
+						status='primary'
 						title='Unspam'
 						onClick={ unspamComment }
 					>
 						<Icon.Unspam />
+					</Button>
+				)}
+
+{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					<Button appearance='elevator' title='Edit' onClick={ editComment }>
+						<Icon.Edit />
 					</Button>
 				)}
 				{false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
@@ -403,12 +402,12 @@ export const Comment = ( { location } ) => {
 			</div>
 
 			{responseMessage.message && (
-				<Message status={ responseMessage.status } icon={ responseMessage.icon }>
+				<Layout.Message status={ responseMessage.status } icon={ responseMessage.icon }>
 					{responseMessage.message}
-				</Message>
+				</Layout.Message>
 			)}
 
 			{renderForm()}
-		</Page.NewPage>
+		</Page>
 	)
 }
