@@ -82,7 +82,7 @@ export const Comment = ( { location } ) => {
 			.then( () => {
 				setResponseMessage( {
 					message: 'Comment has been marked as spam!',
-					status: 'destructive',
+					status: 'alert',
 					icon: Icon.Spam
 				} )
 				setSpamStatus( true )
@@ -264,12 +264,12 @@ export const Comment = ( { location } ) => {
 					actions: {
 						component: 'actions',
 						options: [
-							{ label: 'View on Post', href: url },
+							{ label: 'View on Post', href: url, disabled : trashStatus ? true : false },
 							{ label: 'View in Admin', href: editUrl },
-							{ label: approveStatus ? 'Reject' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment },
-							{ label: spamStatus ? 'Unspam' : 'Mark as Spam', onClick: spamStatus ? unspamComment : spamComment },
-							{ label: 'Reply', onClick: replyComment },
-							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status: 'destructive' },
+							{ label: approveStatus ? 'Unapprove' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment, disabled : (trashStatus ? true : false) || (spamStatus ? true : false) },
+							{ label: 'Mark as Spam', onClick: spamComment, disabled : (trashStatus ? true : false) || (spamStatus ? true : false) },
+							{ label: 'Reply', onClick: replyComment, disabled : (trashStatus ? true : false) || (commentStatus === 'reply' ? true : false) },
+							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status:trashStatus ? 'primary' : 'destructive' },
 						]
 					}
 				}
@@ -351,11 +351,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Reply />
 					</Button>
 				)}
-				{'edit' !== commentStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button appearance='elevator' title='Edit' onClick={ editComment }>
-						<Icon.Edit />
-					</Button>
-				)}
+
 
 				{false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
@@ -367,14 +363,20 @@ export const Comment = ( { location } ) => {
 						<Icon.Spam />
 					</Button>
 				)}
-				{true === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+				{true === spamStatus && false === trashStatus &&( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
-						status='alert'
+						status='primary'
 						title='Unspam'
 						onClick={ unspamComment }
 					>
 						<Icon.Unspam />
+					</Button>
+				)}
+
+{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					<Button appearance='elevator' title='Edit' onClick={ editComment }>
+						<Icon.Edit />
 					</Button>
 				)}
 				{false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
