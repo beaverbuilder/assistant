@@ -189,7 +189,7 @@ export const TaxonomyTermsItem = ( {
 }
 
 
-export const ParentTermItems = ( id ) => {
+export const ParentTermItems = ( taxonomy,id ) => {
 	const [ data, setData ] = useState( {
 		terms: [],
 		idsBySlug: {},
@@ -197,12 +197,11 @@ export const ParentTermItems = ( id ) => {
 	} )
 	const wpRest = getWpRest()
 	const source = CancelToken.source()
-	const taxonomy = 'category'
 	useEffect( () => {
 		wpRest.terms().getParentTerms( {
 			taxonomy,
 			hide_empty: 0,
-			orderby: 'name',
+			orderby: 'id',
 			order: 'ASC',
 			current: id
 		}, {
@@ -231,7 +230,7 @@ export const ParentTermItems = ( id ) => {
 	}
 
 	const getHierarchicalOptions = ( terms = data.terms, options = {}, depth = 0 ) => {
-		options[''] = depth ? '-'.repeat( depth ) + ' ' + 'None' : 'None'
+		options['0'] = depth ? '-'.repeat( depth ) + ' ' + 'None' : 'None'
 		terms.map( term => {
 			if ( term.id !== id ) {
 				options[term.id] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title

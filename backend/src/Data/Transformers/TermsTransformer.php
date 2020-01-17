@@ -17,6 +17,7 @@ class TermsTransformer {
 			'taxonomy'       => $term->taxonomy,
 			'title'          => $term->name,
 			'url'            => get_term_link( $term ),
+			'count'			 => $term->count
 		];
 	}
 }

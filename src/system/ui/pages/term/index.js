@@ -11,11 +11,13 @@ export const Term = ( { location } ) => {
 		title,
 		description,
 		slug,
-		parent
+		parent,
+		count,
+		taxonomy
 	} = item
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
-	const ParentTerms = Form.ParentTermItems( item.id )
+	const ParentTerms = Form.ParentTermItems(taxonomy,item.id )
 
 	const onSubmit = ( { changed, ids } ) => {
 
@@ -99,6 +101,12 @@ export const Term = ( { location } ) => {
 						component: 'textarea',
 						rows: 6,
 					},
+					count :{
+						label: __( 'Post Count:' ),
+						labelPlacement: 'below',
+						type: 'text',
+						component: 'plain-text'
+					}
 
 				}
 			},
