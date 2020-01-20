@@ -66,21 +66,28 @@ export const SummaryTab = () => {
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { query } = useAppState( 'fl-content' )
+	const style = {
+		maxHeight: '100%',
+		minHeight: 0,
+		flex: '1 1 auto',
+	}
 	return (
-		<List.Posts
-			query={ { ...query, post_type: type } }
-			getItemProps={ ( item, defaultProps ) => {
-				if ( item.id ) {
-					return {
-						...defaultProps,
-						to: {
-							pathname: `/${handle}/post/${item.id}`,
-							state: { item }
-						},
+		<Layout.Box outset={true} padY={false} style={style}>
+			<List.Posts
+				query={ { ...query, post_type: type } }
+				getItemProps={ ( item, defaultProps ) => {
+					if ( item.id ) {
+						return {
+							...defaultProps,
+							to: {
+								pathname: `/${handle}/post/${item.id}`,
+								state: { item }
+							},
+						}
 					}
-				}
-				return defaultProps
-			} }
-		/>
+					return defaultProps
+				} }
+			/>
+		</Layout.Box>
 	)
 }
