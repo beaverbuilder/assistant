@@ -4,7 +4,7 @@ import { URLControl } from './url'
 import { NextPrev } from './prev-next'
 import { TagGroup, Tag } from './tag-group'
 import { CirclePicker } from './color-picker'
-import { FilterBar } from './filter'
+import Filter from './filter'
 
 export const Control = props => <input { ...props } />
 
@@ -26,5 +26,4 @@ Control.TagGroup.displayName = 'Control.TagGroup'
 Control.CirclePicker = CirclePicker
 Control.CirclePicker.displayName = 'Control.CirclePicker'
 
-Control.FilterBar = FilterBar
-Control.FilterBar.displayName = 'Control.FilterBar'
+export { Filter }
