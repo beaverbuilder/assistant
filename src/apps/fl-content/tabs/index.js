@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
-import { List, App, Page, Layout } from 'assistant/ui'
+import { List, App, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, useSystemState, getSystemConfig } from 'assistant/data'
 
 export const SummaryTab = () => {
@@ -66,8 +66,13 @@ export const SummaryTab = () => {
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { query } = useAppState( 'fl-content' )
+	const style = {
+		maxHeight: '100%',
+		minHeight: 0,
+		flex: '1 1 auto',
+	}
 	return (
-		<Layout.Box outset={ true } padX={ false } padY={ false }>
+		<Layout.Box outset={true} padY={false} style={style}>
 			<List.Posts
 				query={ { ...query, post_type: type } }
 				getItemProps={ ( item, defaultProps ) => {

@@ -60,7 +60,8 @@
 
             &:focus {
                 outline: none;
-                box-shadow: none;
+                box-shadow: none !important;
+                border: none;
 
                 .fl-asst-app-icon {
                     overflow: hidden;

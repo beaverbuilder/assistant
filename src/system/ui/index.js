@@ -9,7 +9,7 @@ import { Page } from './pages'
 import Nav from './nav'
 import { Window } from './window'
 import { Error } from './errors'
-import { Control } from './controls'
+import { Control, Filter } from './controls'
 import { Form } from './forms'
 import { Table } from './table'
 
@@ -36,6 +36,7 @@ export const api = {
 	Icon,
 	Color,
 	Window,
+	Filter,
 	Form,
 	Control,
 	List,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
-import { Page, Nav, Icon, Button } from 'assistant/ui'
+import { Page, Nav, Icon, Button, Filter } from 'assistant/ui'
 import { SummaryTab, PostTypeTab } from './tabs'
 
 export const Content = ( { match } ) => (
@@ -39,6 +39,14 @@ const Main = () => {
 		return tabs
 	}
 
+	const Header = () => {
+		return (
+			<div style={{ flexDirection: 'column' }}>
+				<Nav.Tabs tabs={ tabs } />
+			</div>
+		)
+	}
+
 	const Actions = () => {
 		const to = {
 			pathname: '/fl-content/post/new',
@@ -62,7 +70,7 @@ const Main = () => {
 			title={ __( 'Content' ) }
 			padX={ false }
 			padY={ false }
-			header={ <Nav.Tabs tabs={ tabs } /> }
+			header={ <Header /> }
 			actions={ <Actions /> }
 		>
 			<Nav.CurrentTab tabs={ tabs } />

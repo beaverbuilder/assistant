@@ -1,33 +1,13 @@
 .fl-asst {
-    .fl-asst-filter-bar {
+    .fl-asst-filter {
+        padding: var(--fluid-sm-space);
         flex: 0 0 auto;
-        display: grid;
-        grid-template-columns: repeat( 3, 1fr );
-        grid-auto-rows: 50px;
-        grid-gap: 2px;
-        min-height: 50px;
-        background: var(--fl-asst-secondary-surface-background);
-        padding-bottom: 2px;
+        margin: 0;
 
-        .fl-asst-filter-bar-item {
-            background: var(--fl-asst-surface-background);
-            padding: 10px;
-            border-radius: 0;
-
-            &:focus {
-                outline: none;
-                box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
-                inset 0px 0px 0px 4px var(--fl-asst-accent-color);
-            }
-        }
-
-        .fl-asst-filter-bar-menu {
-            box-sizing: border-box;
-            background: var(--fl-asst-surface-background);
-            width: 230px;
-            border: 1px solid black;
-            padding: 10px;
-            z-index: 9;
+        & > * {
+            padding: var(--fluid-sm-space);
+            background: var(--fluid-background);
+            border-radius: 3px;
         }
     }
 }

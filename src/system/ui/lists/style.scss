@@ -3,6 +3,7 @@
         display: flex;
         flex-direction: column;
         max-width: 100%;
+        margin: 0;
 
         &.fl-asst-horizontal-list {
             flex-direction: row;
@@ -102,7 +103,6 @@
         flex-direction: column;
         min-height: 36px;
         padding: 15px 0;
-        border-bottom: 1px solid var(--fl-asst-secondary-surface-background);
 
         .fl-asst-list-item-default-content-row {
             display: flex;
@@ -242,6 +242,11 @@
         .fl-asst-item-extras {
             transition-delay: .5s;
             transition-duration: .25s;
+        }
+    }
+    .fl-asst-list-item:first-child {
+        .fl-asst-item-extras {
+            top: -10px;
         }
     }
 
