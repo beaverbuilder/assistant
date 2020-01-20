@@ -66,15 +66,14 @@ const Main = () => {
 	const tabs = getTabs()
 
 	return (
-		<Page.NewPage
+		<Page
 			title={ __( 'Content' ) }
-			padX={ false }
 			padY={ false }
 			header={ <Header /> }
 			actions={ <Actions /> }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
-		</Page.NewPage>
+		</Page>
 	)
 }
 
