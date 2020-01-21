@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
@@ -77,34 +77,23 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 
 	const PostFilter = () => {
 
-
 		const sorts = {
-			title: __('Title'),
-			author: __('Author'),
-		}
+	        title: __('Title'),
+	        author: __('Author'),
+	        ID: __('Post ID'),
+	        date: __('Date Created'),
+	        modified: __('Date Modified')
+	    }
 
 		return (
 			<Filter>
-				<Filter.Item title={ __( 'Sort By' ) } subtitle={sorts[query.orderby]}>
-					{Object.entries(sorts).map( ( [value, label], i ) => {
-						const onChange = () => {
-							setQuery({
-								...query,
-								orderby: value
-							})
-						}
-						return (
-							<label key={i}>
-								<input
-									type="radio"
-									value={value}
-									onChange={onChange}
-									checked={ query.orderby === value }
-								/>{label}{ defaultQuery.orderby === value && ' ' + __('(Default)') }
-							</label>
-						)
-					})}
-				</Filter.Item>
+				<Filter.RadioGroupItem
+		            title={ __('Sort By' ) }
+		            items={sorts}
+					value={query.orderby}
+					defaultValue={defaultQuery.orderby}
+					onChange={ value => setQuery({ ...query, orderby: value }) }
+		        />
 				<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
 		)

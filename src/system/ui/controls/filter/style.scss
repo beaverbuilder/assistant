@@ -28,6 +28,10 @@
                     .fl-asst-filter-button-subtitle {
                         font-size: 13px;
                         font-weight: 600;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 85px;
                     }
                 }
                 .fl-asst-filter-button-caret {

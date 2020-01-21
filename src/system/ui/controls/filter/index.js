@@ -3,6 +3,7 @@ import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { ToggleLayer } from 'react-laag'
 import { Button, Icon } from '../../'
+import { RadioGroupItem } from './items'
 import './style.scss'
 
 const Filter = ( { className, children, ...rest } ) => {
@@ -49,7 +50,7 @@ const Filter = ( { className, children, ...rest } ) => {
 	)
 }
 
-const Item = ( { title, subtitle, children } ) => {
+const Item = ( { title, subtitle, children, isChanged = false  } ) => {
 	const [ isOpen, setIsOpen ] = useState( false )
 	const toggle = () => setIsOpen( ! isOpen )
 
@@ -79,7 +80,7 @@ const Item = ( { title, subtitle, children } ) => {
 								background: 'var(--fluid-background)',
 								color: 'var(--fluid-color)',
 								boxShadow: 'rgba(0, 0, 0, 0.25) 0px 6px 14px',
-								padding: 'var(--fluid-med-space)',
+								padding: 'var(--fluid-lg-space)',
 								borderTop: '2px solid var(--fluid-primary-color)',
 								minWidth: 120,
 								maxWidth: 220,
@@ -123,5 +124,8 @@ const ButtonItem = ( { children, className, ...rest } ) => {
 
 Filter.Button = ButtonItem
 Filter.Button.displayName = 'Filter.Button'
+
+Filter.RadioGroupItem = RadioGroupItem
+Filter.RadioGroupItem.displayName = 'Filter.RadioGroupItem'
 
 export default Filter
