@@ -67,5 +67,9 @@
         grid-gap: var(--fluid-med-space);
         grid-template-columns: auto;
         grid-auto-flow: row;
+
+        label {
+            margin: 0;
+        }
     }
 }

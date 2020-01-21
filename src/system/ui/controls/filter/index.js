@@ -28,7 +28,6 @@ const Filter = ( { className, children, ...rest } ) => {
 					if ( hasMore && !showAll ) {
 						return i > 2 ? null : child
 					}
-
 					return child
 				}) }
 			</ul>

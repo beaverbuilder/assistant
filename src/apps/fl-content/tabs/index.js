@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter } from 'assistant/ui'
-import { useAppState, useSystemState, getSystemConfig } from 'assistant/data'
+import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
+import { defaultQuery } from '../'
 
 export const SummaryTab = () => {
 	const { handle } = useContext( App.Context )
@@ -66,6 +67,8 @@ export const SummaryTab = () => {
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { query } = useAppState( 'fl-content' )
+	const { setQuery } = getAppActions( 'fl-content' )
+
 	const style = {
 		maxHeight: '100%',
 		minHeight: 0,
@@ -73,28 +76,36 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 	}
 
 	const PostFilter = () => {
+
+
+		const sorts = {
+			title: __('Title'),
+			author: __('Author'),
+		}
+
 		return (
 			<Filter>
-				<Filter.Item title={ __( 'Sort By' ) } subtitle={ __( 'Date Added' ) }>
-					Sort Options Here.
+				<Filter.Item title={ __( 'Sort By' ) } subtitle={sorts[query.orderby]}>
+					{Object.entries(sorts).map( ( [value, label], i ) => {
+						const onChange = () => {
+							setQuery({
+								...query,
+								orderby: value
+							})
+						}
+						return (
+							<label key={i}>
+								<input
+									type="radio"
+									value={value}
+									onChange={onChange}
+									checked={ query.orderby === value }
+								/>{label}{ defaultQuery.orderby === value && ' ' + __('(Default)') }
+							</label>
+						)
+					})}
 				</Filter.Item>
-				<Filter.Item title={ __( 'Status' ) } subtitle={ __( 'Not Trashed' ) }>
-
-					<div>
-						<input type="checkbox" value="publish" />{__( 'Published (0)' )}
-					</div>
-					<div>
-						<input type="checkbox" value="publish" />{__( 'Drafted (0)' )}
-					</div>
-					<div>
-						<input type="checkbox" value="publish" />{__( 'Private (0)' )}
-					</div>
-					<div>
-						<input type="checkbox" value="publish" />{__( 'Trashed (0)' )}
-					</div>
-
-				</Filter.Item>
-				<Filter.Button onClick={ () => console.log( 'clicked reset' ) }>{__( 'Reset Filter' )}</Filter.Button>
+				<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
 		)
 	}
