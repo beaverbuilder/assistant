@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { Children, useState } from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import { ToggleLayer } from 'react-laag'
-import { Button } from '../../'
+import { Button, Icon } from '../../'
 import './style.scss'
 
 const Filter = ( { className, children, ...rest } ) => {
+	const [showAll, setShowAll] = useState( false )
+	const hasMore = Children.count( children ) > 3
 
 	const classes = classname( {
 		'fl-asst-filter': true,
@@ -18,7 +21,32 @@ const Filter = ( { className, children, ...rest } ) => {
 	}
 
 	return (
-		<ul className={ classes } style={ style } { ...rest }>{children}</ul>
+		<>
+			<ul className={ classes } style={ style } { ...rest }>
+				{ Children.map(children, (child, i) => {
+
+					if ( hasMore && !showAll ) {
+						return i > 2 ? null : child
+					}
+
+					return child
+				}) }
+			</ul>
+			{ hasMore && (
+				<div className="fl-asst-filter-more">
+					<Button
+						appearance="transparent"
+						status="primary"
+						title={__('More Options')}
+						onClick={ () => setShowAll( !showAll ) }
+					>
+						<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
+							<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+						</svg>
+					</Button>
+				</div>
+			)}
+		</>
 	)
 }
 
@@ -72,7 +100,9 @@ const Item = ( { title, subtitle, children } ) => {
 							<span className="fl-asst-filter-button-title">{title}</span>
 							{ subtitle && <span className="fl-asst-filter-button-subtitle">{subtitle}</span> }
 						</span>
-						<span className="fl-asst-filter-button-caret">^</span>
+						<span className="fl-asst-filter-button-caret">
+							<Icon.DownCaretSmall />
+						</span>
 					</Button>
 				)}
 			</ToggleLayer>

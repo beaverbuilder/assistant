@@ -32,11 +32,36 @@
                 }
                 .fl-asst-filter-button-caret {
                     flex: 0 0 auto;
+                    display: flex;
+
+                    svg {
+                        display: block;
+                    }
                 }
             }
         }
     }
 
+    // More Button
+    .fl-asst-filter-more {
+        display: flex;
+        flex-direction: column;
+        padding: 0 var(--fluid-sm-space);
+
+        .fluid-button {
+            padding: var(--fluid-sm-space);
+            border-radius: 3px;
+            min-height: 0;
+            opacity: .5;
+
+            &:hover,
+            &:focus {
+                opacity: 1;
+            }
+        }
+    }
+
+    // Menu
     .fl-asst-filter-menu {
         display: grid;
         grid-gap: var(--fluid-med-space);
