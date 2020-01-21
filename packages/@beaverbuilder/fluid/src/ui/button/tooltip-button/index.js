@@ -38,7 +38,7 @@ const TooltipButton = forwardRef( ( props, ref ) => {
                                 padding: '5px 10px',
                                 fontSize: 12,
                                 borderRadius: 3,
-                                zIndex: 99999999999999,
+                                zIndex: 99999999999999, /* wow */
                                 pointerEvents: 'none',
 
                             }}

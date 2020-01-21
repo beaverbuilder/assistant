@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
-import { Page, Nav, Icon, Button, Filter } from 'assistant/ui'
+import { Page, Nav, Icon, Button } from 'assistant/ui'
 import { SummaryTab, PostTypeTab } from './tabs'
 
 export const Content = ( { match } ) => (
@@ -41,7 +41,7 @@ const Main = () => {
 
 	const Header = () => {
 		return (
-			<div style={{ flexDirection: 'column' }}>
+			<div style={ { flexDirection: 'column' } }>
 				<Nav.Tabs tabs={ tabs } />
 			</div>
 		)

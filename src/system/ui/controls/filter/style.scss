@@ -4,10 +4,43 @@
         flex: 0 0 auto;
         margin: 0;
 
-        & > * {
-            padding: var(--fluid-sm-space);
-            background: var(--fluid-background);
-            border-radius: 3px;
+        li {
+            display: flex;
+            flex-direction: row;
+
+            .fl-asst-filter-button {
+                padding: 10px;
+                flex: 1 1 auto;
+                border-radius: 3px;
+
+                .fl-asst-filter-button-content {
+                    flex: 1 1 auto;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    font-size: 12px;
+                    line-height: 1.1;
+                    color: var(--fluid-box-color);
+
+                    .fl-asst-filter-button-title {
+                        margin-bottom: 2px;
+                    }
+                    .fl-asst-filter-button-subtitle {
+                        font-size: 13px;
+                        font-weight: 600;
+                    }
+                }
+                .fl-asst-filter-button-caret {
+                    flex: 0 0 auto;
+                }
+            }
         }
+    }
+
+    .fl-asst-filter-menu {
+        display: grid;
+        grid-gap: var(--fluid-med-space);
+        grid-template-columns: auto;
+        grid-auto-flow: row;
     }
 }

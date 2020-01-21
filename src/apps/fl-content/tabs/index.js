@@ -71,8 +71,36 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		minHeight: 0,
 		flex: '1 1 auto',
 	}
+
+	const PostFilter = () => {
+		return (
+			<Filter>
+				<Filter.Item title={ __( 'Sort By' ) } subtitle={ __( 'Date Added' ) }>
+					Sort Options Here.
+				</Filter.Item>
+				<Filter.Item title={ __( 'Status' ) } subtitle={ __( 'Not Trashed' ) }>
+
+					<div>
+						<input type="checkbox" value="publish" />{__( 'Published (0)' )}
+					</div>
+					<div>
+						<input type="checkbox" value="publish" />{__( 'Drafted (0)' )}
+					</div>
+					<div>
+						<input type="checkbox" value="publish" />{__( 'Private (0)' )}
+					</div>
+					<div>
+						<input type="checkbox" value="publish" />{__( 'Trashed (0)' )}
+					</div>
+
+				</Filter.Item>
+				<Filter.Button onClick={ () => console.log( 'clicked reset' ) }>{__( 'Reset Filter' )}</Filter.Button>
+			</Filter>
+		)
+	}
+
 	return (
-		<Layout.Box outset={true} padY={false} style={style}>
+		<Layout.Box outset={ true } padY={ false } style={ style }>
 			<List.Posts
 				query={ { ...query, post_type: type } }
 				getItemProps={ ( item, defaultProps ) => {
@@ -87,6 +115,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					}
 					return defaultProps
 				} }
+				before={ <PostFilter /> }
 			/>
 		</Layout.Box>
 	)

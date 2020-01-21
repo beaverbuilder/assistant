@@ -51,6 +51,8 @@ export const Scroller = ( {
 	items = [],
 	hasMoreItems = true,
 	loadItems = () => {},
+	before,
+	after,
 	...rest
 } ) => {
 	const scrollRef = useRef()
@@ -68,6 +70,7 @@ export const Scroller = ( {
 
 	return (
 		<div className="fl-asst-list-scroller fl-asst-scroller" ref={ scrollRef }>
+			{before}
 			<List items={ items } { ...rest } />
 			{ isFetching &&
 				<List.Loading />
@@ -75,6 +78,7 @@ export const Scroller = ( {
 			{ ! isFetching && ! hasMoreItems && ! items.length &&
 				<List.NoResultsMessage />
 			}
+			{after}
 		</div>
 	)
 }
