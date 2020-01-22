@@ -4,6 +4,11 @@ import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
 import { MediaApp } from './app'
 
+export const defaultQuery = {
+	order: 'ASC',
+	orderby: 'date',
+}
+
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
 	root: MediaApp,
@@ -13,6 +18,7 @@ registerApp( 'fl-media', {
 	},
 	state: {
 		listStyle: '',
+		query: defaultQuery,
 	},
 	search: {
 		label: __( 'Media' ),

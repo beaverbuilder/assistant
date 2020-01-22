@@ -78,9 +78,8 @@
                 }
 
                 &.is-selected {
-                    color: var(--fluid-primary-color);
-                    background: var(--fluid-primary-background);
-                    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+                    color: var(--fluid-primary-background);
+                    background: var(--fluid-primary-color);
 
                     &:hover {
                         background: var(--fluid-primary-hover-background);

@@ -1,8 +1,9 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, List } from 'assistant/ui'
+import { Page, Nav, List, Filter } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
 import { image as imgUtils } from 'assistant/utils'
+import { defaultQuery } from './'
 import './style.scss'
 
 export const MediaApp = ( { match } ) => (
@@ -13,26 +14,52 @@ export const MediaApp = ( { match } ) => (
 )
 
 const Main = ( { match } ) => {
-	const { listStyle } = useAppState( 'fl-media' )
-	const { setListStyle } = getAppActions()
+	const { listStyle, query } = useAppState( 'fl-media' )
+	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
 
-	const Actions = () => {
+	const MediaFilter = () => {
+
+		const sorts = {
+			ID: __('ID'),
+			date: __('Date Uploaded'),
+			modified: __('Last Modified'),
+		}
+
+		const displayStyles = {
+			'': __('List'),
+			grid: __('Grid'),
+		}
+
 		return (
-			<>
-				<select onChange={ e => setListStyle( e.target.value ) } value={ listStyle }>
-					<option value=''>{__( 'List' )}</option>
-					<option value='grid'>{__( 'Grid' )}</option>
-				</select>
-			</>
+			<Filter>
+				<Filter.RadioGroupItem
+					title={ __('Sort By' ) }
+					items={sorts}
+					value={query.orderby}
+					defaultValue={defaultQuery.orderby}
+					onChange={ value => setQuery({ ...query, orderby: value }) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __('Display As' ) }
+					items={displayStyles}
+					value={listStyle}
+					defaultValue={'grid'}
+					onChange={ value => setListStyle( value ) }
+				/>
+			</Filter>
 		)
 	}
 
+	const ListTag = 'grid' === listStyle ? MediaGrid : MediaList
+
 	return (
-		<Page title={ __( 'Media' ) } actions={ <Actions /> } padX={ false } padY={ false }>
-
-			{ '' === listStyle && <MediaList baseURL={ match.url } /> }
-			{ 'grid' === listStyle && <MediaGrid baseURL={ match.url } /> }
-
+		<Page title={ __( 'Media' ) } padX={ false } padY={ false }>
+			<ListTag
+				key={listStyle}
+				baseURL={ match.url }
+				query={query}
+				before={ <MediaFilter /> }
+			/>
 		</Page>
 	)
 }
@@ -63,9 +90,9 @@ const MediaList = ( { baseURL, ...rest } ) => {
 const GridItem = ( { type, thumbnail, sizes } ) => {
 	const { getSrcSet } = imgUtils
 
-	if ( 'image' !== type ) {
-		return null
-	}
+	console.log(type )
+
+	if ( 'image' !== type ) return null
 
 	return (
 		<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
