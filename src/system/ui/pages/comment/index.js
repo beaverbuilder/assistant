@@ -179,7 +179,7 @@ export const Comment = ( { location } ) => {
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button
-					className='cmt-updt-btn'
+					className='fl-asst-cmt-updt-btn'
 					type='submit'
 					status='primary'
 					onClick={ updateContent }
@@ -217,12 +217,12 @@ export const Comment = ( { location } ) => {
 	const ReplyCommentBtn = () => {
 		return (
 			<div className='cmt-btn-wrap'>
-				<Button className='cmt-cncl-btn' onClick={ resetReply }>
+				<Button className='fl-asst-cmt-cncl-btn' onClick={ resetReply }>
 					{__( 'Cancel' )}
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button
-					className='cmt-updt-btn'
+					className='fl-asst-cmt-updt-btn'
 					type='submit'
 					status='primary'
 					onClick={ replyCommentpost }
@@ -264,12 +264,12 @@ export const Comment = ( { location } ) => {
 					actions: {
 						component: 'actions',
 						options: [
-							{ label: 'View on Post', href: url, disabled : trashStatus ? true : false },
+							{ label: 'View on Post', href: url, disabled: trashStatus ? true : false },
 							{ label: 'View in Admin', href: editUrl },
-							{ label: approveStatus ? 'Unapprove' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment, disabled : (trashStatus ? true : false) || (spamStatus ? true : false) },
-							{ label: 'Mark as Spam', onClick: spamComment, disabled : (trashStatus ? true : false) || (spamStatus ? true : false) },
-							{ label: 'Reply', onClick: replyComment, disabled : (trashStatus ? true : false) || (commentStatus === 'reply' ? true : false) },
-							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status:trashStatus ? 'primary' : 'destructive' },
+							{ label: approveStatus ? 'Unapprove' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment, disabled: ( trashStatus ? true : false ) || ( spamStatus ? true : false ) },
+							{ label: 'Mark as Spam', onClick: spamComment, disabled: ( trashStatus ? true : false ) || ( spamStatus ? true : false ) },
+							{ label: 'Reply', onClick: replyComment, disabled: ( trashStatus ? true : false ) || ( 'reply' === commentStatus ? true : false ) },
+							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status: trashStatus ? 'primary' : 'destructive' },
 						]
 					}
 				}
@@ -291,10 +291,10 @@ export const Comment = ( { location } ) => {
 				/>
 			)}
 			{'edit' == commentStatus && (
-				<div className='cmt-text-wrap'>
+				<div className='fl-asst-cmt-text-wrap'>
 					<span className="edit-comment-title">Edit Comment</span>
 					<textarea
-						className="comment-text"
+						className="fl-asst-comment-text"
 						value={ editContent }
 						onChange={ e => setEditContent( e.target.value ) }
 						rows={ 6 }
@@ -303,10 +303,10 @@ export const Comment = ( { location } ) => {
 				</div>
 			)}
 			{'reply' == commentStatus && (
-				<div className='cmt-text-wrap'>
-					<span className="edit-comment-title">Reply Comment</span>
+				<div className='fl-asst-cmt-text-wrap'>
+					<span className="fl-asst-edit-comment-title">Reply Comment</span>
 					<textarea
-						className="comment-text"
+						className="fl-asst-comment-text"
 						value={ replyValue }
 						onChange={ e => setreplyValue( e.target.value ) }
 						rows={ 6 }
@@ -363,7 +363,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Spam />
 					</Button>
 				)}
-				{true === spamStatus && false === trashStatus &&( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+				{true === spamStatus && false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='primary'
@@ -374,7 +374,7 @@ export const Comment = ( { location } ) => {
 					</Button>
 				)}
 
-{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+				{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button appearance='elevator' title='Edit' onClick={ editComment }>
 						<Icon.Edit />
 					</Button>

@@ -204,6 +204,7 @@ const users = () => {
 const terms = () => {
 
 	return {
+
 		/**
 		 * Get hierarchical list of terms by query
 		 * @param params

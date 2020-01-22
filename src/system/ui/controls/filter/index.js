@@ -18,7 +18,7 @@ const Filter = ( { className, ...rest } ) => {
 	}
 
 	return (
-		<ul className={classes} style={style}>
+		<ul className={ classes } style={ style }>
 			<li>Child</li>
 			<li>Child</li>
 			<li>Child</li>

@@ -72,7 +72,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		flex: '1 1 auto',
 	}
 	return (
-		<Layout.Box outset={true} padY={false} style={style}>
+		<Layout.Box outset={ true } padY={ false } style={ style }>
 			<List.Posts
 				query={ { ...query, post_type: type } }
 				getItemProps={ ( item, defaultProps ) => {

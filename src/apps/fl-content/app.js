@@ -41,7 +41,7 @@ const Main = () => {
 
 	const Header = () => {
 		return (
-			<div style={{ flexDirection: 'column' }}>
+			<div style={ { flexDirection: 'column' } }>
 				<Nav.Tabs tabs={ tabs } />
 			</div>
 		)

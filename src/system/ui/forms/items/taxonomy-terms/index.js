@@ -11,7 +11,6 @@ export const TaxonomyTermsItem = ( {
 	taxonomy,
 	value,
 	onChange,
-	isparentSelector,
 } ) => {
 	const [ data, setData ] = useState( {
 		terms: [],
@@ -122,7 +121,7 @@ export const TaxonomyTermsItem = ( {
 		return (
 			<>
 				<Form.SelectItem
-					selectMultiple={ isparentSelector ? false : true }
+					selectMultiple={ true }
 					options={ options }
 					value={ values }
 					onChange={ slugs => {
@@ -186,64 +185,6 @@ export const TaxonomyTermsItem = ( {
 			onAdd={ title => addNewTerm( title ) }
 		/>
 	)
-}
-
-
-export const ParentTermItems = ( taxonomy,id ) => {
-	const [ data, setData ] = useState( {
-		terms: [],
-		idsBySlug: {},
-		slugsById: {}
-	} )
-	const wpRest = getWpRest()
-	const source = CancelToken.source()
-	useEffect( () => {
-		wpRest.terms().getParentTerms( {
-			taxonomy,
-			hide_empty: 0,
-			orderby: 'id',
-			order: 'ASC',
-			current: id
-		}, {
-			cancelToken: source.token,
-		} ).then( response => {
-			data.terms = response.data
-			flattenResponseData( response.data, data )
-			setData( { ...data } )
-		} ).catch( ( error ) => {
-			if ( ! isCancel( error ) ) {
-				console.log( error ) // eslint-disable-line no-console
-			}
-		} )
-		return () => source.cancel()
-	}, [] )
-
-	const flattenResponseData = ( data, flattened ) => {
-		data.map( term => {
-			flattened.slugsById[term.id] = term.slug
-			flattened.idsBySlug[term.slug] = term.id
-			if ( term.children.length ) {
-				flattened = flattenResponseData( term.children, flattened )
-			}
-		} )
-		return flattened
-	}
-
-	const getHierarchicalOptions = ( terms = data.terms, options = {}, depth = 0 ) => {
-		options['0'] = depth ? '-'.repeat( depth ) + ' ' + 'None' : 'None'
-		terms.map( term => {
-			if ( term.id !== id ) {
-				options[term.id] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title
-
-			}
-		} )
-
-		return options
-
-	}
-
-
-	return getHierarchicalOptions()
 }
 
 

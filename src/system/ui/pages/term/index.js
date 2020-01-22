@@ -5,9 +5,10 @@ import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
 
 
-export const Term = ( { location } ) => {
+export const Term = ( { location, history } ) => {
 	const { item } = location.state
 	const {
+		id,
 		title,
 		description,
 		slug,
@@ -17,7 +18,7 @@ export const Term = ( { location } ) => {
 	} = item
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
-	const ParentTerms = Form.ParentTermItems(taxonomy,item.id )
+
 
 	const onSubmit = ( { changed, ids } ) => {
 
@@ -71,6 +72,15 @@ export const Term = ( { location } ) => {
 		} )
 	}
 
+	const deleteTerm = () => {
+		if ( confirm( __( 'Do you really want to delete this term?' ) ) ) {
+			wpRest.terms().update( id, 'trash' ).then( () => {
+				alert( 'Term permanently deleted!' )
+			} )
+			history.goBack()
+		}
+	}
+
 
 	const { hasChanges, resetForm, setIsSubmitting, submitForm, renderForm } = Form.useForm( {
 
@@ -82,6 +92,7 @@ export const Term = ( { location } ) => {
 					title: {
 						label: __( 'Name' ),
 						labelPlacement: 'above',
+						value: title
 					},
 					slug: {
 						label: __( 'Slug' ),
@@ -91,8 +102,11 @@ export const Term = ( { location } ) => {
 					parent: {
 						label: __( 'Parent' ),
 						labelPlacement: 'above',
-						component: 'select',
-						options: ParentTerms,
+						component: 'parent-terms',
+						termId: item.id,
+						taxonomy,
+						value: parent
+
 					},
 					description: {
 						label: __( 'Description' ),
@@ -101,16 +115,36 @@ export const Term = ( { location } ) => {
 						component: 'textarea',
 						rows: 6,
 					},
-					count :{
-						label: __( 'Post Count:' ),
-						labelPlacement: 'below',
+					count: {
+						label: __( 'Post Count' ),
+						labelPlacement: 'beside',
 						type: 'text',
-						component: 'plain-text'
+						component: 'plain-text',
+						value: count
 					}
 
 				}
 			},
-		}, onSubmit,
+			actions: {
+				label: __( 'Actions' ),
+				fields: {
+					actions: {
+						component: 'actions',
+						options: [
+							{
+								label: __( 'Edit in Admin' ),
+								href: item.editUrl,
+							},
+							{
+								label: __( 'Delete' ),
+								onClick: deleteTerm,
+							},
+						]
+					}
+				}
+			},
+		},
+		onSubmit,
 		defaults: item } )
 
 	const Footer = () => {
