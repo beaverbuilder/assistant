@@ -1,9 +1,10 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, List, Filter } from 'assistant/ui'
+import Clipboard from 'react-clipboard.js'
+import { Page, Nav, List, Filter, Button, Icon } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
 import { image as imgUtils } from 'assistant/utils'
-import { defaultQuery } from './'
+import { defaultState } from './'
 import './style.scss'
 
 export const MediaApp = ( { match } ) => (
@@ -19,6 +20,14 @@ const Main = ( { match } ) => {
 
 	const MediaFilter = () => {
 
+		const types = {
+			any: __('Not Hooked Up Yet'),
+			image: __('Image'),
+			video: __('Video'),
+			audio: __('Audio'),
+			doc: __('Document'),
+		}
+
 		const sorts = {
 			ID: __('ID'),
 			date: __('Date Uploaded'),
@@ -30,22 +39,35 @@ const Main = ( { match } ) => {
 			grid: __('Grid'),
 		}
 
+		const resetFilter = () => {
+			setQuery( defaultState.query )
+			setListStyle( defaultState.listStyle )
+		}
+
 		return (
 			<Filter>
+				<Filter.RadioGroupItem
+					title={ __('Type' ) }
+					items={types}
+					value={'any'}
+					defaultValue={''}
+					onChange={ value => {} }
+				/>
 				<Filter.RadioGroupItem
 					title={ __('Sort By' ) }
 					items={sorts}
 					value={query.orderby}
-					defaultValue={defaultQuery.orderby}
+					defaultValue={defaultState.query.orderby}
 					onChange={ value => setQuery({ ...query, orderby: value }) }
 				/>
 				<Filter.RadioGroupItem
 					title={ __('Display As' ) }
 					items={displayStyles}
 					value={listStyle}
-					defaultValue={'grid'}
+					defaultValue={defaultState.listStyle}
 					onChange={ value => setListStyle( value ) }
 				/>
+				<Filter.Button onClick={resetFilter}>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
 		)
 	}
@@ -69,6 +91,29 @@ const MediaList = ( { baseURL, ...rest } ) => {
 		<List.WordPress
 			type="attachments"
 			getItemProps={ ( item, defaultProps ) => {
+
+				console.log(item)
+
+				const Extras = () => (
+					<div className="fl-asst-item-extras">
+						<Button
+							title={ __( 'View Post' ) }
+							tabIndex="-1"
+							href={ item.url }
+							appearance="transparent"
+						>
+							<Icon.View />
+						</Button>
+						<Clipboard
+							button-tabIndex={ '-1' }
+							button-className={ 'fluid-button fluid-appearance-transparent' }
+							data-clipboard-text={ item.url }
+						>
+							<Icon.Link />
+						</Clipboard>
+					</div>
+				)
+
 				return {
 					...defaultProps,
 					thumbnail: item.thumbnail,
@@ -80,6 +125,7 @@ const MediaList = ( { baseURL, ...rest } ) => {
 						pathname: `${baseURL}/attachment/${item.id}`,
 						state: { item }
 					},
+					extras: props => <Extras { ...props } />,
 				}
 			} }
 			{ ...rest }
