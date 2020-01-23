@@ -1,0 +1,9 @@
+.fl-asst {
+    .fl-asst-updates-list-scroller {
+        margin: 0 calc( 0px - var(--fluid-lg-space) );
+
+        .fluid-section {
+            padding: 0 var(--fluid-lg-space);
+        }
+    }
+}

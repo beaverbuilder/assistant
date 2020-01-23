@@ -1,9 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
-import Clipboard from 'react-clipboard.js'
-import { Page, Nav, List, Filter, Button, Icon } from 'assistant/ui'
+import { Page, Nav, List, Filter } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
-import { image as imgUtils } from 'assistant/utils'
 import { defaultState } from './'
 import './style.scss'
 
@@ -34,7 +32,7 @@ const Main = ( { match } ) => {
 			modified: __('Last Modified'),
 		}
 
-		const displayStyles = {
+		const listStyles = {
 			'': __('List'),
 			grid: __('Grid'),
 		}
@@ -62,7 +60,7 @@ const Main = ( { match } ) => {
 				/>
 				<Filter.RadioGroupItem
 					title={ __('Display As' ) }
-					items={displayStyles}
+					items={listStyles}
 					value={listStyle}
 					defaultValue={defaultState.listStyle}
 					onChange={ value => setListStyle( value ) }
@@ -72,65 +70,20 @@ const Main = ( { match } ) => {
 		)
 	}
 
-	const ListTag = 'grid' === listStyle ? MediaGrid : MediaList
-
 	return (
 		<Page title={ __( 'Media' ) } padX={ false } padY={ false }>
-			<ListTag
+			<List.Attachments
 				key={listStyle}
 				baseURL={ match.url }
 				query={query}
+				listStyle={listStyle}
 				before={ <MediaFilter /> }
 			/>
 		</Page>
 	)
 }
 
-const MediaList = ( { baseURL, ...rest } ) => {
-	return (
-		<List.WordPress
-			type="attachments"
-			getItemProps={ ( item, defaultProps ) => {
-
-				const Extras = () => (
-					<div className="fl-asst-item-extras">
-						<Button
-							title={ __( 'View Post' ) }
-							tabIndex="-1"
-							href={ item.url }
-							appearance="transparent"
-						>
-							<Icon.View />
-						</Button>
-						<Clipboard
-							button-tabIndex={ '-1' }
-							button-className={ 'fluid-button fluid-appearance-transparent' }
-							data-clipboard-text={ item.url }
-						>
-							<Icon.Link />
-						</Clipboard>
-					</div>
-				)
-
-				return {
-					...defaultProps,
-					thumbnail: item.thumbnail,
-					shouldAlwaysShowThumbnail: true,
-
-					label: item.title ? item.title : __( 'Untitled' ),
-					description: item.type + ' | ' + item.subtype,
-					to: {
-						pathname: `${baseURL}/attachment/${item.id}`,
-						state: { item }
-					},
-					extras: props => <Extras { ...props } />,
-				}
-			} }
-			{ ...rest }
-		/>
-	)
-}
-
+/*
 const GridItem = ( { type, thumbnail, sizes } ) => {
 	const { getSrcSet } = imgUtils
 
@@ -168,6 +121,7 @@ const MediaGrid = ( { baseURL, ...rest } ) => {
 		/>
 	)
 }
+*/
 
 MediaApp.Icon = ( { windowSize, context } ) => {
 	let size = 32

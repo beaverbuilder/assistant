@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import classname from 'classnames'
 import { List } from '../'
 
 const hasReachedBounds = e => {
@@ -53,6 +54,7 @@ export const Scroller = ( {
 	loadItems = () => {},
 	before,
 	after,
+	scrollerClassName,
 	...rest
 } ) => {
 	const scrollRef = useRef()
@@ -68,8 +70,10 @@ export const Scroller = ( {
 		}
 	}, [ items ] )
 
+	const classes = classname('fl-asst-list-scroller fl-asst-scroller', scrollerClassName )
+
 	return (
-		<div className="fl-asst-list-scroller fl-asst-scroller" ref={ scrollRef }>
+		<div className={classes} ref={ scrollRef }>
 			{before}
 			<List items={ items } { ...rest } />
 			{ isFetching &&
