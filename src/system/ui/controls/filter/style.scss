@@ -1,6 +1,6 @@
 .fl-asst {
     .fl-asst-filter {
-        padding: var(--fluid-sm-space);
+        padding: 3px var(--fluid-sm-space);
         flex: 0 0 auto;
         margin: 0;
 
@@ -73,11 +73,25 @@
         grid-template-columns: auto;
         grid-auto-flow: row;
 
+        background: var(--fluid-background);
+        color: var(--fluid-color);
+        box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.25);
+        padding: var(--fluid-lg-space);
+        border-top: 2px solid var(--fluid-accent);
+        min-width: 120px;
+        max-width: 220px;
+
         label {
             margin: 0;
             padding: 0;
             font-size: 13px;
             font-weight: normal;
+        }
+    }
+    .fluid-color-scheme-dark {
+
+        .fl-asst-filter-menu {
+            background: var(--fluid-box-background);
         }
     }
 }

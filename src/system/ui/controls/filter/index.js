@@ -50,7 +50,7 @@ const Filter = ( { className, children, ...rest } ) => {
 	)
 }
 
-const Item = ( { title, subtitle, children, isChanged = false  } ) => {
+const Item = ( { title, subtitle, children } ) => {
 	const [ isOpen, setIsOpen ] = useState( false )
 	const toggle = () => setIsOpen( ! isOpen )
 
@@ -67,24 +67,12 @@ const Item = ( { title, subtitle, children, isChanged = false  } ) => {
 				onOutsideClick={ () => setIsOpen( false ) }
 				renderLayer={ ( { layerProps, isOpen } ) => {
 
-					if ( ! children ) {
-						return null
-					}
+					if ( ! children ) return null
 
 					return isOpen && (
 						<div
-							ref={ layerProps.ref }
-							className="fl-asst-filter-menu"
-							style={ {
-								...layerProps.style,
-								background: 'var(--fluid-background)',
-								color: 'var(--fluid-color)',
-								boxShadow: 'rgba(0, 0, 0, 0.25) 0px 6px 14px',
-								padding: 'var(--fluid-lg-space)',
-								borderTop: '2px solid var(--fluid-primary-color)',
-								minWidth: 120,
-								maxWidth: 220,
-							} }
+							{...layerProps}
+							className={ classname( 'fl-asst-filter-menu', layerProps.className ) }
 						>{children}</div>
 					)
 				} }

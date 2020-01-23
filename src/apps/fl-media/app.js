@@ -51,7 +51,7 @@ const Main = ( { match } ) => {
 					items={types}
 					value={'any'}
 					defaultValue={''}
-					onChange={ value => {} }
+					onChange={ value => { /* Set State */ } }
 				/>
 				<Filter.RadioGroupItem
 					title={ __('Sort By' ) }
@@ -91,8 +91,6 @@ const MediaList = ( { baseURL, ...rest } ) => {
 		<List.WordPress
 			type="attachments"
 			getItemProps={ ( item, defaultProps ) => {
-
-				console.log(item)
 
 				const Extras = () => (
 					<div className="fl-asst-item-extras">
@@ -135,8 +133,6 @@ const MediaList = ( { baseURL, ...rest } ) => {
 
 const GridItem = ( { type, thumbnail, sizes } ) => {
 	const { getSrcSet } = imgUtils
-
-	console.log(type )
 
 	if ( 'image' !== type ) return null
 

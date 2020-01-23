@@ -5,7 +5,7 @@ import { Page } from 'assistant/ui'
 import { MediaApp } from './app'
 
 export const defaultState = {
-	listStyle: '',
+	listStyle: 'grid',
 	query: {
 		order: 'ASC',
 		orderby: 'date',
