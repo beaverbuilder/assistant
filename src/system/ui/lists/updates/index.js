@@ -12,7 +12,7 @@ export const Updates = ( {
 } ) => {
 	return (
 		<List.WordPress
-			type={ 'post' }
+			type={ 'updates' }
 			query={ query }
 			formatItems={ items => {
 				const groups = [ {
