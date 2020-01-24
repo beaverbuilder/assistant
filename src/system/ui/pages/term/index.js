@@ -144,7 +144,7 @@ export const Term = ( { location, history } ) => {
 							{
 								label: __( 'Delete' ),
 								onClick: deleteTerm,
-								status:'destructive'
+								status: 'destructive'
 							},
 						]
 					}
