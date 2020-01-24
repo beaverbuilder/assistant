@@ -77,7 +77,7 @@ export const Attachment = ( { location } ) => {
 
 	const defaults = {
 		...item,
-		fileUrl: !! item.sizes.full ? item.sizes.full.url : null,
+		fileUrl: item.sizes.full ? item.sizes.full.url : null,
 	}
 
 	const { renderForm } = Form.useForm( {

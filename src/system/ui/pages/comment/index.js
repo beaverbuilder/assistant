@@ -264,12 +264,12 @@ export const Comment = ( { location } ) => {
 					actions: {
 						component: 'actions',
 						options: [
-							{ label: 'View on Post', href: url, disabled : trashStatus ? true : false },
+							{ label: 'View on Post', href: url, disabled: trashStatus ? true : false },
 							{ label: 'View in Admin', href: editUrl },
-							{ label: approveStatus ? 'Unapprove' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment, disabled : (trashStatus ? true : false) || (spamStatus ? true : false) },
-							{ label: 'Mark as Spam', onClick: spamComment, disabled : (trashStatus ? true : false) || (spamStatus ? true : false) },
-							{ label: 'Reply', onClick: replyComment, disabled : (trashStatus ? true : false) || (commentStatus === 'reply' ? true : false) },
-							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status:trashStatus ? 'primary' : 'destructive' },
+							{ label: approveStatus ? 'Unapprove' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment, disabled: ( trashStatus ? true : false ) || ( spamStatus ? true : false ) },
+							{ label: 'Mark as Spam', onClick: spamComment, disabled: ( trashStatus ? true : false ) || ( spamStatus ? true : false ) },
+							{ label: 'Reply', onClick: replyComment, disabled: ( trashStatus ? true : false ) || ( 'reply' === commentStatus ? true : false ) },
+							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status: trashStatus ? 'primary' : 'destructive' },
 						]
 					}
 				}
@@ -363,7 +363,7 @@ export const Comment = ( { location } ) => {
 						<Icon.Spam />
 					</Button>
 				)}
-				{true === spamStatus && false === trashStatus &&( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+				{true === spamStatus && false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='primary'
@@ -374,7 +374,7 @@ export const Comment = ( { location } ) => {
 					</Button>
 				)}
 
-{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+				{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button appearance='elevator' title='Edit' onClick={ editComment }>
 						<Icon.Edit />
 					</Button>
