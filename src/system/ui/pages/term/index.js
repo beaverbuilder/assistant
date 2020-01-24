@@ -14,7 +14,8 @@ export const Term = ( { location, history } ) => {
 		slug,
 		parent,
 		count,
-		taxonomy
+		taxonomy,
+		isHierarchical
 	} = item
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
@@ -105,7 +106,8 @@ export const Term = ( { location, history } ) => {
 						component: 'parent-terms',
 						termId: item.id,
 						taxonomy,
-						value: parent
+						value: parent,
+						isVisible: isHierarchical ? true : false
 
 					},
 					description: {
@@ -136,8 +138,13 @@ export const Term = ( { location, history } ) => {
 								href: item.editUrl,
 							},
 							{
+								label: __( 'View Archive' ),
+								href: item.url,
+							},
+							{
 								label: __( 'Delete' ),
 								onClick: deleteTerm,
+								status:'destructive'
 							},
 						]
 					}
