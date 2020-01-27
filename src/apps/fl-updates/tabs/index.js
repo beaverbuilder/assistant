@@ -7,7 +7,7 @@ import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'assista
 export const allUpdatesTab = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {
-		updateType: 'all',
+		type: 'all',
 	},
 	...rest
 } ) => {
@@ -87,7 +87,7 @@ export const allUpdatesTab = ( {
 export const PluginsTab = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {
-		updateType: 'plugins',
+		type: 'plugins',
 	},
 	...rest
 } ) => {
@@ -160,7 +160,7 @@ export const PluginsTab = ( {
 export const ThemesTab = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {
-		updateType: 'themes',
+		type: 'themes',
 	},
 	...rest
 } ) => {
