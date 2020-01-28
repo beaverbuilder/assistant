@@ -167,6 +167,40 @@ class AttachmentsController extends ControllerAbstract {
 
 		$args = $request->get_params();
 
+		switch ( $args['post_mime_type'] ) {
+			case 'spreadsheets':
+			$args['post_mime_type'] = 'pplication/vnd.apple.numbers,application/vnd.oasis.opendocument.spreadsheet,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12';
+			break;
+			case 'archives':
+			$args['post_mime_type'] = 'application/x-gzip,application/rar,application/x-tar,application/zip,application/x-7z-compressed';
+			break;
+			case 'mine':
+			$args['post_author'] = 1;
+			$args['post_mime_type']= '';
+			break;
+			case 'detached':
+			$args['post_parent'] = 0;
+			$args['post_mime_type'] = '';
+			break;
+		}
+
+		switch ( $args['orderby'] ) {
+			case 'datedesc':
+			$args['orderby'] = 'modified';
+			$args['order'] = 'DESC';
+			break;
+			case 'titleasc':
+			$args['orderby'] = 'title';
+			$args['order'] = 'ASC';
+			break;
+			case 'titleasc':
+			$args['orderby'] = 'title';
+			$args['order'] = 'DESC';
+			break;
+
+
+		}
+
 		return $this->attachments->paginate( $args )
 								 ->apply_transform( $this->transformer )
 								 ->to_rest_response();

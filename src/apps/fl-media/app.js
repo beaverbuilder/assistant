@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, List } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
@@ -15,7 +15,8 @@ export const MediaApp = ( { match } ) => (
 const Main = ( { match } ) => {
 	const { listStyle } = useAppState( 'fl-media' )
 	const { setListStyle } = getAppActions()
-
+	const [ listUpdate, setListUpdate ] = useState('')
+	const [ listSort, setListSort ] = useState('')
 	const Actions = () => {
 		return (
 			<>
@@ -27,20 +28,55 @@ const Main = ( { match } ) => {
 		)
 	}
 
-	return (
-		<Page title={ __( 'Media' ) } actions={ <Actions /> } padX={ false } padY={ false }>
+	const Header = () => {
+		return (
+			<>
+				<select onChange={ e => setListUpdate( e.target.value ) } value={ listUpdate }>
+					<option value=''>{__( 'Type' )}</option>
+					<option value='detached'>{__( 'Not hooked up yet' )}</option>
+					<option value='image'>{__( 'Image' )}</option>
+					<option value='video'>{__( 'Video' )}</option>
+					<option value='audio'>{__( 'Audio' )}</option>
+					<option value='text'>{__( 'Text' )}</option>
+					<option value='application'>{__( 'Document' )}</option>
+					<option value='spreadsheets'>{__( 'Spreadsheets' )}</option>
+					<option value='archives'>{__( 'Archives' )}</option>
+					<option value='mine'>{__( 'Mine' )}</option>
+				</select>
+				<select onChange={ e => setListSort( e.target.value ) } value={ listSort }>
+					<option value=''>{__( 'Sort By' )}</option>
+					<option value='datedesc'>{__( 'Last Modiefied' )}</option>
+					<option value='titleasc'>{__( 'Title (A to Z)' )}</option>
+					<option value='titledesc'>{__( 'Title (Z to A)' )}</option>
 
-			{ '' === listStyle && <MediaList baseURL={ match.url } /> }
-			{ 'grid' === listStyle && <MediaGrid baseURL={ match.url } /> }
+
+				</select>
+				<select onChange={ e => setListStyle( e.target.value ) } value={ listStyle }>
+					<option value=''>{__( 'List' )}</option>
+					<option value='grid'>{__( 'Grid' )}</option>
+				</select>
+			</>
+		)
+	}
+
+	return (
+		<Page title={ __( 'Media' ) } header={ <Header />}  padX={ false } padY={ false }>
+
+			{ '' === listStyle && <MediaList type={ listUpdate } sort={ listSort } baseURL={ match.url } /> }
+			{ 'grid' === listStyle && <MediaGrid type={ listUpdate } sort={ listSort } baseURL={ match.url } /> }
 
 		</Page>
 	)
 }
 
-const MediaList = ( { baseURL, ...rest } ) => {
+const MediaList = ( { baseURL, type, sort, query = {
+	post_mime_type: type,
+	orderby:sort
+}, ...rest } ) => {
 	return (
 		<List.WordPress
 			type="attachments"
+			query={ query }
 			getItemProps={ ( item, defaultProps ) => {
 				return {
 					...defaultProps,
@@ -72,10 +108,14 @@ const GridItem = ( { type, thumbnail, sizes } ) => {
 	)
 }
 
-const MediaGrid = ( { baseURL, ...rest } ) => {
+const MediaGrid = ( { baseURL, type, sort, query = {
+	post_mime_type: type,
+	orderby:sort
+},...rest } ) => {
 	return (
 		<List.WordPress
 			type="attachments"
+			query={ query }
 			className="fl-asst-grid-list"
 			getItemProps={ ( item, defaultProps ) => {
 				return {

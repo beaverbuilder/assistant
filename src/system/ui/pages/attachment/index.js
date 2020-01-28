@@ -81,21 +81,7 @@ export const Attachment = ( { location, history } ) => {
 	}
 
 	const sections = {
-		labels: {
-			label: __( 'Labels' ),
-			fields: {
-				labels: {
-					component: 'labels',
-					alwaysCommit: true,
-					onAdd: label => {
-						wpRest.notations().createLabel( 'post', item.id, label.id )
-					},
-					onRemove: label => {
-						wpRest.notations().deleteLabel( 'post', item.id, label.id )
-					},
-				},
-			}
-		},
+
 		meta: {
 			label: __( 'Metadata' ),
 			fields: {
