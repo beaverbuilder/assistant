@@ -6,7 +6,7 @@ import { List, Button, Icon } from 'ui'
 import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
-//import { getSystemConfig } from 'data'
+import './style.scss'
 
 const Attachments = ( {
     baseURL,
@@ -15,7 +15,6 @@ const Attachments = ( {
     ...rest
 } ) => {
 	const [ labels, setLabels ] = useState( {} )
-	//const { currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
 	const source = CancelToken.source()
 
@@ -129,7 +128,7 @@ const Attachments = ( {
                     className: classname({
                         [`fl-asst-grid-list-item`] : 'grid' === listStyle
                     }, defaultProps.className ),
-                    children: 'grid' === listStyle ? props => <GridItem item={item} {...props} /> : defaultProps.children
+                    children: 'grid' === listStyle ? props => <GridItem item={item} {...props} /> : defaultProps.children,
 				}
 			} }
 			{ ...rest }
@@ -137,15 +136,24 @@ const Attachments = ( {
 	)
 }
 
-const GridItem = ( { item, ...rest } ) => {
+const GridItem = ( { item, extras } ) => {
     const { type, thumbnail, sizes } = item
-
-    //console.log('item', item, rest )
 
 	if ( 'image' !== type ) return null
 
+    const itemExtras = 'function' === typeof extras ? extras( {} ) : null
+    const stopProp = e => e.stopPropagation()
+
 	return (
-		<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
+        <>
+            <img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
+            { itemExtras && (
+                <div
+                    className="fl-asst-list-item-extras"
+                    onClick={ stopProp }
+                >{itemExtras}</div>
+            ) }
+        </>
 	)
 }
 

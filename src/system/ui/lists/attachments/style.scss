@@ -1,0 +1,14 @@
+.fl-asst {
+    .fl-asst-grid-list-item {
+        .fl-asst-item-extras {
+            top: auto;
+            bottom:5px;
+            left: 5px;
+            right: 5px;
+
+            &:first-child {
+                top: auto !important;
+            }
+        }
+    }
+}
