@@ -70,10 +70,10 @@ export const Scroller = ( {
 		}
 	}, [ items ] )
 
-	const classes = classname('fl-asst-list-scroller fl-asst-scroller', scrollerClassName )
+	const classes = classname( 'fl-asst-list-scroller fl-asst-scroller', scrollerClassName )
 
 	return (
-		<div className={classes} ref={ scrollRef }>
+		<div className={ classes } ref={ scrollRef }>
 			{before}
 			<List items={ items } { ...rest } />
 			{ isFetching &&

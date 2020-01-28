@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, List, Filter } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
@@ -19,22 +19,22 @@ const Main = ( { match } ) => {
 	const MediaFilter = () => {
 
 		const types = {
-			any: __('Not Hooked Up Yet'),
-			image: __('Image'),
-			video: __('Video'),
-			audio: __('Audio'),
-			doc: __('Document'),
+			any: __( 'Not Hooked Up Yet' ),
+			image: __( 'Image' ),
+			video: __( 'Video' ),
+			audio: __( 'Audio' ),
+			doc: __( 'Document' ),
 		}
 
 		const sorts = {
-			ID: __('ID'),
-			date: __('Date Uploaded'),
-			modified: __('Last Modified'),
+			ID: __( 'ID' ),
+			date: __( 'Date Uploaded' ),
+			modified: __( 'Last Modified' ),
 		}
 
 		const listStyles = {
-			'': __('List'),
-			grid: __('Grid'),
+			'': __( 'List' ),
+			grid: __( 'Grid' ),
 		}
 
 		const resetFilter = () => {
@@ -45,27 +45,27 @@ const Main = ( { match } ) => {
 		return (
 			<Filter>
 				<Filter.RadioGroupItem
-					title={ __('Type' ) }
-					items={types}
-					value={'any'}
-					defaultValue={''}
+					title={ __( 'Type' ) }
+					items={ types }
+					value={ 'any' }
+					defaultValue={ '' }
 					onChange={ value => { /* Set State */ } }
 				/>
 				<Filter.RadioGroupItem
-					title={ __('Sort By' ) }
-					items={sorts}
-					value={query.orderby}
-					defaultValue={defaultState.query.orderby}
-					onChange={ value => setQuery({ ...query, orderby: value }) }
+					title={ __( 'Sort By' ) }
+					items={ sorts }
+					value={ query.orderby }
+					defaultValue={ defaultState.query.orderby }
+					onChange={ value => setQuery( { ...query, orderby: value } ) }
 				/>
 				<Filter.RadioGroupItem
-					title={ __('Display As' ) }
-					items={listStyles}
-					value={listStyle}
-					defaultValue={defaultState.listStyle}
+					title={ __( 'Display As' ) }
+					items={ listStyles }
+					value={ listStyle }
+					defaultValue={ defaultState.listStyle }
 					onChange={ value => setListStyle( value ) }
 				/>
-				<Filter.Button onClick={resetFilter}>{__( 'Reset Filter' )}</Filter.Button>
+				<Filter.Button onClick={ resetFilter }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
 		)
 	}
@@ -73,10 +73,10 @@ const Main = ( { match } ) => {
 	return (
 		<Page title={ __( 'Media' ) } padX={ false } padY={ false }>
 			<List.Attachments
-				key={listStyle}
+				key={ listStyle }
 				baseURL={ match.url }
-				query={query}
-				listStyle={listStyle}
+				query={ query }
+				listStyle={ listStyle }
 				before={ <MediaFilter /> }
 			/>
 		</Page>

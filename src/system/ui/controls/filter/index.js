@@ -7,8 +7,8 @@ import { RadioGroupItem } from './items'
 import './style.scss'
 
 const Filter = ( { className, children, ...rest } ) => {
-	const [showAll, setShowAll] = useState( false )
-	const hasMore = Children.count( children ) > 3
+	const [ showAll, setShowAll ] = useState( false )
+	const hasMore = 3 < Children.count( children )
 
 	const classes = classname( {
 		'fl-asst-filter': true,
@@ -24,21 +24,21 @@ const Filter = ( { className, children, ...rest } ) => {
 	return (
 		<>
 			<ul className={ classes } style={ style } { ...rest }>
-				{ Children.map(children, (child, i) => {
+				{ Children.map( children, ( child, i ) => {
 
-					if ( hasMore && !showAll ) {
-						return i > 2 ? null : child
+					if ( hasMore && ! showAll ) {
+						return 2 < i ? null : child
 					}
 					return child
-				}) }
+				} ) }
 			</ul>
 			{ hasMore && (
 				<div className="fl-asst-filter-more">
 					<Button
 						appearance="transparent"
 						status="primary"
-						title={__('More Options')}
-						onClick={ () => setShowAll( !showAll ) }
+						title={ __( 'More Options' ) }
+						onClick={ () => setShowAll( ! showAll ) }
 					>
 						<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
 							<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
@@ -67,11 +67,13 @@ const Item = ( { title, subtitle, children } ) => {
 				onOutsideClick={ () => setIsOpen( false ) }
 				renderLayer={ ( { layerProps, isOpen } ) => {
 
-					if ( ! children ) return null
+					if ( ! children ) {
+						return null
+					}
 
 					return isOpen && (
 						<div
-							{...layerProps}
+							{ ...layerProps }
 							className={ classname( 'fl-asst-filter-menu', layerProps.className ) }
 						>{children}</div>
 					)

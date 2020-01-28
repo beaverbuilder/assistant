@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
@@ -78,39 +78,39 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 	const PostFilter = () => {
 
 		const sorts = {
-	        title: __('Title'),
-	        author: __('Author'),
-	        ID: __('Post ID'),
-	        date: __('Date Created'),
-	        modified: __('Date Modified')
-	    }
+			title: __( 'Title' ),
+			author: __( 'Author' ),
+			ID: __( 'Post ID' ),
+			date: __( 'Date Created' ),
+			modified: __( 'Date Modified' )
+		}
 
 		const statuses = {
-			any: __('Any'),
-			publish: __('Published'),
-			draft: __('Drafted'),
-			pending: __('Pending'),
-			future: __('Scheduled'),
-			private: __('Private'),
-			trash: __('Trashed'),
+			any: __( 'Any' ),
+			publish: __( 'Published' ),
+			draft: __( 'Drafted' ),
+			pending: __( 'Pending' ),
+			future: __( 'Scheduled' ),
+			private: __( 'Private' ),
+			trash: __( 'Trashed' ),
 		}
 
 		return (
 			<Filter>
 				<Filter.RadioGroupItem
-		            title={ __('Sort By' ) }
-		            items={sorts}
-					value={query.orderby}
-					defaultValue={defaultQuery.orderby}
-					onChange={ value => setQuery({ ...query, orderby: value }) }
-		        />
+					title={ __( 'Sort By' ) }
+					items={ sorts }
+					value={ query.orderby }
+					defaultValue={ defaultQuery.orderby }
+					onChange={ value => setQuery( { ...query, orderby: value } ) }
+				/>
 				<Filter.RadioGroupItem
-		            title={ __('Status' ) }
-		            items={statuses}
-					value={query.post_status}
-					defaultValue={defaultQuery.post_status}
-					onChange={ value => setQuery({ ...query, post_status: value }) }
-		        />
+					title={ __( 'Status' ) }
+					items={ statuses }
+					value={ query.post_status }
+					defaultValue={ defaultQuery.post_status }
+					onChange={ value => setQuery( { ...query, post_status: value } ) }
+				/>
 				<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
 		)

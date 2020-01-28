@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import classname from 'classnames'
 import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'data'
 import { List, Button } from 'ui'
 import './style.scss'

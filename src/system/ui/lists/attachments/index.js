@@ -9,16 +9,16 @@ import { getSrcSet } from 'utils/image'
 import './style.scss'
 
 const Attachments = ( {
-    baseURL,
-    listStyle = '',
-    className,
-    ...rest
+	baseURL,
+	listStyle = '',
+	className,
+	...rest
 } ) => {
 	const [ labels, setLabels ] = useState( {} )
 	const wpRest = getWpRest()
 	const source = CancelToken.source()
 
-    // Retrieve Labels
+	// Retrieve Labels
 	useEffect( () => {
 
 		// Get the color labels references
@@ -42,16 +42,16 @@ const Attachments = ( {
 		return () => source.cancel()
 	}, [] )
 
-    const classes = classname({
-        [`fl-asst-${listStyle}-list`] : listStyle
-    }, className )
+	const classes = classname( {
+		[`fl-asst-${listStyle}-list`]: listStyle
+	}, className )
 
-    const trashItem = () => console.log('Stub: Need to implment trash functionality')
+	const trashItem = () => console.log( 'Stub: Need to implment trash functionality' )
 
 	return (
 		<List.WordPress
 			type="attachments"
-            className={classes}
+			className={ classes }
 			getItemProps={ ( item, defaultProps ) => {
 
 				const Extras = () => (
@@ -71,15 +71,15 @@ const Attachments = ( {
 						>
 							<Icon.Link />
 						</Clipboard>
-                        <Button
-                            onClick={ trashItem }
-                            tabIndex="-1"
-                            title={ __( 'Move to Trash' ) }
-                            status='destructive'
-                            appearance="transparent"
-                        >
-                            <Icon.Trash />
-                        </Button>
+						<Button
+							onClick={ trashItem }
+							tabIndex="-1"
+							title={ __( 'Move to Trash' ) }
+							status='destructive'
+							appearance="transparent"
+						>
+							<Icon.Trash />
+						</Button>
 					</div>
 				)
 
@@ -125,10 +125,10 @@ const Attachments = ( {
 					},
 					extras: props => <Extras { ...props } />,
 					marks: getMarks( item ),
-                    className: classname({
-                        [`fl-asst-grid-list-item`] : 'grid' === listStyle
-                    }, defaultProps.className ),
-                    children: 'grid' === listStyle ? props => <GridItem item={item} {...props} /> : defaultProps.children,
+					className: classname( {
+						['fl-asst-grid-list-item']: 'grid' === listStyle
+					}, defaultProps.className ),
+					children: 'grid' === listStyle ? props => <GridItem item={ item } { ...props } /> : defaultProps.children,
 				}
 			} }
 			{ ...rest }
@@ -137,23 +137,25 @@ const Attachments = ( {
 }
 
 const GridItem = ( { item, extras } ) => {
-    const { type, thumbnail, sizes } = item
+	const { type, thumbnail, sizes } = item
 
-	if ( 'image' !== type ) return null
+	if ( 'image' !== type ) {
+		return null
+	}
 
-    const itemExtras = 'function' === typeof extras ? extras( {} ) : null
-    const stopProp = e => e.stopPropagation()
+	const itemExtras = 'function' === typeof extras ? extras( {} ) : null
+	const stopProp = e => e.stopPropagation()
 
 	return (
-        <>
-            <img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
-            { itemExtras && (
-                <div
-                    className="fl-asst-list-item-extras"
-                    onClick={ stopProp }
-                >{itemExtras}</div>
-            ) }
-        </>
+<>
+<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
+{ itemExtras && (
+	<div
+		className="fl-asst-list-item-extras"
+		onClick={ stopProp }
+	>{itemExtras}</div>
+) }
+</>
 	)
 }
 

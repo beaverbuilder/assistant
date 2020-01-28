@@ -78,7 +78,7 @@ const UpdatesMain = () => {
 	const UpdatesFilter = () => {
 
 		const types = {
-			'': __('Any'),
+			'': __( 'Any' ),
 			plugins: sprintf( 'Plugin (%s)', counts['update/plugins'] ),
 			themes: sprintf( 'Theme (%s)', counts['update/themes'] ),
 		}
@@ -86,8 +86,8 @@ const UpdatesMain = () => {
 		return (
 			<Filter>
 				<Filter.RadioGroupItem
-					title={__('Type')}
-					items={types}
+					title={ __( 'Type' ) }
+					items={ types }
 					value=""
 					defaultValue=""
 				/>
@@ -118,7 +118,7 @@ const UpdatesMain = () => {
 							},
 						}
 					} }
-					before={<UpdatesFilter />}
+					before={ <UpdatesFilter /> }
 				/>
 			)}
 		</Page>
