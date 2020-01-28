@@ -83,46 +83,6 @@ const Main = ( { match } ) => {
 	)
 }
 
-/*
-const GridItem = ( { type, thumbnail, sizes } ) => {
-	const { getSrcSet } = imgUtils
-
-	if ( 'image' !== type ) return null
-
-	return (
-		<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
-	)
-}
-
-const MediaGrid = ( { baseURL, ...rest } ) => {
-	return (
-		<List.WordPress
-			type="attachments"
-			className="fl-asst-grid-list"
-			getItemProps={ ( item, defaultProps ) => {
-				return {
-					...defaultProps,
-					thumbnail: item.thumbnail,
-					shouldAlwaysShowThumbnail: true,
-
-					label: item.title ? item.title : __( 'Untitled' ),
-					to: {
-						pathname: `${baseURL}/attachment/${item.id}`,
-						state: { item }
-					},
-
-					className: 'fl-asst-grid-list-item',
-					children: () => (
-						<GridItem { ...item } />
-					)
-				}
-			} }
-			{ ...rest }
-		/>
-	)
-}
-*/
-
 MediaApp.Icon = ( { windowSize, context } ) => {
 	let size = 32
 	if ( 'app-list' === context ) {

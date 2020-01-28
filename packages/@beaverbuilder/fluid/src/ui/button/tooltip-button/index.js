@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { ToggleLayer, useHover, Arrow } from 'react-laag'
+import ResizeObserver from 'resize-observer-polyfill'
 import { useFocus } from '../../../utils'
 import Button from '../base'
 
@@ -15,6 +16,7 @@ const TooltipButton = forwardRef( ( props, ref ) => {
 	if ( title ) {
 		return (
             <ToggleLayer
+                ResizeObserver={ResizeObserver}
                 isOpen={ isHovering || isFocused }
                 placement={{
                     possibleAnchors: [

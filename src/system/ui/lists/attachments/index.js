@@ -47,7 +47,6 @@ const Attachments = ( {
 	}, className )
 
 	const trashItem = () => console.log( 'Stub: Need to implment trash functionality' )
-
 	return (
 		<List.WordPress
 			type="attachments"
@@ -123,7 +122,7 @@ const Attachments = ( {
 						pathname: `${baseURL}/attachment/${item.id}`,
 						state: { item }
 					},
-					extras: props => <Extras { ...props } />,
+					extras: () => <Extras />,
 					marks: getMarks( item ),
 					className: classname( {
 						['fl-asst-grid-list-item']: 'grid' === listStyle
@@ -143,19 +142,19 @@ const GridItem = ( { item, extras } ) => {
 		return null
 	}
 
-	const itemExtras = 'function' === typeof extras ? extras( {} ) : null
+	const itemExtras = 'function' === typeof extras ? extras() : null
 	const stopProp = e => e.stopPropagation()
 
 	return (
-<>
-<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
-{ itemExtras && (
-	<div
-		className="fl-asst-list-item-extras"
-		onClick={ stopProp }
-	>{itemExtras}</div>
-) }
-</>
+		<div className="fl-asst-attachment-grid-item">
+			<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
+			{ itemExtras && (
+				<div
+					className="fl-asst-list-item-extras"
+					onClick={ stopProp }
+				>{itemExtras}</div>
+			) }
+		</div>
 	)
 }
 
