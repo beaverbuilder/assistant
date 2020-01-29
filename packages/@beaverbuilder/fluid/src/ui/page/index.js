@@ -70,7 +70,9 @@ const Page = ({
 
     const contentBoxStyle = {
         flexGrow: 1,
-        flexShrink: 0,
+        flexShrink: 1,
+        maxHeight: '100%',
+        minHeight: 0,
         ...contentWrapStyle,
     }
 

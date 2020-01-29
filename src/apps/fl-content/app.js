@@ -39,6 +39,14 @@ const Main = () => {
 		return tabs
 	}
 
+	const Header = () => {
+		return (
+			<div style={ { flexDirection: 'column' } }>
+				<Nav.Tabs tabs={ tabs } />
+			</div>
+		)
+	}
+
 	const Actions = () => {
 		const to = {
 			pathname: '/fl-content/post/new',
@@ -61,7 +69,7 @@ const Main = () => {
 		<Page
 			title={ __( 'Content' ) }
 			padY={ false }
-			header={ <Nav.Tabs tabs={ tabs } /> }
+			header={ <Header /> }
 			actions={ <Actions /> }
 		>
 			<Nav.CurrentTab tabs={ tabs } />

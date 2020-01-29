@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'data'
 import { List, Button } from 'ui'
+import './style.scss'
 
 export const Updates = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
@@ -14,6 +15,7 @@ export const Updates = ( {
 		<List.WordPress
 			type={ 'updates' }
 			query={ query }
+			scrollerClassName='fl-asst-updates-list-scroller'
 			formatItems={ items => {
 				const groups = [ {
 					label: __( 'Plugins' ),

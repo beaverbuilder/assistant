@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 
 export const PreferencesTab = () => {
 
-	const [ state ] = Form.useFormState( {
+	const [ state ] = Form.useFormState_Deprecated( {
 		showAdminBar: true,
 		password: null,
 		darkmode: false,

@@ -34,7 +34,6 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 
-
 		if ( 'title' in changed ) {
 			item.title = changed.title
 		}
@@ -57,7 +56,6 @@ export const Attachment = ( { location, history } ) => {
 
 		wpRest.attachments().update( id, 'data', data ).then( response => {
 			const { data } = response
-			console.log(data.error)
 			if ( data.error ) {
 				handleError()
 			} else {
@@ -140,8 +138,8 @@ export const Attachment = ( { location, history } ) => {
 						},
 						{
 							label: __( 'Delete' ),
-							status:'destructive',
-							onClick:deleteAttchment
+							status: 'destructive',
+							onClick: deleteAttchment
 
 						},
 					]
@@ -165,7 +163,7 @@ export const Attachment = ( { location, history } ) => {
 	const defaults = {
 		...item,
 		fileUrl: item.sizes.full ? item.sizes.full.url : null,
-		type: type+'/'+subtype
+		type: type + '/' + subtype
 	}
 
 	const { hasChanges, resetForm, setIsSubmitting, submitForm, renderForm } = Form.useForm( {

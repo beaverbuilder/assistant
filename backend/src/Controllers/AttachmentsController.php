@@ -13,7 +13,8 @@ use WP_REST_Server;
 /**
  * REST API logic for attachments.
  */
-class AttachmentsController extends ControllerAbstract {
+class AttachmentsController extends ControllerAbstract
+{
 
 	/**
 	 * @var AttachmentsRepository
@@ -31,7 +32,8 @@ class AttachmentsController extends ControllerAbstract {
 	 * @param AttachmentsRepository $attachments
 	 * @param AttachmentTransform $transformer
 	 */
-	public function __construct( AttachmentsRepository $attachments, AttachmentTransform $transformer ) {
+	public function __construct(AttachmentsRepository $attachments, AttachmentTransform $transformer)
+	{
 		$this->attachments = $attachments;
 		$this->transformer = $transformer;
 	}
@@ -39,36 +41,40 @@ class AttachmentsController extends ControllerAbstract {
 	/**
 	 * Register routes.
 	 */
-	public function register_routes() {
+	public function register_routes()
+	{
 		$this->route(
-			'/attachments', [
+			'/attachments',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'index' ],
+					'callback'            => [$this, 'index'],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can('edit_published_posts');
 					},
 				],
 			]
 		);
 
 		$this->route(
-			'/attachments/count', [
+			'/attachments/count',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'count' ],
+					'callback'            => [$this, 'count'],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can('edit_published_posts');
 					},
 				],
 			]
 		);
 
 		$this->route(
-			'/attachments/(?P<id>\d+)', [
+			'/attachments/(?P<id>\d+)',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'find' ],
+					'callback'            => [$this, 'find'],
 					'args'                => [
 						'id' => [
 							'required' => true,
@@ -76,12 +82,12 @@ class AttachmentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can('edit_published_posts');
 					},
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'update' ],
+					'callback'            => [$this, 'update'],
 					'args'                => [
 						'id'     => [
 							'required' => true,
@@ -93,12 +99,12 @@ class AttachmentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can('edit_published_posts');
 					},
 				],
 				[
 					'methods'             => WP_REST_Server::DELETABLE,
-					'callback'            => [ $this, 'delete' ],
+					'callback'            => [$this, 'delete'],
 					'args'                => [
 						'id' => [
 							'required' => true,
@@ -106,17 +112,18 @@ class AttachmentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can('edit_published_posts');
 					},
 				],
 			]
 		);
 
 		$this->route(
-			'/attachments/restore/(?P<id>\d+)', [
+			'/attachments/restore/(?P<id>\d+)',
+			[
 				[
 					'methods'             => WP_REST_Server::EDITABLE,
-					'callback'            => [ $this, 'restore' ],
+					'callback'            => [$this, 'restore'],
 					'args'                => [
 						'id' => [
 							'required' => true,
@@ -124,7 +131,7 @@ class AttachmentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can('edit_published_posts');
 					},
 				],
 			]
@@ -138,22 +145,23 @@ class AttachmentsController extends ControllerAbstract {
 	 *
 	 * @return mixed|WP_REST_Response
 	 */
-	public function count( WP_REST_Request $request ) {
+	public function count(WP_REST_Request $request)
+	{
 		$counts   = wp_count_attachments();
 		$response = [];
 
-		foreach ( $counts as $type => $count ) {
-			$parts = explode( '/', $type );
-			$type  = array_shift( $parts );
+		foreach ($counts as $type => $count) {
+			$parts = explode('/', $type);
+			$type  = array_shift($parts);
 
-			if ( isset( $response[ $type ] ) ) {
-				$response[ $type ] += $count;
+			if (isset($response[$type])) {
+				$response[$type] += $count;
 			} else {
-				$response[ $type ] = $count;
+				$response[$type] = $count;
 			}
 		}
 
-		return rest_ensure_response( $response );
+		return rest_ensure_response($response);
 	}
 
 	/**
@@ -163,47 +171,37 @@ class AttachmentsController extends ControllerAbstract {
 	 *
 	 * @return mixed|WP_REST_Response
 	 */
-	public function index( WP_REST_Request $request ) {
+	public function index(WP_REST_Request $request)
+	{
 
 		$args = $request->get_params();
 
 		switch ( $args['post_mime_type'] ) {
 			case 'spreadsheets':
-			$args['post_mime_type'] = 'pplication/vnd.apple.numbers,application/vnd.oasis.opendocument.spreadsheet,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12';
-			break;
+				$args['post_mime_type'] = 'pplication/vnd.apple.numbers,application/vnd.oasis.opendocument.spreadsheet,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12';
+				break;
 			case 'archives':
-			$args['post_mime_type'] = 'application/x-gzip,application/rar,application/x-tar,application/zip,application/x-7z-compressed';
-			break;
+				$args['post_mime_type'] = 'application/x-gzip,application/rar,application/x-tar,application/zip,application/x-7z-compressed';
+				break;
+			case 'document':
+				$args['post_mime_type'] = 'application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12,application/vnd.oasis.opendocument.text,application/vnd.apple.pages,application/pdf,application/vnd.ms-xpsdocument,application/oxps,application/rtf,application/wordperfect,application/octet-stream';
+				break;
 			case 'mine':
-			$args['post_author'] = 1;
-			$args['post_mime_type']= '';
-			break;
+				$args['post_author'] = 1;
+				$args['post_mime_type'] = '';
+				break;
 			case 'detached':
-			$args['post_parent'] = 0;
-			$args['post_mime_type'] = '';
-			break;
-		}
-
-		switch ( $args['orderby'] ) {
-			case 'datedesc':
-			$args['orderby'] = 'modified';
-			$args['order'] = 'DESC';
-			break;
-			case 'titleasc':
-			$args['orderby'] = 'title';
-			$args['order'] = 'ASC';
-			break;
-			case 'titleasc':
-			$args['orderby'] = 'title';
-			$args['order'] = 'DESC';
-			break;
-
-
+				$args['post_parent'] = 0;
+				$args['post_mime_type'] = '';
+				break;
+			case 'all':
+				$args['post_mime_type'] = '';
+				break;
 		}
 
 		return $this->attachments->paginate( $args )
-								 ->apply_transform( $this->transformer )
-								 ->to_rest_response();
+			->apply_transform( $this->transformer )
+			->to_rest_response();
 	}
 
 
@@ -214,11 +212,12 @@ class AttachmentsController extends ControllerAbstract {
 	 *
 	 * @return array|mixed
 	 */
-	public function find( WP_REST_Request $request ) {
-		$id = $request->get_param( 'id' );
+	public function find(WP_REST_Request $request)
+	{
+		$id = $request->get_param('id');
 
-		if ( current_user_can( 'edit_post', $id ) ) {
-			return $this->attachments->find( $id, $this->transformer );
+		if (current_user_can('edit_post', $id)) {
+			return $this->attachments->find($id, $this->transformer);
 		}
 
 		// @todo: implement this on the client side.
@@ -235,29 +234,30 @@ class AttachmentsController extends ControllerAbstract {
 	 *
 	 * @return mixed|WP_REST_Response
 	 */
-	public function update( WP_REST_Request $request ) {
-		$id     = $request->get_param( 'id' );
-		$action = $request->get_param( 'action' );
+	public function update(WP_REST_Request $request)
+	{
+		$id     = $request->get_param('id');
+		$action = $request->get_param('action');
 
-		if ( ! current_user_can( 'edit_post', $id ) ) {
-			return rest_ensure_response( [ 'error' => true ] );
+		if (!current_user_can('edit_post', $id)) {
+			return rest_ensure_response(['error' => true]);
 		}
 
 		$deprecated = 'This route is deprecated. ';
-		switch ( $action ) {
+		switch ($action) {
 			case 'trash':
-				wp_delete_attachment( $id );
+				wp_delete_attachment($id);
 				$deprecated .= "Please use 'DELETE /attachments/delete/{id}";
 				break;
 			case 'untrash':
 				$deprecated .= "Please use 'POST /attachments/restore/{id}";
-				wp_untrash_post( $id );
+				wp_untrash_post($id);
 				break;
 		}
 
-		$response = new WP_REST_Response( [ 'success' => true ] );
+		$response = new WP_REST_Response(['success' => true]);
 
-		$response->header( 'Warn', "299 {$deprecated}" );
+		$response->header('Warn', "299 {$deprecated}");
 
 		return $response;
 	}
@@ -267,16 +267,17 @@ class AttachmentsController extends ControllerAbstract {
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function delete( WP_REST_Request $request ) {
-		$id = $request->get_param( 'id' );
+	public function delete(WP_REST_Request $request)
+	{
+		$id = $request->get_param('id');
 
-		if ( ! current_user_can( 'edit_post', $id ) ) {
-			return rest_ensure_response( [ 'error' => true ] );
+		if (!current_user_can('edit_post', $id)) {
+			return rest_ensure_response(['error' => true]);
 		}
 
-		$this->attachments->delete( $id );
+		$this->attachments->delete($id);
 
-		return rest_ensure_response( [ 'success' => true ] );
+		return rest_ensure_response(['success' => true]);
 	}
 
 	/**
@@ -284,14 +285,15 @@ class AttachmentsController extends ControllerAbstract {
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function restore( WP_REST_Request $request ) {
-		$id = $request->get_param( 'id' );
+	public function restore(WP_REST_Request $request)
+	{
+		$id = $request->get_param('id');
 
-		if ( ! current_user_can( 'edit_post', $id ) ) {
-			return rest_ensure_response( [ 'error' => true ] );
+		if (!current_user_can('edit_post', $id)) {
+			return rest_ensure_response(['error' => true]);
 		}
 
-		$attachment = $this->attachments->restore( $id, $this->transformer );
+		$attachment = $this->attachments->restore($id, $this->transformer);
 
 		return rest_ensure_response(
 			[
