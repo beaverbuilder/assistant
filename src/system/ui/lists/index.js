@@ -9,6 +9,7 @@ import { Comments } from './comments'
 import { Posts } from './posts'
 import { Users } from './users'
 import { Updates } from './updates'
+import Attachments from './attachments'
 import './style.scss'
 
 import { isRenderProp } from 'utils/react'
@@ -130,6 +131,9 @@ List.Users.displayName = 'List.Users'
 
 List.Updates = Updates
 List.Updates.displayName = 'List.Updates'
+
+List.Attachments = Attachments
+List.Attachments.displayName = 'List.Attachments'
 
 List.Loading = Loading
 List.Loading.displayName = 'List.Loading'

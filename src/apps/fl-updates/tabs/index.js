@@ -3,7 +3,42 @@ import { __ } from '@wordpress/i18n'
 import { List, Button } from 'assistant/ui'
 import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'assistant/data'
 
+const UpdateButton = ( item, defaultProps ) => {
 
+	const updater = getUpdaterStore()
+	const { setUpdateQueueItem, removeCompletedUpdate } = getUpdaterActions()
+	const { getQueuedUpdate, getCompletedUpdate } = getUpdaterSelectors()
+	const [ updating, setUpdating ] = useState( !! getQueuedUpdate( item.id ) )
+	const { removeItem } = defaultProps
+
+	useEffect( () => {
+		if ( getCompletedUpdate( item.id ) ) {
+			removeCompletedUpdate( item.id )
+			removeItem( item.uuid )
+		}
+		const unsubscribe = updater.subscribe( () => {
+			if ( getQueuedUpdate( item.id ) ) {
+				setUpdating( true )
+			}
+		} )
+		return () => unsubscribe()
+	} )
+
+	return (
+		<>
+			{updating &&
+				<Button tabIndex="-1">
+					{__( 'Updating...' )}
+				</Button>
+			}
+			{! updating &&
+				<Button tabIndex="-1" onClick={ () => setUpdateQueueItem( item ) }>
+					{__( 'Update' )}
+				</Button>
+			}
+		</>
+	)
+}
 export const allUpdatesTab = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {
@@ -34,48 +69,13 @@ export const allUpdatesTab = ( {
 				return groups
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const UpdateButton = () => {
-					const updater = getUpdaterStore()
-					const { setUpdateQueueItem, removeCompletedUpdate } = getUpdaterActions()
-					const { getQueuedUpdate, getCompletedUpdate } = getUpdaterSelectors()
-					const [ updating, setUpdating ] = useState( !! getQueuedUpdate( item.id ) )
-					const { removeItem } = defaultProps
-
-					useEffect( () => {
-						if ( getCompletedUpdate( item.id ) ) {
-							removeCompletedUpdate( item.id )
-							removeItem( item.uuid )
-						}
-						const unsubscribe = updater.subscribe( () => {
-							if ( getQueuedUpdate( item.id ) ) {
-								setUpdating( true )
-							}
-						} )
-						return () => unsubscribe()
-					} )
-
-					return (
-						<>
-							{updating &&
-								<Button tabIndex="-1">
-									{__( 'Updating...' )}
-								</Button>
-							}
-							{! updating &&
-								<Button tabIndex="-1" onClick={ () => setUpdateQueueItem( item ) }>
-									{__( 'Update' )}
-								</Button>
-							}
-						</>
-					)
-				}
 
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
 					description: item.meta,
 					thumbnail: item.thumbnail,
-					accessory: props => <UpdateButton { ...props } />,
+					accessory: props => UpdateButton( item, defaultProps ),
 				} )
 			} }
 			{ ...rest }
@@ -99,7 +99,7 @@ export const PluginsTab = ( {
 				const groups = [ {
 					label: __( 'Plugins' ),
 					items: [],
-				}]
+				} ]
 				items.map( item => {
 					if ( 'plugin' === item.type ) {
 						groups[0].items.push( item )
@@ -107,49 +107,15 @@ export const PluginsTab = ( {
 				} )
 				return groups
 			} }
+
 			getItemProps={ ( item, defaultProps ) => {
-				const UpdateButton = () => {
-					const updater = getUpdaterStore()
-					const { setUpdateQueueItem, removeCompletedUpdate } = getUpdaterActions()
-					const { getQueuedUpdate, getCompletedUpdate } = getUpdaterSelectors()
-					const [ updating, setUpdating ] = useState( !! getQueuedUpdate( item.id ) )
-					const { removeItem } = defaultProps
-
-					useEffect( () => {
-						if ( getCompletedUpdate( item.id ) ) {
-							removeCompletedUpdate( item.id )
-							removeItem( item.uuid )
-						}
-						const unsubscribe = updater.subscribe( () => {
-							if ( getQueuedUpdate( item.id ) ) {
-								setUpdating( true )
-							}
-						} )
-						return () => unsubscribe()
-					} )
-
-					return (
-						<>
-							{updating &&
-								<Button tabIndex="-1">
-									{__( 'Updating...' )}
-								</Button>
-							}
-							{! updating &&
-								<Button tabIndex="-1" onClick={ () => setUpdateQueueItem( item ) }>
-									{__( 'Update' )}
-								</Button>
-							}
-						</>
-					)
-				}
 
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
 					description: item.meta,
 					thumbnail: item.thumbnail,
-					accessory: props => <UpdateButton { ...props } />,
+					accessory: props => UpdateButton( item, defaultProps ),
 				} )
 			} }
 			{ ...rest }
@@ -181,48 +147,13 @@ export const ThemesTab = ( {
 				return groups
 			} }
 			getItemProps={ ( item, defaultProps ) => {
-				const UpdateButton = () => {
-					const updater = getUpdaterStore()
-					const { setUpdateQueueItem, removeCompletedUpdate } = getUpdaterActions()
-					const { getQueuedUpdate, getCompletedUpdate } = getUpdaterSelectors()
-					const [ updating, setUpdating ] = useState( !! getQueuedUpdate( item.id ) )
-					const { removeItem } = defaultProps
-
-					useEffect( () => {
-						if ( getCompletedUpdate( item.id ) ) {
-							removeCompletedUpdate( item.id )
-							removeItem( item.uuid )
-						}
-						const unsubscribe = updater.subscribe( () => {
-							if ( getQueuedUpdate( item.id ) ) {
-								setUpdating( true )
-							}
-						} )
-						return () => unsubscribe()
-					} )
-
-					return (
-						<>
-							{updating &&
-								<Button tabIndex="-1">
-									{__( 'Updating...' )}
-								</Button>
-							}
-							{! updating &&
-								<Button tabIndex="-1" onClick={ () => setUpdateQueueItem( item ) }>
-									{__( 'Update' )}
-								</Button>
-							}
-						</>
-					)
-				}
 
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
 					description: item.meta,
 					thumbnail: item.thumbnail,
-					accessory: props => <UpdateButton { ...props } />,
+					accessory: props => UpdateButton( item, defaultProps ),
 				} )
 			} }
 			{ ...rest }

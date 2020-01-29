@@ -37,7 +37,7 @@ export const Attachment = ( { location } ) => {
 				description: {
 					label: __( 'Description' ),
 					component: 'textarea',
-					rows: 2,
+					rows: 4,
 				},
 			},
 		},

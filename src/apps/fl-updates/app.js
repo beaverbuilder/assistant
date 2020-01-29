@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { __ } from '@wordpress/i18n'
-import { App, Page, Button, List, Nav } from 'assistant/ui'
+import { __, sprintf } from '@wordpress/i18n'
+import { App, Page, Button, List, Nav, Filter } from 'assistant/ui'
 import {
 	useSystemState,
 	useAppState,
@@ -78,13 +78,26 @@ const UpdatesMain = () => {
 		)
 	}
 
-	const Header = () => (
-		<Button.Group appearance="tabs">
-			<Button>{counts['update/plugins']} {__( 'Plugins' )}</Button>
-			<Button>{counts['update/themes']} {__( 'Themes' )}</Button>
+	const UpdatesFilter = () => {
 
-		</Button.Group>
-	)
+		const types = {
+			'': __( 'Any' ),
+			plugins: sprintf( 'Plugin (%s)', counts['update/plugins'] ),
+			themes: sprintf( 'Theme (%s)', counts['update/themes'] ),
+		}
+
+		return (
+			<Filter>
+				<Filter.RadioGroupItem
+					title={ __( 'Type' ) }
+					items={ types }
+					value=""
+					defaultValue=""
+				/>
+				<Filter.Button>Reset Fitler</Filter.Button>
+			</Filter>
+		)
+	}
 
 	const getTabs = () => {
 		let tabs = [

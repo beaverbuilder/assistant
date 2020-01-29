@@ -1,33 +1,97 @@
 .fl-asst {
-    .fl-asst-filter-bar {
+    .fl-asst-filter {
+        padding: 3px var(--fluid-sm-space);
         flex: 0 0 auto;
-        display: grid;
-        grid-template-columns: repeat( 3, 1fr );
-        grid-auto-rows: 50px;
-        grid-gap: 2px;
-        min-height: 50px;
-        background: var(--fl-asst-secondary-surface-background);
-        padding-bottom: 2px;
+        margin: 0;
 
-        .fl-asst-filter-bar-item {
-            background: var(--fl-asst-surface-background);
-            padding: 10px;
-            border-radius: 0;
+        li {
+            display: flex;
+            flex-direction: row;
 
-            &:focus {
-                outline: none;
-                box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
-                inset 0px 0px 0px 4px var(--fl-asst-accent-color);
+            .fl-asst-filter-button {
+                padding: 10px;
+                flex: 1 1 auto;
+                border-radius: 3px;
+
+                .fl-asst-filter-button-content {
+                    flex: 1 1 auto;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    font-size: 12px;
+                    line-height: 1.1;
+                    color: var(--fluid-box-color);
+                    text-align: left;
+
+                    .fl-asst-filter-button-title {
+                        margin-bottom: 2px;
+                    }
+                    .fl-asst-filter-button-subtitle {
+                        font-size: 13px;
+                        font-weight: 600;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 85px;
+                    }
+                }
+                .fl-asst-filter-button-caret {
+                    flex: 0 0 auto;
+                    display: flex;
+
+                    svg {
+                        display: block;
+                    }
+                }
             }
         }
+    }
 
-        .fl-asst-filter-bar-menu {
-            box-sizing: border-box;
-            background: var(--fl-asst-surface-background);
-            width: 230px;
-            border: 1px solid black;
-            padding: 10px;
-            z-index: 9;
+    // More Button
+    .fl-asst-filter-more {
+        display: flex;
+        flex-direction: column;
+        padding: 0 var(--fluid-sm-space);
+
+        .fluid-button {
+            padding: var(--fluid-sm-space);
+            border-radius: 3px;
+            min-height: 0;
+            opacity: .5;
+
+            &:hover,
+            &:focus {
+                opacity: 1;
+            }
+        }
+    }
+
+    // Menu
+    .fl-asst-filter-menu {
+        display: grid;
+        grid-gap: var(--fluid-med-space);
+        grid-template-columns: auto;
+        grid-auto-flow: row;
+
+        background: var(--fluid-background);
+        color: var(--fluid-color);
+        box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.25);
+        padding: var(--fluid-lg-space);
+        border-top: 2px solid var(--fluid-accent);
+        min-width: 120px;
+        max-width: 220px;
+
+        label {
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            font-weight: normal;
+        }
+    }
+    .fluid-color-scheme-dark {
+
+        .fl-asst-filter-menu {
+            background: var(--fluid-box-background);
         }
     }
 }

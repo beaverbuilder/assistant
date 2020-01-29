@@ -4,7 +4,7 @@ import { Form, Page, Layout } from 'ui'
 
 export const Plugin = ( { location = {} } ) => {
 	const { item } = location.state
-	const { banner, title, version, content } = item
+	const { banner, title, content } = item
 
 	const { renderForm } = Form.useForm( {
 		defaults: item,
@@ -33,7 +33,7 @@ export const Plugin = ( { location = {} } ) => {
 
 export const Theme = ( { location = {} } ) => {
 	const { item } = location.state
-	const { banner, title, content, version } = item
+	const { banner, title, content } = item
 
 	const { renderForm } = Form.useForm( {
 		defaults: item,

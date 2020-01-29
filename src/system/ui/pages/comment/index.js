@@ -12,8 +12,6 @@ export const Comment = ( { location } ) => {
 		approved,
 		author,
 		date,
-		authorEmail,
-		authorIP,
 		content,
 		trash,
 		spam,

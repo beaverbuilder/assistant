@@ -1,8 +1,8 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, List } from 'assistant/ui'
+import { Page, Nav, List, Filter } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
-import { image as imgUtils } from 'assistant/utils'
+import { defaultState } from './'
 import './style.scss'
 
 export const MediaApp = ( { match } ) => (
@@ -13,90 +13,73 @@ export const MediaApp = ( { match } ) => (
 )
 
 const Main = ( { match } ) => {
-	const { listStyle } = useAppState( 'fl-media' )
-	const { setListStyle } = getAppActions()
+	const { listStyle, query } = useAppState( 'fl-media' )
+	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
 
-	const Actions = () => {
+	const MediaFilter = () => {
+
+		const types = {
+			any: __( 'Not Hooked Up Yet' ),
+			image: __( 'Image' ),
+			video: __( 'Video' ),
+			audio: __( 'Audio' ),
+			doc: __( 'Document' ),
+		}
+
+		const sorts = {
+			ID: __( 'ID' ),
+			date: __( 'Date Uploaded' ),
+			modified: __( 'Last Modified' ),
+		}
+
+		const listStyles = {
+			'': __( 'List' ),
+			grid: __( 'Grid' ),
+		}
+
+		const resetFilter = () => {
+			setQuery( defaultState.query )
+			setListStyle( defaultState.listStyle )
+		}
+
 		return (
-			<>
-				<select onChange={ e => setListStyle( e.target.value ) } value={ listStyle }>
-					<option value=''>{__( 'List' )}</option>
-					<option value='grid'>{__( 'Grid' )}</option>
-				</select>
-			</>
+			<Filter>
+				<Filter.RadioGroupItem
+					title={ __( 'Type' ) }
+					items={ types }
+					value={ 'any' }
+					defaultValue={ '' }
+					onChange={ value => { /* Set State */ } }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Sort By' ) }
+					items={ sorts }
+					value={ query.orderby }
+					defaultValue={ defaultState.query.orderby }
+					onChange={ value => setQuery( { ...query, orderby: value } ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Display As' ) }
+					items={ listStyles }
+					value={ listStyle }
+					defaultValue={ defaultState.listStyle }
+					onChange={ value => setListStyle( value ) }
+				/>
+				<Filter.Button onClick={ resetFilter }>{__( 'Reset Filter' )}</Filter.Button>
+			</Filter>
 		)
 	}
 
 	return (
-		<Page title={ __( 'Media' ) } actions={ <Actions /> } padX={ false } padY={ false }>
-
-			{ '' === listStyle && <MediaList baseURL={ match.url } /> }
-			{ 'grid' === listStyle && <MediaGrid baseURL={ match.url } /> }
-
+		<Page title={ __( 'Media' ) } padX={ false } padY={ false }>
+			<List.Attachments
+				key={ listStyle }
+				baseURL={ match.url }
+				query={ query }
+				listStyle={ listStyle }
+				before={ <MediaFilter /> }
+			/>
 		</Page>
-	)
-}
-
-const MediaList = ( { baseURL, ...rest } ) => {
-	return (
-		<List.WordPress
-			type="attachments"
-			getItemProps={ ( item, defaultProps ) => {
-				return {
-					...defaultProps,
-					thumbnail: item.thumbnail,
-					shouldAlwaysShowThumbnail: true,
-
-					label: item.title ? item.title : __( 'Untitled' ),
-					description: item.type + ' | ' + item.subtype,
-					to: {
-						pathname: `${baseURL}/attachment/${item.id}`,
-						state: { item }
-					},
-				}
-			} }
-			{ ...rest }
-		/>
-	)
-}
-
-const GridItem = ( { type, thumbnail, sizes } ) => {
-	const { getSrcSet } = imgUtils
-
-	if ( 'image' !== type ) {
-		return null
-	}
-
-	return (
-		<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
-	)
-}
-
-const MediaGrid = ( { baseURL, ...rest } ) => {
-	return (
-		<List.WordPress
-			type="attachments"
-			className="fl-asst-grid-list"
-			getItemProps={ ( item, defaultProps ) => {
-				return {
-					...defaultProps,
-					thumbnail: item.thumbnail,
-					shouldAlwaysShowThumbnail: true,
-
-					label: item.title ? item.title : __( 'Untitled' ),
-					to: {
-						pathname: `${baseURL}/attachment/${item.id}`,
-						state: { item }
-					},
-
-					className: 'fl-asst-grid-list-item',
-					children: () => (
-						<GridItem { ...item } />
-					)
-				}
-			} }
-			{ ...rest }
-		/>
 	)
 }
 
