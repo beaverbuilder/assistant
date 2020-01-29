@@ -4,6 +4,14 @@ import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
 import { MediaApp } from './app'
 
+export const defaultState = {
+	listStyle: 'grid',
+	query: {
+		order: 'ASC',
+		orderby: 'date',
+	}
+}
+
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
 	root: MediaApp,
@@ -12,7 +20,7 @@ registerApp( 'fl-media', {
 		color: '#FF5A5E'
 	},
 	state: {
-		listStyle: '',
+		...defaultState,
 	},
 	search: {
 		label: __( 'Media' ),

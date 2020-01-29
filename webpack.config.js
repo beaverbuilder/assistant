@@ -20,6 +20,8 @@ const externals = [
 	    'redux'              		    : 'FL.UID.vendors.Redux',
 	    'classnames'         	        : 'FL.UID.vendors.classnames',
 	    'camelcase'						: 'FL.UID.vendors.camelcase',
+        'react-laag'                    : 'FL.UID.vendors.ReactLaag',
+        'resize-observer-polyfill'      : 'FL.UID.vendors.ResizeObserverPolyfill',
 
         /* FLUID environment */
         'fluid'                         : 'FL.UID',

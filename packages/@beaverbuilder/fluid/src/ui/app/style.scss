@@ -46,6 +46,7 @@
         --fluid-box-background: var(--fluid-primary-background);
         --fluid-box-color: var(--fluid-primary-color);
         --fluid-box-hover-background: var(--fluid-primary-hover-background);
+        --fluid-accent: #0075DB;
     }
     .fluid-status-alert {
         --fluid-box-background: var(--fluid-alert-background);
@@ -63,7 +64,8 @@
     &.fluid-color-scheme-dark {
         --fluid-background: hsl(210, 13%, 16%);
         --fluid-color: hsl(210, 15%, 90%);
-        --fluid-accent: red;
+        // Accent Color
+        --fluid-accent: #0075DB;
 
         // Box Colors
         --fluid-box-background: hsl(210, 17%, 5%);
@@ -71,21 +73,18 @@
         --fluid-box-hover-background: hsl(210, 17%, 10%);
 
         // Primary Colors
-        --fluid-primary-background: #EFF8FF;
-        --fluid-primary-color: #006AD4;
-        --fluid-primary-hover-background: #D8ECFF;
+        --fluid-primary-background: hsl(206, 100%, 9%);
+        --fluid-primary-color: hsl(210, 100%, 80%);
+        --fluid-primary-hover-background: hsl(206, 80%, 14%);
 
         // Alert Colors
-        --fluid-alert-background: #FEF4EA;
-        --fluid-alert-color: #A95700;
-        --fluid-alert-hover-background: #FCE3CA;
+        --fluid-alert-background: hsl(31, 55%, 10%);
+        --fluid-alert-color: hsl(31, 100%, 72%);
+        --fluid-alert-hover-background: hsl(31, 45%, 14%);
 
         // Destructive Colors
-        --fluid-destructive-background: #FEF3F1;
-        --fluid-destructive-color: #BC0A00;
-        --fluid-destructive-hover-background: #F9DAD4;
-
-        // Accent Color
-        --fluid-accent: #0075DB;
+        --fluid-destructive-background: hsl(0, 100%, 7%);
+        --fluid-destructive-color: hsl(3, 100%, 67%);
+        --fluid-destructive-hover-background: hsl(0, 80%, 12%);
     }
 }

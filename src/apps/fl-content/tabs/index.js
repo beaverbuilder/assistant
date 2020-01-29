@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter } from 'assistant/ui'
-import { useAppState, useSystemState, getSystemConfig } from 'assistant/data'
+import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
+import { defaultQuery } from '../'
 
 export const SummaryTab = () => {
 	const { handle } = useContext( App.Context )
@@ -66,11 +67,55 @@ export const SummaryTab = () => {
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { query } = useAppState( 'fl-content' )
+	const { setQuery } = getAppActions( 'fl-content' )
+
 	const style = {
 		maxHeight: '100%',
 		minHeight: 0,
 		flex: '1 1 auto',
 	}
+
+	const PostFilter = () => {
+
+		const sorts = {
+			title: __( 'Title' ),
+			author: __( 'Author' ),
+			ID: __( 'Post ID' ),
+			date: __( 'Date Created' ),
+			modified: __( 'Date Modified' )
+		}
+
+		const statuses = {
+			any: __( 'Any' ),
+			publish: __( 'Published' ),
+			draft: __( 'Drafted' ),
+			pending: __( 'Pending' ),
+			future: __( 'Scheduled' ),
+			private: __( 'Private' ),
+			trash: __( 'Trashed' ),
+		}
+
+		return (
+			<Filter>
+				<Filter.RadioGroupItem
+					title={ __( 'Sort By' ) }
+					items={ sorts }
+					value={ query.orderby }
+					defaultValue={ defaultQuery.orderby }
+					onChange={ value => setQuery( { ...query, orderby: value } ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Status' ) }
+					items={ statuses }
+					value={ query.post_status }
+					defaultValue={ defaultQuery.post_status }
+					onChange={ value => setQuery( { ...query, post_status: value } ) }
+				/>
+				<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
+			</Filter>
+		)
+	}
+
 	return (
 		<Layout.Box outset={ true } padY={ false } style={ style }>
 			<List.Posts
@@ -87,6 +132,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					}
 					return defaultProps
 				} }
+				before={ <PostFilter /> }
 			/>
 		</Layout.Box>
 	)

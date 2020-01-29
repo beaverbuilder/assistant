@@ -1,13 +1,97 @@
 .fl-asst {
     .fl-asst-filter {
-        padding: var(--fluid-sm-space);
+        padding: 3px var(--fluid-sm-space);
         flex: 0 0 auto;
         margin: 0;
 
-        & > * {
+        li {
+            display: flex;
+            flex-direction: row;
+
+            .fl-asst-filter-button {
+                padding: 10px;
+                flex: 1 1 auto;
+                border-radius: 3px;
+
+                .fl-asst-filter-button-content {
+                    flex: 1 1 auto;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    font-size: 12px;
+                    line-height: 1.1;
+                    color: var(--fluid-box-color);
+                    text-align: left;
+
+                    .fl-asst-filter-button-title {
+                        margin-bottom: 2px;
+                    }
+                    .fl-asst-filter-button-subtitle {
+                        font-size: 13px;
+                        font-weight: 600;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 85px;
+                    }
+                }
+                .fl-asst-filter-button-caret {
+                    flex: 0 0 auto;
+                    display: flex;
+
+                    svg {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+    // More Button
+    .fl-asst-filter-more {
+        display: flex;
+        flex-direction: column;
+        padding: 0 var(--fluid-sm-space);
+
+        .fluid-button {
             padding: var(--fluid-sm-space);
-            background: var(--fluid-background);
             border-radius: 3px;
+            min-height: 0;
+            opacity: .5;
+
+            &:hover,
+            &:focus {
+                opacity: 1;
+            }
+        }
+    }
+
+    // Menu
+    .fl-asst-filter-menu {
+        display: grid;
+        grid-gap: var(--fluid-med-space);
+        grid-template-columns: auto;
+        grid-auto-flow: row;
+
+        background: var(--fluid-background);
+        color: var(--fluid-color);
+        box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.25);
+        padding: var(--fluid-lg-space);
+        border-top: 2px solid var(--fluid-accent);
+        min-width: 120px;
+        max-width: 220px;
+
+        label {
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            font-weight: normal;
+        }
+    }
+    .fluid-color-scheme-dark {
+
+        .fl-asst-filter-menu {
+            background: var(--fluid-box-background);
         }
     }
 }
