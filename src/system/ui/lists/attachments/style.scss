@@ -1,4 +1,10 @@
 .fl-asst {
+    .fl-asst-attachment-list {
+        .fl-asst-list-item-thumbnail {
+            background: var(--fluid-primary-background);
+            color: var(--fluid-primary-color);
+        }
+    }
     .fl-asst-attachment-grid-item {
         height: 100%;
 
@@ -7,6 +13,7 @@
         }
     }
     .fl-asst-grid-list-item {
+
         .fl-asst-item-extras {
             top: auto;
             bottom:5px;

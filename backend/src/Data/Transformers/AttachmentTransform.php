@@ -29,6 +29,7 @@ class AttachmentTransform {
 			'description'     => $meta['description'],
 			'editUrl'         => get_edit_post_link( $attachment->ID, '' ),
 			'filesize'        => $meta['filesizeHumanReadable'],
+			'filename'        => $meta['filename'],
 			'id'              => $attachment->ID,
 			'labels'          => [],
 			'mime'            => $meta['mime'],

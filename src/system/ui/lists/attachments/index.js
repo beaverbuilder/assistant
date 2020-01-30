@@ -42,7 +42,8 @@ const Attachments = ( {
 	}, [] )
 
 	const classes = classname( {
-		[`fl-asst-${listStyle}-list`]: listStyle
+		[`fl-asst-${listStyle}-list`]: listStyle,
+		'fl-asst-attachment-list' : true,
 	}, className )
 
 	return (
@@ -102,11 +103,24 @@ const Attachments = ( {
 					return marks
 				}
 
+				const ThumbIcon = () => {
+					const { type } = item
+					return (
+						<div style={{ padding: 5 }}>
+							{ 'video' === type && <Icon.Video /> }
+							{ 'audio' === type && <Icon.Audio /> }
+							{ 'application' === type && 'pdf' !== item.subtype && (
+								<Icon.Document />
+							)}
+						</div>
+					)
+				}
+
 				return {
 					...defaultProps,
-					thumbnail: item.thumbnail,
+					thumbnail: null !== item.thumbnail ? item.thumbnail : <ThumbIcon />,
 					shouldAlwaysShowThumbnail: true,
-					label: item.title ? item.title : __( 'Untitled' ),
+					label: item.title ? item.title : item.filename,
 					description: item.type + ' | ' + item.subtype,
 					to: {
 						pathname: `${baseURL}/attachment/${item.id}`,
@@ -182,7 +196,7 @@ const GridItem = ( { item, extras } ) => {
 				{ 'audio' === type && <Image.Audio /> }
 
 				{ 'application' === type && 'pdf' !== item.subtype && (
-					<Image.Doc type={item.subtype} />
+					<Image.Doc />
 				)}
 				<div className="fl-asst-attachment-item-badge">
 					<span>{item.subtype}</span>

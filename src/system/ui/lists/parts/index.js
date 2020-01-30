@@ -126,7 +126,8 @@ const InfoItem = ( {
 			<div className="fl-asst-list-item-default-content-row">
 				{ ( hasThumbnail || shouldAlwaysShowThumbnail ) &&
 					<div className={ thumbClasses }>
-						{ thumbnail && <img src={ thumbnail } /> }
+						{ thumbnail && 'string' === typeof thumbnail && <img src={ thumbnail } /> }
+						{ thumbnail && 'string' !== typeof thumbnail && thumbnail }
 						{ color && <div className="fl-asst-list-item-color-thumbnail"  style={ { backgroundColor: color } } /> }
 					</div>
 				}
