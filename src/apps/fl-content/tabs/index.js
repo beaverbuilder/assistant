@@ -122,18 +122,18 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					onChange={ value => goToTab( value ) }
 				/>
 				<Filter.RadioGroupItem
-					title={ __( 'Display As' ) }
-					items={ displays }
-					value={ listStyle }
-					defaultValue={ defaultState.listStyle }
-					onChange={ value => setListStyle( value ) }
-				/>
-				<Filter.RadioGroupItem
 					title={ __( 'Status' ) }
 					items={ statuses }
 					value={ query.post_status }
 					defaultValue={ defaultQuery.post_status }
 					onChange={ value => setQuery( { ...query, post_status: value } ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Display As' ) }
+					items={ displays }
+					value={ listStyle }
+					defaultValue={ defaultState.listStyle }
+					onChange={ value => setListStyle( value ) }
 				/>
 				<Filter.RadioGroupItem
 					title={ __( 'Sort By' ) }
@@ -165,34 +165,6 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					return defaultProps
 				} }
 				before={ <PostFilter /> }
-			/>
-		</Layout.Box>
-	)
-}
-
-export const FavoritesTab = () => {
-	const { handle } = useContext( App.Context )
-	const style = {
-		maxHeight: '100%',
-		minHeight: 0,
-		flex: '1 1 auto',
-	}
-	return (
-		<Layout.Box outset={ true } padY={ false } style={ style }>
-			<List.Posts
-				query={ { ...defaultQuery } }
-				getItemProps={ ( item, defaultProps ) => {
-					if ( item.id ) {
-						return {
-							...defaultProps,
-							to: {
-								pathname: `/${handle}/post/${item.id}`,
-								state: { item }
-							},
-						}
-					}
-					return defaultProps
-				} }
 			/>
 		</Layout.Box>
 	)

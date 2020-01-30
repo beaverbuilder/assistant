@@ -300,7 +300,7 @@ const BigThumbnail = ( { item } ) => {
 	}
 	// This sets up an aspect-ratio box around the image to prevent height changing during img load
 	return (
-		<div style={{ padding: '0 var(--fluid-lg-space)' }}>
+		<div style={{ padding: '0 var(--fluid-lg-space) var(--fluid-med-space)' }}>
 			<div style={ style }>
 				<div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
 					<img

@@ -3,7 +3,6 @@ import classname from 'classnames'
 import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon } from 'ui'
-import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import './style.scss'
@@ -46,7 +45,6 @@ const Attachments = ( {
 		[`fl-asst-${listStyle}-list`]: listStyle
 	}, className )
 
-	const trashItem = () => console.log( 'Stub: Need to implment trash functionality' )
 	return (
 		<List.WordPress
 			type="attachments"
@@ -56,28 +54,20 @@ const Attachments = ( {
 				const Extras = () => (
 					<div className="fl-asst-item-extras">
 						<Button
-							title={ __( 'View Post' ) }
+							title={ __( 'View Attachment Page' ) }
 							tabIndex="-1"
 							href={ item.url }
 							appearance="transparent"
 						>
 							<Icon.View />
 						</Button>
-						<Clipboard
-							button-tabIndex={ '-1' }
-							button-className={ 'fluid-button fluid-appearance-transparent' }
-							data-clipboard-text={ item.url }
-						>
-							<Icon.Link />
-						</Clipboard>
 						<Button
-							onClick={ trashItem }
+							title={ __( 'Edit in Admin' ) }
 							tabIndex="-1"
-							title={ __( 'Move to Trash' ) }
-							status='destructive'
+							href={ item.editUrl }
 							appearance="transparent"
 						>
-							<Icon.Trash />
+							<Icon.Edit />
 						</Button>
 					</div>
 				)
@@ -136,7 +126,7 @@ const Attachments = ( {
 }
 
 const GridItem = ( { item, extras } ) => {
-	const { type, thumbnail, sizes } = item
+	const { type, thumbnail, sizes, alt, title } = item
 
 	if ( 'image' !== type ) {
 		return null
@@ -144,16 +134,31 @@ const GridItem = ( { item, extras } ) => {
 
 	const itemExtras = 'function' === typeof extras ? extras() : null
 	const stopProp = e => e.stopPropagation()
-
+	const style = {
+		position: 'relative',
+		boxSizing: 'border-box',
+		paddingTop: '100%',
+		overflow: 'hidden',
+		width: '100%',
+	}
 	return (
-		<div className="fl-asst-attachment-grid-item">
-			<img src={ thumbnail } srcSet={ getSrcSet( sizes ) } />
-			{ itemExtras && (
-				<div
-					className="fl-asst-list-item-extras"
-					onClick={ stopProp }
-				>{itemExtras}</div>
-			) }
+		<div className="fl-asst-attachment-grid-item" style={style}>
+			<div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+				<img
+					src={ thumbnail }
+					srcSet={ getSrcSet( sizes ) }
+					alt={alt}
+					title={title}
+					loading="lazy"
+					style={{ height: '100%', width: '100%' }}
+				/>
+				{ itemExtras && (
+					<div
+						className="fl-asst-list-item-extras"
+						onClick={ stopProp }
+					>{itemExtras}</div>
+				) }
+			</div>
 		</div>
 	)
 }
