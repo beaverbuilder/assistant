@@ -4,6 +4,7 @@ import { Button, Form, List, Page, Layout, Icon } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
+import { getSrcSet } from 'utils/image'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
 
@@ -327,13 +328,26 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	const Hero = () => {
+
+		if ( undefined === item.postThumbnail ) return item.thumbnail
+
+		const { sizes, alt, title, height, width } = item.postThumbnail
+
+		let srcSet = ''
+		if ( sizes ) {
+			srcSet = getSrcSet( sizes )
+		}
 		return (
-			<div style={ {
-				height: 360,
-				background: 'var(--fluid-box-color)',
-				backgroundImage: `url(${item.thumbnail})`,
-				backgroundSize: 'cover'
-			} }>
+			<div style={ {} }>
+				<img
+					src={item.thumbnail}
+					srcset={srcSet}
+					style={{ height: '100%', objectFit: 'cover' }}
+					alt={alt}
+					title={title}
+					height={height}
+					width={width}
+				/>
 			</div>
 		)
 	}
@@ -381,7 +395,7 @@ export const Post = ( { location, match, history } ) => {
 	return (
 		<Page
 			title={ labels.editItem }
-			hero={ item.thumbnail ? <Hero /> : null }
+			hero={ item.hasPostThumbnail ? <Hero /> : null }
 			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>

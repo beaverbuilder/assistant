@@ -30,7 +30,7 @@ class AttachmentTransform {
 			'editUrl'         => get_edit_post_link( $attachment->ID, '' ),
 			'filesize'        => $meta['filesizeHumanReadable'],
 			'id'              => $attachment->ID,
-			'labels'		  => [],
+			'labels'          => [],
 			'mime'            => $meta['mime'],
 			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : [],
 			'slug'            => $attachment->post_name,
