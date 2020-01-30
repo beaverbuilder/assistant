@@ -292,20 +292,28 @@ const BigThumbnail = ( { item } ) => {
 	const { thumbnail, sizes, alt, title, height, width } = item.postThumbnail
 	const srcset = getSrcSet( sizes )
 	const style = {
-		padding: '0 var(--fluid-lg-space)'
+		boxSizing: 'border-box',
+		position: 'relative',
+		overflow: 'hidden',
+		paddingTop: ( height / width ) * 100 + '%',
+		background: 'var(--fluid-box-background)'
 	}
-
+	// This sets up an aspect-ratio box around the image to prevent height changing during img load
 	return (
-		<div style={ style }>
-			<img
-				src={ thumbnail }
-				srcSet={ srcset }
-				alt={ alt }
-				title={ title }
-				height={ height }
-				width={ width }
-				loading="lazy"
-			/>
+		<div style={{ padding: '0 var(--fluid-lg-space)' }}>
+			<div style={ style }>
+				<div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+					<img
+						src={ thumbnail }
+						srcSet={ srcset }
+						alt={ alt }
+						title={ title }
+						height={ height }
+						width={ width }
+						loading="lazy"
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }
