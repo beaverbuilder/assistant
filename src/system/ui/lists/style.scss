@@ -212,12 +212,24 @@
             font-size: 12px;
             padding: var(--fl-asst-tiny-space);
             background: transparent;
+            position: relative;
 
             &:hover {
                 background: var(--fl-asst-surface-background);
             }
             &:focus {
                 background: var(--fl-asst-surface-background);
+            }
+
+            .fl-asst-extra-dot {
+                background: currentColor;
+                width: 6px;
+                height: 6px;
+                border-radius: 3px;
+                position: absolute;
+                bottom: 4px;
+                right: 4px;
+                pointer-events: none;
             }
         }
 

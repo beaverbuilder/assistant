@@ -139,6 +139,9 @@ export const Posts = ( {
 					if ( item.isCloning || item.isTrashing || item.isTrashed || item.isRestoring ) {
 						return null
 					}
+
+					console.log(item)
+
 					return (
 						<div className="fl-asst-item-extras">
 							<Button
@@ -149,13 +152,28 @@ export const Posts = ( {
 							>
 								<Icon.View />
 							</Button>
-							<Clipboard
-								button-tabIndex={ '-1' }
-								button-className={ 'fluid-button fluid-appearance-transparent' }
-								data-clipboard-text={ item.url }
-							>
-								<Icon.Link />
-							</Clipboard>
+							{ item.editUrl && (
+								<Button
+									title={ __( 'Edit in Admin' ) }
+									tabIndex="-1"
+									href={ item.editUrl }
+									appearance="transparent"
+								>
+									<Icon.Edit />
+								</Button>
+							)}
+							{ item.bbCanEdit && (
+								<Button
+									title={ __( 'Edit in Beaver Builder' ) }
+									tabIndex="-1"
+									href={ item.bbEditUrl }
+									appearance="transparent"
+									status={ item.bbIsEnabled ? 'primary' : '' }
+								>
+									<Icon.Placeholder />
+									{ item.bbIsEnabled && <span className="fl-asst-extra-dot" /> }
+								</Button>
+							)}
 							<Button
 								onClick={ favoritePost }
 								tabIndex="-1"
