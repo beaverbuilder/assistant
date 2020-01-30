@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 import { Page, Nav, Icon, Button } from 'assistant/ui'
-import { SummaryTab, PostTypeTab } from './tabs'
+import { SummaryTab, PostTypeTab, FavoritesTab } from './tabs'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
@@ -27,13 +27,22 @@ const Main = () => {
 			}
 		]
 		Object.keys( contentTypes ).map( key => {
+
 			const type = contentTypes[key]
 			tabs.push( {
 				handle: key,
 				path: '/fl-content/tab/' + key,
-				label: type.labels.singular,
+				label: type.labels.plural,
 				component: () => <PostTypeTab type={ key } />,
+				showButton: type.builtin
 			} )
+		} )
+		tabs.push( {
+			handle: 'favorites',
+			path: '/fl-content/tab/favorites',
+			label: <Icon.Bookmark />,
+			title: __( 'Favorites' ),
+			component: FavoritesTab,
 		} )
 
 		return tabs
@@ -41,7 +50,7 @@ const Main = () => {
 
 	const Header = () => {
 		return (
-			<div style={ { flexDirection: 'column' } }>
+			<div style={ { flex: '1 1 auto', display: 'flex', flexDirection: 'column' } }>
 				<Nav.Tabs tabs={ tabs } />
 			</div>
 		)

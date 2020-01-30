@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
-import { List, App, Page, Layout, Filter } from 'assistant/ui'
+import { List, App, Page, Layout, Filter, Nav } from 'assistant/ui'
 import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
 import { defaultQuery } from '../'
 
@@ -66,8 +66,10 @@ export const SummaryTab = () => {
 
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
+	const { history, location } = useContext( Nav.Context )
 	const { query } = useAppState( 'fl-content' )
 	const { setQuery } = getAppActions( 'fl-content' )
+	const { contentTypes } = getSystemConfig()
 
 	const style = {
 		maxHeight: '100%',
@@ -75,7 +77,15 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		flex: '1 1 auto',
 	}
 
+	const goToTab = type => history.replace( `/${handle}/tab/${type}`, location.state )
+
 	const PostFilter = () => {
+
+		const postTypes = {}
+		for ( let key in contentTypes ) {
+			const { labels } = contentTypes[key]
+			postTypes[key] = labels.plural
+		}
 
 		const sorts = {
 			title: __( 'Title' ),
@@ -98,11 +108,10 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		return (
 			<Filter>
 				<Filter.RadioGroupItem
-					title={ __( 'Sort By' ) }
-					items={ sorts }
-					value={ query.orderby }
-					defaultValue={ defaultQuery.orderby }
-					onChange={ value => setQuery( { ...query, orderby: value } ) }
+					title={ __( 'Post Type' ) }
+					items={ postTypes }
+					value={ type }
+					onChange={ value => goToTab( value ) }
 				/>
 				<Filter.RadioGroupItem
 					title={ __( 'Status' ) }
@@ -110,6 +119,13 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					value={ query.post_status }
 					defaultValue={ defaultQuery.post_status }
 					onChange={ value => setQuery( { ...query, post_status: value } ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Sort By' ) }
+					items={ sorts }
+					value={ query.orderby }
+					defaultValue={ defaultQuery.orderby }
+					onChange={ value => setQuery( { ...query, orderby: value } ) }
 				/>
 				<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
@@ -133,6 +149,34 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					return defaultProps
 				} }
 				before={ <PostFilter /> }
+			/>
+		</Layout.Box>
+	)
+}
+
+export const FavoritesTab = () => {
+	const { handle } = useContext( App.Context )
+	const style = {
+		maxHeight: '100%',
+		minHeight: 0,
+		flex: '1 1 auto',
+	}
+	return (
+		<Layout.Box outset={ true } padY={ false } style={ style }>
+			<List.Posts
+				query={ { ...defaultQuery } }
+				getItemProps={ ( item, defaultProps ) => {
+					if ( item.id ) {
+						return {
+							...defaultProps,
+							to: {
+								pathname: `/${handle}/post/${item.id}`,
+								state: { item }
+							},
+						}
+					}
+					return defaultProps
+				} }
 			/>
 		</Layout.Box>
 	)

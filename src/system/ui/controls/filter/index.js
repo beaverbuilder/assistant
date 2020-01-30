@@ -59,7 +59,7 @@ const Item = ( { title, subtitle, children } ) => {
 		<li className="fl-asst-filter-item">
 			<ToggleLayer
 				isOpen={ isOpen }
-				ResizeObserver={ResizeObserver}
+				ResizeObserver={ ResizeObserver }
 				placement={ {
 					anchor: 'BOTTOM_LEFT',
 					possibleAnchors: [ 'BOTTOM_LEFT', 'BOTTOM_RIGHT' ],

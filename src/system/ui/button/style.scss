@@ -12,6 +12,7 @@
         min-height: calc( var(--fl-asst-target-size) + 6px );
         max-width:100%;
         overflow-x: hidden; // Firefox flips out with auto.
+        position: relative;
 
         &.fl-asst-button-group-row {
             align-self: center; // will center self within flex columns

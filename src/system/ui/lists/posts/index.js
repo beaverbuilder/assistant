@@ -3,7 +3,6 @@ import classname from 'classnames'
 import { CancelToken, isCancel } from 'axios'
 import { __, sprintf } from '@wordpress/i18n'
 import { List, Button, Icon } from 'ui'
-import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemConfig } from 'data'
 

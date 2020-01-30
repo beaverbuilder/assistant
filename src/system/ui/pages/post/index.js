@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { Button, Form, List, Page, Layout, Icon } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
@@ -328,12 +328,12 @@ export const Post = ( { location, match, history } ) => {
 
 	const Hero = () => {
 		return (
-			<div style={{
+			<div style={ {
 				height: 360,
 				background: 'var(--fluid-box-color)',
 				backgroundImage: `url(${item.thumbnail})`,
 				backgroundSize: 'cover'
-			}}>
+			} }>
 			</div>
 		)
 	}
@@ -347,21 +347,30 @@ export const Post = ( { location, match, history } ) => {
 		} } >
 			<Button
 				appearance='elevator'
-				title={__('Go To Post')}
+				title={ __( 'Go To Post' ) }
 				href={ item.url }
 			>
 				<Icon.View />
 			</Button>
 			<Button
 				appearance='elevator'
-				title={__('Edit in Admin')}
+				title={ __( 'Edit in Admin' ) }
 				href={ item.editUrl }
 			>
 				<Icon.Edit />
 			</Button>
+			{ item.bbCanEdit && (
+				<Button
+					appearance='elevator'
+					title={ sprintf( 'Edit with %s', item.bbBranding ) }
+					href={ item.bbEditUrl }
+				>
+					<Icon.Beaver />
+				</Button>
+			)}
 			<Button
 				appearance='elevator'
-				title={__('Move to Trash')}
+				title={ __( 'Move to Trash' ) }
 				status="destructive"
 			>
 				<Icon.Trash />
