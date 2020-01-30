@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
-import { List, Button, Icon } from 'ui'
+import { List, Button, Icon, Image } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import './style.scss'
@@ -128,10 +128,6 @@ const Attachments = ( {
 const GridItem = ( { item, extras } ) => {
 	const { type, thumbnail, sizes, alt, title } = item
 
-	if ( 'image' !== type ) {
-		return null
-	}
-
 	const itemExtras = 'function' === typeof extras ? extras() : null
 	const stopProp = e => e.stopPropagation()
 	const style = {
@@ -141,17 +137,56 @@ const GridItem = ( { item, extras } ) => {
 		overflow: 'hidden',
 		width: '100%',
 	}
+
+	// Filter down to just the smaller sizes for srcset
+	const smallSizes = {}
+	const allow = ['thumbnail', 'medium', 'large']
+	for( let key in sizes ) {
+		if ( allow.includes( key ) ) {
+			smallSizes[key] = sizes[key]
+		}
+	}
+
 	return (
 		<div className="fl-asst-attachment-grid-item" style={style}>
-			<div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-				<img
-					src={ thumbnail }
-					srcSet={ getSrcSet( sizes ) }
-					alt={alt}
-					title={title}
-					loading="lazy"
-					style={{ height: '100%', width: '100%' }}
-				/>
+			<div style={{
+				position: 'absolute',
+				top: 0,
+				left: 0,
+				width: '100%',
+				height: '100%',
+				background: 'var(--fluid-primary-background)',
+				color: 'var(--fluid-primary-color)',
+				display: 'flex',
+				flexDirection: 'column',
+				justifyContent: 'center',
+				alignItems: 'center',
+			}}>
+				{ ( 'image' === type || 'pdf' === item.subtype ) && (
+					<img
+						src={ thumbnail }
+						srcSet={ getSrcSet(smallSizes) }
+						alt={alt}
+						title={title}
+						loading="lazy"
+						style={{
+							height: '100%',
+							width: '100%',
+							objectPosition: 'pdf' === item.subtype ? 'top center' : null
+						}}
+						height={157.5}
+						width={157.5}
+					/>
+				)}
+				{ 'video' === type && <Image.Video /> }
+				{ 'audio' === type && <Image.Audio /> }
+
+				{ 'application' === type && 'pdf' !== item.subtype && (
+					<Image.Doc type={item.subtype} />
+				)}
+				<div className="fl-asst-attachment-item-badge">
+					<span>{item.subtype}</span>
+				</div>
 				{ itemExtras && (
 					<div
 						className="fl-asst-list-item-extras"

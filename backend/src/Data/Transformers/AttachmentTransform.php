@@ -42,6 +42,9 @@ class AttachmentTransform {
 			'urls'            => [
 				'medium' => $size[0],
 			],
+			'height'          => $meta['height'],
+			'width'           => $meta['width'],
+			'orientation'     => $meta['orientation'],
 		];
 
 		// Labels
