@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter, Nav } from 'assistant/ui'
 import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
 import { defaultQuery } from '../'
@@ -68,6 +68,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { history, location } = useContext( Nav.Context )
 	const { query } = useAppState( 'fl-content' )
+	const { counts } = useSystemState()
 	const { setQuery } = getAppActions( 'fl-content' )
 	const { contentTypes } = getSystemConfig()
 
@@ -84,7 +85,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		const postTypes = {}
 		for ( let key in contentTypes ) {
 			const { labels } = contentTypes[key]
-			postTypes[key] = labels.plural
+			postTypes[key] = sprintf(`${labels.plural} (%s)`, counts[`content/${key}`] )
 		}
 
 		const sorts = {
