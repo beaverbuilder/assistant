@@ -87,7 +87,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		const postTypes = {}
 		for ( let key in contentTypes ) {
 			const { labels } = contentTypes[key]
-			postTypes[key] = sprintf(`${labels.plural} (%s)`, counts[`content/${key}`] )
+			postTypes[key] = sprintf( `${labels.plural} (%s)`, counts[`content/${key}`] )
 		}
 
 		const sorts = {
@@ -110,7 +110,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 
 		const displays = {
 			'': __( 'List' ),
-			'thumb' : __( 'Post Thumbnails' )
+			'thumb': __( 'Post Thumbnails' )
 		}
 
 		return (
@@ -151,7 +151,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		<Layout.Box outset={ true } padY={ false } style={ style }>
 			<List.Posts
 				query={ { ...query, post_type: type } }
-				listStyle={listStyle}
+				listStyle={ listStyle }
 				getItemProps={ ( item, defaultProps ) => {
 					if ( item.id ) {
 						return {

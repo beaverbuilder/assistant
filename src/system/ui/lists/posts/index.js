@@ -276,7 +276,7 @@ export const Posts = ( {
 						'fl-asst-is-current-page': isCurrentPage(),
 					}, defaultProps.className ),
 					marks: getMarks( item ),
-					before: 'thumb' === listStyle && <BigThumbnail item={item} />
+					before: 'thumb' === listStyle && <BigThumbnail item={ item } />
 				} )
 			} }
 			{ ...rest }
@@ -284,27 +284,26 @@ export const Posts = ( {
 	)
 }
 
-const BigThumbnail = ({ item }) => { console.log(item)
-	if ( !item.postThumbnail ) return null
+const BigThumbnail = ( { item } ) => {
+	if ( ! item.postThumbnail ) {
+		return null
+	}
 
 	const { thumbnail, sizes, alt, title, height, width } = item.postThumbnail
 	const srcset = getSrcSet( sizes )
-
-	console.log(item.postThumbnail, srcset )
-
 	const style = {
 		padding: '0 var(--fluid-lg-space)'
 	}
 
 	return (
-		<div style={style}>
+		<div style={ style }>
 			<img
-				src={thumbnail}
-				srcset={srcset}
-				alt={alt}
-				title={title}
-				height={height}
-				width={width}
+				src={ thumbnail }
+				srcSet={ srcset }
+				alt={ alt }
+				title={ title }
+				height={ height }
+				width={ width }
 				loading="lazy"
 			/>
 		</div>

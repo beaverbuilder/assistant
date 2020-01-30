@@ -329,7 +329,9 @@ export const Post = ( { location, match, history } ) => {
 
 	const Hero = () => {
 
-		if ( undefined === item.postThumbnail ) return item.thumbnail
+		if ( undefined === item.postThumbnail ) {
+			return item.thumbnail
+		}
 
 		const { sizes, alt, title, height, width } = item.postThumbnail
 
@@ -340,13 +342,13 @@ export const Post = ( { location, match, history } ) => {
 		return (
 			<div style={ {} }>
 				<img
-					src={item.thumbnail}
-					srcset={srcSet}
-					style={{ height: '100%', objectFit: 'cover' }}
-					alt={alt}
-					title={title}
-					height={height}
-					width={width}
+					src={ item.thumbnail }
+					srcSet={ srcSet }
+					style={ { height: '100%', objectFit: 'cover' } }
+					alt={ alt }
+					title={ title }
+					height={ height }
+					width={ width }
 				/>
 			</div>
 		)
