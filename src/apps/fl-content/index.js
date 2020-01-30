@@ -7,11 +7,14 @@ import { Content } from './app'
 
 const { contentTypes, taxonomies } = getSystemConfig()
 
-export const defaultQuery = {
-	order: 'ASC',
-	orderby: 'title',
-	post_status: 'any',
-	post_type: 'post',
+export const defaultState = {
+	listStyle: '',
+	query: {
+		order: 'ASC',
+		orderby: 'title',
+		post_status: 'any',
+		post_type: 'post',
+	}
 }
 
 registerApp( 'fl-content', {
@@ -21,9 +24,7 @@ registerApp( 'fl-content', {
 	accent: {
 		color: '#16C8E1'
 	},
-	state: {
-		query: defaultQuery,
-	},
+	state: { ...defaultState },
 	search: Object.entries( contentTypes ).map( ( [ type, data ], key ) => {
 		return {
 			label: data.labels.plural,

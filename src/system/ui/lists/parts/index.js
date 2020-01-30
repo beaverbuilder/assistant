@@ -83,7 +83,8 @@ const InfoItem = ( {
 	className,
 	extras,
 	accessory,
-	marks = []
+	marks = [],
+	before,
 } ) => {
 	const classes = classname( {
 		'fl-asst-list-item-content-info': true,
@@ -121,6 +122,7 @@ const InfoItem = ( {
 
 	return (
 		<Tag className={ classes } { ...newProps }>
+			{ before && <div className="fl-asst-list-item-before-content">{before}</div> }
 			<div className="fl-asst-list-item-default-content-row">
 				{ ( hasThumbnail || shouldAlwaysShowThumbnail ) &&
 					<div className={ thumbClasses }>

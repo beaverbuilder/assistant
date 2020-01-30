@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter, Nav } from 'assistant/ui'
 import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
-import { defaultQuery } from '../'
+import { defaultState } from '../'
 
 export const SummaryTab = () => {
 	const { handle } = useContext( App.Context )
@@ -67,10 +67,12 @@ export const SummaryTab = () => {
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { history, location } = useContext( Nav.Context )
-	const { query } = useAppState( 'fl-content' )
 	const { counts } = useSystemState()
-	const { setQuery } = getAppActions( 'fl-content' )
+	const { query, listStyle } = useAppState( 'fl-content' )
+	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
 	const { contentTypes } = getSystemConfig()
+
+	const defaultQuery = defaultState.query
 
 	const style = {
 		maxHeight: '100%',
@@ -106,6 +108,11 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 			trash: __( 'Trashed' ),
 		}
 
+		const displays = {
+			'': __( 'List' ),
+			'thumb' : __( 'Post Thumbnails' )
+		}
+
 		return (
 			<Filter>
 				<Filter.RadioGroupItem
@@ -113,6 +120,13 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					items={ postTypes }
 					value={ type }
 					onChange={ value => goToTab( value ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Display As' ) }
+					items={ displays }
+					value={ listStyle }
+					defaultValue={ defaultState.listStyle }
+					onChange={ value => setListStyle( value ) }
 				/>
 				<Filter.RadioGroupItem
 					title={ __( 'Status' ) }
@@ -137,6 +151,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		<Layout.Box outset={ true } padY={ false } style={ style }>
 			<List.Posts
 				query={ { ...query, post_type: type } }
+				listStyle={listStyle}
 				getItemProps={ ( item, defaultProps ) => {
 					if ( item.id ) {
 						return {

@@ -352,6 +352,8 @@ export const Post = ( { location, match, history } ) => {
 		)
 	}
 
+	const isCurrentPage = () => item.url === window.location.href
+
 	const ElevatorButtons = () => (
 		<div style={ {
 			display: 'flex',
@@ -363,6 +365,7 @@ export const Post = ( { location, match, history } ) => {
 				appearance='elevator'
 				title={ __( 'Go To Post' ) }
 				href={ item.url }
+				disabled={ isCurrentPage() }
 			>
 				<Icon.View />
 			</Button>
@@ -382,13 +385,6 @@ export const Post = ( { location, match, history } ) => {
 					<Icon.Beaver />
 				</Button>
 			)}
-			<Button
-				appearance='elevator'
-				title={ __( 'Move to Trash' ) }
-				status="destructive"
-			>
-				<Icon.Trash />
-			</Button>
 		</div>
 	)
 

@@ -4,11 +4,13 @@ import { CancelToken, isCancel } from 'axios'
 import { __, sprintf } from '@wordpress/i18n'
 import { List, Button, Icon } from 'ui'
 import { getWpRest } from 'utils/wordpress'
+import { getSrcSet } from 'utils/image'
 import { getSystemConfig } from 'data'
 
 export const Posts = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {},
+	listStyle = 'list',
 	...rest
 } ) => {
 	const [ labels, setLabels ] = useState( {} )
@@ -260,8 +262,9 @@ export const Posts = ( {
 					...defaultProps,
 					label: <Title />,
 					description: getDescription(),
-					thumbnail: item.thumbnail,
+					thumbnail: 'thumb' !== listStyle && item.thumbnail,
 					thumbnailSize,
+					shouldAlwaysShowThumbnail: 'thumb' !== listStyle,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
 					className: classname( {
@@ -272,10 +275,38 @@ export const Posts = ( {
 						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring ),
 						'fl-asst-is-current-page': isCurrentPage(),
 					}, defaultProps.className ),
-					marks: getMarks( item )
+					marks: getMarks( item ),
+					before: 'thumb' === listStyle && <BigThumbnail item={item} />
 				} )
 			} }
 			{ ...rest }
 		/>
+	)
+}
+
+const BigThumbnail = ({ item }) => { console.log(item)
+	if ( !item.postThumbnail ) return null
+
+	const { thumbnail, sizes, alt, title, height, width } = item.postThumbnail
+	const srcset = getSrcSet( sizes )
+
+	console.log(item.postThumbnail, srcset )
+
+	const style = {
+		padding: '0 var(--fluid-lg-space)'
+	}
+
+	return (
+		<div style={style}>
+			<img
+				src={thumbnail}
+				srcset={srcset}
+				alt={alt}
+				title={title}
+				height={height}
+				width={width}
+				loading="lazy"
+			/>
+		</div>
 	)
 }
