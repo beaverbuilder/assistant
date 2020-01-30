@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { CancelToken, isCancel } from 'axios'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { List, Button, Icon } from 'ui'
 import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'utils/wordpress'
@@ -140,8 +140,6 @@ export const Posts = ( {
 						return null
 					}
 
-					console.log(item)
-
 					return (
 						<div className="fl-asst-item-extras">
 							<Button
@@ -164,13 +162,13 @@ export const Posts = ( {
 							)}
 							{ item.bbCanEdit && (
 								<Button
-									title={ __( 'Edit in Beaver Builder' ) }
+									title={ sprintf( 'Edit in %s', item.bbBranding ) }
 									tabIndex="-1"
 									href={ item.bbEditUrl }
 									appearance="transparent"
 									status={ item.bbIsEnabled ? 'primary' : '' }
 								>
-									<Icon.Placeholder />
+									<Icon.Beaver />
 									{ item.bbIsEnabled && <span className="fl-asst-extra-dot" /> }
 								</Button>
 							)}

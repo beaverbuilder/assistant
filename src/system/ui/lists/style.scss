@@ -66,9 +66,9 @@
             }
 
             &.fl-asst-is-current-page {
-                background: var(--fluid-alert-background);
-                box-shadow: inset 3px 0px 0px var(--fluid-alert-color);
-                color: var(--fluid-alert-color);
+                background: var(--fluid-primary-background);
+                box-shadow: inset 3px 0px 0px var(--fluid-primary-color);
+                color: var(--fluid-primary-color);
             }
         }
 
@@ -223,9 +223,9 @@
 
             .fl-asst-extra-dot {
                 background: currentColor;
-                width: 6px;
-                height: 6px;
-                border-radius: 3px;
+                width: 4px;
+                height: 4px;
+                border-radius: 2px;
                 position: absolute;
                 bottom: 4px;
                 right: 4px;

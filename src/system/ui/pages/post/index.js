@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Form, List, Page, Layout } from 'ui'
+import { Button, Form, List, Page, Layout, Icon } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
@@ -326,13 +326,57 @@ export const Post = ( { location, match, history } ) => {
 		)
 	}
 
+	const Hero = () => {
+		return (
+			<div style={{
+				height: 360,
+				background: 'var(--fluid-box-color)',
+				backgroundImage: `url(${item.thumbnail})`,
+				backgroundSize: 'cover'
+			}}>
+			</div>
+		)
+	}
+
+	const ElevatorButtons = () => (
+		<div style={ {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-evenly',
+			margin: '10px 0 0'
+		} } >
+			<Button
+				appearance='elevator'
+				title={__('Go To Post')}
+				href={ item.url }
+			>
+				<Icon.View />
+			</Button>
+			<Button
+				appearance='elevator'
+				title={__('Edit in Admin')}
+				href={ item.editUrl }
+			>
+				<Icon.Edit />
+			</Button>
+			<Button
+				appearance='elevator'
+				title={__('Move to Trash')}
+				status="destructive"
+			>
+				<Icon.Trash />
+			</Button>
+		</div>
+	)
+
 	return (
 		<Page
 			title={ labels.editItem }
-			hero={ item.thumbnail ? item.thumbnail : null }
+			hero={ item.thumbnail ? <Hero /> : null }
 			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
+			<ElevatorButtons />
 			{ renderForm() }
 		</Page>
 	)
