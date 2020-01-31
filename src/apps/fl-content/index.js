@@ -10,7 +10,7 @@ const { contentTypes, taxonomies } = getSystemConfig()
 export const defaultState = {
 	listStyle: '',
 	query: {
-		order: 'ASC',
+		order: 'DESC',
 		orderby: 'title',
 		post_status: 'any',
 		post_type: 'post',

@@ -129,6 +129,8 @@ export const Posts = ( {
 					}
 				}
 
+				const isCurrentPage = () => item.url === window.location.href
+
 				const Accessory = () => {
 					if ( item.isTrashed ) {
 						return <Button onClick={ restorePost } tabIndex="-1">{__( 'Restore' )}</Button>
@@ -143,14 +145,16 @@ export const Posts = ( {
 
 					return (
 						<div className="fl-asst-item-extras">
-							<Button
-								title={ __( 'View Post' ) }
-								tabIndex="-1"
-								href={ item.url }
-								appearance="transparent"
-							>
-								<Icon.View />
-							</Button>
+							{ ! isCurrentPage() && (
+								<Button
+									title={ __( 'View Post' ) }
+									tabIndex="-1"
+									href={ item.url }
+									appearance="transparent"
+								>
+									<Icon.View />
+								</Button>
+							)}
 							{ item.editUrl && (
 								<Button
 									title={ __( 'Edit in Admin' ) }
@@ -255,8 +259,6 @@ export const Posts = ( {
 
 					return marks
 				}
-
-				const isCurrentPage = () => item.url === location.href
 
 				return getItemProps( item, {
 					...defaultProps,

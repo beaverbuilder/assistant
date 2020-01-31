@@ -363,14 +363,15 @@ export const Post = ( { location, match, history } ) => {
 			justifyContent: 'space-evenly',
 			margin: '10px 0 0'
 		} } >
-			<Button
-				appearance='elevator'
-				title={ __( 'Go To Post' ) }
-				href={ item.url }
-				disabled={ isCurrentPage() }
-			>
-				<Icon.View />
-			</Button>
+			{ ! isCurrentPage() && (
+				<Button
+					appearance='elevator'
+					title={ __( 'Go To Post' ) }
+					href={ item.url }
+				>
+					<Icon.View />
+				</Button>
+			)}
 			<Button
 				appearance='elevator'
 				title={ __( 'Edit in Admin' ) }

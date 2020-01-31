@@ -108,6 +108,11 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 			trash: __( 'Trashed' ),
 		}
 
+		const orders = {
+			ASC: __('Ascending'),
+			DESC: __('Descending')
+		}
+
 		const displays = {
 			'': __( 'List' ),
 			'thumb': __( 'Post Thumbnails' )
@@ -141,6 +146,13 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					value={ query.orderby }
 					defaultValue={ defaultQuery.orderby }
 					onChange={ value => setQuery( { ...query, orderby: value } ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Order' ) }
+					items={ orders }
+					value={ query.order }
+					defaultValue={ defaultState.query.order }
+					onChange={ value => setQuery( { ...query, order: value } ) }
 				/>
 				<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
