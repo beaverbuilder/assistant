@@ -5,7 +5,7 @@ const Image = () => {}
 Image.Video = () => (
     <svg width="75" height="55" viewBox="0 0 75 55" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="1" width="73" height="53" rx="10" stroke="currentColor" strokeWidth="2" fill="none" />
-        <path d="M45.5 27.134C46.1667 27.5189 46.1667 28.4811 45.5 28.866L35 34.9282C34.3333 35.3131 33.5 34.832 33.5 34.0622L33.5 21.9378C33.5 21.168 34.3333 20.6869 35 21.0718L45.5 27.134Z" stroke="currentColor" strokeWidth="2"/>
+        <path d="M45.5 27.134C46.1667 27.5189 46.1667 28.4811 45.5 28.866L35 34.9282C34.3333 35.3131 33.5 34.832 33.5 34.0622L33.5 21.9378C33.5 21.168 34.3333 20.6869 35 21.0718L45.5 27.134Z" stroke="currentColor" strokeWidth="2" fill="none"/>
     </svg>
 )
 

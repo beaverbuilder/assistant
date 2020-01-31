@@ -361,7 +361,8 @@ export const Post = ( { location, match, history } ) => {
 			display: 'flex',
 			flexDirection: 'row',
 			justifyContent: 'space-evenly',
-			margin: '10px 0 0'
+			margin: '10px 0 0',
+			flex: '0 0 auto',
 		} } >
 			{ ! isCurrentPage() && (
 				<Button
