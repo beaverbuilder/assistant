@@ -14,6 +14,11 @@
     }
     .fl-asst-grid-list-item {
 
+        &.fl-asst-grid-item-is-favorite {
+            grid-column-end: span 2;
+            grid-row-end: span 2;
+        }
+
         .fl-asst-item-extras {
             top: auto;
             bottom:5px;

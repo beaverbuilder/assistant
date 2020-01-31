@@ -129,7 +129,8 @@ const Attachments = ( {
 					extras: () => <Extras />,
 					marks: getMarks( item ),
 					className: classname( {
-						['fl-asst-grid-list-item']: 'grid' === listStyle
+						['fl-asst-grid-list-item']: 'grid' === listStyle,
+						'fl-asst-grid-item-is-favorite' : item.isFavorite,
 					}, defaultProps.className ),
 					children: 'grid' === listStyle ? props => <GridItem item={ item } { ...props } /> : defaultProps.children,
 				}

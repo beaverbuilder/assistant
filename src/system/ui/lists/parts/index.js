@@ -227,14 +227,44 @@ const Section = ( {
 	)
 }
 
+const MessageBox = ({ children, ...rest }) => {
+	return (
+		<div style={{
+			padding: 'var(--fluid-sm-space)',
+			flex: '0 0 auto',
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center'
+		}}>
+			<Layout.Box
+				{...rest}
+				style={{
+					background: 'var(--fluid-primary-background)',
+					color: 'var(--fluid-primary-color)',
+					borderRadius: '7px',
+					display: 'flex',
+					alignItems: 'center',
+					padding: 'var(--fluid-med-space)'
+				}}
+			>{children}</Layout.Box>
+		</div>
+	)
+}
+
 export const Loading = () => {
 	return (
-		<Layout.Box>{__( 'Loading...' )}</Layout.Box>
+		<MessageBox>{__( 'Loading...' )}</MessageBox>
 	)
 }
 
 export const NoResultsMessage = () => {
 	return (
-		<Layout.Box>{__( 'Nothing found.' )}</Layout.Box>
+		<MessageBox>{__( 'Nothing Results Found' )}</MessageBox>
+	)
+}
+
+export const EndMessage = () => {
+	return (
+		<MessageBox>{__( 'End Of Results')}</MessageBox>
 	)
 }
