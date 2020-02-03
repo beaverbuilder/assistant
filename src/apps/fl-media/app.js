@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, List, Filter } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'

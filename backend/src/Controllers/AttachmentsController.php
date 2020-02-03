@@ -53,6 +53,20 @@ class AttachmentsController extends ControllerAbstract
 						return current_user_can('edit_published_posts');
 					},
 				],
+
+			]
+		);
+
+		$this->route(
+			'/attachments/upload',
+			[
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [$this, 'upload_media'],
+					'permission_callback' => function () {
+						return current_user_can('edit_published_posts');
+					},
+				],
 			]
 		);
 
@@ -176,7 +190,7 @@ class AttachmentsController extends ControllerAbstract
 
 		$args = $request->get_params();
 
-		switch ( $args['post_mime_type'] ) {
+		switch ($args['post_mime_type']) {
 			case 'spreadsheets':
 				$args['post_mime_type'] = 'pplication/vnd.apple.numbers,application/vnd.oasis.opendocument.spreadsheet,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12';
 				break;
@@ -199,8 +213,8 @@ class AttachmentsController extends ControllerAbstract
 				break;
 		}
 
-		return $this->attachments->paginate( $args )
-			->apply_transform( $this->transformer )
+		return $this->attachments->paginate($args)
+			->apply_transform($this->transformer)
 			->to_rest_response();
 	}
 
@@ -301,5 +315,16 @@ class AttachmentsController extends ControllerAbstract
 				'data'    => $attachment,
 			]
 		);
+	}
+
+
+	/**
+	 * Creates a single post.
+	 */
+	public function upload_media($request)
+	{
+		$data = $request->get_params();
+print_r($data);
+exit;
 	}
 }

@@ -1,0 +1,54 @@
+.fl-asst-file-drop {
+    flex: 1 1 auto;
+}
+
+.fl-asst-file-drop-content-view {
+
+	display: block
+}
+
+.fl-asst-file-drop-dragging-view {
+    display: flex;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    background: #fff;
+    opacity: 0;
+	pointer-events: none;
+	max-height: 100%;
+}
+
+.fl-asst-file-drop-is-dragging {
+    .fl-asst-file-drop-dragging-view {
+        opacity: 1;
+        pointer-events: none;
+    }
+    .fl-asst-file-drop-content-view {
+		pointer-events: none;
+		display: none
+    }
+}
+
+.fl-asst-file-uploading {
+	opacity: 1;
+
+	.fl-asst-file-uploading-text {
+		svg {
+			position: relative;
+			margin: 0 2px 0 0;
+			top: 2px;
+		}
+	}
+}
+
+.fl-asst-file-drop-file-wrapper{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 20px;
+    flex: 1 1 auto;
+    font-size: 1.2em;
+}

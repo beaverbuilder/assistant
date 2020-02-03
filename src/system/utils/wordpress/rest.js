@@ -3,6 +3,7 @@ import axios from 'axios'
 import { setupCache } from 'axios-cache-adapter'
 import qs from 'qs'
 
+
 const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 
 /**
@@ -43,7 +44,7 @@ const cache = setupCache( {
  *
  * @type {AxiosInstance}
  */
-const http = axios.create( {
+export const http = axios.create( {
 	baseURL: apiRoot,
 	headers: {
 		common: {
@@ -52,6 +53,7 @@ const http = axios.create( {
 	},
 	adapter: cache.adapter,
 } )
+
 
 /**
  * The main interface for making REST requests.
@@ -71,6 +73,7 @@ export const getWpRest = () => {
 		getContent
 	}
 }
+
 
 /**
  * Methods related to posts
@@ -337,7 +340,19 @@ const attachments = () => {
 				action,
 				data,
 			}, config )
-		}
+		},
+
+		/**
+		 * Create a new post
+		 * @param data
+		 * @param config
+		 */
+		create( filename, file = {}, config = {} ) {
+
+			console.log( file )
+			config.cacheKey = 'attachments'
+			return http.post( 'fl-assistant/v1/attachments/upload', filename, file = {}, config )
+		},
 	}
 }
 
