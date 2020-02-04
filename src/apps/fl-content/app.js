@@ -27,12 +27,14 @@ const Main = () => {
 			}
 		]
 		Object.keys( contentTypes ).map( key => {
+
 			const type = contentTypes[key]
 			tabs.push( {
 				handle: key,
 				path: '/fl-content/tab/' + key,
-				label: type.labels.singular,
+				label: type.labels.plural,
 				component: () => <PostTypeTab type={ key } />,
+				showButton: type.builtin
 			} )
 		} )
 
@@ -41,7 +43,7 @@ const Main = () => {
 
 	const Header = () => {
 		return (
-			<div style={ { flexDirection: 'column' } }>
+			<div style={ { flex: '1 1 auto', display: 'flex', flexDirection: 'column' } }>
 				<Nav.Tabs tabs={ tabs } />
 			</div>
 		)

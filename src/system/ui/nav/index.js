@@ -10,13 +10,15 @@ Nav.Tabs = ( { tabs = [] } ) => {
 		<>
 			<Button.Group appearance="tabs">
 				{ tabs.map( ( tab, i ) => {
-					return (
+					const { showButton = true, path, label, ...rest } = tab
+					return showButton && (
 						<Button
 							key={ i }
-							isSelected={ location.pathname === tab.path }
-							onClick={ () => history.replace( tab.path, {} ) }
+							isSelected={ location.pathname === path }
+							onClick={ () => history.replace( path, {} ) }
+							{ ...rest }
 						>
-							{ tab.label }
+							{ label }
 						</Button>
 					)
 				} ) }

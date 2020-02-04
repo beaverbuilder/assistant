@@ -317,6 +317,7 @@ export const Comment = ( { location } ) => {
 					display: 'flex',
 					flexDirection: 'row',
 					justifyContent: 'space-evenly',
+					flex: '0 0 auto',
 					margin: '10px 0 20px'
 				} }
 			>

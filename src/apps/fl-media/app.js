@@ -37,6 +37,11 @@ const Main = ( { match } ) => {
 			grid: __( 'Grid' ),
 		}
 
+		const orders = {
+			ASC: __('Ascending'),
+			DESC: __('Descending')
+		}
+
 		const resetFilter = () => {
 			setQuery( defaultState.query )
 			setListStyle( defaultState.listStyle )
@@ -52,6 +57,13 @@ const Main = ( { match } ) => {
 					onChange={ value => { /* Set State */ } }
 				/>
 				<Filter.RadioGroupItem
+					title={ __( 'Display As' ) }
+					items={ listStyles }
+					value={ listStyle }
+					defaultValue={ defaultState.listStyle }
+					onChange={ value => setListStyle( value ) }
+				/>
+				<Filter.RadioGroupItem
 					title={ __( 'Sort By' ) }
 					items={ sorts }
 					value={ query.orderby }
@@ -59,11 +71,11 @@ const Main = ( { match } ) => {
 					onChange={ value => setQuery( { ...query, orderby: value } ) }
 				/>
 				<Filter.RadioGroupItem
-					title={ __( 'Display As' ) }
-					items={ listStyles }
-					value={ listStyle }
-					defaultValue={ defaultState.listStyle }
-					onChange={ value => setListStyle( value ) }
+					title={ __( 'Order' ) }
+					items={ orders }
+					value={ query.order }
+					defaultValue={ defaultState.query.order }
+					onChange={ value => setQuery( { ...query, order: value } ) }
 				/>
 				<Filter.Button onClick={ resetFilter }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
