@@ -1,5 +1,6 @@
 import Icon from './icon'
+import Image from './image'
 
-export { Icon }
+export { Icon, Image }
 
 export * from './color'

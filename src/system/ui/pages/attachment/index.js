@@ -7,7 +7,6 @@ import { getSystemActions } from 'data'
 
 export const Attachment = ( { location, history } ) => {
 	const { item } = location.state
-	const srcSet = getSrcSet( item.sizes )
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 	const {
@@ -92,7 +91,7 @@ export const Attachment = ( { location, history } ) => {
 				description: {
 					label: __( 'Description' ),
 					component: 'textarea',
-					rows: 2,
+					rows: 4,
 				},
 				filesize: {
 					label: __( 'File size' ),
@@ -172,7 +171,33 @@ export const Attachment = ( { location, history } ) => {
 		defaults,
 	} )
 
-	const Hero = () => <img src={ item.thumbnail } srcSet={ srcSet } />
+	const Hero = () => {
+		const { width, sizes, height, alt } = item
+		const srcSet = getSrcSet( sizes )
+		const heightPercentage = ( height / width ) * 100
+
+		const style = {
+			position: 'relative',
+			boxSizing: 'border-box',
+			paddingTop: heightPercentage ? heightPercentage + '%' : '50%',
+			background: 'var(--fluid-primary-background)'
+		}
+
+		return (
+			<div style={style}>
+				<div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+					<img
+						src={ item.thumbnail }
+						srcSet={ srcSet }
+						height={height}
+						width={width}
+						alt={alt}
+						loading="lazy"
+					/>
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<Page title={ __( 'Attachment' ) } hero={ <Hero /> } footer={ hasChanges && <Footer /> }>

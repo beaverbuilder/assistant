@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { CancelToken, isCancel } from 'axios'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { List, Button, Icon } from 'ui'
-import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'utils/wordpress'
+import { getSrcSet } from 'utils/image'
 import { getSystemConfig } from 'data'
 
 export const Posts = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {},
+	listStyle = 'list',
 	...rest
 } ) => {
 	const [ labels, setLabels ] = useState( {} )
@@ -128,6 +129,8 @@ export const Posts = ( {
 					}
 				}
 
+				const isCurrentPage = () => item.url === window.location.href
+
 				const Accessory = () => {
 					if ( item.isTrashed ) {
 						return <Button onClick={ restorePost } tabIndex="-1">{__( 'Restore' )}</Button>
@@ -139,23 +142,41 @@ export const Posts = ( {
 					if ( item.isCloning || item.isTrashing || item.isTrashed || item.isRestoring ) {
 						return null
 					}
+
 					return (
 						<div className="fl-asst-item-extras">
-							<Button
-								title={ __( 'View Post' ) }
-								tabIndex="-1"
-								href={ item.url }
-								appearance="transparent"
-							>
-								<Icon.View />
-							</Button>
-							<Clipboard
-								button-tabIndex={ '-1' }
-								button-className={ 'fluid-button fluid-appearance-transparent' }
-								data-clipboard-text={ item.url }
-							>
-								<Icon.Link />
-							</Clipboard>
+							{ ! isCurrentPage() && (
+								<Button
+									title={ __( 'View Post' ) }
+									tabIndex="-1"
+									href={ item.url }
+									appearance="transparent"
+								>
+									<Icon.View />
+								</Button>
+							)}
+							{ item.editUrl && (
+								<Button
+									title={ __( 'Edit in Admin' ) }
+									tabIndex="-1"
+									href={ item.editUrl }
+									appearance="transparent"
+								>
+									<Icon.Edit />
+								</Button>
+							)}
+							{ item.bbCanEdit && (
+								<Button
+									title={ sprintf( 'Edit in %s', item.bbBranding ) }
+									tabIndex="-1"
+									href={ item.bbEditUrl }
+									appearance="transparent"
+									status={ item.bbIsEnabled ? 'primary' : '' }
+								>
+									<Icon.Beaver />
+									{ item.bbIsEnabled && <span className="fl-asst-extra-dot" /> }
+								</Button>
+							)}
 							<Button
 								onClick={ favoritePost }
 								tabIndex="-1"
@@ -239,14 +260,13 @@ export const Posts = ( {
 					return marks
 				}
 
-				const isCurrentPage = () => item.url === location.href
-
 				return getItemProps( item, {
 					...defaultProps,
 					label: <Title />,
 					description: getDescription(),
-					thumbnail: item.thumbnail,
+					thumbnail: 'thumb' !== listStyle && item.thumbnail,
 					thumbnailSize,
+					shouldAlwaysShowThumbnail: 'thumb' !== listStyle,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
 					className: classname( {
@@ -257,10 +277,45 @@ export const Posts = ( {
 						'fl-asst-is-transitioning': ( item.isCloning || item.isTrashing || item.isRestoring ),
 						'fl-asst-is-current-page': isCurrentPage(),
 					}, defaultProps.className ),
-					marks: getMarks( item )
+					marks: getMarks( item ),
+					before: 'thumb' === listStyle && <BigThumbnail item={ item } />
 				} )
 			} }
 			{ ...rest }
 		/>
+	)
+}
+
+const BigThumbnail = ( { item } ) => {
+	if ( ! item.postThumbnail ) {
+		return null
+	}
+
+	const { thumbnail, sizes, alt, title, height, width } = item.postThumbnail
+	const srcset = getSrcSet( sizes )
+	const style = {
+		boxSizing: 'border-box',
+		position: 'relative',
+		overflow: 'hidden',
+		paddingTop: ( height / width ) * 100 + '%',
+		background: 'var(--fluid-box-background)'
+	}
+	// This sets up an aspect-ratio box around the image to prevent height changing during img load
+	return (
+		<div style={{ padding: '0 var(--fluid-lg-space) var(--fluid-med-space)' }}>
+			<div style={ style }>
+				<div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+					<img
+						src={ thumbnail }
+						srcSet={ srcset }
+						alt={ alt }
+						title={ title }
+						height={ height }
+						width={ width }
+						loading="lazy"
+					/>
+				</div>
+			</div>
+		</div>
 	)
 }

@@ -150,8 +150,9 @@ class PostsRepository extends RepositoryAbstract {
 				'canExport'      => $type->can_export,
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,
+				'builtin'        => $type->_builtin,
 				'templates'      => get_page_templates( null, $slug ),
-				'taxonomies'     => [],
+				'taxonomies'     => $type->taxonomies,
 				'supports'       => [
 					'comments'   => post_type_supports( $slug, 'comments' ),
 					'trackbacks' => post_type_supports( $slug, 'trackbacks' ),
