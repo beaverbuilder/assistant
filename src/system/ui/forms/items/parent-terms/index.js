@@ -88,8 +88,8 @@ export const ParentTermItems = ( {
 				{ ...rest }
 			>
 
-				{Object.entries( options ).map( ( [ value, label ] ) => (
-					<option value={ value.replace( ' ', '' ) }>{label}</option>
+				{Object.entries( options ).map( ( [ value, label ], i ) => (
+					<option key={ i } value={ value.replace( ' ', '' ) }>{label}</option>
 				) )}
 			</select>
 		)
