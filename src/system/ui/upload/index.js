@@ -5,8 +5,6 @@ import { getWpRest } from 'utils/wordpress'
 import './style.scss'
 import { FileDropListener } from './drop-listner'
 
-console.log(registerStore)
-
 registerStore( 'fl-media/uploader', {
 	state: {
 		current: 0,
