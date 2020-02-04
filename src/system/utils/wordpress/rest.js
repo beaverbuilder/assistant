@@ -44,7 +44,7 @@ const cache = setupCache( {
  *
  * @type {AxiosInstance}
  */
-export const http = axios.create( {
+const http = axios.create( {
 	baseURL: apiRoot,
 	headers: {
 		common: {
@@ -343,15 +343,12 @@ const attachments = () => {
 		},
 
 		/**
-		 * Create a new post
+		 * Upload media
 		 * @param data
 		 * @param config
 		 */
-		create( filename, file = {}, config = {} ) {
-
-			console.log( file )
-			config.cacheKey = 'attachments'
-			return http.post( 'fl-assistant/v1/attachments/upload', filename, file = {}, config )
+		create( file ) {
+			return http.post( 'wp/v2/media/', file)
 		},
 	}
 }

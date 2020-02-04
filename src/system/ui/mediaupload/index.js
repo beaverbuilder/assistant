@@ -1,14 +1,14 @@
 import React from 'react'
-import { http } from 'utils/wordpress'
 import { Icon } from 'ui'
 import { createStoreRegistry } from 'fluid/data'
+import { getWpRest } from 'utils/wordpress'
 import './style.scss'
 
 
 export const {
-	registerStore,
 	useStore,
 	getStore,
+	registerStore,
 	getDispatch,
 	getSelectors
 } = createStoreRegistry()
@@ -25,7 +25,7 @@ export const MediaDropUploader = ( { children } ) => {
 
 	const { current, items } = useStore( 'fl-media/uploader' )
 	const { setCurrent, setItems } = getDispatch( 'fl-media/uploader' )
-
+	const wpRest = getWpRest()
 	const onFilesDropped = files => {
 		const { current, items } = getStore( 'fl-media/uploader' ).getState()
 
@@ -57,11 +57,13 @@ export const MediaDropUploader = ( { children } ) => {
 
 		data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
 
-		http.post( 'wp/v2/media/', data ).then( () => {
-
+		wpRest.attachments().create(data).then( response => {
 			onSuccess()
+		} ).catch( ( error ) => {
+			onError()
+		} )
 
-		} ).catch( onError )
+
 	}
 
 
