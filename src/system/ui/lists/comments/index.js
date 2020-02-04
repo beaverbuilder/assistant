@@ -21,9 +21,9 @@ export const Comments = ( {
 			getItemProps={ ( item, defaultProps ) => {
 
 				const { updateItem } = defaultProps
-				const [ approveStatus, set_approveStatus ] = useState( item.approved )
-				const [ trashStatus, set_trashStatus ] = useState( item.trash )
-				const [ spamStatus, set_spamStatus ] = useState( item.spam )
+				const [ approveStatus, setApproveStatus ] = useState( item.approved )
+				const [ trashStatus, setTrashStatus ] = useState( item.trash )
+				const [ spamStatus, setSpamStatus ] = useState( item.spam )
 
 				const approveComment = () => {
 					comments
@@ -32,7 +32,7 @@ export const Comments = ( {
 						.then( response => {
 							if ( '1' == response.data.commentData.comment_approved ) {
 								item.approved = true
-								set_approveStatus( true )
+								setApproveStatus( true )
 							}
 						} )
 				}
@@ -44,7 +44,7 @@ export const Comments = ( {
 						.then( response => {
 							if ( '0' == response.data.commentData.comment_approved ) {
 								item.approved = false
-								set_approveStatus( false )
+								setApproveStatus( false )
 							}
 						} )
 				}
@@ -55,7 +55,7 @@ export const Comments = ( {
 						.update( item.id, 'spam', item )
 						.then( () => {
 							item.spam = true
-							set_spamStatus( true )
+							setSpamStatus( true )
 							updateItem( item.uuid, {
 								title: __( 'This item has been moved to the spam' ),
 								isSpam: true,
@@ -70,7 +70,7 @@ export const Comments = ( {
 						.update( item.id, 'unspam', item )
 						.then( () => {
 							item.spam = false
-							set_spamStatus( false )
+							setSpamStatus( false )
 							updateItem( item.uuid, {
 								title: __( 'This item has been restored from spam' ),
 								isSpam: false,
@@ -89,12 +89,12 @@ export const Comments = ( {
 
 								if ( 'trash' == response.data.commentData.comment_approved ) {
 									item.trash = true
-									set_trashStatus( true )
+									setTrashStatus( true )
 									updateItem( item.uuid, {
 										title: __( 'This item has been moved to the trash' ),
 										isTrashing: true,
 										isTrashed: true,
-										isrestore: false
+										isRestore: false
 									} )
 								}
 							} )
@@ -109,12 +109,12 @@ export const Comments = ( {
 						.then( () => {
 
 							item.trash = false
-							set_trashStatus( false )
+							setTrashStatus( false )
 							updateItem( item.uuid, {
 								title: __( 'This item has been restored from trash' ),
 								isTrashing: false,
 								isTrashed: false,
-								isrestore: true
+								isRestore: true
 							} )
 						} )
 				}
@@ -228,7 +228,7 @@ export const Comments = ( {
 					label: ( item.isTrashing && 'trash' !== type ) ||
 						( item.isSpam && 'spam' !== type ) ||
 						( item.isunSpam && 'spam' == type ) ||
-						( item.isrestore && 'trash' == type ) ?
+						( item.isRestore && 'trash' == type ) ?
 						item.title :
 						(
 							<em>
@@ -238,15 +238,14 @@ export const Comments = ( {
 					description: ( item.isTrashing && 'trash' !== type ) ||
 						( item.isSpam && 'spam' !== type ) ||
 						( item.isunSpam && 'spam' == type ) ||
-						( item.isrestore && 'trash' == type ) ?
+						( item.isRestore && 'trash' == type ) ?
 						''						:
 						truncate( item.content.replace( /<\/?[^>]+(>|$)/g, '' ), 80 ),
-					thumbnail: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isrestore && 'trash' == type ) ? '' : item.thumbnail,
+					thumbnail: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isRestore && 'trash' == type ) ? '' : item.thumbnail,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
 
 					className: classname( {
-						'test-class-name': true,
 						'fl-asst-list-item-alert': ! approveStatus
 					}, defaultProps.className )
 				} )

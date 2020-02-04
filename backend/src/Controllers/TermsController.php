@@ -59,6 +59,19 @@ class TermsController extends ControllerAbstract {
 			]
 		);
 
+
+		$this->route(
+			'/terms/get_parent_terms', [
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ $this, 'get_parent_terms' ],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_published_posts' );
+					},
+				],
+			]
+		);
+
 		$this->route(
 			'/terms/count', [
 				[
@@ -139,7 +152,9 @@ class TermsController extends ControllerAbstract {
 				}
 				$children[ $term->parent ][] = $term;
 			}
+			$response[]     = $term;
 		}
+
 
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
@@ -150,6 +165,46 @@ class TermsController extends ControllerAbstract {
 
 		return rest_ensure_response( array_map( $this->transformer, $response ) );
 	}
+
+
+
+	/**
+	 * Returns an array of parent terms and related data
+	 * parent term's data array.
+	 * @param WP_REST_Request $request
+	 * @return mixed|WP_REST_Response
+	 */
+	public function get_parent_terms( WP_REST_Request $request ) {
+		$response = [];
+		$params   = $request->get_params();
+		$terms    = $this->terms->find_where( $params );
+
+
+		foreach ( $terms as $term ) {
+			if ( $term->parent ) {
+				if ( ! isset( $children[ $term->parent ] ) ) {
+					$children[ $term->parent ] = [];
+				}
+				$children[ $term->parent ][] = $term;
+			}
+			if ( $term->parent != $params['current']) {
+				$response[] = $term;
+			}
+		}
+
+
+		foreach ( $terms as $term ) {
+			if ( ! $term->parent ) {
+				$term->children = $this->terms->get_child_terms( $term, $children, $this->transformer );
+				$response[]     = $term;
+			}
+
+		}
+
+		return rest_ensure_response( array_map( $this->transformer, $response ) );
+	}
+
+
 
 
 	/**
