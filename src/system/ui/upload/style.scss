@@ -1,5 +1,7 @@
 .fl-asst-file-drop {
+	display: flex;
     flex: 1 1 auto;
+	overflow: scroll;
 }
 
 .fl-asst-file-drop-content-view {
