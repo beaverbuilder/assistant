@@ -1,18 +1,11 @@
 import React from 'react'
 import { Icon } from 'ui'
-import { createStoreRegistry } from 'fluid/data'
+import { registerStore, useStore, getStore, getDispatch } from 'data/registry'
 import { getWpRest } from 'utils/wordpress'
 import './style.scss'
-
-
-export const {
-	useStore,
-	getStore,
-	registerStore,
-	getDispatch,
-	getSelectors
-} = createStoreRegistry()
 import { FileDropListener } from './drop-listner'
+
+console.log(registerStore)
 
 registerStore( 'fl-media/uploader', {
 	state: {
