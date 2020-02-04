@@ -362,8 +362,9 @@ const attachments = () => {
 		 * @param data
 		 * @param config
 		 */
-		create( file ) {
-			return http.post( 'wp/v2/media/', file)
+		create( file, config = {} ) {
+			config.cacheKey = 'attachments'
+			return http.post( 'wp/v2/media/', file, config )
 		},
 	}
 }
