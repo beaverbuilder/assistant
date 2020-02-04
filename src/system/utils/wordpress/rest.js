@@ -202,6 +202,7 @@ const users = () => {
  * Methods related to terms
  */
 const terms = () => {
+
 	return {
 
 		/**
@@ -212,6 +213,20 @@ const terms = () => {
 		hierarchical( params, config = {} ) {
 			config.cacheKey = 'terms'
 			return http.get( 'fl-assistant/v1/terms/hierarchical', {
+				params,
+				...config
+			} )
+		},
+
+
+		/**
+		 * Get parent list of terms by query
+		 * @param params
+		 * @param config
+		 */
+		getParentTerms( params, config = {} ) {
+			config.cacheKey = 'terms'
+			return http.get( 'fl-assistant/v1/terms/get_parent_terms', {
 				params,
 				...config
 			} )
