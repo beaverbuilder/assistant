@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
-import { List, Button, Icon, Image } from 'ui'
+import { List, Button, Icon, Image, MediaDropUploader } from 'ui'
+import Clipboard from 'react-clipboard.js'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import './style.scss'
@@ -46,23 +47,45 @@ const Attachments = ( {
 		'fl-asst-attachment-list' : true,
 	}, className )
 
-	return (
-		<List.WordPress
-			type="attachments"
-			className={ classes }
-			getItemProps={ ( item, defaultProps ) => {
 
-				const Extras = () => (
-					<div className="fl-asst-item-extras">
-						<Button
-							title={ __( 'View Attachment Page' ) }
-							tabIndex="-1"
-							href={ item.url }
-							appearance="transparent"
-						>
-							<Icon.View />
-						</Button>
-						<Button
+	return (
+		<MediaDropUploader>
+			<List.WordPress
+				type="attachments"
+				className={ classes }
+				getItemProps={ ( item, defaultProps ) => {
+					const { updateItem } = defaultProps
+					const trashItem = () => {
+						if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
+
+					 wpRest.attachments().update( item.id, 'trash' ).then( () => {
+								updateItem( item.uuid, {
+									title: __( 'This item has been deleted!' ),
+									isTrashing: true,
+									isTrashed: true,
+								} )
+							} )
+
+						}
+					}
+					const Extras = () => (
+						<div className="fl-asst-item-extras">
+							<Button
+								title={ __( 'View Attachment Page' ) }
+								tabIndex="-1"
+								href={ item.url }
+								appearance="transparent"
+							>
+								<Icon.View />
+							</Button>
+							<Clipboard
+								button-tabIndex={ '-1' }
+								button-className={ 'fluid-button fluid-appearance-transparent' }
+								data-clipboard-text={ item.url }
+							>
+								<Icon.Link />
+							</Clipboard>
+							<Button
 							title={ __( 'Edit in Admin' ) }
 							tabIndex="-1"
 							href={ item.editUrl }
@@ -70,73 +93,83 @@ const Attachments = ( {
 						>
 							<Icon.Edit />
 						</Button>
-					</div>
-				)
+							<Button
+								onClick={ trashItem }
+								tabIndex="-1"
+								title={ __( 'Move to Trash' ) }
+								status='destructive'
+								appearance="transparent"
+							>
+								<Icon.Trash />
+							</Button>
+						</div>
+					)
 
-				const getMarks = item => {
-					const marks = []
+					const getMarks = item => {
+						const marks = []
 
-					if ( 'labels' in item && 0 < item.labels.length ) {
+						if ( 'labels' in item && 0 < item.labels.length ) {
 
-						item.labels.map( id => {
-							if ( id in labels ) {
-								const { color, label } = labels[id]
-								marks.push(
-									<span
-										className="fl-asst-list-item-color-mark"
-										style={ { background: color } }
-										title={ label }
-									></span>
-								)
-							}
-						} )
+							item.labels.map( id => {
+								if ( id in labels ) {
+									const { color, label } = labels[id]
+									marks.push(
+										<span
+											className="fl-asst-list-item-color-mark"
+											style={ { background: color } }
+											title={ label }
+										></span>
+									)
+								}
+							} )
+						}
+
+						if ( 'isFavorite' in item && item.isFavorite ) {
+							marks.push(
+								<span>
+									<Icon.Bookmark style={ { height: 12, width: 12, marginTop: 2 } } />
+								</span>
+							)
+						}
+
+						return marks
 					}
 
-					if ( 'isFavorite' in item && item.isFavorite ) {
-						marks.push(
-							<span>
-								<Icon.Bookmark style={ { height: 12, width: 12, marginTop: 2 } } />
-							</span>
+					const ThumbIcon = () => {
+						const { type } = item
+						return (
+							<div style={{ padding: 5 }}>
+								{ 'video' === type && <Icon.Video /> }
+								{ 'audio' === type && <Icon.Audio /> }
+								{ 'application' === type && 'pdf' !== item.subtype && (
+									<Icon.Document />
+								)}
+							</div>
 						)
 					}
 
-					return marks
-				}
-
-				const ThumbIcon = () => {
-					const { type } = item
-					return (
-						<div style={{ padding: 5 }}>
-							{ 'video' === type && <Icon.Video /> }
-							{ 'audio' === type && <Icon.Audio /> }
-							{ 'application' === type && 'pdf' !== item.subtype && (
-								<Icon.Document />
-							)}
-						</div>
-					)
-				}
-
-				return {
-					...defaultProps,
-					thumbnail: null !== item.thumbnail ? item.thumbnail : <ThumbIcon />,
-					shouldAlwaysShowThumbnail: true,
-					label: item.title ? item.title : item.filename,
-					description: item.type + ' | ' + item.subtype,
-					to: {
-						pathname: `${baseURL}/attachment/${item.id}`,
-						state: { item }
-					},
-					extras: () => <Extras />,
-					marks: getMarks( item ),
-					className: classname( {
-						['fl-asst-grid-list-item']: 'grid' === listStyle,
-						'fl-asst-grid-item-is-favorite' : item.isFavorite,
-					}, defaultProps.className ),
-					children: 'grid' === listStyle ? props => <GridItem item={ item } { ...props } /> : defaultProps.children,
-				}
-			} }
-			{ ...rest }
-		/>
+					return {
+						...defaultProps,
+						thumbnail: item.isTrashed ? '' : (null !== item.thumbnail ? item.thumbnail : <ThumbIcon />),
+						shouldAlwaysShowThumbnail: true,
+						label: item.title ? item.title : __( 'Untitled' ),
+						description: item.isTrashed ? '' : item.type + ' | ' + item.subtype,
+						to: item.isTrashed ? '' : {
+							pathname: `${baseURL}/attachment/${item.id}`,
+							state: { item }
+						},
+						extras: () =>  item.isTrashed ? '' : <Extras />,
+						marks: getMarks( item ),
+						className: classname( {
+							['fl-asst-grid-list-item']: 'grid' === listStyle,
+							'fl-asst-grid-item-is-favorite' : item.isFavorite,
+						}, defaultProps.className ),
+						children: 'grid' === listStyle ? props => <GridItem item={ item } { ...props } /> : defaultProps.children,
+					}
+				} }
+				{ ...rest }
+			/>
+		</MediaDropUploader>
 	)
 }
 

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { setupCache } from 'axios-cache-adapter'
 import qs from 'qs'
 
+
 const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
 
 /**
@@ -53,6 +54,7 @@ const http = axios.create( {
 	adapter: cache.adapter,
 } )
 
+
 /**
  * The main interface for making REST requests.
  */
@@ -71,6 +73,7 @@ export const getWpRest = () => {
 		getContent
 	}
 }
+
 
 /**
  * Methods related to posts
@@ -352,7 +355,17 @@ const attachments = () => {
 				action,
 				data,
 			}, config )
-		}
+		},
+
+		/**
+		 * Upload media
+		 * @param data
+		 * @param config
+		 */
+		create( file, config = {} ) {
+			config.cacheKey = 'attachments'
+			return http.post( 'wp/v2/media/', file, config )
+		},
 	}
 }
 
