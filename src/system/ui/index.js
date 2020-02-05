@@ -12,7 +12,7 @@ import { Error } from './errors'
 import { Control, Filter } from './controls'
 import { Form } from './forms'
 import { Table } from './table'
-import { MediaDropUploader } from './mediaupload'
+import { MediaDropUploader } from './upload'
 
 // Export for use inside system bundle - import from 'ui'
 export * from './app'
@@ -27,7 +27,7 @@ export * from './errors'
 export * from './controls'
 export * from './forms'
 export * from './table'
-export * from './mediaupload'
+export * from './upload'
 export { Layout }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
