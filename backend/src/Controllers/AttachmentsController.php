@@ -204,10 +204,6 @@ class AttachmentsController extends ControllerAbstract
 				$args['post_author'] = 1;
 				$args['post_mime_type'] = '';
 				break;
-			case 'detached':
-				$args['post_parent'] = 0;
-				$args['post_mime_type'] = '';
-				break;
 			case 'all':
 				$args['post_mime_type'] = '';
 				break;
@@ -253,12 +249,40 @@ class AttachmentsController extends ControllerAbstract
 		$id     = $request->get_param('id');
 		$action = $request->get_param('action');
 
+
 		if (!current_user_can('edit_post', $id)) {
 			return rest_ensure_response(['error' => true]);
 		}
 
 		$deprecated = 'This route is deprecated. ';
 		switch ($action) {
+			case 'data':
+				$data = (array) $request->get_param( 'data' );
+				if ( isset( $data['meta'] ) ) {
+					if ( isset( $data['meta']['alt'] ) ) {
+						update_post_meta( $id, '_wp_attachment_image_alt', $data['meta']['alt'] );
+					} else {
+						wp_update_post(
+							array_merge(
+								$data,
+								[
+									'ID' => $id,
+								]
+							)
+						);
+					}
+
+					unset( $data['meta'] );
+				}
+				wp_update_post(
+					array_merge(
+						$data,
+						[
+							'ID' => $id,
+						]
+					)
+				);
+				break;
 			case 'trash':
 				wp_delete_attachment($id);
 				$deprecated .= "Please use 'DELETE /attachments/delete/{id}";
@@ -315,16 +339,5 @@ class AttachmentsController extends ControllerAbstract
 				'data'    => $attachment,
 			]
 		);
-	}
-
-
-	/**
-	 * Creates a single post.
-	 */
-	public function upload_media($request)
-	{
-		$data = $request->get_params();
-print_r($data);
-exit;
 	}
 }
