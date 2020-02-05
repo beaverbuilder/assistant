@@ -91,7 +91,7 @@ export const FileDropListener = props => {
 		<Fragment>
 			<div { ...merged }>
 				<div className="fl-asst-file-drop-content-view">{children}</div>
-				<div className="fl-asst-file-drop-dragging-view">{draggingView}</div>
+				{ isDragging && <div className="fl-asst-file-drop-dragging-view">{draggingView}</div> }
 			</div>
 		</Fragment>
 	)
