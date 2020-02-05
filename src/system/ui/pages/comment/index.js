@@ -177,7 +177,7 @@ export const Comment = ( { location } ) => {
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button
-					className='cmt-updt-btn'
+					className='fl-asst-cmt-updt-btn'
 					type='submit'
 					status='primary'
 					onClick={ updateContent }
@@ -215,12 +215,12 @@ export const Comment = ( { location } ) => {
 	const ReplyCommentBtn = () => {
 		return (
 			<div className='cmt-btn-wrap'>
-				<Button className='cmt-cncl-btn' onClick={ resetReply }>
+				<Button className='fl-asst-cmt-cncl-btn' onClick={ resetReply }>
 					{__( 'Cancel' )}
 				</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button
-					className='cmt-updt-btn'
+					className='fl-asst-cmt-updt-btn'
 					type='submit'
 					status='primary'
 					onClick={ replyCommentpost }
@@ -289,10 +289,10 @@ export const Comment = ( { location } ) => {
 				/>
 			)}
 			{'edit' == commentStatus && (
-				<div className='cmt-text-wrap'>
+				<div className='fl-asst-cmt-text-wrap'>
 					<span className="edit-comment-title">Edit Comment</span>
 					<textarea
-						className="comment-text"
+						className="fl-asst-comment-text"
 						value={ editContent }
 						onChange={ e => setEditContent( e.target.value ) }
 						rows={ 6 }
@@ -301,10 +301,10 @@ export const Comment = ( { location } ) => {
 				</div>
 			)}
 			{'reply' == commentStatus && (
-				<div className='cmt-text-wrap'>
-					<span className="edit-comment-title">Reply Comment</span>
+				<div className='fl-asst-cmt-text-wrap'>
+					<span className="fl-asst-edit-comment-title">Reply Comment</span>
 					<textarea
-						className="comment-text"
+						className="fl-asst-comment-text"
 						value={ replyValue }
 						onChange={ e => setreplyValue( e.target.value ) }
 						rows={ 6 }

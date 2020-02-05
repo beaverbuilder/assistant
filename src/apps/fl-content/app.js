@@ -21,7 +21,7 @@ const Main = () => {
 			{
 				handle: 'summary',
 				label: __( 'Summary' ),
-				path: '/fl-content',
+				path: '/fl-content/',
 				component: SummaryTab,
 				exact: true,
 			}

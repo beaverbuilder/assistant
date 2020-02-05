@@ -43,8 +43,8 @@ export const TaxonomyTermsItem = ( {
 
 	const flattenResponseData = ( data, flattened ) => {
 		data.map( term => {
-			flattened.slugsById[ term.id ] = term.slug
-			flattened.idsBySlug[ term.slug ] = term.id
+			flattened.slugsById[term.id] = term.slug
+			flattened.idsBySlug[term.slug] = term.id
 			if ( term.children.length ) {
 				flattened = flattenResponseData( term.children, flattened )
 			}
@@ -54,7 +54,7 @@ export const TaxonomyTermsItem = ( {
 
 	const getHierarchicalOptions = ( terms = data.terms, options = [], depth = 0 ) => {
 		terms.map( term => {
-			options[ term.slug ] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title
+			options[term.slug] = depth ? '-'.repeat( depth ) + ' ' + term.title : term.title
 			if ( term.children.length ) {
 				options = getHierarchicalOptions( term.children, options, depth + 1 )
 			}
@@ -76,7 +76,7 @@ export const TaxonomyTermsItem = ( {
 		}
 
 		if ( slug in data.idsBySlug ) {
-			const id = data.idsBySlug[ slug ]
+			const id = data.idsBySlug[slug]
 			if ( ! value.includes( id ) ) {
 				value.push( id )
 				onChange( value )
@@ -86,8 +86,8 @@ export const TaxonomyTermsItem = ( {
 
 		const key = data.terms.length
 		data.terms.push( { title, slug, id: slug, children: [] } )
-		data.idsBySlug[ slug ] = slug
-		data.slugsById[ slug ] = slug
+		data.idsBySlug[slug] = slug
+		data.slugsById[slug] = slug
 		value.push( slug )
 		onChange( value )
 
@@ -95,14 +95,14 @@ export const TaxonomyTermsItem = ( {
 			taxonomy,
 			name: title,
 			slug: usingTempSlug ? '' : slug,
-			parent: parent ? data.idsBySlug[ parent ] : '0',
+			parent: parent ? data.idsBySlug[parent] : '0',
 			description: '',
 		} ).then( response => {
-			delete data.idsBySlug[ slug ]
-			delete data.slugsById[ slug ]
-			data.terms[ key ] = response.data
-			data.idsBySlug[ response.data.slug ] = response.data.id
-			data.slugsById[ response.data.id ] = response.data.slug
+			delete data.idsBySlug[slug]
+			delete data.slugsById[slug]
+			data.terms[key] = response.data
+			data.idsBySlug[response.data.slug] = response.data.id
+			data.slugsById[response.data.id] = response.data.slug
 			if ( value.includes( slug ) ) {
 				value.splice( value.indexOf( slug ), 1, response.data.id )
 				onChange( value )
@@ -110,9 +110,9 @@ export const TaxonomyTermsItem = ( {
 		} )
 	}
 
-	const tax = taxonomies[ taxonomy ]
+	const tax = taxonomies[taxonomy]
 	const options = getHierarchicalOptions()
-	const values = value.map( id => data.slugsById[ id ] )
+	const values = value.map( id => data.slugsById[id] )
 	const [ addingNew, setAddingNew ] = useState( false )
 	const [ newTerm, setNewTerm ] = useState( '' )
 	const [ newTermParent, setNewTermParent ] = useState( '' )
@@ -125,18 +125,18 @@ export const TaxonomyTermsItem = ( {
 					options={ options }
 					value={ values }
 					onChange={ slugs => {
-						onChange( slugs.map( slug => data.idsBySlug[ slug ] ) )
+						onChange( slugs.map( slug => data.idsBySlug[slug] ) )
 					} }
 				/>
 				<div className='fl-asst-new-term-form'>
-					{ addingNew &&
+					{addingNew &&
 						<>
-							<label>{ sprintf( __( 'New %s Name' ), tax.labels.singular ) }</label>
+							<label>{sprintf( __( 'New %s Name' ), tax.labels.singular )}</label>
 							<Form.TextItem
 								value={ newTerm }
 								onChange={ name => setNewTerm( name ) }
 							/>
-							<label>{ sprintf( __( 'New %s Parent' ), tax.labels.singular ) }</label>
+							<label>{sprintf( __( 'New %s Parent' ), tax.labels.singular )}</label>
 							<Form.SelectItem
 								options={ {
 									'': __( 'None' ),
@@ -151,11 +151,11 @@ export const TaxonomyTermsItem = ( {
 									addNewTerm( newTerm, newTermParent )
 								} }
 							>
-								{ tax.labels.addNewItem }
+								{tax.labels.addNewItem}
 							</Button>
 						</>
 					}
-					{ ! addingNew &&
+					{! addingNew &&
 						<Button
 							onClick={ () => {
 								setNewTerm( '' )
@@ -163,7 +163,7 @@ export const TaxonomyTermsItem = ( {
 								setAddingNew( true )
 							} }
 						>
-							{ tax.labels.newItem }
+							{tax.labels.newItem}
 						</Button>
 					}
 				</div>
@@ -174,7 +174,7 @@ export const TaxonomyTermsItem = ( {
 	return (
 		<Form.SuggestItem
 			placeholder={ tax.labels.newItem }
-			id={ `taxonomy-${ taxonomy }` }
+			id={ `taxonomy-${taxonomy}` }
 			options={ options }
 			value={ values }
 			onRemove={ ( v ) => {
@@ -186,3 +186,5 @@ export const TaxonomyTermsItem = ( {
 		/>
 	)
 }
+
+

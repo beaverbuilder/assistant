@@ -160,6 +160,7 @@ const getFieldComponent = key => {
 		'text': Form.TextItem,
 		'textarea': Form.TextareaItem,
 		'url': Form.UrlItem,
+		'parent-terms': Form.ParentTermItems
 	}
 	let Component = Form.TextItem
 
