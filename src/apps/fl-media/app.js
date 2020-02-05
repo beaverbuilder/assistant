@@ -24,10 +24,7 @@ const Main = ( { match } ) => {
 			image: __( 'Image' ),
 			video: __( 'Video' ),
 			audio: __( 'Audio' ),
-			text: __( 'Text' ),
-			document: __( 'Document' ),
-			spreadsheets: __( 'Spreadsheets' ),
-			archives: __( 'Archives' ),
+			document: __( 'Documents' ),
 		}
 
 		const sorts = {

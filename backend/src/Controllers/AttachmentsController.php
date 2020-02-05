@@ -185,19 +185,33 @@ class AttachmentsController extends ControllerAbstract
 	 *
 	 * @return mixed|WP_REST_Response
 	 */
-	public function index(WP_REST_Request $request)
-	{
+	public function index( WP_REST_Request $request ) {
 
 		$args = $request->get_params();
 
-		switch ($args['post_mime_type']) {
+		switch ( $args['post_mime_type'] ) {
+			case 'document':
+				$all_mimes = get_allowed_mime_types();
+				$doc_mimes = [];
+				$exclude = [ 'image', 'video', 'audio' ];
+
+				foreach ( $all_mimes as $key => $mime ) {
+					$parts = explode( '/', $mime );
+					if ( in_array( $parts[0], $exclude, true ) ) {
+						continue;
+					}
+					$doc_mimes[ $key ] = $mime;
+				}
+
+				$args['post_mime_type'] = $doc_mimes;
+				break;
 			case 'spreadsheets':
-				$args['post_mime_type'] = 'pplication/vnd.apple.numbers,application/vnd.oasis.opendocument.spreadsheet,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12';
+				$args['post_mime_type'] = 'application/vnd.apple.numbers,application/vnd.oasis.opendocument.spreadsheet,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12';
 				break;
 			case 'archives':
 				$args['post_mime_type'] = 'application/x-gzip,application/rar,application/x-tar,application/zip,application/x-7z-compressed';
 				break;
-			case 'document':
+			case 'doc':
 				$args['post_mime_type'] = 'application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12,application/vnd.oasis.opendocument.text,application/vnd.apple.pages,application/pdf,application/vnd.ms-xpsdocument,application/oxps,application/rtf,application/wordperfect,application/octet-stream';
 				break;
 			case 'mine':
