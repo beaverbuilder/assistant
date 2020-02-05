@@ -21,7 +21,6 @@ const Main = ( { match } ) => {
 
 		const types = {
 			all: __( 'All' ),
-			detached: __( 'Not Hooked Up Yet' ),
 			image: __( 'Image' ),
 			video: __( 'Video' ),
 			audio: __( 'Audio' ),
