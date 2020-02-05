@@ -25,6 +25,11 @@
             left: 5px;
             right: 5px;
 
+            .fluid-button {
+                width: 32px;
+                padding: 0 2px;
+            }
+
             &:first-child {
                 top: auto !important;
             }
