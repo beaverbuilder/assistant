@@ -12,7 +12,7 @@ export const URLControl = ( { value: url, className, ...rest } ) => {
 				<a href={ url }>{url}</a>
 			</div>
 			<div className="fl-asst-control-url-actions">
-				<Clipboard data-clipboard-text={ url } button-className={ 'fluid-button' }><Icon.Link /></Clipboard>
+				<Clipboard data-clipboard-text={ url } button-className={ 'fluid-button fluid-appearance-transparent' }><Icon.Link /></Clipboard>
 			</div>
 		</div>
 	)

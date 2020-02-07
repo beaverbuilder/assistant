@@ -1,7 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
-import { TestSheet } from './examples'
-import { Item, Loading, NoResultsMessage } from './parts'
+import { Item, Loading, NoResultsMessage, EndMessage } from './parts'
 import { useListItems } from './items'
 import { Scroller, useScrollLoader } from './scroller'
 import { WordPress } from './wordpress'
@@ -141,8 +140,8 @@ List.Loading.displayName = 'List.Loading'
 List.NoResultsMessage = NoResultsMessage
 List.NoResultsMessage.displayName = 'List.NoResultsMessage'
 
-List.TestSheet = TestSheet
-List.TestSheet.displayName = 'List.TestSheet'
+List.EndMessage = EndMessage
+List.EndMessage.displayName = 'List.EndMessage'
 
 List.useScrollLoader = useScrollLoader
 List.useListItems = useListItems

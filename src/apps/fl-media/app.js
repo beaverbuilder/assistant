@@ -16,14 +16,15 @@ const Main = ( { match } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
 
+
 	const MediaFilter = () => {
 
 		const types = {
-			any: __( 'Not Hooked Up Yet' ),
+			all: __( 'All' ),
 			image: __( 'Image' ),
 			video: __( 'Video' ),
 			audio: __( 'Audio' ),
-			doc: __( 'Document' ),
+			document: __( 'Documents' ),
 		}
 
 		const sorts = {
@@ -37,6 +38,11 @@ const Main = ( { match } ) => {
 			grid: __( 'Grid' ),
 		}
 
+		const orders = {
+			ASC: __('Ascending'),
+			DESC: __('Descending')
+		}
+
 		const resetFilter = () => {
 			setQuery( defaultState.query )
 			setListStyle( defaultState.listStyle )
@@ -47,9 +53,16 @@ const Main = ( { match } ) => {
 				<Filter.RadioGroupItem
 					title={ __( 'Type' ) }
 					items={ types }
-					value={ 'any' }
+					value={ query.post_mime_type }
 					defaultValue={ '' }
-					onChange={ value => { /* Set State */ } }
+					onChange={ value => setQuery( { ...query, post_mime_type: value } ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Display As' ) }
+					items={ listStyles }
+					value={ listStyle }
+					defaultValue={ defaultState.listStyle }
+					onChange={ value => setListStyle( value ) }
 				/>
 				<Filter.RadioGroupItem
 					title={ __( 'Sort By' ) }
@@ -59,11 +72,11 @@ const Main = ( { match } ) => {
 					onChange={ value => setQuery( { ...query, orderby: value } ) }
 				/>
 				<Filter.RadioGroupItem
-					title={ __( 'Display As' ) }
-					items={ listStyles }
-					value={ listStyle }
-					defaultValue={ defaultState.listStyle }
-					onChange={ value => setListStyle( value ) }
+					title={ __( 'Order' ) }
+					items={ orders }
+					value={ query.order }
+					defaultValue={ defaultState.query.order }
+					onChange={ value => setQuery( { ...query, order: value } ) }
 				/>
 				<Filter.Button onClick={ resetFilter }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>

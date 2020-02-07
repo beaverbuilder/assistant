@@ -29,8 +29,9 @@ class AttachmentTransform {
 			'description'     => $meta['description'],
 			'editUrl'         => get_edit_post_link( $attachment->ID, '' ),
 			'filesize'        => $meta['filesizeHumanReadable'],
+			'filename'        => $meta['filename'],
 			'id'              => $attachment->ID,
-			'labels'		  => [],
+			'labels'          => [],
 			'mime'            => $meta['mime'],
 			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : [],
 			'slug'            => $attachment->post_name,
@@ -42,6 +43,9 @@ class AttachmentTransform {
 			'urls'            => [
 				'medium' => $size[0],
 			],
+			'height'          => $meta['height'],
+			'width'           => $meta['width'],
+			'orientation'     => $meta['orientation'],
 		];
 
 		// Labels

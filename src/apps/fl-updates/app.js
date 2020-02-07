@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
 import { App, Page, Button, List, Nav, Filter } from 'assistant/ui'
@@ -9,13 +9,12 @@ import {
 	getUpdaterStore,
 	getUpdaterActions,
 } from 'assistant/data'
-import { allUpdatesTab, PluginsTab, ThemesTab } from './tabs'
+
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}/` } component={ UpdatesMain } />
-		<Nav.Route path={ `${match.url}/tab/:tab` } component={ UpdatesMain } />
-		<Nav.Route path={ `${match.url}/plugin/:id` } component={ Page.Plugin } />
-		<Nav.Route path={ `${match.url}/theme/:id` } component={ Page.Theme } />
+		<Nav.Route exact path={ `${match.url}/` } component={ UpdatesMain }/>
+		<Nav.Route path={ `${match.url}/plugin/:id` } component={ Page.Plugin }/>
+		<Nav.Route path={ `${match.url}/theme/:id` } component={ Page.Theme }/>
 	</Nav.Switch>
 )
 
@@ -30,8 +29,8 @@ const UpdatesMain = () => {
 
 	const totalUpdates = counts['update/plugins'] + counts['update/themes']
 	const hasUpdates = 0 !== totalUpdates
-	const pluginsCount = counts['update/plugins'] ? counts['update/plugins'] : ''
-	const themesCount = counts['update/themes'] ? counts['update/themes'] : ''
+
+	const [ UpdateType, setUpdateType ] = useState('all')
 
 	const updateAll = () => {
 		setUpdatingAll( true )
@@ -67,13 +66,13 @@ const UpdatesMain = () => {
 		if ( updatingAll ) {
 			return (
 				<Button.Loading>
-					{__( 'Updating' )}
+					{ __( 'Updating' ) }
 				</Button.Loading>
 			)
 		}
 		return (
 			<Button onClick={ updateAll }>
-				{__( 'Update All' )}
+				{ __( 'Update All' ) }
 			</Button>
 		)
 	}
@@ -81,81 +80,54 @@ const UpdatesMain = () => {
 	const UpdatesFilter = () => {
 
 		const types = {
-			'': __( 'Any' ),
+			'all': __( 'Any' ),
 			plugins: sprintf( 'Plugin (%s)', counts['update/plugins'] ),
 			themes: sprintf( 'Theme (%s)', counts['update/themes'] ),
 		}
+
+
 
 		return (
 			<Filter>
 				<Filter.RadioGroupItem
 					title={ __( 'Type' ) }
 					items={ types }
-					value=""
-					defaultValue=""
+					value={ UpdateType }
+					defaultValue={ UpdateType }
+					onChange={ value => setUpdateType( value ) }
 				/>
 				<Filter.Button>Reset Fitler</Filter.Button>
 			</Filter>
 		)
+
+
 	}
-
-	const getTabs = () => {
-		let tabs = [
-			{
-				handle: 'all',
-				label: __( 'All Updates ' + totalUpdates ),
-				path: '/fl-updates',
-				component: allUpdatesTab,
-				exact: true,
-			},
-
-			{
-				handle: 'plugins',
-				label: __( pluginsCount + ' Plugins' ),
-				path: '/fl-updates/tab/plugin',
-				component: PluginsTab,
-			},
-			{
-				handle: 'themes',
-				label: __( themesCount + ' Themes' ),
-				path: '/fl-updates/tab/theme',
-				component: ThemesTab,
-
-			}
-		]
-
-
-		return tabs
-	}
-
-
-	const tabs = getTabs()
 
 	return (
 		<Page
 			title={ __( 'Updates' ) }
-			header={ <Nav.Tabs tabs={ tabs } /> }
 			actions={ <HeaderActions /> }
 			padY={ false }
 		>
 
-			{! hasUpdates && (
+			{ ! hasUpdates && (
 				<Page.Empty>{__( 'You have no updates.' )}</Page.Empty>
 			)}
 
-			{hasUpdates && (
-
-				<Nav.CurrentTab getItemProps={ ( item, defaultProps, counts ) => {
-					return {
-						...defaultProps,
-						to: {
-							pathname: `/${handle}/${item.type}/${item.id}`,
-							state: { item }
-						},
-					}
-				} } tabs={ tabs } />
-
-
+			{ hasUpdates && (
+				<List.Updates
+					updateType={ UpdateType }
+					getItemProps={ ( item, defaultProps ) => {
+						return {
+							...defaultProps,
+							to: {
+								pathname: `/${handle}/${item.type}/${item.id}`,
+								state: { item }
+							},
+						}
+					} }
+					before={ <UpdatesFilter /> }
+				/>
 			)}
 		</Page>
 	)

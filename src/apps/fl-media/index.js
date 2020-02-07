@@ -7,7 +7,8 @@ import { MediaApp } from './app'
 export const defaultState = {
 	listStyle: 'grid',
 	query: {
-		order: 'ASC',
+		post_mime_type: 'all',
+		order: 'DESC',
 		orderby: 'date',
 	}
 }

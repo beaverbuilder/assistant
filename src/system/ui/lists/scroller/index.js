@@ -3,8 +3,9 @@ import classname from 'classnames'
 import { List } from '../'
 
 const hasReachedBounds = e => {
-	const el = e.target
-	return el.scrollTop + el.clientHeight === el.scrollHeight
+	const { scrollTop, clientHeight, scrollHeight } = e.target
+	const bottom = scrollTop + clientHeight
+	return bottom === scrollHeight
 }
 
 export const useScrollLoader = ( {
@@ -15,9 +16,7 @@ export const useScrollLoader = ( {
 } ) => {
 	const [ isFetching, setIsFetching ] = useState( true )
 
-	const reset = () => {
-		setIsFetching( true )
-	}
+	const reset = () => setIsFetching( true )
 
 	useEffect( () => {
 		if ( 'undefined' === typeof ref.current ) {
@@ -88,12 +87,15 @@ export const Scroller = ( {
 		<div className={ classes } ref={ scrollRef }>
 			{before}
 			<List items={ items } { ...rest } />
-			{ isFetching &&
-				<List.Loading />
-			}
-			{ ! isFetching && ! hasMoreItems && ! itemsCount &&
-				<List.NoResultsMessage />
-			}
+			<div style={{ minHeight: 100 }}>
+				{ isFetching && <List.Loading /> }
+				{ ! isFetching && ! hasMoreItems && ! items.length &&
+					<List.NoResultsMessage />
+				}
+				{ isFetching && ! hasMoreItems && items.length && (
+					<List.EndMessage />
+				)}
+			</div>
 			{after}
 		</div>
 	)

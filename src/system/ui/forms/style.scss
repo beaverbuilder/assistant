@@ -198,10 +198,12 @@
     }
     input[type="checkbox"],
     input[type="radio"] {
-        width: auto;
         flex: 0 0 auto;
         margin: 0;
         margin-right: var(--fl-asst-small-space);
+    }
+    input[type="radio"] {
+        width: auto;
     }
 
     select {

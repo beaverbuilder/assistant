@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { __ } from '@wordpress/i18n'
-import { Button, Form, List, Page, Layout } from 'ui'
+import { __, sprintf } from '@wordpress/i18n'
+import { Button, Form, List, Page, Layout, Icon } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
+import { getSrcSet } from 'utils/image'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
 
@@ -326,13 +327,79 @@ export const Post = ( { location, match, history } ) => {
 		)
 	}
 
+	const Hero = () => {
+
+		if ( undefined === item.postThumbnail ) {
+			return item.thumbnail
+		}
+
+		const { sizes, alt, title, height, width } = item.postThumbnail
+
+		let srcSet = ''
+		if ( sizes ) {
+			srcSet = getSrcSet( sizes )
+		}
+		return (
+			<div style={ {} }>
+				<img
+					src={ item.thumbnail }
+					srcSet={ srcSet }
+					style={ { height: '100%', objectFit: 'cover' } }
+					alt={ alt }
+					title={ title }
+					height={ height }
+					width={ width }
+				/>
+			</div>
+		)
+	}
+
+	const isCurrentPage = () => item.url === window.location.href
+
+	const ElevatorButtons = () => (
+		<div style={ {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-evenly',
+			margin: '10px 0 0',
+			flex: '0 0 auto',
+		} } >
+			{ ! isCurrentPage() && (
+				<Button
+					appearance='elevator'
+					title={ __( 'Go To Post' ) }
+					href={ item.url }
+				>
+					<Icon.View />
+				</Button>
+			)}
+			<Button
+				appearance='elevator'
+				title={ __( 'Edit in Admin' ) }
+				href={ item.editUrl }
+			>
+				<Icon.Edit />
+			</Button>
+			{ item.bbCanEdit && (
+				<Button
+					appearance='elevator'
+					title={ sprintf( 'Edit with %s', item.bbBranding ) }
+					href={ item.bbEditUrl }
+				>
+					<Icon.Beaver />
+				</Button>
+			)}
+		</div>
+	)
+
 	return (
 		<Page
 			title={ labels.editItem }
-			hero={ item.thumbnail ? item.thumbnail : null }
+			hero={ item.hasPostThumbnail ? <Hero /> : null }
 			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
+			<ElevatorButtons />
 			{ renderForm() }
 		</Page>
 	)

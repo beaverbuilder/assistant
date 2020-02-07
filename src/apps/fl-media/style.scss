@@ -23,7 +23,8 @@
     .fl-asst-grid-list {
         display: grid;
         grid-gap: 5px;
-        grid-template-columns: auto auto;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 158px;
         padding: var(--fl-asst-outer-space);
 
         .fl-asst-grid-list-item {
