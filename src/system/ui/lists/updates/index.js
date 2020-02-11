@@ -4,35 +4,21 @@ import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'data'
 import { List, Button } from 'ui'
 import './style.scss'
 
-export const Updates = ( {
+export const Updates = ({
+	updateType = { updateType },
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {
-		updateType: 'all',
+		type: updateType,
 	},
 	...rest
-} ) => {
+
+}) => {
+
 	return (
 		<List.WordPress
 			type={ 'updates' }
 			query={ query }
 			scrollerClassName='fl-asst-updates-list-scroller'
-			formatItems={ items => {
-				const groups = [ {
-					label: __( 'Plugins' ),
-					items: [],
-				}, {
-					label: __( 'Themes' ),
-					items: [],
-				} ]
-				items.map( item => {
-					if ( 'plugin' === item.type ) {
-						groups[0].items.push( item )
-					} else {
-						groups[1].items.push( item )
-					}
-				} )
-				return groups
-			} }
 			getItemProps={ ( item, defaultProps ) => {
 				const UpdateButton = () => {
 					const updater = getUpdaterStore()

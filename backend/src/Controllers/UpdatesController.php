@@ -82,6 +82,7 @@ class UpdatesController extends ControllerAbstract {
 		$plugins = get_plugin_updates();
 		$themes = get_theme_updates();
 		$type = $request->get_param( 'type' );
+
 		$response = [];
 
 		if ( ! $type || 'all' === $type || 'plugins' === $type ) {
