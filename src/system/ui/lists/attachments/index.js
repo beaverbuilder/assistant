@@ -44,7 +44,7 @@ const Attachments = ( {
 
 	const classes = classname( {
 		[`fl-asst-${listStyle}-list`]: listStyle,
-		'fl-asst-attachment-list' : true,
+		'fl-asst-attachment-list': true,
 	}, className )
 
 
@@ -58,7 +58,7 @@ const Attachments = ( {
 					const trashItem = () => {
 						if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
 
-					 wpRest.attachments().update( item.id, 'trash' ).then( () => {
+							wpRest.attachments().update( item.id, 'trash' ).then( () => {
 								updateItem( item.uuid, {
 									title: __( 'This item has been deleted!' ),
 									isTrashing: true,
@@ -86,13 +86,13 @@ const Attachments = ( {
 								<Icon.Link />
 							</Clipboard>
 							<Button
-							title={ __( 'Edit in Admin' ) }
-							tabIndex="-1"
-							href={ item.editUrl }
-							appearance="transparent"
-						>
-							<Icon.Edit />
-						</Button>
+								title={ __( 'Edit in Admin' ) }
+								tabIndex="-1"
+								href={ item.editUrl }
+								appearance="transparent"
+							>
+								<Icon.Edit />
+							</Button>
 							<Button
 								onClick={ trashItem }
 								tabIndex="-1"
@@ -138,7 +138,7 @@ const Attachments = ( {
 					const ThumbIcon = () => {
 						const { type } = item
 						return (
-							<div style={{ padding: 5 }}>
+							<div style={ { padding: 5 } }>
 								{ 'video' === type && <Icon.Video /> }
 								{ 'audio' === type && <Icon.Audio /> }
 								{ 'application' === type && 'pdf' !== item.subtype && (
@@ -150,7 +150,7 @@ const Attachments = ( {
 
 					return {
 						...defaultProps,
-						thumbnail: item.isTrashed ? '' : (null !== item.thumbnail ? item.thumbnail : <ThumbIcon />),
+						thumbnail: item.isTrashed ? '' : ( null !== item.thumbnail ? item.thumbnail : <ThumbIcon /> ),
 						shouldAlwaysShowThumbnail: true,
 						label: item.title ? item.title : __( 'Untitled' ),
 						description: item.isTrashed ? '' : item.type + ' | ' + item.subtype,
@@ -162,7 +162,7 @@ const Attachments = ( {
 						marks: getMarks( item ),
 						className: classname( {
 							['fl-asst-grid-list-item']: 'grid' === listStyle,
-							'fl-asst-grid-item-is-favorite' : item.isFavorite,
+							'fl-asst-grid-item-is-favorite': item.isFavorite,
 						}, defaultProps.className ),
 						children: 'grid' === listStyle ? props => <GridItem item={ item } { ...props } /> : defaultProps.children,
 					}
@@ -188,16 +188,16 @@ const GridItem = ( { item, extras } ) => {
 
 	// Filter down to just the smaller sizes for srcset
 	const smallSizes = {}
-	const allow = ['thumbnail', 'medium', 'large']
-	for( let key in sizes ) {
+	const allow = [ 'thumbnail', 'medium', 'large' ]
+	for ( let key in sizes ) {
 		if ( allow.includes( key ) ) {
 			smallSizes[key] = sizes[key]
 		}
 	}
 
 	return (
-		<div className="fl-asst-attachment-grid-item" style={style}>
-			<div style={{
+		<div className="fl-asst-attachment-grid-item" style={ style }>
+			<div style={ {
 				position: 'absolute',
 				top: 0,
 				left: 0,
@@ -209,21 +209,21 @@ const GridItem = ( { item, extras } ) => {
 				flexDirection: 'column',
 				justifyContent: 'center',
 				alignItems: 'center',
-			}}>
+			} }>
 				{ ( 'image' === type || 'pdf' === item.subtype ) && (
 					<img
 						src={ thumbnail }
-						srcSet={ getSrcSet(smallSizes) }
-						alt={alt}
-						title={title}
+						srcSet={ getSrcSet( smallSizes ) }
+						alt={ alt }
+						title={ title }
 						loading="lazy"
-						style={{
+						style={ {
 							height: '100%',
 							width: '100%',
 							objectPosition: 'pdf' === item.subtype ? 'top center' : null
-						}}
-						height={157.5}
-						width={157.5}
+						} }
+						height={ 157.5 }
+						width={ 157.5 }
 					/>
 				)}
 				{ 'video' === type && <Image.Video /> }

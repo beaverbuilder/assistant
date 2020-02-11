@@ -30,7 +30,7 @@ const UpdatesMain = () => {
 	const totalUpdates = counts['update/plugins'] + counts['update/themes']
 	const hasUpdates = 0 !== totalUpdates
 
-	const [ UpdateType, setUpdateType ] = useState('all')
+	const [ UpdateType, setUpdateType ] = useState( 'all' )
 
 	const updateAll = () => {
 		setUpdatingAll( true )
@@ -84,7 +84,6 @@ const UpdatesMain = () => {
 			plugins: sprintf( 'Plugin (%s)', counts['update/plugins'] ),
 			themes: sprintf( 'Theme (%s)', counts['update/themes'] ),
 		}
-
 
 
 		return (

@@ -217,7 +217,7 @@ const getFieldConfig = ( tabs, sections, fields, defaults ) => {
 }
 
 const getDefaultValues = ( fieldConfig, defaults ) => {
-	Object.entries( fieldConfig ).map( ( [ key, config ] ) => {
+	Object.entries( fieldConfig ).map( ( [ key ] ) => {
 		if ( undefined === defaults[ key ] ) {
 			defaults[ key ] = ''
 		}

@@ -180,12 +180,12 @@ export const App = () => {
 				<Button.Group appearance="buttons">
 					<Button
 						onClick={ () => setEditingLabel( label ) }
-						title={ __('Edit Label Text' ) }
+						title={ __( 'Edit Label Text' ) }
 					><Icon.Edit /></Button>
 					<Button
 						onClick={ () => deleteLabel( label.id ) }
 						status="destructive"
-						title={ __('Delete Label' ) }
+						title={ __( 'Delete Label' ) }
 					>
 						<Icon.Trash />
 					</Button>

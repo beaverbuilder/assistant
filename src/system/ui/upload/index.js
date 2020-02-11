@@ -48,10 +48,10 @@ export const MediaDropUploader = ( { children } ) => {
 
 		data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
 
-		wpRest.attachments().create(data).then( response => {
-			onSuccess()
+		wpRest.attachments().create( data ).then( response => {
+			onSuccess( response )
 		} ).catch( ( error ) => {
-			onError()
+			onError( error )
 		} )
 
 

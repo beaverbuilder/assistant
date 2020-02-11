@@ -56,19 +56,20 @@ if ( 'domReady' in wp ) {
 	wp.domReady( () => {
 		const { setWindow } = getSystemActions()
 
-		const skip = document.createElement('button')
-		skip.classList.add('skip-link', 'screen-reader-text')
-		skip.innerText = __('Skip to Assistant')
+		const skip = document.createElement( 'button' )
+		skip.classList.add( 'skip-link', 'screen-reader-text' )
+		skip.innerText = __( 'Skip to Assistant' )
 		skip.tabIndex = 1
 
-		skip.addEventListener( 'click' , () => {
-			setWindow({ isHidden: false })
+		skip.addEventListener( 'click', () => {
+			setWindow( { isHidden: false } )
+
 			// Move focus
-			const closeBtn = document.getElementById('fl-asst-close-panel')
+			const closeBtn = document.getElementById( 'fl-asst-close-panel' )
 			closeBtn.focus()
 		} )
 
 		document.body.prepend( skip )
 
-	})
+	} )
 }

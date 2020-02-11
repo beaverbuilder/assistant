@@ -54,7 +54,7 @@ export const ParentTermItems = ( {
 	}
 
 	const setParentChildOptions = ( options, children, depth = 1 ) => {
-	children.map( child => {
+		children.map( child => {
 			if ( child.id !== termId ) {
 				options[' ' + child.id] = '-' + child.title
 				setParentChildOptions( options, child.children, depth + 1 )

@@ -4,7 +4,7 @@ import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'data'
 import { List, Button } from 'ui'
 import './style.scss'
 
-export const Updates = ({
+export const Updates = ( {
 	updateType = { updateType },
 	getItemProps = ( item, defaultProps ) => defaultProps,
 	query = {
@@ -12,7 +12,7 @@ export const Updates = ({
 	},
 	...rest
 
-}) => {
+} ) => {
 
 	return (
 		<List.WordPress

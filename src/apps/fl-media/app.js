@@ -39,8 +39,8 @@ const Main = ( { match } ) => {
 		}
 
 		const orders = {
-			ASC: __('Ascending'),
-			DESC: __('Descending')
+			ASC: __( 'Ascending' ),
+			DESC: __( 'Descending' )
 		}
 
 		const resetFilter = () => {
