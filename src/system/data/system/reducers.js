@@ -94,7 +94,7 @@ export const counts = ( state = {}, action ) => {
 // New UI
 const windowDefaults = {
 	origin: [ 1, 1 ],
-	size: 'mini',
+	size: 'normal',
 	isHidden: false,
 	hiddenAppearance: '',
 	overlayToolbar: false,
