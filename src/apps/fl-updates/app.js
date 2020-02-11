@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
 import { App, Page, Button, List, Nav, Filter } from 'assistant/ui'
@@ -29,6 +29,8 @@ const UpdatesMain = () => {
 
 	const totalUpdates = counts['update/plugins'] + counts['update/themes']
 	const hasUpdates = 0 !== totalUpdates
+
+	const [ UpdateType, setUpdateType ] = useState('all')
 
 	const updateAll = () => {
 		setUpdatingAll( true )
@@ -78,22 +80,27 @@ const UpdatesMain = () => {
 	const UpdatesFilter = () => {
 
 		const types = {
-			'': __( 'Any' ),
+			'all': __( 'Any' ),
 			plugins: sprintf( 'Plugin (%s)', counts['update/plugins'] ),
 			themes: sprintf( 'Theme (%s)', counts['update/themes'] ),
 		}
+
+
 
 		return (
 			<Filter>
 				<Filter.RadioGroupItem
 					title={ __( 'Type' ) }
 					items={ types }
-					value=""
-					defaultValue=""
+					value={ UpdateType }
+					defaultValue={ UpdateType }
+					onChange={ value => setUpdateType( value ) }
 				/>
 				<Filter.Button>Reset Fitler</Filter.Button>
 			</Filter>
 		)
+
+
 	}
 
 	return (
@@ -109,6 +116,7 @@ const UpdatesMain = () => {
 
 			{ hasUpdates && (
 				<List.Updates
+					updateType={ UpdateType }
 					getItemProps={ ( item, defaultProps ) => {
 						return {
 							...defaultProps,

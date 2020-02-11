@@ -53,6 +53,8 @@ export const Scroller = ( {
 	loadItems = () => {},
 	before,
 	after,
+	isListSection = item => 'undefined' !== typeof item.items,
+	getSectionItems = section => section.items,
 	scrollerClassName,
 	...rest
 } ) => {
@@ -61,6 +63,16 @@ export const Scroller = ( {
 		ref: scrollRef,
 		hasMore: hasMoreItems,
 		callback: loadItems,
+	} )
+
+	let itemsCount = 0
+	items.map( item => {
+		if ( isListSection( item ) ) {
+			const sectionItems = getSectionItems( item )
+			itemsCount += sectionItems.length
+		} else {
+			itemsCount++
+		}
 	} )
 
 	useEffect( () => {
@@ -80,7 +92,7 @@ export const Scroller = ( {
 				{ ! isFetching && ! hasMoreItems && ! items.length &&
 					<List.NoResultsMessage />
 				}
-				{ ! hasMoreItems && items.length && (
+				{ isFetching && ! hasMoreItems && items.length && (
 					<List.EndMessage />
 				)}
 			</div>
