@@ -54,6 +54,7 @@ export const Scroller = ( {
 	before,
 	after,
 	scrollerClassName,
+	noResultsMessage,
 	...rest
 } ) => {
 	const scrollRef = useRef()
@@ -78,9 +79,9 @@ export const Scroller = ( {
 			<div style={ { minHeight: 100 } }>
 				{ isFetching && <List.Loading /> }
 				{ ! isFetching && ! hasMoreItems && ! items.length &&
-					<List.NoResultsMessage />
+					<List.NoResultsMessage message={ noResultsMessage } />
 				}
-				{ isFetching && ! hasMoreItems && items.length && (
+				{ ! isFetching && ! hasMoreItems && !! items.length && (
 					<List.EndMessage />
 				)}
 			</div>

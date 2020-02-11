@@ -257,9 +257,9 @@ export const Loading = () => {
 	)
 }
 
-export const NoResultsMessage = () => {
+export const NoResultsMessage = ( { message } ) => {
 	return (
-		<MessageBox>{__( 'Nothing Results Found' )}</MessageBox>
+		<MessageBox>{ message ? message : __( 'No Results Found' ) }</MessageBox>
 	)
 }
 
