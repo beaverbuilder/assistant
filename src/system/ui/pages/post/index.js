@@ -60,9 +60,6 @@ export const Post = ( { location, match, history } ) => {
 							label: __( 'Title' ),
 							component: 'text',
 							id: 'post_title',
-							onChange: ( { value, setValue } ) => {
-								setValue( 'slug', value )
-							}
 						},
 						slug: {
 							label: __( 'Slug' ),
