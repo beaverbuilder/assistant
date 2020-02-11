@@ -1,12 +1,16 @@
 import React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import { Assistant, getAssistantBBPanelConfig } from '../main'
+import { __ } from '@wordpress/i18n'
+import { getSystemActions } from 'assistant/data'
 
 let mountNode = undefined
 
+const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode( mountNode )
+
 const renderNormal = () => {
 
-	if ( 'undefined' === typeof mountNode ) {
+	if ( undefined === mountNode ) {
 		mountNode = document.createElement( 'div' )
 		mountNode.classList.add( 'fl-asst', 'fl-asst-mount-node' )
 		document.body.appendChild( mountNode )
@@ -14,8 +18,6 @@ const renderNormal = () => {
 
 	render( <Assistant />, mountNode )
 }
-
-const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode( mountNode )
 
 if ( 'FLBuilder' in window ) {
 
@@ -47,4 +49,26 @@ if ( 'FLBuilder' in window ) {
 
 	// Render the standard Assistant app - We're not in Beaver Builder
 	renderNormal()
+}
+
+// Render skip link
+if ( 'domReady' in wp ) {
+	wp.domReady( () => {
+		const { setWindow } = getSystemActions()
+
+		const skip = document.createElement('button')
+		skip.classList.add('skip-link', 'screen-reader-text')
+		skip.innerText = __('Skip to Assistant')
+		skip.tabIndex = 1
+
+		skip.addEventListener( 'click' , () => {
+			setWindow({ isHidden: false })
+			// Move focus
+			const closeBtn = document.getElementById('fl-asst-close-panel')
+			closeBtn.focus()
+		} )
+
+		document.body.prepend( skip )
+
+	})
 }

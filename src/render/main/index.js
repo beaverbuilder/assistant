@@ -46,6 +46,7 @@ const PanelActions = () => {
 				onClick={ toggleIsHidden }
 				title={ __( 'Hide Assistant' ) }
 				appearance="transparent"
+				id="fl-asst-close-panel"
 			>
 				<Icon.Close />
 			</Button>
