@@ -9,7 +9,7 @@ export const Attachment = ( { location, history } ) => {
 	const { item } = location.state
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
-	const { id, title, type, subtype, filesize } = item
+	const { id, title, type, subtype, filesize, author } = item
 
 	const onSubmit = ( { changed, ids } ) => {
 		const data = {
@@ -109,6 +109,11 @@ export const Attachment = ( { location, history } ) => {
 				},
 				date: {
 					label: __( 'Uploaded on' ),
+					component: 'plain-text',
+					labelPlacement: 'beside',
+				},
+				author: {
+					label: __( 'Uploaded by' ),
 					component: 'plain-text',
 					labelPlacement: 'beside',
 				},
@@ -231,7 +236,6 @@ export const Attachment = ( { location, history } ) => {
 			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{title}</Layout.Headline>
-			<div style={ { marginBottom: 'var(--fluid-med-space)' } }>{filesize}</div>
 			{renderForm()}
 		</Page>
 	)
