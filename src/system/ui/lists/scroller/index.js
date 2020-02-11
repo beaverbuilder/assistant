@@ -5,7 +5,7 @@ import { List } from '../'
 const hasReachedBounds = e => {
 	const { scrollTop, clientHeight, scrollHeight } = e.target
 	const bottom = scrollTop + clientHeight
-	return bottom === scrollHeight
+	return bottom + 150 >= scrollHeight
 }
 
 export const useScrollLoader = ( {
