@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { App, Nav, Page, Icon } from 'assistant/ui'
+import { App, Nav, Page, Icon, Button } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
 import { HomeScreen } from './home-screen'
 import './style.scss'
@@ -58,11 +58,15 @@ const NavToolbar = ( { actions } ) => {
 				{ isRoot && <span style={ labelStyle }>{__( 'Assistant' )}</span> }
 
 				{ ! isRoot && <>
-					<button onClick={ goToRoot } style={ {
-						pointerEvents: 'auto',
-						textDecoration: 'underline',
-						padding: '0 10px',
-					} }>{__( 'Assistant' )}</button>
+					<Button
+						appearance="transparent"
+						onClick={ goToRoot }
+						style={ {
+							pointerEvents: 'auto',
+							textDecoration: 'underline',
+							padding: '0 10px',
+						} }
+					>{__( 'Assistant' )}</Button>
 					<span style={ iconWrapStyle }><Icon.BreadcrumbArrow /></span>
 					<span style={ labelStyle }>{label}</span>
 				</> }
