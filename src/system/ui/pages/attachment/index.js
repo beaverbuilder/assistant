@@ -184,12 +184,12 @@ export const Attachment = ( { location, history } ) => {
 	} )
 
 	const Hero = () => {
-		const { width, sizes, height, alt, type } = item
+		const { width, sizes, height, alt, type, filesrc, mime } = item
 		const srcSet = getSrcSet( sizes )
 		const heightPercentage = ( height / width ) * 100
 
 		// Temp - Handle non-image heroes.
-		if ( 'image' !== type ) {
+		if ( 'image' !== type && 'audio' !== type && 'video' !== type ) {
 			return null
 		}
 
@@ -200,8 +200,17 @@ export const Attachment = ( { location, history } ) => {
 			background: 'var(--fluid-primary-background)',
 		}
 
+		let mediaContent = ''
+
+		if ( 'audio' == type || 'video' == type ) {
+			mediaContent = <video width="100%" controls><source src={ filesrc } type={ mime } /></video>
+		} else {
+			mediaContent = <img src={ item.thumbnail } srcSet={ srcSet } height={ height } width={ width } alt={ alt } loading="lazy" />
+		}
+
 		return (
 			<div style={ style }>
+
 				<div
 					style={ {
 						position: 'absolute',
@@ -211,15 +220,9 @@ export const Attachment = ( { location, history } ) => {
 						height: '100%',
 					} }
 				>
-					<img
-						src={ item.thumbnail }
-						srcSet={ srcSet }
-						height={ height }
-						width={ width }
-						alt={ alt }
-						loading="lazy"
-					/>
+					{ mediaContent }
 				</div>
+
 			</div>
 		)
 	}
@@ -230,9 +233,13 @@ export const Attachment = ( { location, history } ) => {
 			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }
 		>
+
 			<Layout.Headline>{title}</Layout.Headline>
 			<div style={ { marginBottom: 'var(--fluid-med-space)' } }>{filesize}</div>
 			{renderForm()}
+
+
 		</Page>
+
 	)
 }
