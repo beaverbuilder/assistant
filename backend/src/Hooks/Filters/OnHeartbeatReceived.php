@@ -17,8 +17,6 @@ class OnHeartbeatReceived {
 	public function __invoke( $response, $data ) {
 		do_action( 'rest_api_init', rest_get_server() );
 
-		FLBuilder::log( $data );
-
 		foreach ( $data as $key => $route ) {
 			if ( strstr( $key, 'fl-assistant-' ) ) {
 				$request          = array_reduce( [ $route ], 'rest_preload_api_request', [] );
