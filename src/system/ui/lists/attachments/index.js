@@ -233,9 +233,9 @@ const GridItem = ( { item, extras } ) => {
 				{ 'application' === type && 'pdf' !== item.subtype && (
 					<Image.Doc />
 				)}
-				{ item.title && (<div className="fl-asst-attachment-item-badge">
+				{ item.title && ( <div className="fl-asst-attachment-item-badge">
 					<span>{item.title}</span>
-				</div>)}
+				</div> )}
 				{ itemExtras && (
 					<div
 						className="fl-asst-list-item-extras"

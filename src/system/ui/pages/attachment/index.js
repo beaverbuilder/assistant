@@ -9,7 +9,7 @@ export const Attachment = ( { location, history } ) => {
 	const { item } = location.state
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
-	const { id, title, type, subtype, filesize, author } = item
+	const { id, title, type, subtype } = item
 
 	const onSubmit = ( { changed, ids } ) => {
 		const data = {
@@ -190,8 +190,6 @@ export const Attachment = ( { location, history } ) => {
 		const { width, sizes, height, alt, type, url, mime } = item
 		const srcSet = getSrcSet( sizes )
 		const heightPercentage = ( height / width ) * 100
-
-		console.log(item.thumbnail)
 
 		// Temp - Handle non-image heroes.
 		if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! item.thumbnail ) {
