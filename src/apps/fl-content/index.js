@@ -22,7 +22,7 @@ registerApp( 'fl-content', {
 	root: Content,
 	icon: Content.Icon,
 	accent: {
-		color: '#16C8E1'
+		color: '#006AD4'
 	},
 	state: { ...defaultState },
 	search: Object.entries( contentTypes ).map( ( [ type, data ], key ) => {

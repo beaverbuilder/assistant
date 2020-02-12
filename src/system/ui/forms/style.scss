@@ -115,8 +115,8 @@
 
         &.fl-asst-highlight-changes {
             .fl-asst-form-item-has-changes {
-                box-shadow: inset 2px 0px 0px 0px var(--fl-asst-blue);
-                background: var(--fl-asst-selected-color);
+                box-shadow: inset 2px 0px 0px 0px var(--fluid-primary-color);
+                background: var(--fluid-primary-background);
             }
         }
     } // form
