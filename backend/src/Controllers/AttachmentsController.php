@@ -185,8 +185,9 @@ class AttachmentsController extends ControllerAbstract {
 	public function index( WP_REST_Request $request ) {
 
 		$args = $request->get_params();
+		$type = isset( $args['post_mime_type'] ) ? $args['post_mime_type'] : 'all';
 
-		switch ( $args['post_mime_type'] ) {
+		switch ( $type ) {
 			case 'document':
 				$all_mimes = get_allowed_mime_types();
 				$doc_mimes = [];
