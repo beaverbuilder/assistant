@@ -17,6 +17,7 @@
 	<exclude-pattern>backend/src/System/Container/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>scoper.inc.php</exclude-pattern>
 
 	<file>./backend/</file>
 
