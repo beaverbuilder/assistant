@@ -191,8 +191,10 @@ export const Attachment = ( { location, history } ) => {
 		const srcSet = getSrcSet( sizes )
 		const heightPercentage = ( height / width ) * 100
 
+		console.log(item.thumbnail)
+
 		// Temp - Handle non-image heroes.
-		if ( 'image' !== type && 'audio' !== type && 'video' !== type ) {
+		if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! item.thumbnail ) {
 			return null
 		}
 
@@ -213,7 +215,6 @@ export const Attachment = ( { location, history } ) => {
 
 		return (
 			<div style={ style }>
-
 				<div
 					style={ {
 						position: 'absolute',
@@ -225,7 +226,6 @@ export const Attachment = ( { location, history } ) => {
 				>
 					{ mediaContent }
 				</div>
-
 			</div>
 		)
 	}
@@ -236,11 +236,8 @@ export const Attachment = ( { location, history } ) => {
 			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }
 		>
-
 			<Layout.Headline>{title}</Layout.Headline>
 			{renderForm()}
-
-
 		</Page>
 
 	)
