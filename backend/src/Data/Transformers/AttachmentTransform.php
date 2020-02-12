@@ -33,20 +33,20 @@ class AttachmentTransform {
 			'id'              => $attachment->ID,
 			'labels'          => [],
 			'mime'            => $meta['mime'],
+			'permalink'       => get_permalink( $attachment ),
 			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : [],
 			'slug'            => $attachment->post_name,
 			'subtype'         => $meta['subtype'],
 			'thumbnail'       => $thumb,
 			'title'           => $meta['title'],
 			'type'            => $meta['type'],
-			'url'             => get_permalink( $attachment ),
+			'url'             => $meta['url'],
 			'urls'            => [
 				'medium' => $size[0],
 			],
 			'height'          => $meta['height'],
 			'width'           => $meta['width'],
 			'orientation'     => $meta['orientation'],
-			'filesrc'		  => $meta['url']
 		];
 
 		// Labels

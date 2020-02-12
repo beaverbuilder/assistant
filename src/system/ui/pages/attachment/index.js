@@ -117,12 +117,11 @@ export const Attachment = ( { location, history } ) => {
 		links: {
 			label: __( 'Links' ),
 			fields: {
-				fileUrl: {
+				url: {
 					label: __( 'File URL' ),
 					component: 'url',
-					isVisible: !! item.sizes.full,
 				},
-				url: {
+				permalink: {
 					label: __( 'URL' ),
 					component: 'url',
 				},
@@ -136,7 +135,7 @@ export const Attachment = ( { location, history } ) => {
 					options: [
 						{
 							label: __( 'View Attachment' ),
-							href: item.url,
+							href: item.permalink,
 						},
 						{
 							label: __( 'Edit in Admin' ),
@@ -167,7 +166,6 @@ export const Attachment = ( { location, history } ) => {
 
 	const defaults = {
 		...item,
-		fileUrl: item.sizes.full ? item.sizes.full.url : null,
 		type: type + '/' + subtype,
 	}
 
@@ -184,7 +182,7 @@ export const Attachment = ( { location, history } ) => {
 	} )
 
 	const Hero = () => {
-		const { width, sizes, height, alt, type, filesrc, mime } = item
+		const { width, sizes, height, alt, type, url, mime } = item
 		const srcSet = getSrcSet( sizes )
 		const heightPercentage = ( height / width ) * 100
 
@@ -203,7 +201,7 @@ export const Attachment = ( { location, history } ) => {
 		let mediaContent = ''
 
 		if ( 'audio' == type || 'video' == type ) {
-			mediaContent = <video width="100%" controls><source src={ filesrc } type={ mime } /></video>
+			mediaContent = <video width="100%" controls><source src={ url } type={ mime } /></video>
 		} else {
 			mediaContent = <img src={ item.thumbnail } srcSet={ srcSet } height={ height } width={ width } alt={ alt } loading="lazy" />
 		}

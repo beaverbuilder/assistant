@@ -73,12 +73,13 @@ const Attachments = ( {
 							<Button
 								title={ __( 'View Attachment Page' ) }
 								tabIndex="-1"
-								href={ item.url }
+								href={ item.permalink }
 								appearance="transparent"
 							>
 								<Icon.View />
 							</Button>
 							<Clipboard
+								title={ __( 'Copy URL' ) }
 								button-tabIndex={ '-1' }
 								button-className={ 'fluid-button fluid-appearance-transparent' }
 								data-clipboard-text={ item.url }
