@@ -1,5 +1,2 @@
 import './user'
-import './term'
-import './plugin'
 import './home'
-import './generic'
