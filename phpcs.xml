@@ -3,6 +3,7 @@
 
 	<rule ref="WordPress-Core">
 		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
 		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
 		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase" />
@@ -16,6 +17,7 @@
 	<exclude-pattern>backend/src/System/Container/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>scoper.inc.php</exclude-pattern>
 
 	<file>./backend/</file>
 

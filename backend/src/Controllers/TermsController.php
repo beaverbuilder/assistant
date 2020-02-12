@@ -59,7 +59,6 @@ class TermsController extends ControllerAbstract {
 			]
 		);
 
-
 		$this->route(
 			'/terms/get_parent_terms', [
 				[
@@ -152,9 +151,8 @@ class TermsController extends ControllerAbstract {
 				}
 				$children[ $term->parent ][] = $term;
 			}
-			$response[]     = $term;
+			$response[] = $term;
 		}
-
 
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
@@ -179,7 +177,6 @@ class TermsController extends ControllerAbstract {
 		$params   = $request->get_params();
 		$terms    = $this->terms->find_where( $params );
 
-
 		foreach ( $terms as $term ) {
 			if ( $term->parent ) {
 				if ( ! isset( $children[ $term->parent ] ) ) {
@@ -187,18 +184,16 @@ class TermsController extends ControllerAbstract {
 				}
 				$children[ $term->parent ][] = $term;
 			}
-			if ( $term->parent != $params['current']) {
+			if ( $term->parent !== $params['current'] ) {
 				$response[] = $term;
 			}
 		}
-
 
 		foreach ( $terms as $term ) {
 			if ( ! $term->parent ) {
 				$term->children = $this->terms->get_child_terms( $term, $children, $this->transformer );
 				$response[]     = $term;
 			}
-
 		}
 
 		return rest_ensure_response( array_map( $this->transformer, $response ) );
