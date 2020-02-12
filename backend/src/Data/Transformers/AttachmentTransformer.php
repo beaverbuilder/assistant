@@ -6,7 +6,7 @@ namespace FL\Assistant\Data\Transformers;
 use FL\Assistant\Data\Repository\NotationsRepository;
 
 
-class AttachmentTransform {
+class AttachmentTransformer {
 
 	protected $notations;
 
@@ -33,13 +33,14 @@ class AttachmentTransform {
 			'id'              => $attachment->ID,
 			'labels'          => [],
 			'mime'            => $meta['mime'],
+			'permalink'       => get_permalink( $attachment ),
 			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : [],
 			'slug'            => $attachment->post_name,
 			'subtype'         => $meta['subtype'],
 			'thumbnail'       => $thumb,
 			'title'           => $meta['title'],
 			'type'            => $meta['type'],
-			'url'             => get_permalink( $attachment ),
+			'url'             => $meta['url'],
 			'urls'            => [
 				'medium' => $size[0],
 			],
