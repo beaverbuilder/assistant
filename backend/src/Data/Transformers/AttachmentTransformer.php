@@ -17,9 +17,10 @@ class AttachmentTransformer {
 	}
 
 	public function __invoke( \WP_Post $attachment ) {
-		$size  = wp_get_attachment_image_src( $attachment->ID, 'medium' );
-		$meta  = wp_prepare_attachment_for_js( $attachment->ID );
-		$thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )[0];
+		$size      = wp_get_attachment_image_src( $attachment->ID, 'medium' );
+		$meta      = wp_prepare_attachment_for_js( $attachment->ID );
+		$thumb_src = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
+		$thumb     = $thumb_src ? $thumb_src[0] : null;
 
 		$response = [
 			'alt'             => $meta['title'],
@@ -42,11 +43,11 @@ class AttachmentTransformer {
 			'type'            => $meta['type'],
 			'url'             => $meta['url'],
 			'urls'            => [
-				'medium' => $size[0],
+				'medium' => $size ? $size[0] : null,
 			],
 			'height'          => $meta['height'],
 			'width'           => $meta['width'],
-			'orientation'     => $meta['orientation'],
+			'orientation'     => isset( $meta['orientation'] ) ? $meta['orientation'] : null,
 		];
 
 		// Labels
