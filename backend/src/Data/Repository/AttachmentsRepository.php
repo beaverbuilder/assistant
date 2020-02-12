@@ -90,7 +90,7 @@ class AttachmentsRepository extends RepositoryAbstract {
 	 *
 	 * @return Pager
 	 */
-	  public function paginate( array $args = [], callable $transform = null ) {
+	public function paginate( array $args = [], callable $transform = null ) {
 		$query = $this->query( $args );
 
 		$pager = new Pager(
