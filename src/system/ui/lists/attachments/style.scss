@@ -51,8 +51,12 @@
 
             span {
                 background: var(--fluid-primary-background);
+                color: var(--fluid-primary-color);
                 padding: 1px var(--fluid-med-space);
                 border-radius: 12px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
     }
