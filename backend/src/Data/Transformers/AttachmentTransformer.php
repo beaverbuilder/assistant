@@ -6,7 +6,7 @@ namespace FL\Assistant\Data\Transformers;
 use FL\Assistant\Data\Repository\NotationsRepository;
 
 
-class AttachmentTransform {
+class AttachmentTransformer {
 
 	protected $notations;
 

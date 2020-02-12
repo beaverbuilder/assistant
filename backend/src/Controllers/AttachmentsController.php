@@ -3,7 +3,7 @@
 namespace FL\Assistant\Controllers;
 
 use FL\Assistant\Data\Repository\AttachmentsRepository;
-use FL\Assistant\Data\Transformers\AttachmentTransform;
+use FL\Assistant\Data\Transformers\AttachmentTransformer;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -22,7 +22,7 @@ class AttachmentsController extends ControllerAbstract
 	protected $attachments;
 
 	/**
-	 * @var AttachmentTransform|callable
+	 * @var AttachmentTransformer|callable
 	 */
 	protected $transformer;
 
@@ -30,9 +30,9 @@ class AttachmentsController extends ControllerAbstract
 	 * AttachmentsController constructor.
 	 *
 	 * @param AttachmentsRepository $attachments
-	 * @param AttachmentTransform $transformer
+	 * @param AttachmentTransformer $transformer
 	 */
-	public function __construct(AttachmentsRepository $attachments, AttachmentTransform $transformer)
+	public function __construct(AttachmentsRepository $attachments, AttachmentTransformer $transformer)
 	{
 		$this->attachments = $attachments;
 		$this->transformer = $transformer;

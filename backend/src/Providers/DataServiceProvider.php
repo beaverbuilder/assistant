@@ -14,7 +14,7 @@ use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Repository\TermsRepository;
 use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
-use FL\Assistant\Data\Transformers\AttachmentTransform;
+use FL\Assistant\Data\Transformers\AttachmentTransformer;
 use FL\Assistant\Data\Transformers\CommentTransformer;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\Data\Transformers\ThemeUpdatesTransformer;
@@ -41,7 +41,7 @@ class DataServiceProvider extends ServiceProviderAbstract {
 	protected $transformers = [
 		UserTransformer::class,
 		PostTransformer::class,
-		AttachmentTransform::class,
+		AttachmentTransformer::class,
 		TermsTransformer::class,
 		CommentTransformer::class,
 		PluginUpdatesTransformer::class,
