@@ -11,6 +11,8 @@ Nav.Tabs = ( { tabs = [] } ) => {
 			<Button.Group appearance="tabs">
 				{ tabs.map( ( tab, i ) => {
 					const { showButton = true, path, label, ...rest } = tab
+					delete rest.component
+					delete rest.exact
 					return showButton && (
 						<Button
 							key={ i }
