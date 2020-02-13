@@ -16,6 +16,47 @@ export const Post = ( { location, match, history } ) => {
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
+	const [ featureThumbnail, setfeatureThumbnail ] = useState( item.thumbnail )
+	const [ thumbData, setthumbData ] = useState( {} )
+	const [ hasUpdateimg, sethasUpdateimg ] = useState( false )
+	const [ removeThumbnail, setremoveThumbnail ] = useState( false )
+
+
+	const uploadFeatureImage = () => {
+		const customUploader = wp.media( {
+			title: 'Select an Image',
+			id: 'fl-asst-media-upload',
+			button: {
+				text: 'Use this image as Feature image'
+			},
+			multiple: false,
+			library: {
+				type: [ 'image' ]
+			},
+			width: '50%'
+		} )
+
+		customUploader.open()
+		customUploader.on( 'select', function() {
+			var attachment = customUploader.state().get( 'selection' ).first().toJSON()
+			setthumbData( attachment )
+			setfeatureThumbnail( attachment.url )
+			sethasUpdateimg( true )
+
+		} )
+	}
+
+	const removeFeatureImage = () => {
+		setthumbData( {} )
+		if ( item.hasPostThumbnail ) {
+			setfeatureThumbnail( item.thumbnail )
+		} else {
+			setfeatureThumbnail( '' )
+		}
+
+		setremoveThumbnail( true )
+	}
+
 
 	const tabs = {
 		general: {
@@ -154,6 +195,29 @@ export const Post = ( { location, match, history } ) => {
 						},
 					},
 				},
+				featureimgUpload: {
+					label: __( 'Feature Image' ),
+					isVisible: supports.thumbnail,
+					fields: {
+						featureimgUpload: {
+
+							id: 'post_feature_image',
+							isVisible: supports.thumbnail && false === featureThumbnail,
+							value: featureThumbnail.url,
+							label: __( 'Set Feature Image' ),
+							component: 'text',
+							onClick: uploadFeatureImage,
+						},
+						featureimg: {
+							id: 'post_feature_img',
+							src: featureThumbnail,
+							isVisible: featureThumbnail,
+							component: 'image',
+							onClick: uploadFeatureImage,
+						},
+
+					},
+				},
 				attributes: {
 					label: __( 'Attributes' ),
 					isVisible: !! Object.keys( templates ).length || isHierarchical || supports.order,
@@ -271,6 +335,9 @@ export const Post = ( { location, match, history } ) => {
 		}
 		if ( 'terms' in changed ) {
 			data.terms = changed.terms
+		}
+		if ( hasUpdateimg ) {
+		 	data.thumbnail = thumbData.id
 		}
 
 		const handleError = error => {
@@ -393,7 +460,7 @@ export const Post = ( { location, match, history } ) => {
 		<Page
 			title={ labels.editItem }
 			hero={ item.hasPostThumbnail ? <Hero /> : null }
-			footer={ hasChanges && <Footer /> }
+			footer={ hasChanges || hasUpdateimg  && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
 			<ElevatorButtons />
