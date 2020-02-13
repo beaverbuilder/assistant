@@ -61,7 +61,7 @@ const Page = ({
     }
 
     const wrapStyle = {
-        flex: '1 0 auto',
+        flex: '1 1 auto',
         position: 'relative',
         minHeight: 0,
         maxHeight: '100%',

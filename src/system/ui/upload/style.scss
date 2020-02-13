@@ -1,15 +1,16 @@
 .fl-asst-file-drop {
 	display: flex;
-    flex: 1 0 auto;
+    flex: 1 1 auto;
 	max-height: 100%;
 	min-height: 0;
 }
 
 .fl-asst-file-drop-content-view {
 	display: flex;
-	flex: 1 0 auto;
+	flex: 1 1 auto;
 	max-height: 100%;
 	min-height: 0;
+	max-width: 100%;
 }
 
 .fl-asst-file-drop-dragging-view {

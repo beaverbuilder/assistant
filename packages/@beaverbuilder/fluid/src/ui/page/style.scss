@@ -43,7 +43,7 @@
         --fluid-top-inset: 0;
 
         position: relative;
-        flex: 1 0 auto;
+        flex: 1 1 auto;
         display: flex;
         flex-direction: column;
         background-color: var(--fluid-background);
@@ -85,7 +85,7 @@
 
         .fluid-page-content {
             box-sizing: border-box;
-            flex: 1 0 auto;
+            flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             max-height: 100%;
