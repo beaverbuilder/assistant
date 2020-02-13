@@ -70,9 +70,9 @@ const Page = ({
 
     const contentBoxStyle = {
         flexGrow: 1,
-        flexShrink: 1,
-        maxHeight: '100%',
+        flexShrink: 0,
         minHeight: 0,
+        maxHeight: '100%', /* yes, for scroll loading to work */
         ...contentWrapStyle,
     }
 
