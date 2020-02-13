@@ -61,7 +61,7 @@ const Page = ({
     }
 
     const wrapStyle = {
-        flex: '1 1 auto',
+        flex: '1 0 auto',
         position: 'relative',
         minHeight: 0,
         maxHeight: '100%',
@@ -71,7 +71,7 @@ const Page = ({
 
     const contentBoxStyle = {
         flexGrow: 1,
-        flexShrink: 0,
+        flexShrink: 1,
         minHeight: 0,
         maxHeight: '100%', /* yes, for scroll loading to work */
         ...contentWrapStyle,

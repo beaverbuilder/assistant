@@ -43,11 +43,13 @@
         --fluid-top-inset: 0;
 
         position: relative;
-        flex: 1 1 auto;
+        flex: 1 0 auto;
         display: flex;
         flex-direction: column;
         background-color: var(--fluid-background);
         color: var(--fluid-color);
+        max-height: 100%;
+        min-height: 0;
 
         .fluid-sticky-element {
             // Yea, all this for sticky headers
