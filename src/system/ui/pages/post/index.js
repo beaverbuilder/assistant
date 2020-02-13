@@ -337,11 +337,11 @@ export const Post = ( { location, match, history } ) => {
 			srcSet = getSrcSet( sizes )
 		}
 		return (
-			<div style={ {} }>
+			<div>
 				<img
 					src={ item.thumbnail }
 					srcSet={ srcSet }
-					style={ { height: '100%', objectFit: 'cover' } }
+					style={ { objectFit: 'cover' } }
 					alt={ alt }
 					title={ title }
 					height={ height }
