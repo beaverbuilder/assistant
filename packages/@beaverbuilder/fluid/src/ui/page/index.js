@@ -48,7 +48,8 @@ const Page = ({
 
         const style = {
             transformOrigin: '0 0',
-            transform: 'translateZ(-2px) scale(3)'
+            /* parallax disabled while I work out the kinks */
+            /*transform: 'translateZ(-2px) scale(3)' */
         }
 
         return (
