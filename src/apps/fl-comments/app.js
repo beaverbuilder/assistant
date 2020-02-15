@@ -1,5 +1,6 @@
 import React from 'react'
 import { Page, Nav } from 'assistant/ui'
+import { getSystemConfig } from 'assistant/data'
 import { AllTab, CommentTypeTab } from './tabs'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
@@ -70,12 +71,18 @@ const Main = () => {
 		return tabs
 	}
 	const tabs = getTabs()
+
+	const { pluginURL } = getSystemConfig()
+	const hero = `${pluginURL}img/comment-hero-a.jpg`
+
 	return (
 		<Page
 			padX={ false }
 			padY={ false }
 			title={ __( 'Comments' ) }
 			header={ <Nav.Tabs tabs={ tabs } /> }
+			hero={hero}
+			shouldScroll={false}
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
