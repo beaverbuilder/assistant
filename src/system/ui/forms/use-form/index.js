@@ -53,12 +53,12 @@ const Tabs = ( { config } ) => {
 	const setTab = path => history.replace( path, location.state )
 	return (
 		<Layout.Box
-			outset={true}
-			padX={false}
-			padY={false}
-			style={{
+			outset={ true }
+			padX={ false }
+			padY={ false }
+			style={ {
 				marginTop: 'var(--fluid-lg-space)'
-			}}
+			} }
 		>
 			<Button.Group appearance="tabs">
 				{ Object.entries( config ).map( ( [ , tab ], i ) => {

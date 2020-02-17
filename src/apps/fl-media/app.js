@@ -84,7 +84,7 @@ const Main = ( { match } ) => {
 	}
 
 	return (
-		<Page title={ __( 'Media' ) } padX={ false } padY={ false } shouldScroll={false}>
+		<Page title={ __( 'Media' ) } padX={ false } padY={ false } shouldScroll={ false }>
 			<List.Attachments
 				key={ listStyle }
 				baseURL={ match.url }

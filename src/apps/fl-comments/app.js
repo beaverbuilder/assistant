@@ -77,8 +77,8 @@ const Main = () => {
 			padY={ false }
 			title={ __( 'Comments' ) }
 			header={ <Nav.Tabs tabs={ tabs } /> }
-			hero={hero}
-			shouldScroll={false}
+			hero={ hero }
+			shouldScroll={ false }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
