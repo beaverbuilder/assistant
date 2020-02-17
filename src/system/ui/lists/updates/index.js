@@ -79,7 +79,7 @@ export const Updates = ( {
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
-					description: item.meta,
+					description: <>{item.version} &rarr; {item.updatedVersion}</>,
 					thumbnail: 'card' !== listStyle ? item.thumbnail : null,
 					accessory: props => <UpdateButton { ...props } />,
 					before: 'card' === listStyle ? <Before /> : null,

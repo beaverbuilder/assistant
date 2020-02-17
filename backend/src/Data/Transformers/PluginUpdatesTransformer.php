@@ -28,17 +28,18 @@ class PluginUpdatesTransformer {
 		}
 
 		return [
-			'author'      => $plugin->AuthorName,
-			'banner'      => $banner,
-			'content'     => $plugin->Description,
-			'id'          => $update->plugin,
-			'meta'        => $plugin->Version . ' by ' . $plugin->AuthorName,
-			'metaUpdated' => $update->new_version . ' by ' . $plugin->AuthorName,
-			'plugin'      => $update->plugin,
-			'thumbnail'   => $thumbnail,
-			'title'       => $plugin->Name,
-			'type'        => 'plugin',
-			'version'     => $plugin->Version,
+			'author'         => $plugin->AuthorName,
+			'banner'         => $banner,
+			'content'        => $plugin->Description,
+			'id'             => $update->plugin,
+			'meta'           => $plugin->Version . ' by ' . $plugin->AuthorName,
+			'metaUpdated'    => $update->new_version . ' by ' . $plugin->AuthorName,
+			'plugin'         => $update->plugin,
+			'thumbnail'      => $thumbnail,
+			'title'          => $plugin->Name,
+			'type'           => 'plugin',
+			'version'        => $plugin->Version,
+			'updatedVersion' => $update->new_version,
 		];
 	}
 }

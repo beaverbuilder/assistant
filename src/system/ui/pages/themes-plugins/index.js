@@ -13,12 +13,22 @@ export const Plugin = ( { location = {} } ) => {
 				label: __( 'Details' ),
 				fields: {
 					version: {
-						label: __( 'Version' ),
+						label: __( 'Current Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					updatedVersion: {
+						label: __( 'Updated Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					author: {
+						label: __( 'Author' ),
 						labelPlacement: 'beside',
 						component: 'plain-text',
 					}
 				}
-			}
+			},
 		}
 	} )
 
@@ -43,6 +53,16 @@ export const Theme = ( { location = {} } ) => {
 				fields: {
 					version: {
 						label: __( 'Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					updatedVersion: {
+						label: __( 'Updated Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					author: {
+						label: __( 'Author' ),
 						labelPlacement: 'beside',
 						component: 'plain-text',
 					}
