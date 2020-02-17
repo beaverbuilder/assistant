@@ -29,17 +29,23 @@ class PluginUpdatesTransformer {
 
 		return [
 			'author'         => $plugin->AuthorName,
+			'authorURI'      => $plugin->AuthorURI,
 			'banner'         => $banner,
+			'bannerSizes'    => $update->banners,
 			'content'        => $plugin->Description,
 			'id'             => $update->plugin,
 			'meta'           => $plugin->Version . ' by ' . $plugin->AuthorName,
 			'metaUpdated'    => $update->new_version . ' by ' . $plugin->AuthorName,
 			'plugin'         => $update->plugin,
 			'thumbnail'      => $thumbnail,
+			'thumbnailSizes' => $update->icons,
 			'title'          => $plugin->Name,
 			'type'           => 'plugin',
 			'version'        => $plugin->Version,
 			'updatedVersion' => $update->new_version,
+			'tested'		 => $update->tested,
+			'requiresPHP'    => $update->requires_php,
+			'pluginURI'      => $plugin->PluginURI,
 		];
 	}
 }
