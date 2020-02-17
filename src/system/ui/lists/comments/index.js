@@ -21,9 +21,6 @@ export const Comments = ( {
 			getItemProps={ ( item, defaultProps ) => {
 
 				const { updateItem } = defaultProps
-				const [ approveStatus, setApproveStatus ] = useState( item.approved )
-				const [ trashStatus, setTrashStatus ] = useState( item.trash )
-				const [ spamStatus, setSpamStatus ] = useState( item.spam )
 
 				const approveComment = () => {
 					comments
@@ -31,8 +28,9 @@ export const Comments = ( {
 						.update( item.id, 'approve', item )
 						.then( response => {
 							if ( '1' == response.data.commentData.comment_approved ) {
-								item.approved = true
-								setApproveStatus( true )
+								updateItem( item.uuid, {
+									approved: true,
+								} )
 							}
 						} )
 				}
@@ -43,8 +41,9 @@ export const Comments = ( {
 						.update( item.id, 'unapprove', item )
 						.then( response => {
 							if ( '0' == response.data.commentData.comment_approved ) {
-								item.approved = false
-								setApproveStatus( false )
+								updateItem( item.uuid, {
+									approved: false,
+								} )
 							}
 						} )
 				}
@@ -54,10 +53,9 @@ export const Comments = ( {
 						.comments()
 						.update( item.id, 'spam', item )
 						.then( () => {
-							item.spam = true
-							setSpamStatus( true )
 							updateItem( item.uuid, {
 								title: __( 'This item has been moved to the spam' ),
+								spam: true,
 								isSpam: true,
 								isunSpam: false
 							} )
@@ -69,10 +67,9 @@ export const Comments = ( {
 						.comments()
 						.update( item.id, 'unspam', item )
 						.then( () => {
-							item.spam = false
-							setSpamStatus( false )
 							updateItem( item.uuid, {
 								title: __( 'This item has been restored from spam' ),
+								spam: false,
 								isSpam: false,
 								isunSpam: true
 							} )
@@ -88,10 +85,9 @@ export const Comments = ( {
 							.then( response => {
 
 								if ( 'trash' == response.data.commentData.comment_approved ) {
-									item.trash = true
-									setTrashStatus( true )
 									updateItem( item.uuid, {
 										title: __( 'This item has been moved to the trash' ),
+										trash: true,
 										isTrashing: true,
 										isTrashed: true,
 										isRestore: false
@@ -107,11 +103,9 @@ export const Comments = ( {
 						.comments()
 						.update( item.id, 'untrash', item )
 						.then( () => {
-
-							item.trash = false
-							setTrashStatus( false )
 							updateItem( item.uuid, {
 								title: __( 'This item has been restored from trash' ),
+								trash: false,
 								isTrashing: false,
 								isTrashed: false,
 								isRestore: true
@@ -152,7 +146,7 @@ export const Comments = ( {
 								<Icon.View  />
 							</Button>
 
-							{ approveStatus ? (
+							{ item.approved ? (
 								<Button
 									onClick={ unapproveComment }
 									title={ __( 'Reject Comment' ) }
@@ -175,7 +169,7 @@ export const Comments = ( {
 							)}
 
 
-							{ spamStatus ? (
+							{ item.spam ? (
 								<Button
 									onClick={ unspamComment }
 									title={ __( 'Mark as not spam' ) }
@@ -198,7 +192,7 @@ export const Comments = ( {
 							)}
 
 
-							{ trashStatus ? (
+							{ item.trash ? (
 								<Button
 									onClick={ untrashComment }
 									title={ __( 'Restore from trash' ) }
@@ -246,7 +240,7 @@ export const Comments = ( {
 					extras: props => <Extras { ...props } />,
 
 					className: classname( {
-						'fl-asst-list-item-alert': ! approveStatus
+						'fl-asst-list-item-alert': ! item.approved
 					}, defaultProps.className )
 				} )
 			} }
