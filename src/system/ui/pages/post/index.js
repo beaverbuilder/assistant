@@ -224,6 +224,7 @@ export const Post = ( { location, match, history } ) => {
 							state: { item }
 						},
 					} ) }
+					scrollerClassName="fl-asst-outset"
 				/>
 			),
 		},
