@@ -20,7 +20,6 @@ const Main = () => {
 		let tabs = [
 			{
 				handle: 'all',
-				title: __( 'All' ),
 				label: __( 'All' ),
 				path: '/fl-comments',
 				component: AllTab,
@@ -31,26 +30,22 @@ const Main = () => {
 
 			{
 				handle: 'hold',
-				title: __( 'Pending' ),
-				label: __( 'Pending Comments' ),
+				label: __( 'Pending ' ),
 				path: '/fl-comments/',
 			},
 			{
 				handle: 'approve',
-				title: __( 'Approved' ),
-				label: __( 'Approved Comments' ),
+				label: __( 'Approved' ),
 				path: '/fl-comments/',
 			},
 			{
 				handle: 'spam',
-				title: __( 'Spam' ),
-				label: __( 'Spam Comments' ),
+				label: __( 'Spam' ),
 				path: '/fl-comments/',
 			},
 			{
 				handle: 'trash',
-				title: __( 'Trashed' ),
-				label: __( 'Trashed Comments' ),
+				label: __( 'Trashed' ),
 				path: '/fl-comments/',
 			},
 
@@ -62,7 +57,7 @@ const Main = () => {
 			tabs.push( {
 				handle: type.handle,
 				path: '/fl-comments/tab/' + type.handle,
-				label: type.title,
+				label: type.label,
 				component: () => <CommentTypeTab type={ type.handle } label={ type.label } />,
 
 			} )
@@ -77,6 +72,7 @@ const Main = () => {
 
 	return (
 		<Page
+			id="fl-comments-list-page"
 			padX={ false }
 			padY={ false }
 			title={ __( 'Comments' ) }

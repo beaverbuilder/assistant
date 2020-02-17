@@ -59,19 +59,20 @@
 
         &.fl-asst-button-group-appearance-tabs {
             flex: 1 1 auto;
-            background: transparent;
-            padding: 0px;
-            min-height: var(--fl-asst-target-size);
+            background: var(--fluid-box-background);
+            padding: 0 var(--fluid-lg-space);
+            height: 38px;
             border-radius: 0;
             overflow: auto;
-            justify-content: center;
+            justify-content: flex-start;
             align-self: stretch;
-            padding: 2px;
+            overflow: visible;
 
             .fluid-button {
                 margin: 0;
                 background: transparent;
                 border: none;
+                border-radius: 3px;
                 margin-right: var(--fluid-sm-space);
 
                 &:hover {
@@ -79,15 +80,14 @@
                 }
 
                 &.is-selected {
-                    color: var(--fluid-primary-background);
-                    background: var(--fluid-primary-color);
-
-                    &:hover {
-                        background: var(--fluid-primary-hover-background);
-                    }
+                    color: var(--fluid-primary-color);
+                    background: var(--fluid-background);
+                    box-shadow: 0px -2px 0px var(--fluid-primary-color);
+                    border-radius: 0;
 
                     &:focus {
-                        box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
+                        border-radius: 3px;
+                        box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
                                     0px 0px 0px 2px var(--fluid-accent),
                                     0px 4px 4px 0px rgba(0, 0, 0, 0.1);
                     }

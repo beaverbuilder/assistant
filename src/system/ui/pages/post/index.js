@@ -54,7 +54,7 @@ export const Post = ( { location, match, history } ) => {
 			path: match.url + '/edit',
 			sections: {
 				general: {
-					label: __( 'General' ),
+					label: '',
 					fields: {
 						title: {
 							label: __( 'Title' ),

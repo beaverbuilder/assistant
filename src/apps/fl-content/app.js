@@ -43,7 +43,7 @@ const Main = () => {
 
 	const Header = () => {
 		return (
-			<div style={ { flex: '1 1 auto', display: 'flex', flexDirection: 'column' } }>
+			<div style={ { flex: '1 1 auto', display: 'flex', flexDirection: 'column', margin: '0 -5px' } }>
 				<Nav.Tabs tabs={ tabs } />
 			</div>
 		)
