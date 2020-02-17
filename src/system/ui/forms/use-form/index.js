@@ -52,9 +52,14 @@ const Tabs = ( { config } ) => {
 	const { history, location, match } = useContext( Nav.Context )
 	const setTab = path => history.replace( path, location.state )
 	return (
-		<Layout.Box outset={true} padX={false} padY={false} style={{
-			marginTop: 'var(--fluid-lg-space)'
-		}}>
+		<Layout.Box
+			outset={true}
+			padX={false}
+			padY={false}
+			style={{
+				marginTop: 'var(--fluid-lg-space)'
+			}}
+		>
 			<Button.Group appearance="tabs">
 				{ Object.entries( config ).map( ( [ , tab ], i ) => {
 					const { isVisible, label, path } = tab
