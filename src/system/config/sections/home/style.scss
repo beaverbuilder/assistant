@@ -88,5 +88,15 @@
     .fl-asst-window-normal .fl-asst-app-grid .fl-asst-app-grid-item .fl-asst-app-icon {
         width: 60px;
         height: 60px;
-    }
+	}
+	.fl-asst-subscribe-wrap{
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		grid-gap: var(--fl-asst-inner-space);
+	}
+	.fl-asst-subscribe svg{
+		background: none;
+    	margin: 0 auto;
+    	display: block;
+	}
 }
