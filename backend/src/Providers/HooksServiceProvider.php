@@ -70,10 +70,10 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 	public function enqueue_custom_admin_columns() {
 
-		$types = get_post_types( [ 'public' => true, ], 'objects' );
+		$types = get_post_types( [ 'public' => true ], 'objects' );
 
-		foreach( $types as $type => $info ) {
-			add_filter( "manage_{$type}_posts_columns", [$this, 'add_columns'] );
+		foreach ( $types as $type => $info ) {
+			add_filter( "manage_{$type}_posts_columns", [ $this, 'add_columns' ] );
 			add_action( "manage_{$type}_posts_custom_column", [ $this, 'render_column' ], 10, 2 );
 		}
 	}
@@ -84,9 +84,9 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 	}
 
 	public function render_column( $column, $post_id ) {
-		$vars = "--fl-asst-red: #FF5335; --fl-asst-blue: #1BADF8; --fl-asst-green: #00D281; --fl-asst-yellow: #FFD000; --fl-asst-orange: #FF9500; --fl-asst-purple: #CC73E1; --fl-asst-pink: #FF2968;";
+		$vars = '--fl-asst-red: #FF5335; --fl-asst-blue: #1BADF8; --fl-asst-green: #00D281; --fl-asst-yellow: #FFD000; --fl-asst-orange: #FF9500; --fl-asst-purple: #CC73E1; --fl-asst-pink: #FF2968;';
 		$styles = "{$vars} padding: 2px 5px; display: inline-flex; flex: 0 0 auto; border-radius: 20px; border: 1px solid #d2d2d2; align-items: center; color: black; background: white; margin: 2px 5px 3px; margin-left:0;";
-		$dot = "width: 10px; height: 10px; flex: 0 0 10px; border-radius: 7px; background: blue; margin-right: 5px;";
+		$dot = 'width: 10px; height: 10px; flex: 0 0 10px; border-radius: 7px; background: blue; margin-right: 5px;';
 
 		if ( 'fl_assistant' === $column ) {
 			$transformer = new NotationsTransformer;
@@ -99,13 +99,13 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 			// Assemble term meta dataset
 			$term_meta = [];
-			foreach( $terms as $key => $term ) {
+			foreach ( $terms as $key => $term ) {
 				$item = call_user_func( $labels_transformer, $term );
 				$term_meta[ $item['id'] ] = $item;
 			}
 
 			// Output labels
-			foreach( $labels as $label ) {
+			foreach ( $labels as $label ) {
 				$term = $term_meta[ $label['label_id'] ];
 				if ( isset( $term ) ) {
 					print "<span style='{$styles}'><span style='{$dot}; background-color: {$term['color']}'></span>{$term['label']}</span>";
