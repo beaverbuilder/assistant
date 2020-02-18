@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { getSystemConfig } from 'assistant/data'
+import { getSystemConfig, useSystemState } from 'assistant/data'
 import { Page, Nav, Icon, Button } from 'assistant/ui'
 import { SummaryTab, PostTypeTab } from './tabs'
 
@@ -15,6 +15,14 @@ export const Content = ( { match } ) => (
 
 const Main = () => {
 	const { contentTypes } = getSystemConfig()
+	const { counts } = useSystemState()
+
+	const PostTypeLabel = ({ children, count = 0 }) => (
+		<>
+			{children}
+			<span className="fl-asst-count-badge">{count}</span>
+		</>
+	)
 
 	const getTabs = () => {
 		let tabs = [
@@ -32,7 +40,7 @@ const Main = () => {
 			tabs.push( {
 				handle: key,
 				path: '/fl-content/tab/' + key,
-				label: type.labels.plural,
+				label: <PostTypeLabel count={counts[`content/${key}`]}>{type.labels.plural}</PostTypeLabel>,
 				component: () => <PostTypeTab type={ key } />,
 				showButton: type.builtin
 			} )
