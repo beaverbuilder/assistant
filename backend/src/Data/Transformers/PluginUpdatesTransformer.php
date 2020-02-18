@@ -43,7 +43,7 @@ class PluginUpdatesTransformer {
 			'type'           => 'plugin',
 			'version'        => $plugin->Version,
 			'updatedVersion' => $update->new_version,
-			'tested'		 => $update->tested,
+			'tested'         => $update->tested,
 			'requiresPHP'    => $update->requires_php,
 			'pluginURI'      => $plugin->PluginURI,
 		];
