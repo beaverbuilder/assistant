@@ -334,9 +334,9 @@ class PostsController extends ControllerAbstract {
 					unset( $data['terms'] );
 				}
 				if ( isset( $data['thumbnail'] ) ) {
-					if( $data[ 'thumbnail' ] == '0'){
+					if ( '0' === $data['thumbnail'] ) {
 						delete_post_meta( $id, '_thumbnail_id' );
-					}else{
+					} else {
 						set_post_thumbnail( $id, $data['thumbnail'] );
 					}
 

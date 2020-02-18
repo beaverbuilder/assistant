@@ -11,9 +11,9 @@ export const ButtonItem = ( {
 
 			key={ id }
 			id={ id }
-			value={text}
+			value={ text }
 			width="100%"
-			className={"fluid-button "+btnclass}
+			className={ 'fluid-button ' + btnclass }
 			{ ...rest }
 		>{ text }</button>
 	)
