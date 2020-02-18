@@ -5,4 +5,5 @@ import { App } from './app'
 registerApp( 'fl-labels', {
 	label: __( 'Labels' ),
 	root: App,
+	icon: App.Icon,
 } )

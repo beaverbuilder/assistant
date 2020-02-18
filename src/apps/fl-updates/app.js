@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
 import { App, Page, Button, List, Nav, Filter } from 'assistant/ui'
@@ -9,6 +9,7 @@ import {
 	getUpdaterStore,
 	getUpdaterActions,
 } from 'assistant/data'
+import { defaultState } from './'
 
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
@@ -21,16 +22,14 @@ export const UpdatesApp = ( { match } ) => (
 const UpdatesMain = () => {
 	const updater = getUpdaterStore()
 	const { setUpdateQueueItems } = getUpdaterActions()
-	const { updatingAll } = useAppState( 'fl-updates' )
-	const { setUpdatingAll } = getAppActions( 'fl-updates' )
+	const { updatingAll, updateType, listStyle } = useAppState( 'fl-updates' )
+	const { setUpdatingAll, setUpdateType, setListStyle } = getAppActions( 'fl-updates' )
 	const { handle } = useContext( App.Context )
 	const { getContent } = getWpRest()
 	const { counts } = useSystemState()
 
 	const totalUpdates = counts['update/plugins'] + counts['update/themes']
 	const hasUpdates = 0 !== totalUpdates
-
-	const [ UpdateType, setUpdateType ] = useState( 'all' )
 
 	const updateAll = () => {
 		setUpdatingAll( true )
@@ -80,26 +79,40 @@ const UpdatesMain = () => {
 	const UpdatesFilter = () => {
 
 		const types = {
-			'all': __( 'Any' ),
+			'all': __( 'All' ),
 			plugins: sprintf( 'Plugin (%s)', counts['update/plugins'] ),
 			themes: sprintf( 'Theme (%s)', counts['update/themes'] ),
 		}
 
+		const listStyles = {
+			card: __( 'Cards' ),
+			list: __( 'Compact' )
+		}
+
+		const resetFilter = () => {
+			setUpdateType( defaultState.updateType )
+			setListStyle( defaultState.listStyle )
+		}
 
 		return (
 			<Filter>
 				<Filter.RadioGroupItem
 					title={ __( 'Type' ) }
 					items={ types }
-					value={ UpdateType }
-					defaultValue={ UpdateType }
+					value={ updateType }
+					defaultValue={ defaultState.updateType }
 					onChange={ value => setUpdateType( value ) }
 				/>
-				<Filter.Button>Reset Fitler</Filter.Button>
+				<Filter.RadioGroupItem
+					title={ __( 'Display As' ) }
+					items={ listStyles }
+					value={ listStyle }
+					defaultValue={ defaultState.listStyle }
+					onChange={ value => setListStyle( value ) }
+				/>
+				<Filter.Button onClick={ resetFilter }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
 		)
-
-
 	}
 
 	return (
@@ -107,6 +120,7 @@ const UpdatesMain = () => {
 			title={ __( 'Updates' ) }
 			actions={ <HeaderActions /> }
 			padY={ false }
+			shouldScroll={ false }
 		>
 
 			{ ! hasUpdates && (
@@ -115,7 +129,7 @@ const UpdatesMain = () => {
 
 			{ hasUpdates && (
 				<List.Updates
-					updateType={ UpdateType }
+					updateType={ updateType }
 					getItemProps={ ( item, defaultProps ) => {
 						return {
 							...defaultProps,
@@ -126,6 +140,7 @@ const UpdatesMain = () => {
 						}
 					} }
 					before={ <UpdatesFilter /> }
+					listStyle={ listStyle }
 				/>
 			)}
 		</Page>

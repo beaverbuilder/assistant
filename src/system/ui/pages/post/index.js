@@ -98,7 +98,7 @@ export const Post = ( { location, match, history } ) => {
 			path: match.url + '/edit',
 			sections: {
 				general: {
-					label: __( 'General' ),
+					label: '',
 					fields: {
 						title: {
 							label: __( 'Title' ),
@@ -300,6 +300,7 @@ export const Post = ( { location, match, history } ) => {
 							state: { item }
 						},
 					} ) }
+					scrollerClassName="fl-asst-outset"
 				/>
 			),
 		},
@@ -420,11 +421,11 @@ export const Post = ( { location, match, history } ) => {
 			srcSet = getSrcSet( sizes )
 		}
 		return (
-			<div style={ {} }>
+			<div>
 				<img
 					src={ item.thumbnail }
 					srcSet={ srcSet }
-					style={ { height: '100%', objectFit: 'cover' } }
+					style={ { objectFit: 'cover' } }
 					alt={ alt }
 					title={ title }
 					height={ height }

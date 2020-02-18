@@ -20,6 +20,7 @@ const Page = ({
     header,
     footer,
     onLoad = focusFirstElement,
+    shouldScroll = true,
 
     // Passed to Layout.Box
     padX = true,
@@ -36,7 +37,7 @@ const Page = ({
 
     const style = {
         overflowX: 'hidden',
-        overflowY: 'scroll',
+        overflowY: shouldScroll ? 'scroll' : 'hidden',
         perspective : 1,
         perspectiveOrigin: '0 0',
     }
@@ -48,7 +49,9 @@ const Page = ({
 
         const style = {
             transformOrigin: '0 0',
-            transform: 'translateZ(-2px) scale(3)'
+            flex: '0 0 auto',
+            /* parallax disabled while I work out the kinks */
+            /*transform: 'translateZ(-2px) scale(3)' */
         }
 
         return (
@@ -71,8 +74,8 @@ const Page = ({
     const contentBoxStyle = {
         flexGrow: 1,
         flexShrink: 1,
-        maxHeight: '100%',
         minHeight: 0,
+        maxHeight: '100%', /* yes, for scroll loading to work */
         ...contentWrapStyle,
     }
 
@@ -81,7 +84,11 @@ const Page = ({
             <div className={classes} style={style} {...rest}>
                 <Hero>{hero}</Hero>
 
-                <div className="fluid-page-content">
+                <div className="fluid-page-content" style={{
+                    maxHeight: shouldScroll ? '' : '100%',
+                    minHeight: 0,
+                    flexShrink: shouldScroll ? 0 : 1,
+                }}>
                     <div className="fluid-sticky-element">
                         { toolbar !== false  && (
                             <div className="fluid-toolbar">

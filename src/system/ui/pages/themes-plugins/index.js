@@ -4,7 +4,14 @@ import { Form, Page, Layout } from 'ui'
 
 export const Plugin = ( { location = {} } ) => {
 	const { item } = location.state
-	const { banner, title, content } = item
+	const {
+		banner,
+		title,
+		content,
+		author,
+		authorURI,
+		pluginURI
+	} = item
 
 	const { renderForm } = Form.useForm( {
 		defaults: item,
@@ -13,12 +20,37 @@ export const Plugin = ( { location = {} } ) => {
 				label: __( 'Details' ),
 				fields: {
 					version: {
-						label: __( 'Version' ),
+						label: __( 'Current Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					updatedVersion: {
+						label: __( 'Updated Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					author: {
+						label: __( 'Author' ),
+						labelPlacement: 'beside',
+						component: () => authorURI ? <a href={ authorURI }>{author}</a> : author,
+					},
+					pluginURI: {
+						label: __( 'Plugin Page' ),
+						labelPlacement: 'beside',
+						component: () => <a href={ pluginURI }>{title}</a>,
+					},
+					tested: {
+						label: __( 'Tested for WordPress Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					requiresPHP: {
+						label: __( 'Requires PHP Version' ),
 						labelPlacement: 'beside',
 						component: 'plain-text',
 					}
 				}
-			}
+			},
 		}
 	} )
 
@@ -43,6 +75,16 @@ export const Theme = ( { location = {} } ) => {
 				fields: {
 					version: {
 						label: __( 'Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					updatedVersion: {
+						label: __( 'Updated Version' ),
+						labelPlacement: 'beside',
+						component: 'plain-text',
+					},
+					author: {
+						label: __( 'Author' ),
 						labelPlacement: 'beside',
 						component: 'plain-text',
 					}

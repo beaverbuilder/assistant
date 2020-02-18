@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react'
-import { Button, Form, Nav, Page } from 'ui'
+import { Button, Form, Nav, Page, Layout } from 'ui'
 import { useFormData } from '../use-form-data'
 import './style.scss'
 
@@ -52,7 +52,14 @@ const Tabs = ( { config } ) => {
 	const { history, location, match } = useContext( Nav.Context )
 	const setTab = path => history.replace( path, location.state )
 	return (
-		<Page.Pad className="fl-asst-form-tabs fl-asst-stick-to-top">
+		<Layout.Box
+			outset={ true }
+			padX={ false }
+			padY={ false }
+			style={ {
+				marginTop: 'var(--fluid-lg-space)'
+			} }
+		>
 			<Button.Group appearance="tabs">
 				{ Object.entries( config ).map( ( [ , tab ], i ) => {
 					const { isVisible, label, path } = tab
@@ -69,7 +76,7 @@ const Tabs = ( { config } ) => {
 					)
 				} ) }
 			</Button.Group>
-		</Page.Pad>
+		</Layout.Box>
 	)
 }
 

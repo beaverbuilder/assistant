@@ -9,7 +9,7 @@ export const Attachment = ( { location, history } ) => {
 	const { item } = location.state
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
-	const { id, title, type, subtype, filesize } = item
+	const { id, title, type, subtype } = item
 
 	const onSubmit = ( { changed, ids } ) => {
 		const data = {
@@ -112,17 +112,21 @@ export const Attachment = ( { location, history } ) => {
 					component: 'plain-text',
 					labelPlacement: 'beside',
 				},
+				author: {
+					label: __( 'Uploaded by' ),
+					component: 'plain-text',
+					labelPlacement: 'beside',
+				},
 			}
 		},
 		links: {
 			label: __( 'Links' ),
 			fields: {
-				fileUrl: {
+				url: {
 					label: __( 'File URL' ),
 					component: 'url',
-					isVisible: !! item.sizes.full,
 				},
-				url: {
+				permalink: {
 					label: __( 'URL' ),
 					component: 'url',
 				},
@@ -136,7 +140,7 @@ export const Attachment = ( { location, history } ) => {
 					options: [
 						{
 							label: __( 'View Attachment' ),
-							href: item.url,
+							href: item.permalink,
 						},
 						{
 							label: __( 'Edit in Admin' ),
@@ -167,7 +171,6 @@ export const Attachment = ( { location, history } ) => {
 
 	const defaults = {
 		...item,
-		fileUrl: item.sizes.full ? item.sizes.full.url : null,
 		type: type + '/' + subtype,
 	}
 
@@ -184,12 +187,12 @@ export const Attachment = ( { location, history } ) => {
 	} )
 
 	const Hero = () => {
-		const { width, sizes, height, alt, type } = item
+		const { width, sizes, height, alt, type, url, mime } = item
 		const srcSet = getSrcSet( sizes )
 		const heightPercentage = ( height / width ) * 100
 
 		// Temp - Handle non-image heroes.
-		if ( 'image' !== type ) {
+		if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! item.thumbnail ) {
 			return null
 		}
 
@@ -198,6 +201,14 @@ export const Attachment = ( { location, history } ) => {
 			boxSizing: 'border-box',
 			paddingTop: heightPercentage ? heightPercentage + '%' : '50%',
 			background: 'var(--fluid-primary-background)',
+		}
+
+		let mediaContent = ''
+
+		if ( 'audio' == type || 'video' == type ) {
+			mediaContent = <video width="100%" controls><source src={ url } type={ mime } /></video>
+		} else {
+			mediaContent = <img src={ item.thumbnail } srcSet={ srcSet } height={ height } width={ width } alt={ alt } loading="lazy" />
 		}
 
 		return (
@@ -211,14 +222,7 @@ export const Attachment = ( { location, history } ) => {
 						height: '100%',
 					} }
 				>
-					<img
-						src={ item.thumbnail }
-						srcSet={ srcSet }
-						height={ height }
-						width={ width }
-						alt={ alt }
-						loading="lazy"
-					/>
+					{ mediaContent }
 				</div>
 			</div>
 		)
@@ -231,8 +235,8 @@ export const Attachment = ( { location, history } ) => {
 			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{title}</Layout.Headline>
-			<div style={ { marginBottom: 'var(--fluid-med-space)' } }>{filesize}</div>
 			{renderForm()}
 		</Page>
+
 	)
 }

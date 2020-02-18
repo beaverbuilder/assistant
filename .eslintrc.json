@@ -71,6 +71,9 @@
           "error",
           "always"
         ],
+        "no-case-declarations": [
+            "off"
+        ],
         "react/prop-types": [
             "off"
         ],
