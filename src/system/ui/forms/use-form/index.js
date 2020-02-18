@@ -161,7 +161,8 @@ const getFieldComponent = key => {
 		'textarea': Form.TextareaItem,
 		'url': Form.UrlItem,
 		'parent-terms': Form.ParentTermItems,
-		'image': Form.ImageItem
+		'image': Form.ImageItem,
+		'button': Form.ButtonItem
 	}
 	let Component = Form.TextItem
 

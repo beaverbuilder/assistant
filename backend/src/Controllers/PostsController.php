@@ -334,7 +334,12 @@ class PostsController extends ControllerAbstract {
 					unset( $data['terms'] );
 				}
 				if ( isset( $data['thumbnail'] ) ) {
-					set_post_thumbnail( $id, $data['thumbnail'] );
+					if( $data[ 'thumbnail' ] == '0'){
+						delete_post_meta( $id, '_thumbnail_id' );
+					}else{
+						set_post_thumbnail( $id, $data['thumbnail'] );
+					}
+
 					unset( $data['thumbnail'] );
 				}
 				wp_update_post(

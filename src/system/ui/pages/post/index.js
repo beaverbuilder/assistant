@@ -39,22 +39,25 @@ export const Post = ( { location, match, history } ) => {
 		customUploader.open()
 		customUploader.on( 'select', function() {
 			var attachment = customUploader.state().get( 'selection' ).first().toJSON()
+			setremoveThumbnail( false )
 			setthumbData( attachment )
 			setfeatureThumbnail( attachment.url )
 			sethasUpdateimg( true )
+
 
 		} )
 	}
 
 	const removeFeatureImage = () => {
+
 		setthumbData( {} )
 		if ( item.hasPostThumbnail ) {
-			setfeatureThumbnail( item.thumbnail )
+			setfeatureThumbnail( false )
 		} else {
-			setfeatureThumbnail( '' )
+			setfeatureThumbnail( false )
 		}
-
 		setremoveThumbnail( true )
+		sethasUpdateimg( true )
 	}
 
 
@@ -215,6 +218,15 @@ export const Post = ( { location, match, history } ) => {
 							component: 'image',
 							onClick: uploadFeatureImage,
 						},
+						removeFeatureimg: {
+							id: 'remove_post_feature_img',
+							text: 'Remove',
+							btnclass:'fl-asst-remove-feature-img',
+							isVisible: featureThumbnail,
+							component: 'button',
+							onClick: removeFeatureImage,
+
+						},
 
 					},
 				},
@@ -277,7 +289,7 @@ export const Post = ( { location, match, history } ) => {
 		comments: {
 			label: __( 'Comments' ),
 			path: match.url + '/comments',
-			isVisible: supports.comments,
+			isVisible: supports.comments && item.commentsCount > 0,
 			sections: () => (
 				<List.Comments
 					query={ { post__in: [ item.id ] } }
@@ -336,9 +348,13 @@ export const Post = ( { location, match, history } ) => {
 		if ( 'terms' in changed ) {
 			data.terms = changed.terms
 		}
-		if ( hasUpdateimg ) {
+		if ( hasUpdateimg && thumbData && removeThumbnail == false) {
 		 	data.thumbnail = thumbData.id
 		}
+
+		if ( removeThumbnail ) {
+			data.thumbnail = '0'
+	   }
 
 		const handleError = error => {
 			setIsSubmitting( false )
@@ -460,7 +476,7 @@ export const Post = ( { location, match, history } ) => {
 		<Page
 			title={ labels.editItem }
 			hero={ item.hasPostThumbnail ? <Hero /> : null }
-			footer={ hasChanges || hasUpdateimg  && <Footer /> }
+			footer={ hasChanges || hasUpdateimg   && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
 			<ElevatorButtons />
