@@ -83,9 +83,9 @@ class UsersRepository extends RepositoryAbstract {
 		if ( $transform ) {
 			$data = array_merge(
 				$data,
-				array(
+				[
 					'capabilities' => $current_user->allcaps,
-				)
+				]
 			);
 		}
 
