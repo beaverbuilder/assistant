@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
-import { App, Page, Button, List, Nav, Filter } from 'assistant/ui'
+import { App, Page, Button, List, Nav, Filter, Layout, Icon } from 'assistant/ui'
+//import { Layout, Icon } from 'ui'
 import {
 	useSystemState,
 	useAppState,
@@ -27,7 +28,11 @@ const UpdatesMain = () => {
 	const { handle } = useContext( App.Context )
 	const { getContent } = getWpRest()
 	const { counts } = useSystemState()
-
+	const [ responseMessage, setResponseMessage ] = useState( {
+		message: '',
+		status: '',
+		icon: ''
+	} )
 	const totalUpdates = counts['update/plugins'] + counts['update/themes']
 	const hasUpdates = 0 !== totalUpdates
 
@@ -36,11 +41,22 @@ const UpdatesMain = () => {
 		getContent( 'updates' ).then( response => {
 			const { items } = response.data
 			setUpdateQueueItems( items )
+			setResponseMessage( {
+				message: __( 'Updated Sucessfully.' ),
+				status: 'alert',
+				icon: Icon.Approve
+			}
+		 )
 		} ).catch( error => {
 			console.log( error ) // eslint-disable-line no-console
 			setUpdatingAll( false )
-			alert( __( 'Something went wrong. Please try again.' ) )
-		} )
+			setResponseMessage( {
+				message: __( 'Something went wrong. Please try again.' ),
+				status: 'destructive',
+				icon: Icon.Reject
+			}
+		 )
+		})
 	}
 
 	const maybeSetUpdatingAll = () => {
@@ -127,6 +143,7 @@ const UpdatesMain = () => {
 				<Page.Empty>{__( 'You have no updates.' )}</Page.Empty>
 			)}
 
+
 			{ hasUpdates && (
 				<List.Updates
 					updateType={ updateType }
@@ -143,6 +160,14 @@ const UpdatesMain = () => {
 					listStyle={listStyle}
 				/>
 			)}
+			{responseMessage.message && (
+				<Layout.Message status={ responseMessage.status } icon={ responseMessage.icon }>
+					{responseMessage.message}
+				</Layout.Message>
+			)}
+
+
+
 		</Page>
 	)
 }
