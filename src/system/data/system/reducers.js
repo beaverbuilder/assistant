@@ -10,6 +10,9 @@ export const apps = ( state = {}, action ) => {
 
 	switch ( action.type ) {
 	case 'REGISTER_APP':
+		if ( false === action.config.enabled ) {
+			return state
+		}
 		return {
 			[action.key]: {
 				...defaults,
@@ -31,7 +34,9 @@ export const appOrder = ( state = [], action ) => {
 	case 'SET_APP_POSITION': {
 		const { key, position = null } = action
 
-		if ( null === position ) {
+		if ( action.config && false === action.config.enabled ) {
+			return state
+		} else if ( null === position ) {
 			const newState = Array.from( state )
 			if ( -1 === newState.indexOf( key ) ) {
 				newState.push( key )

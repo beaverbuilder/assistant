@@ -18,7 +18,7 @@ const wpapi = getWpRest()
 export const before = {
 
 	REGISTER_APP: ( action ) => {
-		if ( action.config.state ) {
+		if ( action.config.state && false !== action.config.enabled ) {
 			registerAppStore( {
 				key: action.key,
 				...action.config,

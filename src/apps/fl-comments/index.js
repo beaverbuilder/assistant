@@ -1,6 +1,7 @@
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
+import { currentUserCan } from 'assistant/utils/wordpress'
 import { Page } from 'assistant/ui'
 import { CommentsApp } from './app'
 
@@ -8,6 +9,7 @@ registerApp( 'fl-comments', {
 	label: __( 'Comments' ),
 	root: CommentsApp,
 	icon: CommentsApp.Icon,
+	enabled: currentUserCan( 'moderate_comments' ),
 	accent: {
 		color: '#FFCC00'
 	},
