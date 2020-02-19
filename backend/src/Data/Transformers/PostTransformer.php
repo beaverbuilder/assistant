@@ -84,7 +84,7 @@ class PostTransformer {
 			'visibility'       => 'public',
 			'postThumbnail'    => $featured_image,
 			'hasPostThumbnail' => has_post_thumbnail( $post ),
-			'commentsCount'    => get_comments_number( $post->ID )
+			'commentsCount'    => get_comments_number( $post->ID ),
 		];
 
 		// Post visibility.

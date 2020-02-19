@@ -49,6 +49,7 @@ class CommentsRepository extends RepositoryAbstract {
 	 * @return Pager
 	 */
 	public function paginate( array $args = [], callable $transform = null ) {
+		$args['no_found_rows'] = false; // Make sure to calc the number of found rows.
 		$query = $this->query( $args );
 
 		$pager = new Pager(

@@ -99,7 +99,7 @@ export const Post = ( { location, match, history } ) => {
 			path: match.url + '/edit',
 			sections: {
 				general: {
-					label: __( 'General' ),
+					label: '',
 					fields: {
 						title: {
 							label: __( 'Title' ),
@@ -222,7 +222,7 @@ export const Post = ( { location, match, history } ) => {
 						removeFeatureimg: {
 							id: 'remove_post_feature_img',
 							text: 'Remove',
-							btnclass:'fl-asst-remove-feature-img',
+							btnclass: 'fl-asst-remove-feature-img',
 							isVisible: featureThumbnail,
 							component: 'button',
 							onClick: removeFeatureImage,
@@ -290,7 +290,7 @@ export const Post = ( { location, match, history } ) => {
 		comments: {
 			label: __( 'Comments' ),
 			path: match.url + '/comments',
-			isVisible: supports.comments && item.commentsCount > 0,
+			isVisible: supports.comments && 0 < item.commentsCount,
 			sections: () => (
 				<List.Comments
 					query={ { post__in: [ item.id ] } }
@@ -301,6 +301,7 @@ export const Post = ( { location, match, history } ) => {
 							state: { item }
 						},
 					} ) }
+					scrollerClassName="fl-asst-outset"
 				/>
 			),
 		},
@@ -349,13 +350,13 @@ export const Post = ( { location, match, history } ) => {
 		if ( 'terms' in changed ) {
 			data.terms = changed.terms
 		}
-		if ( hasUpdateimg && thumbData && removeThumbnail == false) {
-		 	data.thumbnail = thumbData.id
+		if ( hasUpdateimg && thumbData && false == removeThumbnail ) {
+			data.thumbnail = thumbData.id
 		}
 
 		if ( removeThumbnail ) {
 			data.thumbnail = '0'
-	   }
+		}
 
 		const handleError = error => {
 			setIsSubmitting( false )
@@ -421,11 +422,11 @@ export const Post = ( { location, match, history } ) => {
 			srcSet = getSrcSet( sizes )
 		}
 		return (
-			<div style={ {} }>
+			<div>
 				<img
 					src={ item.thumbnail }
 					srcSet={ srcSet }
-					style={ { height: '100%', objectFit: 'cover' } }
+					style={ { objectFit: 'cover' } }
 					alt={ alt }
 					title={ title }
 					height={ height }

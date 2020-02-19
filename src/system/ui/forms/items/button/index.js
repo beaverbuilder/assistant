@@ -12,7 +12,7 @@ export const ButtonItem = ( {
 
 			key={ id }
 			id={ id }
-			value={text}
+			value={ text }
 			width="100%"
 			className={btnclass}
 			{ ...rest }

@@ -17,6 +17,6 @@ class ControllerTestCase extends BaseTestCase {
 
 		$wp_rest_server = new \WP_REST_Server;
 		$this->server = $wp_rest_server;
-		do_action( 'rest_api_init' );
+		do_action( 'rest_api_init', rest_get_server() );
 	}
 }

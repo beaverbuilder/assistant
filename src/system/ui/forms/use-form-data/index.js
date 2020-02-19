@@ -5,7 +5,7 @@ const initReducer = ( { fields, defaults } ) => {
 	const state = {}
 
 	Object.entries( fields ).map( ( [ key, field ] ) => {
-		const { alwaysCommit, sanitize } = field
+		const { sanitize } = field
 		const value = sanitize( defaults[ key ] )
 		state[ key ] = {
 			value,

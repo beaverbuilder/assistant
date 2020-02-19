@@ -48,6 +48,8 @@
         flex-direction: column;
         background-color: var(--fluid-background);
         color: var(--fluid-color);
+        max-height: 100%;
+        min-height: 0;
 
         .fluid-sticky-element {
             // Yea, all this for sticky headers
@@ -68,7 +70,7 @@
         .fluid-page-toolbar-content {
             position:static;
             padding: 0 var(--fluid-med-space);
-            flex: 1 1 auto;
+            flex: 1 0 auto;
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
@@ -83,11 +85,9 @@
 
         .fluid-page-content {
             box-sizing: border-box;
-            flex: 1 1 auto;
+            flex: 1 0 auto;
             display: flex;
             flex-direction: column;
-            max-height: 100%;
-            min-height: 0;
             background: var(--fluid-background);
             z-index: 1;
         }

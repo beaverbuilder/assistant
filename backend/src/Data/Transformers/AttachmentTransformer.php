@@ -6,7 +6,7 @@ namespace FL\Assistant\Data\Transformers;
 use FL\Assistant\Data\Repository\NotationsRepository;
 
 
-class AttachmentTransform {
+class AttachmentTransformer {
 
 	protected $notations;
 
@@ -17,9 +17,10 @@ class AttachmentTransform {
 	}
 
 	public function __invoke( \WP_Post $attachment ) {
-		$size  = wp_get_attachment_image_src( $attachment->ID, 'medium' );
-		$meta  = wp_prepare_attachment_for_js( $attachment->ID );
-		$thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' )[0];
+		$size      = wp_get_attachment_image_src( $attachment->ID, 'medium' );
+		$meta      = wp_prepare_attachment_for_js( $attachment->ID );
+		$thumb_src = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
+		$thumb     = $thumb_src ? $thumb_src[0] : null;
 
 		$response = [
 			'alt'             => $meta['title'],
@@ -33,19 +34,20 @@ class AttachmentTransform {
 			'id'              => $attachment->ID,
 			'labels'          => [],
 			'mime'            => $meta['mime'],
+			'permalink'       => get_permalink( $attachment ),
 			'sizes'           => isset( $meta['sizes'] ) ? $meta['sizes'] : [],
 			'slug'            => $attachment->post_name,
 			'subtype'         => $meta['subtype'],
 			'thumbnail'       => $thumb,
 			'title'           => $meta['title'],
 			'type'            => $meta['type'],
-			'url'             => get_permalink( $attachment ),
+			'url'             => $meta['url'],
 			'urls'            => [
-				'medium' => $size[0],
+				'medium' => $size ? $size[0] : null,
 			],
 			'height'          => $meta['height'],
 			'width'           => $meta['width'],
-			'orientation'     => $meta['orientation'],
+			'orientation'     => isset( $meta['orientation'] ) ? $meta['orientation'] : null,
 		];
 
 		// Labels

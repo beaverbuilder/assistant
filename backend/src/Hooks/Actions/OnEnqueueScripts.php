@@ -201,7 +201,7 @@ class OnEnqueueScripts {
 				'wp-dom-ready',
 			];
 
-			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid' ], $ver, null );
+			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid', 'dashicons' ], $ver, null );
 			wp_enqueue_script( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.js', $js_deps, $ver, false );
 
 			wp_localize_script( 'fl-assistant-system', 'FL_ASSISTANT_CONFIG', $config );
