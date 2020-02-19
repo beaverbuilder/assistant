@@ -107,7 +107,7 @@ const UpdatesMain = () => {
 			title={ __( 'Updates' ) }
 			actions={ <HeaderActions /> }
 			padY={ false }
-			shouldScroll={false}
+			shouldScroll={ false }
 		>
 
 			{ ! hasUpdates && (

@@ -73,7 +73,7 @@ const Main = () => {
 			padY={ false }
 			header={ <Header /> }
 			actions={ <Actions /> }
-			shouldScroll={false}
+			shouldScroll={ false }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
