@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
 import { Button, Icon } from 'ui'
 import { __ } from '@wordpress/i18n'
@@ -15,11 +15,17 @@ registerSection( 'fl-asst-quick-actions', {
 	render: () => {
 		const { adminURLs } = getSystemConfig()
 
-		const dashURL = 'undefined' !== typeof adminURLs.dashboard ? adminURLs.dashboard : '/wp-admin'
+		const dashURL =
+			'undefined' !== typeof adminURLs.dashboard ?
+				adminURLs.dashboard :
+				'/wp-admin'
 
 		const { appearance } = useSystemState()
 		const { setBrightness } = getSystemActions()
-		const toggleBrightness = () => 'light' === appearance.brightness ? setBrightness( 'dark' ) : setBrightness( 'light' )
+		const toggleBrightness = () =>
+			'light' === appearance.brightness ?
+				setBrightness( 'dark' ) :
+				setBrightness( 'light' )
 
 		return (
 			<div className="fl-asst-quick-actions">
@@ -29,13 +35,21 @@ registerSection( 'fl-asst-quick-actions', {
 				<Button href={ dashURL } appearance="elevator" title={ __( 'Go to Admin' ) }>
 					<span className="dashicons dashicons-wordpress-alt"></span>
 				</Button>
-				<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
+				<Button
+					onClick={ toggleBrightness }
+					appearance="elevator"
+					title={ __( 'Toggle UI Brightness' ) }
+				>
 					<Icon.Brightness />
 				</Button>
-				<Button to={ {
-					pathname: '/fl-content/post/new',
-					state: { detailBaseUrl: '/fl-content/post' }
-				} } appearance="elevator" title={ __( 'Create Post' ) }>
+				<Button
+					to={ {
+						pathname: '/fl-content/post/new',
+						state: { detailBaseUrl: '/fl-content/post' },
+					} }
+					appearance="elevator"
+					title={ __( 'Create Post' ) }
+				>
 					<Icon.Plus />
 				</Button>
 			</div>
@@ -55,10 +69,13 @@ registerSection( 'fl-home-currently-viewing', {
 		return (
 			<>
 				<div className="fl-asst-currently-viewing-summary">
-					{ type && <div className="fl-asst-pretitle">{type}</div> }
+					{type && <div className="fl-asst-pretitle">{type}</div>}
 					<div className="fl-asst-title">{name}</div>
-					{ Array.isArray( actions ) && 0 < actions.length &&
-					<Button.Group appearance="buttons">{ Button.renderActions( actions ) }</Button.Group> }
+					{Array.isArray( actions ) && 0 < actions.length && (
+						<Button.Group appearance="buttons">
+							{Button.renderActions( actions )}
+						</Button.Group>
+					)}
 				</div>
 			</>
 		)
@@ -78,7 +95,7 @@ registerSection( 'fl-home-apps', {
 
 		return (
 			<div className="fl-asst-app-grid">
-				{ appOrder.map( ( handle, i ) => {
+				{appOrder.map( ( handle, i ) => {
 					const app = apps[handle]
 
 					let icon = Icon.DefaultApp
@@ -96,7 +113,7 @@ registerSection( 'fl-home-apps', {
 					}
 
 					const style = {
-						color: 'var(--fl-asst-secondary-surface-background)'
+						color: 'var(--fl-asst-secondary-surface-background)',
 					}
 					if ( 'undefined' !== typeof app.accent ) {
 						style['--fl-asst-accent-color'] = app.accent.color
@@ -126,12 +143,92 @@ registerSection( 'fl-home-apps', {
 							appearance="transparent"
 						>
 							<div className="fl-asst-app-icon" style={ style }>
-								{ 'function' === typeof icon && icon( iconProps ) }
+								{'function' === typeof icon && icon( iconProps )}
 							</div>
 							<label>{app.label}</label>
 						</Button>
 					)
 				} )}
+			</div>
+		)
+	},
+} )
+
+registerSection( 'fl-home-subscribe', {
+	label: __( 'Subscribe' ),
+	location: {
+		type: 'home',
+	},
+	padX: false,
+	render: () => {
+		const { apps, appOrder, window } = useSystemState()
+		const focusRef = useInitialFocus()
+		let didSetFocusRef = false
+		const [ subscribeEmail, setsubscribeEmail ] = useState( '' )
+		const [ isSubscribing, setisSubscribing ] = useState( false )
+
+		const ValidateEmail = mail => {
+			if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( mail ) ) {
+				return true
+			}
+			alert( 'You have entered an invalid email address!' )
+			return false
+		}
+
+		const subscribeUser = () => {
+			if ( '' === subscribeEmail ) {
+				alert( 'Please Enter email!' )
+			} else if ( ValidateEmail( subscribeEmail ) ) {
+
+				setisSubscribing( true )
+
+				if ( 'undefined' != typeof _dcq ) {
+					_dcq.push( [
+						'identify',
+						{
+							email: subscribeEmail,
+							tags: [ 'Assistant Newsletter' ],
+							success: function( response ) {
+								if ( response.success ) {
+									setisSubscribing( false )
+									alert( 'Subscribed Successfully!' )
+								} else {
+									setisSubscribing( false )
+									alert( 'Problem in subscribing' )
+								}
+							},
+						},
+					] )
+				} else {
+					setisSubscribing( false )
+					alert( 'Problem in subscribing' )
+				}
+			}
+		}
+
+		return (
+			<div className="fluid-pad-x fl-asst-form fl-asst-subscribe">
+				<p>Subscribe for the Latest Assistant News and Updates!</p>
+				<div className="fl-asst-subscribe-wrap">
+					<label>
+						<input
+							type="text"
+							value={ subscribeEmail }
+							onChange={ e => {
+								setsubscribeEmail( e.target.value )
+							} }
+						/>
+					</label>
+					<div className="fl-asst-form-item-content">
+						<Button className="fl-asst-app-grid-item" onClick={ subscribeUser }>
+							<label>Subscribe</label>
+						</Button>
+
+					</div>
+				</div>
+				{isSubscribing &&
+				<Icon.SmallSpinner/>
+				}
 			</div>
 		)
 	},
