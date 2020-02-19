@@ -7,6 +7,7 @@ import { createSlug } from 'utils/url'
 import { getSrcSet } from 'utils/image'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
+import './style.scss'
 
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
@@ -27,7 +28,7 @@ export const Post = ( { location, match, history } ) => {
 			title: 'Select an Image',
 			id: 'fl-asst-media-upload',
 			button: {
-				text: 'Use this image as Feature image'
+				text: 'Choose Featured Image'
 			},
 			multiple: false,
 			library: {
