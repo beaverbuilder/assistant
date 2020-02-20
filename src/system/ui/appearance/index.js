@@ -17,7 +17,15 @@ export const Appearance = ( {
 		[`fluid-color-scheme-${brightness}`]: brightness,
 	}, className )
 
+	const style = { // This stuff is mainly for the BB panel integration
+		maxHeight: '100%',
+		minHeight: 0,
+		flex: '1 1 auto',
+		display: 'flex',
+		flexDirection: 'column',
+	}
+
 	return (
-		<div className={ classes } { ...rest } style={ { maxHeight: '100%' } } />
+		<div className={ classes } { ...rest } style={ style } />
 	)
 }
