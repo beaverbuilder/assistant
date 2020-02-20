@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Form, Button, Layout } from 'ui'
 import { getSrcSet } from 'utils/image'
@@ -10,7 +10,11 @@ export const Attachment = ( { location, history } ) => {
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 	const { id, title, type, subtype } = item
-
+	const [ responseMessage, setResponseMessage ] = useState( {
+		message: '',
+		status: '',
+		icon: ''
+	} )
 	const onSubmit = ( { changed, ids } ) => {
 		const data = {
 			meta: {},
@@ -37,7 +41,12 @@ export const Attachment = ( { location, history } ) => {
 
 		const handleError = error => {
 			setIsSubmitting( false )
-			alert( __( 'Error: Changes not saved! Please try again.' ) )
+			setResponseMessage( {
+				message: __( 'Error: Changes not saved! Please try again.' ),
+				status: 'destructive',
+				icon: Icon.Reject
+			}
+		 )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
@@ -53,7 +62,12 @@ export const Attachment = ( { location, history } ) => {
 				} else {
 					setCurrentHistoryState( { item } )
 					setIsSubmitting( false )
-					alert( __( 'Changes Saved!' ) )
+					setResponseMessage( {
+						message: __( 'Changes Saved!' ),
+						status: 'alert',
+						icon: Icon.Approve
+					}
+				 )
 				}
 			} )
 			.catch( error => {
@@ -67,7 +81,12 @@ export const Attachment = ( { location, history } ) => {
 				.attachments()
 				.update( id, 'trash' )
 				.then( () => {
-					alert( 'Media permanently deleted!' )
+					setResponseMessage( {
+						message: __( 'Media permanently deleted!' ),
+						status: 'alert',
+						icon: Icon.Trash
+					}
+				 )
 				} )
 			history.goBack()
 		}
@@ -160,11 +179,19 @@ export const Attachment = ( { location, history } ) => {
 	const Footer = () => {
 		return (
 			<>
+			{ hasChanges &&
 				<Button onClick={ resetForm }>{__( 'Cancel' )}</Button>
 				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button type="submit" status="primary" onClick={ submitForm }>
 					{__( 'Save' )}
 				</Button>
+			}
+
+				{responseMessage.message && (
+				<Layout.Message status={ responseMessage.status } icon={ responseMessage.icon }>
+					{responseMessage.message}
+				</Layout.Message>
+			)}
 			</>
 		)
 	}
@@ -232,10 +259,11 @@ export const Attachment = ( { location, history } ) => {
 		<Page
 			title={ __( 'Attachment' ) }
 			hero={ <Hero /> }
-			footer={ hasChanges && <Footer /> }
+			footer={  <Footer /> }
 		>
 			<Layout.Headline>{title}</Layout.Headline>
 			{renderForm()}
+
 		</Page>
 
 	)

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
-import { Button, Icon } from 'ui'
+import { Button, Icon, Layout } from 'ui'
 import { __ } from '@wordpress/i18n'
 import { useInitialFocus } from 'utils/react'
 import './style.scss'
@@ -166,18 +166,33 @@ registerSection( 'fl-home-subscribe', {
 		let didSetFocusRef = false
 		const [ subscribeEmail, setsubscribeEmail ] = useState( '' )
 		const [ isSubscribing, setisSubscribing ] = useState( false )
-
+		const [ responseMessage, setResponseMessage ] = useState( {
+			message: '',
+			status: '',
+			icon: ''
+		} )
 		const ValidateEmail = mail => {
 			if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( mail ) ) {
 				return true
 			}
-			alert( 'You have entered an invalid email address!' )
+
+			setResponseMessage( {
+				message: __( 'You have entered an invalid email address!' ),
+				status: 'destructive',
+				icon: Icon.Reject
+			}
+		 )
 			return false
 		}
 
 		const subscribeUser = () => {
 			if ( '' === subscribeEmail ) {
-				alert( 'Please Enter email!' )
+				setResponseMessage( {
+					message: __( 'Please Enter Email!' ),
+					status: 'destructive',
+					icon: Icon.Reject
+				}
+			 )
 			} else if ( ValidateEmail( subscribeEmail ) ) {
 
 				setisSubscribing( true )
@@ -191,17 +206,33 @@ registerSection( 'fl-home-subscribe', {
 							success: function( response ) {
 								if ( response.success ) {
 									setisSubscribing( false )
-									alert( 'Subscribed Successfully!' )
+									setResponseMessage( {
+										message: __( 'Subscribed Successfully!' ),
+										status: 'alert',
+										icon: Icon.Approve
+									}
+								 )
+
 								} else {
 									setisSubscribing( false )
-									alert( 'Problem in subscribing' )
+									setResponseMessage( {
+										message: __( 'Problem in subscribing!' ),
+										status: 'destructive',
+										icon: Icon.Reject
+									}
+								 )
 								}
 							},
 						},
 					] )
 				} else {
 					setisSubscribing( false )
-					alert( 'Problem in subscribing' )
+					setResponseMessage( {
+						message: __( 'Problem in subscribing!' ),
+						status: 'destructive',
+						icon: Icon.Reject
+					}
+				 )
 				}
 			}
 		}
@@ -229,6 +260,11 @@ registerSection( 'fl-home-subscribe', {
 				{isSubscribing &&
 				<Icon.SmallSpinner/>
 				}
+				{responseMessage.message && (
+				<Layout.Message status={ responseMessage.status } icon={ responseMessage.icon }>
+					{responseMessage.message}
+				</Layout.Message>
+			)}
 			</div>
 		)
 	},
