@@ -14,7 +14,8 @@ App.defaults = {
 	handle: null,
 	label: null,
 	icon: () => {},
-	accentColor: { color: null, }
+	accentColor: { color: null, },
+	environment: 'normal'
 }
 
 /**
@@ -26,7 +27,7 @@ App.Context.displayName = 'App.Context'
 /**
  * Provider
  */
-App.Provider = withRouter( ( { children, location } ) => {
+App.Provider = withRouter( ( { children, location, environment = 'normal' } ) => {
 	const { apps } = useSystemState()
 
 	const parts = location.pathname.split( '/' )
@@ -35,6 +36,7 @@ App.Provider = withRouter( ( { children, location } ) => {
 	const context = {
 		...App.defaults,
 		handle: name,
+		environment,
 		...app
 	}
 	return (

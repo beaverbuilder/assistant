@@ -85,7 +85,7 @@ export const Assistant = () => {
 export const AssistantCore = () => {
 	const { appearance } = useSystemState()
 	return (
-		<App.Provider>
+		<App.Provider environment='beaver-builder'>
 			<Appearance brightness={ appearance.brightness }>
 				<AppMain />
 			</Appearance>

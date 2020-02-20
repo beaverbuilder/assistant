@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
-import { Button, Icon } from 'ui'
+import { Button, Icon, App } from 'ui'
 import { __ } from '@wordpress/i18n'
 import { useInitialFocus } from 'utils/react'
 import './style.scss'
@@ -13,6 +13,7 @@ registerSection( 'fl-asst-quick-actions', {
 	},
 	padX: false,
 	render: () => {
+		const { environment } = useContext( App.Context )
 		const { adminURLs } = getSystemConfig()
 
 		const dashURL = 'undefined' !== typeof adminURLs.dashboard ? adminURLs.dashboard : '/wp-admin'
@@ -29,9 +30,11 @@ registerSection( 'fl-asst-quick-actions', {
 				<Button href={ dashURL } appearance="elevator" title={ __( 'Go to Admin' ) }>
 					<span className="dashicons dashicons-wordpress-alt"></span>
 				</Button>
-				<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
-					<Icon.Brightness />
-				</Button>
+				{ 'beaver-builder' !== environment && (
+					<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
+						<Icon.Brightness />
+					</Button>
+				)}
 				<Button to={ {
 					pathname: '/fl-content/post/new',
 					state: { detailBaseUrl: '/fl-content/post' }
