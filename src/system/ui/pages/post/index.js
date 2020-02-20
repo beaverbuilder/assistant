@@ -17,10 +17,10 @@ export const Post = ( { location, match, history } ) => {
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
-	const [ featureThumbnail, setfeatureThumbnail ] = useState( item.thumbnail )
-	const [ thumbData, setthumbData ] = useState( {} )
-	const [ hasUpdateimg, sethasUpdateimg ] = useState( false )
-	const [ removeThumbnail, setremoveThumbnail ] = useState( false )
+	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnail )
+	const [ thumbData, setThumbData ] = useState( {} )
+	const [ hasUpdateimg, setHasUpdateimg ] = useState( false )
+	const [ removeThumbnail, setRemoveThumbnail ] = useState( false )
 
 
 	const uploadFeatureImage = () => {
@@ -40,10 +40,10 @@ export const Post = ( { location, match, history } ) => {
 		customUploader.open()
 		customUploader.on( 'select', function() {
 			var attachment = customUploader.state().get( 'selection' ).first().toJSON()
-			setremoveThumbnail( false )
-			setthumbData( attachment )
-			setfeatureThumbnail( attachment.url )
-			sethasUpdateimg( true )
+			setRemoveThumbnail( false )
+			setThumbData( attachment )
+			setFeatureThumbnail( attachment.url )
+			setHasUpdateimg( true )
 
 
 		} )
@@ -53,12 +53,12 @@ export const Post = ( { location, match, history } ) => {
 
 		setthumbData( {} )
 		if ( item.hasPostThumbnail ) {
-			setfeatureThumbnail( false )
+			setFeatureThumbnail( false )
 		} else {
-			setfeatureThumbnail( false )
+			setFeatureThumbnail( false )
 		}
-		setremoveThumbnail( true )
-		sethasUpdateimg( true )
+		setRemoveThumbnail( true )
+		setHasUpdateimg( true )
 	}
 
 

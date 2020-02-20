@@ -14,7 +14,7 @@ export const ButtonItem = ( {
 			id={ id }
 			value={ text }
 			width="100%"
-			className={btnclass}
+			className={ btnclass }
 			{ ...rest }
 		>{ text }</Button>
 	)
