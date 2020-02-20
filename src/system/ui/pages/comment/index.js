@@ -145,7 +145,12 @@ export const Comment = ( { location } ) => {
 
 	const updateContent = () => {
 		if ( '' === editContent ) {
-			alert( 'Please type a comment!' )
+
+			setResponseMessage( {
+				message: 'Please type a comment!',
+				status: 'destructive',
+				icon: Icon.Reject
+			} )
 		} else {
 			comments
 				.comments()
@@ -194,7 +199,11 @@ export const Comment = ( { location } ) => {
 
 	const replyCommentpost = () => {
 		if ( '' === replyValue ) {
-			alert( 'Please type a comment!' )
+			setResponseMessage( {
+				message: 'Please type a comment!',
+				status: 'destructive',
+				icon: Icon.Reject
+			} )
 		} else {
 			const Rc = replyToComment( id, postId, replyValue, () => { } )
 			Rc.then( () => {
