@@ -168,7 +168,7 @@ class OnEnqueueScripts {
 		}
 
 		// There is no read-only assistant (for now). Users must be able to edit.
-		if ( ! current_user_can( 'edit_published_posts' ) ) {
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
 			return false;
 		}
 
