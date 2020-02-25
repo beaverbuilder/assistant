@@ -51,7 +51,7 @@ export const Post = ( { location, match, history } ) => {
 
 	const removeFeatureImage = () => {
 
-		setthumbData( {} )
+		setThumbData( {} )
 		if ( item.hasPostThumbnail ) {
 			setFeatureThumbnail( false )
 		} else {
@@ -478,7 +478,7 @@ export const Post = ( { location, match, history } ) => {
 		<Page
 			title={ labels.editItem }
 			hero={ item.hasPostThumbnail ? <Hero /> : null }
-			footer={ hasChanges || hasUpdateimg   && <Footer /> }
+			footer={ ( hasChanges || hasUpdateimg )   && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
 			<ElevatorButtons />
