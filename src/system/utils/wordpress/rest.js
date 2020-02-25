@@ -160,6 +160,26 @@ const posts = () => {
 			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}/clone`, config )
 		},
+
+		/**
+		 * Export a post
+		 * @param data
+		 * @param config
+		 */
+		export( id, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/${id}/export`, config )
+		},
+
+		/**
+		 * Delete Temporary exported file
+		 * @param data
+		 * @param config
+		 */
+		deleteExport( data = {}, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( 'fl-assistant/v1/posts/deleteExport', data, config )
+		},
 	}
 }
 
