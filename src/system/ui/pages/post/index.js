@@ -18,10 +18,6 @@ export const Post = ( { location, match, history } ) => {
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
 	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnail )
-	const [ thumbData, setThumbData ] = useState( {} )
-	const [ hasUpdateimg, setHasUpdateimg ] = useState( false )
-	const [ removeThumbnail, setRemoveThumbnail ] = useState( false )
-
 
 	const uploadFeatureImage = () => {
 		const customUploader = wp.media( {
@@ -40,27 +36,15 @@ export const Post = ( { location, match, history } ) => {
 		customUploader.open()
 		customUploader.on( 'select', function() {
 			var attachment = customUploader.state().get( 'selection' ).first().toJSON()
-			setRemoveThumbnail( false )
-			setThumbData( attachment )
 			setFeatureThumbnail( attachment.url )
-			setHasUpdateimg( true )
-
-
+			setValues( { thumbnail: attachment.id }, false )
 		} )
 	}
 
 	const removeFeatureImage = () => {
-
-		setThumbData( {} )
-		if ( item.hasPostThumbnail ) {
-			setFeatureThumbnail( false )
-		} else {
-			setFeatureThumbnail( false )
-		}
-		setRemoveThumbnail( true )
-		setHasUpdateimg( true )
+		setFeatureThumbnail( false )
+		setValues( { thumbnail: '0' }, false )
 	}
-
 
 	const tabs = {
 		general: {
@@ -350,13 +334,6 @@ export const Post = ( { location, match, history } ) => {
 		if ( 'terms' in changed ) {
 			data.terms = changed.terms
 		}
-		if ( hasUpdateimg && thumbData && false == removeThumbnail ) {
-			data.thumbnail = thumbData.id
-		}
-
-		if ( removeThumbnail ) {
-			data.thumbnail = '0'
-		}
 
 		const handleError = error => {
 			setIsSubmitting( false )
@@ -388,6 +365,7 @@ export const Post = ( { location, match, history } ) => {
 		values,
 		hasChanges,
 		setIsSubmitting,
+		setValues,
 	} = Form.useForm( {
 		tabs,
 		onSubmit,
@@ -478,7 +456,7 @@ export const Post = ( { location, match, history } ) => {
 		<Page
 			title={ labels.editItem }
 			hero={ item.hasPostThumbnail ? <Hero /> : null }
-			footer={ ( hasChanges || hasUpdateimg )   && <Footer /> }
+			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
 			<ElevatorButtons />
