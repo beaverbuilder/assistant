@@ -333,6 +333,15 @@ class PostsController extends ControllerAbstract {
 					$this->update_post_terms( $id, $data['terms'] );
 					unset( $data['terms'] );
 				}
+				if ( isset( $data['thumbnail'] ) ) {
+					if ( '0' === $data['thumbnail'] ) {
+						delete_post_meta( $id, '_thumbnail_id' );
+					} else {
+						set_post_thumbnail( $id, $data['thumbnail'] );
+					}
+
+					unset( $data['thumbnail'] );
+				}
 				wp_update_post(
 					array_merge(
 						$data, [
@@ -359,6 +368,7 @@ class PostsController extends ControllerAbstract {
 			case 'untrash':
 				wp_untrash_post( $id );
 				break;
+
 		}
 
 		$updated_post = get_post( $id );

@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 import { Page, Nav, Icon, Button } from 'assistant/ui'
 import { SummaryTab, PostTypeTab } from './tabs'
+import './style.scss'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>

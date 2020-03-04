@@ -7,6 +7,7 @@ import { createSlug } from 'utils/url'
 import { getSrcSet } from 'utils/image'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
+import './style.scss'
 
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
@@ -16,6 +17,34 @@ export const Post = ( { location, match, history } ) => {
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
+	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnail )
+
+	const uploadFeatureImage = () => {
+		const customUploader = wp.media( {
+			title: 'Select an Image',
+			id: 'fl-asst-media-upload',
+			button: {
+				text: 'Choose Featured Image'
+			},
+			multiple: false,
+			library: {
+				type: [ 'image' ]
+			},
+			width: '50%'
+		} )
+
+		customUploader.open()
+		customUploader.on( 'select', function() {
+			var attachment = customUploader.state().get( 'selection' ).first().toJSON()
+			setFeatureThumbnail( attachment.url )
+			setValues( { thumbnail: attachment.id }, false )
+		} )
+	}
+
+	const removeFeatureImage = () => {
+		setFeatureThumbnail( false )
+		setValues( { thumbnail: '0' }, false )
+	}
 
 	const tabs = {
 		general: {
@@ -154,6 +183,38 @@ export const Post = ( { location, match, history } ) => {
 						},
 					},
 				},
+				featureimgUpload: {
+					label: __( 'Feature Image' ),
+					isVisible: supports.thumbnail,
+					fields: {
+						featureimgUpload: {
+
+							id: 'post_feature_image',
+							isVisible: supports.thumbnail && false === featureThumbnail,
+							value: featureThumbnail.url,
+							label: __( 'Set Feature Image' ),
+							component: 'text',
+							onClick: uploadFeatureImage,
+						},
+						featureimg: {
+							id: 'post_feature_img',
+							src: featureThumbnail,
+							isVisible: featureThumbnail,
+							component: 'image',
+							onClick: uploadFeatureImage,
+						},
+						removeFeatureimg: {
+							id: 'remove_post_feature_img',
+							text: 'Remove',
+							btnclass: 'fl-asst-remove-feature-img',
+							isVisible: featureThumbnail,
+							component: 'button',
+							onClick: removeFeatureImage,
+
+						},
+
+					},
+				},
 				attributes: {
 					label: __( 'Attributes' ),
 					isVisible: !! Object.keys( templates ).length || isHierarchical || supports.order,
@@ -213,7 +274,7 @@ export const Post = ( { location, match, history } ) => {
 		comments: {
 			label: __( 'Comments' ),
 			path: match.url + '/comments',
-			isVisible: supports.comments,
+			isVisible: supports.comments && 0 < item.commentsCount,
 			sections: () => (
 				<List.Comments
 					query={ { post__in: [ item.id ] } }
@@ -304,6 +365,7 @@ export const Post = ( { location, match, history } ) => {
 		values,
 		hasChanges,
 		setIsSubmitting,
+		setValues,
 	} = Form.useForm( {
 		tabs,
 		onSubmit,

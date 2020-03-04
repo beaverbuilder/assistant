@@ -185,7 +185,7 @@ class OnEnqueueScripts {
 
 		wp_register_script( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.js', [ 'react', 'react-dom' ], $ver, false );
 		wp_register_style( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.css', [], $ver, null );
-
+		wp_enqueue_media();
 		if ( $this->should_enqueue() ) {
 
 			$config = $this->generate_frontend_config();

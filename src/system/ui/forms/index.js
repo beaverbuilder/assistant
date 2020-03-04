@@ -19,7 +19,9 @@ import {
 	ParentTermItems,
 	TextItem,
 	TextareaItem,
-	UrlItem
+	UrlItem,
+	ImageItem,
+	ButtonItem
 } from './items'
 
 export const Form = ( {
@@ -99,6 +101,12 @@ Form.UrlItem.displayName = 'Form.UrlItem'
 
 Form.ParentTermItems = ParentTermItems
 Form.ParentTermItems.displayName = 'Form.ParentTermItems'
+
+Form.ImageItem = ImageItem
+Form.ImageItem.displayName = 'Form.ImageItem'
+
+Form.ButtonItem = ButtonItem
+Form.ButtonItem.displayName = 'Form.ButtonItem'
 
 /* ------ Form Testing Components ------ */
 Form.Test = Test
