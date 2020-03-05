@@ -160,6 +160,17 @@ const posts = () => {
 			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}/clone`, config )
 		},
+
+
+		/**
+		 * Import posts
+		 * @param data
+		 * @param config
+		 */
+		import( file, config = {} ) {
+			config.cacheKey = 'attachments'
+			return http.post( 'fl-assistant/v1/posts/import', file, config )
+		},
 	}
 }
 

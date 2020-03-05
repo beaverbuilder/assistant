@@ -134,6 +134,19 @@ class PostsController extends ControllerAbstract {
 				],
 			]
 		);
+
+
+		$this->route(
+			'/posts/import', [
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'import_posts' ],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_published_posts' );
+					},
+				],
+			]
+		);
 	}
 
 	/**
@@ -411,4 +424,175 @@ class PostsController extends ControllerAbstract {
 			]
 		);
 	}
+
+
+	/*Import posts */
+
+	public function import_posts( $request){
+		$file = $request->get_file_params();
+
+		global $wpdb;
+
+//$uri = get_template_directory_uri().'/xmlupload/';
+        $uri = wp_upload_dir();
+        $target_dir = $uri;
+        $target_file = $target_dir . basename($file["file"]["name"]);
+        $filename = basename($file["file"]["name"]);
+        $filetypenew = wp_check_filetype($filename);
+        $uploadOk = 1;
+        $FileType = pathinfo($target_file, PATHINFO_EXTENSION);
+//$FileType = pathinfo($filetype,PATHINFO_EXTENSION);
+
+// Check if file already exists
+        if (file_exists($target_file)) {
+            echo "<br/><br/>Sorry, file already exists.";
+            $uploadOk = 1;
+        }
+// Check file size
+if ($file["file"]["size"] > 500000) {
+            echo "<br/><br/>Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+// Allow certain file formats
+        if ($FileType != "xml") {
+            echo "<br/><br/>Sorry, only XML files are allowed.";
+            $uploadOk = 0;
+        }
+// Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo "<br/><br/>Sorry, your file was not uploaded.";
+            //echo "<br/>".$uri;
+            //echo "<br/>".$target_file;
+            //echo "<br/>file name is ".$filetypenew." file name is ".$filename;
+// if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($file["file"]["tmp_name"], $target_file)) {
+                echo "<br/><br/>The file " . basename($file["file"]["name"]) . " has been uploaded successfully!!.";
+                $xml = simplexml_load_file($target_file);
+
+            $counter = 0;
+            $status = '';
+            $state = '';
+            $suburb = '';
+			$additional_array = '';
+
+
+			$xml_data = $this->XMLtoArray(file_get_contents($target_file));
+
+
+			foreach ($xml_data['RSS']['CHANNEL']['ITEM'] as $property) {
+
+
+
+				$current_user = wp_get_current_user();
+				$post_data    = [
+					'comment_status' => $property['WP:COMMENT_STATUS'],
+					'ping_status'    => $property['WP:PING_STATUS'],
+					'post_author'    => $current_user->ID,
+					'post_content'   => $property['DESCRIPTION'] ? $property['DESCRIPTION'] : '',
+					'post_excerpt'   => $property['EXCERPT:ENCODED'] ? $property['EXCERPT:ENCODED'] : '',
+					'post_name'      => $property['WP:POST_NAME'],
+					'post_status'    => $property['WP:STATUS'],
+					/* translators: %s: post/page title */
+					'post_title'     => $property['TITLE'],
+					'post_type'      => $property['WP:POST_TYPE'],
+					'to_ping'        => $property['WP:PING_STATUS'],
+					'menu_order'     => $property['WP:MENU_ORDER'],
+				];
+
+				$new_post_id = wp_insert_post( $post_data );
+				$post_meta   = $property['WP:POSTMETA'];
+				$taxonomies  = get_object_taxonomies( $property['WP:POST_TYPE'] );
+
+				if ( count( $post_meta ) !== 0 ) {
+					foreach ( $post_meta as $meta_info ) {
+						$meta_key   = $meta_info['WP:META_KEY'];
+						$meta_value = addslashes( $meta_info['WP:META_VALUE']);
+						$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					}
+				}
+
+
+
+
+            }
+
+        } else {
+            echo "<br/><br/>Sorry, there was an error uploading your file.";
+        }
+    }
+
+
+	}
+
+
+
+	function XMLtoArray($XML)
+{
+    $xml_parser = xml_parser_create();
+    xml_parse_into_struct($xml_parser, $XML, $vals);
+    xml_parser_free($xml_parser);
+    // wyznaczamy tablice z powtarzajacymi sie tagami na tym samym poziomie
+    $_tmp='';
+    foreach ($vals as $xml_elem) {
+        $x_tag=$xml_elem['tag'];
+        $x_level=$xml_elem['level'];
+        $x_type=$xml_elem['type'];
+        if ($x_level!=1 && $x_type == 'close') {
+            if (isset($multi_key[$x_tag][$x_level]))
+                $multi_key[$x_tag][$x_level]=1;
+            else
+                $multi_key[$x_tag][$x_level]=0;
+        }
+        if ($x_level!=1 && $x_type == 'complete') {
+            if ($_tmp==$x_tag)
+                $multi_key[$x_tag][$x_level]=1;
+            $_tmp=$x_tag;
+        }
+    }
+    // jedziemy po tablicy
+    foreach ($vals as $xml_elem) {
+        $x_tag=$xml_elem['tag'];
+        $x_level=$xml_elem['level'];
+        $x_type=$xml_elem['type'];
+        if ($x_type == 'open')
+            $level[$x_level] = $x_tag;
+        $start_level = 1;
+        $php_stmt = '$xml_array';
+        if ($x_type=='close' && $x_level!=1)
+            $multi_key[$x_tag][$x_level]++;
+        while ($start_level < $x_level) {
+            $php_stmt .= '[$level['.$start_level.']]';
+            if (isset($multi_key[$level[$start_level]][$start_level]) && $multi_key[$level[$start_level]][$start_level])
+                $php_stmt .= '['.($multi_key[$level[$start_level]][$start_level]-1).']';
+            $start_level++;
+        }
+        $add='';
+        if (isset($multi_key[$x_tag][$x_level]) && $multi_key[$x_tag][$x_level] && ($x_type=='open' || $x_type=='complete')) {
+            if (!isset($multi_key2[$x_tag][$x_level]))
+                $multi_key2[$x_tag][$x_level]=0;
+            else
+                $multi_key2[$x_tag][$x_level]++;
+            $add='['.$multi_key2[$x_tag][$x_level].']';
+        }
+        if (isset($xml_elem['value']) && trim($xml_elem['value'])!='' && !array_key_exists('attributes', $xml_elem)) {
+            if ($x_type == 'open')
+                $php_stmt_main=$php_stmt.'[$x_type]'.$add.'[\'content\'] = $xml_elem[\'value\'];';
+            else
+                $php_stmt_main=$php_stmt.'[$x_tag]'.$add.' = $xml_elem[\'value\'];';
+            eval($php_stmt_main);
+        }
+        if (array_key_exists('attributes', $xml_elem)) {
+            if (isset($xml_elem['value'])) {
+                $php_stmt_main=$php_stmt.'[$x_tag]'.$add.'[\'content\'] = $xml_elem[\'value\'];';
+                eval($php_stmt_main);
+            }
+            foreach ($xml_elem['attributes'] as $key=>$value) {
+                $php_stmt_att=$php_stmt.'[$x_tag]'.$add.'[$key] = $value;';
+                eval($php_stmt_att);
+            }
+        }
+    }
+    return $xml_array;
+}
 }
