@@ -17,7 +17,7 @@ export const Post = ( { location, match, history } ) => {
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
-	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnail )
+	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnailData )
 
 	const uploadFeatureImage = () => {
 		const customUploader = wp.media( {
@@ -36,14 +36,26 @@ export const Post = ( { location, match, history } ) => {
 		customUploader.open()
 		customUploader.on( 'select', function() {
 			var attachment = customUploader.state().get( 'selection' ).first().toJSON()
-			setFeatureThumbnail( attachment.url )
-			setValues( { thumbnail: attachment.id }, false )
+			setFeatureThumbnail( attachment )
+			setValues( { thumbnailData: attachment }, false )
 		} )
 	}
 
 	const removeFeatureImage = () => {
 		setFeatureThumbnail( false )
-		setValues( { thumbnail: '0' }, false )
+		setValues( { thumbnailData: null }, false )
+	}
+
+	const getFeaturedImageSrcSet = () => {
+		if ( ! item.thumbnailData ) {
+			return ''
+		}
+		const { sizes } = item.thumbnailData
+		let srcSet = ''
+		if ( sizes ) {
+			srcSet = getSrcSet( sizes )
+		}
+		return srcSet
 	}
 
 	const tabs = {
@@ -188,17 +200,16 @@ export const Post = ( { location, match, history } ) => {
 					isVisible: supports.thumbnail,
 					fields: {
 						featureimgUpload: {
-
 							id: 'post_feature_image',
-							isVisible: supports.thumbnail && false === featureThumbnail,
-							value: featureThumbnail.url,
+							isVisible: supports.thumbnail && ! featureThumbnail,
 							label: __( 'Set Feature Image' ),
 							component: 'text',
 							onClick: uploadFeatureImage,
 						},
 						featureimg: {
 							id: 'post_feature_img',
-							src: featureThumbnail,
+							src: featureThumbnail.url,
+							srcSet: getFeaturedImageSrcSet(),
 							isVisible: featureThumbnail,
 							component: 'image',
 							onClick: uploadFeatureImage,
@@ -388,22 +399,15 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	const Hero = () => {
-
-		if ( undefined === item.postThumbnail ) {
-			return item.thumbnail
+		if ( ! item.thumbnailData ) {
+			return null
 		}
-
-		const { sizes, alt, title, height, width } = item.postThumbnail
-
-		let srcSet = ''
-		if ( sizes ) {
-			srcSet = getSrcSet( sizes )
-		}
+		const { alt, title, height, width } = item.thumbnailData
 		return (
 			<div>
 				<img
-					src={ item.thumbnail }
-					srcSet={ srcSet }
+					src={ item.thumbnailData.url }
+					srcSet={ getFeaturedImageSrcSet() }
 					style={ { objectFit: 'cover' } }
 					alt={ alt }
 					title={ title }
@@ -455,7 +459,7 @@ export const Post = ( { location, match, history } ) => {
 	return (
 		<Page
 			title={ labels.editItem }
-			hero={ item.hasPostThumbnail ? <Hero /> : null }
+			hero={ item.thumbnailData ? <Hero /> : null }
 			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
