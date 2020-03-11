@@ -5,6 +5,8 @@ namespace FL\Assistant\Controllers;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\System\Contracts\ControllerAbstract;
+use FL\Assistant\System\View;
+
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -15,12 +17,17 @@ class PostsController extends ControllerAbstract
 {
 
     protected $posts;
-    protected $transformer;
+	protected $transformer;
+	/**
+	 * @var View
+	 */
+	protected $view;
 
-    public function __construct(PostsRepository $posts, PostTransformer $transformer)
+    public function __construct( PostsRepository $posts, PostTransformer $transformer, View $view )
     {
         $this->posts = $posts;
-        $this->transformer = $transformer;
+		$this->transformer = $transformer;
+		$this->view = $view;
     }
 
     /**
@@ -465,39 +472,39 @@ class PostsController extends ControllerAbstract
     public function export_post($request)
     {
         /* Get requested post data */
-        $post_id = absint( $request->get_param( 'id' ) );
-        $post = get_post( $post_id );
+        $post_id = absint($request->get_param('id'));
+        $post = get_post($post_id);
 
         /*Create Temporary file */
 
         $file_url = FL_ASSISTANT_URL . $post->post_title . '_' . $post->ID . '.xml';
         $file = FL_ASSISTANT_DIR . $post->post_title . '_' . $post->ID . '.xml';
 
-        if ( file_exists( $file ) ) {
-            unlink( $file );
+        if (file_exists($file)) {
+            unlink($file);
             $file = FL_ASSISTANT_DIR . $post->post_title . '_' . $post->ID . '.xml';
         }
 
-        $current = file_get_contents( $file );
+        $current = file_get_contents($file);
         // Append a new post to the file
 
         /* Creates taxomies string for xml export */
 
-        $taxonomies = get_taxonomies( '', 'names' );
-        $terms = wp_get_object_terms( $post->ID, $taxonomies );
+        $taxonomies = get_taxonomies('', 'names');
+        $terms = wp_get_object_terms($post->ID, $taxonomies);
 
         $taxonomies_str = '';
-        foreach ( $terms as $term ) {
+        foreach ($terms as $term) {
             $taxonomies_str .= '<category domain="' . $term->taxonomy . '" nicename="' . $term->slug . '"><![CDATA[' . $term->name . ']]></category>';
         }
 
         /* Creates comments string  */
 
-        $comments = get_comments (array( 'post_id' => $post->ID ) );
+        $comments = get_comments(array('post_id' => $post->ID));
 
         $comment_str = '';
 
-        foreach ( $comments as $comment ) {
+        foreach ($comments as $comment) {
 
             $comment_str .= '<wp:comment>
 			<wp:comment_id>' . $comment->comment_ID . '</wp:comment_id>
@@ -519,8 +526,8 @@ class PostsController extends ControllerAbstract
         /* Created Post meta string */
 
         $meta_str = '';
-		$meta_values = get_post_meta($post->ID);
-		foreach ($meta_values as $key => $values) {
+        $meta_values = get_post_meta($post->ID);
+        foreach ($meta_values as $key => $values) {
             foreach ($values as $value) {
                 $meta_str .= '<wp:postmeta>
 				<wp:meta_key><![CDATA[' . $key . ']]></wp:meta_key>
@@ -532,7 +539,7 @@ class PostsController extends ControllerAbstract
 
         /* Main content string */
 
-        $post = '<?xml version="1.0" encoding="UTF-8" ?>
+        $post_data = '<?xml version="1.0" encoding="UTF-8" ?>
 		<!-- generator="WordPress/3.9" created="2014-04-25 14:19" -->
 	<rss version="2.0"
     	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
@@ -580,7 +587,19 @@ class PostsController extends ControllerAbstract
 </rss>
 ';
 
-        file_put_contents($file, $current . $post);
+
+$export_data = $this->view->render(
+	'post-export', [
+		'post'      => $post,
+		'taxonomy_data' => $taxonomies_str,
+		'comment_data' => $comment_str,
+'meta_data' => $meta_str
+
+	]
+);
+
+
+       file_put_contents($file, $current . $export_data);
 
         return $file_url;
     }
@@ -601,16 +620,16 @@ class PostsController extends ControllerAbstract
         if (file_exists($file)) {
             unlink($file);
             return rest_ensure_response(
-				[
-					'success' => true,
-				]
-			);
+                [
+                    'success' => true,
+                ]
+            );
         } else {
-			return rest_ensure_response(
-				[
-					'error' => true,
-				]
-			);
+            return rest_ensure_response(
+                [
+                    'error' => true,
+                ]
+            );
         }
     }
 }
