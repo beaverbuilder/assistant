@@ -184,12 +184,8 @@ Icon.Plus = () => (
 )
 
 Icon.BreadcrumbArrow = () => (
-	<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-		<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round">
-			<path d="M12,7 L2,7"></path>
-			<path d="M12,7 L7,2"></path>
-			<path d="M12,12 L7,7" transform="translate(9.500000, 9.500000) scale(1, -1) translate(-9.500000, -9.500000) "></path>
-		</g>
+	<svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M1 1L7 7L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 	</svg>
 )
 Icon.BreadcrumbArrow.displayName = 'Icon.BreadcrumbArrow'
