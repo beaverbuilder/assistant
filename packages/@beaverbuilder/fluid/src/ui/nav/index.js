@@ -5,6 +5,7 @@ import {
     Switch,
     Route,
     Link,
+    useHistory,
 } from 'react-router-dom'
 import Button from '../button'
 import { Icon } from '../art'
@@ -80,9 +81,13 @@ Nav.Link = Link
 Nav.Link.displayName = 'Nav.Link'
 
 Nav.BackButton = props => {
-    const { history } = useContext( Nav.Context )
+    const history = useHistory()
     return (
-        <Button onClick={history.goBack} title="Back" {...props}>
+        <Button
+            appearance="transparent"
+            onClick={ history.goBack }
+            {...props}
+        >
             <Icon.BackArrow />
         </Button>
     )
