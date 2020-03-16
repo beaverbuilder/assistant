@@ -47,22 +47,33 @@ registerSection( 'fl-asst-quick-actions', {
 } )
 
 registerSection( 'fl-home-currently-viewing', {
-	label: __( 'Currently Viewing' ),
+	label: false,
 	location: {
 		type: 'home',
 	},
+	padY: false,
 	render: () => {
 		const { currentPageView } = getSystemConfig()
-		const { name, type, actions } = currentPageView
+		const { name, intro, actions } = currentPageView
+
+		const style = {
+			background: 'var(--fluid-box-background)',
+			borderRadius: 20,
+			padding: 'var(--fluid-lg-space)',
+		}
 
 		return (
 			<>
-				<div className="fl-asst-currently-viewing-summary">
-					{ type && <div className="fl-asst-pretitle">{type}</div> }
-					<div className="fl-asst-title">{name}</div>
-					{ Array.isArray( actions ) && 0 < actions.length &&
-					<Button.Group appearance="buttons">{ Button.renderActions( actions ) }</Button.Group> }
-				</div>
+			<div
+				className="fl-asst-currently-viewing-summary"
+				style={ style }
+			>
+				{ intro && <div className="fl-asst-pretitle">{intro}</div> }
+				<div className="fl-asst-title">{name}</div>
+
+			</div>
+			{ Array.isArray( actions ) && 0 < actions.length &&
+			<Button.Group appearance="buttons">{ Button.renderActions( actions ) }</Button.Group> }
 			</>
 		)
 	},

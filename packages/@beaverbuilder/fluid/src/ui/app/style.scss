@@ -51,18 +51,24 @@
         --fluid-box-color: var(--fluid-primary-color);
         --fluid-box-hover-background: var(--fluid-primary-hover-background);
         --fluid-accent: #0075DB;
+
+        color: var(--fluid-box-color);
     }
     .fluid-status-alert {
         --fluid-box-background: var(--fluid-alert-background);
         --fluid-box-color: var(--fluid-alert-color);
         --fluid-box-hover-background: var(--fluid-alert-hover-background);
         --fluid-accent: var(--fluid-alert-color);
+
+        color: var(--fluid-box-color);
     }
     .fluid-status-destructive {
         --fluid-box-background: var(--fluid-destructive-background);
         --fluid-box-color: var(--fluid-destructive-color);
         --fluid-box-hover-background: var(--fluid-destructive-hover-background);
         --fluid-accent: var(--fluid-destructive-color);
+
+        color: var(--fluid-box-color);
     }
 
     &.fluid-color-scheme-dark {

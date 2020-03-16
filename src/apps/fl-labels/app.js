@@ -134,6 +134,7 @@ export const App = () => {
 			return {
 				edit: (
 					<>
+						<h2>Edit Label</h2>
 						<input
 							type='text'
 							value={ editingLabel.label }
@@ -177,10 +178,11 @@ export const App = () => {
 			),
 			label: label.label,
 			actions: (
-				<Button.Group appearance="buttons">
+				<>
 					<Button
 						onClick={ () => setEditingLabel( label ) }
 						title={ __( 'Edit Label Text' ) }
+						style={{ marginRight: 5 }}
 					><Icon.Edit /></Button>
 					<Button
 						onClick={ () => deleteLabel( label.id ) }
@@ -189,7 +191,7 @@ export const App = () => {
 					>
 						<Icon.Trash />
 					</Button>
-				</Button.Group>
+				</>
 			),
 		}
 	} )
@@ -235,12 +237,6 @@ export const App = () => {
 					onChange={ value => setNewColor( value ) }
 				/>
 				<Button onClick={ addLabel }>{ __( 'Add New Label' ) }</Button>
-			</Page.Section>
-
-			<Page.Section label={ __( 'Bookmarks' ) }>
-				<InnerSection>
-					{ __( 'Bookmarks allow you to mark items privately. Only you will be able to see what items you’ve bookmarked.' ) }
-				</InnerSection>
 			</Page.Section>
 		</Page>
 	)

@@ -84,7 +84,8 @@ const Page = ({
     return (
         <div className="fluid-page-wrap" style={wrapStyle}>
             <div className={classes} style={style} {...rest}>
-                <Hero>{hero}</Hero>
+
+                { hero && <Hero>{hero}</Hero> }
 
                 <div className="fluid-page-content" style={{
                     maxHeight: shouldScroll ? '' : '100%',
