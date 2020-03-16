@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "A common UI environment for Beaver Builder and Assistant projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -22,23 +22,23 @@
     "dependencies": {
         "camelcase": "^5.3.1",
         "classnames": "^2.2.6",
-        "react-laag": "^1.6.2",
+        "react-laag": "^1.7.3",
         "react-router-dom": "^5.1.2",
-        "redux": "^4.0.4",
+        "redux": "^4.0.5",
         "resize-observer-polyfill": "^1.5.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.7.2",
-        "@babel/plugin-external-helpers": "^7.2.0",
-        "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
-        "@babel/preset-env": "^7.7.1",
-        "@babel/preset-react": "^7.7.0",
-        "rollup": "^1.27.3",
-        "rollup-plugin-babel": "^4.3.3",
+        "@babel/core": "^7.8.7",
+        "@babel/plugin-external-helpers": "^7.8.3",
+        "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+        "@babel/preset-env": "^7.8.7",
+        "@babel/preset-react": "^7.8.3",
+        "rollup": "^1.32.1",
+        "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",
-        "rollup-plugin-peer-deps-external": "^2.2.0",
-        "rollup-plugin-postcss": "^2.0.3",
-        "rollup-plugin-url": "^3.0.0"
+        "rollup-plugin-peer-deps-external": "^2.2.2",
+        "rollup-plugin-postcss": "^2.4.1",
+        "rollup-plugin-url": "^3.0.1"
     }
 }

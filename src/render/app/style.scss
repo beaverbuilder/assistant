@@ -79,11 +79,25 @@
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
-    min-height: 36px;
+    min-height: 40px;
     padding: 2px 5px;
+    background: var(--fluid-background);
 
     .fl-asst-window-content & {
         cursor: move;
+    }
+
+    &.fl-asst-overlay-toolbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+
+    &.fl-asst-toolbar-appearance-dark {
+        background: var(--fluid-dark-background);
+        color: var(--fluid-dark-color);
     }
 }
 

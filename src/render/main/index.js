@@ -37,7 +37,6 @@ const PanelActions = () => {
 				onClick={ toggleSize }
 				title={ toggleTitle }
 				appearance="transparent"
-				style={ { marginRight: 5 } }
 			>
 				{ 'mini' === size && <Icon.Expand /> }
 				{ 'normal' === size && <Icon.Collapse /> }

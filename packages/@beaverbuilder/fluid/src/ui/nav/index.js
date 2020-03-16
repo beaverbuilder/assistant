@@ -4,7 +4,7 @@ import {
     MemoryRouter,
     Switch,
     Route,
-    Link
+    Link,
 } from 'react-router-dom'
 import Button from '../button'
 import { Icon } from '../art'
@@ -49,6 +49,11 @@ const Provider = withRouter( ( { children, location, match, history, onChange } 
     )
 })
 
+Nav.useNavContext = () => {
+    const context = useContext( Nav.Context )
+    return context
+}
+
 Nav.Root = ({
     children,
     router: Router = MemoryRouter,
@@ -73,8 +78,6 @@ Nav.Route.displayName = 'Nav.Route'
 
 Nav.Link = Link
 Nav.Link.displayName = 'Nav.Link'
-
-Nav.withRouter = withRouter
 
 Nav.BackButton = props => {
     const { history } = useContext( Nav.Context )

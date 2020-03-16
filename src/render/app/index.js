@@ -1,12 +1,14 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
+import { useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { App, Nav, Page, Icon, Button } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
 import { HomeScreen } from './home-screen'
 import './style.scss'
 
-const AppMain = Nav.withRouter(  ( { location, actions } ) => {
+const AppMain = ( { actions } ) => {
+	const location = useLocation()
 	return (
 		<>
 			<NavToolbar actions={ actions } />
@@ -17,10 +19,13 @@ const AppMain = Nav.withRouter(  ( { location, actions } ) => {
 			</Nav.Switch>
 		</>
 	)
-} )
+}
 AppMain.displayName = 'AppMain'
 
-const NavToolbar = ( { actions } ) => {
+const NavToolbar = ( {
+		actions,
+		appearance = 'light'
+} ) => {
 	const { isRoot, goToRoot } = useContext( Nav.Context )
 	const { label } = useContext( App.Context )
 	const labelStyle = {
@@ -29,7 +34,7 @@ const NavToolbar = ( { actions } ) => {
 	const iconWrapStyle = {
 		display: 'inline-flex',
 		transform: 'translateY(2px)',
-		paddingBottom: 4
+		padding: '0 4px 4px'
 	}
 
 	const style = {
@@ -43,7 +48,8 @@ const NavToolbar = ( { actions } ) => {
 	const toolbarClasses = classname( {
 		'fl-asst-panel-toolbar': true,
 		'fl-asst-window-drag-handle': true,
-		'fl-asst-window-overlay-toolbar': false,
+		'fl-asst-overlay-toolbar': true,
+		[`fl-asst-toolbar-appearance-${appearance}`] : appearance,
 	} )
 
 	const stopProp = e => e.stopPropagation()
@@ -67,7 +73,9 @@ const NavToolbar = ( { actions } ) => {
 							padding: '0 10px',
 						} }
 					>{__( 'Assistant' )}</Button>
-					<span style={ iconWrapStyle }><Icon.BreadcrumbArrow /></span>
+					<span style={ iconWrapStyle }>
+						<Icon.BreadcrumbArrow />
+					</span>
 					<span style={ labelStyle }>{label}</span>
 				</> }
 			</span>

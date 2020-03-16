@@ -21,6 +21,7 @@ const Page = ({
     footer,
     onLoad = focusFirstElement,
     shouldScroll = true,
+    insetTop = true,
 
     // Passed to Layout.Box
     padX = true,
@@ -40,6 +41,7 @@ const Page = ({
         overflowY: shouldScroll ? 'scroll' : 'hidden',
         perspective : 1,
         perspectiveOrigin: '0 0',
+        paddingTop: insetTop ? 40 : null,
     }
 
     const Hero = ({ children }) => {
