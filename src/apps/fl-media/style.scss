@@ -24,13 +24,11 @@
         display: grid;
         grid-gap: 5px;
         grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 158px;
         padding: var(--fl-asst-outer-space);
 
         .fl-asst-grid-list-item {
             background: var(--fl-asst-secondary-surface-background);
             width: 100%;
-            height: 157px;
             border-radius: 3px;
             overflow: hidden;
 

@@ -1,7 +1,6 @@
 .fl-asst {
     .fl-asst-window {
         --fl-asst-window-size: 360px;
-        --fl-asst-window-toolbar-height: 38px;
 
         position: relative;
         box-sizing: border-box;
@@ -32,46 +31,10 @@
             height: 100%;
         }
 
-        .fl-asst-window-toolbar {
-            box-sizing: border-box;
-            flex: 0 0 var(--fl-asst-window-toolbar-height);
-            line-height: 1;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            cursor: move;
-            user-select:none;
-            padding: 0 5px;
-            -webkit-user-select: none;
-            user-select:none;
-
-            &.fl-asst-window-overlay-toolbar {
-                position: absolute;
-                top:0;
-                left:0;
-                right:0;
-                margin: 5px;
-                border-radius: 7px;
-                background:white;
-                z-index: 9;
-            }
-
-            button {
-                color: inherit;
-                padding:2px 10px;
-                background:none;
-                line-height: 1;
-                display: inline-flex;
-                flex-direction: row;
-                align-items: center;
-
-                &:focus {
-                    outline: none;
-                }
-            }
-            span.fl-asst-window-drag-handle {
-                align-items: center;
+        @media screen and (min-width: 1080px ) {
+            &.fl-asst-window-normal {
+                --fl-asst-window-size: 450px;
+                --fluid-lg-space: 30px;
             }
         }
 
@@ -220,11 +183,12 @@
             pointer-events: auto;
         }
     }
+}
 
-    @media screen and ( max-width: 782px ) {
+@media screen and ( max-width: 782px ) {
+    .fl-asst {
         .fl-asst-window {
             --fl-asst-admin-bar-height: 46px;
-            --fl-asst-window-toolbar-height: 46px;
         }
     }
 }
