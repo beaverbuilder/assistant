@@ -1,6 +1,7 @@
+import React from 'react'
 import { Icon } from 'assistant/ui'
 
-const AppIcon = ({ context }) => {
+const AppIcon = ( { context } ) => {
 	let size = 48
 	if ( 'sidebar' === context ) {
 		return <Icon.Placeholder />

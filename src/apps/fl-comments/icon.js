@@ -1,11 +1,13 @@
+import React from 'react'
+import { Icon } from 'assistant/ui'
 
-const CommentsIcon = ({ context }) => {
+const CommentsIcon = ( { context } ) => {
 	const size = 42
 
-    if ( 'sidebar' === context ) {
+	if ( 'sidebar' === context ) {
 		return <Icon.Placeholder />
 	}
-    
+
 	return (
 		<svg width={ size } viewBox="0 0 33 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g transform="translate(-9.000000, -10.000000)" fill="currentColor" fillRule="nonzero" stroke="none">
@@ -14,3 +16,5 @@ const CommentsIcon = ({ context }) => {
 		</svg>
 	)
 }
+
+export default CommentsIcon

@@ -182,7 +182,7 @@ export const App = () => {
 					<Button
 						onClick={ () => setEditingLabel( label ) }
 						title={ __( 'Edit Label Text' ) }
-						style={{ marginRight: 5 }}
+						style={ { marginRight: 5 } }
 					><Icon.Edit /></Button>
 					<Button
 						onClick={ () => deleteLabel( label.id ) }

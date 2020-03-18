@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
 import AppMain from '../app'
@@ -10,7 +10,6 @@ import {
 	Window,
 	Error,
 	Page,
-	Button,
 	Layout,
 } from 'assistant/ui'
 
@@ -24,33 +23,6 @@ const getRouterProps = history => {
 		props.initialEntries = history.entries
 	}
 	return props
-}
-
-// Top right buttons - only in standalone version
-const PanelActions = () => {
-	const { toggleIsHidden, toggleSize, size } = useContext( Window.Context )
-
-	const toggleTitle = 'mini' === size ? __( 'Expand Panel' ) : __( 'Shrink Panel' )
-	return (
-		<>
-			<Button
-				onClick={ toggleSize }
-				title={ toggleTitle }
-				appearance="transparent"
-			>
-				{ 'mini' === size && <Icon.Expand /> }
-				{ 'normal' === size && <Icon.Collapse /> }
-			</Button>
-			<Button
-				onClick={ toggleIsHidden }
-				title={ __( 'Hide Assistant' ) }
-				appearance="transparent"
-				id="fl-asst-close-panel"
-			>
-				<Icon.Close />
-			</Button>
-		</>
-	)
 }
 
 /**

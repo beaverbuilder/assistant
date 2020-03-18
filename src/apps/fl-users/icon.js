@@ -1,6 +1,7 @@
+import React from 'react'
 import { Icon } from 'assistant/ui'
 
-const UsersIcon = ({ context }) => {
+const UsersIcon = ( { context } ) => {
 
 	if ( 'sidebar' === context ) {
 		return <Icon.Placeholder />

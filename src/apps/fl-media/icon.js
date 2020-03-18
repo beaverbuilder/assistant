@@ -1,12 +1,13 @@
+import React from 'react'
 import { Icon } from 'assistant/ui'
 
-const MediaIcon = ({ context }) => {
+const MediaIcon = ( { context } ) => {
 	let size = 42
 
-    if ( 'sidebar' === context ) {
+	if ( 'sidebar' === context ) {
 		return <Icon.Placeholder />
 	}
-    
+
 	return (
 		<svg width={ size } height={ size } viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<g fill="currentColor" fillRule="nonzero" stroke="none">

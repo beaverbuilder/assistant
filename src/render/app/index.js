@@ -8,23 +8,23 @@ import { HomeScreen } from './home-screen'
 import Sidebar from './side-bar'
 import './style.scss'
 
-const AppMain = ( { actions } ) => {
+const AppMain = () => {
 	const location = useLocation()
 	const { window } = useSystemState()
 	const side = window.origin[0]
 	return (
-		<div style={{
+		<div style={ {
 			display: 'flex',
 			flexDirection: side ? 'row-reverse' : 'row',
 			flex: '1 1 auto',
 			maxHeight: '100%',
 			minHeight: 0
-		}}
+		} }
 		>
 			<Sidebar edge={ side ? 'right' : 'left' } />
-			
-			<div style={{ flex: '1 1 auto', position: 'relative' }}>
-				<NavToolbar actions={ actions } />
+
+			<div style={ { flex: '1 1 auto', position: 'relative' } }>
+				<NavToolbar />
 				<Nav.Switch location={ location }>
 					<Nav.Route exact path="/" component={ HomeScreen } />
 					<Nav.Route path="/:app" component={ AppContent } />
@@ -37,8 +37,8 @@ const AppMain = ( { actions } ) => {
 AppMain.displayName = 'AppMain'
 
 const NavToolbar = ( {
-		actions,
-		appearance = 'light'
+	actions,
+	appearance = 'light'
 } ) => {
 	const { isRoot, goToRoot } = useContext( Nav.Context )
 	const { label } = useContext( App.Context )
@@ -63,7 +63,7 @@ const NavToolbar = ( {
 		'fl-asst-panel-toolbar': true,
 		'fl-asst-window-drag-handle': true,
 		'fl-asst-overlay-toolbar': true,
-		[`fl-asst-toolbar-appearance-${appearance}`] : appearance,
+		[`fl-asst-toolbar-appearance-${appearance}`]: appearance,
 	} )
 
 	const stopProp = e => e.stopPropagation()
