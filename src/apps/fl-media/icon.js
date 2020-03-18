@@ -1,11 +1,19 @@
 import React from 'react'
-import { Icon } from 'assistant/ui'
 
 const MediaIcon = ( { context } ) => {
 	let size = 42
 
 	if ( 'sidebar' === context ) {
-		return <Icon.Placeholder />
+		return (
+			<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M1 5V1H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+			<path d="M15 1H19V5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+			<path d="M19 15V19H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+			<path d="M5 19H1V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+			<path d="M16 16H4L8 9L10.5 12L11.5 11L16 16Z" fill="currentColor"/>
+			<circle cx="13" cy="7" r="2" fill="currentColor"/>
+			</svg>
+		)
 	}
 
 	return (
