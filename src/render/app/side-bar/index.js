@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { __ } from '@wordpress/i18n'
+import { useLocation, useHistory } from 'react-router-dom'
 import { Button, Icon } from 'assistant/ui'
 import { useSystemState, getSystemActions } from 'assistant/data'
 import './style.scss'
@@ -8,8 +9,11 @@ const Sidebar = ( { edge = 'right' } ) => {
 	const { window, apps, appOrder } = useSystemState()
 	const { toggleIsShowingUI, setWindow } = getSystemActions()
 	const { pathname } = useLocation()
+	const history = useHistory()
+	const goToRoot = () => history.go( -history.index )
 	const [ limitApps, setLimitApps ] = useState( true )
-    const maxApps = 5
+    const maxApps = 4
+	const isRoot = 0 === history.index
 
 	const edgeProp = 'left' === edge ? 'borderRight' : 'borderLeft'
 
@@ -29,7 +33,10 @@ const Sidebar = ( { edge = 'right' } ) => {
 			[`${edgeProp}`]: '2px solid var(--fluid-box-background)' } }
 		>
 			<div className="fl-asst-sidebar-cell">
-				<Button appearance="transparent" onClick={ () => toggleIsShowingUI( false ) }>
+				<Button
+					appearance="transparent"
+					onClick={ () => toggleIsShowingUI( false ) }
+				>
 					<Icon.Close />
 				</Button>
 			</div>
@@ -37,6 +44,15 @@ const Sidebar = ( { edge = 'right' } ) => {
 				className="fl-asst-sidebar-cell"
 				style={ { flex: '1 1 auto' } }
 			>
+				<Button
+					appearance={ isRoot ? 'normal' : 'transparent' }
+					status={ isRoot ? 'primary' : '' }
+					title={__('Home')}
+					onClick={goToRoot}
+				>
+					<Icon.Home />
+				</Button>
+
 				{ appOrder.map( ( handle, i ) => {
 					const app = apps[handle]
 
@@ -70,7 +86,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 						>{icon( { context: 'sidebar' } )}</Button>
 					)
 				} )}
-                
+
 				<Button appearance="transparent" onClick={ () => setLimitApps( ! limitApps ) }>
 					<Icon.Apps />
 				</Button>
