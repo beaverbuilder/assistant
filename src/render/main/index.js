@@ -72,7 +72,7 @@ export const Assistant = () => {
 			<App.Provider>
 				<Appearance brightness={ brightness }>
 					<MainWindow>
-						<AppMain actions={ <PanelActions /> } />
+						<AppMain />
 					</MainWindow>
 				</Appearance>
 			</App.Provider>

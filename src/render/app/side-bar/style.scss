@@ -1,0 +1,14 @@
+.fl-asst {
+    .fl-asst-sidebar-cell {
+        padding: var(--fluid-sm-space);
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+
+        .fluid-button {
+            height: 50px;
+        }
+    }
+}

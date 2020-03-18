@@ -86,7 +86,7 @@ registerSection( 'fl-home-apps', {
 	},
 	padX: false,
 	render: () => {
-		const { apps, appOrder, window } = useSystemState()
+		const { apps, appOrder } = useSystemState()
 		const focusRef = useInitialFocus()
 		let didSetFocusRef = false
 
@@ -123,12 +123,8 @@ registerSection( 'fl-home-apps', {
 						didSetFocusRef = true
 					}
 
-					const size = 'mini' === window.size ? 50 : 60
 					const iconProps = {
-						width: size,
-						height: size,
-						windowSize: window.size,
-						context: 'app-list',
+						context: 'grid',
 					}
 
 					return (

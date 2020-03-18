@@ -5,19 +5,33 @@ import { __ } from '@wordpress/i18n'
 import { App, Nav, Page, Icon, Button } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
 import { HomeScreen } from './home-screen'
+import Sidebar from './side-bar'
 import './style.scss'
 
 const AppMain = ( { actions } ) => {
 	const location = useLocation()
+	const { window } = useSystemState()
+	const side = window.origin[0]
 	return (
-		<>
-			<NavToolbar actions={ actions } />
-			<Nav.Switch location={ location }>
-				<Nav.Route exact path="/" component={ HomeScreen } />
-				<Nav.Route path="/:app" component={ AppContent } />
-				<Nav.Route component={ Page.NotFound } />
-			</Nav.Switch>
-		</>
+		<div style={{
+			display: 'flex',
+			flexDirection: side ? 'row-reverse' : 'row',
+			flex: '1 1 auto',
+			maxHeight: '100%',
+			minHeight: 0
+		}}
+		>
+			<Sidebar edge={ side ? 'right' : 'left' } />
+			
+			<div style={{ flex: '1 1 auto', position: 'relative' }}>
+				<NavToolbar actions={ actions } />
+				<Nav.Switch location={ location }>
+					<Nav.Route exact path="/" component={ HomeScreen } />
+					<Nav.Route path="/:app" component={ AppContent } />
+					<Nav.Route component={ Page.NotFound } />
+				</Nav.Switch>
+			</div>
+		</div>
 	)
 }
 AppMain.displayName = 'AppMain'

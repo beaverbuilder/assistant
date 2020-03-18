@@ -4,6 +4,7 @@ import { addQueryArgs } from 'assistant/utils/url'
 import { getSystemConfig } from 'assistant/data'
 import { Page } from 'assistant/ui'
 import { Content } from './app'
+import Icon from './icon'
 
 const { contentTypes, taxonomies } = getSystemConfig()
 
@@ -20,7 +21,7 @@ export const defaultState = {
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: Content,
-	icon: Content.Icon,
+	icon: Icon,
 	accent: {
 		color: '#006AD4'
 	},

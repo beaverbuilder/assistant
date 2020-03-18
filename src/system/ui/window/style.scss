@@ -1,10 +1,11 @@
 .fl-asst {
     .fl-asst-window {
+        --fl-asst-side-toolbar-width: 60px;
         --fl-asst-window-size: 360px;
 
         position: relative;
         box-sizing: border-box;
-        width: var(--fl-asst-window-size);
+        width: calc( var(--fl-asst-side-toolbar-width) + var(--fl-asst-window-size) );
         max-width: 100vw;
         min-height: 100px;
         overflow: hidden;
@@ -30,12 +31,10 @@
         &.fl-asst-window-normal {
             height: 100%;
         }
-
-        @media screen and (min-width: 1080px ) {
-            &.fl-asst-window-normal {
-                --fl-asst-window-size: 450px;
-                --fluid-lg-space: 30px;
-            }
+        &.fl-asst-window-expanded {
+            height: 100%;
+            --fl-asst-window-size: 450px;
+            --fluid-lg-space: 30px;
         }
 
         .fl-asst-window-content {
