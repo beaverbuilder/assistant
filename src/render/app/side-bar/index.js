@@ -86,7 +86,12 @@ const Sidebar = ( { edge = 'right' } ) => {
 					)
 				} )}
 
-				<Button appearance="transparent" to="/fl-manage">
+				<Button
+					appearance={ pathname.startsWith( `/fl-manage` ) ? 'normal' : 'transparent' }
+					status={ pathname.startsWith( `/fl-manage` ) ? 'primary' : '' }
+					to="/fl-manage"
+					title={__('Manage Apps')}
+				>
 					<Icon.Apps />
 				</Button>
 			</div>
