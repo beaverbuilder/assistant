@@ -11,8 +11,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 	const { pathname } = useLocation()
 	const history = useHistory()
 	const goToRoot = () => history.go( -history.index )
-	const [ limitApps, setLimitApps ] = useState( true )
-    const maxApps = 4
+    const maxApps = 5
 	const isRoot = 0 === history.index
 
 	const edgeProp = 'left' === edge ? 'borderRight' : 'borderLeft'
@@ -56,7 +55,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 				{ appOrder.map( ( handle, i ) => {
 					const app = apps[handle]
 
-					if ( limitApps && maxApps < i ) {
+					if ( maxApps < i ) {
 						return null
 					}
 
@@ -87,7 +86,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 					)
 				} )}
 
-				<Button appearance="transparent" onClick={ () => setLimitApps( ! limitApps ) }>
+				<Button appearance="transparent" to="/fl-manage">
 					<Icon.Apps />
 				</Button>
 			</div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Page } from 'assistant/ui'
 
-export const HomeScreen = () => {
+const HomeScreen = () => {
 	return (
 		<Page
 			padY={ false }
@@ -14,3 +14,5 @@ export const HomeScreen = () => {
 		</Page>
 	)
 }
+
+export default HomeScreen

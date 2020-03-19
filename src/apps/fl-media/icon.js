@@ -6,12 +6,10 @@ const MediaIcon = ( { context } ) => {
 	if ( 'sidebar' === context ) {
 		return (
 			<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M1 5V1H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-			<path d="M15 1H19V5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-			<path d="M19 15V19H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-			<path d="M5 19H1V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-			<path d="M16 16H4L8 9L10.5 12L11.5 11L16 16Z" fill="currentColor"/>
-			<circle cx="13" cy="7" r="2" fill="currentColor"/>
+				<path d="M1 11V1H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+				<path d="M8 1H19V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+				<path d="M18.5817 20H1.82145C1.03236 20 0.554142 19.1288 0.977785 18.4631L6.99977 9L11.3748 13.7143L13.1248 12.1429L19.288 18.2921C19.919 18.9217 19.4731 20 18.5817 20Z" fill="currentColor"/>
+				<circle cx="13" cy="7" r="2" fill="currentColor"/>
 			</svg>
 		)
 	}

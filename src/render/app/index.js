@@ -4,8 +4,9 @@ import { useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { App, Nav, Page, Icon, Button } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
-import { HomeScreen } from './home-screen'
+import HomeScreen from './home-screen'
 import Sidebar from './side-bar'
+import ManageScreen from './manage-screen'
 import './style.scss'
 
 const AppMain = () => {
@@ -23,10 +24,11 @@ const AppMain = () => {
 		>
 			<Sidebar edge={ side ? 'right' : 'left' } />
 
-			<div style={ { flex: '1 1 auto', position: 'relative' } }>
+			<div style={ { flex: '1 1 auto', position: 'relative', display: 'flex' } }>
 				<NavToolbar />
 				<Nav.Switch location={ location }>
 					<Nav.Route exact path="/" component={ HomeScreen } />
+					<Nav.Route path="/fl-manage" component={ ManageScreen } />
 					<Nav.Route path="/:app" component={ AppContent } />
 					<Nav.Route component={ Page.NotFound } />
 				</Nav.Switch>
@@ -87,10 +89,14 @@ const NavToolbar = ( {
 							padding: '0 10px',
 						} }
 					>{__( 'Assistant' )}</Button>
-					<span style={ iconWrapStyle }>
-						<Icon.BreadcrumbArrow />
-					</span>
-					<span style={ labelStyle }>{label}</span>
+					{ label && (
+						<>
+							<span style={ iconWrapStyle }>
+								<Icon.BreadcrumbArrow />
+							</span>
+							<span style={ labelStyle }>{label}</span>
+						</>
+					)}
 				</> }
 			</span>
 			{ actions && <span style={ {

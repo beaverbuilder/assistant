@@ -1,0 +1,26 @@
+.fl-asst {
+    .fl-asst-manage-app-order-list {
+        margin:0;
+
+        li {
+            padding: 1px 0;
+            display: flex;
+            flex-direction: row;
+
+            .fluid-button {
+                display: inline-flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                min-height: 40px;
+            }
+
+            .fl-asst-item-icon {
+                display: inline-flex;
+                flex: 0 0 20px;
+                margin-right: var(--fluid-med-space);
+                justify-content: center;
+            }
+        }
+    }
+}
