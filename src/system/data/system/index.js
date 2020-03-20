@@ -4,6 +4,7 @@ import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
+import useAppList from './use-app-list'
 
 registerStore( 'fl-assistant/system', {
 	state: {
@@ -38,3 +39,5 @@ export const getSystemSelectors = () => {
 export const getSystemConfig = () => {
 	return { ...FL_ASSISTANT_CONFIG }
 }
+
+export { useAppList }

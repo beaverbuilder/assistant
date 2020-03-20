@@ -142,7 +142,9 @@ const WindowLayer = ( {
 			} )
 		}
 
-		if ( e.target.classList.contains( 'fl-asst-window-drag-handle' ) ) {
+		if ( e.target.classList.contains( 'fl-asst-window-drag-handle' ) ||
+			 e.target.classList.contains( 'fl-asst-sidebar' )
+		) {
 			setIsDragging( true )
 		}
 	}

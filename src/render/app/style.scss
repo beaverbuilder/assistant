@@ -1,4 +1,13 @@
 .fl-asst {
+
+    .fl-asst-main {
+        width: 420px;
+
+        &.fl-asst-main-sidebar-only {
+            width: 58px;
+        }
+    }
+
     .fl-asst-screen {
         flex: 1 1 auto;
         display: flex;

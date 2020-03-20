@@ -1,4 +1,7 @@
 .fl-asst {
+    .fl-asst-sidebar {
+        cursor: move;
+    }
     .fl-asst-sidebar-cell {
         padding: var(--fluid-sm-space);
         flex: 0 0 auto;
@@ -7,8 +10,31 @@
         justify-content: center;
         align-items: stretch;
 
+        &.fl-asst-sidebar-cell-middle {
+            padding: 20px var(--fluid-sm-space);
+            pointer-events: none;
+
+            .fluid-button {
+                pointer-events: auto;
+            }
+        }
+
         .fluid-button {
             height: 50px;
+        }
+    }
+
+    .fl-asst-window-sidebar-only {
+        .fl-asst-sidebar {
+            padding-top: 6px;
+        }
+        .fl-asst-sidebar-cell-top {
+            pointer-events: none;
+        }
+        .fl-asst-sidebar-close-button {
+            height: 38px;
+            margin-bottom: 6px;
+            pointer-events: auto;
         }
     }
 }

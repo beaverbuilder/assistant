@@ -1,28 +1,41 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import { useHistory } from 'react-router-dom'
 import { Page, Icon, Button } from 'assistant/ui'
-import { useSystemState, getSystemActions } from 'assistant/data'
+import { useAppList } from 'assistant/data'
 import './style.scss'
 
 const ManageScreen = () => {
-    const { apps, appOrder } = useSystemState()
-    const { setAppPosition } = getSystemActions()
+    const apps = useAppList()
+    const history = useHistory()
+    const goToRoot = () => history.go( - history.length )
 
     return (
         <Page title={__('Manage Screen')}>
             <Page.Section label={__('App Order')}>
 
-                <p>{__('You can reorder the apps below. The top 5 will appear in the sidebar for quick access.')}</p>
+                <p style={{ marginTop: 0 }}>{__('You can reorder the apps below. The top 5 will appear in the sidebar for quick access.')}</p>
 
                 <ul className="fl-asst-manage-app-order-list">
-                { appOrder.map( ( handle, i ) => {
-                    const app = apps[handle]
-                    const { label, icon } = app
-
-                    if ( 'undefined' === typeof app || ! app.shouldShowInAppList ) {
-						return
-					}
-
+                <li>
+                    <Button appearance="transparent" onClick={goToRoot}>
+                        <span className="fl-asst-item-icon">
+                            <Icon.Home />
+                        </span>
+                        {__('Home')}
+                    </Button>
+                    <span className="fl-asst-item-reorder-buttons" />
+                </li>
+                { apps.map( ( app, i ) => {
+                    const {
+                        handle,
+                        label,
+                        icon,
+                        isFirst,
+                        isLast,
+                        moveUp,
+                        moveDown,
+                    } = app
 					const location = {
 						pathname: `/${handle}`,
 						state: app,
@@ -33,32 +46,45 @@ const ManageScreen = () => {
                             <Button
                                 to={location}
                                 appearance="transparent"
-                                style={{ flex: '1 1 auto' }}
+                                style={{
+                                    flex: '1 1 auto',
+                                    marginRight: 'auto',
+                                }}
                             >
                                 <span className="fl-asst-item-icon">
                                     { icon ? icon({ context: 'sidebar' }) : <Icon.Placeholder /> }
                                 </span>
                                 {label}
                             </Button>
-                            <Button
-                                onClick={ () => setAppPosition( handle, i - 1 )}
-                                appearance="transparent"
-                                title={__('Move Up')}
-                            >
-                                <Icon.UpCaret />
-                            </Button>
-                            <Button
-                                onClick={ () => setAppPosition( handle, i + 1 )}
-                                appearance="transparent"
-                                title={__('Move Down')}
-                            >
-                                <Icon.DownCaret />
-                            </Button>
+
+                            <span className="fl-asst-item-reorder-buttons">
+                                <span className="fl-asst-button-space">
+                                { ! isFirst && (
+                                    <Button
+                                        onClick={moveUp}
+                                        appearance="transparent"
+                                        title={__('Move Up')}
+                                    >
+                                        <Icon.UpCaret />
+                                    </Button>
+                                )}
+                                </span>
+                                <span className="fl-asst-button-space">
+                                { ! isLast && (
+                                    <Button
+                                        onClick={moveDown}
+                                        appearance="transparent"
+                                        title={__('Move Down')}
+                                    >
+                                        <Icon.DownCaret />
+                                    </Button>
+                                )}
+                                </span>
+                            </span>
                         </li>
                     )
                 })}
                 </ul>
-
             </Page.Section>
         </Page>
     )

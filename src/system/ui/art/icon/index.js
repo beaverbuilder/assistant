@@ -199,10 +199,12 @@ Icon.More = () => (
 )
 Icon.More.displayName = 'Icon.More'
 
-Icon.DefaultApp = ( { windowSize, context } ) => {
-	let size = 32
-	if ( 'app-list' === context ) {
-		size = 'mini' === windowSize ? 34 : 42
+Icon.DefaultApp = ( { context } ) => {
+	let size = 42
+	if ( 'sidebar' === context ) {
+		return (
+			<Icon.Placeholder />
+		)
 	}
 	return (
 		<svg width={ size } height={ size } viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg">

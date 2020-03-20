@@ -1,10 +1,11 @@
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
 import App from './app'
-import Icon from './icon'
+//import Icon from './icon'
 
-registerApp( 'fl-current-view', {
-	label: __( 'Currently Viewing' ),
-	root: App,
-	icon: Icon,
-} )
+if ( ! __PRODUCTION__ ) {
+	registerApp( 'fl-current-view', {
+		label: __( 'Currently Viewing' ),
+		root: App,
+	} )
+}

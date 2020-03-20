@@ -1,18 +1,26 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useLocation, useHistory } from 'react-router-dom'
-import { Button, Icon } from 'assistant/ui'
-import { useSystemState, getSystemActions } from 'assistant/data'
+import { App, Button, Icon } from 'assistant/ui'
+import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
 import './style.scss'
 
 const Sidebar = ( { edge = 'right' } ) => {
-	const { window, apps, appOrder } = useSystemState()
-	const { toggleIsShowingUI, setWindow } = getSystemActions()
+	const { window, isAppHidden  } = useSystemState()
+	const { environment } = useContext( App.Context )
+	const {
+		toggleIsShowingUI,
+		setWindow,
+		setIsAppHidden
+	} = getSystemActions()
+	const _apps = useAppList({ maxCount: 5 })
 	const { pathname } = useLocation()
 	const history = useHistory()
-	const goToRoot = () => history.go( -history.index )
-    const maxApps = 5
+
+	const isBeaverBuilder = 'beaver-builder' === environment
 	const isRoot = 0 === history.index
+	const isManage = pathname.startsWith( `/fl-manage` )
+	const toggleIsAppHidden = () => setIsAppHidden( ! isAppHidden )
 
 	const edgeProp = 'left' === edge ? 'borderRight' : 'borderLeft'
 
@@ -24,82 +32,98 @@ const Sidebar = ( { edge = 'right' } ) => {
 		setWindow( { ...window, size: sizes[next] } )
 	}
 
+	const goToRoot = () => {
+		history.go( - history.length )
+		history.replace( '/', {} )
+	}
+	const navOrHideApp = ( isCurrentScreen = false, goToScreen = () => {} ) => {
+		if ( isCurrentScreen ) {
+			toggleIsAppHidden()
+		} else {
+			setIsAppHidden( false )
+			goToScreen()
+		}
+	}
+
 	return (
-		<div style={ {
-			flex: '0 0 60px',
-			display: 'flex',
-			flexDirection: 'column',
-			[`${edgeProp}`]: '2px solid var(--fluid-box-background)' } }
+		<div
+			className="fl-asst-sidebar"
+			style={ {
+				flexGrow: 0,
+				flexShrink: 0,
+				flexBasis: isAppHidden ? 58 : 60, /* account for border */
+				display: 'flex',
+				flexDirection: 'column',
+				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-box-background)' }
+			}
 		>
-			<div className="fl-asst-sidebar-cell">
-				<Button
-					appearance="transparent"
-					onClick={ () => toggleIsShowingUI( false ) }
-				>
-					<Icon.Close />
-				</Button>
-			</div>
+			{ ! isBeaverBuilder && (
+				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top">
+					<Button
+						appearance="transparent"
+						onClick={ () => toggleIsShowingUI( false ) }
+						className="fl-asst-sidebar-close-button"
+						title={__('Hide Panel')}
+					>
+						<Icon.Close />
+					</Button>
+				</div>
+			)}
+
+
 			<div
-				className="fl-asst-sidebar-cell"
-				style={ { flex: '1 1 auto' } }
+				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
+				style={ { flex: '0 0 auto', margin: 'auto 0' } }
 			>
 				<Button
-					appearance={ isRoot ? 'normal' : 'transparent' }
-					status={ isRoot ? 'primary' : '' }
+					appearance={ ( isRoot && !isAppHidden ) ? 'normal' : 'transparent' }
+					status={ ( isRoot && !isAppHidden ) ? 'primary' : '' }
 					title={__('Home')}
-					onClick={goToRoot}
+					onClick={ () => navOrHideApp( isRoot, goToRoot ) }
 				>
 					<Icon.Home />
 				</Button>
 
-				{ appOrder.map( ( handle, i ) => {
-					const app = apps[handle]
-
-					if ( maxApps < i ) {
-						return null
-					}
-
-					if ( 'undefined' === typeof app || ! app.shouldShowInAppList ) {
-						return null
-					}
-
-					let icon = Icon.Placeholder
-					if ( 'function' === typeof app.icon ) {
-						icon = app.icon
-					}
+				{ _apps.map( ( app, i ) => {
+					const { label, handle, icon } = app
 
 					const location = {
 						pathname: `/${handle}`,
 						state: app,
 					}
-
 					const isSelected = pathname.startsWith( `/${handle}` )
-
 					return (
 						<Button
 							key={ i }
-							appearance={ isSelected ? 'normal' : 'transparent' }
-							status={ isSelected ? 'primary' : 'normal' }
-							to={ location }
-							title={ app.label }
-						>{icon( { context: 'sidebar' } )}</Button>
+							appearance={ ( isSelected && !isAppHidden ) ? 'normal' : 'transparent' }
+							status={ ( isSelected && !isAppHidden ) ? 'primary' : 'normal' }
+							onClick={ () => navOrHideApp( isSelected, () => history.push( location ) )}
+							title={ label }
+						>{ icon( { context: 'sidebar' } ) }</Button>
 					)
 				} )}
 
 				<Button
-					appearance={ pathname.startsWith( `/fl-manage` ) ? 'normal' : 'transparent' }
-					status={ pathname.startsWith( `/fl-manage` ) ? 'primary' : '' }
-					to="/fl-manage"
+					appearance={ ( isManage && !isAppHidden ) ? 'normal' : 'transparent' }
+					status={ ( isManage && !isAppHidden ) ? 'primary' : '' }
+					onClick={ () => navOrHideApp( isManage, () => history.push('/fl-manage') )}
 					title={__('Manage Apps')}
 				>
 					<Icon.Apps />
 				</Button>
 			</div>
-			<div className="fl-asst-sidebar-cell">
-				<Button appearance="transparent" onClick={ toggleWindowSize }>
-					<Icon.Expand />
-				</Button>
-			</div>
+
+			{ ! isBeaverBuilder && (
+				<div className="fl-asst-sidebar-cell">
+					<Button
+						appearance="transparent"
+						onClick={ toggleWindowSize }
+						title={ 'mini' === window.size ? __('Expand Panel') : __('Collapse Panel') }
+					>
+						{ 'mini' === window.size ? <Icon.Expand /> : <Icon.Collapse /> }
+					</Button>
+				</div>
+			)}
 		</div>
 	)
 }

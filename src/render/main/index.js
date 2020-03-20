@@ -1,5 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import classname from 'classnames'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
 import AppMain from '../app'
 import { App as FLUID_Root } from 'fluid/ui'
@@ -29,11 +30,15 @@ const getRouterProps = history => {
  * The Root Component
  */
 export const Assistant = () => {
-	const { appearance, history } = useSystemState()
+	const { appearance, history, isAppHidden } = useSystemState()
 	const { setHistory } = getSystemActions()
 	const { brightness = 'light' } = appearance
 
 	const onHistoryChanged = history => setHistory( history.index, history.entries )
+
+	const windowClasses = classname({
+		'fl-asst-window-sidebar-only' : isAppHidden,
+	})
 
 	return (
 		<FLUID_Root
@@ -43,7 +48,7 @@ export const Assistant = () => {
 		>
 			<App.Provider>
 				<Appearance brightness={ brightness }>
-					<MainWindow>
+					<MainWindow className={windowClasses}>
 						<AppMain />
 					</MainWindow>
 				</Appearance>
@@ -80,7 +85,7 @@ export const getAssistantBBPanelConfig = () => {
 	}
 }
 
-const MainWindow = ( { children } ) => {
+const MainWindow = ( { children, ...rest } ) => {
 	const { window: mainWindow, shouldShowLabels } = useSystemState()
 	const { size, origin, isHidden, hiddenAppearance } = mainWindow
 	const { setWindow } = getSystemActions()
@@ -96,6 +101,7 @@ const MainWindow = ( { children } ) => {
 			onChange={ onChanged }
 			shouldShowLabels={ shouldShowLabels }
 			shouldDisplayButton={ '' === hiddenAppearance }
+			{...rest}
 		>
 			<Error.Boundary alternate={ WindowError }>
 				{children}

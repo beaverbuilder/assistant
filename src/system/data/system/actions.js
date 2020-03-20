@@ -154,3 +154,10 @@ export const registerSection = ( handle = '', config = {} ) => {
 		config,
 	}
 }
+
+export const setIsAppHidden = value => {
+	return {
+		type: 'SET_IS_APP_HIDDEN',
+		value,
+	}
+}

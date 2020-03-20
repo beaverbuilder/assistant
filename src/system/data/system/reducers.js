@@ -133,6 +133,7 @@ export const window = ( state = windowDefaults, action ) => {
 const defaultAppearance = {
 	brightness: 'light',
 }
+
 export const appearance = ( state = defaultAppearance, action ) => {
 	switch ( action.type ) {
 	case 'SET_BRIGHTNESS':
@@ -256,6 +257,15 @@ export const sections = ( state = {}, action ) => {
 			...state,
 			[handle]: section,
 		}
+	default:
+		return state
+	}
+}
+
+export const isAppHidden = ( state = false, action ) => {
+	switch ( action.type ) {
+	case 'SET_IS_APP_HIDDEN':
+		return action.value ? true : false
 	default:
 		return state
 	}

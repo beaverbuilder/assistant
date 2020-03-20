@@ -11,28 +11,38 @@ import './style.scss'
 
 const AppMain = () => {
 	const location = useLocation()
-	const { window } = useSystemState()
+	const { window, isAppHidden } = useSystemState()
 	const side = window.origin[0]
+
+	const classes = classname({
+		'fl-asst-main' : true,
+		'fl-asst-main-sidebar-only' : isAppHidden,
+	})
+
 	return (
-		<div style={ {
-			display: 'flex',
-			flexDirection: side ? 'row-reverse' : 'row',
-			flex: '1 1 auto',
-			maxHeight: '100%',
-			minHeight: 0
-		} }
+		<div
+			className={classes}
+			style={ {
+				display: 'flex',
+				flexDirection: side ? 'row-reverse' : 'row',
+				flex: '1 1 auto',
+				maxHeight: '100%',
+				minHeight: 0
+			} }
 		>
 			<Sidebar edge={ side ? 'right' : 'left' } />
 
-			<div style={ { flex: '1 1 auto', position: 'relative', display: 'flex' } }>
-				<NavToolbar />
-				<Nav.Switch location={ location }>
-					<Nav.Route exact path="/" component={ HomeScreen } />
-					<Nav.Route path="/fl-manage" component={ ManageScreen } />
-					<Nav.Route path="/:app" component={ AppContent } />
-					<Nav.Route component={ Page.NotFound } />
-				</Nav.Switch>
-			</div>
+			{ ! isAppHidden && (
+				<div style={ { flex: '1 1 auto', position: 'relative', display: 'flex' } }>
+					<NavToolbar />
+					<Nav.Switch location={ location }>
+						<Nav.Route exact path="/" component={ HomeScreen } />
+						<Nav.Route path="/fl-manage" component={ ManageScreen } />
+						<Nav.Route path="/:app" component={ AppContent } />
+						<Nav.Route component={ Page.NotFound } />
+					</Nav.Switch>
+				</div>
+			)}
 		</div>
 	)
 }
