@@ -1,7 +1,7 @@
 import React from 'react'
-import { Icon } from 'ui'
-import { registerStore, useStore, getStore, getDispatch } from 'data/registry'
-import { getWpRest } from 'utils/wordpress'
+import { Icon } from 'assistant/ui'
+import { registerStore, useStore, getStore, getDispatch } from 'assistant/data'
+import { getWpRest } from 'assistant/utils/wordpress'
 import './style.scss'
 import { FileDropListener } from './drop-listner'
 
