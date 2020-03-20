@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { getSystemActions, getSystemConfig, useSystemState } from 'data'
+import { getSystemActions, getSystemConfig, useSystemState, useAppList } from 'data'
 import { Button, Icon, App } from 'ui'
 import { __ } from '@wordpress/i18n'
 import { useInitialFocus } from 'utils/react'
@@ -86,23 +86,14 @@ registerSection( 'fl-home-apps', {
 	},
 	padX: false,
 	render: () => {
-		const { apps, appOrder } = useSystemState()
+		const apps = useAppList()
 		const focusRef = useInitialFocus()
 		let didSetFocusRef = false
 
 		return (
 			<div className="fl-asst-app-grid">
-				{ appOrder.map( ( handle, i ) => {
-					const app = apps[handle]
-
-					let icon = Icon.DefaultApp
-					if ( 'function' === typeof app.icon ) {
-						icon = app.icon
-					}
-
-					if ( 'undefined' === typeof app || ! app.shouldShowInAppList ) {
-						return
-					}
+				{ apps.map( ( app, i ) => {
+					const { handle, icon, label, accent } = app
 
 					const location = {
 						pathname: `/${handle}`,
@@ -112,8 +103,8 @@ registerSection( 'fl-home-apps', {
 					const style = {
 						color: 'var(--fl-asst-secondary-surface-background)'
 					}
-					if ( 'undefined' !== typeof app.accent ) {
-						style['--fl-asst-accent-color'] = app.accent.color
+					if ( 'undefined' !== typeof accent ) {
+						style['--fl-asst-accent-color'] = accent.color
 						style.color = 'var(--fl-asst-accent-color)'
 					}
 
@@ -121,10 +112,6 @@ registerSection( 'fl-home-apps', {
 					if ( ! didSetFocusRef ) {
 						ref = focusRef
 						didSetFocusRef = true
-					}
-
-					const iconProps = {
-						context: 'grid',
 					}
 
 					return (
@@ -136,9 +123,9 @@ registerSection( 'fl-home-apps', {
 							appearance="transparent"
 						>
 							<div className="fl-asst-app-icon" style={ style }>
-								{ 'function' === typeof icon && icon( iconProps ) }
+								{ 'function' === typeof icon && icon({ context: 'grid' }) }
 							</div>
-							<label>{app.label}</label>
+							<label>{label}</label>
 						</Button>
 					)
 				} )}
