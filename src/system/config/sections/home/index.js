@@ -123,7 +123,7 @@ registerSection( 'fl-home-apps', {
 							appearance="transparent"
 						>
 							<div className="fl-asst-app-icon" style={ style }>
-								{ 'function' === typeof icon && icon({ context: 'grid' }) }
+								{ 'function' === typeof icon && icon( { context: 'grid' } ) }
 							</div>
 							<label>{label}</label>
 						</Button>
