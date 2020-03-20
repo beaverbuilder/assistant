@@ -47,7 +47,6 @@ const Attachments = ( {
 		'fl-asst-attachment-list': true,
 	}, className )
 
-
 	return (
 		<MediaDropUploader>
 			<List.WordPress
@@ -189,7 +188,7 @@ const GridItem = ( { item, extras } ) => {
 
 	// Filter down to just the smaller sizes for srcset
 	const smallSizes = {}
-	const allow = [ 'thumbnail', 'medium', 'large' ]
+	const allow = [ 'thumbnail', 'medium' ]
 	for ( let key in sizes ) {
 		if ( allow.includes( key ) ) {
 			smallSizes[key] = sizes[key]
@@ -218,21 +217,17 @@ const GridItem = ( { item, extras } ) => {
 						alt={ alt }
 						title={ title }
 						loading="lazy"
-						style={ {
-							height: '100%',
-							width: '100%',
-							objectPosition: 'pdf' === item.subtype ? 'top center' : null
-						} }
 						height={ 157.5 }
 						width={ 157.5 }
 					/>
 				)}
+
 				{ 'video' === type && <Image.Video /> }
 				{ 'audio' === type && <Image.Audio /> }
-
 				{ 'application' === type && 'pdf' !== item.subtype && (
 					<Image.Doc />
 				)}
+
 				{ item.title && ( <div className="fl-asst-attachment-item-badge">
 					<span>{item.title}</span>
 				</div> )}

@@ -6,7 +6,7 @@ import { getWpRest } from 'assistant/utils/wordpress'
 import { Color, Control, Page, Table, Button, Icon, Nav } from 'assistant/ui'
 import './style.scss'
 
-const App = ({ match }) => {
+const App = ( { match } ) => {
 	return (
 		<Nav.Switch>
 			<Nav.Route exact path={ `${match.url}/` } component={ Main } />

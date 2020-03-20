@@ -16,7 +16,6 @@ const Main = ( { match } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
 
-
 	const MediaFilter = () => {
 
 		const types = {
