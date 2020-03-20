@@ -16,7 +16,7 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
-    "@beaverbuilder/fluid": "^0.2.5",
+    "@beaverbuilder/fluid": "^0.2.6",
     "@wordpress/autop": "^2.5.1",
     "@wordpress/i18n": "^3.7.0",
     "axios": "0.18.1",

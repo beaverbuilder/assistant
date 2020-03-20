@@ -14,14 +14,14 @@ const AppMain = () => {
 	const { window, isAppHidden } = useSystemState()
 	const side = window.origin[0]
 
-	const classes = classname({
-		'fl-asst-main' : true,
-		'fl-asst-main-sidebar-only' : isAppHidden,
-	})
+	const classes = classname( {
+		'fl-asst-main': true,
+		'fl-asst-main-sidebar-only': isAppHidden,
+	} )
 
 	return (
 		<div
-			className={classes}
+			className={ classes }
 			style={ {
 				display: 'flex',
 				flexDirection: side ? 'row-reverse' : 'row',

@@ -2,38 +2,42 @@ import { useSystemState, getSystemActions } from '../'
 import { Icon } from 'ui'
 
 const defaults = {
-    maxCount: null,
+	maxCount: null,
 }
 
 const useAppList = ( config = defaults ) => {
-    const { maxCount } = config
+	const { maxCount } = config
 	const { apps, appOrder } = useSystemState()
-    const { setAppPosition } = getSystemActions()
+	const { setAppPosition } = getSystemActions()
 	let output = []
 
 	appOrder.map( ( handle, i ) => {
 		const app = apps[handle]
 
-		if ( 'Undefined' === typeof app || ! app.shouldShowInAppList ) return
+		if ( 'undefined' === typeof app || ! app.shouldShowInAppList ) {
+			return
+		}
 
-		if ( maxCount && output.length >= maxCount ) return
+		if ( maxCount && output.length >= maxCount ) {
+			return
+		}
 
-		output.push({
+		output.push( {
 			...app,
 			handle: app.app,
-            icon: app.icon ? app.icon : Icon.DefaultApp,
-            position: i,
-            isFirst: false,
-            isLast: false,
-            moveUp: () => setAppPosition( handle, i - 1 ),
-            moveDown: () => setAppPosition( handle, i + 1 )
-		})
-	})
+			icon: app.icon ? app.icon : Icon.DefaultApp,
+			position: i,
+			isFirst: false,
+			isLast: false,
+			moveUp: () => setAppPosition( handle, i - 1 ),
+			moveDown: () => setAppPosition( handle, i + 1 )
+		} )
+	} )
 
-    if ( output.length > 0 ) {
-        output[0].isFirst = true
-        output[ output.length - 1 ].isLast = true
-    }
+	if ( 0 < output.length ) {
+		output[0].isFirst = true
+		output[ output.length - 1 ].isLast = true
+	}
 
 	return output
 }

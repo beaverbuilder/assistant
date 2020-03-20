@@ -36,9 +36,9 @@ export const Assistant = () => {
 
 	const onHistoryChanged = history => setHistory( history.index, history.entries )
 
-	const windowClasses = classname({
-		'fl-asst-window-sidebar-only' : isAppHidden,
-	})
+	const windowClasses = classname( {
+		'fl-asst-window-sidebar-only': isAppHidden,
+	} )
 
 	return (
 		<FLUID_Root
@@ -48,7 +48,7 @@ export const Assistant = () => {
 		>
 			<App.Provider>
 				<Appearance brightness={ brightness }>
-					<MainWindow className={windowClasses}>
+					<MainWindow className={ windowClasses }>
 						<AppMain />
 					</MainWindow>
 				</Appearance>
@@ -101,7 +101,7 @@ const MainWindow = ( { children, ...rest } ) => {
 			onChange={ onChanged }
 			shouldShowLabels={ shouldShowLabels }
 			shouldDisplayButton={ '' === hiddenAppearance }
-			{...rest}
+			{ ...rest }
 		>
 			<Error.Boundary alternate={ WindowError }>
 				{children}
