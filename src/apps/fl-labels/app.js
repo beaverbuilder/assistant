@@ -3,10 +3,18 @@ import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { Color, Control, Page, Table, Button, Icon } from 'assistant/ui'
+import { Color, Control, Page, Table, Button, Icon, Nav } from 'assistant/ui'
 import './style.scss'
 
-export const App = () => {
+const App = ({ match }) => {
+	return (
+		<Nav.Switch>
+			<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+		</Nav.Switch>
+	)
+}
+
+const Main = () => {
 	const [ loading, setLoading ] = useState( true )
 	const [ labels, setLabels ] = useState( [] )
 	const [ editingLabel, setEditingLabel ] = useState( null )
@@ -241,3 +249,5 @@ export const App = () => {
 		</Page>
 	)
 }
+
+export default App
