@@ -218,9 +218,9 @@ const Main = () => {
 				className='fl-asst-edit-labels'
 				contentStyle={ { paddingTop: 0 } }
 			>
-				<div>
+				<p style={{ marginTop: 0 }}>
 					{ __( 'Labels allow you to mark posts for organization and collaborate with other users. Below you can add more labels and change the name of existing ones.' ) }
-				</div>
+				</p>
 				{ loading &&
 					<InnerSection>{ __( 'Loading...' ) }</InnerSection>
 				}
@@ -233,6 +233,7 @@ const Main = () => {
 			<Page.Section
 				label={ __( 'Add New Label' ) }
 				className='fl-asst-add-label'
+				style={{ marginTop: 'auto' }}
 			>
 				<input
 					type='text'

@@ -4,6 +4,7 @@
 		align-items: center;
 		display: flex;
 		flex-wrap: wrap;
+		min-height: 50px;
 
 		&:first-child {
 			flex: 0;
