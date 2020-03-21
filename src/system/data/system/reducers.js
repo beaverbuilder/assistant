@@ -262,7 +262,7 @@ export const sections = ( state = {}, action ) => {
 	}
 }
 
-export const isAppHidden = ( state = false, action ) => {
+export const isAppHidden = ( state = true, action ) => {
 	switch ( action.type ) {
 	case 'SET_IS_APP_HIDDEN':
 		return action.value ? true : false
