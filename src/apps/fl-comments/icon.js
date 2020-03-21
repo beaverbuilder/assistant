@@ -5,8 +5,8 @@ const CommentsIcon = ( { context } ) => {
 
 	if ( 'sidebar' === context ) {
 		return (
-			<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M1 4.18421C1 2.70176 2.20883 1.5 3.7 1.5H16.3C17.7912 1.5 19 2.70176 19 4.18421V11.1316C19 12.614 17.7912 13.8158 16.3 13.8158H12L6 18.5V13.8158H3.7C2.20883 13.8158 1 12.614 1 11.1316V4.18421Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+			<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M19 4.5V3.68421C19 2.20176 17.7912 1 16.3 1H8M19 8.5V10.8158C19 12.2982 17.7912 13.5 16.3 13.5H12L6 18V13.5H3.7C2.20883 13.5 1 12.2982 1 10.8158V3.68421C1 2.20176 2.20883 1 3.7 1H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 			</svg>
 		)
 	}
