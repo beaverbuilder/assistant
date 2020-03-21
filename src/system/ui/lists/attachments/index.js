@@ -203,7 +203,6 @@ const GridItem = ( { item, extras } ) => {
 				left: 0,
 				width: '100%',
 				height: '100%',
-				background: 'var(--fluid-primary-background)',
 				color: 'var(--fluid-primary-color)',
 				display: 'flex',
 				flexDirection: 'column',

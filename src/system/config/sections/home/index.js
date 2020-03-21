@@ -100,9 +100,7 @@ registerSection( 'fl-home-apps', {
 						state: app,
 					}
 
-					const style = {
-						color: 'var(--fl-asst-secondary-surface-background)'
-					}
+					const style = {}
 					if ( 'undefined' !== typeof accent ) {
 						style['--fl-asst-accent-color'] = accent.color
 						style.color = 'var(--fl-asst-accent-color)'
