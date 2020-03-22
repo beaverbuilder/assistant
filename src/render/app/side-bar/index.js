@@ -15,7 +15,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 		setWindow,
 		setIsAppHidden
 	} = getSystemActions()
-	const isVeryCompactHeight = useMedia({ maxHeight: 400 })
+	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
 
 
 	const getMaxCount = () => {
@@ -63,11 +63,11 @@ const Sidebar = ( { edge = 'right' } ) => {
 	}
 
 	const classes = classname( 'fl-asst-sidebar', {
-		'fl-asst-sidebar-compact' : isCompactHeight
+		'fl-asst-sidebar-compact': isCompactHeight
 	} )
 
 	return (
-		<div className={classes}
+		<div className={ classes }
 			style={ {
 				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-box-background)' }
 			}
