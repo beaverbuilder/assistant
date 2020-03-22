@@ -14,7 +14,8 @@
         .fl-asst-sidebar {
             flex-direction: row-reverse;
             padding: var(--fluid-sm-space);
-            flex-basis: 50px;
+            margin-bottom: env(safe-area-inset-bottom);
+            flex-basis: 60px;
         }
         .fl-asst-sidebar-cell {
             flex-direction: row;
@@ -55,6 +56,28 @@
 
         .fluid-button {
             height: 50px;
+        }
+    }
+
+    .fl-asst-sidebar-compact {
+        .fl-asst-sidebar-cell {
+
+            &.fl-asst-sidebar-cell-middle {
+                margin: 0;
+                flex: 1 1 auto;
+                padding: var(--fluid-sm-space);
+            }
+
+            .fluid-button {
+                height: auto;
+                min-height: 36px;
+                flex: 1 1 auto;
+            }
+        }
+    }
+    @media screen and ( max-height: 500px ) {
+        .fl-asst-sidebar-cell.fl-asst-sidebar-cell-middle {
+            padding: var(--fluid-sm-space);
         }
     }
 

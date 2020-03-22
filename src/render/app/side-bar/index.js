@@ -1,21 +1,32 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Button, Icon, Env } from 'assistant/ui'
 import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
+import { useMedia } from 'assistant/utils/react'
 import './style.scss'
 
 const Sidebar = ( { edge = 'right' } ) => {
 	const { window, isAppHidden  } = useSystemState()
-	const { isMobile, application } = Env.useEnvironment()
+	const { isMobile, isCompactHeight, application } = Env.useEnvironment()
 	const {
 		toggleIsShowingUI,
 		setWindow,
 		setIsAppHidden
 	} = getSystemActions()
+	const isVeryCompactHeight = useMedia({ maxHeight: 400 })
 
 
-	const getMaxCount = () => isMobile ? 3 : 5
+	const getMaxCount = () => {
+		if ( isVeryCompactHeight ) {
+			return 3
+		}
+		if ( isCompactHeight ) {
+			return 4
+		}
+		return isMobile ? 3 : 5
+	}
 	const apps = useAppList( { maxCount: getMaxCount } )
 	const { pathname } = useLocation()
 	const history = useHistory()
@@ -51,9 +62,12 @@ const Sidebar = ( { edge = 'right' } ) => {
 		}
 	}
 
+	const classes = classname( 'fl-asst-sidebar', {
+		'fl-asst-sidebar-compact' : isCompactHeight
+	} )
+
 	return (
-		<div
-			className="fl-asst-sidebar"
+		<div className={classes}
 			style={ {
 				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-box-background)' }
 			}

@@ -62,6 +62,15 @@
             border-radius: 12px;
             height: auto;
         }
+        &.fl-asst-window-is-mobile {
+            height: auto;
+            margin-top: auto;
+            min-height: 0;
+
+            .fl-asst-window-grab-bar {
+                display: none !important;
+            }
+        }
     }
 
     .fl-asst-window-layer-is-dragging {
