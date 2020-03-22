@@ -134,6 +134,7 @@ class Site {
 			'icon' => get_site_icon_url( 120, $default_icon ),
 			'title' => get_bloginfo('name'),
 			'description' => get_bloginfo('description'),
+			'homeURL' => home_url(),
 		];
 
 		return $data;

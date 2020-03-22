@@ -10,6 +10,7 @@ const useAppList = ( config = defaults ) => {
 	const { apps, appOrder } = useSystemState()
 	const { setAppPosition } = getSystemActions()
 	let output = []
+	let count = 'function' === typeof maxCount ? maxCount() : maxCount
 
 	appOrder.map( ( handle, i ) => {
 		const app = apps[handle]
@@ -18,7 +19,7 @@ const useAppList = ( config = defaults ) => {
 			return
 		}
 
-		if ( maxCount && output.length >= maxCount ) {
+		if ( count && output.length >= count ) {
 			return
 		}
 

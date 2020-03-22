@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState, useAppList } from 'data'
-import { Button, Icon, App } from 'ui'
+import { Button, Icon, App, List } from 'ui'
 import { __ } from '@wordpress/i18n'
 import { useInitialFocus } from 'utils/react'
 import './style.scss'
@@ -79,6 +79,7 @@ registerSection( 'fl-home-currently-viewing', {
 	},
 } )
 
+/*
 registerSection( 'fl-home-apps', {
 	label: __( 'Apps' ),
 	location: {
@@ -130,4 +131,39 @@ registerSection( 'fl-home-apps', {
 			</div>
 		)
 	},
+} )
+*/
+
+registerSection( 'fl-recent-posts', {
+	label: __( 'Recent Posts' ),
+	location: {
+		type: 'home',
+	},
+	padX: false,
+	render: () => {
+		const handle = 'fl-content'
+		return (
+			<List.Posts
+				query={ {
+					post_type: 'post',
+					posts_per_page: 5
+				} }
+				paginate={ false }
+				getItemProps={ ( item, defaultProps ) => {
+					if ( item.id ) {
+						return {
+							...defaultProps,
+							description: null,
+							thumbnailSize: 'sm',
+							to: {
+								pathname: `/${handle}/post/${item.id}`,
+								state: { item }
+							},
+						}
+					}
+					return defaultProps
+				} }
+			/>
+		)
+	}
 } )

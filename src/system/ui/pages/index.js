@@ -1,7 +1,7 @@
 import React, { useContext, createContext } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { Page as FLUID_Page } from 'fluid/ui'
+import { Page as FLUIDPage } from 'fluid/ui'
 import { useSystemState } from 'data'
 import { Nav, Icon, App } from 'ui'
 
@@ -24,7 +24,21 @@ import { PageNotFound } from './not-found'
 
 import './style.scss'
 
-const Page = FLUID_Page
+const Page = ( { className, ...rest } ) => {
+	const { isAppRoot } = App.useApp()
+	const classes = classname( {
+		'is-app-root': isAppRoot,
+	}, className )
+
+	return (
+		<FLUIDPage
+			className={ classes }
+			{ ...rest }
+		/>
+	)
+}
+
+Page.Section = FLUIDPage.Section
 
 
 /* ------ Page System Setup ------ */

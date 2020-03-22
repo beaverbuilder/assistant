@@ -10,6 +10,7 @@ import {
 	getUpdaterActions,
 } from 'assistant/data'
 import { defaultState } from './'
+import AppIcon from './icon'
 
 export const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
@@ -118,6 +119,8 @@ const UpdatesMain = () => {
 	return (
 		<Page
 			title={ __( 'Updates' ) }
+			icon={ <AppIcon context="sidebar" /> }
+			shouldShowBackButton={ false }
 			actions={ <HeaderActions /> }
 			padY={ false }
 			shouldScroll={ false }

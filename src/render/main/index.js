@@ -12,6 +12,7 @@ import {
 	Error,
 	Page,
 	Layout,
+	Env,
 } from 'assistant/ui'
 
 const getRouterProps = history => {
@@ -46,13 +47,15 @@ export const Assistant = () => {
 			onHistoryChanged={ onHistoryChanged }
 			colorScheme={ brightness }
 		>
-			<App.Provider>
-				<Appearance brightness={ brightness }>
-					<MainWindow className={ windowClasses }>
-						<AppMain />
-					</MainWindow>
-				</Appearance>
-			</App.Provider>
+			<Env.Provider>
+				<App.Provider>
+					<Appearance brightness={ brightness }>
+						<MainWindow className={ windowClasses }>
+							<AppMain />
+						</MainWindow>
+					</Appearance>
+				</App.Provider>
+			</Env.Provider>
 		</FLUID_Root>
 	)
 }
@@ -61,11 +64,13 @@ export const Assistant = () => {
 export const AssistantCore = () => {
 	const { appearance } = useSystemState()
 	return (
-		<App.Provider environment='beaver-builder'>
-			<Appearance brightness={ appearance.brightness }>
-				<AppMain />
-			</Appearance>
-		</App.Provider>
+		<Env.Provider application='beaver-builder'>
+			<App.Provider environment='beaver-builder'>
+				<Appearance brightness={ appearance.brightness }>
+					<AppMain />
+				</Appearance>
+			</App.Provider>
+		</Env.Provider>
 	)
 }
 

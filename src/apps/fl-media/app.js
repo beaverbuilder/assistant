@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Page, Nav, List, Filter } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
 import { defaultState } from './'
+import AppIcon from './icon'
 import './style.scss'
 
 export const MediaApp = ( { match } ) => (
@@ -83,7 +84,14 @@ const Main = ( { match } ) => {
 	}
 
 	return (
-		<Page title={ __( 'Media' ) } padX={ false } padY={ false } shouldScroll={ false }>
+		<Page
+			title={ __( 'Media' ) }
+			icon={ <AppIcon context="sidebar" /> }
+			shouldShowBackButton={ false }
+			padX={ false }
+			padY={ false }
+			shouldScroll={ false }
+		>
 			<List.Attachments
 				key={ listStyle }
 				baseURL={ match.url }

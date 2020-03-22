@@ -13,6 +13,7 @@ import { Control, Filter } from './controls'
 import { Form } from './forms'
 import { Table } from './table'
 import { MediaDropUploader } from './upload'
+import Env from './env'
 
 // Export for use inside system bundle - import from 'ui'
 export * from './app'
@@ -28,7 +29,7 @@ export * from './controls'
 export * from './forms'
 export * from './table'
 export * from './upload'
-export { Layout }
+export { Layout, Env }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
 export const api = {
@@ -45,6 +46,7 @@ export const api = {
 	Layout,
 	Page,
 	Error,
+	Env,
 	Nav,
 	Table,
 	MediaDropUploader,

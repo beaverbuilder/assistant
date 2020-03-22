@@ -11,8 +11,12 @@ const ManageScreen = () => {
 	const goToRoot = () => history.go( -history.length )
 
 	return (
-		<Page title={ __( 'Manage Screen' ) }>
-			<Page.Section label={ __( 'App Order' ) }>
+		<Page
+			title={ __( 'Apps' ) }
+			shouldShowBackButton={ false }
+			icon={ <Icon.Apps context="sidebar" /> }
+		>
+			<Page.Section>
 
 				<p style={ { marginTop: 0 } }>{__( 'You can reorder the apps below. The top 5 will appear in the sidebar for quick access.' )}</p>
 

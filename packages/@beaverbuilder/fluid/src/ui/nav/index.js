@@ -84,6 +84,7 @@ Nav.BackButton = props => {
     const history = useHistory()
     return (
         <Button
+            className="fluid-back-button"
             appearance="transparent"
             onClick={ history.goBack }
             {...props}

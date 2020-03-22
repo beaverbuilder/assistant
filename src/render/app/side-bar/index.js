@@ -1,28 +1,34 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { useLocation, useHistory } from 'react-router-dom'
-import { App, Button, Icon } from 'assistant/ui'
+import { Button, Icon, Env } from 'assistant/ui'
 import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
 import './style.scss'
 
 const Sidebar = ( { edge = 'right' } ) => {
 	const { window, isAppHidden  } = useSystemState()
-	const { environment } = useContext( App.Context )
+	const { isMobile, application } = Env.useEnvironment()
 	const {
 		toggleIsShowingUI,
 		setWindow,
 		setIsAppHidden
 	} = getSystemActions()
-	const _apps = useAppList( { maxCount: 5 } )
+
+
+	const getMaxCount = () => isMobile ? 3 : 5
+	const apps = useAppList( { maxCount: getMaxCount } )
 	const { pathname } = useLocation()
 	const history = useHistory()
 
-	const isBeaverBuilder = 'beaver-builder' === environment
+	const isBeaverBuilder = 'beaver-builder' === application
 	const isRoot = 0 === history.index
 	const isManage = pathname.startsWith( '/fl-manage' )
 	const toggleIsAppHidden = () => setIsAppHidden( ! isAppHidden )
 
-	const edgeProp = 'left' === edge ? 'borderRight' : 'borderLeft'
+	let edgeProp = 'left' === edge ? 'borderRight' : 'borderLeft'
+	if ( isMobile ) {
+		edgeProp = 'borderTop'
+	}
 
 	const toggleWindowSize = () => {
 		const sizes = [ 'mini', 'normal' ]
@@ -49,11 +55,6 @@ const Sidebar = ( { edge = 'right' } ) => {
 		<div
 			className="fl-asst-sidebar"
 			style={ {
-				flexGrow: 0,
-				flexShrink: 0,
-				flexBasis: isAppHidden ? 58 : 60, /* account for border */
-				display: 'flex',
-				flexDirection: 'column',
 				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-box-background)' }
 			}
 		>
@@ -73,7 +74,6 @@ const Sidebar = ( { edge = 'right' } ) => {
 
 			<div
 				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
-				style={ { flex: '0 0 auto', margin: 'auto 0' } }
 			>
 				<Button
 					appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
@@ -84,7 +84,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 					<Icon.Home />
 				</Button>
 
-				{ _apps.map( ( app, i ) => {
+				{ apps.map( ( app, i ) => {
 					const { label, handle, icon } = app
 
 					const location = {
@@ -99,7 +99,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 							status={ ( isSelected && ! isAppHidden ) ? 'primary' : 'normal' }
 							onClick={ () => navOrHideApp( isSelected, () => history.push( location ) ) }
 							title={ label }
-						>{ icon( { context: 'sidebar' } ) }</Button>
+						>{ icon( { context: 'sidebar', isSelected } ) }</Button>
 					)
 				} )}
 
@@ -113,7 +113,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 				</Button>
 			</div>
 
-			{ ! isBeaverBuilder && (
+			{ ! isBeaverBuilder && ! isMobile && (
 				<div className="fl-asst-sidebar-cell">
 					<Button
 						appearance="transparent"

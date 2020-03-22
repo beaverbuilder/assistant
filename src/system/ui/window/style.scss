@@ -46,6 +46,14 @@
         }
     }
 
+    .fl-asst-window.fl-asst-window-is-mobile {
+        width: 100vw;
+        height: 100vh;
+        max-width: none !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+    }
+
     .fl-asst-window-sidebar-only .fl-asst-window {
         --fl-asst-window-size: calc( var(--fl-asst-side-toolbar-width) - 2px ); // Accounts for border width
         box-shadow: 0 0 0 3px rgba(0,0,0,.05);
@@ -53,10 +61,6 @@
         &.fl-asst-window-mini {
             border-radius: 12px;
             height: auto;
-        }
-
-        .fl-asst-window-grab-bar {
-            display: none;
         }
     }
 

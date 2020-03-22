@@ -1,6 +1,7 @@
 import React from 'react'
 import { Page, Nav } from 'assistant/ui'
 import { AllTab, CommentTypeTab } from './tabs'
+import AppIcon from './icon'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
 
@@ -72,6 +73,8 @@ const Main = () => {
 			padX={ false }
 			padY={ false }
 			title={ __( 'Comments' ) }
+			icon={ <AppIcon context="sidebar" /> }
+			shouldShowBackButton={ false }
 			header={ <Nav.Tabs tabs={ tabs } /> }
 			shouldScroll={ false }
 		>

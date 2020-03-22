@@ -16,7 +16,7 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
-    "@beaverbuilder/fluid": "^0.2.6",
+    "@beaverbuilder/fluid": "^0.2.7",
     "@wordpress/autop": "^2.5.1",
     "@wordpress/i18n": "^3.7.0",
     "axios": "0.18.1",
@@ -35,7 +35,8 @@
     "react-redux": "^6.0.1",
     "resize-observer-polyfill": "^1.5.1",
     "striptags": "^3.1.1",
-    "ua-parser-js": "^0.7.21"
+    "ua-parser-js": "^0.7.21",
+    "use-media": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",

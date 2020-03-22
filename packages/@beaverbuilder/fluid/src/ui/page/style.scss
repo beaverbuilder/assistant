@@ -21,7 +21,7 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-        align-items: center;
+        align-items: stretch;
         padding: 5px;
         padding-bottom: 3px;
     }
@@ -40,7 +40,7 @@
     }
 
     .fluid-page {
-        --fluid-top-inset: 0;
+        --fluid-top-inset: 0px;
 
         position: relative;
         flex: 1 1 auto;
@@ -63,8 +63,15 @@
             z-index: 9;
         }
 
+        .fluid-page-top-toolbar {
+            min-height: 60px;
+        }
+
         .fluid-page-actions {
             margin-left: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
 
         .fluid-page-toolbar-content {
@@ -79,6 +86,16 @@
             font-weight: 600;
         }
 
+        .fluid-page-title-icon {
+            flex: 0 0 auto;
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
         .fluid-page-headline {
             font-size: 24px;
             font-weight: 600;
@@ -91,6 +108,10 @@
             flex-direction: column;
             background: var(--fluid-background);
             z-index: 1;
+
+            .fluid-page-top-content {
+                border-bottom: 2px solid var(--fluid-box-background);
+            }
         }
     }
     .fluid-page-footer {

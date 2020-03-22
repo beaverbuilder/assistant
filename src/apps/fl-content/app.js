@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 import { Page, Nav, Icon, Button } from 'assistant/ui'
 import { SummaryTab, PostTypeTab } from './tabs'
+import AppIcon from './icon'
 import './style.scss'
 
 export const Content = ( { match } ) => (
@@ -71,10 +72,12 @@ const Main = () => {
 	return (
 		<Page
 			title={ __( 'Content' ) }
+			icon={ <AppIcon context="sidebar" /> }
 			padY={ false }
 			header={ <Header /> }
 			actions={ <Actions /> }
 			shouldScroll={ false }
+			shouldShowBackButton={ false }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>

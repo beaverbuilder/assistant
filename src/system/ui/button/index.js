@@ -101,7 +101,7 @@ Button.Group = ( {
 	const props = {
 		...rest,
 		className: classes,
-		role: 'group',
+		role: rest.role ? rest.role : 'group',
 		ref: wrapRef,
 	}
 

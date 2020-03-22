@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { Color, Control, Page, Table, Button, Icon, Nav } from 'assistant/ui'
+import AppIcon from './icon'
 import './style.scss'
 
 const App = ( { match } ) => {
@@ -213,12 +214,16 @@ const Main = () => {
 	}
 
 	return (
-		<Page title={ __( 'Manage Labels' ) }>
+		<Page
+			title={ __( 'Labels' ) }
+			icon={ <AppIcon context="sidebar" /> }
+			shouldShowBackButton={ false }
+		>
 			<Page.Section
 				className='fl-asst-edit-labels'
 				contentStyle={ { paddingTop: 0 } }
 			>
-				<p style={{ marginTop: 0 }}>
+				<p style={ { marginTop: 0 } }>
 					{ __( 'Labels allow you to mark posts for organization and collaborate with other users. Below you can add more labels and change the name of existing ones.' ) }
 				</p>
 				{ loading &&
@@ -233,7 +238,7 @@ const Main = () => {
 			<Page.Section
 				label={ __( 'Add New Label' ) }
 				className='fl-asst-add-label'
-				style={{ marginTop: 'auto' }}
+				style={ { marginTop: 'auto' } }
 			>
 				<input
 					type='text'
