@@ -1,5 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import { Redirect } from 'react-router-dom'
 import { getSystemConfig } from 'assistant/data'
 import { Page, Nav, Icon, Button } from 'assistant/ui'
 import { SummaryTab, PostTypeTab } from './tabs'
@@ -8,7 +9,9 @@ import './style.scss'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}` } component={ Main } />
+		<Nav.Route exact path={ `${match.url}` }>
+			<Redirect to={{ pathname: `${match.url}/tab/post` }} />
+		</Nav.Route>
 		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
 		<Nav.Route path={ `${match.url}/post/new` } component={ Page.CreatePost } />
 		<Nav.Route path={ `${match.url}/post/:id` } component={ Page.Post } />
@@ -19,15 +22,7 @@ const Main = () => {
 	const { contentTypes } = getSystemConfig()
 
 	const getTabs = () => {
-		let tabs = [
-			{
-				handle: 'summary',
-				label: __( 'Summary' ),
-				path: '/fl-content',
-				component: SummaryTab,
-				exact: true,
-			}
-		]
+		let tabs = []
 		Object.keys( contentTypes ).map( key => {
 
 			const type = contentTypes[key]
@@ -77,7 +72,7 @@ const Main = () => {
 			header={ <Header /> }
 			actions={ <Actions /> }
 			shouldScroll={ false }
-			shouldShowBackButton={ false }
+			shouldShowBackButton={ true }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
