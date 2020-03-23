@@ -6,6 +6,7 @@
         display: flex;
         flex-direction: row;
         margin-bottom: 2px;
+        overflow: hidden;
 
         .fl-asst-site-icon {
             flex: 0 0 var(--fl-asst-site-icon-size);
@@ -21,11 +22,22 @@
             flex-direction: column;
             padding-left: var(--fluid-med-space);
             justify-content: center;
+            max-width: 100%;
+            min-width: 0;
 
             .fl-asst-site-title {
-                font-size: 20px;
+                font-size: 18px;
                 font-weight: 600;
-                line-height: 1.1;
+            }
+            .fl-asst-site-description {
+                font-size: 13px;
+            }
+            .fl-asst-site-title,
+            .fl-asst-site-description {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                //white-space: nowrap;
             }
         }
     }

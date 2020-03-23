@@ -51,7 +51,6 @@ registerSection( 'fl-home-currently-viewing', {
 	location: {
 		type: 'home',
 	},
-	padY: false,
 	render: () => {
 		const { currentPageView } = getSystemConfig()
 		const { name, intro, actions } = currentPageView

@@ -6,16 +6,18 @@ import './style.scss'
 const Header = () => {
 	const { currentPageView } = getSystemConfig()
 	const { site } = currentPageView
-	const { icon, title, description, homeURL } = site
+	const { icon, title, description } = site
 
 	return (
 		<div className="fl-asst-site-identity">
-			<a className="fl-asst-site-icon" href={ homeURL }>
+			<span className="fl-asst-site-icon">
 				<img src={ icon } />
-			</a>
+			</span>
 			<span className="fl-asst-site-title-area">
 				<span className="fl-asst-site-title">{title}</span>
-				{ description && <span>{description}</span> }
+				{ description && (
+					<span className="fl-asst-site-description">{description}</span>
+				) }
 			</span>
 		</div>
 	)
