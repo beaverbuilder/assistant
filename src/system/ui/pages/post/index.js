@@ -208,7 +208,7 @@ export const Post = ( { location, match, history } ) => {
 						},
 						featureimg: {
 							id: 'post_feature_img',
-							src: featureThumbnail.url,
+							src: featureThumbnail && featureThumbnail.url,
 							srcSet: getFeaturedImageSrcSet(),
 							isVisible: featureThumbnail,
 							component: 'image',

@@ -3,14 +3,14 @@ import { __ } from '@wordpress/i18n'
 import { Redirect } from 'react-router-dom'
 import { getSystemConfig } from 'assistant/data'
 import { Page, Nav, Icon, Button } from 'assistant/ui'
-import { SummaryTab, PostTypeTab } from './tabs'
+import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
 import './style.scss'
 
 export const Content = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}` }>
-			<Redirect to={{ pathname: `${match.url}/tab/post` }} />
+			<Redirect to={ { pathname: `${match.url}/tab/post` } } />
 		</Nav.Route>
 		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
 		<Nav.Route path={ `${match.url}/post/new` } component={ Page.CreatePost } />
@@ -64,6 +64,13 @@ const Main = () => {
 
 	const tabs = getTabs()
 
+	const onLoad = () => {
+		const item = document.querySelector( '.fl-asst-filter .fluid-button' )
+		if ( item ) {
+			item.focus()
+		}
+	}
+
 	return (
 		<Page
 			title={ __( 'Content' ) }
@@ -72,7 +79,9 @@ const Main = () => {
 			header={ <Header /> }
 			actions={ <Actions /> }
 			shouldScroll={ false }
-			shouldShowBackButton={ true }
+			shouldShowBackButton={ false }
+			showAsRoot={ true }
+			onLoad={ onLoad }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>

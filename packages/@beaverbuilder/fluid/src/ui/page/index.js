@@ -6,8 +6,6 @@ import Error from '../error'
 import Layout from '../layout'
 import './style.scss'
 
-const focusFirstElement = () => {}
-
 const Page = ({
     children,
     className,
@@ -18,7 +16,7 @@ const Page = ({
     actions,
     header,
     footer,
-    onLoad = focusFirstElement,
+    onLoad = () => {},
     shouldScroll = true,
     shouldShowBackButton = val => val,
     insetTop = true,

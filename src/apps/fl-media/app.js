@@ -83,6 +83,13 @@ const Main = ( { match } ) => {
 		)
 	}
 
+	const onLoad = () => {
+		const item = document.querySelector( '.fl-asst-filter .fluid-button' )
+		if ( item ) {
+			item.focus()
+		}
+	}
+
 	return (
 		<Page
 			title={ __( 'Media' ) }
@@ -91,6 +98,7 @@ const Main = ( { match } ) => {
 			padX={ false }
 			padY={ false }
 			shouldScroll={ false }
+			onLoad={ onLoad }
 		>
 			<List.Attachments
 				key={ listStyle }
