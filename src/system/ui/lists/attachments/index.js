@@ -208,6 +208,7 @@ const GridItem = ( { item, extras } ) => {
 				flexDirection: 'column',
 				justifyContent: 'center',
 				alignItems: 'center',
+				opacity: ( item.isTrashed || item.isTrashing ) ? .5 : 1
 			} }>
 				{ ( 'image' === type || 'pdf' === item.subtype ) && (
 					<img
