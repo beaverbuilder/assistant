@@ -139,22 +139,25 @@ Icon.Search = () => {
 Icon.Search.displayName = 'Icon.Search'
 
 Icon.Brightness = () => (
-	<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-		<g stroke="none" strokeWidth="2" fill="currentColor" fillRule="evenodd">
-			<path d="M7.00294406,4 C8.63984298,4 10,5.35749265 10,6.9970617 C10,8.63663075 8.63984298,10 7.00294406,10 C5.36015702,10 4,8.63663075 4,6.9970617 C4,5.35749265 5.36015702,4 7.00294406,4 Z" id="Center" stroke="currentColor" fill="none" fillRule="nonzero"></path>
-
-			<circle cx="7" cy="1" r="1"></circle>
-			<circle cx="7" cy="13" r="1"></circle>
-			<circle cx="1" cy="7" r="1"></circle>
-			<circle cx="13" cy="7" r="1"></circle>
-			<circle transform="translate(2.757359, 2.757359) rotate(-45.000000) translate(-2.757359, -2.757359) " cx="2.75735931" cy="2.75735931" r="1"></circle>
-			<circle transform="translate(11.242641, 11.242641) rotate(-45.000000) translate(-11.242641, -11.242641) " cx="11.2426407" cy="11.2426407" r="1"></circle>
-			<circle transform="translate(2.757359, 11.242641) rotate(-45.000000) translate(-2.757359, -11.242641) " cx="2.75735931" cy="11.2426407" r="1"></circle>
-			<circle transform="translate(11.242641, 2.757359) rotate(-45.000000) translate(-11.242641, -2.757359) " cx="11.2426407" cy="2.75735931" r="1"></circle>
-		</g>
+	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M10.0029 7C11.6398 7 13 8.35749 13 9.99706C13 11.6366 11.6398 13 10.0029 13C8.36016 13 7 11.6366 7 9.99706C7 8.35749 8.36016 7 10.0029 7Z" stroke="currentColor" strokeWidth="2"/>
+		<rect x="9" y="1" width="2" height="3" rx="1" fill="currentColor"/>
+		<rect x="15.6567" y="2.92896" width="2" height="3" rx="1" transform="rotate(45 15.6567 2.92896)" fill="currentColor"/>
+		<rect x="9" y="16" width="2" height="3" rx="1" fill="currentColor"/>
+		<rect x="5.05029" y="13.5356" width="2" height="3" rx="1" transform="rotate(45 5.05029 13.5356)" fill="currentColor"/>
+		<rect x="16" y="9" width="3" height="2" rx="1" fill="currentColor"/>
+		<rect x="14.9497" y="13.5356" width="3" height="2" rx="1" transform="rotate(45 14.9497 13.5356)" fill="currentColor"/>
+		<rect x="1" y="9" width="3" height="2" rx="1" fill="currentColor"/>
+		<rect x="4.34326" y="2.92896" width="3" height="2" rx="1" transform="rotate(45 4.34326 2.92896)" fill="currentColor"/>
 	</svg>
 )
 Icon.Brightness.displayName = 'Icon.Brightness'
+
+Icon.Moon = () => (
+	<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M12.5454 11.8065C13.3007 11.8065 14.05 11.6973 14.6727 11.5571C13.6062 13.4684 11.1995 15 8.3852 15C4.14468 15 1 12.0208 1 7.87097C1 5.15153 2.46609 2.59685 4.64661 1.36934C4.46112 2.1296 4.35226 3.01956 4.35226 3.70161C4.35226 6.10561 5.1287 8.15603 6.60223 9.60594C8.07382 11.0539 10.1423 11.8065 12.5454 11.8065Z" stroke="currentColor" strokeWidth="2"/>
+	</svg>
+)
 
 Icon.RightCaret = () => (
 	<svg width="9px" height="14px" viewBox="0 0 9 14" version="1.1" xmlns="http://www.w3.org/2000/svg">

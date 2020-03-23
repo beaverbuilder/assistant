@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
-import { getSystemActions, getSystemConfig, useSystemState, useAppList } from 'data'
+import { getSystemActions, getSystemConfig, useSystemState } from 'data'
 import { Button, Icon, App, List } from 'ui'
 import { __ } from '@wordpress/i18n'
-import { useInitialFocus } from 'utils/react'
 import './style.scss'
 
 const { registerSection } = getSystemActions()
@@ -32,7 +31,7 @@ registerSection( 'fl-asst-quick-actions', {
 				</Button>
 				{ 'beaver-builder' !== environment && (
 					<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
-						<Icon.Brightness />
+						{ 'light' === appearance.brightness ? <Icon.Moon /> : <Icon.Brightness /> }
 					</Button>
 				)}
 				<Button to={ {
