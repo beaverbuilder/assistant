@@ -224,7 +224,7 @@ const Main = () => {
 				contentStyle={ { paddingTop: 0 } }
 			>
 				<p style={ { marginTop: 0 } }>
-					{ __( 'Labels allow you to mark posts for organization and collaborate with other users. Below you can add more labels and change the name of existing ones.' ) }
+					{ __( 'Labels allow you to mark posts or pages for organization and collaborate with other users. Below you can add more labels and change the name of existing ones. Add labels to posts inside the Content app.' ) }
 				</p>
 				{ loading &&
 					<InnerSection>{ __( 'Loading...' ) }</InnerSection>
