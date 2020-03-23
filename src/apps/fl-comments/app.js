@@ -77,6 +77,7 @@ const Main = () => {
 			shouldShowBackButton={ false }
 			header={ <Nav.Tabs tabs={ tabs } /> }
 			shouldScroll={ false }
+			showAsRoot={ true }
 		>
 			<Nav.CurrentTab tabs={ tabs } />
 		</Page>
