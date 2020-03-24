@@ -540,7 +540,7 @@ class PostsController extends ControllerAbstract
 
 
 
-		$export_data = $this->view->render(
+		$export_data = $this->view->render_to_string(
 			'post-export',
 			[
 				'post'      => $post,

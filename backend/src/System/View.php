@@ -52,13 +52,13 @@ class View {
 
 		error_reporting( 'E_ALL');
 
-	 $path = sprintf( '%s/%s.php', $this->template_dir, $template_name );
+		 $path = sprintf( '%s/%s.php', $this->template_dir, $template_name );
 
 		ob_start();
 
 		extract( $data );
 
-		include( $path );
+		include($path);
 
 		$output = ob_get_clean();
 		return $output;
