@@ -345,6 +345,9 @@ export const Post = ( { location, match, history } ) => {
 		if ( 'terms' in changed ) {
 			data.terms = changed.terms
 		}
+		if ( 'thumbnailData' in changed ) {
+			data.thumbnail = changed.thumbnailData.id
+		}
 
 		const handleError = error => {
 			setIsSubmitting( false )
