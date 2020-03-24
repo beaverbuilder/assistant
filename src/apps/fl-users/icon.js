@@ -5,9 +5,9 @@ const UsersIcon = ( { context } ) => {
 	if ( 'sidebar' === context ) {
 		return (
 			<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M10 12C16 12 18.5 16 18.5 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-				<path d="M1.00021 19C1.00021 17.3599 1.74743 15.4209 3.40527 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-				<path d="M10 12C6.96243 12 4.5 9.53757 4.5 6.5C4.5 3.46243 6.96243 1 10 1C13.0376 1 15.5 3.46243 15.5 6.5C15.5 7.43887 15.2648 8.3228 14.85 9.09605" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+				<path d="M10 12C16 12 18.5 16 18.5 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+				<path d="M1.00021 19C1.00021 17.3599 1.74743 15.4209 3.40527 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+				<path d="M10 12C6.96243 12 4.5 9.53757 4.5 6.5C4.5 3.46243 6.96243 1 10 1C13.0376 1 15.5 3.46243 15.5 6.5C15.5 7.43887 15.2648 8.3228 14.85 9.09605" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
 			</svg>
 		)
 	}

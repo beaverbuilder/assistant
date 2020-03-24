@@ -34,6 +34,7 @@ const TooltipButton = forwardRef( ( props, ref ) => {
                     return isOpen && (
                         <div
                             ref={layerProps.ref}
+                            className="fl-asst-tooltip"
                             style={{
                                 ...layerProps.style,
                                 background: 'var(--fluid-box-color)',

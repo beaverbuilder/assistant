@@ -140,7 +140,7 @@ Icon.Search.displayName = 'Icon.Search'
 
 Icon.Brightness = () => (
 	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M10.0029 7C11.6398 7 13 8.35749 13 9.99706C13 11.6366 11.6398 13 10.0029 13C8.36016 13 7 11.6366 7 9.99706C7 8.35749 8.36016 7 10.0029 7Z" stroke="currentColor" strokeWidth="2"/>
+		<path d="M10.0029 7C11.6398 7 13 8.35749 13 9.99706C13 11.6366 11.6398 13 10.0029 13C8.36016 13 7 11.6366 7 9.99706C7 8.35749 8.36016 7 10.0029 7Z" stroke="currentColor" strokeWidth="2" fill="none" />
 		<rect x="9" y="1" width="2" height="3" rx="1" fill="currentColor"/>
 		<rect x="15.6567" y="2.92896" width="2" height="3" rx="1" transform="rotate(45 15.6567 2.92896)" fill="currentColor"/>
 		<rect x="9" y="16" width="2" height="3" rx="1" fill="currentColor"/>
@@ -155,7 +155,7 @@ Icon.Brightness.displayName = 'Icon.Brightness'
 
 Icon.Moon = () => (
 	<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M12.5454 11.8065C13.3007 11.8065 14.05 11.6973 14.6727 11.5571C13.6062 13.4684 11.1995 15 8.3852 15C4.14468 15 1 12.0208 1 7.87097C1 5.15153 2.46609 2.59685 4.64661 1.36934C4.46112 2.1296 4.35226 3.01956 4.35226 3.70161C4.35226 6.10561 5.1287 8.15603 6.60223 9.60594C8.07382 11.0539 10.1423 11.8065 12.5454 11.8065Z" stroke="currentColor" strokeWidth="2"/>
+		<path d="M12.5454 11.8065C13.3007 11.8065 14.05 11.6973 14.6727 11.5571C13.6062 13.4684 11.1995 15 8.3852 15C4.14468 15 1 12.0208 1 7.87097C1 5.15153 2.46609 2.59685 4.64661 1.36934C4.46112 2.1296 4.35226 3.01956 4.35226 3.70161C4.35226 6.10561 5.1287 8.15603 6.60223 9.60594C8.07382 11.0539 10.1423 11.8065 12.5454 11.8065Z" stroke="currentColor" strokeWidth="2" fill="none" />
 	</svg>
 )
 
@@ -254,8 +254,8 @@ Icon.Document = () => (
 Icon.Home = () => {
 	return (
 		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M3 12L3 17C3 18.1046 3.89543 19 5 19H6M17 12V17C17 18.1046 16.1046 19 15 19H10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-			<path d="M1 9L9.33564 1.59055C9.71452 1.25376 10.2855 1.25376 10.6644 1.59055L19 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+			<path d="M3 12L3 17C3 18.1046 3.89543 19 5 19H6M17 12V17C17 18.1046 16.1046 19 15 19H10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+			<path d="M1 9L9.33564 1.59055C9.71452 1.25376 10.2855 1.25376 10.6644 1.59055L19 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
 			<path d="M14 2C14 1.44772 14.4477 1 15 1H16C16.5523 1 17 1.44772 17 2V6L14 3.5V2Z" fill="currentColor" />
 		</svg>
 	)
