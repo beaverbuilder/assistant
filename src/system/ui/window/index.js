@@ -303,14 +303,15 @@ const WindowPanel = ( {
 		const styles = {
 			display: 'flex',
 			paddingTop: 4,
+			paddingBottom: 10,
 			alignItems: 'center',
 			justifyContent: 'center',
-			pointerEvents: 'none',
 			position: 'absolute',
 			top: 0,
 			left: 0,
 			right: 0,
 			zIndex: 2,
+			cursor: 'move',
 		}
 		return (
 			<div className="fl-asst-window-grab-bar" style={ styles } { ...rest }>

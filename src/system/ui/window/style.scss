@@ -43,6 +43,10 @@
 
         .fl-asst-window-grab-bar {
             color: var(--fl-asst-light-5);
+
+            svg {
+                pointer-events: none;
+            }
         }
     }
 
