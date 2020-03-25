@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useRef } from 'react'
+import React, { useContext, createContext } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { Page as FLUIDPage } from 'fluid/ui'
@@ -35,7 +35,6 @@ const focusFirstElement = () => {
 
 const Page = ( { className, showAsRoot = false, onLoad = focusFirstElement, ...rest } ) => {
 	const { isAppRoot } = App.useApp()
-	const ref = useRef()
 	const classes = classname( {
 		'is-app-root': isAppRoot || showAsRoot,
 	}, className )
@@ -44,7 +43,6 @@ const Page = ( { className, showAsRoot = false, onLoad = focusFirstElement, ...r
 		<FLUIDPage
 			className={ classes }
 			onLoad={ onLoad }
-			ref={ ref }
 			{ ...rest }
 		/>
 	)
