@@ -47,10 +47,10 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	const getFeaturedImageSrcSet = () => {
-		if ( ! item.thumbnailData ) {
+		if ( ! featureThumbnail ) {
 			return ''
 		}
-		const { sizes } = item.thumbnailData
+		const { sizes } = featureThumbnail
 		let srcSet = ''
 		if ( sizes ) {
 			srcSet = getSrcSet( sizes )
@@ -383,6 +383,9 @@ export const Post = ( { location, match, history } ) => {
 	} = Form.useForm( {
 		tabs,
 		onSubmit,
+		onReset: ( { state } ) => {
+			setFeatureThumbnail( state.thumbnailData.value )
+		},
 		defaults: {
 			...item,
 			parent: item.parent ? `parent:${ item.parent }` : 0,
@@ -402,14 +405,14 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	const Hero = () => {
-		if ( ! item.thumbnailData ) {
+		if ( ! featureThumbnail ) {
 			return null
 		}
-		const { alt, title, height, width } = item.thumbnailData
+		const { alt, title, height, width, url } = featureThumbnail
 		return (
 			<div>
 				<img
-					src={ item.thumbnailData.url }
+					src={ url }
 					srcSet={ getFeaturedImageSrcSet() }
 					style={ { objectFit: 'cover' } }
 					alt={ alt }
@@ -462,7 +465,7 @@ export const Post = ( { location, match, history } ) => {
 	return (
 		<Page
 			title={ labels.editItem }
-			hero={ item.thumbnailData ? <Hero /> : null }
+			hero={ featureThumbnail ? <Hero /> : null }
 			footer={ hasChanges && <Footer /> }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
