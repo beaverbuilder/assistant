@@ -9,12 +9,13 @@
     background: var(--fluid-box-background);
 }
 
-#post_feature_image{
+#post_feature_image {
 	display: none;
 }
 
-#post_feature_img{
+#post_feature_img {
 	cursor: pointer;
+	max-height: 300px;
 }
 
 .fl-asst-remove-feature-img{
