@@ -18,7 +18,7 @@ const onFilesDropped = files => {
 const Main = ({ match }) => {
 	return (
 		<Page title={__('Import')}>
-
+<ImportDropUploader>
 			<Page.Section
 				className='fl-asst-edit-labels'
 				contentStyle={{ paddingTop: 0 }}
@@ -31,8 +31,10 @@ const Main = ({ match }) => {
 					)}
 
 				</div>
+
 			</Page.Section>
-			<ImportDropUploader></ImportDropUploader>
+			</ImportDropUploader>
+
 		</Page>
 	)
 }
