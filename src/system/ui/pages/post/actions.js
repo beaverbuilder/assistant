@@ -109,12 +109,12 @@ export const getPostActions = ( { history, values, setValue } ) => {
 			onClick: favoritePost,
 		},
 		{
-			label: 'Trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
-			onClick: 'Trash' === status ? untrashPost : trashPost,
-		},
-		{
 			label: __( 'Export' ),
 			onClick: exportPost,
+		},
+		{
+			label: 'Trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
+			onClick: 'Trash' === status ? untrashPost : trashPost,
 		},
 	]
 }
