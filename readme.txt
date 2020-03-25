@@ -8,7 +8,7 @@ Stable tag: trunk
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Assistant is a new way to work with WordPress. It's an every day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area. For example, you can quickly find a page or post and update its title or slug. You can upload media and navigate to attachment pages. You can approve or reject comments. You can even run plugin and theme updates.
+Assistant is a new way to work with WordPress. It's an every-day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area. For example, you can quickly find a page or post and update its title or slug. You can upload media and navigate to attachment pages. You can approve or reject comments. You can even run plugin and theme updates.
 
 **Note** - This is an early preview release. A full 1.0 release of Assistant will be coming later this year.
 
