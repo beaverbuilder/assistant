@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
 import { Button, Icon, App, List } from 'ui'
+import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
 
@@ -27,7 +28,7 @@ registerSection( 'fl-asst-quick-actions', {
 					<Icon.Search />
 				</Button>
 				<Button href={ dashURL } appearance="elevator" title={ __( 'Go to Admin' ) }>
-					<span className="dashicons dashicons-wordpress-alt"></span>
+					<Dashicon icon="wordpress" />
 				</Button>
 				{ 'beaver-builder' !== environment && (
 					<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
