@@ -1,4 +1,7 @@
 .fl-asst {
+    --fl-asst-window-zone-color: hsl(210, 100%, 42%);
+    --fl-asst-window-zone-background: hsla(210, 100%, 36%, .2 );
+
     .fl-asst-window {
         --fl-asst-window-size: calc( var(--fl-asst-side-toolbar-width) + var(--fl-asst-panel-size) );
 
@@ -79,13 +82,13 @@
 
     .fl-asst-window-layer-is-dragging {
         .fl-asst-window-mini {
-            box-shadow: 0 0 0 3px #16D4F3,
+            box-shadow: 0 0 0 3px var(--fl-asst-window-zone-color),
                         0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
         }
         .fl-asst-window-normal {
-            box-shadow: 0 0 0 3px #16D4F3,
+            box-shadow: 0 0 0 3px var(--fl-asst-window-zone-color),
                         0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
-            border-radius: 15px;
+            border-radius: 5px;
         }
     }
 
@@ -138,8 +141,8 @@
 
         &.fl-asst-window-layer-is-dragging {
             pointer-events: auto;
-            box-shadow: inset 0px 0px 0px 4px #16D4F3;
-            background-color: hsla(188, 89%, 52%, .15);
+            box-shadow: inset 0px 0px 0px 4px var(--fl-asst-window-zone-color);
+            background-color: var(--fl-asst-window-zone-background);
 
             &:after {
                 content: '';
@@ -149,7 +152,7 @@
                 left:15px;
                 width: 60px;
                 height: 60px;
-                background: #16D4F3;
+                background: var(--fl-asst-window-zone-color);
                 border-radius: 15px;
                 z-index: -1;
             }
