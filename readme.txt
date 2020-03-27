@@ -76,6 +76,7 @@ Our API for creating new apps and extending the existing ones is in development 
 
 = 0.3.1 (2020-03-27) =
 * Harden form control styles
+* Remove Assistant button from Beaver Builder toolbar (too soon!)
 
 = 0.3.0 (2020-03-25) !!REBIRTH!! =
 * Complete ground-up rebuild
