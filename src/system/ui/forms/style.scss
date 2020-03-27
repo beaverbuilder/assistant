@@ -201,6 +201,11 @@
         flex: 0 0 auto;
         margin: 0;
         margin-right: var(--fl-asst-small-space);
+
+        &:checked:before {
+            display: none !important;
+            content: '' !important;
+        }
     }
     input[type="radio"] {
         width: auto;
