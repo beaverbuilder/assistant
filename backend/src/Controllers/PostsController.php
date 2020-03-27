@@ -37,7 +37,7 @@ class PostsController extends ControllerAbstract {
 			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, ' posts ' ],
+					'callback'            => [ $this, 'posts' ],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_published_posts' );
 					},
@@ -461,12 +461,12 @@ class PostsController extends ControllerAbstract {
 
 		/*Create Temporary file */
 
-		$file_url = WP_CONTENT_URL . $post->post_title . '_' . $post->ID . '.xml';
-		$file = WP_CONTENT_DIR . $post->post_title . '_' . $post->ID . '.xml';
+		$file_url = WP_CONTENT_URL .'/'. $post->post_title . '_' . $post->ID . '.xml';
+		$file = WP_CONTENT_DIR .'/'. $post->post_title . '_' . $post->ID . '.xml';
 
 		if ( file_exists( $file ) ) {
 			unlink( $file );
-			$file = WP_CONTENT_DIR . $post->post_title . '_' . $post->ID . '.xml';
+			$file = WP_CONTENT_DIR .'/'. $post->post_title . '_' . $post->ID . '.xml';
 		}
 
 		$current = file_get_contents( $file );
@@ -545,7 +545,7 @@ class PostsController extends ControllerAbstract {
 
 		/*Remove Temporary file */
 
-		$file = FL_ASSISTANT_DIR . $post->post_title . '_' . $post->ID . '.xml';
+		$file = WP_CONTENT_DIR .'/'. $post->post_title . '_' . $post->ID . '.xml';
 
 		if ( file_exists( $file ) ) {
 			unlink( $file );
