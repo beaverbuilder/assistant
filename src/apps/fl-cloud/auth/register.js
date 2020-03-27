@@ -1,10 +1,10 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Form, Layout } from 'ui'
+import { Button, Form, Layout, Nav } from 'ui'
 import { useSystemState, getSystemActions } from 'assistant/data'
-import AuthLayout from './layout'
+import CloudLayout from '../layout'
 
-export default () => {
+export default ( { match } ) => {
 
 	const { attemptRegister } = getSystemActions()
 
@@ -45,10 +45,15 @@ export default () => {
 	} )
 
 	return (
-		<AuthLayout>
+		<CloudLayout className="fl-asst-auth-layout">
 			<Layout.Headline>{ __( 'Sign Up for Assistant Cloud!' ) }</Layout.Headline>
 			{ renderForm() }
-			<Button status="primary" onClick={ submitForm } >{__( 'Sign Up!' )}</Button>
-		</AuthLayout>
+			<div className="fl-asst-auth-submit">
+				<Button status="primary" onClick={ submitForm } >{__( 'Sign Up!' )}</Button>
+				<div className="fl-asst-auth-links">
+					<Nav.Link to="/fl-cloud/login">{ __( 'Login' ) }</Nav.Link>
+				</div>
+			</div>
+		</CloudLayout>
 	)
 }

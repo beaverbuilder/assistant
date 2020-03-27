@@ -1,10 +1,10 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Form, Layout } from 'ui'
+import { Button, Form, Layout, Nav } from 'ui'
 import { useSystemState, getSystemActions } from 'assistant/data'
-import AuthLayout from './layout'
+import CloudLayout from '../layout'
 
-export default () => {
+export default ( { match } ) => {
 
 	const { attemptLogin } = getSystemActions()
 
@@ -17,14 +17,6 @@ export default () => {
 			label: __( 'Password' ),
 			component: 'text',
 			type: 'password'
-		},
-		forgot: {
-			component: () => {
-				return (
-					<a>{ __( 'Forgot Password?' ) }</a>
-				)
-			}
-
 		}
 	}
 
@@ -53,10 +45,17 @@ export default () => {
 	} )
 
 	return (
-		<AuthLayout>
+		<CloudLayout className="fl-asst-auth-layout">
 			<Layout.Headline>{ __( 'Login to Assistant Cloud' ) }</Layout.Headline>
 			{ renderForm() }
-			<Button status="primary" onClick={ submitForm } >{__( 'Login' )}</Button>
-		</AuthLayout>
+			<div className="fl-asst-auth-submit">
+				<Button status="primary" onClick={ submitForm } >{__( 'Login' )}</Button>
+				<div className="fl-asst-auth-links">
+					<Nav.Link to="/fl-cloud/register">{ __( 'Register' ) }</Nav.Link>
+					<span> | </span>
+					<Nav.Link to="/fl-cloud/forgot-password">{ __( 'Forgot Password?' ) }</Nav.Link>
+				</div>
+			</div>
+		</CloudLayout>
 	)
 }

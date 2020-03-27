@@ -7,7 +7,7 @@ export default () => {
 
 	return (
 		<CloudLayout>
-			<Layout.Headline>{ __( 'Your Profile' ) }</Layout.Headline>
+			<Layout.Headline>{ __( 'Cloud Home' ) }</Layout.Headline>
 		</CloudLayout>
 	)
 }
