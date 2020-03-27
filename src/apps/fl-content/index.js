@@ -12,7 +12,7 @@ export const defaultState = {
 	listStyle: '',
 	query: {
 		order: 'DESC',
-		orderby: 'title',
+		orderby: 'ID',
 		post_status: 'any',
 		post_type: 'post',
 	}
