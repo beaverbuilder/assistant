@@ -9,6 +9,7 @@ import useAppList from './use-app-list'
 registerStore( 'fl-assistant/system', {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
+		isAppHidden: false,
 		isCloudConnected: cloud.auth.isConnected(),
 		cloudToken: cloud.session.getToken(),
 		currentUser: cloud.session.getUser(),

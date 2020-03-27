@@ -6,8 +6,5 @@ import AppIcon from './icon'
 registerApp( 'fl-cloud', {
 	label: __( 'Cloud' ),
 	root: App,
-	icon: AppIcon,
-	accent: {
-		color: '#FA9200'
-	}
+	icon: AppIcon
 } )
