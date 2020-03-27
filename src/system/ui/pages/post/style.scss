@@ -1,27 +1,32 @@
 .fl-asst {
-	label[for=post_feature_image]
-{
-	text-align: center;
-    float: left;
-    width: 100%;
-    display: block;
-    padding: 10px;
-    background: var(--fluid-box-background);
-}
+	label[for=post_feature_image] {
+		text-align: center;
+	    float: left;
+	    width: 100%;
+	    display: block;
+	    padding: 10px;
+	    background: var(--fluid-box-background);
+	}
 
-#post_feature_image {
-	display: none;
-}
+	#post_feature_image {
+		display: none;
+	}
 
-#post_feature_img {
-	cursor: pointer;
-	max-height: 300px;
-}
+	#post_feature_img {
+		cursor: pointer;
+		max-height: 300px;
+	}
 
-.fl-asst-remove-feature-img{
-	float: right;
-}
+	.fl-asst-remove-feature-img {
+		float: right;
+	}
 
+	#fl-asst-post-detail {
+		padding-bottom: 70px; /* account for publish footer */
+	}
+	#fl-asst-post-detail ~ .fluid-page-footer {
+		padding-bottom: 5px;
+	}
 }
 
 .media-modal{
