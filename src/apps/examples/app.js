@@ -12,7 +12,7 @@ export const App = ( { match } ) => (
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
 		<Nav.Route path={ `${match.url}/forms` } component={ FormExamples } />
 		<Nav.Route path={ `${match.url}/fluid` } component={ FLUIDExamples } />
-		<Nav.Route path={ `${match.url}/wp-components`} component={ WPComponentsExamples } />
+		<Nav.Route path={ `${match.url}/wp-components` } component={ WPComponentsExamples } />
 	</Nav.Switch>
 )
 

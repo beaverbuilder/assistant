@@ -77,8 +77,9 @@ Our API for creating new apps and extending the existing ones is in development 
 = 0.3.1 (2020-03-27) =
 * Harden form control styles
 * Remove Assistant button from Beaver Builder toolbar (too soon!)
-* Fix updates not loading correctly in some situations
-* Made publish bar more prominent
+* Fix updates list not loading correctly in some situations
+* Enhancement - Made publish bar more prominent
+* Fix attachment alt text field displaying title
 
 = 0.3.0 (2020-03-25) !!REBIRTH!! =
 * Complete ground-up rebuild
