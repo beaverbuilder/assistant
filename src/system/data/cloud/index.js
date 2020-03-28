@@ -3,13 +3,13 @@ import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
-import cloud from 'utils/cloud'
+import { auth, session } from 'utils/cloud'
 
 registerStore( 'fl-assistant/cloud', {
 	state: {
-		isCloudConnected: cloud.auth.isConnected(),
-		cloudToken: cloud.session.getToken(),
-		cloudUser: cloud.session.getUser(),
+		isCloudConnected: auth.isConnected(),
+		cloudToken: session.getToken(),
+		cloudUser: session.getUser(),
 		cloudErrors: []
 	},
 	actions,

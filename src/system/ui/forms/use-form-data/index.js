@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import classname from 'classnames'
 
 const initReducer = ( { fields, defaults } ) => {
@@ -26,17 +26,24 @@ export const useFormData = ( {
 	onReset = () => {},
 } ) => {
 	const [ isSubmitting, setIsSubmitting ] = useState( false )
+	const isMounted = useRef( false )
+
+	useEffect( () => {
+		isMounted.current = true
+		return () => isMounted.current = false
+	}, [] )
 
 	Object.entries( fields ).map( ( [ key, field ] ) => {
 		fields[ key ] = {
 			alwaysCommit: false,
 			disabled: false,
 			id: null,
+			isRequired: false,
 			isVisible: true,
 			label: null,
 			onChange: () => {},
-			required: false,
 			sanitize: v => v,
+			validate: () => {},
 			...field,
 		}
 	} )
@@ -101,8 +108,13 @@ export const useFormData = ( {
 
 		case 'SET_ERRORS':
 			for ( let key in action.errors ) {
-				state[ key ].errors = action.errors[ key ]
+				if ( 'string' === typeof action.errors[ key ] ) {
+					state[ key ].errors = [ action.errors[ key ] ]
+				} else {
+					state[ key ].errors = action.errors[ key ]
+				}
 			}
+			return { ...state }
 
 		default:
 			return state
@@ -174,6 +186,16 @@ export const useFormData = ( {
 		} )
 	}
 
+	const selectErrors = () => {
+		const errors = {}
+		for ( let key in state ) {
+			if ( state[ key ].errors.length ) {
+				errors[ key ] = state[ key ].errors
+			}
+		}
+		return errors
+	}
+
 	const getFieldIDs = () => {
 		const ids = {}
 		for ( let key in fields ) {
@@ -221,9 +243,10 @@ export const useFormData = ( {
 				} )
 			}
 
-			delete config[ key ].sanitize
 			delete config[ key ].lastCommittedValue
 			delete config[ key ].alwaysCommit
+			delete config[ key ].sanitize
+			delete config[ key ].validate
 		} )
 
 		return config
@@ -251,16 +274,28 @@ export const useFormData = ( {
 	}
 
 	const submitForm = () => {
-		setIsSubmitting( true )
-
-		dispatch( {
-			type: 'COMMIT_ALL'
+		Object.keys( values ).map( key => {
+			const errors = []
+			fields[ key ].validate( values[ key ], errors )
+			if ( errors.length ) {
+				setErrors( { [ key ]: errors } )
+			}
 		} )
 
+		if ( Object.keys( selectErrors() ).length ) {
+			return
+		}
+
+		setIsSubmitting( true )
+		dispatch( { type: 'COMMIT_ALL' } )
 		const response = onSubmit( callbackArgs )
 
 		if ( response instanceof Promise ) {
-			response.finally( () => setIsSubmitting( false ) )
+			response.finally( () => {
+				if ( isMounted.current ) {
+					setIsSubmitting( false )
+				}
+			} )
 		} else {
 			setIsSubmitting( false )
 		}
@@ -284,7 +319,6 @@ export const useFormData = ( {
 		resetForm,
 		submitForm,
 		isSubmitting,
-		setValues,
-		setErrors
+		setValues
 	}
 }

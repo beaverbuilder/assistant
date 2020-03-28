@@ -144,6 +144,7 @@ Button.Group = ( {
 Button.Loading = ( {
 	className,
 	children,
+	isLoading = true,
 	...rest
 } ) => {
 	const classes = classname( {
@@ -153,7 +154,7 @@ Button.Loading = ( {
 	return (
 		<Button className={ classes } { ...rest }>
 			{ children }
-			<Icon.SmallSpinner />
+			{ isLoading && <Icon.SmallSpinner /> }
 		</Button>
 	)
 }

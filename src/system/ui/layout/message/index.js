@@ -15,7 +15,10 @@ const Message = ( {
 	} )
 
 	return (
-		<div className={ messageClassName }><Icon />&nbsp;&nbsp;{children}</div>
+		<div className={ messageClassName }>
+			{ Icon && <span><Icon />&nbsp;&nbsp;</span> }
+			{ children }
+		</div>
 	)
 }
 

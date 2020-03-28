@@ -1,8 +1,6 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
-import { Nav, Page } from 'assistant/ui'
+import { Nav } from 'assistant/ui'
 import { useCloudState } from 'assistant/data'
-import AppIcon from './icon'
 
 import Login from './auth/login'
 import Register from './auth/register'

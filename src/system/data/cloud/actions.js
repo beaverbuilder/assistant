@@ -25,31 +25,3 @@ export const setCloudUser = ( user ) => {
 		user
 	}
 }
-
-export const fetchCloudUser = () => {
-	return {
-		type: 'FETCH_CLOUD_USER'
-	}
-}
-
-export const attemptCloudRegister = ( email, password ) => {
-	return {
-		type: 'ATTEMPT_CLOUD_REGISTER',
-		email,
-		password
-	}
-}
-
-export const attemptCloudLogin = ( email, password ) => {
-	return {
-		type: 'ATTEMPT_CLOUD_LOGIN',
-		email,
-		password
-	}
-}
-
-export const attemptCloudLogout = () => {
-	return {
-		type: 'ATTEMPT_CLOUD_LOGOUT'
-	}
-}

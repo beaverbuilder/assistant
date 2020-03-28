@@ -1,13 +1,19 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
-import { Layout } from 'ui'
+import { __, sprintf } from '@wordpress/i18n'
+import { useCloudState } from 'assistant/data'
+import { cloudLogout } from 'assistant/utils/cloud'
+import { Button, Layout } from 'ui'
 import CloudLayout from '../layout'
 
 export default () => {
+	const { cloudUser } = useCloudState()
 
 	return (
 		<CloudLayout>
-			<Layout.Headline>{ __( 'Cloud Home' ) }</Layout.Headline>
+			<Layout.Headline>{ sprintf( 'Welcome, %s', cloudUser.name ) }</Layout.Headline>
+			<Layout.Box padX={ false }>
+				<Button status="primary" onClick={ cloudLogout }>{ __( 'Logout' ) }</Button>
+			</Layout.Box>
 		</CloudLayout>
 	)
 }
