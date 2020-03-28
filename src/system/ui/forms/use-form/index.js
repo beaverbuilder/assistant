@@ -136,6 +136,7 @@ const Fields = ( { config, data } ) => {
 			isRequired,
 			isVisible,
 			hasChanges,
+			errors,
 			...rest
 		} = data.fields[ key ]
 		const Field = getFieldComponent( component )
@@ -148,6 +149,7 @@ const Fields = ( { config, data } ) => {
 				isRequired={ isRequired }
 				isVisible={ isVisible }
 				hasChanges={ hasChanges }
+				errors={ errors }
 			>
 				<Field id={ id } { ...rest } />
 			</Form.Item>

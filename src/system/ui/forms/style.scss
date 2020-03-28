@@ -119,6 +119,19 @@
                 background: var(--fluid-primary-background);
             }
         }
+
+		.fl-asst-form-item-has-errors {
+			box-shadow: inset 2px 0px 0px 0px var(--fl-asst-red) !important;
+
+			label {
+				color: var(--fl-asst-red) !important;
+			}
+			.fl-asst-form-item-error {
+				color: var(--fl-asst-red);
+				padding: var(--fl-asst-tiny-space) 0 0;
+			}
+
+		}
     } // form
 
     label {

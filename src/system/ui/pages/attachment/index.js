@@ -36,14 +36,13 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 		const handleError = error => {
-			setIsSubmitting( false )
 			alert( __( 'Error: Changes not saved! Please try again.' ) )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
 		}
 
-		wpRest
+		return wpRest
 			.attachments()
 			.update( id, 'data', data )
 			.then( response => {
@@ -52,7 +51,6 @@ export const Attachment = ( { location, history } ) => {
 					handleError()
 				} else {
 					setCurrentHistoryState( { item } )
-					setIsSubmitting( false )
 					alert( __( 'Changes Saved!' ) )
 				}
 			} )
@@ -177,7 +175,6 @@ export const Attachment = ( { location, history } ) => {
 	const {
 		hasChanges,
 		resetForm,
-		setIsSubmitting,
 		submitForm,
 		renderForm,
 	} = Form.useForm( {

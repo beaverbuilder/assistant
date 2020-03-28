@@ -350,7 +350,6 @@ export const Post = ( { location, match, history } ) => {
 		}
 
 		const handleError = error => {
-			setIsSubmitting( false )
 			alert( __( 'Error: Changes not published! Please try again.' ) )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
@@ -364,7 +363,6 @@ export const Post = ( { location, match, history } ) => {
 			} else {
 				setCurrentHistoryState( { item: data.post } )
 				setValue( 'url', data.post.url, true )
-				setIsSubmitting( false )
 				alert( __( 'Changes published!' ) )
 			}
 		} ).catch( error => {
@@ -378,7 +376,6 @@ export const Post = ( { location, match, history } ) => {
 		submitForm,
 		values,
 		hasChanges,
-		setIsSubmitting,
 		setValues,
 	} = Form.useForm( {
 		tabs,

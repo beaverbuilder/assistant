@@ -8,25 +8,22 @@ export default () => {
 	const fields = {
 		email: {
 			label: __( 'Email Address' ),
-			component: 'text'
+			component: 'text',
+			alwaysCommit: true
 		}
 	}
 
-	const onSubmit = ( { values } ) => {
+	const onSubmit = ( { values, setErrors } ) => {
 		const { email } = values
 
-		setIsSubmitting( false )
-
 		if ( '' === email ) {
-			alert( 'Please enter an email address.' )
-			return
+			setErrors( { email: ['Please enter an email address.'] } )
 		}
 	}
 
 	const {
 		renderForm,
-		submitForm,
-		setIsSubmitting
+		submitForm
 	} = Form.useForm( {
 		fields,
 		onSubmit

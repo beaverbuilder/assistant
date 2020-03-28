@@ -35,6 +35,10 @@ export const after = {
 			} )
 	},
 
+	ATTEMPT_CLOUD_REGISTER: ( action, store ) => {
+
+	},
+
 	ATTEMPT_CLOUD_LOGOUT: ( action, store ) => {
 		cloud.auth.logout().then( () => {
 			store.dispatch( setCloudToken( {} ) )

@@ -10,6 +10,7 @@ const initReducer = ( { fields, defaults } ) => {
 		state[ key ] = {
 			value,
 			lastCommittedValue: value,
+			errors: []
 		}
 	} )
 
@@ -52,7 +53,8 @@ export const useFormData = ( {
 				...state,
 				[ action.key ]: {
 					value: value,
-					lastCommittedValue: alwaysCommit ? value : state[ action.key ].lastCommittedValue
+					lastCommittedValue: alwaysCommit ? value : state[ action.key ].lastCommittedValue,
+					errors: []
 				}
 			}
 
@@ -96,6 +98,11 @@ export const useFormData = ( {
 				state[ key ].value = state[ key ].lastCommittedValue
 			}
 			return { ...state }
+
+		case 'SET_ERRORS':
+			for ( let key in action.errors ) {
+				state[ key ].errors = action.errors[ key ]
+			}
 
 		default:
 			return state
@@ -160,6 +167,13 @@ export const useFormData = ( {
 		return changed
 	}
 
+	const setErrors = ( errors = {} ) => {
+		dispatch( {
+			type: 'SET_ERRORS',
+			errors
+		} )
+	}
+
 	const getFieldIDs = () => {
 		const ids = {}
 		for ( let key in fields ) {
@@ -177,6 +191,7 @@ export const useFormData = ( {
 				...field,
 				hasChanges: valueHasChanged( state[ key ] ),
 				value: state[ key ].value,
+				errors: state[ key ].errors,
 				onChange: value => {
 					const args = {
 						key,
@@ -224,6 +239,7 @@ export const useFormData = ( {
 		values,
 		setValue,
 		setValues,
+		setErrors,
 		state,
 	}
 
@@ -235,14 +251,19 @@ export const useFormData = ( {
 	}
 
 	const submitForm = () => {
-		if ( isSubmitting ) {
-			return
-		}
 		setIsSubmitting( true )
+
 		dispatch( {
 			type: 'COMMIT_ALL'
 		} )
-		onSubmit( callbackArgs )
+
+		const response = onSubmit( callbackArgs )
+
+		if ( response instanceof Promise ) {
+			response.finally( () => setIsSubmitting( false ) )
+		} else {
+			setIsSubmitting( false )
+		}
 	}
 
 	return {
@@ -263,7 +284,7 @@ export const useFormData = ( {
 		resetForm,
 		submitForm,
 		isSubmitting,
-		setIsSubmitting,
 		setValues,
+		setErrors
 	}
 }

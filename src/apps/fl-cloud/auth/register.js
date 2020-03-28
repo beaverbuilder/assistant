@@ -11,34 +11,33 @@ export default ( { match } ) => {
 	const fields = {
 		email: {
 			label: __( 'Email Address' ),
-			component: 'text'
+			component: 'text',
+			alwaysCommit: true
 		},
 		password: {
 			label: __( 'Password' ),
 			component: 'text',
-			type: 'password'
+			type: 'password',
+			alwaysCommit: true
 		}
 	}
 
-	const onSubmit = ( { values } ) => {
+	const onSubmit = ( { values, setErrors } ) => {
 		const { email, password } = values
 
-		setIsSubmitting( false )
-
 		if ( '' === email ) {
-			alert( 'Please enter an email address.' )
-			return
+			setErrors( { email: ['Please enter an email address.'] } )
 		}
 		if ( '' === password ) {
-			alert( 'Please enter a password.' )
-			return
+			setErrors( { password: ['Please enter a password.'] } )
 		}
+
+		//attemptCloudRegister( email, password )
 	}
 
 	const {
 		renderForm,
-		submitForm,
-		setIsSubmitting
+		submitForm
 	} = Form.useForm( {
 		fields,
 		onSubmit
