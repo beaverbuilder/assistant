@@ -390,14 +390,12 @@ export const Post = ( { location, match, history } ) => {
 	} )
 
 	const Footer = () => {
+
 		return (
-            <>
-			<Button
-				onClick={ resetForm }
-			>{__( 'Cancel' )}</Button>
-			<div style={ { flex: '1 1 auto', margin: 'auto' } } />
-			<Button type="submit" status="primary" onClick={ submitForm } >{__( 'Publish' )}</Button>
-            </>
+			<Layout.PublishBar
+				onPublish={ submitForm }
+				onDiscard={ resetForm }
+			/>
 		)
 	}
 
@@ -461,6 +459,7 @@ export const Post = ( { location, match, history } ) => {
 
 	return (
 		<Page
+			id="fl-asst-post-detail"
 			title={ labels.editItem }
 			hero={ featureThumbnail ? <Hero /> : null }
 			footer={ hasChanges && <Footer /> }

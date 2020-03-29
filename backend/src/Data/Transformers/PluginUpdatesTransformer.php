@@ -20,6 +20,8 @@ class PluginUpdatesTransformer {
 		}
 
 		if ( isset( $update->banners ) ) {
+			$update->banners = (array) $update->banners;
+			
 			if ( isset( $update->banners['2x'] ) ) {
 				$banner = $update->banners['2x'];
 			} elseif ( isset( $update->banners['1x'] ) ) {

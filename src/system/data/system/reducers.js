@@ -98,8 +98,8 @@ export const counts = ( state = {}, action ) => {
 
 // New UI
 const windowDefaults = {
-	origin: [ 1, 1 ],
-	size: 'normal',
+	origin: [ 1, 0 ], /* top right */
+	size: 'normal', /* full sidebar */
 	isHidden: false,
 	hiddenAppearance: '',
 	overlayToolbar: false,

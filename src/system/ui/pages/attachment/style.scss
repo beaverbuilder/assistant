@@ -1,0 +1,9 @@
+.fl-asst {
+    #fl-asst-attachment-detail {
+        padding-bottom: 70px;
+    }
+    #fl-asst-attachment-detail ~ .fluid-page-footer {
+        padding: 0;
+        border: none;
+    }
+}
