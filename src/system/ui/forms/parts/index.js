@@ -18,6 +18,7 @@ export const Item = props => {
 		hasChanges = false,
 		isRequired = false,
 		isVisible = true,
+		errors = [],
 		style = {}
 	} = props
 
@@ -29,6 +30,7 @@ export const Item = props => {
 		'fl-asst-form-item': true,
 		[`fl-asst-form-item-placement-${labelPlacement}`]: labelPlacement,
 		'fl-asst-form-item-has-changes': hasChanges,
+		'fl-asst-form-item-has-errors': !! errors.length
 	}, className )
 
 	return (
@@ -37,8 +39,12 @@ export const Item = props => {
 				<label htmlFor={ labelFor }>
 					{label}
 					{ isRequired && <abbr title="required"><Icon name="asterisk" /></abbr> }
-				</label> }
+				</label>
+			}
 			<div className="fl-asst-form-item-content">{children}</div>
+			{ errors.map( ( error, key ) =>
+				<div key={ key } className="fl-asst-form-item-error">{ error }</div>
+			) }
 		</div>
 	)
 }

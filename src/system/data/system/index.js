@@ -1,5 +1,4 @@
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
-import cloud from 'utils/cloud'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
@@ -9,10 +8,7 @@ import useAppList from './use-app-list'
 registerStore( 'fl-assistant/system', {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
-		isCloudConnected: cloud.auth.isConnected(),
-		cloudToken: cloud.session.getToken(),
-		currentUser: cloud.session.getUser(),
-		loginErrors: []
+		isAppHidden: __PRODUCTION__ ? true : false,
 	},
 	actions,
 	reducers,
