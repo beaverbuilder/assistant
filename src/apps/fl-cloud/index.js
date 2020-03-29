@@ -6,5 +6,6 @@ import AppIcon from './icon'
 registerApp( 'fl-cloud', {
 	label: __( 'Cloud' ),
 	root: App,
-	icon: AppIcon
+	icon: AppIcon,
+	enabled: ! __PRODUCTION__
 } )

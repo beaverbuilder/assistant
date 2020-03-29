@@ -8,7 +8,7 @@ import useAppList from './use-app-list'
 registerStore( 'fl-assistant/system', {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
-		isAppHidden: false,
+		isAppHidden: __PRODUCTION__ ? true : false,
 	},
 	actions,
 	reducers,
