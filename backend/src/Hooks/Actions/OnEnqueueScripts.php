@@ -187,7 +187,7 @@ class OnEnqueueScripts {
 				'wp-i18n',
 				'wp-keycodes',
 				'wp-dom-ready',
-				'wp-components'
+				'wp-components',
 			];
 
 			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid', 'wp-components' ], $ver, null );
