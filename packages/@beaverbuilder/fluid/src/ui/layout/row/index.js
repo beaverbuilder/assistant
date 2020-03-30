@@ -1,5 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
+import { getSpacingValue } from '../utils'
 import Layout from '../'
 
 const Row = ({
@@ -12,23 +13,6 @@ const Row = ({
     direction,
     ...rest
 }) => {
-
-    const formatGap = val => {
-
-        if ( Number.isInteger( val ) && 0 !== val ) {
-            return val + 'px'
-        }
-        if ( 'lg' === val || 'large' === val ) {
-            return 'var(--fluid-lg-space)'
-        }
-        if ( 'med' === val || 'medium' === val ) {
-            return 'var(--fluid-med-space)'
-        }
-        if ( 'sm' === val || 'small' === val ) {
-            return 'var(--fluid-med-space)'
-        }
-        return val
-    }
 
     const formatAlign = val => {
 
@@ -47,7 +31,7 @@ const Row = ({
 
     const styles = {
         justifyContent: formatAlign( align ),
-        '--fluid-gap': formatGap( gap ),
+        '--fluid-gap': getSpacingValue( gap ),
         flexDirection: formatDirection( direction ),
         ...style,
     }
