@@ -78,7 +78,6 @@ class OnEnqueueScripts {
 
 		return [
 			'appOrder'           => $user_state['appOrder'],
-			'counts'             => $this->get_counts(),
 			'shouldReduceMotion' => false, /* Disabled */
 
 			/* New UI Props */
