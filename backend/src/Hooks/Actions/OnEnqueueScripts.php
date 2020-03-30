@@ -8,7 +8,6 @@ use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
 use FLBuilderModel;
-use WP_REST_Request;
 
 /**
  * Class OnEnqueueScripts
@@ -126,16 +125,6 @@ class OnEnqueueScripts {
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
 		];
-	}
-
-	/**
-	 * Returns an array of all counts to hydrate the store.
-	 */
-	public function get_counts() {
-		$request  = new WP_REST_Request( 'GET', '/fl-assistant/v1/counts' );
-		$response = rest_do_request( $request );
-
-		return $response->get_data();
 	}
 
 	/**

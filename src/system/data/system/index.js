@@ -1,4 +1,5 @@
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
+import { getWpRest } from 'utils/wordpress'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
@@ -37,3 +38,10 @@ export const getSystemConfig = () => {
 }
 
 export { useAppList }
+
+getWpRest().batch().get( {
+	'/fl-assistant/v1/counts': counts => {
+		const { setCounts } = getSystemActions()
+		setCounts( counts )
+	}
+} )
