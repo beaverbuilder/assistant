@@ -1,49 +1,43 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { useSystemState, getSystemActions } from 'assistant/data'
 import { Page, Nav } from 'assistant/ui'
 import { ImportDropUploader } from './import'
 
-export const ImportApp = ({ match }) => (
+export const ImportApp = ( { match } ) => (
 	<Nav.Switch>
-		<Nav.Route exact path={`${match.url}/`} component={Main} />
+		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
 	</Nav.Switch>
 )
 
-const onFilesDropped = files => {
-	console.log(files)
-	exit;
-}
 
-const Main = ({ match }) => {
+const Main = ( ) => {
 	return (
-		<Page title={__('Import')}>
-<ImportDropUploader>
-			<Page.Section
-				className='fl-asst-edit-labels'
-				contentStyle={{ paddingTop: 0 }}
-				onDrop={ onFilesDropped }
-			>
+		<Page title={ __( 'Import' ) }>
+			<div>
+				{__(
+					'Import allows you to import posts from exported xml files.'
+				)}
 
-				<div>
-					{__(
-						'Import allows you to import posts from exported xml files.'
-					)}
+			</div>
+			<ImportDropUploader>
+				<Page.Section
+					className='fl-asst-edit-labels'
+					contentStyle={ { paddingTop: 0 } }
+				>
 
-				</div>
 
-			</Page.Section>
+				</Page.Section>
 			</ImportDropUploader>
 
 		</Page>
 	)
 }
 
-ImportApp.Icon = ({ windowSize }) => {
+ImportApp.Icon = ( { windowSize } ) => {
 	const size = 'mini' === windowSize ? 32 : 45
 	return (
 		<svg
-			width={size}
+			width={ size }
 			viewBox='0 0 32 20'
 			version='1.1'
 			xmlns='http://www.w3.org/2000/svg'

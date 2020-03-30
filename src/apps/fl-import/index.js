@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n'
 import { ImportApp } from './app'
 
 
-
 registerApp( 'fl-import', {
 	label: __( 'Import' ),
 	root: ImportApp,

@@ -58,13 +58,13 @@ export const ImportDropUploader = ( { children } ) => {
 	}
 
 
-	const onSuccess = () => {
-		const { current, items } = getStore( 'fl-import/uploader' ).getState()
+	const onSuccess = ( response ) => {
 		uploadNextItem()
-		if ( current === items.length ) {
-			alert( 'Import complete!' )
+		if ( response ) {
 
+			alert( response.data.message )
 		}
+
 	}
 
 	const onError = () => {

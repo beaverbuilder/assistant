@@ -74,7 +74,7 @@ export const FileDropListener = props => {
 	const onFilesDropped = files => {
 		onDrop( files )
 	}
-	const { bind, isDragging } = useFileDrop( onFilesDropped )
+	const { bind } = useFileDrop( onFilesDropped )
 
 	const classes = classname( {
 		'fl-asst-file-drop': true,
@@ -89,9 +89,9 @@ export const FileDropListener = props => {
 
 	return (
 		<Fragment>
-<div { ...merged }>
+			<div { ...merged }>
 				<div className="fl-asst-file-drop-content-view">{children}</div>
-				{ isDragging && <div className="fl-asst-file-drop-dragging-view">{draggingView}</div> }
+				{ <div className="fl-asst-file-drop-dragging-view">{draggingView}</div> }
 			</div>
 		</Fragment>
 	)

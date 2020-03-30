@@ -110,7 +110,7 @@ const UpdatesMain = () => {
 					defaultValue={ defaultState.listStyle }
 					onChange={ value => setListStyle( value ) }
 				/>
-				<Filter.Button onClick={resetFilter}>{__('Reset Filter')}</Filter.Button>
+				<Filter.Button onClick={ resetFilter }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
 		)
 	}
@@ -140,7 +140,7 @@ const UpdatesMain = () => {
 						}
 					} }
 					before={ <UpdatesFilter /> }
-					listStyle={listStyle}
+					listStyle={ listStyle }
 				/>
 			)}
 		</Page>

@@ -4,7 +4,6 @@ namespace FL\Assistant\Controllers;
 
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Transformers\PostTransformer;
-use FL\Assistant\System\Integrations\BeaverBuilder;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -14,11 +13,12 @@ use WP_REST_Server;
  */
 class PostsController extends ControllerAbstract {
 
+
 	protected $posts;
 	protected $transformer;
 
 	public function __construct( PostsRepository $posts, PostTransformer $transformer ) {
-		$this->posts = $posts;
+		$this->posts       = $posts;
 		$this->transformer = $transformer;
 	}
 
@@ -27,7 +27,8 @@ class PostsController extends ControllerAbstract {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/posts', [
+			'/posts',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts' ],
@@ -46,7 +47,8 @@ class PostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/hierarchical', [
+			'/posts/hierarchical',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_posts' ],
@@ -58,7 +60,8 @@ class PostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/count', [
+			'/posts/count',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts_count' ],
@@ -70,7 +73,8 @@ class PostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/(?P<id>\d+)', [
+			'/posts/(?P<id>\d+)',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'post' ],
@@ -118,7 +122,8 @@ class PostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/(?P<id>\d+)/clone', [
+			'/posts/(?P<id>\d+)/clone',
+			[
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'clone_post' ],
@@ -135,9 +140,9 @@ class PostsController extends ControllerAbstract {
 			]
 		);
 
-
 		$this->route(
-			'/posts/import', [
+			'/posts/import',
+			[
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'import_posts' ],
@@ -174,7 +179,8 @@ class PostsController extends ControllerAbstract {
 		$params   = $request->get_params();
 		$posts    = get_posts(
 			array_merge(
-				$params, [
+				$params,
+				[
 					'perm' => 'editable',
 				]
 			)
@@ -234,8 +240,8 @@ class PostsController extends ControllerAbstract {
 		$response   = [];
 
 		foreach ( $post_types as $slug => $label ) {
-			$counts            = wp_count_posts( $slug );
-			$counts->total     = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
+			$counts          = wp_count_posts( $slug );
+			$counts->total   = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
 			$response[ $slug ] = $counts;
 		}
 
@@ -312,7 +318,7 @@ class PostsController extends ControllerAbstract {
 
 		foreach ( $taxonomies as $taxonomy ) {
 			$post_terms = wp_get_object_terms( $post_id, $taxonomy );
-			for ( $i = 0; $i < count( $post_terms ); $i ++ ) {
+			for ( $i = 0; $i < count( $post_terms ); $i++ ) {
 				wp_set_object_terms( $new_post_id, $post_terms[ $i ]->slug, $taxonomy, true );
 			}
 		}
@@ -348,7 +354,8 @@ class PostsController extends ControllerAbstract {
 				}
 				wp_update_post(
 					array_merge(
-						$data, [
+						$data,
+						[
 							'ID' => $id,
 						]
 					)
@@ -425,174 +432,232 @@ class PostsController extends ControllerAbstract {
 		);
 	}
 
-
 	/*Import posts */
 
-	public function import_posts( $request){
+	public function import_posts( $request ) {
 		$file = $request->get_file_params();
 
 		global $wpdb;
 
-//$uri = get_template_directory_uri().'/xmlupload/';
-        $uri = wp_upload_dir();
-        $target_dir = $uri;
-        $target_file = $target_dir . basename($file["file"]["name"]);
-        $filename = basename($file["file"]["name"]);
-        $filetypenew = wp_check_filetype($filename);
-        $uploadOk = 1;
-        $FileType = pathinfo($target_file, PATHINFO_EXTENSION);
-//$FileType = pathinfo($filetype,PATHINFO_EXTENSION);
+		//$uri = get_template_directory_uri().'/xmlupload/';
+		$uri         = wp_upload_dir();
+		$target_dir  = $uri;
+		$target_file = $target_dir . basename( $file['file']['name'] );
+		$filename    = basename( $file['file']['name'] );
+		$filetypenew = wp_check_filetype( $filename );
+		$upload_ok    = 1;
+		$file_type    = pathinfo( $target_file, PATHINFO_EXTENSION );
+		//$FileType = pathinfo($filetype,PATHINFO_EXTENSION);
 
-// Check if file already exists
-        if (file_exists($target_file)) {
-            echo "<br/><br/>Sorry, file already exists.";
-            $uploadOk = 1;
-        }
-// Check file size
-if ($file["file"]["size"] > 500000) {
-            echo "<br/><br/>Sorry, your file is too large.";
-            $uploadOk = 0;
-        }
-// Allow certain file formats
-        if ($FileType != "xml") {
-            echo "<br/><br/>Sorry, only XML files are allowed.";
-            $uploadOk = 0;
-        }
-// Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            echo "<br/><br/>Sorry, your file was not uploaded.";
-            //echo "<br/>".$uri;
-            //echo "<br/>".$target_file;
-            //echo "<br/>file name is ".$filetypenew." file name is ".$filename;
-// if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($file["file"]["tmp_name"], $target_file)) {
-                echo "<br/><br/>The file " . basename($file["file"]["name"]) . " has been uploaded successfully!!.";
-                $xml = simplexml_load_file($target_file);
+		// Check file size
 
-            $counter = 0;
-            $status = '';
-            $state = '';
-            $suburb = '';
-			$additional_array = '';
+		// Allow certain file formats
+		if ( $file_type != 'xml' ) {
 
+			return rest_ensure_response(
+				[
+					'error'   => true,
+					'message' => 'Sorry, only XML files are allowed.',
+				]
+			);
+			$upload_ok = 0;
+		} else {
+			if ( $file['file']['size'] > 500000 ) {
 
-			$xml_data = $this->XMLtoArray(file_get_contents($target_file));
+				return rest_ensure_response(
+					[
+						'error'   => true,
+						'message' => 'Sorry, your file is too large.',
+					]
+				);
+				$upload_ok = 0;
+			}
+		}
+		// Check if $uploadOk is set to 0 by an error
+		if ( $upload_ok == 0 ) {
 
+			return rest_ensure_response(
+				[
+					'error'   => true,
+					'message' => 'Sorry, your file was not uploaded.',
+				]
+			);
+		} else {
+			if ( move_uploaded_file( $file['file']['tmp_name'], $target_file ) ) {
+				// echo "<br/><br/>The file " . basename($file["file"]["name"]) . " has been uploaded successfully!!.";
+				$xml = simplexml_load_file( $target_file );
 
-			foreach ($xml_data['RSS']['CHANNEL']['ITEM'] as $property) {
+				$counter          = 0;
+				$status           = '';
+				$state            = '';
+				$suburb           = '';
+				$additional_array = '';
 
-
-
-				$current_user = wp_get_current_user();
-				$post_data    = [
-					'comment_status' => $property['WP:COMMENT_STATUS'],
-					'ping_status'    => $property['WP:PING_STATUS'],
-					'post_author'    => $current_user->ID,
-					'post_content'   => $property['DESCRIPTION'] ? $property['DESCRIPTION'] : '',
-					'post_excerpt'   => $property['EXCERPT:ENCODED'] ? $property['EXCERPT:ENCODED'] : '',
-					'post_name'      => $property['WP:POST_NAME'],
-					'post_status'    => $property['WP:STATUS'],
-					/* translators: %s: post/page title */
-					'post_title'     => $property['TITLE'],
-					'post_type'      => $property['WP:POST_TYPE'],
-					'to_ping'        => $property['WP:PING_STATUS'],
-					'menu_order'     => $property['WP:MENU_ORDER'],
-				];
-
-				$new_post_id = wp_insert_post( $post_data );
-				$post_meta   = $property['WP:POSTMETA'];
-				$taxonomies  = get_object_taxonomies( $property['WP:POST_TYPE'] );
-
-				if ( count( $post_meta ) !== 0 ) {
-					foreach ( $post_meta as $meta_info ) {
-						$meta_key   = $meta_info['WP:META_KEY'];
-						$meta_value = addslashes( $meta_info['WP:META_VALUE']);
-						$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-					}
+				$xml_data = $this->XMLtoArray( file_get_contents( $target_file ) );
+				$post_arr  = [];
+				if ( $this->isAssoc( $xml_data['RSS']['CHANNEL']['ITEM'] ) ) {
+					$post_arr[] = $xml_data['RSS']['CHANNEL']['ITEM'];
+				} else {
+					$post_arr = $xml_data['RSS']['CHANNEL']['ITEM'];
 				}
 
+				foreach ( $post_arr as $property ) {
 
+					$current_user = wp_get_current_user();
+					$post_data    = [
+						'comment_status' => $property['WP:COMMENT_STATUS'],
+						'ping_status'    => $property['WP:PING_STATUS'],
+						'post_author'    => $current_user->ID,
+						'post_content'   => $property['DESCRIPTION'] ? $property['DESCRIPTION'] : '',
+						'post_excerpt'   => $property['EXCERPT:ENCODED'] ? $property['EXCERPT:ENCODED'] : '',
+						'post_name'      => $property['WP:POST_NAME'],
+						'post_status'    => $property['WP:STATUS'],
+						/* translators: %s: post/page title */
+						'post_title'     => $property['TITLE'],
+						'post_type'      => $property['WP:POST_TYPE'],
+						'to_ping'        => $property['WP:PING_STATUS'],
+						'menu_order'     => $property['WP:MENU_ORDER'],
+					];
+					if ( ! function_exists( 'post_exists' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/post.php';
+					}
+					if ( 0 === post_exists( $property['TITLE'], '', '', $property['WP:POST_TYPE'] ) ) {
+						$new_post_id = wp_insert_post( $post_data );
+						wp_set_post_terms( $new_post_id, null, 'category' );
+						$post_meta = $property['WP:POSTMETA'];
 
+						if ( count( $post_meta ) !== 0 ) {
+							foreach ( $post_meta as $meta_info ) {
 
-            }
+								$meta_key   = $meta_info['WP:META_KEY'];
+								$meta_value = addslashes( $meta_info['WP:META_VALUE'] );
+								$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+								if ( is_array( $meta_info ) ) {
 
-        } else {
-            echo "<br/><br/>Sorry, there was an error uploading your file.";
-        }
-    }
+									foreach ( $meta_info as $category ) {
 
+										   $term = term_exists( $category['content'], $category['DOMAIN'] );
 
+										   wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category['DOMAIN'], true );
+
+									}
+								}
+							}
+						}
+						return rest_ensure_response(
+							[
+								'success' => true,
+								'message' => 'Post Imported Successfully!',
+							]
+						);
+					} else {
+
+						return rest_ensure_response(
+							[
+								'error'   => true,
+								'message' => 'Sorry, Post Already exist!',
+							]
+						);
+					}
+				}
+			} else {
+
+				return rest_ensure_response(
+					[
+						'error'   => true,
+						'message' => 'Sorry, there was an error uploading your file.',
+					]
+				);
+			}
+		}
 	}
 
+	public function XMLtoArray( $xml ) {
+		$xml_parser = xml_parser_create();
+		xml_parse_into_struct( $xml_parser, $xml, $vals );
+		xml_parser_free( $xml_parser );
+		// wyznaczamy tablice z powtarzajacymi sie tagami na tym samym poziomie
+		$_tmp = '';
+		foreach ( $vals as $xml_elem ) {
+			$x_tag   = $xml_elem['tag'];
+			$x_level = $xml_elem['level'];
+			$x_type  = $xml_elem['type'];
+			if ( $x_level !== 1 && $x_type === 'close' ) {
+				if ( isset( $multi_key[ $x_tag ][ $x_level ] ) ) {
+					$multi_key[ $x_tag ][ $x_level ] = 1;
+				} else {
+					$multi_key[ $x_tag ][ $x_level ] = 0;
+				}
+			}
+			if ( $x_level !== 1 && $x_type === 'complete' ) {
+				if ( $_tmp == $x_tag ) {
+					$multi_key[ $x_tag ][ $x_level ] = 1;
+				}
 
+				$_tmp = $x_tag;
+			}
+		}
+		// jedziemy po tablicy
+		foreach ( $vals as $xml_elem ) {
+			$x_tag   = $xml_elem['tag'];
+			$x_level = $xml_elem['level'];
+			$x_type  = $xml_elem['type'];
+			if ( $x_type == 'open' ) {
+				$level[ $x_level ] = $x_tag;
+			}
 
-	function XMLtoArray($XML)
-{
-    $xml_parser = xml_parser_create();
-    xml_parse_into_struct($xml_parser, $XML, $vals);
-    xml_parser_free($xml_parser);
-    // wyznaczamy tablice z powtarzajacymi sie tagami na tym samym poziomie
-    $_tmp='';
-    foreach ($vals as $xml_elem) {
-        $x_tag=$xml_elem['tag'];
-        $x_level=$xml_elem['level'];
-        $x_type=$xml_elem['type'];
-        if ($x_level!=1 && $x_type == 'close') {
-            if (isset($multi_key[$x_tag][$x_level]))
-                $multi_key[$x_tag][$x_level]=1;
-            else
-                $multi_key[$x_tag][$x_level]=0;
-        }
-        if ($x_level!=1 && $x_type == 'complete') {
-            if ($_tmp==$x_tag)
-                $multi_key[$x_tag][$x_level]=1;
-            $_tmp=$x_tag;
-        }
-    }
-    // jedziemy po tablicy
-    foreach ($vals as $xml_elem) {
-        $x_tag=$xml_elem['tag'];
-        $x_level=$xml_elem['level'];
-        $x_type=$xml_elem['type'];
-        if ($x_type == 'open')
-            $level[$x_level] = $x_tag;
-        $start_level = 1;
-        $php_stmt = '$xml_array';
-        if ($x_type=='close' && $x_level!=1)
-            $multi_key[$x_tag][$x_level]++;
-        while ($start_level < $x_level) {
-            $php_stmt .= '[$level['.$start_level.']]';
-            if (isset($multi_key[$level[$start_level]][$start_level]) && $multi_key[$level[$start_level]][$start_level])
-                $php_stmt .= '['.($multi_key[$level[$start_level]][$start_level]-1).']';
-            $start_level++;
-        }
-        $add='';
-        if (isset($multi_key[$x_tag][$x_level]) && $multi_key[$x_tag][$x_level] && ($x_type=='open' || $x_type=='complete')) {
-            if (!isset($multi_key2[$x_tag][$x_level]))
-                $multi_key2[$x_tag][$x_level]=0;
-            else
-                $multi_key2[$x_tag][$x_level]++;
-            $add='['.$multi_key2[$x_tag][$x_level].']';
-        }
-        if (isset($xml_elem['value']) && trim($xml_elem['value'])!='' && !array_key_exists('attributes', $xml_elem)) {
-            if ($x_type == 'open')
-                $php_stmt_main=$php_stmt.'[$x_type]'.$add.'[\'content\'] = $xml_elem[\'value\'];';
-            else
-                $php_stmt_main=$php_stmt.'[$x_tag]'.$add.' = $xml_elem[\'value\'];';
-            eval($php_stmt_main);
-        }
-        if (array_key_exists('attributes', $xml_elem)) {
-            if (isset($xml_elem['value'])) {
-                $php_stmt_main=$php_stmt.'[$x_tag]'.$add.'[\'content\'] = $xml_elem[\'value\'];';
-                eval($php_stmt_main);
-            }
-            foreach ($xml_elem['attributes'] as $key=>$value) {
-                $php_stmt_att=$php_stmt.'[$x_tag]'.$add.'[$key] = $value;';
-                eval($php_stmt_att);
-            }
-        }
-    }
-    return $xml_array;
-}
+			$start_level = 1;
+			$php_stmt    = '$xml_array';
+			if ( $x_type == 'close' && $x_level != 1 ) {
+				$multi_key[ $x_tag ][ $x_level ]++;
+			}
+
+			while ( $start_level < $x_level ) {
+				$php_stmt .= '[$level[' . $start_level . ']]';
+				if ( isset( $multi_key[ $level[ $start_level ] ][ $start_level ] ) && $multi_key[ $level[ $start_level ] ][ $start_level ] ) {
+					$php_stmt .= '[' . ( $multi_key[ $level[ $start_level ] ][ $start_level ] - 1 ) . ']';
+				}
+
+				$start_level++;
+			}
+			$add = '';
+			if ( isset( $multi_key[ $x_tag ][ $x_level ] ) && $multi_key[ $x_tag ][ $x_level ] && ( $x_type == 'open' || $x_type == 'complete' ) ) {
+				if ( ! isset( $multi_key2[ $x_tag ][ $x_level ] ) ) {
+					$multi_key2[ $x_tag ][ $x_level ] = 0;
+				} else {
+					$multi_key2[ $x_tag ][ $x_level ]++;
+				}
+
+				$add = '[' . $multi_key2[ $x_tag ][ $x_level ] . ']';
+			}
+			if ( isset( $xml_elem['value'] ) && trim( $xml_elem['value'] ) != '' && ! array_key_exists( 'attributes', $xml_elem ) ) {
+				if ( $x_type == 'open' ) {
+					$php_stmt_main = $php_stmt . '[$x_type]' . $add . '[\'content\'] = $xml_elem[\'value\'];';
+				} else {
+					$php_stmt_main = $php_stmt . '[$x_tag]' . $add . ' = $xml_elem[\'value\'];';
+				}
+
+				eval( $php_stmt_main );
+			}
+			if ( array_key_exists( 'attributes', $xml_elem ) ) {
+				if ( isset( $xml_elem['value'] ) ) {
+					$php_stmt_main = $php_stmt . '[$x_tag]' . $add . '[\'content\'] = $xml_elem[\'value\'];';
+					eval( $php_stmt_main );
+				}
+				foreach ( $xml_elem['attributes'] as $key => $value ) {
+					$php_stmt_att = $php_stmt . '[$x_tag]' . $add . '[$key] = $value;';
+					eval( $php_stmt_att );
+				}
+			}
+		}
+		return $xml_array;
+	}
+
+	public function isAssoc( array $arr ) {
+		if ( [] === $arr ) {
+			return false;
+		} else {
+			return array_keys( $arr ) !== range( 0, count( $arr ) - 1 );
+		}
+	}
 }
