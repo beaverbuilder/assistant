@@ -3,7 +3,7 @@ import { getWpRest } from 'assistant/utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
 import { App, Page, Button, List, Nav, Filter } from 'assistant/ui'
 import {
-	useSystemState,
+	getSystemSelectors,
 	useAppState,
 	getAppActions,
 	getUpdaterStore,
@@ -27,9 +27,9 @@ const UpdatesMain = () => {
 	const { setUpdatingAll, setUpdateType, setListStyle } = getAppActions( 'fl-updates' )
 	const { handle } = useContext( App.Context )
 	const { getContent } = getWpRest()
-	const { counts } = useSystemState()
+	const { getCount } = getSystemSelectors()
 
-	const totalUpdates = counts['update/plugins'] + counts['update/themes']
+	const totalUpdates = getCount( 'update/plugins' ) + getCount( 'update/themes' )
 	const hasUpdates = 0 !== totalUpdates
 
 	const updateAll = () => {
@@ -81,8 +81,8 @@ const UpdatesMain = () => {
 
 		const types = {
 			'all': __( 'All' ),
-			plugins: sprintf( 'Plugin (%s)', counts['update/plugins'] ),
-			themes: sprintf( 'Theme (%s)', counts['update/themes'] ),
+			plugins: sprintf( 'Plugin (%s)', getCount( 'update/plugins' ) ),
+			themes: sprintf( 'Theme (%s)', getCount( 'update/themes' ) ),
 		}
 
 		const listStyles = {

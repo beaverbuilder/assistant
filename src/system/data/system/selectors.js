@@ -1,4 +1,6 @@
-
+export const getCount = ( state, key ) => {
+	return state.counts[ key ] ? state.counts[ key ] : 0
+}
 
 export const querySections = ( state, passedQuery ) => {
 	const { sections } = state
