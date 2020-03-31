@@ -9,7 +9,6 @@ import { getFirstFocusableChild } from 'utils/dom'
 import {
 	Pad,
 	Toolbar,
-	TitleCard,
 	RegisteredSections,
 	Empty,
 } from './parts'
@@ -142,9 +141,6 @@ Page.Toolbar.displayName = 'Page.Toolbar'
 // Padded box
 Page.Pad = Pad
 Page.Pad.displayName = 'Page.Pad'
-
-Page.TitleCard = TitleCard
-Page.TitleCard.displayName = 'Page.TitleCard'
 
 Page.RegisteredSections = RegisteredSections
 Page.RegisteredSections.displayName = 'Page.RegisteredSections'

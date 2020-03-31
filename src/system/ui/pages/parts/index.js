@@ -40,20 +40,6 @@ export const Pad = ( {
 	return <div className={ classes } { ...rest } />
 }
 
-export const TitleCard = ( { className, title, children, ...rest } ) => {
-	const classes = classname( {
-		'fl-asst-card': true,
-		'fl-asst-secondary-surface ': true,
-	}, className )
-
-	return (
-		<div className={ classes } { ...rest }>
-			{ title && <div className="fl-asst-card-title">{title}</div> }
-			{children}
-		</div>
-	)
-}
-
 export const RegisteredSections = ( { location, data } ) => {
 	const { querySections } = getSystemSelectors()
 	const sections = useMemo( () => querySections( location ), [ location ] )

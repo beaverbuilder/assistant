@@ -41,57 +41,6 @@
     }
 }
 
-.fl-asst-app-header {
-    box-sizing: border-box;
-    flex: 0 0 46px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 var(--fl-asst-medium-space);
-    margin: var(--fl-asst-tiny-space) 0 0;
-    -webkit-user-select: none;
-    user-select: none;
-
-    .fl-asst-app-header-icon {
-        flex: 0 0 auto;
-        display: flex;
-        justify-content: center;
-        padding-right: var(--fl-asst-small-space);
-        color: var(--fl-asst-accent-color);
-        width: 38px;
-    }
-
-    .fl-asst-app-header-name {
-        flex: 1 1 auto;
-        font-size: 20px;
-        font-weight: 600;
-        display: flex;
-        flex-direction: column;
-
-        &.fl-asst-app-small-title {
-            font-size: 16px;
-            border-left: 2px solid var(--fl-asst-dim-text);
-            padding-left: var(--fl-asst-inner-space);
-        }
-
-        .fl-asst-app-header-name-description {
-            font-size: 12px;
-            font-weight: normal;
-            text-transform: capitalize;
-        }
-    }
-
-    .fl-asst-app-header-actions {
-        flex: 0 0 auto;
-        margin-left: auto;
-        display: flex;
-        flex-direction: row;
-
-        a {
-            text-decoration: none;
-        }
-    }
-}
 
 .fl-asst-screen-content {
     box-sizing: border-box;
@@ -104,6 +53,7 @@
     min-height: 0;
 }
 
+/*
 .fl-asst-panel-toolbar {
     flex: 0 0 auto;
     display: flex;
@@ -130,6 +80,7 @@
         color: var(--fluid-dark-color);
     }
 }
+*/
 
 .fl-asst .remove-btn {
     margin-right: 0.5rem;
