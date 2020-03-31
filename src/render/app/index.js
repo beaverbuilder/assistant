@@ -135,9 +135,13 @@ const AppContent = props => {
 		'fl-asst-app-root': isAppRoot,
 	} )
 
+	const AppRoot = () => {
+		return 'function' === typeof app.root ? app.root( appProps ) : null
+	}
+
 	return (
 		<div className={ appWrapClasses }>
-			{ 'function' === typeof app.root ? app.root( appProps ) : null }
+			<AppRoot />
 		</div>
 	)
 }
