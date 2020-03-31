@@ -13,8 +13,10 @@ const Page = ({
     title,
     icon,
     toolbar,
+    topContentStyle, /* element wraps header and toolbar */
     actions,
     header,
+
     footer,
     onLoad = () => {},
     shouldScroll = true,
@@ -97,7 +99,7 @@ const Page = ({
                     minHeight: 0,
                     flexShrink: shouldScroll ? 0 : 1,
                 }}>
-                    <div className="fluid-sticky-element fluid-page-top-content">
+                    <div className="fluid-sticky-element fluid-page-top-content" style={topContentStyle}>
                         { toolbar !== false  && (
                             <div className="fluid-toolbar fluid-page-top-toolbar">
                                 { showBackButton && <Nav.BackButton /> }
