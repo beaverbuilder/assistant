@@ -8,6 +8,7 @@ import { getSrcSet } from 'utils/image'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
 
+
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
@@ -16,6 +17,7 @@ export const Post = ( { location, match, history } ) => {
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
+	const [startDate, setStartDate] = useState(new Date());
 
 	const tabs = {
 		general: {
@@ -115,7 +117,8 @@ export const Post = ( { location, match, history } ) => {
 						date: {
 							label: __( 'Publish Date' ),
 							labelPlacement: 'beside',
-							component: 'plain-text',
+							component:'calender',
+
 						},
 					},
 				},
@@ -399,6 +402,7 @@ export const Post = ( { location, match, history } ) => {
 			<Layout.Headline>{values.title}</Layout.Headline>
 			<ElevatorButtons />
 			{ renderForm() }
+
 		</Page>
 	)
 }
