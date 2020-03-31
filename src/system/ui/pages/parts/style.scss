@@ -1,16 +1,5 @@
 .fl-asst {
 
-    .fl-asst-pad-top {
-        padding-top:  var(--fl-asst-outer-space);
-    }
-    .fl-asst-pad-sides {
-        padding-left:  var(--fl-asst-outer-space);
-        padding-right:  var(--fl-asst-outer-space);
-    }
-    .fl-asst-pad-bottom {
-        padding-bottom: var(--fl-asst-outer-space);
-    }
-
     .fl-asst-toolbar {
         flex: 0 0 auto;
         display: flex;
@@ -19,7 +8,7 @@
         justify-content: center;
 
         & > * {
-            margin-right: var(--fl-asst-tiny-space);
+            margin-right: var(--fluid-sm-space);
 
             &:last-child {
                 margin-right:0;

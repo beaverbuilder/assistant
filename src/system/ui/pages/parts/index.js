@@ -1,25 +1,7 @@
 import React, { useMemo } from 'react'
-import classname from 'classnames'
 import { Page } from 'ui'
 import { getSystemSelectors } from 'data'
 import './style.scss'
-
-// Padded box
-export const Pad = ( {
-	className,
-	top = true,
-	sides = true,
-	bottom = true,
-	...rest
-} ) => {
-	const classes = classname( {
-		'fl-asst-pad-top': top,
-		'fl-asst-pad-sides': sides,
-		'fl-asst-pad-bottom': bottom,
-	}, className )
-
-	return <div className={ classes } { ...rest } />
-}
 
 export const RegisteredSections = ( { location, data } ) => {
 	const { querySections } = getSystemSelectors()

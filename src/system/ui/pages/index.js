@@ -4,7 +4,7 @@ import { Page as FLUIDPage } from 'fluid/ui'
 import { App } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
-import { Pad, RegisteredSections } from './parts'
+import { RegisteredSections } from './parts'
 
 import { Post } from './post'
 import { CreatePost } from './post/create'
@@ -50,10 +50,6 @@ Page.defaults = {
 
 Page.Context = createContext( Page.defaults )
 Page.Context.displayName = 'Page.Context'
-
-// Padded box
-Page.Pad = Pad
-Page.Pad.displayName = 'Page.Pad'
 
 Page.RegisteredSections = RegisteredSections
 Page.RegisteredSections.displayName = 'Page.RegisteredSections'

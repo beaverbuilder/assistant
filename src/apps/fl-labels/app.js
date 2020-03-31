@@ -3,7 +3,7 @@ import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { Color, Control, Page, Table, Button, Icon, Nav } from 'assistant/ui'
+import { Color, Control, Page, Table, Button, Icon, Nav, Layout } from 'assistant/ui'
 import AppIcon from './icon'
 import './style.scss'
 
@@ -207,9 +207,9 @@ const Main = () => {
 
 	const InnerSection = ( { children } ) => {
 		return (
-			<Page.Pad top={ false } sides={ false }>
+			<Layout.Row style={{ paddingBottom: 'var(--fluid-lg-space)'}}>
 				{ children }
-			</Page.Pad>
+			</Layout.Row>
 		)
 	}
 

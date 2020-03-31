@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig, useSystemState, getSystemActions } from 'assistant/data'
-import { Page, Form, Button, Nav } from 'assistant/ui'
+import { Page, Form, Button, Nav, Layout } from 'assistant/ui'
 
 //import { CancelToken } from 'axios'
 
@@ -165,7 +165,7 @@ export const User = ( { location, match, history } ) => {
 
 	// Don't show tab buttons for only 1 tab
 	const TabButtons = () => useMemo( () =>  1 < tabs.length && (
-		<Page.Pad style={ { display: 'flex', justifyContent: 'center',  flexShrink: 0 } } bottom={ false } sides={ false }>
+		<Layout.Box style={ { display: 'flex', justifyContent: 'center',  flexShrink: 0 } } bottom={ false } sides={ false }>
 			<Button.Group appearance="tabs">
 				{tabs.map( ( { label, path, shouldInclude = true }, i ) => shouldInclude && (
 					<Button key={ i }
@@ -174,7 +174,7 @@ export const User = ( { location, match, history } ) => {
 					>{label}</Button>
 				) )}
 			</Button.Group>
-		</Page.Pad>
+		</Layout.Box>
 	), [] )
 
 	return (
