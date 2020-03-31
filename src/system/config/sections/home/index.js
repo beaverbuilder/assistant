@@ -57,7 +57,7 @@ registerSection( 'fl-home-currently-viewing', {
 
 		const style = {
 			background: 'var(--fluid-box-background)',
-			borderRadius: 20,
+			borderRadius: 'var(--fluid-radius)',
 			padding: 'var(--fluid-lg-space)',
 		}
 

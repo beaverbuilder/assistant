@@ -34,7 +34,7 @@
         border:none;
         outline: none;
         box-shadow: none;
-        min-height: var(--fl-asst-target-size);
+        min-height: var(--fluid-target-size);
 
         // Yes, these have to be separate rules.
         &::-webkit-input-placeholder{

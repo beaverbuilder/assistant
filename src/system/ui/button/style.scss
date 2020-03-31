@@ -9,7 +9,7 @@
         color: var(--fl-asst-secondary-surface-color);
         border-radius: 5px;
         padding: 3px;
-        min-height: calc( var(--fl-asst-target-size) + 6px );
+        min-height: calc( var(--fluid-target-size) + 6px );
         max-width:100%;
         overflow-x: hidden; // Firefox flips out with auto.
         position: relative;
@@ -44,8 +44,9 @@
 
         &.fl-asst-button-group-appearance-buttons {
             background: transparent;
-            padding: 2px;
-            min-height: var(--fl-asst-target-size);
+            padding: 2px 0;
+            min-height: var(--fluid-target-size);
+            overflow: visible;
 
             .fluid-button {
                 margin-right: var(--fl-asst-tiny-space);
@@ -72,10 +73,13 @@
                 margin: 0;
                 background: transparent;
                 border: none;
-                border-radius: 3px;
+                border-radius: 0;
 
                 &:hover {
                     background: var(--fluid-box-hover-background);
+                }
+                &:focus {
+                    border-radius: var(--fluid-radius);
                 }
 
                 &.is-selected {
