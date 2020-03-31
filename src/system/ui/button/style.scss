@@ -7,7 +7,7 @@
 	    flex-wrap: wrap;
         background: var(--fl-asst-secondary-surface-background);
         color: var(--fl-asst-secondary-surface-color);
-        border-radius: var(--fl-asst-base-radius);
+        border-radius: 5px;
         padding: 3px;
         min-height: calc( var(--fl-asst-target-size) + 6px );
         max-width:100%;
@@ -25,9 +25,9 @@
         &.fl-asst-button-group-appearance-normal {
             .fluid-button {
                 background: transparent;
-                border-radius: 4px;
                 z-index:1;
                 white-space: nowrap;
+                border-radius: 3px;
 
                 &.fl-asst-is-selected {
                     background: var(--fl-asst-surface-background);
@@ -79,9 +79,9 @@
                 }
 
                 &.is-selected {
-                    color: var(--fluid-primary-color);
+                    color: var(--fluid-accent);
                     background: var(--fluid-background);
-                    box-shadow: 0px -2px 0px var(--fluid-primary-color);
+                    box-shadow: 0px -2px 0px var(--fluid-accent);
                     border-radius: 0;
 
                     &:focus {

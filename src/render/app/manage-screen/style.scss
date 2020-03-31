@@ -13,7 +13,6 @@
                 display: inline-flex;
                 flex-direction: row;
                 align-items: center;
-                justify-content: flex-start;
                 min-height: 40px;
             }
 
@@ -27,7 +26,7 @@
             .fl-asst-item-reorder-buttons {
                 display: inline-flex;
                 flex-direction: row;
-                flex: 0 0 64px;
+                flex: 0 0 72px;
 
                 .fl-asst-button-space {
                     display: flex;

@@ -1,8 +1,8 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
-import { Page, Icon, Button } from 'assistant/ui'
-import { useAppList } from 'assistant/data'
+import { Page, Icon, Button, Form, Layout } from 'assistant/ui'
+import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
 import './style.scss'
 
 const ManageScreen = () => {
@@ -22,7 +22,7 @@ const ManageScreen = () => {
 
 				<ul className="fl-asst-manage-app-order-list">
 					<li>
-						<Button appearance="transparent" onClick={ goToRoot }>
+						<Button appearance="transparent" onClick={ goToRoot } style={{ justifyContent: 'flex-start' }}>
 							<span className="fl-asst-item-icon">
 								<Icon.Home />
 							</span>
@@ -53,6 +53,7 @@ const ManageScreen = () => {
 									style={ {
 										flex: '1 1 auto',
 										marginRight: 'auto',
+										justifyContent: 'flex-start',
 									} }
 								>
 									<span className="fl-asst-item-icon">
@@ -90,7 +91,39 @@ const ManageScreen = () => {
 					} )}
 				</ul>
 			</Page.Section>
+
+			<UIColorPreferences />
+
 		</Page>
+	)
+}
+
+const UIColorPreferences = () => {
+	const { appearance } = useSystemState()
+	const { setBrightness } = getSystemActions()
+	return (
+		<Form>
+			<Form.Section label={__('Preferences')}>
+				<Form.Item label={__('UI Brightness')} labelPlacement="beside">
+
+					<Layout.Row gap={5}>
+						<Button
+							isSelected={ 'light' === appearance.brightness }
+							onClick={ () => setBrightness('light') }
+						>
+							<Icon.Brightness />&nbsp;&nbsp;{__('Light')}
+						</Button>
+
+						<Button
+							isSelected={ 'dark' === appearance.brightness }
+							onClick={ () => setBrightness('dark') }
+						>
+							<Icon.Moon />&nbsp;&nbsp;{__('Dark')}
+						</Button>
+					</Layout.Row>
+				</Form.Item>
+			</Form.Section>
+		</Form>
 	)
 }
 
