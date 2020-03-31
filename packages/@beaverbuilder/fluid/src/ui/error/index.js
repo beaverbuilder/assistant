@@ -1,4 +1,4 @@
-import { Component, createElement } from 'react'
+import React, { Component, createElement } from 'react'
 
 const Error = props => props.children
 

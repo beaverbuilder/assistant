@@ -1,3 +1,4 @@
+import React from 'react'
 import classname from 'classnames'
 import { Layout } from '../../'
 import './style.scss'

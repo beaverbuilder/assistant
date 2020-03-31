@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import classname from 'classnames'
 import Nav from '../nav'
 import Section from './section'
@@ -21,7 +21,6 @@ const Page = ( {
 	onLoad = () => {},
 	shouldScroll = true,
 	shouldShowBackButton = val => val,
-	insetTop = true,
 	style = {},
 
 	// Passed to Layout.Box

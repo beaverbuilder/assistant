@@ -1,3 +1,4 @@
+import React from 'react'
 import classname from 'classnames'
 import Error from '../error'
 import Nav from '../nav'
