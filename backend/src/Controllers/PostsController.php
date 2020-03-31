@@ -459,16 +459,16 @@ class PostsController extends ControllerAbstract {
 		$post_id = absint( $request->get_param( 'id' ) );
 		$post = get_post( $post_id );
 
-		/*Create Temporary file */
-
+		/* Create temporary file */
 		$file_url = WP_CONTENT_URL . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
 		$file = WP_CONTENT_DIR . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
+		$current = '';
 
-		$current = file_get_contents( $file );
-		// Append a new post to the file
+		if ( file_exists( $file ) ) {
+			$current = file_get_contents( $file );
+		}
 
-		/* Creates taxomies string for xml export */
-
+		/* Creates taxonomies string for xml export */
 		$taxonomies = get_taxonomies( '', 'names' );
 		$terms = wp_get_object_terms( $post->ID, $taxonomies );
 
@@ -478,7 +478,6 @@ class PostsController extends ControllerAbstract {
 		}
 
 		/* Creates comments string  */
-
 		$comments = get_comments( [ 'post_id' => $post->ID ] );
 
 		$comment_str = '';
@@ -502,8 +501,7 @@ class PostsController extends ControllerAbstract {
 			';
 		}
 
-		/* Created Post meta string */
-
+		/* Creates post meta string */
 		$meta_str = '';
 		$meta_values = get_post_meta( $post->ID );
 		foreach ( $meta_values as $key => $values ) {
@@ -515,6 +513,8 @@ class PostsController extends ControllerAbstract {
 				';
 			}
 		}
+
+		/* Append a new post to the file */
 		$export_data = $this->view->render_to_string(
 			'post-export',
 			[
@@ -525,6 +525,7 @@ class PostsController extends ControllerAbstract {
 
 			]
 		);
+
 		file_put_contents( $file, $current . $export_data );
 
 		return $file_url;
@@ -538,8 +539,7 @@ class PostsController extends ControllerAbstract {
 		$post_id = absint( $request->get_param( 'id' ) );
 		$post = get_post( $post_id );
 
-		/*Remove Temporary file */
-
+		/* Remove temporary file */
 		$file = WP_CONTENT_DIR . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
 
 		if ( file_exists( $file ) ) {
