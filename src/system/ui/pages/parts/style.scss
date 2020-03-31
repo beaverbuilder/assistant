@@ -31,25 +31,4 @@
         display: flex;
         flex-direction: column;
     }
-
-    .fl-asst-card {
-        border-radius: 15px;
-        padding: var(--fl-asst-outer-space);
-        display: grid;
-        grid-gap: var(--fl-asst-tiny-space);
-
-        .fl-asst-card-title {
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-    }
-
-    .fl-asst-empty-page-message {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        align-items:center;
-        justify-content: center;
-    }
 }

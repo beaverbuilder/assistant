@@ -6,12 +6,7 @@ import { useSystemState } from 'data'
 import { Nav, Icon, App } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
-import {
-	Pad,
-	Toolbar,
-	RegisteredSections,
-	Empty,
-} from './parts'
+import { Pad, RegisteredSections } from './parts'
 
 import { Post } from './post'
 import { CreatePost } from './post/create'
@@ -58,82 +53,6 @@ Page.defaults = {
 Page.Context = createContext( Page.defaults )
 Page.Context.displayName = 'Page.Context'
 
-/* ------ Partial Components ------ */
-Page.Header = ( { icon, label, actions } ) => {
-	const { shouldShowLabels, window } = useSystemState()
-
-	const app = useContext( App.Context )
-	const { label: appLabel, icon: appIcon } = app
-
-	const { history, isRoot } = useContext( Nav.Context )
-
-	const isAppRoot = 1 === history.index
-
-	let visual = icon
-	if ( 'function' !== typeof visual ) {
-		visual = appIcon
-	}
-
-	const iconProps = {
-		width: 24,
-		height: 24,
-		windowSize: window.size,
-		context: 'header',
-	}
-
-	const titleClasses = classname( {
-		'fl-asst-app-header-name': true,
-		'fl-asst-app-small-title': ! isRoot && ! isAppRoot,
-	} )
-
-	return (
-		<>
-			<div className="fl-asst-app-header">
-
-				{ ( isRoot || isAppRoot ) && 'function' === typeof visual &&
-				<div className="fl-asst-app-header-icon">
-					{ visual( iconProps ) }
-				</div>
-				}
-
-				{ ! isRoot && ! isAppRoot &&
-				<div className="fl-asst-app-header-icon">
-					<button
-						onClick={ history.goBack }
-						style={ {
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-							color: 'inherit',
-							lineHeight: 1,
-							fontSize: 12,
-						} }
-					>
-						<div style={ {
-							color: 'var(--fl-asst-accent-color)',
-							marginBottom: shouldShowLabels ? 5 : null,
-						} }>
-							<Icon.BackArrow />
-						</div>
-						{ shouldShowLabels && <span style={ { marginTop: 'auto' } }>{__( 'Back' )}</span> }
-					</button>
-				</div>
-				}
-
-				<div className={ titleClasses }>
-					<span>{ label ? label : appLabel }</span>
-				</div>
-
-				{ actions && <div className="fl-asst-app-header-actions">{actions}</div> }
-			</div>
-		</>
-	)
-}
-
-
-Page.Header.displayName = 'Page.Header'
-
 // Padded box
 Page.Pad = Pad
 Page.Pad.displayName = 'Page.Pad'
@@ -165,9 +84,6 @@ Page.Plugin.displayName = 'Page.Plugin'
 
 Page.Theme = Theme
 Page.Theme.displayName = 'Page.Theme'
-
-Page.Empty = Empty
-Page.Empty.displayName = 'Page.Empty'
 
 Page.NotFound = PageNotFound
 Page.NotFound.displayName = 'Page.NotFound'
