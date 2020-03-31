@@ -18,14 +18,6 @@
         min-height: var(--fluid-target-size);
         justify-content: center;
 
-        &.fl-asst-pad-sides {
-            padding-left: var(--fl-asst-outer-space);
-            padding-right: var(--fl-asst-outer-space);
-        }
-        &.fl-asst-pad-bottom {
-            padding-bottom: var(--fl-asst-inner-space);
-        }
-
         & > * {
             margin-right: var(--fl-asst-tiny-space);
 

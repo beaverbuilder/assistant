@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import React from 'react'
-import { Page, Form, Button, Control } from 'assistant/ui'
+import { Page, Form, Button, Control, Layout } from 'assistant/ui'
 import { Avatar } from '../components/avatar'
 import TitleCard from '../title-card'
 import './invite.scss'
@@ -92,10 +92,10 @@ export const Invite = ( ) => {
 
 	const Footer = () => {
 		return (
-			<Page.Toolbar>
+			<Layout.Row>
 				<Button onClick={ resetForm }>{__( 'Cancel' )}</Button>
 				<Button onClick={ submitForm }>{__( 'Invite' )}</Button>
-			</Page.Toolbar>
+			</Layout.Row>
 		)
 	}
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Page, Button } from 'assistant/ui'
+import { Button, Layout } from 'assistant/ui'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSystemStore } from 'assistant/data'
 import { __ } from '@wordpress/i18n'
@@ -77,12 +77,12 @@ export const getListSectionConfig = ( {
 
 	if ( section.items.length >= NUMBER_OF_RESULTS ) {
 		props.footer = (
-			<Page.Toolbar>
+			<Layout.Box padX={false}>
 				<Button to={ {
 					pathname: `${match.url}/all`,
 					state: { keyword, configKey }
 				} }>{__( 'View All' )}</Button>
-			</Page.Toolbar>
+			</Layout.Box>
 		)
 	}
 

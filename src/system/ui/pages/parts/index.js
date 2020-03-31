@@ -4,25 +4,6 @@ import { Page } from 'ui'
 import { getSystemSelectors } from 'data'
 import './style.scss'
 
-// Horizontal Toolbar - edge padding for controls
-export const Toolbar = ( {
-	className,
-	shouldPadSides = true,
-	shouldPadBottom = false,
-	shouldPadTop = false,
-	...rest
-} ) => {
-	const classes = classname( {
-		'fl-asst-toolbar': true,
-		'fl-asst-pad-top': shouldPadTop,
-		'fl-asst-pad-sides': shouldPadSides,
-		'fl-asst-pad-bottom': shouldPadBottom,
-	}, className )
-	return (
-		<div className={ classes } { ...rest } />
-	)
-}
-
 // Padded box
 export const Pad = ( {
 	className,

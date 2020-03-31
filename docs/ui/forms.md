@@ -53,10 +53,10 @@ const Footer = () => {
 		return null
 	}
 	return (
-		<Page.Toolbar>
+		<Layout.Row>
 			<Button onClick={ resetForm }>{ __( 'Cancel' ) }</Button>
 			<Button type="submit" onClick={ submitForm } >{ __( 'Submit' ) }</Button>
-		</Page.Toolbar>
+		</Layout.Row>
 	)
 }
 
