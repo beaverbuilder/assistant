@@ -128,13 +128,13 @@ class Site {
 			'version'    => $theme->get( 'Version' ),
 		];
 
-		$default_icon = plugins_url('img/icon-128x128.jpg', FL_ASSISTANT_FILE );
+		$default_icon = plugins_url( 'img/icon-128x128.jpg', FL_ASSISTANT_FILE );
 		$data['site'] = [
-			'test' => $default_icon,
-			'icon' => get_site_icon_url( 120, $default_icon ),
-			'title' => get_bloginfo('name'),
-			'description' => get_bloginfo('description'),
-			'homeURL' => home_url(),
+			'test'        => $default_icon,
+			'icon'        => get_site_icon_url( 120, $default_icon ),
+			'title'       => get_bloginfo( 'name' ),
+			'description' => get_bloginfo( 'description' ),
+			'homeURL'     => home_url(),
 		];
 
 		return $data;

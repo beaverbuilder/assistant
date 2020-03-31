@@ -8,7 +8,6 @@ use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
 use FLBuilderModel;
-use WP_REST_Request;
 
 /**
  * Class OnEnqueueScripts
@@ -78,7 +77,6 @@ class OnEnqueueScripts {
 
 		return [
 			'appOrder'           => $user_state['appOrder'],
-			'counts'             => $this->get_counts(),
 			'shouldReduceMotion' => false, /* Disabled */
 
 			/* New UI Props */
@@ -127,16 +125,6 @@ class OnEnqueueScripts {
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
 		];
-	}
-
-	/**
-	 * Returns an array of all counts to hydrate the store.
-	 */
-	public function get_counts() {
-		$request  = new WP_REST_Request( 'GET', '/fl-assistant/v1/counts' );
-		$response = rest_do_request( $request );
-
-		return $response->get_data();
 	}
 
 	/**
@@ -199,7 +187,7 @@ class OnEnqueueScripts {
 				'wp-i18n',
 				'wp-keycodes',
 				'wp-dom-ready',
-				'wp-components'
+				'wp-components',
 			];
 
 			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid', 'wp-components' ], $ver, null );
