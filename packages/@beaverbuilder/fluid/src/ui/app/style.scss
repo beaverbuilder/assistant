@@ -29,6 +29,10 @@
     // Accent Color
     --fluid-accent: #0075DB;
 
+    // Outlines and Separators
+    --fluid-line-color: #F1F5F9;
+    --fluid-dark-line-color: black;
+
     // Spacing
     --fluid-sm-space: 5px;
     --fluid-med-space: 10px;
@@ -76,6 +80,7 @@
         --fluid-color: hsl(210, 15%, 90%);
         // Accent Color
         --fluid-accent: #0075DB;
+        --fluid-line-color: var(--fluid-dark-line-color);
 
         // Box Colors
         --fluid-box-background: hsl(210, 17%, 5%);

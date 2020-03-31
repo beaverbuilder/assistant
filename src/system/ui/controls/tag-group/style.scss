@@ -8,7 +8,7 @@
 
         padding: var(--fluid-sm-space);
         background: var(--fluid-box-background);
-        border-radius: var(--fl-asst-base-radius);
+        border-radius: var(--fluid-radius);
     }
 
     .fl-asst-tag {
@@ -18,7 +18,7 @@
         align-items: center;
         background: var(--fluid-background);
         color: var(--fluid-color);
-        border-radius: 13px;
+        border-radius: var(--fluid-radius);
         padding: var(--fluid-sm-space) 6px;
         margin: var(--fluid-sm-space);
         min-height: 26px;

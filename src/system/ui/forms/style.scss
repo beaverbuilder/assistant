@@ -179,9 +179,9 @@
         color: inherit;
         padding: var(--fluid-sm-space);
         margin:0;
-        background-color: var(--fluid-background);
+        background-color: transparent;
         background-image: none;
-        box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background);
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
         border-radius: 3px;
         height: auto;
         min-height: var(--fl-asst-target-size);

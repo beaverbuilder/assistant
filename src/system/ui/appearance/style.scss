@@ -21,7 +21,6 @@
     --fl-asst-dark-translucent: hsla(210, 17%, 12%, .96);
 
     // Sizes
-    --fl-asst-base-radius: var(--fluid-radius);
     --fl-asst-target-size: var(--fluid-target-size); // Smallest actionable area
 
     --fl-asst-side-toolbar-width: 60px;
@@ -71,7 +70,7 @@
         color: inherit;
         background: transparent;
         border: none;
-        border-radius: var(--fl-asst-base-radius);
+        border-radius: var(--fluid-radius);
         user-select: none;
         padding:0;
         display: inline-flex;
@@ -187,7 +186,7 @@
     // Helpers
     .fl-asst-is-hidden { visibility: hidden; }
 
-    .fl-asst-rounded { border-radius: var(--fl-asst-base-radius); }
+    .fl-asst-rounded { border-radius: var(--fluid-radius); }
 
     .fl-asst-padded { padding: var(--fl-asst-outer-space); }
 

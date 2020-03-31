@@ -30,14 +30,14 @@
 	    overflow: scroll;
 		padding: var(--fl-asst-tiny-space);
 		background: var(--fl-asst-surface-background);
-		border-radius: var(--fl-asst-base-radius);
+		border-radius: var(--fluid-radius);
 		box-shadow: 0 0 10px rgba(0, 0, 0, .20);
 	}
 
 	.fl-asst-tag-group-suggest-item {
 		cursor: pointer;
 		padding: var(--fl-asst-tiny-space);
-		border-radius: var(--fl-asst-base-radius);
+		border-radius: var(--fluid-radius);
 
 		&:hover {
 			background: var(--fl-asst-secondary-surface-background);
