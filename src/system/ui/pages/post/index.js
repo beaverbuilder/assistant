@@ -118,6 +118,7 @@ export const Post = ( { location, match, history } ) => {
 							label: __( 'Publish Date' ),
 							labelPlacement: 'beside',
 							component:'calender',
+							value:item.date
 
 						},
 					},

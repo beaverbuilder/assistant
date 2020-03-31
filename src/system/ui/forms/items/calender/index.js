@@ -2,7 +2,7 @@ import React, { useState }  from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 export const CalenderItem = ( {id,value,onChange = () => {},content,...rest} ) => {
-	const [startDate, setStartDate] = useState(new Date());
+	const [startDate, setStartDate] = useState(value);
 
 	return (
 		<>
