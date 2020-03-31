@@ -461,8 +461,8 @@ class PostsController extends ControllerAbstract {
 
 		/*Create Temporary file */
 
-		$file_url = WP_CONTENT_URL . '/' . $post->post_title . '_' . $post->ID . '.xml';
-		$file = WP_CONTENT_DIR . '/' . $post->post_title . '_' . $post->ID . '.xml';
+		$file_url = WP_CONTENT_URL . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
+		$file = WP_CONTENT_DIR . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
 
 		$current = file_get_contents( $file );
 		// Append a new post to the file
@@ -540,7 +540,7 @@ class PostsController extends ControllerAbstract {
 
 		/*Remove Temporary file */
 
-		$file = WP_CONTENT_DIR . '/' . $post->post_title . '_' . $post->ID . '.xml';
+		$file = WP_CONTENT_DIR . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
 
 		if ( file_exists( $file ) ) {
 			unlink( $file );
