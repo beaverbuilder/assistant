@@ -22,7 +22,7 @@ const ManageScreen = () => {
 
 				<ul className="fl-asst-manage-app-order-list">
 					<li>
-						<Button appearance="transparent" onClick={ goToRoot } style={{ justifyContent: 'flex-start' }}>
+						<Button appearance="transparent" onClick={ goToRoot } style={ { justifyContent: 'flex-start' } }>
 							<span className="fl-asst-item-icon">
 								<Icon.Home />
 							</span>
@@ -103,22 +103,22 @@ const UIColorPreferences = () => {
 	const { setBrightness } = getSystemActions()
 	return (
 		<Form>
-			<Form.Section label={__('Preferences')}>
-				<Form.Item label={__('UI Brightness')} labelPlacement="beside">
+			<Form.Section label={ __( 'Preferences' ) }>
+				<Form.Item label={ __( 'UI Brightness' ) } labelPlacement="beside">
 
-					<Layout.Row gap={5}>
+					<Layout.Row gap={ 5 }>
 						<Button
 							isSelected={ 'light' === appearance.brightness }
-							onClick={ () => setBrightness('light') }
+							onClick={ () => setBrightness( 'light' ) }
 						>
-							<Icon.Brightness />&nbsp;&nbsp;{__('Light')}
+							<Icon.Brightness />&nbsp;&nbsp;{__( 'Light' )}
 						</Button>
 
 						<Button
 							isSelected={ 'dark' === appearance.brightness }
-							onClick={ () => setBrightness('dark') }
+							onClick={ () => setBrightness( 'dark' ) }
 						>
-							<Icon.Moon />&nbsp;&nbsp;{__('Dark')}
+							<Icon.Moon />&nbsp;&nbsp;{__( 'Dark' )}
 						</Button>
 					</Layout.Row>
 				</Form.Item>

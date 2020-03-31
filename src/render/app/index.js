@@ -1,7 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
 import { useLocation } from 'react-router-dom'
-import { __ } from '@wordpress/i18n'
 import { App, Nav, Page, Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
 import HomeScreen from './home-screen'

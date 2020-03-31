@@ -77,7 +77,7 @@ export const getListSectionConfig = ( {
 
 	if ( section.items.length >= NUMBER_OF_RESULTS ) {
 		props.footer = (
-			<Layout.Box padX={false}>
+			<Layout.Box padX={ false }>
 				<Button to={ {
 					pathname: `${match.url}/all`,
 					state: { keyword, configKey }

@@ -77,7 +77,7 @@ const Main = () => {
 			icon={ <AppIcon context="sidebar" /> }
 			padY={ false }
 			header={ <Header /> }
-			topContentStyle={{ border: 'none' }}
+			topContentStyle={ { border: 'none' } }
 			actions={ <Actions /> }
 			shouldScroll={ false }
 			shouldShowBackButton={ false }

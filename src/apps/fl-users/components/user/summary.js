@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Page } from 'assistant/ui'
+import { Button } from 'assistant/ui'
 import TitleCard from '../../title-card'
 import './summary.scss'
 

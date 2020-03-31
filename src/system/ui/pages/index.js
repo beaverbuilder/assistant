@@ -1,9 +1,7 @@
-import React, { useContext, createContext } from 'react'
+import React, { createContext } from 'react'
 import classname from 'classnames'
-import { __ } from '@wordpress/i18n'
 import { Page as FLUIDPage } from 'fluid/ui'
-import { useSystemState } from 'data'
-import { Nav, Icon, App } from 'ui'
+import { App } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
 import { Pad, RegisteredSections } from './parts'

@@ -97,7 +97,7 @@ export const Main = ( { match } ) => {
 		>
 
 			{ null !== results && ! results.length &&
-				<Layout.Box padX={false}>{ __( 'Please try a different search.' ) }</Layout.Box>
+				<Layout.Box padX={ false }>{ __( 'Please try a different search.' ) }</Layout.Box>
 			}
 
 			{ ( '' === keyword || ( null !== results && ! results.length ) ) &&
