@@ -6,21 +6,21 @@ import Error from '../error'
 import Layout from '../layout'
 import './style.scss'
 
-const focusFirstElement = () => {
-
-}
-
 const Page = ({
     children,
     className,
     hero,
     title,
+    icon,
     toolbar,
     actions,
     header,
     footer,
-    onLoad = focusFirstElement,
+    onLoad = () => {},
     shouldScroll = true,
+    shouldShowBackButton = val => val,
+    insetTop = true,
+    style = {},
 
     // Passed to Layout.Box
     padX = true,
@@ -35,11 +35,12 @@ const Page = ({
     // Handle initial loading, like focusing.
     useEffect( onLoad, [] )
 
-    const style = {
-        overflowX: 'hidden',
-        overflowY: shouldScroll ? 'scroll' : 'hidden',
-        perspective : 1,
-        perspectiveOrigin: '0 0',
+    // Handle whether or not to show the back button
+    let showBackButton = true
+    if ( 'boolean' === typeof shouldShowBackButton ) {
+        showBackButton = shouldShowBackButton
+    } else if ( 'function' === typeof shouldShowBackButton ) {
+        showBackButton = shouldShowBackButton( !isRoot )
     }
 
     const Hero = ({ children }) => {
@@ -50,8 +51,6 @@ const Page = ({
         const style = {
             transformOrigin: '0 0',
             flex: '0 0 auto',
-            /* parallax disabled while I work out the kinks */
-            /*transform: 'translateZ(-2px) scale(3)' */
         }
 
         return (
@@ -60,6 +59,14 @@ const Page = ({
                 { !isString && children }
             </div>
         )
+    }
+
+    const styles = {
+        ...style,
+        overflowX: 'hidden',
+        overflowY: shouldScroll ? 'scroll' : 'hidden',
+        perspective : 1,
+        perspectiveOrigin: '0 0',
     }
 
     const wrapStyle = {
@@ -81,20 +88,30 @@ const Page = ({
 
     return (
         <div className="fluid-page-wrap" style={wrapStyle}>
-            <div className={classes} style={style} {...rest}>
-                <Hero>{hero}</Hero>
+            <div className={classes} {...rest} style={styles}>
+
+                { hero && <Hero>{hero}</Hero> }
 
                 <div className="fluid-page-content" style={{
                     maxHeight: shouldScroll ? '' : '100%',
                     minHeight: 0,
                     flexShrink: shouldScroll ? 0 : 1,
                 }}>
-                    <div className="fluid-sticky-element">
+                    <div className="fluid-sticky-element fluid-page-top-content">
                         { toolbar !== false  && (
-                            <div className="fluid-toolbar">
-                                { !isRoot  && <Nav.BackButton /> }
+                            <div className="fluid-toolbar fluid-page-top-toolbar">
+                                { showBackButton && <Nav.BackButton /> }
+                                { icon && (
+                                    <span className="fluid-page-title-icon">
+                                        {icon}
+                                    </span>
+                                )}
                                 { title && <div className="fluid-page-toolbar-content">
-                                    <span  role="heading" aria-level="1" style={{ flex: '1 1 auto' }}>{title}</span>
+                                    <span
+                                        className="fluid-page-title"
+                                        role="heading"
+                                        aria-level="1" style={{ flex: '1 1 auto' }}
+                                    >{title}</span>
                                 </div> }
                                 { actions && <span className="fluid-page-actions">{actions}</span> }
                             </div>

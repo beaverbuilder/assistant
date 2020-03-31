@@ -100,6 +100,14 @@
                 &.fluid-button.fl-asst-more-btn {
                     margin-left:auto;
                 }
+
+                .fl-asst-count-badge {
+                    margin-left: 5px;
+                    padding: 3px;
+                    background: var(--fluid-primary-background);
+                    color: var(--fluid-primary-color);
+                    border-radius: 3px;
+                }
             }
         }
 

@@ -1,7 +1,6 @@
 import classname from 'classnames'
 
 const Box = ({
-    children,
     className,
     style,
     padX = true,
@@ -18,7 +17,7 @@ const Box = ({
     }, className )
 
     return (
-        <div className={classes} style={style} {...rest}>{children}</div>
+        <div className={classes} style={style} {...rest} />
     )
 }
 

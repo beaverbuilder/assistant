@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
 import { MediaApp } from './app'
+import Icon from './icon'
 
 export const defaultState = {
 	listStyle: 'grid',
@@ -16,7 +17,7 @@ export const defaultState = {
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
 	root: MediaApp,
-	icon: MediaApp.Icon,
+	icon: Icon,
 	accent: {
 		color: '#FF5A5E'
 	},

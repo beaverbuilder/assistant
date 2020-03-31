@@ -20,7 +20,8 @@
     left:0;
     right:0;
     bottom: 0;
-    background: #fff;
+    background: var(--fluid-background);
+	color: var(--fluid-color);
     opacity: 0;
 	pointer-events: none;
 	max-height: 100%;

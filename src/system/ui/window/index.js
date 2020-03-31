@@ -2,6 +2,7 @@ import React, { useState, useEffect, createRef, createContext, useContext } from
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
 import { getSystemConfig, useSystemState } from 'data'
+import { Env } from 'ui'
 import './style.scss'
 
 const transition = {
@@ -117,7 +118,14 @@ const WindowLayer = ( {
 	onChange = () => {},
 	...rest
 } ) => {
-	const { requestAnimate, size, isHidden, position, setPosition } = useContext( Window.Context )
+	const {
+		requestAnimate,
+		size,
+		isHidden,
+		position,
+		setPosition,
+	} = useContext( Window.Context )
+	const { isMobile } = Env.useEnvironment()
 	const ref = createRef()
 	const posRef = createRef()
 
@@ -142,7 +150,11 @@ const WindowLayer = ( {
 			} )
 		}
 
-		if ( e.target.classList.contains( 'fl-asst-window-drag-handle' ) ) {
+		if ( e.target.classList.contains( 'fl-asst-window-drag-handle' ) ||
+			e.target.classList.contains( 'fl-asst-sidebar' ) ||
+			e.target.classList.contains( 'fluid-page-header' ) ||
+			e.target.classList.contains( 'fl-asst-window-grab-bar' )
+		) {
 			setIsDragging( true )
 		}
 	}
@@ -227,13 +239,13 @@ const WindowLayer = ( {
 	const { x: xPos, y: yPos } = currentPos
 	const transform = isDragging ? 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0)' : ''
 	const [ windowX, windowY ] = position
-	const pad = 15
+	const pad = isMobile ? 0 : 15
 
 	let positionerStyles = {
 		display: 'flex',
 		flexDirection: 'column',
 		position: 'absolute',
-		top: adminBarSize() + pad,
+		top: isMobile ? 0 : adminBarSize() + pad,
 		bottom: windowY ? pad : pad,
 		right: windowX ? pad : 'auto',
 		left: windowX ? 'auto' : pad,
@@ -272,11 +284,13 @@ const WindowPanel = ( {
 	...rest
 } ) => {
 	const { size } = useContext( Window.Context )
+	const { isMobile } = Env.useEnvironment()
 
 	const classes = classname( {
 		'fl-asst-window': true,
 		[`fl-asst-window-${size}`]: size,
 		'fl-asst-primary-content': true,
+		'fl-asst-window-is-mobile': isMobile,
 	}, className )
 
 	const styles = {
@@ -289,14 +303,15 @@ const WindowPanel = ( {
 		const styles = {
 			display: 'flex',
 			paddingTop: 4,
+			paddingBottom: 10,
 			alignItems: 'center',
 			justifyContent: 'center',
-			pointerEvents: 'none',
 			position: 'absolute',
 			top: 0,
 			left: 0,
 			right: 0,
-			zIndex: 1,
+			zIndex: 2,
+			cursor: 'move',
 		}
 		return (
 			<div className="fl-asst-window-grab-bar" style={ styles } { ...rest }>

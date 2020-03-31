@@ -1,11 +1,15 @@
 import classname from 'classnames'
 import Box from './box'
+import Row from './row'
 import './style.scss'
 
 const Layout = () => {}
 
 Layout.Box = Box
 Layout.Box.displayName = 'Layout.Box'
+
+Layout.Row = Row
+Layout.Row.displayName = 'Layout.Row'
 
 // Headline
 Layout.Headline = ({ className, children, ...rest }) => {

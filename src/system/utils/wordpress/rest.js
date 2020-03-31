@@ -60,6 +60,7 @@ const http = axios.create( {
  */
 export const getWpRest = () => {
 	return {
+		batch,
 		posts,
 		terms,
 		users,
@@ -74,6 +75,23 @@ export const getWpRest = () => {
 	}
 }
 
+/**
+ * Methods for making batch REST requests.
+ */
+const batch = () => {
+	return {
+		get( routes ) {
+			const params = {
+				routes: Object.keys( routes )
+			}
+			http.get( 'fl-assistant/v1/batch', { params } ).then( response => {
+				Object.keys( response.data ).map( route => {
+					routes[ route ]( response.data[ route ] )
+				} )
+			} )
+		},
+	}
+}
 
 /**
  * Methods related to posts

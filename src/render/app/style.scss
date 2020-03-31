@@ -1,4 +1,33 @@
 .fl-asst {
+
+    .fl-asst-main {
+        width: 420px;
+        display: flex;
+        flex-direction: row;
+        flex: 1 1 auto;
+        max-height: 100%;
+        min-height: 0;
+
+        &.fl-asst-pinned-right {
+            flex-direction: row-reverse;
+        }
+        &.fl-asst-main-sidebar-only {
+            width: 58px;
+        }
+        &.fl-asst-is-mobile {
+            width: auto;
+            flex-direction: column-reverse;
+        }
+
+        .fl-asst-main-content {
+            flex: 1 1 auto;
+            position: relative;
+            display: flex;
+            max-height: 100%;
+            min-height: 0;
+        }
+    }
+
     .fl-asst-screen {
         flex: 1 1 auto;
         display: flex;
@@ -79,16 +108,31 @@
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
-    min-height: 36px;
+    min-height: 50px;
     padding: 2px 5px;
+    background: var(--fluid-background);
+    border-bottom: 2px solid var(--fluid-box-background);
 
     .fl-asst-window-content & {
         cursor: move;
     }
+
+    &.fl-asst-overlay-toolbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+
+    &.fl-asst-toolbar-appearance-dark {
+        background: var(--fluid-dark-background);
+        color: var(--fluid-dark-color);
+    }
 }
 
 .fl-asst .remove-btn {
-  margin-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 @media print {
@@ -100,4 +144,10 @@
 // Cause PopupMaker
 body #wpadminbar {
     z-index: 99999;
+}
+
+@media screen and (max-width: 782px) {
+    #wp-toolbar > ul > li#wp-admin-bar-fl_assistant_toggle_ui {
+        display: block;
+    }
 }

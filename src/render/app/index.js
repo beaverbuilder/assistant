@@ -1,26 +1,51 @@
 import React, { useContext } from 'react'
 import classname from 'classnames'
+import { useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { App, Nav, Page, Icon, Button } from 'assistant/ui'
+import { App, Nav, Page, Icon, Button, Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
-import { HomeScreen } from './home-screen'
+import HomeScreen from './home-screen'
+import Sidebar from './side-bar'
+import ManageScreen from './manage-screen'
 import './style.scss'
 
-const AppMain = Nav.withRouter(  ( { location, actions } ) => {
+const AppMain = () => {
+	const location = useLocation()
+	const { window, isAppHidden } = useSystemState()
+	const side = window.origin[0]
+	const sideName = side ? 'right' : 'left'
+	const { isMobile } = Env.useEnvironment()
+
+	const classes = classname( {
+		'fl-asst-main': true,
+		'fl-asst-main-sidebar-only': isAppHidden,
+		[`fl-asst-pinned-${sideName}`]: sideName,
+		'fl-asst-is-mobile': isMobile,
+	} )
+
 	return (
-		<>
-			<NavToolbar actions={ actions } />
-			<Nav.Switch location={ location }>
-				<Nav.Route exact path="/" component={ HomeScreen } />
-				<Nav.Route path="/:app" component={ AppContent } />
-				<Nav.Route component={ Page.NotFound } />
-			</Nav.Switch>
-		</>
+		<div className={ classes } >
+			<Sidebar edge={ sideName } />
+
+			{ ! isAppHidden && (
+				<div className="fl-asst-main-content">
+					<Nav.Switch location={ location }>
+						<Nav.Route exact path="/" component={ HomeScreen } />
+						<Nav.Route path="/fl-manage" component={ ManageScreen } />
+						<Nav.Route path="/:app" component={ AppContent } />
+						<Nav.Route component={ Page.NotFound } />
+					</Nav.Switch>
+				</div>
+			)}
+		</div>
 	)
-} )
+}
 AppMain.displayName = 'AppMain'
 
-const NavToolbar = ( { actions } ) => {
+const NavToolbar = ( {
+	actions,
+	appearance = 'light'
+} ) => {
 	const { isRoot, goToRoot } = useContext( Nav.Context )
 	const { label } = useContext( App.Context )
 	const labelStyle = {
@@ -29,7 +54,7 @@ const NavToolbar = ( { actions } ) => {
 	const iconWrapStyle = {
 		display: 'inline-flex',
 		transform: 'translateY(2px)',
-		paddingBottom: 4
+		padding: '0 4px 4px'
 	}
 
 	const style = {
@@ -43,7 +68,8 @@ const NavToolbar = ( { actions } ) => {
 	const toolbarClasses = classname( {
 		'fl-asst-panel-toolbar': true,
 		'fl-asst-window-drag-handle': true,
-		'fl-asst-window-overlay-toolbar': false,
+		'fl-asst-overlay-toolbar': true,
+		[`fl-asst-toolbar-appearance-${appearance}`]: appearance,
 	} )
 
 	const stopProp = e => e.stopPropagation()
@@ -67,8 +93,14 @@ const NavToolbar = ( { actions } ) => {
 							padding: '0 10px',
 						} }
 					>{__( 'Assistant' )}</Button>
-					<span style={ iconWrapStyle }><Icon.BreadcrumbArrow /></span>
-					<span style={ labelStyle }>{label}</span>
+					{ label && (
+						<>
+							<span style={ iconWrapStyle }>
+								<Icon.BreadcrumbArrow />
+							</span>
+							<span style={ labelStyle }>{label}</span>
+						</>
+					)}
 				</> }
 			</span>
 			{ actions && <span style={ {
@@ -83,6 +115,7 @@ const NavToolbar = ( { actions } ) => {
 const AppContent = props => {
 	const { match } = props
 	const { apps } = useSystemState()
+	const { isAppRoot } = App.useApp()
 	const { params: { app: appName } } = match
 	const app = apps[appName]
 
@@ -90,12 +123,16 @@ const AppContent = props => {
 		return null
 	}
 
-	const appProps = { ...props, ...app }
+	const appProps = {
+		...props,
+		...app,
+	}
 
 	const appWrapClasses = classname( {
 		'fl-asst-screen-content': true,
 		'fl-asst-app-content': true,
 		[`fl-asst-app-${appName}`]: appName,
+		'fl-asst-app-root': isAppRoot,
 	} )
 
 	return (

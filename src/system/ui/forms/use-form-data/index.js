@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import classname from 'classnames'
 
 const initReducer = ( { fields, defaults } ) => {
@@ -10,6 +10,7 @@ const initReducer = ( { fields, defaults } ) => {
 		state[ key ] = {
 			value,
 			lastCommittedValue: value,
+			errors: []
 		}
 	} )
 
@@ -25,17 +26,24 @@ export const useFormData = ( {
 	onReset = () => {},
 } ) => {
 	const [ isSubmitting, setIsSubmitting ] = useState( false )
+	const isMounted = useRef( false )
+
+	useEffect( () => {
+		isMounted.current = true
+		return () => isMounted.current = false
+	}, [] )
 
 	Object.entries( fields ).map( ( [ key, field ] ) => {
 		fields[ key ] = {
 			alwaysCommit: false,
 			disabled: false,
 			id: null,
+			isRequired: false,
 			isVisible: true,
 			label: null,
 			onChange: () => {},
-			required: false,
 			sanitize: v => v,
+			validate: () => {},
 			...field,
 		}
 	} )
@@ -52,7 +60,8 @@ export const useFormData = ( {
 				...state,
 				[ action.key ]: {
 					value: value,
-					lastCommittedValue: alwaysCommit ? value : state[ action.key ].lastCommittedValue
+					lastCommittedValue: alwaysCommit ? value : state[ action.key ].lastCommittedValue,
+					errors: []
 				}
 			}
 
@@ -94,6 +103,16 @@ export const useFormData = ( {
 		case 'REVERT_ALL':
 			for ( let key in state ) {
 				state[ key ].value = state[ key ].lastCommittedValue
+			}
+			return { ...state }
+
+		case 'SET_ERRORS':
+			for ( let key in action.errors ) {
+				if ( 'string' === typeof action.errors[ key ] ) {
+					state[ key ].errors = [ action.errors[ key ] ]
+				} else {
+					state[ key ].errors = action.errors[ key ]
+				}
 			}
 			return { ...state }
 
@@ -160,6 +179,23 @@ export const useFormData = ( {
 		return changed
 	}
 
+	const setErrors = ( errors = {} ) => {
+		dispatch( {
+			type: 'SET_ERRORS',
+			errors
+		} )
+	}
+
+	const selectErrors = () => {
+		const errors = {}
+		for ( let key in state ) {
+			if ( state[ key ].errors.length ) {
+				errors[ key ] = state[ key ].errors
+			}
+		}
+		return errors
+	}
+
 	const getFieldIDs = () => {
 		const ids = {}
 		for ( let key in fields ) {
@@ -177,6 +213,7 @@ export const useFormData = ( {
 				...field,
 				hasChanges: valueHasChanged( state[ key ] ),
 				value: state[ key ].value,
+				errors: state[ key ].errors,
 				onChange: value => {
 					const args = {
 						key,
@@ -206,9 +243,10 @@ export const useFormData = ( {
 				} )
 			}
 
-			delete config[ key ].sanitize
 			delete config[ key ].lastCommittedValue
 			delete config[ key ].alwaysCommit
+			delete config[ key ].sanitize
+			delete config[ key ].validate
 		} )
 
 		return config
@@ -224,6 +262,7 @@ export const useFormData = ( {
 		values,
 		setValue,
 		setValues,
+		setErrors,
 		state,
 	}
 
@@ -235,14 +274,31 @@ export const useFormData = ( {
 	}
 
 	const submitForm = () => {
-		if ( isSubmitting ) {
+		Object.keys( values ).map( key => {
+			const errors = []
+			fields[ key ].validate( values[ key ], errors )
+			if ( errors.length ) {
+				setErrors( { [ key ]: errors } )
+			}
+		} )
+
+		if ( Object.keys( selectErrors() ).length ) {
 			return
 		}
+
 		setIsSubmitting( true )
-		dispatch( {
-			type: 'COMMIT_ALL'
-		} )
-		onSubmit( callbackArgs )
+		dispatch( { type: 'COMMIT_ALL' } )
+		const response = onSubmit( callbackArgs )
+
+		if ( response instanceof Promise ) {
+			response.finally( () => {
+				if ( isMounted.current ) {
+					setIsSubmitting( false )
+				}
+			} )
+		} else {
+			setIsSubmitting( false )
+		}
 	}
 
 	return {
@@ -263,7 +319,6 @@ export const useFormData = ( {
 		resetForm,
 		submitForm,
 		isSubmitting,
-		setIsSubmitting,
-		setValues,
+		setValues
 	}
 }

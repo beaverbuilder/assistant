@@ -6,8 +6,8 @@
 		min-height: 32px;
 		position: relative;
 
-        padding: var(--fl-asst-tiny-space);
-        background: var(--fl-asst-secondary-surface-background);
+        padding: var(--fluid-sm-space);
+        background: var(--fluid-box-background);
         border-radius: var(--fl-asst-base-radius);
     }
 
@@ -16,13 +16,14 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background: var(--fl-asst-surface-background);
+        background: var(--fluid-background);
+        color: var(--fluid-color);
         border-radius: 13px;
-        padding: var(--fl-asst-tiny-space) 6px;
-        margin: var(--fl-asst-tiny-space);
+        padding: var(--fluid-sm-space) 6px;
+        margin: var(--fluid-sm-space);
         min-height: 26px;
 	    max-width: 100%;
-        box-shadow: 0 2px 4px 0 #D2DAE3;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
         font-size: 12px;
         font-weight: 500;
 
@@ -31,13 +32,13 @@
         }
 
         &:focus-within {
-            box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background),
-                        0px 0px 0px 2px black,
-                        0 5px 10px 0 #aab0b8;
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                        0px 0px 0px 2px var(--fluid-accent),
+                        0 5px 10px 0 rgba(0,0,0,.1);
         }
 
         .fl-asst-tag-label {
-            padding: 0 var(--fl-asst-tiny-space);
+            padding: 0 var(--fluid-sm-space);
         }
 
         .fl-asst-tag-color {
@@ -61,11 +62,5 @@
         &:hover .fl-asst-tag-remove-btn {
             opacity: 1;
         }
-    }
-
-    .fl-asst-brightness-dark .fl-asst-tag {
-        color: var(--fl-asst-secondary-surface-color);
-        background: var(--fl-asst-dark-3);
-        box-shadow: none;
     }
 }

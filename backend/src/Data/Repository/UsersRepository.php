@@ -77,7 +77,19 @@ class UsersRepository extends RepositoryAbstract {
 	 * @return \WP_User
 	 */
 	public function current( callable $transform = null ) {
-		return $this->find( wp_get_current_user()->ID, $transform );
+		$current_user = wp_get_current_user();
+		$data = $this->find( $current_user->ID, $transform );
+
+		if ( $transform ) {
+			$data = array_merge(
+				$data,
+				[
+					'capabilities' => $current_user->allcaps,
+				]
+			);
+		}
+
+		return $data;
 	}
 
 

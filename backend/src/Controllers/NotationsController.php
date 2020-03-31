@@ -35,7 +35,7 @@ class NotationsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'delete_notation' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]

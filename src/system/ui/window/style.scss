@@ -1,7 +1,9 @@
 .fl-asst {
+    --fl-asst-window-zone-color: hsl(210, 100%, 42%);
+    --fl-asst-window-zone-background: hsla(210, 100%, 36%, .2 );
+
     .fl-asst-window {
-        --fl-asst-window-size: 360px;
-        --fl-asst-window-toolbar-height: 38px;
+        --fl-asst-window-size: calc( var(--fl-asst-side-toolbar-width) + var(--fl-asst-panel-size) );
 
         position: relative;
         box-sizing: border-box;
@@ -14,7 +16,6 @@
         border-radius: 0;
         transition-property: background, box-shadow, border-radius;
         transition-duration: .25s;
-
         box-shadow: 0 0 0 3px rgba(0,0,0,.05),
                     0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
 
@@ -26,53 +27,11 @@
         &.fl-asst-window-mini {
             max-width: 100%;
             max-height: 70vh;
-            border-radius: var(--fl-asst-medium-space);
+            height: 70vh;
+            border-radius: var(--fluid-med-space);
         }
         &.fl-asst-window-normal {
             height: 100%;
-        }
-
-        .fl-asst-window-toolbar {
-            box-sizing: border-box;
-            flex: 0 0 var(--fl-asst-window-toolbar-height);
-            line-height: 1;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            cursor: move;
-            user-select:none;
-            padding: 0 5px;
-            -webkit-user-select: none;
-            user-select:none;
-
-            &.fl-asst-window-overlay-toolbar {
-                position: absolute;
-                top:0;
-                left:0;
-                right:0;
-                margin: 5px;
-                border-radius: 7px;
-                background:white;
-                z-index: 9;
-            }
-
-            button {
-                color: inherit;
-                padding:2px 10px;
-                background:none;
-                line-height: 1;
-                display: inline-flex;
-                flex-direction: row;
-                align-items: center;
-
-                &:focus {
-                    outline: none;
-                }
-            }
-            span.fl-asst-window-drag-handle {
-                align-items: center;
-            }
         }
 
         .fl-asst-window-content {
@@ -87,18 +46,49 @@
 
         .fl-asst-window-grab-bar {
             color: var(--fl-asst-light-5);
+
+            svg {
+                pointer-events: none;
+            }
         }
     }
+
+    .fl-asst-window.fl-asst-window-is-mobile {
+        width: 100vw;
+        height: 100vh;
+        max-width: none !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+    }
+
+    .fl-asst-window-sidebar-only .fl-asst-window {
+        --fl-asst-window-size: calc( var(--fl-asst-side-toolbar-width) - 2px ); // Accounts for border width
+        box-shadow: 0 0 0 3px rgba(0,0,0,.05);
+
+        &.fl-asst-window-mini {
+            border-radius: 5px;
+            height: auto;
+        }
+        &.fl-asst-window-is-mobile {
+            height: auto;
+            margin-top: auto;
+            min-height: 0;
+
+            .fl-asst-window-grab-bar {
+                display: none !important;
+            }
+        }
+    }
+
     .fl-asst-window-layer-is-dragging {
         .fl-asst-window-mini {
-            box-shadow: 0 0 0 3px #16D4F3,
+            box-shadow: 0 0 0 3px var(--fl-asst-window-zone-color),
                         0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
         }
         .fl-asst-window-normal {
-            box-shadow: 0 0 0 3px #16D4F3,
+            box-shadow: 0 0 0 3px var(--fl-asst-window-zone-color),
                         0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
-            border-radius: 15px;
-            max-height: 96vh;
+            border-radius: 5px;
         }
     }
 
@@ -151,8 +141,8 @@
 
         &.fl-asst-window-layer-is-dragging {
             pointer-events: auto;
-            box-shadow: inset 0px 0px 0px 4px #16D4F3;
-            background-color: hsla(188, 89%, 52%, .15);
+            box-shadow: inset 0px 0px 0px 4px var(--fl-asst-window-zone-color);
+            background-color: var(--fl-asst-window-zone-background);
 
             &:after {
                 content: '';
@@ -162,7 +152,7 @@
                 left:15px;
                 width: 60px;
                 height: 60px;
-                background: #16D4F3;
+                background: var(--fl-asst-window-zone-color);
                 border-radius: 15px;
                 z-index: -1;
             }
@@ -220,11 +210,16 @@
             pointer-events: auto;
         }
     }
+}
 
-    @media screen and ( max-width: 782px ) {
+.fluid .fl-builder-workspace-panel.fl-asst {
+    width: auto;
+}
+
+@media screen and ( max-width: 782px ) {
+    .fl-asst {
         .fl-asst-window {
             --fl-asst-admin-bar-height: 46px;
-            --fl-asst-window-toolbar-height: 46px;
         }
     }
 }

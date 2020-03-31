@@ -284,11 +284,18 @@ export const Posts = ( {
 }
 
 const BigThumbnail = ( { item } ) => {
-	if ( ! item.postThumbnail ) {
+	if ( ! item.thumbnail ) {
 		return null
 	}
 
-	const { thumbnail, sizes, alt, title, height, width } = item.postThumbnail
+	const {
+		thumbnail,
+		sizes,
+		alt,
+		title,
+		height,
+		width
+	} = item.thumbnailData
 	const srcset = getSrcSet( sizes )
 	const style = {
 		boxSizing: 'border-box',

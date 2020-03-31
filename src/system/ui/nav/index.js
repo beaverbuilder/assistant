@@ -8,7 +8,7 @@ Nav.Tabs = ( { tabs = [] } ) => {
 	const { location, history } = useContext( Nav.Context )
 	return (
 		<>
-			<Button.Group appearance="tabs">
+			<Button.Group appearance="tabs" role="tablist">
 				{ tabs.map( ( tab, i ) => {
 					const { showButton = true, path, label, ...rest } = tab
 					delete rest.component

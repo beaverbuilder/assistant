@@ -24,6 +24,7 @@
             transition-duration: .15s;
             -moz-user-select: none;
             user-select: none;
+            border-bottom: 2px solid var(--fluid-box-background);
 
             &:hover {
                 background-color: var(--fl-asst-secondary-surface-background);
@@ -197,7 +198,8 @@
         top: -20px;
         right: var(--fluid-sm-space);
         background: var(--fluid-background);
-        border-radius: 9px;
+        color: var(--fluid-color);
+        border-radius: 5px;
         padding: 2px;
         box-shadow: 0px 2px 4px rgba(0,0,0,.1),
                     0px 0px 0px 2px var(--fluid-box-background);

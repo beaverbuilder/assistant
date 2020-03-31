@@ -23,7 +23,7 @@ class AttachmentTransformer {
 		$thumb     = $thumb_src ? $thumb_src[0] : null;
 
 		$response = [
-			'alt'             => $meta['title'],
+			'alt'             => $meta['alt'],
 			'author'          => get_the_author_meta( 'display_name', $attachment->post_author ),
 			'commentsAllowed' => 'open' === $attachment->comment_status ? true : false,
 			'date'            => get_the_date( '', $attachment ),
