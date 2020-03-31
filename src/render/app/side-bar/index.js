@@ -69,7 +69,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 	return (
 		<div className={ classes }
 			style={ {
-				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-box-background)' }
+				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-line-color)' }
 			}
 		>
 			{ ! isBeaverBuilder && (

@@ -230,7 +230,7 @@
     select {
         height: var(--fluid-target-size);
         background-color: var(--fluid-background);
-        box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background);
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
         border-radius: 3px;
         padding: var(--fluid-sm-space);
 

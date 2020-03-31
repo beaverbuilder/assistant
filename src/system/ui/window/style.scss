@@ -16,7 +16,7 @@
         border-radius: 0;
         transition-property: background, box-shadow, border-radius;
         transition-duration: .25s;
-        box-shadow: 0 0 0 3px rgba(0,0,0,.05),
+        box-shadow: 0 0 0 2px rgba(0,0,0,.05),
                     0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
 
         .fl-asst-brightness-dark & {
