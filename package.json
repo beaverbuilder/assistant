@@ -12,6 +12,7 @@
     "build:dist": "NODE_ENV=production webpack && node bin/build-dist.js",
     "dev": "webpack --watch",
     "fix": "eslint src --fix",
+    "fix:fluid": "eslint packages/@beaverbuilder/fluid/src --fix",
     "test": "jest && eslint src"
   },
   "license": "GPL-2.0+",

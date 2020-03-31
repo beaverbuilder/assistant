@@ -24,13 +24,13 @@ const Section = ( {
 			{ label && <div className="fluid-section-title"><span className="fluid-section-title-text">{label}</span></div> }
 			<Layout.Box
 				className="fluid-section-content"
-				padX={padX}
-				padY={padY}
+				padX={ padX }
+				padY={ padY }
 				style={ contentStyle }
 			>{children}</Layout.Box>
 			{ footer && (
 				<Layout.Box
-					padY={false}
+					padY={ false }
 					className="fluid-section-footer"
 				>{footer}</Layout.Box>
 			)}

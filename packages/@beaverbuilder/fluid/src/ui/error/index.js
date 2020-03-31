@@ -21,7 +21,7 @@ class ErrorBoundary extends Component {
 	}
 
 	render() {
-        const { alternate = DefaultError, children } = this.props
+		const { alternate = DefaultError, children } = this.props
 		const { hasError, error } = this.state
 
 		if ( hasError ) {
@@ -31,23 +31,23 @@ class ErrorBoundary extends Component {
 	}
 }
 
-const DefaultError = ({ error }) => {
+const DefaultError = ( { error } ) => {
 
-    const style = {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: '1 0 auto',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20
-    }
+	const style = {
+		display: 'flex',
+		flexDirection: 'column',
+		flex: '1 0 auto',
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: 20
+	}
 
-    return (
-        <div className="fluid-default-error-message" style={style}>
-            <div>There seems to be an error.</div>
-            <code>{error.message}</code>
-        </div>
-    )
+	return (
+		<div className="fluid-default-error-message" style={ style }>
+			<div>There seems to be an error.</div>
+			<code>{error.message}</code>
+		</div>
+	)
 }
 
 // Ensure the proper display name in the react dev tools tree
