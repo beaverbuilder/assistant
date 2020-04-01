@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter, Nav } from 'assistant/ui'
-import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
+import { useAppState, getAppActions, useSystemState, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { defaultState } from '../'
 
 export const SummaryTab = () => {
@@ -70,6 +70,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 	const { getCount } = getSystemSelectors()
 	const { query, listStyle } = useAppState( 'fl-content' )
 	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
+	const { labels } = useSystemState()
 	const { contentTypes } = getSystemConfig()
 
 	const defaultQuery = defaultState.query
@@ -88,6 +89,11 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		for ( let key in contentTypes ) {
 			const { labels } = contentTypes[key]
 			postTypes[key] = sprintf( `${labels.plural} (%s)`, getCount( `content/${key}` ) )
+		}
+
+		const labelItems = { 0: __( 'Any' ) }
+		for ( let key in labels ) {
+			labelItems[ labels[ key ].id ] = labels[ key ].label
 		}
 
 		const sorts = {
@@ -132,6 +138,13 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					value={ query.post_status }
 					defaultValue={ defaultQuery.post_status }
 					onChange={ value => setQuery( { ...query, post_status: value } ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Label' ) }
+					items={ labelItems }
+					value={ query.label }
+					defaultValue={ defaultQuery.label }
+					onChange={ value => setQuery( { ...query, label: value } ) }
 				/>
 				<Filter.RadioGroupItem
 					title={ __( 'Display As' ) }
