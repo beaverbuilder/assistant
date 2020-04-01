@@ -68,7 +68,6 @@ export const getWpRest = () => {
 		comments,
 		updates,
 		search,
-		labels,
 		notations,
 		getPagedContent,
 		getContent
@@ -481,20 +480,6 @@ const search = ( keyword, routes, config = {} ) => {
 		},
 		...config
 	} )
-}
-
-/**
- * Methods related to labels
- */
-const labels = () => {
-	return {
-
-		findWhere( params, config = {} ) {
-			config.cacheKey = 'labels'
-			config.params = params
-			return http.get( 'fl-assistant/v1/labels', config )
-		},
-	}
 }
 
 /**

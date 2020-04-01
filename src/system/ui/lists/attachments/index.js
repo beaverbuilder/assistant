@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
-import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon, Image, MediaDropUploader } from 'ui'
 import Clipboard from 'react-clipboard.js'
+import { useSystemState } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import './style.scss'
@@ -14,33 +14,16 @@ const Attachments = ( {
 	className,
 	...rest
 } ) => {
-	const [ labels, setLabels ] = useState( {} )
+	const { labels } = useSystemState()
+	const [ labelsById, setLabelsById ] = useState( [] )
 	const wpRest = getWpRest()
-	const source = CancelToken.source()
 
-	// Retrieve Labels
+	// Retrieve labels by ID
 	useEffect( () => {
-
-		// Get the color labels references
-		wpRest.labels().findWhere( {}, {
-			cancelToken: source.token,
-		} ).then( response => {
-			const items = {}
-			if ( 'data' in response ) {
-				for ( let i in response.data ) {
-					const { id, ...rest } = response.data[i]
-					items[id] = rest
-				}
-				setLabels( items )
-			}
-		} ).catch( ( error ) => {
-			if ( ! isCancel( error ) ) {
-				console.log( error ) // eslint-disable-line no-console
-			}
-		} )
-
-		return () => source.cancel()
-	}, [] )
+		const items = {}
+		labels.map( label => items[ label.id ] = label )
+		setLabelsById( items )
+	}, [ labels ] )
 
 	const classes = classname( {
 		[`fl-asst-${listStyle}-list`]: listStyle,
@@ -111,8 +94,8 @@ const Attachments = ( {
 						if ( 'labels' in item && 0 < item.labels.length ) {
 
 							item.labels.map( id => {
-								if ( id in labels ) {
-									const { color, label } = labels[id]
+								if ( id in labelsById ) {
+									const { color, label } = labelsById[id]
 									marks.push(
 										<span
 											className="fl-asst-list-item-color-mark"
