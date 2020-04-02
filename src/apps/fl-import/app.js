@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Page, Nav } from 'assistant/ui'
 import { ImportDropUploader } from './import'
 
-export const ImportApp = ( { match } ) => (
+export const ImportApp = ( { match, history } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
 	</Nav.Switch>
@@ -19,7 +19,7 @@ const Main = ( ) => {
 				)}
 
 			</div>
-			<ImportDropUploader>
+			<ImportDropUploader history={history}>
 				<Page.Section
 					className='fl-asst-edit-labels'
 					contentStyle={ { paddingTop: 0 } }

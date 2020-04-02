@@ -4,6 +4,7 @@ import { registerStore, useStore, getStore, getDispatch } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import './style.scss'
 import { FileDropListener } from './drop-listner'
+import { useHistory } from "react-router-dom";
 
 registerStore( 'fl-import/uploader', {
 	state: {
@@ -17,6 +18,7 @@ export const ImportDropUploader = ( { children } ) => {
 	const { current, items } = useStore( 'fl-import/uploader' )
 	const { setCurrent, setItems } = getDispatch( 'fl-import/uploader' )
 	const wpRest = getWpRest()
+	let history = useHistory();
 	const onFilesDropped = files => {
 		const { current, items } = getStore( 'fl-import/uploader' ).getState()
 
@@ -63,6 +65,7 @@ export const ImportDropUploader = ( { children } ) => {
 		if ( response ) {
 
 			alert( response.data.message )
+			history.push( '/fl-content' )
 		}
 
 	}
