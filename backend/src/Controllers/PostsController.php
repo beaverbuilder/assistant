@@ -442,7 +442,7 @@ class PostsController extends ControllerAbstract {
 		//$uri = get_template_directory_uri().'/xmlupload/';
 		$uri         = wp_upload_dir();
 		$target_dir  = $uri;
-		$target_file = $target_dir . basename( $file['file']['name'] );
+		$target_file = $target_dir['path'] . basename( $file['file']['name'] );
 		$filename    = basename( $file['file']['name'] );
 		$filetypenew = wp_check_filetype( $filename );
 		$upload_ok    = 1;
@@ -525,6 +525,7 @@ class PostsController extends ControllerAbstract {
 						$new_post_id = wp_insert_post( $post_data );
 						wp_set_post_terms( $new_post_id, null, 'category' );
 						$post_meta = $property['WP:POSTMETA'];
+						$post_cat  = $property['CATEGORY'];
 
 						if ( count( $post_meta ) !== 0 ) {
 							foreach ( $post_meta as $meta_info ) {
@@ -532,18 +533,21 @@ class PostsController extends ControllerAbstract {
 								$meta_key   = $meta_info['WP:META_KEY'];
 								$meta_value = addslashes( $meta_info['WP:META_VALUE'] );
 								$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-								if ( is_array( $meta_info ) ) {
 
-									foreach ( $meta_info as $category ) {
-
-										   $term = term_exists( $category['content'], $category['DOMAIN'] );
-
-										   wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category['DOMAIN'], true );
-
-									}
-								}
 							}
 						}
+
+						if ( count( $post_cat ) !== 0 ) {
+
+							foreach ( $post_cat as $category ) {
+
+								   $term = term_exists( $category['content'], $category['DOMAIN'] );
+
+								   wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category['DOMAIN'], true );
+
+							}
+						}
+
 						return rest_ensure_response(
 							[
 								'success' => true,
