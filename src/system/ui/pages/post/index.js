@@ -118,6 +118,7 @@ export const Post = ( { location, match, history } ) => {
 							label: __( 'Publish Date' ),
 							labelPlacement: 'beside',
 							component:'calender',
+							id: 'publish_date',
 							value:item.date
 
 						},
@@ -246,7 +247,7 @@ export const Post = ( { location, match, history } ) => {
 			}
 			data[ ids[ key ] ] = changed[ key ]
 		}
-
+console.log(changed)
 		if ( 'visibility' in changed ) {
 			switch ( changed.visibility ) {
 			case 'public':
