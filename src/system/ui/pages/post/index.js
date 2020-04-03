@@ -66,7 +66,7 @@ export const Post = ( { location, match, history } ) => {
 			exact: true,
 			sections: {
 				title: {
-					fields: ({ values }) => {
+					fields: ( { values } ) => {
 						return (
 							<>
 								<Layout.Headline>{ values.title }</Layout.Headline>
@@ -469,7 +469,7 @@ export const Post = ( { location, match, history } ) => {
 	)
 
 	const focusFirstInput = () => {
-		const el = getFirstFocusableChild( document.querySelector('.fl-asst-form') )
+		const el = getFirstFocusableChild( document.querySelector( '.fl-asst-form' ) )
 		if ( el ) {
 			el.focus()
 		}

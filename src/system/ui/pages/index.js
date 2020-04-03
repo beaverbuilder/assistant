@@ -36,14 +36,14 @@ const Page = ( {
 	const { isAppRoot } = App.useApp()
 	const classes = classname( {
 		'is-app-root': isAppRoot || showAsRoot,
-		'fl-asst-page-has-tabs' : tabs,
+		'fl-asst-page-has-tabs': tabs,
 	}, className )
 
 	return (
 		<FLUIDPage
 			className={ classes }
 			onLoad={ onLoad }
-			toolbar={ tabs ? <Nav.TabsToolbar tabs={tabs} /> : toolbar }
+			toolbar={ tabs ? <Nav.TabsToolbar tabs={ tabs } /> : toolbar }
 			{ ...rest }
 		/>
 	)

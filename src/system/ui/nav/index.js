@@ -32,7 +32,7 @@ Nav.Tabs = ( { tabs = [] } ) => {
 }
 Nav.Tabs.displayName = 'Nav.Tabs'
 
-Nav.TabsToolbar = ({ tabs }) => {
+Nav.TabsToolbar = ( { tabs } ) => {
 	const history = useHistory()
 	const location = useLocation()
 	return (
@@ -40,7 +40,7 @@ Nav.TabsToolbar = ({ tabs }) => {
 			<Button.Group appearance="tabs">
 				<Nav.BackButton />
 				{ Object.entries( tabs ).map( ( [ , tab ], i ) => {
-					const { isVisible, label, path, state = {} } = tab
+					const { isVisible, label, path } = tab
 					if ( undefined !== isVisible && ! isVisible ) {
 						return
 					}
