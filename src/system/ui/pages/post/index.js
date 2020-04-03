@@ -5,6 +5,7 @@ import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
 import { getSrcSet } from 'utils/image'
+import { getFirstFocusableChild } from 'utils/dom'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
 import './style.scss'
@@ -64,6 +65,16 @@ export const Post = ( { location, match, history } ) => {
 			path: match.url,
 			exact: true,
 			sections: {
+				title: {
+					fields: ({ values }) => {
+						return (
+							<>
+								<Layout.Headline>{ values.title }</Layout.Headline>
+								<ElevatorButtons />
+							</>
+						)
+					}
+				},
 				labels: {
 					label: __( 'Labels' ),
 					fields: {
@@ -374,11 +385,11 @@ export const Post = ( { location, match, history } ) => {
 		renderForm,
 		resetForm,
 		submitForm,
-		values,
 		hasChanges,
 		setValues,
 	} = Form.useForm( {
 		tabs,
+		renderTabs: false,
 		onSubmit,
 		onReset: ( { state } ) => {
 			setFeatureThumbnail( state.thumbnailData.value )
@@ -457,15 +468,22 @@ export const Post = ( { location, match, history } ) => {
 		</div>
 	)
 
+	const focusFirstInput = () => {
+		const el = getFirstFocusableChild( document.querySelector('.fl-asst-form') )
+		if ( el ) {
+			el.focus()
+		}
+	}
+
 	return (
 		<Page
 			id="fl-asst-post-detail"
 			title={ labels.editItem }
 			hero={ featureThumbnail ? <Hero /> : null }
 			footer={ hasChanges && <Footer /> }
+			tabs={ tabs }
+			onLoad={ focusFirstInput }
 		>
-			<Layout.Headline>{values.title}</Layout.Headline>
-			<ElevatorButtons />
 			{ renderForm() }
 		</Page>
 	)

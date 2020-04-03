@@ -1,0 +1,21 @@
+.fl-asst {
+    .fluid-page.fl-asst-page-has-tabs {
+        .fluid-page-top-content {
+            border-bottom: none;
+        }
+    }
+    .fl-asst-tabs-toolbar {
+        flex: 0 0 50px;
+        display: flex;
+        flex-direction: row;
+
+        .fl-asst-button-group {
+            padding: 0 2px;
+            height: 50px;
+
+            .fluid-button:focus {
+                margin: 2px 0;
+            }
+        }
+    }
+}
