@@ -3,6 +3,7 @@
 namespace FL\Assistant\Controllers;
 
 use FL\Assistant\Data\Repository\AttachmentsRepository;
+use FL\Assistant\Data\Repository\LabelsRepository;
 use FL\Assistant\Data\Transformers\AttachmentTransformer;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Request;
@@ -27,14 +28,24 @@ class AttachmentsController extends ControllerAbstract {
 	protected $transformer;
 
 	/**
+	 * @var LabelsRepository
+	 */
+	protected $labels;
+
+	/**
 	 * AttachmentsController constructor.
 	 *
 	 * @param AttachmentsRepository $attachments
 	 * @param AttachmentTransformer $transformer
 	 */
-	public function __construct( AttachmentsRepository $attachments, AttachmentTransformer $transformer ) {
+	public function __construct(
+		AttachmentsRepository $attachments,
+		AttachmentTransformer $transformer,
+		LabelsRepository $labels
+	) {
 		$this->attachments = $attachments;
 		$this->transformer = $transformer;
+		$this->labels = $labels;
 	}
 
 	/**
@@ -220,6 +231,15 @@ class AttachmentsController extends ControllerAbstract {
 				$args['post_mime_type'] = '';
 				break;
 		}
+
+		if ( isset( $args['label'] ) && $args['label'] ) {
+			$args['post__in'] = $this->labels->get_object_ids( 'attachment', $args['label'] );
+			if ( ! count( $args['post__in'] ) ) {
+				$args['post__in'][] = -1; // post__in returns all posts if empty.
+			}
+		}
+
+		\FLBuilder::log( $args );
 
 		return $this->attachments->paginate( $args )
 			->apply_transform( $this->transformer )

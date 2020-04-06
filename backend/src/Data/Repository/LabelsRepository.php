@@ -28,7 +28,7 @@ class LabelsRepository extends TermsRepository {
 
 	/**
 	 * @param string $object_type
- 	 * @param int $label_id
+	 * @param int $label_id
 	 * @return array
 	 */
 	function get_object_ids( $object_type, $label_id ) {
@@ -40,9 +40,14 @@ class LabelsRepository extends TermsRepository {
 				ON m1.post_id = m2.post_id
 				AND m1.meta_key = 'fl_asst_notation_object_id'
 				AND m2.meta_key = 'fl_asst_notation_label_id'
-				AND m2.meta_value = '%d'";
+				AND m2.meta_value = '%d'
+				INNER JOIN $wpdb->postmeta m3
+				ON m1.post_id = m3.post_id
+				AND m3.meta_key = 'fl_asst_notation_object_type'
+				AND m3.meta_value = '%s'
+				";
 
-		$prepared = $wpdb->prepare( $sql, $label_id );
+		$prepared = $wpdb->prepare( $sql, $label_id, $object_type );
 		$results = $wpdb->get_results( $prepared );
 		$ids = [];
 

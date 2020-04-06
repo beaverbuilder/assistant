@@ -86,7 +86,7 @@ const PostTypeCounts = () => {
 	const { contentTypes } = getSystemConfig()
 
 	return (
-		<Layout.Box padY={false}>
+		<Layout.Box padY={ false }>
 			<div style={ {
 				display: 'grid',
 				gridTemplateColumns: 'repeat(3, 1fr)',
