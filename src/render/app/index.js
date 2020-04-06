@@ -64,15 +64,15 @@ const AppContent = props => {
 		'fl-asst-app-root': isAppRoot,
 	} )
 
-	const AppRoot = () => {
-		return 'function' === typeof app.root ? app.root( appProps ) : null
-	}
-
 	return (
 		<div className={ appWrapClasses }>
-			<AppRoot />
+			<AppRoot app={ app } appProps={ appProps } />
 		</div>
 	)
+}
+
+const AppRoot = ( { app, appProps } ) => {
+	return 'function' === typeof app.root ? app.root( appProps ) : null
 }
 
 export default AppMain
