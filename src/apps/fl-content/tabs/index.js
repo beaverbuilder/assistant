@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter, Nav } from 'assistant/ui'
-import { useAppState, getAppActions, useSystemState, getSystemSelectors, getSystemConfig } from 'assistant/data'
+import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { defaultState } from '../'
 
 export const SummaryTab = () => {
@@ -67,10 +67,9 @@ export const SummaryTab = () => {
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { history, location } = useContext( Nav.Context )
-	const { getCount } = getSystemSelectors()
+	const { getCount, getLabels } = getSystemSelectors()
 	const { query, listStyle } = useAppState( 'fl-content' )
 	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
-	const { labels } = useSystemState()
 	const { contentTypes } = getSystemConfig()
 
 	const defaultQuery = defaultState.query
@@ -91,6 +90,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 			postTypes[key] = sprintf( `${labels.plural} (%s)`, getCount( `content/${key}` ) )
 		}
 
+		const labels = getLabels()
 		const labelItems = { 0: __( 'Any' ) }
 		for ( let key in labels ) {
 			labelItems[ labels[ key ].id ] = labels[ key ].label

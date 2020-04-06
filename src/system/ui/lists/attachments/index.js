@@ -3,7 +3,7 @@ import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon, Image, MediaDropUploader } from 'ui'
 import Clipboard from 'react-clipboard.js'
-import { useSystemState } from 'data'
+import { getSystemSelectors } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import './style.scss'
@@ -14,9 +14,10 @@ const Attachments = ( {
 	className,
 	...rest
 } ) => {
-	const { labels } = useSystemState()
+	const { getLabels } = getSystemSelectors()
 	const [ labelsById, setLabelsById ] = useState( [] )
 	const wpRest = getWpRest()
+	const labels = getLabels()
 
 	// Retrieve labels by ID
 	useEffect( () => {

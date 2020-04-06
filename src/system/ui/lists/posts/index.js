@@ -4,7 +4,7 @@ import { __, sprintf } from '@wordpress/i18n'
 import { List, Button, Icon } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
-import { getSystemConfig, useSystemState } from 'data'
+import { getSystemConfig, getSystemSelectors } from 'data'
 
 export const Posts = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
@@ -12,10 +12,11 @@ export const Posts = ( {
 	listStyle = 'list',
 	...rest
 } ) => {
-	const { labels } = useSystemState()
+	const { getLabels } = getSystemSelectors()
 	const [ labelsById, setLabelsById ] = useState( [] )
 	const { currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
+	const labels = getLabels()
 
 	// Retrieve labels by ID
 	useEffect( () => {
