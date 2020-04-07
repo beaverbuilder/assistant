@@ -239,8 +239,6 @@ class AttachmentsController extends ControllerAbstract {
 			}
 		}
 
-		\FLBuilder::log( $args );
-
 		return $this->attachments->paginate( $args )
 			->apply_transform( $this->transformer )
 			->to_rest_response();
