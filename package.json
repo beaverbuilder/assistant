@@ -18,6 +18,7 @@
   "dependencies": {
     "@beaverbuilder/fluid": "^0.2.4",
     "@wordpress/autop": "^2.5.1",
+    "@wordpress/components": "^9.3.0",
     "@wordpress/i18n": "^3.7.0",
     "axios": "0.18.1",
     "axios-cache-adapter": "^2.5.0",

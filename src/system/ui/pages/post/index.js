@@ -9,6 +9,7 @@ import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
 
 
+
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()

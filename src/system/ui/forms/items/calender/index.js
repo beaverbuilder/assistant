@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";
+import { DateTimePicker } from '@wordpress/components';
 export const CalenderItem = ({
 	id,
 	value,
@@ -14,6 +15,11 @@ export const CalenderItem = ({
 
 	return (
 		<>
+		<DateTimePicker
+            currentDate={ date }
+            onChange={ ( date ) => setState( { date } ) }
+            is12Hour={ is12HourTime }
+        />
 			<DatePicker
 				key={id}
 				id={id}
