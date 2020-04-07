@@ -10,8 +10,7 @@
         flex-direction: row;
 
         .fl-asst-button-group {
-            padding: 0 2px;
-            height: 50px;
+            padding-left: 0; // because back button
 
             .fluid-button:focus {
                 margin: 2px 0;

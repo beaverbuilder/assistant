@@ -80,7 +80,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		flex: '1 1 auto',
 	}
 
-	const goToTab = type => history.replace( `/${handle}/tab/${type}`, location.state )
+	//const goToTab = type => history.replace( `/${handle}/tab/${type}`, location.state )
 
 	const PostFilter = () => {
 
@@ -120,12 +120,12 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 
 		return (
 			<Filter>
-				<Filter.RadioGroupItem
+				{ /*<Filter.RadioGroupItem
 					title={ __( 'Post Type' ) }
 					items={ postTypes }
 					value={ type }
 					onChange={ value => goToTab( value ) }
-				/>
+				/>*/ }
 				<Filter.RadioGroupItem
 					title={ __( 'Status' ) }
 					items={ statuses }

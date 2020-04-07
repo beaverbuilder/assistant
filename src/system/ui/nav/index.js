@@ -6,11 +6,16 @@ import './style.scss'
 
 const Nav = { ...FLUID_Nav }
 
-Nav.Tabs = ( { tabs = [] } ) => {
+Nav.Tabs = ( { tabs = [], ...rest } ) => {
 	const { location, history } = useContext( Nav.Context )
 	return (
 		<>
-			<Button.Group appearance="tabs" role="tablist">
+			<Button.Group
+				appearance="tabs"
+				shouldHandleOverflow={ true }
+				role="tablist"
+				{ ...rest }
+			>
 				{ tabs.map( ( tab, i ) => {
 					const { showButton = true, path, label, ...rest } = tab
 					delete rest.component
@@ -37,8 +42,13 @@ Nav.TabsToolbar = ( { tabs } ) => {
 	const location = useLocation()
 	return (
 		<div className="fl-asst-tabs-toolbar">
-			<Button.Group appearance="tabs">
-				<Nav.BackButton />
+			<Button.Group
+				appearance="tabs"
+				shouldHandleOverflow={ true }
+				role="tablist"
+			>
+				<Nav.BackButton excludeFromMenu={ true } />
+
 				{ Object.entries( tabs ).map( ( [ , tab ], i ) => {
 					const { isVisible, label, path } = tab
 					if ( undefined !== isVisible && ! isVisible ) {
