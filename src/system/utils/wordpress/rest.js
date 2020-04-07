@@ -27,16 +27,25 @@ const cache = setupCache( {
 	invalidate: ( config, req ) => {
 		const method = req.method.toLowerCase()
 		if ( req.cacheKey && 'get' !== method ) {
-			config.store.iterate( ( data, key ) => {
-				if ( key.startsWith( `fl-cache-${ req.cacheKey }` ) ) {
-					config.store.removeItem( key )
-				}
-			} )
+			clearCache( req.cacheKey )
 		} else if ( req.ignoreCache ) {
 			config.store.removeItem( config.uuid )
 		}
 	},
 } )
+
+/**
+ * Clears the cache for a given key.
+ *
+ * @param cacheKey
+ */
+const clearCache = cacheKey => {
+	cache.store.iterate( ( data, key ) => {
+		if ( key.startsWith( `fl-cache-${ cacheKey }` ) ) {
+			cache.store.removeItem( key )
+		}
+	} )
+}
 
 /**
  * Create `axios` instance with pre-configured `axios-cache-adapter`
@@ -68,7 +77,6 @@ export const getWpRest = () => {
 		comments,
 		updates,
 		search,
-		labels,
 		notations,
 		getPagedContent,
 		getContent
@@ -177,6 +185,22 @@ const posts = () => {
 		clone( id, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}/clone`, config )
+		},
+
+		/**
+		 * Adds a label to a post.
+		 */
+		addLabel( postId, labelId, config = {} ) {
+			clearCache( 'posts' )
+			return notations().createLabel( 'post', postId, labelId, config )
+		},
+
+		/**
+		 * Removes a label from a post.
+		 */
+		removeLabel( postId, labelId, config = {} ) {
+			clearCache( 'posts' )
+			return notations().deleteLabel( 'post', postId, labelId, config )
 		},
 	}
 }
@@ -384,6 +408,22 @@ const attachments = () => {
 			config.cacheKey = 'attachments'
 			return http.post( 'wp/v2/media/', file, config )
 		},
+
+		/**
+		 * Adds a label to an attachment.
+		 */
+		addLabel( attachmentId, labelId, config = {} ) {
+			clearCache( 'attachments' )
+			return notations().createLabel( 'attachment', attachmentId, labelId, config )
+		},
+
+		/**
+		 * Removes a label from an attachment.
+		 */
+		removeLabel( attachmentId, labelId, config = {} ) {
+			clearCache( 'attachments' )
+			return notations().deleteLabel( 'attachment', attachmentId, labelId, config )
+		},
 	}
 }
 
@@ -481,20 +521,6 @@ const search = ( keyword, routes, config = {} ) => {
 		},
 		...config
 	} )
-}
-
-/**
- * Methods related to labels
- */
-const labels = () => {
-	return {
-
-		findWhere( params, config = {} ) {
-			config.cacheKey = 'labels'
-			config.params = params
-			return http.get( 'fl-assistant/v1/labels', config )
-		},
-	}
 }
 
 /**

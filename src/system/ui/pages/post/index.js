@@ -71,10 +71,10 @@ export const Post = ( { location, match, history } ) => {
 							component: 'labels',
 							alwaysCommit: true,
 							onAdd: label => {
-								wpRest.notations().createLabel( 'post', item.id, label.id )
+								wpRest.posts().addLabel( item.id, label.id )
 							},
 							onRemove: label => {
-								wpRest.notations().deleteLabel( 'post', item.id, label.id )
+								wpRest.posts().removeLabel( item.id, label.id )
 							},
 						},
 					}

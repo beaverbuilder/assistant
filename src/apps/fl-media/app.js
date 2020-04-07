@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, List, Filter } from 'assistant/ui'
-import { useAppState, getAppActions } from 'assistant/data'
+import { useAppState, getAppActions, getSystemSelectors } from 'assistant/data'
 import { defaultState } from './'
 import AppIcon from './icon'
 import './style.scss'
@@ -16,6 +16,7 @@ export const MediaApp = ( { match } ) => (
 const Main = ( { match } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
+	const { getLabels } = getSystemSelectors()
 
 	const MediaFilter = () => {
 
@@ -43,6 +44,12 @@ const Main = ( { match } ) => {
 			DESC: __( 'Descending' )
 		}
 
+		const labels = getLabels()
+		const labelItems = { 0: __( 'Any' ) }
+		for ( let key in labels ) {
+			labelItems[ labels[ key ].id ] = labels[ key ].label
+		}
+
 		const resetFilter = () => {
 			setQuery( defaultState.query )
 			setListStyle( defaultState.listStyle )
@@ -63,6 +70,13 @@ const Main = ( { match } ) => {
 					value={ listStyle }
 					defaultValue={ defaultState.listStyle }
 					onChange={ value => setListStyle( value ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Label' ) }
+					items={ labelItems }
+					value={ query.label }
+					defaultValue="0"
+					onChange={ value => setQuery( { ...query, label: value } ) }
 				/>
 				<Filter.RadioGroupItem
 					title={ __( 'Sort By' ) }

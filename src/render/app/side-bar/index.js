@@ -110,7 +110,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 						<Button
 							key={ i }
 							appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
-							isSelected={isSelected}
+							isSelected={ isSelected }
 							onClick={ () => navOrHideApp( isSelected, () => history.push( location ) ) }
 							title={ label }
 						>{ icon( { context: 'sidebar', isSelected } ) }</Button>

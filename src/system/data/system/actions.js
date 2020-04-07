@@ -43,6 +43,13 @@ export const decrementCount = ( key ) => {
 	}
 }
 
+export const setLabels = ( labels ) => {
+	return {
+		type: 'SET_LABELS',
+		labels,
+	}
+}
+
 export const setWindow = config => {
 	return {
 		type: 'SET_WINDOW',
