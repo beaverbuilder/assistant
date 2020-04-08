@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { List, App, Page, Layout, Filter, Nav } from 'assistant/ui'
+import { List, App, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { defaultState } from '../'
 
@@ -66,7 +66,6 @@ export const SummaryTab = () => {
 
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
-	const { history, location } = useContext( Nav.Context )
 	const { getCount, getLabels } = getSystemSelectors()
 	const { query, listStyle } = useAppState( 'fl-content' )
 	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
@@ -79,8 +78,6 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		minHeight: 0,
 		flex: '1 1 auto',
 	}
-
-	//const goToTab = type => history.replace( `/${handle}/tab/${type}`, location.state )
 
 	const PostFilter = () => {
 
@@ -126,12 +123,6 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 
 		return (
 			<Filter>
-				{ /*<Filter.RadioGroupItem
-					title={ __( 'Post Type' ) }
-					items={ postTypes }
-					value={ type }
-					onChange={ value => goToTab( value ) }
-				/>*/ }
 				<Filter.RadioGroupItem
 					title={ __( 'Status' ) }
 					items={ statuses }

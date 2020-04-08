@@ -15,7 +15,7 @@ export const defaultState = {
 		orderby: 'ID',
 		post_status: 'any',
 		post_type: 'post',
-		label: 0,
+		label: '0',
 	}
 }
 
