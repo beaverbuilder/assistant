@@ -9,6 +9,7 @@ export const useForm = ( {
 	sections = {},
 	fields = {},
 	defaults = {},
+	renderTabs = true,
 	...options // See useFormData
 } ) => {
 	const tabData = useMemo( () => tabs, [ JSON.stringify( tabs ) ] )
@@ -23,7 +24,7 @@ export const useForm = ( {
 		if ( Object.entries( tabData ).length ) {
 			return (
 				<>
-					<Tabs config={ tabData } />
+					{ renderTabs && <Tabs config={ tabData } /> }
 					<Form { ...form }>
 						<TabsContent config={ tabData } data={ formData } />
 					</Form>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Button, Form, List, Page, Layout, Icon } from 'ui'
+import { Button, Form, List, Page, Layout, Icon, Notice } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
 import { getSrcSet } from 'utils/image'
+import { getFirstFocusableChild } from 'utils/dom'
 import { applyFilters } from 'hooks'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
@@ -14,6 +15,7 @@ export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes, contentStatus, taxonomies } = getSystemConfig()
+	const { renderNotices, createNotice } = Notice.useNotices()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const parentOptions = useParentOptions( item.type )
@@ -71,6 +73,16 @@ export const Post = ( { location, match, history } ) => {
 			path: match.url,
 			exact: true,
 			sections: {
+				title: {
+					fields: ( { values } ) => {
+						return (
+							<>
+								<Layout.Headline>{ values.title }</Layout.Headline>
+								<ElevatorButtons />
+							</>
+						)
+					}
+				},
 				labels: {
 					label: __( 'Labels' ),
 					fields: {
@@ -358,7 +370,13 @@ export const Post = ( { location, match, history } ) => {
 		}
 
 		const handleError = error => {
-			alert( __( 'Error: Changes not published! Please try again.' ) )
+
+			createNotice( {
+				id: 'publish-error',
+				status: 'error',
+				content: __( 'Error: Changes not published! Please try again.' )
+			} )
+
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
@@ -371,7 +389,12 @@ export const Post = ( { location, match, history } ) => {
 			} else {
 				setCurrentHistoryState( { item: data.post } )
 				setValue( 'url', data.post.url, true )
-				alert( __( 'Changes published!' ) )
+
+				createNotice( {
+					id: 'publish-success',
+					status: 'success',
+					content: __( 'Changes published!' )
+				} )
 			}
 		} ).catch( error => {
 			handleError( error )
@@ -382,11 +405,11 @@ export const Post = ( { location, match, history } ) => {
 		renderForm,
 		resetForm,
 		submitForm,
-		values,
 		hasChanges,
 		setValues,
 	} = Form.useForm( {
 		tabs,
+		renderTabs: false,
 		onSubmit,
 		onReset: ( { state } ) => {
 			setFeatureThumbnail( state.thumbnailData.value )
@@ -413,17 +436,22 @@ export const Post = ( { location, match, history } ) => {
 		}
 		const { alt, title, height, width, url } = featureThumbnail
 		return (
-			<div>
-				<img
-					src={ url }
-					srcSet={ getFeaturedImageSrcSet() }
-					style={ { objectFit: 'cover' } }
-					alt={ alt }
-					title={ title }
-					height={ height }
-					width={ width }
-				/>
-			</div>
+			<>
+				{renderNotices()}
+				{ featureThumbnail && (
+					<div>
+						<img
+							src={ url }
+							srcSet={ getFeaturedImageSrcSet() }
+							style={ { objectFit: 'cover' } }
+							alt={ alt }
+							title={ title }
+							height={ height }
+							width={ width }
+						/>
+					</div>
+				)}
+			</>
 		)
 	}
 
@@ -465,15 +493,22 @@ export const Post = ( { location, match, history } ) => {
 		</div>
 	)
 
+	const focusFirstInput = () => {
+		const el = getFirstFocusableChild( document.querySelector( '.fl-asst-form' ) )
+		if ( el ) {
+			el.focus()
+		}
+	}
+
 	return (
 		<Page
 			id="fl-asst-post-detail"
 			title={ labels.editItem }
 			hero={ featureThumbnail ? <Hero /> : null }
 			footer={ hasChanges && <Footer /> }
+			tabs={ tabs }
+			onLoad={ focusFirstInput }
 		>
-			<Layout.Headline>{values.title}</Layout.Headline>
-			<ElevatorButtons />
 			{ renderForm() }
 		</Page>
 	)

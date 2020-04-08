@@ -45,7 +45,9 @@ const Main = ( { match } ) => {
 		}
 
 		const labels = getLabels()
-		const labelItems = { 0: __( 'Any' ) }
+		const labelItems = {
+			'0': __( 'Any' )
+		}
 		for ( let key in labels ) {
 			labelItems[ labels[ key ].id ] = labels[ key ].label
 		}
@@ -75,7 +77,7 @@ const Main = ( { match } ) => {
 					title={ __( 'Label' ) }
 					items={ labelItems }
 					value={ query.label }
-					defaultValue="0"
+					defaultValue={ defaultState.query.label }
 					onChange={ value => setQuery( { ...query, label: value } ) }
 				/>
 				<Filter.RadioGroupItem

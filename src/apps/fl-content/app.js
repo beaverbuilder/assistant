@@ -31,7 +31,6 @@ const Main = () => {
 				path: '/fl-content/tab/' + key,
 				label: type.labels.plural,
 				component: () => <PostTypeTab type={ key } />,
-				showButton: type.builtin
 			} )
 		} )
 
@@ -40,9 +39,7 @@ const Main = () => {
 
 	const Header = () => {
 		return (
-			<div style={ { flex: '1 1 auto', display: 'flex', flexDirection: 'column', margin: '5px -5px 0' } }>
-				<Nav.Tabs tabs={ tabs } />
-			</div>
+			<Nav.Tabs tabs={ tabs } shouldHandleOverflow={ true } />
 		)
 	}
 
@@ -73,6 +70,7 @@ const Main = () => {
 
 	return (
 		<Page
+			id="fl-asst-content-list-page"
 			title={ __( 'Content' ) }
 			icon={ <AppIcon context="sidebar" /> }
 			padY={ false }

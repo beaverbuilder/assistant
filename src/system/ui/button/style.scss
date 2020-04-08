@@ -61,19 +61,23 @@
         &.fl-asst-button-group-appearance-tabs {
             flex: 1 1 auto;
             background: var(--fluid-box-background);
-            padding: 0 var(--fluid-lg-space);
-            height: 38px;
+            padding: 0 var(--fluid-med-space);
+            padding-right: 2px;
+            height: 50px;
             border-radius: 0;
             overflow: auto;
             justify-content: flex-start;
             align-self: stretch;
             overflow: visible;
+            flex-wrap: nowrap;
+            max-width: 100%;
 
             .fluid-button {
                 margin: 0;
                 background: transparent;
                 border: none;
                 border-radius: 0;
+                padding: 0 12px;
 
                 &:hover {
                     background: var(--fluid-box-hover-background);
@@ -101,8 +105,8 @@
                 }
 
                 // See Nav.Tabs
-                &.fluid-button.fl-asst-more-btn {
-                    margin-left:auto;
+                &.fl-asst-more-button {
+                    margin-left:auto !important;
                 }
 
                 .fl-asst-count-badge {

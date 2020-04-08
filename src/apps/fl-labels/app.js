@@ -190,14 +190,6 @@ const Main = () => {
 		}
 	} )
 
-	const InnerSection = ( { children } ) => {
-		return (
-			<Layout.Row style={ { paddingBottom: 'var(--fluid-lg-space)' } }>
-				{ children }
-			</Layout.Row>
-		)
-	}
-
 	return (
 		<Page
 			title={ __( 'Labels' ) }
