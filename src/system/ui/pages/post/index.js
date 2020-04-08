@@ -351,12 +351,12 @@ export const Post = ( { location, match, history } ) => {
 		}
 
 		const handleError = error => {
-			
-			createNotice({
+
+			createNotice( {
 				id: 'publish-error',
 				status: 'error',
 				content: __( 'Error: Changes not published! Please try again.' )
-			})
+			} )
 
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
@@ -371,11 +371,11 @@ export const Post = ( { location, match, history } ) => {
 				setCurrentHistoryState( { item: data.post } )
 				setValue( 'url', data.post.url, true )
 
-				createNotice({
+				createNotice( {
 					id: 'publish-success',
 					status: 'success',
 					content: __( 'Changes published!' )
-				})
+				} )
 			}
 		} ).catch( error => {
 			handleError( error )
