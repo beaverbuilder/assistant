@@ -5,6 +5,7 @@ import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
 import { getSrcSet } from 'utils/image'
+import { applyFilters } from 'hooks'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
 import './style.scss'
@@ -57,6 +58,12 @@ export const Post = ( { location, match, history } ) => {
 		}
 		return srcSet
 	}
+
+	const args = {
+		post: item,
+		baseURL: match.url,
+	}
+	const additionalTabs = applyFilters( 'post-tabs', {}, args )
 
 	const tabs = {
 		general: {
@@ -300,6 +307,7 @@ export const Post = ( { location, match, history } ) => {
 				/>
 			),
 		},
+		...additionalTabs,
 	}
 
 	const onSubmit = ( { changed, ids, setValue } ) => {

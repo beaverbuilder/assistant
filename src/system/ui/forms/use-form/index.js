@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from 'react'
+import { __ } from '@wordpress/i18n'
 import { Button, Form, Nav, Page, Layout } from 'ui'
 import { useFormData } from '../use-form-data'
 import './style.scss'
@@ -104,6 +105,14 @@ const TabsContent = ( { config, data } ) => {
 					/>
 				)
 			} ) }
+			<Nav.Route render={ () => (
+				<Layout.Box style={{
+					textAlign: 'center',
+					fontSize: 16
+				}} outset={true}>
+					{__("Oh no! We couldn't find that tab. Try Another")}
+				</Layout.Box>
+			)} />
 		</Nav.Switch>
 	)
 }

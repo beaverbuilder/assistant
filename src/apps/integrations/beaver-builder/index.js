@@ -7,6 +7,7 @@ const integrationEnabled = () => applyFilters( 'enable-default-integration', tru
 
 addFilter( 'list-item-actions', 'fl-assistant', ( actions, item ) => {
 
+	// Allow default integration to be overridden
 	if ( ! integrationEnabled() ) return actions
 
 	const { bbEditUrl, bbIsEnabled, bbBranding, bbCanEdit } = item
