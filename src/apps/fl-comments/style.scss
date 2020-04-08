@@ -25,7 +25,10 @@
 		float: left;
 	}
 
-	#fl-comments-list-page .fluid-page-header {
-		padding: 5px 0;
+	#fl-comments-list-page {
+		.fluid-page-header {
+            padding: 0;
+            padding-bottom: 2px;
+        }
 	}
 }
