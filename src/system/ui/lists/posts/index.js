@@ -5,6 +5,7 @@ import { List, Button, Icon } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import { getSystemConfig, getSystemSelectors } from 'data'
+import ItemActions from './item-actions'
 
 export const Posts = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
@@ -123,9 +124,13 @@ export const Posts = ( {
 				}
 
 				const Extras = () => {
-					if ( item.isCloning || item.isTrashing || item.isTrashed || item.isRestoring ) {
-						return null
-					}
+
+					return <ItemActions
+								item={item}
+								clonePost={clonePost}
+								trashPost={trashPost}
+								favoritePost={favoritePost}
+							/>
 
 					return (
 						<div className="fl-asst-item-extras">

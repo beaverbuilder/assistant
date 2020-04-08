@@ -1,6 +1,7 @@
 import { api as data } from 'data'
 import { api as ui } from 'ui'
 import utils from './utils'
+import hooks from './hooks'
 
 const api = window.FL || {}
 const asst = FL.Assistant || {}
@@ -16,6 +17,7 @@ const Assistant = {
 	data,
 	ui,
 	utils,
+	hooks,
 }
 
 window.FL = {

@@ -8,3 +8,5 @@ import './fl-labels'
 import './fl-current-view'
 import './fl-cloud'
 import './examples'
+
+import './integrations'
