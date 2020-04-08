@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import React, { useContext, useState } from 'react'
-import { App, Page, List } from 'assistant/ui'
+import { App, Page, List, Layout } from 'assistant/ui'
 
 export const Search = () => {
 	const { handle } = useContext( App.Context )
@@ -13,11 +13,11 @@ export const Search = () => {
 
 	return (
 		<Page padX={ false } title={ __( 'All Users' ) }>
-			<Page.Toolbar>
+			<Layout.Row>
 				<input type="text" placeholder={ __( 'Find User' ) }
 					value={ search }
 					onChange={ e => setSearch( e.target.value ) }/>
-			</Page.Toolbar>
+			</Layout.Row>
 			<List.Users
 				query={ getQuery() }
 				getItemProps={ ( item, defaultProps ) => ( {

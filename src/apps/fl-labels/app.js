@@ -3,10 +3,19 @@ import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { Color, Control, Page, Table, Button, Icon } from 'assistant/ui'
+import { Color, Control, Page, Table, Button, Icon, Nav, Layout } from 'assistant/ui'
+import AppIcon from './icon'
 import './style.scss'
 
-export const App = () => {
+const App = ( { match } ) => {
+	return (
+		<Nav.Switch>
+			<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+		</Nav.Switch>
+	)
+}
+
+const Main = () => {
 	const [ loading, setLoading ] = useState( true )
 	const [ labels, setLabels ] = useState( [] )
 	const [ editingLabel, setEditingLabel ] = useState( null )
@@ -134,6 +143,7 @@ export const App = () => {
 			return {
 				edit: (
 					<>
+						<h2>Edit Label</h2>
 						<input
 							type='text'
 							value={ editingLabel.label }
@@ -177,10 +187,11 @@ export const App = () => {
 			),
 			label: label.label,
 			actions: (
-				<Button.Group appearance="buttons">
+				<>
 					<Button
 						onClick={ () => setEditingLabel( label ) }
 						title={ __( 'Edit Label Text' ) }
+						style={ { marginRight: 5 } }
 					><Icon.Edit /></Button>
 					<Button
 						onClick={ () => deleteLabel( label.id ) }
@@ -189,28 +200,32 @@ export const App = () => {
 					>
 						<Icon.Trash />
 					</Button>
-				</Button.Group>
+				</>
 			),
 		}
 	} )
 
 	const InnerSection = ( { children } ) => {
 		return (
-			<Page.Pad top={ false } sides={ false }>
+			<Layout.Row style={ { paddingBottom: 'var(--fluid-lg-space)' } }>
 				{ children }
-			</Page.Pad>
+			</Layout.Row>
 		)
 	}
 
 	return (
-		<Page title={ __( 'Manage Labels' ) }>
+		<Page
+			title={ __( 'Labels' ) }
+			icon={ <AppIcon context="sidebar" /> }
+			shouldShowBackButton={ false }
+		>
 			<Page.Section
 				className='fl-asst-edit-labels'
 				contentStyle={ { paddingTop: 0 } }
 			>
-				<div>
-					{ __( 'Labels allow you to mark posts for organization and collaborate with other users. Below you can add more labels and change the name of existing ones.' ) }
-				</div>
+				<p style={ { marginTop: 0 } }>
+					{ __( 'Labels allow you to mark posts or pages for organization and collaborate with other users. Below you can add more labels and change the name of existing ones. Add labels to posts inside the Content app.' ) }
+				</p>
 				{ loading &&
 					<InnerSection>{ __( 'Loading...' ) }</InnerSection>
 				}
@@ -223,6 +238,7 @@ export const App = () => {
 			<Page.Section
 				label={ __( 'Add New Label' ) }
 				className='fl-asst-add-label'
+				style={ { marginTop: 'auto' } }
 			>
 				<input
 					type='text'
@@ -236,21 +252,8 @@ export const App = () => {
 				/>
 				<Button onClick={ addLabel }>{ __( 'Add New Label' ) }</Button>
 			</Page.Section>
-
-			<Page.Section label={ __( 'Bookmarks' ) }>
-				<InnerSection>
-					{ __( 'Bookmarks allow you to mark items privately. Only you will be able to see what items you’ve bookmarked.' ) }
-				</InnerSection>
-			</Page.Section>
 		</Page>
 	)
 }
 
-App.Icon = () => (
-	<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<circle cx="7.5" cy="26.5" r="6.25" stroke="#F8D247" strokeWidth="2.5"/>
-		<circle cx="26.5" cy="26.5" r="6.25" stroke="#EB426A" strokeWidth="2.5"/>
-		<circle cx="7.5" cy="7.5" r="6.25" stroke="#5FCF88" strokeWidth="2.5"/>
-		<circle cx="26.5" cy="7.5" r="6.25" stroke="#51ABF2" strokeWidth="2.5"/>
-	</svg>
-)
+export default App

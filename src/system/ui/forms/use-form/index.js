@@ -136,6 +136,7 @@ const Fields = ( { config, data } ) => {
 			isRequired,
 			isVisible,
 			hasChanges,
+			errors,
 			...rest
 		} = data.fields[ key ]
 		const Field = getFieldComponent( component )
@@ -148,6 +149,7 @@ const Fields = ( { config, data } ) => {
 				isRequired={ isRequired }
 				isVisible={ isVisible }
 				hasChanges={ hasChanges }
+				errors={ errors }
 			>
 				<Field id={ id } { ...rest } />
 			</Form.Item>
@@ -168,6 +170,8 @@ const getFieldComponent = key => {
 		'textarea': Form.TextareaItem,
 		'url': Form.UrlItem,
 		'parent-terms': Form.ParentTermItems,
+		'image': Form.ImageItem,
+		'button': Form.ButtonItem,
 		'calender' : Form.CalenderItem
 	}
 	let Component = Form.TextItem

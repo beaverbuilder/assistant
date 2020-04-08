@@ -1,4 +1,7 @@
 import { useEffect, useRef } from 'react'
+import useMedia from 'use-media'
+
+export { useMedia }
 
 /**
  * Check if a given prop (most likely children) is a function to be rendered.

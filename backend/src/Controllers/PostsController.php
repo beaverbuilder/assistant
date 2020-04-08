@@ -32,14 +32,14 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_post' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -51,7 +51,7 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_posts' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -63,7 +63,7 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts_count' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -81,7 +81,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -98,7 +98,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -111,7 +111,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -129,7 +129,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -333,6 +333,15 @@ class PostsController extends ControllerAbstract {
 					$this->update_post_terms( $id, $data['terms'] );
 					unset( $data['terms'] );
 				}
+				if ( isset( $data['thumbnail'] ) ) {
+					if ( '0' === $data['thumbnail'] ) {
+						delete_post_meta( $id, '_thumbnail_id' );
+					} else {
+						set_post_thumbnail( $id, $data['thumbnail'] );
+					}
+
+					unset( $data['thumbnail'] );
+				}
 				wp_update_post(
 					array_merge(
 						$data, [
@@ -359,6 +368,7 @@ class PostsController extends ControllerAbstract {
 			case 'untrash':
 				wp_untrash_post( $id );
 				break;
+
 		}
 
 		$updated_post = get_post( $id );

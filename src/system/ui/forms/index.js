@@ -20,6 +20,8 @@ import {
 	TextItem,
 	TextareaItem,
 	UrlItem,
+	ImageItem,
+	ButtonItem,
 	CalenderItem
 } from './items'
 
@@ -100,6 +102,12 @@ Form.UrlItem.displayName = 'Form.UrlItem'
 
 Form.ParentTermItems = ParentTermItems
 Form.ParentTermItems.displayName = 'Form.ParentTermItems'
+
+Form.ImageItem = ImageItem
+Form.ImageItem.displayName = 'Form.ImageItem'
+
+Form.ButtonItem = ButtonItem
+Form.ButtonItem.displayName = 'Form.ButtonItem'
 
 Form.CalenderItem = CalenderItem
 Form.CalenderItem.displayName = 'Form.CalenderItem'

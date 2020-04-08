@@ -101,7 +101,7 @@ Button.Group = ( {
 	const props = {
 		...rest,
 		className: classes,
-		role: 'group',
+		role: rest.role ? rest.role : 'group',
 		ref: wrapRef,
 	}
 
@@ -144,6 +144,7 @@ Button.Group = ( {
 Button.Loading = ( {
 	className,
 	children,
+	isLoading = true,
 	...rest
 } ) => {
 	const classes = classname( {
@@ -153,7 +154,7 @@ Button.Loading = ( {
 	return (
 		<Button className={ classes } { ...rest }>
 			{ children }
-			<Icon.SmallSpinner />
+			{ isLoading && <Icon.SmallSpinner /> }
 		</Button>
 	)
 }

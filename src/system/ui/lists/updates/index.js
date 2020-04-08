@@ -58,19 +58,19 @@ export const Updates = ( {
 				}
 
 				const Before = () => (
-					<Layout.Box style={{
+					<Layout.Box style={ {
 						paddingTop: 0,
 						paddingBottom: 5
-					}}>
+					} }>
 						<div
-							style={{
+							style={ {
 								position: 'relative',
 								paddingTop: 'plugin' === item.type ? '32.3%' : '75%',
 								background: 'var(--fluid-box-background)'
-							}}
+							} }
 						>
-							<div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-								<img src={item.banner} />
+							<div style={ { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' } }>
+								<img src={ item.banner } />
 							</div>
 						</div>
 					</Layout.Box>

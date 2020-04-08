@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
+import classname from 'classnames'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
 import AppMain from '../app'
 import { App as FLUID_Root } from 'fluid/ui'
@@ -10,8 +11,8 @@ import {
 	Window,
 	Error,
 	Page,
-	Button,
 	Layout,
+	Env,
 } from 'assistant/ui'
 
 const getRouterProps = history => {
@@ -26,43 +27,19 @@ const getRouterProps = history => {
 	return props
 }
 
-// Top right buttons - only in standalone version
-const PanelActions = () => {
-	const { toggleIsHidden, toggleSize, size } = useContext( Window.Context )
-
-	const toggleTitle = 'mini' === size ? __( 'Expand Panel' ) : __( 'Shrink Panel' )
-	return (
-		<>
-			<Button
-				onClick={ toggleSize }
-				title={ toggleTitle }
-				appearance="transparent"
-				style={ { marginRight: 5 } }
-			>
-				{ 'mini' === size && <Icon.Expand /> }
-				{ 'normal' === size && <Icon.Collapse /> }
-			</Button>
-			<Button
-				onClick={ toggleIsHidden }
-				title={ __( 'Hide Assistant' ) }
-				appearance="transparent"
-				id="fl-asst-close-panel"
-			>
-				<Icon.Close />
-			</Button>
-		</>
-	)
-}
-
 /**
  * The Root Component
  */
 export const Assistant = () => {
-	const { appearance, history } = useSystemState()
+	const { appearance, history, isAppHidden } = useSystemState()
 	const { setHistory } = getSystemActions()
 	const { brightness = 'light' } = appearance
 
 	const onHistoryChanged = history => setHistory( history.index, history.entries )
+
+	const windowClasses = classname( {
+		'fl-asst-window-sidebar-only': isAppHidden,
+	} )
 
 	return (
 		<FLUID_Root
@@ -70,13 +47,15 @@ export const Assistant = () => {
 			onHistoryChanged={ onHistoryChanged }
 			colorScheme={ brightness }
 		>
-			<App.Provider>
-				<Appearance brightness={ brightness }>
-					<MainWindow>
-						<AppMain actions={ <PanelActions /> } />
-					</MainWindow>
-				</Appearance>
-			</App.Provider>
+			<Env.Provider>
+				<App.Provider>
+					<Appearance brightness={ brightness }>
+						<MainWindow className={ windowClasses }>
+							<AppMain />
+						</MainWindow>
+					</Appearance>
+				</App.Provider>
+			</Env.Provider>
 		</FLUID_Root>
 	)
 }
@@ -85,11 +64,13 @@ export const Assistant = () => {
 export const AssistantCore = () => {
 	const { appearance } = useSystemState()
 	return (
-		<App.Provider>
-			<Appearance brightness={ appearance.brightness }>
-				<AppMain />
-			</Appearance>
-		</App.Provider>
+		<Env.Provider application='beaver-builder'>
+			<App.Provider environment='beaver-builder'>
+				<Appearance brightness={ appearance.brightness }>
+					<AppMain />
+				</Appearance>
+			</App.Provider>
+		</Env.Provider>
 	)
 }
 
@@ -109,7 +90,7 @@ export const getAssistantBBPanelConfig = () => {
 	}
 }
 
-const MainWindow = ( { children } ) => {
+const MainWindow = ( { children, ...rest } ) => {
 	const { window: mainWindow, shouldShowLabels } = useSystemState()
 	const { size, origin, isHidden, hiddenAppearance } = mainWindow
 	const { setWindow } = getSystemActions()
@@ -125,6 +106,7 @@ const MainWindow = ( { children } ) => {
 			onChange={ onChanged }
 			shouldShowLabels={ shouldShowLabels }
 			shouldDisplayButton={ '' === hiddenAppearance }
+			{ ...rest }
 		>
 			<Error.Boundary alternate={ WindowError }>
 				{children}

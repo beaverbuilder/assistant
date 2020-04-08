@@ -20,6 +20,8 @@ class PluginUpdatesTransformer {
 		}
 
 		if ( isset( $update->banners ) ) {
+			$update->banners = (array) $update->banners;
+
 			if ( isset( $update->banners['2x'] ) ) {
 				$banner = $update->banners['2x'];
 			} elseif ( isset( $update->banners['1x'] ) ) {
@@ -43,7 +45,7 @@ class PluginUpdatesTransformer {
 			'type'           => 'plugin',
 			'version'        => $plugin->Version,
 			'updatedVersion' => $update->new_version,
-			'tested'		 => $update->tested,
+			'tested'         => $update->tested,
 			'requiresPHP'    => $update->requires_php,
 			'pluginURI'      => $plugin->PluginURI,
 		];

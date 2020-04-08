@@ -87,21 +87,19 @@ export const CreatePost = ( { history, location } ) => {
 		}
 
 		const handleError = error => {
-			setIsSubmitting( false )
 			alert( __( 'Error: Post not created! Please try again.' ) )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
 		}
 
-		wpRest.posts().create( data ).then( response => {
+		return wpRest.posts().create( data ).then( response => {
 			const { data } = response
 			if ( data.error ) {
 				handleError()
 			} else if ( detailBaseUrl ) {
 				history.replace( `${ detailBaseUrl }/:${ data.id }`, { item: data } )
 			} else {
-				setIsSubmitting( false )
 				alert( __( 'Post not created!' ) )
 			}
 		} ).catch( error => {
@@ -112,8 +110,7 @@ export const CreatePost = ( { history, location } ) => {
 	const {
 		renderForm,
 		submitForm,
-		isSubmitting,
-		setIsSubmitting,
+		isSubmitting
 	} = Form.useForm( {
 		sections,
 		defaults,

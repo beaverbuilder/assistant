@@ -8,9 +8,23 @@
             margin-left: calc( 0px - var(--fluid-lg-space) );
             margin-right: calc( 0px - var(--fluid-lg-space) );
         }
+
+        &.fluid-row {
+            --fluid-gap: 0px;
+            flex-direction: row;
+
+            & > * {
+                margin-right: var(--fluid-gap);
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
     }
     .fluid-headline {
         font-size: 24px;
         font-weight: 600;
+        word-break: break-word;
     }
 }

@@ -32,12 +32,12 @@ export const Plugin = ( { location = {} } ) => {
 					author: {
 						label: __( 'Author' ),
 						labelPlacement: 'beside',
-						component: () => authorURI ? <a href={authorURI}>{author}</a> : author,
+						component: () => authorURI ? <a href={ authorURI }>{author}</a> : author,
 					},
 					pluginURI: {
 						label: __( 'Plugin Page' ),
 						labelPlacement: 'beside',
-						component: () => <a href={pluginURI}>{title}</a>,
+						component: () => <a href={ pluginURI }>{title}</a>,
 					},
 					tested: {
 						label: __( 'Tested for WordPress Version' ),

@@ -1,0 +1,16 @@
+.fl-asst {
+    .fl-asst-attention {
+        --fluid-box-background: #23282d;
+        --fluid-box-color: white;
+        --radius: 30px;
+
+        flex: 0 0 auto;
+        position: relative;
+        background: var(--fluid-box-background);
+        color: var(--fluid-box-color);
+        padding: var(--fluid-lg-space);
+        padding-top: calc( 36px + var(--fluid-lg-space) );
+
+        h1, p { margin: var(--fluid-med-space); }
+    }
+}
