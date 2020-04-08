@@ -1,9 +1,13 @@
 import React from 'react'
-import { addFilter } from 'assistant/hooks'
+import { addFilter, applyFilters } from 'assistant/hooks'
 import { sprintf } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
 
+const integrationEnabled = () => applyFilters( 'enable-default-integration', true, 'beaver-builder' )
+
 addFilter( 'list-item-actions', 'fl-assistant', ( actions, item ) => {
+
+	if ( ! integrationEnabled() ) return actions
 
 	const { bbEditUrl, bbIsEnabled, bbBranding, bbCanEdit } = item
 	const i = actions.findIndex( action => 'edit-post' === action.handle )
