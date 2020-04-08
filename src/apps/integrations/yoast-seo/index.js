@@ -7,7 +7,7 @@ const { integrations } = getSystemConfig()
 
 const integrationEnabled = () => applyFilters( 'enable-default-integration', true, 'yoast-seo' )
 
-addFilter( 'post-tabs', 'fl-assistant', ( tabs, { post, baseURL } ) => {
+addFilter( 'post-tabs', 'fl-assistant', ( tabs, { baseURL } ) => {
 
     // Allow default integration to be overridden
     if (
