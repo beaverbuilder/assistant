@@ -1,27 +1,19 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
 import classname from 'classnames'
 
-const defaultField = {
-	lastCommittedValue: null,
-	sanitize: v => v,
-	value: null,
-	errors: [],
-	onChange: () => {},
-	validate: () => {},
-}
-
 const initReducer = ( { fields, defaults } ) => {
 	const state = {}
 
 	Object.entries( fields ).map( ( [ key, field ] ) => {
-		const { sanitize } = { ...defaultField, ...field }
+		const { sanitize } = field
 		const value = sanitize( defaults[ key ] )
 		state[ key ] = {
-			...defaultField,
 			value,
 			lastCommittedValue: value,
+			errors: []
 		}
 	} )
+
 	return state
 }
 
@@ -43,7 +35,15 @@ export const useFormData = ( {
 
 	Object.entries( fields ).map( ( [ key, field ] ) => {
 		fields[ key ] = {
-			...defaultField,
+			alwaysCommit: false,
+			disabled: false,
+			id: null,
+			isRequired: false,
+			isVisible: true,
+			label: null,
+			onChange: () => {},
+			sanitize: v => v,
+			validate: () => {},
 			...field,
 		}
 	} )

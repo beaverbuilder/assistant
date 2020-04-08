@@ -112,6 +112,7 @@
             padding: 0 var(--fl-asst-outer-space);
         }
         .fl-asst-list-item-extras {
+            pointer-events: none;
             padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) 0;
         }
     }
@@ -202,8 +203,9 @@
         border-radius: var(--fluid-radius);
         padding: 2px;
         box-shadow: 0px 2px 4px rgba(0,0,0,.1),
-                    0px 0px 0px 2px var(--fluid-line-color);
+                    0px 0px 0px 1px var(--fluid-color);
         z-index: 9;
+        pointer-events: auto;
 
         transition-property: opacity;
         transition-delay: 0s;

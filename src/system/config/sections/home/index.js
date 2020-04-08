@@ -95,17 +95,21 @@ const PostTypeCounts = () => {
 				{ Object.entries( contentTypes ).map( ( [ key, item ], i ) => {
 					const { labels } = item
 					return (
-						<div key={ i } style={ {
-							display: 'flex',
-							flexDirection: 'column',
-							background: 'var(--fluid-primary-background)',
-							color: 'var(--fluid-primary-color)',
-							borderRadius: 'var(--fluid-sm-space)',
-							padding: 'var(--fluid-med-space)'
-						} }>
+						<Button
+							key={ i }
+							status="primary"
+							to={`/fl-content/tab/${key}`}
+							style={ {
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'flex-start',
+								borderRadius: 'var(--fluid-sm-space)',
+								padding: 'var(--fluid-med-space)'
+							} }
+						>
 							{labels.plural}
 							<span style={ { fontSize: 24, marginTop: 5, lineHeight: 1 } }>{getCount( `content/${key}` )}</span>
-						</div>
+						</Button>
 					)
 				} )}
 			</div>
