@@ -2,6 +2,7 @@
 
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Data\Repository\LabelsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\System\Integrations\BeaverBuilder;
@@ -14,10 +15,16 @@ use WP_REST_Server;
  */
 class PostsController extends ControllerAbstract {
 
+	protected $labels;
 	protected $posts;
 	protected $transformer;
 
-	public function __construct( PostsRepository $posts, PostTransformer $transformer ) {
+	public function __construct(
+		LabelsRepository $labels,
+		PostsRepository $posts,
+		PostTransformer $transformer
+	) {
+		$this->labels = $labels;
 		$this->posts = $posts;
 		$this->transformer = $transformer;
 	}
@@ -142,8 +149,14 @@ class PostsController extends ControllerAbstract {
 	public function posts( WP_REST_Request $request ) {
 
 		$params = $request->get_params();
-
 		$params['perm'] = 'editable';
+
+		if ( isset( $params['label'] ) && $params['label'] ) {
+			$params['post__in'] = $this->labels->get_object_ids( 'post', $params['label'] );
+			if ( ! count( $params['post__in'] ) ) {
+				$params['post__in'][] = -1; // post__in returns all posts if empty.
+			}
+		}
 
 		$pager = $this->posts->paginate( $params, $this->transformer );
 
