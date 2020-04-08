@@ -74,9 +74,13 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
-= NEXT =
+= 0.4.0 =
 * Added access to all public post types inside content app
 * Refined post detail screen layout
+* Added ability to query posts by label
+* Added ability to query attachments by label
+* Fix showing publish bar when favoriting a post
+* Added notice bar and removed confirmation alerts
 
 = 0.3.1 (2020-03-27) =
 * Harden form control styles
