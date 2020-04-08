@@ -4,24 +4,24 @@ import { createHooks } from '@wordpress/hooks'
 const hooks = createHooks()
 
 export const {
-    addAction,
-    addFilter,
-    removeAction,
-    removeFilter,
-    hasAction,
-    hasFilter,
-    removeAllActions,
-    removeAllFilters,
-    doAction,
-    applyFilters,
-    currentAction,
-    currentFilter,
-    doingAction,
-    doingFilter,
-    didAction,
-    didFilter,
-    actions,
-    filters
+	addAction,
+	addFilter,
+	removeAction,
+	removeFilter,
+	hasAction,
+	hasFilter,
+	removeAllActions,
+	removeAllFilters,
+	doAction,
+	applyFilters,
+	currentAction,
+	currentFilter,
+	doingAction,
+	doingFilter,
+	didAction,
+	didFilter,
+	actions,
+	filters
 } = hooks
 
 export default hooks

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
-import { __, sprintf } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { List, Button, Icon } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
@@ -123,77 +123,15 @@ export const Posts = ( {
 					return null
 				}
 
-				const Extras = () => {
-
-					return <ItemActions
-								item={item}
-								clonePost={clonePost}
-								trashPost={trashPost}
-								favoritePost={favoritePost}
-							/>
-
-					return (
-						<div className="fl-asst-item-extras">
-							{ ! isCurrentPage() && (
-								<Button
-									title={ __( 'View Post' ) }
-									tabIndex="-1"
-									href={ item.url }
-									appearance="transparent"
-								>
-									<Icon.View />
-								</Button>
-							)}
-							{ item.editUrl && (
-								<Button
-									title={ __( 'Edit in Admin' ) }
-									tabIndex="-1"
-									href={ item.editUrl }
-									appearance="transparent"
-								>
-									<Icon.Edit />
-								</Button>
-							)}
-							{ item.bbCanEdit && (
-								<Button
-									title={ sprintf( 'Edit in %s', item.bbBranding ) }
-									tabIndex="-1"
-									href={ item.bbEditUrl }
-									appearance="transparent"
-									status={ item.bbIsEnabled ? 'primary' : '' }
-								>
-									<Icon.Beaver />
-									{ item.bbIsEnabled && <span className="fl-asst-extra-dot" /> }
-								</Button>
-							)}
-							<Button
-								onClick={ favoritePost }
-								tabIndex="-1"
-								title={ __( 'Mark as Favorite' ) }
-								appearance="transparent"
-							>
-								{ item.isFavorite ? <Icon.BookmarkSolid /> : <Icon.Bookmark /> }
-							</Button>
-							<Button
-								onClick={ clonePost }
-								tabIndex="-1"
-								title={ __( 'Duplicate' ) }
-								appearance="transparent"
-							>
-								<Icon.Clone />
-							</Button>
-							<Button
-								onClick={ trashPost }
-								tabIndex="-1"
-								title={ __( 'Move to Trash' ) }
-								status='destructive'
-								appearance="transparent"
-							>
-								<Icon.Trash />
-							</Button>
-						</div>
-					)
-				}
+				const Extras = () => (
+					<ItemActions
+						item={ item }
+						clonePost={ clonePost }
+						trashPost={ trashPost }
+						favoritePost={ favoritePost }
+						isCurrentPage={ isCurrentPage }
+					/>
+				)
 
 				const thumbnailSize = ( item.isTrashing || item.isTrashed || item.isRestoring ) ? 'sm' : 'med'
 
@@ -254,7 +192,7 @@ export const Posts = ( {
 					thumbnailSize,
 					shouldAlwaysShowThumbnail: 'thumb' !== listStyle,
 					accessory: props => <Accessory { ...props } />,
-					extras: props => <Extras { ...props } />,
+					extras: Extras,
 					className: classname( {
 						'fl-asst-is-trashing': item.isTrashing,
 						'fl-asst-is-trashed': item.isTrashed,
