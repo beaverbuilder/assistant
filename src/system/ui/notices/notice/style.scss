@@ -1,8 +1,33 @@
 .fl-asst {
     .fl-asst-notice {
-        padding: var(--fluid-med-space);
+        padding: 0 var(--fluid-lg-space);
+        padding-right: var(--fluid-med-space);
         margin: 0;
         height: 60px;
+        border: none;
+
+        &.is-info {
+            color: var(--fluid-primary-color);
+            background: var(--fluid-primary-background);
+            box-shadow: inset 3px 0 0 var(--fluid-primary-color);
+        }
+        &.is-error {
+            color: var(--fluid-destructive-color);
+            background: var(--fluid-destructive-background);
+            box-shadow: inset 3px 0 0 var(--fluid-destructive-color);
+        }
+        &.is-warning {
+            color: var(--fluid-alert-color);
+            background: var(--fluid-alert-background);
+            box-shadow: inset 3px 0 0 var(--fluid-alert-color);
+        }
+        &.is-success {
+            box-shadow: inset 3px 0 0 #4ab866;
+            
+            button svg path {
+                fill: #4ab866;
+            }
+        }
 
         button {
             align-self: center;
