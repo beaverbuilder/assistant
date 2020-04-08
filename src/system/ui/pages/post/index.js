@@ -97,9 +97,13 @@ export const Post = ( { location, match, history } ) => {
 						actions: {
 							component: 'actions',
 							options: args => getPostActions( { history, ...args } ),
-						}
+						},
+						isFavorite: {
+							alwaysCommit: true,
+							isVisible: false,
+						},
 					}
-				}
+				},
 			},
 		},
 		edit: {
