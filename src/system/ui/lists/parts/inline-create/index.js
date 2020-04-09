@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import { Layout, Form, Icon } from 'ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
@@ -32,7 +32,8 @@ const InlineCreate = ( {
 		} )
 
 		const post = {
-			post_title: value
+			post_title: value,
+            post_type: postType,
 		}
 
 		const handleError = error => {
@@ -78,6 +79,10 @@ const InlineCreate = ( {
 
 const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
 
+    useEffect( () => {
+        document.getElementById('fl-asst-inline-create-item').focus()
+    }, [])
+
 	const keyPress = e => {
 		if ( e.which === ENTER ) {
 			onCreate( e.target.value )
@@ -93,6 +98,7 @@ const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
 				</div>
 				<div className="fl-asst-list-item-subject">
 					<Form.Input
+                        id="fl-asst-inline-create-item"
 						appearance="transparent"
 						onKeyPress={ keyPress }
 						placeholder={ sprintf( 'Create New %s', typeLabel ) }
