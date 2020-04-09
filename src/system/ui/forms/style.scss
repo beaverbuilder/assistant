@@ -154,6 +154,7 @@
         }
     }
 
+    .fl-asst-form-input,
     input[type="text"],
     input[type="email"],
     input[type="url"],
@@ -278,4 +279,36 @@
             background-color: transparent;
         }
 	}
+
+    input.fl-asst-appearance-transparent {
+        background: transparent;
+        border: none;
+        margin: 0;
+        box-shadow: none;
+        font-size: 13px;
+        font-weight: normal;
+        letter-spacing: normal;
+        color: var(--fluid-color);
+
+        &:focus {
+            background-color: var(--fluid-box-background);
+            border: none;
+            outline: none;
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                        0px 0px 0px 2px var(--fluid-accent);
+        }
+
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: currentColor;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+            color: currentColor;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+            color: currentColor;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+            color: currentColor;
+        }
+    }
 }

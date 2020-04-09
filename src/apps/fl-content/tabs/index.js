@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { __, sprintf } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { defaultState } from '../'
@@ -66,10 +66,8 @@ export const SummaryTab = () => {
 
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
-	const { getCount } = getSystemSelectors()
 	const { query, listStyle } = useAppState( 'fl-content' )
 	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
-	const { contentTypes } = getSystemConfig()
 
 	const defaultQuery = defaultState.query
 
@@ -79,13 +77,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		flex: '1 1 auto',
 	}
 
-	const PostFilter = () => {
-
-		const postTypes = {}
-		for ( let key in contentTypes ) {
-			const { labels } = contentTypes[key]
-			postTypes[key] = sprintf( `${labels.plural} (%s)`, getCount( `content/${key}` ) )
-		}
+	const BeforeContent = () => {
 
 		const sorts = {
 			title: __( 'Title' ),
@@ -116,42 +108,53 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		}
 
 		return (
-			<Filter>
-				<Filter.RadioGroupItem
-					title={ __( 'Status' ) }
-					items={ statuses }
-					value={ query.post_status }
-					defaultValue={ defaultQuery.post_status }
-					onChange={ value => setQuery( { ...query, post_status: value } ) }
+			<>
+				<Filter>
+					<Filter.RadioGroupItem
+						title={ __( 'Status' ) }
+						items={ statuses }
+						value={ query.post_status }
+						defaultValue={ defaultQuery.post_status }
+						onChange={ value => setQuery( { ...query, post_status: value } ) }
+					/>
+					<Filter.LabelsItem
+						value={ query.label }
+						defaultValue={ defaultQuery.label }
+						onChange={ value => setQuery( { ...query, label: value } ) }
+					/>
+					<Filter.RadioGroupItem
+						title={ __( 'Display As' ) }
+						items={ displays }
+						value={ listStyle }
+						defaultValue={ defaultState.listStyle }
+						onChange={ value => setListStyle( value ) }
+					/>
+					<Filter.RadioGroupItem
+						title={ __( 'Sort By' ) }
+						items={ sorts }
+						value={ query.orderby }
+						defaultValue={ defaultQuery.orderby }
+						onChange={ value => setQuery( { ...query, orderby: value } ) }
+					/>
+					<Filter.RadioGroupItem
+						title={ __( 'Order' ) }
+						items={ orders }
+						value={ query.order }
+						defaultValue={ defaultState.query.order }
+						onChange={ value => setQuery( { ...query, order: value } ) }
+					/>
+					<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
+				</Filter>
+
+				<List.InlineCreate
+					postType={ type }
+					onPostCreated={ () => setQuery( {
+						...query,
+						order: 'DESC',
+						orderby: 'ID',
+					} ) }
 				/>
-				<Filter.LabelsItem
-					value={ query.label }
-					defaultValue={ defaultQuery.label }
-					onChange={ value => setQuery( { ...query, label: value } ) }
-				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Display As' ) }
-					items={ displays }
-					value={ listStyle }
-					defaultValue={ defaultState.listStyle }
-					onChange={ value => setListStyle( value ) }
-				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Sort By' ) }
-					items={ sorts }
-					value={ query.orderby }
-					defaultValue={ defaultQuery.orderby }
-					onChange={ value => setQuery( { ...query, orderby: value } ) }
-				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Order' ) }
-					items={ orders }
-					value={ query.order }
-					defaultValue={ defaultState.query.order }
-					onChange={ value => setQuery( { ...query, order: value } ) }
-				/>
-				<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
-			</Filter>
+			</>
 		)
 	}
 
@@ -172,7 +175,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					}
 					return defaultProps
 				} }
-				before={ <PostFilter /> }
+				before={ <BeforeContent /> }
 			/>
 		</Layout.Box>
 	)

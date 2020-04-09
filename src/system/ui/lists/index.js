@@ -1,6 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
-import { Item, Loading, NoResultsMessage, EndMessage } from './parts'
+import { Item, Loading, NoResultsMessage, EndMessage, InlineCreate } from './parts'
 import { useListItems } from './items'
 import { Scroller, useScrollLoader } from './scroller'
 import { WordPress } from './wordpress'
@@ -145,3 +145,6 @@ List.EndMessage.displayName = 'List.EndMessage'
 
 List.useScrollLoader = useScrollLoader
 List.useListItems = useListItems
+
+List.InlineCreate = InlineCreate
+List.InlineCreate.displayName = 'List.InlineCreate'

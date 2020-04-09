@@ -58,3 +58,12 @@ export const Footer = props => {
 		<div className={ classes }>{children}</div>
 	)
 }
+
+export const Input = ( { className, appearance, ...rest } ) => (
+	<input
+		{ ...rest }
+		className={ classname( 'fl-asst-form-input', {
+			[`fl-asst-appearance-${appearance}`]: appearance,
+		}, className ) }
+	/>
+)

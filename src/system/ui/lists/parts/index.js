@@ -5,6 +5,8 @@ import { isColor } from 'utils/color'
 import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
+import InlineCreate from './inline-create'
+
 
 export const defaultItemProps = {
 	thumbnailSize: 'med',
@@ -268,3 +270,5 @@ export const EndMessage = () => {
 		<MessageBox>{__( 'End Of Results' )}</MessageBox>
 	)
 }
+
+export { InlineCreate }
