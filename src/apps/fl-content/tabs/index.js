@@ -66,7 +66,7 @@ export const SummaryTab = () => {
 
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
-	const { getCount, getLabels } = getSystemSelectors()
+	const { getCount } = getSystemSelectors()
 	const { query, listStyle } = useAppState( 'fl-content' )
 	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
 	const { contentTypes } = getSystemConfig()
@@ -85,12 +85,6 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		for ( let key in contentTypes ) {
 			const { labels } = contentTypes[key]
 			postTypes[key] = sprintf( `${labels.plural} (%s)`, getCount( `content/${key}` ) )
-		}
-
-		const labels = getLabels()
-		const labelItems = { 0: __( 'Any' ) }
-		for ( let key in labels ) {
-			labelItems[ labels[ key ].id ] = labels[ key ].label
 		}
 
 		const sorts = {
@@ -130,9 +124,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					defaultValue={ defaultQuery.post_status }
 					onChange={ value => setQuery( { ...query, post_status: value } ) }
 				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Label' ) }
-					items={ labelItems }
+				<Filter.LabelsItem
 					value={ query.label }
 					defaultValue={ defaultQuery.label }
 					onChange={ value => setQuery( { ...query, label: value } ) }

@@ -16,7 +16,6 @@ export const MediaApp = ( { match } ) => (
 const Main = ( { match } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
-	const { getLabels } = getSystemSelectors()
 
 	const MediaFilter = () => {
 
@@ -44,14 +43,6 @@ const Main = ( { match } ) => {
 			DESC: __( 'Descending' )
 		}
 
-		const labels = getLabels()
-		const labelItems = {
-			'0': __( 'Any' )
-		}
-		for ( let key in labels ) {
-			labelItems[ labels[ key ].id ] = labels[ key ].label
-		}
-
 		const resetFilter = () => {
 			setQuery( defaultState.query )
 			setListStyle( defaultState.listStyle )
@@ -73,9 +64,7 @@ const Main = ( { match } ) => {
 					defaultValue={ defaultState.listStyle }
 					onChange={ value => setListStyle( value ) }
 				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Label' ) }
-					items={ labelItems }
+				<Filter.LabelsItem
 					value={ query.label }
 					defaultValue={ defaultState.query.label }
 					onChange={ value => setQuery( { ...query, label: value } ) }

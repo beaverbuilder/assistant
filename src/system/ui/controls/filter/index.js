@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { ToggleLayer } from 'react-laag'
 import ResizeObserver from 'resize-observer-polyfill'
 import { Button, Icon } from '../../'
-import { RadioGroupItem } from './items'
+import { RadioGroupItem, LabelsItem } from './items'
 import './style.scss'
 
 const Filter = ( { className, children, ...rest } ) => {
@@ -51,7 +51,7 @@ const Filter = ( { className, children, ...rest } ) => {
 	)
 }
 
-const Item = ( { title, subtitle, children } ) => {
+const Item = ( { title, subtitle, children, hasLoadedItems = true } ) => {
 	const [ isOpen, setIsOpen ] = useState( false )
 	const toggle = () => setIsOpen( ! isOpen )
 
@@ -91,10 +91,13 @@ const Item = ( { title, subtitle, children } ) => {
 						<span className="fl-asst-filter-button-content">
 							<span className="fl-asst-filter-button-title">{title}</span>
 							{ subtitle && <span className="fl-asst-filter-button-subtitle">{subtitle}</span> }
+							{ ! subtitle && <span className="fl-asst-filter-button-subtitle">&mdash;</span> }
 						</span>
-						<span className="fl-asst-filter-button-caret">
-							<Icon.DownCaretSmall />
-						</span>
+						{ hasLoadedItems && (
+							<span className="fl-asst-filter-button-caret">
+								<Icon.DownCaretSmall />
+							</span>
+						)}
 					</Button>
 				)}
 			</ToggleLayer>
@@ -119,5 +122,8 @@ Filter.Button.displayName = 'Filter.Button'
 
 Filter.RadioGroupItem = RadioGroupItem
 Filter.RadioGroupItem.displayName = 'Filter.RadioGroupItem'
+
+Filter.LabelsItem = LabelsItem
+Filter.LabelsItem.displayName = 'Filter.LabelsItem'
 
 export default Filter
