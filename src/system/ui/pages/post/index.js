@@ -218,37 +218,6 @@ export const Post = ( { location, match, history } ) => {
 						},
 					},
 				},
-				featureimgUpload: {
-					label: __( 'Feature Image' ),
-					isVisible: supports.thumbnail,
-					fields: {
-						featureimgUpload: {
-							id: 'post_feature_image',
-							isVisible: supports.thumbnail && ! featureThumbnail,
-							label: __( 'Set Feature Image' ),
-							component: 'text',
-							onClick: uploadFeatureImage,
-						},
-						featureimg: {
-							id: 'post_feature_img',
-							src: featureThumbnail && featureThumbnail.url,
-							srcSet: getFeaturedImageSrcSet(),
-							isVisible: featureThumbnail,
-							component: 'image',
-							onClick: uploadFeatureImage,
-						},
-						removeFeatureimg: {
-							id: 'remove_post_feature_img',
-							text: 'Remove',
-							btnclass: 'fl-asst-remove-feature-img',
-							isVisible: featureThumbnail,
-							component: 'button',
-							onClick: removeFeatureImage,
-
-						},
-
-					},
-				},
 				attributes: {
 					label: __( 'Attributes' ),
 					isVisible: !! Object.keys( templates ).length || isHierarchical || supports.order,
@@ -283,6 +252,37 @@ export const Post = ( { location, match, history } ) => {
 							id: 'menu_order',
 							isVisible: supports.order,
 						},
+					},
+				},
+				featureimgUpload: {
+					label: __( 'Feature Image' ),
+					isVisible: supports.thumbnail,
+					fields: {
+						featureimgUpload: {
+							id: 'post_feature_image',
+							isVisible: supports.thumbnail && ! featureThumbnail,
+							label: __( 'Set Feature Image' ),
+							component: 'text',
+							onClick: uploadFeatureImage,
+						},
+						featureimg: {
+							id: 'post_feature_img',
+							src: featureThumbnail && featureThumbnail.url,
+							srcSet: getFeaturedImageSrcSet(),
+							isVisible: featureThumbnail,
+							component: 'image',
+							onClick: uploadFeatureImage,
+						},
+						removeFeatureimg: {
+							id: 'remove_post_feature_img',
+							text: 'Remove',
+							btnclass: 'fl-asst-remove-feature-img',
+							isVisible: featureThumbnail,
+							component: 'button',
+							onClick: removeFeatureImage,
+
+						},
+
 					},
 				},
 				discussion: {
