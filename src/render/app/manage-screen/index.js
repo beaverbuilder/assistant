@@ -106,43 +106,43 @@ const UIColorPreferences = () => {
 	const { origin } = window
 
 	const origins = {
-		'0-0': __('Top Left'),
-		'0-1': __('Bottom Left'),
-		'1-0': __('Top Right'),
-		'1-1': __('Bottom Right')
+		'0-0': __( 'Top Left' ),
+		'0-1': __( 'Bottom Left' ),
+		'1-0': __( 'Top Right' ),
+		'1-1': __( 'Bottom Right' )
 	}
 	const onChangeOrigin = value => {
-		const v = value.split('-')
-		setWindow({
+		const v = value.split( '-' )
+		setWindow( {
 			...window,
 			origin: [ parseInt( v[0] ), parseInt( v[1] ) ]
-		})
+		} )
 	}
 	return (
-			<Form.Section label={ __( 'Preferences' ) }>
-				<Form.Item label={ __( 'UI Brightness' ) } labelPlacement="beside">
+		<Form.Section label={ __( 'Preferences' ) }>
+			<Form.Item label={ __( 'UI Brightness' ) } labelPlacement="beside">
 
-					<Layout.Row gap={ 5 }>
-						<Button
-							isSelected={ 'light' === appearance.brightness }
-							onClick={ () => setBrightness( 'light' ) }
-						>
-							<Icon.Brightness />&nbsp;&nbsp;{__( 'Light' )}
-						</Button>
+				<Layout.Row gap={ 5 }>
+					<Button
+						isSelected={ 'light' === appearance.brightness }
+						onClick={ () => setBrightness( 'light' ) }
+					>
+						<Icon.Brightness />&nbsp;&nbsp;{__( 'Light' )}
+					</Button>
 
-						<Button
-							isSelected={ 'dark' === appearance.brightness }
-							onClick={ () => setBrightness( 'dark' ) }
-						>
-							<Icon.Moon />&nbsp;&nbsp;{__( 'Dark' )}
-						</Button>
-					</Layout.Row>
-				</Form.Item>
+					<Button
+						isSelected={ 'dark' === appearance.brightness }
+						onClick={ () => setBrightness( 'dark' ) }
+					>
+						<Icon.Moon />&nbsp;&nbsp;{__( 'Dark' )}
+					</Button>
+				</Layout.Row>
+			</Form.Item>
 
-				<Form.Item label={ __( 'Anchor Pane To' ) } labelPlacement="beside">
-					<Form.SelectItem value={origin.join('-')} options={ origins } onChange={onChangeOrigin} />
-				</Form.Item>
-			</Form.Section>
+			<Form.Item label={ __( 'Anchor Pane To' ) } labelPlacement="beside">
+				<Form.SelectItem value={ origin.join( '-' ) } options={ origins } onChange={ onChangeOrigin } />
+			</Form.Item>
+		</Form.Section>
 	)
 }
 

@@ -9,7 +9,7 @@ export const RadioGroupItem = ( { items = {}, title, value, defaultValue, onChan
 			title={ title }
 			subtitle={ items[value] }
 			isChanged={ value !== defaultValue }
-			hasLoadedItems={ Object.keys(items).length !== 0 }
+			hasLoadedItems={ 0 !== Object.keys( items ).length }
 		>
 			{Object.entries( items ).map( ( [ key, label ], i ) => {
 				return (
@@ -20,8 +20,8 @@ export const RadioGroupItem = ( { items = {}, title, value, defaultValue, onChan
 							onChange={ e => onChange( key, e ) }
 							checked={ value === key }
 						/>{label}{ defaultValue === key && (
-							<em style={{ marginLeft: 'var(--fluid-sm-space)' }}>
-								({ __('Default')})
+							<em style={ { marginLeft: 'var(--fluid-sm-space)' } }>
+								({ __( 'Default' )})
 							</em>
 						) }
 					</label>
@@ -31,14 +31,14 @@ export const RadioGroupItem = ( { items = {}, title, value, defaultValue, onChan
 	)
 }
 
-export const LabelsItem = ({ ...rest }) => {
+export const LabelsItem = ( { ...rest } ) => {
 	const { getLabels } = getSystemSelectors()
 
-	const Dot = ({ color, outline, ...rest }) => {
+	const Dot = ( { color, outline, ...rest } ) => {
 		return (
 			<span
-				{...rest}
-				style={{
+				{ ...rest }
+				style={ {
 					display: 'inline-block',
 					width: 10,
 					height: 10,
@@ -46,7 +46,7 @@ export const LabelsItem = ({ ...rest }) => {
 					border: outline ? `2px solid ${outline}` : 'none',
 					borderRadius: '50%',
 					marginRight: 'var(--fluid-sm-space)'
-				}}
+				} }
 			/>
 		)
 	}
@@ -56,7 +56,7 @@ export const LabelsItem = ({ ...rest }) => {
 		0: (
 			<>
 				<Dot outline="var(--fluid-primary-color)" />
-				{__('Any')}
+				{__( 'Any' )}
 			</>
 		)
 	}
@@ -65,7 +65,7 @@ export const LabelsItem = ({ ...rest }) => {
 		const { id, color, label } = labels[ key ]
 		items[ id ] = (
 			<>
-				<Dot color={color} />
+				<Dot color={ color } />
 				{label}
 			</>
 		)
@@ -73,7 +73,7 @@ export const LabelsItem = ({ ...rest }) => {
 
 	return (
 		<RadioGroupItem
-			title={ __('Label' ) }
+			title={ __( 'Label' ) }
 			items={ items }
 			{ ...rest }
 		/>

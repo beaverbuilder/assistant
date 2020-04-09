@@ -98,7 +98,7 @@ const PostTypeCounts = () => {
 						<Button
 							key={ i }
 							status="primary"
-							to={`/fl-content/tab/${key}`}
+							to={ `/fl-content/tab/${key}` }
 							style={ {
 								display: 'flex',
 								flexDirection: 'column',

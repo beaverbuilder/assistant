@@ -44,7 +44,9 @@ const useNotices = ( initial = [] ) => {
 	const renderNotices = () => {
 		return state.map( ( notice, i ) => {
 
-			if ( i !== state.length - 1 ) return null
+			if ( i !== state.length - 1 ) {
+				return null
+			}
 
 			const { id, content, ...rest } = notice
 			return (

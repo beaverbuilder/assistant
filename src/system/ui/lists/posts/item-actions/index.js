@@ -9,7 +9,7 @@ const ItemActions = ( {
 	clonePost,
 	trashPost,
 	favoritePost,
-    isCurrentPage,
+	isCurrentPage,
 } ) => {
 
 	if (

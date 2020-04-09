@@ -107,13 +107,13 @@ const TabsContent = ( { config, data } ) => {
 				)
 			} ) }
 			<Nav.Route render={ () => (
-				<Layout.Box style={{
+				<Layout.Box style={ {
 					textAlign: 'center',
 					fontSize: 16
-				}} outset={true}>
-					{__("Oh no! We couldn't find that tab. Try Another")}
+				} } outset={ true }>
+					{__( 'Oh no! We couldn\'t find that tab. Try Another' )}
 				</Layout.Box>
-			)} />
+			) } />
 		</Nav.Switch>
 	)
 }

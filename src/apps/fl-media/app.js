@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Nav, List, Filter } from 'assistant/ui'
-import { useAppState, getAppActions, getSystemSelectors } from 'assistant/data'
+import { useAppState, getAppActions } from 'assistant/data'
 import { defaultState } from './'
 import AppIcon from './icon'
 import './style.scss'
