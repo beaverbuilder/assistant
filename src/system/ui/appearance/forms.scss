@@ -113,6 +113,10 @@
                     font-weight: bold;
                     text-align:center;
                 }
+                &:before {
+                    content: '';
+                    display: none;
+                }
             }
         }
 

@@ -233,6 +233,7 @@
         box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
         border-radius: 3px;
         padding: var(--fluid-sm-space);
+        padding-right: 30px;
 
         &:focus {
             background-color: var(--fluid-box-background);
