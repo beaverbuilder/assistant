@@ -240,7 +240,7 @@ const WindowLayer = ( {
 	const { x: xPos, y: yPos } = currentPos
 	const transform = isDragging ? 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0)' : ''
 	const [ windowX, windowY ] = position
-	let pad = 'mini' === size && !isMobile ? 15 : 0
+	let pad = 'mini' === size && ! isMobile ? 15 : 0
 	if ( isHidden ) {
 		pad = 8
 	}
