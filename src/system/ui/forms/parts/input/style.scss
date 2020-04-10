@@ -5,13 +5,13 @@
         flex-direction: row;
         flex-wrap: nowrap;
         align-items: center;
+        color: var(--fluid-color);
 
         &.fl-asst-appearance-transparent {
             background: transparent;
             border: none;
             margin: 0;
             box-shadow: none;
-            color: var(--fluid-color);
 
             &:hover {
                 background-color: var(--fluid-box-background);
@@ -47,9 +47,9 @@
                 background: transparent;
                 border-radius: 0;
                 font-size: 13px;
-                font-weight: normal;
+                font-weight: 500;
                 letter-spacing: normal;
-                color: var(--fluid-color);
+                color: inherit;
                 display: inline-flex;
                 flex: 1 1 auto;
                 min-height: var(--fluid-target-size);
