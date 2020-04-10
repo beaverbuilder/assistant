@@ -48,6 +48,16 @@
             }
 
             &.fl-asst-is-transitioning,
+            &.fl-asst-is-trashed {
+                .fl-asst-list-item-content-info {
+                    padding: var(--fluid-med-space) 0;
+                }
+                .fl-asst-list-item-default-content-row {
+                    min-height: var(--fluid-target-size);
+                }
+            }
+
+            &.fl-asst-is-transitioning,
             &.fl-asst-list-item-alert {
                 opacity: .8;
                 background: var(--fluid-alert-background);
@@ -102,18 +112,18 @@
         flex: 1 1 auto;
         display: flex;
         flex-direction: column;
-        min-height: 36px;
-        padding: 15px 0;
+        min-height: var(--fluid-target-size);
+        padding: var(--fluid-lg-space) 0;
 
         .fl-asst-list-item-default-content-row {
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 0 var(--fl-asst-outer-space);
+            padding: 0 var(--fluid-lg-space);
         }
         .fl-asst-list-item-extras {
             pointer-events: none;
-            padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) 0;
+            padding: 0;
         }
     }
     .fl-asst-list-item-subject {
@@ -138,13 +148,13 @@
     }
     .fl-asst-list-item-thumbnail {
         flex: 0 0 auto;
-        margin-right: var(--fl-asst-inner-space);
+        margin-right: var(--fluid-lg-space);
         width: 60px;
         height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: var(--fl-asst-secondary-surface-background);
+        background-color: var(--fluid-box-background);
         border-radius: 3px;
         overflow: hidden;
 
@@ -214,7 +224,7 @@
         button, a {
             flex: 0 0 auto;
             font-size: 12px;
-            padding: var(--fl-asst-tiny-space);
+            padding: var(--fluid-sm-space);
             background: transparent;
             position: relative;
             border-radius: 2px !important;

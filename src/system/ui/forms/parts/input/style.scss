@@ -13,11 +13,15 @@
             box-shadow: none;
             color: var(--fluid-color);
 
+            &:hover {
+                background-color: var(--fluid-box-background);
+            }
+
             &:focus-within {
                 background-color: var(--fluid-box-background);
                 border: none;
                 outline: none;
-                box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
                             0px 0px 0px 2px var(--fluid-accent);
             }
 

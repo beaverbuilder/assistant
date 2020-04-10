@@ -184,13 +184,15 @@ export const Posts = ( {
 					return marks
 				}
 
+				const isPending = item.isTrashing || item.isTrashed || item.isRestoring
+
 				return getItemProps( item, {
 					...defaultProps,
 					label: <Title />,
 					description: getDescription(),
 					thumbnail: 'thumb' !== listStyle && item.thumbnail,
 					thumbnailSize,
-					shouldAlwaysShowThumbnail: 'thumb' !== listStyle,
+					shouldAlwaysShowThumbnail: 'thumb' !== listStyle && ! isPending,
 					accessory: props => <Accessory { ...props } />,
 					extras: Extras,
 					className: classname( {

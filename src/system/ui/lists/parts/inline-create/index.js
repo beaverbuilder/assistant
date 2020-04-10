@@ -2,7 +2,7 @@ import React, { useState, useReducer, useEffect } from 'react'
 import { Layout, Form, Icon, Button } from 'ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
-import { sprintf } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
 import './style.scss'
 
@@ -18,7 +18,6 @@ const InlineCreate = ( {
 		case 'CREATE_ITEM':
 			return [ ...state, {
 				title: action.title,
-				status: 'pending',
 			} ]
 		default:
 			return state
@@ -61,14 +60,14 @@ const InlineCreate = ( {
 				onCreate={ onCreate }
 			/>
 			{ items.map( ( item, i ) => {
-				const { title, status } = item
+				const { title } = item
 				return (
-					<Layout.Box key={ i } className="fl-asst-inline-item">
+					<Layout.Box key={ i } className="fl-asst-inline-item fl-asst-list-item-content-info" padX={ false } padY={ false }>
 						<Layout.Row className="fl-asst-list-item-default-content-row" gap="var(--fluid-med-space)">
 							<div className="fl-asst-list-item-thumbnail fl-asst-thumbnail-size-med" />
 							<div className="fl-asst-list-item-subject">
 								<div className="fl-asst-list-item-title">{title}</div>
-								<div className="fl-asst-list-item-description">{status}</div></div>
+								<div className="fl-asst-list-item-description">{__( 'Creating...' )}</div></div>
 						</Layout.Row>
 					</Layout.Box>
 				)
@@ -104,7 +103,7 @@ const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
 	}
 
 	return (
-		<Layout.Box className="fl-asst-inline-item fl-asst-inline-create-item">
+		<Layout.Box className="fl-asst-inline-item fl-asst-inline-create-item fl-asst-list-item-content-info" padX={ false } padY={ false }>
 			<Layout.Row className="fl-asst-list-item-default-content-row" gap="var(--fluid-med-space)">
 				<div className="fl-asst-list-item-thumbnail fl-asst-thumbnail-size-med">
 					<Icon.Plus />
