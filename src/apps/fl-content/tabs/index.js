@@ -152,6 +152,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 						...defaultState.query,
 						order: 'DESC',
 						orderby: 'ID',
+						key: new Date().getTime()
 					} ) }
 				/>
 			</>
