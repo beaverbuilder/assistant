@@ -10,10 +10,13 @@
         flex-direction: row;
 
         .fl-asst-button-group {
-            padding-left: 0; // because back button
+            padding-left: 2px; // because back button
 
             .fluid-button:focus {
                 margin: 2px 0;
+            }
+            .fluid-back-button {
+                width: 48px;
             }
         }
     }

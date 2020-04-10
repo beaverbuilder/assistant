@@ -218,6 +218,7 @@ const WindowLayer = ( {
 		'fl-asst-window-layer': true,
 		'fl-asst-window-layer-is-dragging': isDragging,
 		[`fl-asst-window-size-${size}`]: size,
+		'fl-asst-window-is-hidden': isHidden,
 	}, originClass, className )
 
 	// Layer Props
@@ -239,13 +240,16 @@ const WindowLayer = ( {
 	const { x: xPos, y: yPos } = currentPos
 	const transform = isDragging ? 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0)' : ''
 	const [ windowX, windowY ] = position
-	const pad = isMobile ? 0 : 15
+	let pad = 'mini' === size && !isMobile ? 15 : 0
+	if ( isHidden ) {
+		pad = 8
+	}
 
 	let positionerStyles = {
 		display: 'flex',
 		flexDirection: 'column',
 		position: 'absolute',
-		top: isMobile ? 0 : adminBarSize() + pad,
+		top: isMobile ? 0 : adminBarSize() + ( pad - 3 ),
 		bottom: windowY ? pad : pad,
 		right: windowX ? pad : 'auto',
 		left: windowX ? 'auto' : pad,
