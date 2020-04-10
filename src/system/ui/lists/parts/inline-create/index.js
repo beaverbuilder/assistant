@@ -1,5 +1,5 @@
-import React, { useReducer, useEffect } from 'react'
-import { Layout, Form, Icon } from 'ui'
+import React, { useState, useReducer, useEffect } from 'react'
+import { Layout, Form, Icon, Button } from 'ui'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { sprintf } from '@wordpress/i18n'
@@ -33,13 +33,13 @@ const InlineCreate = ( {
 
 		const post = {
 			post_title: value,
-            post_type: postType,
+			post_type: postType,
 		}
 
 		const handleError = error => {
 
 			// Should do something meaninful here
-			console.error( error )
+			console.error( error ) // eslint-disable-line no-console
 		}
 
 		return wpRest.posts().create( post ).then( response => {
@@ -55,39 +55,52 @@ const InlineCreate = ( {
 	}
 
 	return (
-        <>
-            <CreateItem
-            	typeLabel={ contentTypes[postType].labels.singular }
-            	onCreate={ onCreate }
-            />
-            { items.map( ( item, i ) => {
-            	const { title, status } = item
-            	return (
-            		<Layout.Box key={ i } className="fl-asst-inline-item">
-            			<Layout.Row className="fl-asst-list-item-default-content-row" gap="var(--fluid-med-space)">
-            				<div className="fl-asst-list-item-thumbnail fl-asst-thumbnail-size-med" />
-            				<div className="fl-asst-list-item-subject">
-            					<div className="fl-asst-list-item-title">{title}</div>
-            					<div className="fl-asst-list-item-description">{status}</div></div>
-            			</Layout.Row>
-            		</Layout.Box>
-            	)
-            } )}
-        </>
+		<>
+			<CreateItem
+				typeLabel={ contentTypes[postType].labels.singular }
+				onCreate={ onCreate }
+			/>
+			{ items.map( ( item, i ) => {
+				const { title, status } = item
+				return (
+					<Layout.Box key={ i } className="fl-asst-inline-item">
+						<Layout.Row className="fl-asst-list-item-default-content-row" gap="var(--fluid-med-space)">
+							<div className="fl-asst-list-item-thumbnail fl-asst-thumbnail-size-med" />
+							<div className="fl-asst-list-item-subject">
+								<div className="fl-asst-list-item-title">{title}</div>
+								<div className="fl-asst-list-item-description">{status}</div></div>
+						</Layout.Row>
+					</Layout.Box>
+				)
+			} )}
+		</>
 	)
 }
 
 const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
+	const [ val, setVal ] = useState( '' )
 
-    useEffect( () => {
-        document.getElementById('fl-asst-inline-create-item').focus()
-    }, [])
+	useEffect( () => {
+		document.getElementById( 'fl-asst-inline-create-item' ).focus()
+	}, [] )
 
 	const keyPress = e => {
 		if ( e.which === ENTER ) {
-			onCreate( e.target.value )
+			if ( ! val ) {
+				return
+			}
+
+			onCreate( val )
+			setVal( '' )
 			e.target.value = ''
 		}
+	}
+	const onClick = () => {
+		if ( ! val ) {
+			return
+		}
+		onCreate( val )
+		setVal( '' )
 	}
 
 	return (
@@ -98,10 +111,20 @@ const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
 				</div>
 				<div className="fl-asst-list-item-subject">
 					<Form.Input
-                        id="fl-asst-inline-create-item"
+						id="fl-asst-inline-create-item"
 						appearance="transparent"
-						onKeyPress={ keyPress }
 						placeholder={ sprintf( 'Create New %s', typeLabel ) }
+						onKeyPress={ keyPress }
+						onInput={ e => setVal( e.target.value ) }
+						after={
+							val &&
+							<Button
+								status="primary"
+								onClick={ onClick }
+							>
+								<Icon.Return />
+							</Button>
+						}
 					/>
 				</div>
 			</Layout.Row>

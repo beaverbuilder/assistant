@@ -149,7 +149,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 				<List.InlineCreate
 					postType={ type }
 					onPostCreated={ () => setQuery( {
-						...query,
+						...defaultState.query,
 						order: 'DESC',
 						orderby: 'ID',
 					} ) }
