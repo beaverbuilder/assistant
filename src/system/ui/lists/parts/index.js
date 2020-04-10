@@ -6,7 +6,7 @@ import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
 import InlineCreate from './inline-create'
-
+import Loading from './loading'
 
 export const defaultItemProps = {
 	thumbnailSize: 'med',
@@ -253,12 +253,6 @@ const MessageBox = ( { children, ...rest } ) => {
 	)
 }
 
-export const Loading = () => {
-	return (
-		<MessageBox>{__( 'Loading...' )}</MessageBox>
-	)
-}
-
 export const NoResultsMessage = ( { message } ) => {
 	return (
 		<MessageBox>{ message ? message : __( 'No Results Found' ) }</MessageBox>
@@ -271,4 +265,4 @@ export const EndMessage = () => {
 	)
 }
 
-export { InlineCreate }
+export { InlineCreate, Loading }
