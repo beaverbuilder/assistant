@@ -494,12 +494,16 @@ class PostsController extends ControllerAbstract {
 				$additional_array = '';
 
 				$xml_data = $this->XMLtoArray( file_get_contents( $target_file ) );
-				$post_arr  = [];
+
+				$post_arr = [];
 				if ( $this->isAssoc( $xml_data['RSS']['CHANNEL']['ITEM'] ) ) {
 					$post_arr[] = $xml_data['RSS']['CHANNEL']['ITEM'];
 				} else {
 					$post_arr = $xml_data['RSS']['CHANNEL']['ITEM'];
 				}
+
+				$sucess_imp_count = 0;
+				$fail_imp_count = 0;
 
 				foreach ( $post_arr as $property ) {
 
@@ -548,22 +552,39 @@ class PostsController extends ControllerAbstract {
 							}
 						}
 
-						return rest_ensure_response(
-							[
-								'success' => true,
-								'message' => 'Post Imported Successfully!',
-							]
-						);
-					} else {
+						$sucess_imp_count++;
 
-						return rest_ensure_response(
-							[
-								'error'   => true,
-								'message' => 'Sorry, Post Already exist!',
-							]
-						);
+					} else {
+						$fail_imp_count++;
+
 					}
 				}
+
+				$post_fail_msg = 'Post Imported Failed!';
+
+				if ( $sucess_imp_count > 1 ) {
+					$post_success_msg = $sucess_imp_count . ' Posts Imported Successfully!';
+				} elseif ( $sucess_imp_count === 1 ) {
+					$post_success_msg = 'Post Imported Successfully!';
+				} else {
+					$post_success_msg = '';
+				}
+
+				if ( $fail_imp_count > 1 ) {
+					$post_fail_msg = $fail_imp_count . ' Posts Already exist. Import Failed!';
+				} elseif ( $fail_imp_count === 1 ) {
+					$post_fail_msg = 'Post Already exist. Import Failed!';
+				} else {
+					$post_fail_msg = '';
+				}
+
+				return rest_ensure_response(
+					[
+						'success' => true,
+						'message' => $post_success_msg . ' ' . $post_fail_msg,
+					]
+				);
+
 			} else {
 
 				return rest_ensure_response(
