@@ -148,6 +148,7 @@ Button.Group = ( {
 				<Menu content={ <MoreMenuContent /> } isShowing={ isShowing }>
 					<Button
 						className='fl-asst-more-button'
+						status={ isShowing ? 'primary' : '' }
 						onClick={ () => setIsShowing( ! isShowing ) }
 					>
 						<Icon.More />
