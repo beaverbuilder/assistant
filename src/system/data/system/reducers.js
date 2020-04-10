@@ -10,6 +10,9 @@ export const apps = ( state = {}, action ) => {
 
 	switch ( action.type ) {
 	case 'REGISTER_APP':
+		if ( false === action.config.enabled ) {
+			return state
+		}
 		return {
 			[action.key]: {
 				...defaults,
@@ -31,7 +34,9 @@ export const appOrder = ( state = [], action ) => {
 	case 'SET_APP_POSITION': {
 		const { key, position = null } = action
 
-		if ( null === position ) {
+		if ( action.config && false === action.config.enabled ) {
+			return state
+		} else if ( null === position ) {
 			const newState = Array.from( state )
 			if ( -1 === newState.indexOf( key ) ) {
 				newState.push( key )
@@ -93,8 +98,8 @@ export const counts = ( state = {}, action ) => {
 
 // New UI
 const windowDefaults = {
-	origin: [ 1, 1 ],
-	size: 'normal',
+	origin: [ 1, 0 ], /* top right */
+	size: 'normal', /* full sidebar */
 	isHidden: false,
 	hiddenAppearance: '',
 	overlayToolbar: false,
@@ -128,6 +133,7 @@ export const window = ( state = windowDefaults, action ) => {
 const defaultAppearance = {
 	brightness: 'light',
 }
+
 export const appearance = ( state = defaultAppearance, action ) => {
 	switch ( action.type ) {
 	case 'SET_BRIGHTNESS':
@@ -177,42 +183,6 @@ export const searchHistory = ( state = [], action ) => {
 	}
 }
 
-export const isCloudConnected = ( state = false, action ) => {
-	switch ( action.type ) {
-	case 'SET_IS_CLOUD_CONNECTED':
-		return action.isCloudConnected
-	default:
-		return state
-	}
-}
-
-export const cloudToken = ( state = {}, action ) => {
-	switch ( action.type ) {
-	case 'SET_CLOUD_TOKEN':
-		return action.token
-	default:
-		return state
-	}
-}
-
-export const loginErrors = ( state = [], action ) => {
-	switch ( action.type ) {
-	case 'SET_LOGIN_ERRORS':
-		return action.errors
-	default:
-		return state
-	}
-}
-
-export const currentUser = ( state = null, action ) => {
-	switch ( action.type ) {
-	case 'SET_CURRENT_USER':
-		return action.user
-	default:
-		return state
-	}
-}
-
 export const shouldReduceMotion = () => false
 
 
@@ -251,6 +221,15 @@ export const sections = ( state = {}, action ) => {
 			...state,
 			[handle]: section,
 		}
+	default:
+		return state
+	}
+}
+
+export const isAppHidden = ( state = true, action ) => {
+	switch ( action.type ) {
+	case 'SET_IS_APP_HIDDEN':
+		return action.value ? true : false
 	default:
 		return state
 	}

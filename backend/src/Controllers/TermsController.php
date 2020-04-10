@@ -34,14 +34,14 @@ class TermsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'terms' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_term' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -53,7 +53,7 @@ class TermsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_terms' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -65,7 +65,7 @@ class TermsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'get_parent_terms' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -95,7 +95,7 @@ class TermsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -112,7 +112,7 @@ class TermsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]

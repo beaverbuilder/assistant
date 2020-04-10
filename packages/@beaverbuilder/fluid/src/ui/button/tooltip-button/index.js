@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 import { ToggleLayer, useHover, Arrow } from 'react-laag'
 import ResizeObserver from 'resize-observer-polyfill'
 import { useFocus } from '../../../utils'
@@ -18,6 +18,7 @@ const TooltipButton = forwardRef( ( props, ref ) => {
             <ToggleLayer
                 ResizeObserver={ResizeObserver}
                 isOpen={ isHovering || isFocused }
+                closeOnOutsideClick={ true }
                 placement={{
                     possibleAnchors: [
                         "TOP_CENTER",
@@ -33,6 +34,7 @@ const TooltipButton = forwardRef( ( props, ref ) => {
                     return isOpen && (
                         <div
                             ref={layerProps.ref}
+                            className="fl-asst-tooltip"
                             style={{
                                 ...layerProps.style,
                                 background: 'var(--fluid-box-color)',

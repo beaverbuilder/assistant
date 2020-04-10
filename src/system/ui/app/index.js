@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useSystemState } from 'data'
 
@@ -14,7 +14,8 @@ App.defaults = {
 	handle: null,
 	label: null,
 	icon: () => {},
-	accentColor: { color: null, }
+	accentColor: { color: null, },
+	environment: 'normal'
 }
 
 /**
@@ -26,19 +27,29 @@ App.Context.displayName = 'App.Context'
 /**
  * Provider
  */
-App.Provider = withRouter( ( { children, location } ) => {
+App.Provider = withRouter( ( { children, location, environment = 'normal' } ) => {
 	const { apps } = useSystemState()
 
 	const parts = location.pathname.split( '/' )
 	const name = parts[1]
 	const app = '' !== name ? apps[name] : {}
+	const isAppRoot = 2 >= parts.length
 	const context = {
 		...App.defaults,
 		handle: name,
+		environment,
+		isAppRoot,
 		...app
 	}
 	return (
-		<App.Context.Provider value={ context }>{children}</App.Context.Provider>
+		<App.Context.Provider value={ context }>
+			{children}
+		</App.Context.Provider>
 	)
 } )
 App.Provider.displayName = 'App.Provider'
+
+App.useApp = () => {
+	const context = useContext( App.Context )
+	return context
+}

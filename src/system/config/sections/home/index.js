@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
-import { Button, Icon } from 'ui'
+import { Button, Icon, App, List } from 'ui'
+import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { useInitialFocus } from 'utils/react'
 import './style.scss'
 
 const { registerSection } = getSystemActions()
@@ -13,6 +13,7 @@ registerSection( 'fl-asst-quick-actions', {
 	},
 	padX: false,
 	render: () => {
+		const { environment } = useContext( App.Context )
 		const { adminURLs } = getSystemConfig()
 
 		const dashURL = 'undefined' !== typeof adminURLs.dashboard ? adminURLs.dashboard : '/wp-admin'
@@ -27,11 +28,13 @@ registerSection( 'fl-asst-quick-actions', {
 					<Icon.Search />
 				</Button>
 				<Button href={ dashURL } appearance="elevator" title={ __( 'Go to Admin' ) }>
-					<span className="dashicons dashicons-wordpress-alt"></span>
+					<Dashicon icon="wordpress" />
 				</Button>
-				<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
-					<Icon.Brightness />
-				</Button>
+				{ 'beaver-builder' !== environment && (
+					<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
+						{ 'light' === appearance.brightness ? <Icon.Moon /> : <Icon.Brightness /> }
+					</Button>
+				)}
 				<Button to={ {
 					pathname: '/fl-content/post/new',
 					state: { detailBaseUrl: '/fl-content/post' }
@@ -44,27 +47,38 @@ registerSection( 'fl-asst-quick-actions', {
 } )
 
 registerSection( 'fl-home-currently-viewing', {
-	label: __( 'Currently Viewing' ),
+	label: false,
 	location: {
 		type: 'home',
 	},
 	render: () => {
 		const { currentPageView } = getSystemConfig()
-		const { name, type, actions } = currentPageView
+		const { name, intro, actions } = currentPageView
+
+		const style = {
+			background: 'var(--fluid-box-background)',
+			borderRadius: 20,
+			padding: 'var(--fluid-lg-space)',
+		}
 
 		return (
 			<>
-				<div className="fl-asst-currently-viewing-summary">
-					{ type && <div className="fl-asst-pretitle">{type}</div> }
-					<div className="fl-asst-title">{name}</div>
-					{ Array.isArray( actions ) && 0 < actions.length &&
-					<Button.Group appearance="buttons">{ Button.renderActions( actions ) }</Button.Group> }
-				</div>
+			<div
+				className="fl-asst-currently-viewing-summary"
+				style={ style }
+			>
+				{ intro && <div className="fl-asst-pretitle">{intro}</div> }
+				<div className="fl-asst-title">{name}</div>
+
+			</div>
+			{ Array.isArray( actions ) && 0 < actions.length &&
+			<Button.Group appearance="buttons">{ Button.renderActions( actions ) }</Button.Group> }
 			</>
 		)
 	},
 } )
 
+/*
 registerSection( 'fl-home-apps', {
 	label: __( 'Apps' ),
 	location: {
@@ -72,34 +86,23 @@ registerSection( 'fl-home-apps', {
 	},
 	padX: false,
 	render: () => {
-		const { apps, appOrder, window } = useSystemState()
+		const apps = useAppList()
 		const focusRef = useInitialFocus()
 		let didSetFocusRef = false
 
 		return (
 			<div className="fl-asst-app-grid">
-				{ appOrder.map( ( handle, i ) => {
-					const app = apps[handle]
-
-					let icon = Icon.DefaultApp
-					if ( 'function' === typeof app.icon ) {
-						icon = app.icon
-					}
-
-					if ( 'undefined' === typeof app || ! app.shouldShowInAppList ) {
-						return
-					}
+				{ apps.map( ( app, i ) => {
+					const { handle, icon, label, accent } = app
 
 					const location = {
 						pathname: `/${handle}`,
 						state: app,
 					}
 
-					const style = {
-						color: 'var(--fl-asst-secondary-surface-background)'
-					}
-					if ( 'undefined' !== typeof app.accent ) {
-						style['--fl-asst-accent-color'] = app.accent.color
+					const style = {}
+					if ( 'undefined' !== typeof accent ) {
+						style['--fl-asst-accent-color'] = accent.color
 						style.color = 'var(--fl-asst-accent-color)'
 					}
 
@@ -107,14 +110,6 @@ registerSection( 'fl-home-apps', {
 					if ( ! didSetFocusRef ) {
 						ref = focusRef
 						didSetFocusRef = true
-					}
-
-					const size = 'mini' === window.size ? 50 : 60
-					const iconProps = {
-						width: size,
-						height: size,
-						windowSize: window.size,
-						context: 'app-list',
 					}
 
 					return (
@@ -126,13 +121,48 @@ registerSection( 'fl-home-apps', {
 							appearance="transparent"
 						>
 							<div className="fl-asst-app-icon" style={ style }>
-								{ 'function' === typeof icon && icon( iconProps ) }
+								{ 'function' === typeof icon && icon( { context: 'grid' } ) }
 							</div>
-							<label>{app.label}</label>
+							<label>{label}</label>
 						</Button>
 					)
 				} )}
 			</div>
 		)
 	},
+} )
+*/
+
+registerSection( 'fl-recent-posts', {
+	label: __( 'Recent Posts' ),
+	location: {
+		type: 'home',
+	},
+	padX: false,
+	render: () => {
+		const handle = 'fl-content'
+		return (
+			<List.Posts
+				query={ {
+					post_type: 'post',
+					posts_per_page: 5
+				} }
+				paginate={ false }
+				getItemProps={ ( item, defaultProps ) => {
+					if ( item.id ) {
+						return {
+							...defaultProps,
+							description: null,
+							thumbnailSize: 'sm',
+							to: {
+								pathname: `/${handle}/post/${item.id}`,
+								state: { item }
+							},
+						}
+					}
+					return defaultProps
+				} }
+			/>
+		)
+	}
 } )

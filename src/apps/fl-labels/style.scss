@@ -4,6 +4,7 @@
 		align-items: center;
 		display: flex;
 		flex-wrap: wrap;
+		min-height: 50px;
 
 		&:first-child {
 			flex: 0;
@@ -22,7 +23,9 @@
 	}
 
 	.fl-asst-table-cell-edit {
-		padding: var(--fl-asst-outer-space) 0;
+		padding: var(--fl-asst-outer-space) !important;
+		box-shadow: inset 3px 0px 0px var(--fluid-color), 0px 3px 20px 3px rgba(0, 0, 0, 0.15);
+		margin: 10px calc( 0px - var(--fluid-lg-space) );
 
 		.fl-asst-circle-picker {
 			padding-top: var(--fl-asst-tiny-space);

@@ -1,9 +1,10 @@
 import React, { useContext, createContext } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { Page as FLUID_Page } from 'fluid/ui'
+import { Page as FLUIDPage } from 'fluid/ui'
 import { useSystemState } from 'data'
 import { Nav, Icon, App } from 'ui'
+import { getFirstFocusableChild } from 'utils/dom'
 
 import {
 	Pad,
@@ -24,7 +25,30 @@ import { PageNotFound } from './not-found'
 
 import './style.scss'
 
-const Page = FLUID_Page
+const focusFirstElement = () => {
+	const page = document.querySelector( '.fl-asst-screen-content' )
+	const first = getFirstFocusableChild( page )
+	if ( first ) {
+		first.focus()
+	}
+}
+
+const Page = ( { className, showAsRoot = false, onLoad = focusFirstElement, ...rest } ) => {
+	const { isAppRoot } = App.useApp()
+	const classes = classname( {
+		'is-app-root': isAppRoot || showAsRoot,
+	}, className )
+
+	return (
+		<FLUIDPage
+			className={ classes }
+			onLoad={ onLoad }
+			{ ...rest }
+		/>
+	)
+}
+
+Page.Section = FLUIDPage.Section
 
 
 /* ------ Page System Setup ------ */

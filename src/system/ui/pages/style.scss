@@ -64,6 +64,12 @@
         }
     }
 
+    .is-app-root {
+        .fluid-page-title {
+            font-size: 20px;
+        }
+    }
+
     .fl-asst-content-area {
         margin: var(--fl-asst-outer-space) calc( 0px - var(--fl-asst-outer-space) );
         padding: 0 var(--fl-asst-outer-space);

@@ -2,6 +2,7 @@
 
 namespace FL\Assistant\Hooks\Actions;
 
+use FL\Assistant\Hooks\Actions\OnEnqueueScripts;
 use FL\Assistant\Data\UserState;
 
 
@@ -12,8 +13,18 @@ use FL\Assistant\Data\UserState;
  */
 class OnWPBeforeAdminBarRender {
 
+	protected $on_enqueue_scripts;
+
+	public function __construct( OnEnqueueScripts $on_enqueue_scripts ) {
+		$this->on_enqueue_scripts = $on_enqueue_scripts;
+	}
+
 	public function __invoke() {
 		global $wp_admin_bar;
+
+		if ( ! $this->on_enqueue_scripts->should_enqueue() ) {
+			return;
+		}
 
 		$state = UserState::get();
 		$show_toolbar_item = false;

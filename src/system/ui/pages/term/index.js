@@ -52,7 +52,6 @@ export const Term = ( { location, history } ) => {
 		}
 
 		const handleError = error => {
-			setIsSubmitting( false )
 			alert( __( 'Error: Changes not saved! Please try again.' ) )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
@@ -65,7 +64,6 @@ export const Term = ( { location, history } ) => {
 				handleError()
 			} else {
 				setCurrentHistoryState( { item } )
-				setIsSubmitting( false )
 				alert( __( 'Changes Saved!' ) )
 			}
 		} ).catch( error => {
@@ -83,7 +81,7 @@ export const Term = ( { location, history } ) => {
 	}
 
 
-	const { hasChanges, resetForm, setIsSubmitting, submitForm, renderForm } = Form.useForm( {
+	const { hasChanges, resetForm, submitForm, renderForm } = Form.useForm( {
 
 
 		sections: {

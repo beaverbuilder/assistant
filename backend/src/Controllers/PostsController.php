@@ -39,14 +39,14 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_post' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -59,7 +59,7 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_posts' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -72,7 +72,7 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts_count' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -91,7 +91,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -108,7 +108,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -121,7 +121,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -140,7 +140,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -371,6 +371,15 @@ class PostsController extends ControllerAbstract {
 					$this->update_post_terms( $id, $data['terms'] );
 					unset( $data['terms'] );
 				}
+				if ( isset( $data['thumbnail'] ) ) {
+					if ( '0' === $data['thumbnail'] ) {
+						delete_post_meta( $id, '_thumbnail_id' );
+					} else {
+						set_post_thumbnail( $id, $data['thumbnail'] );
+					}
+
+					unset( $data['thumbnail'] );
+				}
 				wp_update_post(
 					array_merge(
 						$data,
@@ -398,6 +407,7 @@ class PostsController extends ControllerAbstract {
 			case 'untrash':
 				wp_untrash_post( $id );
 				break;
+
 		}
 
 		$updated_post = get_post( $id );
@@ -459,16 +469,16 @@ class PostsController extends ControllerAbstract {
 		$post_id = absint( $request->get_param( 'id' ) );
 		$post = get_post( $post_id );
 
-		/*Create Temporary file */
-
+		/* Create temporary file */
 		$file_url = WP_CONTENT_URL . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
 		$file = WP_CONTENT_DIR . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
+		$current = '';
 
-		$current = file_get_contents( $file );
-		// Append a new post to the file
+		if ( file_exists( $file ) ) {
+			$current = file_get_contents( $file );
+		}
 
-		/* Creates taxomies string for xml export */
-
+		/* Creates taxonomies string for xml export */
 		$taxonomies = get_taxonomies( '', 'names' );
 		$terms = wp_get_object_terms( $post->ID, $taxonomies );
 
@@ -478,7 +488,6 @@ class PostsController extends ControllerAbstract {
 		}
 
 		/* Creates comments string  */
-
 		$comments = get_comments( [ 'post_id' => $post->ID ] );
 
 		$comment_str = '';
@@ -502,8 +511,7 @@ class PostsController extends ControllerAbstract {
 			';
 		}
 
-		/* Created Post meta string */
-
+		/* Creates post meta string */
 		$meta_str = '';
 		$meta_values = get_post_meta( $post->ID );
 		foreach ( $meta_values as $key => $values ) {
@@ -551,6 +559,7 @@ class PostsController extends ControllerAbstract {
 				'post_type'      => $post_type,
 			]
 		);
+
 		file_put_contents( $file, $current . $export_data );
 
 		return $file_url;
@@ -564,8 +573,7 @@ class PostsController extends ControllerAbstract {
 		$post_id = absint( $request->get_param( 'id' ) );
 		$post = get_post( $post_id );
 
-		/*Remove Temporary file */
-
+		/* Remove temporary file */
 		$file = WP_CONTENT_DIR . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
 
 		if ( file_exists( $file ) ) {

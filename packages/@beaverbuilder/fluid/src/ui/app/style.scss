@@ -2,6 +2,10 @@
     --fluid-background: white;
     --fluid-color: black;
 
+    // Dark Colors
+    --fluid-dark-background: hsl(210, 13%, 16%);
+    --fluid-dark-color: hsl(210, 15%, 90%);
+
     // Box Colors
     --fluid-box-background: #F1F5F9;
     --fluid-box-color: black;
@@ -32,8 +36,8 @@
 
     // Base Sizes
     --fluid-font-size: 13px;
-    --fluid-radius: 7px;
-    --fluid-target-size: 32px; // Minimum click target
+    --fluid-radius: 3px;
+    --fluid-target-size: 36px; // Minimum click target
 }
 
 .fl.uid {
@@ -47,18 +51,24 @@
         --fluid-box-color: var(--fluid-primary-color);
         --fluid-box-hover-background: var(--fluid-primary-hover-background);
         --fluid-accent: #0075DB;
+
+        color: var(--fluid-box-color);
     }
     .fluid-status-alert {
         --fluid-box-background: var(--fluid-alert-background);
         --fluid-box-color: var(--fluid-alert-color);
         --fluid-box-hover-background: var(--fluid-alert-hover-background);
         --fluid-accent: var(--fluid-alert-color);
+
+        color: var(--fluid-box-color);
     }
     .fluid-status-destructive {
         --fluid-box-background: var(--fluid-destructive-background);
         --fluid-box-color: var(--fluid-destructive-color);
         --fluid-box-hover-background: var(--fluid-destructive-hover-background);
         --fluid-accent: var(--fluid-destructive-color);
+
+        color: var(--fluid-box-color);
     }
 
     &.fluid-color-scheme-dark {

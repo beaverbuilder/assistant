@@ -57,5 +57,3 @@ $xml_data .= '<rss version="2.0"
 </rss>';
 
 echo $xml_data;
-
-

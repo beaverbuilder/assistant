@@ -77,7 +77,7 @@ export const Main = ( { match } ) => {
 						placeholder={ __( 'Search' ) }
 						ref={ inputRef }
 					/>
-					<span style={ { marginLeft: 5 } }>
+					<span style={ { marginLeft: 5, flex: '0 0 auto', display: 'flex', flexDirection: 'row' } }>
 						{ '' !== keyword && <Button onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
 						{ '' !== keyword && loading &&
 						<div className='fl-asst-search-spinner'>

@@ -21,8 +21,11 @@
     --fl-asst-dark-translucent: hsla(210, 17%, 12%, .96);
 
     // Sizes
-    --fl-asst-base-radius: 7px;
-    --fl-asst-target-size: 32px; // Smallest actionable area
+    --fl-asst-base-radius: var(--fluid-radius);
+    --fl-asst-target-size: var(--fluid-target-size); // Smallest actionable area
+
+    --fl-asst-side-toolbar-width: 60px;
+    --fl-asst-panel-size: 360px;
 
     // Spacing
     --fl-asst-large-space: 30px;

@@ -30,7 +30,6 @@
 
         padding: var(--fl-asst-tiny-space);
         color: var(--fl-asst-secondary-surface-color);
-        background-color: var(--fl-asst-secondary-surface-background);
         border-radius: var(--fl-asst-base-radius);
         border:none;
         outline: none;
@@ -52,7 +51,6 @@
         }
 
         &:focus {
-            background-color: var(--fl-asst-secondary-surface-background) !important;
 
             &::-webkit-input-placeholder{
                 text-align: left;

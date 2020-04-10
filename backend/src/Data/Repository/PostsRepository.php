@@ -133,10 +133,10 @@ class PostsRepository extends RepositoryAbstract {
 		);
 
 		foreach ( $types as $slug => $type ) {
-			if ( ! isset( $type->cap->edit_published_posts ) ) {
+			if ( ! isset( $type->cap->edit_others_posts ) ) {
 				continue;
 			}
-			if ( ! current_user_can( $type->cap->edit_published_posts ) ) {
+			if ( ! current_user_can( $type->cap->edit_others_posts ) ) {
 				continue;
 			}
 			if ( 'attachment' === $slug ) {

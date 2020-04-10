@@ -68,6 +68,19 @@ const App = () => {
 			<Layout.Headline>Design Elements</Layout.Headline>
 			<div>Buttons and stuff</div>
 
+			<Page.Section label='Row'>
+
+
+				<Layout.Row gap="sm">
+					<Button>One</Button>
+					<Button>Two</Button>
+					<Button>Three</Button>
+					<Button>Four</Button>
+				</Layout.Row>
+
+
+			</Page.Section>
+
 			<Page.Section>
 				<ButtonSpacedRow>
 					<Button title={ __( 'Edit' ) } appearance="elevator">

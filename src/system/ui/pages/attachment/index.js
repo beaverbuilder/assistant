@@ -1,9 +1,10 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form, Button, Layout } from 'ui'
+import { Page, Form, Layout } from 'ui'
 import { getSrcSet } from 'utils/image'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
+import './style.scss'
 
 export const Attachment = ( { location, history } ) => {
 	const { item } = location.state
@@ -36,14 +37,13 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 		const handleError = error => {
-			setIsSubmitting( false )
 			alert( __( 'Error: Changes not saved! Please try again.' ) )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
 		}
 
-		wpRest
+		return wpRest
 			.attachments()
 			.update( id, 'data', data )
 			.then( response => {
@@ -52,7 +52,6 @@ export const Attachment = ( { location, history } ) => {
 					handleError()
 				} else {
 					setCurrentHistoryState( { item } )
-					setIsSubmitting( false )
 					alert( __( 'Changes Saved!' ) )
 				}
 			} )
@@ -159,13 +158,10 @@ export const Attachment = ( { location, history } ) => {
 
 	const Footer = () => {
 		return (
-			<>
-				<Button onClick={ resetForm }>{__( 'Cancel' )}</Button>
-				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
-				<Button type="submit" status="primary" onClick={ submitForm }>
-					{__( 'Save' )}
-				</Button>
-			</>
+			<Layout.PublishBar
+				onPublish={ submitForm }
+				onDiscard={ resetForm }
+			/>
 		)
 	}
 
@@ -177,7 +173,6 @@ export const Attachment = ( { location, history } ) => {
 	const {
 		hasChanges,
 		resetForm,
-		setIsSubmitting,
 		submitForm,
 		renderForm,
 	} = Form.useForm( {
@@ -230,6 +225,7 @@ export const Attachment = ( { location, history } ) => {
 
 	return (
 		<Page
+			id="fl-asst-attachment-detail"
 			title={ __( 'Attachment' ) }
 			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }

@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter, Nav } from 'assistant/ui'
-import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
+import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { defaultState } from '../'
 
 export const SummaryTab = () => {
 	const { handle } = useContext( App.Context )
-	const { counts } = useSystemState()
+	const { getCount } = getSystemSelectors()
 	const { contentTypes } = getSystemConfig()
 	return (
 		<>
@@ -29,7 +29,7 @@ export const SummaryTab = () => {
 								padding: 'var(--fluid-med-space)'
 							} }>
 								{labels.plural}
-								<span style={ { fontSize: 24, marginTop: 5, lineHeight: 1 } }>{counts[`content/${key}`]}</span>
+								<span style={ { fontSize: 24, marginTop: 5, lineHeight: 1 } }>{getCount( `content/${key}` )}</span>
 							</div>
 						)
 					} )}
@@ -67,7 +67,7 @@ export const SummaryTab = () => {
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
 	const { history, location } = useContext( Nav.Context )
-	const { counts } = useSystemState()
+	const { getCount } = getSystemSelectors()
 	const { query, listStyle } = useAppState( 'fl-content' )
 	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
 	const { contentTypes } = getSystemConfig()
@@ -87,7 +87,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		const postTypes = {}
 		for ( let key in contentTypes ) {
 			const { labels } = contentTypes[key]
-			postTypes[key] = sprintf( `${labels.plural} (%s)`, counts[`content/${key}`] )
+			postTypes[key] = sprintf( `${labels.plural} (%s)`, getCount( `content/${key}` ) )
 		}
 
 		const sorts = {

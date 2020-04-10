@@ -1,0 +1,97 @@
+.fl-asst {
+    .fl-asst-sidebar {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        flex-grow: 0;
+        flex-basis: 60px;
+        cursor: move;
+    }
+    .fl-asst-main-sidebar-only .fl-asst-sidebar {
+        flex-basis: 58px;
+    }
+    .fl-asst-is-mobile {
+        .fl-asst-sidebar {
+            flex-direction: row-reverse;
+            padding: var(--fluid-sm-space);
+            margin-bottom: env(safe-area-inset-bottom);
+            flex-basis: 60px;
+        }
+        .fl-asst-sidebar-cell {
+            flex-direction: row;
+            padding: 0;
+
+            .fluid-button {
+                height: auto;
+                flex: 1 1 auto;
+                min-width: 50px;
+            }
+        }
+        .fl-asst-sidebar-cell.fl-asst-sidebar-cell-middle {
+            padding: 0;
+            margin: 0;
+            flex: 1 1 auto;
+            justify-content: space-around;
+        }
+    }
+
+    .fl-asst-sidebar-cell {
+        padding: var(--fluid-sm-space);
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+
+        &.fl-asst-sidebar-cell-middle {
+            padding: 20px var(--fluid-sm-space);
+            flex: 0 0 auto;
+            margin: auto 0;
+            pointer-events: none;
+
+            .fluid-button {
+                pointer-events: auto;
+            }
+        }
+
+        .fluid-button {
+            height: 50px;
+        }
+    }
+
+    .fl-asst-sidebar-compact {
+        .fl-asst-sidebar-cell {
+
+            &.fl-asst-sidebar-cell-middle {
+                margin: 0;
+                flex: 1 1 auto;
+                padding: var(--fluid-sm-space);
+            }
+
+            .fluid-button {
+                height: auto;
+                min-height: 36px;
+                flex: 1 1 auto;
+            }
+        }
+    }
+    @media screen and ( max-height: 500px ) {
+        .fl-asst-sidebar-cell.fl-asst-sidebar-cell-middle {
+            padding: var(--fluid-sm-space);
+        }
+    }
+
+    .fl-asst-window-sidebar-only {
+        .fl-asst-sidebar {
+            padding-top: 6px;
+        }
+        .fl-asst-sidebar-cell-top {
+            pointer-events: none;
+        }
+        .fl-asst-sidebar-close-button {
+            height: 38px;
+            margin-bottom: 6px;
+            pointer-events: auto;
+        }
+    }
+}
