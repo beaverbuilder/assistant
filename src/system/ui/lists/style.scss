@@ -208,11 +208,12 @@
         z-index: 1;
         position: absolute;
         top: -20px;
+        min-height: 40px;
         right: var(--fluid-sm-space);
         background: var(--fluid-background);
         color: var(--fluid-color);
         border-radius: var(--fluid-radius);
-        padding: 2px;
+        padding: 0;
         box-shadow: 0px 2px 4px rgba(0,0,0,.1),
                     0px 0px 0px 1px var(--fluid-color);
         z-index: 9;
