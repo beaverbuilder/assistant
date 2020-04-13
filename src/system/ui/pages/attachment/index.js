@@ -93,6 +93,21 @@ export const Attachment = ( { location, history } ) => {
 
 			},
 		},
+		labels: {
+			label: __( 'Labels' ),
+			fields: {
+				labels: {
+					component: 'labels',
+					alwaysCommit: true,
+					onAdd: label => {
+						wpRest.attachments().addLabel( item.id, label.id )
+					},
+					onRemove: label => {
+						wpRest.attachments().removeLabel( item.id, label.id )
+					},
+				},
+			}
+		},
 		info: {
 			label: __( 'Info' ),
 			fields: {

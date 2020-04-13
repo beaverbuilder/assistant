@@ -76,6 +76,7 @@ const Main = () => {
 			icon={ <AppIcon context="sidebar" /> }
 			shouldShowBackButton={ false }
 			header={ <Nav.Tabs tabs={ tabs } /> }
+			topContentStyle={ { border: 'none' } }
 			shouldScroll={ false }
 			showAsRoot={ true }
 		>

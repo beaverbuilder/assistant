@@ -124,6 +124,13 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
+
+			/*
+			'integrations'		=> [
+				'yoastSEO'		=> [
+					'isActive' => is_plugin_active('wordpress-seo/wp-seo.php')
+				]
+			],*/
 		];
 	}
 

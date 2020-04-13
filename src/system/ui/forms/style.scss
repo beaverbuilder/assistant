@@ -30,7 +30,7 @@
                 .fl-asst-form-section-title-text {
                     display: inline-flex;
                     align-items: center;
-                    min-height: var(--fl-asst-target-size);
+                    min-height: var(--fluid-target-size);
                     max-width: 70%;
                     box-shadow: 0px 2px 0px 0px currentColor;
                     align-items: flex-end;
@@ -66,7 +66,7 @@
             justify-content: center;
             padding: 5px var(--fl-asst-outer-space);
             margin: 0 calc( 0px - var(--fl-asst-outer-space) );
-            min-height: var(--fl-asst-target-size);
+            min-height: var(--fluid-target-size);
             box-shadow: none;
             transition-property: box-shadow;
             transition-duration: .25s;
@@ -116,7 +116,6 @@
         &.fl-asst-highlight-changes {
             .fl-asst-form-item-has-changes {
                 box-shadow: inset 3px 0px 0px 0px var(--fluid-primary-color);
-                background: var(--fluid-primary-background);
             }
         }
 
@@ -155,6 +154,7 @@
         }
     }
 
+    .fl-asst-form-input,
     input[type="text"],
     input[type="email"],
     input[type="url"],
@@ -179,12 +179,12 @@
         color: inherit;
         padding: var(--fluid-sm-space);
         margin:0;
-        background-color: var(--fluid-background);
+        background-color: transparent;
         background-image: none;
-        box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background);
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
         border-radius: 3px;
         height: auto;
-        min-height: var(--fl-asst-target-size);
+        min-height: var(--fluid-target-size);
 
         &:focus,
         &:invalid {
@@ -228,11 +228,12 @@
     }
 
     select {
-        height: var(--fl-asst-target-size);
+        height: var(--fluid-target-size);
         background-color: var(--fluid-background);
-        box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background);
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
         border-radius: 3px;
         padding: var(--fluid-sm-space);
+        padding-right: 30px;
 
         &:focus {
             background-color: var(--fluid-box-background);

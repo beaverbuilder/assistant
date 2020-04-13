@@ -9,5 +9,4 @@ registerApp( 'fl-search', {
 	state: {
 		keyword: ''
 	},
-	shouldShowInAppList: false,
 } )

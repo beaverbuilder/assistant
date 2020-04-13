@@ -1,3 +1,4 @@
+import React from 'react'
 import classname from 'classnames'
 import Box from './box'
 import Row from './row'
@@ -12,11 +13,11 @@ Layout.Row = Row
 Layout.Row.displayName = 'Layout.Row'
 
 // Headline
-Layout.Headline = ({ className, children, ...rest }) => {
-    const classes = classname( 'fluid-headline', className )
-    return (
-        <div className={classes} role="heading" aria-level="2" {...rest}>{children}</div>
-    )
+Layout.Headline = ( { className, children, ...rest } ) => {
+	const classes = classname( 'fluid-headline', className )
+	return (
+		<div className={ classes } role="heading" aria-level="2" { ...rest }>{children}</div>
+	)
 }
 Layout.Headline.displayName = 'Layout.Headline'
 

@@ -30,11 +30,11 @@
 
         padding: var(--fl-asst-tiny-space);
         color: var(--fl-asst-secondary-surface-color);
-        border-radius: var(--fl-asst-base-radius);
+        border-radius: var(--fluid-radius);
         border:none;
         outline: none;
         box-shadow: none;
-        min-height: var(--fl-asst-target-size);
+        min-height: var(--fluid-target-size);
 
         // Yes, these have to be separate rules.
         &::-webkit-input-placeholder{
@@ -112,6 +112,10 @@
                     line-height: 1;
                     font-weight: bold;
                     text-align:center;
+                }
+                &:before {
+                    content: '';
+                    display: none;
                 }
             }
         }

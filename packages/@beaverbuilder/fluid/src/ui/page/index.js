@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import classname from 'classnames'
 import Nav from '../nav'
 import Section from './section'
@@ -6,126 +6,132 @@ import Error from '../error'
 import Layout from '../layout'
 import './style.scss'
 
-const Page = ({
-    children,
-    className,
-    hero,
-    title,
-    icon,
-    toolbar,
-    actions,
-    header,
-    footer,
-    onLoad = () => {},
-    shouldScroll = true,
-    shouldShowBackButton = val => val,
-    insetTop = true,
-    style = {},
+const Page = ( {
+	children,
+	className,
+	hero,
+	title,
+	icon,
+	toolbar,
+	topContentStyle, /* element wraps header and toolbar */
+	actions,
+	header,
 
-    // Passed to Layout.Box
-    padX = true,
-    padY = true,
-    contentWrapStyle = null,
+	footer,
+	onLoad = () => {},
+	shouldScroll = true,
+	shouldShowBackButton = val => val,
+	style = {},
 
-    ...rest
-}) => {
-    const { isRoot } = useContext( Nav.Context )
-    const classes = classname( 'fluid-page', className )
+	// Passed to Layout.Box
+	padX = true,
+	padY = true,
+	contentWrapStyle = null,
 
-    // Handle initial loading, like focusing.
-    useEffect( onLoad, [] )
+	...rest
+} ) => {
+	const { isRoot } = useContext( Nav.Context )
+	const classes = classname( 'fluid-page', className )
 
-    // Handle whether or not to show the back button
-    let showBackButton = true
-    if ( 'boolean' === typeof shouldShowBackButton ) {
-        showBackButton = shouldShowBackButton
-    } else if ( 'function' === typeof shouldShowBackButton ) {
-        showBackButton = shouldShowBackButton( !isRoot )
-    }
+	// Handle initial loading, like focusing.
+	useEffect( onLoad, [] )
 
-    const Hero = ({ children }) => {
+	// Handle whether or not to show the back button
+	let showBackButton = true
+	if ( 'boolean' === typeof shouldShowBackButton ) {
+		showBackButton = shouldShowBackButton
+	} else if ( 'function' === typeof shouldShowBackButton ) {
+		showBackButton = shouldShowBackButton( ! isRoot )
+	}
 
-        if ( ! children ) return null
-        const isString = 'string' === typeof children
+	const Hero = ( { children } ) => {
 
-        const style = {
-            transformOrigin: '0 0',
-            flex: '0 0 auto',
-        }
+		if ( ! children ) {
+			return null
+		}
+		const isString = 'string' === typeof children
 
-        return (
-            <div style={style}>
-                { isString && <img src={children} style={{ width: '100%' }} /> }
-                { !isString && children }
-            </div>
-        )
-    }
+		const style = {
+			transformOrigin: '0 0',
+			flex: '0 0 auto',
+		}
 
-    const styles = {
-        ...style,
-        overflowX: 'hidden',
-        overflowY: shouldScroll ? 'scroll' : 'hidden',
-        perspective : 1,
-        perspectiveOrigin: '0 0',
-    }
+		return (
+			<div style={ style }>
+				{ isString && <img src={ children } style={ { width: '100%' } } /> }
+				{ ! isString && children }
+			</div>
+		)
+	}
 
-    const wrapStyle = {
-        flex: '1 1 auto',
-        position: 'relative',
-        minHeight: 0,
-        maxHeight: '100%',
-        display: 'flex',
-        flexDirection: 'column'
-    }
+	const styles = {
+		...style,
+		overflowX: 'hidden',
+		overflowY: shouldScroll ? 'scroll' : 'hidden',
+		perspective: 1,
+		perspectiveOrigin: '0 0',
+	}
 
-    const contentBoxStyle = {
-        flexGrow: 1,
-        flexShrink: 1,
-        minHeight: 0,
-        maxHeight: '100%', /* yes, for scroll loading to work */
-        ...contentWrapStyle,
-    }
+	const wrapStyle = {
+		flex: '1 1 auto',
+		position: 'relative',
+		minHeight: 0,
+		maxHeight: '100%',
+		display: 'flex',
+		flexDirection: 'column'
+	}
 
-    return (
-        <div className="fluid-page-wrap" style={wrapStyle}>
-            <div className={classes} {...rest} style={styles}>
+	const contentBoxStyle = {
+		flexGrow: 1,
+		flexShrink: 1,
+		minHeight: 0,
+		maxHeight: '100%', /* yes, for scroll loading to work */
+		...contentWrapStyle,
+	}
 
-                { hero && <Hero>{hero}</Hero> }
+	return (
+		<div className="fluid-page-wrap" style={ wrapStyle }>
+			<div className={ classes } { ...rest } style={ styles }>
 
-                <div className="fluid-page-content" style={{
-                    maxHeight: shouldScroll ? '' : '100%',
-                    minHeight: 0,
-                    flexShrink: shouldScroll ? 0 : 1,
-                }}>
-                    <div className="fluid-sticky-element fluid-page-top-content">
-                        { toolbar !== false  && (
-                            <div className="fluid-toolbar fluid-page-top-toolbar">
-                                { showBackButton && <Nav.BackButton /> }
-                                { icon && (
-                                    <span className="fluid-page-title-icon">
-                                        {icon}
-                                    </span>
-                                )}
-                                { title && <div className="fluid-page-toolbar-content">
-                                    <span
-                                        className="fluid-page-title"
-                                        role="heading"
-                                        aria-level="1" style={{ flex: '1 1 auto' }}
-                                    >{title}</span>
-                                </div> }
-                                { actions && <span className="fluid-page-actions">{actions}</span> }
-                            </div>
-                        )}
-                        { header && <div className="fluid-toolbar fluid-page-header">{header}</div> }
-                    </div>
-                    <Layout.Box padX={padX} padY={padY} style={contentBoxStyle}>
-                        <Error.Boundary>{children}</Error.Boundary>
-                    </Layout.Box>
-                </div>
-            </div>
-            { footer && <div className="fluid-page-footer">{footer}</div> }
-        </div>
-    )
+				{ hero && <Hero>{hero}</Hero> }
+
+				<div className="fluid-page-content" style={ {
+					maxHeight: shouldScroll ? '' : '100%',
+					minHeight: 0,
+					flexShrink: shouldScroll ? 0 : 1,
+				} }>
+					<div className="fluid-sticky-element fluid-page-top-content" style={ topContentStyle }>
+
+						{ toolbar }
+						{ false !== toolbar && ! toolbar && (
+							<div className="fluid-toolbar fluid-page-top-toolbar">
+								{ showBackButton && <Nav.BackButton /> }
+								{ icon && (
+									<span className="fluid-page-title-icon">
+										{icon}
+									</span>
+								)}
+								{ title && <div className="fluid-page-toolbar-content">
+									<span
+										className="fluid-page-title"
+										role="heading"
+										aria-level="1" style={ { flex: '1 1 auto' } }
+									>{title}</span>
+								</div> }
+								{ actions && <span className="fluid-page-actions">{actions}</span> }
+							</div>
+						)}
+						{ header && <div className="fluid-toolbar fluid-page-header">{header}</div> }
+					</div>
+
+					<Layout.Box padX={ padX } padY={ padY } style={ contentBoxStyle }>
+						<Error.Boundary>{children}</Error.Boundary>
+					</Layout.Box>
+				</div>
+			</div>
+			{ footer && <div className="fluid-page-footer">{footer}</div> }
+		</div>
+	)
 }
 
 Page.Section = Section

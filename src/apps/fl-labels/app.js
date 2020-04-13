@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { CancelToken, isCancel } from 'axios'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { Color, Control, Page, Table, Button, Icon, Nav } from 'assistant/ui'
+import { getSystemActions, useSystemState } from 'assistant/data'
 import AppIcon from './icon'
 import './style.scss'
 
@@ -16,28 +16,13 @@ const App = ( { match } ) => {
 }
 
 const Main = () => {
-	const [ loading, setLoading ] = useState( true )
-	const [ labels, setLabels ] = useState( [] )
+	const { labels } = useSystemState()
+	const { setLabels } = getSystemActions()
 	const [ editingLabel, setEditingLabel ] = useState( null )
 	const [ newLabel, setNewLabel ] = useState( '' )
 	const firstColor = 'var(--fl-asst-blue)'
 	const [ newColor, setNewColor ] = useState( firstColor )
 	const wpRest = getWpRest()
-	const source = CancelToken.source()
-
-	useEffect( () => {
-		wpRest.labels().findWhere( {}, {
-			cancelToken: source.token,
-		} ).then( response => {
-			setLoading( false )
-			setLabels( [ ...response.data ] )
-		} ).catch( ( error ) => {
-			if ( ! isCancel( error ) ) {
-				console.log( error ) // eslint-disable-line no-console
-			}
-		} )
-		return () => source.cancel()
-	}, [] )
 
 	const getDefaultColor = () => {
 		const key = Object.keys( Color.labelColors ).shift()
@@ -205,14 +190,6 @@ const Main = () => {
 		}
 	} )
 
-	const InnerSection = ( { children } ) => {
-		return (
-			<Page.Pad top={ false } sides={ false }>
-				{ children }
-			</Page.Pad>
-		)
-	}
-
 	return (
 		<Page
 			title={ __( 'Labels' ) }
@@ -226,12 +203,6 @@ const Main = () => {
 				<p style={ { marginTop: 0 } }>
 					{ __( 'Labels allow you to mark posts or pages for organization and collaborate with other users. Below you can add more labels and change the name of existing ones. Add labels to posts inside the Content app.' ) }
 				</p>
-				{ loading &&
-					<InnerSection>{ __( 'Loading...' ) }</InnerSection>
-				}
-				{ ! loading && 0 === labels.length &&
-					<InnerSection>{ __( 'No labels found.' ) }</InnerSection>
-				}
 				<Table rows={ rows } />
 			</Page.Section>
 

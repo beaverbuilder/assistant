@@ -16,7 +16,7 @@
         border-radius: 0;
         transition-property: background, box-shadow, border-radius;
         transition-duration: .25s;
-        box-shadow: 0 0 0 3px rgba(0,0,0,.05),
+        box-shadow: 0 0 0 2px rgba(0,0,0,.05),
                     0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
 
         .fl-asst-brightness-dark & {
@@ -95,14 +95,15 @@
     .fl-asst-window-button {
         display: flex;
         align-items: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 30px;
-        background: var(--fl-asst-surface-background) !important;
+        width: 50px;
+        height: 50px;
+        border-radius: 3px;
+        background: var(--fluid-background) !important;
         overflow: hidden;
         padding:0;
         pointer-events: auto;
-        box-shadow: 0px 10px 20px rgba(0,0,0,.25);
+        box-shadow: inset 0 0 0 var(--fluid-color),
+                    0px 10px 20px rgba(0,0,0,.1);
 
         &:hover {
             background: var(--fl-asst-surface-background);
@@ -113,9 +114,12 @@
             top:0;
             outline: none;
             background: var(--fl-asst-surface-background);
-            box-shadow: inset 0px 0px 0px 2px #ffac3b,
-                        0px 0px 0px 2px var(--fl-asst-surface-background),
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-accent),
                         0px 10px 20px rgba(0,0,0,.25);
+        }
+
+        svg {
+            pointer-events: none;
         }
     }
 
@@ -133,6 +137,7 @@
         background-color: transparent;
         box-shadow: inset 0px 0px 0px 0px white;
         transition-property: box-shadow, background-color;
+        transition-delay: .1s;
         transition-duration: .3s;
 
         user-select: none;
@@ -140,6 +145,8 @@
         pointer-events: none;
 
         &.fl-asst-window-layer-is-dragging {
+            --edge-pad: 5px;
+            --bordered-edge: calc( var(--edge-pad) + 3px );
             pointer-events: auto;
             box-shadow: inset 0px 0px 0px 4px var(--fl-asst-window-zone-color);
             background-color: var(--fl-asst-window-zone-background);
@@ -148,47 +155,47 @@
                 content: '';
                 pointer-events: none;
                 position: absolute;
-                top: 15px;
-                left:15px;
-                width: 60px;
-                height: 60px;
+                top: var(--edge-pad);
+                left: var(--bordered-edge);
+                width: 50px;
+                height: 50px;
                 background: var(--fl-asst-window-zone-color);
-                border-radius: 15px;
+                border-radius: 3px;
                 z-index: -1;
             }
             &.fl-asst-window-layer-origin-top-left:after {
                 display: block;
 
                 body.admin-bar & {
-                    top: calc( 15px + var(--fl-asst-admin-bar-height) );
+                    top: calc( var(--edge-pad) + var(--fl-asst-admin-bar-height) );
                 }
             }
             &.fl-asst-window-layer-origin-top-right:after {
                 display: block;
                 left: auto;
-                right: 15px;
+                right: var(--bordered-edge);
 
                 body.admin-bar & {
-                    top: calc( 15px + var(--fl-asst-admin-bar-height) );
+                    top: calc( var(--edge-pad) + var(--fl-asst-admin-bar-height) );
                 }
             }
             &.fl-asst-window-layer-origin-bottom-left:after {
                 display: block;
                 top: auto;
-                bottom: 15px;
-                left: 15px;
+                bottom: var(--bordered-edge);
+                left: var(--bordered-edge);
             }
             &.fl-asst-window-layer-origin-bottom-right:after {
                 display: block;
                 top: auto;
-                bottom: 15px;
+                bottom: var(--bordered-edge);
                 left: auto;
-                right: 15px;
+                right: var(--bordered-edge);
             }
-            &.fl-asst-window-size-normal {
+            &.fl-asst-window-size-normal:not(.fl-asst-window-is-hidden) {
                 &:after {
                     height: 100vh;
-                    width: 40px;
+                    width: 60px;
                     top:0 !important;
                     bottom: auto;
                     border-radius: 0;

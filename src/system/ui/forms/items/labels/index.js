@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { CancelToken, isCancel } from 'axios'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getWpRest } from 'utils/wordpress'
+import { useSystemState } from 'data'
 import { Button, Control } from 'ui'
 import './style.scss'
 
@@ -11,23 +10,8 @@ export const LabelsItem = ( {
 	onAdd = () => {},
 	onRemove = () => {},
 } ) => {
-	const [ options, setOptions ] = useState( [] )
+	const { labels } = useSystemState()
 	const [ selectedLabel, setSelectedLabel ] = useState( '' )
-	const wpRest = getWpRest()
-	const source = CancelToken.source()
-
-	useEffect( () => {
-		wpRest.labels().findWhere( {}, {
-			cancelToken: source.token,
-		} ).then( response => {
-			setOptions( [ ...response.data ] )
-		} ).catch( ( error ) => {
-			if ( ! isCancel( error ) ) {
-				console.log( error ) // eslint-disable-line no-console
-			}
-		} )
-		return () => source.cancel()
-	}, [] )
 
 	const removeLabel = ( option ) => {
 		const i = value.indexOf( option.id )
@@ -41,7 +25,7 @@ export const LabelsItem = ( {
 			return
 		}
 
-		options.map( option => {
+		labels.map( option => {
 			if ( option.id === Number( selectedLabel ) && ! value.includes( option.id ) ) {
 				value.push( option.id )
 				onChange( [ ...value ] )
@@ -54,7 +38,7 @@ export const LabelsItem = ( {
 
 	const tags = []
 	const filteredOptions = []
-	options.map( option => {
+	labels.map( option => {
 		if ( value.includes( option.id ) ) {
 			tags.push( option )
 		} else {

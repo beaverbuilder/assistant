@@ -37,12 +37,16 @@ class LabelsRepository extends TermsRepository {
 		$sql = "SELECT m1.meta_value
 				FROM $wpdb->postmeta m1
 				INNER JOIN $wpdb->postmeta m2
-				ON m1.post_id = m2.post_id
-				AND m1.meta_key = 'fl_asst_notation_object_id'
-				AND m2.meta_key = 'fl_asst_notation_label_id'
-				AND m2.meta_value = '%d'";
+					ON m1.post_id = m2.post_id
+					AND m1.meta_key = 'fl_asst_notation_object_id'
+					AND m2.meta_key = 'fl_asst_notation_label_id'
+					AND m2.meta_value = '%d'
+				INNER JOIN $wpdb->postmeta m3
+					ON m1.post_id = m3.post_id
+					AND m3.meta_key = 'fl_asst_notation_object_type'
+					AND m3.meta_value = '%s'";
 
-		$prepared = $wpdb->prepare( $sql, $label_id );
+		$prepared = $wpdb->prepare( $sql, $label_id, $object_type );
 		$results = $wpdb->get_results( $prepared );
 		$ids = [];
 

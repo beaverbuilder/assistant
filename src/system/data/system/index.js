@@ -43,5 +43,9 @@ getWpRest().batch().get( {
 	'/fl-assistant/v1/counts': counts => {
 		const { setCounts } = getSystemActions()
 		setCounts( counts )
+	},
+	'/fl-assistant/v1/labels': labels => {
+		const { setLabels } = getSystemActions()
+		setLabels( labels )
 	}
 } )

@@ -23,7 +23,6 @@
         justify-content: flex-start;
         align-items: stretch;
         padding: 5px;
-        padding-bottom: 3px;
     }
 
     .fluid-pad {
@@ -108,10 +107,9 @@
             flex-direction: column;
             background: var(--fluid-background);
             z-index: 1;
-
-            .fluid-page-top-content {
-                border-bottom: 2px solid var(--fluid-box-background);
-            }
+        }
+        .fluid-page-top-content {
+            border-bottom: 2px solid var(--fluid-line-color);
         }
     }
     .fluid-page-footer {
@@ -129,8 +127,6 @@
         background: var(--fluid-background);
         border-top: 2px solid var(--fluid-box-background);
         z-index: 9;
-        padding: var(--fluid-sm-space);
-        padding-bottom: 15px;
 
         & > .fluid-button {
             margin-right: var(--fluid-sm-space);

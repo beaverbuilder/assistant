@@ -7,9 +7,9 @@
 	    flex-wrap: wrap;
         background: var(--fl-asst-secondary-surface-background);
         color: var(--fl-asst-secondary-surface-color);
-        border-radius: var(--fl-asst-base-radius);
+        border-radius: 5px;
         padding: 3px;
-        min-height: calc( var(--fl-asst-target-size) + 6px );
+        min-height: calc( var(--fluid-target-size) + 6px );
         max-width:100%;
         overflow-x: hidden; // Firefox flips out with auto.
         position: relative;
@@ -25,9 +25,9 @@
         &.fl-asst-button-group-appearance-normal {
             .fluid-button {
                 background: transparent;
-                border-radius: 4px;
                 z-index:1;
                 white-space: nowrap;
+                border-radius: 3px;
 
                 &.fl-asst-is-selected {
                     background: var(--fl-asst-surface-background);
@@ -44,8 +44,9 @@
 
         &.fl-asst-button-group-appearance-buttons {
             background: transparent;
-            padding: 2px;
-            min-height: var(--fl-asst-target-size);
+            padding: 2px 0;
+            min-height: var(--fluid-target-size);
+            overflow: visible;
 
             .fluid-button {
                 margin-right: var(--fl-asst-tiny-space);
@@ -60,28 +61,35 @@
         &.fl-asst-button-group-appearance-tabs {
             flex: 1 1 auto;
             background: var(--fluid-box-background);
-            padding: 0 var(--fluid-lg-space);
-            height: 38px;
+            padding: 0 var(--fluid-med-space);
+            padding-right: 2px;
+            height: 50px;
             border-radius: 0;
             overflow: auto;
             justify-content: flex-start;
             align-self: stretch;
             overflow: visible;
+            flex-wrap: nowrap;
+            max-width: 100%;
 
             .fluid-button {
                 margin: 0;
                 background: transparent;
                 border: none;
-                border-radius: 3px;
+                border-radius: 0;
+                padding: 0 12px;
 
                 &:hover {
                     background: var(--fluid-box-hover-background);
                 }
+                &:focus {
+                    border-radius: var(--fluid-radius);
+                }
 
                 &.is-selected {
-                    color: var(--fluid-primary-color);
+                    color: var(--fluid-accent);
                     background: var(--fluid-background);
-                    box-shadow: 0px -2px 0px var(--fluid-primary-color);
+                    box-shadow: 0px -2px 0px var(--fluid-accent);
                     border-radius: 0;
 
                     &:focus {
@@ -97,8 +105,8 @@
                 }
 
                 // See Nav.Tabs
-                &.fluid-button.fl-asst-more-btn {
-                    margin-left:auto;
+                &.fl-asst-more-button {
+                    margin-left:auto !important;
                 }
 
                 .fl-asst-count-badge {
@@ -138,7 +146,7 @@
     .fl-asst-more-menu {
         background: var(--fl-asst-secondary-surface-background);
         color: var(--fl-asst-secondary-surface-color);
-        border-radius: var(--fl-asst-base-radius);
+        border-radius: var(--fluid-radius);
         padding: 3px;
         display: flex;
         flex-direction: column;

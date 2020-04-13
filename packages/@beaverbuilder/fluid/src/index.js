@@ -10,17 +10,17 @@ import * as ui from './ui'
 import * as utils from './utils'
 
 const FLUID = {
-    data,
-    ui,
-    utils,
-    vendors: {
-        ReactRouter,
-        Redux,
-        classnames,
-        camelcase,
-        ReactLaag,
-        ResizeObserverPolyfill,
-    }
+	data,
+	ui,
+	utils,
+	vendors: {
+		ReactRouter,
+		Redux,
+		classnames,
+		camelcase,
+		ReactLaag,
+		ResizeObserverPolyfill,
+	}
 }
 
 export default FLUID

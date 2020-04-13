@@ -69,7 +69,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 	return (
 		<div className={ classes }
 			style={ {
-				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-box-background)' }
+				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-line-color)' }
 			}
 		>
 			{ ! isBeaverBuilder && (
@@ -110,7 +110,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 						<Button
 							key={ i }
 							appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
-							status={ ( isSelected && ! isAppHidden ) ? 'primary' : 'normal' }
+							isSelected={ isSelected }
 							onClick={ () => navOrHideApp( isSelected, () => history.push( location ) ) }
 							title={ label }
 						>{ icon( { context: 'sidebar', isSelected } ) }</Button>

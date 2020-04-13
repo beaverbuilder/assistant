@@ -1,0 +1,29 @@
+.fl-asst {
+    .fl-asst-inline-item {
+        border-bottom: 2px solid var(--fluid-line-color);
+
+        .fl-asst-list-item-thumbnail {
+            background-color: var(--fluid-primary-background);
+            color: var(--fluid-primary-color);
+        }
+        .fl-asst-list-item-subject {
+            margin: auto;
+        }
+    }
+    .fl-asst-inline-create-item {
+        &:focus-within {
+            box-shadow: inset 3px 0 0 var(--fluid-primary-color);
+        }
+
+        .fl-asst-form-input {
+            font-weight: 500;
+            font-size: 14px;
+            font-style: italic;
+            color: var(--fluid-primary-color);
+
+            &:focus {
+                color: var(--fluid-color);
+            }
+        }
+    }
+}

@@ -64,6 +64,11 @@ const Main = ( { match } ) => {
 					defaultValue={ defaultState.listStyle }
 					onChange={ value => setListStyle( value ) }
 				/>
+				<Filter.LabelsItem
+					value={ query.label }
+					defaultValue={ defaultState.query.label }
+					onChange={ value => setQuery( { ...query, label: value } ) }
+				/>
 				<Filter.RadioGroupItem
 					title={ __( 'Sort By' ) }
 					items={ sorts }

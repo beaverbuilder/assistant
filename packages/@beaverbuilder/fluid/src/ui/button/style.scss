@@ -33,6 +33,11 @@
                         0px 0px 0px 2px var(--fluid-accent);
         }
 
+        &.is-selected {
+            background: var(--fluid-primary-background);
+            color: var(--fluid-primary-color);
+        }
+
         &.fluid-appearance-elevator {
             height: 45px;
             width: 45px;

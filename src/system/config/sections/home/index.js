@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { getSystemActions, getSystemConfig, useSystemState } from 'data'
-import { Button, Icon, App, List } from 'ui'
+import { getSystemActions, getSystemConfig, useSystemState, getSystemSelectors } from 'data'
+import { Button, Icon, App, List, Layout } from 'ui'
 import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
@@ -51,13 +51,16 @@ registerSection( 'fl-home-currently-viewing', {
 	location: {
 		type: 'home',
 	},
+	contentStyle: {
+		paddingTop: 0
+	},
 	render: () => {
 		const { currentPageView } = getSystemConfig()
 		const { name, intro, actions } = currentPageView
 
 		const style = {
 			background: 'var(--fluid-box-background)',
-			borderRadius: 20,
+			borderRadius: 'var(--fluid-radius)',
 			padding: 'var(--fluid-lg-space)',
 		}
 
@@ -78,60 +81,42 @@ registerSection( 'fl-home-currently-viewing', {
 	},
 } )
 
-/*
-registerSection( 'fl-home-apps', {
-	label: __( 'Apps' ),
-	location: {
-		type: 'home',
-	},
-	padX: false,
-	render: () => {
-		const apps = useAppList()
-		const focusRef = useInitialFocus()
-		let didSetFocusRef = false
+const PostTypeCounts = () => {
+	const { getCount } = getSystemSelectors()
+	const { contentTypes } = getSystemConfig()
 
-		return (
-			<div className="fl-asst-app-grid">
-				{ apps.map( ( app, i ) => {
-					const { handle, icon, label, accent } = app
-
-					const location = {
-						pathname: `/${handle}`,
-						state: app,
-					}
-
-					const style = {}
-					if ( 'undefined' !== typeof accent ) {
-						style['--fl-asst-accent-color'] = accent.color
-						style.color = 'var(--fl-asst-accent-color)'
-					}
-
-					let ref = null
-					if ( ! didSetFocusRef ) {
-						ref = focusRef
-						didSetFocusRef = true
-					}
-
+	return (
+		<Layout.Box padY={ false }>
+			<div style={ {
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: 5
+			} }>
+				{ Object.entries( contentTypes ).map( ( [ key, item ], i ) => {
+					const { labels } = item
 					return (
 						<Button
-							to={ location }
-							className="fl-asst-app-grid-item"
 							key={ i }
-							innerRef={ ref }
-							appearance="transparent"
+							status="primary"
+							to={ `/fl-content/tab/${key}` }
+							style={ {
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'flex-start',
+								borderRadius: 'var(--fluid-sm-space)',
+								padding: 'var(--fluid-med-space)'
+							} }
 						>
-							<div className="fl-asst-app-icon" style={ style }>
-								{ 'function' === typeof icon && icon( { context: 'grid' } ) }
-							</div>
-							<label>{label}</label>
+							{labels.plural}
+							<span style={ { fontSize: 24, marginTop: 5, lineHeight: 1 } }>{getCount( `content/${key}` )}</span>
 						</Button>
 					)
 				} )}
 			</div>
-		)
-	},
-} )
-*/
+
+		</Layout.Box>
+	)
+}
 
 registerSection( 'fl-recent-posts', {
 	label: __( 'Recent Posts' ),
@@ -142,27 +127,30 @@ registerSection( 'fl-recent-posts', {
 	render: () => {
 		const handle = 'fl-content'
 		return (
-			<List.Posts
-				query={ {
-					post_type: 'post',
-					posts_per_page: 5
-				} }
-				paginate={ false }
-				getItemProps={ ( item, defaultProps ) => {
-					if ( item.id ) {
-						return {
-							...defaultProps,
-							description: null,
-							thumbnailSize: 'sm',
-							to: {
-								pathname: `/${handle}/post/${item.id}`,
-								state: { item }
-							},
+			<>
+				<PostTypeCounts />
+				<List.Posts
+					query={ {
+						post_type: 'post',
+						posts_per_page: 5
+					} }
+					paginate={ false }
+					getItemProps={ ( item, defaultProps ) => {
+						if ( item.id ) {
+							return {
+								...defaultProps,
+								description: null,
+								thumbnailSize: 'sm',
+								to: {
+									pathname: `/${handle}/post/${item.id}`,
+									state: { item }
+								},
+							}
 						}
-					}
-					return defaultProps
-				} }
-			/>
+						return defaultProps
+					} }
+				/>
+			</>
 		)
 	}
 } )

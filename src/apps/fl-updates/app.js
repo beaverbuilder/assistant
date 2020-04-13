@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
-import { App, Page, Button, List, Nav, Filter } from 'assistant/ui'
+import { App, Page, Button, List, Nav, Filter, Layout } from 'assistant/ui'
 import {
 	getSystemSelectors,
 	useAppState,
@@ -127,7 +127,7 @@ const UpdatesMain = () => {
 		>
 
 			{ ! hasUpdates && (
-				<Page.Empty>{__( 'You have no updates.' )}</Page.Empty>
+				<Layout.Box>{__( 'You have no updates.' )}</Layout.Box>
 			)}
 
 			{ hasUpdates && (

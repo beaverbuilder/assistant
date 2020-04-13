@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 import classname from 'classnames'
 
@@ -9,16 +9,16 @@ const Button = forwardRef( ( props, ref ) => {
 		href,
 		onClick,
 		isSelected = false,
-        appearance,
-        status,
+		appearance,
+		status,
 		...rest
 	} = props
 
 	const classes = classname( {
 		'fluid-button': true,
 		'is-selected': isSelected,
-        [`fluid-status-${status}`] : status,
-        [`fluid-appearance-${appearance}`] : appearance
+		[`fluid-status-${status}`]: status,
+		[`fluid-appearance-${appearance}`]: appearance
 	}, className )
 
 	let newProps = {
