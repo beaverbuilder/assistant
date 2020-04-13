@@ -5,6 +5,7 @@ import { List, Button, Icon } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import { getSystemConfig, getSystemSelectors } from 'data'
+import { applyFilters } from 'hooks'
 import ItemActions from './item-actions'
 
 export const Posts = ( {
@@ -186,7 +187,7 @@ export const Posts = ( {
 
 				const isPending = item.isTrashing || item.isTrashed || item.isRestoring
 
-				return getItemProps( item, {
+				const props = getItemProps( item, {
 					...defaultProps,
 					label: <Title />,
 					description: getDescription(),
@@ -206,6 +207,18 @@ export const Posts = ( {
 					marks: getMarks( item ),
 					before: 'thumb' === listStyle && <BigThumbnail item={ item } />
 				} )
+
+				const filterArgs = {
+					item,
+					defaultProps,
+					isPending,
+					restorePost,
+					trashPost,
+					favoritePost,
+					clonePost,
+				}
+
+				return applyFilters( 'list-item-props', props, filterArgs )
 			} }
 			{ ...rest }
 		/>
