@@ -443,7 +443,7 @@ export const Post = ( { location, match, history } ) => {
 			<>
 				{renderNotices()}
 				{ featureThumbnail && (
-					<div>
+					<Layout.AspectBox width={ width } height={ height }>
 						<img
 							src={ url }
 							srcSet={ getFeaturedImageSrcSet() }
@@ -453,7 +453,7 @@ export const Post = ( { location, match, history } ) => {
 							height={ height }
 							width={ width }
 						/>
-					</div>
+					</Layout.AspectBox>
 				)}
 			</>
 		)
