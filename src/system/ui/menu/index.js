@@ -1,19 +1,15 @@
 import React, { cloneElement } from 'react'
 import { ToggleLayer } from 'react-laag'
 import classname from 'classnames'
-import Button from '../'
+import { Button } from 'ui'
 import './style.scss'
 
-const Menu = ( { children, content, isShowing } ) => {
-
-	if ( ! isShowing ) {
-		return children
-	}
-
+const Menu = ( { children, content, isShowing, onOutsideClick = () => {} } ) => {
 	return (
 		<ToggleLayer
-			isOpen={ true }
+			isOpen={ isShowing }
 			closeOnOutsideClick={ true }
+			onOutsideClick = { onOutsideClick }
 			placement={ {
 				anchor: 'BOTTOM_RIGHT',
 			} }
