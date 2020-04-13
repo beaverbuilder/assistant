@@ -214,7 +214,7 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 		return (
-			<Layout.AspectBox height={height} width={width}>{mediaContent}</Layout.AspectBox>
+			<Layout.AspectBox height={ height } width={ width }>{mediaContent}</Layout.AspectBox>
 		)
 	}
 

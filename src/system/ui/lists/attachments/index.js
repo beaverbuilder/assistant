@@ -162,13 +162,6 @@ const GridItem = ( { item, extras } ) => {
 
 	const itemExtras = 'function' === typeof extras ? extras() : null
 	const stopProp = e => e.stopPropagation()
-	const style = {
-		position: 'relative',
-		boxSizing: 'border-box',
-		paddingTop: '100%',
-		overflow: 'hidden',
-		width: '100%',
-	}
 
 	// Filter down to just the smaller sizes for srcset
 	const smallSizes = {}
@@ -180,7 +173,7 @@ const GridItem = ( { item, extras } ) => {
 	}
 
 	return (
-		<Layout.AspectBox className="fl-asst-attachment-grid-item" style={{ width: '100%' }}>
+		<Layout.AspectBox className="fl-asst-attachment-grid-item" style={ { width: '100%' } }>
 			<div style={ {
 				color: 'var(--fluid-primary-color)',
 				display: 'flex',

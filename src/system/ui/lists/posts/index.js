@@ -243,7 +243,7 @@ const BigThumbnail = ( { item } ) => {
 	// This sets up an aspect-ratio box around the image to prevent height changing during img load
 	return (
 		<div style={ { padding: '0 var(--fluid-lg-space) var(--fluid-med-space)' } }>
-			<Layout.AspectBox width={width} height={height}>
+			<Layout.AspectBox width={ width } height={ height }>
 				<img
 					src={ thumbnail }
 					srcSet={ srcset }
