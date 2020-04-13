@@ -182,7 +182,7 @@ const getFieldComponent = key => {
 		'parent-terms': Form.ParentTermItems,
 		'image': Form.ImageItem,
 		'button': Form.ButtonItem,
-		'calender' : Form.CalenderItem
+		'calender': Form.CalenderItem
 	}
 	let Component = Form.TextItem
 

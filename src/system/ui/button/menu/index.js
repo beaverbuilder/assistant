@@ -23,10 +23,10 @@ const Menu = ( { children, content, isShowing, className, style, ...rest } ) => 
 						{ ...layerProps }
 						{ ...rest }
 						className={ classname( 'fl-asst-menu', layerProps.className, className ) }
-						style={{
+						style={ {
 							...style,
 							...layerProps.style,
-						}}
+						} }
 					>
 						{content}
 					</div>

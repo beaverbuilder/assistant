@@ -27,9 +27,11 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, item ) => {
 	}
 
 	if ( i ) {
+
 		// insert after edit-post item
 		actions.splice( i + 1, 0, bbAction )
 	} else {
+
 		// insert at end
 		actions.push( bbAction )
 	}
@@ -45,4 +47,4 @@ addFilter( 'list-item-props', 'fl-assistant', ( props, args ) => {
 		}
 	}
 	return props
-})
+} )

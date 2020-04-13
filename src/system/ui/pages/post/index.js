@@ -12,7 +12,6 @@ import { useParentOptions } from './parent'
 import './style.scss'
 
 
-
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
@@ -22,7 +21,6 @@ export const Post = ( { location, match, history } ) => {
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
-	const [startDate, setStartDate] = useState(new Date());
 	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnailData )
 
 	const uploadFeatureImage = () => {
@@ -182,9 +180,9 @@ export const Post = ( { location, match, history } ) => {
 						date: {
 							label: __( 'Publish Date' ),
 							labelPlacement: 'beside',
-							component:'calender',
+							component: 'calender',
 							id: 'publish_date',
-							value:item.date
+							value: item.date
 
 						},
 					},
