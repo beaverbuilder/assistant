@@ -38,6 +38,7 @@ const externals = [
 	    '@wordpress/heartbeat'          : 'wp.heartbeat',
 	    '@wordpress/hooks'              : 'wp.hooks',
 	    '@wordpress/dom-ready'          : 'wp.domReady',
+        '@wordpress/date'               : 'wp.date',
 
         /* system bundle */
         'assistant'             		: 'FL.Assistant',

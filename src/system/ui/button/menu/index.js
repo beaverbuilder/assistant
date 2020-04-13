@@ -4,7 +4,7 @@ import classname from 'classnames'
 import Button from '../'
 import './style.scss'
 
-const Menu = ( { children, content, isShowing } ) => {
+const Menu = ( { children, content, isShowing, className, style, ...rest } ) => {
 
 	if ( ! isShowing ) {
 		return children
@@ -21,7 +21,12 @@ const Menu = ( { children, content, isShowing } ) => {
 				return isOpen && (
 					<div
 						{ ...layerProps }
-						className={ classname( 'fl-asst-menu', layerProps.className ) }
+						{ ...rest }
+						className={ classname( 'fl-asst-menu', layerProps.className, className ) }
+						style={{
+							...style,
+							...layerProps.style,
+						}}
 					>
 						{content}
 					</div>

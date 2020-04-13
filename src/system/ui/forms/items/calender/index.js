@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
-import './style.scss'
+import { Button, Menu } from 'ui'
 import { DateTimePicker } from '@wordpress/components'
-import { __experimentalGetSettings } from '@wordpress/date'
-import '@wordpress/components/build-style/style.css'
+import { __experimentalGetSettings, dateI18n } from '@wordpress/date'
+import './style.scss'
 
 export const CalenderItem = ({
-	id,
 	value,
 	onChange = () => {},
-	content,
-	...rest
 }) => {
+	const [ isMenuShowing, setIsMenuShowing ] = useState( false )
 	const unixTime = Date.parse(value)
-	const [startDate, setStartDate] = useState(unixTime)
+	const [ startDate, setStartDate ] = useState( unixTime )
 	const settings = __experimentalGetSettings()
 	const is12HourTime = /a(?!\\)/i.test(
 		settings.formats.time
@@ -23,13 +21,25 @@ export const CalenderItem = ({
 			.join('') // Reverse the string and test for "a" not followed by a slash
 	)
 
-	return (
-		<>
+	const label = dateI18n( settings.formats.datetime, startDate )
+
+	const MenuContent = () => {
+		return (
 			<DateTimePicker
-				currentDate={startDate}
-				onChange={date => onChange(setStartDate(date), date)}
-				is12Hour={is12HourTime}
+				currentDate={ startDate }
+				onChange={ date => onChange( setStartDate( date ), date ) }
+				is12Hour={ is12HourTime }
 			/>
-		</>
+		)
+	}
+
+	return (
+		<Menu
+			content={ <MenuContent /> }
+			isShowing={ isMenuShowing }
+			style={{ width: 260 }}
+		>
+			<Button onClick={ () => setIsMenuShowing( !isMenuShowing )}>{label}</Button>
+		</Menu>
 	)
 }
