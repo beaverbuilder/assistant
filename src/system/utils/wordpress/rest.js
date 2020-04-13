@@ -194,9 +194,9 @@ const posts = () => {
 		 * @param data
 		 * @param config
 		 */
-		deleteExport( data = {}, config = {} ) {
+		deleteExport( id, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( 'fl-assistant/v1/posts/deleteExport', data, config )
+			return http.delete( `fl-assistant/v1/posts/${id}/export`, config )
 		},
 	}
 }

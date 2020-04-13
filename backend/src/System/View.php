@@ -50,7 +50,7 @@ class View {
 	 */
 	public function render_to_string( $template_name, array $data = [] ) {
 
-		error_reporting( 'E_ALL');
+		error_reporting( 'E_ALL' );
 
 		 $path = sprintf( '%s/%s.php', $this->template_dir, $template_name );
 
@@ -58,7 +58,7 @@ class View {
 
 		extract( $data );
 
-		include($path);
+		include( $path );
 
 		$output = ob_get_clean();
 		return $output;

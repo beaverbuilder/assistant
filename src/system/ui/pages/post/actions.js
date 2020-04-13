@@ -74,7 +74,7 @@ export const getPostActions = ( { history, values, setValue } ) => {
 				link.onclick = function() {
 
 					wpRest
-						.posts().deleteExport( { 'id': id } ).then( response => {
+						.posts().deleteExport( id ).then( response => {
 							if ( response ) {
 								document.body.removeChild( link )
 							}

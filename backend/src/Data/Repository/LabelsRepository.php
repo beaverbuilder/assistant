@@ -28,7 +28,7 @@ class LabelsRepository extends TermsRepository {
 
 	/**
 	 * @param string $object_type
- 	 * @param int $label_id
+	 * @param int $label_id
 	 * @return array
 	 */
 	function get_object_ids( $object_type, $label_id ) {
