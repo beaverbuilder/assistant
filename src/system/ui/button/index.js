@@ -210,6 +210,6 @@ Button.renderActions = actions => {
 	} )
 }
 
-export { Button }
+export { Button, Menu }
 
 export default Button

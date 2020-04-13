@@ -1,7 +1,7 @@
 // Public API
 import { Appearance } from './appearance'
 import { App } from './app'
-import { Button } from './button'
+import { Button, Menu } from './button'
 import { Icon, Color } from './art'
 import { List } from './lists'
 import Layout from './layout'
@@ -30,7 +30,7 @@ export * from './controls'
 export * from './forms'
 export * from './table'
 export * from './upload'
-export { Layout, Env, Notice }
+export { Layout, Env, Notice, Menu }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
 export const api = {
@@ -52,4 +52,5 @@ export const api = {
 	Notice,
 	Table,
 	MediaDropUploader,
+	Menu,
 }
