@@ -1,12 +1,13 @@
 import React from 'react'
 import classname from 'classnames'
 import { Icon, Page } from 'ui'
+import Input from './input'
 
-export const Section = props => {
-	return (
-		<Page.Section className="fl-asst-form-section" { ...props } />
-	)
-}
+export { Input }
+
+export const Section = props => (
+	<Page.Section className="fl-asst-form-section" { ...props } />
+)
 
 export const Item = props => {
 	const {

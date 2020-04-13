@@ -1,0 +1,23 @@
+.fl-asst {
+    .fluid-page.fl-asst-page-has-tabs {
+        .fluid-page-top-content {
+            border-bottom: none;
+        }
+    }
+    .fl-asst-tabs-toolbar {
+        flex: 0 0 50px;
+        display: flex;
+        flex-direction: row;
+
+        .fl-asst-button-group {
+            padding-left: 2px; // because back button
+
+            .fluid-button:focus {
+                margin: 2px 0;
+            }
+            .fluid-back-button {
+                width: 48px;
+            }
+        }
+    }
+}

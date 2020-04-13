@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Redirect } from 'react-router-dom'
 import { getSystemConfig } from 'assistant/data'
-import { Page, Nav, Icon, Button } from 'assistant/ui'
+import { Page, Nav } from 'assistant/ui'
 import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
 import './style.scss'
@@ -31,7 +31,6 @@ const Main = () => {
 				path: '/fl-content/tab/' + key,
 				label: type.labels.plural,
 				component: () => <PostTypeTab type={ key } />,
-				showButton: type.builtin
 			} )
 		} )
 
@@ -40,12 +39,11 @@ const Main = () => {
 
 	const Header = () => {
 		return (
-			<div style={ { flex: '1 1 auto', display: 'flex', flexDirection: 'column', margin: '5px -5px 0' } }>
-				<Nav.Tabs tabs={ tabs } />
-			</div>
+			<Nav.Tabs tabs={ tabs } shouldHandleOverflow={ true } />
 		)
 	}
 
+	/* Ready to Remove Create Button?
 	const Actions = () => {
 		const to = {
 			pathname: '/fl-content/post/new',
@@ -60,7 +58,7 @@ const Main = () => {
 				</Button>
 			</>
 		)
-	}
+	}*/
 
 	const tabs = getTabs()
 
@@ -73,12 +71,12 @@ const Main = () => {
 
 	return (
 		<Page
+			id="fl-asst-content-list-page"
 			title={ __( 'Content' ) }
 			icon={ <AppIcon context="sidebar" /> }
 			padY={ false }
 			header={ <Header /> }
 			topContentStyle={ { border: 'none' } }
-			actions={ <Actions /> }
 			shouldScroll={ false }
 			shouldShowBackButton={ false }
 			showAsRoot={ true }
