@@ -199,18 +199,10 @@ export const Attachment = ( { location, history } ) => {
 	const Hero = () => {
 		const { width, sizes, height, alt, type, url, mime } = item
 		const srcSet = getSrcSet( sizes )
-		const heightPercentage = ( height / width ) * 100
 
 		// Temp - Handle non-image heroes.
 		if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! item.thumbnail ) {
 			return null
-		}
-
-		const style = {
-			position: 'relative',
-			boxSizing: 'border-box',
-			paddingTop: heightPercentage ? heightPercentage + '%' : '50%',
-			background: 'var(--fluid-primary-background)',
 		}
 
 		let mediaContent = ''
@@ -222,19 +214,7 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 		return (
-			<div style={ style }>
-				<div
-					style={ {
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						width: '100%',
-						height: '100%',
-					} }
-				>
-					{ mediaContent }
-				</div>
-			</div>
+			<Layout.AspectBox height={height} width={width}>{mediaContent}</Layout.AspectBox>
 		)
 	}
 

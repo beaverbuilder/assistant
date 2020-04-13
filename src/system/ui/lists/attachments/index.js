@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { List, Button, Icon, Image, MediaDropUploader } from 'ui'
+import { List, Button, Icon, Image, MediaDropUploader, Layout } from 'ui'
 import Clipboard from 'react-clipboard.js'
 import { getSystemSelectors } from 'data'
 import { getWpRest } from 'utils/wordpress'
@@ -180,13 +180,8 @@ const GridItem = ( { item, extras } ) => {
 	}
 
 	return (
-		<div className="fl-asst-attachment-grid-item" style={ style }>
+		<Layout.AspectBox className="fl-asst-attachment-grid-item" style={{ width: '100%' }}>
 			<div style={ {
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				width: '100%',
-				height: '100%',
 				color: 'var(--fluid-primary-color)',
 				display: 'flex',
 				flexDirection: 'column',
@@ -222,7 +217,7 @@ const GridItem = ( { item, extras } ) => {
 					>{itemExtras}</div>
 				) }
 			</div>
-		</div>
+		</Layout.AspectBox>
 	)
 }
 
