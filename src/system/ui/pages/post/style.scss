@@ -27,6 +27,10 @@
 	#fl-asst-post-detail ~ .fluid-page-footer {
         border: none;
 	}
+	.fl-asst-lock-view .fl-asst-form{
+		pointer-events: none;
+		opacity: 0.2;
+	}
 }
 
 .media-modal{

@@ -7,56 +7,21 @@ import { createSlug } from 'utils/url'
 import { getSrcSet } from 'utils/image'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
+import { LockView } from './lock'
 import './style.scss'
 
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes, contentStatus, taxonomies } = getSystemConfig()
-	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
-	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
+	const { isHierarchical, labels, supports, templates } = contentTypes[
+		item.type
+	]
+	const [ passwordVisible, setPasswordVisible ] = useState(
+		'protected' === item.visibility
+	)
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
-	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnailData )
-
-	const uploadFeatureImage = () => {
-		const customUploader = wp.media( {
-			title: 'Select an Image',
-			id: 'fl-asst-media-upload',
-			button: {
-				text: 'Choose Featured Image'
-			},
-			multiple: false,
-			library: {
-				type: [ 'image' ]
-			},
-			width: '50%'
-		} )
-
-		customUploader.open()
-		customUploader.on( 'select', function() {
-			var attachment = customUploader.state().get( 'selection' ).first().toJSON()
-			setFeatureThumbnail( attachment )
-			setValues( { thumbnailData: attachment }, false )
-		} )
-	}
-
-	const removeFeatureImage = () => {
-		setFeatureThumbnail( false )
-		setValues( { thumbnailData: null }, false )
-	}
-
-	const getFeaturedImageSrcSet = () => {
-		if ( ! featureThumbnail ) {
-			return ''
-		}
-		const { sizes } = featureThumbnail
-		let srcSet = ''
-		if ( sizes ) {
-			srcSet = getSrcSet( sizes )
-		}
-		return srcSet
-	}
 
 	const tabs = {
 		general: {
@@ -75,8 +40,8 @@ export const Post = ( { location, match, history } ) => {
 							},
 							onRemove: label => {
 								wpRest.notations().deleteLabel( 'post', item.id, label.id )
-							},
-						},
+							}
+						}
 					}
 				},
 				actions: {
@@ -84,11 +49,11 @@ export const Post = ( { location, match, history } ) => {
 					fields: {
 						actions: {
 							component: 'actions',
-							options: args => getPostActions( { history, ...args } ),
+							options: args => getPostActions( { history, ...args } )
 						}
 					}
 				}
-			},
+			}
 		},
 		edit: {
 			label: __( 'Edit' ),
@@ -100,19 +65,20 @@ export const Post = ( { location, match, history } ) => {
 						title: {
 							label: __( 'Title' ),
 							component: 'text',
-							id: 'post_title',
+							id: 'post_title'
 						},
 						slug: {
 							label: __( 'Slug' ),
 							component: 'text',
 							id: 'post_name',
 							sanitize: createSlug,
+							disabled: true
 						},
 						url: {
 							label: __( 'URL' ),
 							component: 'url',
-							id: 'post_url',
-						},
+							id: 'post_url'
+						}
 					}
 				},
 				publish: {
@@ -122,16 +88,17 @@ export const Post = ( { location, match, history } ) => {
 							label: __( 'Status' ),
 							labelPlacement: 'beside',
 							component: 'plain-text',
-							sanitize: value => contentStatus[ value ] ? contentStatus[ value ] : value,
+							sanitize: value =>
+								contentStatus[value] ? contentStatus[value] : value
 						},
 						visibility: {
 							label: __( 'Visibility' ),
 							labelPlacement: 'beside',
 							component: 'select',
 							options: {
-								'public': __( 'Public' ),
-								'private': __( 'Private' ),
-								'protected': __( 'Protected' ),
+								public: __( 'Public' ),
+								private: __( 'Private' ),
+								protected: __( 'Protected' )
 							},
 							onChange: ( { value, setValue } ) => {
 								switch ( value ) {
@@ -151,14 +118,14 @@ export const Post = ( { location, match, history } ) => {
 							labelPlacement: 'beside',
 							component: 'text',
 							id: 'post_password',
-							isVisible: passwordVisible,
+							isVisible: passwordVisible
 						},
 						date: {
 							label: __( 'Publish Date' ),
 							labelPlacement: 'beside',
-							component: 'plain-text',
-						},
-					},
+							component: 'plain-text'
+						}
+					}
 				},
 				taxonomies: {
 					label: __( 'Taxonomies' ),
@@ -167,21 +134,18 @@ export const Post = ( { location, match, history } ) => {
 						const { value, onChange } = fields.terms
 						const values = { ...value }
 						return Object.keys( values ).map( ( taxonomy, key ) => (
-							<Form.Item
-								key={ key }
-								label={ taxonomies[ taxonomy ].labels.plural }
-							>
+							<Form.Item key={ key } label={ taxonomies[taxonomy].labels.plural }>
 								<Form.TaxonomyTermsItem
 									taxonomy={ taxonomy }
-									value={ [ ...values[ taxonomy ] ] }
+									value={ [ ...values[taxonomy] ] }
 									onChange={ newValue => {
-										values[ taxonomy ] = newValue
+										values[taxonomy] = newValue
 										onChange( { ...values } )
 									} }
 								/>
 							</Form.Item>
 						) )
-					},
+					}
 				},
 				excerpt: {
 					label: __( 'Excerpt' ),
@@ -191,44 +155,14 @@ export const Post = ( { location, match, history } ) => {
 							component: 'textarea',
 							id: 'post_excerpt',
 							isVisible: supports.excerpt,
-							rows: 5,
-						},
-					},
-				},
-				featureimgUpload: {
-					label: __( 'Feature Image' ),
-					isVisible: supports.thumbnail,
-					fields: {
-						featureimgUpload: {
-							id: 'post_feature_image',
-							isVisible: supports.thumbnail && ! featureThumbnail,
-							label: __( 'Set Feature Image' ),
-							component: 'text',
-							onClick: uploadFeatureImage,
-						},
-						featureimg: {
-							id: 'post_feature_img',
-							src: featureThumbnail && featureThumbnail.url,
-							srcSet: getFeaturedImageSrcSet(),
-							isVisible: featureThumbnail,
-							component: 'image',
-							onClick: uploadFeatureImage,
-						},
-						removeFeatureimg: {
-							id: 'remove_post_feature_img',
-							text: 'Remove',
-							btnclass: 'fl-asst-remove-feature-img',
-							isVisible: featureThumbnail,
-							component: 'button',
-							onClick: removeFeatureImage,
-
-						},
-
-					},
+							rows: 5
+						}
+					}
 				},
 				attributes: {
 					label: __( 'Attributes' ),
-					isVisible: !! Object.keys( templates ).length || isHierarchical || supports.order,
+					isVisible:
+						!! Object.keys( templates ).length || isHierarchical || supports.order,
 					fields: {
 						template: {
 							label: __( 'Template' ),
@@ -237,13 +171,13 @@ export const Post = ( { location, match, history } ) => {
 							isVisible: !! Object.keys( templates ).length,
 							options: () => {
 								const options = {
-									'default': __( 'Default' ),
+									default: __( 'Default' )
 								}
-								Object.keys( templates ).map( ( key ) => {
-									options[ templates[ key ] ] = key
+								Object.keys( templates ).map( key => {
+									options[templates[key]] = key
 								} )
 								return options
-							},
+							}
 						},
 						parent: {
 							label: __( 'Parent' ),
@@ -251,16 +185,16 @@ export const Post = ( { location, match, history } ) => {
 							component: 'select',
 							id: 'post_parent',
 							isVisible: isHierarchical,
-							options: parentOptions,
+							options: parentOptions
 						},
 						order: {
 							label: __( 'Order' ),
 							labelPlacement: 'beside',
 							component: 'text',
 							id: 'menu_order',
-							isVisible: supports.order,
-						},
-					},
+							isVisible: supports.order
+						}
+					}
 				},
 				discussion: {
 					label: __( 'Discussion' ),
@@ -270,49 +204,49 @@ export const Post = ( { location, match, history } ) => {
 							label: __( 'Allow Comments' ),
 							labelPlacement: 'beside',
 							component: 'checkbox',
-							isVisible: supports.comments,
+							isVisible: supports.comments
 						},
 						pingbacksAllowed: {
 							label: __( 'Allow Pingbacks' ),
 							labelPlacement: 'beside',
 							component: 'checkbox',
-							isVisible: supports.trackbacks,
-						},
-					},
-				},
-			},
+							isVisible: supports.trackbacks
+						}
+					}
+				}
+			}
 		},
 		comments: {
 			label: __( 'Comments' ),
 			path: match.url + '/comments',
-			isVisible: supports.comments && 0 < item.commentsCount,
+			isVisible: supports.comments,
 			sections: () => (
 				<List.Comments
 					query={ { post__in: [ item.id ] } }
 					getItemProps={ ( item, defaultProps ) => ( {
 						...defaultProps,
 						to: {
-							pathname: `/fl-comments/comment/${ item.id }`,
+							pathname: `/fl-comments/comment/${item.id}`,
 							state: { item }
-						},
+						}
 					} ) }
-					scrollerClassName="fl-asst-outset"
+					scrollerClassName='fl-asst-outset'
 				/>
-			),
-		},
+			)
+		}
 	}
 
 	const onSubmit = ( { changed, ids, setValue } ) => {
 		const data = {
 			meta: {},
-			terms: {},
+			terms: {}
 		}
 
 		for ( let key in changed ) {
-			if ( ! ids[ key ] ) {
+			if ( ! ids[key] ) {
 				continue
 			}
-			data[ ids[ key ] ] = changed[ key ]
+			data[ids[key]] = changed[key]
 		}
 
 		if ( 'visibility' in changed ) {
@@ -345,29 +279,32 @@ export const Post = ( { location, match, history } ) => {
 		if ( 'terms' in changed ) {
 			data.terms = changed.terms
 		}
-		if ( 'thumbnailData' in changed ) {
-			data.thumbnail = changed.thumbnailData.id
-		}
 
 		const handleError = error => {
+			setIsSubmitting( false )
 			alert( __( 'Error: Changes not published! Please try again.' ) )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
 		}
 
-		wpRest.posts().update( item.id, 'data', data ).then( response => {
-			const { data } = response
-			if ( data.error ) {
-				handleError()
-			} else {
-				setCurrentHistoryState( { item: data.post } )
-				setValue( 'url', data.post.url, true )
-				alert( __( 'Changes published!' ) )
-			}
-		} ).catch( error => {
-			handleError( error )
-		} )
+		wpRest
+			.posts()
+			.update( item.id, 'data', data )
+			.then( response => {
+				const { data } = response
+				if ( data.error ) {
+					handleError()
+				} else {
+					setCurrentHistoryState( { item: data.post } )
+					setValue( 'url', data.post.url, true )
+					setIsSubmitting( false )
+					alert( __( 'Changes published!' ) )
+				}
+			} )
+			.catch( error => {
+				handleError( error )
+			} )
 	}
 
 	const {
@@ -376,39 +313,44 @@ export const Post = ( { location, match, history } ) => {
 		submitForm,
 		values,
 		hasChanges,
-		setValues,
+		setIsSubmitting
 	} = Form.useForm( {
 		tabs,
 		onSubmit,
-		onReset: ( { state } ) => {
-			setFeatureThumbnail( state.thumbnailData.value )
-		},
 		defaults: {
 			...item,
-			parent: item.parent ? `parent:${ item.parent }` : 0,
-		},
+			parent: item.parent ? `parent:${item.parent}` : 0
+		}
 	} )
 
 	const Footer = () => {
-
 		return (
-			<Layout.PublishBar
-				onPublish={ submitForm }
-				onDiscard={ resetForm }
-			/>
+			<>
+				<Button onClick={ resetForm }>{__( 'Cancel' )}</Button>
+				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
+				<Button type='submit' status='primary' onClick={ submitForm }>
+					{__( 'Publish' )}
+				</Button>
+			</>
 		)
 	}
 
 	const Hero = () => {
-		if ( ! featureThumbnail ) {
-			return null
+		if ( undefined === item.postThumbnail ) {
+			return item.thumbnail
 		}
-		const { alt, title, height, width, url } = featureThumbnail
+
+		const { sizes, alt, title, height, width } = item.postThumbnail
+
+		let srcSet = ''
+		if ( sizes ) {
+			srcSet = getSrcSet( sizes )
+		}
 		return (
 			<div>
 				<img
-					src={ url }
-					srcSet={ getFeaturedImageSrcSet() }
+					src={ item.thumbnail }
+					srcSet={ srcSet }
 					style={ { objectFit: 'cover' } }
 					alt={ alt }
 					title={ title }
@@ -422,19 +364,17 @@ export const Post = ( { location, match, history } ) => {
 	const isCurrentPage = () => item.url === window.location.href
 
 	const ElevatorButtons = () => (
-		<div style={ {
-			display: 'flex',
-			flexDirection: 'row',
-			justifyContent: 'space-evenly',
-			margin: '10px 0 0',
-			flex: '0 0 auto',
-		} } >
-			{ ! isCurrentPage() && (
-				<Button
-					appearance='elevator'
-					title={ __( 'Go To Post' ) }
-					href={ item.url }
-				>
+		<div
+			style={ {
+				display: 'flex',
+				flexDirection: 'row',
+				justifyContent: 'space-evenly',
+				margin: '10px 0 0',
+				flex: '0 0 auto'
+			} }
+		>
+			{! isCurrentPage() && (
+				<Button appearance='elevator' title={ __( 'Go To Post' ) } href={ item.url }>
 					<Icon.View />
 				</Button>
 			)}
@@ -445,7 +385,7 @@ export const Post = ( { location, match, history } ) => {
 			>
 				<Icon.Edit />
 			</Button>
-			{ item.bbCanEdit && (
+			{item.bbCanEdit && (
 				<Button
 					appearance='elevator'
 					title={ sprintf( 'Edit with %s', item.bbBranding ) }
@@ -459,14 +399,21 @@ export const Post = ( { location, match, history } ) => {
 
 	return (
 		<Page
-			id="fl-asst-post-detail"
 			title={ labels.editItem }
-			hero={ featureThumbnail ? <Hero /> : null }
-			footer={ hasChanges && <Footer /> }
+			hero={ item.hasPostThumbnail ? <Hero /> : null }
+			footer={ hasChanges && false === item.hasLock && <Footer /> }
+			disable={ item.hasLock }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
-			<ElevatorButtons />
-			{ renderForm() }
+			<LockView isLock={ item.hasLock }>
+				<ElevatorButtons />
+				{renderForm()}
+			</LockView>
+			{item.hasLock && (
+				<Layout.Message status='alert' icon={ Icon.Reject }>
+					The post has been currenly edit by another user.
+				</Layout.Message>
+			)}
 		</Page>
 	)
 }
