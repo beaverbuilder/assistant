@@ -37,9 +37,12 @@ export const CalenderItem = ({
 		<Menu
 			content={ <MenuContent /> }
 			isShowing={ isMenuShowing }
-			style={{ width: 260 }}
+			className="fl-asst-calendar-menu"
 		>
-			<Button onClick={ () => setIsMenuShowing( !isMenuShowing )}>{label}</Button>
+			<Button
+				appearance="transparent"
+				onClick={ () => setIsMenuShowing( !isMenuShowing )}
+			>{label}</Button>
 		</Menu>
 	)
 }
