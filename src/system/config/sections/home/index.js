@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState, getSystemSelectors } from 'data'
-import { Button, Icon, App, List, Layout } from 'ui'
+import { Button, Icon, App, List, Layout, Form } from 'ui'
 import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { ENTER } from '@wordpress/keycodes'
 import './style.scss'
 
 const { registerSection } = getSystemActions()
@@ -166,7 +167,6 @@ registerSection( 'fl-home-subscribe', {
 	location: {
 		type: 'home',
 	},
-	padX: false,
 	render: () => {
 		const [ subscribeEmail, setsubscribeEmail ] = useState( '' )
 		const [ isSubscribing, setisSubscribing ] = useState( false )
@@ -210,30 +210,37 @@ registerSection( 'fl-home-subscribe', {
 			}
 		}
 
-		return (
-			<div className="fluid-pad-x fl-asst-form fl-asst-subscribe">
-				<p>Subscribe for the Latest Assistant News and Updates!</p>
-				<div className="fl-asst-subscribe-wrap">
-					<label>
-						<input
-							type="text"
-							value={ subscribeEmail }
-							onChange={ e => {
-								setsubscribeEmail( e.target.value )
-							} }
-						/>
-					</label>
-					<div className="fl-asst-form-item-content">
-						<Button className="fl-asst-app-grid-item" onClick={ subscribeUser }>
-							<label>Subscribe</label>
-						</Button>
+		const onClick = e => {
+			subscribeUser()
+			e.preventDefault()
+		}
+		const onKeyPress = e => {
+			if ( ENTER === e.which ) {
+				subscribeUser()
+			}
+		}
 
-					</div>
-				</div>
-				{isSubscribing &&
-				<Icon.SmallSpinner/>
-				}
-			</div>
+		return (
+			<form>
+				<p style={{ marginTop: 0 }}>{__('Subscribe for the Latest Assistant News and Updates!')}</p>
+				<Form.Input
+					value={ subscribeEmail }
+					onChange={ e => setsubscribeEmail( e.target.value ) }
+					onKeyPress={ onKeyPress }
+					placeholder={ __('email@example.com') }
+					after={
+						subscribeEmail &&
+						<Button
+							status="primary"
+							onClick={ onClick }
+						>
+							<span style={{ marginRight: 'var(--fluid-sm-space)'}}>{__('Send')}</span>
+							<Icon.Return />
+						</Button>
+					}
+				/>
+				{ isSubscribing && <Icon.SmallSpinner/> }
+			</form>
 		)
 	},
 } )

@@ -89,12 +89,12 @@
         width: 60px;
         height: 60px;
 	}
-	.fl-asst-subscribe-wrap{
+	.fl-asst-subscribe-wrap {
 		display: grid;
 		grid-template-columns: 2fr 1fr;
 		grid-gap: var(--fl-asst-inner-space);
 	}
-	.fl-asst-subscribe svg{
+	.fl-asst-subscribe svg {
 		background: none;
     	margin: 0 auto;
     	display: block;

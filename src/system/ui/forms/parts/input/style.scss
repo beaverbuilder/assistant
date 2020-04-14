@@ -6,6 +6,7 @@
         flex-wrap: nowrap;
         align-items: center;
         color: var(--fluid-color);
+        box-shadow: 0 0 0 2px var(--fluid-box-background);
 
         &.fl-asst-appearance-transparent {
             background: transparent;
@@ -40,40 +41,40 @@
                     color: var(--fluid-primary-color);
                 }
             }
+        }
 
-            input {
+        input {
+            box-shadow: none;
+            border: none;
+            background: transparent;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: normal;
+            color: inherit;
+            display: inline-flex;
+            flex: 1 1 auto;
+            min-height: var(--fluid-target-size);
+            width: auto;
+            padding: var(--fluid-sm-space);
+
+            &:focus {
                 box-shadow: none;
                 border: none;
-                background: transparent;
-                border-radius: 0;
-                font-size: 13px;
-                font-weight: 500;
-                letter-spacing: normal;
-                color: inherit;
-                display: inline-flex;
-                flex: 1 1 auto;
-                min-height: var(--fluid-target-size);
-                width: auto;
-                padding: var(--fluid-sm-space);
+                outline: none;
+            }
 
-                &:focus {
-                    box-shadow: none;
-                    border: none;
-                    outline: none;
-                }
-
-                &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-                    color: currentColor;
-                }
-                &::-moz-placeholder { /* Firefox 19+ */
-                    color: currentColor;
-                }
-                &:-ms-input-placeholder { /* IE 10+ */
-                    color: currentColor;
-                }
-                &:-moz-placeholder { /* Firefox 18- */
-                    color: currentColor;
-                }
+            &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                color: currentColor;
+            }
+            &::-moz-placeholder { /* Firefox 19+ */
+                color: currentColor;
+            }
+            &:-ms-input-placeholder { /* IE 10+ */
+                color: currentColor;
+            }
+            &:-moz-placeholder { /* Firefox 18- */
+                color: currentColor;
             }
         }
     }
