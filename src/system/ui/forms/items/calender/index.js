@@ -43,6 +43,7 @@ export const CalenderItem = ( {
 		<Menu
 			content={ <MenuContent /> }
 			isShowing={ isMenuShowing }
+			onOutsideClick={ () => setIsMenuShowing( false )}
 			className="fl-asst-calendar-menu"
 		>
 			<Button
