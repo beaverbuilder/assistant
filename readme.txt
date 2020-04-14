@@ -81,6 +81,8 @@ Our API for creating new apps and extending the existing ones is in development 
 * Added ability to query attachments by label
 * Fix showing publish bar when favoriting a post
 * Added notice bar and removed confirmation alerts
+* Added ability to export post from post detail screen
+* Refined labels picker control
 
 = 0.3.1 (2020-03-27) =
 * Harden form control styles
@@ -89,7 +91,7 @@ Our API for creating new apps and extending the existing ones is in development 
 * Enhancement - Made publish bar more prominent
 * Fix attachment alt text field displaying title
 
-= 0.3.0 (2020-03-25) !!REBIRTH!! =
+= 0.3.0 (2020-03-25) =
 * Complete ground-up rebuild
 * All new apps for working with Content, Media, Comments & Updates
 * Add custom labels to posts and pages to help you organize your site
