@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 
-export const getPostActions = ( { history, values, setValue } ) => {
+export const getPostActions = ( { history, values, setValue, createNotice } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
 
@@ -26,7 +26,7 @@ export const getPostActions = ( { history, values, setValue } ) => {
 		} else {
 			wpRest.notations().createFavorite( 'post', id, currentUser.id )
 		}
-		setValue( 'isFavorite', ! isFavorite )
+		setValue( 'isFavorite', ! isFavorite, true )
 	}
 
 	const clonePost = () => {
@@ -34,7 +34,11 @@ export const getPostActions = ( { history, values, setValue } ) => {
 			.posts()
 			.clone( id )
 			.then( () => {
-				alert( 'Post Duplicated!' )
+				createNotice( {
+					id: 'clone-success',
+					status: 'success',
+					content: __( 'Post Duplicated!' )
+				} )
 			} )
 	}
 
@@ -45,13 +49,17 @@ export const getPostActions = ( { history, values, setValue } ) => {
 					.posts()
 					.update( id, 'trash' )
 					.then( () => {
-						alert( 'Post permanently deleted!' )
+						createNotice( {
+							id: 'post-delete-success',
+							status: 'success',
+							content: __( 'Post permanently deleted!' )
+						} )
 					} )
 				history.goBack()
 			}
 		} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
 			wpRest.posts().update( id, 'trash' )
-			setValue( 'trashedStatus', status )
+			setValue( 'trashedStatus', status, true )
 			setValue( 'status', 'trash', true )
 		}
 	}
@@ -59,7 +67,7 @@ export const getPostActions = ( { history, values, setValue } ) => {
 	const untrashPost = () => {
 		wpRest.posts().update( id, 'untrash' )
 		setValue( 'status', trashedStatus, true )
-		setValue( 'trashedStatus', '' )
+		setValue( 'trashedStatus', '', true )
 	}
 
 	const exportPost = () => {

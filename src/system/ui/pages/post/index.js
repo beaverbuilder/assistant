@@ -103,11 +103,7 @@ export const Post = ( { location, match, history } ) => {
 					fields: {
 						actions: {
 							component: 'actions',
-							options: args => getPostActions( { history, ...args } ),
-						},
-						isFavorite: {
-							alwaysCommit: true,
-							isVisible: false,
+							options: args => getPostActions( { history, createNotice, ...args } ),
 						},
 					}
 				},
