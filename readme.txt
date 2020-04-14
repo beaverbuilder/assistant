@@ -83,6 +83,7 @@ Our API for creating new apps and extending the existing ones is in development 
 * Added notice bar and removed confirmation alerts
 * Added ability to export post from post detail screen
 * Refined labels picker control
+* Added calendar control to edit publish date
 
 = 0.3.1 (2020-03-27) =
 * Harden form control styles
