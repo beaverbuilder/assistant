@@ -1,18 +1,23 @@
 .fl-asst {
 
-	.fl-asst-selected-labels {
+	.fl-asst-labels-item {
 		margin-bottom: var(--fl-asst-tiny-space);
 		width: 100%;
 	}
 
-	.fl-asst-add-label {
+	.fl-asst-labels-menu-item {
 		display: flex;
-		flex-direction: row;
-		flex: 1 1 auto;
+		padding: var(--fl-asst-small-space);
 
-		select {
-			flex: 1 1 auto;
-			margin-right: var(--fl-asst-tiny-space);
+		.fl-asst-labels-menu-color {
+			border-radius: 100%;
+			flex: 0 0 auto;
+			margin-right: var(--fl-asst-small-space);
+			height: 16px;
+			width: 16px;
+		}
+		.fl-asst-labels-menu-label {
+			flex: 1 0 auto;
 		}
 	}
 }
