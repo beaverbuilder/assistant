@@ -54,7 +54,7 @@ const Page = ( {
 			className={ classes }
 			onLoad={ onLoad }
 			toolbar={ tabs ? <Nav.TabsToolbar tabs={ tabs } /> : toolbar }
-			overlay={ overlay || 0 < notices.length && <Overlay /> }
+			overlay={ overlay || ( notices && 0 < notices.length ) && <Overlay /> }
 			{ ...rest }
 		>
 			{children}
