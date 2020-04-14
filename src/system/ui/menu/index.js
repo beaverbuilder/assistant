@@ -1,32 +1,37 @@
 import React, { cloneElement } from 'react'
 import { ToggleLayer } from 'react-laag'
 import classname from 'classnames'
-import Button from '../'
+import { Button } from 'ui'
 import './style.scss'
 
-const Menu = ( { children, content, isShowing, className, style, ...rest } ) => {
-
-	if ( ! isShowing ) {
-		return children
-	}
-
+const Menu = ( {
+	children,
+	content,
+	isShowing,
+	onOutsideClick = () => {},
+	className,
+	style,
+	...rest
+} ) => {
 	return (
 		<ToggleLayer
-			isOpen={ true }
+			isOpen={ isShowing }
 			closeOnOutsideClick={ true }
+			onOutsideClick = { onOutsideClick }
 			placement={ {
 				anchor: 'BOTTOM_RIGHT',
+				possibleAnchors: [ 'BOTTOM_LEFT', 'BOTTOM_CENTER', 'BOTTOM_RIGHT' ]
 			} }
 			renderLayer={ ( { layerProps, isOpen } ) => {
 				return isOpen && (
 					<div
-						{ ...layerProps }
 						{ ...rest }
-						className={ classname( 'fl-asst-menu', layerProps.className, className ) }
-						style={ {
+						{ ...layerProps }
+						style={{
 							...style,
 							...layerProps.style,
-						} }
+						}}
+						className={ classname( 'fl-asst-menu', layerProps.className, className ) }
 					>
 						{content}
 					</div>

@@ -1,8 +1,7 @@
 import React, { Children, useState, useLayoutEffect, useRef } from 'react'
 import classname from 'classnames'
 import { Button as FLUID_Button } from 'fluid/ui'
-import { Icon } from 'ui'
-import Menu from './menu'
+import { Icon, Menu } from 'ui'
 import './style.scss'
 
 const Button = { ...FLUID_Button }
@@ -145,7 +144,11 @@ Button.Group = ( {
 					className='fl-asst-more-button-divider'
 					direction={ dividerDirection }
 				/> }
-				<Menu content={ <MoreMenuContent /> } isShowing={ isShowing }>
+				<Menu
+					content={ <MoreMenuContent /> }
+					isShowing={ isShowing }
+					onOutsideClick={ () => setIsShowing( false ) }
+				>
 					<Button
 						className='fl-asst-more-button'
 						status={ isShowing ? 'primary' : '' }

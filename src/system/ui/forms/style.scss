@@ -181,7 +181,7 @@
         color: inherit;
         padding: var(--fluid-sm-space);
         margin:0;
-        background-color: transparent;
+        background-color: hsl( var(--fluid-hue), 32%, 99% );
         background-image: none;
         box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
         border-radius: 3px;

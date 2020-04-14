@@ -28,6 +28,8 @@ const Page = ( {
 	padY = true,
 	contentWrapStyle = null,
 
+	overlay,
+
 	...rest
 } ) => {
 	const { isRoot } = useContext( Nav.Context )
@@ -130,6 +132,7 @@ const Page = ( {
 				</div>
 			</div>
 			{ footer && <div className="fluid-page-footer">{footer}</div> }
+			{ overlay && <div className="fluid-page-overlay">{overlay}</div> }
 		</div>
 	)
 }

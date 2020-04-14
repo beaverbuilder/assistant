@@ -1,7 +1,7 @@
 // Public API
 import { Appearance } from './appearance'
 import { App } from './app'
-import { Button, Menu } from './button'
+import { Button } from './button'
 import { Icon, Color } from './art'
 import { List } from './lists'
 import Layout from './layout'
@@ -15,6 +15,7 @@ import { Table } from './table'
 import { MediaDropUploader } from './upload'
 import Env from './env'
 import Notice from './notices'
+import Menu from './menu'
 
 // Export for use inside system bundle - import from 'ui'
 export * from './app'

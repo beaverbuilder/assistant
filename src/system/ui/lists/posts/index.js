@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { List, Button, Icon } from 'ui'
+import { List, Button, Icon, Layout } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import { getSystemConfig, getSystemSelectors } from 'data'
@@ -239,30 +239,21 @@ const BigThumbnail = ( { item } ) => {
 		width
 	} = item.thumbnailData
 	const srcset = getSrcSet( sizes )
-	const style = {
-		boxSizing: 'border-box',
-		position: 'relative',
-		overflow: 'hidden',
-		paddingTop: ( height / width ) * 100 + '%',
-		background: 'var(--fluid-box-background)'
-	}
 
 	// This sets up an aspect-ratio box around the image to prevent height changing during img load
 	return (
 		<div style={ { padding: '0 var(--fluid-lg-space) var(--fluid-med-space)' } }>
-			<div style={ style }>
-				<div style={ { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' } }>
-					<img
-						src={ thumbnail }
-						srcSet={ srcset }
-						alt={ alt }
-						title={ title }
-						height={ height }
-						width={ width }
-						loading="lazy"
-					/>
-				</div>
-			</div>
+			<Layout.AspectBox width={ width } height={ height }>
+				<img
+					src={ thumbnail }
+					srcSet={ srcset }
+					alt={ alt }
+					title={ title }
+					height={ height }
+					width={ width }
+					loading="lazy"
+				/>
+			</Layout.AspectBox>
 		</div>
 	)
 }
