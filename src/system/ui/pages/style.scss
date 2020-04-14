@@ -96,4 +96,11 @@
             line-height: 1.5;
         }
     }
+    .fl-asst-notices-area {
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        z-index: 1;
+    }
 }

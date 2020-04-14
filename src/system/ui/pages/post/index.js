@@ -438,36 +438,28 @@ export const Post = ( { location, match, history } ) => {
 		const { pluginURL } = getSystemConfig()
 		if ( ! featureThumbnail ) {
 			return (
-				<>
-					{renderNotices()}
-					<Layout.AspectBox
-						ratio="4:1"
-						style={{
-							background: `url("${pluginURL}img/dark-triangles.png")`,
-						}}
-					/>
-				</>
+				<Layout.AspectBox
+					ratio="4:1"
+					style={{
+						background: `url("${pluginURL}img/dark-triangles.png")`,
+					}}
+				/>
 			)
 		}
 		const { alt, title, height, width, url } = featureThumbnail
 
-		return (
-			<>
-				{renderNotices()}
-				{ featureThumbnail && (
-					<Layout.AspectBox width={ width } height={ height }>
-						<img
-							src={ url }
-							srcSet={ getFeaturedImageSrcSet() }
-							style={ { objectFit: 'cover' } }
-							alt={ alt }
-							title={ title }
-							height={ height }
-							width={ width }
-						/>
-					</Layout.AspectBox>
-				)}
-			</>
+		return featureThumbnail && (
+			<Layout.AspectBox width={ width } height={ height }>
+				<img
+					src={ url }
+					srcSet={ getFeaturedImageSrcSet() }
+					style={ { objectFit: 'cover' } }
+					alt={ alt }
+					title={ title }
+					height={ height }
+					width={ width }
+				/>
+			</Layout.AspectBox>
 		)
 	}
 
@@ -521,6 +513,7 @@ export const Post = ( { location, match, history } ) => {
 			id="fl-asst-post-detail"
 			title={ labels.editItem }
 			hero={ <Hero /> }
+			notices={ renderNotices() }
 			footer={ hasChanges && <Footer /> }
 			tabs={ tabs }
 			onLoad={ focusFirstInput }

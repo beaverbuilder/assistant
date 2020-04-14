@@ -31,6 +31,8 @@ const Page = ( {
 	onLoad = focusFirstElement,
 	tabs,
 	toolbar,
+	notices,
+	children,
 	...rest
 } ) => {
 	const { isAppRoot } = App.useApp()
@@ -45,7 +47,10 @@ const Page = ( {
 			onLoad={ onLoad }
 			toolbar={ tabs ? <Nav.TabsToolbar tabs={ tabs } /> : toolbar }
 			{ ...rest }
-		/>
+		>
+			{children}
+			{ notices && <div className="fl-asst-notices-area">{notices}</div> }
+		</FLUIDPage>
 	)
 }
 
