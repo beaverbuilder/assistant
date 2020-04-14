@@ -435,10 +435,22 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	const Hero = () => {
+		const { pluginURL } = getSystemConfig()
 		if ( ! featureThumbnail ) {
-			return null
+			return (
+				<>
+					{renderNotices()}
+					<Layout.AspectBox
+						ratio="4:1"
+						style={{
+							background: `url("${pluginURL}img/dark-triangles.png")`,
+						}}
+					/>
+				</>
+			)
 		}
 		const { alt, title, height, width, url } = featureThumbnail
+
 		return (
 			<>
 				{renderNotices()}
@@ -508,7 +520,7 @@ export const Post = ( { location, match, history } ) => {
 		<Page
 			id="fl-asst-post-detail"
 			title={ labels.editItem }
-			hero={ featureThumbnail ? <Hero /> : null }
+			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }
 			tabs={ tabs }
 			onLoad={ focusFirstInput }
