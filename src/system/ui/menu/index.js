@@ -12,6 +12,7 @@ const Menu = ( { children, content, isShowing, onOutsideClick = () => {} } ) => 
 			onOutsideClick = { onOutsideClick }
 			placement={ {
 				anchor: 'BOTTOM_RIGHT',
+				possibleAnchors: [ "BOTTOM_LEFT", "BOTTOM_CENTER", "BOTTOM_RIGHT" ]
 			} }
 			renderLayer={ ( { layerProps, isOpen } ) => {
 				return isOpen && (

@@ -144,7 +144,11 @@ Button.Group = ( {
 					className='fl-asst-more-button-divider'
 					direction={ dividerDirection }
 				/> }
-				<Menu content={ <MoreMenuContent /> } isShowing={ isShowing } onOutsideClick={ () => setIsShowing(false) }>
+				<Menu
+					content={ <MoreMenuContent /> }
+					isShowing={ isShowing }
+					onOutsideClick={ () => setIsShowing(false) }
+				>
 					<Button
 						className='fl-asst-more-button'
 						status={ isShowing ? 'primary' : '' }
