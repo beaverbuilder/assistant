@@ -175,13 +175,13 @@ registerSection( 'fl-home-subscribe', {
 			if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( mail ) ) {
 				return true
 			}
-			alert( 'You have entered an invalid email address!' )
+			alert( 'Please enter a valid email address.' )
 			return false
 		}
 
 		const subscribeUser = () => {
 			if ( '' === subscribeEmail ) {
-				alert( 'Please Enter email!' )
+				alert( 'Please enter an email address.' )
 			} else if ( ValidateEmail( subscribeEmail ) ) {
 
 				setisSubscribing( true )
@@ -198,14 +198,14 @@ registerSection( 'fl-home-subscribe', {
 									alert( 'Subscribed Successfully!' )
 								} else {
 									setisSubscribing( false )
-									alert( 'Problem in subscribing' )
+									alert( 'There was an subscribing. Please try again.' )
 								}
 							},
 						},
 					] )
 				} else {
 					setisSubscribing( false )
-					alert( 'Problem in subscribing' )
+					alert( 'There was an subscribing. Please try again.' )
 				}
 			}
 		}
