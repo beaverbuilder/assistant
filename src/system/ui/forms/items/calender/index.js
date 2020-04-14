@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Menu } from 'ui'
 import { DateTimePicker } from '@wordpress/components'
 import { __experimentalGetSettings, dateI18n } from '@wordpress/date'
@@ -20,6 +20,9 @@ export const CalenderItem = ( {
 			.reverse()
 			.join( '' ) // Reverse the string and test for "a" not followed by a slash
 	)
+
+	// Listen for prop change (like when form changes get discarded)
+	useEffect( () => setStartDate( value ), [ value ])
 
 	const label = dateI18n( settings.formats.datetime, startDate )
 
