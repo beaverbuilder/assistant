@@ -43,7 +43,6 @@ export const CalenderItem = ( {
 			className="fl-asst-calendar-menu"
 		>
 			<Button
-				appearance="transparent"
 				onClick={ () => setIsMenuShowing( ! isMenuShowing ) }
 			>{label}</Button>
 		</Menu>
