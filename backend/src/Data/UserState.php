@@ -25,6 +25,7 @@ class UserState {
 			'size'             => 'mini',
 			'isHidden'         => false,
 			'hiddenAppearance' => '',
+			'overlayToolbar'   => false,
 		],
 		'appearance'         => [
 			'brightness' => 'light',

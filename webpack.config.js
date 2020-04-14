@@ -8,6 +8,7 @@ const alias = {
     ui: path.resolve( __dirname, './src/system/ui/'),
     data: path.resolve( __dirname, './src/system/data'),
     utils: path.resolve( __dirname, './src/system/utils' ),
+    hooks: path.resolve( __dirname, './src/system/hooks' ),
 }
 
 const externals = [
@@ -43,6 +44,7 @@ const externals = [
         'assistant/data'        		: 'FL.Assistant.data',
         'assistant/ui'          		: 'FL.Assistant.ui',
         'assistant/utils'       		: 'FL.Assistant.utils',
+        'assistant/hooks'               : 'FL.Assistant.hooks',
 	},
 	function( context, request, callback ) {
 		/* Nested util imports */

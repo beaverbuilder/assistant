@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from 'react'
-import { Button, Form, Nav, Page } from 'ui'
+import { __ } from '@wordpress/i18n'
+import { Button, Form, Nav, Page, Layout } from 'ui'
 import { useFormData } from '../use-form-data'
 import './style.scss'
 
@@ -8,6 +9,7 @@ export const useForm = ( {
 	sections = {},
 	fields = {},
 	defaults = {},
+	renderTabs = true,
 	...options // See useFormData
 } ) => {
 	const tabData = useMemo( () => tabs, [ JSON.stringify( tabs ) ] )
@@ -22,7 +24,7 @@ export const useForm = ( {
 		if ( Object.entries( tabData ).length ) {
 			return (
 				<>
-					<Tabs config={ tabData } />
+					{ renderTabs && <Tabs config={ tabData } /> }
 					<Form { ...form }>
 						<TabsContent config={ tabData } data={ formData } />
 					</Form>
@@ -52,7 +54,14 @@ const Tabs = ( { config } ) => {
 	const { history, location, match } = useContext( Nav.Context )
 	const setTab = path => history.replace( path, location.state )
 	return (
-		<Page.Pad className="fl-asst-form-tabs fl-asst-stick-to-top">
+		<Layout.Box
+			outset={ true }
+			padX={ false }
+			padY={ false }
+			style={ {
+				marginTop: 'var(--fluid-lg-space)'
+			} }
+		>
 			<Button.Group appearance="tabs">
 				{ Object.entries( config ).map( ( [ , tab ], i ) => {
 					const { isVisible, label, path } = tab
@@ -69,7 +78,7 @@ const Tabs = ( { config } ) => {
 					)
 				} ) }
 			</Button.Group>
-		</Page.Pad>
+		</Layout.Box>
 	)
 }
 
@@ -97,6 +106,14 @@ const TabsContent = ( { config, data } ) => {
 					/>
 				)
 			} ) }
+			<Nav.Route render={ () => (
+				<Layout.Box style={ {
+					textAlign: 'center',
+					fontSize: 16
+				} } outset={ true }>
+					{__( 'Oh no! We couldn\'t find that tab. Try Another' )}
+				</Layout.Box>
+			) } />
 		</Nav.Switch>
 	)
 }
@@ -129,6 +146,7 @@ const Fields = ( { config, data } ) => {
 			isRequired,
 			isVisible,
 			hasChanges,
+			errors,
 			...rest
 		} = data.fields[ key ]
 		const Field = getFieldComponent( component )
@@ -141,6 +159,7 @@ const Fields = ( { config, data } ) => {
 				isRequired={ isRequired }
 				isVisible={ isVisible }
 				hasChanges={ hasChanges }
+				errors={ errors }
 			>
 				<Field id={ id } { ...rest } />
 			</Form.Item>
@@ -160,7 +179,9 @@ const getFieldComponent = key => {
 		'text': Form.TextItem,
 		'textarea': Form.TextareaItem,
 		'url': Form.UrlItem,
-		'parent-terms': Form.ParentTermItems
+		'parent-terms': Form.ParentTermItems,
+		'image': Form.ImageItem,
+		'button': Form.ButtonItem
 	}
 	let Component = Form.TextItem
 

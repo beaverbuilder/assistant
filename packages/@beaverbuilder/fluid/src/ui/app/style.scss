@@ -1,11 +1,16 @@
 :root {
-    --fluid-background: white;
-    --fluid-color: black;
+    --fluid-hue: 210;
+    --fluid-background: hsl( var(--fluid-hue), 40%, 100% ); // white
+    --fluid-color: hsl( var(--fluid-hue), 40%, 0% ); // black
+
+    // Dark Colors
+    --fluid-dark-background: hsl( var(--fluid-hue), 13%, 16%);
+    --fluid-dark-color: hsl( var(--fluid-hue), 15%, 90%);
 
     // Box Colors
-    --fluid-box-background: #F1F5F9;
-    --fluid-box-color: black;
-    --fluid-box-hover-background: #E3EBF2;
+    --fluid-box-background: hsl( var(--fluid-hue), 40%, 96%);
+    --fluid-box-color: hsl( var(--fluid-hue), 40%, 0% );
+    --fluid-box-hover-background: hsl( var(--fluid-hue), 37%, 92%);;
 
     // Primary Colors
     --fluid-primary-background: #EFF8FF;
@@ -23,7 +28,11 @@
     --fluid-destructive-hover-background: #F9DAD4;
 
     // Accent Color
-    --fluid-accent: #0075DB;
+    --fluid-accent: hsl( var(--fluid-hue), 100%, 43%);
+
+    // Outlines and Separators
+    --fluid-line-color: #F1F5F9;
+    --fluid-dark-line-color: black;
 
     // Spacing
     --fluid-sm-space: 5px;
@@ -32,8 +41,10 @@
 
     // Base Sizes
     --fluid-font-size: 13px;
-    --fluid-radius: 7px;
-    --fluid-target-size: 32px; // Minimum click target
+    --fluid-radius: 3px;
+    --fluid-target-size: 36px; // Minimum click target
+
+    --fluid-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .fl.uid {
@@ -47,30 +58,37 @@
         --fluid-box-color: var(--fluid-primary-color);
         --fluid-box-hover-background: var(--fluid-primary-hover-background);
         --fluid-accent: #0075DB;
+
+        color: var(--fluid-box-color);
     }
     .fluid-status-alert {
         --fluid-box-background: var(--fluid-alert-background);
         --fluid-box-color: var(--fluid-alert-color);
         --fluid-box-hover-background: var(--fluid-alert-hover-background);
         --fluid-accent: var(--fluid-alert-color);
+
+        color: var(--fluid-box-color);
     }
     .fluid-status-destructive {
         --fluid-box-background: var(--fluid-destructive-background);
         --fluid-box-color: var(--fluid-destructive-color);
         --fluid-box-hover-background: var(--fluid-destructive-hover-background);
         --fluid-accent: var(--fluid-destructive-color);
+
+        color: var(--fluid-box-color);
     }
 
     &.fluid-color-scheme-dark {
-        --fluid-background: hsl(210, 13%, 16%);
-        --fluid-color: hsl(210, 15%, 90%);
+        --fluid-background: var(--fluid-dark-background);
+        --fluid-color: var(--fluid-dark-color);
         // Accent Color
         --fluid-accent: #0075DB;
+        --fluid-line-color: var(--fluid-dark-line-color);
 
         // Box Colors
-        --fluid-box-background: hsl(210, 17%, 5%);
-        --fluid-box-color: hsl(210, 11%, 65%);
-        --fluid-box-hover-background: hsl(210, 17%, 10%);
+        --fluid-box-background: hsl( var(--fluid-hue), 17%, 5%);
+        --fluid-box-color: hsl( var(--fluid-hue), 11%, 65%);
+        --fluid-box-hover-background: hsl( var(--fluid-hue), 17%, 10%);
 
         // Primary Colors
         --fluid-primary-background: hsl(206, 100%, 9%);

@@ -24,6 +24,7 @@
             transition-duration: .15s;
             -moz-user-select: none;
             user-select: none;
+            border-bottom: 2px solid var(--fluid-line-color);
 
             &:hover {
                 background-color: var(--fl-asst-secondary-surface-background);
@@ -44,6 +45,16 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+
+            &.fl-asst-is-transitioning,
+            &.fl-asst-is-trashed {
+                .fl-asst-list-item-content-info {
+                    padding: var(--fluid-med-space) 0;
+                }
+                .fl-asst-list-item-default-content-row {
+                    min-height: var(--fluid-target-size);
+                }
             }
 
             &.fl-asst-is-transitioning,
@@ -101,17 +112,18 @@
         flex: 1 1 auto;
         display: flex;
         flex-direction: column;
-        min-height: 36px;
-        padding: 15px 0;
+        min-height: var(--fluid-target-size);
+        padding: var(--fluid-lg-space) 0;
 
         .fl-asst-list-item-default-content-row {
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 0 var(--fl-asst-outer-space);
+            padding: 0 var(--fluid-lg-space);
         }
         .fl-asst-list-item-extras {
-            padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) 0;
+            pointer-events: none;
+            padding: 0;
         }
     }
     .fl-asst-list-item-subject {
@@ -133,16 +145,17 @@
         font-size: 12px;
         line-height: 1.5;
         word-break: break-word;
+        margin-top: 4px;
     }
     .fl-asst-list-item-thumbnail {
         flex: 0 0 auto;
-        margin-right: var(--fl-asst-inner-space);
+        margin-right: var(--fluid-lg-space);
         width: 60px;
         height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: var(--fl-asst-secondary-surface-background);
+        background-color: var(--fluid-box-background);
         border-radius: 3px;
         overflow: hidden;
 
@@ -153,19 +166,19 @@
         &.fl-asst-thumbnail-size-med {
             width: 50px;
             height: 50px;
-
-            &.fl-asst-round {
-                border-radius: 60px;
-            }
         }
 
         &.fl-asst-thumbnail-size-sm {
             width: 30px;
             height: 30px;
-
-            &.fl-asst-round {
-                border-radius: 30px;
-            }
+        }
+        &.fl-asst-thumbnail-size-poster {
+            width: 50px;
+            height: 66px;
+        }
+        &.fl-asst-thumbnail-size-video {
+            width: 50px;
+            height: 28px;
         }
 
         img {
@@ -195,13 +208,16 @@
         z-index: 1;
         position: absolute;
         top: -20px;
+        min-height: 40px;
         right: var(--fluid-sm-space);
         background: var(--fluid-background);
-        border-radius: 9px;
-        padding: 2px;
+        color: var(--fluid-color);
+        border-radius: var(--fluid-radius);
+        padding: 0;
         box-shadow: 0px 2px 4px rgba(0,0,0,.1),
-                    0px 0px 0px 2px var(--fluid-box-background);
+                    0px 0px 0px 1px var(--fluid-color);
         z-index: 9;
+        pointer-events: auto;
 
         transition-property: opacity;
         transition-delay: 0s;
@@ -210,9 +226,10 @@
         button, a {
             flex: 0 0 auto;
             font-size: 12px;
-            padding: var(--fl-asst-tiny-space);
+            padding: var(--fluid-sm-space);
             background: transparent;
             position: relative;
+            border-radius: 2px !important;
 
             &:hover {
                 background: var(--fl-asst-surface-background);

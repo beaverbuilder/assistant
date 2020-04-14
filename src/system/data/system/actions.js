@@ -43,6 +43,13 @@ export const decrementCount = ( key ) => {
 	}
 }
 
+export const setLabels = ( labels ) => {
+	return {
+		type: 'SET_LABELS',
+		labels,
+	}
+}
+
 export const setWindow = config => {
 	return {
 		type: 'SET_WINDOW',
@@ -99,58 +106,17 @@ export const setSearchHistory = ( keyword ) => {
 	}
 }
 
-export const setIsCloudConnected = ( isCloudConnected ) => {
-	return {
-		type: 'SET_IS_CLOUD_CONNECTED',
-		isCloudConnected
-	}
-}
-
-export const setCloudToken = ( token ) => {
-	return {
-		type: 'SET_CLOUD_TOKEN',
-		token
-	}
-}
-
-export const setLoginErrors = ( errors ) => {
-	return {
-		type: 'SET_LOGIN_ERRORS',
-		errors
-	}
-}
-
-export const setCurrentUser = ( user ) => {
-	return {
-		type: 'SET_CURRENT_USER',
-		user
-	}
-}
-
-export const fetchCurrentUser = () => {
-	return {
-		type: 'FETCH_CURRENT_USER'
-	}
-}
-
-export const attemptLogin = ( email, password ) => {
-	return {
-		type: 'ATTEMPT_LOGIN',
-		email,
-		password
-	}
-}
-
-export const attemptLogout = () => {
-	return {
-		type: 'ATTEMPT_LOGOUT'
-	}
-}
-
 export const registerSection = ( handle = '', config = {} ) => {
 	return {
 		type: 'REGISTER_SECTION',
 		handle,
 		config,
+	}
+}
+
+export const setIsAppHidden = value => {
+	return {
+		type: 'SET_IS_APP_HIDDEN',
+		value,
 	}
 }

@@ -4,7 +4,7 @@ import { useForm } from './use-form'
 import { useFormData } from './use-form-data'
 import { useFormData_Deprecated } from './use-form-data-deprecated' // Deprecated
 import { useFormState_Deprecated } from './use-form-state-deprecated' // Deprecated
-import { Section, Item, Footer } from './parts'
+import { Section, Item, Footer, Input } from './parts'
 import { Test } from './tests'
 import './style.scss'
 
@@ -19,7 +19,9 @@ import {
 	ParentTermItems,
 	TextItem,
 	TextareaItem,
-	UrlItem
+	UrlItem,
+	ImageItem,
+	ButtonItem
 } from './items'
 
 export const Form = ( {
@@ -99,6 +101,15 @@ Form.UrlItem.displayName = 'Form.UrlItem'
 
 Form.ParentTermItems = ParentTermItems
 Form.ParentTermItems.displayName = 'Form.ParentTermItems'
+
+Form.ImageItem = ImageItem
+Form.ImageItem.displayName = 'Form.ImageItem'
+
+Form.ButtonItem = ButtonItem
+Form.ButtonItem.displayName = 'Form.ButtonItem'
+
+Form.Input = Input
+Form.Input.displayName = 'Form.Input'
 
 /* ------ Form Testing Components ------ */
 Form.Test = Test

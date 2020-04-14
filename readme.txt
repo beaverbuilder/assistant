@@ -1,31 +1,27 @@
 === Assistant - Every Day Productivity Apps ===
-Contributors: justinbusa, RobbyMcCullough, brentjettgmailcom
+Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22
 Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media, Upload, Beaver Builder
-Requires at least: 5.0
-Tested up to: 5.1
+Requires at least: 5.2
+Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Assistant is a new way to work with WordPress. It's an every day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area. For example, you can quickly find a page or post and update its title or slug. You can upload media and navigate to attachment pages.
+Assistant is a new way to work with WordPress. It's an every-day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area. For example, you can quickly find a page or post and update its title or slug. You can upload media and navigate to attachment pages. You can approve or reject comments. You can even run plugin and theme updates.
 
 **Note** - This is an early preview release. A full 1.0 release of Assistant will be coming later this year.
 
 Assistant is an open source project from the same team that makes Beaver Builder. It's free and being developed in public. Try it and let us know what you think!
 
-Watch this intro video to see it in action!
-
-[youtube https://youtu.be/_E0tmbd61Cg]
-
 = Assistant Features =
 
 *   Access the Assistant UI from any frontend page (post, archive, term, etc...)
 *   Get a glance of your recently edited posts and new comments on the Dashboard app.
-*   Quickly find posts, pages, categories, and more with the content app.
+*   Quickly find posts, pages, and custom post types with the content app.
 *   Upload media to WordPress media library by dropping files on the Media app.
-*   The Notifications app shows your comments as well as available plugin and theme updates.
-*   Access your user profile.
+*   The Comments app lets you quick reply, approve, mark as spam and trash comments.
+*   Add custom labels to posts or pages to help organize your site while you work.
 
 You can also try Assistant on a [demo site here](http://demo.wpbeaverbuilder.com/?new=assistant).
 
@@ -44,19 +40,21 @@ You can also try Assistant on a [demo site here](http://demo.wpbeaverbuilder.com
 
 == Screenshots ==
 
-1. Assistant is a collection of productivity tools that you can access from any page on your site.
+1. Home - Get a quick info about the current screen and recent posts. Quickly jump into search or other apps.
 
 2. Content - The Content app can help you find posts and pages and quickly navigate to them.
 
-3. Media - The Media app gives you a quick glance at what's in your media library. Drop items on the app to upload.
+3. Post Details - Get more details on a page or quickly change metadata like Title or Featured Image.
 
-4. Media - Clicking on any media item will show you details about that item.
+4. Media - Find media fast, get more details, or drop new files to upload.
 
-5. Notifications - The Notifications app gives you quick access to comments and plugin and theme updates.
+5. Attachment Details - update metadata like Title and Alt Text. Navigate to attachment pages.
 
-6. Notifications - Navigate to an update item to update themes and plugins.
+6. Comments - Sort through comments, reply, approve, mark as spam, and trash.
 
-7. People - Quickly view your user profile.
+7. Updates - Keep up with Theme and Plugin updates without even going to the admin.
+
+8. Pin the panel to whatever edge or corner of the screen you prefer for quick access.
 
 
 == Frequently Asked Questions ==
@@ -71,10 +69,32 @@ No, Assistant is a standalone plugin and can be used with any WordPress installa
 
 = Does Assistant provide a public API for developers to create new apps? =
 
-While we do not currently offer a developer API, that is on our roadmap for the 1.0 release. We'll be sharing more details about that as we get closer to that milestone.
+Our API for creating new apps and extending the existing ones is in development and we'll be talking more about it as we near 1.0 later this year. We'll be sharing more details about that as we get closer to that milestone.
 
 
 == Changelog ==
+
+= 0.4.0 =
+* Added access to all public post types inside content app
+* Refined post detail screen layout
+* Added ability to query posts by label
+* Added ability to query attachments by label
+* Fix showing publish bar when favoriting a post
+* Added notice bar and removed confirmation alerts
+* Added ability to export post from post detail screen
+* Refined labels picker control
+
+= 0.3.1 (2020-03-27) =
+* Harden form control styles
+* Remove Assistant button from Beaver Builder toolbar (too soon!)
+* Fix updates list not loading correctly in some situations
+* Enhancement - Made publish bar more prominent
+* Fix attachment alt text field displaying title
+
+= 0.3.0 (2020-03-25) =
+* Complete ground-up rebuild
+* All new apps for working with Content, Media, Comments & Updates
+* Add custom labels to posts and pages to help you organize your site
 
 = 0.2.2 (2019-04-16) =
 

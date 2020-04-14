@@ -26,6 +26,40 @@ class LabelsRepository extends TermsRepository {
 		return parent::query( $args );
 	}
 
+	/**
+	 * @param string $object_type
+	 * @param int $label_id
+	 * @return array
+	 */
+	function get_object_ids( $object_type, $label_id ) {
+		global $wpdb;
+
+		$sql = "SELECT m1.meta_value
+				FROM $wpdb->postmeta m1
+				INNER JOIN $wpdb->postmeta m2
+					ON m1.post_id = m2.post_id
+					AND m1.meta_key = 'fl_asst_notation_object_id'
+					AND m2.meta_key = 'fl_asst_notation_label_id'
+					AND m2.meta_value = '%d'
+				INNER JOIN $wpdb->postmeta m3
+					ON m1.post_id = m3.post_id
+					AND m3.meta_key = 'fl_asst_notation_object_type'
+					AND m3.meta_value = '%s'";
+
+		$prepared = $wpdb->prepare( $sql, $label_id, $object_type );
+		$results = $wpdb->get_results( $prepared );
+		$ids = [];
+
+		foreach ( $results as $result ) {
+			$ids[] = $result->meta_value;
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * @return void
+	 */
 	public function save_defaults() {
 		$did_install = get_option( static::FL_ASST_INSTALLED_LABELS, false );
 		$existing = $this->query(

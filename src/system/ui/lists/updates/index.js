@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'data'
-import { List, Button } from 'ui'
+import { List, Button, Layout } from 'ui'
 import './style.scss'
 
 export const Updates = ( {
@@ -10,6 +10,7 @@ export const Updates = ( {
 	query = {
 		type: updateType,
 	},
+	listStyle,
 	...rest
 
 } ) => {
@@ -56,12 +57,32 @@ export const Updates = ( {
 					)
 				}
 
+				const Before = () => (
+					<Layout.Box style={ {
+						paddingTop: 0,
+						paddingBottom: 5
+					} }>
+						<div
+							style={ {
+								position: 'relative',
+								paddingTop: 'plugin' === item.type ? '32.3%' : '75%',
+								background: 'var(--fluid-box-background)'
+							} }
+						>
+							<div style={ { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' } }>
+								<img src={ item.banner } />
+							</div>
+						</div>
+					</Layout.Box>
+				)
+
 				return getItemProps( item, {
 					...defaultProps,
 					label: item.title,
-					description: item.meta,
-					thumbnail: item.thumbnail,
+					description: <>{item.version} &rarr; {item.updatedVersion}</>,
+					thumbnail: 'card' !== listStyle ? item.thumbnail : null,
 					accessory: props => <UpdateButton { ...props } />,
+					before: 'card' === listStyle ? <Before /> : null,
 				} )
 			} }
 			{ ...rest }

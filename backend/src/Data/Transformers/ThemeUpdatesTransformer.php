@@ -19,17 +19,18 @@ class ThemeUpdatesTransformer {
 			}
 		}
 		return [
-			'author'       => strip_tags( $theme->Author ),
-			'banner'       => $theme->get_screenshot(),
-			'content'      => $theme->Description,
-			'id'           => $update['theme'],
-			'meta'         => $theme->Version . ' by ' . strip_tags( $theme->Author ),
-			'meta_updated' => $update['new_version'] . ' by ' . strip_tags( $theme->Author ),
-			'theme'        => $update['theme'],
-			'thumbnail'    => $theme->get_screenshot(),
-			'title'        => $theme->Name,
-			'type'         => 'theme',
-			'version'      => $theme->Version,
+			'author'         => strip_tags( $theme->Author ),
+			'banner'         => $theme->get_screenshot(),
+			'content'        => $theme->Description,
+			'id'             => $update['theme'],
+			'meta'           => $theme->Version . ' by ' . strip_tags( $theme->Author ),
+			'meta_updated'   => $update['new_version'] . ' by ' . strip_tags( $theme->Author ),
+			'theme'          => $update['theme'],
+			'thumbnail'      => $theme->get_screenshot(),
+			'title'          => $theme->Name,
+			'type'           => 'theme',
+			'version'        => $theme->Version,
+			'updatedVersion' => $update['new_version'],
 		];
 	}
 }

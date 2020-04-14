@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
-import { CancelToken, isCancel } from 'axios'
-import { __, sprintf } from '@wordpress/i18n'
-import { List, Button, Icon } from 'ui'
+import { __ } from '@wordpress/i18n'
+import { List, Button, Icon, Layout } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
-import { getSystemConfig } from 'data'
+import { getSystemConfig, getSystemSelectors } from 'data'
+import { applyFilters } from 'hooks'
+import ItemActions from './item-actions'
 
 export const Posts = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
@@ -13,33 +14,18 @@ export const Posts = ( {
 	listStyle = 'list',
 	...rest
 } ) => {
-	const [ labels, setLabels ] = useState( {} )
+	const { getLabels } = getSystemSelectors()
+	const [ labelsById, setLabelsById ] = useState( [] )
 	const { currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
-	const source = CancelToken.source()
+	const labels = getLabels()
 
+	// Retrieve labels by ID
 	useEffect( () => {
-
-		// Get the color labels references
-		wpRest.labels().findWhere( {}, {
-			cancelToken: source.token,
-		} ).then( response => {
-			const items = {}
-			if ( 'data' in response ) {
-				for ( let i in response.data ) {
-					const { id, ...rest } = response.data[i]
-					items[id] = rest
-				}
-				setLabels( items )
-			}
-		} ).catch( ( error ) => {
-			if ( ! isCancel( error ) ) {
-				console.log( error ) // eslint-disable-line no-console
-			}
-		} )
-
-		return () => source.cancel()
-	}, [] )
+		const items = {}
+		labels.map( label => items[ label.id ] = label )
+		setLabelsById( items )
+	}, [ labels ] )
 
 	return (
 		<List.WordPress
@@ -138,73 +124,15 @@ export const Posts = ( {
 					return null
 				}
 
-				const Extras = () => {
-					if ( item.isCloning || item.isTrashing || item.isTrashed || item.isRestoring ) {
-						return null
-					}
-
-					return (
-						<div className="fl-asst-item-extras">
-							{ ! isCurrentPage() && (
-								<Button
-									title={ __( 'View Post' ) }
-									tabIndex="-1"
-									href={ item.url }
-									appearance="transparent"
-								>
-									<Icon.View />
-								</Button>
-							)}
-							{ item.editUrl && (
-								<Button
-									title={ __( 'Edit in Admin' ) }
-									tabIndex="-1"
-									href={ item.editUrl }
-									appearance="transparent"
-								>
-									<Icon.Edit />
-								</Button>
-							)}
-							{ item.bbCanEdit && (
-								<Button
-									title={ sprintf( 'Edit in %s', item.bbBranding ) }
-									tabIndex="-1"
-									href={ item.bbEditUrl }
-									appearance="transparent"
-									status={ item.bbIsEnabled ? 'primary' : '' }
-								>
-									<Icon.Beaver />
-									{ item.bbIsEnabled && <span className="fl-asst-extra-dot" /> }
-								</Button>
-							)}
-							<Button
-								onClick={ favoritePost }
-								tabIndex="-1"
-								title={ __( 'Mark as Favorite' ) }
-								appearance="transparent"
-							>
-								{ item.isFavorite ? <Icon.BookmarkSolid /> : <Icon.Bookmark /> }
-							</Button>
-							<Button
-								onClick={ clonePost }
-								tabIndex="-1"
-								title={ __( 'Duplicate' ) }
-								appearance="transparent"
-							>
-								<Icon.Clone />
-							</Button>
-							<Button
-								onClick={ trashPost }
-								tabIndex="-1"
-								title={ __( 'Move to Trash' ) }
-								status='destructive'
-								appearance="transparent"
-							>
-								<Icon.Trash />
-							</Button>
-						</div>
-					)
-				}
+				const Extras = () => (
+					<ItemActions
+						item={ item }
+						clonePost={ clonePost }
+						trashPost={ trashPost }
+						favoritePost={ favoritePost }
+						isCurrentPage={ isCurrentPage }
+					/>
+				)
 
 				const thumbnailSize = ( item.isTrashing || item.isTrashed || item.isRestoring ) ? 'sm' : 'med'
 
@@ -233,8 +161,8 @@ export const Posts = ( {
 					if ( 'labels' in item && 0 < item.labels.length ) {
 
 						item.labels.map( id => {
-							if ( id in labels ) {
-								const { color, label } = labels[id]
+							if ( id in labelsById ) {
+								const { color, label } = labelsById[id]
 								marks.push(
 									<span
 										className="fl-asst-list-item-color-mark"
@@ -257,15 +185,17 @@ export const Posts = ( {
 					return marks
 				}
 
-				return getItemProps( item, {
+				const isPending = item.isTrashing || item.isTrashed || item.isRestoring
+
+				const props = getItemProps( item, {
 					...defaultProps,
 					label: <Title />,
 					description: getDescription(),
 					thumbnail: 'thumb' !== listStyle && item.thumbnail,
 					thumbnailSize,
-					shouldAlwaysShowThumbnail: 'thumb' !== listStyle,
+					shouldAlwaysShowThumbnail: 'thumb' !== listStyle && ! isPending,
 					accessory: props => <Accessory { ...props } />,
-					extras: props => <Extras { ...props } />,
+					extras: Extras,
 					className: classname( {
 						'fl-asst-is-trashing': item.isTrashing,
 						'fl-asst-is-trashed': item.isTrashed,
@@ -277,6 +207,18 @@ export const Posts = ( {
 					marks: getMarks( item ),
 					before: 'thumb' === listStyle && <BigThumbnail item={ item } />
 				} )
+
+				const filterArgs = {
+					item,
+					defaultProps,
+					isPending,
+					restorePost,
+					trashPost,
+					favoritePost,
+					clonePost,
+				}
+
+				return applyFilters( 'list-item-props', props, filterArgs )
 			} }
 			{ ...rest }
 		/>
@@ -284,36 +226,34 @@ export const Posts = ( {
 }
 
 const BigThumbnail = ( { item } ) => {
-	if ( ! item.postThumbnail ) {
+	if ( ! item.thumbnail ) {
 		return null
 	}
 
-	const { thumbnail, sizes, alt, title, height, width } = item.postThumbnail
+	const {
+		thumbnail,
+		sizes,
+		alt,
+		title,
+		height,
+		width
+	} = item.thumbnailData
 	const srcset = getSrcSet( sizes )
-	const style = {
-		boxSizing: 'border-box',
-		position: 'relative',
-		overflow: 'hidden',
-		paddingTop: ( height / width ) * 100 + '%',
-		background: 'var(--fluid-box-background)'
-	}
 
 	// This sets up an aspect-ratio box around the image to prevent height changing during img load
 	return (
 		<div style={ { padding: '0 var(--fluid-lg-space) var(--fluid-med-space)' } }>
-			<div style={ style }>
-				<div style={ { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' } }>
-					<img
-						src={ thumbnail }
-						srcSet={ srcset }
-						alt={ alt }
-						title={ title }
-						height={ height }
-						width={ width }
-						loading="lazy"
-					/>
-				</div>
-			</div>
+			<Layout.AspectBox width={ width } height={ height }>
+				<img
+					src={ thumbnail }
+					srcSet={ srcset }
+					alt={ alt }
+					title={ title }
+					height={ height }
+					width={ width }
+					loading="lazy"
+				/>
+			</Layout.AspectBox>
 		</div>
 	)
 }

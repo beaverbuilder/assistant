@@ -45,6 +45,11 @@
         overflow-y: auto;
         overflow-x: hidden;
         position: relative; // for tooltip positioning
+
+        &.fl-asst-outset {
+            margin-left: calc( 0px - var(--fluid-lg-space) );
+            margin-right: calc( 0px - var(--fluid-lg-space) );
+        }
     }
 
     .fl-asst-page-footer {
@@ -56,6 +61,12 @@
             flex-direction: column;
 
             padding: 10px 0;
+        }
+    }
+
+    .is-app-root {
+        .fluid-page-title {
+            font-size: 20px;
         }
     }
 

@@ -1,9 +1,10 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form, Button, Layout } from 'ui'
+import { Page, Form, Layout } from 'ui'
 import { getSrcSet } from 'utils/image'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
+import './style.scss'
 
 export const Attachment = ( { location, history } ) => {
 	const { item } = location.state
@@ -36,14 +37,13 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 		const handleError = error => {
-			setIsSubmitting( false )
 			alert( __( 'Error: Changes not saved! Please try again.' ) )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
 		}
 
-		wpRest
+		return wpRest
 			.attachments()
 			.update( id, 'data', data )
 			.then( response => {
@@ -52,7 +52,6 @@ export const Attachment = ( { location, history } ) => {
 					handleError()
 				} else {
 					setCurrentHistoryState( { item } )
-					setIsSubmitting( false )
 					alert( __( 'Changes Saved!' ) )
 				}
 			} )
@@ -93,6 +92,21 @@ export const Attachment = ( { location, history } ) => {
 				},
 
 			},
+		},
+		labels: {
+			label: __( 'Labels' ),
+			fields: {
+				labels: {
+					component: 'labels',
+					alwaysCommit: true,
+					onAdd: label => {
+						wpRest.attachments().addLabel( item.id, label.id )
+					},
+					onRemove: label => {
+						wpRest.attachments().removeLabel( item.id, label.id )
+					},
+				},
+			}
 		},
 		info: {
 			label: __( 'Info' ),
@@ -159,13 +173,10 @@ export const Attachment = ( { location, history } ) => {
 
 	const Footer = () => {
 		return (
-			<>
-				<Button onClick={ resetForm }>{__( 'Cancel' )}</Button>
-				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
-				<Button type="submit" status="primary" onClick={ submitForm }>
-					{__( 'Save' )}
-				</Button>
-			</>
+			<Layout.PublishBar
+				onPublish={ submitForm }
+				onDiscard={ resetForm }
+			/>
 		)
 	}
 
@@ -177,7 +188,6 @@ export const Attachment = ( { location, history } ) => {
 	const {
 		hasChanges,
 		resetForm,
-		setIsSubmitting,
 		submitForm,
 		renderForm,
 	} = Form.useForm( {
@@ -189,18 +199,10 @@ export const Attachment = ( { location, history } ) => {
 	const Hero = () => {
 		const { width, sizes, height, alt, type, url, mime } = item
 		const srcSet = getSrcSet( sizes )
-		const heightPercentage = ( height / width ) * 100
 
 		// Temp - Handle non-image heroes.
 		if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! item.thumbnail ) {
 			return null
-		}
-
-		const style = {
-			position: 'relative',
-			boxSizing: 'border-box',
-			paddingTop: heightPercentage ? heightPercentage + '%' : '50%',
-			background: 'var(--fluid-primary-background)',
 		}
 
 		let mediaContent = ''
@@ -212,24 +214,13 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 		return (
-			<div style={ style }>
-				<div
-					style={ {
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						width: '100%',
-						height: '100%',
-					} }
-				>
-					{ mediaContent }
-				</div>
-			</div>
+			<Layout.AspectBox height={ height } width={ width }>{mediaContent}</Layout.AspectBox>
 		)
 	}
 
 	return (
 		<Page
+			id="fl-asst-attachment-detail"
 			title={ __( 'Attachment' ) }
 			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }

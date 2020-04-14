@@ -1,0 +1,26 @@
+.fl-asst {
+    .fl-asst-publish-bar {
+        flex: 1 1 auto;
+        background: var(--fluid-primary-color);
+        display: flex;
+        flex-direction: column;
+        padding: var(--fluid-med-space);
+
+        .fl-asst-publish-bar-message {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-bottom: var(--fluid-med-space);
+            font-size: 15px;
+            color: var(--fluid-primary-background);
+        }
+
+        .fl-asst-publish-bar-actions {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+        }
+    }
+}

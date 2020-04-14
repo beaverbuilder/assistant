@@ -6,23 +6,23 @@
 		min-height: 32px;
 		position: relative;
 
-        padding: var(--fl-asst-tiny-space);
-        background: var(--fl-asst-secondary-surface-background);
-        border-radius: var(--fl-asst-base-radius);
+        padding: var(--fluid-sm-space);
+        background: var(--fluid-box-background);
+        border-radius: var(--fluid-radius);
     }
 
     .fl-asst-tag {
         display: inline-flex;
         flex-direction: row;
         justify-content: center;
-        align-items: center;
-        background: var(--fl-asst-surface-background);
-        border-radius: 13px;
-        padding: var(--fl-asst-tiny-space) 6px;
-        margin: var(--fl-asst-tiny-space);
-        min-height: 26px;
+        align-items: stretch;
+        background: var(--fluid-background);
+        color: var(--fluid-color);
+        border-radius: var(--fluid-radius);
+        margin: var(--fluid-sm-space);
+        min-height: var(--fluid-target-size);
 	    max-width: 100%;
-        box-shadow: 0 2px 4px 0 #D2DAE3;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
         font-size: 12px;
         font-weight: 500;
 
@@ -30,42 +30,30 @@
             margin-left: 0;
         }
 
-        &:focus-within {
-            box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background),
-                        0px 0px 0px 2px black,
-                        0 5px 10px 0 #aab0b8;
-        }
-
         .fl-asst-tag-label {
-            padding: 0 var(--fl-asst-tiny-space);
+            flex: 1 0 auto;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 var(--fluid-sm-space);
+            padding-right: 0;
         }
 
         .fl-asst-tag-color {
             flex: 0 0 auto;
-            width: 14px;
-            height: 14px;
+            display: flex;
+            align-self: center;
+            margin-left: var(--fluid-med-space);
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
         }
 
         .fl-asst-tag-remove-btn {
-            padding: 0;
+            padding: var(--fluid-med-space);
             min-height: 14px;
             min-width: 14px;
-            opacity: .5;
-
-            &:focus {
-                opacity: 1;
-            }
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
         }
-
-        &:hover .fl-asst-tag-remove-btn {
-            opacity: 1;
-        }
-    }
-
-    .fl-asst-brightness-dark .fl-asst-tag {
-        color: var(--fl-asst-secondary-surface-color);
-        background: var(--fl-asst-dark-3);
-        box-shadow: none;
     }
 }

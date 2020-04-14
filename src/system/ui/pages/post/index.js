@@ -1,21 +1,71 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Button, Form, List, Page, Layout, Icon } from 'ui'
+import { Button, Form, List, Page, Layout, Icon, Notice } from 'ui'
 import { getSystemActions, getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
 import { getSrcSet } from 'utils/image'
+import { getFirstFocusableChild } from 'utils/dom'
+import { applyFilters } from 'hooks'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
+import './style.scss'
 
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes, contentStatus, taxonomies } = getSystemConfig()
+	const { renderNotices, createNotice } = Notice.useNotices()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
+	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnailData )
+
+	const uploadFeatureImage = () => {
+		const customUploader = wp.media( {
+			title: 'Select an Image',
+			id: 'fl-asst-media-upload',
+			button: {
+				text: 'Choose Featured Image'
+			},
+			multiple: false,
+			library: {
+				type: [ 'image' ]
+			},
+			width: '50%'
+		} )
+
+		customUploader.open()
+		customUploader.on( 'select', function() {
+			var attachment = customUploader.state().get( 'selection' ).first().toJSON()
+			setFeatureThumbnail( attachment )
+			setValues( { thumbnailData: attachment }, false )
+		} )
+	}
+
+	const removeFeatureImage = () => {
+		setFeatureThumbnail( false )
+		setValues( { thumbnailData: null }, false )
+	}
+
+	const getFeaturedImageSrcSet = () => {
+		if ( ! featureThumbnail ) {
+			return ''
+		}
+		const { sizes } = featureThumbnail
+		let srcSet = ''
+		if ( sizes ) {
+			srcSet = getSrcSet( sizes )
+		}
+		return srcSet
+	}
+
+	const args = {
+		post: item,
+		baseURL: match.url,
+	}
+	const additionalTabs = applyFilters( 'post-tabs', {}, args )
 
 	const tabs = {
 		general: {
@@ -23,6 +73,16 @@ export const Post = ( { location, match, history } ) => {
 			path: match.url,
 			exact: true,
 			sections: {
+				title: {
+					fields: ( { values } ) => {
+						return (
+							<>
+								<Layout.Headline>{ values.title }</Layout.Headline>
+								<ElevatorButtons />
+							</>
+						)
+					}
+				},
 				labels: {
 					label: __( 'Labels' ),
 					fields: {
@@ -30,10 +90,10 @@ export const Post = ( { location, match, history } ) => {
 							component: 'labels',
 							alwaysCommit: true,
 							onAdd: label => {
-								wpRest.notations().createLabel( 'post', item.id, label.id )
+								wpRest.posts().addLabel( item.id, label.id )
 							},
 							onRemove: label => {
-								wpRest.notations().deleteLabel( 'post', item.id, label.id )
+								wpRest.posts().removeLabel( item.id, label.id )
 							},
 						},
 					}
@@ -44,9 +104,13 @@ export const Post = ( { location, match, history } ) => {
 						actions: {
 							component: 'actions',
 							options: args => getPostActions( { history, ...args } ),
-						}
+						},
+						isFavorite: {
+							alwaysCommit: true,
+							isVisible: false,
+						},
 					}
-				}
+				},
 			},
 		},
 		edit: {
@@ -54,7 +118,7 @@ export const Post = ( { location, match, history } ) => {
 			path: match.url + '/edit',
 			sections: {
 				general: {
-					label: __( 'General' ),
+					label: '',
 					fields: {
 						title: {
 							label: __( 'Title' ),
@@ -190,6 +254,37 @@ export const Post = ( { location, match, history } ) => {
 						},
 					},
 				},
+				featureimgUpload: {
+					label: __( 'Feature Image' ),
+					isVisible: supports.thumbnail,
+					fields: {
+						featureimgUpload: {
+							id: 'post_feature_image',
+							isVisible: supports.thumbnail && ! featureThumbnail,
+							label: __( 'Set Feature Image' ),
+							component: 'text',
+							onClick: uploadFeatureImage,
+						},
+						featureimg: {
+							id: 'post_feature_img',
+							src: featureThumbnail && featureThumbnail.url,
+							srcSet: getFeaturedImageSrcSet(),
+							isVisible: featureThumbnail,
+							component: 'image',
+							onClick: uploadFeatureImage,
+						},
+						removeFeatureimg: {
+							id: 'remove_post_feature_img',
+							text: 'Remove',
+							btnclass: 'fl-asst-remove-feature-img',
+							isVisible: featureThumbnail,
+							component: 'button',
+							onClick: removeFeatureImage,
+
+						},
+
+					},
+				},
 				discussion: {
 					label: __( 'Discussion' ),
 					isVisible: supports.comments || supports.trackbacks,
@@ -213,7 +308,7 @@ export const Post = ( { location, match, history } ) => {
 		comments: {
 			label: __( 'Comments' ),
 			path: match.url + '/comments',
-			isVisible: supports.comments,
+			isVisible: supports.comments && 0 < item.commentsCount,
 			sections: () => (
 				<List.Comments
 					query={ { post__in: [ item.id ] } }
@@ -224,9 +319,11 @@ export const Post = ( { location, match, history } ) => {
 							state: { item }
 						},
 					} ) }
+					scrollerClassName="fl-asst-outset"
 				/>
 			),
 		},
+		...additionalTabs,
 	}
 
 	const onSubmit = ( { changed, ids, setValue } ) => {
@@ -272,10 +369,18 @@ export const Post = ( { location, match, history } ) => {
 		if ( 'terms' in changed ) {
 			data.terms = changed.terms
 		}
+		if ( 'thumbnailData' in changed ) {
+			data.thumbnail = changed.thumbnailData.id
+		}
 
 		const handleError = error => {
-			setIsSubmitting( false )
-			alert( __( 'Error: Changes not published! Please try again.' ) )
+
+			createNotice( {
+				id: 'publish-error',
+				status: 'error',
+				content: __( 'Error: Changes not published! Please try again.' )
+			} )
+
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
@@ -288,8 +393,12 @@ export const Post = ( { location, match, history } ) => {
 			} else {
 				setCurrentHistoryState( { item: data.post } )
 				setValue( 'url', data.post.url, true )
-				setIsSubmitting( false )
-				alert( __( 'Changes published!' ) )
+
+				createNotice( {
+					id: 'publish-success',
+					status: 'success',
+					content: __( 'Changes published!' )
+				} )
 			}
 		} ).catch( error => {
 			handleError( error )
@@ -300,12 +409,15 @@ export const Post = ( { location, match, history } ) => {
 		renderForm,
 		resetForm,
 		submitForm,
-		values,
 		hasChanges,
-		setIsSubmitting,
+		setValues,
 	} = Form.useForm( {
 		tabs,
+		renderTabs: false,
 		onSubmit,
+		onReset: ( { state } ) => {
+			setFeatureThumbnail( state.thumbnailData.value )
+		},
 		defaults: {
 			...item,
 			parent: item.parent ? `parent:${ item.parent }` : 0,
@@ -313,41 +425,49 @@ export const Post = ( { location, match, history } ) => {
 	} )
 
 	const Footer = () => {
+
 		return (
-            <>
-			<Button
-				onClick={ resetForm }
-			>{__( 'Cancel' )}</Button>
-			<div style={ { flex: '1 1 auto', margin: 'auto' } } />
-			<Button type="submit" status="primary" onClick={ submitForm } >{__( 'Publish' )}</Button>
-            </>
+			<Layout.PublishBar
+				onPublish={ submitForm }
+				onDiscard={ resetForm }
+			/>
 		)
 	}
 
 	const Hero = () => {
-
-		if ( undefined === item.postThumbnail ) {
-			return item.thumbnail
+		const { pluginURL } = getSystemConfig()
+		if ( ! featureThumbnail ) {
+			return (
+				<>
+					{renderNotices()}
+					<Layout.AspectBox
+						ratio="4:1"
+						style={ {
+							background: `url("${pluginURL}img/dark-triangles.png")`,
+						} }
+					/>
+				</>
+			)
 		}
+		const { alt, title, height, width, url } = featureThumbnail
 
-		const { sizes, alt, title, height, width } = item.postThumbnail
-
-		let srcSet = ''
-		if ( sizes ) {
-			srcSet = getSrcSet( sizes )
-		}
 		return (
-			<div>
-				<img
-					src={ item.thumbnail }
-					srcSet={ srcSet }
-					style={ { objectFit: 'cover' } }
-					alt={ alt }
-					title={ title }
-					height={ height }
-					width={ width }
-				/>
-			</div>
+			<>
+				{renderNotices()}
+				{ featureThumbnail && (
+					<Layout.AspectBox width={ width } height={ height }>
+						<img
+							src={ url }
+							srcSet={ getFeaturedImageSrcSet() }
+							style={ { objectFit: 'cover' } }
+							alt={ alt }
+							title={ title }
+							height={ height }
+							width={ width }
+						/>
+					</Layout.AspectBox>
+				)}
+			</>
 		)
 	}
 
@@ -389,14 +509,22 @@ export const Post = ( { location, match, history } ) => {
 		</div>
 	)
 
+	const focusFirstInput = () => {
+		const el = getFirstFocusableChild( document.querySelector( '.fl-asst-form' ) )
+		if ( el ) {
+			el.focus()
+		}
+	}
+
 	return (
 		<Page
+			id="fl-asst-post-detail"
 			title={ labels.editItem }
-			hero={ item.hasPostThumbnail ? <Hero /> : null }
+			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }
+			tabs={ tabs }
+			onLoad={ focusFirstInput }
 		>
-			<Layout.Headline>{values.title}</Layout.Headline>
-			<ElevatorButtons />
 			{ renderForm() }
 		</Page>
 	)

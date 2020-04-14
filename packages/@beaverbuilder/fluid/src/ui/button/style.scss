@@ -7,7 +7,6 @@
         justify-content: center;
         align-items: center;
         background: var(--fluid-box-background);
-        color: var(--fluid-box-color);
         border-radius: var(--fluid-radius);
         box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
         min-height: var(--fluid-target-size);
@@ -21,6 +20,7 @@
         &.is-hovering {
             text-decoration: none;
             background: var(--fluid-box-hover-background);
+            color: var(--fluid-box-color);
         }
 
         &:focus,
@@ -31,6 +31,11 @@
             text-decoration: none;
             box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
                         0px 0px 0px 2px var(--fluid-accent);
+        }
+
+        &.is-selected {
+            background: var(--fluid-primary-background);
+            color: var(--fluid-primary-color);
         }
 
         &.fluid-appearance-elevator {
@@ -57,4 +62,9 @@
             }
         }
     }
+}
+
+/* outside of .fl-asst on purpose */
+.fl-asst-tooltip {
+    font-family: sans-serif;
 }
