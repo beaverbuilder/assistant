@@ -39,7 +39,7 @@ export const LabelsItem = ( {
 
 	const MenuContent = () => {
 		return labels.map( ( option, i ) =>
-			<div key={ i } className='fl-asst-labels-menu-item'>
+			<label key={ i } className='fl-asst-labels-menu-item'>
 				<div
 					className='fl-asst-labels-menu-color'
 					style={ {
@@ -59,7 +59,7 @@ export const LabelsItem = ( {
 						}
 					} }
 				/>
-			</div>
+			</label>
 		)
 	}
 
