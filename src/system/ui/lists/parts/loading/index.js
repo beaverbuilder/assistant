@@ -1,28 +1,20 @@
 import React from 'react'
-import { List } from 'ui'
+import { List, Layout } from 'ui'
 import './style.scss'
 
-const Loading = () => {
-	const items = [ 1, 2, 3, 4, 5 ]
-
-	const Bar = () => (
-		<div className="fl-asst-loading-bar">
-			<div className="fl-asst-load-dot"></div>
-			<div className="fl-asst-load-dot"></div>
-			<div className="fl-asst-load-dot"></div>
-		</div>
-	)
-
+const Loading = ({ count = 5, ...rest }) => {
 	return (
 		<List
-			items={ items }
+			items={ new Array( count ).fill('') }
 			getItemProps={ ( item, defaultProps ) => {
 				return {
 					...defaultProps,
-					label: <Bar />,
+					label: <Layout.Loading />,
 					shouldAlwaysShowThumbnail: true,
+					className: "fl-asst-list-item-loading"
 				}
 			} }
+			{...rest}
 		/>
 	)
 }
