@@ -31,7 +31,7 @@ const ManageScreen = () => {
 							</Button>
 							<span className="fl-asst-item-reorder-buttons" />
 						</li>
-						{ apps.map( ( app, i ) => {
+						{ apps.map( app => {
 							const {
 								handle,
 								label,

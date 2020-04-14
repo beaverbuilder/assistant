@@ -440,9 +440,9 @@ export const Post = ( { location, match, history } ) => {
 			return (
 				<Layout.AspectBox
 					ratio="4:1"
-					style={{
+					style={ {
 						background: `url("${pluginURL}img/dark-triangles.png")`,
-					}}
+					} }
 				/>
 			)
 		}
