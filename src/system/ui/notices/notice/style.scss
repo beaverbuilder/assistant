@@ -5,6 +5,7 @@
         margin: 0;
         height: 60px;
         border: none;
+        pointer-events: auto;
 
         &.is-info {
             color: var(--fluid-primary-color);
@@ -23,7 +24,7 @@
         }
         &.is-success {
             box-shadow: inset 3px 0 0 #4ab866;
-            
+
             button svg path {
                 fill: #4ab866;
             }

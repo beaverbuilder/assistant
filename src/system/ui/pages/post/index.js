@@ -100,15 +100,15 @@ export const Post = ( { location, match, history } ) => {
 								<Button
 									onClick={ () => {
 										history.replace( match.url + '/edit', location.state )
-									}}
-									style={{ margin: 'auto' }}
-								>{__('Show More Details')}</Button>)
+									} }
+									style={ { margin: 'auto' } }
+								>{__( 'Show More Details' )}</Button> )
 						}
 					}
 				},
 				labels: {
 					label: __( 'Labels' ),
-					description: __('Labels allow you to mark posts or pages for organization purposes. Labels are not publicly visible on your site.'),
+					description: __( 'Labels allow you to mark posts or pages for organization purposes. Labels are not publicly visible on your site.' ),
 					fields: {
 						labels: {
 							component: 'labels',

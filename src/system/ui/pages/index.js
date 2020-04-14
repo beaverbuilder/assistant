@@ -32,6 +32,7 @@ const Page = ( {
 	tabs,
 	toolbar,
 	notices,
+	overlay,
 	children,
 	...rest
 } ) => {
@@ -41,15 +42,22 @@ const Page = ( {
 		'fl-asst-page-has-tabs': tabs,
 	}, className )
 
+	const Overlay = () => (
+		<>
+			{overlay}
+			{notices}
+		</>
+	)
+
 	return (
 		<FLUIDPage
 			className={ classes }
 			onLoad={ onLoad }
 			toolbar={ tabs ? <Nav.TabsToolbar tabs={ tabs } /> : toolbar }
+			overlay={ overlay || 0 < notices.length && <Overlay /> }
 			{ ...rest }
 		>
 			{children}
-			{ notices && <div className="fl-asst-notices-area">{notices}</div> }
 		</FLUIDPage>
 	)
 }

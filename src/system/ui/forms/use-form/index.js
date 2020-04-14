@@ -125,7 +125,7 @@ const Sections = ( { config, data } ) => {
 			return
 		}
 		return (
-			<Page.Section key={ i } handle={ key } label={ label } {...rest}>
+			<Page.Section key={ i } handle={ key } label={ label } { ...rest }>
 				<Fields config={ fields } data={ data } />
 			</Page.Section>
 		)
