@@ -47,7 +47,7 @@ const ManageScreen = () => {
 							}
 
 							return (
-								<li key={ i }>
+								<li key={ handle }>
 									<Button
 										to={ location }
 										appearance="transparent"
