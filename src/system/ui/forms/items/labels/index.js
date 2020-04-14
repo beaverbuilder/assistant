@@ -38,8 +38,8 @@ export const LabelsItem = ( {
 	} )
 
 	const MenuContent = () => {
-		return labels.map( option =>
-			<div className='fl-asst-labels-menu-item'>
+		return labels.map( ( option, i ) =>
+			<div key={ i } className='fl-asst-labels-menu-item'>
 				<div
 					className='fl-asst-labels-menu-color'
 					style={ {
@@ -72,10 +72,11 @@ export const LabelsItem = ( {
 				<Menu
 					content={ <MenuContent /> }
 					isShowing={ isMenuShowing }
-					onOutsideClick={ () => setIsMenuShowing(false) }
+					onOutsideClick={ () => setIsMenuShowing( false ) }
+					className="fl-asst-label-picker-menu"
 				>
 					<Button
-						className='fl-asst-tag'
+						className='fl-asst-tag-add-button'
 						status={ isMenuShowing ? 'primary' : '' }
 						onClick={ () => setIsMenuShowing( ! isMenuShowing ) }
 					>

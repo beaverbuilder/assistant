@@ -147,7 +147,7 @@ Button.Group = ( {
 				<Menu
 					content={ <MoreMenuContent /> }
 					isShowing={ isShowing }
-					onOutsideClick={ () => setIsShowing(false) }
+					onOutsideClick={ () => setIsShowing( false ) }
 				>
 					<Button
 						className='fl-asst-more-button'

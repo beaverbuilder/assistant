@@ -4,7 +4,14 @@ import classname from 'classnames'
 import { Button } from 'ui'
 import './style.scss'
 
-const Menu = ( { children, content, isShowing, onOutsideClick = () => {} } ) => {
+const Menu = ( {
+	children,
+	content,
+	isShowing,
+	onOutsideClick = () => {},
+	className,
+	...rest
+} ) => {
 	return (
 		<ToggleLayer
 			isOpen={ isShowing }
@@ -12,13 +19,14 @@ const Menu = ( { children, content, isShowing, onOutsideClick = () => {} } ) => 
 			onOutsideClick = { onOutsideClick }
 			placement={ {
 				anchor: 'BOTTOM_RIGHT',
-				possibleAnchors: [ "BOTTOM_LEFT", "BOTTOM_CENTER", "BOTTOM_RIGHT" ]
+				possibleAnchors: [ 'BOTTOM_LEFT', 'BOTTOM_CENTER', 'BOTTOM_RIGHT' ]
 			} }
 			renderLayer={ ( { layerProps, isOpen } ) => {
 				return isOpen && (
 					<div
+						{ ...rest }
 						{ ...layerProps }
-						className={ classname( 'fl-asst-menu', layerProps.className ) }
+						className={ classname( 'fl-asst-menu', layerProps.className, className ) }
 					>
 						{content}
 					</div>
