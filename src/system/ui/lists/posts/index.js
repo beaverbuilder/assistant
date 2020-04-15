@@ -106,9 +106,7 @@ export const Posts = ( {
 				}
 
 				const getDescription = () => {
-					if ( item.author && item.visibility ) {
-						return __( 'by' ) + ' ' + item.author + ' | ' + item.visibility
-					} else if ( item.author ) {
+					if ( item.author ) {
 						return __( 'by' ) + ' ' + item.author
 					} else if ( item.visibility ) {
 						return item.visibility
