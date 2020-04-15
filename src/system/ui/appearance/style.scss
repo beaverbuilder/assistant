@@ -10,6 +10,8 @@
     --fl-asst-light-subtext: var(--fl-asst-dark-2);
     --fl-asst-light-translucent: hsla(214, 30%, 92%, .96);
 
+    --fl-asst-input-background: hsl( var(--fluid-hue), 32%, 99% );
+
     // Darks
     --fl-asst-dark-1: hsl(210, 17%, 5%);
     --fl-asst-dark-2: hsl(210, 13%, 16%);
@@ -213,6 +215,10 @@
             --fl-asst-translucent-background: var(--fl-asst-dark-translucent);
             --fl-asst-dim-text: var(--fl-asst-light-5);
         }
+    }
+
+    .fluid-color-scheme-dark {
+        --fl-asst-input-background: hsl( var(--fluid-hue), 15%, 12% );
     }
 
     // Surfaces and content areas
