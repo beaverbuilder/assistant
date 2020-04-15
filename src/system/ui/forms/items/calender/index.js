@@ -22,7 +22,7 @@ export const CalenderItem = ( {
 	)
 
 	// Listen for prop change (like when form changes get discarded)
-	useEffect( () => setStartDate( value ), [ value ])
+	useEffect( () => setStartDate( value ), [ value ] )
 
 	const label = dateI18n( settings.formats.datetime, startDate )
 
@@ -43,7 +43,7 @@ export const CalenderItem = ( {
 		<Menu
 			content={ <MenuContent /> }
 			isShowing={ isMenuShowing }
-			onOutsideClick={ () => setIsMenuShowing( false )}
+			onOutsideClick={ () => setIsMenuShowing( false ) }
 			className="fl-asst-calendar-menu"
 		>
 			<Button
