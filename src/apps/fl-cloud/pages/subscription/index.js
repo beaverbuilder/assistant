@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Layout, Page } from 'ui'
+import { Button, Layout, Page } from 'assistant/ui'
 
 export default () => {
 
