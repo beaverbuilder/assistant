@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { applyFilters } from 'hooks'
-import { Button, Icon } from 'ui'
+import { Button, Icon, Env } from 'ui'
 
 const ItemActions = ( {
 	item,
@@ -11,6 +11,7 @@ const ItemActions = ( {
 	favoritePost,
 	isCurrentPage,
 } ) => {
+	const env = Env.useEnvironment()
 
 	if (
 		item.isCloning ||
@@ -19,15 +20,6 @@ const ItemActions = ( {
         item.isRestoring
 	) {
 		return null
-	}
-
-	const defaultAction = {
-		handle: '',
-		icon: <Icon.Placeholder />,
-		isShowing: true,
-		component: Button,
-		appearance: 'transparent',
-		tabIndex: -1,
 	}
 
 	const actions = applyFilters( 'list-item-actions', [
@@ -64,12 +56,20 @@ const ItemActions = ( {
 			status: 'destructive',
 			icon: <Icon.Trash />,
 		},
-	], item )
+	], { item, listType: 'post', env } )
 
 	return (
 		<div className="fl-asst-item-extras">
 			{ actions.map( ( item, i ) => {
-				const action = { ...defaultAction, ...item }
+				const action = {
+					handle: '',
+					icon: <Icon.Placeholder />,
+					isShowing: true,
+					component: Button,
+					appearance: 'transparent',
+					tabIndex: -1,
+					...item
+				}
 				const {
 					component: Component,
 					isShowing,
