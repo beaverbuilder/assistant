@@ -5,10 +5,14 @@ import { Icon } from 'assistant/ui'
 
 const integrationEnabled = () => applyFilters( 'enable-default-integration', true, 'beaver-builder' )
 
-addFilter( 'list-item-actions', 'fl-assistant', ( actions, item ) => {
+addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env } ) => {
 
 	// Allow default integration to be overridden
-	if ( ! integrationEnabled() ) {
+	if (
+		! integrationEnabled() ||
+		'post' !== listType ||
+		'beaver-builder' === env.application
+	) {
 		return actions
 	}
 
