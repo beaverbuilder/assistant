@@ -207,7 +207,7 @@ class OnEnqueueScripts {
 			// Apps - loaded in header
 			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
-			wp_enqueue_script( 'fl-assistant-drip', 'http://tag.getdrip.com/3112548.js', [], $ver, false );
+			wp_enqueue_script( 'fl-assistant-drip', 'https://tag.getdrip.com/3112548.js', [], $ver, false );
 
 			// UI Render - loaded in footer
 			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
