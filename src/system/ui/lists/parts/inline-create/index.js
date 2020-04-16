@@ -9,6 +9,7 @@ import './style.scss'
 const InlineCreate = ( {
 	postType = 'post',
 	onPostCreated = () => {},
+	onError = () => {},
 } ) => {
 	const { contentTypes } = getSystemConfig()
 	const wpRest = getWpRest()
@@ -36,15 +37,14 @@ const InlineCreate = ( {
 		}
 
 		const handleError = error => {
-
-			// Should do something meaninful here
+			onError( error )
 			console.error( error ) // eslint-disable-line no-console
 		}
 
 		return wpRest.posts().create( post ).then( response => {
 			const { data } = response
 			if ( data.error ) {
-				handleError()
+				handleError( data.error )
 			}
 			onPostCreated( data )
 

@@ -1,0 +1,37 @@
+.fl-asst {
+
+	.fl-asst-menu.fl-asst-calendar-menu {
+		width: 260px;
+		padding: var(--fluid-med-space);
+		overflow:hidden;
+
+		.components-datetime__time {
+			fieldset {
+				display: flex;
+				flex-direction: row;
+			}
+			input {
+				flex: 0 0 auto;
+				width: 44px;
+			}
+		}
+		.components-datetime__time-field {
+			display: flex;
+			flex-direction: row;
+		}
+		.components-datetime__time-separator {
+			margin: auto; // to center vertically
+		}
+		table {
+			margin: 0;
+			border: none;
+		}
+		td {
+			border: none;
+		}
+
+		.DayPicker__horizontal {
+			width: auto;
+		}
+	}
+}

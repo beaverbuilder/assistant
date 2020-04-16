@@ -76,22 +76,24 @@
             }
 
             &.fl-asst-form-item-placement-beside {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-gap: var(--fl-asst-inner-space);
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
 
                 label {
                     margin:0;
-                    justify-self: start;
+                    margin-right: var(--fluid-med-space);
+                    flex: 0 0 auto;
                 }
 
                 .fl-asst-form-item-content {
                     text-align: right;
+                    justify-content: flex-end;
+                    flex: 1 1 auto;
                 }
             }
 
             .fl-asst-form-item-content {
-                justify-self: end;
                 display: flex;
                 flex-direction: row;
                 align-items: stretch;
@@ -179,7 +181,7 @@
         color: inherit;
         padding: var(--fluid-sm-space);
         margin:0;
-        background-color: transparent;
+        background-color: var(--fl-asst-input-background);
         background-image: none;
         box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
         border-radius: 3px;
@@ -262,6 +264,12 @@
                 border-radius: 3px;
                 font-weight: normal;
             }
+        }
+    }
+    .fl-asst-form-item-placement-beside {
+        select {
+            flex: 0 0 auto;
+            width: auto;
         }
     }
 

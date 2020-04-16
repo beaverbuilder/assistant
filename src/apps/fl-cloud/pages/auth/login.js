@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Form, Layout, Nav } from 'ui'
+import { Button, Form, Layout, Nav } from 'assistant/ui'
 import { useCloudState } from 'assistant/data'
 import { cloudLogin } from 'assistant/utils/cloud'
 import AuthLayout from './layout'

@@ -10,6 +10,7 @@ const Menu = ( {
 	isShowing,
 	onOutsideClick = () => {},
 	className,
+	style,
 	...rest
 } ) => {
 	return (
@@ -26,6 +27,10 @@ const Menu = ( {
 					<div
 						{ ...rest }
 						{ ...layerProps }
+						style={ {
+							...style,
+							...layerProps.style,
+						} }
 						className={ classname( 'fl-asst-menu', layerProps.className, className ) }
 					>
 						{content}

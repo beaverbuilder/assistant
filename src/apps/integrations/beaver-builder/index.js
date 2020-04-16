@@ -5,10 +5,19 @@ import { Icon } from 'assistant/ui'
 
 const integrationEnabled = () => applyFilters( 'enable-default-integration', true, 'beaver-builder' )
 
-addFilter( 'list-item-actions', 'fl-assistant', ( actions, item ) => {
+addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env } ) => {
 
 	// Allow default integration to be overridden
-	if ( ! integrationEnabled() ) {
+	if (
+		! integrationEnabled() ||
+		'post' !== listType
+	) {
+		return actions
+	}
+
+	// Don't show if you're currently editing this item in BB
+	const href = window.location.href.split('?')
+	if ( 'beaver-builder' === env.application && item.url === href[0] ) {
 		return actions
 	}
 

@@ -84,6 +84,7 @@ class PostTransformer {
 			'url'              => get_permalink( $post ),
 			'visibility'       => 'public',
 			'commentsCount'    => get_comments_number( $post->ID ),
+			'isSticky'         => is_sticky( $post->ID ),
 		];
 
 		// Post visibility.

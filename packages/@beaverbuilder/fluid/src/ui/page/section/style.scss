@@ -24,6 +24,21 @@
                 font-weight: 500;
             }
         }
+        .fluid-section-description {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            padding: var(--fluid-lg-space);
+            padding-bottom: 0;
+            font-style: italic;
+
+            & > :first-child {
+                margin-top: 0;
+            }
+            & > :last-child {
+                margin-bottom: 0;
+            }
+        }
         .fluid-section-content {
             flex: 1 0 auto;
             display: grid;

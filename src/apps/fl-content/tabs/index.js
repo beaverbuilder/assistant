@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, App, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
+import { addFilter } from 'assistant/hooks'
 import { defaultState } from '../'
 
 export const SummaryTab = () => {
@@ -181,3 +182,23 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		</Layout.Box>
 	)
 }
+
+addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType } ) => {
+
+	if ( 'post' === listType ) {
+		const i = actions.findIndex( action => 'edit-post' === action.handle )
+		if ( i ) {
+			// Replace existing admin edit action
+			const action = actions[i]
+			delete action.href
+			action.isShowing = true
+			action.title = __('Edit Details')
+			action.to = {
+				pathname: `/fl-content/post/${item.id}`,
+				state: { item }
+			}
+		}
+	}
+
+	return actions
+})

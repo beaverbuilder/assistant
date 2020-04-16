@@ -120,12 +120,12 @@ const TabsContent = ( { config, data } ) => {
 
 const Sections = ( { config, data } ) => {
 	return Object.entries( config ).map( ( [ key, section ], i ) => {
-		const { isVisible, label, fields } = section
+		const { isVisible, label, fields, ...rest } = section
 		if ( undefined !== isVisible && ! isVisible ) {
 			return
 		}
 		return (
-			<Page.Section key={ i } handle={ key } label={ label }>
+			<Page.Section key={ i } handle={ key } label={ label } { ...rest }>
 				<Fields config={ fields } data={ data } />
 			</Page.Section>
 		)
@@ -181,7 +181,8 @@ const getFieldComponent = key => {
 		'url': Form.UrlItem,
 		'parent-terms': Form.ParentTermItems,
 		'image': Form.ImageItem,
-		'button': Form.ButtonItem
+		'button': Form.ButtonItem,
+		'calender': Form.CalenderItem
 	}
 	let Component = Form.TextItem
 

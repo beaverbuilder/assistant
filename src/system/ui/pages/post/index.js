@@ -11,6 +11,7 @@ import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
 import './style.scss'
 
+
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
@@ -83,8 +84,32 @@ export const Post = ( { location, match, history } ) => {
 						)
 					}
 				},
+				general: {
+					fields: {
+						title: {
+							label: __( 'Title' ),
+							component: 'text',
+							id: 'post_title',
+						},
+						url: {
+							label: __( 'URL' ),
+							component: 'url',
+							id: 'post_url',
+						},
+						more: {
+							component: () => (
+								<Button
+									onClick={ () => {
+										history.replace( match.url + '/edit', location.state )
+									} }
+									style={ { margin: 'auto' } }
+								>{__( 'Show More Details' )}</Button> )
+						}
+					}
+				},
 				labels: {
 					label: __( 'Labels' ),
+					description: __( 'Labels allow you to mark posts or pages for organization purposes. Labels are not publicly visible on your site.' ),
 					fields: {
 						labels: {
 							component: 'labels',
@@ -103,11 +128,7 @@ export const Post = ( { location, match, history } ) => {
 					fields: {
 						actions: {
 							component: 'actions',
-							options: args => getPostActions( { history, ...args } ),
-						},
-						isFavorite: {
-							alwaysCommit: true,
-							isVisible: false,
+							options: args => getPostActions( { history, createNotice, ...args } ),
 						},
 					}
 				},
@@ -118,7 +139,6 @@ export const Post = ( { location, match, history } ) => {
 			path: match.url + '/edit',
 			sections: {
 				general: {
-					label: '',
 					fields: {
 						title: {
 							label: __( 'Title' ),
@@ -179,7 +199,10 @@ export const Post = ( { location, match, history } ) => {
 						date: {
 							label: __( 'Publish Date' ),
 							labelPlacement: 'beside',
-							component: 'plain-text',
+							component: 'calender',
+							id: 'publish_date',
+							value: item.date
+
 						},
 					},
 				},
@@ -438,36 +461,28 @@ export const Post = ( { location, match, history } ) => {
 		const { pluginURL } = getSystemConfig()
 		if ( ! featureThumbnail ) {
 			return (
-				<>
-					{renderNotices()}
-					<Layout.AspectBox
-						ratio="4:1"
-						style={ {
-							background: `url("${pluginURL}img/dark-triangles.png")`,
-						} }
-					/>
-				</>
+				<Layout.AspectBox
+					ratio="4:1"
+					style={ {
+						background: `url("${pluginURL}img/dark-triangles.png")`,
+					} }
+				/>
 			)
 		}
 		const { alt, title, height, width, url } = featureThumbnail
 
-		return (
-			<>
-				{renderNotices()}
-				{ featureThumbnail && (
-					<Layout.AspectBox width={ width } height={ height }>
-						<img
-							src={ url }
-							srcSet={ getFeaturedImageSrcSet() }
-							style={ { objectFit: 'cover' } }
-							alt={ alt }
-							title={ title }
-							height={ height }
-							width={ width }
-						/>
-					</Layout.AspectBox>
-				)}
-			</>
+		return featureThumbnail && (
+			<Layout.AspectBox width={ width } height={ height }>
+				<img
+					src={ url }
+					srcSet={ getFeaturedImageSrcSet() }
+					style={ { objectFit: 'cover' } }
+					alt={ alt }
+					title={ title }
+					height={ height }
+					width={ width }
+				/>
+			</Layout.AspectBox>
 		)
 	}
 
@@ -521,11 +536,13 @@ export const Post = ( { location, match, history } ) => {
 			id="fl-asst-post-detail"
 			title={ labels.editItem }
 			hero={ <Hero /> }
+			notices={ renderNotices() }
 			footer={ hasChanges && <Footer /> }
 			tabs={ tabs }
 			onLoad={ focusFirstInput }
 		>
 			{ renderForm() }
+
 		</Page>
 	)
 }

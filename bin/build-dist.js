@@ -39,6 +39,7 @@ const filterFiles = src => {
         'vendor',
         'backend/tests',
         'docs',
+        'stats.json',
     ].map( name => `${fromDir}/${name}` )
 
     for( let i in ignores ) {

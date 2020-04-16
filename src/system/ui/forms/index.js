@@ -21,7 +21,8 @@ import {
 	TextareaItem,
 	UrlItem,
 	ImageItem,
-	ButtonItem
+	ButtonItem,
+	CalenderItem
 } from './items'
 
 export const Form = ( {
@@ -107,6 +108,9 @@ Form.ImageItem.displayName = 'Form.ImageItem'
 
 Form.ButtonItem = ButtonItem
 Form.ButtonItem.displayName = 'Form.ButtonItem'
+
+Form.CalenderItem = CalenderItem
+Form.CalenderItem.displayName = 'Form.CalenderItem'
 
 Form.Input = Input
 Form.Input.displayName = 'Form.Input'

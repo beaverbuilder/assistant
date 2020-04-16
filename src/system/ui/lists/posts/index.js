@@ -106,16 +106,16 @@ export const Posts = ( {
 				}
 
 				const getDescription = () => {
-					if ( item.author && item.visibility ) {
-						return __( 'by' ) + ' ' + item.author + ' | ' + item.visibility
-					} else if ( item.author ) {
+					if ( item.author ) {
 						return __( 'by' ) + ' ' + item.author
 					} else if ( item.visibility ) {
 						return item.visibility
 					}
 				}
 
-				const isCurrentPage = () => item.url === window.location.href
+				// Check if item is the current page being viewed
+				const href = window.location.href.split('?')
+				const isCurrentPage = () => item.url === href[0]
 
 				const Accessory = () => {
 					if ( item.isTrashed ) {
@@ -154,10 +154,6 @@ export const Posts = ( {
 						return []
 					}
 
-					if ( 'draft' === item.status ) {
-						marks.push( 'DRAFT' )
-					}
-
 					if ( 'labels' in item && 0 < item.labels.length ) {
 
 						item.labels.map( id => {
@@ -180,6 +176,22 @@ export const Posts = ( {
 								<Icon.Bookmark style={ { height: 12, width: 12, marginTop: 2 } } />
 							</span>
 						)
+					}
+
+					if ( 'draft' === item.status ) {
+						marks.push( __( 'Draft' ) )
+					}
+					if ( 'future' === item.status ) {
+						marks.push( __( 'Scheduled' ))
+					}
+					if ( 'private' === item.visibility ) {
+						marks.push( __( 'Private' ))
+					}
+					if ( 'protected' === item.visibility ) {
+						marks.push( __( 'Protected' ))
+					}
+					if ( item.isSticky ) {
+						marks.push( __( 'Sticky' ))
 					}
 
 					return marks

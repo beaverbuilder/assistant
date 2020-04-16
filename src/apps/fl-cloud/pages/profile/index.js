@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { useCloudState } from 'assistant/data'
-import { Button, Form, Layout, Page } from 'ui'
+import { Button, Form, Layout, Page } from 'assistant/ui'
 
 export default () => {
 	const { cloudUser } = useCloudState()

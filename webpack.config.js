@@ -2,7 +2,9 @@ const webpack = require( 'webpack' )
 const path = require( 'path' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const production = 'production' === process.env.NODE_ENV
+const isAnalyzing = 'analyze' === process.env.NODE_ENV
 
 const alias = {
     ui: path.resolve( __dirname, './src/system/ui/'),
@@ -38,6 +40,7 @@ const externals = [
 	    '@wordpress/heartbeat'          : 'wp.heartbeat',
 	    '@wordpress/hooks'              : 'wp.hooks',
 	    '@wordpress/dom-ready'          : 'wp.domReady',
+        '@wordpress/date'               : 'wp.date',
 
         /* system bundle */
         'assistant'             		: 'FL.Assistant',
@@ -120,6 +123,12 @@ const config = {
     ]
 }
 
+if ( isAnalyzing ) {
+    config.plugins.push(
+        new BundleAnalyzerPlugin()
+    )
+}
+
 if ( production ) {
 	config.mode = 'production'
 	config.stats = false
@@ -133,7 +142,7 @@ if ( production ) {
 		} ),
 		new webpack.DefinePlugin( {
 			'process.env.NODE_ENV': JSON.stringify( 'production' ),
-		} )
+		} ),
 	)
 }
 
