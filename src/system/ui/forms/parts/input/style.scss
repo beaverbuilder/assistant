@@ -26,7 +26,7 @@
                             0px 0px 0px 2px var(--fluid-accent);
             }
 
-            & > * {
+            & > *:not( input ) {
                 display: inline-flex;
                 flex-grow: 0;
                 flex-shrink: 0;

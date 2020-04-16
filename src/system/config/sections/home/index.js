@@ -170,18 +170,21 @@ registerSection( 'fl-home-subscribe', {
 	render: () => {
 		const [ subscribeEmail, setsubscribeEmail ] = useState( '' )
 		const [ isSubscribing, setisSubscribing ] = useState( false )
+		const placeholderText = __( 'Please enter a valid email address.' )
+		const successText = __( 'Subscribed Successfully!' )
+		const errorText = __( 'There was an issue subscribing. Please try again.' )
 
 		const ValidateEmail = mail => {
 			if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( mail ) ) {
 				return true
 			}
-			alert( 'Please enter a valid email address.' )
+			alert( placeholderText )
 			return false
 		}
 
 		const subscribeUser = () => {
 			if ( '' === subscribeEmail ) {
-				alert( 'Please enter an email address.' )
+				alert( placeholderText )
 			} else if ( ValidateEmail( subscribeEmail ) ) {
 
 				setisSubscribing( true )
@@ -195,17 +198,17 @@ registerSection( 'fl-home-subscribe', {
 							success: function( response ) {
 								if ( response.success ) {
 									setisSubscribing( false )
-									alert( 'Subscribed Successfully!' )
+									alert( successText )
 								} else {
 									setisSubscribing( false )
-									alert( 'There was an subscribing. Please try again.' )
+									alert( errorText )
 								}
 							},
 						},
 					] )
 				} else {
 					setisSubscribing( false )
-					alert( 'There was an subscribing. Please try again.' )
+					alert( errorText )
 				}
 			}
 		}
@@ -222,7 +225,7 @@ registerSection( 'fl-home-subscribe', {
 
 		return (
 			<form>
-				<p style={{ marginTop: 0 }}>{__('Subscribe for the Latest Assistant News and Updates!')}</p>
+				<p style={{ marginTop: 0 }}>{__('Keep up to date with Assistant!')}</p>
 				<Form.Input
 					value={ subscribeEmail }
 					onChange={ e => setsubscribeEmail( e.target.value ) }
