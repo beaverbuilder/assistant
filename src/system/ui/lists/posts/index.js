@@ -188,6 +188,9 @@ export const Posts = ( {
 					if ( 'protected' === item.visibility ) {
 						marks.push( __( 'Protected' ))
 					}
+					if ( item.isSticky ) {
+						marks.push( __( 'Sticky' ))
+					}
 
 					return marks
 				}
