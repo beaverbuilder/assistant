@@ -85,7 +85,7 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 	public function render_column( $column, $post_id ) {
 		$vars = '--fl-asst-red: #FF5335; --fl-asst-blue: #1BADF8; --fl-asst-green: #00D281; --fl-asst-yellow: #FFD000; --fl-asst-orange: #FF9500; --fl-asst-purple: #CC73E1; --fl-asst-pink: #FF2968;';
-		$styles = "{$vars} padding: 2px 5px; display: inline-flex; flex: 0 0 auto; border-radius: 20px; border: 1px solid #d2d2d2; align-items: center; color: black; background: white; margin: 2px 5px 3px; margin-left:0;";
+		$styles = "{$vars} padding: 2px 5px; display: inline-flex; flex: 0 0 auto; border-radius: 3px; border: 1px solid #d2d2d2; align-items: center; color: black; background: white; margin: 2px 5px 3px; margin-left:0; font-size: 12px;";
 		$dot = 'width: 10px; height: 10px; flex: 0 0 10px; border-radius: 7px; background: blue; margin-right: 5px;';
 
 		if ( 'fl_assistant' === $column ) {
