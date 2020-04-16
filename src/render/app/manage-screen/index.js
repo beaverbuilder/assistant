@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
-import { Page, Icon, Button, Form, Layout } from 'assistant/ui'
+import { Page, Icon, Button, Form, Layout, Env } from 'assistant/ui'
 import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
 import './style.scss'
 
@@ -101,6 +101,7 @@ const ManageScreen = () => {
 }
 
 const UIColorPreferences = () => {
+	const { application } = Env.useEnvironment()
 	const { appearance, window } = useSystemState()
 	const { setBrightness, setWindow } = getSystemActions()
 	const { origin } = window
@@ -120,24 +121,26 @@ const UIColorPreferences = () => {
 	}
 	return (
 		<Form.Section label={ __( 'Preferences' ) }>
-			<Form.Item label={ __( 'UI Brightness' ) } labelPlacement="beside">
+			{ 'beaver-builder' !== application && (
+				<Form.Item label={ __( 'UI Brightness' ) } labelPlacement="beside">
 
-				<Layout.Row gap={ 5 }>
-					<Button
-						isSelected={ 'light' === appearance.brightness }
-						onClick={ () => setBrightness( 'light' ) }
-					>
-						<Icon.Brightness />&nbsp;&nbsp;{__( 'Light' )}
-					</Button>
+					<Layout.Row gap={ 5 }>
+						<Button
+							isSelected={ 'light' === appearance.brightness }
+							onClick={ () => setBrightness( 'light' ) }
+						>
+							<Icon.Brightness />&nbsp;&nbsp;{__( 'Light' )}
+						</Button>
 
-					<Button
-						isSelected={ 'dark' === appearance.brightness }
-						onClick={ () => setBrightness( 'dark' ) }
-					>
-						<Icon.Moon />&nbsp;&nbsp;{__( 'Dark' )}
-					</Button>
-				</Layout.Row>
-			</Form.Item>
+						<Button
+							isSelected={ 'dark' === appearance.brightness }
+							onClick={ () => setBrightness( 'dark' ) }
+						>
+							<Icon.Moon />&nbsp;&nbsp;{__( 'Dark' )}
+						</Button>
+					</Layout.Row>
+				</Form.Item>
+			)}
 
 			<Form.Item label={ __( 'Anchor Pane To' ) } labelPlacement="beside">
 				<Form.SelectItem value={ origin.join( '-' ) } options={ origins } onChange={ onChangeOrigin } />
