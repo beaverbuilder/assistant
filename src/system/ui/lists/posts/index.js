@@ -113,7 +113,9 @@ export const Posts = ( {
 					}
 				}
 
-				const isCurrentPage = () => item.url === window.location.href
+				// Check if item is the current page being viewed
+				const href = window.location.href.split('?')
+				const isCurrentPage = () => item.url === href[0]
 
 				const Accessory = () => {
 					if ( item.isTrashed ) {

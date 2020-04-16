@@ -10,9 +10,14 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env
 	// Allow default integration to be overridden
 	if (
 		! integrationEnabled() ||
-		'post' !== listType ||
-		'beaver-builder' === env.application
+		'post' !== listType
 	) {
+		return actions
+	}
+
+	// Don't show if you're currently editing this item in BB
+	const href = window.location.href.split('?')
+	if ( 'beaver-builder' === env.application && item.url === href[0] ) {
 		return actions
 	}
 
