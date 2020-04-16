@@ -152,10 +152,6 @@ export const Posts = ( {
 						return []
 					}
 
-					if ( 'draft' === item.status ) {
-						marks.push( 'DRAFT' )
-					}
-
 					if ( 'labels' in item && 0 < item.labels.length ) {
 
 						item.labels.map( id => {
@@ -178,6 +174,19 @@ export const Posts = ( {
 								<Icon.Bookmark style={ { height: 12, width: 12, marginTop: 2 } } />
 							</span>
 						)
+					}
+
+					if ( 'draft' === item.status ) {
+						marks.push( __( 'Draft' ) )
+					}
+					if ( 'future' === item.status ) {
+						marks.push( __( 'Scheduled' ))
+					}
+					if ( 'private' === item.visibility ) {
+						marks.push( __( 'Private' ))
+					}
+					if ( 'protected' === item.visibility ) {
+						marks.push( __( 'Protected' ))
 					}
 
 					return marks
