@@ -149,31 +149,20 @@ export const login = ( email, password, config = {} ) => {
 		http.post( '/iam/authenticate', { email, password }, config )
 			.then( ( response ) => {
 
-				console.log( response )
-
-				return
-
-				// server returns JWT
-				const token = response.data
-
-				// if returned object is JWT and not empty object or error message
-				if ( session.isValidToken( token ) ) {
-
-					// save the token in localStorage
-					session.setToken( token )
-
-					// resolve the promise
-					resolve( token )
-				} else {
-
-					// reject promise with error
-					reject( new Error( 'Received invalid token from the server' ) )
+				// Handle an error
+				if ( response.response ) {
+					reject( response.response.data )
+					return
 				}
+
+				// Handle success
+				const { token, user } = response.data.data
+				session.setToken( token )
+				session.setUser( user )
+				resolve( { token, user } )
 			} )
 			.catch( reject )
-
 	} )
-
 }
 
 /**

@@ -288,9 +288,10 @@ export const useFormData = ( {
 
 		setIsSubmitting( true )
 		dispatch( { type: 'COMMIT_ALL' } )
+
 		const response = onSubmit( callbackArgs )
 
-		if ( response instanceof Promise ) {
+		if ( 'object' === typeof response ) {
 			response.finally( () => {
 				if ( isMounted.current ) {
 					setIsSubmitting( false )

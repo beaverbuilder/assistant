@@ -16,15 +16,6 @@ export const cloudToken = ( state = {}, action ) => {
 	}
 }
 
-export const cloudErrors = ( state = [], action ) => {
-	switch ( action.type ) {
-	case 'SET_CLOUD_ERRORS':
-		return action.errors
-	default:
-		return state
-	}
-}
-
 export const cloudUser = ( state = null, action ) => {
 	switch ( action.type ) {
 	case 'SET_CLOUD_USER':

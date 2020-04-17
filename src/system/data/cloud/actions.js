@@ -12,13 +12,6 @@ export const setCloudToken = ( token ) => {
 	}
 }
 
-export const setCloudErrors = ( errors ) => {
-	return {
-		type: 'SET_CLOUD_ERRORS',
-		errors
-	}
-}
-
 export const setCloudUser = ( user ) => {
 	return {
 		type: 'SET_CLOUD_USER',

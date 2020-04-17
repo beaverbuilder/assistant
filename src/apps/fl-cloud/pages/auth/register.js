@@ -63,10 +63,10 @@ export default ( { history } ) => {
 	return (
 		<AuthLayout>
 			<Layout.Headline>{ __( 'Sign Up for Assistant Cloud!' ) }</Layout.Headline>
-			{ !! cloudErrors.length && (
+			{ !! cloudErrors.message && (
 				<Layout.Box padX={ false }>
 					<Layout.Message status='destructive'>
-						{ cloudErrors.pop() }
+						{ cloudErrors.message }
 					</Layout.Message>
 				</Layout.Box>
 			) }

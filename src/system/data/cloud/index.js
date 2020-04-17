@@ -11,8 +11,7 @@ const cache = getCache( 'fl-cloud', 'state' ) // Test cache for mock data
 const state = {
 	isCloudConnected: auth.isConnected(),
 	cloudToken: session.getToken(),
-	cloudUser: session.getUser(),
-	cloudErrors: []
+	cloudUser: session.getUser()
 }
 
 registerStore( 'fl-assistant/cloud', {

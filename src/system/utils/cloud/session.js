@@ -4,7 +4,7 @@ const FL_CLOUD_AUTH_STORAGE_KEY = 'fl-cloud-auth'
 const FL_CLOUD_USER_KEY = 'fl-cloud-user'
 
 export const isValidToken = ( token ) => {
-	return ( isObject( token ) && token.hasOwnProperty( 'access_token' ) )
+	return 'string' === typeof token
 }
 
 export const hasToken = () => {

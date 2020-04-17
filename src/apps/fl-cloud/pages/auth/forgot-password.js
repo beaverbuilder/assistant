@@ -50,10 +50,10 @@ export default () => {
 					</Layout.Message>
 				</Layout.Box>
 			) }
-			{ !! cloudErrors.length && (
+			{ !! cloudErrors.message && (
 				<Layout.Box padX={ false }>
 					<Layout.Message status='destructive'>
-						{ cloudErrors.pop() }
+						{ cloudErrors.message }
 					</Layout.Message>
 				</Layout.Box>
 			) }

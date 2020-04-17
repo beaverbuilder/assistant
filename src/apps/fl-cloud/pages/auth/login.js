@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav } from 'assistant/ui'
-import { useCloudState } from 'assistant/data'
 import { cloudLogin } from 'assistant/utils/cloud'
 import AuthLayout from './layout'
 
 export default ( { history } ) => {
 
-	const { cloudErrors } = useCloudState()
+	const [ errorMessage, setErrorMessage ] = useState( null )
 
 	const fields = {
 		email: {
@@ -33,14 +32,19 @@ export default ( { history } ) => {
 		}
 	}
 
-	const onSubmit = ( { values } ) => {
+	const onSubmit = ( { values, setErrors } ) => {
 		const { email, password } = values
 
-		return cloudLogin( email, password ).then( () => {
-			if ( history ) {
-				history.replace( '/fl-cloud' )
-			}
-		} )
+		return cloudLogin( email, password )
+			.then( () => {
+				if ( history ) {
+					history.replace( '/fl-cloud' )
+				}
+			} )
+			.catch( ( error ) => {
+				setErrorMessage( error.message )
+				setErrors( error.errors )
+			} )
 	}
 
 	const {
@@ -55,10 +59,10 @@ export default ( { history } ) => {
 	return (
 		<AuthLayout>
 			<Layout.Headline>{ __( 'Login to Assistant Cloud' ) }</Layout.Headline>
-			{ !! cloudErrors.length && (
+			{ errorMessage && (
 				<Layout.Box padX={ false }>
 					<Layout.Message status='destructive'>
-						{ cloudErrors.pop() }
+						{ errorMessage }
 					</Layout.Message>
 				</Layout.Box>
 			) }

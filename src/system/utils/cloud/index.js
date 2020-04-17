@@ -32,58 +32,21 @@ const cloudRegisterWithMockData = ( name, email ) => {
  * Login
  */
 export const cloudLogin = ( email, password ) => {
-	const { setCloudToken, setCloudErrors, setIsCloudConnected } = getCloudActions()
+	const { setCloudToken, setCloudUser, setCloudErrors, setIsCloudConnected } = getCloudActions()
 
-	return auth.login( email, password ).then( ( token ) => {
-		setCloudErrors( [] )
-		setCloudToken( token )
-		setIsCloudConnected( true )
-	} )
-	.catch( ( error ) => {
-		const messages = []
-
-		if ( error.response && 401 == error.response.status ) {
-			messages.push( 'Invalid Credentials' )
-		} else {
-			messages.push( error.message )
-		}
-
-		setCloudErrors( messages )
-		setIsCloudConnected( false )
-	} )
-}
-
-export const cloudLoginWithMockData = ( email ) => {
-	const { setCloudToken, setCloudErrors, setCloudUser, setIsCloudConnected } = getCloudActions()
-
-	return new Promise( ( resolve ) => {
-		setTimeout( () => {
+	return auth.login( email, password )
+		.then( ( { token, user } ) => {
 			setCloudErrors( [] )
-			setCloudToken( new Date().getTime() )
-			setCloudUser( { name: 'Test User', email } )
+			setCloudToken( token )
+			setCloudUser( user )
 			setIsCloudConnected( true )
-			resolve()
-		}, 1000 )
-	} )
+		} )
 }
 
 /**
  * Logout
  */
 export const cloudLogout = () => {
-	cloudLogoutWithMockData()
-
-	// const { setCloudToken, setCloudErrors, setCloudUser, setIsCloudConnected } = getCloudActions()
-	//
-	// return auth.logout().then( () => {
-	// 	setCloudErrors( [] )
-	// 	setCloudToken( {} )
-	// 	setCloudUser( null )
-	// 	setIsCloudConnected( false )
-	// } )
-}
-
-export const cloudLogoutWithMockData = () => {
 	const { setCloudToken, setCloudErrors, setCloudUser, setIsCloudConnected } = getCloudActions()
 
 	setCloudErrors( [] )
