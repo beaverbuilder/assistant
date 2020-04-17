@@ -18,7 +18,16 @@ const currentRequest = {
  * @type {AxiosInstance}
  */
 const http = axios.create( {
-	baseURL: cloudUrl
+	baseURL: cloudUrl,
+	crossDomain: true,
+	headers: {
+		common: {
+			Accept: 'application/json',
+			'Content-type': 'application/json',
+			'X-Requested-With': 'XMLHttpRequest',
+			'Access-Control-Allow-Origin': '*',
+		}
+	}
 } )
 
 /**
@@ -77,6 +86,54 @@ const interval = setInterval( async() => {
 }, 60000 )
 
 /**
+ * Register with Assistant Cloud
+ *
+ * @param email
+ * @param password
+ * @param config
+ * @returns Promise
+ */
+export const register = ( name, email, password, config = {} ) => {
+
+	const data = { email, password }
+
+	data.first_name = name.split( ' ' ).shift()
+	data.last_name = name.split( ' ' ).shift()
+
+	// Wrap axios promise in our own promise
+	return new Promise( ( resolve, reject ) => {
+
+		http.post( '/account/user/register', data, config )
+			.then( ( response ) => {
+
+				console.log( response )
+
+				return
+
+				// server returns JWT
+				const token = response.data
+
+				// if returned object is JWT and not empty object or error message
+				if ( session.isValidToken( token ) ) {
+
+					// save the token in localStorage
+					session.setToken( token )
+
+					// resolve the promise
+					resolve( token )
+				} else {
+
+					// reject promise with error
+					reject( new Error( 'Received invalid token from the server' ) )
+				}
+			} )
+			.catch( reject )
+
+	} )
+
+}
+
+/**
  * Login to Assistant Cloud
  *
  * @param email
@@ -89,8 +146,12 @@ export const login = ( email, password, config = {} ) => {
 	// Wrap axios promise in our own promise
 	return new Promise( ( resolve, reject ) => {
 
-		http.post( '/auth/login', { email, password }, config )
+		http.post( '/iam/authenticate', { email, password }, config )
 			.then( ( response ) => {
+
+				console.log( response )
+
+				return
 
 				// server returns JWT
 				const token = response.data

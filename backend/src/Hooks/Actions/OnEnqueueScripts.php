@@ -107,6 +107,7 @@ class OnEnqueueScripts {
 			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
 			'apiRoot'           => esc_url_raw( get_rest_url() ),
 			'cloudUrl'          => FL_ASSISTANT_CLOUD_URL,
+			'cloudWpUrl'		=> FL_ASSISTANT_WP_API_URL,
 			'contentTypes'      => $this->posts->get_types(),
 			'contentStatus'     => $this->posts->get_stati(),
 			'currentPageView'   => $this->site->get_current_view(),

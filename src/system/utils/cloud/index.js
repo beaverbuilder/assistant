@@ -32,27 +32,25 @@ const cloudRegisterWithMockData = ( name, email ) => {
  * Login
  */
 export const cloudLogin = ( email, password ) => {
-	return cloudLoginWithMockData( email, password )
+	const { setCloudToken, setCloudErrors, setIsCloudConnected } = getCloudActions()
 
-	// const { setCloudToken, setCloudErrors, setIsCloudConnected } = getCloudActions()
-	//
-	// return auth.login( email, password ).then( ( token ) => {
-	// 	setCloudErrors( [] )
-	// 	setCloudToken( token )
-	// 	setIsCloudConnected( true )
-	// } )
-	// .catch( ( error ) => {
-	// 	const messages = []
-	//
-	// 	if ( error.response && 401 == error.response.status ) {
-	// 		messages.push( 'Invalid Credentials' )
-	// 	} else {
-	// 		messages.push( error.message )
-	// 	}
-	//
-	// 	setCloudErrors( messages )
-	// 	setIsCloudConnected( false )
-	// } )
+	return auth.login( email, password ).then( ( token ) => {
+		setCloudErrors( [] )
+		setCloudToken( token )
+		setIsCloudConnected( true )
+	} )
+	.catch( ( error ) => {
+		const messages = []
+
+		if ( error.response && 401 == error.response.status ) {
+			messages.push( 'Invalid Credentials' )
+		} else {
+			messages.push( error.message )
+		}
+
+		setCloudErrors( messages )
+		setIsCloudConnected( false )
+	} )
 }
 
 export const cloudLoginWithMockData = ( email ) => {
