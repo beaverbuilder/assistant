@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav } from 'assistant/ui'
-import { useCloudState } from 'assistant/data'
 import { cloudPasswordReset } from 'assistant/utils/cloud'
 import AuthLayout from './layout'
 
 export default () => {
 
 	const [ showSuccessMessage, setShowSuccessMessage ] = useState( false )
-	const { cloudErrors } = useCloudState()
+	const [ errorMessage, setErrorMessage ] = useState( null )
 
 	const fields = {
 		email: {
@@ -23,12 +22,17 @@ export default () => {
 		}
 	}
 
-	const onSubmit = ( { values } ) => {
+	const onSubmit = ( { values, setErrors } ) => {
 		const { email } = values
 
-		return cloudPasswordReset( email ).then( () => {
-			setShowSuccessMessage( true )
-		} )
+		return cloudPasswordReset( email )
+			.then( () => {
+				setShowSuccessMessage( true )
+			} )
+			.catch( ( error ) => {
+				setErrorMessage( error.message )
+				setErrors( error.errors )
+			} )
 	}
 
 	const {
@@ -50,10 +54,10 @@ export default () => {
 					</Layout.Message>
 				</Layout.Box>
 			) }
-			{ !! cloudErrors.message && (
+			{ errorMessage && (
 				<Layout.Box padX={ false }>
 					<Layout.Message status='destructive'>
-						{ cloudErrors.message }
+						{ errorMessage }
 					</Layout.Message>
 				</Layout.Box>
 			) }

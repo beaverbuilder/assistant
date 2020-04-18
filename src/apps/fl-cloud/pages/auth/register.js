@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav } from 'assistant/ui'
-import { useCloudState } from 'assistant/data'
 import { cloudRegister } from 'assistant/utils/cloud'
 import AuthLayout from './layout'
 
 export default ( { history } ) => {
 
-	const { cloudErrors } = useCloudState()
+	const [ errorMessage, setErrorMessage ] = useState( null )
 
 	const fields = {
-		name: {
-			label: __( 'Name' ),
+		first_name: {
+			label: __( 'First Name' ),
 			component: 'text',
 			alwaysCommit: true,
 			validate: ( value, errors ) => {
 				if ( '' === value ) {
-					errors.push( __( 'Please enter your name.' ) )
+					errors.push( __( 'Please enter your first name.' ) )
+				}
+			}
+		},
+		last_name: {
+			label: __( 'Last Name' ),
+			component: 'text',
+			alwaysCommit: true,
+			validate: ( value, errors ) => {
+				if ( '' === value ) {
+					errors.push( __( 'Please enter your last name.' ) )
 				}
 			}
 		},
@@ -26,7 +35,7 @@ export default ( { history } ) => {
 			alwaysCommit: true,
 			validate: ( value, errors ) => {
 				if ( '' === value ) {
-					errors.push( __( 'Please enter an email address.' ) )
+					errors.push( __( 'Please enter your email address.' ) )
 				}
 			}
 		},
@@ -43,12 +52,17 @@ export default ( { history } ) => {
 		}
 	}
 
-	const onSubmit = ( { values } ) => {
-		const { name, email, password } = values
+	const onSubmit = ( { values, setErrors } ) => {
+		const { first_name, last_name, email, password } = values
 
-		return cloudRegister( name, email, password ).then( () => {
-			history.replace( '/fl-cloud' )
-		} )
+		return cloudRegister( first_name, last_name, email, password )
+			.then( () => {
+				history.replace( '/fl-cloud/auth/login', { registered: true } )
+			} )
+			.catch( ( error ) => {
+				setErrorMessage( error.message )
+				setErrors( error.errors )
+			} )
 	}
 
 	const {
@@ -63,10 +77,10 @@ export default ( { history } ) => {
 	return (
 		<AuthLayout>
 			<Layout.Headline>{ __( 'Sign Up for Assistant Cloud!' ) }</Layout.Headline>
-			{ !! cloudErrors.message && (
+			{ errorMessage && (
 				<Layout.Box padX={ false }>
 					<Layout.Message status='destructive'>
-						{ cloudErrors.message }
+						{ errorMessage }
 					</Layout.Message>
 				</Layout.Box>
 			) }

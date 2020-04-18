@@ -31,14 +31,14 @@ const http = axios.create( {
 } )
 
 /**
- * Attach JWT token to every request, if it exists
+ * Attach the token to every request, if it exists
  */
 http.interceptors.request.use( ( config ) => {
 
 	// mark request as active
 	currentRequest.active = true
 
-	// attach jwt token to request
+	// attach the token to request
 	if ( session.hasToken() ) {
 		config.headers.Authorization = 'Bearer ' + session.getToken().access_token
 	}
@@ -93,12 +93,16 @@ const interval = setInterval( async() => {
  * @param config
  * @returns Promise
  */
-export const register = ( name, email, password, config = {} ) => {
+export const register = ( first_name, last_name, email, password, config = {} ) => {
 
-	const data = { email, password }
-
-	data.first_name = name.split( ' ' ).shift()
-	data.last_name = name.split( ' ' ).shift()
+	const data = {
+		first_name,
+		last_name,
+		email,
+		username: email,
+		password,
+		password_confirmation: password
+	}
 
 	// Wrap axios promise in our own promise
 	return new Promise( ( resolve, reject ) => {
@@ -106,26 +110,14 @@ export const register = ( name, email, password, config = {} ) => {
 		http.post( '/account/user/register', data, config )
 			.then( ( response ) => {
 
-				console.log( response )
-
-				return
-
-				// server returns JWT
-				const token = response.data
-
-				// if returned object is JWT and not empty object or error message
-				if ( session.isValidToken( token ) ) {
-
-					// save the token in localStorage
-					session.setToken( token )
-
-					// resolve the promise
-					resolve( token )
-				} else {
-
-					// reject promise with error
-					reject( new Error( 'Received invalid token from the server' ) )
+				// Handle an error
+				if ( response.response ) {
+					reject( response.response.data )
+					return
 				}
+
+				// Handle success
+				resolve()
 			} )
 			.catch( reject )
 
@@ -166,19 +158,7 @@ export const login = ( email, password, config = {} ) => {
 }
 
 /**
- * Get Cloud User info
- * @param config
- * @returns {Promise<T>}
- */
-export const fetchCurrentUser = async( config = {} ) => {
-	const response = await http.post( '/auth/me', {}, config )
-	const user = response.data
-	session.setUser( user )
-	return user
-}
-
-/**
- * Refresh JWT token
+ * Refresh token
  * @param config
  * @returns Promise
  */
@@ -187,49 +167,42 @@ export const refresh = ( config = {} ) => {
 	// Wrap axios promise in our own promise
 	return new Promise( ( resolve, reject ) => {
 
-		// attempt to refresh JWT
-		http.post( '/auth/refresh', {}, config )
+		// attempt to refresh the token
+		http.post( '/iam/token/refresh', {}, config )
 			.then( ( response ) => {
-				const token = response.data
 
-				// if server returns valid JWT
-				if ( session.isValidToken( token ) ) {
+				console.log(response)
 
-					// save to localStorage
-					session.setToken( token )
-
-					// resolve promise with token
-					resolve( token )
-				} else {
-
-					// reject promise with error
-					reject( new Error( 'Received invalid refresh token.' ) )
+				// Handle an error
+				if ( response.response ) {
+					reject( response.response.data )
+					return
 				}
 
-			} ).catch( reject )
+				// Handle success
+				const { token, user } = response.data.data
+				session.setToken( token )
+				session.setUser( user )
+				resolve( { token, user } )
+			} )
+			.catch( reject )
 	} )
 
 }
 
 /**
- * Clear JWT token locally and on server
+ * Clear the token locally and on server
  * @param config
  * @returns Promise
  */
 export const logout = ( config = {} ) => {
 
 	return new Promise( ( resolve, reject ) => {
-		http.post( '/auth/logout', {}, config )
+		session.removeToken()
+		session.removeUser()
+		http.post( '/iam/token/destroy', {}, config )
 			.then( () => {
 				resolve()
-			} )
-			.catch( ( error ) => {
-				console.log( 'could not invalidate token on the server', error.message ) // eslint-disable-line no-console
-				reject( error )
-			} )
-			.finally( () => {
-				session.removeToken()
-				session.removeUser()
 			} )
 	} )
 }

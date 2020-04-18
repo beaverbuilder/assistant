@@ -4,8 +4,8 @@ import { Button, Form, Layout, Nav } from 'assistant/ui'
 import { cloudLogin } from 'assistant/utils/cloud'
 import AuthLayout from './layout'
 
-export default ( { history } ) => {
-
+export default ( { location, history } ) => {
+	const { registered } = location.state ? location.state : {}
 	const [ errorMessage, setErrorMessage ] = useState( null )
 
 	const fields = {
@@ -59,6 +59,13 @@ export default ( { history } ) => {
 	return (
 		<AuthLayout>
 			<Layout.Headline>{ __( 'Login to Assistant Cloud' ) }</Layout.Headline>
+			{ registered && ! errorMessage && (
+				<Layout.Box padX={ false }>
+					<Layout.Message status='primary'>
+						{ __( 'Registration successful! Please login.' ) }
+					</Layout.Message>
+				</Layout.Box>
+			) }
 			{ errorMessage && (
 				<Layout.Box padX={ false }>
 					<Layout.Message status='destructive'>

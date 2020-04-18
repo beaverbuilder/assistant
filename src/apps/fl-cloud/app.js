@@ -19,6 +19,10 @@ export default ( { match, history } ) => {
 		history.replace( '/fl-cloud/auth/login' )
 		return null
 	}
+	if ( isCloudConnected && pathname.includes( '/auth/' ) ) {
+		history.replace( '/fl-cloud' )
+		return null
+	}
 
 	return (
 		<Nav.Switch>
