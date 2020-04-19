@@ -19,17 +19,18 @@ const externals = [
 	    'react'                         : 'React',
 	    'react-dom'                     : 'ReactDOM',
 	    'lodash'                        : 'lodash',
-	    'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
-	    'redux'              		    : 'FL.UID.vendors.Redux',
-	    'classnames'         	        : 'FL.UID.vendors.classnames',
-	    'camelcase'						: 'FL.UID.vendors.camelcase',
-        'react-laag'                    : 'FL.UID.vendors.ReactLaag',
-        'resize-observer-polyfill'      : 'FL.UID.vendors.ResizeObserverPolyfill',
 
         /* FLUID environment */
         'fluid'                         : 'FL.UID',
         'fluid/ui'                      : 'FL.UID.ui',
         'fluid/data'                    : 'FL.UID.data',
+        /* Vendors provided by FL.UID */
+        'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
+	    'redux'              		    : 'FL.UID.vendors.Redux',
+	    'classnames'         	        : 'FL.UID.vendors.classnames',
+	    'camelcase'						: 'FL.UID.vendors.camelcase',
+        'react-laag'                    : 'FL.UID.vendors.ReactLaag',
+        'resize-observer-polyfill'      : 'FL.UID.vendors.ResizeObserverPolyfill',
 
 	    /* wp */
 	    '@wordpress/i18n'               : 'wp.i18n',
