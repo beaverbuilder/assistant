@@ -533,12 +533,19 @@ export const Post = ( { location, match, history } ) => {
 			title={ labels.editItem }
 			hero={ <Hero /> }
 			notices={ renderNotices() }
-			footer={ hasChanges && <Footer /> }
+			footer={ hasChanges && false === item.hasLock && <Footer /> }
 			tabs={ tabs }
 			onLoad={ focusFirstInput }
+			disable={ item.hasLock }
 		>
-			{ renderForm() }
-
+			{item.hasLock && (
+				<Layout.Message status='alert' icon={ Icon.Reject }>
+					This post is being edited by another user.
+				</Layout.Message>
+			)}
+			<LockView isLock={ item.hasLock }>
+				{ renderForm() }
+			</LockView>
 		</Page>
 	)
 }
