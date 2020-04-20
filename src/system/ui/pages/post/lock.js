@@ -18,7 +18,7 @@ export const LockView = props => {
 
 	return (
 		<Fragment>
-			<div {...merged}>
+			<div { ...merged }>
 				<div>{children}</div>
 			</div>
 		</Fragment>

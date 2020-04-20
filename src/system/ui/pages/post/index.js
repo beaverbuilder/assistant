@@ -468,7 +468,7 @@ export const Post = ( { location, match, history } ) => {
 				/>
 			)
 		}
-		const { alt, title, height, width, url } = featureThumbnail
+		const { alt, title, height, width } = featureThumbnail
 
 		return featureThumbnail && (
 			<Layout.AspectBox width={ width } height={ height }>

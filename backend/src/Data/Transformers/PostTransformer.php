@@ -89,7 +89,7 @@ class PostTransformer {
 			'visibility'       => 'public',
 			'commentsCount'    => get_comments_number( $post->ID ),
 			'isSticky'         => is_sticky( $post->ID ),
-			'hasLock'		   => wp_check_post_lock( $post->ID ),
+			'hasLock'          => wp_check_post_lock( $post->ID ),
 		];
 
 		// Post visibility.
