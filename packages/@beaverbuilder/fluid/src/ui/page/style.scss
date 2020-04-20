@@ -23,7 +23,6 @@
         justify-content: flex-start;
         align-items: stretch;
         padding: 5px;
-        padding-bottom: 3px;
     }
 
     .fluid-pad {
@@ -108,10 +107,9 @@
             flex-direction: column;
             background: var(--fluid-background);
             z-index: 1;
-
-            .fluid-page-top-content {
-                border-bottom: 2px solid var(--fluid-line-color);
-            }
+        }
+        .fluid-page-top-content {
+            border-bottom: 2px solid var(--fluid-line-color);
         }
     }
     .fluid-page-footer {
@@ -137,5 +135,14 @@
                 margin-right: 0px;
             }
         }
+    }
+
+    .fluid-page-overlay {
+        position: absolute;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        pointer-events: none;
     }
 }

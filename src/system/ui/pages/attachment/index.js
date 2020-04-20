@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form, Layout } from 'ui'
+import { Page, Form, Layout, Notice } from 'ui'
 import { getSrcSet } from 'utils/image'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
@@ -10,6 +10,7 @@ export const Attachment = ( { location, history } ) => {
 	const { item } = location.state
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
+	const { renderNotices, createNotice } = Notice.useNotices()
 	const { id, title, type, subtype } = item
 
 	const onSubmit = ( { changed, ids } ) => {
@@ -37,7 +38,11 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 		const handleError = error => {
-			alert( __( 'Error: Changes not saved! Please try again.' ) )
+			createNotice( {
+				id: 'update-error',
+				status: 'error',
+				content: __( 'Error saving! Please try again.' )
+			} )
 			if ( error ) {
 				console.log( error ) // eslint-disable-line no-console
 			}
@@ -52,7 +57,11 @@ export const Attachment = ( { location, history } ) => {
 					handleError()
 				} else {
 					setCurrentHistoryState( { item } )
-					alert( __( 'Changes Saved!' ) )
+					createNotice( {
+						id: 'update-success',
+						status: 'success',
+						content: __( 'Changes saved!' )
+					} )
 				}
 			} )
 			.catch( error => {
@@ -66,7 +75,11 @@ export const Attachment = ( { location, history } ) => {
 				.attachments()
 				.update( id, 'trash' )
 				.then( () => {
-					alert( 'Media permanently deleted!' )
+					createNotice( {
+						id: 'delete-success',
+						status: 'success',
+						content: __( 'Media Permanently Deleted!' )
+					} )
 				} )
 			history.goBack()
 		}
@@ -131,6 +144,21 @@ export const Attachment = ( { location, history } ) => {
 				},
 			},
 		},
+		labels: {
+			label: __( 'Labels' ),
+			fields: {
+				labels: {
+					component: 'labels',
+					alwaysCommit: true,
+					onAdd: label => {
+						wpRest.attachments().addLabel( item.id, label.id )
+					},
+					onRemove: label => {
+						wpRest.attachments().removeLabel( item.id, label.id )
+					},
+				},
+			}
+		},
 		actions: {
 			label: __( 'Actions' ),
 			fields: {
@@ -184,18 +212,10 @@ export const Attachment = ( { location, history } ) => {
 	const Hero = () => {
 		const { width, sizes, height, alt, type, url, mime } = item
 		const srcSet = getSrcSet( sizes )
-		const heightPercentage = ( height / width ) * 100
 
 		// Temp - Handle non-image heroes.
 		if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! item.thumbnail ) {
 			return null
-		}
-
-		const style = {
-			position: 'relative',
-			boxSizing: 'border-box',
-			paddingTop: heightPercentage ? heightPercentage + '%' : '50%',
-			background: 'var(--fluid-primary-background)',
 		}
 
 		let mediaContent = ''
@@ -207,19 +227,7 @@ export const Attachment = ( { location, history } ) => {
 		}
 
 		return (
-			<div style={ style }>
-				<div
-					style={ {
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						width: '100%',
-						height: '100%',
-					} }
-				>
-					{ mediaContent }
-				</div>
-			</div>
+			<Layout.AspectBox height={ height } width={ width }>{mediaContent}</Layout.AspectBox>
 		)
 	}
 
@@ -229,6 +237,7 @@ export const Attachment = ( { location, history } ) => {
 			title={ __( 'Attachment' ) }
 			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }
+			notices={ renderNotices() }
 		>
 			<Layout.Headline>{title}</Layout.Headline>
 			{renderForm()}

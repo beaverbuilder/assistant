@@ -51,7 +51,7 @@ class AttachmentTransformer {
 		];
 
 		// Labels
-		$labels = $this->notations->get_labels( 'post', $attachment->ID );
+		$labels = $this->notations->get_labels( 'attachment', $attachment->ID );
 		foreach ( $labels as $label ) {
 			$response['labels'][] = $label['label_id'];
 		}

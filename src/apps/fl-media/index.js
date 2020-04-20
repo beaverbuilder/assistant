@@ -11,6 +11,7 @@ export const defaultState = {
 		post_mime_type: 'all',
 		order: 'DESC',
 		orderby: 'date',
+		label: '0',
 	}
 }
 

@@ -28,6 +28,8 @@ const Page = ( {
 	padY = true,
 	contentWrapStyle = null,
 
+	overlay,
+
 	...rest
 } ) => {
 	const { isRoot } = useContext( Nav.Context )
@@ -101,7 +103,9 @@ const Page = ( {
 					flexShrink: shouldScroll ? 0 : 1,
 				} }>
 					<div className="fluid-sticky-element fluid-page-top-content" style={ topContentStyle }>
-						{ false !== toolbar  && (
+
+						{ toolbar }
+						{ false !== toolbar && ! toolbar && (
 							<div className="fluid-toolbar fluid-page-top-toolbar">
 								{ showBackButton && <Nav.BackButton /> }
 								{ icon && (
@@ -121,12 +125,14 @@ const Page = ( {
 						)}
 						{ header && <div className="fluid-toolbar fluid-page-header">{header}</div> }
 					</div>
+
 					<Layout.Box padX={ padX } padY={ padY } style={ contentBoxStyle }>
 						<Error.Boundary>{children}</Error.Boundary>
 					</Layout.Box>
 				</div>
 			</div>
 			{ footer && <div className="fluid-page-footer">{footer}</div> }
+			{ overlay && <div className="fluid-page-overlay">{overlay}</div> }
 		</div>
 	)
 }

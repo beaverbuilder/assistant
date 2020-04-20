@@ -124,6 +124,13 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
+
+			/*
+			'integrations'		=> [
+				'yoastSEO'		=> [
+					'isActive' => is_plugin_active('wordpress-seo/wp-seo.php')
+				]
+			],*/
 		];
 	}
 
@@ -188,6 +195,7 @@ class OnEnqueueScripts {
 				'wp-keycodes',
 				'wp-dom-ready',
 				'wp-components',
+				'wp-date',
 			];
 
 			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid', 'wp-components' ], $ver, null );

@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from 'react'
+import { __ } from '@wordpress/i18n'
 import { Button, Form, Nav, Page, Layout } from 'ui'
 import { useFormData } from '../use-form-data'
 import './style.scss'
@@ -8,6 +9,7 @@ export const useForm = ( {
 	sections = {},
 	fields = {},
 	defaults = {},
+	renderTabs = true,
 	...options // See useFormData
 } ) => {
 	const tabData = useMemo( () => tabs, [ JSON.stringify( tabs ) ] )
@@ -22,7 +24,7 @@ export const useForm = ( {
 		if ( Object.entries( tabData ).length ) {
 			return (
 				<>
-					<Tabs config={ tabData } />
+					{ renderTabs && <Tabs config={ tabData } /> }
 					<Form { ...form }>
 						<TabsContent config={ tabData } data={ formData } />
 					</Form>
@@ -104,18 +106,26 @@ const TabsContent = ( { config, data } ) => {
 					/>
 				)
 			} ) }
+			<Nav.Route render={ () => (
+				<Layout.Box style={ {
+					textAlign: 'center',
+					fontSize: 16
+				} } outset={ true }>
+					{__( 'Oh no! We couldn\'t find that tab. Try Another' )}
+				</Layout.Box>
+			) } />
 		</Nav.Switch>
 	)
 }
 
 const Sections = ( { config, data } ) => {
 	return Object.entries( config ).map( ( [ key, section ], i ) => {
-		const { isVisible, label, fields } = section
+		const { isVisible, label, fields, ...rest } = section
 		if ( undefined !== isVisible && ! isVisible ) {
 			return
 		}
 		return (
-			<Page.Section key={ i } handle={ key } label={ label }>
+			<Page.Section key={ i } handle={ key } label={ label } { ...rest }>
 				<Fields config={ fields } data={ data } />
 			</Page.Section>
 		)
@@ -171,7 +181,8 @@ const getFieldComponent = key => {
 		'url': Form.UrlItem,
 		'parent-terms': Form.ParentTermItems,
 		'image': Form.ImageItem,
-		'button': Form.ButtonItem
+		'button': Form.ButtonItem,
+		'calender': Form.CalenderItem
 	}
 	let Component = Form.TextItem
 

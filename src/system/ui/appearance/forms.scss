@@ -82,37 +82,48 @@
         input[type="checkbox"] {
             -moz-appearace: none;
             -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            background-color: var(--fl-asst-secondary-surface-background);
-            box-shadow: 0px 0px 0px 2px var(--fl-asst-dark-4);
-            border-radius: 3px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--fluid-box-background);
+            box-shadow: none;
+            border: none;
+            border-radius: var(--fluid-radius);
 
             &:focus {
                 outline: none;
                 box-shadow: 0px 0px 0px 2px var(--fl-asst-accent-color),
-                            inset 0px 0px 0px 2px var(--fl-asst-surface-background);;
+                            inset 0px 0px 0px 2px var(--fl-asst-surface-background);
             }
 
             &:checked {
-                background-color: var(--fl-asst-blue);
+                background-color: var(--fluid-primary-color);
                 box-shadow: none;
 
                 &:focus {
                     outline: none;
                     box-shadow: 0px 0px 0px 2px var(--fl-asst-accent-color),
-                                inset 0px 0px 0px 2px var(--fl-asst-surface-background);
+                                inset 0px 0px 0px 2px var(--fluid-background);
                 }
 
                 &:after {
                     display: block;
-                    content: "✓";
+                    content: "\2713";
                     color: white;
-                    font-size: 16px;
+                    font-size: 20px;
                     line-height: 1;
                     font-weight: bold;
-                    text-align:center;
+                    text-align: center;
+                    margin-left: -1px;
                 }
+                &:before {
+                    content: '';
+                    display: none;
+                }
+            }
+        }
+        .fluid-color-scheme-dark {
+            input[type="checkbox"] {
+                background-color: var(--fl-asst-input-background);
             }
         }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { useCloudState } from 'assistant/data'
 import { cloudLogout } from 'assistant/utils/cloud'
-import { Button, Layout, Page } from 'ui'
+import { Button, Layout, Page } from 'assistant/ui'
 import AppIcon from '../../icon'
 
 export default () => {

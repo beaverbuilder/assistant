@@ -1,7 +1,7 @@
 import React, { createContext } from 'react'
 import classname from 'classnames'
 import { Page as FLUIDPage } from 'fluid/ui'
-import { App } from 'ui'
+import { App, Nav } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
 import { RegisteredSections } from './parts'
@@ -25,18 +25,40 @@ const focusFirstElement = () => {
 	}
 }
 
-const Page = ( { className, showAsRoot = false, onLoad = focusFirstElement, ...rest } ) => {
+const Page = ( {
+	className,
+	showAsRoot = false,
+	onLoad = focusFirstElement,
+	tabs,
+	toolbar,
+	notices,
+	overlay,
+	children,
+	...rest
+} ) => {
 	const { isAppRoot } = App.useApp()
 	const classes = classname( {
 		'is-app-root': isAppRoot || showAsRoot,
+		'fl-asst-page-has-tabs': tabs,
 	}, className )
+
+	const Overlay = () => (
+		<>
+			{overlay}
+			{notices}
+		</>
+	)
 
 	return (
 		<FLUIDPage
 			className={ classes }
 			onLoad={ onLoad }
+			toolbar={ tabs ? <Nav.TabsToolbar tabs={ tabs } /> : toolbar }
+			overlay={ overlay || ( notices && 0 < notices.length ) && <Overlay /> }
 			{ ...rest }
-		/>
+		>
+			{children}
+		</FLUIDPage>
 	)
 }
 

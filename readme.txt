@@ -1,5 +1,5 @@
 === Assistant - Every Day Productivity Apps ===
-Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross
+Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media, Upload, Beaver Builder
 Requires at least: 5.2
 Tested up to: 5.4
@@ -74,6 +74,17 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
+= 0.4.0 =
+* Added access to all public post types inside content app
+* Refined post detail screen layout
+* Added ability to query posts by label
+* Added ability to query attachments by label
+* Fix showing publish bar when favoriting a post
+* Added notice bar and removed confirmation alerts
+* Added ability to export post from post detail screen
+* Refined labels picker control
+* Added calendar control to edit publish date
+
 = 0.3.1 (2020-03-27) =
 * Harden form control styles
 * Remove Assistant button from Beaver Builder toolbar (too soon!)
@@ -81,7 +92,7 @@ Our API for creating new apps and extending the existing ones is in development 
 * Enhancement - Made publish bar more prominent
 * Fix attachment alt text field displaying title
 
-= 0.3.0 (2020-03-25) !!REBIRTH!! =
+= 0.3.0 (2020-03-25) =
 * Complete ground-up rebuild
 * All new apps for working with Content, Media, Comments & Updates
 * Add custom labels to posts and pages to help you organize your site

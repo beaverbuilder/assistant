@@ -2,10 +2,11 @@
 
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Data\Repository\LabelsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Transformers\PostTransformer;
-use FL\Assistant\System\Integrations\BeaverBuilder;
 use FL\Assistant\System\Contracts\ControllerAbstract;
+
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -14,10 +15,16 @@ use WP_REST_Server;
  */
 class PostsController extends ControllerAbstract {
 
+	protected $labels;
 	protected $posts;
 	protected $transformer;
 
-	public function __construct( PostsRepository $posts, PostTransformer $transformer ) {
+	public function __construct(
+		LabelsRepository $labels,
+		PostsRepository $posts,
+		PostTransformer $transformer
+	) {
+		$this->labels = $labels;
 		$this->posts = $posts;
 		$this->transformer = $transformer;
 	}
@@ -27,7 +34,8 @@ class PostsController extends ControllerAbstract {
 	 */
 	public function register_routes() {
 		$this->route(
-			'/posts', [
+			'/posts',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts' ],
@@ -46,7 +54,8 @@ class PostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/hierarchical', [
+			'/posts/hierarchical',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_posts' ],
@@ -58,7 +67,8 @@ class PostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/count', [
+			'/posts/count',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts_count' ],
@@ -70,7 +80,8 @@ class PostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/(?P<id>\d+)', [
+			'/posts/(?P<id>\d+)',
+			[
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'post' ],
@@ -118,7 +129,8 @@ class PostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/(?P<id>\d+)/clone', [
+			'/posts/(?P<id>\d+)/clone',
+			[
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'clone_post' ],
@@ -142,8 +154,14 @@ class PostsController extends ControllerAbstract {
 	public function posts( WP_REST_Request $request ) {
 
 		$params = $request->get_params();
-
 		$params['perm'] = 'editable';
+
+		if ( isset( $params['label'] ) && $params['label'] ) {
+			$params['post__in'] = $this->labels->get_object_ids( 'post', $params['label'] );
+			if ( ! count( $params['post__in'] ) ) {
+				$params['post__in'][] = -1; // post__in returns all posts if empty.
+			}
+		}
 
 		$pager = $this->posts->paginate( $params, $this->transformer );
 
@@ -158,10 +176,11 @@ class PostsController extends ControllerAbstract {
 	public function hierarchical_posts( $request ) {
 		$response = [];
 		$children = [];
-		$params   = $request->get_params();
-		$posts    = get_posts(
+		$params = $request->get_params();
+		$posts = get_posts(
 			array_merge(
-				$params, [
+				$params,
+				[
 					'perm' => 'editable',
 				]
 			)
@@ -172,15 +191,15 @@ class PostsController extends ControllerAbstract {
 				if ( ! isset( $children[ $post->post_parent ] ) ) {
 					$children[ $post->post_parent ] = [];
 				}
-				$children[ $post->post_parent ][] = $post;
+				$children [ $post->post_parent ][] = $post;
 			}
 		}
 
 		foreach ( $posts as $post ) {
 			if ( ! $post->post_parent ) {
-				$parent             = $this->transform( $post );
+				$parent = $this->transform( $post );
 				$parent['children'] = $this->get_child_posts( $post, $children );
-				$response[]         = $parent;
+				$response[] = $parent;
 			}
 		}
 
@@ -202,7 +221,7 @@ class PostsController extends ControllerAbstract {
 		if ( isset( $children[ $post->ID ] ) ) {
 			$post_children = $children[ $post->ID ];
 			foreach ( $post_children as $i => $child ) {
-				$post_children[ $i ]             = $this->transform( $child );
+				$post_children[ $i ] = $this->transform( $child );
 				$post_children[ $i ]['children'] = $this->get_child_posts( $child, $children );
 			}
 
@@ -218,11 +237,11 @@ class PostsController extends ControllerAbstract {
 	public function posts_count( $request ) {
 
 		$post_types = $this->posts->get_types();
-		$response   = [];
+		$response = [];
 
 		foreach ( $post_types as $slug => $label ) {
-			$counts            = wp_count_posts( $slug );
-			$counts->total     = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
+			$counts = wp_count_posts( $slug );
+			$counts->total = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
 			$response[ $slug ] = $counts;
 		}
 
@@ -265,10 +284,10 @@ class PostsController extends ControllerAbstract {
 	public function clone_post( $request ) {
 		global $wpdb;
 
-		$post_id      = absint( $request->get_param( 'id' ) );
-		$post         = get_post( $post_id );
+		$post_id = absint( $request->get_param( 'id' ) );
+		$post = get_post( $post_id );
 		$current_user = wp_get_current_user();
-		$post_data    = [
+		$post_data = [
 			'comment_status' => $post->comment_status,
 			'ping_status'    => $post->ping_status,
 			'post_author'    => $current_user->ID,
@@ -286,12 +305,12 @@ class PostsController extends ControllerAbstract {
 		];
 
 		$new_post_id = wp_insert_post( $post_data );
-		$post_meta   = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id ) );
-		$taxonomies  = get_object_taxonomies( $post->post_type );
+		$post_meta = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id ) );
+		$taxonomies = get_object_taxonomies( $post->post_type );
 
 		if ( count( $post_meta ) !== 0 ) {
 			foreach ( $post_meta as $meta_info ) {
-				$meta_key   = $meta_info->meta_key;
+				$meta_key = $meta_info->meta_key;
 				$meta_value = addslashes( $meta_info->meta_value );
 				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
@@ -299,7 +318,7 @@ class PostsController extends ControllerAbstract {
 
 		foreach ( $taxonomies as $taxonomy ) {
 			$post_terms = wp_get_object_terms( $post_id, $taxonomy );
-			for ( $i = 0; $i < count( $post_terms ); $i ++ ) {
+			for ( $i = 0; $i < count( $post_terms ); $i++ ) {
 				wp_set_object_terms( $new_post_id, $post_terms[ $i ]->slug, $taxonomy, true );
 			}
 		}
@@ -311,7 +330,7 @@ class PostsController extends ControllerAbstract {
 	 * Updates a single post based on the specified action.
 	 */
 	public function update_post( $request ) {
-		$id     = $request->get_param( 'id' );
+		$id = $request->get_param( 'id' );
 		$action = $request->get_param( 'action' );
 
 		if ( ! current_user_can( 'edit_post', $id ) ) {
@@ -344,7 +363,8 @@ class PostsController extends ControllerAbstract {
 				}
 				wp_update_post(
 					array_merge(
-						$data, [
+						$data,
+						[
 							'ID' => $id,
 						]
 					)

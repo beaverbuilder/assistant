@@ -5,6 +5,7 @@ import postcss from 'rollup-plugin-postcss'
 import resolve from 'rollup-plugin-node-resolve'
 import url from 'rollup-plugin-url'
 import pkg from './package.json'
+import visualizer from 'rollup-plugin-visualizer'
 
 const { IS_PRODUCTION } = process.env
 
@@ -37,6 +38,7 @@ export default {
             namedExports: {
                 'node_modules/react-is/index.js': ['isValidElementType']
             }
-        })
+        }),
+        visualizer()
     ]
 }

@@ -95,6 +95,15 @@ export const counts = ( state = {}, action ) => {
 	}
 }
 
+export const labels = ( state = [], action ) => {
+	switch ( action.type ) {
+	case 'SET_LABELS':
+		return action.labels
+	default:
+		return state
+	}
+}
+
 
 // New UI
 const windowDefaults = {

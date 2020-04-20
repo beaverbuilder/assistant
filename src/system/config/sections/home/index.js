@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { getSystemActions, getSystemConfig, useSystemState, getSystemSelectors } from 'data'
-import { Button, Icon, App, List, Layout } from 'ui'
+import { Button, Icon, List, Layout, Env } from 'ui'
 import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
@@ -13,7 +13,7 @@ registerSection( 'fl-asst-quick-actions', {
 	},
 	padX: false,
 	render: () => {
-		const { environment } = useContext( App.Context )
+		const { application } = Env.useEnvironment()
 		const { adminURLs } = getSystemConfig()
 
 		const dashURL = 'undefined' !== typeof adminURLs.dashboard ? adminURLs.dashboard : '/wp-admin'
@@ -30,7 +30,7 @@ registerSection( 'fl-asst-quick-actions', {
 				<Button href={ dashURL } appearance="elevator" title={ __( 'Go to Admin' ) }>
 					<Dashicon icon="wordpress" />
 				</Button>
-				{ 'beaver-builder' !== environment && (
+				{ 'beaver-builder' !== application && (
 					<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
 						{ 'light' === appearance.brightness ? <Icon.Moon /> : <Icon.Brightness /> }
 					</Button>
@@ -95,17 +95,21 @@ const PostTypeCounts = () => {
 				{ Object.entries( contentTypes ).map( ( [ key, item ], i ) => {
 					const { labels } = item
 					return (
-						<div key={ i } style={ {
-							display: 'flex',
-							flexDirection: 'column',
-							background: 'var(--fluid-primary-background)',
-							color: 'var(--fluid-primary-color)',
-							borderRadius: 'var(--fluid-sm-space)',
-							padding: 'var(--fluid-med-space)'
-						} }>
+						<Button
+							key={ i }
+							status="primary"
+							to={ `/fl-content/tab/${key}` }
+							style={ {
+								display: 'flex',
+								flexDirection: 'column',
+								alignItems: 'flex-start',
+								borderRadius: 'var(--fluid-sm-space)',
+								padding: 'var(--fluid-med-space)'
+							} }
+						>
 							{labels.plural}
 							<span style={ { fontSize: 24, marginTop: 5, lineHeight: 1 } }>{getCount( `content/${key}` )}</span>
-						</div>
+						</Button>
 					)
 				} )}
 			</div>
