@@ -40,7 +40,7 @@ http.interceptors.request.use( ( config ) => {
 
 	// attach the token to request
 	if ( session.hasToken() ) {
-		config.headers.Authorization = 'Bearer ' + session.getToken().access_token
+		config.headers.Authorization = 'Bearer ' + session.getToken()
 	}
 	return config
 }, Promise.reject )
@@ -81,6 +81,8 @@ const interval = setInterval( async() => {
 			await refresh()
 		} catch ( error ) {
 			clearInterval( interval )
+			session.removeToken()
+			session.removeUser()
 		}
 	}
 }, 60000 )
@@ -171,8 +173,6 @@ export const refresh = ( config = {} ) => {
 		http.post( '/iam/token/refresh', {}, config )
 			.then( ( response ) => {
 
-				console.log(response)
-
 				// Handle an error
 				if ( response.response ) {
 					reject( response.response.data )
@@ -198,10 +198,10 @@ export const refresh = ( config = {} ) => {
 export const logout = ( config = {} ) => {
 
 	return new Promise( ( resolve, reject ) => {
-		session.removeToken()
-		session.removeUser()
 		http.post( '/iam/token/destroy', {}, config )
 			.then( () => {
+				session.removeToken()
+				session.removeUser()
 				resolve()
 			} )
 	} )
