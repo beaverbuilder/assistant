@@ -405,15 +405,16 @@ export const Post = ( { location, match, history } ) => {
 			disable={ item.hasLock }
 		>
 			<Layout.Headline>{values.title}</Layout.Headline>
+			{item.hasLock && (
+				<Layout.Message status='alert' icon={ Icon.Reject }>
+					This post is being edited by another user.
+				</Layout.Message>
+			)}
 			<LockView isLock={ item.hasLock }>
 				<ElevatorButtons />
 				{renderForm()}
 			</LockView>
-			{item.hasLock && (
-				<Layout.Message status='alert' icon={ Icon.Reject }>
-					The post has been currenly edit by another user.
-				</Layout.Message>
-			)}
+
 		</Page>
 	)
 }
