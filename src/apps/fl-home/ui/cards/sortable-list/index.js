@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
+import classname from 'classnames'
 import { motion, useMotionValue } from 'framer-motion'
 import arrayMove from 'array-move'
 import findIndex from './find-index'
 
 // Spring configs
-const onTop = { zIndex: 1 }
+const onTop = { zIndex: 9999999 }
 const flat = {
 	zIndex: 0,
 	transition: { delay: 0.3 }
@@ -45,7 +46,7 @@ const SortableList = ( {
 	)
 }
 
-const Item = ( { i, setPosition, moveItem, children } ) => {
+const Item = ( { i, setPosition, moveItem, className, children } ) => {
 	const [ isDragging, setDragging ] = useState( false )
 	const ref = useRef( null )
 	const dragOriginY = useMotionValue( 0 )
@@ -60,6 +61,7 @@ const Item = ( { i, setPosition, moveItem, children } ) => {
 	return (
 		<motion.li
 			ref={ ref }
+			className={ classname({ 'is-dragging': isDragging }, className )}
 			initial={ false }
 			animate={ isDragging ? onTop : flat }
 			whileTap={ { scale: 1.04 } }

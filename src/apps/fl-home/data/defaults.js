@@ -12,20 +12,16 @@ export const defaultPage = {
 			type: 'fl-tile-grid',
 		},
 		{
-			id: 'lksjdlfkjsdf',
-			type: 'fl-shortcuts',
-		},
-		{
 			id: '98372934729',
 			type: 'fl-query',
 		},
 		{
-			id: '092u30909',
-			type: 'fl-apps',
+			id: 'lksjdlfkjsdf',
+			type: 'fl-shortcuts',
 		},
 		{
-			id: 'sfsdfsdf',
-			type: 'fl-labels',
+			id: '092u30909',
+			type: 'fl-apps',
 		},
 	],
 }

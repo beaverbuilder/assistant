@@ -74,4 +74,8 @@
             & > *:last-child { margin-bottom: 0; }
         }
     }
+
+    .is-dragging .fl-asst-card {
+        pointer-events: none;
+    }
 }

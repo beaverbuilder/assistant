@@ -7,7 +7,6 @@ const Apps = () => {
     return (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridGap: 5 }}>
         {apps.map( app => {
-            console.log(app)
             const { label, icon: AppIcon, handle } = app
             return (
                 <Button
