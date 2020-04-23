@@ -27,6 +27,43 @@ class LabelsRepository extends TermsRepository {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function count() {
+		global $wpdb;
+
+		$terms = $this->query(
+			[
+				'hide_empty' => false,
+			]
+		)->get_terms();
+
+		$counts = [];
+		$subqueries = [];
+
+		foreach ( $terms as $term ) {
+			$subqueries[] = $wpdb->prepare(
+				"(SELECT COUNT(*)
+				FROM $wpdb->postmeta
+				WHERE meta_key = 'fl_asst_notation_label_id'
+				AND meta_value = %d) as label_%d",
+				$term->term_id,
+				$term->term_id
+			);
+		}
+
+		$results = $wpdb->get_row( 'SELECT ' . implode( ',', $subqueries ) );
+		$counts = [];
+
+		foreach ( $results as $key => $count ) {
+			$key = str_replace( 'label_', '', $key );
+			$counts[ $key ] = $count;
+		}
+
+		return $counts;
+	}
+
+	/**
 	 * @param string $object_type
 	 * @param int $label_id
 	 * @return array
