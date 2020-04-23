@@ -3,17 +3,18 @@ import { useCardsState, getCardsActions } from 'fl-home/data'
 
 const useCards = initialPage => {
     const [page, setPage] = useState( initialPage )
-    const { pages } = useCardsState()
+    const { pages, types } = useCardsState()
     const { setCardPosition, setCards } = getCardsActions()
     let cards = []
 
     if ( pages[ page ] ) {
 
         // Any visibility checks should happen here
-        cards = pages[ page ].cards.filter( () => true )
+        cards = pages[ page ].cards.filter( card => Object.keys( types ).includes( card.type ) )
 
         // Map custom properties & functions to item
         cards = cards.map( ( card, i ) => {
+            const type = types[ card.type ]
 
             const isFirst = i === 0
             const isLast = i === cards.length - 1
@@ -29,11 +30,16 @@ const useCards = initialPage => {
 
             return {
                 ...card,
+                ...type,
+                title: card.title ? card.title : type.label,
+                icon: type.icon,
                 isFirst,
                 isLast,
                 moveUp: () => move('up'),
                 moveDown: () => move('down'),
-                setPosition: to => setCardPosition( page, i, to )
+                setPosition: to => setCardPosition( page, i, to ),
+                render: type.render,
+                edit: type.edit,
             }
         })
     }

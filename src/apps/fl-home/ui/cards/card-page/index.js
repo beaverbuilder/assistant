@@ -21,148 +21,55 @@ const CardPage = ({
 
     return (
         <>
-            <Layout.Box>
-                <SortableList
-                    items={cards}
-                    setItems={ setCards }
-                >
-                { card => {
-                    const {
-                        id,
-                        actions,
-                        moveUp,
-                        moveDown,
-                        isFirst,
-                        isLast,
-                    } = card
-
-                    const EditActions = () => (
-                        <>
-                            { ! isFirst && <Button
-                                appearance="transparent"
-                                onClick={ moveUp }
-                            >
-                                <Icon.UpCaret />
-                            </Button> }
-                            { ! isLast && <Button
-                                appearance="transparent"
-                                onClick={ moveDown }
-                            >
-                                <Icon.DownCaret />
-                            </Button> }
-                        </>
-                    )
-
-                    return (
-                        <Card
-                            key={id}
-                            isEditing={ isEditing }
-                            actions={ isEditing ? <EditActions /> : actions }
-                            {...card}
-                        />
-                    )
-                }}
-                </SortableList>
-            </Layout.Box>
-
-            { /*
-            <ul
+            <SortableList
+                items={cards}
+                setItems={ setCards }
                 className="fl-asst-card-list"
-                ref={ref}
-                {...rest}
             >
-                { cards.map( ( card, i ) => {
-                    const [isDragging, setIsDragging] = useState(false)
-                    const dragOriginY = useMotionValue(0)
-                    const {
-                        id,
-                        content,
-                        actions,
-                        moveUp,
-                        moveDown,
-                        setPosition,
-                        isFirst,
-                        isLast,
-                        className,
-                        ...rest
-                    } = card
+            { card => {
+                const {
+                    id,
+                    actions,
+                    moveUp,
+                    moveDown,
+                    isFirst,
+                    isLast,
+                    render: Render,
+                    edit: Edit
+                } = card
 
-                    const EditActions = () => (
-                        <>
-                            { ! isFirst && <Button
-                                appearance="transparent"
-                                onClick={ moveUp }
-                            >
-                                <Icon.UpCaret />
-                            </Button> }
-                            { ! isLast && <Button
-                                appearance="transparent"
-                                onClick={ moveDown }
-                            >
-                                <Icon.DownCaret />
-                            </Button> }
-                        </>
-                    )
-
-                    const onTop = {
-                        zIndex: 1,
-                    }
-                    const flat = {
-                        zIndex: 0,
-                        transition: { delay: 0.3 },
-                    }
-
-                    const classes = classname({
-                        'is-dragging' : isDragging
-                    }, className )
-
-                    const moveItem = ( i, dragOffset ) => {
-                        const targetIndex = findIndex( i, dragOffset, positions )
-                        if ( targetIndex !== i ) {
-                            console.log('set', i, targetIndex )
-                            setPosition( targetIndex )
-                        }
-                    }
-
-                    return (
-                        <Card
-                            key={id}
-                            isEditing={ isEditing }
-                            actions={ isEditing ? <EditActions /> : actions }
-                            className={ classes }
-
-                            // Animation stuff
-                            tag={motion.li}
-                            animate={ isDragging ? onTop : flat }
-                            whileTap={{ scale: 1.05 }}
-                            drag="y"
-                            dragOriginY={dragOriginY}
-                            dragConstraints={{ top: 0, bottom: 0 }}
-                            dragElastic={1}
-                            onDragStart={() => setIsDragging(true)}
-                            onDragEnd={() => setIsDragging(false)}
-                            onDrag={( e, { point } ) => moveItem( i, point.y )}
-                            positionTransition={({ delta }) => {
-                                if ( isDragging ) {
-                                    console.log('origin', dragOriginY.get() + delta.y )
-                                    dragOriginY.set( dragOriginY.get() + delta.y )
-                                }
-                                return ! isDragging
-                            }}
-
-                            {...rest}
+                const EditActions = () => (
+                    <>
+                        { ! isFirst && <Button
+                            appearance="transparent"
+                            onClick={ moveUp }
                         >
-                            {content}
-                        </Card>
-                    )
-                })}
-            </ul>
-            */ }
+                            <Icon.UpCaret />
+                        </Button> }
+                        { ! isLast && <Button
+                            appearance="transparent"
+                            onClick={ moveDown }
+                        >
+                            <Icon.DownCaret />
+                        </Button> }
+                    </>
+                )
+
+                return (
+                    <Card
+                        key={id}
+                        isEditing={ isEditing }
+                        actions={ isEditing ? <EditActions /> : actions }
+                        {...card}
+                    >{ isEditing? <Edit {...card}/> : <Render {...card} /> }</Card>
+                )
+            }}
+            </SortableList>
 
             { isEditing && (
                 <div style={{ padding: '0 var(--fluid-lg-space)' }}>
-                    <h2>{__('Available Cards')}</h2>
-                    <CardTypesList />
+                    <h2 style={{ marginTop: 'var(--fluid-lg-space)'}}>{__('Available Cards')}</h2>
+                    <CardTypesList page={page} />
                 </div>
             )}
         </>
@@ -173,6 +80,7 @@ const CardType = ({
     label,
     icon: TypeIcon  = () => {},
     insert = () => {},
+    page,
     ...rest
 }) => {
 
@@ -180,7 +88,7 @@ const CardType = ({
         <Button
             className="fl-asst-card-type"
             status="primary"
-            onClick={ () => insert( 'home' ) }
+            onClick={ () => insert( page ) }
             {...rest}
         >
             <span className="fl-asst-card-type-title">
@@ -194,7 +102,7 @@ const CardType = ({
     )
 }
 
-const CardTypesList = () => {
+const CardTypesList = ({ page }) => {
     const types = useCardTypes()
     return (
         <ul className="fl-asst-card-type-list">
@@ -203,7 +111,7 @@ const CardTypesList = () => {
                 <li
                     key={i}
                 >
-                    <CardType {...type} />
+                    <CardType {...type} page={page} />
                 </li>
             )
         })}

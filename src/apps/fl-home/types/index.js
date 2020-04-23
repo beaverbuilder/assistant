@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
-import { getCardsActions } from './data'
+import { getCardsActions } from '../data'
+import Shortcuts from './shortcuts'
 
 const { registerCardType } = getCardsActions()
 
@@ -8,9 +9,14 @@ const registerDefaultCardTypes = () => {
 
     registerCardType( 'fl-shortcuts', {
         label: __( 'Shortcuts' ),
-        icon: Icon.Placeholder,
-        render: () => <div>Render</div>,
-        edit: () => <div>Edit</div>,
+        icon: Icon.Link,
+        render: Shortcuts,
+        edit: Shortcuts.Edit,
+        contentProps: {
+            style: {
+                 padding: 'var(--fluid-sm-space)'
+            }
+        }
     })
 
     registerCardType( 'fl-apps', {

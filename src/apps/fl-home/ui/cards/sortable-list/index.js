@@ -14,6 +14,7 @@ const SortableList = ({
         items = [],
         setItems = () => {},
         children,
+        ...rest
     }) => {
 
     const positions = useRef([]).current
@@ -25,7 +26,7 @@ const SortableList = ({
     }
 
     return (
-        <ul>
+        <ul {...rest}>
             { items.map( ( item, i ) => {
                 return (
                     <Item
@@ -59,7 +60,7 @@ const Item = ({ i, setPosition, moveItem, children }) => {
             ref={ref}
             initial={false}
             animate={isDragging ? onTop : flat}
-            whileTap={{ scale: 1.05 }}
+            whileTap={{ scale: 1.04 }}
             drag="y"
             dragOriginY={dragOriginY}
             dragConstraints={{ top: 0, bottom: 0 }}

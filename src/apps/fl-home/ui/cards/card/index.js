@@ -6,10 +6,13 @@ const Card = ({
     className,
     children,
     title,
+    icon: CardIcon,
     actions,
     tag: Tag = 'div',
     contentTag: ContentTag = 'div',
+    contentProps,
     isEditing = false,
+    type, // Remove from rest
     ...rest
 }) => {
 
@@ -21,10 +24,13 @@ const Card = ({
     return (
         <Tag className={classes} {...rest}>
             { title && <div className="fl-asst-card-title">
-                <span className="fl-asst-card-title-text">{title}</span>
+                <span className="fl-asst-card-title-text">
+                    <CardIcon />
+                    {title}
+                </span>
                 { actions && <span className="fl-asst-card-title-actions">{actions}</span> }
             </div> }
-            <ContentTag className="fl-asst-card-content">
+            <ContentTag className="fl-asst-card-content" {...contentProps}>
                 {children}
             </ContentTag>
         </Tag>

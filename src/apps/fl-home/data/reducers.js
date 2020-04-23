@@ -29,6 +29,14 @@ export const pages = ( state = {}, action ) => {
                 cards: action.cards
             }
         }
+    case 'CREATE_CARD':
+        return {
+            ...state,
+            [ action.page ]: {
+                ...state[ action.page ],
+                cards: [ ...state[ action.page].cards, action.config ]
+            }
+        }
 
     case 'SET_CARD_POSITION':
 

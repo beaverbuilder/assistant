@@ -5,7 +5,7 @@ import { Header, CardPage } from './ui'
 import './style.scss'
 
 const CardsApp = () => {
-    const [isEditing, setIsEditing] = useState( true )
+    const [isEditing, setIsEditing] = useState( false )
     return (
         <Page
             id="cards"

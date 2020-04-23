@@ -31,3 +31,11 @@ export const setCardPosition = ( page, from, to ) => {
         to,
     }
 }
+
+export const createCard = ( page, config ) => {
+    return {
+        type: 'CREATE_CARD',
+        page,
+        config
+    }
+}
