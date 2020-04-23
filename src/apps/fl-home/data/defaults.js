@@ -8,14 +8,12 @@ export const defaultPage = {
     isEditable: true,
     cards: [
         {
-            id: '232flksjdflk',
-            title: __('My First Card'),
-            children: "Hi my name is brent",
-            type: 'fl-card',
-        },
-        {
             id: 'lksjdlfkjsdf',
             type: 'fl-shortcuts',
+        },
+        {
+            id: '98372934729',
+            type: 'fl-query',
         },
         {
             id: '092u30909',

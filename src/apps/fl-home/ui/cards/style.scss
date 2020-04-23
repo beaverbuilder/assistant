@@ -2,7 +2,7 @@
     .fl-asst-card-list,
     .fl-asst-card-type-list {
 
-        li {
+        & > li {
             margin-bottom: var(--fluid-sm-space);
 
             &:last-child {

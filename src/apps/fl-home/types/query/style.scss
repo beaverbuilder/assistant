@@ -1,0 +1,17 @@
+.fl-asst {
+    .fl-asst-query-card-list {
+        li:last-child {
+            border-bottom: none;
+        }
+        .fl-asst-list-item-content-info {
+            padding: 15px 0;
+
+            .fl-asst-list-item-default-content-row {
+                padding-left: var(--fluid-med-space);
+            }
+            .fl-asst-list-item-thumbnail {
+                margin-right: var(--fluid-med-space);
+            }
+        }
+    }
+}
