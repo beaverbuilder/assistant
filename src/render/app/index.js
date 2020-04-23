@@ -3,6 +3,7 @@ import classname from 'classnames'
 import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
+
 //import HomeScreen from './home-screen'
 import Sidebar from './side-bar'
 import ManageScreen from './manage-screen'
@@ -32,7 +33,7 @@ const AppMain = () => {
 				<div className="fl-asst-main-content">
 					<Nav.Switch location={ location }>
 						<Nav.Route exact path="/">
-							<Redirect to={`/${homeApp}`} />
+							<Redirect to={ `/${homeApp}` } />
 						</Nav.Route>
 						<Nav.Route path="/fl-manage" component={ ManageScreen } />
 						<Nav.Route path="/:app" component={ AppContent } />

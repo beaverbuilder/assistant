@@ -5,8 +5,8 @@ import Card from './card'
 import './style.scss'
 
 export {
-    useCardTypes,
-    useCards,
-    CardPage,
-    Card
+	useCardTypes,
+	useCards,
+	CardPage,
+	Card
 }

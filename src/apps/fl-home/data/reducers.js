@@ -3,59 +3,59 @@ import arrayMove from 'array-move'
 
 export const types = ( state = {}, action ) => {
 
-    switch( action.type ) {
-    case 'REGISTER_TYPE':
+	switch ( action.type ) {
+	case 'REGISTER_TYPE':
 
-        return {
-            ...state,
-            [action.key]: {
-                ...defaultCardType,
-                ...action.config,
-            }
-        }
-    default:
-        return state
-    }
+		return {
+			...state,
+			[action.key]: {
+				...defaultCardType,
+				...action.config,
+			}
+		}
+	default:
+		return state
+	}
 }
 
 export const pages = ( state = {}, action ) => {
-    switch( action.type ) {
+	switch ( action.type ) {
 
-    case 'SET_CARDS':
-        return {
-            ...state,
-            [ action.page ]: {
-                ...state[ action.page ],
-                cards: action.cards
-            }
-        }
-    case 'CREATE_CARD':
-        return {
-            ...state,
-            [ action.page ]: {
-                ...state[ action.page ],
-                cards: [ ...state[ action.page].cards, action.config ]
-            }
-        }
+	case 'SET_CARDS':
+		return {
+			...state,
+			[ action.page ]: {
+				...state[ action.page ],
+				cards: action.cards
+			}
+		}
+	case 'CREATE_CARD':
+		return {
+			...state,
+			[ action.page ]: {
+				...state[ action.page ],
+				cards: [ ...state[ action.page].cards, action.config ]
+			}
+		}
 
-    case 'SET_CARD_POSITION':
+	case 'SET_CARD_POSITION':
 
-        if ( ! state[ action.page ] ) {
-            return state
-        }
+		if ( ! state[ action.page ] ) {
+			return state
+		}
 
-        const page = state[ action.page ]
-        const cards = page.cards
+		const page = state[ action.page ]
+		const cards = page.cards
 
-        return {
-            ...state,
-            [ action.page ]: {
-                ...page,
-                cards: arrayMove( cards, action.from, action.to )
-            }
-        }
+		return {
+			...state,
+			[ action.page ]: {
+				...page,
+				cards: arrayMove( cards, action.from, action.to )
+			}
+		}
 
-    default:
-        return state
-    }
+	default:
+		return state
+	}
 }

@@ -9,114 +9,114 @@ import './style.scss'
 
 import SortableList from '../sortable-list'
 
-const CardPage = ({
-    page = 'home',
-    isEditing = false,
-    ...rest
-}) => {
-    const { cards, setPage, setCards } = useCards( page )
+const CardPage = ( {
+	page = 'home',
+	isEditing = false,
+	...rest
+} ) => {
+	const { cards, setPage, setCards } = useCards( page )
 
-    // Listen for page prop changing and update hook
-    useEffect( () => setPage( page ), [page] )
+	// Listen for page prop changing and update hook
+	useEffect( () => setPage( page ), [ page ] )
 
-    return (
+	return (
         <>
             <SortableList
-                items={cards}
-                setItems={ setCards }
-                className="fl-asst-card-list"
+            	items={ cards }
+            	setItems={ setCards }
+            	className="fl-asst-card-list"
             >
-            { card => {
-                const {
-                    id,
-                    actions,
-                    moveUp,
-                    moveDown,
-                    isFirst,
-                    isLast,
-                    render: Render,
-                    edit: Edit
-                } = card
+            	{ card => {
+            		const {
+            			id,
+            			actions,
+            			moveUp,
+            			moveDown,
+            			isFirst,
+            			isLast,
+            			render: Render,
+            			edit: Edit
+            		} = card
 
-                const EditActions = () => (
+            		const EditActions = () => (
                     <>
                         { ! isFirst && <Button
-                            appearance="transparent"
-                            onClick={ moveUp }
+                        	appearance="transparent"
+                        	onClick={ moveUp }
                         >
-                            <Icon.UpCaret />
+                        	<Icon.UpCaret />
                         </Button> }
                         { ! isLast && <Button
-                            appearance="transparent"
-                            onClick={ moveDown }
+                        	appearance="transparent"
+                        	onClick={ moveDown }
                         >
-                            <Icon.DownCaret />
+                        	<Icon.DownCaret />
                         </Button> }
                     </>
-                )
+            		)
 
-                return (
-                    <Card
-                        key={id}
-                        isEditing={ isEditing }
-                        actions={ isEditing ? <EditActions /> : actions }
-                        {...card}
-                    >{ isEditing? <Edit {...card}/> : <Render {...card} /> }</Card>
-                )
-            }}
+            		return (
+            			<Card
+            				key={ id }
+            				isEditing={ isEditing }
+            				actions={ isEditing ? <EditActions /> : actions }
+            				{ ...card }
+            			>{ isEditing ? <Edit { ...card }/> : <Render { ...card } /> }</Card>
+            		)
+            	}}
             </SortableList>
 
             { isEditing && (
-                <div style={{ padding: '0 var(--fluid-lg-space)' }}>
-                    <h2 style={{ marginTop: 'var(--fluid-lg-space)'}}>{__('Available Cards')}</h2>
-                    <CardTypesList page={page} />
-                </div>
+            	<div style={ { padding: '0 var(--fluid-lg-space)' } }>
+            		<h2 style={ { marginTop: 'var(--fluid-lg-space)' } }>{__( 'Available Cards' )}</h2>
+            		<CardTypesList page={ page } />
+            	</div>
             )}
         </>
-    )
+	)
 }
 
-const CardType = ({
-    label,
-    icon: TypeIcon  = () => {},
-    insert = () => {},
-    page,
-    ...rest
-}) => {
+const CardType = ( {
+	label,
+	icon: TypeIcon  = () => {},
+	insert = () => {},
+	page,
+	...rest
+} ) => {
 
-    return (
-        <Button
-            className="fl-asst-card-type"
-            status="primary"
-            onClick={ () => insert( page ) }
-            {...rest}
-        >
-            <span className="fl-asst-card-type-title">
-                <TypeIcon />
-                { label }
-            </span>
-            <span className="fl-asst-card-type-actions">
-                <Icon.Plus />
-            </span>
-        </Button>
-    )
+	return (
+		<Button
+			className="fl-asst-card-type"
+			status="primary"
+			onClick={ () => insert( page ) }
+			{ ...rest }
+		>
+			<span className="fl-asst-card-type-title">
+				<TypeIcon />
+				{ label }
+			</span>
+			<span className="fl-asst-card-type-actions">
+				<Icon.Plus />
+			</span>
+		</Button>
+	)
 }
 
-const CardTypesList = ({ page }) => {
-    const types = useCardTypes()
-    return (
-        <ul className="fl-asst-card-type-list">
-        { types.map( ( type, i ) => {
-            return (
-                <li
-                    key={i}
-                >
-                    <CardType {...type} page={page} />
-                </li>
-            )
-        })}
-        </ul>
-    )
+const CardTypesList = ( { page } ) => {
+	const types = useCardTypes()
+	return (
+		<ul className="fl-asst-card-type-list">
+			{ types.map( ( type, i ) => {
+				return (
+					<li
+						key={ i }
+					>
+						<CardType { ...type } page={ page } />
+					</li>
+				)
+			} )}
+		</ul>
+	)
 }
 
 export default CardPage
