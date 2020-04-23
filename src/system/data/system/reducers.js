@@ -155,14 +155,7 @@ export const appearance = ( state = defaultAppearance, action ) => {
 	}
 }
 
-export const shouldShowLabels = ( state = true, action ) => {
-	switch ( action.type ) {
-	case 'SET_SHOULD_SHOW_LABELS':
-		return false /* Temporarily Disable */
-	default:
-		return state ? true : false
-	}
-}
+export const shouldShowLabels = () => false
 
 // Navigation History
 const defaultHistory = { index: 0, entries: [] }
@@ -191,8 +184,6 @@ export const searchHistory = ( state = [], action ) => {
 		return state
 	}
 }
-
-export const shouldReduceMotion = () => false
 
 
 // Page Sections

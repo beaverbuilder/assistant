@@ -1,9 +1,9 @@
 import React from 'react'
 import classname from 'classnames'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
-import HomeScreen from './home-screen'
+//import HomeScreen from './home-screen'
 import Sidebar from './side-bar'
 import ManageScreen from './manage-screen'
 import './style.scss'
@@ -22,6 +22,8 @@ const AppMain = () => {
 		'fl-asst-is-mobile': isMobile,
 	} )
 
+	const homeApp = 'fl-home'
+
 	return (
 		<div className={ classes } >
 			<Sidebar edge={ sideName } />
@@ -29,7 +31,9 @@ const AppMain = () => {
 			{ ! isAppHidden && (
 				<div className="fl-asst-main-content">
 					<Nav.Switch location={ location }>
-						<Nav.Route exact path="/" component={ HomeScreen } />
+						<Nav.Route exact path="/">
+							<Redirect to={`/${homeApp}`} />
+						</Nav.Route>
 						<Nav.Route path="/fl-manage" component={ ManageScreen } />
 						<Nav.Route path="/:app" component={ AppContent } />
 						<Nav.Route component={ Page.NotFound } />
