@@ -9,10 +9,8 @@ const CardsApp = () => {
 	return (
 		<Page
 			id="cards"
-			title={ isEditing ? __( 'Edit Cards' ) : __( 'Cards' ) }
 			padX={ false }
 			padY={ false }
-			header={ <Header /> }
 			toolbar={ false }
 		>
 			<div style={ {

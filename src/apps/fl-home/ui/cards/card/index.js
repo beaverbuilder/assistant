@@ -13,6 +13,7 @@ const Card = ( {
 	contentProps,
 	isEditing = false,
 	type, // Remove from rest
+	label, // Remove from rest
 	...rest
 } ) => {
 

@@ -32,10 +32,18 @@ const useCards = initialPage => {
 				setCardPosition( page, from, to )
 			}
 
+			const getTitle = ( card, type ) => {
+
+				if ( card.title ) {
+					return card.title
+				}
+				return type.label
+			}
+
 			return {
 				...card,
 				...type,
-				title: card.title ? card.title : type.label,
+				title: getTitle( card, type ),
 				icon: type.icon,
 				isFirst,
 				isLast,

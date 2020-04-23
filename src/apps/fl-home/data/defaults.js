@@ -8,6 +8,10 @@ export const defaultPage = {
 	isEditable: true,
 	cards: [
 		{
+			id: '465484684',
+			type: 'fl-tile-grid',
+		},
+		{
 			id: 'lksjdlfkjsdf',
 			type: 'fl-shortcuts',
 		},

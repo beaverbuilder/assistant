@@ -1,0 +1,18 @@
+.fl-asst {
+    .fl-asst-tile-grid {
+        display: grid;
+        grid-template-columns: repeat( 3, 1fr );
+        grid-gap: var(--fluid-sm-space);
+        grid-auto-rows: 103px;
+
+        & > *,
+        & > *.fluid-button {
+            background: var(--fluid-background);
+            padding: var(--fluid-med-space);
+            border-radius: var(--fluid-radius);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+    }
+}
