@@ -6,7 +6,7 @@ import { Page } from 'assistant/ui'
 import Icon from './icon'
 
 const App = lazy( () => import(
-    /* webpackChunkName: "app-media" */ "./app"
+	/* webpackChunkName: "app-media" */ './app'
 ) )
 
 export const defaultState = {

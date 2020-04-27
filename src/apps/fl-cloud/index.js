@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import AppIcon from './icon'
 
 const App = lazy( () => import(
-    /* webpackChunkName: "app-cloud" */ "./app"
+	/* webpackChunkName: "app-cloud" */ './app'
 ) )
 
 if ( ! __PRODUCTION__ ) {

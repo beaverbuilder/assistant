@@ -6,7 +6,7 @@ import Icon from './icon'
 if ( ! __PRODUCTION__ ) {
 
 	const App = lazy( () => import(
-		/* webpackChunkName: "app-examples" */ "./app"
+		/* webpackChunkName: "app-examples" */ './app'
 	) )
 
 	registerApp( 'fl-ui-examples', {

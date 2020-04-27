@@ -7,7 +7,7 @@ import { Page } from 'assistant/ui'
 import Icon from './icon'
 
 const App = lazy( () => import(
-    /* webpackChunkName: "app-users" */ "./app"
+	/* webpackChunkName: "app-users" */ './app'
 ) )
 
 if ( ! __PRODUCTION__ ) {

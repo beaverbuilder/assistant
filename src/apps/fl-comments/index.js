@@ -7,7 +7,7 @@ import { Page } from 'assistant/ui'
 import Icon from './icon'
 
 const CommentsApp = lazy( () => import(
-    /* webpackChunkName: "app-comments" */ "./app"
+	/* webpackChunkName: "app-comments" */ './app'
 ) )
 
 registerApp( 'fl-comments', {

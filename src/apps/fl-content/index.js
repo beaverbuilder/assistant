@@ -7,7 +7,7 @@ import { Page } from 'assistant/ui'
 import Icon from './icon'
 
 const App = lazy( () => import(
-    /* webpackChunkName: "app-content" */ "./app"
+	/* webpackChunkName: "app-content" */ './app'
 ) )
 
 const { contentTypes, taxonomies } = getSystemConfig()

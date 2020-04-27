@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n'
 import Icon from './icon'
 
 const App = lazy( () => import(
-    /* webpackChunkName: "app-updates" */ "./app"
+	/* webpackChunkName: "app-updates" */ './app'
 ) )
 
 export const defaultState = {

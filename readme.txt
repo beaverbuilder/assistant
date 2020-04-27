@@ -75,6 +75,7 @@ Our API for creating new apps and extending the existing ones is in development 
 == Changelog ==
 
 = 0.5.0 =
+* Rework apps to load on-demand
 
 = 0.4.0 =
 * Added access to all public post types inside content app

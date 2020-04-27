@@ -69,7 +69,7 @@ const AppContent = props => {
 	return (
 		<div className={ appWrapClasses }>
 			<Suspense fallback={ <Page.Loading /> }>
-				<AppRoot {...appProps} />
+				<AppRoot { ...appProps } />
 			</Suspense>
 		</div>
 	)
