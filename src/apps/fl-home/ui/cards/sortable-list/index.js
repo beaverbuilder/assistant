@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import classname from 'classnames'
-import { motion, useMotionValue } from 'framer-motion'
+import { motion, useMotionValue, useDragControls } from 'framer-motion'
 import arrayMove from 'array-move'
 import findIndex from './find-index'
 
@@ -38,6 +38,7 @@ const SortableList = ( {
 						setPosition={ setPosition }
 						moveItem={ moveItem }
 					>
+						<div>Handle</div>
 						{ children( item ) }
 					</Item>
 				)

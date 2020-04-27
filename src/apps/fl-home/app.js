@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Button, Icon } from 'assistant/ui'
-import { Header, CardPage } from './ui'
+import { CardPage } from './ui'
 import './style.scss'
 
 const CardsApp = () => {
