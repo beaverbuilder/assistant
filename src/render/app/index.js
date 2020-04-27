@@ -64,26 +64,15 @@ const AppContent = props => {
 		'fl-asst-app-root': isAppRoot,
 	} )
 
-	const AppNotFound = () => {
-		return (
-			<div>App Not Found</div>
-		)
-	}
-
-	const AppRoot = app.root ? app.root : AppNotFound
+	const AppRoot = app.root ? app.root : Page.NotFound
 
 	return (
 		<div className={ appWrapClasses }>
-			<Suspense fallback="Loading...">
+			<Suspense fallback={ <Page.Loading /> }>
 				<AppRoot {...appProps} />
 			</Suspense>
 		</div>
 	)
-}
-
-const AppRoot = ( { app, appProps } ) => {
-	console.log(app, appProps)
-	return app.root ? app.root( appProps ) : null
 }
 
 export default AppMain
