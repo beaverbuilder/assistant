@@ -6,7 +6,7 @@ import { User } from './pages/user'
 import { Search } from './pages/search'
 import { Invite } from './pages/invite'
 
-export const Users = ( { match } ) => (
+const Users = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
 		<Nav.Route path={ `${match.url}/search` } component={ Search }/>
@@ -15,3 +15,5 @@ export const Users = ( { match } ) => (
 		<Nav.Route path={ `${match.url}/post/:id` } component={ Page.Post } />
 	</Nav.Switch>
 )
+
+export default Users

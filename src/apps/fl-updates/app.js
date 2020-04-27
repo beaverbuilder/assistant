@@ -12,7 +12,7 @@ import {
 import { defaultState } from './'
 import AppIcon from './icon'
 
-export const UpdatesApp = ( { match } ) => (
+const UpdatesApp = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ UpdatesMain }/>
 		<Nav.Route path={ `${match.url}/plugin/:id` } component={ Page.Plugin }/>
@@ -149,3 +149,5 @@ const UpdatesMain = () => {
 		</Page>
 	)
 }
+
+export default UpdatesApp

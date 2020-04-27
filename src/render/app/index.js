@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import classname from 'classnames'
 import { useLocation } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
@@ -64,15 +64,26 @@ const AppContent = props => {
 		'fl-asst-app-root': isAppRoot,
 	} )
 
+	const AppNotFound = () => {
+		return (
+			<div>App Not Found</div>
+		)
+	}
+
+	const AppRoot = app.root ? app.root : AppNotFound
+
 	return (
 		<div className={ appWrapClasses }>
-			<AppRoot app={ app } appProps={ appProps } />
+			<Suspense fallback="Loading...">
+				<AppRoot {...appProps} />
+			</Suspense>
 		</div>
 	)
 }
 
 const AppRoot = ( { app, appProps } ) => {
-	return 'function' === typeof app.root ? app.root( appProps ) : null
+	console.log(app, appProps)
+	return app.root ? app.root( appProps ) : null
 }
 
 export default AppMain

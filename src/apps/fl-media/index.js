@@ -1,9 +1,13 @@
+import { lazy } from 'react'
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
-import { MediaApp } from './app'
 import Icon from './icon'
+
+const App = lazy( () => import(
+    /* webpackChunkName: "app-media" */ "./app"
+) )
 
 export const defaultState = {
 	listStyle: 'grid',
@@ -17,7 +21,7 @@ export const defaultState = {
 
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
-	root: MediaApp,
+	root: App,
 	icon: Icon,
 	accent: {
 		color: '#FF5A5E'
