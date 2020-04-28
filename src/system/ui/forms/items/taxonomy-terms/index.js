@@ -140,15 +140,15 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 			checkedItems: prevState.checkedItems.set(item, isChecked)
 
 		}))
-
-
+console.log(checkedItems)
+onChange(checkedItems)
 	}
 
-	var tifOptions = Object.keys(options).map(function (key) {
+	var catOptions = Object.keys(options).map(function (key) {
 
 		var str = options[key];
 		var n = str.includes("-");
-
+		console.log(checkedItems)
 		return (
 			<CheckboxControl
 				label={options[key]}
@@ -172,7 +172,7 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 					}}
 				/>
 
-				{tifOptions}
+				{catOptions}
 
 				<div className='fl-asst-new-term-form'>
 					{addingNew && (
