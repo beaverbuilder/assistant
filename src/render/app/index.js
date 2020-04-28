@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import classname from 'classnames'
 import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
@@ -68,13 +68,13 @@ const AppContent = props => {
 
 	return (
 		<div className={ appWrapClasses }>
-			<AppRoot app={ app } appProps={ appProps } />
+			<AppRoot root={ app.root } { ...appProps } />
 		</div>
 	)
 }
 
-const AppRoot = ( { app, appProps } ) => {
-	return 'function' === typeof app.root ? app.root( appProps ) : null
-}
+const AppRoot = memo( ( { root, ...rest } ) => {
+	return 'function' === typeof root ? root( rest ) : null
+} )
 
 export default AppMain

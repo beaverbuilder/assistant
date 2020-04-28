@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Button, Icon, Env, List } from 'assistant/ui'
 import {
-	useAppList,
+	useAppOrder,
 	useSystemState,
 	getSystemActions,
 	getSystemSelectors,
@@ -20,8 +20,8 @@ const Sidebar = ( { edge = 'right' } ) => {
 		toggleIsShowingUI,
 		setWindow,
 		setIsAppHidden,
-		resetAppOrder,
 	} = getSystemActions()
+	const [isSorting, setIsSorting] = useState( false )
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
 
 
@@ -34,7 +34,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 		}
 		return isMobile ? 3 : 5
 	}
-	const apps = useAppList( { maxCount: getMaxCount } )
+	const [appOrder, setAppOrder] = useAppOrder( { maxCount: getMaxCount() } )
 	const { pathname } = useLocation()
 	const history = useHistory()
 
@@ -70,7 +70,8 @@ const Sidebar = ( { edge = 'right' } ) => {
 	}
 
 	const classes = classname( 'fl-asst-sidebar', {
-		'fl-asst-sidebar-compact': isCompactHeight
+		'fl-asst-sidebar-compact': isCompactHeight,
+		'is-sorting' : isSorting,
 	} )
 
 	const manage = selectApp( 'fl-manage' )
@@ -82,7 +83,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 			}
 		>
 			{ ! isBeaverBuilder && (
-				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top">
+				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top disable-while-sorting">
 					<Button
 						appearance="transparent"
 						onClick={ () => toggleIsShowingUI( false ) }
@@ -103,19 +104,21 @@ const Sidebar = ( { edge = 'right' } ) => {
 					status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
 					title={ __( 'Home' ) }
 					onClick={ () => navOrHideApp( isRoot, goToRoot ) }
+					className="disable-while-sorting"
 				>
 					<Icon.Home />
 				</Button>
 
 				<List.Sortable
-					items={apps}
-					setItems={ items => {
-						const keys = items.map( item => item.handle )
-						resetAppOrder( keys )
-					}}
+					items={ appOrder }
+					setItems={ setAppOrder }
+					keyProp={ item => item }
+					onSortStart={ () => setIsSorting( true )}
+					onSortEnd={ () => setIsSorting( false )}
 				>
-				{ app => {
-					const { label, handle, icon } = app
+				{ key => {
+					const app = selectApp( key )
+					const { handle, icon } = app
 
 					const location = {
 						pathname: `/${handle}`,
@@ -129,7 +132,6 @@ const Sidebar = ( { edge = 'right' } ) => {
 							onClick={ e => {
 								navOrHideApp( isSelected, () => history.push( location ) )
 							} }
-							title={ label }
 						>{ icon( { context: 'sidebar', isSelected } ) }</Button>
 					)
 				}}
@@ -162,7 +164,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 							pathname: `/${manage.handle}`,
 							state: manage
 						}) ) }
-						title={ __( 'Manage Apps' ) }
+						className="disable-while-sorting"
 					>
 						<Icon.Apps />
 					</Button>
@@ -170,7 +172,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 			</div>
 
 			{ ! isBeaverBuilder && ! isMobile && (
-				<div className="fl-asst-sidebar-cell">
+				<div className="fl-asst-sidebar-cell disable-while-sorting">
 					<Button
 						appearance="transparent"
 						onClick={ toggleWindowSize }

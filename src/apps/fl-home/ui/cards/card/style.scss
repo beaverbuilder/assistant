@@ -12,6 +12,8 @@
             align-items: stretch;
             min-height: var(--fluid-target-size);
             cursor: move;
+            -webkit-user-select: none;
+            user-select: none;
 
             .fl-asst-card-title-text {
                 flex: 0 0 auto;
@@ -79,5 +81,7 @@
 
     .is-dragging .fl-asst-card {
         pointer-events: none;
+        -webkit-user-select: none;
+        user-select: none;
     }
 }

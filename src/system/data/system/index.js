@@ -5,6 +5,7 @@ import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
 import useAppList from './use-app-list'
+import useAppOrder from './use-app-order'
 
 registerStore( 'fl-assistant/system', {
 	state: {
@@ -37,7 +38,7 @@ export const getSystemConfig = () => {
 	return { ...FL_ASSISTANT_CONFIG }
 }
 
-export { useAppList }
+export { useAppList, useAppOrder }
 
 getWpRest().batch().get( {
 	'/fl-assistant/v1/counts': counts => {

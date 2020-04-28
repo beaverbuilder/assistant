@@ -6,6 +6,18 @@
         flex-grow: 0;
         flex-basis: 60px;
         cursor: move;
+
+        .disable-while-sorting {
+            transition-property: opacity;
+            transition-duration: .15s;
+        }
+
+        &.is-sorting {
+            .disable-while-sorting {
+                pointer-events: none;
+                opacity: .3;
+            }
+        }
     }
     .fl-asst-main-sidebar-only .fl-asst-sidebar {
         flex-basis: 58px;
