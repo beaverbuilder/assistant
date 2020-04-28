@@ -3,12 +3,18 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Button, Icon, Env } from 'assistant/ui'
-import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
+import {
+	useAppList,
+	useSystemState,
+	getSystemActions,
+	getSystemSelectors,
+} from 'assistant/data'
 import { useMedia } from 'assistant/utils/react'
 import './style.scss'
 
 const Sidebar = ( { edge = 'right' } ) => {
 	const { window, isAppHidden  } = useSystemState()
+	const { selectApp } = getSystemSelectors()
 	const { isMobile, isCompactHeight, application } = Env.useEnvironment()
 	const {
 		toggleIsShowingUI,
@@ -66,6 +72,8 @@ const Sidebar = ( { edge = 'right' } ) => {
 		'fl-asst-sidebar-compact': isCompactHeight
 	} )
 
+	const manage = selectApp( 'fl-manage' )
+
 	return (
 		<div className={ classes }
 			style={ {
@@ -117,14 +125,19 @@ const Sidebar = ( { edge = 'right' } ) => {
 					)
 				} )}
 
-				<Button
-					appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
-					status={ ( isManage && ! isAppHidden ) ? 'primary' : '' }
-					onClick={ () => navOrHideApp( isManage, () => history.push( '/fl-manage' ) ) }
-					title={ __( 'Manage Apps' ) }
-				>
-					<Icon.Apps />
-				</Button>
+				{ manage && (
+					<Button
+						appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
+						status={ ( isManage && ! isAppHidden ) ? 'primary' : '' }
+						onClick={ () => navOrHideApp( isManage, () => history.push({
+							pathname: `/${manage.handle}`,
+							state: manage
+						}) ) }
+						title={ __( 'Manage Apps' ) }
+					>
+						<Icon.Apps />
+					</Button>
+				)}
 			</div>
 
 			{ ! isBeaverBuilder && ! isMobile && (

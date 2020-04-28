@@ -4,9 +4,7 @@ import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
 
-//import HomeScreen from './home-screen'
 import Sidebar from './side-bar'
-import ManageScreen from './manage-screen'
 import './style.scss'
 
 const AppMain = () => {
@@ -35,7 +33,6 @@ const AppMain = () => {
 						<Nav.Route exact path="/">
 							<Redirect to={ `/${homeApp}` } />
 						</Nav.Route>
-						<Nav.Route path="/fl-manage" component={ ManageScreen } />
 						<Nav.Route path="/:app" component={ AppContent } />
 						<Nav.Route component={ Page.NotFound } />
 					</Nav.Switch>

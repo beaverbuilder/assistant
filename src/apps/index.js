@@ -1,4 +1,5 @@
 import './fl-home'
+import './fl-manage'
 import './fl-search'
 import './fl-content'
 import './fl-media'

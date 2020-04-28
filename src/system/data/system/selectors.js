@@ -1,3 +1,5 @@
+import { Icon } from 'ui'
+
 export const getCount = ( state, key ) => {
 	return state.counts[ key ] ? state.counts[ key ] : 0
 }
@@ -56,4 +58,16 @@ export const querySections = ( state, passedQuery ) => {
 	}
 
 	return Object.values( sections ).filter( matchesQuery )
+}
+
+export const selectApp = ( state, key ) => {
+	if ( ! Object.keys( state.apps ).includes( key ) ) {
+		return false
+	}
+	const app = state.apps[key]
+	return {
+		...app,
+		handle: app.app,
+		icon: app.icon ? app.icon : Icon.DefaultApp,
+	}
 }

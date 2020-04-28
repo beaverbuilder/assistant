@@ -1,8 +1,18 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Button, Icon } from 'assistant/ui'
+import { Page, Button, Icon, Nav } from 'assistant/ui'
 import { CardPage } from './ui'
 import './style.scss'
+
+const Home = ( { match } ) => (
+	<Nav.Switch>
+		<Nav.Route
+			exact
+			path={ match.url }
+			component={CardsApp}
+		/>
+	</Nav.Switch>
+)
 
 const CardsApp = () => {
 	const [ isEditing, setIsEditing ] = useState( false )
@@ -34,4 +44,4 @@ const CardsApp = () => {
 	)
 }
 
-export default CardsApp
+export default Home
