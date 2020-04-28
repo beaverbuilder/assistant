@@ -6,7 +6,6 @@ import Login from './pages/auth/login'
 import Register from './pages/auth/register'
 import ForgotPassword from './pages/auth/forgot-password'
 
-
 import Dashboard from './pages/dashboard'
 import Teams from './pages/teams'
 import Sites from './pages/sites'
