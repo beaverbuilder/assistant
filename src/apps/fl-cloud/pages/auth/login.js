@@ -53,7 +53,11 @@ export default ( { location, history } ) => {
 		isSubmitting
 	} = Form.useForm( {
 		fields,
-		onSubmit
+		onSubmit,
+		defaults: {
+			email: 'justinbusa@gmail.com',
+			password: 'testing',
+		}
 	} )
 
 	return (
