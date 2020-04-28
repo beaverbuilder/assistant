@@ -3,24 +3,6 @@ import { __ } from '@wordpress/i18n'
 import { Form, Layout, List, Nav, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 
-// cloud.api.getTeams().then( response => console.log( response ) )
-
-// mockup.createTeam( {
-// 	name: 'Test'
-// } ).then( team => {
-//
-// 	mockup.updateTeam( 3, {
-// 		name: 'Update Test'
-// 	} ).then( team => {
-// 		console.log( team )
-// 		mockup.getTeams().then( response => console.log( response ) )
-// 	} )
-// } )
-
-// mockup.deleteTeam( 1 ).then( () => {
-// 	mockup.getTeams().then( response => console.log( response ) )
-// } )
-
 export default () => {
 	let tabs = [
 		{
@@ -89,10 +71,15 @@ const TeamMembers = () => {
 	}
 
 	return (
-		<List
-			items={ items }
-			getItemProps={ getItemProps }
-		/>
+		<>
+			<Layout.Box>
+				<Form.TextItem placeholder="Email Address"></Form.TextItem>
+			</Layout.Box>
+			<List
+				items={ items }
+				getItemProps={ getItemProps }
+			/>
+		</>
 	)
 }
 

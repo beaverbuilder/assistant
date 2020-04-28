@@ -7,7 +7,8 @@ export const createMockupApi = ( tables, options ) => {
 	const { cacheKey } = options
 	const cache = getMockupCache( cacheKey )
 	const db = cache ? { ...cache } : { ...setupTables( tables ) }
-	const mock = new MockAdapter( axios )
+	const http = axios.create()
+	const mock = new MockAdapter( http )
 	const api = {}
 
 	Object.keys( db ).map( key => {
@@ -21,23 +22,23 @@ export const createMockupApi = ( tables, options ) => {
 		}
 
 		api[ methods.index ] = () => {
-			return axios.get( `/${ key }` )
+			return http.get( `/${ key }` )
 		}
 
 		api[ methods.read ] = ( id ) => {
-			return axios.get( `/${ singular }/${ id }` )
+			return http.get( `/${ singular }/${ id }` )
 		}
 
 		api[ methods.create ] = ( data ) => {
-			return axios.post( `/${ singular }`, data )
+			return http.post( `/${ singular }`, data )
 		}
 
 		api[ methods.update ] = ( id, data ) => {
-			return axios.put( `/${ singular }/${ id }`, data )
+			return http.put( `/${ singular }/${ id }`, data )
 		}
 
 		api[ methods.delete ] = ( id ) => {
-			return axios.delete( `/${ singular }/${ id }` )
+			return http.delete( `/${ singular }/${ id }` )
 		}
 
 		mock.onGet( `/${ key }` ).reply( () => {
