@@ -1,14 +1,14 @@
-import { auth, session } from 'utils/cloud'
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
+import cloud from 'utils/cloud'
 
 const state = {
-	isCloudConnected: auth.isConnected(),
-	cloudToken: session.getToken(),
-	cloudUser: session.getUser()
+	isCloudConnected: cloud.auth.isConnected(),
+	cloudToken: cloud.session.getToken(),
+	cloudUser: cloud.session.getUser()
 }
 
 registerStore( 'fl-assistant/cloud', {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { useCloudState, getSystemConfig } from 'assistant/data'
-import { cloudLogout } from 'assistant/utils/cloud'
+import cloud from 'assistant/utils/cloud'
 import { Button, Form, Layout, List, Nav, Page } from 'assistant/ui'
 import AppIcon from '../../icon'
 
@@ -62,7 +62,7 @@ const ElevatorButtons = () => (
 		<Button
 			appearance='elevator'
 			title={ __( 'Logout' ) }
-			onClick={ cloudLogout }
+			onClick={ cloud.auth.logout }
 		>
 			<span
 				className="dashicons dashicons-lock"
@@ -89,7 +89,7 @@ const CurrentlyViewing = () => {
 				{ intro && <div className="fl-asst-pretitle">{intro}</div> }
 				<div className="fl-asst-title">{name}</div>
 			</div>
-			<Button.Group appearance="buttons" style={{ alignSelf: 'start', marginTop: '2px' }}>
+			<Button.Group appearance="buttons" style={ { alignSelf: 'start', marginTop: '2px' } }>
 				<Button>Save to Cloud</Button>
 				<Button>Sync to Site</Button>
 			</Button.Group>

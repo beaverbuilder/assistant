@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav } from 'assistant/ui'
-import { cloudLogin } from 'assistant/utils/cloud'
+import cloud from 'assistant/utils/cloud'
 import AuthLayout from './layout'
 
 export default ( { location, history } ) => {
@@ -35,7 +35,7 @@ export default ( { location, history } ) => {
 	const onSubmit = ( { values, setErrors } ) => {
 		const { email, password } = values
 
-		return cloudLogin( email, password )
+		return cloud.auth.login( email, password )
 			.then( () => {
 				if ( history ) {
 					history.replace( '/fl-cloud' )

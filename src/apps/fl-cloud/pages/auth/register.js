@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav } from 'assistant/ui'
-import { cloudRegister } from 'assistant/utils/cloud'
+import cloud from 'assistant/utils/cloud'
 import AuthLayout from './layout'
 
 export default ( { history } ) => {
@@ -55,7 +55,7 @@ export default ( { history } ) => {
 	const onSubmit = ( { values, setErrors } ) => {
 		const { first_name, last_name, email, password } = values
 
-		return cloudRegister( first_name, last_name, email, password )
+		return cloud.auth.register( first_name, last_name, email, password )
 			.then( () => {
 				history.replace( '/fl-cloud/auth/login', { registered: true } )
 			} )

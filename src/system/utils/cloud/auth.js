@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Promise from 'promise'
 import * as session from './session'
+import { getCloudActions } from 'data/cloud'
 
 const { cloudUrl } = FL_ASSISTANT_CONFIG
 
@@ -151,8 +152,12 @@ export const login = ( email, password, config = {} ) => {
 
 				// Handle success
 				const { token, user } = response.data.data
+				const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
 				session.setToken( token )
 				session.setUser( user )
+				setCloudToken( token )
+				setCloudUser( user )
+				setIsCloudConnected( true )
 				resolve( { token, user } )
 			} )
 			.catch( reject )
@@ -200,10 +205,27 @@ export const logout = ( config = {} ) => {
 	return new Promise( ( resolve, reject ) => {
 		http.post( '/iam/token/destroy', {}, config )
 			.then( () => {
+				const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
 				session.removeToken()
 				session.removeUser()
+				setCloudToken( {} )
+				setCloudUser( null )
+				setIsCloudConnected( false )
 				resolve()
 			} )
+	} )
+}
+
+/**
+ * Sends the password reset email.
+ * @param config
+ * @returns Promise
+ */
+export const requestPasswordReset = ( email, config = {} ) => {
+	return new Promise( ( resolve ) => {
+		setTimeout( () => {
+			resolve()
+		}, 1000 )
 	} )
 }
 

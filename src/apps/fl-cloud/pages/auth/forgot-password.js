@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav } from 'assistant/ui'
-import { cloudPasswordReset } from 'assistant/utils/cloud'
+import cloud from 'assistant/utils/cloud'
 import AuthLayout from './layout'
 
 export default () => {
@@ -25,7 +25,7 @@ export default () => {
 	const onSubmit = ( { values, setErrors } ) => {
 		const { email } = values
 
-		return cloudPasswordReset( email )
+		return cloud.auth.requestPasswordReset( email )
 			.then( () => {
 				setShowSuccessMessage( true )
 			} )
