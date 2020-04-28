@@ -4,10 +4,12 @@ import { motion, useMotionValue, useDragControls } from 'framer-motion'
 import arrayMove from 'array-move'
 import findIndex from './find-index'
 
-const SortableList = ( {
+const Sortable = ( {
+    tag: Tag = 'ul',
 	items = [],
 	setItems = () => {},
 	children,
+    keyProp = 'handle',
 	...rest
 } ) => {
 
@@ -22,11 +24,11 @@ const SortableList = ( {
 	}
 
 	return (
-		<ul { ...rest }>
+		<Tag { ...rest }>
 			{ items.map( ( item, i ) => {
 				return (
 					<Item
-						key={ item.id }
+						key={ item[ keyProp ] }
 						i={ i }
 						setPosition={ setPosition }
 						moveItem={ moveItem }
@@ -35,11 +37,17 @@ const SortableList = ( {
 					</Item>
 				)
 			} )}
-		</ul>
+		</Tag>
 	)
 }
 
-const Item = ( { i, setPosition, moveItem, className, children } ) => {
+const Item = ( {
+    i,
+    setPosition,
+    moveItem,
+    className,
+    children,
+} ) => {
 	const [ isDragging, setDragging ] = useState( false )
 	const ref = useRef( null )
 	const dragOriginY = useMotionValue( 0 )
@@ -66,18 +74,19 @@ const Item = ( { i, setPosition, moveItem, className, children } ) => {
 		scale: 1,
 	}
 
-	const isDragElement = e => e.target.classList.contains('fl-asst-card-title')
+	const isDragElement = e => true
 
 	return (
 		<motion.li
 			ref={ ref }
 			className={classes}
-
+            initial={false}
 			animate={ isDragging ? onTop : flat }
 
 			drag="y"
 			dragControls={controls}
 			dragOriginY={ dragOriginY }
+            dragOriginX="right"
 			dragConstraints={ { top: 0, bottom: 0 } }
 			dragElastic={ 1 }
 
@@ -93,7 +102,9 @@ const Item = ( { i, setPosition, moveItem, className, children } ) => {
 				}
 				setDragging( true )
 			} }
-			onDragEnd={ () => setDragging( false ) }
+			onDragEnd={ e => {
+                setDragging( false )
+            } }
 			onDrag={ ( e, { point } ) => moveItem( i, point.y ) }
 
 			positionTransition={ ( { delta } ) => {
@@ -108,6 +119,4 @@ const Item = ( { i, setPosition, moveItem, className, children } ) => {
 	)
 }
 
-SortableList.Item = Item
-
-export default SortableList
+export default Sortable

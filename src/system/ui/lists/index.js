@@ -9,6 +9,7 @@ import { Posts } from './posts'
 import { Users } from './users'
 import { Updates } from './updates'
 import Attachments from './attachments'
+import Sortable from './sortable'
 import './style.scss'
 
 import { isRenderProp } from 'utils/react'
@@ -148,3 +149,6 @@ List.useListItems = useListItems
 
 List.InlineCreate = InlineCreate
 List.InlineCreate.displayName = 'List.InlineCreate'
+
+List.Sortable = Sortable
+List.Sortable.displayName = 'List.Sortable'

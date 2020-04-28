@@ -13,17 +13,13 @@ import * as selectors from './selectors'
 import {
 	defaultPageKey,
 	defaultPage,
-	defaultCardType,
-	defaultCardTypeKey
 } from './defaults'
 
 const STORE_KEY = 'fl-assistant/cards'
 
 registerStore( STORE_KEY, {
 	state: {
-		types: {
-			[defaultCardTypeKey]: defaultCardType
-		},
+		types: {},
 		pages: {
 			[defaultPageKey]: { ...defaultPage }
 		},

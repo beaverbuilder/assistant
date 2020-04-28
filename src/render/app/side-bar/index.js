@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
-import { Button, Icon, Env } from 'assistant/ui'
+import { Button, Icon, Env, List } from 'assistant/ui'
 import {
 	useAppList,
 	useSystemState,
@@ -19,7 +19,8 @@ const Sidebar = ( { edge = 'right' } ) => {
 	const {
 		toggleIsShowingUI,
 		setWindow,
-		setIsAppHidden
+		setIsAppHidden,
+		resetAppOrder,
 	} = getSystemActions()
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
 
@@ -106,7 +107,35 @@ const Sidebar = ( { edge = 'right' } ) => {
 					<Icon.Home />
 				</Button>
 
-				{ apps.map( ( app, i ) => {
+				<List.Sortable
+					items={apps}
+					setItems={ items => {
+						const keys = items.map( item => item.handle )
+						resetAppOrder( keys )
+					}}
+				>
+				{ app => {
+					const { label, handle, icon } = app
+
+					const location = {
+						pathname: `/${handle}`,
+						state: app,
+					}
+					const isSelected = pathname.startsWith( `/${handle}` )
+					return (
+						<Button
+							appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
+							isSelected={ isSelected }
+							onClick={ e => {
+								navOrHideApp( isSelected, () => history.push( location ) )
+							} }
+							title={ label }
+						>{ icon( { context: 'sidebar', isSelected } ) }</Button>
+					)
+				}}
+				</List.Sortable>
+
+				{ /* apps.map( ( app, i ) => {
 					const { label, handle, icon } = app
 
 					const location = {
@@ -123,7 +152,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 							title={ label }
 						>{ icon( { context: 'sidebar', isSelected } ) }</Button>
 					)
-				} )}
+				} ) */}
 
 				{ manage && (
 					<Button
