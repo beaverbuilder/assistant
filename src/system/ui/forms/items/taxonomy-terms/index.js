@@ -138,22 +138,24 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 		const isChecked = e.target.checked
 		setcheckedItems(prevState => ({
 			checkedItems: prevState.checkedItems.set(item, isChecked)
+
 		}))
+
+		onChange(checkedItems)
 
 	}
 
-	var wpCheckboxGroup = Object.keys(options).map(function (key) {
+	var tifOptions = Object.keys(options).map(function (key) {
 
 		var str = options[key];
-		var isSubcat = str.includes("-");
-		var catLabel = str.replace("-", "");
+		var n = str.includes("-");
 
 		return (
 			<CheckboxControl
-				label={catLabel}
+				label={options[key]}
 				checked={checkedItems.get(options[key])}
 				onChange={handleChange}
-				className={ isSubcat ? 'fl-asst-subCat' : 'fl-asst-Maincat'}
+				className={ n ? 'fl-asst-subCat' : 'fl-asst-cat'}
 				value={key}
 			/>
 		)
@@ -161,7 +163,17 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 	if (tax.isHierarchical) {
 		return (
 			<>
-				{wpCheckboxGroup}
+				<Form.SelectItem
+					selectMultiple={true}
+					options={options}
+					value={values}
+					onChange={slugs => {
+
+						onChange(slugs.map(slug => data.idsBySlug[slug]))
+					}}
+				/>
+
+				{tifOptions}
 
 				<div className='fl-asst-new-term-form'>
 					{addingNew && (
