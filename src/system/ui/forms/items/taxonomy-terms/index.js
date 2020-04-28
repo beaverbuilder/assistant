@@ -141,7 +141,6 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 
 		}))
 
-		onChange(checkedItems)
 
 	}
 
