@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
-import classname from 'classnames'
-import { Button, Icon, Layout } from 'assistant/ui'
+import { Button, Icon } from 'assistant/ui'
 import Card from '../card'
 import useCards from '../use-cards'
 import useCardTypes from '../use-card-types'
@@ -11,8 +10,7 @@ import SortableList from '../sortable-list'
 
 const CardPage = ( {
 	page = 'home',
-	isEditing = false,
-	...rest
+	isEditing = false
 } ) => {
 	const { cards, setPage, setCards } = useCards( page )
 

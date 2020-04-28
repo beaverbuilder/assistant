@@ -4,13 +4,6 @@ import { motion, useMotionValue, useDragControls } from 'framer-motion'
 import arrayMove from 'array-move'
 import findIndex from './find-index'
 
-// Spring configs
-const onTop = { zIndex: 9999999 }
-const flat = {
-	zIndex: 0,
-	transition: { delay: 0.3 }
-}
-
 const SortableList = ( {
 	items = [],
 	setItems = () => {},
@@ -38,7 +31,6 @@ const SortableList = ( {
 						setPosition={ setPosition }
 						moveItem={ moveItem }
 					>
-						<div>Handle</div>
 						{ children( item ) }
 					</Item>
 				)
@@ -51,6 +43,7 @@ const Item = ( { i, setPosition, moveItem, className, children } ) => {
 	const [ isDragging, setDragging ] = useState( false )
 	const ref = useRef( null )
 	const dragOriginY = useMotionValue( 0 )
+	const controls = useDragControls()
 
 	useEffect( () => {
 		setPosition( i, {
@@ -59,20 +52,49 @@ const Item = ( { i, setPosition, moveItem, className, children } ) => {
 		} )
 	} )
 
+	const classes = classname({
+		'is-dragging': isDragging
+	}, className )
+
+	// Spring configs
+	const onTop = {
+		zIndex: 9,
+		scale: 1.04
+	}
+	const flat = {
+		zIndex: 0,
+		scale: 1,
+	}
+
 	return (
 		<motion.li
 			ref={ ref }
-			className={ classname({ 'is-dragging': isDragging }, className )}
-			initial={ false }
+			className={classes}
+
 			animate={ isDragging ? onTop : flat }
-			whileTap={ { scale: 1.04 } }
+
 			drag="y"
+			dragControls={controls}
 			dragOriginY={ dragOriginY }
 			dragConstraints={ { top: 0, bottom: 0 } }
 			dragElastic={ 1 }
-			onDragStart={ () => setDragging( true ) }
+
+			onDragStart={ ( e, info ) => {
+
+				if ( ! e.target.classList.contains('fl-asst-card-title') ) {
+
+					controls.componentControls.forEach( entry => {
+						entry.stop( e, info )
+					})
+
+					setDragging( false )
+					return
+				}
+				setDragging( true )
+			} }
 			onDragEnd={ () => setDragging( false ) }
 			onDrag={ ( e, { point } ) => moveItem( i, point.y ) }
+
 			positionTransition={ ( { delta } ) => {
 				if ( isDragging ) {
 					dragOriginY.set( dragOriginY.get() + delta.y )

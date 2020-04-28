@@ -31,7 +31,9 @@ const Card = ( {
 				</span>
 				{ actions && <span className="fl-asst-card-title-actions">{actions}</span> }
 			</div> }
-			<ContentTag className="fl-asst-card-content" { ...contentProps }>
+			<ContentTag
+				className="fl-asst-card-content" { ...contentProps }
+			>
 				{children}
 			</ContentTag>
 		</Tag>
