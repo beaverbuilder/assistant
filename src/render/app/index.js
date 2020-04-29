@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, Suspense } from 'react'
 import classname from 'classnames'
 import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
@@ -68,13 +68,16 @@ const AppContent = props => {
 
 	return (
 		<div className={ appWrapClasses }>
-			<AppRoot root={ app.root } { ...appProps } />
+			<Suspense fallback={ <Page.Loading /> }>
+				<AppRoot root={ app.root } { ...appProps } />
+			</Suspense>
 		</div>
 	)
 }
 
-const AppRoot = memo( ( { root, ...rest } ) => {
-	return 'function' === typeof root ? root( rest ) : null
+const AppRoot = memo( ( { root: Root, ...rest } ) => {
+
+	return Root ? <Root {...rest} /> : Page.NotFound
 } )
 
 export default AppMain

@@ -7,7 +7,7 @@ import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
 import './style.scss'
 
-export const Content = ( { match } ) => (
+const Content = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}` }>
 			<Redirect to={ { pathname: `${match.url}/tab/post` } } />
@@ -86,3 +86,5 @@ const Main = () => {
 		</Page>
 	)
 }
+
+export default Content

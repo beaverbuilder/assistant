@@ -6,7 +6,7 @@ import { defaultState } from './'
 import AppIcon from './icon'
 import './style.scss'
 
-export const MediaApp = ( { match } ) => (
+const MediaApp = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
 		<Nav.Route path={ `${match.url}/attachment/:id` } component={ Page.Attachment } />
@@ -115,3 +115,5 @@ const Main = ( { match } ) => {
 		</Page>
 	)
 }
+
+export default MediaApp

@@ -14,6 +14,7 @@ import { Attachment } from './attachment'
 import { Plugin, Theme } from './themes-plugins'
 import { Comment } from './comment'
 import { PageNotFound } from './not-found'
+import Loading from './loading'
 
 import './style.scss'
 
@@ -103,5 +104,8 @@ Page.Theme.displayName = 'Page.Theme'
 
 Page.NotFound = PageNotFound
 Page.NotFound.displayName = 'Page.NotFound'
+
+Page.Loading = Loading
+Page.Loading.displayName = 'Page.Loading'
 
 export { Page }

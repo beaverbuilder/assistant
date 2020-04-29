@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n'
 import './style.scss'
 
 
-export const CommentsApp = ( { match } ) => (
+const CommentsApp = ( { match } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
 		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
@@ -84,3 +84,5 @@ const Main = () => {
 		</Page>
 	)
 }
+
+export default CommentsApp
