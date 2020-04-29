@@ -28,6 +28,11 @@ export const after = {
 		wpapi.users().updateState( { appOrder } )
 	},
 
+	RESET_APP_ORDER: ( action, store ) => {
+		const { appOrder } = store.getState()
+		wpapi.users().updateState( { appOrder } )
+	},
+
 	SET_WINDOW: ( action, store ) => {
 		const { window } = store.getState()
 		wpapi.users().updateState( { window: { ...window } } )
