@@ -34,6 +34,7 @@ const externals = [
 	    'camelcase'						: 'FL.UID.vendors.camelcase',
         'react-laag'                    : 'FL.UID.vendors.ReactLaag',
         'resize-observer-polyfill'      : 'FL.UID.vendors.ResizeObserverPolyfill',
+        'framer-motion'                 : 'FL.UID.vendors.FramerMotion',
 
 	    /* wp */
 	    '@wordpress/i18n'               : 'wp.i18n',
