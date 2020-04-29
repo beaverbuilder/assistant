@@ -27,7 +27,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 		setIsAppHidden,
 	} = getSystemActions()
 
-	const [isSorting, setIsSorting] = useState( false )
+	const [ isSorting, setIsSorting ] = useState( false )
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
 
 	const getMaxCount = () => {
@@ -39,7 +39,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 		}
 		return isMobile ? 3 : 5
 	}
-	const [appOrder, setAppOrder] = useAppOrder( { maxCount: getMaxCount() } )
+	const [ appOrder, setAppOrder ] = useAppOrder( { maxCount: getMaxCount() } )
 	const { pathname } = useLocation()
 	const history = useHistory()
 
@@ -76,7 +76,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 
 	const classes = classname( 'fl-asst-sidebar', {
 		'fl-asst-sidebar-compact': isCompactHeight,
-		'is-sorting' : isSorting,
+		'is-sorting': isSorting,
 	} )
 
 	const manage = selectApp( 'fl-manage' )
@@ -100,7 +100,6 @@ const Sidebar = ( { edge = 'right' } ) => {
 				</div>
 			)}
 
-
 			<div
 				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
 			>
@@ -118,28 +117,28 @@ const Sidebar = ( { edge = 'right' } ) => {
 					items={ appOrder }
 					setItems={ setAppOrder }
 					keyProp={ item => item }
-					onSortStart={ () => setIsSorting( true )}
-					onSortEnd={ () => setIsSorting( false )}
+					onSortStart={ () => setIsSorting( true ) }
+					onSortEnd={ () => setIsSorting( false ) }
 				>
-				{ key => {
-					const app = selectApp( key )
-					const { handle, icon } = app
+					{ key => {
+						const app = selectApp( key )
+						const { handle, icon } = app
 
-					const location = {
-						pathname: `/${handle}`,
-						state: app,
-					}
-					const isSelected = pathname.startsWith( `/${handle}` )
-					return (
-						<Button
-							appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
-							isSelected={ isSelected }
-							onClick={ e => {
-								navOrHideApp( isSelected, () => history.push( location ) )
-							} }
-						>{ icon( { context: 'sidebar', isSelected } ) }</Button>
-					)
-				}}
+						const location = {
+							pathname: `/${handle}`,
+							state: app,
+						}
+						const isSelected = pathname.startsWith( `/${handle}` )
+						return (
+							<Button
+								appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
+								isSelected={ isSelected }
+								onClick={ () => {
+									navOrHideApp( isSelected, () => history.push( location ) )
+								} }
+							>{ icon( { context: 'sidebar', isSelected } ) }</Button>
+						)
+					}}
 				</List.Sortable>
 
 				{ /* apps.map( ( app, i ) => {
@@ -165,10 +164,10 @@ const Sidebar = ( { edge = 'right' } ) => {
 					<Button
 						appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
 						status={ ( isManage && ! isAppHidden ) ? 'primary' : '' }
-						onClick={ () => navOrHideApp( isManage, () => history.push({
+						onClick={ () => navOrHideApp( isManage, () => history.push( {
 							pathname: `/${manage.handle}`,
 							state: manage
-						}) ) }
+						} ) ) }
 						className="disable-while-sorting"
 					>
 						<Icon.Apps />

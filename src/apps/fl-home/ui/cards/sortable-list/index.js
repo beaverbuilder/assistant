@@ -52,7 +52,7 @@ const Item = ( { i, setPosition, moveItem, className, children } ) => {
 		} )
 	} )
 
-	const classes = classname({
+	const classes = classname( {
 		'is-dragging': isDragging
 	}, className )
 
@@ -66,17 +66,17 @@ const Item = ( { i, setPosition, moveItem, className, children } ) => {
 		scale: 1,
 	}
 
-	const isDragElement = e => e.target.classList.contains('fl-asst-card-title')
+	const isDragElement = e => e.target.classList.contains( 'fl-asst-card-title' )
 
 	return (
 		<motion.li
 			ref={ ref }
-			className={classes}
+			className={ classes }
 
 			animate={ isDragging ? onTop : flat }
 
 			drag="y"
-			dragControls={controls}
+			dragControls={ controls }
 			dragOriginY={ dragOriginY }
 			dragConstraints={ { top: 0, bottom: 0 } }
 			dragElastic={ 1 }
@@ -86,7 +86,7 @@ const Item = ( { i, setPosition, moveItem, className, children } ) => {
 
 					controls.componentControls.forEach( entry => {
 						entry.stop( e, info )
-					})
+					} )
 
 					setDragging( false )
 					return

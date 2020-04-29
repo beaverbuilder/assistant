@@ -12,13 +12,16 @@ import {
 import { defaultState } from './'
 import AppIcon from './icon'
 
-const UpdatesApp = ( { match } ) => (
-	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}/` } component={ UpdatesMain }/>
-		<Nav.Route path={ `${match.url}/plugin/:id` } component={ Page.Plugin }/>
-		<Nav.Route path={ `${match.url}/theme/:id` } component={ Page.Theme }/>
-	</Nav.Switch>
-)
+const UpdatesApp = () => {
+	const baseURL = '/fl-updates'
+	return (
+		<Nav.Switch>
+			<Nav.Route exact path={ baseURL } component={ UpdatesMain }/>
+			<Nav.Route path={ `${baseURL}/plugin/:id` } component={ Page.Plugin }/>
+			<Nav.Route path={ `${baseURL}/theme/:id` } component={ Page.Theme }/>
+		</Nav.Switch>
+	)
+}
 
 const UpdatesMain = () => {
 	const updater = getUpdaterStore()

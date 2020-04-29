@@ -2,7 +2,7 @@ import React, { memo, Suspense } from 'react'
 import classname from 'classnames'
 import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
-import { useSystemState } from 'assistant/data'
+import { useSystemState, getSystemSelectors } from 'assistant/data'
 
 import Sidebar from './side-bar'
 import './style.scss'
@@ -44,19 +44,13 @@ const AppMain = () => {
 AppMain.displayName = 'AppMain'
 
 const AppContent = props => {
-	const { match } = props
-	const { apps } = useSystemState()
+	const { params: { app: appName } } = props.match
 	const { isAppRoot } = App.useApp()
-	const { params: { app: appName } } = match
-	const app = apps[appName]
+	const { selectApp } = getSystemSelectors()
+	const app = selectApp( appName )
 
-	if ( 'undefined' === typeof app ) {
+	if ( ! app ) {
 		return null
-	}
-
-	const appProps = {
-		...props,
-		...app,
 	}
 
 	const appWrapClasses = classname( {
@@ -69,15 +63,14 @@ const AppContent = props => {
 	return (
 		<div className={ appWrapClasses }>
 			<Suspense fallback={ <Page.Loading /> }>
-				<AppRoot root={ app.root } { ...appProps } />
+				<AppRoot root={ app.root } />
 			</Suspense>
 		</div>
 	)
 }
 
-const AppRoot = memo( ( { root: Root, ...rest } ) => {
-
-	return Root ? <Root {...rest} /> : Page.NotFound
+const AppRoot = memo( ( { root: Root } ) => {
+	return Root ? <Root /> : Page.NotFound
 } )
 
 export default AppMain

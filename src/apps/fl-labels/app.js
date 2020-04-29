@@ -7,10 +7,10 @@ import { getSystemActions, useSystemState } from 'assistant/data'
 import AppIcon from './icon'
 import './style.scss'
 
-const App = ( { match } ) => {
+const App = () => {
 	return (
 		<Nav.Switch>
-			<Nav.Route exact path={ `${match.url}/` } component={ Main } />
+			<Nav.Route exact path="/fl-labels" component={ Main } />
 		</Nav.Switch>
 	)
 }

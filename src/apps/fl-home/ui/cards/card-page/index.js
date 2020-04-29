@@ -18,59 +18,59 @@ const CardPage = ( {
 	useEffect( () => setPage( page ), [ page ] )
 
 	return (
-        <>
-            <SortableList
-            	items={ cards }
-            	setItems={ setCards }
-            	className="fl-asst-card-list"
-            >
-            	{ card => {
-            		const {
-            			id,
-            			actions,
-            			moveUp,
-            			moveDown,
-            			isFirst,
-            			isLast,
-            			render: Render,
-            			edit: Edit
-            		} = card
+		<>
+			<SortableList
+				items={ cards }
+				setItems={ setCards }
+				className="fl-asst-card-list"
+			>
+				{ card => {
+					const {
+						id,
+						actions,
+						moveUp,
+						moveDown,
+						isFirst,
+						isLast,
+						render: Render,
+						edit: Edit
+					} = card
 
-            		const EditActions = () => (
-                    <>
-                        { ! isFirst && <Button
-                        	appearance="transparent"
-                        	onClick={ moveUp }
-                        >
-                        	<Icon.UpCaret />
-                        </Button> }
-                        { ! isLast && <Button
-                        	appearance="transparent"
-                        	onClick={ moveDown }
-                        >
-                        	<Icon.DownCaret />
-                        </Button> }
-                    </>
-            		)
+					const EditActions = () => (
+						<>
+							{ ! isFirst && <Button
+								appearance="transparent"
+								onClick={ moveUp }
+							>
+								<Icon.UpCaret />
+							</Button> }
+							{ ! isLast && <Button
+								appearance="transparent"
+								onClick={ moveDown }
+							>
+								<Icon.DownCaret />
+							</Button> }
+						</>
+					)
 
-            		return (
-            			<Card
-            				key={ id }
-            				isEditing={ isEditing }
-            				actions={ isEditing ? <EditActions /> : actions }
-            				{ ...card }
-            			>{ isEditing ? <Edit { ...card }/> : <Render { ...card } /> }</Card>
-            		)
-            	}}
-            </SortableList>
+					return (
+						<Card
+							key={ id }
+							isEditing={ isEditing }
+							actions={ isEditing ? <EditActions /> : actions }
+							{ ...card }
+						>{ isEditing ? <Edit { ...card }/> : <Render { ...card } /> }</Card>
+					)
+				}}
+			</SortableList>
 
-            { isEditing && (
-            	<div style={ { padding: '0 var(--fluid-lg-space)' } }>
-            		<h2 style={ { marginTop: 'var(--fluid-lg-space)' } }>{__( 'Available Cards' )}</h2>
-            		<CardTypesList page={ page } />
-            	</div>
-            )}
-        </>
+			{ isEditing && (
+				<div style={ { padding: '0 var(--fluid-lg-space)' } }>
+					<h2 style={ { marginTop: 'var(--fluid-lg-space)' } }>{__( 'Available Cards' )}</h2>
+					<CardTypesList page={ page } />
+				</div>
+			)}
+		</>
 	)
 }
 

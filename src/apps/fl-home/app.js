@@ -4,12 +4,12 @@ import { Page, Button, Icon, Nav } from 'assistant/ui'
 import { CardPage } from './ui'
 import './style.scss'
 
-const Home = ( { match } ) => (
+export default () => (
 	<Nav.Switch>
 		<Nav.Route
 			exact
-			path={ match.url }
-			component={CardsApp}
+			path='/fl-home'
+			component={ CardsApp }
 		/>
 	</Nav.Switch>
 )
@@ -43,5 +43,3 @@ const CardsApp = () => {
 		</Page>
 	)
 }
-
-export default Home

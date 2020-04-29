@@ -6,16 +6,18 @@ import { __ } from '@wordpress/i18n'
 import './style.scss'
 
 
-const CommentsApp = ( { match } ) => (
-	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
-		<Nav.Route path={ `${match.url}/comment/:id` } component={ Page.Comment } />
-	</Nav.Switch>
-)
+const CommentsApp = () => {
+	const baseURL = '/fl-comments'
+	return (
+		<Nav.Switch>
+			<Nav.Route exact path={ baseURL } component={ Main } />
+			<Nav.Route path={ `${baseURL}/tab/:tab` } component={ Main } />
+			<Nav.Route path={ `${baseURL}/comment/:id` } component={ Page.Comment } />
+		</Nav.Switch>
+	)
+}
 
 const Main = () => {
-
 	const getTabs = () => {
 		let tabs = [
 			{

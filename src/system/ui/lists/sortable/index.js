@@ -5,14 +5,14 @@ import arrayMove from 'array-move'
 import findIndex from './find-index'
 
 const Sortable = ( {
-    tag: Tag = 'ul',
+	tag: Tag = 'ul',
 	items = [],
 	setItems = () => {},
 	children,
-    keyProp = 'handle',
-    itemProps = {},
-    onSortStart = () => {},
-    onSortEnd = () => {},
+	keyProp = 'handle',
+	itemProps = {},
+	onSortStart = () => {},
+	onSortEnd = () => {},
 	...rest
 } ) => {
 
@@ -26,11 +26,11 @@ const Sortable = ( {
 		}
 	}
 
-    // Need to provide a unique key for each item
-    // Indexes do not work well here.
-    const getItemKey = ( item, i ) => {
-        return 'function' === typeof keyProp ? keyProp( item, i ) : item[ keyProp ]
-    }
+	// Need to provide a unique key for each item
+	// Indexes do not work well here.
+	const getItemKey = ( item, i ) => {
+		return 'function' === typeof keyProp ? keyProp( item, i ) : item[ keyProp ]
+	}
 
 	return (
 		<Tag { ...rest }>
@@ -42,9 +42,9 @@ const Sortable = ( {
 						i={ i }
 						setPosition={ setPosition }
 						moveItem={ moveItem }
-                        onSortStart={onSortStart}
-                        onSortEnd={onSortEnd}
-                        {...itemProps}
+						onSortStart={ onSortStart }
+						onSortEnd={ onSortEnd }
+						{ ...itemProps }
 					>
 						{ children( item ) }
 					</Item>
@@ -55,14 +55,14 @@ const Sortable = ( {
 }
 
 const Item = ( {
-    i,
-    setPosition,
-    moveItem,
-    className,
-    children,
-    onSortStart,
-    onSortEnd,
-    ...rest
+	i,
+	setPosition,
+	moveItem,
+	className,
+	children,
+	onSortStart,
+	onSortEnd,
+	...rest
 } ) => {
 	const [ isDragging, setDragging ] = useState( false )
 	const ref = useRef( null )
@@ -76,7 +76,7 @@ const Item = ( {
 		} )
 	} )
 
-	const classes = classname({
+	const classes = classname( {
 		'is-dragging': isDragging
 	}, className )
 
@@ -84,25 +84,23 @@ const Item = ( {
 	const onTop = {
 		zIndex: 9,
 		scale: 1.04,
-        originX: 1,
 	}
 	const flat = {
 		zIndex: 0,
 		scale: 1,
-        originX: 1,
 	}
 
-	const isDragElement = e => true
+	const isDragElement = () => true
 
 	return (
 		<motion.li
 			ref={ ref }
-			className={classes}
-            initial={false}
+			className={ classes }
+			initial={ false }
 			animate={ isDragging ? onTop : flat }
 
 			drag="y"
-			dragControls={controls}
+			dragControls={ controls }
 			dragOriginY={ dragOriginY }
 			dragConstraints={ { top: 0, bottom: 0 } }
 			dragElastic={ 1 }
@@ -112,36 +110,30 @@ const Item = ( {
 
 					controls.componentControls.forEach( entry => {
 						entry.stop( e, info )
-					})
+					} )
 
 					setDragging( false )
 					return
 				}
-                onSortStart()
+				onSortStart()
 				setDragging( true )
 			} }
-			onDragEnd={ e => {
-                setDragging( false )
-                onSortEnd()
-            } }
+			onDragEnd={ () => {
+				setDragging( false )
+				onSortEnd()
+			} }
 			onDrag={ ( e, { point } ) => moveItem( i, point.y ) }
 
-			positionTransition={ ( { delta } ) => {
+			positionTransition={ info => {
+				const { delta } = info
 				if ( isDragging ) {
 					dragOriginY.set( dragOriginY.get() + delta.y )
+					return false
 				}
-				return ! isDragging
+				return true
 			} }
 
-            onTapEnd={ e => console.log('tap end')}
-            onClickCapture={ e => {
-                console.log('capture click', isDragging )
-                if ( isDragging ) {
-                    e.stopPropagation()
-                }
-            } }
-
-            {...rest}
+			{ ...rest }
 		>
 			{children}
 		</motion.li>

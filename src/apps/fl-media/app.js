@@ -6,12 +6,15 @@ import { defaultState } from './'
 import AppIcon from './icon'
 import './style.scss'
 
-const MediaApp = ( { match } ) => (
-	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-		<Nav.Route path={ `${match.url}/attachment/:id` } component={ Page.Attachment } />
-	</Nav.Switch>
-)
+export default () => {
+	const baseURL = '/fl-media'
+	return (
+		<Nav.Switch>
+			<Nav.Route exact path={ baseURL } component={ Main } />
+			<Nav.Route path={ `${baseURL}/attachment/:id` } component={ Page.Attachment } />
+		</Nav.Switch>
+	)
+}
 
 const Main = ( { match } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
@@ -115,5 +118,3 @@ const Main = ( { match } ) => {
 		</Page>
 	)
 }
-
-export default MediaApp
