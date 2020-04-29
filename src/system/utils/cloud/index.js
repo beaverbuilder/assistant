@@ -1,10 +1,9 @@
-import api from './api'
 import * as auth from './auth'
 import * as session from './session'
-import { getCloudActions } from 'data/cloud'
+import teams from './teams'
 
 export default {
-	api,
 	auth,
-	session
+	session,
+	teams
 }

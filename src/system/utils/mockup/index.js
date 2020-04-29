@@ -2,78 +2,75 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import camelCase from 'camelcase'
 import { getCache, setCache } from 'utils/cache'
+import { addQueryArgs, getQueryArgs } from 'utils/url'
 
 export const createMockupApi = ( tables, options ) => {
-	const { cacheKey } = options
+	const { cacheKey, delayResponse } = options
 	const cache = getMockupCache( cacheKey )
 	const db = cache ? { ...cache } : { ...setupTables( tables ) }
 	const http = axios.create()
-	const mock = new MockAdapter( http )
+	const mock = new MockAdapter( http, { delayResponse } )
 	const api = {}
 
 	Object.keys( db ).map( key => {
-		const singular = key.substring( 0, key.length - 1 )
-		const methods = {
-			index: camelCase( `get_${ key }` ),
-			read: camelCase( `get_${ singular }` ),
-			create: camelCase( `create_${ singular }` ),
-			update: camelCase( `update_${ singular }` ),
-			delete: camelCase( `delete_${ singular }` )
+		api[ key ] = {
+			getAll: ( args = {} ) => {
+				return http.get( addQueryArgs( `/${ key }`, args ) )
+			},
+			get: ( id ) => {
+				return http.get( `/${ key }/${ id }` )
+			},
+			create: ( data ) => {
+				return http.post( `/${ key }`, data )
+			},
+			update: ( id, data ) => {
+				return http.put( `/${ key }/${ id }`, data )
+			},
+			delete: ( id ) => {
+				return http.delete( `/${ key }/${ id }` )
+			}
 		}
 
-		api[ methods.index ] = () => {
-			return http.get( `/${ key }` )
-		}
-
-		api[ methods.read ] = ( id ) => {
-			return http.get( `/${ singular }/${ id }` )
-		}
-
-		api[ methods.create ] = ( data ) => {
-			return http.post( `/${ singular }`, data )
-		}
-
-		api[ methods.update ] = ( id, data ) => {
-			return http.put( `/${ singular }/${ id }`, data )
-		}
-
-		api[ methods.delete ] = ( id ) => {
-			return http.delete( `/${ singular }/${ id }` )
-		}
-
-		mock.onGet( `/${ key }` ).reply( () => {
-			return [ 200, {
-				[ key ]: db[ key ],
-			} ]
-		} )
-
-		mock.onGet( new RegExp( `/${ singular }/*` ) ).reply( config => {
+		mock.onGet( new RegExp( `/${ key }/[0-9]` ) ).reply( config => {
 			const items = db[ key ]
 			const id = parseInt( config.url.split( '/' ).pop() )
 			const item = items.filter( item => item.id === id ).pop()
+			return [ 200, item ]
+		} )
+
+		mock.onGet( new RegExp( `/${ key }/*` ) ).reply( config => {
+			const args = getQueryArgs( config.url )
+			let items = db[ key ]
+			if ( args ) {
+				items = db[ key ].filter( item => {
+					for ( let arg in args ) {
+						if ( item[ arg ] !== args[ arg ] ) {
+							return false
+						}
+					}
+					return true
+				} )
+			}
 			return [ 200, {
-				[ singular ]: item,
+				[ key ]: items,
 			} ]
 		} )
 
-		mock.onPost( `/${ singular }` ).reply( config => {
+		mock.onPost( `/${ key }` ).reply( config => {
 			const data = JSON.parse( config.data )
 			const items = db[ key ]
 			const id = items.length + 1
 			const item = { ...data, id }
 			db[ key ].push( item )
 			updateMockupCache( cacheKey, db )
-			return [ 200, {
-				[ singular ]: item,
-			} ]
+			return [ 200, item ]
 		} )
 
-		mock.onPut( new RegExp( `/${ singular }/*` ) ).reply( config => {
+		mock.onPut( new RegExp( `/${ key }/*` ) ).reply( config => {
 			const data = JSON.parse( config.data )
 			const items = db[ key ]
 			const id = parseInt( config.url.split( '/' ).pop() )
 			let updated = null
-
 			db[ key ] = items.map( item => {
 				if ( item.id === id ) {
 					updated = { ...item, ...data }
@@ -81,15 +78,11 @@ export const createMockupApi = ( tables, options ) => {
 				}
 				return item
 			} )
-
 			updateMockupCache( cacheKey, db )
-
-			return [ 200, {
-				[ singular ]: updated,
-			} ]
+			return [ 200, updated ]
 		} )
 
-		mock.onDelete( new RegExp( `/${ singular }/*` ) ).reply( config => {
+		mock.onDelete( new RegExp( `/${ key }/*` ) ).reply( config => {
 			const items = db[ key ]
 			const id = parseInt( config.url.split( '/' ).pop() )
 			db[ key ] = items.filter( item => item.id !== id )

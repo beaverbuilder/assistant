@@ -1,10 +1,10 @@
-export const teams = [
-	{
-		id: 1,
-		name: 'FastLine Media',
-	},
-	{
-		id: 2,
-		name: 'Crowd Favorite',
-	}
-]
+import { createMockupApi } from 'utils/mockup'
+
+const db = {
+	teams: []
+}
+
+export default createMockupApi( db, {
+	cacheKey: 'fl-assistant/cloud-mockup',
+	delayResponse: 1000
+} )

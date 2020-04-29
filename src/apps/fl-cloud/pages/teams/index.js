@@ -2,19 +2,63 @@ import React, { useState, useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Filter, Form, Layout, List, Nav, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
+import { TeamMembers } from './members.js'
+import { TeamInvite } from './invite.js'
+import { TeamInfo } from './info.js'
+import { TeamBilling } from './billing.js'
+import { NewTeamForm } from './new-team-form'
+import './style.scss'
 
 export default () => {
-	const [ teams, setTeams ] = useState( [] )
+	const [ teams, setTeams ] = useState( null )
 
-	useEffect( () => {
-		cloud.api.getTeams().then(
-			response => setTeams( response.data.teams )
-		)
-	}, [] )
+	const loadTeams = () => {
+		cloud.teams.getAll().then( response => {
+			setTeams( response.data.teams )
+		} )
+	}
+
+	useEffect( loadTeams, [] )
+
+	return (
+		<Page
+			className='fl-asst-teams-layout'
+			title={ __( 'Teams' ) }
+			shouldShowBackButton={ true }
+			padX={ false }
+			padY={ false }
+		>
+			{ ( teams && !! teams.length ) &&
+				<Teams teams={ teams } />
+			}
+			{ ( teams && ! teams.length ) &&
+				<Layout.Box>
+					<Layout.Headline>{ __( 'Get Started With Teams!' ) }</Layout.Headline>
+					<p>{ __( 'You\'re not part of any teams. Get started by creating a team or receiving an invite from someone you know.' ) }</p>
+					<NewTeamForm
+						onCreated={ () => {
+							setTeams( null )
+							loadTeams()
+						} }
+					/>
+				</Layout.Box>
+			}
+			{ ! teams &&
+				<Layout.Box>
+					<Layout.Loading style={ { alignSelf: 'center', alignItems: 'flex-start' } } />
+				</Layout.Box>
+			}
+		</Page>
+	)
+}
+
+const Teams = ( { teams } ) => {
 
 	const getTeamOptions = () => {
 		const options = {}
-		teams.map( team => options[ team.id ] = team.name )
+		if ( teams ) {
+			teams.map( team => options[ team.id ] = team.name )
+		}
 		return options
 	}
 
@@ -47,13 +91,7 @@ export default () => {
 	]
 
 	return (
-		<Page
-			className='fl-asst-teams-layout'
-			title={ __( 'Teams' ) }
-			shouldShowBackButton={ true }
-			padX={ false }
-			padY={ false }
-		>
+		<>
 			<Layout.Box>
 				<Form.SelectItem
 					options={ getTeamOptions() }
@@ -66,111 +104,6 @@ export default () => {
 				<Nav.Tabs tabs={ tabs } />
 				<Nav.CurrentTab tabs={ tabs } />
 			</Layout.Box>
-		</Page>
-	)
-}
-
-const TeamMembers = () => {
-	const items = [
-		{ label: 'Brent Jett', description: 'Admin' },
-		{ label: 'Danny Holt', description: 'Member' },
-		{ label: 'Jamie VanRaalte', description: 'Member' }
-	]
-
-	const getItemProps = ( item, defaults ) => {
-		return {
-			...defaults,
-			label: item.label,
-			description: item.description,
-			shouldAlwaysShowThumbnail: true,
-			thumbnailSize: 'sm',
-		}
-	}
-
-	return (
-		<>
-			<Filter>
-				<Filter.RadioGroupItem
-					title={ __( 'Role' ) }
-					items={ {
-						any: __( 'Any' ),
-						admin: __( 'Admin' ),
-						member: __( 'Member' )
-					} }
-					value={ 'any' }
-					defaultValue={ 'any' }
-					onChange={ () => {} }
-				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Status' ) }
-					items={ {
-						active: __( 'Active' ),
-						pending: __( 'Pending' )
-					} }
-					value={ 'active' }
-					defaultValue={ 'active' }
-					onChange={ () => {} }
-				/>
-			</Filter>
-			<List
-				items={ items }
-				getItemProps={ getItemProps }
-			/>
 		</>
 	)
-}
-
-const TeamInvite = () => {
-	const items = [
-		{ label: 'Billy Young', description: 'billy@young.com' },
-		{ label: 'Robby McCullough', description: 'robby@mccullough.com' },
-		{ label: 'Justin Busa', description: 'justin@busa.com' }
-	]
-
-	const getItemProps = ( item, defaults ) => {
-		return {
-			...defaults,
-			label: item.label,
-			description: item.description,
-			shouldAlwaysShowThumbnail: true,
-			thumbnailSize: 'sm',
-		}
-	}
-
-	return (
-		<>
-			<Layout.Box
-				style={ {
-					display: 'flex',
-					flexDirection: 'row',
-					paddingBottom: '0'
-				} }
-			>
-				<Form.TextItem
-					placeholder="Email Address"
-					style={ {
-						width: '50%',
-						margin: '0 5px 0 0'
-					} }
-				></Form.TextItem>
-				<Button>{ __( 'Invite' ) }</Button>
-			</Layout.Box>
-			<Layout.Box>
-				<Page.Section label={ __( 'Pending Invites' ) } padX={ false }>
-					<List
-						items={ items }
-						getItemProps={ getItemProps }
-					/>
-				</Page.Section>
-			</Layout.Box>
-		</>
-	)
-}
-
-const TeamInfo = () => {
-	return null
-}
-
-const TeamBilling = () => {
-	return null
 }

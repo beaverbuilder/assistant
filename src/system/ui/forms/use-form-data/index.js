@@ -320,6 +320,7 @@ export const useFormData = ( {
 		resetForm,
 		submitForm,
 		isSubmitting,
-		setValues
+		setValues,
+		setErrors
 	}
 }
