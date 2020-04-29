@@ -2,8 +2,8 @@
     .fl-asst-tile-grid {
         display: grid;
         grid-template-columns: repeat( 3, 1fr );
-        grid-gap: var(--fluid-sm-space);
-        grid-auto-rows: 103px;
+        grid-gap: var(--fluid-med-space);
+        grid-auto-rows: 100px;
 
         & > *,
         & > *.fluid-button {

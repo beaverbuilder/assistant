@@ -12,7 +12,7 @@ const Card = ( {
 	contentTag: ContentTag = 'div',
 	contentProps,
 	isEditing = false,
-	type, // Remove from rest
+	type,
 	label, // Remove from rest
 	...rest
 } ) => {
@@ -20,6 +20,7 @@ const Card = ( {
 	const classes = classname( {
 		'fl-asst-card': true,
 		'fl-asst-card-is-editing': isEditing,
+		[`fl-asst-card-type-${type}`]: type,
 	}, className )
 
 	return (

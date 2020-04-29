@@ -15,15 +15,20 @@ import './style.scss'
 const Sidebar = ( { edge = 'right' } ) => {
 	const { window, isAppHidden  } = useSystemState()
 	const { selectApp } = getSystemSelectors()
-	const { isMobile, isCompactHeight, application } = Env.useEnvironment()
+	const {
+		isMobile,
+		isCompactHeight,
+		application
+	} = Env.useEnvironment()
+
 	const {
 		toggleIsShowingUI,
 		setWindow,
 		setIsAppHidden,
 	} = getSystemActions()
+
 	const [isSorting, setIsSorting] = useState( false )
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
-
 
 	const getMaxCount = () => {
 		if ( isVeryCompactHeight ) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAppList } from 'assistant/data'
 import { Button } from 'assistant/ui'
+import { motion } from 'framer-motion'
 
 const Apps = () => {
     const apps = useAppList()
@@ -9,16 +10,28 @@ const Apps = () => {
         {apps.map( app => {
             const { label, icon: AppIcon, handle } = app
             return (
-                <Button
-                    appearance="transparent"
-                    to={`/${handle}`}
-                    style={{ justifyContent: 'flex-start' }}
+                <motion.div
+                    key={handle}
+                    positionTransition
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row'
+                    }}
                 >
-                    <span style={{ marginRight: 'var(--fluid-lg-space)'}}>
-                        <AppIcon context="sidebar" />
-                    </span>
-                    {label}
-                </Button>
+                    <Button
+                        appearance="transparent"
+                        to={`/${handle}`}
+                        style={{
+                            flex: '1 1 auto',
+                            justifyContent: 'flex-start'
+                        }}
+                    >
+                        <span style={{ marginRight: 'var(--fluid-lg-space)'}}>
+                            <AppIcon context="sidebar" />
+                        </span>
+                        {label}
+                    </Button>
+                </motion.div>
             )
         })}
         </div>

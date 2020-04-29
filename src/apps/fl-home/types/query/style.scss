@@ -1,5 +1,6 @@
 .fl-asst {
     .fl-asst-query-card-list {
+
         li:last-child {
             border-bottom: none;
         }
@@ -12,6 +13,11 @@
             .fl-asst-list-item-thumbnail {
                 margin-right: var(--fluid-med-space);
             }
+        }
+    }
+    .fl-asst-card-type-fl-query {
+        ul {
+            min-height: 308px;
         }
     }
 }
