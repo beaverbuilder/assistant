@@ -7,13 +7,11 @@ import { getSystemActions, useSystemState } from 'assistant/data'
 import AppIcon from './icon'
 import './style.scss'
 
-const App = () => {
-	return (
-		<Nav.Switch>
-			<Nav.Route exact path="/fl-labels" component={ Main } />
-		</Nav.Switch>
-	)
-}
+export default ({ baseURL }) => (
+	<Nav.Switch>
+		<Nav.Route exact path={ baseURL } component={ Main } />
+	</Nav.Switch>
+)
 
 const Main = () => {
 	const { labels } = useSystemState()
@@ -226,5 +224,3 @@ const Main = () => {
 		</Page>
 	)
 }
-
-export default App

@@ -7,17 +7,14 @@ import { FormExamples } from './forms'
 import FLUIDExamples from './fluid'
 import WPComponentsExamples from './wp-components'
 
-export default () => {
-	const baseURL = '/fl-ui-examples'
-	return (
-		<Nav.Switch>
-			<Nav.Route exact path={ baseURL } component={ Main } />
-			<Nav.Route path={ `${baseURL}/forms` } component={ FormExamples } />
-			<Nav.Route path={ `${baseURL}/fluid` } component={ FLUIDExamples } />
-			<Nav.Route path={ `${baseURL}/wp-components` } component={ WPComponentsExamples } />
-		</Nav.Switch>
-	)
-}
+export default ({ baseURL }) => (
+	<Nav.Switch>
+		<Nav.Route exact path={ baseURL } component={ Main } />
+		<Nav.Route path={ `${baseURL}/forms` } component={ FormExamples } />
+		<Nav.Route path={ `${baseURL}/fluid` } component={ FLUIDExamples } />
+		<Nav.Route path={ `${baseURL}/wp-components` } component={ WPComponentsExamples } />
+	</Nav.Switch>
+)
 
 const Main = ( { match } ) => {
 	return (

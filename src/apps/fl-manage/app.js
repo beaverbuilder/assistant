@@ -6,11 +6,11 @@ import { Page, Icon, Button, Form, Layout, Env, Nav, List } from 'assistant/ui'
 import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
 import './style.scss'
 
-const Manage = () => (
+export default ({ baseURL }) => (
 	<Nav.Switch>
 		<Nav.Route
 			exact
-			path="/fl-manage"
+			path={ baseURL }
 			component={ MainScreen }
 		/>
 	</Nav.Switch>
@@ -166,5 +166,3 @@ const UIColorPreferences = () => {
 		</Form.Section>
 	)
 }
-
-export default Manage

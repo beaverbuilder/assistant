@@ -12,17 +12,15 @@ import Sites from './pages/sites'
 import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
 
-export default () => {
+export default ({ baseURL }) => {
 	const { isCloudConnected } = useCloudState()
 	const { pathname } = useLocation()
 	const history = useHistory()
-	const baseURL = '/fl-cloud'
 
 	if ( ! isCloudConnected && ! pathname.includes( '/auth/' ) ) {
 		history.replace( '/fl-cloud/auth/login' )
 		return null
 	}
-
 	return (
 		<Nav.Switch>
 			<Nav.Route exact path={ baseURL } component={ Dashboard } />

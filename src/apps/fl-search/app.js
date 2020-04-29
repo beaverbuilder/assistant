@@ -5,8 +5,7 @@ import { ViewAll } from './view-all'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getRequestConfig } from './config'
 
-export default () => {
-	const baseURL = '/fl-search'
+export default ({ baseURL }) => {
 	const { config } = getRequestConfig()
 	return (
 		<Nav.Switch>

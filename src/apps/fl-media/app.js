@@ -6,15 +6,12 @@ import { defaultState } from './'
 import AppIcon from './icon'
 import './style.scss'
 
-export default () => {
-	const baseURL = '/fl-media'
-	return (
-		<Nav.Switch>
-			<Nav.Route exact path={ baseURL } component={ Main } />
-			<Nav.Route path={ `${baseURL}/attachment/:id` } component={ Page.Attachment } />
-		</Nav.Switch>
-	)
-}
+export default ({ baseURL }) => (
+	<Nav.Switch>
+		<Nav.Route exact path={ baseURL } component={ Main } />
+		<Nav.Route path={ `${baseURL}/attachment/:id` } component={ Page.Attachment } />
+	</Nav.Switch>
+)
 
 const Main = ( { match } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )

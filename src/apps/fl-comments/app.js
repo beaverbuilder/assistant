@@ -5,17 +5,13 @@ import AppIcon from './icon'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
 
-
-const CommentsApp = () => {
-	const baseURL = '/fl-comments'
-	return (
-		<Nav.Switch>
-			<Nav.Route exact path={ baseURL } component={ Main } />
-			<Nav.Route path={ `${baseURL}/tab/:tab` } component={ Main } />
-			<Nav.Route path={ `${baseURL}/comment/:id` } component={ Page.Comment } />
-		</Nav.Switch>
-	)
-}
+export default ({ baseURL }) => (
+	<Nav.Switch>
+		<Nav.Route exact path={ baseURL } component={ Main } />
+		<Nav.Route path={ `${baseURL}/tab/:tab` } component={ Main } />
+		<Nav.Route path={ `${baseURL}/comment/:id` } component={ Page.Comment } />
+	</Nav.Switch>
+)
 
 const Main = () => {
 	const getTabs = () => {
@@ -86,5 +82,3 @@ const Main = () => {
 		</Page>
 	)
 }
-
-export default CommentsApp

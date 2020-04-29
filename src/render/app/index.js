@@ -1,6 +1,6 @@
 import React, { memo, Suspense } from 'react'
 import classname from 'classnames'
-import { useLocation, Redirect } from 'react-router-dom'
+import { useLocation, useParams, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
 import { useSystemState, getSystemSelectors } from 'assistant/data'
 
@@ -43,10 +43,10 @@ const AppMain = () => {
 }
 AppMain.displayName = 'AppMain'
 
-const AppContent = props => {
-	const { params: { app: appName } } = props.match
-	const { isAppRoot } = App.useApp()
+const AppContent = () => {
+	const { app: appName } = useParams()
 	const { selectApp } = getSystemSelectors()
+	const { isAppRoot } = App.useApp()
 	const app = selectApp( appName )
 
 	if ( ! app ) {
@@ -60,17 +60,24 @@ const AppContent = props => {
 		'fl-asst-app-root': isAppRoot,
 	} )
 
+	const props = {
+		handle: app.handle,
+		baseURL: `/${app.handle}`,
+		label: app.label,
+	}
+
 	return (
 		<div className={ appWrapClasses }>
 			<Suspense fallback={ <Page.Loading /> }>
-				<AppRoot root={ app.root } />
+				<AppRoot root={ app.root } {...props} />
 			</Suspense>
 		</div>
 	)
 }
 
-const AppRoot = memo( ( { root: Root } ) => {
-	return Root ? <Root /> : Page.NotFound
+const AppRoot = memo( ( { root: Root, ...rest } ) => {
+	console.log( 'root', rest )
+	return Root ? <Root {...rest} /> : <Page.NotFound {...rest} />
 } )
 
 export default AppMain

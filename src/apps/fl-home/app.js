@@ -4,11 +4,11 @@ import { Page, Button, Icon, Nav } from 'assistant/ui'
 import { CardPage } from './ui'
 import './style.scss'
 
-export default () => (
+export default ({ baseURL }) => (
 	<Nav.Switch>
 		<Nav.Route
 			exact
-			path='/fl-home'
+			path={ baseURL }
 			component={ CardsApp }
 		/>
 	</Nav.Switch>
