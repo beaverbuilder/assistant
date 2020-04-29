@@ -7,7 +7,7 @@ import { FormExamples } from './forms'
 import FLUIDExamples from './fluid'
 import WPComponentsExamples from './wp-components'
 
-export default ({ baseURL }) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ baseURL } component={ Main } />
 		<Nav.Route path={ `${baseURL}/forms` } component={ FormExamples } />

@@ -5,7 +5,7 @@ import AppIcon from './icon'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
 
-export default ({ baseURL }) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ baseURL } component={ Main } />
 		<Nav.Route path={ `${baseURL}/tab/:tab` } component={ Main } />

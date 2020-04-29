@@ -6,7 +6,7 @@ import { defaultState } from './'
 import AppIcon from './icon'
 import './style.scss'
 
-export default ({ baseURL }) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ baseURL } component={ Main } />
 		<Nav.Route path={ `${baseURL}/attachment/:id` } component={ Page.Attachment } />

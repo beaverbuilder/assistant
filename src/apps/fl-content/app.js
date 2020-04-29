@@ -7,7 +7,7 @@ import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
 import './style.scss'
 
-export default ({ baseURL }) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ baseURL }>
 			<Redirect to={ { pathname: `${baseURL}/tab/post` } } />

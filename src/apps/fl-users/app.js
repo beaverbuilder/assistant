@@ -6,7 +6,7 @@ import { User } from './pages/user'
 import { Search } from './pages/search'
 import { Invite } from './pages/invite'
 
-export default ({ baseURL }) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ baseURL } component={ Main } />
 		<Nav.Route path={ `${baseURL}/search` } component={ Search }/>

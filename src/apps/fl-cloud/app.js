@@ -12,7 +12,7 @@ import Sites from './pages/sites'
 import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
 
-export default ({ baseURL }) => {
+export default ( { baseURL } ) => {
 	const { isCloudConnected } = useCloudState()
 	const { pathname } = useLocation()
 	const history = useHistory()

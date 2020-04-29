@@ -6,7 +6,7 @@ import { Page, Icon, Button, Form, Layout, Env, Nav, List } from 'assistant/ui'
 import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
 import './style.scss'
 
-export default ({ baseURL }) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
 		<Nav.Route
 			exact

@@ -69,15 +69,14 @@ const AppContent = () => {
 	return (
 		<div className={ appWrapClasses }>
 			<Suspense fallback={ <Page.Loading /> }>
-				<AppRoot root={ app.root } {...props} />
+				<AppRoot root={ app.root } { ...props } />
 			</Suspense>
 		</div>
 	)
 }
 
 const AppRoot = memo( ( { root: Root, ...rest } ) => {
-	console.log( 'root', rest )
-	return Root ? <Root {...rest} /> : <Page.NotFound {...rest} />
+	return Root ? <Root { ...rest } /> : <Page.NotFound { ...rest } />
 } )
 
 export default AppMain

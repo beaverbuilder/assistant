@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
@@ -7,13 +7,13 @@ import { getSystemActions, useSystemState } from 'assistant/data'
 import AppIcon from './icon'
 import './style.scss'
 
-export default ({ baseURL }) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
-		<Nav.Route exact path={ baseURL } component={ Main } />
+		<Nav.Route exact path={ baseURL } render={ () => <Main /> } />
 	</Nav.Switch>
 )
 
-const Main = () => {
+const Main = memo( () => {
 	const { labels } = useSystemState()
 	const { setLabels } = getSystemActions()
 	const [ editingLabel, setEditingLabel ] = useState( null )
@@ -223,4 +223,4 @@ const Main = () => {
 			</Page.Section>
 		</Page>
 	)
-}
+})

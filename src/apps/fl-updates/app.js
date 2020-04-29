@@ -12,7 +12,7 @@ import {
 import { defaultState } from './'
 import AppIcon from './icon'
 
-export default ({ baseURL }) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
 		<Nav.Route exact path={ baseURL } component={ UpdatesMain }/>
 		<Nav.Route path={ `${baseURL}/plugin/:id` } component={ Page.Plugin }/>
