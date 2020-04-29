@@ -76,17 +76,18 @@ export const cancel = ( message ) => {
  * Refresh the users token once per minute
  * @type {number}
  */
-const interval = setInterval( async() => {
-	if ( session.hasToken() ) {
-		try {
-			await refresh()
-		} catch ( error ) {
-			clearInterval( interval )
-			session.removeToken()
-			session.removeUser()
-		}
-	}
-}, 60000 )
+// TODO: Disabled for now. Causing logout.
+// const interval = setInterval( async() => {
+// 	if ( session.hasToken() ) {
+// 		try {
+// 			await refresh()
+// 		} catch ( error ) {
+// 			clearInterval( interval )
+// 			session.removeToken()
+// 			session.removeUser()
+// 		}
+// 	}
+// }, 60000 )
 
 /**
  * Register with Assistant Cloud
@@ -140,6 +141,34 @@ export const login = ( email, password, config = {} ) => {
 
 	// Wrap axios promise in our own promise
 	return new Promise( ( resolve, reject ) => {
+
+		// Mockup...
+		const data = {
+			token: '80NpnYAYbruhB80vt4XQq0RfwQZFkMAAqBDBhg48EBWwW6KIixXtWamXuPlHSK1SNtpydk4XdauTPJtR',
+			user: {
+				created_at: '2020-04-18T00:28:53.000000Z',
+				current_team_id: 1,
+				deleted_at: null,
+				email: 'test@test.com',
+				email_verified_at: null,
+				first_name: 'Mr.',
+				id: 1,
+				last_name: 'Robot',
+				name: 'Mr. Robot',
+				updated_at: '2020-04-18T00:28:53.000000Z',
+				username: 'test@test.com'
+			}
+		}
+
+		const { token, user } = data
+		const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
+		session.setToken( token )
+		session.setUser( user )
+		setCloudToken( token )
+		setCloudUser( user )
+		setIsCloudConnected( true )
+		resolve( data )
+		return
 
 		http.post( '/iam/authenticate', { email, password }, config )
 			.then( ( response ) => {

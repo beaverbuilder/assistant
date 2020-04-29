@@ -1,12 +1,14 @@
 import React, { useRef } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Page } from 'assistant/ui'
+import { getCloudSelectors } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 
 export const NewTeamForm = ( {
 	onCreated = () => {}
 } ) => {
 	const timeout = useRef( null )
+	const { getCloudUser } = getCloudSelectors()
 
 	const checkName = ( name ) => {
 		if ( timeout.current ) {
@@ -15,7 +17,6 @@ export const NewTeamForm = ( {
 		}
 		timeout.current = setTimeout( () => {
 			cloud.teams.nameExists( name ).then( exists => {
-				console.log( exists )
 				if ( exists ) {
 					setErrors( {
 						name: 'That name already exists.'
@@ -41,14 +42,19 @@ export const NewTeamForm = ( {
 		}
 	}
 
-	const onSubmit = ( { values } ) => {
+	const onSubmit = ( { values, setErrors } ) => {
 		const { name } = values
+		const { id } = getCloudUser()
 		if ( ! name ) {
 			return
 		}
-		return cloud.teams.create( { name } ).then( team => {
+		const data = {
+			name,
+			owner_id: id
+		}
+		return cloud.teams.create( data ).then( team => {
 			onCreated( team )
-		} )
+		} ).catch( error => setErrors( error.errors ) )
 	}
 
 	const {

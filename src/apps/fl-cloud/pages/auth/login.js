@@ -55,7 +55,7 @@ export default ( { location, history } ) => {
 		fields,
 		onSubmit,
 		defaults: {
-			email: 'justinbusa@gmail.com',
+			email: 'test@test.com',
 			password: 'testing',
 		}
 	} )

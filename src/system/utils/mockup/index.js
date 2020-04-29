@@ -5,7 +5,7 @@ import { getCache, setCache } from 'utils/cache'
 import { addQueryArgs, getQueryArgs } from 'utils/url'
 
 export const createMockupApi = ( tables, options ) => {
-	const { cacheKey, delayResponse } = options
+	const { cacheKey, delayResponse, debug } = options
 	const cache = getMockupCache( cacheKey )
 	const db = cache ? { ...cache } : { ...setupTables( tables ) }
 	const http = axios.create()
@@ -14,6 +14,9 @@ export const createMockupApi = ( tables, options ) => {
 
 	Object.keys( db ).map( key => {
 		api[ key ] = {
+			getData: () => {
+				return [ ...db[ key ] ]
+			},
 			getAll: ( args = {} ) => {
 				return http.get( addQueryArgs( `/${ key }`, args ) )
 			},
@@ -90,6 +93,10 @@ export const createMockupApi = ( tables, options ) => {
 			return [ 200, {} ]
 		} )
 	} )
+
+	if ( debug ) {
+		console.log( db, api )
+	}
 
 	return api
 }

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { useCloudState, getSystemConfig } from 'assistant/data'
+import { getSystemConfig, useCloudState, getCloudActions } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 import { Button, Form, Layout, List, Nav, Page } from 'assistant/ui'
 import AppIcon from '../../icon'
@@ -31,21 +31,21 @@ const ElevatorButtons = () => (
 	} } >
 		<Button
 			appearance='elevator'
-			title={ __( 'Sites' ) }
-			to='/fl-cloud/sites'
-		>
-			<span
-				className="dashicons dashicons-networking"
-				style={ { marginTop: '-8px' } }
-			></span>
-		</Button>
-		<Button
-			appearance='elevator'
 			title={ __( 'Teams' ) }
 			to='/fl-cloud/teams'
 		>
 			<span
 				className="dashicons dashicons-buddicons-buddypress-logo"
+				style={ { marginTop: '-8px' } }
+			></span>
+		</Button>
+		<Button
+			appearance='elevator'
+			title={ __( 'Sites' ) }
+			to='/fl-cloud/sites'
+		>
+			<span
+				className="dashicons dashicons-networking"
 				style={ { marginTop: '-8px' } }
 			></span>
 		</Button>
@@ -98,6 +98,16 @@ const CurrentlyViewing = () => {
 }
 
 const Library = () => {
+	const { cloudUser } = useCloudState()
+	const { setCloudUser } = getCloudActions()
+	const [ teams, setTeams ] = useState( null )
+
+	const loadTeams = () => {
+		cloud.teams.getAll().then( response => {
+			setTeams( response.data.teams )
+		} )
+	}
+
 	let tabs = [
 		{
 			handle: 'content',
@@ -114,14 +124,29 @@ const Library = () => {
 		}
 	]
 
+	const getTeamOptions = () => {
+		const options = {
+			yours: __( 'Your Library' ),
+		}
+		if ( teams ) {
+			teams.map( team => options[ team.id ] = team.name )
+		}
+		return options
+	}
+
+	useEffect( loadTeams, [] )
+
 	return (
 		<Page.Section label={ __( 'Library' ) } padX={ false }>
 			<Layout.Box style={ { paddingTop: 0 } }>
 				<Form.SelectItem
-					options={ {
-						yours: __( 'Your Library' ),
-						flm: __( 'FastLine Media' ),
-						cf: __( 'Crowd Favorite' ),
+					options={ getTeamOptions() }
+					value={ cloudUser.current_team_id }
+					onChange={ value => {
+						setCloudUser( {
+							...cloudUser,
+							current_team_id: parseInt( value ),
+						} )
 					} }
 				></Form.SelectItem>
 			</Layout.Box>

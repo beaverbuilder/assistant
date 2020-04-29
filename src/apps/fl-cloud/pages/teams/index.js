@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Filter, Form, Layout, List, Nav, Page } from 'assistant/ui'
+import { Button, Icon, Filter, Form, Layout, List, Nav, Page } from 'assistant/ui'
+import { useCloudState, getCloudActions } from 'data/cloud'
 import cloud from 'assistant/utils/cloud'
 import { TeamMembers } from './members.js'
 import { TeamInvite } from './invite.js'
@@ -20,18 +21,12 @@ export default () => {
 
 	useEffect( loadTeams, [] )
 
-	return (
-		<Page
-			className='fl-asst-teams-layout'
-			title={ __( 'Teams' ) }
-			shouldShowBackButton={ true }
-			padX={ false }
-			padY={ false }
-		>
-			{ ( teams && !! teams.length ) &&
-				<Teams teams={ teams } />
-			}
-			{ ( teams && ! teams.length ) &&
+	const PageContent = () => {
+		if ( teams && !! teams.length ) {
+			return <Teams teams={ teams } />
+		}
+		if ( teams && ! teams.length ) {
+			return (
 				<Layout.Box>
 					<Layout.Headline>{ __( 'Get Started With Teams!' ) }</Layout.Headline>
 					<p>{ __( 'You\'re not part of any teams. Get started by creating a team or receiving an invite from someone you know.' ) }</p>
@@ -42,17 +37,34 @@ export default () => {
 						} }
 					/>
 				</Layout.Box>
-			}
-			{ ! teams &&
+			)
+		}
+		if ( ! teams ) {
+			return (
 				<Layout.Box>
 					<Layout.Loading style={ { alignSelf: 'center', alignItems: 'flex-start' } } />
 				</Layout.Box>
-			}
+			)
+		}
+		return null
+	}
+
+	return (
+		<Page
+			className='fl-asst-teams-layout'
+			title={ __( 'Teams' ) }
+			shouldShowBackButton={ true }
+			padX={ false }
+			padY={ false }
+		>
+			<PageContent />
 		</Page>
 	)
 }
 
 const Teams = ( { teams } ) => {
+	const { cloudUser } = useCloudState()
+	const { setCloudUser } = getCloudActions()
 
 	const getTeamOptions = () => {
 		const options = {}
@@ -92,10 +104,20 @@ const Teams = ( { teams } ) => {
 
 	return (
 		<>
-			<Layout.Box>
+			<Layout.Box style={ { flexDirection: 'row' } }>
 				<Form.SelectItem
 					options={ getTeamOptions() }
+					value={ cloudUser.current_team_id }
+					onChange={ value => {
+						setCloudUser( {
+							...cloudUser,
+							current_team_id: parseInt( value ),
+						} )
+					} }
 				></Form.SelectItem>
+				<Button to='/fl-cloud/teams/new' style={ { marginLeft: '10px' } }>
+					<Icon.Plus />
+				</Button>
 			</Layout.Box>
 			<Layout.Box
 				padX={ false }
