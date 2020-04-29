@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 const Apps = () => {
 	const apps = useAppList()
 	return (
-		<div style={ { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridGap: 5 } }>
+		<div style={ { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridGap: 5, position: 'relative' } }>
 			{apps.map( app => {
 				const { label, icon: AppIcon, handle } = app
 				return (
