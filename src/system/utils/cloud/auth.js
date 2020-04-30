@@ -150,7 +150,6 @@ export const logout = ( config = {} ) => {
 	} )
 }
 
-
 /**
  * Sends the password reset email.
  * @param config
