@@ -20,4 +20,5 @@ define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
 
 require_once( __DIR__ . '/backend/autoloader.php' );
 
+
 new FL\Assistant\System\Plugin( __FILE__ );
