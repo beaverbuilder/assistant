@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useSystemState } from 'data'
+import Config from './config'
 
 export const App = ( { children, ...rest } ) => {
 	return (
@@ -53,3 +54,6 @@ App.useApp = () => {
 	const context = useContext( App.Context )
 	return context
 }
+
+App.Config = Config
+App.Config.displayName = 'App.Config'
