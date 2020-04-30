@@ -7,8 +7,9 @@ import { TeamInvite } from './invite.js'
 import { TeamInfo } from './info.js'
 import './style.scss'
 
-export default ( { history } ) => {
-	const [ currentTeamId, setCurrentTeamId ] = useState( 0 )
+export default ( { history, location } ) => {
+	const { id } = location.state ? location.state : {}
+	const [ currentTeamId, setCurrentTeamId ] = useState( id ? id : 0 )
 	const [ teams, setTeams ] = cloud.teams.useAll()
 	const [ team, setTeam ] = cloud.teams.useOne( currentTeamId )
 
@@ -29,6 +30,33 @@ export default ( { history } ) => {
 			teams.map( team => options[ team.id ] = team.name )
 		}
 		return options
+	}
+
+	const onTeamUpdated = data => {
+		teams.map( ( team, i ) => {
+			if ( data.id === team.id ) {
+				teams[i] = data
+			}
+		} )
+		setTeam( data )
+		setTeams( [ ...teams ] )
+	}
+
+	const onTeamDeleted = id => {
+		setCurrentTeamId( 0 )
+		setTeam( null )
+		setTeams( teams.filter( team => team.id !== id ) )
+	}
+
+	const leaveTeam = () => {
+		const { id } = team
+		if ( confirm( __( 'Do you really want to leave this team?' ) ) ) {
+			setCurrentTeamId( 0 )
+			setTeam( null )
+			cloud.teams.delete( id ).then( () => {
+				setTeams( teams.filter( team => team.id !== id ) )
+			} )
+		}
 	}
 
 	let tabs = [
@@ -53,15 +81,8 @@ export default ( { history } ) => {
 				return (
 					<TeamInfo
 						team={ team ? team : {} }
-						onUpdate={ data => {
-							teams.map( ( team, i ) => {
-								if ( data.id === team.id ) {
-									teams[i] = data
-								}
-							} )
-							setTeam( data )
-							setTeams( [ ...teams ] )
-						} }
+						onUpdate={ onTeamUpdated }
+						onDelete={ onTeamDeleted }
 					/>
 				)
 			},
@@ -76,12 +97,12 @@ export default ( { history } ) => {
 			padX={ false }
 			padY={ false }
 		>
-			{ ! teams &&
+			{ ( ! teams || ! currentTeamId ) &&
 				<Layout.Box>
 					<Layout.Loading style={ { alignSelf: 'center', alignItems: 'flex-start' } } />
 				</Layout.Box>
 			}
-			{ teams &&
+			{ teams && !! currentTeamId &&
 				<>
 					<Layout.Box style={ { flexDirection: 'row' } }>
 						<Form.SelectItem
@@ -92,6 +113,14 @@ export default ( { history } ) => {
 						<Button to='/fl-cloud/teams/new' style={ { marginLeft: '10px' } }>
 							<Icon.Plus />
 						</Button>
+					</Layout.Box>
+					<Layout.Box
+						style={ {
+							alignItems: 'flex-end',
+							paddingTop: '0'
+						} }
+					>
+						<a onClick={ leaveTeam }>{ __( 'Leave Team' ) }</a>
 					</Layout.Box>
 					<Layout.Box
 						padX={ false }

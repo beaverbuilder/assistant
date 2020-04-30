@@ -1,11 +1,12 @@
 import React, { useRef } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Form, Layout } from 'assistant/ui'
+import { Button, Form, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 
 export const TeamInfo = ( {
 	team,
-	onUpdate = () => {}
+	onUpdate = () => {},
+	onDelete = () => {}
 } ) => {
 	const timeout = useRef( null )
 
@@ -13,6 +14,9 @@ export const TeamInfo = ( {
 		if ( timeout.current ) {
 			clearTimeout( timeout.current )
 			timeout.current = null
+		}
+		if ( name === team.name ) {
+			return
 		}
 		timeout.current = setTimeout( () => {
 			cloud.teams.nameExists( name ).then( exists => {
@@ -23,6 +27,14 @@ export const TeamInfo = ( {
 				}
 			} )
 		}, 250 )
+	}
+
+	const deleteTeam = () => {
+		if ( confirm( __( 'Do you really want to delete this team?' ) ) ) {
+			cloud.teams.delete( team.id ).then( () => {
+				onDelete( team.id )
+			} )
+		}
 	}
 
 	const fields = {
@@ -76,11 +88,20 @@ export const TeamInfo = ( {
 	} )
 
 	return (
-		<Layout.Box style={ { paddingTop: '0' } }>
-			{ renderForm() }
-			<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
-				{ __( 'Save Changes' ) }
-			</Button.Loading>
-		</Layout.Box>
+		<>
+			<Layout.Box style={ { paddingTop: '0' } }>
+				{ renderForm() }
+				<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
+					{ __( 'Save Changes' ) }
+				</Button.Loading>
+			</Layout.Box>
+			<Layout.Box>
+				<Page.Section label={ __( 'Danger Zone' ) }>
+					<Layout.Headline>{ __( 'Delete This Team' ) }</Layout.Headline>
+					<p style={ { margin: '0' } }>{ __( 'Once a team has been delete, it is gone forever. Please be sure you want to delete this team.' ) }</p>
+				</Page.Section>
+				<Button onClick={ deleteTeam } status='destructive'>Delete Team</Button>
+			</Layout.Box>
+		</>
 	)
 }
