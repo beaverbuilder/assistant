@@ -135,15 +135,17 @@ export const refresh = ( config = {} ) => {
 export const logout = ( config = {} ) => {
 
 	return new Promise( ( resolve ) => {
+		const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
+		setCloudToken( {} )
+		setCloudUser( null )
+		setIsCloudConnected( false )
 		http.post( '/iam/token/destroy', {}, config )
 			.then( () => {
-				const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
+				resolve()
+			} )
+			.finally( () => {
 				session.removeToken()
 				session.removeUser()
-				setCloudToken( {} )
-				setCloudUser( null )
-				setIsCloudConnected( false )
-				resolve()
 			} )
 	} )
 }
