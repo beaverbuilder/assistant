@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { __, sprintf } from '@wordpress/i18n'
+import React from 'react'
+import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 import { Button, Form, Layout, List, Nav, Page } from 'assistant/ui'
@@ -72,7 +72,7 @@ const ElevatorButtons = () => (
 
 const CurrentlyViewing = () => {
 	const { currentPageView } = getSystemConfig()
-	const { name, intro, actions } = currentPageView
+	const { name, intro } = currentPageView
 
 	return (
 		<Layout.Box padX={ false }>
@@ -130,7 +130,7 @@ const Library = () => {
 				<Form.SelectItem
 					options={ getTeamOptions() }
 					value={ 0 }
-					onChange={ value => {} }
+					onChange={ () => {} }
 				></Form.SelectItem>
 			</Layout.Box>
 			<Nav.Tabs tabs={ tabs } />

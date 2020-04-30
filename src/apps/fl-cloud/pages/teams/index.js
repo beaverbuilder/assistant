@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Filter, Form, Layout, List, Nav, Page } from 'assistant/ui'
+import { Button, Icon, Form, Layout, Nav, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 import { TeamMembers } from './members.js'
 import { TeamInvite } from './invite.js'

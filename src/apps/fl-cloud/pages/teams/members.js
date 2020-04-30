@@ -1,12 +1,13 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Filter, List } from 'assistant/ui'
+import { MembersListAccessory } from './components/members-list-accessory'
 
 export const TeamMembers = () => {
 	const items = [
-		{ label: 'Brent Jett', description: 'Admin' },
-		{ label: 'Danny Holt', description: 'Member' },
-		{ label: 'Jamie VanRaalte', description: 'Member' }
+		{ label: 'Brent Jett', description: 'Admin', role: 'admin' },
+		{ label: 'Danny Holt', description: 'Member', role: 'member' },
+		{ label: 'Jamie VanRaalte', description: 'Member', role: 'member' }
 	]
 
 	const getItemProps = ( item, defaults ) => {
@@ -16,6 +17,7 @@ export const TeamMembers = () => {
 			description: item.description,
 			shouldAlwaysShowThumbnail: true,
 			thumbnailSize: 'sm',
+			accessory: () => <MembersListAccessory item={ item } />
 		}
 	}
 

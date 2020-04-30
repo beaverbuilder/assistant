@@ -51,7 +51,7 @@ export default ( { history, location } ) => {
 			name,
 			owner_id: id
 		}
-		return cloud.teams.create( data ).then( team => {
+		return cloud.teams.create( data ).then( () => {
 			history.replace( '/fl-cloud/teams' )
 		} ).catch( error => setErrors( error.errors ) )
 	}

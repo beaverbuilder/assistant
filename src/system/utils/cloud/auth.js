@@ -203,7 +203,7 @@ export const refresh = ( config = {} ) => {
  */
 export const logout = ( config = {} ) => {
 
-	return new Promise( ( resolve, reject ) => {
+	return new Promise( ( resolve ) => {
 		http.post( '/iam/token/destroy', {}, config )
 			.then( () => {
 				const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
@@ -225,7 +225,7 @@ export const logout = ( config = {} ) => {
 export const requestPasswordReset = ( email, config = {} ) => {
 	return new Promise( ( resolve ) => {
 		setTimeout( () => {
-			resolve()
+			resolve( config )
 		}, 1000 )
 	} )
 }

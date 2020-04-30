@@ -1,12 +1,13 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, List, Page } from 'assistant/ui'
+import { MembersListAccessory } from './components/members-list-accessory'
 
 export const TeamInvite = () => {
 	const items = [
-		{ label: 'Billy Young', description: 'billy@young.com' },
-		{ label: 'Robby McCullough', description: 'robby@mccullough.com' },
-		{ label: 'Justin Busa', description: 'justin@busa.com' }
+		{ label: 'Billy Young', description: 'billy@young.com', invite: true },
+		{ label: 'Robby McCullough', description: 'robby@mccullough.com', invite: true },
+		{ label: 'Justin Busa', description: 'justin@busa.com', invite: true }
 	]
 
 	const getItemProps = ( item, defaults ) => {
@@ -16,6 +17,7 @@ export const TeamInvite = () => {
 			description: item.description,
 			shouldAlwaysShowThumbnail: true,
 			thumbnailSize: 'sm',
+			accessory: () => <MembersListAccessory item={ item } />
 		}
 	}
 

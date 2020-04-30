@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import camelCase from 'camelcase'
+import { useEffect, useState } from 'react'
 import { getCache, setCache } from 'utils/cache'
 import { addQueryArgs, getQueryArgs } from 'utils/url'
 
@@ -110,7 +109,7 @@ export const createMockupApi = ( tables, options ) => {
 	} )
 
 	if ( debug ) {
-		console.log( db, api )
+		console.log( db, api ) // eslint-disable-line no-console
 	}
 
 	return api
