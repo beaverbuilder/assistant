@@ -149,6 +149,9 @@ const Fields = ( { config, data } ) => {
 			errors,
 			...rest
 		} = data.fields[ key ]
+		if ( ! component ) {
+			return null
+		}
 		const Field = getFieldComponent( component )
 		return (
 			<Form.Item

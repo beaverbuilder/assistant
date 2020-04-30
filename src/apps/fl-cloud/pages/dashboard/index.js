@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { getSystemConfig, useCloudState, getCloudActions } from 'assistant/data'
+import { getSystemConfig } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 import { Button, Form, Layout, List, Nav, Page } from 'assistant/ui'
 import AppIcon from '../../icon'
 
 export default () => {
-	const { cloudUser } = useCloudState()
-
 	return (
 		<Page
 			title={ __( 'Cloud' ) }
@@ -98,15 +96,7 @@ const CurrentlyViewing = () => {
 }
 
 const Library = () => {
-	const { cloudUser } = useCloudState()
-	const { setCloudUser } = getCloudActions()
-	const [ teams, setTeams ] = useState( null )
-
-	const loadTeams = () => {
-		cloud.teams.getAll().then( response => {
-			setTeams( response.data.teams )
-		} )
-	}
+	const [ teams ] = cloud.teams.useAll()
 
 	let tabs = [
 		{
@@ -126,7 +116,7 @@ const Library = () => {
 
 	const getTeamOptions = () => {
 		const options = {
-			yours: __( 'Your Library' ),
+			0: __( 'Your Library' ),
 		}
 		if ( teams ) {
 			teams.map( team => options[ team.id ] = team.name )
@@ -134,20 +124,13 @@ const Library = () => {
 		return options
 	}
 
-	useEffect( loadTeams, [] )
-
 	return (
 		<Page.Section label={ __( 'Library' ) } padX={ false }>
 			<Layout.Box style={ { paddingTop: 0 } }>
 				<Form.SelectItem
 					options={ getTeamOptions() }
-					value={ cloudUser.current_team_id }
-					onChange={ value => {
-						setCloudUser( {
-							...cloudUser,
-							current_team_id: parseInt( value ),
-						} )
-					} }
+					value={ 0 }
+					onChange={ value => {} }
 				></Form.SelectItem>
 			</Layout.Box>
 			<Nav.Tabs tabs={ tabs } />

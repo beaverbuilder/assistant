@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import camelCase from 'camelcase'
@@ -31,6 +32,20 @@ export const createMockupApi = ( tables, options ) => {
 			},
 			delete: ( id ) => {
 				return http.delete( `/${ key }/${ id }` )
+			},
+			useAll: () => {
+				const [ items, setItems ] = useState( null )
+				useEffect( () => {
+					api[ key ].getAll().then( response => setItems( response.data[ key ] ) )
+				}, [] )
+				return [ items, setItems ]
+			},
+			useOne: ( id ) => {
+				const [ item, setItem ] = useState( null )
+				useEffect( () => {
+					api[ key ].get( id ).then( response => setItem( response.data ) )
+				}, [ id ] )
+				return [ item, setItem ]
 			}
 		}
 
