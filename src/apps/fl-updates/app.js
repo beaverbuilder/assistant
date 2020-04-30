@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
-import { App, Page, Button, List, Nav, Filter, Layout } from 'assistant/ui'
+import { App, Page, Button, List, Filter, Layout } from 'assistant/ui'
 import {
 	getSystemSelectors,
 	useAppState,
@@ -12,12 +12,15 @@ import {
 import { defaultState } from './'
 import AppIcon from './icon'
 
-export default ( { baseURL } ) => (
-	<Nav.Switch>
-		<Nav.Route exact path={ baseURL } component={ UpdatesMain }/>
-		<Nav.Route path={ `${baseURL}/plugin/:id` } component={ Page.Plugin }/>
-		<Nav.Route path={ `${baseURL}/theme/:id` } component={ Page.Theme }/>
-	</Nav.Switch>
+export default props => (
+	<App.Config
+		pages={ {
+			default: UpdatesMain,
+			'plugin/:id': Page.Plugin,
+			'theme/:id': Page.Theme
+		} }
+		{ ...props }
+	/>
 )
 
 const UpdatesMain = () => {

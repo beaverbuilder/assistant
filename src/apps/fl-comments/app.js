@@ -1,16 +1,19 @@
 import React from 'react'
-import { Page, Nav } from 'assistant/ui'
+import { App, Page, Nav } from 'assistant/ui'
 import { AllTab, CommentTypeTab } from './tabs'
 import AppIcon from './icon'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
 
-export default ( { baseURL } ) => (
-	<Nav.Switch>
-		<Nav.Route exact path={ baseURL } component={ Main } />
-		<Nav.Route path={ `${baseURL}/tab/:tab` } component={ Main } />
-		<Nav.Route path={ `${baseURL}/comment/:id` } component={ Page.Comment } />
-	</Nav.Switch>
+export default props => (
+	<App.Config
+		pages={ {
+			default: Main,
+			'tab/:tab': Main,
+			'comment/:id': Page.Comment
+		} }
+		{ ...props }
+	/>
 )
 
 const Main = () => {

@@ -1,9 +1,10 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Form, Page, Layout } from 'ui'
+import { useLocation } from 'react-router-dom'
 
-export const Plugin = ( { location = {} } ) => {
-	const { item } = location.state
+export const Plugin = () => {
+	const { item } = useLocation().state
 	const {
 		banner,
 		title,
@@ -12,6 +13,19 @@ export const Plugin = ( { location = {} } ) => {
 		authorURI,
 		pluginURI
 	} = item
+
+	const Hero = () => {
+		return (
+			<Layout.AspectBox
+				width={ 1544 }
+				height={ 500 }
+				style={ {
+					backgroundImage: `url(${banner})`,
+					backgroundSize: 'cover'
+				} }
+			/>
+		)
+	}
 
 	const { renderForm } = Form.useForm( {
 		defaults: item,
@@ -55,7 +69,7 @@ export const Plugin = ( { location = {} } ) => {
 	} )
 
 	return (
-		<Page title={ __( 'Plugin' ) } hero={ banner }>
+		<Page title={ __( 'Plugin' ) } hero={ <Hero /> }>
 			<Layout.Headline>{title}</Layout.Headline>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
@@ -63,8 +77,8 @@ export const Plugin = ( { location = {} } ) => {
 	)
 }
 
-export const Theme = ( { location = {} } ) => {
-	const { item } = location.state
+export const Theme = () => {
+	const { item } = useLocation().state
 	const { banner, title, content } = item
 
 	const { renderForm } = Form.useForm( {
@@ -93,8 +107,21 @@ export const Theme = ( { location = {} } ) => {
 		}
 	} )
 
+	const Hero = () => {
+		return (
+			<Layout.AspectBox
+				width={ 1200 }
+				height={ 900 }
+				style={ {
+					backgroundImage: `url(${banner})`,
+					backgroundSize: 'cover'
+				} }
+			/>
+		)
+	}
+
 	return (
-		<Page title={ __( 'Theme' ) } hero={ banner }>
+		<Page title={ __( 'Theme' ) } hero={ <Hero /> }>
 			<Layout.Headline>{title}</Layout.Headline>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}

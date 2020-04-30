@@ -50,7 +50,7 @@ const AppContent = () => {
 	const app = selectApp( appName )
 
 	if ( ! app ) {
-		return null
+		return <Page.NotFound />
 	}
 
 	const appWrapClasses = classname( {
@@ -76,7 +76,7 @@ const AppContent = () => {
 }
 
 const AppRoot = memo( ( { root: Root, ...rest } ) => {
-	return Root ? <Root { ...rest } /> : <Page.NotFound { ...rest } />
+	return Root ? <Root { ...rest } /> : <Page.NotFound />
 } )
 
 export default AppMain

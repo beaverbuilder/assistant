@@ -1,21 +1,23 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Button, Icon, Nav } from 'assistant/ui'
+import { App, Page, Button, Icon } from 'assistant/ui'
 import { CardPage } from './ui'
 import './style.scss'
 
-export default ( { baseURL } ) => (
-	<Nav.Switch>
-		<Nav.Route
-			exact
-			path={ baseURL }
-			component={ CardsApp }
-		/>
-	</Nav.Switch>
+
+// Setup config like this
+export default props => (
+	<App.Config
+		pages={ {
+			default: CardsApp
+		} }
+		{ ...props }
+	/>
 )
 
 const CardsApp = () => {
 	const [ isEditing, setIsEditing ] = useState( false )
+
 	return (
 		<Page
 			id="cards"
