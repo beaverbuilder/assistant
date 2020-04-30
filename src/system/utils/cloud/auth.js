@@ -1,82 +1,13 @@
-import axios from 'axios'
 import Promise from 'promise'
 import * as session from './session'
 import { getCloudActions } from 'data/cloud'
-
-const { cloudUrl } = FL_ASSISTANT_CONFIG
-
-const freshCancelToken = () => {
-	return axios.CancelToken.source()
-}
-
-const currentRequest = {
-	active: false,
-	source: freshCancelToken()
-}
+import http from './http'
 
 /**
- * Create new axios instance
- * @type {AxiosInstance}
- */
-const http = axios.create( {
-	baseURL: cloudUrl,
-	crossDomain: true,
-	headers: {
-		common: {
-			Accept: 'application/json',
-			'Content-type': 'application/json',
-			'X-Requested-With': 'XMLHttpRequest',
-			'Access-Control-Allow-Origin': '*',
-		}
-	}
-} )
-
-/**
- * Attach the token to every request, if it exists
- */
-http.interceptors.request.use( ( config ) => {
-
-	// mark request as active
-	currentRequest.active = true
-
-	// attach the token to request
-	if ( session.hasToken() ) {
-		config.headers.Authorization = 'Bearer ' + session.getToken()
-	}
-	return config
-}, Promise.reject )
-
-
-http.interceptors.response.use( ( config ) => {
-	currentRequest.active = false
-	return config
-}, ( error ) => {
-	currentRequest.active = false
-	return error
-} )
-
-/**
- * Is there an active request?
- * @returns {boolean}
- */
-export const isActive = () => {
-	return currentRequest.active
-}
-
-/**
- * Cancel any running requests
- * @param message
- */
-export const cancel = ( message ) => {
-	currentRequest.source.cancel( message )
-	currentRequest.source = freshCancelToken()
-}
-
-/**
+ * TODO: Disabled for now. Causing logout.
  * Refresh the users token once per minute
  * @type {number}
  */
-// TODO: Disabled for now. Causing logout.
 // const interval = setInterval( async() => {
 // 	if ( session.hasToken() ) {
 // 		try {

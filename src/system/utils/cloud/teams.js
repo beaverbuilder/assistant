@@ -1,9 +1,19 @@
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'utils/url'
 import mockup from './mockup'
+import http from './http'
 
 export default {
 	...mockup.teams,
+
+	// create: ( data ) => {
+	// 	return http.post( '/account/teams/register', data )
+	// 		.then( ( response ) => {
+	//
+	// 			console.log( response )
+	// 			return response
+	// 		} )
+	// },
 
 	create: ( data ) => {
 		return new Promise( ( resolve, reject ) => {

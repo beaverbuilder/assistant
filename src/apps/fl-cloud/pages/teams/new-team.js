@@ -48,8 +48,7 @@ export default ( { history, location } ) => {
 			return
 		}
 		const data = {
-			name,
-			owner_id: id
+			name
 		}
 		return cloud.teams.create( data ).then( response => {
 			history.replace( '/fl-cloud/teams', { id: response.data.id } )

@@ -23,23 +23,30 @@ export const TeamInvite = () => {
 
 	return (
 		<>
-			<Layout.Box
-				style={ {
-					display: 'flex',
-					flexDirection: 'row',
-					paddingBottom: '0'
-				} }
-			>
-				<Form.TextItem
-					placeholder="Email Address"
-					style={ {
-						width: '50%',
-						margin: '0 5px 0 0'
-					} }
-				></Form.TextItem>
-				<Button>{ __( 'Invite' ) }</Button>
+			<Layout.Box padY={ false }>
+				<Page.Section
+					label={ __( 'Invite' ) }
+					padX={ false }
+				>
+					<Layout.Box
+					 	padY={ false }
+						style={ {
+							display: 'flex',
+							flexDirection: 'row',
+						} }
+					>
+						<Form.TextItem
+							placeholder="Email Address"
+							style={ {
+								width: '50%',
+								margin: '0 5px 0 0'
+							} }
+						></Form.TextItem>
+						<Button>{ __( 'Invite' ) }</Button>
+					</Layout.Box>
+				</Page.Section>
 			</Layout.Box>
-			<Layout.Box>
+			<Layout.Box padY={ false }>
 				<Page.Section label={ __( 'Pending Invites' ) } padX={ false }>
 					<List
 						items={ items }

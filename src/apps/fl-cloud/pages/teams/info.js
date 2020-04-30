@@ -89,11 +89,13 @@ export const TeamInfo = ( {
 
 	return (
 		<>
-			<Layout.Box style={ { paddingTop: '0' } }>
-				{ renderForm() }
-				<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
-					{ __( 'Save Changes' ) }
-				</Button.Loading>
+			<Layout.Box padY={ false }>
+				<Page.Section label={ __( 'Information' ) }>
+					{ renderForm() }
+					<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
+						{ __( 'Save Changes' ) }
+					</Button.Loading>
+				</Page.Section>
 			</Layout.Box>
 			<Layout.Box>
 				<Page.Section label={ __( 'Danger Zone' ) }>
