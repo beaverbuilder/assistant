@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
 import { App, Page, Button, List, Filter, Layout } from 'assistant/ui'
 import {
-	getSystemSelectors,
 	useAppState,
 	getAppActions,
 	getUpdaterStore,
 	getUpdaterActions,
 } from 'assistant/data'
 import { defaultState } from './'
+import useUpdates from './use-updates'
 import AppIcon from './icon'
 
 export default props => (
@@ -23,17 +23,13 @@ export default props => (
 	/>
 )
 
-const UpdatesMain = () => {
+const UpdatesMain = ( { handle } ) => {
 	const updater = getUpdaterStore()
 	const { setUpdateQueueItems } = getUpdaterActions()
-	const { updatingAll, updateType, listStyle } = useAppState( 'fl-updates' )
-	const { setUpdatingAll, setUpdateType, setListStyle } = getAppActions( 'fl-updates' )
-	const { handle } = useContext( App.Context )
+	const { updatingAll, updateType, listStyle } = useAppState( handle )
+	const { setUpdatingAll, setUpdateType, setListStyle } = getAppActions( handle )
 	const { getContent } = getWpRest()
-	const { getCount } = getSystemSelectors()
-
-	const totalUpdates = getCount( 'update/plugins' ) + getCount( 'update/themes' )
-	const hasUpdates = 0 !== totalUpdates
+	const { plugins, themes, total, hasUpdates } = useUpdates()
 
 	const updateAll = () => {
 		setUpdatingAll( true )
@@ -83,9 +79,9 @@ const UpdatesMain = () => {
 	const UpdatesFilter = () => {
 
 		const types = {
-			'all': __( 'All' ),
-			plugins: sprintf( 'Plugin (%s)', getCount( 'update/plugins' ) ),
-			themes: sprintf( 'Theme (%s)', getCount( 'update/themes' ) ),
+			'all': sprintf( 'All (%s)', total ),
+			plugins: sprintf( 'Plugin (%s)', plugins ),
+			themes: sprintf( 'Theme (%s)', themes ),
 		}
 
 		const listStyles = {
