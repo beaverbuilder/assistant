@@ -33,7 +33,7 @@ export const getSystemSelectors = () => getSelectors( KEY )
 
 export const getSystemHooks = () => generateHooks( getStore( KEY ), getDispatch( KEY ) )
 
-export const getSystemConfig = () => ({ ...FL_ASSISTANT_CONFIG })
+export const getSystemConfig = () => ( { ...FL_ASSISTANT_CONFIG } )
 
 export { useAppList, useAppOrder }
 
