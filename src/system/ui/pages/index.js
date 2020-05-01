@@ -1,6 +1,5 @@
 import React, { createContext } from 'react'
 import classname from 'classnames'
-import { motion } from 'framer-motion'
 import { Page as FLUIDPage } from 'fluid/ui'
 import { App, Nav } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'

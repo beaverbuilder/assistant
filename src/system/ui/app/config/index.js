@@ -4,7 +4,6 @@ import { Page, Icon } from 'ui'
 
 const Config = ( {
 	pages,
-	shouldAnimate = false,
 	...rest
 } ) => {
 	const { baseURL } = rest
