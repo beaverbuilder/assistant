@@ -31,7 +31,7 @@ export const getSystemActions = () => getDispatch( KEY )
 
 export const getSystemSelectors = () => getSelectors( KEY )
 
-export const getSystemHooks = () => generateHooks( getStore( KEY ), getDispatch( KEY ) )
+export const getSystemHooks = () => generateHooks( getSystemStore, getSystemActions )
 
 export const getSystemConfig = () => ( { ...FL_ASSISTANT_CONFIG } )
 
