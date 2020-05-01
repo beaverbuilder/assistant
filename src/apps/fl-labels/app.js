@@ -1,9 +1,9 @@
-import React, { useState, memo } from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { App, Color, Control, Page, Table, Button, Icon } from 'assistant/ui'
-import { getSystemActions, useSystemState } from 'assistant/data'
+import { getSystemHooks } from 'assistant/data'
 import AppIcon from './icon'
 import './style.scss'
 
@@ -14,14 +14,15 @@ export default props => (
 	/>
 )
 
-const Main = memo( () => {
-	const { labels } = useSystemState()
-	const { setLabels } = getSystemActions()
+const Main = () => {
 	const [ editingLabel, setEditingLabel ] = useState( null )
 	const [ newLabel, setNewLabel ] = useState( '' )
 	const firstColor = 'var(--fl-asst-blue)'
 	const [ newColor, setNewColor ] = useState( firstColor )
 	const wpRest = getWpRest()
+
+	const { useLabels } = getSystemHooks()
+	const [labels, setLabels] = useLabels( [] )
 
 	const getDefaultColor = () => {
 		const key = Object.keys( Color.labelColors ).shift()
@@ -224,4 +225,4 @@ const Main = memo( () => {
 			</Page.Section>
 		</Page>
 	)
-} )
+}
