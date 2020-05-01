@@ -6,10 +6,15 @@ import * as effects from './effects'
 import * as selectors from './selectors'
 import useAppList from './use-app-list'
 import useAppOrder from './use-app-order'
+import generateHooks from './generate-hooks'
 
-registerStore( 'fl-assistant/system', {
+const KEY = 'fl-assistant/system'
+
+registerStore( KEY, {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
+
+		// Don't hide apps by default while we're working
 		isAppHidden: __PRODUCTION__ ? true : false,
 	},
 	actions,
@@ -18,25 +23,17 @@ registerStore( 'fl-assistant/system', {
 	selectors,
 } )
 
-export const useSystemState = () => {
-	return useStore( 'fl-assistant/system' )
-}
+export const useSystemState = () => useStore( KEY )
 
-export const getSystemStore = () => {
-	return getStore( 'fl-assistant/system' )
-}
+export const getSystemStore = () => getStore( KEY )
 
-export const getSystemActions = () => {
-	return getDispatch( 'fl-assistant/system' )
-}
+export const getSystemActions = () => getDispatch( KEY )
 
-export const getSystemSelectors = () => {
-	return getSelectors( 'fl-assistant/system' )
-}
+export const getSystemSelectors = () => getSelectors( KEY )
 
-export const getSystemConfig = () => {
-	return { ...FL_ASSISTANT_CONFIG }
-}
+export const getSystemHooks = () => generateHooks( getStore( KEY ), getDispatch( KEY ) )
+
+export const getSystemConfig = () => ({ ...FL_ASSISTANT_CONFIG })
 
 export { useAppList, useAppOrder }
 
