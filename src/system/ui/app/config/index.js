@@ -24,9 +24,7 @@ const Config = ( {
 						key={ i }
 						exact={ 'default' === path }
 						path={ 'default' === path ? baseURL : baseURL + '/' + path }
-						render={ () => {
-							return <Component { ...rest } />
-						} }
+						render={ () => <Component { ...rest } /> }
 					/>
 				)
 			} )}
