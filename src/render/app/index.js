@@ -9,7 +9,7 @@ import './style.scss'
 
 const AppMain = () => {
 	const location = useLocation()
-	const { window, isAppHidden } = useSystemState( ['window', 'isAppHidden'] )
+	const { window, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
 	const side = window.origin[0]
 	const sideName = side ? 'right' : 'left'
 	const { isMobile } = Env.useEnvironment()
@@ -44,11 +44,13 @@ const AppMain = () => {
 AppMain.displayName = 'AppMain'
 
 const AppContent = () => {
-	const { apps } = useSystemState('apps')
+	const { apps } = useSystemState( 'apps' )
 	const { isAppRoot, app: appName } = App.useApp()
 	const app = apps[appName] ? apps[appName] : null
 
-	if ( ! app ) return <Page.NotFound />
+	if ( ! app ) {
+		return <Page.NotFound />
+	}
 
 	const appWrapClasses = classname( {
 		'fl-asst-screen-content': true,

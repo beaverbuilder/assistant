@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
@@ -39,7 +39,8 @@ export const Assistant = () => {
 		return (
 			state.appearance.brightness !== newState.appearance.brightness ||
 			state.isAppHidden !== newState.isAppHidden
-			// We only need history initially - we're not listening for changes
+
+		// We only need history initially - we're not listening for changes
 		)
 	} )
 
@@ -102,7 +103,7 @@ export const getAssistantBBPanelConfig = () => {
 }
 
 const MainWindow = ( { children, ...rest } ) => {
-	const { window: mainWindow } = useSystemState('window')
+	const { window: mainWindow } = useSystemState( 'window' )
 	const { size, origin, isHidden, hiddenAppearance } = mainWindow
 	const { setWindow } = getSystemActions()
 

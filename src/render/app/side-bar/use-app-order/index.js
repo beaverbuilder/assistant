@@ -5,7 +5,7 @@ const defaults = { maxCount: null }
 const useAppOrder = ( config = defaults ) => {
 	const { selectAppOrder } = getSystemSelectors()
 	const { maxCount } = config
-	useSystemState('appOrder')
+	useSystemState( 'appOrder' )
 	const { resetAppOrder } = getSystemActions()
 
 	return [
