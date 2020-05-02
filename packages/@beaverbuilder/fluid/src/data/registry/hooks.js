@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react'
+import { useState, useLayoutEffect, useRef } from 'react'
 import { shouldUpdate } from './'
 
 const capitalize = string => string.charAt( 0 ).toUpperCase() + string.slice( 1 )
@@ -14,32 +14,26 @@ export default ( store, actions ) => {
 		hooks[name] = ( needsRender = true ) => {
 
 			const [ value, setValue ] = useState( store.getState()[key] )
+			const prevValue = useRef( store.getState()[key] )
 
 			useLayoutEffect( () => {
 
 				// Set initial value from store - overrides default value
 				setValue( store.getState()[key] )
+				prevValue.current = store.getState()[key]
 
 				return store.subscribe( () => {
 					const state = store.getState()
 
-					if ( shouldUpdate( needsRender, value, state[key] ) ) {
+					if ( shouldUpdate( needsRender, value, prevValue.current ) ) {
 						setValue( state[key] )
 					}
+					prevValue.current = state[key]
 				} )
 			}, [] )
 
 			const actionName = `set${capitalize( key )}`
 			let action = actions[actionName]
-
-			if ( 'undefined' === typeof action ) {
-
-				action = value => store.dispatch({
-					type: `SET_VALUE_FOR_KEY`,
-					key,
-					value,
-				})
-			}
 
 			return [ value, action ]
 		}

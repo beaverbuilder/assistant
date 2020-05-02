@@ -1,13 +1,13 @@
 import React from 'react'
 import { Page, Button, Layout } from 'assistant/ui'
-import { getSystemHooks, useSystemState } from 'assistant/data'
+import { getSystemHooks, getSystemActions } from 'assistant/data'
 
 export default () => {
-    console.log('render tests')
-
     return (
         <Page title="Tests" padX={false}>
-            test page.
+            <Layout.Box>
+                Just a spot for some tests.
+            </Layout.Box>
 
             <BrightnessTest />
         </Page>
@@ -16,14 +16,13 @@ export default () => {
 
 const BrightnessTest = () => {
     const { useAppearance } = getSystemHooks()
-    const [appearance, setAppearance] = useAppearance()
+    const { setBrightness } = getSystemActions()
+    const [appearance] = useAppearance()
     return (
         <Layout.Box>
             Brightness: {appearance.brightness}
             <Button
-                onClick={ () => setAppearance({
-                    brightness: 'light' === appearance.brightness ? 'dark' : 'light'
-                })}
+                onClick={ () => setBrightness( 'light' === appearance.brightness ? 'dark' : 'light' )}
             >Toggle</Button>
         </Layout.Box>
     )
