@@ -17,9 +17,7 @@ const Config = ( {
 	return (
 		<Switch>
 			{ Object.entries( pages ).map( ( [ path, config ], i ) => {
-				let props = {
-					key: i
-				}
+				let props = {}
 
 				// config could be
 				// Component
@@ -45,7 +43,7 @@ const Config = ( {
 						render: () => <Component { ...rest } />
 					}
 				}
-				return <Route {...props} />
+				return <Route key={ i } { ...props } />
 			} )}
 			{children}
 			<Route component={ Page.NotFound } />
