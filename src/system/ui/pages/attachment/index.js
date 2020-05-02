@@ -1,13 +1,15 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import { useHistory } from 'react-router-dom'
 import { Page, Form, Layout, Notice } from 'ui'
 import { getSrcSet } from 'utils/image'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
 import './style.scss'
 
-export const Attachment = ( { location, history } ) => {
-	const { item } = location.state
+export const Attachment = () => {
+	const history = useHistory()
+	const { item } = history.location.state
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 	const { renderNotices, createNotice } = Notice.useNotices()

@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { getSystemSelectors } from 'data'
+import { getSystemHooks } from 'data'
 import Filter from '../'
 
 export const RadioGroupItem = ( { items = {}, title, value, defaultValue, onChange = () => {} } ) => {
@@ -32,7 +32,8 @@ export const RadioGroupItem = ( { items = {}, title, value, defaultValue, onChan
 }
 
 export const LabelsItem = ( { ...rest } ) => {
-	const { getLabels } = getSystemSelectors()
+	const { useLabels } = getSystemHooks()
+	const [labels] = useLabels( [] )
 
 	const Dot = ( { color, outline, ...rest } ) => {
 		return (
@@ -50,8 +51,6 @@ export const LabelsItem = ( { ...rest } ) => {
 			/>
 		)
 	}
-
-	const labels = getLabels()
 	const items = {
 		0: (
 			<>
