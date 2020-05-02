@@ -1,20 +1,19 @@
-import { isEqual } from 'lodash'
 import { useState, useLayoutEffect } from 'react'
-
-const _hasChanged = ( a, b ) => ! isEqual( a, b )
+import { shouldUpdate } from './'
 
 const capitalize = string => string.charAt( 0 ).toUpperCase() + string.slice( 1 )
 
-export default ( getStore, getActions ) => {
-	const store = getStore()
+export default ( store, actions ) => {
 	const state = store.getState()
 	const hooks = {}
 
 	Object.keys( state ).map( key => {
 		const name = `use${ capitalize( key ) }`
-		hooks[name] = ( initial, hasChanged = _hasChanged ) => {
 
-			const [ value, setValue ] = useState( initial )
+		// Create a hook function named use{KeyName}()
+		hooks[name] = ( needsRender = true ) => {
+
+			const [ value, setValue ] = useState( store.getState()[key] )
 
 			useLayoutEffect( () => {
 
@@ -24,17 +23,25 @@ export default ( getStore, getActions ) => {
 				return store.subscribe( () => {
 					const state = store.getState()
 
-					if ( hasChanged( value, state[key] ) ) {
+					if ( shouldUpdate( needsRender, value, state[key] ) ) {
 						setValue( state[key] )
 					}
 				} )
 			}, [] )
 
-			const actions = getActions()
 			const actionName = `set${capitalize( key )}`
-			const setter = actions[actionName]
+			let action = actions[actionName]
 
-			return [ value, setter ]
+			if ( 'undefined' === typeof action ) {
+
+				action = value => store.dispatch({
+					type: `SET_VALUE_FOR_KEY`,
+					key,
+					value,
+				})
+			}
+
+			return [ value, action ]
 		}
 	} )
 

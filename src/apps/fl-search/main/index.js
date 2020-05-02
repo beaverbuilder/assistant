@@ -9,7 +9,7 @@ import './style.scss'
 
 const Main = ( { baseURL, handle } ) => {
 	const { useSearchHistory } = getSystemHooks()
-	const [ searchHistory, setSearchHistory ] = useSearchHistory( [] )
+	const [ searchHistory, setSearchHistory ] = useSearchHistory()
 	const { keyword } = useAppState( handle )
 	const { setKeyword } = getAppActions( handle )
 	const [ loading, setLoading ] = useState( false )

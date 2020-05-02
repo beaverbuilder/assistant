@@ -1,12 +1,10 @@
-import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
+import { registerStore, useStore, getStore, getDispatch, getSelectors, getHooks } from '../registry'
 import { getWpRest } from 'utils/wordpress'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
 import useAppList from './use-app-list'
-import useAppOrder from './use-app-order'
-import generateHooks from './generate-hooks'
 
 const KEY = 'fl-assistant/system'
 
@@ -23,7 +21,7 @@ registerStore( KEY, {
 	selectors,
 } )
 
-export const useSystemState = () => useStore( KEY )
+export const useSystemState = shouldUpdate => useStore( KEY, shouldUpdate )
 
 export const getSystemStore = () => getStore( KEY )
 
@@ -31,11 +29,11 @@ export const getSystemActions = () => getDispatch( KEY )
 
 export const getSystemSelectors = () => getSelectors( KEY )
 
-export const getSystemHooks = () => generateHooks( getSystemStore, getSystemActions )
+export const getSystemHooks = () => getHooks( KEY )
 
 export const getSystemConfig = () => ( { ...FL_ASSISTANT_CONFIG } )
 
-export { useAppList, useAppOrder }
+export { useAppList }
 
 getWpRest().batch().get( {
 	'/fl-assistant/v1/counts': counts => {

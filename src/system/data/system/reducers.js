@@ -1,11 +1,11 @@
 export const apps = ( state = {}, action ) => {
 
 	const defaults = {
+		handle: null,
 		app: null,
 		label: null,
 		isEnabled: true,
-		icon: null,
-		appearance: 'normal',
+		shouldShowInAppList: true,
 	}
 
 	switch ( action.type ) {
@@ -16,9 +16,9 @@ export const apps = ( state = {}, action ) => {
 		return {
 			[action.key]: {
 				...defaults,
+				handle: action.key,
 				app: action.key,
 				label: action.key,
-				shouldShowInAppList: true,
 				...action.config,
 			},
 			...state,

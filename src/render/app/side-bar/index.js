@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Button, Icon, Env, List } from 'assistant/ui'
 import {
-	useAppOrder,
 	useSystemState,
 	getSystemActions,
 	getSystemSelectors,
 } from 'assistant/data'
 import { useMedia } from 'assistant/utils/react'
+import useAppOrder from './use-app-order'
 import './style.scss'
 
-const Sidebar = ( { edge = 'right' } ) => {
-	const { window, isAppHidden  } = useSystemState()
+const Sidebar = memo( ( { edge = 'right' } ) => {
+	const { window, isAppHidden  } = useSystemState( ['window', 'isAppHidden', 'appOrder'] )
 	const { selectApp } = getSystemSelectors()
 	const {
 		isMobile,
@@ -141,25 +141,6 @@ const Sidebar = ( { edge = 'right' } ) => {
 					}}
 				</List.Sortable>
 
-				{ /* apps.map( ( app, i ) => {
-					const { label, handle, icon } = app
-
-					const location = {
-						pathname: `/${handle}`,
-						state: app,
-					}
-					const isSelected = pathname.startsWith( `/${handle}` )
-					return (
-						<Button
-							key={ i }
-							appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
-							isSelected={ isSelected }
-							onClick={ () => navOrHideApp( isSelected, () => history.push( location ) ) }
-							title={ label }
-						>{ icon( { context: 'sidebar', isSelected } ) }</Button>
-					)
-				} ) */}
-
 				{ manage && (
 					<Button
 						appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
@@ -188,6 +169,6 @@ const Sidebar = ( { edge = 'right' } ) => {
 			)}
 		</div>
 	)
-}
+} )
 
 export default Sidebar

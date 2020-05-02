@@ -33,7 +33,7 @@ export const RadioGroupItem = ( { items = {}, title, value, defaultValue, onChan
 
 export const LabelsItem = ( { ...rest } ) => {
 	const { useLabels } = getSystemHooks()
-	const [ labels ] = useLabels( [] )
+	const [ labels ] = useLabels()
 
 	const Dot = ( { color, outline, ...rest } ) => {
 		return (

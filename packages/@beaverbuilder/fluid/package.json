@@ -1,7 +1,7 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.3.6",
-    "description": "A common UI environment for Beaver Builder and Assistant projects.",
+    "version": "0.3.7",
+    "description": "Common UI environment for Beaver Builder and Assistant projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
     "main": "dist/index.js",
@@ -17,7 +17,8 @@
     },
     "peerDependencies": {
         "react": "^16.9.0",
-        "react-dom": "^16.9.0"
+        "react-dom": "^16.9.0",
+        "lodash": "^4.17.15"
     },
     "dependencies": {
         "camelcase": "^5.3.1",

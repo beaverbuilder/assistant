@@ -1,15 +1,15 @@
 import React, { memo, Suspense } from 'react'
 import classname from 'classnames'
-import { useLocation, useParams, Redirect } from 'react-router-dom'
+import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
-import { useSystemState, getSystemSelectors } from 'assistant/data'
+import { useSystemState } from 'assistant/data'
 
 import Sidebar from './side-bar'
 import './style.scss'
 
 const AppMain = () => {
 	const location = useLocation()
-	const { window, isAppHidden } = useSystemState()
+	const { window, isAppHidden } = useSystemState( ['window', 'isAppHidden'] )
 	const side = window.origin[0]
 	const sideName = side ? 'right' : 'left'
 	const { isMobile } = Env.useEnvironment()
@@ -44,14 +44,11 @@ const AppMain = () => {
 AppMain.displayName = 'AppMain'
 
 const AppContent = () => {
-	const { app: appName } = useParams()
-	const { selectApp } = getSystemSelectors()
-	const { isAppRoot } = App.useApp()
-	const app = selectApp( appName )
+	const { apps } = useSystemState('apps')
+	const { isAppRoot, app: appName } = App.useApp()
+	const app = apps[appName] ? apps[appName] : null
 
-	if ( ! app ) {
-		return <Page.NotFound />
-	}
+	if ( ! app ) return <Page.NotFound />
 
 	const appWrapClasses = classname( {
 		'fl-asst-screen-content': true,

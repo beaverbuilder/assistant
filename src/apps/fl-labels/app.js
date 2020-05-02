@@ -22,7 +22,7 @@ const Main = () => {
 	const wpRest = getWpRest()
 
 	const { useLabels } = getSystemHooks()
-	const [ labels, setLabels ] = useLabels( [] )
+	const [ labels, setLabels ] = useLabels()
 
 	const getDefaultColor = () => {
 		const key = Object.keys( Color.labelColors ).shift()

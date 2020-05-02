@@ -27,5 +27,18 @@ export const createReducers = ( reducers, state ) => {
 		}
 	} )
 
-	return combineReducers( reducers )
+	const reducer = combineReducers( reducers )
+
+    // Wrap in a root reducer to handle the generated key/val action in getHooks
+    return ( state, action ) => {
+
+        if ( 'SET_VALUE_FOR_KEY' === action.type ) {
+            return {
+                ...state,
+                [action.key]: action.value
+            }
+        }
+
+        return reducer( state, action )
+    }
 }
