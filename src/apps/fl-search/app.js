@@ -1,20 +1,31 @@
 import React from 'react'
-import { Nav } from 'assistant/ui'
-import { Main } from './main'
+import { Route } from 'react-router-dom'
+import { App } from 'assistant/ui'
+import Main from './main'
 import { ViewAll } from './view-all'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getRequestConfig } from './config'
 
-export default ( { baseURL } ) => {
+export default props => {
+	const { baseURL } = props
 	const { config } = getRequestConfig()
+
+	console.log('render search')
+
 	return (
-		<Nav.Switch>
-			<Nav.Route exact path={ baseURL } component={ Main } />
-			<Nav.Route exact path={ `${baseURL}/all` } component={ ViewAll } />
+		<>
+		<App.Config
+			pages={ {
+				default: Main,
+			} }
+			{ ...props }
+		>
+			<Route exact path={ `${baseURL}/all` } component={ ViewAll } />
+
 			{ config.map( ( { detail }, key ) => {
 				if ( detail ) {
 					return (
-						<Nav.Route
+						<Route
 							key={ key }
 							path={ baseURL + addLeadingSlash( detail.path ) }
 							component={ detail.component }
@@ -25,7 +36,7 @@ export default ( { baseURL } ) => {
 			{ config.map( ( { detail }, key ) => {
 				if ( detail ) {
 					return (
-						<Nav.Route
+						<Route
 							key={ key }
 							path={ `${baseURL}/all` + addLeadingSlash( detail.path ) }
 							component={ detail.component }
@@ -33,6 +44,7 @@ export default ( { baseURL } ) => {
 					)
 				}
 			} ) }
-		</Nav.Switch>
+		</App.Config>
+		</>
 	)
 }

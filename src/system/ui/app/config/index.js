@@ -4,6 +4,7 @@ import { Page, Icon } from 'ui'
 
 const Config = ( {
 	pages,
+	children,
 	...rest
 } ) => {
 	const { baseURL } = rest
@@ -15,19 +16,38 @@ const Config = ( {
 
 	return (
 		<Switch>
-			{ Object.entries( pages ).map( ( [ path, component ], i ) => {
+			{ Object.entries( pages ).map( ( [ path, config ], i ) => {
+				let props = {
+					key: i
+				}
 
-				const Component = memo( component )
+				// config could be
+				// Component
+				// config.component: Component
+				// config.render: () => {}
+				// config.children
 
-				return (
-					<Route
-						key={ i }
-						exact={ 'default' === path }
-						path={ 'default' === path ? baseURL : baseURL + '/' + path }
-						render={ () => <Component { ...rest } /> }
-					/>
-				)
+				if ( 'object' === typeof config && 'component' in config ) {
+					const { component, ...restConfig } = config
+					const Component = memo( component )
+					props = {
+						...props,
+						...restConfig,
+						render: () => <Component { ...rest } />
+					}
+
+				} else {
+					const Component = memo( config )
+					props = {
+						...props,
+						exact: 'default' === path,
+						path: 'default' === path ? baseURL : baseURL + '/' + path,
+						render: () => <Component { ...rest } />
+					}
+				}
+				return <Route {...props} />
 			} )}
+			{children}
 			<Route component={ Page.NotFound } />
 		</Switch>
 	)

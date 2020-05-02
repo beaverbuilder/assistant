@@ -70,7 +70,7 @@ export const getListSectionConfig = ( {
 	section,
 	defaultProps,
 	keyword,
-	match,
+	baseURL,
 } ) => {
 	const { configKey } = section
 	let props = { ...defaultProps }
@@ -79,7 +79,7 @@ export const getListSectionConfig = ( {
 		props.footer = (
 			<Layout.Box padX={ false }>
 				<Button to={ {
-					pathname: `${match.url}/all`,
+					pathname: `${baseURL}/all`,
 					state: { keyword, configKey }
 				} }>{__( 'View All' )}</Button>
 			</Layout.Box>
@@ -96,7 +96,7 @@ export const getListItemConfig = ( {
 	item,
 	defaultProps,
 	config,
-	match,
+	baseURL,
 } ) => {
 	const { configKey } = item
 	const { detail } = config[ configKey ]
@@ -117,7 +117,7 @@ export const getListItemConfig = ( {
 
 	if ( detail ) {
 		props.to = {
-			pathname: match.url + addLeadingSlash( detail.pathname( item ) ),
+			pathname: baseURL + addLeadingSlash( detail.pathname( item ) ),
 			state: { item },
 		}
 	}
