@@ -1,15 +1,14 @@
 import React from 'react'
 import { List } from 'assistant/ui'
 
-export default ( { type = 'all' } ) => {
-	const handle = '/fl-comments'
+export default ( { type = 'all', appHandle } ) => {
 	return (
 		<List.Comments
 			type ={ type }
 			getItemProps={ ( item, defaultProps ) => ( {
 				...defaultProps,
 				to: {
-					pathname: `/${handle}/comment/${item.id}`,
+					pathname: `/${appHandle}/comment/${item.id}`,
 					state: { item }
 				},
 			} ) }
