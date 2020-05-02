@@ -9,7 +9,7 @@ import {
 	getUpdaterActions,
 } from 'assistant/data'
 import { defaultState } from './'
-import useUpdates from './use-updates'
+import useUpdateCounts from './use-update-counts'
 import AppIcon from './icon'
 
 export default props => (
@@ -29,7 +29,7 @@ const UpdatesMain = ( { handle } ) => {
 	const { updatingAll, updateType, listStyle } = useAppState( handle )
 	const { setUpdatingAll, setUpdateType, setListStyle } = getAppActions( handle )
 	const { getContent } = getWpRest()
-	const { plugins, themes, total, hasUpdates } = useUpdates()
+	const { plugins, themes, total, hasUpdates } = useUpdateCounts()
 
 	const updateAll = () => {
 		setUpdatingAll( true )
