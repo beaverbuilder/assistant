@@ -1,18 +1,25 @@
 .fl-asst {
+    .fl-asst-card.fl-asst-card-type-fl-tile-grid {
+        background: transparent;
+        box-shadow: none;
+    }
     .fl-asst-tile-grid {
         display: grid;
         grid-template-columns: repeat( 3, 1fr );
         grid-gap: var(--fluid-med-space);
-        grid-auto-rows: 100px;
+        grid-auto-rows: 85px;
 
         & > *,
         & > *.fluid-button {
-            background: var(--fluid-background);
+            background-color: var(--fluid-background);
+            box-shadow: 0 6px 12px rgba( 0, 0, 0, .03 );
             padding: var(--fluid-med-space);
             border-radius: var(--fluid-radius);
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
     }
 }

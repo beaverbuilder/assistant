@@ -6,7 +6,6 @@ const Card = ( {
 	className,
 	children,
 	title,
-	icon: CardIcon,
 	actions,
 	tag: Tag = 'div',
 	contentTag: ContentTag = 'div',
@@ -27,7 +26,6 @@ const Card = ( {
 		<Tag className={ classes } { ...rest }>
 			{ title && <div className="fl-asst-card-title">
 				<span className="fl-asst-card-title-text">
-					<CardIcon />
 					{title}
 				</span>
 				{ actions && <span className="fl-asst-card-title-actions">{actions}</span> }

@@ -11,12 +11,12 @@ const TileGrid = () => {
 	const { icon } = site
 	return (
 		<div className="fl-asst-tile-grid">
-			<Button style={ { alignItems: 'flex-end' } } to="/fl-content/tab/post">
-				<span style={ { fontSize: 33, fontWeight: 100 } }>{counts['content/post']}</span>
+			<Button style={ { alignItems: 'center' } } to="/fl-content/tab/post">
+				<span style={ { fontSize: 30, fontWeight: 200 } }>{counts['content/post']}</span>
 				<span>{__( 'Posts' )}</span>
 			</Button>
-			<Button style={ { alignItems: 'flex-end' } } to="/fl-content/tab/page">
-				<span style={ { fontSize: 33, fontWeight: 100 } }>{counts['content/page']}</span>
+			<Button style={ { alignItems: 'center' } } to="/fl-content/tab/page">
+				<span style={ { fontSize: 30, fontWeight: 200 } }>{counts['content/page']}</span>
 				<span>{__( 'Pages' )}</span>
 			</Button>
 			<div style={ { padding: 0 } }>

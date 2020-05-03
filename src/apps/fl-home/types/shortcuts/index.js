@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Icon, Env } from 'assistant/ui'
 import { getSystemConfig, useSystemState, getSystemActions } from 'assistant/data'
 import { Dashicon } from '@wordpress/components'
+import './style.scss'
 
 const Shortcuts = () => {
 	const { application } = Env.useEnvironment()
@@ -28,7 +29,7 @@ const Shortcuts = () => {
 	return items.map( ( item, i ) => {
 		const { icon, shouldDisplay, ...rest } = item
 		return shouldDisplay && (
-			<Button key={ i } appearance="transparent" { ...rest }>
+			<Button key={ i } { ...rest }>
 				{icon}
 			</Button>
 		)

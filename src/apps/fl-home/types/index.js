@@ -24,7 +24,6 @@ const registerDefaultCardTypes = () => {
 
 	registerCardType( 'fl-shortcuts', {
 		label: __( 'Shortcuts' ),
-		icon: Icon.Link,
 		render: Shortcuts,
 		edit: Shortcuts.Edit,
 		contentProps: {
@@ -36,7 +35,6 @@ const registerDefaultCardTypes = () => {
 
 	registerCardType( 'fl-apps', {
 		label: __( 'Apps' ),
-		icon: Icon.Apps,
 		render: Apps,
 		edit: Apps.Edit,
 		contentProps: {

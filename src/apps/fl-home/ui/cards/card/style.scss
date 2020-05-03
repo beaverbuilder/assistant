@@ -2,7 +2,11 @@
     .fl-asst-card {
         display: flex;
         flex-direction: column;
-        margin-bottom: var(--fluid-med-space);
+        margin-bottom: 30px;
+
+        background: var(--fluid-background);
+        border-radius: 5px;
+        box-shadow: 0 6px 12px rgba( 0, 0, 0, .03 );
 
         .fl-asst-card-title {
             flex: 0 0 auto;
@@ -10,19 +14,22 @@
             flex-direction: row;
             justify-content: flex-start;
             align-items: stretch;
-            min-height: var(--fluid-target-size);
+            min-height: 60px;
             cursor: move;
             -webkit-user-select: none;
             user-select: none;
+
+            padding: 2px var(--fluid-lg-space);
 
             .fl-asst-card-title-text {
                 flex: 0 0 auto;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                box-shadow: inset 0 -2px 0 var(--fluid-color);
                 margin-right: var(--fluid-med-space);
                 pointer-events: none;
+                font-size: 16px;
+                font-weight: 500;
 
                 svg {
                     margin-right: var(--fluid-med-space);
@@ -68,10 +75,6 @@
         }
 
         .fl-asst-card-content {
-            background: var(--fluid-background);
-            border-radius: var(--fluid-radius);
-            border-top-left-radius: 0;
-            box-shadow: 0 6px 12px rgba( 0, 0, 0, .03 );
             padding: var(--fluid-lg-space);
 
             & > *:first-child { margin-top: 0; }

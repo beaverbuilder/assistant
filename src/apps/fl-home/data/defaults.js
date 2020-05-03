@@ -38,7 +38,6 @@ export const defaultCardTypeKey = 'fl-card'
 export const defaultCardType = {
 	label: __( 'Generic Card' ),
 	allowMultiple: true,
-	icon: Icon.Placeholder,
 	edit: () => null,
 	render: () => null,
 }
