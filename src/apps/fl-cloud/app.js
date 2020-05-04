@@ -38,6 +38,7 @@ export default ( { match, history } ) => {
 			<Nav.Route path={ `${match.url}/teams/new` } component={ NewTeam } />
 			<Nav.Route path={ `${match.url}/sites` } component={ Sites } />
 			<Nav.Route path={ `${match.url}/profile` } component={ Profile } />
+			<Nav.Route path={ `${match.url}/profile/tab/:tab` } component={ Profile } />
 			<Nav.Route path={ `${match.url}/subscription` } component={ Subscription } />
 		</Nav.Switch>
 	)
