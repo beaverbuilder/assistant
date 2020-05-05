@@ -130,48 +130,51 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 	const [addingNew, setAddingNew] = useState(false)
 	const [newTerm, setNewTerm] = useState('')
 	const [newTermParent, setNewTermParent] = useState('')
-	const [checkedItems, setcheckedItems] = useState(new Map())
+	const [checkedItems, setcheckedItems] = useState([])
+	value.map(id => checkedItems.push(id))
 
-	const handleChange = e => {
+	const handleChange = (e, key) => {
+		console.log(data.idsBySlug[key])
 
-		const item = e.target.name
-		const isChecked = e.target.checked
-		setcheckedItems(prevState => ({
-			checkedItems: prevState.checkedItems.set(item, isChecked)
+		if (e === true) {
+			checkedItems.push(data.idsBySlug[key])
+			const uniqueNames = checkedItems.filter((val, id, array) => {
+				return array.indexOf(val) == id
+			})
+			onChange(uniqueNames)
+			setcheckedItems(uniqueNames)
+		} else {
+			const uniqueNames = checkedItems.filter((val, id, array) => {
+				return array.indexOf(val) == id
+			})
 
-		}))
-console.log(checkedItems)
-onChange(checkedItems)
+			var index = uniqueNames.indexOf(data.idsBySlug[key])
+			uniqueNames.splice(index, 1)
+
+			onChange(uniqueNames)
+			setcheckedItems(uniqueNames)
+		}
 	}
 
 	var catOptions = Object.keys(options).map(function (key) {
+		var str = options[key]
+		var n = str.includes('-')
 
-		var str = options[key];
-		var n = str.includes("-");
-		console.log(checkedItems)
 		return (
 			<CheckboxControl
-				label={options[key]}
-				checked={checkedItems.get(options[key])}
-				onChange={handleChange}
-				className={ n ? 'fl-asst-subCat' : 'fl-asst-cat'}
-				value={key}
+				label={options[key].replace('-', '')}
+				checked={checkedItems.includes(data.idsBySlug[key])}
+				onChange={e => {
+					handleChange(e, key)
+				}}
+				className={n ? 'fl-asst-subCat' : 'fl-asst-cat'}
+				value={data.idsBySlug[key]}
 			/>
 		)
 	})
 	if (tax.isHierarchical) {
 		return (
 			<>
-				<Form.SelectItem
-					selectMultiple={true}
-					options={options}
-					value={values}
-					onChange={slugs => {
-
-						onChange(slugs.map(slug => data.idsBySlug[slug]))
-					}}
-				/>
-
 				{catOptions}
 
 				<div className='fl-asst-new-term-form'>

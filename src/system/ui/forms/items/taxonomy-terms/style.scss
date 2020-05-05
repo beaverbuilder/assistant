@@ -37,7 +37,10 @@
     height: 25px;
 	}
 
-	.components-base-control+.components-base-control {
+	.fl-asst .components-base-control+.components-base-control {
 		margin-bottom: 7px;
+	}
+	 .components-checkbox-control__input-container svg.dashicon{
+		display: none !important;
 	}
 }
