@@ -9,7 +9,16 @@
 	    color: var(--fluid-box-color);
 	    border-radius: var(--fluid-radius);
 	    min-height: var(--fluid-target-size);
-	    padding: var(--fluid-med-space);
-	    text-decoration: none;
+	    padding: 0 var(--fluid-med-space);
+		text-decoration: none;
+		padding: 10px;
+		margin-top: 15px;
+        margin-bottom: 10px;
 	}
+	.fl-msg-icon{
+		margin-right: 7px;
+		height: 100%;
+		width: 7%;
+	}
+
 }

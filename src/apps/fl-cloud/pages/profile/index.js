@@ -1,63 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { useCloudState } from 'assistant/data'
-import { Button, Form, Layout, Page } from 'assistant/ui'
+import { useCloudState, getCloudActions } from 'assistant/data'
+import { Button, Form, Layout, Nav, Page } from 'assistant/ui'
+import cloud from 'assistant/utils/cloud'
+import { ProfileSettings } from './settings.js'
+import { ProfilePassword } from './password.js'
 
 export default () => {
-	const { cloudUser } = useCloudState()
-
-	const fields = {
-		name: {
-			label: __( 'Name' ),
-			component: 'text',
-			alwaysCommit: true,
-			validate: ( value, errors ) => {
-				if ( '' === value ) {
-					errors.push( __( 'Please enter your name.' ) )
-				}
-			}
+	let tabs = [
+		{
+			handle: 'settings',
+			label: __( 'Settings' ),
+			path: '/fl-cloud/profile',
+			component: ProfileSettings,
+			exact: true,
 		},
-		email: {
-			label: __( 'Email Address' ),
-			component: 'email',
-			alwaysCommit: true,
-			validate: ( value, errors ) => {
-				if ( '' === value ) {
-					errors.push( __( 'Please enter an email address.' ) )
-				}
-			}
-		},
-		password: {
-			label: __( 'Change Password' ),
-			component: 'text',
-			type: 'password',
-			alwaysCommit: true
+		{
+			handle: 'sites',
+			label: __( 'Password' ),
+			path: '/fl-cloud/profile/tab/password',
+			component: ProfilePassword,
 		}
-	}
-
-	const {
-		renderForm,
-		submitForm,
-		isSubmitting
-	} = Form.useForm( {
-		fields,
-		defaults: cloudUser
-	} )
+	]
 
 	return (
 		<Page
 			title={ __( 'Profile' ) }
 			shouldShowBackButton={ true }
+			padX={ false }
+			padY={ false }
 		>
-			<Layout.Headline>{ __( 'Your Profile' ) }</Layout.Headline>
-			{ renderForm() }
-			<Button.Loading
-				status="primary"
-				onClick={ submitForm }
-				isLoading={ isSubmitting }
-			>
-				{ __( 'Save Changes' ) }
-			</Button.Loading>
+			<Layout.Box padX={ false } style={ { paddingBottom: '0px' } }>
+				<Nav.Tabs tabs={ tabs } />
+			</Layout.Box>
+			<Layout.Box padY={ false }>
+				<Nav.CurrentTab tabs={ tabs } />
+			</Layout.Box>
 		</Page>
 	)
 }

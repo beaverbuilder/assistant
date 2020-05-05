@@ -1,31 +1,22 @@
-import { auth, session } from 'utils/cloud'
-import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
-
-const cache = getCache( 'fl-cloud', 'state' ) // Test cache for mock data
+import cloud from 'utils/cloud'
 
 const state = {
-	isCloudConnected: auth.isConnected(),
-	cloudToken: session.getToken(),
-	cloudUser: session.getUser(),
-	cloudErrors: []
+	isCloudConnected: cloud.auth.isConnected(),
+	cloudToken: cloud.session.getToken(),
+	cloudUser: cloud.session.getUser()
 }
 
 registerStore( 'fl-assistant/cloud', {
-	state: cache ? { ...state, ...cache } : state,
+	state,
 	actions,
 	reducers,
 	effects,
 	selectors,
-} )
-
-getStore( 'fl-assistant/cloud' ).subscribe( () => {
-	const state = getStore( 'fl-assistant/cloud' ).getState()
-	setCache( 'fl-cloud', 'state', state, false )
 } )
 
 export const useCloudState = () => {

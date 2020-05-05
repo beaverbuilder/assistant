@@ -60,6 +60,10 @@ class PostTransformer {
 		$thumb_id = get_post_thumbnail_id( $post );
 		$thumb_data = wp_prepare_attachment_for_js( $thumb_id );
 
+		if ( ! function_exists( 'wp_check_post_lock' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/post.php';
+		}
+
 		$response = [
 			'author'           => $author,
 			'commentsAllowed'  => 'open' === $post->comment_status ? true : false,
@@ -85,6 +89,7 @@ class PostTransformer {
 			'visibility'       => 'public',
 			'commentsCount'    => get_comments_number( $post->ID ),
 			'isSticky'         => is_sticky( $post->ID ),
+			'hasLock'          => wp_check_post_lock( $post->ID ),
 		];
 
 		// Post visibility.

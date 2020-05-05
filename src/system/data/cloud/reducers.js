@@ -16,19 +16,12 @@ export const cloudToken = ( state = {}, action ) => {
 	}
 }
 
-export const cloudErrors = ( state = [], action ) => {
-	switch ( action.type ) {
-	case 'SET_CLOUD_ERRORS':
-		return action.errors
-	default:
-		return state
-	}
-}
-
 export const cloudUser = ( state = null, action ) => {
 	switch ( action.type ) {
 	case 'SET_CLOUD_USER':
 		return action.user
+	case 'SET_CURRENT_TEAM_ID':
+		return { ...state, current_team_id: parseInt( action.id ) }
 	default:
 		return state
 	}
