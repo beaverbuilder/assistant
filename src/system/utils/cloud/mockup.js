@@ -1,7 +1,8 @@
 import { createMockupApi } from 'utils/mockup'
 
 const db = {
-	teams: []
+	...FL_ASSISTANT_CONFIG.mockup,
+	teams: [],
 }
 
 export default createMockupApi( db, {

@@ -7,8 +7,8 @@ use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
+use FL\Assistant\Data\Mockup;
 use FLBuilderModel;
-use FL\Assistant\Data\Libraries;
 
 /**
  * Class OnEnqueueScripts
@@ -117,6 +117,7 @@ class OnEnqueueScripts {
 			'emptyTrashDays'    => EMPTY_TRASH_DAYS,
 			'isShowingAdminBar' => is_admin_bar_showing(),
 			'isAdmin'           => is_admin(),
+			'mockup'			=> Mockup::get(),
 			'nonce'             => [
 				'api'             => wp_create_nonce( 'wp_rest' ),
 				'reply'           => wp_create_nonce( 'replyto-comment' ),
@@ -133,8 +134,6 @@ class OnEnqueueScripts {
 					'isActive' => is_plugin_active('wordpress-seo/wp-seo.php')
 				]
 			],*/
-
-			'libraries'			=> Libraries::get()
 		];
 	}
 
