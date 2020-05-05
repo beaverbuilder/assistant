@@ -8,6 +8,7 @@ use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
 use FLBuilderModel;
+use FL\Assistant\Data\Libraries;
 
 /**
  * Class OnEnqueueScripts
@@ -131,6 +132,8 @@ class OnEnqueueScripts {
 					'isActive' => is_plugin_active('wordpress-seo/wp-seo.php')
 				]
 			],*/
+
+			'libraries'			=> Libraries::get()
 		];
 	}
 
