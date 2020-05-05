@@ -14,6 +14,13 @@ export const setAppPosition = ( key, position ) => {
 	}
 }
 
+export const resetAppOrder = ( keys = [] ) => {
+	return {
+		type: 'RESET_APP_ORDER',
+		keys,
+	}
+}
+
 export const setCounts = ( counts ) => {
 	return {
 		type: 'SET_COUNTS',

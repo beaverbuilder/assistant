@@ -1,16 +1,15 @@
-import React from 'react'
+import React, { memo, Suspense } from 'react'
 import classname from 'classnames'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
-import HomeScreen from './home-screen'
+
 import Sidebar from './side-bar'
-import ManageScreen from './manage-screen'
 import './style.scss'
 
 const AppMain = () => {
 	const location = useLocation()
-	const { window, isAppHidden } = useSystemState()
+	const { window, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
 	const side = window.origin[0]
 	const sideName = side ? 'right' : 'left'
 	const { isMobile } = Env.useEnvironment()
@@ -22,6 +21,8 @@ const AppMain = () => {
 		'fl-asst-is-mobile': isMobile,
 	} )
 
+	const homeApp = 'fl-home'
+
 	return (
 		<div className={ classes } >
 			<Sidebar edge={ sideName } />
@@ -29,8 +30,9 @@ const AppMain = () => {
 			{ ! isAppHidden && (
 				<div className="fl-asst-main-content">
 					<Nav.Switch location={ location }>
-						<Nav.Route exact path="/" component={ HomeScreen } />
-						<Nav.Route path="/fl-manage" component={ ManageScreen } />
+						<Nav.Route exact path="/">
+							<Redirect to={ `/${homeApp}` } />
+						</Nav.Route>
 						<Nav.Route path="/:app" component={ AppContent } />
 						<Nav.Route component={ Page.NotFound } />
 					</Nav.Switch>
@@ -41,20 +43,13 @@ const AppMain = () => {
 }
 AppMain.displayName = 'AppMain'
 
-const AppContent = props => {
-	const { match } = props
-	const { apps } = useSystemState()
-	const { isAppRoot } = App.useApp()
-	const { params: { app: appName } } = match
-	const app = apps[appName]
+const AppContent = () => {
+	const { apps } = useSystemState( 'apps' )
+	const { isAppRoot, app: appName } = App.useApp()
+	const app = apps[appName] ? apps[appName] : null
 
-	if ( 'undefined' === typeof app ) {
-		return null
-	}
-
-	const appProps = {
-		...props,
-		...app,
+	if ( ! app ) {
+		return <Page.NotFound />
 	}
 
 	const appWrapClasses = classname( {
@@ -64,15 +59,23 @@ const AppContent = props => {
 		'fl-asst-app-root': isAppRoot,
 	} )
 
+	const props = {
+		handle: app.handle,
+		baseURL: `/${app.handle}`,
+		label: app.label,
+	}
+
 	return (
 		<div className={ appWrapClasses }>
-			<AppRoot app={ app } appProps={ appProps } />
+			<Suspense fallback={ <Page.Loading /> }>
+				<AppRoot root={ app.root } { ...props } />
+			</Suspense>
 		</div>
 	)
 }
 
-const AppRoot = ( { app, appProps } ) => {
-	return 'function' === typeof app.root ? app.root( appProps ) : null
-}
+const AppRoot = memo( ( { root: Root, ...rest } ) => {
+	return Root ? <Root { ...rest } /> : <Page.NotFound />
+} )
 
 export default AppMain

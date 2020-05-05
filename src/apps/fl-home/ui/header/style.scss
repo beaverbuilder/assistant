@@ -1,6 +1,6 @@
 .fl-asst {
     .fl-asst-site-identity {
-        --fl-asst-site-icon-size: 50px;
+        --fl-asst-site-icon-size: 60px;
         min-height: var(--fl-asst-site-icon-size);
         flex: 1 1 auto;
         display: flex;
@@ -12,7 +12,6 @@
             background: #23282d;
             width: var(--fl-asst-site-icon-size);
             height: var(--fl-asst-site-icon-size);
-            border-radius: 5px;
             overflow: hidden;
         }
         .fl-asst-site-title-area {

@@ -1,11 +1,11 @@
 export const apps = ( state = {}, action ) => {
 
 	const defaults = {
+		handle: null,
 		app: null,
 		label: null,
 		isEnabled: true,
-		icon: null,
-		appearance: 'normal',
+		shouldShowInAppList: true,
 	}
 
 	switch ( action.type ) {
@@ -16,9 +16,9 @@ export const apps = ( state = {}, action ) => {
 		return {
 			[action.key]: {
 				...defaults,
+				handle: action.key,
 				app: action.key,
 				label: action.key,
-				shouldShowInAppList: true,
 				...action.config,
 			},
 			...state,
@@ -30,6 +30,14 @@ export const apps = ( state = {}, action ) => {
 
 export const appOrder = ( state = [], action ) => {
 	switch ( action.type ) {
+	case 'RESET_APP_ORDER':
+
+		const newKeys = [
+			...action.keys,
+			...state.filter( i => ! action.keys.includes( i ) )
+		]
+		return newKeys
+
 	case 'REGISTER_APP':
 	case 'SET_APP_POSITION': {
 		const { key, position = null } = action
@@ -74,11 +82,14 @@ export const appOrder = ( state = [], action ) => {
 export const counts = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_COUNTS':
-		return { ...state, ...action.counts }
+		Object.entries( action.counts ).map( ( [ key, value ] ) => {
+			state[ key ] = parseInt( value )
+		} )
+		return { ...state }
 	case 'SET_COUNT':
 		return {
 			...state,
-			[action.key]: action.count
+			[action.key]: parseInt( action.count )
 		}
 	case 'INCREMENT_COUNT':
 		return {
@@ -155,14 +166,7 @@ export const appearance = ( state = defaultAppearance, action ) => {
 	}
 }
 
-export const shouldShowLabels = ( state = true, action ) => {
-	switch ( action.type ) {
-	case 'SET_SHOULD_SHOW_LABELS':
-		return false /* Temporarily Disable */
-	default:
-		return state ? true : false
-	}
-}
+export const shouldShowLabels = () => false
 
 // Navigation History
 const defaultHistory = { index: 0, entries: [] }
@@ -191,8 +195,6 @@ export const searchHistory = ( state = [], action ) => {
 		return state
 	}
 }
-
-export const shouldReduceMotion = () => false
 
 
 // Page Sections

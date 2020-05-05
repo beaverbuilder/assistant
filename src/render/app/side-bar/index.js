@@ -1,22 +1,34 @@
-import React from 'react'
+import React, { useState, memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
-import { Button, Icon, Env } from 'assistant/ui'
-import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
+import { Button, Icon, Env, List } from 'assistant/ui'
+import {
+	useSystemState,
+	getSystemActions,
+	getSystemSelectors,
+} from 'assistant/data'
 import { useMedia } from 'assistant/utils/react'
+import useAppOrder from './use-app-order'
 import './style.scss'
 
-const Sidebar = ( { edge = 'right' } ) => {
-	const { window, isAppHidden  } = useSystemState()
-	const { isMobile, isCompactHeight, application } = Env.useEnvironment()
+const Sidebar = memo( ( { edge = 'right' } ) => {
+	const { window, isAppHidden  } = useSystemState( [ 'window', 'isAppHidden', 'appOrder' ] )
+	const { selectApp } = getSystemSelectors()
+	const {
+		isMobile,
+		isCompactHeight,
+		application
+	} = Env.useEnvironment()
+
 	const {
 		toggleIsShowingUI,
 		setWindow,
-		setIsAppHidden
+		setIsAppHidden,
 	} = getSystemActions()
-	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
 
+	const [ isSorting, setIsSorting ] = useState( false )
+	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
 
 	const getMaxCount = () => {
 		if ( isVeryCompactHeight ) {
@@ -27,7 +39,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 		}
 		return isMobile ? 3 : 5
 	}
-	const apps = useAppList( { maxCount: getMaxCount } )
+	const [ appOrder, setAppOrder ] = useAppOrder( { maxCount: getMaxCount() } )
 	const { pathname } = useLocation()
 	const history = useHistory()
 
@@ -63,8 +75,11 @@ const Sidebar = ( { edge = 'right' } ) => {
 	}
 
 	const classes = classname( 'fl-asst-sidebar', {
-		'fl-asst-sidebar-compact': isCompactHeight
+		'fl-asst-sidebar-compact': isCompactHeight,
+		'is-sorting': isSorting,
 	} )
+
+	const manage = selectApp( 'fl-manage' )
 
 	return (
 		<div className={ classes }
@@ -73,7 +88,7 @@ const Sidebar = ( { edge = 'right' } ) => {
 			}
 		>
 			{ ! isBeaverBuilder && (
-				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top">
+				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top disable-while-sorting">
 					<Button
 						appearance="transparent"
 						onClick={ () => toggleIsShowingUI( false ) }
@@ -85,7 +100,6 @@ const Sidebar = ( { edge = 'right' } ) => {
 				</div>
 			)}
 
-
 			<div
 				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
 			>
@@ -94,41 +108,56 @@ const Sidebar = ( { edge = 'right' } ) => {
 					status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
 					title={ __( 'Home' ) }
 					onClick={ () => navOrHideApp( isRoot, goToRoot ) }
+					className="disable-while-sorting"
 				>
 					<Icon.Home />
 				</Button>
 
-				{ apps.map( ( app, i ) => {
-					const { label, handle, icon } = app
-
-					const location = {
-						pathname: `/${handle}`,
-						state: app,
-					}
-					const isSelected = pathname.startsWith( `/${handle}` )
-					return (
-						<Button
-							key={ i }
-							appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
-							isSelected={ isSelected }
-							onClick={ () => navOrHideApp( isSelected, () => history.push( location ) ) }
-							title={ label }
-						>{ icon( { context: 'sidebar', isSelected } ) }</Button>
-					)
-				} )}
-
-				<Button
-					appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
-					status={ ( isManage && ! isAppHidden ) ? 'primary' : '' }
-					onClick={ () => navOrHideApp( isManage, () => history.push( '/fl-manage' ) ) }
-					title={ __( 'Manage Apps' ) }
+				<List.Sortable
+					items={ appOrder }
+					setItems={ setAppOrder }
+					keyProp={ item => item }
+					onSortStart={ () => setIsSorting( true ) }
+					onSortEnd={ () => setIsSorting( false ) }
 				>
-					<Icon.Apps />
-				</Button>
+					{ key => {
+						const app = selectApp( key )
+						const { handle, icon } = app
+
+						const location = {
+							pathname: `/${handle}`,
+							state: app,
+						}
+						const isSelected = pathname.startsWith( `/${handle}` )
+						return (
+							<Button
+								appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
+								isSelected={ isSelected }
+								onClick={ () => {
+									navOrHideApp( isSelected, () => history.push( location ) )
+								} }
+							>{ icon( { context: 'sidebar', isSelected } ) }</Button>
+						)
+					}}
+				</List.Sortable>
+
+				{ manage && (
+					<Button
+						appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
+						status={ ( isManage && ! isAppHidden ) ? 'primary' : '' }
+						onClick={ () => navOrHideApp( isManage, () => history.push( {
+							pathname: `/${manage.handle}`,
+							state: manage
+						} ) ) }
+						className="disable-while-sorting"
+					>
+						<Icon.Apps />
+					</Button>
+				)}
 			</div>
 
 			{ ! isBeaverBuilder && ! isMobile && (
-				<div className="fl-asst-sidebar-cell">
+				<div className="fl-asst-sidebar-cell disable-while-sorting">
 					<Button
 						appearance="transparent"
 						onClick={ toggleWindowSize }
@@ -140,6 +169,6 @@ const Sidebar = ( { edge = 'right' } ) => {
 			)}
 		</div>
 	)
-}
+} )
 
 export default Sidebar

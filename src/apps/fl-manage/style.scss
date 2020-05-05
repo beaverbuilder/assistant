@@ -12,6 +12,14 @@
             flex-direction: row;
             font-size: 14px;
 
+            &.is-dragging {
+                pointer-events: none;
+
+                * {
+                    pointer-events: none;
+                }
+            }
+
             .fluid-button {
                 flex: 1 1 auto;
                 display: inline-flex;

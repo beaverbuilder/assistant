@@ -1,5 +1,4 @@
 import React from 'react'
-import { Page } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import './style.scss'
 
@@ -23,19 +22,4 @@ const Header = () => {
 	)
 }
 
-const HomeScreen = () => {
-	return (
-		<Page
-			padY={ false }
-			toolbar={ false }
-			header={ <Header /> }
-		>
-			<Page.RegisteredSections
-				location={ { type: 'home' } }
-				data={ {} }
-			/>
-		</Page>
-	)
-}
-
-export default HomeScreen
+export default Header

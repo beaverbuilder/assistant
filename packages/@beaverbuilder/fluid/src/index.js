@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import camelcase from 'camelcase'
 import * as ReactLaag from 'react-laag'
 import ResizeObserverPolyfill from 'resize-observer-polyfill'
+import * as FramerMotion from 'framer-motion'
 
 import * as data from './data'
 import * as ui from './ui'
@@ -20,6 +21,7 @@ const FLUID = {
 		camelcase,
 		ReactLaag,
 		ResizeObserverPolyfill,
+		FramerMotion,
 	}
 }
 

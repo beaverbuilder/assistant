@@ -7,14 +7,14 @@ import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
 import './style.scss'
 
-export const Content = ( { match } ) => (
+export default ( { baseURL } ) => (
 	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}` }>
-			<Redirect to={ { pathname: `${match.url}/tab/post` } } />
+		<Nav.Route exact path={ baseURL }>
+			<Redirect to={ { pathname: `${baseURL}/tab/post` } } />
 		</Nav.Route>
-		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
-		<Nav.Route path={ `${match.url}/post/new` } component={ Page.CreatePost } />
-		<Nav.Route path={ `${match.url}/post/:id` } component={ Page.Post } />
+		<Nav.Route path={ `${baseURL}/tab/:tab` } component={ Main } />
+		<Nav.Route path={ `${baseURL}/post/new` } component={ Page.CreatePost } />
+		<Nav.Route path={ `${baseURL}/post/:id` } component={ Page.Post } />
 	</Nav.Switch>
 )
 

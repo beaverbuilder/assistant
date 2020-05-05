@@ -1,0 +1,17 @@
+.fl-asst-screen-reader-text {
+    left: 40px;
+    position: absolute;
+    transform: translateY(-400%);
+
+    min-height: var(--fluid-target-size);
+    padding: var(--fluid-med-space);
+    background: var(--fluid-box-background);
+    color: var(--fluid-color);
+    border-radius: var(--fluid-radius);
+
+    &:focus {
+        top: 40px;
+        left: 40px;
+        transform: translateY(0%);
+    }
+}

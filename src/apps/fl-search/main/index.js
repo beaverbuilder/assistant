@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
+import { useAppState, getAppActions, getSystemHooks } from 'assistant/data'
 import { Page, List, Icon, Button, Layout } from 'assistant/ui'
 import { CancelToken, isCancel } from 'axios'
 import { getRequestConfig, getListSectionConfig, getListItemConfig } from '../config'
 import './style.scss'
 
-export const Main = ( { match } ) => {
-	const { searchHistory } = useSystemState()
-	const { setSearchHistory } = getSystemActions()
-	const { keyword } = useAppState( 'fl-search' )
-	const { setKeyword } = getAppActions( 'fl-search' )
+const Main = ( { baseURL, handle } ) => {
+	const { useSearchHistory } = getSystemHooks()
+	const [ searchHistory, setSearchHistory ] = useSearchHistory()
+	const { keyword } = useAppState( handle )
+	const { setKeyword } = getAppActions( handle )
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
 	const { config, routes } = getRequestConfig( { keyword } )
@@ -130,7 +130,7 @@ export const Main = ( { match } ) => {
 							section,
 							defaultProps,
 							keyword,
-							match,
+							baseURL,
 						} )
 					} }
 					getItemProps={ ( item, defaultProps ) => {
@@ -138,7 +138,7 @@ export const Main = ( { match } ) => {
 							item,
 							defaultProps,
 							config,
-							match,
+							baseURL,
 						} )
 					} }
 				/>
@@ -147,3 +147,5 @@ export const Main = ( { match } ) => {
 		</Page>
 	)
 }
+
+export default Main

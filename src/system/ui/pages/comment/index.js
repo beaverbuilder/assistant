@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
+import { useLocation } from 'react-router-dom'
 import { Form, Icon, Button, Page, Layout } from 'ui'
 import { getSystemConfig, getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
 
 
-export const Comment = ( { location } ) => {
-	const { item } = location.state
+export const Comment = () => {
+	const { item } = useLocation().state
 	const {
 		id,
 		approved,

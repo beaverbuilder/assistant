@@ -2,27 +2,27 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { Color, Control, Page, Table, Button, Icon, Nav } from 'assistant/ui'
-import { getSystemActions, useSystemState } from 'assistant/data'
+import { App, Color, Control, Page, Table, Button, Icon } from 'assistant/ui'
+import { getSystemHooks } from 'assistant/data'
 import AppIcon from './icon'
 import './style.scss'
 
-const App = ( { match } ) => {
-	return (
-		<Nav.Switch>
-			<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-		</Nav.Switch>
-	)
-}
+export default props => (
+	<App.Config
+		pages={ { default: Main } }
+		{ ...props }
+	/>
+)
 
 const Main = () => {
-	const { labels } = useSystemState()
-	const { setLabels } = getSystemActions()
 	const [ editingLabel, setEditingLabel ] = useState( null )
 	const [ newLabel, setNewLabel ] = useState( '' )
 	const firstColor = 'var(--fl-asst-blue)'
 	const [ newColor, setNewColor ] = useState( firstColor )
 	const wpRest = getWpRest()
+
+	const { useLabels } = getSystemHooks()
+	const [ labels, setLabels ] = useLabels()
 
 	const getDefaultColor = () => {
 		const key = Object.keys( Color.labelColors ).shift()
@@ -226,5 +226,3 @@ const Main = () => {
 		</Page>
 	)
 }
-
-export default App
