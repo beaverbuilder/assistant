@@ -82,11 +82,14 @@ export const appOrder = ( state = [], action ) => {
 export const counts = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_COUNTS':
-		return { ...state, ...action.counts }
+		Object.entries( action.counts ).map( ( [ key, value ] ) => {
+			state[ key ] = parseInt( value )
+		} )
+		return { ...state }
 	case 'SET_COUNT':
 		return {
 			...state,
-			[action.key]: action.count
+			[action.key]: parseInt( action.count )
 		}
 	case 'INCREMENT_COUNT':
 		return {
