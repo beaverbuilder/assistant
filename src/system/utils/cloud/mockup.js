@@ -7,5 +7,5 @@ const db = {
 export default createMockupApi( db, {
 	cacheKey: 'fl-assistant/cloud-mockup',
 	delayResponse: 500,
-	debug: true
+	debug: false
 } )

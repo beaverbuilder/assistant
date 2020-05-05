@@ -4,21 +4,20 @@ import { getCloudActions } from 'data/cloud'
 import http from './http'
 
 /**
- * TODO: Disabled for now. Causing logout.
  * Refresh the users token once per minute
  * @type {number}
  */
-// const interval = setInterval( async() => {
-// 	if ( session.hasToken() ) {
-// 		try {
-// 			await refresh()
-// 		} catch ( error ) {
-// 			clearInterval( interval )
-// 			session.removeToken()
-// 			session.removeUser()
-// 		}
-// 	}
-// }, 60000 )
+const interval = setInterval( async() => {
+	if ( session.hasToken() ) {
+		try {
+			await refresh()
+		} catch ( error ) {
+			clearInterval( interval )
+			session.removeToken()
+			session.removeUser()
+		}
+	}
+}, 60000 )
 
 /**
  * Register with Assistant Cloud
@@ -76,6 +75,8 @@ export const login = ( email, password, config = {} ) => {
 		http.post( '/iam/authenticate', { email, password }, config )
 			.then( ( response ) => {
 
+				console.log( response )
+
 				// Handle an error
 				if ( response.response ) {
 					reject( response.response.data )
@@ -111,16 +112,15 @@ export const refresh = ( config = {} ) => {
 			.then( ( response ) => {
 
 				// Handle an error
-				if ( response.response ) {
-					reject( response.response.data )
+				if ( ! response.data || ! response.data.token ) {
+					reject( response )
 					return
 				}
 
 				// Handle success
-				const { token, user } = response.data.data
-				session.setToken( token )
-				session.setUser( user )
-				resolve( { token, user } )
+				const { plainTextToken } = response.data.token
+				session.setToken( plainTextToken )
+				resolve()
 			} )
 			.catch( reject )
 	} )
