@@ -17,8 +17,6 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 	const { taxonomies } = getSystemConfig()
 	const wpRest = getWpRest()
 	const source = CancelToken.source()
-	const [isChecked, setChecked] = useState(true)
-
 	useEffect(() => {
 		wpRest
 			.terms()
@@ -68,6 +66,15 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 				: term.title
 			if (term.children.length) {
 				options = getHierarchicalOptions(term.children, options, depth + 1)
+			}
+		})
+		return options
+	}
+
+	const getHierarchicalChekboxOptions = (terms = data.terms, options = []) => {
+		terms.map(term => {
+			if (0 == term.parent && 'post_tag' !== term.taxonomy) {
+				options[term.slug] = term
 			}
 		})
 		return options
@@ -126,18 +133,19 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 
 	const tax = taxonomies[taxonomy]
 	const options = getHierarchicalOptions()
+	const checkboxTerms = getHierarchicalChekboxOptions()
+
 	const values = value.map(id => data.slugsById[id])
 	const [addingNew, setAddingNew] = useState(false)
 	const [newTerm, setNewTerm] = useState('')
 	const [newTermParent, setNewTermParent] = useState('')
 	const [checkedItems, setcheckedItems] = useState([])
+
 	value.map(id => checkedItems.push(id))
 
-	const handleChange = (e, key) => {
-		console.log(data.idsBySlug[key])
-
-		if (e === true) {
-			checkedItems.push(data.idsBySlug[key])
+	const handleChange = (e, id) => {
+		if (true === e) {
+			checkedItems.push(id)
 			const uniqueNames = checkedItems.filter((val, id, array) => {
 				return array.indexOf(val) == id
 			})
@@ -148,7 +156,7 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 				return array.indexOf(val) == id
 			})
 
-			var index = uniqueNames.indexOf(data.idsBySlug[key])
+			let index = uniqueNames.indexOf(id)
 			uniqueNames.splice(index, 1)
 
 			onChange(uniqueNames)
@@ -156,26 +164,38 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 		}
 	}
 
-	var catOptions = Object.keys(options).map(function (key) {
-		var str = options[key]
-		var n = str.includes('-')
+	const renderTerms = renderedTerms => {
+		return Object.keys(renderedTerms).map(function (key) {
+			return (
+				<>
+					<div
+						key={renderedTerms[key].id}
+						className='editor-post-taxonomies__hierarchical-terms-choice'
+					>
+						<CheckboxControl
+							label={renderedTerms[key].title}
+							checked={checkedItems.includes(renderedTerms[key].id)}
+							onChange={e => {
+								handleChange(e, renderedTerms[key].id)
+							}}
+							value={renderedTerms[key].id}
+						/>
 
-		return (
-			<CheckboxControl
-				label={options[key].replace('-', '')}
-				checked={checkedItems.includes(data.idsBySlug[key])}
-				onChange={e => {
-					handleChange(e, key)
-				}}
-				className={n ? 'fl-asst-subCat' : 'fl-asst-cat'}
-				value={data.idsBySlug[key]}
-			/>
-		)
-	})
+						{!!renderedTerms[key].children.length && (
+							<div className='editor-post-taxonomies__hierarchical-terms-subchoices'>
+								{renderTerms(renderedTerms[key].children)}
+							</div>
+						)}
+					</div>
+				</>
+			)
+		})
+	}
+
 	if (tax.isHierarchical) {
 		return (
 			<>
-				{catOptions}
+				{renderTerms(checkboxTerms)}
 
 				<div className='fl-asst-new-term-form'>
 					{addingNew && (

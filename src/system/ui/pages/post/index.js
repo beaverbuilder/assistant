@@ -222,7 +222,7 @@ export const Post = ( { location, match, history } ) => {
 									value={ [ ...values[ taxonomy ] ] }
 									onChange={ newValue => {
 										values[ taxonomy ] = newValue
-										console.log(values)
+										console.log( values )
 										onChange( { ...values } )
 									} }
 								/>
