@@ -8,15 +8,10 @@ import { useMedia } from 'assistant/utils/react'
 import './style.scss'
 
 const Sidebar = ( { edge = 'right' } ) => {
-	const { window, isAppHidden  } = useSystemState()
+	const { window, isAppHidden } = useSystemState()
 	const { isMobile, isCompactHeight, application } = Env.useEnvironment()
-	const {
-		toggleIsShowingUI,
-		setWindow,
-		setIsAppHidden
-	} = getSystemActions()
+	const { toggleIsShowingUI, setWindow, setIsAppHidden } = getSystemActions()
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
-
 
 	const getMaxCount = () => {
 		if ( isVeryCompactHeight ) {
@@ -67,17 +62,18 @@ const Sidebar = ( { edge = 'right' } ) => {
 	} )
 
 	return (
-		<div className={ classes }
+		<div
+			className={ classes }
 			style={ {
-				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-line-color)' }
-			}
+				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-line-color)'
+			} }
 		>
-			{ ! isBeaverBuilder && (
-				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top">
+			{! isBeaverBuilder && (
+				<div className='fl-asst-sidebar-cell fl-asst-sidebar-cell-top'>
 					<Button
-						appearance="transparent"
+						appearance='transparent'
 						onClick={ () => toggleIsShowingUI( false ) }
-						className="fl-asst-sidebar-close-button"
+						className='fl-asst-sidebar-close-button'
 						title={ __( 'Hide Panel' ) }
 					>
 						<Icon.Close />
@@ -85,56 +81,61 @@ const Sidebar = ( { edge = 'right' } ) => {
 				</div>
 			)}
 
-
-			<div
-				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
-			>
+			<div className='fl-asst-sidebar-cell fl-asst-sidebar-cell-middle'>
 				<Button
-					appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
-					status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
+					appearance={ isRoot && ! isAppHidden ? 'normal' : 'transparent' }
+					status={ isRoot && ! isAppHidden ? 'primary' : '' }
 					title={ __( 'Home' ) }
 					onClick={ () => navOrHideApp( isRoot, goToRoot ) }
 				>
 					<Icon.Home />
 				</Button>
 
-				{ apps.map( ( app, i ) => {
+				{apps.map( ( app, i ) => {
 					const { label, handle, icon } = app
 
 					const location = {
 						pathname: `/${handle}`,
-						state: app,
+						state: app
 					}
 					const isSelected = pathname.startsWith( `/${handle}` )
 					return (
 						<Button
 							key={ i }
-							appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
+							appearance={ isSelected && ! isAppHidden ? 'normal' : 'transparent' }
 							isSelected={ isSelected }
-							onClick={ () => navOrHideApp( isSelected, () => history.push( location ) ) }
+							onClick={ () =>
+								navOrHideApp( isSelected, () => history.push( location ) )
+							}
 							title={ label }
-						>{ icon( { context: 'sidebar', isSelected } ) }</Button>
+						>
+							{icon( { context: 'sidebar', isSelected } )}
+						</Button>
 					)
 				} )}
 
 				<Button
-					appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
-					status={ ( isManage && ! isAppHidden ) ? 'primary' : '' }
-					onClick={ () => navOrHideApp( isManage, () => history.push( '/fl-manage' ) ) }
+					appearance={ isManage && ! isAppHidden ? 'normal' : 'transparent' }
+					status={ isManage && ! isAppHidden ? 'primary' : '' }
+					onClick={ () =>
+						navOrHideApp( isManage, () => history.push( '/fl-manage' ) )
+					}
 					title={ __( 'Manage Apps' ) }
 				>
 					<Icon.Apps />
 				</Button>
 			</div>
 
-			{ ! isBeaverBuilder && ! isMobile && (
-				<div className="fl-asst-sidebar-cell">
+			{! isBeaverBuilder && ! isMobile && (
+				<div className='fl-asst-sidebar-cell'>
 					<Button
-						appearance="transparent"
+						appearance='transparent'
 						onClick={ toggleWindowSize }
-						title={ 'mini' === window.size ? __( 'Expand Panel' ) : __( 'Collapse Panel' ) }
+						title={
+							'mini' === window.size ? __( 'Expand Panel' ) : __( 'Collapse Panel' )
+						}
 					>
-						{ 'mini' === window.size ? <Icon.Expand /> : <Icon.Collapse /> }
+						{'mini' === window.size ? <Icon.Expand /> : <Icon.Collapse />}
 					</Button>
 				</div>
 			)}

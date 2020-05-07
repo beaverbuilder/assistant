@@ -102,6 +102,15 @@ class OnEnqueueScripts {
 
 		$current_user = $this->users->current( $this->user_transform );
 
+		$wp_comments = get_option( 'default_comment_status' );
+		if ( isset( $wp_comments ) ) {
+			if ( $wp_comments === 'closed' ) {
+				$system_comment_status = 0;
+			} else {
+				$system_comment_status = 1;
+			}
+		}
+
 		return [
 			'adminURLs'         => $this->site->get_admin_urls(),
 			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
@@ -124,6 +133,7 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
+			'sysCommentStatus'  => $system_comment_status,
 
 			/*
 			'integrations'		=> [

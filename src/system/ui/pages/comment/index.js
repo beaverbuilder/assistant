@@ -18,6 +18,7 @@ export const Comment = ( { location } ) => {
 		postId,
 		url,
 		editUrl,
+		authorUrl
 	} = item
 	const { pluginURL } = getSystemConfig()
 	const hero = `${pluginURL}img/comment-hero-a.jpg`
@@ -247,6 +248,10 @@ export const Comment = ( { location } ) => {
 						labelPlacement: 'beside',
 						type: 'text',
 						component: 'plain-text'
+					},
+					authorUrl: {
+						label: __( 'Author Url' ),
+						component: 'url'
 					},
 					date: {
 						label: __( 'Submitted On' ),
