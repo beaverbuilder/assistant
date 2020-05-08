@@ -60,8 +60,16 @@ class PostTransformer {
 		$thumb_id = get_post_thumbnail_id( $post );
 		$thumb_data = wp_prepare_attachment_for_js( $thumb_id );
 
+		$all_users = get_users( [ 'who' => 'authors' ] );
+		$users     = [];
+
+		foreach ( $all_users as $user ) {
+			$users[ $user->ID ] = $user->display_name;
+		}
+
 		$response = [
 			'author'           => $author,
+			'post_author'      => $post->post_author,
 			'commentsAllowed'  => 'open' === $post->comment_status ? true : false,
 			'excerpt'          => $post->post_excerpt,
 			'date'             => $date,
@@ -85,6 +93,7 @@ class PostTransformer {
 			'visibility'       => 'public',
 			'commentsCount'    => get_comments_number( $post->ID ),
 			'isSticky'         => is_sticky( $post->ID ),
+			'authorList'       => $users,
 		];
 
 		// Post visibility.
