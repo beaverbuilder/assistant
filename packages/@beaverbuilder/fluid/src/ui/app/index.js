@@ -4,7 +4,7 @@ import Error from '../error'
 import Nav from '../nav'
 import './style.scss'
 
-const App = ( {
+const Root = ( {
 	children,
 	errorComponent,
 	colorScheme = 'light',
@@ -30,5 +30,10 @@ const App = ( {
 		</Error.Boundary>
 	)
 }
+
+const App = Root
+
+App.Root = Root
+App.Root.displayName = 'App.Root'
 
 export default App
