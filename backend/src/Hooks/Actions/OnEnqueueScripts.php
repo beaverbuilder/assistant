@@ -190,7 +190,6 @@ class OnEnqueueScripts {
 			$js_deps = [
 				'fl-fluid',
 				'lodash',
-				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',
 				'wp-dom-ready',
