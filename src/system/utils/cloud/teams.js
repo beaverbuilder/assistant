@@ -6,6 +6,15 @@ import http from './http'
 export default {
 	...mockup.teams,
 
+	// getAllTest: () => {
+	// 	return http.get( '/account/teams' )
+	// 		.then( ( response ) => {
+	//
+	// 			console.log( response )
+	// 			return response
+	// 		} )
+	// },
+	//
 	// create: ( data ) => {
 	// 	return http.post( '/account/teams/register', data )
 	// 		.then( ( response ) => {
