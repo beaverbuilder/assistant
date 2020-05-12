@@ -64,6 +64,12 @@
         }
     }
 
+    .is-app-root {
+        .fluid-page-title {
+            font-size: 20px;
+        }
+    }
+
     .fl-asst-content-area {
         margin: var(--fl-asst-outer-space) calc( 0px - var(--fl-asst-outer-space) );
         padding: 0 var(--fl-asst-outer-space);
@@ -89,5 +95,12 @@
             font-style: italic;
             line-height: 1.5;
         }
+    }
+    .fl-asst-notices-area {
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        z-index: 1;
     }
 }

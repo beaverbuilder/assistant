@@ -30,7 +30,7 @@
                 .fl-asst-form-section-title-text {
                     display: inline-flex;
                     align-items: center;
-                    min-height: var(--fl-asst-target-size);
+                    min-height: var(--fluid-target-size);
                     max-width: 70%;
                     box-shadow: 0px 2px 0px 0px currentColor;
                     align-items: flex-end;
@@ -66,7 +66,7 @@
             justify-content: center;
             padding: 5px var(--fl-asst-outer-space);
             margin: 0 calc( 0px - var(--fl-asst-outer-space) );
-            min-height: var(--fl-asst-target-size);
+            min-height: var(--fluid-target-size);
             box-shadow: none;
             transition-property: box-shadow;
             transition-duration: .25s;
@@ -76,22 +76,24 @@
             }
 
             &.fl-asst-form-item-placement-beside {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-gap: var(--fl-asst-inner-space);
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
 
                 label {
                     margin:0;
-                    justify-self: start;
+                    margin-right: var(--fluid-med-space);
+                    flex: 0 0 auto;
                 }
 
                 .fl-asst-form-item-content {
                     text-align: right;
+                    justify-content: flex-end;
+                    flex: 1 1 auto;
                 }
             }
 
             .fl-asst-form-item-content {
-                justify-self: end;
                 display: flex;
                 flex-direction: row;
                 align-items: stretch;
@@ -110,15 +112,27 @@
         }
 
         .fl-asst-form-item:focus-within {
-            box-shadow: inset 2px 0px 0px 0px var(--fl-asst-accent-color);
+            box-shadow: inset 3px 0px 0px 0px var(--fluid-accent);
         }
 
         &.fl-asst-highlight-changes {
             .fl-asst-form-item-has-changes {
-                box-shadow: inset 2px 0px 0px 0px var(--fluid-primary-color);
-                background: var(--fluid-primary-background);
+                box-shadow: inset 3px 0px 0px 0px var(--fluid-primary-color);
             }
         }
+
+		.fl-asst-form-item-has-errors {
+			box-shadow: inset 3px 0px 0px 0px var(--fl-asst-red) !important;
+
+			label {
+				color: var(--fl-asst-red) !important;
+			}
+			.fl-asst-form-item-error {
+				color: var(--fl-asst-red);
+				padding: var(--fl-asst-tiny-space) 0 0;
+			}
+
+		}
     } // form
 
     label {
@@ -142,6 +156,7 @@
         }
     }
 
+    .fl-asst-form-input,
     input[type="text"],
     input[type="email"],
     input[type="url"],
@@ -164,19 +179,22 @@
         flex-grow: 1;
         flex-shrink: 1;
         color: inherit;
-        padding: var(--fl-asst-tiny-space);
+        padding: var(--fluid-sm-space);
         margin:0;
-        background-color: var(--fl-asst-secondary-surface-background);
+        background-color: var(--fl-asst-input-background);
         background-image: none;
-        border-radius: 7px;
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
+        border-radius: 3px;
         height: auto;
-        min-height: var(--fl-asst-target-size);
+        min-height: var(--fluid-target-size);
 
         &:focus,
         &:invalid {
+            background-color: var(--fluid-box-background);
+            border: none;
             outline: none;
-            box-shadow: inset 0px 0px 0px 2px var(--fl-asst-surface-background),
-                        0px 0px 0px 2px var(--fl-asst-highlight-color);
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                        0px 0px 0px 2px var(--fluid-accent);
         }
         &:invalid {
             --fl-asst-highlight-color: var(--fl-asst-error-color);
@@ -201,14 +219,33 @@
         flex: 0 0 auto;
         margin: 0;
         margin-right: var(--fl-asst-small-space);
+
+        &:checked:before {
+            display: none !important;
+            content: '' !important;
+        }
     }
     input[type="radio"] {
         width: auto;
     }
 
     select {
-        height: var(--fl-asst-target-size);
-        background-color: var(--fl-asst-secondary-surface-background);
+        height: var(--fluid-target-size);
+        background-color: var(--fluid-background);
+        color: var(--fluid-color);
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
+        border-radius: 3px;
+        padding: var(--fluid-sm-space);
+        padding-right: 30px;
+
+        &:focus {
+            background-color: var(--fluid-box-background);
+            color: var(--fluid-color) !important;
+            border: none;
+            outline: none;
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                        0px 0px 0px 2px var(--fluid-accent);
+        }
 
         &:-moz-focusring {
             color: transparent;
@@ -229,6 +266,12 @@
                 border-radius: 3px;
                 font-weight: normal;
             }
+        }
+    }
+    .fl-asst-form-item-placement-beside {
+        select {
+            flex: 0 0 auto;
+            width: auto;
         }
     }
 

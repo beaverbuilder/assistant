@@ -4,6 +4,7 @@
 namespace FL\Assistant\Providers;
 
 use FL\Assistant\Controllers\AttachmentsController;
+use FL\Assistant\Controllers\BatchController;
 use FL\Assistant\Controllers\CommentsController;
 use FL\Assistant\Controllers\CountsController;
 use FL\Assistant\Controllers\CurrentUserController;
@@ -11,6 +12,7 @@ use FL\Assistant\Controllers\LabelsController;
 use FL\Assistant\Controllers\NotationsController;
 use FL\Assistant\Controllers\NotificationsController;
 use FL\Assistant\Controllers\PostsController;
+use FL\Assistant\Controllers\PostsExportController;
 use FL\Assistant\Controllers\SearchController;
 use FL\Assistant\Controllers\TermsController;
 use FL\Assistant\Controllers\UpdatesController;
@@ -36,10 +38,12 @@ class RestServiceProvider extends ServiceProviderAbstract {
 		NotationsController::class,
 		NotificationsController::class,
 		PostsController::class,
+		PostsExportController::class,
 		TermsController::class,
 		UpdatesController::class,
 		UsersController::class,
 		SearchController::class,
+		BatchController::class, // Must be last
 	];
 
 

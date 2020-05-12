@@ -1,14 +1,17 @@
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
+import { currentUserCan } from 'assistant/utils/wordpress'
 import { Page } from 'assistant/ui'
 import { Users } from './app'
+import Icon from './icon'
 
 if ( ! __PRODUCTION__ ) {
 	registerApp( 'fl-users', {
 		label: __( 'People' ),
 		root: Users,
-		icon: Users.Icon,
+		icon: Icon,
+		enabled: currentUserCan( 'edit_users' ),
 		accent: {
 			color: '#7166EC'
 		},

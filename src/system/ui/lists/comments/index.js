@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { List, Button, Icon } from 'ui'
 import { truncate } from 'utils/text'
 import { __ } from '@wordpress/i18n'

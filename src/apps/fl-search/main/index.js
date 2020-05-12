@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { useSystemState, getSystemActions, useAppState, getAppActions } from 'assistant/data'
-import { Page, List, Icon, Button } from 'assistant/ui'
+import { Page, List, Icon, Button, Layout } from 'assistant/ui'
 import { CancelToken, isCancel } from 'axios'
 import { getRequestConfig, getListSectionConfig, getListItemConfig } from '../config'
 import './style.scss'
@@ -77,7 +77,7 @@ export const Main = ( { match } ) => {
 						placeholder={ __( 'Search' ) }
 						ref={ inputRef }
 					/>
-					<span style={ { marginLeft: 5 } }>
+					<span style={ { marginLeft: 5, flex: '0 0 auto', display: 'flex', flexDirection: 'row' } }>
 						{ '' !== keyword && <Button onClick={ () => setKeyword( '' ) }>{__( 'Clear' )}</Button> }
 						{ '' !== keyword && loading &&
 						<div className='fl-asst-search-spinner'>
@@ -97,7 +97,7 @@ export const Main = ( { match } ) => {
 		>
 
 			{ null !== results && ! results.length &&
-				<Page.Toolbar>{ __( 'Please try a different search.' ) }</Page.Toolbar>
+				<Layout.Box padX={ false }>{ __( 'Please try a different search.' ) }</Layout.Box>
 			}
 
 			{ ( '' === keyword || ( null !== results && ! results.length ) ) &&

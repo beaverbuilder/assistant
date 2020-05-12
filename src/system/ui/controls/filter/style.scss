@@ -1,6 +1,6 @@
 .fl-asst {
     .fl-asst-filter {
-        padding: 3px var(--fluid-sm-space);
+        padding: var(--fluid-sm-space);
         flex: 0 0 auto;
         margin: 0;
 
@@ -80,6 +80,7 @@
         border-top: 2px solid var(--fluid-accent);
         min-width: 120px;
         max-width: 220px;
+        z-index: 9;
 
         label {
             margin: 0;

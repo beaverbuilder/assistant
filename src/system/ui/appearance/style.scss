@@ -10,6 +10,8 @@
     --fl-asst-light-subtext: var(--fl-asst-dark-2);
     --fl-asst-light-translucent: hsla(214, 30%, 92%, .96);
 
+    --fl-asst-input-background: hsl( var(--fluid-hue), 32%, 99% );
+
     // Darks
     --fl-asst-dark-1: hsl(210, 17%, 5%);
     --fl-asst-dark-2: hsl(210, 13%, 16%);
@@ -21,26 +23,19 @@
     --fl-asst-dark-translucent: hsla(210, 17%, 12%, .96);
 
     // Sizes
-    --fl-asst-base-radius: 7px;
-    --fl-asst-target-size: 32px; // Smallest actionable area
+    --fl-asst-side-toolbar-width: 60px;
+    --fl-asst-panel-size: 360px;
 
     // Spacing
-    --fl-asst-large-space: 30px;
-    --fl-asst-medium-space: 15px;
-    --fl-asst-small-space: 10px;
-    --fl-asst-tiny-space: 5px;
-
-    --fl-asst-outer-space: 20px;
-    --fl-asst-inner-space: 15px;
-
-    // Typograpy
-    --fl-asst-base-text-size: 13px;
-    --fl-asst-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --fl-asst-small-space: var(--fluid-med-space);
+    --fl-asst-tiny-space: var(--fluid-sm-space);
+    --fl-asst-outer-space: var(--fluid-lg-space);
+    --fl-asst-inner-space: var(--fluid-med-space);
 }
 
 .fl-asst {
-    font-family: var(--fl-asst-font-family);
-    font-size: var(--fl-asst-base-text-size);
+    font-family: var(--fluid-font-family);
+    font-size: var(--fluid-font-size);
 
     & * {
         box-sizing: border-box;
@@ -68,7 +63,7 @@
         color: inherit;
         background: transparent;
         border: none;
-        border-radius: var(--fl-asst-base-radius);
+        border-radius: var(--fluid-radius);
         user-select: none;
         padding:0;
         display: inline-flex;
@@ -105,8 +100,8 @@
         }
     }
     button {
-        min-height: var(--fl-asst-target-size);
-        min-width: var(--fl-asst-target-size);
+        min-height: var(--fluid-target-size);
+        min-width: var(--fluid-target-size);
 
         &:focus {
             box-shadow: 0px 0px 0px 2px rgba(128, 128, 128, .5);
@@ -125,13 +120,13 @@
         }
     }
     h1 {
-        font-size: calc( var(--fl-asst-base-text-size) + 6px );
+        font-size: calc( var(--fluid-font-size) + 6px );
     }
     h2 {
-        font-size: calc( var(--fl-asst-base-text-size) + 2px );
+        font-size: calc( var(--fluid-font-size) + 2px );
     }
     p {
-        font-size: var(--fl-asst-base-text-size);
+        font-size: calc( var(--fluid-font-size) + 1px );
         margin: var(--fl-asst-outer-space) 0;
     }
 
@@ -184,9 +179,9 @@
     // Helpers
     .fl-asst-is-hidden { visibility: hidden; }
 
-    .fl-asst-rounded { border-radius: var(--fl-asst-base-radius); }
+    .fl-asst-rounded { border-radius: var(--fluid-radius); }
 
-    .fl-asst-padded { padding: var(--fl-asst-outer-space); }
+    .fl-asst-padded { padding: var(--fluid-lg-space); }
 
     // Brightness Setups
     .fl-asst-appearance {
@@ -196,7 +191,6 @@
         --fl-asst-surface-background: var(--fl-asst-light-1);
 
         --fl-asst-accent-color: var(--fl-asst-light-text);
-        --fl-asst-line-color: var(--fl-asst-surface-color);
 
         &.fl-asst-brightness-light {
             --fl-asst-surface-color: var(--fl-asst-light-text);
@@ -207,8 +201,6 @@
 
             --fl-asst-translucent-background: var(--fl-asst-light-translucent);
             --fl-asst-dim-text: var(--fl-asst-dark-5);
-
-            --fl-asst-alt-row-background: hsla(214, 30%, 92%, .3); // transparent version of light-4
         }
 
         &.fl-asst-brightness-dark {
@@ -222,31 +214,24 @@
 
             --fl-asst-translucent-background: var(--fl-asst-dark-translucent);
             --fl-asst-dim-text: var(--fl-asst-light-5);
-
-            --fl-asst-alt-row-background: hsla(0,0%,0%,.15);
         }
+    }
+
+    .fluid-color-scheme-dark {
+        --fl-asst-input-background: hsl( var(--fluid-hue), 15%, 12% );
     }
 
     // Surfaces and content areas
     .fl-asst-surface,
     .fl-asst-primary-content {
-        background-color: var(--fl-asst-surface-background);
-        color: var(--fl-asst-surface-color);
+        background-color: var(--fluid-background);
+        color: var(--fluid-color);
         transition: background-color .15s, color .15s;
     }
     .fl-asst-secondary-surface,
     .fl-asst-secondary-content {
-        background-color: var(--fl-asst-secondary-surface-background);
-        color: var(--fl-asst-secondary-surface-color);
+        background-color: var(--fluid-box-background);
+        color: var(--fluid-box-color);
         transition: background-color .15s, color .15s;
     }
-    &.fl-asst-brightness-dark {
-
-        .fl-asst-secondary-surface,
-        .fl-asst-secondary-content {
-            background-color: var(--fl-asst-dark-3);
-            color: var(--fl-asst-surface-color);
-        }
-	}
-
 }

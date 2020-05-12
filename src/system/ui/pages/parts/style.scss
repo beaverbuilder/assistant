@@ -1,33 +1,14 @@
 .fl-asst {
 
-    .fl-asst-pad-top {
-        padding-top:  var(--fl-asst-outer-space);
-    }
-    .fl-asst-pad-sides {
-        padding-left:  var(--fl-asst-outer-space);
-        padding-right:  var(--fl-asst-outer-space);
-    }
-    .fl-asst-pad-bottom {
-        padding-bottom: var(--fl-asst-outer-space);
-    }
-
     .fl-asst-toolbar {
         flex: 0 0 auto;
         display: flex;
         flex-direction: row;
-        min-height: var(--fl-asst-target-size);
+        min-height: var(--fluid-target-size);
         justify-content: center;
 
-        &.fl-asst-pad-sides {
-            padding-left: var(--fl-asst-outer-space);
-            padding-right: var(--fl-asst-outer-space);
-        }
-        &.fl-asst-pad-bottom {
-            padding-bottom: var(--fl-asst-inner-space);
-        }
-
         & > * {
-            margin-right: var(--fl-asst-tiny-space);
+            margin-right: var(--fluid-sm-space);
 
             &:last-child {
                 margin-right:0;
@@ -38,26 +19,5 @@
     .fl-asst-page-header {
         display: flex;
         flex-direction: column;
-    }
-
-    .fl-asst-card {
-        border-radius: 15px;
-        padding: var(--fl-asst-outer-space);
-        display: grid;
-        grid-gap: var(--fl-asst-tiny-space);
-
-        .fl-asst-card-title {
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-    }
-
-    .fl-asst-empty-page-message {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        align-items:center;
-        justify-content: center;
     }
 }

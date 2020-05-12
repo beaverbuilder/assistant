@@ -1,3 +1,4 @@
+import React from 'react'
 import classname from 'classnames'
 import { Layout } from '../../'
 import './style.scss'
@@ -11,6 +12,7 @@ const Section = ( {
 	padX = true,
 	padY = true,
 	footer,
+	description,
 	...rest
 } ) => {
 
@@ -22,15 +24,16 @@ const Section = ( {
 	return (
 		<div className={ classes } { ...rest }>
 			{ label && <div className="fluid-section-title"><span className="fluid-section-title-text">{label}</span></div> }
+			{ description && <Layout.Row className="fluid-section-description">{description}</Layout.Row> }
 			<Layout.Box
 				className="fluid-section-content"
-				padX={padX}
-				padY={padY}
+				padX={ padX }
+				padY={ padY }
 				style={ contentStyle }
 			>{children}</Layout.Box>
 			{ footer && (
 				<Layout.Box
-					padY={false}
+					padY={ false }
 					className="fluid-section-footer"
 				>{footer}</Layout.Box>
 			)}

@@ -139,22 +139,25 @@ Icon.Search = () => {
 Icon.Search.displayName = 'Icon.Search'
 
 Icon.Brightness = () => (
-	<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-		<g stroke="none" strokeWidth="2" fill="currentColor" fillRule="evenodd">
-			<path d="M7.00294406,4 C8.63984298,4 10,5.35749265 10,6.9970617 C10,8.63663075 8.63984298,10 7.00294406,10 C5.36015702,10 4,8.63663075 4,6.9970617 C4,5.35749265 5.36015702,4 7.00294406,4 Z" id="Center" stroke="currentColor" fill="none" fillRule="nonzero"></path>
-
-			<circle cx="7" cy="1" r="1"></circle>
-			<circle cx="7" cy="13" r="1"></circle>
-			<circle cx="1" cy="7" r="1"></circle>
-			<circle cx="13" cy="7" r="1"></circle>
-			<circle transform="translate(2.757359, 2.757359) rotate(-45.000000) translate(-2.757359, -2.757359) " cx="2.75735931" cy="2.75735931" r="1"></circle>
-			<circle transform="translate(11.242641, 11.242641) rotate(-45.000000) translate(-11.242641, -11.242641) " cx="11.2426407" cy="11.2426407" r="1"></circle>
-			<circle transform="translate(2.757359, 11.242641) rotate(-45.000000) translate(-2.757359, -11.242641) " cx="2.75735931" cy="11.2426407" r="1"></circle>
-			<circle transform="translate(11.242641, 2.757359) rotate(-45.000000) translate(-11.242641, -2.757359) " cx="11.2426407" cy="2.75735931" r="1"></circle>
-		</g>
+	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M10.0029 7C11.6398 7 13 8.35749 13 9.99706C13 11.6366 11.6398 13 10.0029 13C8.36016 13 7 11.6366 7 9.99706C7 8.35749 8.36016 7 10.0029 7Z" stroke="currentColor" strokeWidth="2" fill="none" />
+		<rect x="9" y="1" width="2" height="3" rx="1" fill="currentColor"/>
+		<rect x="15.6567" y="2.92896" width="2" height="3" rx="1" transform="rotate(45 15.6567 2.92896)" fill="currentColor"/>
+		<rect x="9" y="16" width="2" height="3" rx="1" fill="currentColor"/>
+		<rect x="5.05029" y="13.5356" width="2" height="3" rx="1" transform="rotate(45 5.05029 13.5356)" fill="currentColor"/>
+		<rect x="16" y="9" width="3" height="2" rx="1" fill="currentColor"/>
+		<rect x="14.9497" y="13.5356" width="3" height="2" rx="1" transform="rotate(45 14.9497 13.5356)" fill="currentColor"/>
+		<rect x="1" y="9" width="3" height="2" rx="1" fill="currentColor"/>
+		<rect x="4.34326" y="2.92896" width="3" height="2" rx="1" transform="rotate(45 4.34326 2.92896)" fill="currentColor"/>
 	</svg>
 )
 Icon.Brightness.displayName = 'Icon.Brightness'
+
+Icon.Moon = () => (
+	<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M12.5454 11.8065C13.3007 11.8065 14.05 11.6973 14.6727 11.5571C13.6062 13.4684 11.1995 15 8.3852 15C4.14468 15 1 12.0208 1 7.87097C1 5.15153 2.46609 2.59685 4.64661 1.36934C4.46112 2.1296 4.35226 3.01956 4.35226 3.70161C4.35226 6.10561 5.1287 8.15603 6.60223 9.60594C8.07382 11.0539 10.1423 11.8065 12.5454 11.8065Z" stroke="currentColor" strokeWidth="2" fill="none" />
+	</svg>
+)
 
 Icon.RightCaret = () => (
 	<svg width="9px" height="14px" viewBox="0 0 9 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -184,29 +187,27 @@ Icon.Plus = () => (
 )
 
 Icon.BreadcrumbArrow = () => (
-	<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-		<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round">
-			<path d="M12,7 L2,7"></path>
-			<path d="M12,7 L7,2"></path>
-			<path d="M12,12 L7,7" transform="translate(9.500000, 9.500000) scale(1, -1) translate(-9.500000, -9.500000) "></path>
-		</g>
+	<svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M1 1L7 7L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 	</svg>
 )
 Icon.BreadcrumbArrow.displayName = 'Icon.BreadcrumbArrow'
 
 Icon.More = () => (
-	<svg width="6px" height="19px" viewBox="0 0 6 19" version="1.1" xmlns="http://www.w3.org/2000/svg">
-		<path fill="currentColor" d="M3.25,13.5 C1.83246521,13.5 0.684326172,14.61875 0.684326172,16 C0.684326172,17.38125 1.83246521,18.5 3.25,18.5 C4.66753479,18.5 5.81567383,17.38125 5.81567383,16 C5.81567383,14.61875 4.66753479,13.5 3.25,13.5 Z"></path>
-		<path fill="currentColor" d="M3.25,0 C1.83246521,0 0.684326172,1.11875 0.684326172,2.5 C0.684326172,3.88125 1.83246521,5 3.25,5 C4.66753479,5 5.81567383,3.88125 5.81567383,2.5 C5.81567383,1.11875 4.66753479,0 3.25,0 Z"></path>
-		<path fill="currentColor" d="M3.25,6.75 C1.83246521,6.75 0.684326172,7.86875 0.684326172,9.25 C0.684326172,10.63125 1.83246521,11.75 3.25,11.75 C4.66753479,11.75 5.81567383,10.63125 5.81567383,9.25 C5.81567383,7.86875 4.66753479,6.75 3.25,6.75 Z"></path>
+	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M10 15C8.895 15 8 15.895 8 17C8 18.105 8.895 19 10 19C11.105 19 12 18.105 12 17C12 15.895 11.105 15 10 15Z" fill="currentColor" stroke="none" />
+		<path d="M10 1C8.895 1 8 1.895 8 3C8 4.105 8.895 5 10 5C11.105 5 12 4.105 12 3C12 1.895 11.105 1 10 1Z" fill="currentColor" stroke="none" />
+		<path d="M10 8C8.895 8 8 8.895 8 10C8 11.105 8.895 12 10 12C11.105 12 12 11.105 12 10C12 8.895 11.105 8 10 8Z" fill="currentColor" stroke="none" />
 	</svg>
 )
 Icon.More.displayName = 'Icon.More'
 
-Icon.DefaultApp = ( { windowSize, context } ) => {
-	let size = 32
-	if ( 'app-list' === context ) {
-		size = 'mini' === windowSize ? 34 : 42
+Icon.DefaultApp = ( { context } ) => {
+	let size = 42
+	if ( 'sidebar' === context ) {
+		return (
+			<Icon.Placeholder />
+		)
 	}
 	return (
 		<svg width={ size } height={ size } viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -247,6 +248,38 @@ Icon.Video = () => {
 Icon.Document = () => (
 	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path d="M5.04179 20H14.9485C16.8795 20 17.8403 19.0205 17.8403 17.0802V8.61007C17.8403 7.40672 17.7004 6.88433 16.9541 6.1194L11.8142 0.886194C11.1052 0.158582 10.5175 0 9.47276 0H5.04179C3.12015 0 2.15 0.988806 2.15 2.9291V17.0802C2.15 19.0298 3.11082 20 5.04179 20ZM5.10709 18.4981C4.14627 18.4981 3.65187 17.9851 3.65187 17.0522V2.95709C3.65187 2.03358 4.14627 1.50187 5.11642 1.50187H9.26754V6.92164C9.26754 8.09701 9.85522 8.67537 11.0213 8.67537H16.3384V17.0522C16.3384 17.9851 15.844 18.4981 14.8739 18.4981H5.10709ZM11.1892 7.26679C10.816 7.26679 10.6761 7.11754 10.6761 6.7444V1.79104L16.0493 7.26679H11.1892Z" fill="currentColor"/>
+	</svg>
+)
+
+Icon.Home = () => {
+	return (
+		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M3 12L3 17C3 18.1046 3.89543 19 5 19H6M17 12V17C17 18.1046 16.1046 19 15 19H10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+			<path d="M1 9L9.33564 1.59055C9.71452 1.25376 10.2855 1.25376 10.6644 1.59055L19 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+			<path d="M14 2C14 1.44772 14.4477 1 15 1H16C16.5523 1 17 1.44772 17 2V6L14 3.5V2Z" fill="currentColor" />
+		</svg>
+	)
+}
+
+Icon.DownCaret = () => {
+	return (
+		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M16 7L10 13L4 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+		</svg>
+	)
+}
+
+Icon.UpCaret = () => {
+	return (
+		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M16 13L10 7L4 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+		</svg>
+	)
+}
+
+Icon.Return = () => (
+	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M6.79004 17.0781C7.29102 17.0781 7.61621 16.7354 7.61621 16.2607C7.61621 16.0059 7.51953 15.8301 7.37012 15.6807L5.71777 14.0723L4.54883 13.1143L6.15723 13.1934H14.5068C16.3262 13.1934 17.0732 12.3936 17.0732 10.6182V6.56641C17.0732 4.74707 16.3262 4 14.5068 4H10.8682C10.3584 4 10.0068 4.37793 10.0068 4.84375C10.0068 5.30078 10.3584 5.67871 10.8682 5.67871H14.4717C15.1484 5.67871 15.4121 5.94238 15.4121 6.61914V10.5654C15.4121 11.2422 15.1484 11.5059 14.4717 11.5059H6.15723L4.54883 11.585L5.71777 10.627L7.37012 9.02734C7.51953 8.87793 7.61621 8.69336 7.61621 8.44727C7.61621 7.96387 7.29102 7.62988 6.79004 7.62988C6.58789 7.62988 6.35059 7.72656 6.18359 7.88477L2.26367 11.7256C2.08789 11.8926 2 12.1211 2 12.3496C2 12.5781 2.08789 12.8066 2.26367 12.9736L6.18359 16.8145C6.35059 16.9814 6.58789 17.0781 6.79004 17.0781Z" fill="currentColor" stroke="none" />
 	</svg>
 )
 

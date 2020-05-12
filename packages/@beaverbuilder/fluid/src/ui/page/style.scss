@@ -21,9 +21,8 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-        align-items: center;
+        align-items: stretch;
         padding: 5px;
-        padding-bottom: 2px;
     }
 
     .fluid-pad {
@@ -40,7 +39,7 @@
     }
 
     .fluid-page {
-        --fluid-top-inset: 0;
+        --fluid-top-inset: 0px;
 
         position: relative;
         flex: 1 1 auto;
@@ -63,19 +62,37 @@
             z-index: 9;
         }
 
+        .fluid-page-top-toolbar {
+            min-height: 60px;
+        }
+
         .fluid-page-actions {
             margin-left: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
 
         .fluid-page-toolbar-content {
             position:static;
             padding: 0 var(--fluid-med-space);
+            padding-left: 2px;
             flex: 1 0 auto;
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
             font-weight: 600;
+        }
+
+        .fluid-page-title-icon {
+            flex: 0 0 auto;
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
         }
 
         .fluid-page-headline {
@@ -90,6 +107,9 @@
             flex-direction: column;
             background: var(--fluid-background);
             z-index: 1;
+        }
+        .fluid-page-top-content {
+            border-bottom: 2px solid var(--fluid-line-color);
         }
     }
     .fluid-page-footer {
@@ -107,8 +127,6 @@
         background: var(--fluid-background);
         border-top: 2px solid var(--fluid-box-background);
         z-index: 9;
-        padding: var(--fluid-sm-space);
-        padding-bottom: 15px;
 
         & > .fluid-button {
             margin-right: var(--fluid-sm-space);
@@ -117,5 +135,14 @@
                 margin-right: 0px;
             }
         }
+    }
+
+    .fluid-page-overlay {
+        position: absolute;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        pointer-events: none;
     }
 }

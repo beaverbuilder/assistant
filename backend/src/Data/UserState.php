@@ -22,9 +22,10 @@ class UserState {
 		'appOrder'           => [],
 		'window'             => [
 			'origin'           => [ 1, 0 ],
-			'size'             => 'mini',
+			'size'             => 'normal',
 			'isHidden'         => false,
 			'hiddenAppearance' => '',
+			'overlayToolbar'   => false,
 		],
 		'appearance'         => [
 			'brightness' => 'light',

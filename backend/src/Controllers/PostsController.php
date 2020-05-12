@@ -2,9 +2,11 @@
 
 namespace FL\Assistant\Controllers;
 
+use FL\Assistant\Data\Repository\LabelsRepository;
 use FL\Assistant\Data\Repository\PostsRepository;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\System\Contracts\ControllerAbstract;
+
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -13,12 +15,17 @@ use WP_REST_Server;
  */
 class PostsController extends ControllerAbstract {
 
-
+	protected $labels;
 	protected $posts;
 	protected $transformer;
 
-	public function __construct( PostsRepository $posts, PostTransformer $transformer ) {
-		$this->posts       = $posts;
+	public function __construct(
+		LabelsRepository $labels,
+		PostsRepository $posts,
+		PostTransformer $transformer
+	) {
+		$this->labels = $labels;
+		$this->posts = $posts;
 		$this->transformer = $transformer;
 	}
 
@@ -33,14 +40,14 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'create_post' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -53,7 +60,7 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'hierarchical_posts' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -66,7 +73,7 @@ class PostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'posts_count' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -85,7 +92,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -102,7 +109,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -115,7 +122,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -134,7 +141,7 @@ class PostsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -160,8 +167,14 @@ class PostsController extends ControllerAbstract {
 	public function posts( WP_REST_Request $request ) {
 
 		$params = $request->get_params();
-
 		$params['perm'] = 'editable';
+
+		if ( isset( $params['label'] ) && $params['label'] ) {
+			$params['post__in'] = $this->labels->get_object_ids( 'post', $params['label'] );
+			if ( ! count( $params['post__in'] ) ) {
+				$params['post__in'][] = -1; // post__in returns all posts if empty.
+			}
+		}
 
 		$pager = $this->posts->paginate( $params, $this->transformer );
 
@@ -176,8 +189,8 @@ class PostsController extends ControllerAbstract {
 	public function hierarchical_posts( $request ) {
 		$response = [];
 		$children = [];
-		$params   = $request->get_params();
-		$posts    = get_posts(
+		$params = $request->get_params();
+		$posts = get_posts(
 			array_merge(
 				$params,
 				[
@@ -191,15 +204,15 @@ class PostsController extends ControllerAbstract {
 				if ( ! isset( $children[ $post->post_parent ] ) ) {
 					$children[ $post->post_parent ] = [];
 				}
-				$children[ $post->post_parent ][] = $post;
+				$children [ $post->post_parent ][] = $post;
 			}
 		}
 
 		foreach ( $posts as $post ) {
 			if ( ! $post->post_parent ) {
-				$parent             = $this->transform( $post );
+				$parent = $this->transform( $post );
 				$parent['children'] = $this->get_child_posts( $post, $children );
-				$response[]         = $parent;
+				$response[] = $parent;
 			}
 		}
 
@@ -221,7 +234,7 @@ class PostsController extends ControllerAbstract {
 		if ( isset( $children[ $post->ID ] ) ) {
 			$post_children = $children[ $post->ID ];
 			foreach ( $post_children as $i => $child ) {
-				$post_children[ $i ]             = $this->transform( $child );
+				$post_children[ $i ] = $this->transform( $child );
 				$post_children[ $i ]['children'] = $this->get_child_posts( $child, $children );
 			}
 
@@ -237,7 +250,7 @@ class PostsController extends ControllerAbstract {
 	public function posts_count( $request ) {
 
 		$post_types = $this->posts->get_types();
-		$response   = [];
+		$response = [];
 
 		foreach ( $post_types as $slug => $label ) {
 			$counts          = wp_count_posts( $slug );
@@ -284,10 +297,10 @@ class PostsController extends ControllerAbstract {
 	public function clone_post( $request ) {
 		global $wpdb;
 
-		$post_id      = absint( $request->get_param( 'id' ) );
-		$post         = get_post( $post_id );
+		$post_id = absint( $request->get_param( 'id' ) );
+		$post = get_post( $post_id );
 		$current_user = wp_get_current_user();
-		$post_data    = [
+		$post_data = [
 			'comment_status' => $post->comment_status,
 			'ping_status'    => $post->ping_status,
 			'post_author'    => $current_user->ID,
@@ -305,12 +318,12 @@ class PostsController extends ControllerAbstract {
 		];
 
 		$new_post_id = wp_insert_post( $post_data );
-		$post_meta   = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id ) );
-		$taxonomies  = get_object_taxonomies( $post->post_type );
+		$post_meta = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id ) );
+		$taxonomies = get_object_taxonomies( $post->post_type );
 
 		if ( count( $post_meta ) !== 0 ) {
 			foreach ( $post_meta as $meta_info ) {
-				$meta_key   = $meta_info->meta_key;
+				$meta_key = $meta_info->meta_key;
 				$meta_value = addslashes( $meta_info->meta_value );
 				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
@@ -330,7 +343,7 @@ class PostsController extends ControllerAbstract {
 	 * Updates a single post based on the specified action.
 	 */
 	public function update_post( $request ) {
-		$id     = $request->get_param( 'id' );
+		$id = $request->get_param( 'id' );
 		$action = $request->get_param( 'action' );
 
 		if ( ! current_user_can( 'edit_post', $id ) ) {
@@ -351,6 +364,15 @@ class PostsController extends ControllerAbstract {
 				if ( isset( $data['terms'] ) ) {
 					$this->update_post_terms( $id, $data['terms'] );
 					unset( $data['terms'] );
+				}
+				if ( isset( $data['thumbnail'] ) ) {
+					if ( '0' === $data['thumbnail'] ) {
+						delete_post_meta( $id, '_thumbnail_id' );
+					} else {
+						set_post_thumbnail( $id, $data['thumbnail'] );
+					}
+
+					unset( $data['thumbnail'] );
 				}
 				wp_update_post(
 					array_merge(
@@ -379,6 +401,7 @@ class PostsController extends ControllerAbstract {
 			case 'untrash':
 				wp_untrash_post( $id );
 				break;
+
 		}
 
 		$updated_post = get_post( $id );

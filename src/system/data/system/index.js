@@ -1,17 +1,15 @@
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
-import cloud from 'utils/cloud'
+import { getWpRest } from 'utils/wordpress'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
+import useAppList from './use-app-list'
 
 registerStore( 'fl-assistant/system', {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
-		isCloudConnected: cloud.auth.isConnected(),
-		cloudToken: cloud.session.getToken(),
-		currentUser: cloud.session.getUser(),
-		loginErrors: []
+		isAppHidden: __PRODUCTION__ ? true : false,
 	},
 	actions,
 	reducers,
@@ -38,3 +36,16 @@ export const getSystemSelectors = () => {
 export const getSystemConfig = () => {
 	return { ...FL_ASSISTANT_CONFIG }
 }
+
+export { useAppList }
+
+getWpRest().batch().get( {
+	'/fl-assistant/v1/counts': counts => {
+		const { setCounts } = getSystemActions()
+		setCounts( counts )
+	},
+	'/fl-assistant/v1/labels': labels => {
+		const { setLabels } = getSystemActions()
+		setLabels( labels )
+	}
+} )

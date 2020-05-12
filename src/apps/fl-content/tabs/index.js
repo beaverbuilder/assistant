@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
-import { __, sprintf } from '@wordpress/i18n'
-import { List, App, Page, Layout, Filter, Nav } from 'assistant/ui'
-import { useAppState, getAppActions, useSystemState, getSystemConfig } from 'assistant/data'
+import { __ } from '@wordpress/i18n'
+import { List, App, Page, Layout, Filter } from 'assistant/ui'
+import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
+import { addFilter } from 'assistant/hooks'
 import { defaultState } from '../'
 
 export const SummaryTab = () => {
 	const { handle } = useContext( App.Context )
-	const { counts } = useSystemState()
+	const { getCount } = getSystemSelectors()
 	const { contentTypes } = getSystemConfig()
 	return (
 		<>
@@ -29,7 +30,7 @@ export const SummaryTab = () => {
 								padding: 'var(--fluid-med-space)'
 							} }>
 								{labels.plural}
-								<span style={ { fontSize: 24, marginTop: 5, lineHeight: 1 } }>{counts[`content/${key}`]}</span>
+								<span style={ { fontSize: 24, marginTop: 5, lineHeight: 1 } }>{getCount( `content/${key}` )}</span>
 							</div>
 						)
 					} )}
@@ -66,11 +67,8 @@ export const SummaryTab = () => {
 
 export const PostTypeTab = ( { type = 'post' } ) => {
 	const { handle } = useContext( App.Context )
-	const { history, location } = useContext( Nav.Context )
-	const { counts } = useSystemState()
 	const { query, listStyle } = useAppState( 'fl-content' )
 	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
-	const { contentTypes } = getSystemConfig()
 
 	const defaultQuery = defaultState.query
 
@@ -80,15 +78,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		flex: '1 1 auto',
 	}
 
-	const goToTab = type => history.replace( `/${handle}/tab/${type}`, location.state )
-
-	const PostFilter = () => {
-
-		const postTypes = {}
-		for ( let key in contentTypes ) {
-			const { labels } = contentTypes[key]
-			postTypes[key] = sprintf( `${labels.plural} (%s)`, counts[`content/${key}`] )
-		}
+	const BeforeContent = () => {
 
 		const sorts = {
 			title: __( 'Title' ),
@@ -119,43 +109,54 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		}
 
 		return (
-			<Filter>
-				<Filter.RadioGroupItem
-					title={ __( 'Post Type' ) }
-					items={ postTypes }
-					value={ type }
-					onChange={ value => goToTab( value ) }
+			<>
+				<Filter>
+					<Filter.RadioGroupItem
+						title={ __( 'Status' ) }
+						items={ statuses }
+						value={ query.post_status }
+						defaultValue={ defaultQuery.post_status }
+						onChange={ value => setQuery( { ...query, post_status: value } ) }
+					/>
+					<Filter.LabelsItem
+						value={ query.label }
+						defaultValue={ defaultQuery.label }
+						onChange={ value => setQuery( { ...query, label: value } ) }
+					/>
+					<Filter.RadioGroupItem
+						title={ __( 'Display As' ) }
+						items={ displays }
+						value={ listStyle }
+						defaultValue={ defaultState.listStyle }
+						onChange={ value => setListStyle( value ) }
+					/>
+					<Filter.RadioGroupItem
+						title={ __( 'Sort By' ) }
+						items={ sorts }
+						value={ query.orderby }
+						defaultValue={ defaultQuery.orderby }
+						onChange={ value => setQuery( { ...query, orderby: value } ) }
+					/>
+					<Filter.RadioGroupItem
+						title={ __( 'Order' ) }
+						items={ orders }
+						value={ query.order }
+						defaultValue={ defaultState.query.order }
+						onChange={ value => setQuery( { ...query, order: value } ) }
+					/>
+					<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
+				</Filter>
+
+				<List.InlineCreate
+					postType={ type }
+					onPostCreated={ () => setQuery( {
+						...defaultState.query,
+						order: 'DESC',
+						orderby: 'ID',
+						key: new Date().getTime()
+					} ) }
 				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Status' ) }
-					items={ statuses }
-					value={ query.post_status }
-					defaultValue={ defaultQuery.post_status }
-					onChange={ value => setQuery( { ...query, post_status: value } ) }
-				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Display As' ) }
-					items={ displays }
-					value={ listStyle }
-					defaultValue={ defaultState.listStyle }
-					onChange={ value => setListStyle( value ) }
-				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Sort By' ) }
-					items={ sorts }
-					value={ query.orderby }
-					defaultValue={ defaultQuery.orderby }
-					onChange={ value => setQuery( { ...query, orderby: value } ) }
-				/>
-				<Filter.RadioGroupItem
-					title={ __( 'Order' ) }
-					items={ orders }
-					value={ query.order }
-					defaultValue={ defaultState.query.order }
-					onChange={ value => setQuery( { ...query, order: value } ) }
-				/>
-				<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
-			</Filter>
+			</>
 		)
 	}
 
@@ -176,8 +177,29 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					}
 					return defaultProps
 				} }
-				before={ <PostFilter /> }
+				before={ <BeforeContent /> }
 			/>
 		</Layout.Box>
 	)
 }
+
+addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType } ) => {
+
+	if ( 'post' === listType ) {
+		const i = actions.findIndex( action => 'edit-post' === action.handle )
+		if ( i ) {
+
+			// Replace existing admin edit action
+			const action = actions[i]
+			delete action.href
+			action.isShowing = true
+			action.title = __( 'Edit Details' )
+			action.to = {
+				pathname: `/fl-content/post/${item.id}`,
+				state: { item }
+			}
+		}
+	}
+
+	return actions
+} )

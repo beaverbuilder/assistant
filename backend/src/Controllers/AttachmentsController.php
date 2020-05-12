@@ -3,6 +3,7 @@
 namespace FL\Assistant\Controllers;
 
 use FL\Assistant\Data\Repository\AttachmentsRepository;
+use FL\Assistant\Data\Repository\LabelsRepository;
 use FL\Assistant\Data\Transformers\AttachmentTransformer;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use WP_REST_Request;
@@ -27,14 +28,24 @@ class AttachmentsController extends ControllerAbstract {
 	protected $transformer;
 
 	/**
+	 * @var LabelsRepository
+	 */
+	protected $labels;
+
+	/**
 	 * AttachmentsController constructor.
 	 *
 	 * @param AttachmentsRepository $attachments
 	 * @param AttachmentTransformer $transformer
 	 */
-	public function __construct( AttachmentsRepository $attachments, AttachmentTransformer $transformer ) {
+	public function __construct(
+		AttachmentsRepository $attachments,
+		AttachmentTransformer $transformer,
+		LabelsRepository $labels
+	) {
 		$this->attachments = $attachments;
 		$this->transformer = $transformer;
+		$this->labels = $labels;
 	}
 
 	/**
@@ -48,7 +59,7 @@ class AttachmentsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'index' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 
@@ -62,7 +73,7 @@ class AttachmentsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'upload_media' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -75,7 +86,7 @@ class AttachmentsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'count' ],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -94,7 +105,7 @@ class AttachmentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -111,7 +122,7 @@ class AttachmentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 				[
@@ -124,7 +135,7 @@ class AttachmentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -143,7 +154,7 @@ class AttachmentsController extends ControllerAbstract {
 						],
 					],
 					'permission_callback' => function () {
-						return current_user_can( 'edit_published_posts' );
+						return current_user_can( 'edit_others_posts' );
 					},
 				],
 			]
@@ -219,6 +230,13 @@ class AttachmentsController extends ControllerAbstract {
 			case 'all':
 				$args['post_mime_type'] = '';
 				break;
+		}
+
+		if ( isset( $args['label'] ) && $args['label'] ) {
+			$args['post__in'] = $this->labels->get_object_ids( 'attachment', $args['label'] );
+			if ( ! count( $args['post__in'] ) ) {
+				$args['post__in'][] = -1; // post__in returns all posts if empty.
+			}
 		}
 
 		return $this->attachments->paginate( $args )

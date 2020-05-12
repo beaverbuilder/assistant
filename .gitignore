@@ -3,6 +3,7 @@ backend/tests/wp-config.php
 
 # Built files
 /build/
+stats.json
 
 # Grunt
 /node_modules/

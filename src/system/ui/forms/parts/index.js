@@ -1,12 +1,13 @@
 import React from 'react'
 import classname from 'classnames'
 import { Icon, Page } from 'ui'
+import Input from './input'
 
-export const Section = props => {
-	return (
-		<Page.Section className="fl-asst-form-section" { ...props } />
-	)
-}
+export { Input }
+
+export const Section = props => (
+	<Page.Section className="fl-asst-form-section" { ...props } />
+)
 
 export const Item = props => {
 	const {
@@ -18,6 +19,7 @@ export const Item = props => {
 		hasChanges = false,
 		isRequired = false,
 		isVisible = true,
+		errors = [],
 		style = {}
 	} = props
 
@@ -29,6 +31,7 @@ export const Item = props => {
 		'fl-asst-form-item': true,
 		[`fl-asst-form-item-placement-${labelPlacement}`]: labelPlacement,
 		'fl-asst-form-item-has-changes': hasChanges,
+		'fl-asst-form-item-has-errors': !! errors.length
 	}, className )
 
 	return (
@@ -37,8 +40,12 @@ export const Item = props => {
 				<label htmlFor={ labelFor }>
 					{label}
 					{ isRequired && <abbr title="required"><Icon name="asterisk" /></abbr> }
-				</label> }
+				</label>
+			}
 			<div className="fl-asst-form-item-content">{children}</div>
+			{ errors.map( ( error, key ) =>
+				<div key={ key } className="fl-asst-form-item-error">{ error }</div>
+			) }
 		</div>
 	)
 }

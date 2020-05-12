@@ -1,6 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Page } from 'assistant/ui'
+import { Button } from 'assistant/ui'
+import TitleCard from '../../title-card'
 import './summary.scss'
 
 
@@ -8,7 +9,7 @@ export const Summary = ( props ) => {
 	const { user } = props
 
 	return (
-		<Page.TitleCard className="fl-asst-users-summary">
+		<TitleCard className="fl-asst-users-summary">
 			<div className='circles'>
 				<div className="col">
 					<div className="circle">
@@ -40,6 +41,6 @@ export const Summary = ( props ) => {
 				<Button href={ user.url }>{__( 'Author Page' )}</Button>
 				<Button href={ user.editUrl }>{__( 'Edit in Admin' )}</Button>
 			</div>
-		</Page.TitleCard>
+		</TitleCard>
 	)
 }

@@ -1,0 +1,52 @@
+.fl-asst {
+    @-webkit-keyframes fl-asst-animate-in {
+        0%, 100% {
+            transform: translateX(30px);
+        }
+        50% {
+            transform: translateX(0);
+        }
+    }
+    @keyframes fl-asst-animate-in {
+        0%, 100% {
+            transform: translateX(30px);
+        }
+        50% {
+            transform: translateX(0);
+        }
+    }
+
+    .fl-asst-list-item-loading {
+
+        .fl-asst-loading-bar {
+            -webkit-animation: fl-asst-animate-in 1s infinite ease-in-out both;
+            animation: fl-asst-animate-in 1s infinite ease-in-out both;
+            will-change: transform, opacity;
+        }
+
+        &:nth-child( 5n + 2 ) {
+            .fl-asst-loading-bar {
+                -webkit-animation-delay: .1s;
+                animation-delay: .1s;
+            }
+        }
+        &:nth-child( 5n + 3 ) {
+            .fl-asst-loading-bar {
+                -webkit-animation-delay: .2s;
+                animation-delay: .2s;
+            }
+        }
+        &:nth-child( 5n + 4 ) {
+            .fl-asst-loading-bar {
+                -webkit-animation-delay: .3s;
+                animation-delay: .3s;
+            }
+        }
+        &:nth-child( 5n + 5 ) {
+            .fl-asst-loading-bar {
+                -webkit-animation-delay: .4s;
+                animation-delay: .4s;
+            }
+        }
+    }
+}

@@ -8,7 +8,6 @@ use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
 use FLBuilderModel;
-use WP_REST_Request;
 
 /**
  * Class OnEnqueueScripts
@@ -78,7 +77,6 @@ class OnEnqueueScripts {
 
 		return [
 			'appOrder'           => $user_state['appOrder'],
-			'counts'             => $this->get_counts(),
 			'shouldReduceMotion' => false, /* Disabled */
 
 			/* New UI Props */
@@ -126,17 +124,14 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
+
+			/*
+			'integrations'		=> [
+				'yoastSEO'		=> [
+					'isActive' => is_plugin_active('wordpress-seo/wp-seo.php')
+				]
+			],*/
 		];
-	}
-
-	/**
-	 * Returns an array of all counts to hydrate the store.
-	 */
-	public function get_counts() {
-		$request  = new WP_REST_Request( 'GET', '/fl-assistant/v1/counts' );
-		$response = rest_do_request( $request );
-
-		return $response->get_data();
 	}
 
 	/**
@@ -168,7 +163,7 @@ class OnEnqueueScripts {
 		}
 
 		// There is no read-only assistant (for now). Users must be able to edit.
-		if ( ! current_user_can( 'edit_published_posts' ) ) {
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
 			return false;
 		}
 
@@ -195,13 +190,14 @@ class OnEnqueueScripts {
 			$js_deps = [
 				'fl-fluid',
 				'lodash',
-				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',
 				'wp-dom-ready',
+				'wp-components',
+				'wp-date',
 			];
 
-			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid', 'dashicons' ], $ver, null );
+			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid', 'wp-components' ], $ver, null );
 			wp_enqueue_script( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.js', $js_deps, $ver, false );
 
 			wp_localize_script( 'fl-assistant-system', 'FL_ASSISTANT_CONFIG', $config );
@@ -214,6 +210,9 @@ class OnEnqueueScripts {
 			// UI Render - loaded in footer
 			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.js', $js_deps, $ver, true );
+
+			// WordPress Media Uploader
+			wp_enqueue_media();
 
 			do_action( 'fl_assistant_enqueue' );
 		}

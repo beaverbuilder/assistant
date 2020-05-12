@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
-import { CancelToken, isCancel } from 'axios'
 import { __ } from '@wordpress/i18n'
-import { List, Button, Icon, Image, MediaDropUploader } from 'ui'
+import { List, Button, Icon, Image, MediaDropUploader, Layout } from 'ui'
 import Clipboard from 'react-clipboard.js'
+import { getSystemSelectors } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import './style.scss'
@@ -14,39 +14,22 @@ const Attachments = ( {
 	className,
 	...rest
 } ) => {
-	const [ labels, setLabels ] = useState( {} )
+	const { getLabels } = getSystemSelectors()
+	const [ labelsById, setLabelsById ] = useState( [] )
 	const wpRest = getWpRest()
-	const source = CancelToken.source()
+	const labels = getLabels()
 
-	// Retrieve Labels
+	// Retrieve labels by ID
 	useEffect( () => {
-
-		// Get the color labels references
-		wpRest.labels().findWhere( {}, {
-			cancelToken: source.token,
-		} ).then( response => {
-			const items = {}
-			if ( 'data' in response ) {
-				for ( let i in response.data ) {
-					const { id, ...rest } = response.data[i]
-					items[id] = rest
-				}
-				setLabels( items )
-			}
-		} ).catch( ( error ) => {
-			if ( ! isCancel( error ) ) {
-				console.log( error ) // eslint-disable-line no-console
-			}
-		} )
-
-		return () => source.cancel()
-	}, [] )
+		const items = {}
+		labels.map( label => items[ label.id ] = label )
+		setLabelsById( items )
+	}, [ labels ] )
 
 	const classes = classname( {
 		[`fl-asst-${listStyle}-list`]: listStyle,
 		'fl-asst-attachment-list': true,
 	}, className )
-
 
 	return (
 		<MediaDropUploader>
@@ -112,8 +95,8 @@ const Attachments = ( {
 						if ( 'labels' in item && 0 < item.labels.length ) {
 
 							item.labels.map( id => {
-								if ( id in labels ) {
-									const { color, label } = labels[id]
+								if ( id in labelsById ) {
+									const { color, label } = labelsById[id]
 									marks.push(
 										<span
 											className="fl-asst-list-item-color-mark"
@@ -179,17 +162,10 @@ const GridItem = ( { item, extras } ) => {
 
 	const itemExtras = 'function' === typeof extras ? extras() : null
 	const stopProp = e => e.stopPropagation()
-	const style = {
-		position: 'relative',
-		boxSizing: 'border-box',
-		paddingTop: '100%',
-		overflow: 'hidden',
-		width: '100%',
-	}
 
 	// Filter down to just the smaller sizes for srcset
 	const smallSizes = {}
-	const allow = [ 'thumbnail', 'medium', 'large' ]
+	const allow = [ 'thumbnail', 'medium' ]
 	for ( let key in sizes ) {
 		if ( allow.includes( key ) ) {
 			smallSizes[key] = sizes[key]
@@ -197,19 +173,14 @@ const GridItem = ( { item, extras } ) => {
 	}
 
 	return (
-		<div className="fl-asst-attachment-grid-item" style={ style }>
+		<Layout.AspectBox className="fl-asst-attachment-grid-item" style={ { width: '100%' } }>
 			<div style={ {
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				width: '100%',
-				height: '100%',
-				background: 'var(--fluid-primary-background)',
 				color: 'var(--fluid-primary-color)',
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'center',
 				alignItems: 'center',
+				opacity: ( item.isTrashed || item.isTrashing ) ? .5 : 1
 			} }>
 				{ ( 'image' === type || 'pdf' === item.subtype ) && (
 					<img
@@ -218,21 +189,17 @@ const GridItem = ( { item, extras } ) => {
 						alt={ alt }
 						title={ title }
 						loading="lazy"
-						style={ {
-							height: '100%',
-							width: '100%',
-							objectPosition: 'pdf' === item.subtype ? 'top center' : null
-						} }
 						height={ 157.5 }
 						width={ 157.5 }
 					/>
 				)}
+
 				{ 'video' === type && <Image.Video /> }
 				{ 'audio' === type && <Image.Audio /> }
-
 				{ 'application' === type && 'pdf' !== item.subtype && (
 					<Image.Doc />
 				)}
+
 				{ item.title && ( <div className="fl-asst-attachment-item-badge">
 					<span>{item.title}</span>
 				</div> )}
@@ -243,7 +210,7 @@ const GridItem = ( { item, extras } ) => {
 					>{itemExtras}</div>
 				) }
 			</div>
-		</div>
+		</Layout.AspectBox>
 	)
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'data'
-import { Page, Form } from 'ui'
+import { Page, Form, Layout } from 'ui'
 
 export const User = ( { location } ) => {
 	const { item } = location.state
@@ -13,9 +13,8 @@ export const User = ( { location } ) => {
 	return (
 		<Page title={ isYou ? __( 'Your Profile' ) : __( 'Edit User' ) }
 		>
-			<Page.TitleCard title={ item.displayName }>
-				{item.email}
-			</Page.TitleCard>
+			<Layout.Headline>{ item.displayName }</Layout.Headline>
+			<div>{item.email}</div>
 
 			<Form { ...form }>
 				<Page.RegisteredSections

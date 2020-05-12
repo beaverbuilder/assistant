@@ -1,13 +1,25 @@
-import React, { Children, cloneElement, useState, useLayoutEffect, useRef } from 'react'
-import { __ } from '@wordpress/i18n'
+import React, { Children, useState, useLayoutEffect, useRef } from 'react'
 import classname from 'classnames'
 import { Button as FLUID_Button } from 'fluid/ui'
-import { Icon } from 'ui'
+import { Icon, Menu } from 'ui'
 import './style.scss'
 
 const Button = { ...FLUID_Button }
 
-const Rule = ( { className, direction: dir = 'horizontal', isHidden = false } ) => {
+export const limitChildren = ( children, count = null ) => {
+	if ( Number.isInteger( count ) ) {
+		return Children.map( children, ( child, i ) => {
+			return ( i + 1 ) > count ? null : child
+		} )
+	}
+	return children
+}
+
+const Rule = ( {
+	className,
+	direction: dir = 'horizontal',
+	isHidden = false
+} ) => {
 	const classes = classname( className, {
 		'fl-asst-divider': true,
 		'fl-asst-vertical-divider': 'vertical' === dir,
@@ -29,39 +41,27 @@ Button.Group = ( {
 	appearance = 'normal',
 	shouldHandleOverflow = false,
 	label,
+	moreMenu,
 	...rest
 } ) => {
-	const [ visibleChildren, setVisibleChildren ] = useState( [] )
-	const [ moreChildren, setMoreChildren ] = useState( [] )
+	const [ maxChildren, setMaxChildren ] = useState( null )
 	const [ shouldShowMoreBtn, setShouldShowMoreBtn ] = useState( true )
-	const [ shouldShowMoreMenu, setShouldShowMoreMenu ] = useState( false )
 	const wrapRef = useRef()
-	const moreBtnRef = useRef()
 
 	const shouldInsertDividers = 'normal' === appearance
 	const dividerDirection = 'row' === direction ? 'vertical' : 'horizontal'
 
-	let allChildren = []
-	let childWidths = []
-
-	allChildren = Children.map( children, ( child, i ) => {
-
+	let allChildren = Children.map( children, ( child, i ) => {
 		if ( ! child ) {
 			return null
 		}
-
 		const isFirst = 0 === i
 		const shouldInsertDivider = ! isFirst && shouldInsertDividers
 		const shouldHideDivider = child.props.isSelected
-		const childRef = el => {
-			if ( el ) {
-				childWidths.push( el.clientWidth + ( isFirst ? 0 : 2 ) )
-			}
-		}
 		return (
 			<>
 				{ shouldInsertDivider && <Rule direction={ dividerDirection } isHidden={ shouldHideDivider } /> }
-				{ cloneElement( child, { ref: childRef } ) }
+				{ child }
 			</>
 		)
 	} )
@@ -72,25 +72,36 @@ Button.Group = ( {
 			return
 		}
 
-		const wrapWidth = wrapRef.current.clientWidth
-		const moreBtnWidth = moreBtnRef.current.offsetWidth
-		let totalChildWidths = 0
-		let visibleChildren = []
-		let moreChildren = []
+		if ( wrapRef.current ) {
+			const wrap = wrapRef.current
+			const styles = window.getComputedStyle( wrap )
+			const pad = parseInt( styles.paddingLeft ) + parseInt( styles.paddingRight )
+			const moreBtn = wrap.querySelector( '.fl-asst-more-button' )
+			const areaWidth = wrap.clientWidth - pad
+			const contentWidth = moreBtn ? wrap.scrollWidth - ( pad + moreBtn.offsetWidth ) : wrap.scrollWidth - pad
 
-		childWidths.map( ( width, i ) => {
-			totalChildWidths += width
-			if ( totalChildWidths + moreBtnWidth < wrapWidth ) {
-				visibleChildren.push( allChildren[ i ] )
+
+			if ( contentWidth > areaWidth ) {
+				setShouldShowMoreBtn( true )
+
+				const available = areaWidth - moreBtn.offsetWidth
+				let used = 0
+				let max = 0
+
+				for ( let child of wrap.childNodes ) {
+					used += child.offsetWidth
+					if ( used > available ) {
+						continue
+					}
+					max++
+				}
+				setMaxChildren( max )
 			} else {
-				moreChildren.push( allChildren[ i ] )
+				setShouldShowMoreBtn( false )
+				setMaxChildren( null )
 			}
-		} )
-
-		setVisibleChildren( visibleChildren )
-		setMoreChildren( moreChildren )
-		setShouldShowMoreBtn( 0 < moreChildren.length )
-	}, [] )
+		}
+	}, [ children ] )
 
 	const classes = classname( {
 		'fl-asst-button-group': true,
@@ -101,31 +112,52 @@ Button.Group = ( {
 	const props = {
 		...rest,
 		className: classes,
-		role: 'group',
+		role: rest.role ? rest.role : 'group',
 		ref: wrapRef,
 	}
 
-	const MoreBtn = () => {
-		return (
-			<>
-				<Rule
-					className='fl-asst-more-button-divider'
-					direction={ dividerDirection }
+	const MoreMenuContent = () => {
+
+		if ( moreMenu ) {
+			return moreMenu
+		}
+
+		return Children.map( children, ( child, i ) => {
+			if ( ! child || child.props.excludeFromMenu ) {
+				return null
+			}
+			return (
+				<Menu.Item
+					key={ i }
+					{ ...child.props }
 				/>
-				<Button
-					ref={ moreBtnRef }
-					className='fl-asst-more-button'
-					onClick={ () => setShouldShowMoreMenu( ! shouldShowMoreMenu ) }
-				>
-					{__( 'More' )}
-				</Button>
-			</>
-		)
+			)
+		} )
 	}
 
-	const MoreMenu = () => {
+	const MoreBtn = () => {
+		const [ isShowing, setIsShowing ] = useState( false )
+
 		return (
-			<div className="fl-asst-more-menu">{ moreChildren }</div>
+			<>
+				{ shouldInsertDividers && <Rule
+					className='fl-asst-more-button-divider'
+					direction={ dividerDirection }
+				/> }
+				<Menu
+					content={ <MoreMenuContent /> }
+					isShowing={ isShowing }
+					onOutsideClick={ () => setIsShowing( false ) }
+				>
+					<Button
+						className='fl-asst-more-button'
+						status={ isShowing ? 'primary' : '' }
+						onClick={ () => setIsShowing( ! isShowing ) }
+					>
+						<Icon.More />
+					</Button>
+				</Menu>
+			</>
 		)
 	}
 
@@ -133,10 +165,10 @@ Button.Group = ( {
 		<>
 			{ label && <label>{label}</label> }
 			<div { ...props }>
-				{ 0 === visibleChildren.length ? allChildren : visibleChildren }
+				{ limitChildren( allChildren, maxChildren ) }
+				{ /*0 === visibleChildren.length ? allChildren : visibleChildren*/ }
 				{ shouldShowMoreBtn && <MoreBtn /> }
 			</div>
-			{ shouldShowMoreMenu && 0 < moreChildren.length && <MoreMenu /> }
 		</>
 	)
 }
@@ -144,6 +176,7 @@ Button.Group = ( {
 Button.Loading = ( {
 	className,
 	children,
+	isLoading = true,
 	...rest
 } ) => {
 	const classes = classname( {
@@ -153,7 +186,7 @@ Button.Loading = ( {
 	return (
 		<Button className={ classes } { ...rest }>
 			{ children }
-			<Icon.SmallSpinner />
+			{ isLoading && <Icon.SmallSpinner /> }
 		</Button>
 	)
 }
@@ -180,6 +213,6 @@ Button.renderActions = actions => {
 	} )
 }
 
-export { Button }
+export { Button, Menu }
 
 export default Button

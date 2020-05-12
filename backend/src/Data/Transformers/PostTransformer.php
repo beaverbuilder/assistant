@@ -58,7 +58,7 @@ class PostTransformer {
 		$template = get_post_meta( $post->ID, '_wp_page_template', true );
 
 		$thumb_id = get_post_thumbnail_id( $post );
-		$featured_image  = wp_prepare_attachment_for_js( $thumb_id );
+		$thumb_data = wp_prepare_attachment_for_js( $thumb_id );
 
 		$response = [
 			'author'           => $author,
@@ -77,13 +77,14 @@ class PostTransformer {
 			'template'         => empty( $template ) ? 'default' : $template,
 			'terms'            => [],
 			'thumbnail'        => get_the_post_thumbnail_url( $post, 'thumbnail' ),
+			'thumbnailData'    => $thumb_data,
 			'title'            => empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
 			'trashedStatus'    => get_post_meta( $post->ID, '_wp_trash_meta_status', true ),
 			'type'             => $post->post_type,
 			'url'              => get_permalink( $post ),
 			'visibility'       => 'public',
-			'postThumbnail'    => $featured_image,
-			'hasPostThumbnail' => has_post_thumbnail( $post ),
+			'commentsCount'    => get_comments_number( $post->ID ),
+			'isSticky'         => is_sticky( $post->ID ),
 		];
 
 		// Post visibility.
