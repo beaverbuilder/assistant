@@ -74,6 +74,10 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
+= 0.4.1 =
+* Fixed Assistant not loading on hosts with heartbeat disabled (such as WP Engine).
+* Fixed media library scripts loading while logged out.
+
 = 0.4.0 =
 * Added access to all public post types inside content app
 * Refined post detail screen layout
