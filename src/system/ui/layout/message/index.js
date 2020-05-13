@@ -15,7 +15,10 @@ const Message = ( {
 	} )
 
 	return (
-		<div className={ messageClassName }><div className="fl-msg-icon"><Icon /></div>{children}</div>
+		<div className={ messageClassName }>
+			{ Icon && <div className="fl-msg-icon"><Icon /></div> }
+			{children}
+		</div>
 	)
 }
 

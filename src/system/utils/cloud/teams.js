@@ -20,9 +20,11 @@ export default {
 	useOne: ( id ) => {
 		const [ team, setTeam ] = useState( null )
 		useEffect( () => {
-			http.get( `/account/teams/${ id }` ).then( response => {
-				setTeam( response.data )
-			} )
+			if ( id ) {
+				http.get( `/account/teams/${ id }` ).then( response => {
+					setTeam( response.data )
+				} )
+			}
 		}, [ id ] )
 		return [ team, setTeam ]
 	},
@@ -37,6 +39,18 @@ export default {
 
 	create: ( data ) => {
 		return http.post( '/account/teams/register', data )
+	},
+
+	update: ( id, data ) => {
+		return http.put( `/account/teams/${ id }`, data )
+	},
+
+	delete: ( id ) => {
+		return http.delete( `/account/teams/${ id }` )
+	},
+
+	invite: ( id, email ) => {
+		return http.post( `/account/teams/invite?team=${ id }`, { email } )
 	},
 
 	// create: ( data ) => {

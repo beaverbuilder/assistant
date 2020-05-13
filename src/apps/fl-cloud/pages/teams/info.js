@@ -69,7 +69,8 @@ export const TeamInfo = ( {
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.teams.update( team.id, values ).then( response => {
+		const { name } = values
+		return cloud.teams.update( team.id, { name } ).then( response => {
 			onUpdate( response.data )
 		} ).catch( error => {
 			setErrors( error.errors )
