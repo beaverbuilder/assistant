@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Promise from 'promise'
-import * as session from './session'
+import * as session from '../auth/session'
 
 const { cloudUrl } = FL_ASSISTANT_CONFIG
 

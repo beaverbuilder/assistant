@@ -1,33 +1,15 @@
-import { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'utils/url'
-import mockup from './mockup'
-import http from './http'
+import { useAll, useOne } from '../hooks'
+import mockup from '../mockup'
+import http from '../http'
 
 export default {
 	...mockup.teams,
 
-	useAll: () => {
-		const [ teams, setTeams ] = useState( null )
-		useEffect( () => {
-			http.get( '/account/teams' ).then( response => {
-				setTeams( response.data )
-			} )
-		}, [] )
-		return [ teams, setTeams ]
-	},
+	useAll: useAll( '/account/teams' ),
 
-	useOne: ( id ) => {
-		const [ team, setTeam ] = useState( null )
-		useEffect( () => {
-			if ( id ) {
-				http.get( `/account/teams/${ id }` ).then( response => {
-					setTeam( response.data )
-				} )
-			}
-		}, [ id ] )
-		return [ team, setTeam ]
-	},
+	useOne: useOne( '/account/teams' ),
 
 	getAll: () => {
 		return http.get( '/account/teams' )

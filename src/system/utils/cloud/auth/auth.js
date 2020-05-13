@@ -1,7 +1,7 @@
 import Promise from 'promise'
 import * as session from './session'
 import { getCloudActions } from 'data/cloud'
-import http from './http'
+import http from '../http'
 
 /**
  * Refresh the users token once per minute
