@@ -16,6 +16,7 @@ export const registerAppStore = args => {
 		actions,
 		reducers,
 		effects,
+		serialize = state => state
 	} = args
 
 	const storeKey = `${ key }/state`
@@ -33,13 +34,18 @@ export const registerAppStore = args => {
 	} )
 
 	getStore( storeKey ).subscribe( () => {
-		setCache( 'app-state', key, getStore( storeKey ).getState(), false )
+		const state = serialize( getStore( storeKey ).getState() )
+		if ( false !== state ) {
+			setCache( 'app-state', key, state, false )
+		}
 	} )
 }
 
-export const useAppState = ( key ) => {
+export const getAppStore = key => getStore( `${ key }/state` )
+
+export const useAppState = ( key, needsRender = true ) => {
 	const app = key ? key : useContext( App.Context ).app
-	return useStore( `${ app }/state` )
+	return useStore( `${ app }/state`, needsRender )
 }
 
 export const getAppActions = ( key ) => {

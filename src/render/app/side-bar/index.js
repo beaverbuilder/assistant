@@ -129,6 +129,13 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 							state: app,
 						}
 						const isSelected = pathname.startsWith( `/${handle}` )
+
+						const iconProps = {
+							icon,
+							context: 'sidebar',
+							isSelected
+						}
+
 						return (
 							<Button
 								appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
@@ -136,7 +143,9 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 								onClick={ () => {
 									navOrHideApp( isSelected, () => history.push( location ) )
 								} }
-							>{ icon( { context: 'sidebar', isSelected } ) }</Button>
+							>
+								<AppIcon {...iconProps} />
+							</Button>
 						)
 					}}
 				</List.Sortable>
@@ -170,5 +179,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 		</div>
 	)
 } )
+
+const AppIcon = memo(  ({ icon: Component, ...rest }) => <Component {...rest} /> )
 
 export default Sidebar

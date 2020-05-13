@@ -154,7 +154,6 @@ export const Item = ( {
 	className,
 	tag: Tag = 'li',
 	to,
-	isSelecting,
 	...rest
 } ) => {
 	const classes = classname( {
@@ -207,10 +206,7 @@ export const Item = ( {
 	const content = 'function' === typeof children ? children( rest ) : <InfoItem { ...itemProps } />
 
 	return (
-		<Tag { ...props }>
-			{ isSelecting && <div className="fl-asst-list-item-selector"><input type="checkbox" /></div> }
-			{content}
-		</Tag>
+		<Tag { ...props }>{content}</Tag>
 	)
 }
 

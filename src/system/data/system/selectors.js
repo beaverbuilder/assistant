@@ -62,6 +62,7 @@ export const selectApp = ( state, key ) => {
 	}
 	const app = state.apps[key]
 	return {
+		onMount: () => {},
 		...app,
 		handle: app.app,
 		icon: app.icon ? app.icon : Icon.DefaultApp,

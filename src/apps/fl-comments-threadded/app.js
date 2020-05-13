@@ -16,15 +16,16 @@ export default props => (
 	/>
 )
 
+export const statuses = {
+	all: __( 'All' ),
+	hold: __( 'Pending ' ),
+	approve: __( 'Approved' ),
+	spam: __( 'Spam' ),
+	trash: __( 'Trashed' ),
+}
+
 const Main = ( { baseURL, handle: appHandle, label } ) => {
 
-	const statuses = {
-		all: __( 'All' ),
-		hold: __( 'Pending ' ),
-		approve: __( 'Approved' ),
-		spam: __( 'Spam' ),
-		trash: __( 'Trashed' ),
-	}
 	const tabs = Object.entries( statuses ).map( ( [ handle, label ] ) => {
 		return {
 			handle,
@@ -36,6 +37,7 @@ const Main = ( { baseURL, handle: appHandle, label } ) => {
 					type={ handle }
 					label={ label }
 					appHandle={ appHandle }
+					baseURL={ baseURL }
 				/>
 			)
 		}

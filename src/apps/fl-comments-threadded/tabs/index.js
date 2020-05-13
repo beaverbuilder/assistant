@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import classname from 'classnames'
+import { sprintf } from '@wordpress/i18n'
 import { AnimatePresence, motion } from 'framer-motion'
-import { List, Button, Layout } from 'assistant/ui'
-import state from '../state'
+import { List, Button, Layout, Filter } from 'assistant/ui'
+import { useAppState } from 'assistant/data'
+import v2 from './v2'
 import './style.scss'
+
+export default v2
 
 const Caret = () => (
 	<svg width="8" height="7" viewBox="0 0 8 7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,42 +24,59 @@ const PostSection = ({
 }) => {
 	const [isExpanded, setIsExpanded] = useState( true )
 	return (
-		<li className="fl-asst-comment-list-header">
-			<Button
-				className={classname({
-					'fl-asst-comment-list-post-header': true,
-					'fluid-sticky-element': true,
-					isExpanded
-				})}
-				onClick={ () => setIsExpanded( ! isExpanded )}
-			>
-				<Layout.Row style={{
-						minHeight: 40,
-						flex: '1 1 auto',
-						justifyContent: 'flex-start',
-						alignItems: 'center'
-					}}>
-					<div className={ classname('fl-asst-comment-list-caret', { isExpanded })}>
-						<Caret />
-					</div>
-					<div style={{ padding: 10, paddingLeft: 0 }}>
-						<Layout.AspectBox
-							style={{
-								width: 40,
-								borderRadius: 3,
-								backgroundImage: `url(${ thumbnail })`,
-								backgroundSize: 'cover'
-							}}/>
-					</div>
-					<div className="fl-asst-comment-list-post-header-title">{title}</div>
-				</Layout.Row>
-				{ ! isExpanded && (
-					<Layout.Row style={{ padding: '0 10px 10px'}}>
-						{totalComments} Comments | {totalPending} Pending
+		<AnimatePresence>
+			<li className="fl-asst-comment-list-header">
+				<Button
+					className={classname({
+						'fl-asst-comment-list-post-header': true,
+						'fluid-sticky-element': true,
+						isExpanded
+					})}
+					onClick={ () => setIsExpanded( ! isExpanded )}
+				>
+					<Layout.Row style={{
+							minHeight: 40,
+							flex: '1 1 auto',
+							justifyContent: 'flex-start',
+							alignItems: 'center'
+						}}>
+						<motion.div
+							className='fl-asst-comment-list-caret'
+							initial={false}
+							animate={ isExpanded ? 'down' : 'right' }
+							variants={{
+								down: { rotate: '0deg' },
+								right: { rotate: '-90deg' }
+							}}
+						>
+							<Caret />
+						</motion.div>
+						<div style={{ padding: 10, paddingLeft: 0 }}>
+							<Layout.AspectBox
+								style={{
+									width: 40,
+									borderRadius: 3,
+									backgroundImage: `url(${ thumbnail })`,
+									backgroundSize: 'cover'
+								}}/>
+						</div>
+						<div className="fl-asst-comment-list-post-header-title">{title}</div>
 					</Layout.Row>
-				)}
-			</Button>
-			<AnimatePresence>
+
+					{ ! isExpanded && (
+						<motion.div
+							className="fl-asst-comment-list-post-header-details"
+							initial={{ scale: 0 }}
+							animate={{ scale: 1 }}
+							exit={{ scale: 0 }}
+						>
+							{ sprintf('%s Comments', totalComments ) }
+							&nbsp;&nbsp;
+							{ sprintf('%s Pending', totalPending ) }
+						</motion.div>
+					)}
+				</Button>
+
 				<motion.div
 					className="fl-asst-sublist-wrap"
 					initial={false}
@@ -83,8 +104,9 @@ const PostSection = ({
 				>
 					{children}
 				</motion.div>
-			</AnimatePresence>
-		</li>
+
+			</li>
+		</AnimatePresence>
 	)
 }
 
@@ -157,19 +179,21 @@ const Comment = ({
 					</div>
 					{ isPending && <CommentMeta {...author} /> }
 				</div>
-				<div className="fl-asst-comment-content">{content}</div>
+				<div className="fl-asst-comment-content"
+					dangerouslySetInnerHTML={ { __html: content } }
+				/>
 			</div>
 		</motion.li>
 	)
 }
 
-export default () => {
-	const { posts } = state
+const TreeTab = ({ handle }) => {
+	const { posts } = useAppState( handle )
 
 	return (
 		<List.Scroller
 			items={ posts }
-			
+
 			loadItems={ endFetching => endFetching() }
 			hasMoreItems={ false }
 

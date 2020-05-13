@@ -128,7 +128,6 @@ export const Comments = ( {
 					return null
 				}
 
-
 				const Extras = () => {
 					if (
 						item.isCloning || item.isTrashing || item.isRestoring

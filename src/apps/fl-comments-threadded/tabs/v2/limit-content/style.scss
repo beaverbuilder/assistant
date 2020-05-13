@@ -1,0 +1,32 @@
+.fl-asst {
+    .fl-asst-limit-content {
+        display: flex;
+        flex-direction: column;
+
+        .fl-asst-limit-content-cell {
+            position: relative;
+            overflow: hidden;
+            flex: 0 0 auto;
+            pointer-events: none;
+
+            .fl-asst-limit-content-fadeout {
+                position: absolute;
+                bottom:0;
+                left:0;
+                right:0;
+                height: 60px;
+                background: linear-gradient(rgba(1,1,1,0), var(--thread-background-color));
+            }
+        }
+        .fl-asst-limit-content-controls {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: row;
+            padding: 2px;
+
+            .fluid-button {
+                flex: 1 1 auto;
+            }
+        }
+    }
+}

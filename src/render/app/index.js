@@ -1,8 +1,8 @@
-import React, { memo, Suspense } from 'react'
+import React, { memo, Suspense, useEffect } from 'react'
 import classname from 'classnames'
 import { useLocation, Redirect } from 'react-router-dom'
 import { App, Nav, Page, Env } from 'assistant/ui'
-import { useSystemState } from 'assistant/data'
+import { useSystemState, getSystemSelectors } from 'assistant/data'
 
 import Sidebar from './side-bar'
 import './style.scss'
@@ -27,30 +27,32 @@ const AppMain = () => {
 		<div className={ classes } >
 			<Sidebar edge={ sideName } />
 
-			{ ! isAppHidden && (
-				<div className="fl-asst-main-content">
-					<Nav.Switch location={ location }>
-						<Nav.Route exact path="/">
-							<Redirect to={ `/${homeApp}` } />
-						</Nav.Route>
-						<Nav.Route path="/:app" component={ AppContent } />
-						<Nav.Route component={ Page.NotFound } />
-					</Nav.Switch>
-				</div>
-			)}
+			<div className="fl-asst-main-content" >
+				<Nav.Switch location={ location }>
+					<Nav.Route exact path="/">
+						<Redirect to={ `/${homeApp}` } />
+					</Nav.Route>
+					<Nav.Route path="/:app" component={ AppContent } />
+					<Nav.Route component={ Page.NotFound } />
+				</Nav.Switch>
+			</div>
 		</div>
 	)
 }
 AppMain.displayName = 'AppMain'
 
 const AppContent = () => {
-	const { apps } = useSystemState( 'apps' )
-	const { isAppRoot, app: appName } = App.useApp()
-	const app = apps[appName] ? apps[appName] : null
+	useSystemState( 'apps' )
+	const { selectApp } = getSystemSelectors()
+	const { isAppRoot, app: appName = '' } = App.useApp()
+	const app = selectApp( appName )
 
 	if ( ! app ) {
 		return <Page.NotFound />
 	}
+
+	// Subsequent app changes
+	useEffect( () => app.onMount(), [ appName ] )
 
 	const appWrapClasses = classname( {
 		'fl-asst-screen-content': true,
