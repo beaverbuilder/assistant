@@ -1,7 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from 'react'
 import { motion, useMotionValue } from 'framer-motion'
 import { __ } from '@wordpress/i18n'
-import { Button } from 'assistant/ui'
+import { Button, Layout } from 'assistant/ui'
 import './style.scss'
 
 const LimitContent = ({
@@ -57,16 +57,20 @@ const LimitContent = ({
 
                 </motion.div>
             )}
-            { needsTruncate && <div className="fl-asst-limit-content-controls">
-                <Button
-                    onClick={ e => {
-                        toggleIsOpen()
-                        e.stopPropagation()
-                        e.preventDefault()
-                    } }
-                    appearance="transparent"
-                >{ ! isOpen ? __('Show More') : __('Show Less')}</Button>
-            </div> }
+            { needsTruncate && (
+                <Layout.Row outset style={{ justifyContent: 'flex-start', padding: '2px 10px' }}>
+
+                    <Button
+                        appearance="transparent"
+                        onClick={ e => {
+                            toggleIsOpen()
+                            e.stopPropagation()
+                            e.preventDefault()
+                        } }
+                    >{ ! isOpen ? __('Show More') : __('Show Less')}</Button>
+
+                </Layout.Row>
+            ) }
         </div>
     )
 }

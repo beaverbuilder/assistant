@@ -1,5 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
+import { __ } from '@wordpress/i18n'
 import LimitContent from '../limit-content'
 import { Layout, Button } from 'assistant/ui'
 import { motion } from 'framer-motion'
@@ -9,7 +10,7 @@ const Gutter = ({ isPending = false, isSpam = false }) => {
     return (
         <div className="fl-asst-comment-gutter">
             <div className="fl-asst-thread-line" />
-            { ( isPending || isSpam ) && (
+
                 <div className="fl-asst-gutter-dot-area">
                     <div className={ classname({
                         'fl-asst-dot' : true,
@@ -17,7 +18,7 @@ const Gutter = ({ isPending = false, isSpam = false }) => {
                         'is-spam' : isSpam
                     })} />
                 </div>
-            ) }
+            
         </div>
     )
 }
@@ -45,9 +46,24 @@ const Author = ({ name, avatar, date }) => {
 const Meta = ({ url, ip, email }) => {
 	return (
 		<div className="fl-asst-comment-meta" >
-			{ url && <a className="fl-asst-comment-meta-value" href={url}>{url}</a> }
-			{ ip && <div className="fl-asst-comment-meta-value">{ip}</div> }
-			{ email && <a className="fl-asst-comment-meta-value" href={`mailto:${email}`}>{email}</a> }
+			{ url && (
+                <span className="fl-asst-comment-meta-value">
+                    <strong>{__('URL')}&nbsp;</strong>
+                    <a href={url}>{url}</a>
+                </span>
+            ) }
+			{ ip && (
+                <span className="fl-asst-comment-meta-value">
+                    <strong>{__('IP Address')}&nbsp;</strong>
+                    <span>{ip}</span>
+                </span>
+            ) }
+			{ email && (
+                <span className="fl-asst-comment-meta-value">
+                    <strong>{__('Email')}&nbsp;</strong>
+                    <a href={`mailto:${email}`}>{email}</a>
+                </span>
+            ) }
 		</div>
 	)
 }
@@ -69,7 +85,7 @@ export default ({
                 <Gutter isPending={isPending} isSpam={isSpam} />
                 <div className="fl-asst-comment-cell">
                     <Author {...author} />
-                    { isPending && <Meta {...author} /> }
+                    { isPending && !isSpam && <Meta {...author} /> }
                     <LimitContent>
                         <div className="fl-asst-comment-content"
                             dangerouslySetInnerHTML={ { __html: content } }

@@ -4,6 +4,7 @@
         background: var(--thread-background-color);
 
         .fl-asst-comment-gutter {
+            --line-color: #ddd;
             flex: 0 0 40px;
             display: flex;
             flex-direction: column;
@@ -25,6 +26,7 @@
                     height: 17px;
                     border-radius: 50%;
                     border: 5px solid var(--thread-background-color);
+                    background: var(--line-color);
 
                     &.is-pending {
                         background: var(--fluid-primary-color);
@@ -38,7 +40,7 @@
             .fl-asst-thread-line {
                 width: 2px;
                 height: 20px;
-                background: rgba(0,0,0,.1);
+                background: var(--line-color);
                 flex: 1 1 auto;
             }
         }
@@ -87,6 +89,10 @@
                     padding: 5px 0;
                     text-align: left;
                     font-size: 12px !important;
+
+                    a {
+                        display: inline;
+                    }
                 }
             }
 
@@ -148,6 +154,19 @@
 
                 .fl-asst-item-extras {
                     display: flex;
+                }
+            }
+        }
+    }
+    .fluid-color-scheme-dark {
+        .fl-asst-comment-list {
+            .fl-asst-comment-gutter {
+                --line-color: var(--fluid-box-background);
+            }
+
+            li:hover {
+                .fl-asst-comment-gutter {
+                    --line-color: var(--fluid-background);
                 }
             }
         }
