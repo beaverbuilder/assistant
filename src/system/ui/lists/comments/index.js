@@ -115,15 +115,15 @@ export const Comments = ( {
 
 				const Accessory = () => {
 					if ( item.isTrashed && 'trash' !== type ) {
-						return <Button onClick={ untrashComment } tabIndex="-1">Restore</Button>
+						return <Button onClick={ untrashComment } tabIndex="-1">{__('Restore')}</Button>
 					} else if ( false === item.isTrashed && 'trash' == type ) {
-						return <Button onClick={ trashComment } tabIndex="-1">Trash</Button>
+						return <Button onClick={ trashComment } tabIndex="-1">{__('Trash')}</Button>
 					}
 					if ( item.isSpam && 'spam' !== type ) {
-						return <Button onClick={ unspamComment } tabIndex="-1">Restore</Button>
+						return <Button onClick={ unspamComment } tabIndex="-1">{__('Restore')}</Button>
 					}
 					if ( item.isunSpam && 'spam' == type ) {
-						return <Button onClick={ spamComment } tabIndex="-1">Spam</Button>
+						return <Button onClick={ spamComment } tabIndex="-1">{__('Spam')}</Button>
 					}
 					return null
 				}

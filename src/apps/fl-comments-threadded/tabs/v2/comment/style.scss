@@ -1,8 +1,7 @@
 .fl-asst {
     .fl-asst-comment-list {
-        --thread-background-color: #F8FAFC;
+        --thread-background-color: var(--fluid-background);
         background: var(--thread-background-color);
-        border-top: 2px solid var(--fluid-line-color);
 
         .fl-asst-comment-gutter {
             flex: 0 0 40px;
@@ -74,7 +73,21 @@
                 }
             }
             .fl-asst-comment-meta {
-                padding-bottom: var(--fluid-med-space);
+                padding: var(--fluid-med-space);
+                margin-bottom: var(--fluid-med-space);
+                background: var(--fluid-primary-background);
+                color: var(--fluid-primary-color);
+                border-radius: var(--fluid-radius);
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                overflow: hidden;
+
+                .fl-asst-comment-meta-value {
+                    padding: 5px 0;
+                    text-align: left;
+                    font-size: 12px !important;
+                }
             }
 
             .fl-asst-comment-content {
@@ -83,6 +96,25 @@
                 }
                 & > :last-child {
                     margin-bottom: 0;
+                }
+                & > * {
+                    padding: 0;
+                    border: none;
+                    margin: var(--fluid-lg-space) 0;
+                }
+                blockquote {
+                    font-size: 16px;
+                    line-height: 1.75;
+                    font-style: italic;
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    font-weight: 500;
+                    font-size: 16px;
+                }
+                a {
+                    font-size: inherit;
+                    font-weight: 600;
+                    line-height: inherit;
                 }
             }
         }
@@ -98,7 +130,10 @@
                 align-items: stretch;
                 justify-content: flex-start;
 
-                &:hover { background: transparent; }
+                &:hover {
+                    color: var(--fluid-color);
+                    background: transparent;
+                }
             }
 
             &:first-child {

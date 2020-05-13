@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import classname from 'classnames'
-import { sprintf } from '@wordpress/i18n'
-import { AnimatePresence, motion } from 'framer-motion'
-import { List, Button, Layout, Filter } from 'assistant/ui'
-import { useAppState } from 'assistant/data'
+//import React, { useState } from 'react'
+//import classname from 'classnames'
+//import { sprintf } from '@wordpress/i18n'
+//import { AnimatePresence, motion } from 'framer-motion'
+//import { List, Button, Layout, Filter } from 'assistant/ui'
+//import { useAppState } from 'assistant/data'
 import v2 from './v2'
-import './style.scss'
+//import './style.scss'
 
 export default v2
 
+/*
 const Caret = () => (
 	<svg width="8" height="7" viewBox="0 0 8 7" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path d="M4.86603 6.5C4.48113 7.16667 3.51887 7.16667 3.13397 6.5L0.535899 2C0.150999 1.33333 0.632124 0.499999 1.40192 0.499999L6.59808 0.5C7.36788 0.5 7.849 1.33333 7.4641 2L4.86603 6.5Z" fill="currentColor" />
@@ -223,3 +224,4 @@ const TreeTab = ({ handle }) => {
 		/>
 	)
 }
+*/

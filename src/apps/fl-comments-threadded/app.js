@@ -16,6 +16,8 @@ export default props => (
 	/>
 )
 
+export const defaultStatus = 'hold'
+
 export const statuses = {
 	all: __( 'All' ),
 	hold: __( 'Pending ' ),

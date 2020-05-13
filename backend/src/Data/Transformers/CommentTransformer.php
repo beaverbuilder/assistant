@@ -11,14 +11,16 @@ class CommentTransformer {
 		$time = mysql2date( get_option( 'time_format' ), $comment->comment_date );
 
 		return [
+			'id'          => $comment->comment_ID,
 			'approved'    => $comment->comment_approved ? true : false,
 			'author'      => $comment->comment_author,
+			'authorName'  => $comment->comment_author,
 			'authorEmail' => $comment->comment_author_email,
 			'authorIP'    => $comment->comment_author_IP,
+			'authorURL'   => get_comment_author_url( $comment->comment_ID ),
 			'content'     => $comment->comment_content,
 			'date'        => $date,
 			'editUrl'     => admin_url( 'comment.php?action=editcomment&c=' ) . $comment->comment_ID,
-			'id'          => $comment->comment_ID,
 			'meta'        => $comment->comment_author . ' - ' . $date,
 			'postId'      => $post->ID,
 			'postTitle'   => $post->post_title,
@@ -28,6 +30,7 @@ class CommentTransformer {
 			'title'       => strip_tags( $comment->comment_content ),
 			'trash'       => 'trash' === $comment->comment_approved,
 			'url'         => get_comment_link( $comment ),
+			'timeDiff'    => human_time_diff( strtotime( $comment->comment_date ) ),
 		];
 	}
 }

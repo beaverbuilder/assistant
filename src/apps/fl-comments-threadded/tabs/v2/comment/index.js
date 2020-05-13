@@ -2,6 +2,7 @@ import React from 'react'
 import classname from 'classnames'
 import LimitContent from '../limit-content'
 import { Layout, Button } from 'assistant/ui'
+import { motion } from 'framer-motion'
 import './style.scss'
 
 const Gutter = ({ isPending = false, isSpam = false }) => {
@@ -41,6 +42,16 @@ const Author = ({ name, avatar, date }) => {
     )
 }
 
+const Meta = ({ url, ip, email }) => {
+	return (
+		<div className="fl-asst-comment-meta" >
+			{ url && <a className="fl-asst-comment-meta-value" href={url}>{url}</a> }
+			{ ip && <div className="fl-asst-comment-meta-value">{ip}</div> }
+			{ email && <a className="fl-asst-comment-meta-value" href={`mailto:${email}`}>{email}</a> }
+		</div>
+	)
+}
+
 export default ({
     content,
     isPending,
@@ -50,11 +61,15 @@ export default ({
     to,
 }) => {
     return (
-        <li>
+        <motion.li
+            initial={{ scale: .5 }}
+            animate={{ scale: 1 }}
+        >
             <Button to={to} style={{ display: 'flex', flexDirection: 'row', padding: 0 }}>
                 <Gutter isPending={isPending} isSpam={isSpam} />
                 <div className="fl-asst-comment-cell">
                     <Author {...author} />
+                    { isPending && <Meta {...author} /> }
                     <LimitContent>
                         <div className="fl-asst-comment-content"
                             dangerouslySetInnerHTML={ { __html: content } }
@@ -63,6 +78,6 @@ export default ({
                 </div>
             </Button>
             <Extras />
-        </li>
+        </motion.li>
     )
 }

@@ -7,7 +7,6 @@
             position: relative;
             overflow: hidden;
             flex: 0 0 auto;
-            pointer-events: none;
 
             .fl-asst-limit-content-fadeout {
                 position: absolute;
@@ -22,7 +21,7 @@
             flex: 0 0 auto;
             display: flex;
             flex-direction: row;
-            padding: 2px;
+            padding: 10px 2px;
 
             .fluid-button {
                 flex: 1 1 auto;
