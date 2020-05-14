@@ -1,15 +1,11 @@
+import { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'utils/url'
-import { useAll, useOne } from '../hooks'
 import mockup from '../mockup'
 import http from '../http'
 
-export default {
+const api = {
 	...mockup.teams,
-
-	useAll: useAll( '/account/teams' ),
-
-	useOne: useOne( '/account/teams' ),
 
 	getAll: () => {
 		return http.get( '/account/teams' )
@@ -33,6 +29,24 @@ export default {
 
 	invite: ( id, email ) => {
 		return http.post( `/account/teams/invite?team=${ id }`, { email } )
+	},
+
+	useAll: () => {
+		const [ teams, setTeams ] = useState( null )
+		useEffect( () => {
+			api.getAll().then( response => setTeams( response.data ) )
+		}, [] )
+		return [ teams, setTeams ]
+	},
+
+	useOne: ( id ) => {
+		const [ team, setTeam ] = useState( null )
+		useEffect( () => {
+			if ( id ) {
+				api.get( id ).then( response => setTeam( response.data ) )
+			}
+		}, [ id ] )
+		return [ team, setTeam ]
 	},
 
 	// create: ( data ) => {
@@ -60,3 +74,5 @@ export default {
 		} )
 	}
 }
+
+export default api

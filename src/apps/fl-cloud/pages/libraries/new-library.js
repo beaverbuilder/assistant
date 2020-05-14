@@ -1,10 +1,22 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { Button, Form, Layout, Page } from 'assistant/ui'
+import { useCloudState } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 
 export default ( { history, location } ) => {
 	const [ teams, setTeams ] = cloud.teams.useAll()
+	const { cloudUser } = useCloudState()
+
+	const getOwnerOptions = () => {
+		const options = {
+			0: sprintf( __( '%s (You)' ), cloudUser.name ),
+		}
+		if ( teams ) {
+			teams.map( team => options[ team.id ] = team.name )
+		}
+		return options
+	}
 
 	const fields = {
 		name: {
@@ -26,16 +38,20 @@ export default ( { history, location } ) => {
 			label: __( 'Owner' ),
 			component: 'select',
 			alwaysCommit: true,
-			options: {
-				you: __( 'Justin Busa (You)' ),
-				bb: __( 'Beaver Builder' ),
-				db: __( 'Dickiebirds' ),
-			}
+			options: getOwnerOptions()
 		},
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.create( values ).then( response => {
+		const { name, description, owner } = values
+		const data = {
+			name,
+			description
+		}
+		if ( owner ) {
+			data.team_id = owner
+		}
+		return cloud.libraries.create( data ).then( response => {
 			history.replace( '/fl-cloud' )
 		} ).catch( error => {
 			setErrors( error.response.data.errors )

@@ -23,16 +23,16 @@ export default ( { library } ) => {
 			component: 'text',
 			alwaysCommit: true
 		},
-		owner: {
-			label: __( 'Owner' ),
-			component: 'select',
-			alwaysCommit: true,
-			options: {
-				you: __( 'Justin Busa (You)' ),
-				bb: __( 'Beaver Builder' ),
-				db: __( 'Dickiebirds' ),
-			}
-		},
+		// owner: {
+		// 	label: __( 'Owner' ),
+		// 	component: 'select',
+		// 	alwaysCommit: true,
+		// 	options: {
+		// 		you: __( 'Justin Busa (You)' ),
+		// 		bb: __( 'Beaver Builder' ),
+		// 		db: __( 'Dickiebirds' ),
+		// 	}
+		// },
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {

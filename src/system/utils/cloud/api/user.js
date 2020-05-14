@@ -1,6 +1,6 @@
 import http from '../http'
 
-export default {
+const api = {
 	update: ( data ) => {
 		return http.put( '/account/user/update', data )
 	},
@@ -12,3 +12,5 @@ export default {
 		} )
 	},
 }
+
+export default api

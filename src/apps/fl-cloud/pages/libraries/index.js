@@ -1,18 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Icon, Layout, List, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 import './style.scss'
 
 export default () => {
+	const [ ownerId, setOwnerId ] = useState( 0 )
 	const [ teams, setTeams ] = cloud.teams.useAll()
-	const [ libraries, setLibraries ] = cloud.libraries.useAll()
+	const [ libraries, setLibraries ] = cloud.libraries.useAll( ownerId )
 
-	if ( ! teams || ! libraries ) {
+	if ( ! teams ) {
 		return <Page.Loading />
 	}
 
-	const getTeamOptions = () => {
+	const getOwnerOptions = () => {
 		const options = {
 			0: __( 'Your Libraries' ),
 		}
@@ -39,21 +40,24 @@ export default () => {
 		<Page.Section label={ __( 'Libraries' ) } padX={ false }>
 			<Layout.Box padY={ false } style={ { flexDirection: 'row' } }>
 				<Form.SelectItem
-					options={ getTeamOptions() }
-					value={ 0 }
-					onChange={ () => {} }
+					options={ getOwnerOptions() }
+					value={ ownerId }
+					onChange={ value => setOwnerId( parseInt( value ) ) }
 				></Form.SelectItem>
 				<Button to='/fl-cloud/libraries/new' style={ { marginLeft: '10px' } }>
 					<Icon.Plus />
 				</Button>
 			</Layout.Box>
-			{ !! libraries.length &&
+			{ ! libraries &&
+				<Page.Loading />
+			}
+			{ libraries && !! libraries.length &&
 				<List
 					items={ libraries }
 					getItemProps={ getItemProps }
 				/>
 			}
-			{ ! libraries.length &&
+			{ libraries && ! libraries.length &&
 				<Layout.Box padY={ false } style={ { textAlign: 'center' } }>
 					<p>{ __( "No libraries found." ) }</p>
 				</Layout.Box>
