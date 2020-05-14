@@ -210,7 +210,6 @@ export const Post = ( { location, match, history } ) => {
 							component: 'select',
 							id: 'post_author',
 							options: item.authorList,
-							value: item.post_author,
 							isVisible: isSiteAdmin ? true : false
 						}
 					},
