@@ -17,11 +17,36 @@
                 background: linear-gradient(rgba(1,1,1,0), var(--thread-background-color));
             }
         }
-        .fl-asst-limit-content-controls {
-            flex: 0 0 auto;
-            display: flex;
-            flex-direction: row;
-            padding: 10px 2px;
+        .fluid-button.fl-asst-limit-content-expand-button {
+            flex: 1 1 auto;
+            margin-bottom: -5px;
+
+            &:hover {
+                background: transparent;
+
+                span {
+                    background: var(--fluid-box-hover-background);
+                }
+            }
+            &:focus {
+                background: transparent;
+                box-shadow: none;
+
+                span {
+                    box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
+                                0px 0px 0px 2px var(--fluid-accent);
+                }
+            }
+
+            span {
+                flex: 0 0 auto;
+                background: var(--fluid-box-background);
+                padding:0 10px;
+                border-radius: var(--fluid-radius);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
     }
 }

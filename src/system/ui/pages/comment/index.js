@@ -11,7 +11,6 @@ export const Comment = () => {
 	const {
 		id,
 		approved,
-		author,
 		authorName,
 		date,
 		content,
