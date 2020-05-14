@@ -14,20 +14,21 @@ export default () => {
 			shouldShowBackButton={ false }
 		>
 			<ElevatorButtons />
-			<CurrentlyViewing />
 			<Libraries />
 		</Page>
 	)
 }
 
 const ElevatorButtons = () => (
-	<div style={ {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-evenly',
-		margin: '10px 0 0',
-		flex: '0 0 auto',
-	} } >
+	<Layout.Box
+		padX={ false }
+		style={ {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-evenly',
+			flex: '0 0 auto',
+		} }
+	>
 		<Button
 			appearance='elevator'
 			title={ __( 'Teams' ) }
@@ -68,30 +69,5 @@ const ElevatorButtons = () => (
 				style={ { marginTop: '-8px' } }
 			></span>
 		</Button>
-	</div>
+	</Layout.Box>
 )
-
-const CurrentlyViewing = () => {
-	const { currentPageView } = getSystemConfig()
-	const { name, intro } = currentPageView
-
-	return (
-		<Layout.Box padX={ false }>
-			<div
-				className="fl-asst-currently-viewing-summary"
-				style={ {
-					background: 'var(--fluid-box-background)',
-					borderRadius: 'var(--fluid-radius)',
-					padding: 'var(--fluid-lg-space)',
-				} }
-			>
-				{ intro && <div className="fl-asst-pretitle">{intro}</div> }
-				<div className="fl-asst-title">{name}</div>
-			</div>
-			<Button.Group appearance="buttons" style={ { alignSelf: 'start', marginTop: '2px' } }>
-				<Button>Save to Cloud</Button>
-				<Button>Sync to Site</Button>
-			</Button.Group>
-		</Layout.Box>
-	)
-}
