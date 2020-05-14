@@ -58,4 +58,11 @@
 		width: 100%;
 	}
 
+	.fl-asst-hierarchical-terms-list{
+		max-height: 14em;
+    	overflow-y: auto;
+    	overflow-x: hidden;
+    	padding-top: 10px;
+	}
+
 }
