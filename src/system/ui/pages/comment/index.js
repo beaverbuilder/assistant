@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { Form, Icon, Button, Page, Layout } from 'ui'
 import { getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
-
+import './style.scss'
 
 export const Comment = () => {
 	const { item } = useLocation().state
@@ -276,7 +276,7 @@ export const Comment = () => {
 	} )
 
 	return (
-		<Page title={ __( 'Edit Comment' ) }>
+		<Page title={ __( 'Edit Comment' ) } className="fl-asst-comment-details">
 
 			<Layout.Headline>{author}</Layout.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>

@@ -29,12 +29,10 @@ registerApp( 'fl-comments', {
 				offset,
 			} )
 		},
-		format: items => {
-			return items.map( item => ( {
-				...item,
-				label: item.meta,
-			} ) )
-		},
+		format: items => items.map( item => ( {
+			...item,
+			label: item.meta,
+		} ) ),
 		detail: {
 			component: Comment,
 			path: '/comment/:id',

@@ -6,7 +6,6 @@ export default props => (
 	<App.Config
 		pages={ {
 			default: Main,
-			'tab/:tab': Main,
 			'comment/:id': Comment
 		} }
 		{ ...props }

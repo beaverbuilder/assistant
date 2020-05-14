@@ -157,6 +157,10 @@
 
             &:first-child {
                 padding-top: 20px;
+
+                .fl-asst-item-extras {
+                    top: 2px;
+                }
             }
             &:last-child {
                 padding-bottom: 20px;
