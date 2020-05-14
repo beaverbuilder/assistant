@@ -4,10 +4,7 @@
 //import { AnimatePresence, motion } from 'framer-motion'
 //import { List, Button, Layout, Filter } from 'assistant/ui'
 //import { useAppState } from 'assistant/data'
-import v2 from './v2'
 //import './style.scss'
-
-export default v2
 
 /*
 const Caret = () => (

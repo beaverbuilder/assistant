@@ -144,7 +144,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 									navOrHideApp( isSelected, () => history.push( location ) )
 								} }
 							>
-								<AppIcon {...iconProps} />
+								<AppIcon { ...iconProps } />
 							</Button>
 						)
 					}}
@@ -180,6 +180,6 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 	)
 } )
 
-const AppIcon = memo(  ({ icon: Component, ...rest }) => <Component {...rest} /> )
+const AppIcon = memo(  ( { icon: Component, ...rest } ) => <Component { ...rest } /> )
 
 export default Sidebar

@@ -34,6 +34,9 @@
                     &.is-spam {
                         background: var(--fluid-alert-color);
                     }
+                    &.is-trash {
+                        background: var(--fluid-destructive-color);
+                    }
                 }
             }
 
@@ -123,6 +126,16 @@
                     line-height: inherit;
                 }
             }
+        }
+
+        .is-pending .fl-asst-comment-author-name {
+            color: var(--fluid-primary-color);
+        }
+        .is-spam .fl-asst-comment-author-name {
+            color: var(--fluid-alert-color);
+        }
+        .is-trash .fl-asst-comment-author-name {
+            color: var(--fluid-destructive-color);
         }
 
         & > li {

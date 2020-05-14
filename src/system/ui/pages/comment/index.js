@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { useLocation } from 'react-router-dom'
 import { Form, Icon, Button, Page, Layout } from 'ui'
-import { getSystemConfig, getSystemActions } from 'data'
+import { getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
 
 
@@ -20,8 +20,6 @@ export const Comment = () => {
 		url,
 		editUrl,
 	} = item
-	const { pluginURL } = getSystemConfig()
-	const hero = `${pluginURL}img/comment-hero-a.jpg`
 	const comments = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 
@@ -278,7 +276,7 @@ export const Comment = () => {
 	} )
 
 	return (
-		<Page title={ __( 'Edit Comment' ) } hero={ hero }>
+		<Page title={ __( 'Edit Comment' ) }>
 
 			<Layout.Headline>{author}</Layout.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>

@@ -106,7 +106,7 @@ export const List = ( {
 	}, className )
 
 	return (
-		<Tag className={ classes } {...rest}>{content}</Tag>
+		<Tag className={ classes } { ...rest }>{content}</Tag>
 	)
 }
 

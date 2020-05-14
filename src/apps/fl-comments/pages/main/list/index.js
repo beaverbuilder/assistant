@@ -3,10 +3,10 @@ import { __ } from '@wordpress/i18n'
 import { AnimatePresence } from 'framer-motion'
 import { List, Filter } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
-import { statuses, defaultStatus } from '../../app'
+import { statuses, defaultStatus } from '../../../data'
 import Comment from './comment'
 
-export default ({ baseURL }) => {
+export default ( { baseURL } ) => {
 	const { type } = useAppState()
 	const { setType } = getAppActions()
 
@@ -30,8 +30,8 @@ export default ({ baseURL }) => {
 			<List.Comments
 				className="fl-asst-comment-list"
 				before={ <Filters /> }
-				type={type}
-				direction={null}
+				type={ type }
+				direction={ null }
 				getItemComponent={ () => Comment }
 				getItemProps={ ( item, defaultProps ) => {
 					const {
@@ -68,7 +68,7 @@ export default ({ baseURL }) => {
 							state: { item }
 						},
 					}
-				}}
+				} }
 			/>
 		</AnimatePresence>
 	)

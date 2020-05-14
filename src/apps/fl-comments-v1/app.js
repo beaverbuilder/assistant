@@ -16,18 +16,15 @@ export default props => (
 	/>
 )
 
-export const defaultStatus = 'hold'
+const Main = ( { baseURL, handle: appHandle } ) => {
 
-export const statuses = {
-	all: __( 'All' ),
-	hold: __( 'Pending ' ),
-	approve: __( 'Approved' ),
-	spam: __( 'Spam' ),
-	trash: __( 'Trashed' ),
-}
-
-const Main = ( { baseURL, handle: appHandle, label } ) => {
-
+	const statuses = {
+		all: __( 'All' ),
+		hold: __( 'Pending ' ),
+		approve: __( 'Approved' ),
+		spam: __( 'Spam' ),
+		trash: __( 'Trashed' ),
+	}
 	const tabs = Object.entries( statuses ).map( ( [ handle, label ] ) => {
 		return {
 			handle,
@@ -39,7 +36,6 @@ const Main = ( { baseURL, handle: appHandle, label } ) => {
 					type={ handle }
 					label={ label }
 					appHandle={ appHandle }
-					baseURL={ baseURL }
 				/>
 			)
 		}
@@ -50,9 +46,11 @@ const Main = ( { baseURL, handle: appHandle, label } ) => {
 			id="fl-comments-list-page"
 			padX={ false }
 			padY={ false }
-			title={ label }
+			title={ __( 'Comments' ) }
 			icon={ <AppIcon context="sidebar" /> }
 			shouldShowBackButton={ false }
+			header={ <Nav.Tabs tabs={ tabs } /> }
+			topContentStyle={ { border: 'none' } }
 			shouldScroll={ false }
 			showAsRoot={ true }
 		>

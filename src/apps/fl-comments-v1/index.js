@@ -5,7 +5,6 @@ import { addQueryArgs } from 'assistant/utils/url'
 import { currentUserCan } from 'assistant/utils/wordpress'
 import { Page } from 'assistant/ui'
 import Icon from './icon'
-import { onMount, defaultState, reducers, effects } from './data'
 
 const CommentsApp = lazy( () => import(
 	/* webpackChunkName: "app-comments" */ './app'
@@ -16,6 +15,9 @@ registerApp( 'fl-comments', {
 	root: CommentsApp,
 	icon: Icon,
 	enabled: currentUserCan( 'moderate_comments' ),
+	accent: {
+		color: '#FFCC00'
+	},
 	search: {
 		label: __( 'Comments' ),
 		priority: 300,
@@ -40,10 +42,4 @@ registerApp( 'fl-comments', {
 			},
 		},
 	},
-
-	state: defaultState,
-	reducers,
-	effects,
-	onMount,
-	serialize: state => false
 } )
