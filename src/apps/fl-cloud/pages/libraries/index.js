@@ -47,10 +47,17 @@ export default () => {
 					<Icon.Plus />
 				</Button>
 			</Layout.Box>
-			<List
-				items={ libraries }
-				getItemProps={ getItemProps }
-			/>
+			{ !! libraries.length &&
+				<List
+					items={ libraries }
+					getItemProps={ getItemProps }
+				/>
+			}
+			{ ! libraries.length &&
+				<Layout.Box padY={ false } style={ { textAlign: 'center' } }>
+					<p>{ __( "No libraries found." ) }</p>
+				</Layout.Box>
+			}
 		</Page.Section>
 	)
 }
