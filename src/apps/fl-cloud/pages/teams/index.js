@@ -71,7 +71,13 @@ export default ( { history, location } ) => {
 			handle: 'invite',
 			label: __( 'Invite' ),
 			path: '/fl-cloud/teams/tab/invite',
-			component: TeamInvite,
+			component: () => {
+				return (
+					<TeamInvite
+						team={ team ? team : {} }
+					/>
+				)
+			},
 		},
 		{
 			handle: 'settings',
