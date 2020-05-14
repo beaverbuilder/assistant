@@ -47,11 +47,11 @@ const Author = ( { name, avatar, date } ) => {
 const Meta = ( { url, ip, email } ) => {
 	const stopProp = e => e.stopPropagation()
 	return (
-		<div className="fl-asst-comment-meta" onClick={ stopProp } >
+		<div className="fl-asst-comment-meta">
 			{ url && (
 				<span className="fl-asst-comment-meta-value">
 					<strong>{__( 'URL' )}&nbsp;</strong>
-					<a href={ url } target="_blank" rel="noopener noreferrer">{url}</a>
+					<a href={ url } target="_blank" rel="noopener noreferrer" onClick={ stopProp }>{url}</a>
 				</span>
 			) }
 			{ ip && (
@@ -63,7 +63,7 @@ const Meta = ( { url, ip, email } ) => {
 			{ email && (
 				<span className="fl-asst-comment-meta-value">
 					<strong>{__( 'Email' )}&nbsp;</strong>
-					<a href={ `mailto:${email}` }>{email}</a>
+					<a href={ `mailto:${email}` } onClick={ stopProp }>{email}</a>
 				</span>
 			) }
 		</div>
