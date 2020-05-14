@@ -101,7 +101,7 @@ export const TeamInfo = ( {
 			<Layout.Box>
 				<Page.Section label={ __( 'Danger Zone' ) }>
 					<Layout.Headline>{ __( 'Delete This Team' ) }</Layout.Headline>
-					<p style={ { margin: '0' } }>{ __( 'Once a team has been delete, it is gone forever. Please be sure you want to delete this team.' ) }</p>
+					<p style={ { margin: '0' } }>{ __( 'Once a team has been deleted, it is gone forever. Please be sure you want to delete this team.' ) }</p>
 				</Page.Section>
 				<Button onClick={ deleteTeam } status='destructive'>Delete Team</Button>
 			</Layout.Box>

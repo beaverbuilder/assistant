@@ -4,6 +4,7 @@ import { getSystemConfig } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 import { Button, Form, Layout, List, Nav, Page } from 'assistant/ui'
 import AppIcon from '../../icon'
+import Libraries from '../libraries'
 
 export default () => {
 	return (
@@ -14,7 +15,7 @@ export default () => {
 		>
 			<ElevatorButtons />
 			<CurrentlyViewing />
-			<Library />
+			<Libraries />
 		</Page>
 	)
 }
@@ -92,109 +93,5 @@ const CurrentlyViewing = () => {
 				<Button>Sync to Site</Button>
 			</Button.Group>
 		</Layout.Box>
-	)
-}
-
-const Library = () => {
-	const [ teams ] = cloud.teams.useAll()
-
-	let tabs = [
-		{
-			handle: 'content',
-			label: __( 'Content' ),
-			path: '/fl-cloud',
-			component: LibraryContent,
-			exact: true,
-		},
-		{
-			handle: 'sites',
-			label: __( 'Site Templates' ),
-			path: '/fl-cloud/tab/content',
-			component: LibrarySites,
-		}
-	]
-
-	const getTeamOptions = () => {
-		const options = {
-			0: __( 'Your Library' ),
-		}
-		if ( teams ) {
-			teams.map( team => options[ team.id ] = team.name )
-		}
-		return options
-	}
-
-	return (
-		<Page.Section label={ __( 'Library' ) } padX={ false }>
-			<Layout.Box style={ { paddingTop: 0 } }>
-				<Form.SelectItem
-					options={ getTeamOptions() }
-					value={ 0 }
-					onChange={ () => {} }
-				></Form.SelectItem>
-			</Layout.Box>
-			<Nav.Tabs tabs={ tabs } />
-			<Nav.CurrentTab tabs={ tabs } />
-		</Page.Section>
-	)
-}
-
-const LibrarySites = () => {
-	const wrapStyle = {
-		display: 'flex',
-		flexWrap: 'wrap',
-		padding: '5px'
-	}
-
-	const itemStyle = {
-		padding: '10px',
-		width: '50%',
-		textAlign: 'center'
-	}
-
-	return (
-		<div style={ wrapStyle }>
-			<div style={ itemStyle }>
-				<img src="https://picsum.photos/200" />
-				<div>Site 1</div>
-			</div>
-			<div style={ itemStyle }>
-				<img src="https://picsum.photos/200" />
-				<div>Site 2</div>
-			</div>
-			<div style={ itemStyle }>
-				<img src="https://picsum.photos/200" />
-				<div>Site 3</div>
-			</div>
-			<div style={ itemStyle }>
-				<img src="https://picsum.photos/200" />
-				<div>Site 4</div>
-			</div>
-		</div>
-	)
-}
-
-const LibraryContent = () => {
-	const items = [
-		{ label: 'Posts (11)' },
-		{ label: 'Pages (32)' },
-		{ label: 'Lead Gen (7)' },
-		{ label: 'Hero Rows (55)' }
-	]
-
-	const getItemProps = ( item, defaults ) => {
-		return {
-			...defaults,
-			label: item.label,
-			shouldAlwaysShowThumbnail: true,
-			thumbnailSize: 'sm',
-		}
-	}
-
-	return (
-		<List
-			items={ items }
-			getItemProps={ getItemProps }
-		/>
 	)
 }

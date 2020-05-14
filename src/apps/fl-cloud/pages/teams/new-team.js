@@ -52,7 +52,7 @@ export default ( { history, location } ) => {
 		}
 		return cloud.teams.create( data ).then( response => {
 			history.replace( '/fl-cloud/teams', { id: response.data.id } )
-		} ).catch( error => setErrors( error.errors ) )
+		} ).catch( error => setErrors( error.response.data.errors ) )
 	}
 
 	const {

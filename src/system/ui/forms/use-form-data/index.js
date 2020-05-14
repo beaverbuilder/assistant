@@ -274,15 +274,18 @@ export const useFormData = ( {
 	}
 
 	const submitForm = () => {
+		let hasErrors = false
+
 		Object.keys( values ).map( key => {
 			const errors = []
 			fields[ key ].validate( values[ key ], errors )
 			if ( errors.length ) {
 				setErrors( { [ key ]: errors } )
+				hasErrors = true
 			}
 		} )
 
-		if ( Object.keys( selectErrors() ).length ) {
+		if ( hasErrors ) {
 			return
 		}
 
