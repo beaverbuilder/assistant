@@ -15,7 +15,7 @@ import './style.scss'
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
-	const { contentTypes, contentStatus, taxonomies, isAdmin } = getSystemConfig()
+	const { contentTypes, contentStatus, taxonomies, isSiteAdmin } = getSystemConfig()
 	const { renderNotices, createNotice } = Notice.useNotices()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
@@ -211,7 +211,7 @@ export const Post = ( { location, match, history } ) => {
 							id: 'post_author',
 							options: item.authorList,
 							value: item.post_author,
-							isVisible: isAdmin ? true : false
+							isVisible: isSiteAdmin ? true : false
 						}
 					},
 				},
