@@ -105,9 +105,9 @@ class OnEnqueueScripts {
 		$wp_comments = get_option( 'default_comment_status' );
 		if ( isset( $wp_comments ) ) {
 			if ( $wp_comments === 'closed' ) {
-				$system_comment_status = 0;
+				$wp_comment_status = 0;
 			} else {
-				$system_comment_status = 1;
+				$wp_comment_status = 1;
 			}
 		}
 
@@ -133,7 +133,7 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
-			'sysCommentStatus'  => $system_comment_status,
+			'wpCommentStatus'   => $wp_comment_status,
 
 			/*
 			'integrations'		=> [

@@ -8,13 +8,13 @@ import { CommentsApp } from './app'
 import Icon from './icon'
 
 
-const { sysCommentStatus } = getSystemConfig()
+const { wpCommentStatus } = getSystemConfig()
 
 registerApp( 'fl-comments', {
 	label: __( 'Comments' ),
 	root: CommentsApp,
 	icon: Icon,
-	enabled: currentUserCan( 'moderate_comments' ) && 1 == sysCommentStatus,
+	enabled: currentUserCan( 'moderate_comments' ) && 1 == wpCommentStatus,
 	accent: {
 		color: '#FFCC00'
 	},
