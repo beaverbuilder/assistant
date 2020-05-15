@@ -27,15 +27,17 @@ const AppMain = () => {
 		<div className={ classes } >
 			<Sidebar edge={ sideName } />
 
-			<div className="fl-asst-main-content" >
-				<Nav.Switch location={ location }>
-					<Nav.Route exact path="/">
-						<Redirect to={ `/${homeApp}` } />
-					</Nav.Route>
-					<Nav.Route path="/:app" component={ AppContent } />
-					<Nav.Route component={ Page.NotFound } />
-				</Nav.Switch>
-			</div>
+			{ ! isAppHidden && (
+				<div className="fl-asst-main-content" >
+					<Nav.Switch location={ location }>
+						<Nav.Route exact path="/">
+							<Redirect to={ `/${homeApp}` } />
+						</Nav.Route>
+						<Nav.Route path="/:app" component={ AppContent } />
+						<Nav.Route component={ Page.NotFound } />
+					</Nav.Switch>
+				</div>
+			)}
 		</div>
 	)
 }
