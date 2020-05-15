@@ -162,7 +162,7 @@ export default ( {
 	post,
 	to,
 	className,
-	actions: initialActions,
+	actions,
 	approveComment,
 	unapproveComment,
 	spamComment,
@@ -170,40 +170,36 @@ export default ( {
 	trashComment,
 	restoreComment,
 } ) => {
-	const [actions, setActions] = useState( initialActions )
 	const [isReplying, setIsReplying] = useState( false )
 	const toggleReplying = () => setIsReplying( ! isReplying )
 
-	useEffect( () => {
-		const additional = [
-			{
-				handle: 'reply',
-				title: __( 'Reply' ),
-				icon: <Icon.Reply />,
-				onClick: toggleReplying
-			},
-			{
-				handle: 'approve',
-				onClick: isPending ? approveComment : unapproveComment,
-				title: isPending ? __( 'Approve' ) : __( 'Reject' ),
-				icon: isPending ? <Icon.Approve /> : <Icon.Reject />
-			},
-			{
-				handle: 'spam',
-				onClick: ! isSpam ? spamComment : unspamComment,
-				title: ! isSpam ? __( 'Mark as Spam' ) : __( 'Unmark as Spam' ),
-				icon: ! isSpam ? <Icon.Spam /> : <Icon.Unspam />
-			},
-			{
-				handle: 'trash',
-				status: 'destructive',
-				onClick: ! isTrash ? trashComment : restoreComment,
-				title: ! isTrash ? __( 'Move to trash' ) : __( 'Restore' ),
-				icon: ! isTrash ? <Icon.Trash /> : <Icon.Restore />
-			}
-		]
-		setActions( [ ...actions, ...additional ] )
-	}, [])
+	const additional = [
+		{
+			handle: 'reply',
+			title: __( 'Reply' ),
+			icon: <Icon.Reply />,
+			onClick: toggleReplying
+		},
+		{
+			handle: 'approve',
+			onClick: isPending ? approveComment : unapproveComment,
+			title: isPending ? __( 'Approve' ) : __( 'Reject' ),
+			icon: isPending ? <Icon.Approve /> : <Icon.Reject />
+		},
+		{
+			handle: 'spam',
+			onClick: ! isSpam ? spamComment : unspamComment,
+			title: ! isSpam ? __( 'Mark as Spam' ) : __( 'Unmark as Spam' ),
+			icon: ! isSpam ? <Icon.Spam /> : <Icon.Unspam />
+		},
+		{
+			handle: 'trash',
+			status: 'destructive',
+			onClick: ! isTrash ? trashComment : restoreComment,
+			title: ! isTrash ? __( 'Move to trash' ) : __( 'Restore' ),
+			icon: ! isTrash ? <Icon.Trash /> : <Icon.Restore />
+		}
+	]
 
 	return (
 		<motion.li
@@ -242,7 +238,7 @@ export default ( {
 					) }
 				</div>
 			</Button>
-			<Actions items={actions} />
+			<Actions items={[ ...actions, ...additional ]} />
 		</motion.li>
 	)
 }
