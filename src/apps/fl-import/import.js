@@ -4,90 +4,82 @@ import { registerStore, useStore, getStore, getDispatch } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import './style.scss'
 import { FileDropListener } from './drop-listner'
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 
-registerStore( 'fl-import/uploader', {
+registerStore('fl-import/uploader', {
 	state: {
 		current: 0,
-		items: [],
+		items: []
 	}
-} )
+})
 
-export const ImportDropUploader = ( { children } ) => {
-
-	const { current, items } = useStore( 'fl-import/uploader' )
-	const { setCurrent, setItems } = getDispatch( 'fl-import/uploader' )
+export const ImportDropUploader = ({ children }) => {
+	const { current, items } = useStore('fl-import/uploader')
+	const { setCurrent, setItems } = getDispatch('fl-import/uploader')
 	const wpRest = getWpRest()
-	let history = useHistory();
+	let history = useHistory()
 	const onFilesDropped = files => {
-		const { current, items } = getStore( 'fl-import/uploader' ).getState()
+		const { current, items } = getStore('fl-import/uploader').getState()
 
-		for ( let i = 0; i < files.length; i++ ) {
-			items.push( files.item( i ) )
+		for (let i = 0; i < files.length; i++) {
+			items.push(files.item(i))
 		}
 
-		setItems( [ ...items ] )
+		setItems([...items])
 
-		if ( ! current ) {
-
+		if (!current) {
 			uploadNextItem()
 		}
 	}
 
 	const uploadNextItem = () => {
-
-		const { current, items } = getStore( 'fl-import/uploader' ).getState()
+		const { current, items } = getStore('fl-import/uploader').getState()
 		const file = items[current]
 		const data = new FormData()
 
-		if ( ! file ) {
-			setItems( [] )
-			setCurrent( 0 )
+		if (!file) {
+			setItems([])
+			setCurrent(0)
 			return
 		}
 
-		setCurrent( current + 1 )
+		setCurrent(current + 1)
 
-		data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
+		data.append('file', file, file.name || file.type.replace('/', '.'))
 
-		wpRest.posts().import( data ).then( response => {
-			onSuccess( response )
-		} ).catch( ( error ) => {
-			onError( error )
-		} )
-
-
+		wpRest
+			.posts()
+			.import(data)
+			.then(response => {
+				onSuccess(response)
+			})
+			.catch(error => {
+				onError(error)
+			})
 	}
 
-
-	const onSuccess = ( response ) => {
+	const onSuccess = response => {
 		uploadNextItem()
-		if ( response ) {
-
-			alert( response.data.message )
-			history.push( '/fl-content' )
+		if (response) {
+			alert(response.data.message)
+			if (typeof response.data.error == 'undefined') {
+				history.push('/fl-content')
+			}
 		}
-
 	}
 
 	const onError = () => {
 		uploadNextItem()
-		alert( 'Error uploading import file.', { appearance: 'error' } )
+		alert('Error uploading import file.', { appearance: 'error' })
 	}
 
-	if ( current ) {
+	if (current) {
 		return (
-
-			<div className="fl-asst-file-uploading-text fl-asst-file-drop-file-wrapper">
+			<div className='fl-asst-file-uploading-text fl-asst-file-drop-file-wrapper'>
 				<Icon.SmallSpinner /> Uploading {current} of {items.length}
 			</div>
-
 		)
 	}
 
-	return (
-		<FileDropListener onDrop={ onFilesDropped }>
-			{children}
-		</FileDropListener>
-	)
+	return <FileDropListener onDrop={onFilesDropped}>{children}</FileDropListener>
 }
