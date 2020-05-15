@@ -84,7 +84,7 @@ export const login = ( email, password, config = {} ) => {
 				}
 
 				// Handle success
-				const { token, user } = response.data.data
+				const { token, user } = response.data
 				const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
 				session.setToken( token )
 				session.setUser( user )

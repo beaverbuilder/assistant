@@ -13,7 +13,7 @@ export default ( { match } ) => {
 		return <Page.Loading />
 	}
 
-	const tabs = [
+	let tabs = [
 		{
 			handle: 'items',
 			label: __( 'Items' ),
@@ -21,13 +21,16 @@ export default ( { match } ) => {
 			component: () => <LibraryItems library={ library } />,
 			exact: true,
 		},
-		{
+	]
+
+	if ( library.permissions.update ) {
+		tabs.push( {
 			handle: 'settings',
 			label: __( 'Settings' ),
 			path: `/fl-cloud/libraries/${ id }/tab/settings`,
 			component: () => <LibrarySettings library={ library } />,
-		}
-	]
+		} )
+	}
 
 	return (
 		<Page

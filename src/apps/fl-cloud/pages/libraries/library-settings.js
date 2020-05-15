@@ -23,16 +23,6 @@ export default ( { library } ) => {
 			component: 'text',
 			alwaysCommit: true
 		},
-		// owner: {
-		// 	label: __( 'Owner' ),
-		// 	component: 'select',
-		// 	alwaysCommit: true,
-		// 	options: {
-		// 		you: __( 'Justin Busa (You)' ),
-		// 		bb: __( 'Beaver Builder' ),
-		// 		db: __( 'Dickiebirds' ),
-		// 	}
-		// },
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
@@ -68,13 +58,15 @@ export default ( { library } ) => {
 					{ __( 'Update Library' ) }
 				</Button.Loading>
 			</Layout.Box>
-			<Layout.Box>
-				<Page.Section label={ __( 'Danger Zone' ) }>
-					<Layout.Headline>{ __( 'Delete This Library' ) }</Layout.Headline>
-					<p style={ { margin: '0' } }>{ __( 'Once a library has been deleted, it is gone forever. Please be sure you want to delete this library.' ) }</p>
-				</Page.Section>
-				<Button onClick={ deleteLibrary } status='destructive'>Delete Library</Button>
-			</Layout.Box>
+			{ library.permissions.delete &&
+				<Layout.Box>
+					<Page.Section label={ __( 'Danger Zone' ) }>
+						<Layout.Headline>{ __( 'Delete This Library' ) }</Layout.Headline>
+						<p style={ { margin: '0' } }>{ __( 'Once a library has been deleted, it is gone forever. Please be sure you want to delete this library.' ) }</p>
+					</Page.Section>
+					<Button onClick={ deleteLibrary } status='destructive'>Delete Library</Button>
+				</Layout.Box>
+			}
 		</>
 	)
 }

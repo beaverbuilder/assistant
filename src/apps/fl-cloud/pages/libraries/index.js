@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Icon, Layout, List, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 import './style.scss'
 
 export default () => {
-	const [ ownerId, setOwnerId ] = useState( 0 )
+	const location = useLocation()
+	const { team } = location.state ? location.state : {}
+	const [ ownerId, setOwnerId ] = useState( team )
 	const [ teams, setTeams ] = cloud.teams.useAll()
 	const [ libraries, setLibraries ] = cloud.libraries.useAll( ownerId )
 

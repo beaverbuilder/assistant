@@ -52,7 +52,7 @@ export default ( { history, location } ) => {
 			data.team_id = owner
 		}
 		return cloud.libraries.create( data ).then( response => {
-			history.replace( '/fl-cloud' )
+			history.replace( '/fl-cloud', { team: owner } )
 		} ).catch( error => {
 			setErrors( error.response.data.errors )
 		} )
