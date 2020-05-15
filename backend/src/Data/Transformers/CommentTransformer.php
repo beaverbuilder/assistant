@@ -15,6 +15,7 @@ class CommentTransformer {
 			'author'      => $comment->comment_author,
 			'authorEmail' => $comment->comment_author_email,
 			'authorIP'    => $comment->comment_author_IP,
+			'authorUrl'   => get_author_posts_url( $comment->user_id ),
 			'content'     => $comment->comment_content,
 			'date'        => $date,
 			'editUrl'     => admin_url( 'comment.php?action=editcomment&c=' ) . $comment->comment_ID,
