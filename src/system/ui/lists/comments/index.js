@@ -34,6 +34,7 @@ export const Comments = ( {
 							}
 						} )
 				}
+				item.approveComment = approveComment
 
 				const unapproveComment = () => {
 					comments
@@ -47,6 +48,7 @@ export const Comments = ( {
 							}
 						} )
 				}
+				item.unapproveComment = unapproveComment
 
 				const spamComment = () => {
 					comments
@@ -61,6 +63,7 @@ export const Comments = ( {
 							} )
 						} )
 				}
+				item.spamComment = spamComment
 
 				const unspamComment = () => {
 					comments
@@ -75,6 +78,7 @@ export const Comments = ( {
 							} )
 						} )
 				}
+				item.unspamComment = unspamComment
 
 				const trashComment = () => {
 					if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
@@ -97,6 +101,7 @@ export const Comments = ( {
 					}
 
 				}
+				item.trashComment = trashComment
 
 				const untrashComment = () => {
 					comments
@@ -112,6 +117,7 @@ export const Comments = ( {
 							} )
 						} )
 				}
+				item.untrashComment = untrashComment
 
 				const Accessory = () => {
 					if ( item.isTrashed && 'trash' !== type ) {
@@ -237,7 +243,6 @@ export const Comments = ( {
 					thumbnail: ( item.isTrashing && 'trash' !== type ) || ( item.isSpam && 'spam' !== type ) || ( item.isunSpam && 'spam' == type ) || ( item.isRestore && 'trash' == type ) ? '' : item.thumbnail,
 					accessory: props => <Accessory { ...props } />,
 					extras: props => <Extras { ...props } />,
-
 					className: classname( {
 						'fl-asst-list-item-alert': ! item.approved
 					}, defaultProps.className )

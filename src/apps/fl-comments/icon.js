@@ -1,9 +1,10 @@
 import React from 'react'
 
 const CommentsIcon = () => (
-	<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M19 4.5V3.68421C19 2.20176 17.7912 1 16.3 1H8M19 8.5V10.8158C19 12.2982 17.7912 13.5 16.3 13.5H12L6 18V13.5H3.7C2.20883 13.5 1 12.2982 1 10.8158V3.68421C1 2.20176 2.20883 1 3.7 1H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M1 4.18421V11.3158C1 12.7982 2.20883 14 3.7 14H6V18.5L12 14H16.3C17.7912 14 19 12.7982 19 11.3158V4.18421C19 2.70176 17.7912 1.5 16.3 1.5H3.7C2.20883 1.5 1 2.70176 1 4.18421Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 	</svg>
+
 )
 
 export default CommentsIcon

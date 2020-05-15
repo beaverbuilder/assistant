@@ -11,7 +11,7 @@ export const Comment = () => {
 	const {
 		id,
 		approved,
-		authorName,
+		author,
 		date,
 		content,
 		trash,
@@ -300,7 +300,7 @@ export const Comment = () => {
 			className="fl-asst-comment-details"
 		>
 
-			<Layout.Headline>{authorName}</Layout.Headline>
+			<Layout.Headline>{author.name}</Layout.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
 
 			{ 'edit' !== commentStatus && (
@@ -323,7 +323,7 @@ export const Comment = () => {
 			)}
 			{ 'reply' == commentStatus && (
 				<div className='fl-asst-cmt-text-wrap'>
-					<span className="fl-asst-edit-comment-title">{__('Reply Comment')}</span>
+					<span className="fl-asst-edit-comment-title">{__('Reply To Comment')}</span>
 					<textarea
 						className="fl-asst-comment-text"
 						value={ replyValue }

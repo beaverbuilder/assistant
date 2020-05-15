@@ -182,6 +182,9 @@
             }
 
             li:hover {
+                --thread-background-color: var(--fluid-box-background);
+                background: var(--fluid-box-background);
+
                 .fl-asst-comment-gutter {
                     --line-color: var(--fluid-background);
                 }

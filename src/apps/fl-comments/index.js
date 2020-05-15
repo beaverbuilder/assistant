@@ -1,9 +1,9 @@
 import { lazy } from 'react'
-import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
+import { registerApp } from 'assistant'
+import { Page } from 'assistant/ui'
 import { addQueryArgs } from 'assistant/utils/url'
 import { currentUserCan } from 'assistant/utils/wordpress'
-import { Comment } from './pages'
 import Icon from './icon'
 import { defaultState } from './data'
 
@@ -34,7 +34,7 @@ registerApp( 'fl-comments', {
 			label: item.meta,
 		} ) ),
 		detail: {
-			component: Comment,
+			component: Page.Comment,
 			path: '/comment/:id',
 			pathname: item => `/comment/${ item.id }`
 		},
