@@ -2,11 +2,13 @@ import React from 'react'
 import classname from 'classnames'
 import { Button, Icon } from 'assistant/ui'
 
-const Actions = ({ items = [] }) => {
+const Actions = ( { items = [] } ) => {
 
-    if ( ! items || items.length < 1 ) return null
+	if ( ! items || 1 > items.length ) {
+		return null
+	}
 
-    return (
+	return (
 		<div className="fl-asst-item-extras">
 			{ items.map( ( item, i ) => {
 				const action = {

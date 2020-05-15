@@ -72,13 +72,13 @@ const Meta = ( { url, ip, email } ) => {
 	)
 }
 
-const Reply = ({
+const Reply = ( {
 	onDismiss,
 	id,
 	postID
-}) => {
+} ) => {
 	const ref = useRef()
-	const [replyWasPosted, setReplyWasPosted] = useState( false )
+	const [ replyWasPosted, setReplyWasPosted ] = useState( false )
 
 	const stop = e => {
 		e.stopPropagation()
@@ -92,7 +92,6 @@ const Reply = ({
 
 		if ( '' !== ref.current.value ) {
 			replyToComment( id, postID, ref.current.value, () => { } ).then( response => {
-				console.log('success???', response )
 				setReplyWasPosted( true )
 			} )
 		}
@@ -102,50 +101,50 @@ const Reply = ({
 	// Set focus on mount
 	useEffect( () => {
 		ref.current && ref.current.focus()
-	}, [])
+	}, [] )
 
 	if ( replyWasPosted ) {
 		return (
 			<Layout.Row
-				padY={true}
-				style={{
+				padY={ true }
+				style={ {
 					background: 'var(--fluid-primary-background)',
 					color: 'var(--fluid-primary-color)',
 					borderRadius: 'var(--fluid-radius)',
 					marginTop: 10
-				}}
-			>{__('Success! Your reply was posted.')}</Layout.Row>
+				} }
+			>{__( 'Success! Your reply was posted.' )}</Layout.Row>
 		)
 	}
 
 	return (
 		<motion.div
-			style={{ padding: '20px 0 5px'}}
-			initial={{ scale: 0 }}
-			animate={{ scale: 1 }}
+			style={ { padding: '20px 0 5px' } }
+			initial={ { scale: 0 } }
+			animate={ { scale: 1 } }
 		>
 			<textarea
-				ref={ref}
-				onClick={stop}
-				placeholder={__('Type Your Reply...')}
-				style={{
+				ref={ ref }
+				onClick={ stop }
+				placeholder={ __( 'Type Your Reply...' ) }
+				style={ {
 					maxWidth: '100%',
 					minHeight: 100,
 					resize: 'none'
-				}}
+				} }
 			/>
-			<Layout.Row style={{ padding: '5px 0' }}>
+			<Layout.Row style={ { padding: '5px 0' } }>
 				<Button
 					onClick={ dismiss }
 				>
-					{__('Cancel')}
+					{__( 'Cancel' )}
 				</Button>
 				<Button
 					status="primary"
 					onClick={ reply }
-					style={{ marginLeft: 'auto' }}
+					style={ { marginLeft: 'auto' } }
 				>
-					{__('Reply')}
+					{__( 'Reply' )}
 				</Button>
 			</Layout.Row>
 		</motion.div>
@@ -170,7 +169,7 @@ export default ( {
 	trashComment,
 	restoreComment,
 } ) => {
-	const [isReplying, setIsReplying] = useState( false )
+	const [ isReplying, setIsReplying ] = useState( false )
 	const toggleReplying = () => setIsReplying( ! isReplying )
 
 	const additional = [
@@ -231,14 +230,14 @@ export default ( {
 
 					{ isReplying && (
 						<Reply
-							id={id}
-							postID={post.id}
+							id={ id }
+							postID={ post.id }
 							onDismiss={ () => setIsReplying( false ) }
 						/>
 					) }
 				</div>
 			</Button>
-			<Actions items={[ ...actions, ...additional ]} />
+			<Actions items={ [ ...actions, ...additional ] } />
 		</motion.li>
 	)
 }

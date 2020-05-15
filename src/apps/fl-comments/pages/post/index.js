@@ -3,11 +3,11 @@ import { __ } from '@wordpress/i18n'
 import { Page } from 'assistant/ui'
 
 const Post = () => {
-    return (
-        <Page title={__('Discussion')}>
+	return (
+		<Page title={ __( 'Discussion' ) }>
             View Post discussion.
-        </Page>
-    )
+		</Page>
+	)
 }
 
 export default Post
