@@ -8,7 +8,9 @@ import { Button, Form } from 'ui'
 import { CheckboxControl } from '@wordpress/components'
 import './style.scss'
 
-export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
+export const TaxonomyTermsItem = ({ taxonomy, value, onChange, isDiscard }) => {
+	console.log(isDiscard)
+
 	const [data, setData] = useState({
 		terms: [],
 		idsBySlug: {},
@@ -195,8 +197,9 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 	if (tax.isHierarchical) {
 		return (
 			<>
-				{renderTerms(checkboxTerms)}
-
+				<div className='fl-asst-hierarchical-terms-list'>
+					{renderTerms(checkboxTerms)}
+				</div>
 				<div className='fl-asst-new-term-form'>
 					{addingNew && (
 						<>
