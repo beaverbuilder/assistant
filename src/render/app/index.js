@@ -1,7 +1,7 @@
 import React, { memo, Suspense, useEffect } from 'react'
 import classname from 'classnames'
-import { useLocation, Redirect } from 'react-router-dom'
-import { App, Nav, Page, Env } from 'assistant/ui'
+import { useLocation, Redirect, Route, Switch } from 'react-router-dom'
+import { App, Page, Env } from 'assistant/ui'
 import { useSystemState, getSystemSelectors } from 'assistant/data'
 
 import Sidebar from './side-bar'
@@ -29,13 +29,13 @@ const AppMain = () => {
 
 			{ ! isAppHidden && (
 				<div className="fl-asst-main-content" >
-					<Nav.Switch location={ location }>
-						<Nav.Route exact path="/">
+					<Switch location={ location }>
+						<Route exact path="/">
 							<Redirect to={ `/${homeApp}` } />
-						</Nav.Route>
-						<Nav.Route path="/:app" component={ AppContent } />
-						<Nav.Route component={ Page.NotFound } />
-					</Nav.Switch>
+						</Route>
+						<Route path="/:app" component={ AppContent } />
+						<Route component={ Page.NotFound } />
+					</Switch>
 				</div>
 			)}
 		</div>

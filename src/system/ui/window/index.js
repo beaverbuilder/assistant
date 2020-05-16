@@ -36,8 +36,7 @@ export const Window = ( {
 	toolbar: topbar,
 	...rest
 } ) => {
-
-	const { overlayToolbar, shouldReduceMotion } = useSystemState()
+	const { shouldReduceMotion } = useSystemState('shouldReduceMotion')
 
 	const handleChange = config => {
 		const state = {
@@ -77,14 +76,10 @@ export const Window = ( {
 	const context = {
 		isHidden,
 		toggleIsHidden,
-		overlayToolbar,
-
 		size,
 		toggleSize,
-
 		position,
 		setPosition,
-
 		requestAnimate,
 		shouldShowLabels,
 	}

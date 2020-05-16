@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react'
+import React, { memo } from 'react'
 import { Nav as FLUID_Nav } from 'fluid/ui'
 import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
 import { Button } from 'ui'
@@ -7,7 +7,8 @@ import './style.scss'
 const Nav = { ...FLUID_Nav }
 
 Nav.Tabs = ( { tabs = [], ...rest } ) => {
-	const { location, history } = useContext( Nav.Context )
+	const history = useHistory()
+	const location = useLocation()
 	return (
 		<>
 			<Button.Group

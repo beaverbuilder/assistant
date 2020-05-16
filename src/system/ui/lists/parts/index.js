@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import classname from 'classnames'
-import { Nav, Page, Layout } from 'ui'
+import { useHistory } from 'react-router-dom'
+import { Page, Layout } from 'ui'
 import { isColor } from 'utils/color'
 import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'
@@ -160,7 +161,7 @@ export const Item = ( {
 		'fl-asst-list-item': true,
 		'fl-asst-is-clickable': to,
 	}, className )
-	const { history } = useContext( Nav.Context )
+	const history = useHistory()
 	const [ isHovering, setIsHovering ] = useState( false )
 	const [ isFocused, setIsFocused ] = useState( false )
 
