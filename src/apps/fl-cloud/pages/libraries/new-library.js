@@ -4,8 +4,8 @@ import { Button, Form, Layout, Page } from 'assistant/ui'
 import { useCloudState } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 
-export default ( { history, location } ) => {
-	const [ teams, setTeams ] = cloud.teams.useAll()
+export default ( { history } ) => {
+	const [ teams ] = cloud.teams.useAll()
 	const { cloudUser } = useCloudState()
 
 	const getOwnerOptions = () => {
@@ -51,7 +51,7 @@ export default ( { history, location } ) => {
 		if ( owner ) {
 			data.team_id = owner
 		}
-		return cloud.libraries.create( data ).then( response => {
+		return cloud.libraries.create( data ).then( () => {
 			history.replace( '/fl-cloud', { team: owner } )
 		} ).catch( error => {
 			setErrors( error.response.data.errors )
@@ -61,8 +61,7 @@ export default ( { history, location } ) => {
 	const {
 		renderForm,
 		submitForm,
-		isSubmitting,
-		setErrors
+		isSubmitting
 	} = Form.useForm( {
 		fields,
 		onSubmit

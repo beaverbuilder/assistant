@@ -52,7 +52,7 @@ export const TeamInvite = ( { team } ) => {
 					padX={ false }
 				>
 					<Layout.Box
-					 	padY={ false }
+						padY={ false }
 						style={ {
 							display: 'flex',
 							flexDirection: 'row',

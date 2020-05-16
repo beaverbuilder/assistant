@@ -1,13 +1,11 @@
 import React, { useRef } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Page } from 'assistant/ui'
-import { getCloudSelectors } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 
 export default ( { history, location } ) => {
 	const { welcome } = location.state ? location.state : {}
 	const timeout = useRef( null )
-	const { getCloudUser } = getCloudSelectors()
 
 	const checkName = ( name ) => {
 		if ( timeout.current ) {
@@ -43,7 +41,6 @@ export default ( { history, location } ) => {
 
 	const onSubmit = ( { values, setErrors } ) => {
 		const { name } = values
-		const { id } = getCloudUser()
 		if ( ! name ) {
 			return
 		}

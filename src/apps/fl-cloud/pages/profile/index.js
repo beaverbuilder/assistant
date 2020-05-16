@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { useCloudState, getCloudActions } from 'assistant/data'
-import { Button, Form, Layout, Nav, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import { Layout, Nav, Page } from 'assistant/ui'
 import { ProfileSettings } from './settings.js'
 import { ProfilePassword } from './password.js'
 

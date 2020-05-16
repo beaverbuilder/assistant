@@ -186,16 +186,6 @@ export const useFormData = ( {
 		} )
 	}
 
-	const selectErrors = () => {
-		const errors = {}
-		for ( let key in state ) {
-			if ( state[ key ].errors.length ) {
-				errors[ key ] = state[ key ].errors
-			}
-		}
-		return errors
-	}
-
 	const getFieldIDs = () => {
 		const ids = {}
 		for ( let key in fields ) {

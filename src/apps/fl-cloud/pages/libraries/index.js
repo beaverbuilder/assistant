@@ -9,8 +9,8 @@ export default () => {
 	const location = useLocation()
 	const { team } = location.state ? location.state : {}
 	const [ ownerId, setOwnerId ] = useState( team )
-	const [ teams, setTeams ] = cloud.teams.useAll()
-	const [ libraries, setLibraries ] = cloud.libraries.useAll( ownerId )
+	const [ teams ] = cloud.teams.useAll()
+	const [ libraries ] = cloud.libraries.useAll( ownerId )
 
 	if ( ! teams ) {
 		return <Page.Loading />
@@ -62,7 +62,7 @@ export default () => {
 			}
 			{ libraries && ! libraries.length &&
 				<Layout.Box padY={ false } style={ { textAlign: 'center' } }>
-					<p>{ __( "No libraries found." ) }</p>
+					<p>{ __( 'No libraries found.' ) }</p>
 				</Layout.Box>
 			}
 		</Page.Section>

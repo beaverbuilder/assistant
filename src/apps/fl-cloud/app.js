@@ -14,6 +14,7 @@ import Sites from './pages/sites'
 import NewLibrary from './pages/libraries/new-library'
 import NewLibraryItems from './pages/libraries/new-items'
 import Library from './pages/libraries/library'
+import LibraryItem from './pages/libraries/library-item'
 import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
 
@@ -33,33 +34,34 @@ export default ( { baseURL } ) => {
 
 	return (
 		<Nav.Switch>
-			// Dashboard
+			{ /* Dashboard */ }
 			<Nav.Route exact path={ `${baseURL}` } component={ Dashboard } />
 
-			// Auth
+			{ /* Auth */ }
 			<Nav.Route path={ `${baseURL}/auth/login` } component={ Login } />
 			<Nav.Route path={ `${baseURL}/auth/register` } component={ Register } />
 			<Nav.Route path={ `${baseURL}/auth/forgot-password` } component={ ForgotPassword } />
 
-			// Teams
+			{ /* Teams */ }
 			<Nav.Route exact path={ `${baseURL}/teams` } component={ Teams } />
 			<Nav.Route path={ `${baseURL}/teams/tab/:tab` } component={ Teams } />
 			<Nav.Route path={ `${baseURL}/teams/new` } component={ NewTeam } />
 
-			// Sites
+			{ /* Sites */ }
 			<Nav.Route path={ `${baseURL}/sites` } component={ Sites } />
 
-			// Libraries
+			{ /* Libraries */ }
 			<Nav.Route path={ `${baseURL}/libraries/new` } component={ NewLibrary } />
 			<Nav.Route path={ `${baseURL}/libraries/:id/items/new` } component={ NewLibraryItems } />
+			<Nav.Route path={ `${baseURL}/libraries/:id/items/:itemId` } component={ LibraryItem } />
 			<Nav.Route path={ `${baseURL}/libraries/:id` } component={ Library } />
 			<Nav.Route path={ `${baseURL}/libraries/:id/tab/:tab` } component={ Library } />
 
-			// Profile
+			{ /* Profile */ }
 			<Nav.Route path={ `${baseURL}/profile` } component={ Profile } />
 			<Nav.Route path={ `${baseURL}/profile/tab/:tab` } component={ Profile } />
 
-			// Subscription
+			{ /* Subscription */ }
 			<Nav.Route path={ `${baseURL}/subscription` } component={ Subscription } />
 		</Nav.Switch>
 	)

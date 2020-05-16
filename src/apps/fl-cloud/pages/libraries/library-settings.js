@@ -34,8 +34,7 @@ export default ( { library } ) => {
 	const {
 		renderForm,
 		submitForm,
-		isSubmitting,
-		setErrors
+		isSubmitting
 	} = Form.useForm( {
 		fields,
 		onSubmit,

@@ -9,7 +9,7 @@ const api = {
 	updatePassword: ( data ) => {
 		return new Promise( ( resolve ) => {
 			setTimeout( () => {
-				resolve()
+				resolve( data )
 			}, 1000 )
 		} )
 	},
