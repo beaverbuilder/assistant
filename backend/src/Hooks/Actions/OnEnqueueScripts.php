@@ -183,7 +183,7 @@ class OnEnqueueScripts {
 
 		wp_register_script( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.js', [ 'react', 'react-dom', 'lodash' ], $ver, false );
 		wp_register_style( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.css', [], $ver, null );
-		wp_enqueue_media();
+
 		if ( $this->should_enqueue() ) {
 
 			$config = $this->generate_frontend_config();
@@ -193,7 +193,6 @@ class OnEnqueueScripts {
 			$js_deps = [
 				'fl-fluid',
 				'lodash',
-				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',
 				'wp-dom-ready',
@@ -214,6 +213,9 @@ class OnEnqueueScripts {
 			// UI Render - loaded in footer
 			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.js', $js_deps, $ver, true );
+
+			// WordPress Media Uploader
+			wp_enqueue_media();
 
 			do_action( 'fl_assistant_enqueue' );
 		}
