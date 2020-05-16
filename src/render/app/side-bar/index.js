@@ -2,7 +2,7 @@ import React, { useState, memo, Suspense } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
-import { Button, Icon, Env, List } from 'assistant/ui'
+import { Button, Icon, Env, List, Error } from 'assistant/ui'
 import {
 	useSystemState,
 	getSystemActions,
@@ -160,7 +160,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 						} ) ) }
 						className="disable-while-sorting"
 					>
-						<Icon.Apps />
+						<Icon.Safely icon={manage.icon} />
 					</Button>
 				)}
 			</div>
@@ -180,10 +180,6 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 	)
 } )
 
-const AppIcon = memo(  ( { icon: AppIcon, ...rest } ) => (
-	<Suspense fallback={ <Icon.Loading /> }>
-		<AppIcon { ...rest } />
-	</Suspense>
-))
+const AppIcon = memo(  ( { icon, ...rest } ) => <Icon.Safely icon={icon} {...rest} /> )
 
 export default Sidebar

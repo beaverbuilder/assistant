@@ -36,7 +36,6 @@ const registerDefaultCardTypes = () => {
 
 	registerCardType( 'fl-apps', {
 		label: __( 'Apps' ),
-		icon: Icon.Apps,
 		render: Apps,
 		edit: Apps.Edit,
 		contentProps: {

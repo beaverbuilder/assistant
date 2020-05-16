@@ -1,10 +1,16 @@
 import React from 'react'
 import { Icon as FLUID_Icon } from 'fluid/ui'
 import Loading from './loading'
+import Error from './error'
+import Safely from './safely'
 
 const Icon = { ...FLUID_Icon }
 
 Icon.Loading = Loading
+Icon.Error = Error
+
+// Render a user-generated icon safely with Suspense and Error.Boundary
+Icon.Safely = Safely
 
 Icon.Pencil = ( { size = 45, ...rest } ) => {
 
@@ -24,23 +30,6 @@ Icon.Pencil = ( { size = 45, ...rest } ) => {
 	)
 }
 Icon.Pencil.displayName = 'Icon.Pencil'
-
-Icon.Apps = () => {
-	return (
-		<svg width="20px" height="14px" viewBox="0 0 21 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g fill="currentColor" fillRule="nonzero">
-				<circle cx="2.5" cy="2.5" r="2.5"/>
-				<circle cx="10.5" cy="2.5" r="2.5"/>
-				<circle cx="18.5" cy="2.5" r="2.5"/>
-
-				<circle cx="2.5" cy="11.5" r="2.5"/>
-				<circle cx="10.5" cy="11.5" r="2.5"/>
-				<circle cx="18.5" cy="11.5" r="2.5"/>
-			</g>
-		</svg>
-	)
-}
-Icon.Apps.displayName = 'Icon.Apps'
 
 Icon.DragHandle = () => {
 	return (

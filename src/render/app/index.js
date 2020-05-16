@@ -1,10 +1,10 @@
 import React, { memo, Suspense, useEffect } from 'react'
 import classname from 'classnames'
 import { useLocation, Redirect, Route, Switch } from 'react-router-dom'
-import { App, Page, Env } from 'assistant/ui'
+import { App, Page, Env, Error } from 'assistant/ui'
 import { useSystemState, getSystemSelectors } from 'assistant/data'
-
 import Sidebar from './side-bar'
+import ErrorPage from './error-page'
 import './style.scss'
 
 const AppMain = () => {
@@ -28,15 +28,17 @@ const AppMain = () => {
 			<Sidebar edge={ sideName } />
 
 			{ ! isAppHidden && (
-				<div className="fl-asst-main-content" >
-					<Switch location={ location }>
-						<Route exact path="/">
-							<Redirect to={ `/${homeApp}` } />
-						</Route>
-						<Route path="/:app" component={ AppContent } />
-						<Route component={ Page.NotFound } />
-					</Switch>
-				</div>
+				<Error.Boundary alternate={ ErrorPage }>
+					<div className="fl-asst-main-content" >
+						<Switch location={ location }>
+							<Route exact path="/">
+								<Redirect to={ `/${homeApp}` } />
+							</Route>
+							<Route path="/:app" component={ AppContent } />
+							<Route component={ Page.NotFound } />
+						</Switch>
+					</div>
+				</Error.Boundary>
 			)}
 		</div>
 	)

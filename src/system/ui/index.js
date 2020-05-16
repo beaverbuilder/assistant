@@ -8,7 +8,7 @@ import Layout from './layout'
 import { Page } from './pages'
 import Nav from './nav'
 import { Window } from './window'
-import { Error } from './errors'
+import Error from './errors'
 import { Control, Filter } from './controls'
 import { Form } from './forms'
 import { Table } from './table'
@@ -26,12 +26,18 @@ export * from './nav'
 export * from './window'
 export * from './button'
 export * from './art'
-export * from './errors'
 export * from './controls'
 export * from './forms'
 export * from './table'
 export * from './upload'
-export { Layout, Env, Notice, Menu, Media }
+export {
+	Layout,
+	Env,
+	Notice,
+	Menu,
+	Media,
+	Error,
+}
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
 export const api = {

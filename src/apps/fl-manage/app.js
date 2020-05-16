@@ -1,7 +1,17 @@
 import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
-import { App, Page, Icon, Button, Form, Layout, Env, List } from 'assistant/ui'
+import {
+	App,
+	Page,
+	Icon,
+	Button,
+	Form,
+	Layout,
+	Env,
+	List,
+} from 'assistant/ui'
 import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
+import AppIcon from './icon'
 import './style.scss'
 
 export default props => (
@@ -12,15 +22,13 @@ export default props => (
 )
 
 const MainScreen = () => {
-
 	//const history = useHistory()
 	//const goToRoot = () => history.go( -history.length )
-
 	return (
 		<Page
 			title={ __( 'Apps & Settings' ) }
 			shouldShowBackButton={ false }
-			icon={ <Icon.Apps context="sidebar" /> }
+			icon={ <AppIcon context="sidebar" /> }
 		>
 			<Form>
 				<Page.Section>
@@ -65,6 +73,10 @@ const AppList = memo( () => {
 					state: app,
 				}
 
+				const Test = () => (
+					<div>Problem!</div>
+				)
+
 				return (
 				<>
 					<Button
@@ -76,14 +88,14 @@ const AppList = memo( () => {
 							justifyContent: 'flex-start',
 						} }
 						onDragStart={ e => {
-
 							// prevent link dragging behavior
 							e.preventDefault()
 						} }
 					>
 						<span className="fl-asst-item-icon">
-							{ icon ? icon( { context: 'sidebar' } ) : <Icon.Placeholder /> }
+							<Icon.Safely icon={icon} context="sidebar" />
 						</span>
+
 						{label}
 					</Button>
 
