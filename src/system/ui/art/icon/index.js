@@ -1,7 +1,10 @@
 import React from 'react'
 import { Icon as FLUID_Icon } from 'fluid/ui'
+import Loading from './loading'
 
 const Icon = { ...FLUID_Icon }
+
+Icon.Loading = Loading
 
 Icon.Pencil = ( { size = 45, ...rest } ) => {
 

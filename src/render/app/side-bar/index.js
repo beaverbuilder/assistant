@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, Suspense } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
@@ -180,6 +180,10 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 	)
 } )
 
-const AppIcon = memo(  ( { icon: Component, ...rest } ) => <Component { ...rest } /> )
+const AppIcon = memo(  ( { icon: AppIcon, ...rest } ) => (
+	<Suspense fallback={ <Icon.Loading /> }>
+		<AppIcon { ...rest } />
+	</Suspense>
+))
 
 export default Sidebar
