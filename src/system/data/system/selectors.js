@@ -65,8 +65,13 @@ export const selectApp = ( state, key ) => {
 		onMount: () => {},
 		...app,
 		handle: app.app,
-		icon: app.icon ? app.icon : Icon.DefaultApp,
+		icon: app.icon ? app.icon : Icon.Placeholder,
 	}
+}
+
+export const selectHomeApp = ( state ) => {
+	const key = 'fl-home'
+	return selectApp( state, key )
 }
 
 export const selectAppOrder = ( state, maxCount = null ) => {

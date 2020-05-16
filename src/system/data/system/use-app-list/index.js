@@ -26,7 +26,7 @@ const useAppList = ( config = defaults ) => {
 		output.push( {
 			...app,
 			handle: app.app,
-			icon: app.icon ? app.icon : Icon.DefaultApp,
+			icon: app.icon ? app.icon : Icon.Placeholder,
 			position: i,
 			isFirst: false,
 			isLast: false,

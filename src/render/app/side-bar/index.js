@@ -2,7 +2,7 @@ import React, { useState, memo, Suspense } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
-import { Button, Icon, Env, List, Error } from 'assistant/ui'
+import { Button, Icon, Env, List } from 'assistant/ui'
 import {
 	useSystemState,
 	getSystemActions,
@@ -14,7 +14,7 @@ import './style.scss'
 
 const Sidebar = memo( ( { edge = 'right' } ) => {
 	const { window, isAppHidden  } = useSystemState( [ 'window', 'isAppHidden', 'appOrder', 'apps' ] )
-	const { selectApp } = getSystemSelectors()
+	const { selectApp, selectHomeApp } = getSystemSelectors()
 	const {
 		isMobile,
 		isCompactHeight,
@@ -79,6 +79,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 		'is-sorting': isSorting,
 	} )
 
+	const home = selectHomeApp()
 	const manage = selectApp( 'fl-manage' )
 
 	return (
@@ -103,15 +104,17 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 			<div
 				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
 			>
-				<Button
-					appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
-					status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
-					title={ __( 'Home' ) }
-					onClick={ () => navOrHideApp( isRoot, goToRoot ) }
-					className="disable-while-sorting"
-				>
-					<Icon.Home />
-				</Button>
+				{ home && (
+					<Button
+						appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
+						status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
+						title={ home.label }
+						onClick={ () => navOrHideApp( isRoot, goToRoot ) }
+						className="disable-while-sorting"
+					>
+						<Icon.Safely icon={home.icon} />
+					</Button>
+				)}
 
 				<List.Sortable
 					items={ appOrder }
