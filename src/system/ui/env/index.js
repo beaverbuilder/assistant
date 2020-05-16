@@ -9,14 +9,13 @@ Env.defaults = {
 	isCompactHeight: false,
 }
 
-Env.Context = createContext( Env.defaults )
-Env.Context.displayName = 'Env.Context'
+const EnvContext = createContext( Env.defaults )
 
 Env.Provider = ( { application = 'standalone', ...rest } ) => {
 	const isMobile = useMedia( { maxWidth: '450px' } )
 	const isCompactHeight = useMedia( { maxHeight: '475px' } )
 	return (
-		<Env.Context.Provider
+		<EnvContext.Provider
 			value={ {
 				...Env.defaults,
 				application,
@@ -28,6 +27,6 @@ Env.Provider = ( { application = 'standalone', ...rest } ) => {
 	)
 }
 
-Env.use = () => useContext( Env.Context )
+Env.use = () => useContext( EnvContext )
 
 export default Env
