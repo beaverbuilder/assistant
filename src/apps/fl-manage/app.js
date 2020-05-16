@@ -18,7 +18,7 @@ const MainScreen = () => {
 
 	return (
 		<Page
-			title={ __( 'Apps' ) }
+			title={ __( 'Apps & Settings' ) }
 			shouldShowBackButton={ false }
 			icon={ <Icon.Apps context="sidebar" /> }
 		>
