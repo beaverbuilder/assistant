@@ -4,4 +4,8 @@ const api = {
 	...mockup.sites,
 }
 
-export default api
+const hooks = {
+
+}
+
+export default { ...api, ...hooks }

@@ -19,7 +19,9 @@ export default () => {
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-
+		// return cloud.libraries.addItem( library.id, {
+		// 	name: 'Test'
+		// } )
 	}
 
 	const {

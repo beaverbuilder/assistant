@@ -75,8 +75,6 @@ export const login = ( email, password, config = {} ) => {
 		http.post( '/iam/authenticate', { email, password }, config )
 			.then( ( response ) => {
 
-				console.log( response )
-
 				// Handle an error
 				if ( response.response ) {
 					reject( response.response.data )

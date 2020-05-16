@@ -31,24 +31,6 @@ const api = {
 		return http.post( `/account/teams/invite?team=${ id }`, { email } )
 	},
 
-	useAll: () => {
-		const [ teams, setTeams ] = useState( null )
-		useEffect( () => {
-			api.getAll().then( response => setTeams( response.data ) )
-		}, [] )
-		return [ teams, setTeams ]
-	},
-
-	useOne: ( id ) => {
-		const [ team, setTeam ] = useState( null )
-		useEffect( () => {
-			if ( id ) {
-				api.get( id ).then( response => setTeam( response.data ) )
-			}
-		}, [ id ] )
-		return [ team, setTeam ]
-	},
-
 	// create: ( data ) => {
 	// 	return new Promise( ( resolve, reject ) => {
 	// 		const teams = mockup.teams.getData().filter(
@@ -75,4 +57,25 @@ const api = {
 	}
 }
 
-export default api
+const hooks = {
+
+	useAll: () => {
+		const [ teams, setTeams ] = useState( null )
+		useEffect( () => {
+			api.getAll().then( response => setTeams( response.data ) )
+		}, [] )
+		return [ teams, setTeams ]
+	},
+
+	useOne: ( id ) => {
+		const [ team, setTeam ] = useState( null )
+		useEffect( () => {
+			if ( id ) {
+				api.get( id ).then( response => setTeam( response.data ) )
+			}
+		}, [ id ] )
+		return [ team, setTeam ]
+	},
+}
+
+export default { ...api, ...hooks }
