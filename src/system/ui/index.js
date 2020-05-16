@@ -12,7 +12,7 @@ import { Error } from './errors'
 import { Control, Filter } from './controls'
 import { Form } from './forms'
 import { Table } from './table'
-import { MediaDropUploader } from './upload'
+import Media from './upload'
 import Env from './env'
 import Notice from './notices'
 import Menu from './menu'
@@ -31,7 +31,7 @@ export * from './controls'
 export * from './forms'
 export * from './table'
 export * from './upload'
-export { Layout, Env, Notice, Menu }
+export { Layout, Env, Notice, Menu, Media }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
 export const api = {
@@ -52,6 +52,6 @@ export const api = {
 	Nav,
 	Notice,
 	Table,
-	MediaDropUploader,
+	Media,
 	Menu,
 }
