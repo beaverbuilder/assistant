@@ -119,7 +119,7 @@ const AppList = memo( () => {
 } )
 
 const UIColorPreferences = () => {
-	const { application } = Env.useEnvironment()
+	const { application } = Env.use()
 	const { appearance, window } = useSystemState()
 	const { setBrightness, setWindow } = getSystemActions()
 	const { origin } = window

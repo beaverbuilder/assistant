@@ -120,7 +120,7 @@ const WindowLayer = ( {
 		position,
 		setPosition,
 	} = useContext( Window.Context )
-	const { isMobile } = Env.useEnvironment()
+	const { isMobile } = Env.use()
 	const ref = createRef()
 	const posRef = createRef()
 
@@ -283,7 +283,7 @@ const WindowPanel = ( {
 	...rest
 } ) => {
 	const { size } = useContext( Window.Context )
-	const { isMobile } = Env.useEnvironment()
+	const { isMobile } = Env.use()
 
 	const classes = classname( {
 		'fl-asst-window': true,

@@ -12,7 +12,7 @@ const AppMain = () => {
 	const { window, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
 	const side = window.origin[0]
 	const sideName = side ? 'right' : 'left'
-	const { isMobile } = Env.useEnvironment()
+	const { isMobile } = Env.use()
 
 	const classes = classname( {
 		'fl-asst-main': true,

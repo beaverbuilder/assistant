@@ -28,8 +28,6 @@ Env.Provider = ( { application = 'standalone', ...rest } ) => {
 	)
 }
 
-Env.useEnvironment = () => {
-	return useContext( Env.Context )
-}
+Env.use = () => useContext( Env.Context )
 
 export default Env

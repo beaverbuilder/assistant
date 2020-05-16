@@ -4,7 +4,7 @@ import { getSystemConfig, useSystemState, getSystemActions } from 'assistant/dat
 import { Dashicon } from '@wordpress/components'
 
 const Shortcuts = () => {
-	const { application } = Env.useEnvironment()
+	const { application } = Env.use()
 	const { adminURLs } = getSystemConfig()
 	const dashURL = 'undefined' !== typeof adminURLs.dashboard ? adminURLs.dashboard : '/wp-admin'
 

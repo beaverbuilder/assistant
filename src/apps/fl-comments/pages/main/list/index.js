@@ -8,7 +8,7 @@ import Comment from './comment'
 
 export default ( { baseURL } ) => {
 	const { type } = useAppState()
-	const env = Env.useEnvironment()
+	const env = Env.use()
 
 	return (
 		<AnimatePresence>

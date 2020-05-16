@@ -19,7 +19,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 		isMobile,
 		isCompactHeight,
 		application
-	} = Env.useEnvironment()
+	} = Env.use()
 
 	const {
 		toggleIsShowingUI,

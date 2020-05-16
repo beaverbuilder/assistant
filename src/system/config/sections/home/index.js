@@ -13,7 +13,7 @@ registerSection( 'fl-asst-quick-actions', {
 	},
 	padX: false,
 	render: () => {
-		const { application } = Env.useEnvironment()
+		const { application } = Env.use()
 		const { adminURLs } = getSystemConfig()
 
 		const dashURL = 'undefined' !== typeof adminURLs.dashboard ? adminURLs.dashboard : '/wp-admin'
