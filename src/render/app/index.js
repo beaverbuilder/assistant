@@ -10,6 +10,7 @@ import './style.scss'
 const AppMain = () => {
 	const location = useLocation()
 	const { window, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
+	const { selectHomeKey } = getSystemSelectors()
 	const side = window.origin[0]
 	const sideName = side ? 'right' : 'left'
 	const { isMobile } = Env.use()
@@ -21,7 +22,7 @@ const AppMain = () => {
 		'fl-asst-is-mobile': isMobile,
 	} )
 
-	const homeApp = 'fl-home'
+	const home = selectHomeKey()
 
 	return (
 		<div className={ classes } >
@@ -32,7 +33,7 @@ const AppMain = () => {
 					<div className="fl-asst-main-content" >
 						<Switch location={ location }>
 							<Route exact path="/">
-								<Redirect to={ `/${homeApp}` } />
+								<Redirect to={ `/${home}` } />
 							</Route>
 							<Route path="/:app" component={ AppContent } />
 							<Route component={ Page.NotFound } />
@@ -43,7 +44,6 @@ const AppMain = () => {
 		</div>
 	)
 }
-AppMain.displayName = 'AppMain'
 
 const AppContent = () => {
 	useSystemState( 'apps' )

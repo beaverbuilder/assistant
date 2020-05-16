@@ -79,6 +79,8 @@ export const appOrder = ( state = [], action ) => {
 	}
 }
 
+export const homeKey = ( state = 'fl-home' ) => state
+
 export const counts = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_COUNTS':

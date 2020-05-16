@@ -69,8 +69,10 @@ export const selectApp = ( state, key ) => {
 	}
 }
 
+export const selectHomeKey = ( state ) => state.homeKey
+
 export const selectHomeApp = ( state ) => {
-	const key = 'fl-home'
+	const key = selectHomeKey( state )
 	return selectApp( state, key )
 }
 
