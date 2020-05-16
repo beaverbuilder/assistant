@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Layout, Nav, Page } from 'assistant/ui'
+import { Button, Icon, Layout, Nav, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 import LibraryItems from './library-items'
 import LibrarySettings from './library-settings'
@@ -39,6 +39,29 @@ export default ( { match } ) => {
 			padX={ false }
 			padY={ false }
 		>
+			<Layout.Box
+				padY={ false }
+				style={ {
+					flexDirection: 'row',
+					alignItems: 'center',
+					paddingTop: 'var(--fluid-sm-space)'
+				} }
+			>
+				<div style={ { width: '100%' } }>
+					<Layout.Headline>{ library.name }</Layout.Headline>
+					{ library.description &&
+						<div style={ { marginTop: 'var(--fluid-sm-space)' } }>
+							{ library.description }
+						</div>
+					}
+				</div>
+				<Button
+					to={ `/fl-cloud/libraries/${ library.id }/items/new` }
+					style={ { marginLeft: '10px' } }
+				>
+					<Icon.Plus />
+				</Button>
+			</Layout.Box>
 			<Layout.Box
 				padX={ false }
 			>

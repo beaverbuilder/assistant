@@ -12,6 +12,7 @@ import Teams from './pages/teams'
 import NewTeam from './pages/teams/new-team'
 import Sites from './pages/sites'
 import NewLibrary from './pages/libraries/new-library'
+import NewLibraryItems from './pages/libraries/new-items'
 import Library from './pages/libraries/library'
 import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
@@ -50,6 +51,7 @@ export default ( { baseURL } ) => {
 
 			// Libraries
 			<Nav.Route path={ `${baseURL}/libraries/new` } component={ NewLibrary } />
+			<Nav.Route path={ `${baseURL}/libraries/:id/items/new` } component={ NewLibraryItems } />
 			<Nav.Route path={ `${baseURL}/libraries/:id` } component={ Library } />
 			<Nav.Route path={ `${baseURL}/libraries/:id/tab/:tab` } component={ Library } />
 
