@@ -28,23 +28,23 @@ const api = {
 	},
 
 	getItems: ( libraryId ) => {
-		return http.get( `/libraries/${ libraryId }/items` )
+		return http.get( `/libraries/${ libraryId }/library-items` )
 	},
 
 	getItem: ( libraryId, itemId ) => {
-		return http.get( `/libraries/${ libraryId }/items/${ itemId }` )
+		return http.get( `/library-items/${ itemId }` )
 	},
 
 	createItem: ( libraryId, data ) => {
-		return http.post( `/libraries/${ libraryId }/items`, data )
+		return http.post( `/libraries/${ libraryId }/library-items`, data )
 	},
 
 	updateItem: ( libraryId, itemId, data ) => {
-		return http.put( `/libraries/${ libraryId }/items/${ itemId }`, data )
+		return http.put( `/library-items/${ itemId }`, data )
 	},
 
 	deleteItem: ( libraryId, itemId ) => {
-		return http.delete( `/libraries/${ libraryId }/items/${ itemId }` )
+		return http.delete( `/library-items/${ itemId }` )
 	},
 }
 

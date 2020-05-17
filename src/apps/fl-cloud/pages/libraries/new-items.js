@@ -18,6 +18,11 @@ export default () => {
 				post: __( 'Post' ),
 				image: __( 'Image' ),
 				svg: __( 'SVG' ),
+			},
+			validate: ( value, errors ) => {
+				if ( ! value || 'none' === value ) {
+					errors.push( __( 'Please choose a type.' ) )
+				}
 			}
 		},
 		name: {
@@ -33,9 +38,10 @@ export default () => {
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		const { name } = values
+		const { name, type } = values
 		return cloud.libraries.createItem( id, {
-			name
+			type,
+			name,
 		} ).then( () => {
 			history.goBack()
 		} ).catch( error => {
