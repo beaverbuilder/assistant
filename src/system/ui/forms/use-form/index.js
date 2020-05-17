@@ -145,6 +145,7 @@ const Fields = ( { config, data } ) => {
 			id,
 			isRequired,
 			isVisible,
+			isLoading,
 			hasChanges,
 			errors,
 			...rest
@@ -161,6 +162,7 @@ const Fields = ( { config, data } ) => {
 				labelFor={ id }
 				isRequired={ isRequired }
 				isVisible={ isVisible }
+				isLoading={ isLoading }
 				hasChanges={ hasChanges }
 				errors={ errors }
 			>

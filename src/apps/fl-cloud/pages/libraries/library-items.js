@@ -52,7 +52,7 @@ export default ( { library } ) => {
 					</div>
 					<div>
 						<Button to={ `/fl-cloud/libraries/${ library.id }/items/new` }>
-							{ __( 'Add Items' ) }
+							{ __( 'Add Item' ) }
 						</Button>
 					</div>
 				</Layout.Box>

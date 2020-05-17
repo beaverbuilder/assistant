@@ -154,6 +154,12 @@
             margin-left: 5px;
             color: var(--fl-asst-base-art-color);
         }
+
+		.fl-asst-loading-bar {
+			padding-top: 0;
+			padding-bottom: 0;
+			min-height: auto;
+		}
     }
 
     .fl-asst-form-input,

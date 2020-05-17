@@ -1,6 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
-import { Icon, Page } from 'ui'
+import { Icon, Layout, Page } from 'ui'
 import Input from './input'
 
 export { Input }
@@ -19,6 +19,7 @@ export const Item = props => {
 		hasChanges = false,
 		isRequired = false,
 		isVisible = true,
+		isLoading = false,
 		errors = [],
 		style = {}
 	} = props
@@ -40,6 +41,7 @@ export const Item = props => {
 				<label htmlFor={ labelFor }>
 					{label}
 					{ isRequired && <abbr title="required"><Icon name="asterisk" /></abbr> }
+					{ isLoading && <Layout.Loading /> }
 				</label>
 			}
 			<div className="fl-asst-form-item-content">{children}</div>

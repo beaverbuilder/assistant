@@ -40,6 +40,7 @@ export const useFormData = ( {
 			id: null,
 			isRequired: false,
 			isVisible: true,
+			isLoading: false,
 			label: null,
 			onChange: () => {},
 			sanitize: v => v,
