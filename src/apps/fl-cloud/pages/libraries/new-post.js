@@ -28,10 +28,14 @@ export default ( { libraryId, onCreate } ) => {
 			component: 'select',
 			alwaysCommit: true,
 			isLoading: loading,
-			options: {
-				0: __( 'Choose...' ),
-				post: __( 'Post' ),
-				page: __( 'Page' ),
+			options: () => {
+				const options = {
+					0: __( 'Choose...' ),
+				}
+				Object.entries( contentTypes ).map(
+					( [ key, value ] ) => options[ key ] = value.labels.singular
+				)
+				return options
 			},
 			onChange: ( { value } ) => {
 				setType( null )
@@ -86,10 +90,8 @@ export default ( { libraryId, onCreate } ) => {
 			type: 'post',
 			name: post.title,
 			data: {
-				title: post.title,
-				content: post.content,
-				type: post.type,
-				post: post,
+				// TODO: Pull raw post, meta, terms, and comments (maybe) to store.
+				//post: post,
 			}
 		} ).then( () => {
 			onCreate()
