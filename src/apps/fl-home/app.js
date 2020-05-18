@@ -4,6 +4,8 @@ import { App, Page, Button, Icon } from 'assistant/ui'
 import { CardPage } from './ui'
 import './style.scss'
 
+import './types'
+
 
 // Setup config like this
 export default props => (
