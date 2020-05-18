@@ -1,5 +1,6 @@
 export * from './actions'
 export * from './checkbox'
+export * from './file'
 export * from './labels'
 export * from './plain-text'
 export * from './select'

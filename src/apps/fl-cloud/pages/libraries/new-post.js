@@ -57,7 +57,7 @@ export default ( { libraryId, onCreate } ) => {
 				}
 			}
 		},
-		post: {
+		slug: {
 			label: getPostLabels().singular,
 			component: 'select',
 			alwaysCommit: true,
@@ -80,9 +80,17 @@ export default ( { libraryId, onCreate } ) => {
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
+		const { slug } = values
+		const post = posts.filter( post => post.slug === slug ).pop()
 		return cloud.libraries.createItem( libraryId, {
 			type: 'post',
-			name: 'Test',
+			name: post.title,
+			data: {
+				title: post.title,
+				content: post.content,
+				type: post.type,
+				post: post,
+			}
 		} ).then( () => {
 			onCreate()
 		} ).catch( error => {

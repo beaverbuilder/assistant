@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Form, Layout, Page } from 'assistant/ui'
 import NewPost from './new-post'
+import NewImage from './new-image'
 
 export default () => {
 	const history = useHistory()
@@ -37,6 +38,7 @@ export default () => {
 					></Form.SelectItem>
 				</Form.Item>
 				{ 'post' === type && <NewPost libraryId={ id } onCreate={ onCreate } /> }
+				{ 'image' === type && <NewImage libraryId={ id } onCreate={ onCreate } /> }
 			</Layout.Box>
 		</Page>
 	)

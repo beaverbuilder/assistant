@@ -176,6 +176,7 @@ const getFieldComponent = key => {
 	const map = {
 		'actions': Form.ActionsItem,
 		'checkbox': Form.CheckboxItem,
+		'file': Form.FileItem,
 		'labels': Form.LabelsItem,
 		'plain-text': Form.PlainTextItem,
 		'select': Form.SelectItem,

@@ -11,6 +11,7 @@ import './style.scss'
 import {
 	ActionsItem,
 	CheckboxItem,
+	FileItem,
 	LabelsItem,
 	PlainTextItem,
 	SelectItem,
@@ -75,6 +76,9 @@ Form.ActionsItem.displayName = 'Form.ActionsItem'
 
 Form.CheckboxItem = CheckboxItem
 Form.CheckboxItem.displayName = 'Form.CheckboxItem'
+
+Form.FileItem = FileItem
+Form.FileItem.displayName = 'Form.FileItem'
 
 Form.LabelsItem = LabelsItem
 Form.LabelsItem.displayName = 'Form.LabelsItem'
