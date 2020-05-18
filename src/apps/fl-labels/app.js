@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { App, Color, Control, Page, Table, Button, Icon } from 'assistant/ui'
+import { App, Color, Control, Page, Layout, Button, Icon } from 'assistant/ui'
 import { getSystemHooks } from 'assistant/data'
 import AppIcon from './icon'
 import './style.scss'
@@ -203,7 +203,7 @@ const Main = () => {
 				<p style={ { marginTop: 0 } }>
 					{ __( 'Labels allow you to mark posts or pages for organization and collaborate with other users. Below you can add more labels and change the name of existing ones. Add labels to posts inside the Content app.' ) }
 				</p>
-				<Table rows={ rows } />
+				<Layout.Table rows={ rows } />
 			</Page.Section>
 
 			<Page.Section

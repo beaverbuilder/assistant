@@ -2,7 +2,7 @@ import React from 'react'
 import classname from 'classnames'
 import './style.scss'
 
-export const Table = ( {
+const Table = ( {
 	headings = [],
 	rows = [],
 } ) => {
@@ -39,3 +39,5 @@ export const Table = ( {
 		</div>
 	)
 }
+
+export default Table
