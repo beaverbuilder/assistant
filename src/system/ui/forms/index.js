@@ -2,8 +2,8 @@ import React, { createContext } from 'react'
 import classname from 'classnames'
 import { useForm } from './use-form'
 import { useFormData } from './use-form-data'
-import { useFormData_Deprecated } from './use-form-data-deprecated' // Deprecated
-import { useFormState_Deprecated } from './use-form-state-deprecated' // Deprecated
+//import { useFormData_Deprecated } from './use-form-data-deprecated' // Deprecated
+//import { useFormState_Deprecated } from './use-form-state-deprecated' // Deprecated
 import { Section, Item, Footer, Input } from './parts'
 import { Test } from './tests'
 import './style.scss'
@@ -53,8 +53,8 @@ Form.Context.displayName = 'Form.Context'
 /* ------ Form Hooks ------ */
 Form.useForm = useForm
 Form.useFormData = useFormData
-Form.useFormData_Deprecated = useFormData_Deprecated
-Form.useFormState_Deprecated = useFormState_Deprecated
+//Form.useFormData_Deprecated = useFormData_Deprecated
+//Form.useFormState_Deprecated = useFormState_Deprecated
 
 /* ------ Form Part Components ------ */
 Form.Section = Section

@@ -43,6 +43,19 @@ class LabelsController extends ControllerAbstract {
 				],
 			]
 		);
+
+		$this->route(
+			'/labels/count',
+			[
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ $this, 'label_counts' ],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_others_posts' );
+					},
+				],
+			]
+		);
 	}
 
 	/**
@@ -65,5 +78,12 @@ class LabelsController extends ControllerAbstract {
 		}
 
 		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Returns an array of counts by label ID.
+	 */
+	public function label_counts( $request ) {
+		return rest_ensure_response( $this->labels->count() );
 	}
 }

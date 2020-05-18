@@ -5,7 +5,7 @@ import { Dashicon } from '@wordpress/components'
 import './style.scss'
 
 const Shortcuts = () => {
-	const { application } = Env.useEnvironment()
+	const { application } = Env.use()
 	const { adminURLs } = getSystemConfig()
 	const dashURL = 'undefined' !== typeof adminURLs.dashboard ? adminURLs.dashboard : '/wp-admin'
 

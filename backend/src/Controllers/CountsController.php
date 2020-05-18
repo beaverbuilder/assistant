@@ -90,6 +90,14 @@ class CountsController extends ControllerAbstract {
 
 				return $return;
 			},
+			'/fl-assistant/v1/labels/count'        => function ( $response ) {
+				$return = [];
+				foreach ( $response as $type => $count ) {
+					$return[ 'label/' . $type ] = $count;
+				}
+
+				return $return;
+			},
 		];
 
 		$requests = array_reduce( array_keys( $routes ), 'rest_preload_api_request', [] );
@@ -102,4 +110,3 @@ class CountsController extends ControllerAbstract {
 		return $counts;
 	}
 }
-

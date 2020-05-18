@@ -3,17 +3,16 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
 import AppMain from '../app'
-import { App as FLUID_Root } from 'fluid/ui'
+import { App as FLUIDApp } from 'fluid/ui'
 import {
 	Appearance,
 	App,
 	Icon,
-	Window,
 	Error,
 	Page,
-	Layout,
 	Env,
 } from 'assistant/ui'
+import Window from '../window'
 
 const getRouterProps = history => {
 	const props = {
@@ -54,7 +53,7 @@ export const Assistant = () => {
 	} )
 
 	return (
-		<FLUID_Root
+		<FLUIDApp.Root
 			routerProps={ getRouterProps( history ) }
 			onHistoryChanged={ onHistoryChanged }
 			colorScheme={ brightness }
@@ -68,7 +67,7 @@ export const Assistant = () => {
 					</Appearance>
 				</App.Provider>
 			</Env.Provider>
-		</FLUID_Root>
+		</FLUIDApp.Root>
 	)
 }
 
@@ -126,11 +125,9 @@ const MainWindow = ( { children, ...rest } ) => {
 	)
 }
 
-const WindowError = () => {
-	return (
-		<Page>
-			<Layout.Headline>{__( 'We Have A Problem!' )}</Layout.Headline>
-			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
-		</Page>
-	)
-}
+const WindowError = props => (
+    <Page.Error
+		message={__('There seems to be an issue in the Assistant panel.')}
+		{...props}
+	/>
+)

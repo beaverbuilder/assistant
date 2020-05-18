@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createRef, createContext, useContext } from 'react'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
-import { getSystemConfig, useSystemState } from 'data'
-import { Env } from 'ui'
+import { getSystemConfig, useSystemState } from 'assistant/data'
+import { Env } from 'assistant/ui'
 import './style.scss'
 
 const transition = {
@@ -24,7 +24,7 @@ const adminBarSize = () => {
 	return 32
 }
 
-export const Window = ( {
+const Window = ( {
 	children,
 	icon,
 	size = 'mini',
@@ -36,8 +36,7 @@ export const Window = ( {
 	toolbar: topbar,
 	...rest
 } ) => {
-
-	const { overlayToolbar, shouldReduceMotion } = useSystemState()
+	const { shouldReduceMotion } = useSystemState('shouldReduceMotion')
 
 	const handleChange = config => {
 		const state = {
@@ -77,31 +76,27 @@ export const Window = ( {
 	const context = {
 		isHidden,
 		toggleIsHidden,
-		overlayToolbar,
-
 		size,
 		toggleSize,
-
 		position,
 		setPosition,
-
 		requestAnimate,
 		shouldShowLabels,
 	}
 
 	return (
 		<Flipper flipKey={ needsAnimate }>
-			<Window.Context.Provider value={ context }>
+			<WindowContext.Provider value={ context }>
 				<WindowLayer onChange={ handleChange } { ...rest }>
 					{ ! isHidden && <WindowPanel topbar={ topbar }>{children}</WindowPanel> }
 					{ isHidden && shouldDisplayButton && <WindowButton>{icon}</WindowButton> }
 				</WindowLayer>
-			</Window.Context.Provider>
+			</WindowContext.Provider>
 		</Flipper>
 	)
 }
 
-Window.defaults = {
+const defaults = {
 	isHidden: false,
 	size: 'mini',
 	position: [ 1, 1 ],
@@ -109,8 +104,9 @@ Window.defaults = {
 	overlayToolbar: false,
 }
 
-Window.Context = createContext( Window.defaults )
-Window.Context.displayName = 'Window.Context'
+const WindowContext = createContext( defaults )
+
+const useWindow = () => useContext( WindowContext )
 
 const WindowLayer = ( {
 	className,
@@ -124,8 +120,8 @@ const WindowLayer = ( {
 		isHidden,
 		position,
 		setPosition,
-	} = useContext( Window.Context )
-	const { isMobile } = Env.useEnvironment()
+	} = useWindow()
+	const { isMobile } = Env.use()
 	const ref = createRef()
 	const posRef = createRef()
 
@@ -287,8 +283,8 @@ const WindowPanel = ( {
 	style,
 	...rest
 } ) => {
-	const { size } = useContext( Window.Context )
-	const { isMobile } = Env.useEnvironment()
+	const { size } = useWindow()
+	const { isMobile } = Env.use()
 
 	const classes = classname( {
 		'fl-asst-window': true,
@@ -337,7 +333,7 @@ const WindowPanel = ( {
 }
 
 const WindowButton = ( { children, ...rest } ) => {
-	const { toggleIsHidden } = useContext( Window.Context )
+	const { toggleIsHidden } = useWindow()
 	const ref = createRef()
 
 	useEffect( () => {
@@ -353,3 +349,5 @@ const WindowButton = ( { children, ...rest } ) => {
 		</Flipped>
 	)
 }
+
+export default Window

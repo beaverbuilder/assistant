@@ -62,10 +62,18 @@ export const selectApp = ( state, key ) => {
 	}
 	const app = state.apps[key]
 	return {
+		onMount: () => {},
 		...app,
 		handle: app.app,
-		icon: app.icon ? app.icon : Icon.DefaultApp,
+		icon: app.icon ? app.icon : Icon.Placeholder,
 	}
+}
+
+export const selectHomeKey = ( state ) => state.homeKey
+
+export const selectHomeApp = ( state ) => {
+	const key = selectHomeKey( state )
+	return selectApp( state, key )
 }
 
 export const selectAppOrder = ( state, maxCount = null ) => {

@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, Suspense } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
@@ -13,13 +13,13 @@ import useAppOrder from './use-app-order'
 import './style.scss'
 
 const Sidebar = memo( ( { edge = 'right' } ) => {
-	const { window, isAppHidden  } = useSystemState( [ 'window', 'isAppHidden', 'appOrder' ] )
-	const { selectApp } = getSystemSelectors()
+	const { window, isAppHidden  } = useSystemState( [ 'window', 'isAppHidden', 'appOrder', 'apps' ] )
+	const { selectApp, selectHomeApp } = getSystemSelectors()
 	const {
 		isMobile,
 		isCompactHeight,
 		application
-	} = Env.useEnvironment()
+	} = Env.use()
 
 	const {
 		toggleIsShowingUI,
@@ -79,6 +79,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 		'is-sorting': isSorting,
 	} )
 
+	const home = selectHomeApp()
 	const manage = selectApp( 'fl-manage' )
 
 	return (
@@ -103,15 +104,17 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 			<div
 				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
 			>
-				<Button
-					appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
-					status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
-					title={ __( 'Home' ) }
-					onClick={ () => navOrHideApp( isRoot, goToRoot ) }
-					className="disable-while-sorting"
-				>
-					<Icon.Home />
-				</Button>
+				{ home && (
+					<Button
+						appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
+						status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
+						title={ home.label }
+						onClick={ () => navOrHideApp( isRoot, goToRoot ) }
+						className="disable-while-sorting"
+					>
+						<Icon.Safely icon={home.icon} />
+					</Button>
+				)}
 
 				<List.Sortable
 					items={ appOrder }
@@ -129,6 +132,13 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 							state: app,
 						}
 						const isSelected = pathname.startsWith( `/${handle}` )
+
+						const iconProps = {
+							icon,
+							context: 'sidebar',
+							isSelected
+						}
+
 						return (
 							<Button
 								appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
@@ -136,7 +146,9 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 								onClick={ () => {
 									navOrHideApp( isSelected, () => history.push( location ) )
 								} }
-							>{ icon( { context: 'sidebar', isSelected } ) }</Button>
+							>
+								<AppIcon { ...iconProps } />
+							</Button>
 						)
 					}}
 				</List.Sortable>
@@ -151,7 +163,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 						} ) ) }
 						className="disable-while-sorting"
 					>
-						<Icon.Apps />
+						<Icon.Safely icon={manage.icon} />
 					</Button>
 				)}
 			</div>
@@ -170,5 +182,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 		</div>
 	)
 } )
+
+const AppIcon = memo(  ( { icon, ...rest } ) => <Icon.Safely icon={icon} {...rest} /> )
 
 export default Sidebar

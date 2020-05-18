@@ -82,8 +82,7 @@ const config = {
     output: {
         path: path.resolve( __dirname, 'build' ),
         filename: `fl-assistant-[name].bundle.js`,
-        chunkFilename: "fl-chunk-[name].js",
-        publicPath: "/wp-content/plugins/assistant/build/"
+        chunkFilename: "fl-chunk-[name].js"
     },
     resolve: { alias },
     devtool: 'source-map',

@@ -192,7 +192,7 @@
 
         --fl-asst-accent-color: var(--fl-asst-light-text);
 
-        &.fl-asst-brightness-light {
+        &.fluid-color-scheme-light {
             --fl-asst-surface-color: var(--fl-asst-light-text);
             --fl-asst-surface-background: var(--fl-asst-light-1);
 
@@ -203,7 +203,7 @@
             --fl-asst-dim-text: var(--fl-asst-dark-5);
         }
 
-        &.fl-asst-brightness-dark {
+        &.fluid-color-scheme-dark {
             --fl-asst-surface-color: var(--fl-asst-dark-text);
             --fl-asst-surface-background: var(--fl-asst-dark-2);
 

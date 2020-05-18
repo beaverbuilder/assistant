@@ -1,7 +1,18 @@
 import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
-import { App, Page, Icon, Button, Form, Layout, Env, List } from 'assistant/ui'
-import { useAppList, useSystemState, getSystemActions } from 'assistant/data'
+import { useHistory } from 'react-router-dom'
+import {
+	App,
+	Page,
+	Icon,
+	Button,
+	Form,
+	Layout,
+	Env,
+	List,
+} from 'assistant/ui'
+import { useAppList, useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
+import AppIcon from './icon'
 import './style.scss'
 
 export default props => (
@@ -12,15 +23,11 @@ export default props => (
 )
 
 const MainScreen = () => {
-
-	//const history = useHistory()
-	//const goToRoot = () => history.go( -history.length )
-
 	return (
 		<Page
-			title={ __( 'Apps' ) }
+			title={ __( 'Apps & Settings' ) }
 			shouldShowBackButton={ false }
-			icon={ <Icon.Apps context="sidebar" /> }
+			icon={ <AppIcon context="sidebar" /> }
 		>
 			<Form>
 				<Page.Section>
@@ -37,6 +44,33 @@ const MainScreen = () => {
 	)
 }
 
+const Home = memo( () => {
+	const history = useHistory()
+	const goToRoot = () => history.go( -history.length )
+	const { selectHomeApp } = getSystemSelectors()
+	const home = selectHomeApp()
+	
+	return (
+		<li>
+			<Button
+				onClick={goToRoot}
+				appearance="transparent"
+				style={ {
+					flex: '1 1 auto',
+					marginRight: 'auto',
+					justifyContent: 'flex-start',
+				} }
+			>
+				<span className="fl-asst-item-icon">
+					<Icon.Safely icon={home.icon} context="sidebar" />
+				</span>
+
+				{home.label}
+			</Button>
+		</li>
+	)
+} )
+
 const AppList = memo( () => {
 	const apps = useAppList()
 	const { resetAppOrder } = getSystemActions()
@@ -49,6 +83,7 @@ const AppList = memo( () => {
 				const keys = items.map( item => item.handle )
 				resetAppOrder( keys )
 			} }
+			before={ <Home /> }
 		>
 			{ app => {
 				const {
@@ -66,52 +101,52 @@ const AppList = memo( () => {
 				}
 
 				return (
-				<>
-					<Button
-						to={ location }
-						appearance="transparent"
-						style={ {
-							flex: '1 1 auto',
-							marginRight: 'auto',
-							justifyContent: 'flex-start',
-						} }
-						onDragStart={ e => {
+					<>
+						<Button
+							to={ location }
+							appearance="transparent"
+							style={ {
+								flex: '1 1 auto',
+								marginRight: 'auto',
+								justifyContent: 'flex-start',
+							} }
+							onDragStart={ e => {
+								// prevent link dragging behavior
+								e.preventDefault()
+							} }
+						>
+							<span className="fl-asst-item-icon">
+								<Icon.Safely icon={icon} context="sidebar" />
+							</span>
 
-							// prevent link dragging behavior
-							e.preventDefault()
-						} }
-					>
-						<span className="fl-asst-item-icon">
-							{ icon ? icon( { context: 'sidebar' } ) : <Icon.Placeholder /> }
-						</span>
-						{label}
-					</Button>
+							{label}
+						</Button>
 
-					<span className="fl-asst-item-reorder-buttons">
-						<span className="fl-asst-button-space">
-							{ ! isFirst && (
-								<Button
-									onClick={ moveUp }
-									appearance="transparent"
-									title={ __( 'Move Up' ) }
-								>
-									<Icon.UpCaret />
-								</Button>
-							)}
+						<span className="fl-asst-item-reorder-buttons">
+							<span className="fl-asst-button-space">
+								{ ! isFirst && (
+									<Button
+										onClick={ moveUp }
+										appearance="transparent"
+										title={ __( 'Move Up' ) }
+									>
+										<Icon.UpCaret />
+									</Button>
+								)}
+							</span>
+							<span className="fl-asst-button-space">
+								{ ! isLast && (
+									<Button
+										onClick={ moveDown }
+										appearance="transparent"
+										title={ __( 'Move Down' ) }
+									>
+										<Icon.DownCaret />
+									</Button>
+								)}
+							</span>
 						</span>
-						<span className="fl-asst-button-space">
-							{ ! isLast && (
-								<Button
-									onClick={ moveDown }
-									appearance="transparent"
-									title={ __( 'Move Down' ) }
-								>
-									<Icon.DownCaret />
-								</Button>
-							)}
-						</span>
-					</span>
-				</>
+					</>
 				)
 			}}
 		</List.Sortable>
@@ -119,7 +154,7 @@ const AppList = memo( () => {
 } )
 
 const UIColorPreferences = () => {
-	const { application } = Env.useEnvironment()
+	const { application } = Env.use()
 	const { appearance, window } = useSystemState()
 	const { setBrightness, setWindow } = getSystemActions()
 	const { origin } = window
