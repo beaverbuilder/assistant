@@ -8,11 +8,11 @@ import {
 	Appearance,
 	App,
 	Icon,
-	Window,
 	Error,
 	Page,
 	Env,
 } from 'assistant/ui'
+import Window from '../window'
 
 const getRouterProps = history => {
 	const props = {

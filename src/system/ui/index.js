@@ -7,7 +7,6 @@ import { List } from './lists'
 import Layout from './layout'
 import { Page } from './pages'
 import Nav from './nav'
-import { Window } from './window'
 import Error from './errors'
 import { Control, Filter } from './controls'
 import { Form } from './forms'
@@ -23,7 +22,6 @@ export * from './appearance'
 export * from './lists'
 export * from './pages'
 export * from './nav'
-export * from './window'
 export * from './button'
 export * from './art'
 export * from './controls'
@@ -46,7 +44,6 @@ export const api = {
 	Button,
 	Icon,
 	Color,
-	Window,
 	Filter,
 	Form,
 	Control,

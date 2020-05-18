@@ -24,7 +24,7 @@ const adminBarSize = () => {
 	return 32
 }
 
-export const Window = ( {
+const Window = ( {
 	children,
 	icon,
 	size = 'mini',
@@ -86,17 +86,17 @@ export const Window = ( {
 
 	return (
 		<Flipper flipKey={ needsAnimate }>
-			<Window.Context.Provider value={ context }>
+			<WindowContext.Provider value={ context }>
 				<WindowLayer onChange={ handleChange } { ...rest }>
 					{ ! isHidden && <WindowPanel topbar={ topbar }>{children}</WindowPanel> }
 					{ isHidden && shouldDisplayButton && <WindowButton>{icon}</WindowButton> }
 				</WindowLayer>
-			</Window.Context.Provider>
+			</WindowContext.Provider>
 		</Flipper>
 	)
 }
 
-Window.defaults = {
+const defaults = {
 	isHidden: false,
 	size: 'mini',
 	position: [ 1, 1 ],
@@ -104,8 +104,9 @@ Window.defaults = {
 	overlayToolbar: false,
 }
 
-Window.Context = createContext( Window.defaults )
-Window.Context.displayName = 'Window.Context'
+const WindowContext = createContext( defaults )
+
+const useWindow = () => useContext( WindowContext )
 
 const WindowLayer = ( {
 	className,
@@ -119,7 +120,7 @@ const WindowLayer = ( {
 		isHidden,
 		position,
 		setPosition,
-	} = useContext( Window.Context )
+	} = useWindow()
 	const { isMobile } = Env.use()
 	const ref = createRef()
 	const posRef = createRef()
@@ -282,7 +283,7 @@ const WindowPanel = ( {
 	style,
 	...rest
 } ) => {
-	const { size } = useContext( Window.Context )
+	const { size } = useWindow()
 	const { isMobile } = Env.use()
 
 	const classes = classname( {
@@ -332,7 +333,7 @@ const WindowPanel = ( {
 }
 
 const WindowButton = ( { children, ...rest } ) => {
-	const { toggleIsHidden } = useContext( Window.Context )
+	const { toggleIsHidden } = useWindow()
 	const ref = createRef()
 
 	useEffect( () => {
@@ -348,3 +349,5 @@ const WindowButton = ( { children, ...rest } ) => {
 		</Flipped>
 	)
 }
+
+export default Window
