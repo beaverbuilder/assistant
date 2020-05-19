@@ -39,7 +39,14 @@ const Main = () => {
             )}
 
             { ! hasResults && ! isLoading && (
-                <CardPage />
+                <>
+                    <CardPage />
+                    <Layout.Box padX={true} padY={false}>
+                        <div className="fl-asst-floating-box dummie-card">Dummie Card</div>
+                        <div className="fl-asst-floating-box dummie-card">Dummie Card</div>
+                        <div className="fl-asst-floating-box dummie-card">Dummie Card</div>
+                    </Layout.Box>
+                </>
             )}
 		</Page>
     )
