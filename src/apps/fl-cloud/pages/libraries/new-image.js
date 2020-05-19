@@ -21,17 +21,11 @@ export default ( { libraryId, onCreate } ) => {
 
 	const onSubmit = ( { values, setErrors } ) => {
 		const { image } = values
+		const data = new FormData()
 
-		// TODO: Using FormData isn't working...
-		// const data = new FormData()
-		// data.append( 'type', 'image' )
-		// data.append( 'name', image[0].name )
-		// data.append( 'media', image[0], image[0].name )
-
-		const data = {
-			type: 'image',
-			name: image[0].name,
-		}
+		data.append( 'type', 'image' )
+		data.append( 'name', image[0].name )
+		data.append( 'media', image[0] )
 
 		return cloud.libraries.createItem( libraryId, data ).then( () => {
 			onCreate()
