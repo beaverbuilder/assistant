@@ -1,9 +1,12 @@
 import React from 'react'
+import { __ } from '@wordpress/i18n'
 import { Button, Icon } from 'assistant/ui'
-import { useSystemState, getSystemActions } from 'assistant/data'
+import { useSystemState, getSystemActions, getAppActions } from 'assistant/data'
 import './style.scss'
 
-const SearchSuggestions = () => {
+const app = 'fl-home'
+
+const SearchSuggestions = ({ onClick = () => {} }) => {
     const { searchHistory } = useSystemState('searchHistory')
     const { resetSearchHistory } = getSystemActions()
 
@@ -13,14 +16,17 @@ const SearchSuggestions = () => {
 
     return (
         <div className="fl-asst-home-search-suggestions">
-        { searchHistory.map( term => (
-            <span key={term} className="fl-asst-home-search-item">
-                <Button>{term}</Button>
-                <Button onClick={ () => removeTerm( term )}>
-                    <Icon.CloseCompact />
-                </Button>
-            </span>
-        ))}
+            <div style={{ marginBottom: 10 }}>{__('Recent Searches')}</div>
+            <div>
+            { searchHistory.map( term => (
+                <span key={term} className="fl-asst-home-search-item">
+                    <Button onClick={ () => onClick( term )}>{term}</Button>
+                    <Button onClick={ () => removeTerm( term )}>
+                        <Icon.CloseCompact />
+                    </Button>
+                </span>
+            ))}
+            </div>
         </div>
     )
 }

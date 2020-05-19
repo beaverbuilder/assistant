@@ -9,6 +9,7 @@ export const defaultPage = {
 		{
 			id: '465484684',
 			type: 'fl-tile-grid',
+			title: false,
 		},
 		{
 			id: '98372934729',
@@ -17,6 +18,7 @@ export const defaultPage = {
 		{
 			id: 'lksjdlfkjsdf',
 			type: 'fl-shortcuts',
+			title: false,
 		},
 		{
 			id: '092u30909',

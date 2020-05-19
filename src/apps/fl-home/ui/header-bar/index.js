@@ -1,21 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Layout, Form, Icon, Button } from 'assistant/ui'
-import { useAppState, getAppActions } from 'assistant/data'
+import { SearchSuggestions } from 'home/ui'
 import './style.scss'
 
-const app = 'fl-home'
+const noop = () => {}
 
-const HeaderBar = () => {
-    const { keyword } = useAppState( app )
-	const { setKeyword } = getAppActions( app )
+const HeaderBar = ({
+    onFocus = noop,
+    onClear = noop,
+    onInput = noop,
+    onSuggestionClick = noop,
+    keyword = '',
+}) => {
+    const [isFocused, setIsFocused] = useState( false )
 
     const ClearButton = () => {
         return (
             <Button
                 className="fl-asst-home-search-clear"
                 appearance="transparent"
-                onClick={ () => setKeyword('') }
+                onClick={ e => {
+                    setIsFocused( false )
+                    onClear()
+                } }
             >
                 <Icon.CloseCompact />
             </Button>
@@ -23,22 +31,29 @@ const HeaderBar = () => {
     }
 
     return (
-        <div className="fl-asst-home-search-header">
-            <Layout.Row className="fl-asst-button-row">
-                <Form.Input
-                    className="fl-asst-floating-box"
-                    before={(
-                        <span className="search-icon-wrapper">
-                            <Icon.Search />
-                        </span>
-                    )}
-                    value={keyword}
-                    after={ keyword && <ClearButton /> }
-                    placeholder={__('Search WordPress')}
-                    onInput={ e => setKeyword( e.target.value ) }
-                />
-            </Layout.Row>
-        </div>
+        <>
+            <div className="fl-asst-home-search-header fluid-sticky-element" >
+                <Layout.Row className="fl-asst-button-row">
+                    <Form.Input
+                        className="fl-asst-floating-element"
+                        before={(
+                            <span className="search-icon-wrapper">
+                                <Icon.Search />
+                            </span>
+                        )}
+                        value={keyword}
+                        after={ isFocused && <ClearButton /> }
+                        placeholder={ __('Search WordPress') }
+                        onInput={ e => onInput( e.target.value ) }
+                        onFocus={ () => {
+                            setIsFocused( true )
+                            onFocus()
+                        } }
+                    />
+                </Layout.Row>
+            </div>
+            { isFocused && <SearchSuggestions onClick={onSuggestionClick}/> }
+        </>
     )
 }
 

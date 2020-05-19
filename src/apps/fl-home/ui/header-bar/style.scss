@@ -5,9 +5,18 @@
 
         padding: var(--fluid-lg-space);
 
-        .fl-asst-floating-box {
+        &.fluid-sticky-element {
+            background-color: transparent;
+            background: linear-gradient( 180deg,
+                                         hsla(210, 40%, 98%, 1 ),
+                                         hsla(210, 40%, 98%, 1 ) 50%,
+                                         hsla(210, 40%, 98%, 0 )
+                                        ) !important;
+        }
+
+        .fl-asst-floating-element {
             background: var(--fluid-background);
-            box-shadow: 0px 9px 18px var(--shadow-color);
+            box-shadow: 0px 5px 10px var(--shadow-color);
             border-radius: 20px;
             min-height: var(--box-size);
             min-width: var(--box-size);

@@ -34,7 +34,7 @@ const useCards = initialPage => {
 
 			const getTitle = ( card, type ) => {
 
-				if ( card.title ) {
+				if ( 'undefined' !== typeof card.title ) {
 					return card.title
 				}
 				return type.label

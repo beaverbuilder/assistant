@@ -12,7 +12,4 @@ registerApp( 'fl-home', {
 	root: App,
 	icon: Icon,
 	shouldShowInAppList: false,
-	state: {
-		keyword: ''
-	},
 } )

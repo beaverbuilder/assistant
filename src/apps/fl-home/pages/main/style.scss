@@ -7,5 +7,19 @@
         .fluid-page-content {
             background: var(--page-background);
         }
+
+        // Card Box
+        --shadow-color: #EDF0F3;
+
+        .fl-asst-floating-box {
+            background: var(--fluid-background);
+            box-shadow: 0px 9px 18px var(--shadow-color);
+            padding: 20px;
+        }
+        .dummie-card {
+            border-radius: 10px;
+            height: 350px;
+            margin-bottom: 20px;
+        }
     }
 }
