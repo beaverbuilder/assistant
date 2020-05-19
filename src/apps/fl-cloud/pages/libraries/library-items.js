@@ -19,7 +19,7 @@ export default ( { library } ) => {
 			...defaults,
 			label: item.name,
 			shouldAlwaysShowThumbnail: true,
-			thumbnail: item.thumb,
+			thumbnail: item.media ? item.media.thumb : null,
 			to: {
 				pathname: `/fl-cloud/libraries/${library.id}/items/${item.id}`,
 				state: { item }

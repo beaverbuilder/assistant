@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { Form, Layout, Page } from 'assistant/ui'
 import NewPost from './new-post'
 import NewImage from './new-image'
+import NewSvg from './new-svg'
 
 export default () => {
 	const history = useHistory()
@@ -39,6 +40,7 @@ export default () => {
 				</Form.Item>
 				{ 'post' === type && <NewPost libraryId={ id } onCreate={ onCreate } /> }
 				{ 'image' === type && <NewImage libraryId={ id } onCreate={ onCreate } /> }
+				{ 'svg' === type && <NewSvg libraryId={ id } onCreate={ onCreate } /> }
 			</Layout.Box>
 		</Page>
 	)
