@@ -5,17 +5,17 @@ import { Button, Form, Icon, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 
 export default () => {
-	const { id, itemId } = useParams()
-	const [ item ] = cloud.libraries.useItem( id, itemId )
+	const { itemId } = useParams()
+	const [ item ] = cloud.libraries.useItem( itemId )
 
 	if ( ! item ) {
 		return <Page.Loading />
 	}
 
-	return <Item libraryId={ id } item={ item } />
+	return <Item item={ item } />
 }
 
-const Item = ( { libraryId, item } ) => {
+const Item = ( { item } ) => {
 	const history = useHistory()
 
 	const fields = {
@@ -32,7 +32,7 @@ const Item = ( { libraryId, item } ) => {
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.updateItem( libraryId, item.id, values ).catch( error => {
+		return cloud.libraries.updateItem( item.id, values ).catch( error => {
 			setErrors( error.response.data.errors )
 		} )
 	}
@@ -49,7 +49,7 @@ const Item = ( { libraryId, item } ) => {
 
 	const deleteItem = () => {
 		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-			cloud.libraries.deleteItem( libraryId, item.id )
+			cloud.libraries.deleteItem( item.id )
 			history.goBack()
 		}
 	}

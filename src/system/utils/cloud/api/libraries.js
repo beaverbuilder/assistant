@@ -31,7 +31,7 @@ const api = {
 		return http.get( `/libraries/${ libraryId }/library-items` )
 	},
 
-	getItem: ( libraryId, itemId ) => {
+	getItem: ( itemId ) => {
 		return http.get( `/library-items/${ itemId }` )
 	},
 
@@ -39,11 +39,11 @@ const api = {
 		return http.post( `/libraries/${ libraryId }/library-items`, data )
 	},
 
-	updateItem: ( libraryId, itemId, data ) => {
+	updateItem: ( itemId, data ) => {
 		return http.put( `/library-items/${ itemId }`, data )
 	},
 
-	deleteItem: ( libraryId, itemId ) => {
+	deleteItem: ( itemId ) => {
 		return http.delete( `/library-items/${ itemId }` )
 	},
 }
@@ -78,11 +78,11 @@ const hooks = {
 		return [ items, setItems ]
 	},
 
-	useItem: ( libraryId, itemId ) => {
+	useItem: ( itemId ) => {
 		const [ item, setItem ] = useState( null )
 		useEffect( () => {
-			api.getItem( libraryId, itemId ).then( response => setItem( response.data ) )
-		}, [ libraryId, itemId ] )
+			api.getItem( itemId ).then( response => setItem( response.data ) )
+		}, [ itemId ] )
 		return [ item, setItem ]
 	},
 }

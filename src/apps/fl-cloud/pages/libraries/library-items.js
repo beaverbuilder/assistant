@@ -72,7 +72,7 @@ const ItemActions = ( { library, item, actions } ) => {
 
 	const deleteItem = () => {
 		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-			cloud.libraries.deleteItem( library.id, item.id )
+			cloud.libraries.deleteItem( item.id )
 			removeItem( item.uuid )
 		}
 	}
