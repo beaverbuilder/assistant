@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Page, Layout } from 'assistant/ui'
-import { HeaderBar } from 'home/ui'
+import { Page, Layout, Icon } from 'assistant/ui'
+import { HeaderBar, Results } from 'home/ui'
 import { CardPage } from '../cards'
 import useSearchResults from './use-search-results'
 import './style.scss'
@@ -29,9 +29,7 @@ const Main = () => {
             />
 
             { isSearching && hasResults && (
-                <Layout.Box>
-                    Search Results.
-                </Layout.Box>
+                <Results items={results} />
             )}
 
             { isLoading && (
@@ -41,11 +39,9 @@ const Main = () => {
             { ! hasResults && ! isLoading && (
                 <>
                     <CardPage />
-                    <Layout.Box padX={true} padY={false}>
-                        <div className="fl-asst-floating-box dummie-card">Dummie Card</div>
-                        <div className="fl-asst-floating-box dummie-card">Dummie Card</div>
-                        <div className="fl-asst-floating-box dummie-card">Dummie Card</div>
-                    </Layout.Box>
+                    <Layout.Row padY={true}>
+                        <Icon.Pencil />
+                    </Layout.Row>
                 </>
             )}
 		</Page>
