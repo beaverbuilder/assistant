@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n'
-import { Icon } from 'assistant/ui'
 
 export const defaultPageKey = 'home'
 

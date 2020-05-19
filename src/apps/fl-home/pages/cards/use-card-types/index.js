@@ -1,4 +1,4 @@
-import { useCardsState, getCardsActions } from 'fl-home/data'
+import { useCardsState, getCardsActions } from 'home/data'
 
 const useCardTypes = () => {
 	const { types } = useCardsState()

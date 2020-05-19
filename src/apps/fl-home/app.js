@@ -2,8 +2,6 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { App } from 'assistant/ui'
 import { Main } from './pages'
-import './style.scss'
-
 import './types'
 
 // Setup config like this

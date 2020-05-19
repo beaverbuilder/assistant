@@ -1,0 +1,11 @@
+.fl-asst {
+    #cards {
+        --page-background: #F8FAFC;
+        .fluid-page-header {
+            padding: 0;
+        }
+        .fluid-page-content {
+            background: var(--page-background);
+        }
+    }
+}

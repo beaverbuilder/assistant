@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useCardsState, getCardsActions } from 'fl-home/data'
+import { useCardsState, getCardsActions } from 'home/data'
 
 const useCards = initialPage => {
 	const [ page, setPage ] = useState( initialPage )
