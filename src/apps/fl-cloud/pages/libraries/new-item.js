@@ -5,6 +5,7 @@ import { Form, Layout, Page } from 'assistant/ui'
 import NewPost from './new-post'
 import NewImage from './new-image'
 import NewSvg from './new-svg'
+import NewColor from './new-color'
 
 export default () => {
 	const history = useHistory()
@@ -33,6 +34,7 @@ export default () => {
 							post: __( 'Post, Page or Custom Post Type' ),
 							image: __( 'Image' ),
 							svg: __( 'SVG' ),
+							color: __( 'Color' ),
 						} }
 						value={ type }
 						onChange={ value => setType( value ) }
@@ -41,6 +43,7 @@ export default () => {
 				{ 'post' === type && <NewPost libraryId={ id } onCreate={ onCreate } /> }
 				{ 'image' === type && <NewImage libraryId={ id } onCreate={ onCreate } /> }
 				{ 'svg' === type && <NewSvg libraryId={ id } onCreate={ onCreate } /> }
+				{ 'color' === type && <NewColor libraryId={ id } onCreate={ onCreate } /> }
 			</Layout.Box>
 		</Page>
 	)
