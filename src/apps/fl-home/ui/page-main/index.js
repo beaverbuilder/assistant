@@ -5,11 +5,9 @@ import './style.scss'
 
 const noop = () => {}
 
-const Main = () => {
+const Main = ({ baseURL }) => {
     const { keyword, setKeyword, results, hasResults, clearResults, isLoading } = useSearchResults()
     const [isSearching, setIsSearching] = useState( false )
-
-    console.log('main')
 
     return (
         <Page
@@ -32,7 +30,12 @@ const Main = () => {
             />
 
             { isSearching && ( hasResults || isLoading ) && (
-                <SearchResults items={results} isLoading={isLoading} />
+                <SearchResults
+                    items={results}
+                    isLoading={isLoading}
+                    keyword={keyword}
+                    baseURL={baseURL}
+                />
             ) }
 
             { ! hasResults && ! isLoading && <Widgets /> }
