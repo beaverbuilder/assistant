@@ -73,4 +73,23 @@
             }
         }
     }
+    .fluid-color-scheme-dark {
+        .fl-asst-home-search-header {
+            &.fluid-sticky-element {
+                background: linear-gradient( 180deg,
+                                             hsla(210, 40%, 0%, 1 ),
+                                             hsla(210, 40%, 0%, 1 ) 50%,
+                                             hsla(210, 40%, 0%, 0 )
+                                            ) !important;
+            }
+            .fl-asst-floating-element {
+                box-shadow: none;
+            }
+            .fl-asst-form-input {
+                &:focus-within {
+                    box-shadow: 0px 0px 0px 2px var(--fluid-accent);
+                }
+            }
+        }
+    }
 }
