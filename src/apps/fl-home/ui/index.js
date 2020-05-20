@@ -1,5 +1,13 @@
 import HeaderBar from './header-bar'
-import SearchSuggestions from './search-suggestions'
-import Results from './list'
+import SearchResults from './search-results'
+import Main from './page-main'
+import Widgets from './widgets'
+import useSearchResults from './use-search-results'
 
-export { HeaderBar, SearchSuggestions, Results }
+export {
+    HeaderBar,
+    SearchResults,
+    Main,
+    Widgets,
+    useSearchResults
+}

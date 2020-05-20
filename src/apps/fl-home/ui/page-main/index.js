@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { Page, Layout, Icon } from 'assistant/ui'
-import { HeaderBar, Results } from 'home/ui'
-import { CardPage } from '../cards'
-import useSearchResults from './use-search-results'
+import { Page } from 'assistant/ui'
+import { HeaderBar, SearchResults, Widgets, useSearchResults } from 'home/ui'
 import './style.scss'
 
 const Main = () => {
@@ -28,22 +26,11 @@ const Main = () => {
                 onSuggestionClick={ val => setKeyword( val ) }
             />
 
-            { isSearching && hasResults && (
-                <Results items={results} />
-            )}
+            { isSearching && ( hasResults || isLoading ) && (
+                <SearchResults items={results} isLoading={isLoading} />
+            ) }
 
-            { isLoading && (
-                <Layout.Loading />
-            )}
-
-            { ! hasResults && ! isLoading && (
-                <>
-                    <CardPage />
-                    <Layout.Row padY={true}>
-                        <Icon.Pencil />
-                    </Layout.Row>
-                </>
-            )}
+            { ! hasResults && ! isLoading && <Widgets /> }
 		</Page>
     )
 }

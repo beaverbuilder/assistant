@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Layout, Form, Icon, Button } from 'assistant/ui'
-import { SearchSuggestions } from 'home/ui'
+import SearchSuggestions from './search-suggestions'
 import './style.scss'
 
 const noop = () => {}
