@@ -16,7 +16,7 @@ import './style.scss'
 export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
-	const { contentTypes, contentStatus, taxonomies } = getSystemConfig()
+	const { contentTypes, contentStatus, taxonomies, isSiteAdmin } = getSystemConfig()
 	const { renderNotices, createNotice } = Notice.useNotices()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
@@ -206,6 +206,14 @@ export const Post = ( { location, match, history } ) => {
 							id: 'publish_date',
 							value: item.date
 						},
+						post_author: {
+							label: __( 'Author' ),
+							labelPlacement: 'beside',
+							component: 'select',
+							id: 'post_author',
+							options: item.authorList,
+							isVisible: isSiteAdmin ? true : false
+						}
 					},
 				},
 				taxonomies: {
@@ -394,6 +402,10 @@ export const Post = ( { location, match, history } ) => {
 		}
 		if ( 'thumbnailData' in changed ) {
 			data.thumbnail = changed.thumbnailData ? changed.thumbnailData.id : '0'
+		}
+
+		if ( 'post_author' in changed ) {
+			data.post_author = changed.post_author
 		}
 
 		const handleError = error => {
