@@ -30,19 +30,35 @@ const HeaderBar = ({
         )
     }
 
+    const SearchIcon = () => (
+        <span className="search-icon-wrapper">
+            <Icon.Search />
+        </span>
+    )
+
+    const Back = () => {
+        return (
+            <Button
+                appearance="transparent"
+                className="fl-asst-home-search-clear"
+                onClick={ e => {
+                    setIsFocused( false )
+                    onClear()
+                } }
+            >
+                <Icon.BackArrow />
+            </Button>
+        )
+    }
+
     return (
         <>
             <div className="fl-asst-home-search-header fluid-sticky-element" >
                 <Layout.Row className="fl-asst-button-row">
                     <Form.Input
                         className="fl-asst-floating-element"
-                        before={(
-                            <span className="search-icon-wrapper">
-                                <Icon.Search />
-                            </span>
-                        )}
+                        before={ '' !== keyword ? <Back /> : <SearchIcon /> }
                         value={keyword}
-                        after={ '' !== keyword && <ClearButton /> }
                         placeholder={ __('Search WordPress') }
                         onInput={ e => onInput( e.target.value ) }
                         onFocus={ () => {
