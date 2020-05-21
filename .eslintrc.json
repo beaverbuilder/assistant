@@ -35,7 +35,7 @@
       "FL": "readable",
       "FLBuilder": "readable",
       "__PRODUCTION__": "readable",
-      "__webpack_public_path__": "readable"
+      "__webpack_public_path__": "writable"
     },
     "rules": {
         "camelcase": [

@@ -4,7 +4,7 @@ import { Card } from 'home/ui'
 import { getListSectionConfig, getListItemConfig, getRequestConfig } from '../../config'
 import './style.scss'
 
-const SectionCard = ( { children, label, footer } ) => {
+const SectionCard = ( { children, label } ) => {
 	return (
 		<li style={ { paddingBottom: 20 } }>
 			<Card
