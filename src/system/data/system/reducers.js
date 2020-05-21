@@ -117,8 +117,6 @@ export const labels = ( state = [], action ) => {
 	}
 }
 
-
-// New UI
 const windowDefaults = {
 	origin: [ 1, 0 ], /* top right */
 	size: 'normal', /* full sidebar */
@@ -195,47 +193,6 @@ export const searchHistory = ( state = [], action ) => {
 		return [ action.keyword, ...state.filter( item => item !== action.keyword ) ]
 	case 'RESET_SEARCH_HISTORY':
 		return action.terms
-	default:
-		return state
-	}
-}
-
-
-// Page Sections
-export const sections = ( state = {}, action ) => {
-
-	const defaultSection = {
-		label: '',
-		order: 10,
-		location: {},
-		render: () => {},
-		isEnabled: true,
-	}
-	const defaultLocation = {
-		type: '',
-		tab: '',
-	}
-
-	switch ( action.type ) {
-	case 'REGISTER_SECTION':
-
-		const section = { // eslint-disable-line
-			...defaultSection,
-			...action.config,
-			location: { ...defaultLocation, ...action.config.location },
-			handle: action.handle,
-		}
-		const { handle, location } = section // eslint-disable-line
-
-		// abort
-		if ( '' === location ) {
-			return state
-		}
-
-		return {
-			...state,
-			[handle]: section,
-		}
 	default:
 		return state
 	}
