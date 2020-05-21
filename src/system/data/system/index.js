@@ -1,4 +1,4 @@
-import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
+import { registerStore, useStore, getStore, getDispatch, getSelectors, getHooks } from '../registry'
 import { getWpRest } from 'utils/wordpress'
 import * as actions from './actions'
 import * as reducers from './reducers'
@@ -6,9 +6,13 @@ import * as effects from './effects'
 import * as selectors from './selectors'
 import useAppList from './use-app-list'
 
-registerStore( 'fl-assistant/system', {
+const KEY = 'fl-assistant/system'
+
+registerStore( KEY, {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
+
+		// Don't hide apps by default while we're working
 		isAppHidden: __PRODUCTION__ ? true : false,
 	},
 	actions,
@@ -17,25 +21,17 @@ registerStore( 'fl-assistant/system', {
 	selectors,
 } )
 
-export const useSystemState = () => {
-	return useStore( 'fl-assistant/system' )
-}
+export const useSystemState = shouldUpdate => useStore( KEY, shouldUpdate )
 
-export const getSystemStore = () => {
-	return getStore( 'fl-assistant/system' )
-}
+export const getSystemStore = () => getStore( KEY )
 
-export const getSystemActions = () => {
-	return getDispatch( 'fl-assistant/system' )
-}
+export const getSystemActions = () => getDispatch( KEY )
 
-export const getSystemSelectors = () => {
-	return getSelectors( 'fl-assistant/system' )
-}
+export const getSystemSelectors = () => getSelectors( KEY )
 
-export const getSystemConfig = () => {
-	return { ...FL_ASSISTANT_CONFIG }
-}
+export const getSystemHooks = () => getHooks( KEY )
+
+export const getSystemConfig = () => ( { ...FL_ASSISTANT_CONFIG } )
 
 export { useAppList }
 

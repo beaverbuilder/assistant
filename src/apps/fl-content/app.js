@@ -1,21 +1,21 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Switch, Route } from 'react-router-dom'
 import { getSystemConfig } from 'assistant/data'
 import { Page, Nav } from 'assistant/ui'
 import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
 import './style.scss'
 
-export const Content = ( { match } ) => (
-	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}` }>
-			<Redirect to={ { pathname: `${match.url}/tab/post` } } />
-		</Nav.Route>
-		<Nav.Route path={ `${match.url}/tab/:tab` } component={ Main } />
-		<Nav.Route path={ `${match.url}/post/new` } component={ Page.CreatePost } />
-		<Nav.Route path={ `${match.url}/post/:id` } component={ Page.Post } />
-	</Nav.Switch>
+export default ( { baseURL } ) => (
+	<Switch>
+		<Route exact path={ baseURL }>
+			<Redirect to={ { pathname: `${baseURL}/tab/post` } } />
+		</Route>
+		<Route path={ `${baseURL}/tab/:tab` } component={ Main } />
+		<Route path={ `${baseURL}/post/new` } component={ Page.CreatePost } />
+		<Route path={ `${baseURL}/post/:id` } component={ Page.Post } />
+	</Switch>
 )
 
 const Main = () => {
@@ -42,23 +42,6 @@ const Main = () => {
 			<Nav.Tabs tabs={ tabs } shouldHandleOverflow={ true } />
 		)
 	}
-
-	/* Ready to Remove Create Button?
-	const Actions = () => {
-		const to = {
-			pathname: '/fl-content/post/new',
-			state: {
-				detailBaseUrl: '/fl-content/post'
-			}
-		}
-		return (
-			<>
-				<Button to={ to } title={ __( 'Create New' ) }>
-					<Icon.Plus />
-				</Button>
-			</>
-		)
-	}*/
 
 	const tabs = getTabs()
 

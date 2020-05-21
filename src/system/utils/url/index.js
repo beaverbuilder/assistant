@@ -31,6 +31,22 @@ export const addQueryArgs = ( route, args ) => {
 }
 
 /**
+ * Returns an object of query args for a route.
+ */
+export const getQueryArgs = ( route ) => {
+	const args = {}
+	if ( ! route.includes( '?' ) ) {
+		return args
+	}
+	const parts = route.split( '?' ).pop().split( '&' )
+	parts.map( keyVal => {
+		const parts = keyVal.split( '=' )
+		args[ parts[0] ] = decodeURIComponent( parts[1] )
+	} )
+	return Object.keys( args ).length ? args : null
+}
+
+/**
  * Adds a leading slash to a route.
  */
 export const addLeadingSlash = ( route ) => {

@@ -1,0 +1,19 @@
+.fl-asst {
+    .fl-asst-home-search-suggestions {
+        padding: var(--fluid-lg-space);
+
+        .fl-asst-home-search-item {
+            background: var(--fluid-background);
+            border-radius: 3px;
+            display: inline-flex;
+            flex-direction: row;
+            min-height: var(--fluid-target-size);
+            margin-bottom: 5px;
+            margin-right: 5px;
+
+            .fluid-button {
+                background: transparent;
+            }
+        }
+    }
+}

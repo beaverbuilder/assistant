@@ -7,6 +7,7 @@ use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
+use FL\Assistant\Data\Mockup;
 use FLBuilderModel;
 
 /**
@@ -107,6 +108,7 @@ class OnEnqueueScripts {
 			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
 			'apiRoot'           => esc_url_raw( get_rest_url() ),
 			'cloudUrl'          => FL_ASSISTANT_CLOUD_URL,
+			'cloudWpUrl'		=> FL_ASSISTANT_WP_API_URL,
 			'contentTypes'      => $this->posts->get_types(),
 			'contentStatus'     => $this->posts->get_stati(),
 			'currentPageView'   => $this->site->get_current_view(),
@@ -115,6 +117,7 @@ class OnEnqueueScripts {
 			'emptyTrashDays'    => EMPTY_TRASH_DAYS,
 			'isShowingAdminBar' => is_admin_bar_showing(),
 			'isAdmin'           => is_admin(),
+			'mockup'			=> Mockup::get(),
 			'nonce'             => [
 				'api'             => wp_create_nonce( 'wp_rest' ),
 				'reply'           => wp_create_nonce( 'replyto-comment' ),
@@ -178,9 +181,9 @@ class OnEnqueueScripts {
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
-		wp_register_script( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.js', [ 'react', 'react-dom' ], $ver, false );
+		wp_register_script( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.js', [ 'react', 'react-dom', 'lodash' ], $ver, false );
 		wp_register_style( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.css', [], $ver, null );
-		wp_enqueue_media();
+
 		if ( $this->should_enqueue() ) {
 
 			$config = $this->generate_frontend_config();
@@ -190,7 +193,6 @@ class OnEnqueueScripts {
 			$js_deps = [
 				'fl-fluid',
 				'lodash',
-				'heartbeat',
 				'wp-i18n',
 				'wp-keycodes',
 				'wp-dom-ready',
@@ -212,6 +214,9 @@ class OnEnqueueScripts {
 			// UI Render - loaded in footer
 			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.js', $js_deps, $ver, true );
+
+			// WordPress Media Uploader
+			wp_enqueue_media();
 
 			do_action( 'fl_assistant_enqueue' );
 		}

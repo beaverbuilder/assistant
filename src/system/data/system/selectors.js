@@ -1,9 +1,7 @@
+import { Icon } from 'ui'
+
 export const getCount = ( state, key ) => {
 	return state.counts[ key ] ? state.counts[ key ] : 0
-}
-
-export const getLabels = ( state ) => {
-	return state.labels
 }
 
 export const querySections = ( state, passedQuery ) => {
@@ -56,4 +54,40 @@ export const querySections = ( state, passedQuery ) => {
 	}
 
 	return Object.values( sections ).filter( matchesQuery )
+}
+
+export const selectApp = ( state, key ) => {
+	if ( ! Object.keys( state.apps ).includes( key ) ) {
+		return false
+	}
+	const app = state.apps[key]
+	return {
+		onMount: () => {},
+		...app,
+		handle: app.app,
+		icon: app.icon ? app.icon : Icon.Placeholder,
+	}
+}
+
+export const selectHomeKey = ( state ) => state.homeKey
+
+export const selectHomeApp = ( state ) => {
+	const key = selectHomeKey( state )
+	return selectApp( state, key )
+}
+
+export const selectAppOrder = ( state, maxCount = null ) => {
+	const order = state.appOrder.filter( ( key, i ) => (
+
+		// Make sure there's a registered app
+		Object.keys( state.apps ).includes( key ) &&
+
+		// Make sure the app isn't hidden from lists
+		false !== state.apps[key].shouldShowInAppList &&
+
+		// If there's a max count, limit the total
+		( maxCount && i + 1 <= maxCount )
+
+	) )
+	return order
 }

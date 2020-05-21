@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { List, Button, Icon, Image, MediaDropUploader, Layout } from 'ui'
+import { List, Button, Icon, Image, Media, Layout } from 'ui'
 import Clipboard from 'react-clipboard.js'
 import { getSystemSelectors } from 'data'
 import { getWpRest } from 'utils/wordpress'
@@ -32,7 +32,7 @@ const Attachments = ( {
 	}, className )
 
 	return (
-		<MediaDropUploader>
+		<Media.Uploader>
 			<List.WordPress
 				type="attachments"
 				className={ classes }
@@ -153,7 +153,7 @@ const Attachments = ( {
 				} }
 				{ ...rest }
 			/>
-		</MediaDropUploader>
+		</Media.Uploader>
 	)
 }
 

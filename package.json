@@ -1,7 +1,7 @@
 {
   "name": "fl-assistant",
   "title": "Assistant",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
   "repository": {
     "type": "git",
@@ -19,10 +19,14 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
-    "@beaverbuilder/fluid": "^0.3.4",
+    "@beaverbuilder/fluid": "^0.3.8",
+    "@popmotion/popcorn": "^0.4.4",
+    "array-move": "^2.2.1",
     "axios": "0.18.1",
     "axios-cache-adapter": "^2.5.0",
     "camelcase": "^6.0.0",
+    "cookie": "^0.4.0",
+    "framer-motion": "^1.10.3",
     "md5": "^2.2.1",
     "promise": "^8.1.0",
     "qs": "^6.9.3",
@@ -36,6 +40,7 @@
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@wordpress/babel-preset-default": "^3.0.2",
+    "axios-mock-adapter": "^1.18.1",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",

@@ -28,6 +28,8 @@ const Page = ( {
 	padY = true,
 	contentWrapStyle = null,
 
+	tag: Tag = 'div',
+
 	overlay,
 
 	...rest
@@ -92,7 +94,7 @@ const Page = ( {
 	}
 
 	return (
-		<div className="fluid-page-wrap" style={ wrapStyle }>
+		<Tag className="fluid-page-wrap" style={ wrapStyle }>
 			<div className={ classes } { ...rest } style={ styles }>
 
 				{ hero && <Hero>{hero}</Hero> }
@@ -133,7 +135,7 @@ const Page = ( {
 			</div>
 			{ footer && <div className="fluid-page-footer">{footer}</div> }
 			{ overlay && <div className="fluid-page-overlay">{overlay}</div> }
-		</div>
+		</Tag>
 	)
 }
 

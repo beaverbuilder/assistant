@@ -1,5 +1,5 @@
 === Assistant - Every Day Productivity Apps ===
-Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22
+Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media, Upload, Beaver Builder
 Requires at least: 5.2
 Tested up to: 5.4
@@ -73,6 +73,17 @@ Our API for creating new apps and extending the existing ones is in development 
 
 
 == Changelog ==
+
+= 0.5.0 =
+* Apps now load their UI on-demand.
+* All new comments app
+
+= 0.4.2 =
+* Fixed Beaver Builder edit links not showing in the content app.
+
+= 0.4.1 =
+* Fixed Assistant not loading on hosts with heartbeat disabled (such as WP Engine).
+* Fixed media library scripts loading while logged out.
 
 = 0.4.0 =
 * Added access to all public post types inside content app

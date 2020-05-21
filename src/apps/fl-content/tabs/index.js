@@ -188,11 +188,12 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType } ) 
 	if ( 'post' === listType ) {
 		const i = actions.findIndex( action => 'edit-post' === action.handle )
 		if ( i ) {
+
 			// Replace existing admin edit action
 			const action = actions[i]
 			delete action.href
 			action.isShowing = true
-			action.title = __('Edit Details')
+			action.title = __( 'Edit Details' )
 			action.to = {
 				pathname: `/fl-content/post/${item.id}`,
 				state: { item }
@@ -201,4 +202,4 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType } ) 
 	}
 
 	return actions
-})
+} )

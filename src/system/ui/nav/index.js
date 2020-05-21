@@ -1,13 +1,14 @@
-import React, { useContext } from 'react'
+import React, { memo } from 'react'
 import { Nav as FLUID_Nav } from 'fluid/ui'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
 import { Button } from 'ui'
 import './style.scss'
 
 const Nav = { ...FLUID_Nav }
 
 Nav.Tabs = ( { tabs = [], ...rest } ) => {
-	const { location, history } = useContext( Nav.Context )
+	const history = useHistory()
+	const location = useLocation()
 	return (
 		<>
 			<Button.Group
@@ -70,14 +71,20 @@ Nav.TabsToolbar = ( { tabs } ) => {
 
 Nav.CurrentTab = ( { tabs = [] } ) => {
 	return (
-		<Nav.Switch>
+		<Switch>
 			{ tabs.map( ( tab, i ) => {
-				const { exact = false, path, component } = tab
+				const { exact = false, path, component, ...rest } = tab
+				const Component = memo( component )
 				return (
-					<Nav.Route key={ i } exact={ exact } path={ path } component={ component }  />
+					<Route
+						key={ i }
+						exact={ exact }
+						path={ path }
+						render={ () => <Component { ...rest } /> }
+					/>
 				)
 			} )}
-		</Nav.Switch>
+		</Switch>
 	)
 }
 Nav.CurrentTab.displayName = 'Nav.CurrentTab'

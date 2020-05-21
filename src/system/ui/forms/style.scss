@@ -232,6 +232,7 @@
     select {
         height: var(--fluid-target-size);
         background-color: var(--fluid-background);
+        color: var(--fluid-color);
         box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
         border-radius: 3px;
         padding: var(--fluid-sm-space);
@@ -239,6 +240,7 @@
 
         &:focus {
             background-color: var(--fluid-box-background);
+            color: var(--fluid-color) !important;
             border: none;
             outline: none;
             box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),

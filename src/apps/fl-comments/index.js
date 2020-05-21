@@ -1,21 +1,26 @@
-import { registerApp } from 'assistant'
+import { lazy } from 'react'
 import { __ } from '@wordpress/i18n'
+import { registerApp } from 'assistant'
+import { Page } from 'assistant/ui'
 import { addQueryArgs } from 'assistant/utils/url'
 import { currentUserCan } from 'assistant/utils/wordpress'
-import { Page } from 'assistant/ui'
-import { CommentsApp } from './app'
 import Icon from './icon'
+import { defaultState } from './data'
+
+const CommentsApp = lazy( () => import(
+	/* webpackChunkName: "app-comments" */ './app'
+) )
+
+const label = __( 'Comments' )
 
 registerApp( 'fl-comments', {
-	label: __( 'Comments' ),
+	label,
 	root: CommentsApp,
 	icon: Icon,
 	enabled: currentUserCan( 'moderate_comments' ),
-	accent: {
-		color: '#FFCC00'
-	},
+	state: defaultState,
 	search: {
-		label: __( 'Comments' ),
+		label,
 		priority: 300,
 		route: ( keyword, number, offset ) => {
 			return addQueryArgs( 'fl-assistant/v1/comments', {
@@ -24,18 +29,14 @@ registerApp( 'fl-comments', {
 				offset,
 			} )
 		},
-		format: items => {
-			return items.map( item => ( {
-				...item,
-				label: item.meta,
-			} ) )
-		},
+		format: items => items.map( item => ( {
+			...item,
+			label: item.meta,
+		} ) ),
 		detail: {
 			component: Page.Comment,
 			path: '/comment/:id',
-			pathname: item => {
-				return `/comment/${ item.id }`
-			},
+			pathname: item => `/comment/${ item.id }`
 		},
 	},
 } )

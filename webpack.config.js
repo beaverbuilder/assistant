@@ -11,6 +11,10 @@ const alias = {
     data: path.resolve( __dirname, './src/system/data'),
     utils: path.resolve( __dirname, './src/system/utils' ),
     hooks: path.resolve( __dirname, './src/system/hooks' ),
+
+    'home': path.resolve( __dirname, './src/apps/fl-home' ),
+    'home/ui': path.resolve( __dirname, './src/apps/fl-home/ui' ),
+    'home/data': path.resolve( __dirname, './src/apps/fl-home/data' ),
 }
 
 const externals = [
@@ -19,17 +23,19 @@ const externals = [
 	    'react'                         : 'React',
 	    'react-dom'                     : 'ReactDOM',
 	    'lodash'                        : 'lodash',
-	    'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
-	    'redux'              		    : 'FL.UID.vendors.Redux',
-	    'classnames'         	        : 'FL.UID.vendors.classnames',
-	    'camelcase'						: 'FL.UID.vendors.camelcase',
-        'react-laag'                    : 'FL.UID.vendors.ReactLaag',
-        'resize-observer-polyfill'      : 'FL.UID.vendors.ResizeObserverPolyfill',
 
         /* FLUID environment */
         'fluid'                         : 'FL.UID',
         'fluid/ui'                      : 'FL.UID.ui',
         'fluid/data'                    : 'FL.UID.data',
+        /* Vendors provided by FL.UID */
+        'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
+	    'redux'              		    : 'FL.UID.vendors.Redux',
+	    'classnames'         	        : 'FL.UID.vendors.classnames',
+	    'camelcase'						: 'FL.UID.vendors.camelcase',
+        'react-laag'                    : 'FL.UID.vendors.ReactLaag',
+        'resize-observer-polyfill'      : 'FL.UID.vendors.ResizeObserverPolyfill',
+        'framer-motion'                 : 'FL.UID.vendors.FramerMotion',
 
 	    /* wp */
 	    '@wordpress/i18n'               : 'wp.i18n',
@@ -76,7 +82,8 @@ const config = {
     watch: true,
     output: {
         path: path.resolve( __dirname, 'build' ),
-        filename: `fl-assistant-[name].bundle.js`
+        filename: `fl-assistant-[name].bundle.js`,
+        chunkFilename: "fl-chunk-[name].js"
     },
     resolve: { alias },
     devtool: 'source-map',

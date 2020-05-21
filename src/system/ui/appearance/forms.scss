@@ -121,6 +121,11 @@
                 }
             }
         }
+        .fluid-color-scheme-dark {
+            input[type="checkbox"] {
+                background-color: var(--fl-asst-input-background);
+            }
+        }
 
         select {
             -moz-appearance: none;

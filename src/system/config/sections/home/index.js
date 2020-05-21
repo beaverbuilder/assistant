@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState, getSystemSelectors } from 'data'
-import { Button, Icon, App, List, Layout, Form } from 'ui'
+import { Button, Icon, List, Layout, Env, Form } from 'ui'
 import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
@@ -14,7 +14,7 @@ registerSection( 'fl-asst-quick-actions', {
 	},
 	padX: false,
 	render: () => {
-		const { environment } = useContext( App.Context )
+		const { application } = Env.use()
 		const { adminURLs } = getSystemConfig()
 
 		const dashURL =
@@ -37,7 +37,7 @@ registerSection( 'fl-asst-quick-actions', {
 				<Button href={ dashURL } appearance="elevator" title={ __( 'Go to Admin' ) }>
 					<Dashicon icon="wordpress" />
 				</Button>
-				{ 'beaver-builder' !== environment && (
+				{ 'beaver-builder' !== application && (
 					<Button onClick={ toggleBrightness } appearance="elevator" title={ __( 'Toggle UI Brightness' ) }>
 						{ 'light' === appearance.brightness ? <Icon.Moon /> : <Icon.Brightness /> }
 					</Button>

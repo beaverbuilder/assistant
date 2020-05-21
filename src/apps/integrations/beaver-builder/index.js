@@ -16,7 +16,7 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env
 	}
 
 	// Don't show if you're currently editing this item in BB
-	const href = window.location.href.split('?')
+	const href = window.location.href.split( '?' )
 	if ( 'beaver-builder' === env.application && item.url === href[0] ) {
 		return actions
 	}

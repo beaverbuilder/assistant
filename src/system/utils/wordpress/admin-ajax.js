@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import { clearWpRestCache } from './rest'
 const { ajaxUrl, nonce } = FL_ASSISTANT_CONFIG
 
 const http = axios.create( {
@@ -22,6 +23,7 @@ export const getAction = ( action, queryParams = {}, config = {} ) => {
 
 
 export const replyToComment = ( id, postId, content, config = {} ) => {
+	clearWpRestCache( 'comments' )
 	return postAction( 'replyto-comment', {
 		_wpnonce: nonce.reply,
 		_wp_unfiltered_html_comment: nonce.replyUnfiltered,

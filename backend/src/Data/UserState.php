@@ -22,7 +22,7 @@ class UserState {
 		'appOrder'           => [],
 		'window'             => [
 			'origin'           => [ 1, 0 ],
-			'size'             => 'mini',
+			'size'             => 'normal',
 			'isHidden'         => false,
 			'hiddenAppearance' => '',
 			'overlayToolbar'   => false,
@@ -35,8 +35,6 @@ class UserState {
 			'entries' => [],
 		],
 		'searchHistory'      => [],
-		'shouldReduceMotion' => false,
-		'shouldShowLabels'   => true,
 		'shouldShowInAdmin'  => true,
 	];
 

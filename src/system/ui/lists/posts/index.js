@@ -114,7 +114,7 @@ export const Posts = ( {
 				}
 
 				// Check if item is the current page being viewed
-				const href = window.location.href.split('?')
+				const href = window.location.href.split( '?' )
 				const isCurrentPage = () => item.url === href[0]
 
 				const Accessory = () => {
@@ -182,16 +182,16 @@ export const Posts = ( {
 						marks.push( __( 'Draft' ) )
 					}
 					if ( 'future' === item.status ) {
-						marks.push( __( 'Scheduled' ))
+						marks.push( __( 'Scheduled' ) )
 					}
 					if ( 'private' === item.visibility ) {
-						marks.push( __( 'Private' ))
+						marks.push( __( 'Private' ) )
 					}
 					if ( 'protected' === item.visibility ) {
-						marks.push( __( 'Protected' ))
+						marks.push( __( 'Protected' ) )
 					}
 					if ( item.isSticky ) {
-						marks.push( __( 'Sticky' ))
+						marks.push( __( 'Sticky' ) )
 					}
 
 					return marks
