@@ -1,4 +1,4 @@
-import React, { useState, memo, Suspense } from 'react'
+import React, { useState, memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
@@ -112,7 +112,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 						onClick={ () => navOrHideApp( isRoot, goToRoot ) }
 						className="disable-while-sorting"
 					>
-						<Icon.Safely icon={home.icon} />
+						<Icon.Safely icon={ home.icon } />
 					</Button>
 				)}
 
@@ -163,7 +163,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 						} ) ) }
 						className="disable-while-sorting"
 					>
-						<Icon.Safely icon={manage.icon} />
+						<Icon.Safely icon={ manage.icon } />
 					</Button>
 				)}
 			</div>
@@ -183,6 +183,6 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 	)
 } )
 
-const AppIcon = memo(  ( { icon, ...rest } ) => <Icon.Safely icon={icon} {...rest} /> )
+const AppIcon = memo(  ( { icon, ...rest } ) => <Icon.Safely icon={ icon } { ...rest } /> )
 
 export default Sidebar

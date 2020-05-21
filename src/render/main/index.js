@@ -126,8 +126,8 @@ const MainWindow = ( { children, ...rest } ) => {
 }
 
 const WindowError = props => (
-    <Page.Error
-		message={__('There seems to be an issue in the Assistant panel.')}
-		{...props}
+	<Page.Error
+		message={ __( 'There seems to be an issue in the Assistant panel.' ) }
+		{ ...props }
 	/>
 )

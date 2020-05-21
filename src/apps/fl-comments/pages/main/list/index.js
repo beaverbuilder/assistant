@@ -38,7 +38,7 @@ export default ( { baseURL } ) => {
 						state: { item }
 					}
 
-				    const actions = applyFilters( 'list-item-actions', [
+					const actions = applyFilters( 'list-item-actions', [
 						{
 							handle: 'view-comment',
 							href: item.url,

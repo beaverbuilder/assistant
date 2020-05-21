@@ -4,61 +4,61 @@ import { Card } from 'home/ui'
 import { getListSectionConfig, getListItemConfig, getRequestConfig } from '../../config'
 import './style.scss'
 
-const SectionCard = ({ children, label, footer }) => {
-    return (
-        <li style={{ paddingBottom: 20 }}>
-            <Card
-                title={label}
-                className="fl-asst-search-results-card"
-            >{children}</Card>
-        </li>
-    )
+const SectionCard = ( { children, label, footer } ) => {
+	return (
+		<li style={ { paddingBottom: 20 } }>
+			<Card
+				title={ label }
+				className="fl-asst-search-results-card"
+			>{children}</Card>
+		</li>
+	)
 }
 
-const Results = ({
-    isLoading = false,
-    items,
-    keyword,
-    baseURL
-}) => {
+const Results = ( {
+	isLoading = false,
+	items,
+	keyword,
+	baseURL
+} ) => {
 
-    if ( isLoading ) {
-        return (
-            <List.Loading />
-        )
-    }
+	if ( isLoading ) {
+		return (
+			<List.Loading />
+		)
+	}
 
-    const { config } = getRequestConfig( { keyword } )
+	const { config } = getRequestConfig( { keyword } )
 
-    return (
-        <Layout.Box padY={false}>
-            <List
-                items={items}
-                getSectionProps={ ( section, defaultProps ) => {
-                    return getListSectionConfig( {
-                        section,
-                        defaultProps,
-                        keyword,
-                        baseURL,
-                    } )
-                } }
-                getItemProps={ ( item, defaultProps ) => {
-                    return getListItemConfig( {
-                        item,
-                        defaultProps,
-                        config,
-                        baseURL,
-                    } )
-                } }
-                getItemComponent={ ( item, isSection, defaultComponent ) => {
-                    return isSection ? SectionCard : defaultComponent
-                }}
-            />
-            <Layout.Row padY={true}>
-                <Icon.Pencil />
-            </Layout.Row>
-        </Layout.Box>
-    )
+	return (
+		<Layout.Box padY={ false }>
+			<List
+				items={ items }
+				getSectionProps={ ( section, defaultProps ) => {
+					return getListSectionConfig( {
+						section,
+						defaultProps,
+						keyword,
+						baseURL,
+					} )
+				} }
+				getItemProps={ ( item, defaultProps ) => {
+					return getListItemConfig( {
+						item,
+						defaultProps,
+						config,
+						baseURL,
+					} )
+				} }
+				getItemComponent={ ( item, isSection, defaultComponent ) => {
+					return isSection ? SectionCard : defaultComponent
+				} }
+			/>
+			<Layout.Row padY={ true }>
+				<Icon.Pencil />
+			</Layout.Row>
+		</Layout.Box>
+	)
 }
 
 export default Results

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
-import { __ } from '@wordpress/i18n'
 import { Button, Icon, Layout } from 'assistant/ui'
 import './style.scss'
 

@@ -6,49 +6,49 @@ import { useAppList } from 'assistant/data'
 import { Card } from 'home/ui'
 
 const AppsWidget = memo ( () => {
-    const apps = useAppList()
+	const apps = useAppList()
 
-    return (
-        <Card
-            title={__('Apps')}
-            contentProps={{
-                style: {
-                    padding: '0 10px 20px',
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    gridGap: 5
-                }
-            }}
-        >
-        { apps.map( app => {
-            const { label, icon, handle } = app
-            return (
-                <motion.div
-                    key={ handle }
-                    positionTransition
-                    style={ {
-                        display: 'flex',
-                        flexDirection: 'row'
-                    } }
-                >
-                    <Button
-                        appearance="transparent"
-                        to={ `/${handle}` }
-                        style={ {
-                            flex: '1 1 auto',
-                            justifyContent: 'flex-start'
-                        } }
-                    >
-                        <span style={ { marginRight: 15 } }>
-                            <Icon.Safely icon={icon} context="sidebar" />
-                        </span>
-                        {label}
-                    </Button>
-                </motion.div>
-            )
-        } ) }
-        </Card>
-    )
+	return (
+		<Card
+			title={ __( 'Apps' ) }
+			contentProps={ {
+				style: {
+					padding: '0 10px 20px',
+					display: 'grid',
+					gridTemplateColumns: 'repeat(2, 1fr)',
+					gridGap: 5
+				}
+			} }
+		>
+			{ apps.map( app => {
+				const { label, icon, handle } = app
+				return (
+					<motion.div
+						key={ handle }
+						positionTransition
+						style={ {
+							display: 'flex',
+							flexDirection: 'row'
+						} }
+					>
+						<Button
+							appearance="transparent"
+							to={ `/${handle}` }
+							style={ {
+								flex: '1 1 auto',
+								justifyContent: 'flex-start'
+							} }
+						>
+							<span style={ { marginRight: 15 } }>
+								<Icon.Safely icon={ icon } context="sidebar" />
+							</span>
+							{label}
+						</Button>
+					</motion.div>
+				)
+			} ) }
+		</Card>
+	)
 } )
 
 export default AppsWidget

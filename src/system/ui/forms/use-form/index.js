@@ -55,7 +55,6 @@ const Tabs = ( { config } ) => {
 	const history = useHistory()
 	const location = history.location
 	const { match } = Nav.useNavContext()
-	console.log('tab', match )
 
 	const setTab = path => history.replace( path, location.state )
 	return (

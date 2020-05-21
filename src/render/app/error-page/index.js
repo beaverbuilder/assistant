@@ -3,10 +3,10 @@ import { __ } from '@wordpress/i18n'
 import { Page } from 'assistant/ui'
 
 const ErrorPage = props => (
-    <Page.Error
-        message={__('There seems to be an issue with this app.')}
-        {...props}
-    />
+	<Page.Error
+		message={ __( 'There seems to be an issue with this app.' ) }
+		{ ...props }
+	/>
 )
 
 export default ErrorPage

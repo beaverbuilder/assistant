@@ -49,11 +49,11 @@ const Home = memo( () => {
 	const goToRoot = () => history.go( -history.length )
 	const { selectHomeApp } = getSystemSelectors()
 	const home = selectHomeApp()
-	
+
 	return (
 		<li>
 			<Button
-				onClick={goToRoot}
+				onClick={ goToRoot }
 				appearance="transparent"
 				style={ {
 					flex: '1 1 auto',
@@ -62,7 +62,7 @@ const Home = memo( () => {
 				} }
 			>
 				<span className="fl-asst-item-icon">
-					<Icon.Safely icon={home.icon} context="sidebar" />
+					<Icon.Safely icon={ home.icon } context="sidebar" />
 				</span>
 
 				{home.label}
@@ -111,12 +111,13 @@ const AppList = memo( () => {
 								justifyContent: 'flex-start',
 							} }
 							onDragStart={ e => {
+
 								// prevent link dragging behavior
 								e.preventDefault()
 							} }
 						>
 							<span className="fl-asst-item-icon">
-								<Icon.Safely icon={icon} context="sidebar" />
+								<Icon.Safely icon={ icon } context="sidebar" />
 							</span>
 
 							{label}

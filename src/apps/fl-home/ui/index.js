@@ -6,10 +6,10 @@ import Card from './card'
 import useSearchResults from './use-search-results'
 
 export {
-    Card,
-    HeaderBar,
-    SearchResults,
-    Main,
-    Widgets,
-    useSearchResults
+	Card,
+	HeaderBar,
+	SearchResults,
+	Main,
+	Widgets,
+	useSearchResults
 }

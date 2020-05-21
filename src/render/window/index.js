@@ -36,7 +36,7 @@ const Window = ( {
 	toolbar: topbar,
 	...rest
 } ) => {
-	const { shouldReduceMotion } = useSystemState('shouldReduceMotion')
+	const { shouldReduceMotion } = useSystemState( 'shouldReduceMotion' )
 
 	const handleChange = config => {
 		const state = {

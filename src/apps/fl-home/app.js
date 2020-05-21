@@ -1,5 +1,4 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
 import { Route } from 'react-router-dom'
 import { App } from 'assistant/ui'
 import { addLeadingSlash } from 'assistant/utils/url'

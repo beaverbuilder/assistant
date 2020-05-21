@@ -91,7 +91,7 @@ const Reply = ( {
 	const reply = e => {
 
 		if ( '' !== ref.current.value ) {
-			replyToComment( id, postID, ref.current.value, () => { } ).then( response => {
+			replyToComment( id, postID, ref.current.value, () => { } ).then( () => {
 				setReplyWasPosted( true )
 			} )
 		}
