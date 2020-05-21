@@ -3,6 +3,7 @@ import { Layout, Icon } from 'assistant/ui'
 import AppsWidget from './apps'
 import RecentContentWidget from './recent-content'
 import CurrentlyViewingWidget from './currently-viewing'
+import SubscribeWidget from './subscribe'
 import './style.scss'
 
 const Cap = () => {
@@ -29,6 +30,11 @@ const Widgets = () => {
 			<li>
 				<Layout.Box style={ { paddingTop: 0 } }>
 					<AppsWidget />
+				</Layout.Box>
+			</li>
+			<li>
+				<Layout.Box style={ { paddingTop: 0 } }>
+					<SubscribeWidget />
 				</Layout.Box>
 			</li>
 			<li>

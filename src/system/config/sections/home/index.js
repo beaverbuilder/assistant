@@ -174,7 +174,7 @@ registerSection( 'fl-home-subscribe', {
 		const successText = __( 'Subscribed Successfully!' )
 		const errorText = __( 'There was an issue subscribing. Please try again.' )
 
-		const ValidateEmail = mail => {
+		const validateEmail = mail => {
 			if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( mail ) ) {
 				return true
 			}
@@ -185,7 +185,7 @@ registerSection( 'fl-home-subscribe', {
 		const subscribeUser = () => {
 			if ( '' === subscribeEmail ) {
 				alert( placeholderText )
-			} else if ( ValidateEmail( subscribeEmail ) ) {
+			} else if ( validateEmail( subscribeEmail ) ) {
 
 				setisSubscribing( true )
 
