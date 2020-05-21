@@ -75,8 +75,11 @@ Our API for creating new apps and extending the existing ones is in development 
 == Changelog ==
 
 = 0.5.0 =
-* Apps now load their UI on-demand.
-* All new comments app
+* Apps now load their UI on-demand
+* Drag the apps to reorder them
+* All new comments app - reply to comments right in the list
+* All New Home + Search app
+* Numerous performance enhancements
 
 = 0.4.2 =
 * Fixed Beaver Builder edit links not showing in the content app.

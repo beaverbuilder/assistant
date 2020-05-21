@@ -30,10 +30,7 @@ export const Form = ( {
 	...rest
 } ) => {
 
-	const classes = classname( {
-		'fl-asst-form': true,
-	}, className, additionalClasses )
-
+	const classes = classname( 'fl-asst-form', className, additionalClasses )
 	return (
 		<Form.Context.Provider value={ context }>
 			<form className={ classes } onSubmit={ onSubmit } { ...rest } />
@@ -42,17 +39,13 @@ export const Form = ( {
 }
 
 /* ------ Form System Setup ------ */
-Form.defaults = {}
 
-Form.Context = createContext( Form.defaults )
+Form.Context = createContext( {} )
 Form.Context.displayName = 'Form.Context'
 
 /* ------ Form Hooks ------ */
 Form.useForm = useForm
 Form.useFormData = useFormData
-
-//Form.useFormData_Deprecated = useFormData_Deprecated
-//Form.useFormState_Deprecated = useFormState_Deprecated
 
 /* ------ Form Part Components ------ */
 Form.Section = Section
@@ -112,7 +105,3 @@ Form.CalenderItem.displayName = 'Form.CalenderItem'
 
 Form.Input = Input
 Form.Input.displayName = 'Form.Input'
-
-/* ------ Form Testing Components ------ */
-Form.Test = Test
-Form.Test.displayName = 'Form.Test'
