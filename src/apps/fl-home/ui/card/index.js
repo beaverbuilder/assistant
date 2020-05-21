@@ -19,6 +19,8 @@ const Card = ( {
 	const { className: footClasses, ...footerRest } = footerProps
 	const footerClasses = classname( 'fl-asst-card-footer', footClasses )
 
+	const { className: contentClasses, ...contentRest } = contentProps
+
 	return (
 		<Tag
 			className={ classname( {
@@ -34,10 +36,14 @@ const Card = ( {
 					{ subtitle && <div className="fl-asst-card-subtitle">{subtitle}</div> }
 				</div>
 			)}
-			<div
-				className="fl-asst-card-content"
-				{ ...contentProps }
-			>{children}</div>
+			{ children && (
+				<div
+					className={ classname('fl-asst-card-content', contentClasses )}
+					{ ...contentRest }
+				>
+					{children}
+				</div>
+			)}
 			{ footer && <div className={ footerClasses } { ...footerRest }>{footer}</div> }
 		</Tag>
 	)
