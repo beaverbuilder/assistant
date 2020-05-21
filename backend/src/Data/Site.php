@@ -17,8 +17,7 @@ class Site {
 		$type    = '';
 		$name    = __( 'Untitled', 'fl-assistant' );
 
-		$obj                    = get_queried_object();
-		$data['queried_object'] = $obj;
+		$obj = get_queried_object();
 
 		if ( is_admin() ) {
 

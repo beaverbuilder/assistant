@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { getSystemActions, getSystemConfig, useSystemState, getSystemSelectors } from 'data'
-import { Button, Icon, List, Layout, Env } from 'ui'
+import { Button, Icon, List, Layout, Env, Form } from 'ui'
 import { Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { ENTER } from '@wordpress/keycodes'
 import './style.scss'
 
 const { registerSection } = getSystemActions()
@@ -13,14 +14,20 @@ registerSection( 'fl-asst-quick-actions', {
 	},
 	padX: false,
 	render: () => {
-		const { application } = Env.useEnvironment()
+		const { application } = Env.use()
 		const { adminURLs } = getSystemConfig()
 
-		const dashURL = 'undefined' !== typeof adminURLs.dashboard ? adminURLs.dashboard : '/wp-admin'
+		const dashURL =
+			'undefined' !== typeof adminURLs.dashboard ?
+				adminURLs.dashboard :
+				'/wp-admin'
 
 		const { appearance } = useSystemState()
 		const { setBrightness } = getSystemActions()
-		const toggleBrightness = () => 'light' === appearance.brightness ? setBrightness( 'dark' ) : setBrightness( 'light' )
+		const toggleBrightness = () =>
+			'light' === appearance.brightness ?
+				setBrightness( 'dark' ) :
+				setBrightness( 'light' )
 
 		return (
 			<div className="fl-asst-quick-actions">
@@ -153,4 +160,90 @@ registerSection( 'fl-recent-posts', {
 			</>
 		)
 	}
+} )
+
+registerSection( 'fl-home-subscribe', {
+	label: __( 'Subscribe' ),
+	location: {
+		type: 'home',
+	},
+	render: () => {
+		const [ subscribeEmail, setsubscribeEmail ] = useState( '' )
+		const [ isSubscribing, setisSubscribing ] = useState( false )
+		const placeholderText = __( 'Please enter a valid email address.' )
+		const successText = __( 'Subscribed Successfully!' )
+		const errorText = __( 'There was an issue subscribing. Please try again.' )
+
+		const validateEmail = mail => {
+			if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( mail ) ) {
+				return true
+			}
+			alert( placeholderText )
+			return false
+		}
+
+		const subscribeUser = () => {
+			if ( '' === subscribeEmail ) {
+				alert( placeholderText )
+			} else if ( validateEmail( subscribeEmail ) ) {
+
+				setisSubscribing( true )
+
+				if ( 'undefined' != typeof _dcq ) {
+					_dcq.push( [
+						'identify',
+						{
+							email: subscribeEmail,
+							tags: [ 'Assistant Newsletter' ],
+							success: function( response ) {
+								if ( response.success ) {
+									setisSubscribing( false )
+									alert( successText )
+								} else {
+									setisSubscribing( false )
+									alert( errorText )
+								}
+							},
+						},
+					] )
+				} else {
+					setisSubscribing( false )
+					alert( errorText )
+				}
+			}
+		}
+
+		const onClick = e => {
+			subscribeUser()
+			e.preventDefault()
+		}
+		const onKeyPress = e => {
+			if ( ENTER === e.which ) {
+				subscribeUser()
+			}
+		}
+
+		return (
+			<form>
+				<p style={{ marginTop: 0 }}>{__('Keep up to date with Assistant!')}</p>
+				<Form.Input
+					value={ subscribeEmail }
+					onChange={ e => setsubscribeEmail( e.target.value ) }
+					onKeyPress={ onKeyPress }
+					placeholder={ __('email@example.com') }
+					after={
+						subscribeEmail &&
+						<Button
+							status="primary"
+							onClick={ onClick }
+						>
+							<span style={{ marginRight: 'var(--fluid-sm-space)'}}>{__('Send')}</span>
+							<Icon.Return />
+						</Button>
+					}
+				/>
+				{ isSubscribing && <Icon.SmallSpinner/> }
+			</form>
+		)
+	},
 } )

@@ -15,10 +15,7 @@ const Message = ( {
 	} )
 
 	return (
-		<div className={ messageClassName }>
-			{ Icon && <span><Icon />&nbsp;&nbsp;</span> }
-			{ children }
-		</div>
+		<div className={ messageClassName }><div className="fl-msg-icon"><Icon /></div>{children}</div>
 	)
 }
 

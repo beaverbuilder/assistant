@@ -5,6 +5,8 @@ import { getWpRest } from 'utils/wordpress'
 import './style.scss'
 import { FileDropListener } from './drop-listner'
 
+const Media = {}
+
 registerStore( 'fl-media/uploader', {
 	state: {
 		current: 0,
@@ -12,7 +14,7 @@ registerStore( 'fl-media/uploader', {
 	}
 } )
 
-export const MediaDropUploader = ( { children } ) => {
+export const Uploader = ( { children } ) => {
 
 	const { current, items } = useStore( 'fl-media/uploader' )
 	const { setCurrent, setItems } = getDispatch( 'fl-media/uploader' )
@@ -88,3 +90,8 @@ export const MediaDropUploader = ( { children } ) => {
 		</FileDropListener>
 	)
 }
+
+Media.Uploader = Uploader
+Media.Uploader.displayName = 'Media.Uploader'
+
+export default Media

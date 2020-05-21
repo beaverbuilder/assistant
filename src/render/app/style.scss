@@ -17,6 +17,11 @@
         &.fl-asst-is-mobile {
             width: auto;
             flex-direction: column-reverse;
+
+            .fl-asst-main-content {
+                pointer-events: none;
+                visibility: hidden;
+            }
         }
 
         .fl-asst-main-content {

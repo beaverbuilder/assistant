@@ -13,7 +13,6 @@ export const Appearance = ( {
 
 	const classes = classname( {
 		'fl-asst-appearance': true,
-		[`fl-asst-brightness-${brightness}`]: brightness,
 		[`fluid-color-scheme-${brightness}`]: brightness,
 	}, className )
 

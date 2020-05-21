@@ -27,7 +27,7 @@ const cache = setupCache( {
 	invalidate: ( config, req ) => {
 		const method = req.method.toLowerCase()
 		if ( req.cacheKey && 'get' !== method ) {
-			clearCache( req.cacheKey )
+			clearWpRestCache( req.cacheKey )
 		} else if ( req.ignoreCache ) {
 			config.store.removeItem( config.uuid )
 		}
@@ -39,7 +39,7 @@ const cache = setupCache( {
  *
  * @param cacheKey
  */
-const clearCache = cacheKey => {
+export const clearWpRestCache = cacheKey => {
 	cache.store.iterate( ( data, key ) => {
 		if ( key.startsWith( `fl-cache-${ cacheKey }` ) ) {
 			cache.store.removeItem( key )
@@ -211,7 +211,7 @@ const posts = () => {
 		 * Adds a label to a post.
 		 */
 		addLabel( postId, labelId, config = {} ) {
-			clearCache( 'posts' )
+			clearWpRestCache( 'posts' )
 			return notations().createLabel( 'post', postId, labelId, config )
 		},
 
@@ -219,7 +219,7 @@ const posts = () => {
 		 * Removes a label from a post.
 		 */
 		removeLabel( postId, labelId, config = {} ) {
-			clearCache( 'posts' )
+			clearWpRestCache( 'posts' )
 			return notations().deleteLabel( 'post', postId, labelId, config )
 		},
 	}
@@ -433,7 +433,7 @@ const attachments = () => {
 		 * Adds a label to an attachment.
 		 */
 		addLabel( attachmentId, labelId, config = {} ) {
-			clearCache( 'attachments' )
+			clearWpRestCache( 'attachments' )
 			return notations().createLabel( 'attachment', attachmentId, labelId, config )
 		},
 
@@ -441,7 +441,7 @@ const attachments = () => {
 		 * Removes a label from an attachment.
 		 */
 		removeLabel( attachmentId, labelId, config = {} ) {
-			clearCache( 'attachments' )
+			clearWpRestCache( 'attachments' )
 			return notations().deleteLabel( 'attachment', attachmentId, labelId, config )
 		},
 	}

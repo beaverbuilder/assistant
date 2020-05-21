@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import classname from 'classnames'
-import { Nav, Page, Layout } from 'ui'
+import { useHistory } from 'react-router-dom'
+import { Page, Layout } from 'ui'
 import { isColor } from 'utils/color'
 import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'
@@ -154,14 +155,13 @@ export const Item = ( {
 	className,
 	tag: Tag = 'li',
 	to,
-	isSelecting,
 	...rest
 } ) => {
 	const classes = classname( {
 		'fl-asst-list-item': true,
 		'fl-asst-is-clickable': to,
 	}, className )
-	const { history } = useContext( Nav.Context )
+	const history = useHistory()
 	const [ isHovering, setIsHovering ] = useState( false )
 	const [ isFocused, setIsFocused ] = useState( false )
 
@@ -207,10 +207,7 @@ export const Item = ( {
 	const content = 'function' === typeof children ? children( rest ) : <InfoItem { ...itemProps } />
 
 	return (
-		<Tag { ...props }>
-			{ isSelecting && <div className="fl-asst-list-item-selector"><input type="checkbox" /></div> }
-			{content}
-		</Tag>
+		<Tag { ...props }>{content}</Tag>
 	)
 }
 

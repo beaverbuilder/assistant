@@ -1,0 +1,43 @@
+.fl-asst {
+    .fl-asst-card {
+        background: var(--fluid-background);
+        border-radius: var(--fluid-med-space);
+        box-shadow: 0px 9px 18px var(--shadow-color);
+        position: relative;
+
+        .fl-asst-card-header {
+            padding: 5px var(--fluid-lg-space);
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .fl-asst-card-title {
+                font-size: 16px;
+                font-weight: 500;
+            }
+            .fl-asst-card-eyebrow,
+            .fl-asst-card-subtitle {
+                font-size: 12px;
+                font-weight: normal;
+                text-transform: uppercase;
+                line-height: 1.5;
+            }
+        }
+
+        &.fl-asst-card-pad-x {
+            .fl-asst-card-content {
+                padding-left: var(--fluid-lg-space);
+                padding-right: var(--fluid-lg-space);
+            }
+        }
+
+        .fl-asst-card-footer {
+            min-height: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

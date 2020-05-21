@@ -11,7 +11,7 @@ const ItemActions = ( {
 	favoritePost,
 	isCurrentPage,
 } ) => {
-	const env = Env.useEnvironment()
+	const env = Env.use()
 
 	if (
 		item.isCloning ||

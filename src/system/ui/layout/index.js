@@ -4,6 +4,7 @@ import Attention from './attention'
 import PublishBar from './publish-bar'
 import AspectBox from './aspect-box'
 import Loading from './loading'
+import Table from './table'
 
 const Layout = { ...FLUID_Layout }
 
@@ -21,5 +22,8 @@ Layout.AspectBox.displayName = 'Layout.AspectBox'
 
 Layout.Loading = Loading
 Layout.Loading.displayName = 'Layout.Loading'
+
+Layout.Table = Table
+Layout.Table.displayName = 'Layout.Table'
 
 export default Layout
