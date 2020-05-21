@@ -1,6 +1,19 @@
 import React from 'react'
-import { List, Layout } from 'assistant/ui'
+import { List, Layout, Icon } from 'assistant/ui'
+import { Card } from 'home/ui'
 import { getListSectionConfig, getListItemConfig, getRequestConfig } from '../../config'
+import './style.scss'
+
+const SectionCard = ({ children, label, footer }) => {
+    return (
+        <li style={{ paddingBottom: 20 }}>
+            <Card
+                title={label}
+                className="fl-asst-search-results-card"
+            >{children}</Card>
+        </li>
+    )
+}
 
 const Results = ({
     isLoading = false,
@@ -37,7 +50,13 @@ const Results = ({
                         baseURL,
                     } )
                 } }
+                getItemComponent={ ( item, isSection, defaultComponent ) => {
+                    return isSection ? SectionCard : defaultComponent
+                }}
             />
+            <Layout.Row padY={true}>
+                <Icon.Pencil />
+            </Layout.Row>
         </Layout.Box>
     )
 }

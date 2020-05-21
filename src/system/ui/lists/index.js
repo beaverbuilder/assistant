@@ -52,7 +52,7 @@ export const List = ( {
 	const renderListItems = items => {
 		return items.map( ( item, i ) => {
 			if ( isListSection( item ) ) {
-				const Section = getItemComponent( item, true, getItemComponent( item, true ) )
+				const Section = getItemComponent( item, true, getItemType( item, true ) )
 				const defaultProps = { key: i, label: 'undefined' === typeof item.label ? '' : item.label }
 				const sectionProps = getSectionProps( item, defaultProps )
 				const sectionItems = getSectionItems( item )
@@ -80,7 +80,7 @@ export const List = ( {
 	}
 
 	const renderItem = ( item, i ) => {
-		const Item = getItemComponent( item, false, getItemComponent( item, false ) )
+		const Item = getItemComponent( item, false, getItemType( item, false ) )
 		const defaultProps = { ...defaultItemProps, key: i }
 		const props = getItemProps( item, defaultProps )
 
