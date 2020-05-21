@@ -10,14 +10,19 @@ import './style.scss'
 const Main = ( { baseURL, handle } ) => {
 	const { useSearchHistory } = getSystemHooks()
 	const [ searchHistory, setSearchHistory ] = useSearchHistory()
+
 	const { keyword } = useAppState( handle )
 	const { setKeyword } = getAppActions( handle )
+
 	const [ loading, setLoading ] = useState( false )
 	const [ results, setResults ] = useState( null )
+
 	const { config, routes } = getRequestConfig( { keyword } )
+
 	const wp = getWpRest()
 	let source = CancelToken.source()
 
+	// Every time keyword changes
 	useEffect( () => {
 		source.cancel()
 		source = CancelToken.source()

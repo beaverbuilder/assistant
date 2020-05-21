@@ -1,9 +1,7 @@
 import { lazy } from 'react'
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
-
-// Register the default card types
-import './types'
+import Icon from './icon'
 
 const App = lazy( () => import(
 	/* webpackChunkName: "app-home" */ './app'
@@ -12,5 +10,9 @@ const App = lazy( () => import(
 registerApp( 'fl-home', {
 	label: __( 'Home' ),
 	root: App,
+	icon: Icon,
 	shouldShowInAppList: false,
+	state: {
+		keyword: ''
+	}
 } )

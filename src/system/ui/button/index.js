@@ -186,7 +186,7 @@ Button.Loading = ( {
 	return (
 		<Button className={ classes } { ...rest }>
 			{ children }
-			{ isLoading && <Icon.SmallSpinner /> }
+			{ isLoading && <Icon.Loading /> }
 		</Button>
 	)
 }

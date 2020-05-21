@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { useLocation } from 'react-router-dom'
 import { Form, Icon, Button, Page, Layout } from 'ui'
-import { getSystemConfig, getSystemActions } from 'data'
+import { getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
-
+import './style.scss'
 
 export const Comment = () => {
 	const { item } = useLocation().state
@@ -20,8 +20,6 @@ export const Comment = () => {
 		url,
 		editUrl,
 	} = item
-	const { pluginURL } = getSystemConfig()
-	const hero = `${pluginURL}img/comment-hero-a.jpg`
 	const comments = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 
@@ -45,7 +43,7 @@ export const Comment = () => {
 			.then( response => {
 				if ( '1' == response.data.commentData.comment_approved ) {
 					setResponseMessage( {
-						message: 'Comment Approved!',
+						message: __( 'Comment Approved!' ),
 						status: 'alert',
 						icon: Icon.Approve
 					} )
@@ -63,7 +61,7 @@ export const Comment = () => {
 			.then( response => {
 				if ( '0' == response.data.commentData.comment_approved ) {
 					setResponseMessage( {
-						message: 'Comment Un-Approved!',
+						message: __( 'Comment Un-Approved!' ),
 						status: 'destructive',
 						icon: Icon.Reject
 					} )
@@ -113,7 +111,7 @@ export const Comment = () => {
 			.then( response => {
 				if ( 'trash' == response.data.commentData.comment_approved ) {
 					setResponseMessage( {
-						message: 'Comment has been moved to trashed!',
+						message: __( 'Comment has been moved to trashed!' ),
 						status: 'destructive',
 						icon: Icon.Trash
 					} )
@@ -130,7 +128,7 @@ export const Comment = () => {
 			.update( id, 'untrash', item )
 			.then( () => {
 				setResponseMessage( {
-					message: 'Comment has been restored!',
+					message: __( 'Comment has been restored!' ),
 					status: 'primary',
 					icon: Icon.Restore
 				} )
@@ -140,20 +138,18 @@ export const Comment = () => {
 			} )
 	}
 
-	const editComment = () => {
-		setCommentStatus( 'edit' )
-	}
+	const editComment = () => setCommentStatus( 'edit' )
 
 	const updateContent = () => {
 		if ( '' === editContent ) {
-			alert( 'Please type a comment!' )
+			alert( __( 'Please type a comment!' ) )
 		} else {
 			comments
 				.comments()
 				.update( id, 'content', { content: editContent } )
 				.then( () => {
 					setResponseMessage( {
-						message: 'Comment has been updated!',
+						message: __( 'Comment has been updated!' ),
 						status: 'primary',
 						icon: Icon.Update
 					} )
@@ -189,19 +185,17 @@ export const Comment = () => {
 		)
 	}
 
-	const replyComment = () => {
-		setCommentStatus( 'reply' )
-	}
+	const replyComment = () => setCommentStatus( 'reply' )
 
 	const replyCommentpost = () => {
 		if ( '' === replyValue ) {
-			alert( 'Please type a comment!' )
+			alert( __( 'Please type a comment!' ) )
 		} else {
 			const Rc = replyToComment( id, postId, replyValue, () => { } )
 			Rc.then( () => {
 				setCommentStatus( 'cancelReply' )
 				setResponseMessage( {
-					message: 'Reply Successfully posted!',
+					message: __( 'Reply Successfully posted!' ),
 					status: 'primary',
 					icon: Icon.Reply
 				} )
@@ -263,12 +257,35 @@ export const Comment = () => {
 					actions: {
 						component: 'actions',
 						options: [
-							{ label: 'View on Post', href: url, disabled: trashStatus ? true : false },
-							{ label: 'View in Admin', href: editUrl },
-							{ label: approveStatus ? 'Unapprove' : 'Approve', onClick: approveStatus ? unapproveComment : approveComment, disabled: ( trashStatus ? true : false ) || ( spamStatus ? true : false ) },
-							{ label: 'Mark as Spam', onClick: spamComment, disabled: ( trashStatus ? true : false ) || ( spamStatus ? true : false ) },
-							{ label: 'Reply', onClick: replyComment, disabled: ( trashStatus ? true : false ) || ( 'reply' === commentStatus ? true : false ) },
-							{ label: trashStatus ? 'Restore Comment' : 'Trash Comment', onClick: trashStatus ? untrashComment : trashComment, status: trashStatus ? 'primary' : 'destructive' },
+							{
+								label: __( 'View on Post' ),
+								href: url,
+								disabled: trashStatus ? true : false
+							},
+							{
+								label: __( 'View in Admin' ),
+								href: editUrl
+							},
+							{
+								label: approveStatus ? __( 'Unapprove' ) : __( 'Approve' ),
+								onClick: approveStatus ? unapproveComment : approveComment,
+								disabled: ( trashStatus ? true : false ) || ( spamStatus ? true : false )
+							},
+							{
+								label: __( 'Mark as Spam' ),
+								onClick: spamComment,
+								disabled: ( trashStatus ? true : false ) || ( spamStatus ? true : false )
+							},
+							{
+								label: __( 'Reply' ),
+								onClick: replyComment,
+								disabled: ( trashStatus ? true : false ) || ( 'reply' === commentStatus ? true : false )
+							},
+							{
+								label: trashStatus ? __( 'Restore Comment' ) : __( 'Trash Comment' ),
+								onClick: trashStatus ? untrashComment : trashComment,
+								status: trashStatus ? 'primary' : 'destructive'
+							},
 						]
 					}
 				}
@@ -278,18 +295,21 @@ export const Comment = () => {
 	} )
 
 	return (
-		<Page title={ __( 'Edit Comment' ) } hero={ hero }>
+		<Page
+			title={ __( 'Edit Comment' ) }
+			className="fl-asst-comment-details"
+		>
 
-			<Layout.Headline>{author}</Layout.Headline>
+			<Layout.Headline>{author.name}</Layout.Headline>
 			<div>{sprintf( 'commented on %s', date )}</div>
 
-			{'edit' !== commentStatus && (
+			{ 'edit' !== commentStatus && (
 				<div
 					className='fl-asst-content-area'
 					dangerouslySetInnerHTML={ { __html: item.content } }
 				/>
 			)}
-			{'edit' == commentStatus && (
+			{ 'edit' == commentStatus && (
 				<div className='fl-asst-cmt-text-wrap'>
 					<span className="edit-comment-title">Edit Comment</span>
 					<textarea
@@ -301,9 +321,9 @@ export const Comment = () => {
 					<UpdateCommentBtn />
 				</div>
 			)}
-			{'reply' == commentStatus && (
+			{ 'reply' == commentStatus && (
 				<div className='fl-asst-cmt-text-wrap'>
-					<span className="fl-asst-edit-comment-title">Reply Comment</span>
+					<span className="fl-asst-edit-comment-title">{__( 'Reply To Comment' )}</span>
 					<textarea
 						className="fl-asst-comment-text"
 						value={ replyValue }
@@ -329,7 +349,7 @@ export const Comment = () => {
 					<Button
 						appearance='elevator'
 						status='primary'
-						title='Approve'
+						title={ __( 'Approve' ) }
 						onClick={ approveComment }
 					>
 						<Icon.Approve />
@@ -340,24 +360,26 @@ export const Comment = () => {
 					<Button
 						appearance='elevator'
 						status='alert'
-						title='Reject'
+						title={ __( 'Reject' ) }
 						onClick={ unapproveComment }
 					>
 						<Icon.Reject />
 					</Button>
 				)}
 				{false === trashStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button appearance='elevator' title='Reply' onClick={ replyComment }>
+					<Button
+						appearance='elevator'
+						title={ __( 'Reply' ) }
+						onClick={ replyComment }
+					>
 						<Icon.Reply />
 					</Button>
 				)}
-
-
 				{false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
 						status='alert'
-						title='Spam'
+						title={ __( 'Spam' ) }
 						onClick={ spamComment }
 					>
 						<Icon.Spam />
@@ -367,7 +389,7 @@ export const Comment = () => {
 					<Button
 						appearance='elevator'
 						status='primary'
-						title='Unspam'
+						title={ __( 'Unspam' ) }
 						onClick={ unspamComment }
 					>
 						<Icon.Unspam />
@@ -375,7 +397,11 @@ export const Comment = () => {
 				)}
 
 				{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button appearance='elevator' title='Edit' onClick={ editComment }>
+					<Button
+						appearance='elevator'
+						title={ __( 'Edit' ) }
+						onClick={ editComment }
+					>
 						<Icon.Edit />
 					</Button>
 				)}
@@ -383,7 +409,7 @@ export const Comment = () => {
 					<Button
 						appearance='elevator'
 						status='destructive'
-						title='Trash'
+						title={ __( 'Trash' ) }
 						onClick={ trashComment }
 					>
 						<Icon.Trash />
@@ -393,7 +419,7 @@ export const Comment = () => {
 					<Button
 						appearance='elevator'
 						status='primary'
-						title='UnTrash'
+						title={ __( 'UnTrash' ) }
 						onClick={ untrashComment }
 					>
 						<Icon.Restore />
@@ -401,11 +427,14 @@ export const Comment = () => {
 				)}
 			</div>
 
-			{responseMessage.message && (
-				<Layout.Message status={ responseMessage.status } icon={ responseMessage.icon }>
+			{ responseMessage.message && (
+				<Layout.Message
+					status={ responseMessage.status }
+					icon={ responseMessage.icon }
+				>
 					{responseMessage.message}
 				</Layout.Message>
-			)}
+			) }
 
 			{renderForm()}
 		</Page>

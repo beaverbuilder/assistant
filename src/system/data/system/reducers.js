@@ -79,6 +79,8 @@ export const appOrder = ( state = [], action ) => {
 	}
 }
 
+export const homeKey = ( state = 'fl-home' ) => state
+
 export const counts = ( state = {}, action ) => {
 	switch ( action.type ) {
 	case 'SET_COUNTS':
@@ -191,6 +193,8 @@ export const searchHistory = ( state = [], action ) => {
 	case 'SET_SEARCH_HISTORY':
 		state.splice( 7, state.length - 7 )
 		return [ action.keyword, ...state.filter( item => item !== action.keyword ) ]
+	case 'RESET_SEARCH_HISTORY':
+		return action.terms
 	default:
 		return state
 	}

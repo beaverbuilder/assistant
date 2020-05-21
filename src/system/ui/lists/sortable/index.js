@@ -13,6 +13,8 @@ const Sortable = ( {
 	itemProps = {},
 	onSortStart = () => {},
 	onSortEnd = () => {},
+	before,
+	after,
 	...rest
 } ) => {
 
@@ -34,6 +36,7 @@ const Sortable = ( {
 
 	return (
 		<Tag { ...rest }>
+			{ before }
 			{ items.map( ( item, i ) => {
 
 				return (
@@ -50,6 +53,7 @@ const Sortable = ( {
 					</Item>
 				)
 			} )}
+			{ after }
 		</Tag>
 	)
 }

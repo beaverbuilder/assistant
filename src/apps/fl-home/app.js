@@ -1,47 +1,43 @@
-import React, { useState } from 'react'
-import { __ } from '@wordpress/i18n'
-import { App, Page, Button, Icon } from 'assistant/ui'
-import { CardPage } from './ui'
-import './style.scss'
-
+import React from 'react'
+import { Route } from 'react-router-dom'
+import { App } from 'assistant/ui'
+import { addLeadingSlash } from 'assistant/utils/url'
+import { Main } from './ui'
+import { getRequestConfig } from './config'
 
 // Setup config like this
-export default props => (
-	<App.Config
-		pages={ {
-			default: CardsApp
-		} }
-		{ ...props }
-	/>
-)
-
-const CardsApp = () => {
-	const [ isEditing, setIsEditing ] = useState( false )
-
+export default props => {
+	const { config } = getRequestConfig()
+	const { baseURL } = props
 	return (
-		<Page
-			id="cards"
-			padX={ false }
-			padY={ false }
-			toolbar={ false }
+		<App.Config
+			pages={ {
+				default: Main
+			} }
+			{ ...props }
 		>
-			<div style={ {
-				display: 'flex',
-				flexDirection: 'row',
-				minHeight: 'var(--fluid-target-size)',
-				justifyContent: 'flex-end',
-				padding: 2
-			} }>
-				<Button
-					onClick={ () => setIsEditing( ! isEditing ) }
-				>
-					{ isEditing ? __( 'Done' ) : <Icon.Edit /> }
-				</Button>
-			</div>
-			<CardPage
-				page="home"
-				isEditing={ isEditing }
-			/>
-		</Page>
+			{ config.map( ( { detail }, key ) => {
+				if ( detail ) {
+					return (
+						<Route
+							key={ key }
+							path={ baseURL + addLeadingSlash( detail.path ) }
+							component={ detail.component }
+						/>
+					)
+				}
+			} ) }
+			{ config.map( ( { detail }, key ) => {
+				if ( detail ) {
+					return (
+						<Route
+							key={ key }
+							path={ `${baseURL}/all` + addLeadingSlash( detail.path ) }
+							component={ detail.component }
+						/>
+					)
+				}
+			} ) }
+		</App.Config>
 	)
 }

@@ -62,6 +62,10 @@ export const after = {
 		const { searchHistory } = store.getState()
 		wpapi.users().updateState( { searchHistory } )
 	},
+	RESET_SEARCH_HISTORY: ( action, store ) => {
+		const { searchHistory } = store.getState()
+		wpapi.users().updateState( { searchHistory } )
+	},
 
 	TOGGLE_IS_SHOWING_UI: ( action, store ) => {
 		const { window } = store.getState()

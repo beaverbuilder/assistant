@@ -1,6 +1,7 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Form, Nav, Page, Layout } from 'ui'
+import { Switch, Route, useHistory } from 'react-router-dom'
+import { Nav, Button, Form, Page, Layout } from 'ui'
 import { useFormData } from '../use-form-data'
 import './style.scss'
 
@@ -51,7 +52,10 @@ export const useForm = ( {
 }
 
 const Tabs = ( { config } ) => {
-	const { history, location, match } = useContext( Nav.Context )
+	const history = useHistory()
+	const location = history.location
+	const { match } = Nav.useNavContext()
+
 	const setTab = path => history.replace( path, location.state )
 	return (
 		<Layout.Box
@@ -83,16 +87,16 @@ const Tabs = ( { config } ) => {
 }
 
 const TabsContent = ( { config, data } ) => {
-	const { match } = useContext( Nav.Context )
+	const { match } = Nav.useNavContext()
 	return (
-		<Nav.Switch>
+		<Switch>
 			{ Object.entries( config ).map( ( [ , tab ], i ) => {
 				const { isVisible, path, exact, sections } = tab
 				if ( undefined !== isVisible && ! isVisible ) {
 					return
 				}
 				return (
-					<Nav.Route
+					<Route
 						key={ i }
 						path={ path ? path : match.url }
 						exact={ exact }
@@ -106,7 +110,7 @@ const TabsContent = ( { config, data } ) => {
 					/>
 				)
 			} ) }
-			<Nav.Route render={ () => (
+			<Route render={ () => (
 				<Layout.Box style={ {
 					textAlign: 'center',
 					fontSize: 16
@@ -114,7 +118,7 @@ const TabsContent = ( { config, data } ) => {
 					{__( 'Oh no! We couldn\'t find that tab. Try Another' )}
 				</Layout.Box>
 			) } />
-		</Nav.Switch>
+		</Switch>
 	)
 }
 

@@ -8,12 +8,11 @@ import {
 	Appearance,
 	App,
 	Icon,
-	Window,
 	Error,
 	Page,
-	Layout,
 	Env,
 } from 'assistant/ui'
+import Window from '../window'
 
 const getRouterProps = history => {
 	const props = {
@@ -126,11 +125,9 @@ const MainWindow = ( { children, ...rest } ) => {
 	)
 }
 
-const WindowError = () => {
-	return (
-		<Page>
-			<Layout.Headline>{__( 'We Have A Problem!' )}</Layout.Headline>
-			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
-		</Page>
-	)
-}
+const WindowError = props => (
+	<Page.Error
+		message={ __( 'There seems to be an issue in the Assistant panel.' ) }
+		{ ...props }
+	/>
+)

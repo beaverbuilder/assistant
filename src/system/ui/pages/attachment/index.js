@@ -94,10 +94,12 @@ export const Attachment = () => {
 				title: {
 					label: __( 'Title' ),
 					id: 'post_title',
+					component: 'text',
 				},
 				alt: {
 					label: __( 'Alternative Text' ),
 					id: 'alt',
+					component: 'text',
 				},
 				description: {
 					label: __( 'Description' ),

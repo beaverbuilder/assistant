@@ -11,38 +11,36 @@ export default props => {
 	const { config } = getRequestConfig()
 
 	return (
-		<>
-			<App.Config
-				pages={ {
-					default: Main,
-				} }
-				{ ...props }
-			>
-				<Route exact path={ `${baseURL}/all` } component={ ViewAll } />
+		<App.Config
+			pages={ {
+				default: Main,
+			} }
+			{ ...props }
+		>
+			<Route exact path={ `${baseURL}/all` } component={ ViewAll } />
 
-				{ config.map( ( { detail }, key ) => {
-					if ( detail ) {
-						return (
-							<Route
-								key={ key }
-								path={ baseURL + addLeadingSlash( detail.path ) }
-								component={ detail.component }
-							/>
-						)
-					}
-				} ) }
-				{ config.map( ( { detail }, key ) => {
-					if ( detail ) {
-						return (
-							<Route
-								key={ key }
-								path={ `${baseURL}/all` + addLeadingSlash( detail.path ) }
-								component={ detail.component }
-							/>
-						)
-					}
-				} ) }
-			</App.Config>
-		</>
+			{ config.map( ( { detail }, key ) => {
+				if ( detail ) {
+					return (
+						<Route
+							key={ key }
+							path={ baseURL + addLeadingSlash( detail.path ) }
+							component={ detail.component }
+						/>
+					)
+				}
+			} ) }
+			{ config.map( ( { detail }, key ) => {
+				if ( detail ) {
+					return (
+						<Route
+							key={ key }
+							path={ `${baseURL}/all` + addLeadingSlash( detail.path ) }
+							component={ detail.component }
+						/>
+					)
+				}
+			} ) }
+		</App.Config>
 	)
 }

@@ -113,6 +113,13 @@ export const setSearchHistory = ( keyword ) => {
 	}
 }
 
+export const resetSearchHistory = ( terms = [] ) => {
+	return {
+		type: 'RESET_SEARCH_HISTORY',
+		terms,
+	}
+}
+
 export const registerSection = ( handle = '', config = {} ) => {
 	return {
 		type: 'REGISTER_SECTION',

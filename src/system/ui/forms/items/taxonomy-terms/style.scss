@@ -12,4 +12,58 @@
 			margin-bottom: var(--fl-asst-small-space);
 		}
 	}
+
+	.components-base-control.fl-asst-subCat {
+		margin-left: 15px;
+	}
+	.components-base-control+.components-base-control {
+		/* margin-bottom: 16px; */
+		float: left;
+		width: 100%;
+		display: block !important;
+	}
+	.components-checkbox-control__label{
+		display: contents;
+	}
+	.components-checkbox-control__input{
+		border: 2px solid #6c7781 !important;
+	}
+	.components-checkbox-control__input:checked:after{
+		font-size: 17px !important;
+	}
+
+	.components-checkbox-control__input {
+		width: 25px;
+    height: 25px;
+	}
+
+	.components-base-control+.components-base-control {
+		margin-bottom: 7px;
+	}
+	.components-checkbox-control__input-container svg {
+		display: none !important;
+	}
+
+
+	.editor-post-taxonomies__hierarchical-terms-subchoices {
+		float: left;
+		width: 100%;
+		margin-left: 16px;
+    	margin-top: 8px;
+	}
+
+	.editor-post-taxonomies__hierarchical-terms-choice {
+		margin-bottom: 8px;
+		float: left;
+		width: 100%;
+		padding-left: 10px;
+	}
+
+	.fl-asst-hierarchical-terms-list{
+		max-height: 14em;
+    	overflow-y: auto;
+    	overflow-x: hidden;
+    	padding-top: 10px;
+	}
+
 }

@@ -1,0 +1,52 @@
+.fl-asst {
+    .fl-asst-limit-content {
+        display: flex;
+        flex-direction: column;
+
+        .fl-asst-limit-content-cell {
+            position: relative;
+            overflow: hidden;
+            flex: 0 0 auto;
+
+            .fl-asst-limit-content-fadeout {
+                position: absolute;
+                bottom:0;
+                left:0;
+                right:0;
+                height: 60px;
+                background: linear-gradient(rgba(1,1,1,0), var(--thread-background-color));
+            }
+        }
+        .fluid-button.fl-asst-limit-content-expand-button {
+            flex: 1 1 auto;
+            margin-bottom: -5px;
+
+            &:hover {
+                background: transparent;
+
+                span {
+                    background: var(--fluid-box-hover-background);
+                }
+            }
+            &:focus {
+                background: transparent;
+                box-shadow: none;
+
+                span {
+                    box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
+                                0px 0px 0px 2px var(--fluid-accent);
+                }
+            }
+
+            span {
+                flex: 0 0 auto;
+                background: var(--fluid-box-background);
+                padding:0 10px;
+                border-radius: var(--fluid-radius);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}
