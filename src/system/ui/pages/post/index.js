@@ -228,7 +228,7 @@ export const Post = ( { location, match, history } ) => {
 									taxonomy={ taxonomy }
 									value={ [ ...values[taxonomy] ] }
 									onChange={ newValue => {
-										values[taxonomy] = newValue
+										values[ taxonomy ] = newValue
 										onChange( { ...values } )
 									} }
 								/>
@@ -450,6 +450,9 @@ export const Post = ( { location, match, history } ) => {
 		tabs,
 		renderTabs: false,
 		onSubmit,
+		onReset: ( { state } ) => {
+			setFeatureThumbnail( state.thumbnailData.value )
+		},
 		defaults: {
 			...item,
 			parent: item.parent ? `parent:${item.parent}` : 0
