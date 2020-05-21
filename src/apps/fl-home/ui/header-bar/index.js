@@ -42,7 +42,7 @@ const HeaderBar = ({
                             </span>
                         )}
                         value={keyword}
-                        after={ isFocused && <ClearButton /> }
+                        after={ '' !== keyword && <ClearButton /> }
                         placeholder={ __('Search WordPress') }
                         onInput={ e => onInput( e.target.value ) }
                         onFocus={ () => {
@@ -52,7 +52,7 @@ const HeaderBar = ({
                     />
                 </Layout.Row>
             </div>
-            { isFocused && <SearchSuggestions onClick={onSuggestionClick}/> }
+            { ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={onSuggestionClick}/> }
         </>
     )
 }

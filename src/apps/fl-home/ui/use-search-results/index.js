@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { CancelToken, isCancel } from 'axios'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { getSystemActions } from 'assistant/data'
+import { getSystemActions, useAppState, getAppActions } from 'assistant/data'
 import { getRequestConfig } from 'home/config'
 
 export default () => {
-    const [keyword, setKeyword] = useState('')
+    const { keyword = '' } = useAppState( 'fl-home' )
+    const { setKeyword } = getAppActions( 'fl-home' )
+
     const [isLoading, setIsLoading] = useState( false )
     const [results, setResults] = useState( null )
 
