@@ -8,9 +8,7 @@ import { Button, Form } from 'ui'
 import { CheckboxControl } from '@wordpress/components'
 import './style.scss'
 
-export const TaxonomyTermsItem = ({ taxonomy, value, onChange, isDiscard }) => {
-	console.log(isDiscard)
-
+export const TaxonomyTermsItem = ({ taxonomy, value, onChange }) => {
 	const [data, setData] = useState({
 		terms: [],
 		idsBySlug: {},
@@ -141,7 +139,7 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange, isDiscard }) => {
 	const [addingNew, setAddingNew] = useState(false)
 	const [newTerm, setNewTerm] = useState('')
 	const [newTermParent, setNewTermParent] = useState('')
-	const [checkedItems, setcheckedItems] = useState([])
+	const checkedItems = []
 
 	value.map(id => checkedItems.push(id))
 
@@ -152,7 +150,6 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange, isDiscard }) => {
 				return array.indexOf(val) == id
 			})
 			onChange(uniqueNames)
-			setcheckedItems(uniqueNames)
 		} else {
 			const uniqueNames = checkedItems.filter((val, id, array) => {
 				return array.indexOf(val) == id
@@ -162,34 +159,31 @@ export const TaxonomyTermsItem = ({ taxonomy, value, onChange, isDiscard }) => {
 			uniqueNames.splice(index, 1)
 
 			onChange(uniqueNames)
-			setcheckedItems(uniqueNames)
 		}
 	}
 
 	const renderTerms = renderedTerms => {
 		return Object.keys(renderedTerms).map(function (key) {
 			return (
-				<>
-					<div
-						key={renderedTerms[key].id}
-						className='editor-post-taxonomies__hierarchical-terms-choice'
-					>
-						<CheckboxControl
-							label={renderedTerms[key].title}
-							checked={checkedItems.includes(renderedTerms[key].id)}
-							onChange={e => {
-								handleChange(e, renderedTerms[key].id)
-							}}
-							value={renderedTerms[key].id}
-						/>
+				<div
+					key={renderedTerms[key].id}
+					className='editor-post-taxonomies__hierarchical-terms-choice'
+				>
+					<CheckboxControl
+						label={renderedTerms[key].title}
+						checked={checkedItems.includes(renderedTerms[key].id)}
+						onChange={e => {
+							handleChange(e, renderedTerms[key].id)
+						}}
+						value={renderedTerms[key].id}
+					/>
 
-						{!!renderedTerms[key].children.length && (
-							<div className='editor-post-taxonomies__hierarchical-terms-subchoices'>
-								{renderTerms(renderedTerms[key].children)}
-							</div>
-						)}
-					</div>
-				</>
+					{!!renderedTerms[key].children.length && (
+						<div className='editor-post-taxonomies__hierarchical-terms-subchoices'>
+							{renderTerms(renderedTerms[key].children)}
+						</div>
+					)}
+				</div>
 			)
 		})
 	}

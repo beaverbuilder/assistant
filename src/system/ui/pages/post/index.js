@@ -22,7 +22,6 @@ export const Post = ( { location, match, history } ) => {
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
 	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnailData )
-	const [ isDiscard, setisDiscard ] = useState(false)
 
 	const uploadFeatureImage = () => {
 		const customUploader = wp.media( {
@@ -225,7 +224,6 @@ export const Post = ( { location, match, history } ) => {
 										values[ taxonomy ] = newValue
 										onChange( { ...values })
 									} }
-									isDiscard={isDiscard}
 								/>
 							</Form.Item>
 						) )
@@ -442,7 +440,6 @@ export const Post = ( { location, match, history } ) => {
 		onSubmit,
 		onReset: ( { state } ) => {
 			setFeatureThumbnail( state.thumbnailData.value )
-			setisDiscard( true )
 },
 		defaults: {
 			...item,

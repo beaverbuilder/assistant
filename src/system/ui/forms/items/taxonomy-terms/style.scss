@@ -28,19 +28,19 @@
 	.components-checkbox-control__input{
 		border: 2px solid #6c7781 !important;
 	}
-	.fl-asst .components-checkbox-control__input:checked:after{
+	.components-checkbox-control__input:checked:after{
 		font-size: 17px !important;
 	}
 
-	.fl-asst  .components-checkbox-control__input {
+	.components-checkbox-control__input {
 		width: 25px;
     height: 25px;
 	}
 
-	.fl-asst .components-base-control+.components-base-control {
+	.components-base-control+.components-base-control {
 		margin-bottom: 7px;
 	}
-	 .components-checkbox-control__input-container svg.dashicon{
+	.components-checkbox-control__input-container svg {
 		display: none !important;
 	}
 
