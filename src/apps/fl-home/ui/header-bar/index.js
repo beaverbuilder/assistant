@@ -15,21 +15,6 @@ const HeaderBar = ({
 }) => {
     const [isFocused, setIsFocused] = useState( false )
 
-    const ClearButton = () => {
-        return (
-            <Button
-                className="fl-asst-home-search-clear"
-                appearance="transparent"
-                onClick={ e => {
-                    setIsFocused( false )
-                    onClear()
-                } }
-            >
-                <Icon.CloseCompact />
-            </Button>
-        )
-    }
-
     const SearchIcon = () => (
         <span className="search-icon-wrapper">
             <Icon.Search />
@@ -60,7 +45,12 @@ const HeaderBar = ({
                         before={ '' !== keyword ? <Back /> : <SearchIcon /> }
                         value={keyword}
                         placeholder={ __('Search WordPress') }
-                        onInput={ e => onInput( e.target.value ) }
+                        onInput={ e => {
+                            onInput( e.target.value )
+                            if ( '' === e.target.value ) {
+                                onClear()
+                            }
+                        } }
                         onFocus={ () => {
                             setIsFocused( true )
                             onFocus()

@@ -6,7 +6,7 @@ import './style.scss'
 const noop = () => {}
 
 const Main = ({ baseURL }) => {
-    const { keyword, setKeyword, results, hasResults, clearResults, isLoading } = useSearchResults()
+    const { keyword, setKeyword, results, clearResults, isLoading } = useSearchResults()
 
     return (
         <Page
@@ -26,7 +26,7 @@ const Main = ({ baseURL }) => {
                 onSuggestionClick={ val => setKeyword( val ) }
             />
 
-            { '' !== keyword && ( hasResults || isLoading ) && (
+            { '' !== keyword && (
                 <SearchResults
                     items={results}
                     isLoading={isLoading}
@@ -35,7 +35,7 @@ const Main = ({ baseURL }) => {
                 />
             ) }
 
-            { ! hasResults && ! isLoading && <Widgets /> }
+            { '' === keyword && <Widgets /> }
 		</Page>
     )
 }
