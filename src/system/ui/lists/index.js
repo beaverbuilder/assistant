@@ -9,6 +9,7 @@ import { Posts } from './posts'
 import { Users } from './users'
 import { Updates } from './updates'
 import Attachments from './attachments'
+import Sortable from './sortable'
 import './style.scss'
 
 import { isRenderProp } from 'utils/react'
@@ -41,17 +42,17 @@ export const List = ( {
 
 	getSectionProps = getDefaultSectionProps,
 
-	isSelecting = false,
-
 	tag: Tag = 'ul',
 
 	className,
+
+	...rest
 } ) => {
 
 	const renderListItems = items => {
 		return items.map( ( item, i ) => {
 			if ( isListSection( item ) ) {
-				const Section = getItemComponent( item, true )
+				const Section = getItemComponent( item, true, getItemType( item, true ) )
 				const defaultProps = { key: i, label: 'undefined' === typeof item.label ? '' : item.label }
 				const sectionProps = getSectionProps( item, defaultProps )
 				const sectionItems = getSectionItems( item )
@@ -79,8 +80,8 @@ export const List = ( {
 	}
 
 	const renderItem = ( item, i ) => {
-		const Item = getItemComponent( item )
-		const defaultProps = { ...defaultItemProps, key: i, isSelecting }
+		const Item = getItemComponent( item, false, getItemType( item, false ) )
+		const defaultProps = { ...defaultItemProps, key: i }
 		const props = getItemProps( item, defaultProps )
 
 		if ( isRenderProp( children ) ) {
@@ -102,11 +103,10 @@ export const List = ( {
 	const classes = classname( {
 		'fl-asst-list': true,
 		[`fl-asst-${direction}-list`]: direction,
-		'fl-asst-list-is-selecting': isSelecting,
 	}, className )
 
 	return (
-		<Tag className={ classes }>{content}</Tag>
+		<Tag className={ classes } { ...rest }>{content}</Tag>
 	)
 }
 
@@ -148,3 +148,6 @@ List.useListItems = useListItems
 
 List.InlineCreate = InlineCreate
 List.InlineCreate.displayName = 'List.InlineCreate'
+
+List.Sortable = Sortable
+List.Sortable.displayName = 'List.Sortable'

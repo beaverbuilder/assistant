@@ -1,0 +1,28 @@
+.fl-asst {
+    .fl-asst-card.fl-asst-recent-content-card {
+
+        .fl-asst-card-content {
+            min-height: 280px; // Add 10px to the bottom
+            padding-bottom: 10px;
+        }
+
+        .fl-asst-list-item {
+            border-bottom: none;
+
+            .fl-asst-list-item-content-info {
+                padding: 8px 0;
+            }
+            .fl-asst-list-item-title {
+                font-weight: normal;
+                font-size: 13px;
+            }
+            .fl-asst-list-item-thumbnail {
+                margin-right: 10px;
+            }
+
+            &.fl-asst-is-current-page {
+                box-shadow: none;
+            }
+        }
+    }
+}

@@ -67,6 +67,10 @@ class PostTransformer {
 			$users[ $user->ID ] = $user->display_name;
 		}
 
+		if ( ! function_exists( 'wp_check_post_lock' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/post.php';
+		}
+
 		$response = [
 			'author'           => $author,
 			'post_author'      => $post->post_author,
@@ -94,6 +98,7 @@ class PostTransformer {
 			'commentsCount'    => get_comments_number( $post->ID ),
 			'isSticky'         => is_sticky( $post->ID ),
 			'authorList'       => $users,
+			'hasLock'          => wp_check_post_lock( $post->ID ),
 		];
 
 		// Post visibility.

@@ -7,6 +7,7 @@ use FL\Assistant\Data\Repository\UsersRepository;
 use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
+use FL\Assistant\Data\Mockup;
 use FLBuilderModel;
 
 /**
@@ -107,6 +108,7 @@ class OnEnqueueScripts {
 			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
 			'apiRoot'           => esc_url_raw( get_rest_url() ),
 			'cloudUrl'          => FL_ASSISTANT_CLOUD_URL,
+			'cloudWpUrl'		=> FL_ASSISTANT_WP_API_URL,
 			'contentTypes'      => $this->posts->get_types(),
 			'contentStatus'     => $this->posts->get_stati(),
 			'currentPageView'   => $this->site->get_current_view(),
@@ -116,6 +118,7 @@ class OnEnqueueScripts {
 			'isShowingAdminBar' => is_admin_bar_showing(),
 			'isAdmin'           => is_admin(),
 			'isSiteAdmin'       => is_super_admin(),
+			'mockup'			=> Mockup::get(),
 			'nonce'             => [
 				'api'             => wp_create_nonce( 'wp_rest' ),
 				'reply'           => wp_create_nonce( 'replyto-comment' ),
@@ -179,7 +182,7 @@ class OnEnqueueScripts {
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
-		wp_register_script( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.js', [ 'react', 'react-dom' ], $ver, false );
+		wp_register_script( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.js', [ 'react', 'react-dom', 'lodash' ], $ver, false );
 		wp_register_style( 'fl-fluid', $url . 'build/fl-assistant-fluid.bundle.css', [], $ver, null );
 
 		if ( $this->should_enqueue() ) {
@@ -207,6 +210,7 @@ class OnEnqueueScripts {
 			// Apps - loaded in header
 			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
+			wp_enqueue_script( 'fl-assistant-drip', 'https://tag.getdrip.com/3112548.js', [], $ver, false );
 
 			// UI Render - loaded in footer
 			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );

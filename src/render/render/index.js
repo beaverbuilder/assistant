@@ -3,6 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom'
 import { Assistant, getAssistantBBPanelConfig } from '../main'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions } from 'assistant/data'
+import './style.scss'
 
 let mountNode = undefined
 
@@ -57,7 +58,7 @@ if ( 'domReady' in wp ) {
 		const { setWindow } = getSystemActions()
 
 		const skip = document.createElement( 'button' )
-		skip.classList.add( 'skip-link', 'screen-reader-text' )
+		skip.classList.add( 'skip-link', 'fl-asst-screen-reader-text' )
 		skip.innerText = __( 'Skip to Assistant' )
 		skip.tabIndex = 1
 

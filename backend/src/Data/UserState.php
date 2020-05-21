@@ -35,8 +35,6 @@ class UserState {
 			'entries' => [],
 		],
 		'searchHistory'      => [],
-		'shouldReduceMotion' => false,
-		'shouldShowLabels'   => true,
 		'shouldShowInAdmin'  => true,
 	];
 

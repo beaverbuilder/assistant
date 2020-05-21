@@ -9,6 +9,7 @@ import { getFirstFocusableChild } from 'utils/dom'
 import { applyFilters } from 'hooks'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
+import { LockView } from './lock'
 import './style.scss'
 
 
@@ -19,9 +20,9 @@ export const Post = ( { location, match, history } ) => {
 	const { renderNotices, createNotice } = Notice.useNotices()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
+	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnailData )
 	const parentOptions = useParentOptions( item.type )
 	const wpRest = getWpRest()
-	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnailData )
 
 	const uploadFeatureImage = () => {
 		const customUploader = wp.media( {
@@ -143,19 +144,20 @@ export const Post = ( { location, match, history } ) => {
 						title: {
 							label: __( 'Title' ),
 							component: 'text',
-							id: 'post_title',
+							id: 'post_title'
 						},
 						slug: {
 							label: __( 'Slug' ),
 							component: 'text',
 							id: 'post_name',
 							sanitize: createSlug,
+							disabled: true
 						},
 						url: {
 							label: __( 'URL' ),
 							component: 'url',
-							id: 'post_url',
-						},
+							id: 'post_url'
+						}
 					}
 				},
 				publish: {
@@ -165,16 +167,17 @@ export const Post = ( { location, match, history } ) => {
 							label: __( 'Status' ),
 							labelPlacement: 'beside',
 							component: 'plain-text',
-							sanitize: value => contentStatus[ value ] ? contentStatus[ value ] : value,
+							sanitize: value =>
+								contentStatus[value] ? contentStatus[value] : value
 						},
 						visibility: {
 							label: __( 'Visibility' ),
 							labelPlacement: 'beside',
 							component: 'select',
 							options: {
-								'public': __( 'Public' ),
-								'private': __( 'Private' ),
-								'protected': __( 'Protected' ),
+								public: __( 'Public' ),
+								private: __( 'Private' ),
+								protected: __( 'Protected' )
 							},
 							onChange: ( { value, setValue } ) => {
 								switch ( value ) {
@@ -194,7 +197,7 @@ export const Post = ( { location, match, history } ) => {
 							labelPlacement: 'beside',
 							component: 'text',
 							id: 'post_password',
-							isVisible: passwordVisible,
+							isVisible: passwordVisible
 						},
 						date: {
 							label: __( 'Publish Date' ),
@@ -202,7 +205,6 @@ export const Post = ( { location, match, history } ) => {
 							component: 'calender',
 							id: 'publish_date',
 							value: item.date
-
 						},
 						post_author: {
 							label: __( 'Author' ),
@@ -221,21 +223,18 @@ export const Post = ( { location, match, history } ) => {
 						const { value, onChange } = fields.terms
 						const values = { ...value }
 						return Object.keys( values ).map( ( taxonomy, key ) => (
-							<Form.Item
-								key={ key }
-								label={ taxonomies[ taxonomy ].labels.plural }
-							>
+							<Form.Item key={ key } label={ taxonomies[taxonomy].labels.plural }>
 								<Form.TaxonomyTermsItem
 									taxonomy={ taxonomy }
-									value={ [ ...values[ taxonomy ] ] }
+									value={ [ ...values[taxonomy] ] }
 									onChange={ newValue => {
-										values[ taxonomy ] = newValue
+										values[taxonomy] = newValue
 										onChange( { ...values } )
 									} }
 								/>
 							</Form.Item>
 						) )
-					},
+					}
 				},
 				excerpt: {
 					label: __( 'Excerpt' ),
@@ -251,7 +250,8 @@ export const Post = ( { location, match, history } ) => {
 				},
 				attributes: {
 					label: __( 'Attributes' ),
-					isVisible: !! Object.keys( templates ).length || isHierarchical || supports.order,
+					isVisible:
+						!! Object.keys( templates ).length || isHierarchical || supports.order,
 					fields: {
 						template: {
 							label: __( 'Template' ),
@@ -260,13 +260,13 @@ export const Post = ( { location, match, history } ) => {
 							isVisible: !! Object.keys( templates ).length,
 							options: () => {
 								const options = {
-									'default': __( 'Default' ),
+									default: __( 'Default' )
 								}
-								Object.keys( templates ).map( ( key ) => {
-									options[ templates[ key ] ] = key
+								Object.keys( templates ).map( key => {
+									options[templates[key]] = key
 								} )
 								return options
-							},
+							}
 						},
 						parent: {
 							label: __( 'Parent' ),
@@ -274,16 +274,16 @@ export const Post = ( { location, match, history } ) => {
 							component: 'select',
 							id: 'post_parent',
 							isVisible: isHierarchical,
-							options: parentOptions,
+							options: parentOptions
 						},
 						order: {
 							label: __( 'Order' ),
 							labelPlacement: 'beside',
 							component: 'text',
 							id: 'menu_order',
-							isVisible: supports.order,
-						},
-					},
+							isVisible: supports.order
+						}
+					}
 				},
 				featureimgUpload: {
 					label: __( 'Feature Image' ),
@@ -324,33 +324,33 @@ export const Post = ( { location, match, history } ) => {
 							label: __( 'Allow Comments' ),
 							labelPlacement: 'beside',
 							component: 'checkbox',
-							isVisible: supports.comments,
+							isVisible: supports.comments
 						},
 						pingbacksAllowed: {
 							label: __( 'Allow Pingbacks' ),
 							labelPlacement: 'beside',
 							component: 'checkbox',
-							isVisible: supports.trackbacks,
-						},
-					},
-				},
-			},
+							isVisible: supports.trackbacks
+						}
+					}
+				}
+			}
 		},
 		comments: {
 			label: __( 'Comments' ),
 			path: match.url + '/comments',
-			isVisible: supports.comments && 0 < item.commentsCount,
+			isVisible: supports.comments,
 			sections: () => (
 				<List.Comments
 					query={ { post__in: [ item.id ] } }
 					getItemProps={ ( item, defaultProps ) => ( {
 						...defaultProps,
 						to: {
-							pathname: `/fl-comments/comment/${ item.id }`,
+							pathname: `/fl-comments/comment/${item.id}`,
 							state: { item }
-						},
+						}
 					} ) }
-					scrollerClassName="fl-asst-outset"
+					scrollerClassName='fl-asst-outset'
 				/>
 			),
 		},
@@ -360,14 +360,14 @@ export const Post = ( { location, match, history } ) => {
 	const onSubmit = ( { changed, ids, setValue } ) => {
 		const data = {
 			meta: {},
-			terms: {},
+			terms: {}
 		}
 
 		for ( let key in changed ) {
-			if ( ! ids[ key ] ) {
+			if ( ! ids[key] ) {
 				continue
 			}
-			data[ ids[ key ] ] = changed[ key ]
+			data[ids[key]] = changed[key]
 		}
 
 		if ( 'visibility' in changed ) {
@@ -401,7 +401,7 @@ export const Post = ( { location, match, history } ) => {
 			data.terms = changed.terms
 		}
 		if ( 'thumbnailData' in changed ) {
-			data.thumbnail = changed.thumbnailData.id
+			data.thumbnail = changed.thumbnailData ? changed.thumbnailData.id : '0'
 		}
 
 		if ( 'post_author' in changed ) {
@@ -445,27 +445,26 @@ export const Post = ( { location, match, history } ) => {
 		resetForm,
 		submitForm,
 		hasChanges,
-		setValues,
+		setValues
 	} = Form.useForm( {
 		tabs,
 		renderTabs: false,
 		onSubmit,
-		onReset: ( { state } ) => {
-			setFeatureThumbnail( state.thumbnailData.value )
-		},
 		defaults: {
 			...item,
-			parent: item.parent ? `parent:${ item.parent }` : 0,
-		},
+			parent: item.parent ? `parent:${item.parent}` : 0
+		}
 	} )
 
 	const Footer = () => {
-
 		return (
-			<Layout.PublishBar
-				onPublish={ submitForm }
-				onDiscard={ resetForm }
-			/>
+			<>
+				<Button onClick={ resetForm }>{__( 'Cancel' )}</Button>
+				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
+				<Button type='submit' status='primary' onClick={ submitForm }>
+					{__( 'Publish' )}
+				</Button>
+			</>
 		)
 	}
 
@@ -481,12 +480,12 @@ export const Post = ( { location, match, history } ) => {
 				/>
 			)
 		}
-		const { alt, title, height, width, url } = featureThumbnail
+		const { alt, title, height, width } = featureThumbnail
 
 		return featureThumbnail && (
 			<Layout.AspectBox width={ width } height={ height }>
 				<img
-					src={ url }
+					src={ item.thumbnail }
 					srcSet={ getFeaturedImageSrcSet() }
 					style={ { objectFit: 'cover' } }
 					alt={ alt }
@@ -501,19 +500,17 @@ export const Post = ( { location, match, history } ) => {
 	const isCurrentPage = () => item.url === window.location.href
 
 	const ElevatorButtons = () => (
-		<div style={ {
-			display: 'flex',
-			flexDirection: 'row',
-			justifyContent: 'space-evenly',
-			margin: '10px 0 0',
-			flex: '0 0 auto',
-		} } >
-			{ ! isCurrentPage() && (
-				<Button
-					appearance='elevator'
-					title={ __( 'Go To Post' ) }
-					href={ item.url }
-				>
+		<div
+			style={ {
+				display: 'flex',
+				flexDirection: 'row',
+				justifyContent: 'space-evenly',
+				margin: '10px 0 0',
+				flex: '0 0 auto'
+			} }
+		>
+			{! isCurrentPage() && (
+				<Button appearance='elevator' title={ __( 'Go To Post' ) } href={ item.url }>
 					<Icon.View />
 				</Button>
 			)}
@@ -524,7 +521,7 @@ export const Post = ( { location, match, history } ) => {
 			>
 				<Icon.Edit />
 			</Button>
-			{ item.bbCanEdit && (
+			{item.bbCanEdit && (
 				<Button
 					appearance='elevator'
 					title={ sprintf( 'Edit with %s', item.bbBranding ) }
@@ -545,16 +542,22 @@ export const Post = ( { location, match, history } ) => {
 
 	return (
 		<Page
-			id="fl-asst-post-detail"
 			title={ labels.editItem }
 			hero={ <Hero /> }
 			notices={ renderNotices() }
-			footer={ hasChanges && <Footer /> }
+			footer={ hasChanges && false === item.hasLock && <Footer /> }
 			tabs={ tabs }
 			onLoad={ focusFirstInput }
+			disable={ item.hasLock }
 		>
-			{ renderForm() }
-
+			{item.hasLock && (
+				<Layout.Message status='alert' icon={ Icon.Reject }>
+					This post is being edited by another user.
+				</Layout.Message>
+			)}
+			<LockView isLock={ item.hasLock }>
+				{ renderForm() }
+			</LockView>
 		</Page>
 	)
 }

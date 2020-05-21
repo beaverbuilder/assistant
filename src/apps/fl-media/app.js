@@ -1,19 +1,22 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Nav, List, Filter } from 'assistant/ui'
+import { App, Page, List, Filter } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
 import { defaultState } from './'
 import AppIcon from './icon'
 import './style.scss'
 
-export const MediaApp = ( { match } ) => (
-	<Nav.Switch>
-		<Nav.Route exact path={ `${match.url}/` } component={ Main } />
-		<Nav.Route path={ `${match.url}/attachment/:id` } component={ Page.Attachment } />
-	</Nav.Switch>
+export default props => (
+	<App.Config
+		pages={ {
+			default: Main,
+			'attachment/:id': Page.Attachment
+		} }
+		{ ...props }
+	/>
 )
 
-const Main = ( { match } ) => {
+const Main = ( { baseURL } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
 
@@ -107,7 +110,7 @@ const Main = ( { match } ) => {
 		>
 			<List.Attachments
 				key={ listStyle }
-				baseURL={ match.url }
+				baseURL={ baseURL }
 				query={ query }
 				listStyle={ listStyle }
 				before={ <MediaFilter /> }

@@ -1,11 +1,25 @@
 .fl-asst {
     .fl-asst-sidebar {
+        position: relative;
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
         flex-grow: 0;
         flex-basis: 60px;
         cursor: move;
+        z-index: 1;
+
+        .disable-while-sorting {
+            transition-property: opacity;
+            transition-duration: .15s;
+        }
+
+        &.is-sorting {
+            .disable-while-sorting {
+                pointer-events: none;
+                opacity: .3;
+            }
+        }
     }
     .fl-asst-main-sidebar-only .fl-asst-sidebar {
         flex-basis: 58px;
@@ -36,6 +50,7 @@
     }
 
     .fl-asst-sidebar-cell {
+        position: relative;
         padding: var(--fluid-sm-space);
         flex: 0 0 auto;
         display: flex;
@@ -51,11 +66,36 @@
 
             .fluid-button {
                 pointer-events: auto;
+                padding: 0;
             }
         }
 
         .fluid-button {
             height: 50px;
+        }
+
+        ul {
+            margin:0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+
+            li {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+
+                &.is-dragging {
+                    * {
+                        pointer-events: none;
+                    }
+                }
+
+                .fluid-button {
+                    flex: 1 1 auto;
+                }
+            }
         }
     }
 

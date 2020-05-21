@@ -1,7 +1,11 @@
+import { lazy } from 'react'
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
-import App from './app'
 import Icon from './icon'
+
+const App = lazy( () => import(
+	/* webpackChunkName: "app-labels" */ './app'
+) )
 
 registerApp( 'fl-labels', {
 	label: __( 'Labels' ),

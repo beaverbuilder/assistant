@@ -1,0 +1,22 @@
+{
+    "name": "My First Library",
+    "editable": false,
+    "assets": [
+        {
+            "id": "23lj42lnf2lkflk2",
+            "type": "image",
+            "filename": "andras-vas-Bd7gNnWJBkU-unsplash.jpg"
+        },
+        {
+            "id": "09s8df089sd0f",
+            "type": "image",
+            "filename": "christin-hume-mfB1B1s4sMc-unsplash.jpg"
+        },
+        {
+            "id": "2lkjf209j32fjl",
+            "type": "image",
+            "filename": "jeff-sheldon-8z2Q6XWLYa4-unsplash.jpg"
+        }
+    ],
+    "collections": {}
+}

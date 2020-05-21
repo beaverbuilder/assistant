@@ -3,17 +3,16 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
 import AppMain from '../app'
-import { App as FLUID_Root } from 'fluid/ui'
+import { App as FLUIDApp } from 'fluid/ui'
 import {
 	Appearance,
 	App,
 	Icon,
-	Window,
 	Error,
 	Page,
-	Layout,
 	Env,
 } from 'assistant/ui'
+import Window from '../window'
 
 const getRouterProps = history => {
 	const props = {
@@ -31,7 +30,19 @@ const getRouterProps = history => {
  * The Root Component
  */
 export const Assistant = () => {
-	const { appearance, history, isAppHidden } = useSystemState()
+	const {
+		appearance,
+		history,
+		isAppHidden
+	} = useSystemState( ( state, newState ) => {
+		return (
+			state.appearance.brightness !== newState.appearance.brightness ||
+			state.isAppHidden !== newState.isAppHidden
+
+		// We only need history initially - we're not listening for changes
+		)
+	} )
+
 	const { setHistory } = getSystemActions()
 	const { brightness = 'light' } = appearance
 
@@ -42,7 +53,7 @@ export const Assistant = () => {
 	} )
 
 	return (
-		<FLUID_Root
+		<FLUIDApp.Root
 			routerProps={ getRouterProps( history ) }
 			onHistoryChanged={ onHistoryChanged }
 			colorScheme={ brightness }
@@ -56,16 +67,16 @@ export const Assistant = () => {
 					</Appearance>
 				</App.Provider>
 			</Env.Provider>
-		</FLUID_Root>
+		</FLUIDApp.Root>
 	)
 }
 
 // Used for Beaver Builder panel - doesn't have Window Frame or FLUID root.
 export const AssistantCore = () => {
-	const { appearance } = useSystemState()
+	const { appearance } = useSystemState( 'appearance' )
 	return (
 		<Env.Provider application='beaver-builder'>
-			<App.Provider environment='beaver-builder'>
+			<App.Provider>
 				<Appearance brightness={ appearance.brightness }>
 					<AppMain />
 				</Appearance>
@@ -91,7 +102,7 @@ export const getAssistantBBPanelConfig = () => {
 }
 
 const MainWindow = ( { children, ...rest } ) => {
-	const { window: mainWindow, shouldShowLabels } = useSystemState()
+	const { window: mainWindow } = useSystemState( 'window' )
 	const { size, origin, isHidden, hiddenAppearance } = mainWindow
 	const { setWindow } = getSystemActions()
 
@@ -104,7 +115,6 @@ const MainWindow = ( { children, ...rest } ) => {
 			size={ size }
 			position={ origin }
 			onChange={ onChanged }
-			shouldShowLabels={ shouldShowLabels }
 			shouldDisplayButton={ '' === hiddenAppearance }
 			{ ...rest }
 		>
@@ -115,11 +125,9 @@ const MainWindow = ( { children, ...rest } ) => {
 	)
 }
 
-const WindowError = () => {
-	return (
-		<Page>
-			<Layout.Headline>{__( 'We Have A Problem!' )}</Layout.Headline>
-			<p>{__( 'There seems to be an issue inside the window content.' )}</p>
-		</Page>
-	)
-}
+const WindowError = props => (
+	<Page.Error
+		message={ __( 'There seems to be an issue in the Assistant panel.' ) }
+		{ ...props }
+	/>
+)

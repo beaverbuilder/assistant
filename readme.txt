@@ -74,6 +74,10 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
+= 0.5.0 =
+* Apps now load their UI on-demand.
+* All new comments app
+
 = 0.4.2 =
 * Fixed Beaver Builder edit links not showing in the content app.
 

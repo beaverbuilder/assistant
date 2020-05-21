@@ -5,5 +5,6 @@ export const {
 	useStore,
 	getStore,
 	getDispatch,
-	getSelectors
+	getSelectors,
+	getHooks,
 } = createStoreRegistry()
