@@ -90,6 +90,7 @@ export default ( { libraryId, onCreate } ) => {
 			type: 'post',
 			name: post.title,
 			data: {
+
 				// TODO: Pull raw post, meta, terms, and comments (maybe) to store.
 				//post: post,
 			}

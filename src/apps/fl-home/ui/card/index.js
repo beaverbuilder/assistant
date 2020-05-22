@@ -38,7 +38,7 @@ const Card = ( {
 			)}
 			{ children && (
 				<div
-					className={ classname('fl-asst-card-content', contentClasses )}
+					className={ classname( 'fl-asst-card-content', contentClasses ) }
 					{ ...contentRest }
 				>
 					{children}
