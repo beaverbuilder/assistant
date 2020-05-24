@@ -1,0 +1,37 @@
+body.toplevel_page_fl_assistant {
+    #adminmenumain {
+        display: none;
+
+        #adminmenuwrap {
+            padding-top: 80px;
+        }
+    }
+    &.fl-asst-show-admin-menu {
+        #adminmenumain {
+            display: block;
+        }
+    }
+
+    #wpadminbar {
+        display: none;
+    }
+    #wpfooter {
+        display: none;
+    }
+    #wpcontent {
+        margin-left: 0;
+        padding-left: 0;
+        min-height: 100vh;
+    }
+    #wpbody {
+        min-height: 100vh;
+
+        #wpbody-content {
+            min-height: 100vh;
+            padding: 0;
+        }
+    }
+}
+html.wp-toolbar {
+    padding-top: 0;
+}

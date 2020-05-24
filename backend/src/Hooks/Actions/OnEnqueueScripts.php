@@ -210,14 +210,19 @@ class OnEnqueueScripts {
 			// Apps - loaded in header
 			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
-			wp_enqueue_script( 'fl-assistant-drip', 'https://tag.getdrip.com/3112548.js', [], $ver, false );
 
-			// UI Render - loaded in footer
-			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
-			wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.js', $js_deps, $ver, true );
+			// Quick-panel only stuff - don't enqueue this stuff on the admin page
+			if ( ! function_exists( 'fl_asst_is_admin_screen' ) || ! fl_asst_is_admin_screen() ) {
+
+				// UI Render - loaded in footer
+				wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
+				wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.js', $js_deps, $ver, true );
+			}
 
 			// WordPress Media Uploader
 			wp_enqueue_media();
+
+			wp_enqueue_script( 'fl-assistant-drip', 'https://tag.getdrip.com/3112548.js', [], $ver, false );
 
 			do_action( 'fl_assistant_enqueue' );
 		}

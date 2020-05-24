@@ -1,0 +1,18 @@
+.fl-asst {
+    .fl-asst-main-content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        max-height: 100%;
+        min-height: 0;
+
+        .fl-asst-app-content {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            max-height: 100%;
+            min-height: 0;
+            overflow: auto;
+        }
+    }
+}

@@ -72,6 +72,7 @@ const entry = { // if you change a key here, you need to update the enqueue url 
     system: './src/system',
     apps: './src/apps',
     fluid: './src/fluid',
+    'admin-render': './src/admin-render',
 }
 
 const config = {

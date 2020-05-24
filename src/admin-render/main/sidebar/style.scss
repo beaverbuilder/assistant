@@ -1,0 +1,50 @@
+.fl-asst {
+    .fl-asst-sidebar {
+        flex: 0 0 180px;
+        background: var(--fluid-background);
+        border-right: 2px solid var(--fluid-line-color);
+        display: flex;
+        flex-direction: column;
+
+        .fl-asst-wordpress-btn {
+            position: fixed;
+            top:0;
+            left:0;
+            z-index: 9999;
+            padding: 2px;
+            width: 60px;
+            height: 60px;
+            background: var(--fluid-dark-background);
+            color: white;
+            border-radius: 0;
+
+            &:hover {
+                background: var(--fluid-dark-background);
+                color: white;
+            }
+            &:focus {
+                background: var(--fluid-dark-background);
+                color: white;
+            }
+        }
+
+        .fl-asst-sidebar-apps {
+            margin: auto 0;
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                justify-content: stretch;
+            }
+            li {
+                display: flex;
+            }
+
+            .fl-asst-sidebar-button {
+                flex: 1 1 auto;
+                margin: 10px 5px;
+                justify-content: flex-start;
+            }
+        }
+    }
+}

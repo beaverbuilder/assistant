@@ -17,7 +17,7 @@ const Filter = ( { className, children, ...rest } ) => {
 
 	const style = {
 		display: 'grid',
-		gridTemplateColumns: 'repeat(3, 1fr)',
+		gridTemplateColumns: 'repeat(3, 200px)',
 		gridAutoRows: 'minmax(40px, 50px)',
 		gridGap: 'var(--fluid-sm-space)'
 	}

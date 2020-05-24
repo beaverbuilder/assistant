@@ -50,6 +50,9 @@ class Plugin {
 
 		$this->register_providers();
 
+		// Cause I can't figure out where the hell to include a file anymore
+		require_once( FL_ASSISTANT_DIR . 'backend/src/Admin/AdminScreen.php');
+
 		// notify assistant was loaded
 		do_action( 'fl_assistant_loaded' );
 	}
@@ -71,4 +74,3 @@ class Plugin {
 	}
 
 }
-
