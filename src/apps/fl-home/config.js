@@ -76,13 +76,14 @@ export const getListSectionConfig = ( {
 	let props = { ...defaultProps }
 
 	if ( section.items.length >= NUMBER_OF_RESULTS ) {
-		props.footer = (
-			<Layout.Box padX={ false }>
-				<Button to={ {
+		props.actions = (
+			<Button
+				appearance="transparent"
+				to={ {
 					pathname: `${baseURL}/all`,
 					state: { keyword, configKey }
-				} }>{__( 'View All' )}</Button>
-			</Layout.Box>
+				} }
+			>{__( 'View All' )}</Button>
 		)
 	}
 

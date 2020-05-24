@@ -9,6 +9,7 @@ const Card = ( {
 	title,
 	eyebrow,
 	subtitle,
+	actions,
 	padX = false,
 	contentProps = {},
 	footer,
@@ -29,13 +30,16 @@ const Card = ( {
 			}, className ) }
 			{ ...rest }
 		>
+			<div className="fl-asst-card-header">
 			{ ( title || eyebrow || subtitle ) && (
-				<div className="fl-asst-card-header">
+				<div className="fl-asst-card-title-area">
 					{ eyebrow && <div className="fl-asst-card-eyebrow">{eyebrow}</div> }
 					{ title && <div className="fl-asst-card-title">{title}</div> }
 					{ subtitle && <div className="fl-asst-card-subtitle">{subtitle}</div> }
 				</div>
 			)}
+				{ actions && <div className="fl-asst-card-actions">{actions}</div> }
+			</div>
 			{ children && (
 				<div
 					className={ classname( 'fl-asst-card-content', contentClasses ) }
