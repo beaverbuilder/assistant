@@ -74,6 +74,9 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
+= 0.4.2 =
+* Fixed Beaver Builder edit links not showing in the content app.
+
 = 0.4.1 =
 * Fixed Assistant not loading on hosts with heartbeat disabled (such as WP Engine).
 * Fixed media library scripts loading while logged out.
