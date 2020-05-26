@@ -212,17 +212,17 @@ class PostsImportController extends ControllerAbstract {
 				$post_fail_msg = 'Post Imported Failed!';
 
 				if ( $sucess_imp_count > 1 ) {
-					$post_success_msg = $sucess_imp_count . ' Posts Imported Successfully!';
+					$post_success_msg = $sucess_imp_count . ' ' . ucfirst( $property['WP:POST_TYPE'] ) . 's Imported Successfully!';
 				} elseif ( $sucess_imp_count === 1 ) {
-					$post_success_msg = 'Post Imported Successfully!';
+					$post_success_msg = ucfirst( $property['WP:POST_TYPE'] ) . ' Imported Successfully!';
 				} else {
 					$post_success_msg = '';
 				}
 
 				if ( $fail_imp_count > 1 ) {
-					$post_fail_msg = $fail_imp_count . ' Posts Already exist or unable to Import!';
+					$post_fail_msg = $fail_imp_count . ' ' . ucfirst( $property[' WP:POST_TYPE '] ) . 's Already exist or unable to Import!';
 				} elseif ( $fail_imp_count === 1 ) {
-					$post_fail_msg = 'Posts Already exist or unable to Import!';
+					$post_fail_msg = ucfirst( $property['WP:POST_TYPE'] ) . ' Already exist or unable to Import!';
 				} else {
 					$post_fail_msg = '';
 				}
