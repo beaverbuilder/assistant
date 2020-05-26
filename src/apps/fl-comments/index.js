@@ -2,15 +2,18 @@ import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
 import { currentUserCan } from 'assistant/utils/wordpress'
+import { getSystemConfig } from 'data'
 import { Page } from 'assistant/ui'
 import { CommentsApp } from './app'
 import Icon from './icon'
+
+const { wpCommentStatus  } = getSystemConfig()
 
 registerApp( 'fl-comments', {
 	label: __( 'Comments' ),
 	root: CommentsApp,
 	icon: Icon,
-	enabled: currentUserCan( 'moderate_comments' ),
+	enabled: currentUserCan( 'moderate_comments' ) && 1 == wpCommentStatus ,
 	accent: {
 		color: '#FFCC00'
 	},

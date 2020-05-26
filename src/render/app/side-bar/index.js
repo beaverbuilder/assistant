@@ -8,7 +8,7 @@ import { useMedia } from 'assistant/utils/react'
 import './style.scss'
 
 const Sidebar = ( { edge = 'right' } ) => {
-	const { window, isAppHidden  } = useSystemState()
+	const { window, isAppHidden } = useSystemState()
 	const { isMobile, isCompactHeight, application } = Env.useEnvironment()
 	const {
 		toggleIsShowingUI,
