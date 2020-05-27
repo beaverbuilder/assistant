@@ -180,6 +180,7 @@ const getFieldComponent = key => {
 	const map = {
 		'actions': Form.ActionsItem,
 		'checkbox': Form.CheckboxItem,
+		'datetime': Form.DateTimeItem,
 		'file': Form.FileItem,
 		'labels': Form.LabelsItem,
 		'plain-text': Form.PlainTextItem,

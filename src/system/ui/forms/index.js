@@ -12,6 +12,7 @@ import './style.scss'
 import {
 	ActionsItem,
 	CheckboxItem,
+	DateTimeItem,
 	FileItem,
 	LabelsItem,
 	PlainTextItem,
@@ -78,6 +79,9 @@ Form.ActionsItem.displayName = 'Form.ActionsItem'
 
 Form.CheckboxItem = CheckboxItem
 Form.CheckboxItem.displayName = 'Form.CheckboxItem'
+
+Form.DateTimeItem = DateTimeItem
+Form.DateTimeItem.displayName = 'Form.DateTimeItem'
 
 Form.FileItem = FileItem
 Form.FileItem.displayName = 'Form.FileItem'
