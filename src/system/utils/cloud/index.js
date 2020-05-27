@@ -5,6 +5,8 @@ import teams from './api/teams'
 import sites from './api/sites'
 import libraries from './api/libraries'
 
+auth.checkAccess()
+
 export default {
 	auth,
 	session,

@@ -1,8 +1,27 @@
 import cookie from 'cookie'
 import { isObject } from 'lodash'
+import { getCloudActions } from 'data/cloud'
 
 const FL_CLOUD_TOKEN_KEY = 'fl-asst-cloud-token'
 const FL_CLOUD_USER_KEY = 'fl-asst-cloud-user'
+
+export const create = ( token, user ) => {
+	const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
+	setToken( token )
+	setUser( user )
+	setCloudToken( token )
+	setCloudUser( user )
+	setIsCloudConnected( true )
+}
+
+export const destroy = () => {
+	const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
+	setCloudToken( {} )
+	setCloudUser( null )
+	setIsCloudConnected( false )
+	removeToken()
+	removeUser()
+}
 
 export const isValidToken = ( token ) => {
 	return token && 'string' === typeof token

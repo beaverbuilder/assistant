@@ -1,23 +1,6 @@
 import Promise from 'promise'
 import * as session from './session'
-import { getCloudActions } from 'data/cloud'
 import http from '../http'
-
-/**
- * Refresh the users token once per minute
- * @type {number}
- */
-const interval = setInterval( async() => {
-	if ( session.hasToken() ) {
-		try {
-			await refresh()
-		} catch ( error ) {
-			clearInterval( interval )
-			session.removeToken()
-			session.removeUser()
-		}
-	}
-}, 60000 )
 
 /**
  * Register with Assistant Cloud
@@ -56,7 +39,6 @@ export const register = ( first_name, last_name, email, password, config = {} ) 
 			.catch( reject )
 
 	} )
-
 }
 
 /**
@@ -83,12 +65,7 @@ export const login = ( email, password, config = {} ) => {
 
 				// Handle success
 				const { token, user } = response.data
-				const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
-				session.setToken( token )
-				session.setUser( user )
-				setCloudToken( token )
-				setCloudUser( user )
-				setIsCloudConnected( true )
+				session.create( token, user )
 				resolve( { token, user } )
 			} )
 			.catch( reject )
@@ -111,6 +88,7 @@ export const refresh = ( config = {} ) => {
 
 				// Handle an error
 				if ( ! response.data || ! response.data.token ) {
+					session.destroy()
 					reject( response )
 					return
 				}
@@ -120,9 +98,24 @@ export const refresh = ( config = {} ) => {
 				session.setToken( plainTextToken )
 				resolve()
 			} )
-			.catch( reject )
+			.catch( error => {
+				session.destroy()
+				reject( error )
+			} )
 	} )
+}
 
+/**
+ * Checks to see if the user is still logged in.
+ * If not, the session will be destroyed.
+ * @returns void
+ */
+export const checkAccess = async () => {
+	if ( isConnected() ) {
+		try {
+			await refresh()
+		} catch ( error ) {}
+	}
 }
 
 /**
@@ -133,18 +126,9 @@ export const refresh = ( config = {} ) => {
 export const logout = ( config = {} ) => {
 
 	return new Promise( ( resolve ) => {
-		const { setCloudToken, setCloudUser, setIsCloudConnected } = getCloudActions()
-		setCloudToken( {} )
-		setCloudUser( null )
-		setIsCloudConnected( false )
 		http.post( '/iam/token/destroy', {}, config )
-			.then( () => {
-				resolve()
-			} )
-			.finally( () => {
-				session.removeToken()
-				session.removeUser()
-			} )
+		session.destroy()
+		resolve()
 	} )
 }
 
