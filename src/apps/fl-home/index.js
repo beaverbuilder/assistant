@@ -10,6 +10,7 @@ const App = lazy( () => import(
 registerApp( 'fl-home', {
 	label: __( 'Home' ),
 	root: App,
+	adminRoot: App,
 	icon: Icon,
 	shouldShowInAppList: false,
 	state: {

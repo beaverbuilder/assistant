@@ -1,6 +1,6 @@
 .fl-asst {
     .fl-asst-sidebar {
-        flex: 0 0 180px;
+        flex: 0 0 60px;
         background: var(--fluid-background);
         border-right: 2px solid var(--fluid-line-color);
         display: flex;
@@ -10,13 +10,20 @@
             position: fixed;
             top:0;
             left:0;
+            width: 53px;
             z-index: 9999;
-            padding: 2px;
-            width: 60px;
-            height: 60px;
+            padding: 5px;
+            margin: 7px;
+            margin-left: 0;
             background: var(--fluid-dark-background);
             color: white;
-            border-radius: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+
+            svg {
+                height: 24px;
+                width: 24px;
+            }
 
             &:hover {
                 background: var(--fluid-dark-background);
@@ -42,8 +49,8 @@
 
             .fl-asst-sidebar-button {
                 flex: 1 1 auto;
-                margin: 10px 5px;
-                justify-content: flex-start;
+                margin: 5px;
+                height: 50px;
             }
         }
     }

@@ -10,6 +10,10 @@ const App = lazy( () => import(
 	/* webpackChunkName: "app-content" */ './app'
 ) )
 
+const Admin = lazy( () => import(
+	/* webpackChunkName: "admin-app-content" */ './app-admin'
+) )
+
 const { contentTypes, taxonomies } = getSystemConfig()
 
 export const defaultState = {
@@ -26,6 +30,7 @@ export const defaultState = {
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: App,
+	adminRoot: Admin,
 	icon: Icon,
 	accent: {
 		color: '#006AD4'

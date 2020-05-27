@@ -22,6 +22,7 @@ export const defaultState = {
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
 	root: App,
+	adminRoot: App,
 	icon: Icon,
 	accent: {
 		color: '#FF5A5E'

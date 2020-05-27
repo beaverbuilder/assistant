@@ -70,6 +70,8 @@ Nav.TabsToolbar = ( { tabs } ) => {
 }
 
 Nav.CurrentTab = ( { tabs = [] } ) => {
+	const location = useLocation()
+	console.log(location, tabs)
 	return (
 		<Switch>
 			{ tabs.map( ( tab, i ) => {

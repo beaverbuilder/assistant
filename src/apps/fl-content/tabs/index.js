@@ -170,7 +170,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 						return {
 							...defaultProps,
 							to: {
-								pathname: `/${handle}/post/${item.id}`,
+								pathname: `/${handle}/tab/${type}/post/${item.id}`,
 								state: { item }
 							},
 						}
@@ -195,7 +195,7 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType } ) 
 			action.isShowing = true
 			action.title = __( 'Edit Details' )
 			action.to = {
-				pathname: `/fl-content/post/${item.id}`,
+				pathname: `/fl-content/tab/${listType}/post/${item.id}`,
 				state: { item }
 			}
 		}

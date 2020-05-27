@@ -44,7 +44,9 @@ const AppIcons = () => {
             >
                 { key => {
                     const app = selectApp( key )
-                    const { handle, icon, label } = app
+                    const { handle, icon, label, adminRoot } = app
+
+                    if ( ! adminRoot ) return null
 
                     const location = {
                         pathname: `/${handle}`,
@@ -68,7 +70,6 @@ const AppIcons = () => {
                             } }
                         >
                             <AppIcon { ...iconProps } />
-                            <span style={{ marginLeft: 10 }}>{label}</span>
                         </Button>
                     )
                 }}

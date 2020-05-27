@@ -25,6 +25,9 @@ function fl_asst_render_admin_screen() {
  */
 function fl_asst_is_admin_screen() {
     global $current_screen;
+    if ( ! $current_screen ) {
+        return false;
+    }
 	return $current_screen->base === 'toplevel_page_fl_assistant';
 }
 
