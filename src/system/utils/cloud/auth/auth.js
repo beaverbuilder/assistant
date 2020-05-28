@@ -133,19 +133,6 @@ export const logout = ( config = {} ) => {
 }
 
 /**
- * Sends the password reset email.
- * @param config
- * @returns Promise
- */
-export const requestPasswordReset = ( email, config = {} ) => {
-	return new Promise( ( resolve ) => {
-		setTimeout( () => {
-			resolve( config )
-		}, 1000 )
-	} )
-}
-
-/**
  * Session has token and user.
  * @returns bool
  */

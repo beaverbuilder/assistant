@@ -5,7 +5,6 @@ import { useCloudState } from 'assistant/data'
 
 import Login from './pages/auth/login'
 import Register from './pages/auth/register'
-import ForgotPassword from './pages/auth/forgot-password'
 
 import Dashboard from './pages/dashboard'
 import Teams from './pages/teams'
@@ -40,7 +39,6 @@ export default ( { baseURL } ) => {
 			{ /* Auth */ }
 			<Nav.Route path={ `${baseURL}/auth/login` } component={ Login } />
 			<Nav.Route path={ `${baseURL}/auth/register` } component={ Register } />
-			<Nav.Route path={ `${baseURL}/auth/forgot-password` } component={ ForgotPassword } />
 
 			{ /* Teams */ }
 			<Nav.Route exact path={ `${baseURL}/teams` } component={ Teams } />

@@ -5,7 +5,7 @@ import * as session from '../auth/session'
 const { cloudUrl } = FL_ASSISTANT_CONFIG
 
 const http = axios.create( {
-	baseURL: cloudUrl,
+	baseURL: `${ cloudUrl }/api`,
 	crossDomain: true,
 	headers: {
 		common: {
