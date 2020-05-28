@@ -91,12 +91,14 @@ export const Term = ( { location, history } ) => {
 					title: {
 						label: __( 'Name' ),
 						labelPlacement: 'above',
-						value: title
+						value: title,
+						component: 'text',
 					},
 					slug: {
 						label: __( 'Slug' ),
 						labelPlacement: 'above',
 						value: slug,
+						component: 'text',
 					},
 					parent: {
 						label: __( 'Parent' ),
