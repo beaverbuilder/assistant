@@ -27,9 +27,6 @@ registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: App,
 	icon: Icon,
-	accent: {
-		color: '#006AD4'
-	},
 	state: { ...defaultState },
 	search: Object.entries( contentTypes ).map( ( [ type, data ], key ) => {
 		return {
@@ -67,9 +64,7 @@ registerApp( 'fl-content', {
 			detail: {
 				component: Page.Term,
 				path: '/term/:id',
-				pathname: item => {
-					return `/term/${ item.id }`
-				},
+				pathname: ({ id }) => `/term/${ id }`
 			},
 		}
 	} ) )
