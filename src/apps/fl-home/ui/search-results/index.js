@@ -10,7 +10,7 @@ const SectionCard = ( { children, label, ...rest } ) => {
 			<Card
 				title={ label }
 				className="fl-asst-search-results-card"
-				{...rest}
+				{ ...rest }
 			>{ children }</Card>
 		</li>
 	)

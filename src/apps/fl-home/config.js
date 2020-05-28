@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Layout } from 'assistant/ui'
+import { Button } from 'assistant/ui'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSystemStore } from 'assistant/data'
 import { __ } from '@wordpress/i18n'

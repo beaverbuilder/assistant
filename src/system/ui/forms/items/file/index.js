@@ -15,7 +15,8 @@ export const FileItem = ( {
 			id={ id }
 			type='file'
 			accept={ accept }
-			onChange={ e => onChange( ref.current.files ) }
+			onChange={ () => onChange( ref.current.files ) }
+			{ ...rest }
 		/>
 	)
 }

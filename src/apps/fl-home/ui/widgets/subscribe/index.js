@@ -30,8 +30,8 @@ const SubscribeWidget = () => {
 
 			setisSubscribing( true )
 
-			if ( 'undefined' !== typeof _dcq ) {
-				_dcq.push( [
+			if ( 'undefined' !== typeof window._dcq ) {
+				window._dcq.push( [
 					'identify',
 					{
 						email: email,
