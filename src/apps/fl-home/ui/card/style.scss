@@ -22,7 +22,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                padding: 5px var(--fluid-lg-space);
+                padding: var(--fluid-med-space) var(--fluid-lg-space);
 
                 .fl-asst-card-title {
                     font-size: 16px;
