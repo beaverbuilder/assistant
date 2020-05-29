@@ -35,7 +35,7 @@ export const after = {
 
 	SET_WINDOW: ( action, store ) => {
 		const { window } = store.getState()
-		wpapi.users().updateState( { window: { ...window } } )
+		wpapi.users().updateState( { window } )
 	},
 
 	SET_BRIGHTNESS: ( action, store ) => {
@@ -69,7 +69,9 @@ export const after = {
 
 	TOGGLE_IS_SHOWING_UI: ( action, store ) => {
 		const { window } = store.getState()
-		wpapi.users().updateState( { window: { ...window } } )
+		const newWindow = { ...window }
+		delete newWindow.hiddenAppearance
+		wpapi.users().updateState( { window: newWindow } )
 	},
 
 	SET_IS_APP_HIDDEN: ( action, store ) => {

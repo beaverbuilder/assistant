@@ -7,17 +7,6 @@ const CurrentlyViewing = () => {
 	const { currentPageView } = getSystemConfig()
 	const { intro, name, actions } = currentPageView
 
-	console.log(currentPageView)
-
-	const Thumb = () => (
-		<Layout.AspectBox
-			ratio="square"
-			style={{
-				background: 'red'
-			}}
-		/>
-	)
-
 	return (
 		<Card
 			eyebrow={ intro }
