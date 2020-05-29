@@ -64,7 +64,7 @@ registerApp( 'fl-content', {
 			detail: {
 				component: Page.Term,
 				path: '/term/:id',
-				pathname: ({ id }) => `/term/${ id }`
+				pathname: ( { id } ) => `/term/${ id }`
 			},
 		}
 	} ) )

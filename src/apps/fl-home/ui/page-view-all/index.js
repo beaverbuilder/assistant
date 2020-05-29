@@ -6,7 +6,7 @@ import { Page, List } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getRequestConfig, getListItemConfig } from '../../config'
 
-const ViewAll = ({ baseURL }) => {
+const ViewAll = ( { baseURL } ) => {
 	const [ items, setItems ] = useState( [] )
 	const { keyword, configKey } = useLocation().state
 	const { config, routes } = getRequestConfig( { keyword, number: 20, offset: items.length } )
@@ -18,7 +18,9 @@ const ViewAll = ({ baseURL }) => {
 	useEffect( () => () => source.cancel(), [] )
 
 	const getPageTitle = () => {
-		if ( '' === keyword ) return label
+		if ( '' === keyword ) {
+			return label
+		}
 		return sprintf( __( '%s matching "%s"' ), label, keyword )
 	}
 

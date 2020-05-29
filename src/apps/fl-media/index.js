@@ -44,7 +44,7 @@ registerApp( 'fl-media', {
 		detail: {
 			component: Page.Attachment,
 			path: '/attachment/:id',
-			pathname: ({ id }) => `/attachment/${ id }`
+			pathname: ( { id } ) => `/attachment/${ id }`
 		},
 	},
 } )

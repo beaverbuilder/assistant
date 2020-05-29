@@ -13,17 +13,17 @@ const CurrentlyViewing = () => {
 			title={ name }
 		>
 			{ actions && (
-				<Layout.Row style={{ padding: 5, paddingTop: 2 }}>
+				<Layout.Row style={ { padding: 5, paddingTop: 2 } }>
 					{ actions.map( ( action, i ) => {
 						const { label, isEnabled, ...rest } = action
 						return false !== isEnabled && (
 							<Button
-								key={i}
+								key={ i }
 								appearance="transparent"
-								{...rest}
+								{ ...rest }
 							>{label}</Button>
 						)
-					})}
+					} )}
 				</Layout.Row>
 			)}
 		</Card>
