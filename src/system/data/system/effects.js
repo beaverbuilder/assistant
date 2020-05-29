@@ -71,4 +71,9 @@ export const after = {
 		const { window } = store.getState()
 		wpapi.users().updateState( { window: { ...window } } )
 	},
+
+	SET_IS_APP_HIDDEN: ( action, store ) => {
+		const { isAppHidden } = store.getState()
+		wpapi.users().updateState( { isAppHidden } )
+	},
 }

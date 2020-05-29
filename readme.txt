@@ -80,6 +80,7 @@ Our API for creating new apps and extending the existing ones is in development 
 * All new comments app - reply to comments right in the list
 * All New Home + Search app
 * Numerous performance enhancements
+* Apps now remain hidden or visible between page refreshes instead of auto-hiding
 
 = 0.4.2 =
 * Fixed Beaver Builder edit links not showing in the content app.
