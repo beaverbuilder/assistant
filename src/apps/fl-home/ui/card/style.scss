@@ -6,16 +6,23 @@
         position: relative;
 
         .fl-asst-card-header {
-            padding: 5px var(--fluid-lg-space);
             min-height: 60px;
             display: flex;
             flex-direction: row;
+
+            .fl-asst-card-thumbnail {
+                flex: 0 0 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
 
             .fl-asst-card-title-area {
                 flex: 1 1 auto;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                padding: 5px var(--fluid-lg-space);
 
                 .fl-asst-card-title {
                     font-size: 16px;
