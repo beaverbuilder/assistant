@@ -14,6 +14,10 @@
             border-bottom: none;
             border-radius: 5px;
 
+            &:focus {
+                box-shadow: none;
+            }
+
             .fl-asst-list-item-content-info {
                 padding: 8px 0;
 

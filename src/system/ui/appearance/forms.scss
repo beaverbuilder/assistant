@@ -96,7 +96,7 @@
             }
 
             &:checked {
-                background-color: var(--fluid-primary-color);
+                background-color: var(--fl-asst-blue);
                 box-shadow: none;
 
                 &:focus {
@@ -121,11 +121,6 @@
                     content: '';
                     display: none;
                 }
-            }
-        }
-        .fluid-color-scheme-dark {
-            input[type="checkbox"] {
-                background-color: var(--fl-asst-input-background);
             }
         }
 
