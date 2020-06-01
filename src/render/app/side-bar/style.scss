@@ -37,7 +37,7 @@
 
             .fluid-button {
                 height: auto;
-                flex: 1 1 60px;
+                flex: 0 1 60px;
                 min-width: 50px;
             }
         }
@@ -81,6 +81,10 @@
 
         .fluid-button {
             height: 50px;
+
+            &.fl-asst-sidebar-close-button {
+                margin-bottom: 0;
+            }
         }
 
         ul {
