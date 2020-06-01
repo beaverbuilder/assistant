@@ -1,5 +1,4 @@
 .fl-asst {
-
 	.fl-asst-new-term-form {
 		padding-top: var(--fl-asst-small-space);
 		width: 100%;
@@ -7,7 +6,6 @@
 		button {
 			width: 100%;
 		}
-
 		input, select {
 			margin-bottom: var(--fl-asst-small-space);
 		}
@@ -17,7 +15,6 @@
 		margin-left: 15px;
 	}
 	.components-base-control+.components-base-control {
-		/* margin-bottom: 16px; */
 		float: left;
 		width: 100%;
 		display: block !important;
@@ -25,16 +22,13 @@
 	.components-checkbox-control__label{
 		display: contents;
 	}
-	.components-checkbox-control__input{
-		border: 2px solid #6c7781 !important;
-	}
 	.components-checkbox-control__input:checked:after{
 		font-size: 17px !important;
 	}
 
 	.components-checkbox-control__input {
 		width: 25px;
-    height: 25px;
+    	height: 25px;
 	}
 
 	.components-base-control+.components-base-control {
@@ -59,7 +53,7 @@
 		padding-left: 10px;
 	}
 
-	.fl-asst-hierarchical-terms-list{
+	.fl-asst-hierarchical-terms-list {
 		max-height: 14em;
     	overflow-y: auto;
     	overflow-x: hidden;
