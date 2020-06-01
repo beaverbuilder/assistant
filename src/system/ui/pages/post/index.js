@@ -461,13 +461,10 @@ export const Post = ( { location, match, history } ) => {
 
 	const Footer = () => {
 		return (
-			<>
-				<Button onClick={ resetForm }>{__( 'Cancel' )}</Button>
-				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
-				<Button type='submit' status='primary' onClick={ submitForm }>
-					{__( 'Publish' )}
-				</Button>
-			</>
+			<Layout.PublishBar
+				onPublish={ submitForm }
+				onDiscard={ resetForm }
+			/>
 		)
 	}
 
@@ -555,7 +552,7 @@ export const Post = ( { location, match, history } ) => {
 		>
 			{item.hasLock && (
 				<Layout.Message status='alert' icon={ Icon.Reject }>
-					This post is being edited by another user.
+					{__('This post is being edited by another user.')}
 				</Layout.Message>
 			)}
 			<LockView isLock={ item.hasLock }>
