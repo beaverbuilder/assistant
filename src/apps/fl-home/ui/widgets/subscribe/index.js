@@ -12,7 +12,9 @@ const SubscribeWidget = () => {
 	const [ email, setEmail ] = useState( '' )
 	const [ isSubscribing, setisSubscribing ] = useState( false )
 
-	if ( hasSubscribed ) return null
+	if ( hasSubscribed ) {
+		return null
+	}
 
 	const placeholderText = __( 'Please enter a valid email address.' )
 
