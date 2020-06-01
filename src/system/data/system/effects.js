@@ -78,4 +78,8 @@ export const after = {
 		const { isAppHidden } = store.getState()
 		wpapi.users().updateState( { isAppHidden } )
 	},
+	SET_HAS_SUBSCRIBED: ( action, store ) => {
+		const { hasSubscribed } = store.getState()
+		wpapi.users().updateState( { hasSubscribed } )
+	},
 }

@@ -134,3 +134,10 @@ export const setIsAppHidden = value => {
 		value,
 	}
 }
+
+export const setHasSubscribed = value => {
+	return {
+		type: 'SET_HAS_SUBSCRIBED',
+		value,
+	}
+}

@@ -87,6 +87,7 @@ class OnEnqueueScripts {
 			'shouldShowLabels'   => false, /* Disabled */
 			'window'             => $user_state['window'],
 			'isAppHidden'        => $user_state['isAppHidden'] ? true : false,
+			'hasSubscribed'      => isset( $user_state['hasSubscribed'] ) && $user_state['hasSubscribed'] ? true : false,
 		];
 
 	}

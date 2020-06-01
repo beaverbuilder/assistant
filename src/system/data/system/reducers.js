@@ -206,3 +206,12 @@ export const isAppHidden = ( state = true, action ) => {
 		return state
 	}
 }
+
+export const hasSubscribed = ( state = false, action ) => {
+	switch ( action.type ) {
+		case 'SET_HAS_SUBSCRIBED':
+		return action.value ? true : false
+	default:
+		return state ? true : false
+	}
+}
