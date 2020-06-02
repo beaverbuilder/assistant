@@ -30,7 +30,7 @@ const Widgets = () => {
 			</li>
 			<li>
 				<Layout.Box style={ { paddingTop: 0 } }>
-					<RecentContentWidget title={ __('Recent Pages' ) } type='page' />
+					<RecentContentWidget title={ __( 'Recent Pages' ) } type='page' />
 				</Layout.Box>
 			</li>
 			<li>

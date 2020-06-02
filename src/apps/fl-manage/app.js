@@ -44,15 +44,15 @@ const MainScreen = () => {
 	)
 }
 
-const DragHandleBox = ({ children }) => (
-	<div className="fl-asst-app-drag-handle-box" style={{
+const DragHandleBox = ( { children } ) => (
+	<div className="fl-asst-app-drag-handle-box" style={ {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
 		width: 20,
 		marginLeft: 10
-	}} >{ children }</div>
+	} } >{ children }</div>
 )
 
 const Home = memo( () => {

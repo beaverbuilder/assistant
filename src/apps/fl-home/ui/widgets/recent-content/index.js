@@ -6,10 +6,10 @@ import './style.scss'
 
 const handle = 'fl-content'
 
-const RecentContentWidget = memo( ({
+const RecentContentWidget = memo( ( {
 	type = 'post',
 	title = __( 'Recent Posts' )
-}) => {
+} ) => {
 
 	return (
 		<Card
