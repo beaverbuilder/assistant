@@ -2,12 +2,19 @@
     .fl-asst-card.fl-asst-recent-content-card {
 
         .fl-asst-card-content {
-            min-height: 280px; // Add 10px to the bottom
+            min-height: 242px; // Add 10px to the bottom
             padding-bottom: 10px;
         }
 
         .fl-asst-list {
             padding: 0 var(--fluid-med-space);
+        }
+
+        // A hack to remove the bottom 100px bumper at the end of scrolling list
+        .fl-asst-list-scroller {
+            .fl-asst-list ~ div {
+                display: none;
+            }
         }
 
         .fl-asst-list-item {
