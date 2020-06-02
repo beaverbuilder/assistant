@@ -6,17 +6,20 @@ import './style.scss'
 
 const handle = 'fl-content'
 
-const RecentContentWidget = memo( () => {
+const RecentContentWidget = memo( ({
+	type = 'post',
+	title = __( 'Recent Posts' )
+}) => {
 
 	return (
 		<Card
 			eyebrow={ __( 'Content' ) }
-			title={ __( 'Recent Posts' ) }
+			title={ title }
 			className="fl-asst-recent-content-card"
 		>
 			<List.Posts
 				query={ {
-					post_type: 'post',
+					post_type: type,
 					posts_per_page: 5
 				} }
 				getItemProps={ ( item, defaultProps ) => {

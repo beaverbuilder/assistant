@@ -1,4 +1,5 @@
 import React from 'react'
+import { __ } from '@wordpress/i18n'
 import { Layout, Icon } from 'assistant/ui'
 import AppsWidget from './apps'
 import RecentContentWidget from './recent-content'
@@ -25,6 +26,11 @@ const Widgets = () => {
 			<li>
 				<Layout.Box style={ { paddingTop: 0 } }>
 					<RecentContentWidget />
+				</Layout.Box>
+			</li>
+			<li>
+				<Layout.Box style={ { paddingTop: 0 } }>
+					<RecentContentWidget title={ __('Recent Pages' ) } type='page' />
 				</Layout.Box>
 			</li>
 			<li>
