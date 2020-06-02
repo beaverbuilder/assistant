@@ -56,6 +56,9 @@
                 }
             }
         }
+        .fl-asst-sidebar-close-button {
+            margin-bottom: 0 !important;
+        }
     }
 
     .fl-asst-sidebar-cell {
@@ -81,10 +84,6 @@
 
         .fluid-button {
             height: 50px;
-
-            &.fl-asst-sidebar-close-button {
-                margin-bottom: 0;
-            }
         }
 
         ul {
