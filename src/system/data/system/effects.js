@@ -33,11 +33,11 @@ export const after = {
 		wpapi.users().updateState( { appOrder } )
 
 		const remove = appOrder.filter( handle => ! Object.keys( apps ).includes( handle ) )
-		if ( remove.length > 0 ) {
-			store.dispatch({
+		if ( 0 < remove.length ) {
+			store.dispatch( {
 				type: 'CLEAN_UP_ORDER',
 				remove,
-			})
+			} )
 		}
 	},
 

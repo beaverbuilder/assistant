@@ -552,7 +552,7 @@ export const Post = ( { location, match, history } ) => {
 		>
 			{item.hasLock && (
 				<Layout.Message status='alert' icon={ Icon.Reject }>
-					{__('This post is being edited by another user.')}
+					{__( 'This post is being edited by another user.' )}
 				</Layout.Message>
 			)}
 			<LockView isLock={ item.hasLock }>
