@@ -110,7 +110,7 @@ export const refresh = ( config = {} ) => {
  * If not, the session will be destroyed.
  * @returns void
  */
-export const checkAccess = async () => {
+export const checkAccess = async() => {
 	if ( isConnected() ) {
 		try {
 			await refresh()

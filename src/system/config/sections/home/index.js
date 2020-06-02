@@ -225,19 +225,19 @@ registerSection( 'fl-home-subscribe', {
 
 		return (
 			<form>
-				<p style={{ marginTop: 0 }}>{__('Keep up to date with Assistant!')}</p>
+				<p style={ { marginTop: 0 } }>{__( 'Keep up to date with Assistant!' )}</p>
 				<Form.Input
 					value={ subscribeEmail }
 					onChange={ e => setsubscribeEmail( e.target.value ) }
 					onKeyPress={ onKeyPress }
-					placeholder={ __('email@example.com') }
+					placeholder={ __( 'email@example.com' ) }
 					after={
 						subscribeEmail &&
 						<Button
 							status="primary"
 							onClick={ onClick }
 						>
-							<span style={{ marginRight: 'var(--fluid-sm-space)'}}>{__('Send')}</span>
+							<span style={ { marginRight: 'var(--fluid-sm-space)' } }>{__( 'Send' )}</span>
 							<Icon.Return />
 						</Button>
 					}
