@@ -74,22 +74,22 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
-= 0.5.0 =
+= 0.5.0 ( 2020-06-02 ) =
+* All New Home + Search app
+* All new comments app - reply to comments right in the list
 * Apps now load their UI on-demand
 * Drag the apps to reorder them
-* All new comments app - reply to comments right in the list
-* All New Home + Search app
 * Apps now remain hidden or visible between page refreshes instead of auto-hiding
 * Numerous performance enhancements
 
-= 0.4.2 =
+= 0.4.2 ( 2020-05-15 ) =
 * Fixed Beaver Builder edit links not showing in the content app.
 
-= 0.4.1 =
+= 0.4.1 ( 2020-05-12 ) =
 * Fixed Assistant not loading on hosts with heartbeat disabled (such as WP Engine).
 * Fixed media library scripts loading while logged out.
 
-= 0.4.0 =
+= 0.4.0 ( 2020-04-17 ) =
 * Added access to all public post types inside content app
 * Refined post detail screen layout
 * Added ability to query posts by label
