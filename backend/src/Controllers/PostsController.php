@@ -146,6 +146,8 @@ class PostsController extends ControllerAbstract {
 				],
 			]
 		);
+
+
 	}
 
 	/**
@@ -240,8 +242,8 @@ class PostsController extends ControllerAbstract {
 		$response = [];
 
 		foreach ( $post_types as $slug => $label ) {
-			$counts = wp_count_posts( $slug );
-			$counts->total = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
+			$counts          = wp_count_posts( $slug );
+			$counts->total   = $counts->publish + $counts->draft + $counts->pending + $counts->private + $counts->future;
 			$response[ $slug ] = $counts;
 		}
 
@@ -441,4 +443,5 @@ class PostsController extends ControllerAbstract {
 			]
 		);
 	}
+
 }

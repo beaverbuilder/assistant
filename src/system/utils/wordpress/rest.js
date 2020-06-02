@@ -188,6 +188,16 @@ const posts = () => {
 		},
 
 		/**
+		 * Import posts
+		 * @param data
+		 * @param config
+		 */
+		import( file, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( 'fl-assistant/v1/posts/import', file, config )
+		},
+
+		/**
 		 * Export a post
 		 * @param data
 		 * @param config

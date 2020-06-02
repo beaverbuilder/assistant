@@ -13,6 +13,7 @@ use FL\Assistant\Controllers\NotationsController;
 use FL\Assistant\Controllers\NotificationsController;
 use FL\Assistant\Controllers\PostsController;
 use FL\Assistant\Controllers\PostsExportController;
+use FL\Assistant\Controllers\PostsImportController;
 use FL\Assistant\Controllers\SearchController;
 use FL\Assistant\Controllers\TermsController;
 use FL\Assistant\Controllers\UpdatesController;
@@ -39,6 +40,7 @@ class RestServiceProvider extends ServiceProviderAbstract {
 		NotificationsController::class,
 		PostsController::class,
 		PostsExportController::class,
+		PostsImportController::class,
 		TermsController::class,
 		UpdatesController::class,
 		UsersController::class,
