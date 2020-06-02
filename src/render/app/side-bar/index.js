@@ -13,7 +13,7 @@ import useAppOrder from './use-app-order'
 import './style.scss'
 
 const Sidebar = memo( ( { edge = 'right' } ) => {
-	const { window, isAppHidden  } = useSystemState( [ 'window', 'isAppHidden', 'appOrder', 'apps' ] )
+	const { window, isAppHidden  } = useSystemState()
 	const { selectApp, selectHomeApp } = getSystemSelectors()
 	const {
 		isMobile,

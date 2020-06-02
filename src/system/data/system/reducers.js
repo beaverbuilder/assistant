@@ -38,6 +38,9 @@ export const appOrder = ( state = [], action ) => {
 		]
 		return newKeys
 
+	case 'CLEAN_UP_ORDER':
+		return [ ...state.filter( key => ! action.remove.includes( key ) ) ]
+
 	case 'REGISTER_APP':
 	case 'SET_APP_POSITION': {
 		const { key, position = null } = action

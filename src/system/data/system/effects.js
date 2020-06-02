@@ -29,8 +29,16 @@ export const after = {
 	},
 
 	RESET_APP_ORDER: ( action, store ) => {
-		const { appOrder } = store.getState()
+		const { appOrder, apps } = store.getState()
 		wpapi.users().updateState( { appOrder } )
+
+		const remove = appOrder.filter( handle => ! Object.keys( apps ).includes( handle ) )
+		if ( remove.length > 0 ) {
+			store.dispatch({
+				type: 'CLEAN_UP_ORDER',
+				remove,
+			})
+		}
 	},
 
 	SET_WINDOW: ( action, store ) => {

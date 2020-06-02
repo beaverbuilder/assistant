@@ -111,7 +111,6 @@ const AppList = memo( () => {
 								justifyContent: 'flex-start',
 							} }
 							onDragStart={ e => {
-
 								// prevent link dragging behavior
 								e.preventDefault()
 							} }
