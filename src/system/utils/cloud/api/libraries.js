@@ -27,6 +27,32 @@ const api = {
 		return http.delete( `/libraries/${ id }` )
 	},
 
+	/**
+	 * Collection specific methods
+	 */
+	getCollections: ( libraryId ) => {
+		return http.get( `/libraries/${ libraryId }/library-collections` )
+	},
+
+	getCollection: ( collectionId ) => {
+		return http.get( `/library-collections/${ collectionId }` )
+	},
+
+	createCollection: ( libraryId, data ) => {
+		return http.post( `/libraries/${ libraryId }/library-collections`, data )
+	},
+
+	updateCollection: ( collectionId, data ) => {
+		return http.put( `/library-collections/${ collectionId }`, data )
+	},
+
+	deleteCollection: ( collectionId ) => {
+		return http.delete( `/library-collections/${ collectionId }` )
+	},
+
+	/**
+	 * Item specific methods
+	 */
 	getItems: ( libraryId ) => {
 		return http.get( `/libraries/${ libraryId }/library-items` )
 	},
@@ -69,6 +95,29 @@ const hooks = {
 		return [ library, setLibrary ]
 	},
 
+	/**
+	 * Collection specific hooks
+	 */
+	useCollections: ( libraryId ) => {
+		const [ collections, setCollections ] = useState( null )
+		useEffect( () => {
+			setCollections( null )
+			api.getCollections( libraryId ).then( response => setCollections( response.data ) )
+		}, [ libraryId ] )
+		return [ collections, setCollections ]
+	},
+
+	useCollection: ( collectionId ) => {
+		const [ collection, setCollection ] = useState( null )
+		useEffect( () => {
+			api.getCollection( collectionId ).then( response => setCollection( response.data ) )
+		}, [ collectionId ] )
+		return [ collection, setCollection ]
+	},
+
+	/**
+	 * Item specific hooks
+	 */
 	useItems: ( libraryId ) => {
 		const [ items, setItems ] = useState( null )
 		useEffect( () => {
