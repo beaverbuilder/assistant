@@ -9,9 +9,11 @@
             flex: 0 0 auto;
             padding: 1px 0;
             margin: 0;
+            margin-left: -20px;
             display: flex;
             flex-direction: row;
             font-size: 14px;
+            cursor: move;
 
             &.is-dragging {
                 pointer-events: none;
@@ -19,6 +21,13 @@
                 * {
                     pointer-events: none;
                 }
+            }
+
+            .fl-asst-app-drag-handle-box {
+                opacity: .15;
+            }
+            &:hover .fl-asst-app-drag-handle-box {
+                opacity: 1;
             }
 
             .fluid-button {

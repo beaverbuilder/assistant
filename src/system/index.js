@@ -24,6 +24,3 @@ window.FL = {
 	...api,
 	Assistant,
 }
-
-// After everything is set up
-import './config'

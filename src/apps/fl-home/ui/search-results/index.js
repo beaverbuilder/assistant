@@ -4,13 +4,14 @@ import { Card } from 'home/ui'
 import { getListSectionConfig, getListItemConfig, getRequestConfig } from '../../config'
 import './style.scss'
 
-const SectionCard = ( { children, label } ) => {
+const SectionCard = ( { children, label, ...rest } ) => {
 	return (
 		<li style={ { paddingBottom: 20 } }>
 			<Card
 				title={ label }
 				className="fl-asst-search-results-card"
-			>{children}</Card>
+				{ ...rest }
+			>{ children }</Card>
 		</li>
 	)
 }

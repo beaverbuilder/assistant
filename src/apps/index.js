@@ -12,6 +12,3 @@ import './fl-cloud'
 //import './examples'
 
 import './integrations'
-
-// Empty - should remove enqueue?
-import './style.scss'

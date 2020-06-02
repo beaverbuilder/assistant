@@ -44,6 +44,17 @@ const MainScreen = () => {
 	)
 }
 
+const DragHandleBox = ( { children } ) => (
+	<div className="fl-asst-app-drag-handle-box" style={ {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: 20,
+		marginLeft: 10
+	} } >{ children }</div>
+)
+
 const Home = memo( () => {
 	const history = useHistory()
 	const goToRoot = () => history.go( -history.length )
@@ -52,6 +63,7 @@ const Home = memo( () => {
 
 	return (
 		<li>
+			<DragHandleBox />
 			<Button
 				onClick={ goToRoot }
 				appearance="transparent"
@@ -102,6 +114,9 @@ const AppList = memo( () => {
 
 				return (
 					<>
+						<DragHandleBox>
+							<Icon.DragHandle />
+						</DragHandleBox>
 						<Button
 							to={ location }
 							appearance="transparent"

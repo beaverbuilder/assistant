@@ -3,9 +3,9 @@ import { useSystemState, getSystemActions, getSystemSelectors } from 'assistant/
 const defaults = { maxCount: null }
 
 const useAppOrder = ( config = defaults ) => {
+	useSystemState( 'appOrder' )
 	const { selectAppOrder } = getSystemSelectors()
 	const { maxCount } = config
-	useSystemState( 'appOrder' )
 	const { resetAppOrder } = getSystemActions()
 
 	return [

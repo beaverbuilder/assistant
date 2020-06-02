@@ -29,13 +29,21 @@ export const after = {
 	},
 
 	RESET_APP_ORDER: ( action, store ) => {
-		const { appOrder } = store.getState()
+		const { appOrder, apps } = store.getState()
 		wpapi.users().updateState( { appOrder } )
+
+		const remove = appOrder.filter( handle => ! Object.keys( apps ).includes( handle ) )
+		if ( 0 < remove.length ) {
+			store.dispatch( {
+				type: 'CLEAN_UP_ORDER',
+				remove,
+			} )
+		}
 	},
 
 	SET_WINDOW: ( action, store ) => {
 		const { window } = store.getState()
-		wpapi.users().updateState( { window: { ...window } } )
+		wpapi.users().updateState( { window } )
 	},
 
 	SET_BRIGHTNESS: ( action, store ) => {
@@ -69,6 +77,17 @@ export const after = {
 
 	TOGGLE_IS_SHOWING_UI: ( action, store ) => {
 		const { window } = store.getState()
-		wpapi.users().updateState( { window: { ...window } } )
+		const newWindow = { ...window }
+		delete newWindow.hiddenAppearance
+		wpapi.users().updateState( { window: newWindow } )
+	},
+
+	SET_IS_APP_HIDDEN: ( action, store ) => {
+		const { isAppHidden } = store.getState()
+		wpapi.users().updateState( { isAppHidden } )
+	},
+	SET_HAS_SUBSCRIBED: ( action, store ) => {
+		const { hasSubscribed } = store.getState()
+		wpapi.users().updateState( { hasSubscribed } )
 	},
 }

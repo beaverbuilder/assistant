@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { CancelToken, isCancel } from 'axios'
+import { useLocation } from 'react-router-dom'
 import { __, sprintf } from '@wordpress/i18n'
 import { Page, List } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { getRequestConfig, getListItemConfig } from '../config'
+import { getRequestConfig, getListItemConfig } from '../../config'
 
-export const ViewAll = ( { match, location } ) => {
+const ViewAll = ( { baseURL } ) => {
 	const [ items, setItems ] = useState( [] )
-	const { keyword, configKey } = location.state
+	const { keyword, configKey } = useLocation().state
 	const { config, routes } = getRequestConfig( { keyword, number: 20, offset: items.length } )
 	const { label, format } = config[ configKey ]
 	const route = routes[ configKey ]
 	const wp = getWpRest()
 	const source = CancelToken.source()
 
-	useEffect( () => {
-		return () => source.cancel()
-	}, [] )
+	useEffect( () => () => source.cancel(), [] )
 
 	const getPageTitle = () => {
 		if ( '' === keyword ) {
@@ -34,7 +33,7 @@ export const ViewAll = ( { match, location } ) => {
 						item,
 						defaultProps,
 						config,
-						match,
+						baseURL,
 					} )
 				} }
 				loadItems={ ( setHasMore ) => {
@@ -55,3 +54,5 @@ export const ViewAll = ( { match, location } ) => {
 		</Page>
 	)
 }
+
+export default ViewAll

@@ -11,9 +11,6 @@ const KEY = 'fl-assistant/system'
 registerStore( KEY, {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
-
-		// Don't hide apps by default while we're working
-		isAppHidden: __PRODUCTION__ ? true : false,
 	},
 	actions,
 	reducers,

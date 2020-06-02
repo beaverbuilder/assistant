@@ -2,12 +2,19 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
 import { Form, Icon, Button, Layout } from 'assistant/ui'
+import { getSystemStore, getSystemActions } from 'assistant/data'
 import { Card } from 'home/ui'
 import './style.scss'
 
 const SubscribeWidget = () => {
+	const { hasSubscribed } = getSystemStore().getState()
+	const { setHasSubscribed } = getSystemActions()
 	const [ email, setEmail ] = useState( '' )
 	const [ isSubscribing, setisSubscribing ] = useState( false )
+
+	if ( hasSubscribed ) {
+		return null
+	}
 
 	const placeholderText = __( 'Please enter a valid email address.' )
 
@@ -30,8 +37,8 @@ const SubscribeWidget = () => {
 
 			setisSubscribing( true )
 
-			if ( 'undefined' !== typeof _dcq ) {
-				_dcq.push( [
+			if ( 'undefined' !== typeof window._dcq ) {
+				window._dcq.push( [
 					'identify',
 					{
 						email: email,
@@ -41,6 +48,7 @@ const SubscribeWidget = () => {
 								setisSubscribing( false )
 								alert( successText )
 								setEmail( '' )
+								setHasSubscribed( true )
 							} else {
 								setisSubscribing( false )
 								alert( errorText )

@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page, Form, Button } from 'ui'
+import { Page, Form, Layout } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
 
@@ -82,8 +82,6 @@ export const Term = ( { location, history } ) => {
 
 
 	const { hasChanges, resetForm, submitForm, renderForm } = Form.useForm( {
-
-
 		sections: {
 			details: {
 				label: __( 'Details' ),
@@ -91,12 +89,14 @@ export const Term = ( { location, history } ) => {
 					title: {
 						label: __( 'Name' ),
 						labelPlacement: 'above',
-						value: title
+						value: title,
+						component: 'text',
 					},
 					slug: {
 						label: __( 'Slug' ),
 						labelPlacement: 'above',
 						value: slug,
+						component: 'text',
 					},
 					parent: {
 						label: __( 'Parent' ),
@@ -154,13 +154,10 @@ export const Term = ( { location, history } ) => {
 
 	const Footer = () => {
 		return (
-			<>
-				<Button
-					onClick={ resetForm }
-				>{__( 'Cancel' )}</Button>
-				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
-				<Button type="submit" status="primary" onClick={ submitForm }>{__( 'Save' )}</Button>
-			</>
+			<Layout.PublishBar
+				onPublish={ submitForm }
+				onDiscard={ resetForm }
+			/>
 		)
 	}
 	return (
