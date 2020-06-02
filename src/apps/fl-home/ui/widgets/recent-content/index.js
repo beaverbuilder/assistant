@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List } from 'assistant/ui'
 import { Card } from 'home/ui'
