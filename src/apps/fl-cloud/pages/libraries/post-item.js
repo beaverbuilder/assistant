@@ -5,6 +5,7 @@ import { Button, Form, Icon, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 import PostItem from './post-item'
 
+
 export default () => {
 	const { itemId } = useParams()
 	const [ item ] = cloud.libraries.useItem( itemId )
@@ -20,16 +21,74 @@ const Item = ( { item } ) => {
 	const history = useHistory()
 
 	const fields = {
-		name: {
-			label: __( 'Name' ),
+		post_title: {
+			label: __( 'Title' ),
 			component: 'text',
 			alwaysCommit: true,
 			validate: ( value, errors ) => {
 				if ( '' === value ) {
-					errors.push( __( 'Please enter a name.' ) )
+					errors.push( __( 'Please enter a title.' ) )
 				}
 			}
 		},
+		post_name: {
+			label: __( 'Slug' ),
+			component: 'text',
+			alwaysCommit: true,
+			validate: ( value, errors ) => {
+				if ( '' === value ) {
+					errors.push( __( 'Please enter a slug.' ) )
+				}
+			}
+		},
+		guid: {
+			label: __( 'URL' ),
+			component: 'url',
+
+		},
+		post_status: {
+			label: __( 'Status' ),
+			labelPlacement: 'beside',
+			component: 'plain-text',
+
+		},
+		post_date: {
+			label: __( 'Publish Date' ),
+			labelPlacement: 'beside',
+			component: 'calender',
+		},
+		post_excerpt: {
+			label: __( 'Excerpt' ),
+			component: 'textarea',
+		},
+		post_thumbnail: {
+			label: __( 'Feature Image' ),
+			component: 'image',
+			src: item.data.post_thumbnail.url,
+		},
+		comment_status: {
+			label: __( 'Allow Comments' ),
+			labelPlacement: 'beside',
+			component: 'plain-text',
+		},
+		ping_status: {
+			label: __( 'Allow Pingbacks' ),
+			labelPlacement: 'beside',
+			component: 'plain-text',
+			disable:true
+		},
+		comments: {
+			label: __( 'Comments' ),
+			fields: ( { fields } ) => {
+
+				return <List.WordPress
+				type={ 'comments' }
+				query={ { post__in: [ item.id ] } }
+				/>
+
+			}
+
+		}
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
@@ -45,7 +104,7 @@ const Item = ( { item } ) => {
 	} = Form.useForm( {
 		fields,
 		onSubmit,
-		defaults: item,
+		defaults: item.data,
 	} )
 
 	const deleteItem = () => {
@@ -55,9 +114,7 @@ const Item = ( { item } ) => {
 		}
 	}
 
-	if( 'post' === item.type){
-		return <PostItem/>
-	}
+
 
 	return (
 		<Page
