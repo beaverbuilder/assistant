@@ -114,7 +114,9 @@ export const checkAccess = async() => {
 	if ( isConnected() ) {
 		try {
 			await refresh()
-		} catch ( error ) {}
+		} catch ( error ) {
+			console.log( error ) // eslint-disable-line no-console
+		}
 	}
 }
 

@@ -19,7 +19,7 @@ const SubscribeWidget = () => {
 	const placeholderText = __( 'Please enter a valid email address.' )
 
 	const isValid = mail => {
-		if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( mail ) ) {
+		if ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test( mail ) ) { // eslint-disable-line no-useless-escape
 			return true
 		}
 		alert( placeholderText )
