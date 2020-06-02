@@ -14,7 +14,7 @@
                 left:0;
                 right:0;
                 height: 60px;
-                background: linear-gradient(rgba(1,1,1,0), var(--thread-background-color));
+                background: linear-gradient( rgba( 255, 255, 255, 0 ), var(--thread-background-color) );
             }
         }
         .fluid-button.fl-asst-limit-content-expand-button {
@@ -48,5 +48,10 @@
                 align-items: center;
             }
         }
+    }
+}
+.fluid-color-scheme-dark {
+    .fl-asst-limit-content-fadeout {
+        background: linear-gradient( hsla( var(--fluid-hue), 13%, 16%, 0 ), var(--thread-background-color) ) !important;
     }
 }
