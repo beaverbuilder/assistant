@@ -21,7 +21,7 @@ const CurrentlyViewing = () => {
 								key={ i }
 								appearance="transparent"
 								{ ...rest }
-							>{label}</Button>
+							>{ label }</Button>
 						)
 					} )}
 				</Layout.Row>
