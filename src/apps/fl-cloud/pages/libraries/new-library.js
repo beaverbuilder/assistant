@@ -51,8 +51,9 @@ export default ( { history } ) => {
 		if ( owner ) {
 			data.team_id = owner
 		}
-		return cloud.libraries.create( data ).then( () => {
-			history.replace( '/fl-cloud', { team: owner } )
+		return cloud.libraries.create( data ).then( response => {
+			const { id } = response.data
+			history.replace( `/fl-cloud/libraries/${ id }` )
 		} ).catch( error => {
 			setErrors( error.response.data.errors )
 		} )
