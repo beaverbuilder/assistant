@@ -1,12 +1,14 @@
 import React from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { Button, Form, Layout, Page } from 'assistant/ui'
-import { useCloudState } from 'assistant/data'
+import { getCloudHooks } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 
 export default ( { history } ) => {
 	const [ teams ] = cloud.teams.useAll()
-	const { cloudUser } = useCloudState()
+	const { useCloudUser, useCurrentTeam } = getCloudHooks()
+	const [ cloudUser ] = useCloudUser()
+	const [ currentTeam, setCurrentTeam ] = useCurrentTeam()
 
 	const getOwnerOptions = () => {
 		const options = {
@@ -53,6 +55,7 @@ export default ( { history } ) => {
 		}
 		return cloud.libraries.create( data ).then( response => {
 			const { id } = response.data
+			setCurrentTeam( owner )
 			history.replace( `/fl-cloud/libraries/${ id }` )
 		} ).catch( error => {
 			setErrors( error.response.data.errors )
