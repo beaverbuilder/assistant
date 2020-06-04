@@ -53,8 +53,8 @@ const api = {
 	/**
 	 * Item specific methods
 	 */
-	getItems: ( libraryId ) => {
-		return http.get( `/libraries/${ libraryId }/library-items` )
+	getItems: ( libraryId, params = {} ) => {
+		return http.get( `/libraries/${ libraryId }/library-items`, { params } )
 	},
 
 	getItem: ( itemId ) => {
