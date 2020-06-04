@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Layout, List, Page } from 'assistant/ui'
+import { Button, Filter, Icon, Layout, List, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 
 export default ( { library } ) => {
 	const [ loading, setLoading ] = useState( true )
+	const [ collections ] = cloud.libraries.useCollections( library.id )
 	const { items, setItems, ...actions } = List.useListItems()
 
 	useEffect( () => {
@@ -34,6 +35,18 @@ export default ( { library } ) => {
 		}
 	}
 
+	const getCollectionOptions = () => {
+		const options = {
+			any: __( 'Any' ),
+		}
+		if ( collections ) {
+			collections.map( collection => {
+				options[ collection.name ] = collection.name
+			} )
+		}
+		return options
+	}
+
 	if ( loading ) {
 		return <Page.Loading />
 	}
@@ -58,10 +71,36 @@ export default ( { library } ) => {
 				</Layout.Box>
 			}
 			{ !! items.length &&
-				<List
-					items={ items }
-					getItemProps={ getItemProps }
-				/>
+				<>
+					<Filter>
+						<Filter.RadioGroupItem
+							title={ __( 'Type' ) }
+							items={ {
+								any: __( 'Any' ),
+								post: __( 'Posts' ),
+								image: __( 'Images' ),
+								svg: __( 'SVG' ),
+								color: __( 'Color' )
+							} }
+							value={ 'any' }
+							defaultValue={ 'any' }
+							onChange={ () => {} }
+						/>
+						{ collections &&
+							<Filter.RadioGroupItem
+								title={ __( 'Collection' ) }
+								items={ getCollectionOptions() }
+								value={ 'any' }
+								defaultValue={ 'any' }
+								onChange={ () => {} }
+							/>
+						}
+					</Filter>
+					<List
+						items={ items }
+						getItemProps={ getItemProps }
+					/>
+				</>
 			}
 		</>
 	)
