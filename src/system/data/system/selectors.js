@@ -78,8 +78,9 @@ export const selectHomeApp = ( state ) => {
 
 export const selectAppOrder = ( state, maxCount = null ) => {
 
-	const order = state.appOrder.filter( ( key, i ) => {
+	const order = state.appOrder.filter( key => {
 		return (
+
 			// Make sure there's a registered app
 			Object.keys( state.apps ).includes( key ) &&
 
@@ -87,6 +88,7 @@ export const selectAppOrder = ( state, maxCount = null ) => {
 			false !== state.apps[key].shouldShowInAppList
 		)
 	} )
+
 	// Filter max count AFTET shouldShowInAppList has already been filtered
-	return order.filter( ( key , i ) => maxCount && i + 1 <= maxCount )
+	return order.filter( ( k, i ) => maxCount && i + 1 <= maxCount )
 }
