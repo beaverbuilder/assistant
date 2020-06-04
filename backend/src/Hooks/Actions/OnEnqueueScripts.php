@@ -79,8 +79,6 @@ class OnEnqueueScripts {
 		return [
 			'appOrder'           => $user_state['appOrder'],
 			'shouldReduceMotion' => false, /* Disabled */
-
-			/* New UI Props */
 			'appearance'         => $user_state['appearance'],
 			'history'            => $user_state['history'],
 			'searchHistory'      => $user_state['searchHistory'],
@@ -89,7 +87,6 @@ class OnEnqueueScripts {
 			'isAppHidden'        => $user_state['isAppHidden'] ? true : false,
 			'hasSubscribed'      => isset( $user_state['hasSubscribed'] ) && $user_state['hasSubscribed'] ? true : false,
 		];
-
 	}
 
 	/**
