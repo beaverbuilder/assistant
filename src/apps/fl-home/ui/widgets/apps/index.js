@@ -5,7 +5,7 @@ import { Button, Icon } from 'assistant/ui'
 import { useAppList } from 'assistant/data'
 import { Card } from 'home/ui'
 
-const AppsWidget = memo ( ({ ...rest }) => {
+const AppsWidget = memo ( ( { ...rest } ) => {
 	const apps = useAppList()
 
 	const Actions = () => {
@@ -14,7 +14,7 @@ const AppsWidget = memo ( ({ ...rest }) => {
 				appearance="transparent"
 				status="primary"
 				to='/fl-manage'
-			>{__('Manage')}</Button>
+			>{__( 'Manage' )}</Button>
 		)
 	}
 
@@ -30,7 +30,7 @@ const AppsWidget = memo ( ({ ...rest }) => {
 				}
 			} }
 			actions={ <Actions /> }
-			{...rest}
+			{ ...rest }
 		>
 			{ apps.map( app => {
 				const { label, icon, handle } = app

@@ -68,8 +68,8 @@ const SubscribeWidget = () => {
 			<Layout.Box style={ { paddingTop: 0 } }>
 				<p style={ { marginTop: 0 } }>{__( 'Keep up-to-date with the latest news and updates about the Assistant Project.' )}</p>
 
-				<Layout.AspectBox width={640} height={321} style={{ marginBottom: 20, borderRadius: 10 }}>
-					<img src={`${pluginURL}/img/asst-banner-sm.jpg`} />
+				<Layout.AspectBox width={ 640 } height={ 321 } style={ { marginBottom: 20, borderRadius: 10 } }>
+					<img src={ `${pluginURL}/img/asst-banner-sm.jpg` } />
 				</Layout.AspectBox>
 
 				<Form.Input

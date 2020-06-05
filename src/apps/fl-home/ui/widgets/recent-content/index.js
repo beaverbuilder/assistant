@@ -20,8 +20,8 @@ const RecentContentWidget = memo( ( {
 			<Button
 				appearance="transparent"
 				status="primary"
-				to={`/fl-content/tab/${type}`}
-			>{__('View All')}</Button>
+				to={ `/fl-content/tab/${type}` }
+			>{__( 'View All' )}</Button>
 		)
 	}
 
