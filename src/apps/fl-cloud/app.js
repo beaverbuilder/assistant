@@ -17,6 +17,7 @@ import Library from './pages/libraries/library'
 import LibraryItem from './pages/libraries/library-item'
 import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
+import ItemImport from './pages/libraries/item-import'
 
 export default ( { baseURL } ) => {
 	const { isCloudConnected } = useCloudState()
@@ -56,6 +57,7 @@ export default ( { baseURL } ) => {
 			<Nav.Route path={ `${baseURL}/libraries/:id/items/:itemId` } component={ LibraryItem } />
 			<Nav.Route path={ `${baseURL}/libraries/:id` } component={ Library } />
 			<Nav.Route path={ `${baseURL}/libraries/:id/tab/:tab` } component={ Library } />
+			<Nav.Route exact path={ `${baseURL}/libraries/:id/import/:itemId` } component={ ItemImport  } />
 
 			{ /* Profile */ }
 			<Nav.Route path={ `${baseURL}/profile` } component={ Profile } />

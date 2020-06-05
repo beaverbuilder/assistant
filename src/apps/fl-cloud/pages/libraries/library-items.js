@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Icon, Layout, List, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
@@ -7,6 +8,7 @@ import { getWpRest } from 'assistant/utils/wordpress'
 export default ( { library } ) => {
 	const [ loading, setLoading ] = useState( true )
 	const { items, setItems, ...actions } = List.useListItems()
+
 
 	useEffect( () => {
 		cloud.libraries.getItems( library.id ).then( response => {
@@ -72,6 +74,7 @@ const ItemActions = ( { library, item, actions } ) => {
 	const { removeItem } = actions
 	const wpRest = getWpRest()
 	const [ postExist, setpostExist ] = useState( false )
+	const history = useHistory()
 	const deleteItem = () => {
 		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
 			cloud.libraries.deleteItem( item.id )
@@ -80,10 +83,13 @@ const ItemActions = ( { library, item, actions } ) => {
 	}
 
 	const importItem = () => {
+
 		if ( confirm( __( 'Do you really want to import this item?' ) ) ) {
 			wpRest.posts().importLibPost( item ).then( response => {
 				if( typeof response.data.post_exist !== 'undefined' && response.data.post_exist === true){
 						setpostExist(true)
+						history.push(`/fl-cloud/libraries/${library.id}/import/${item.id}`)
+
 				}
 			})
 
@@ -91,6 +97,7 @@ const ItemActions = ( { library, item, actions } ) => {
 	}
 
 	return (
+
 		<div className="fl-asst-item-extras">
 			<Button
 				title={ __( 'View Item' ) }
