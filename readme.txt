@@ -15,7 +15,8 @@ Assistant is an open source project from the same team that makes Beaver Builder
 = Assistant Features =
 
 *   Access the Assistant UI from any frontend page (post, archive, term, etc...)
-*   Get a glance of your recently edited posts and new comments on the Dashboard app.
+*   Get a glance of your recently edited posts on the home screen.
+*   Search WordPress directly from the frontend.
 *   Quickly find posts, pages, and custom post types with the content app.
 *   Upload media to WordPress media library by dropping files on the Media app.
 *   The Comments app lets you quick reply, approve, mark as spam and trash comments.
