@@ -32,7 +32,7 @@ const RecentContentWidget = memo( ( {
 			className="fl-asst-recent-content-card"
 			contentProps={ {
 				style: {
-					minHeight: 5 > typeCount ? 46 * typeCount : null
+					minHeight: 5 > typeCount ? 50 * typeCount : null
 				}
 			} }
 			{ ...rest }
