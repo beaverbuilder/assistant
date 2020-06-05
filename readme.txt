@@ -10,14 +10,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Assistant is a new way to work with WordPress. It's an every-day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area. For example, you can quickly find a page or post and update its title or slug. You can upload media and navigate to attachment pages. You can approve or reject comments. You can even run plugin and theme updates.
 
-**Note** - This is an early preview release. A full 1.0 release of Assistant will be coming later this year.
-
 Assistant is an open source project from the same team that makes Beaver Builder. It's free and being developed in public. Try it and let us know what you think!
 
 = Assistant Features =
 
 *   Access the Assistant UI from any frontend page (post, archive, term, etc...)
-*   Get a glance of your recently edited posts and new comments on the Dashboard app.
+*   Get a glance of your recently edited posts on the home screen.
+*   Search WordPress directly from the frontend.
 *   Quickly find posts, pages, and custom post types with the content app.
 *   Upload media to WordPress media library by dropping files on the Media app.
 *   The Comments app lets you quick reply, approve, mark as spam and trash comments.
@@ -73,6 +72,12 @@ Our API for creating new apps and extending the existing ones is in development 
 
 
 == Changelog ==
+
+= 0.5.1 ( 2020-06-05 ) =
+* Fix issue where sidebar shows incorrect number of app icons
+* Add item marks & actions to recent content widgets
+* Add link to "View All" from recent content widgets
+* Fix issue with home tooltip
 
 = 0.5.0 ( 2020-06-02 ) =
 * All New Home + Search app

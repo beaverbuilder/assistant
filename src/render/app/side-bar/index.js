@@ -108,7 +108,6 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 					<Button
 						appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
 						status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
-						title={ home.label }
 						onClick={ () => navOrHideApp( isRoot, goToRoot ) }
 						className="disable-while-sorting"
 					>
