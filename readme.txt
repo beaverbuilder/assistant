@@ -72,9 +72,10 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
-= 0.5.1 ( 2020-06-04 ) =
+= 0.5.1 ( 2020-06-05 ) =
 * Fix issue where sidebar shows incorrect number of app icons
-* Add item marks to recent content widgets
+* Add item marks & actions to recent content widgets
+* Add link to "View All" from recent content widgets
 
 = 0.5.0 ( 2020-06-02 ) =
 * All New Home + Search app
