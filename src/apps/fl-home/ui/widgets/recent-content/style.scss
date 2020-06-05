@@ -12,6 +12,8 @@
 
         // A hack to remove the bottom 100px bumper at the end of scrolling list
         .fl-asst-list-scroller {
+            overflow:visible; // fix first item's extras getting cut off
+
             .fl-asst-list ~ div {
                 display: none;
             }
@@ -21,7 +23,12 @@
             border-bottom: none;
             border-radius: 5px;
 
-            &:focus {
+            &:focus,
+            &:focus-within,
+            &.fl-asst-is-trashed,
+            &.fl-asst-is-transitioning,
+            &.fl-asst-list-item-alert,
+            &.fl-asst-list-item-destructive {
                 box-shadow: none;
             }
 
@@ -42,6 +49,9 @@
 
             &.fl-asst-is-current-page {
                 box-shadow: none;
+            }
+            .fl-asst-item-extras {
+                top: -40px;
             }
         }
     }

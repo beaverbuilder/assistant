@@ -34,8 +34,7 @@ const RecentContentWidget = memo( ( {
 				} }
 				getItemProps={ ( item, defaultProps ) => {
 					if ( item.id ) {
-						delete defaultProps.extras
-						//delete defaultProps.marks
+						//delete defaultProps.extras
 
 						return {
 							...defaultProps,
