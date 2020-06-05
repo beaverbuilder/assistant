@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
 import { Form, Icon, Button, Layout } from 'assistant/ui'
-import { getSystemStore, getSystemActions } from 'assistant/data'
+import { getSystemStore, getSystemActions, getSystemConfig } from 'assistant/data'
 import { Card } from 'home/ui'
-import './style.scss'
 
 const SubscribeWidget = () => {
 	const { hasSubscribed } = getSystemStore().getState()
 	const { setHasSubscribed } = getSystemActions()
 	const [ email, setEmail ] = useState( '' )
 	const [ isSubscribing, setisSubscribing ] = useState( false )
+	const { pluginURL } = getSystemConfig()
 
 	if ( hasSubscribed ) {
 		return null
@@ -67,6 +67,11 @@ const SubscribeWidget = () => {
 		<Card title={ __( 'Sign Up For Updates' ) }>
 			<Layout.Box style={ { paddingTop: 0 } }>
 				<p style={ { marginTop: 0 } }>{__( 'Keep up-to-date with the latest news and updates about the Assistant Project.' )}</p>
+
+				<Layout.AspectBox width={640} height={321} style={{ marginBottom: 20, borderRadius: 10 }}>
+					<img src={`${pluginURL}/img/asst-banner-sm.jpg`} />
+				</Layout.AspectBox>
+
 				<Form.Input
 					value={ email }
 					onChange={ e => setEmail( e.target.value ) }

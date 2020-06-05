@@ -49,7 +49,7 @@
             background: transparent;
             border-radius: 0;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: normal;
             letter-spacing: normal;
             color: inherit;
             display: inline-flex;
@@ -66,15 +66,19 @@
 
             &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
                 color: currentColor;
+                opacity: .5;
             }
             &::-moz-placeholder { /* Firefox 19+ */
                 color: currentColor;
+                opacity: .5;
             }
             &:-ms-input-placeholder { /* IE 10+ */
                 color: currentColor;
+                opacity: .5;
             }
             &:-moz-placeholder { /* Firefox 18- */
                 color: currentColor;
+                opacity: .5;
             }
         }
     }
