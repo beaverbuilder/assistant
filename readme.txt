@@ -76,6 +76,7 @@ Our API for creating new apps and extending the existing ones is in development 
 * Fix issue where sidebar shows incorrect number of app icons
 * Add item marks & actions to recent content widgets
 * Add link to "View All" from recent content widgets
+* Fix issue with home tooltip
 
 = 0.5.0 ( 2020-06-02 ) =
 * All New Home + Search app
