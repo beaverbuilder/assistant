@@ -37,7 +37,7 @@
 
             .fluid-button {
                 height: auto;
-                flex: 1 1 auto;
+                flex: 0 1 60px;
                 min-width: 50px;
             }
         }
@@ -46,6 +46,18 @@
             margin: 0;
             flex: 1 1 auto;
             justify-content: space-around;
+
+            ul {
+                flex-direction: row;
+                flex: 1 1 auto;
+
+                li {
+                    flex: 1 1 auto;
+                }
+            }
+        }
+        .fl-asst-sidebar-close-button {
+            margin-bottom: 0 !important;
         }
     }
 
@@ -112,6 +124,14 @@
                 height: auto;
                 min-height: 36px;
                 flex: 1 1 auto;
+            }
+
+            ul {
+                flex: 1 1 auto;
+
+                li {
+                    flex: 1 1 auto;
+                }
             }
         }
     }

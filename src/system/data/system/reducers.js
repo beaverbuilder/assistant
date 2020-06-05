@@ -38,6 +38,9 @@ export const appOrder = ( state = [], action ) => {
 		]
 		return newKeys
 
+	case 'CLEAN_UP_ORDER':
+		return [ ...state.filter( key => ! action.remove.includes( key ) ) ]
+
 	case 'REGISTER_APP':
 	case 'SET_APP_POSITION': {
 		const { key, position = null } = action
@@ -117,8 +120,6 @@ export const labels = ( state = [], action ) => {
 	}
 }
 
-
-// New UI
 const windowDefaults = {
 	origin: [ 1, 0 ], /* top right */
 	size: 'normal', /* full sidebar */
@@ -200,52 +201,20 @@ export const searchHistory = ( state = [], action ) => {
 	}
 }
 
-
-// Page Sections
-export const sections = ( state = {}, action ) => {
-
-	const defaultSection = {
-		label: '',
-		order: 10,
-		location: {},
-		render: () => {},
-		isEnabled: true,
-	}
-	const defaultLocation = {
-		type: '',
-		tab: '',
-	}
-
-	switch ( action.type ) {
-	case 'REGISTER_SECTION':
-
-		const section = { // eslint-disable-line
-			...defaultSection,
-			...action.config,
-			location: { ...defaultLocation, ...action.config.location },
-			handle: action.handle,
-		}
-		const { handle, location } = section // eslint-disable-line
-
-		// abort
-		if ( '' === location ) {
-			return state
-		}
-
-		return {
-			...state,
-			[handle]: section,
-		}
-	default:
-		return state
-	}
-}
-
 export const isAppHidden = ( state = true, action ) => {
 	switch ( action.type ) {
 	case 'SET_IS_APP_HIDDEN':
 		return action.value ? true : false
 	default:
 		return state
+	}
+}
+
+export const hasSubscribed = ( state = false, action ) => {
+	switch ( action.type ) {
+	case 'SET_HAS_SUBSCRIBED':
+		return action.value ? true : false
+	default:
+		return state ? true : false
 	}
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getUpdaterStore, getUpdaterActions, getUpdaterSelectors } from 'data'
-import { List, Button, Layout } from 'ui'
+import { List, Button, Layout, Icon } from 'ui'
 import './style.scss'
 
 export const Updates = ( {
@@ -45,7 +45,7 @@ export const Updates = ( {
 						<>
 						{ updating &&
 							<Button tabIndex="-1">
-								{__( 'Updating...' )}
+								<Icon.Loading />
 							</Button>
 						}
 						{ ! updating &&

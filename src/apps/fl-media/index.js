@@ -23,9 +23,6 @@ registerApp( 'fl-media', {
 	label: __( 'Media' ),
 	root: App,
 	icon: Icon,
-	accent: {
-		color: '#FF5A5E'
-	},
 	state: {
 		...defaultState,
 	},
@@ -47,9 +44,7 @@ registerApp( 'fl-media', {
 		detail: {
 			component: Page.Attachment,
 			path: '/attachment/:id',
-			pathname: item => {
-				return `/attachment/${ item.id }`
-			},
+			pathname: ( { id } ) => `/attachment/${ id }`
 		},
 	},
 } )

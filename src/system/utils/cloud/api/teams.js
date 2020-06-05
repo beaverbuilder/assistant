@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import { __ } from '@wordpress/i18n'
-import { createSlug } from 'utils/url'
 import mockup from '../mockup'
 import http from '../http'
 

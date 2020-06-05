@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { App } from 'assistant/ui'
 import { addLeadingSlash } from 'assistant/utils/url'
-import { Main } from './ui'
+import { Main, ViewAll } from './ui'
 import { getRequestConfig } from './config'
 
 // Setup config like this
@@ -12,7 +12,8 @@ export default props => {
 	return (
 		<App.Config
 			pages={ {
-				default: Main
+				default: Main,
+				'all': ViewAll,
 			} }
 			{ ...props }
 		>

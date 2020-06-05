@@ -79,15 +79,14 @@ class OnEnqueueScripts {
 		return [
 			'appOrder'           => $user_state['appOrder'],
 			'shouldReduceMotion' => false, /* Disabled */
-
-			/* New UI Props */
 			'appearance'         => $user_state['appearance'],
 			'history'            => $user_state['history'],
 			'searchHistory'      => $user_state['searchHistory'],
 			'shouldShowLabels'   => false, /* Disabled */
 			'window'             => $user_state['window'],
+			'isAppHidden'        => $user_state['isAppHidden'] ? true : false,
+			'hasSubscribed'      => isset( $user_state['hasSubscribed'] ) && $user_state['hasSubscribed'] ? true : false,
 		];
-
 	}
 
 	/**
@@ -127,13 +126,6 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
-
-			/*
-			'integrations'		=> [
-				'yoastSEO'		=> [
-					'isActive' => is_plugin_active('wordpress-seo/wp-seo.php')
-				]
-			],*/
 		];
 	}
 
@@ -192,7 +184,6 @@ class OnEnqueueScripts {
 			// API - loaded in header
 			$js_deps = [
 				'fl-fluid',
-				'lodash',
 				'wp-i18n',
 				'wp-keycodes',
 				'wp-dom-ready',
@@ -207,9 +198,7 @@ class OnEnqueueScripts {
 			wp_localize_script( 'fl-assistant-system', 'FL_ASSISTANT_INITIAL_STATE', $state );
 
 			// Apps - loaded in header
-			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', [], $ver, null );
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
-			wp_enqueue_script( 'fl-assistant-drip', 'https://tag.getdrip.com/3112548.js', [], $ver, false );
 
 			// UI Render - loaded in footer
 			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
@@ -217,6 +206,9 @@ class OnEnqueueScripts {
 
 			// WordPress Media Uploader
 			wp_enqueue_media();
+
+			// Drip email script
+			wp_enqueue_script( 'fl-assistant-drip', 'https://tag.getdrip.com/3112548.js', [], $ver, false );
 
 			do_action( 'fl_assistant_enqueue' );
 		}

@@ -117,6 +117,7 @@ class Site {
 		$data['intro']   = $intro;
 		$data['name']    = $name;
 		$data['type']    = $type;
+		
 		$data['actions'] = $this->filter_actions_by_capability( $actions );
 
 		$theme         = wp_get_theme();
@@ -129,12 +130,29 @@ class Site {
 
 		$default_icon = plugins_url( 'img/icon-128x128.jpg', FL_ASSISTANT_FILE );
 		$data['site'] = [
-			'test'        => $default_icon,
+			'defaultIcon'        => $default_icon,
 			'icon'        => get_site_icon_url( 120, $default_icon ),
 			'title'       => get_bloginfo( 'name' ),
 			'description' => get_bloginfo( 'description' ),
 			'homeURL'     => home_url(),
 		];
+
+		$data['isAdmin'] = is_admin();
+		$data['is404'] = is_404();
+		$data['isSearch'] = is_search();
+		$data['isDate'] = is_date();
+		$data['isPostTypeArchive'] = is_post_type_archive();
+		$data['isSingular'] = is_singular();
+		$data['isAttachment'] = is_attachment();
+		$data['isCategory'] = is_tax();
+		$data['isCategory'] = is_category();
+		$data['isTag'] = is_tag();
+		$data['isAuthor'] = is_author();
+		$data['isFrontPage'] = is_front_page();
+
+		if ( is_singular() ) {
+			$data['id'] = $obj->ID;
+		}
 
 		return $data;
 	}

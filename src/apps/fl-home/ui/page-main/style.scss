@@ -1,11 +1,12 @@
-.fl-asst {
+.fluid {
+
     #cards {
-        --page-background: #F8FAFC;
+        --fl-asst-card-background: #F8FAFC;
         .fluid-page-header {
             padding: 0;
         }
         .fluid-page-content {
-            background: var(--page-background);
+            background: var(--fl-asst-card-background);
         }
 
         // Card Box
@@ -16,12 +17,19 @@
             box-shadow: 0px 9px 18px var(--shadow-color);
             padding: 20px;
         }
+        .fl-asst-home-search-item {
+            background: var(--fluid-background);
+            box-shadow: 0px 9px 18px var(--shadow-color);
+        }
     }
-
-    .fluid-color-scheme-dark {
+    &.fluid-color-scheme-dark {
         #cards {
-            --page-background: #0B0D0F;
             --shadow-color: transparent;
+            --fl-asst-card-background: #0B0D0F !important;
+
+            .fluid-page-content {
+                background: var(--fl-asst-card-background);
+            }
         }
     }
 }

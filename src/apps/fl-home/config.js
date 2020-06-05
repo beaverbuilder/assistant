@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Layout } from 'assistant/ui'
+import { Button } from 'assistant/ui'
 import { addLeadingSlash } from 'assistant/utils/url'
 import { getSystemStore } from 'assistant/data'
 import { __ } from '@wordpress/i18n'
@@ -76,13 +76,14 @@ export const getListSectionConfig = ( {
 	let props = { ...defaultProps }
 
 	if ( section.items.length >= NUMBER_OF_RESULTS ) {
-		props.footer = (
-			<Layout.Box padX={ false }>
-				<Button to={ {
+		props.actions = (
+			<Button
+				appearance="transparent"
+				to={ {
 					pathname: `${baseURL}/all`,
 					state: { keyword, configKey }
-				} }>{__( 'View All' )}</Button>
-			</Layout.Box>
+				} }
+			>{__( 'View All' )}</Button>
 		)
 	}
 

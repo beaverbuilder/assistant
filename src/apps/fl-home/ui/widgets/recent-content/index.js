@@ -2,25 +2,26 @@ import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { List } from 'assistant/ui'
 import { Card } from 'home/ui'
-import CountBar from './count-bar'
 import './style.scss'
 
 const handle = 'fl-content'
 
-const RecentContentWidget = memo( () => {
+const RecentContentWidget = memo( ( {
+	type = 'post',
+	title = __( 'Recent Posts' )
+} ) => {
+
 	return (
 		<Card
 			eyebrow={ __( 'Content' ) }
-			title={ __( 'Recent Updates' ) }
+			title={ title }
 			className="fl-asst-recent-content-card"
 		>
-			<CountBar />
 			<List.Posts
 				query={ {
-					post_type: 'post',
+					post_type: type,
 					posts_per_page: 5
 				} }
-				paginate={ false }
 				getItemProps={ ( item, defaultProps ) => {
 					if ( item.id ) {
 						delete defaultProps.extras
