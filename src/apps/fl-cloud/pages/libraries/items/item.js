@@ -6,51 +6,13 @@ import cloud from 'assistant/utils/cloud'
 import LibraryPostItem from './post'
 
 export default () => {
+	const history = useHistory()
 	const { itemId } = useParams()
 	const [ item ] = cloud.libraries.useItem( itemId )
 
 	if ( ! item ) {
 		return <Page.Loading />
 	}
-
-	if ( 'post' === item.type ) {
-		return <LibraryPostItem/>
-	}
-
-	return <Item item={ item } />
-}
-
-const Item = ( { item } ) => {
-	const history = useHistory()
-
-	const fields = {
-		name: {
-			label: __( 'Name' ),
-			component: 'text',
-			alwaysCommit: true,
-			validate: ( value, errors ) => {
-				if ( '' === value ) {
-					errors.push( __( 'Please enter a name.' ) )
-				}
-			}
-		},
-	}
-
-	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.updateItem( item.id, values ).catch( error => {
-			setErrors( error.response.data.errors )
-		} )
-	}
-
-	const {
-		renderForm,
-		submitForm,
-		isSubmitting
-	} = Form.useForm( {
-		fields,
-		onSubmit,
-		defaults: item,
-	} )
 
 	const deleteItem = () => {
 		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
@@ -84,10 +46,56 @@ const Item = ( { item } ) => {
 					<Icon.Trash />
 				</Button>
 			</Layout.Box>
+			<LibraryItemForm item={ item } />
+		</Page>
+	)
+}
+
+const LibraryItemForm = ( { item } ) => {
+	switch ( item.type ) {
+		case 'post':
+			return <LibraryPostItem item={ item } />
+		break;
+	}
+	return <LibraryDefaultItem item={ item } />
+}
+
+const LibraryDefaultItem = ( { item } ) => {
+	const fields = {
+		name: {
+			label: __( 'Name' ),
+			component: 'text',
+			alwaysCommit: true,
+			validate: ( value, errors ) => {
+				if ( '' === value ) {
+					errors.push( __( 'Please enter a name.' ) )
+				}
+			}
+		},
+	}
+
+	const onSubmit = ( { values, setErrors } ) => {
+		return cloud.libraries.updateItem( item.id, values ).catch( error => {
+			setErrors( error.response.data.errors )
+		} )
+	}
+
+	const {
+		renderForm,
+		submitForm,
+		isSubmitting
+	} = Form.useForm( {
+		fields,
+		onSubmit,
+		defaults: item,
+	} )
+
+	return (
+		<>
 			{ renderForm() }
 			<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
 				{ __( 'Update Item' ) }
 			</Button.Loading>
-		</Page>
+		</>
 	)
 }

@@ -14,7 +14,6 @@ import NewLibrary from './pages/libraries/new-library'
 import NewLibraryItem from './pages/libraries/items/new-item'
 import Library from './pages/libraries/library'
 import LibraryItem from './pages/libraries/items/item'
-import LibraryPostImport from './pages/libraries/items/post/import-post'
 import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
 
@@ -55,7 +54,6 @@ export default ( { baseURL } ) => {
 			<Nav.Route path={ `${baseURL}/libraries/:id/items/:itemId` } component={ LibraryItem } />
 			<Nav.Route path={ `${baseURL}/libraries/:id` } component={ Library } />
 			<Nav.Route path={ `${baseURL}/libraries/:id/tab/:tab` } component={ Library } />
-			<Nav.Route exact path={ `${baseURL}/libraries/:id/import/:itemId` } component={ LibraryPostImport  } />
 
 			{ /* Profile */ }
 			<Nav.Route path={ `${baseURL}/profile` } component={ Profile } />
