@@ -62,7 +62,7 @@ const Item = ( { item } ) => {
 		post_thumbnail: {
 			label: __( 'Feature Image' ),
 			component: 'image',
-			src: item.data.post_thumbnail.url,
+			src: item.data.post_thumbnail ? item.data.post_thumbnail.url : '',
 		},
 		comment_status: {
 			label: __( 'Allow Comments' ),
