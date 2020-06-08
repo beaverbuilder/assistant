@@ -110,11 +110,13 @@ export const refresh = ( config = {} ) => {
  * If not, the session will be destroyed.
  * @returns void
  */
-export const checkAccess = async () => {
+export const checkAccess = async() => {
 	if ( isConnected() ) {
 		try {
 			await refresh()
-		} catch ( error ) {}
+		} catch ( error ) {
+			console.log( error ) // eslint-disable-line no-console
+		}
 	}
 }
 
@@ -129,19 +131,6 @@ export const logout = ( config = {} ) => {
 		http.post( '/iam/token/destroy', {}, config )
 		session.destroy()
 		resolve()
-	} )
-}
-
-/**
- * Sends the password reset email.
- * @param config
- * @returns Promise
- */
-export const requestPasswordReset = ( email, config = {} ) => {
-	return new Promise( ( resolve ) => {
-		setTimeout( () => {
-			resolve( config )
-		}, 1000 )
 	} )
 }
 

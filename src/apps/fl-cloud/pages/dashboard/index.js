@@ -38,7 +38,7 @@ const ElevatorButtons = () => (
 				style={ { marginTop: '-8px' } }
 			></span>
 		</Button>
-		<Button
+		{/*<Button
 			appearance='elevator'
 			title={ __( 'Sites' ) }
 			to='/fl-cloud/sites'
@@ -47,7 +47,7 @@ const ElevatorButtons = () => (
 				className="dashicons dashicons-networking"
 				style={ { marginTop: '-8px' } }
 			></span>
-		</Button>
+		</Button>*/}
 		<Button
 			appearance='elevator'
 			title={ __( 'Profile' ) }

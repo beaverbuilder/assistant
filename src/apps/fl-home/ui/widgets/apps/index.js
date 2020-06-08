@@ -5,8 +5,18 @@ import { Button, Icon } from 'assistant/ui'
 import { useAppList } from 'assistant/data'
 import { Card } from 'home/ui'
 
-const AppsWidget = memo ( () => {
+const AppsWidget = memo ( ( { ...rest } ) => {
 	const apps = useAppList()
+
+	const Actions = () => {
+		return (
+			<Button
+				appearance="transparent"
+				status="primary"
+				to='/fl-manage'
+			>{__( 'Manage' )}</Button>
+		)
+	}
 
 	return (
 		<Card
@@ -19,6 +29,8 @@ const AppsWidget = memo ( () => {
 					gridGap: 5
 				}
 			} }
+			actions={ <Actions /> }
+			{ ...rest }
 		>
 			{ apps.map( app => {
 				const { label, icon, handle } = app

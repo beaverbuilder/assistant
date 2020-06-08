@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Layout, List, Page } from 'assistant/ui'
+import { Button, Filter, Icon, Layout, List, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 import { getWpRest } from 'assistant/utils/wordpress'
 
 export default ( { library } ) => {
 	const [ loading, setLoading ] = useState( true )
+	const [ collections ] = cloud.libraries.useCollections( library.id )
 	const { items, setItems, ...actions } = List.useListItems()
 
+	const defaultFilter = {
+		type: 'any',
+		collection: 'any',
+	}
+
+	const [ filter, setFilter ] = useState( defaultFilter )
 
 	useEffect( () => {
-		cloud.libraries.getItems( library.id ).then( response => {
+		cloud.libraries.getItems( library.id, filter ).then( response => {
 			setItems( response.data )
 			setLoading( false )
 		} )
-	}, [] )
+	}, [ filter ] )
 
 	const getItemProps = ( item, defaults ) => {
 		return {
@@ -37,34 +44,77 @@ export default ( { library } ) => {
 		}
 	}
 
+	const getCollectionOptions = () => {
+		const options = {
+			any: __( 'Any' ),
+		}
+		if ( collections ) {
+			collections.map( collection => {
+				options[ collection.name ] = collection.name
+			} )
+		}
+		return options
+	}
+
 	if ( loading ) {
 		return <Page.Loading />
 	}
 
+	if ( ! items.length && 'any' === filter.type && 'any' === filter.collection ) {
+		return (
+			<Layout.Box
+				style={ {
+					textAlign: 'center',
+					justifyContent: 'center'
+				} }
+			>
+				<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
+					{ __( 'This library doesn\'t have any items yet.' ) }
+				</div>
+				<div>
+					<Button to={ `/fl-cloud/libraries/${ library.id }/items/new` }>
+						{ __( 'Add Item' ) }
+					</Button>
+				</div>
+			</Layout.Box>
+		)
+	}
+
 	return (
 		<>
-			{ ! items.length &&
-				<Layout.Box
-					style={ {
-						textAlign: 'center',
-						justifyContent: 'center'
+			<Filter>
+				<Filter.RadioGroupItem
+					title={ __( 'Type' ) }
+					items={ {
+						any: __( 'Any' ),
+						post: __( 'Posts' ),
+						image: __( 'Images' ),
+						svg: __( 'SVG' ),
+						color: __( 'Color' )
 					} }
-				>
-					<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
-						{ __( 'This library doesn\'t have any items yet.' ) }
-					</div>
-					<div>
-						<Button to={ `/fl-cloud/libraries/${ library.id }/items/new` }>
-							{ __( 'Add Item' ) }
-						</Button>
-					</div>
-				</Layout.Box>
-			}
+					value={ filter.type }
+					defaultValue={ defaultFilter.type }
+					onChange={ value => setFilter( { ...filter, type: value } ) }
+				/>
+				{ collections &&
+					<Filter.RadioGroupItem
+						title={ __( 'Collection' ) }
+						items={ getCollectionOptions() }
+						value={ filter.collection }
+						defaultValue={ defaultFilter.collection }
+						onChange={ value => setFilter( { ...filter, collection: value } ) }
+					/>
+				}
+				<Filter.Button onClick={ () => setFilter( defaultFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
+			</Filter>
 			{ !! items.length &&
 				<List
 					items={ items }
 					getItemProps={ getItemProps }
 				/>
+			}
+			{ ! items.length &&
+				<List.NoResultsMessage />
 			}
 		</>
 	)

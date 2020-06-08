@@ -7,6 +7,9 @@ import './fl-media'
 import './fl-comments'
 import './fl-updates'
 import './fl-labels'
+import './fl-cloud'
+
+//import './examples'
 
 //import './fl-cloud'
 
