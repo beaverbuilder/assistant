@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Icon, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
-import PostItem from './post-item'
+import LibraryPostItem from './post'
 
 export default () => {
 	const { itemId } = useParams()
@@ -11,6 +11,10 @@ export default () => {
 
 	if ( ! item ) {
 		return <Page.Loading />
+	}
+
+	if ( 'post' === item.type ) {
+		return <LibraryPostItem/>
 	}
 
 	return <Item item={ item } />
@@ -53,10 +57,6 @@ const Item = ( { item } ) => {
 			cloud.libraries.deleteItem( item.id )
 			history.goBack()
 		}
-	}
-
-	if( 'post' === item.type){
-		return <PostItem/>
 	}
 
 	return (

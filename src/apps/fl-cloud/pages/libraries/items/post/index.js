@@ -3,8 +3,6 @@ import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Icon, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
-import PostItem from './post-item'
-
 
 export default () => {
 	const { itemId } = useParams()
