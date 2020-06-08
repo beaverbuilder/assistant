@@ -8,7 +8,11 @@ import LibraryPostItem from './post'
 export default () => {
 	const history = useHistory()
 	const { itemId } = useParams()
-	const [ item ] = cloud.libraries.useItem( itemId )
+	const [ item, setItem ] = cloud.libraries.useItem( itemId )
+	const forms = {
+		'default': LibraryDefaultItem,
+		'post': LibraryPostItem
+	}
 
 	if ( ! item ) {
 		return <Page.Loading />
@@ -19,6 +23,11 @@ export default () => {
 			cloud.libraries.deleteItem( item.id )
 			history.goBack()
 		}
+	}
+
+	let LibraryItemForm = forms.default
+	if ( forms[ item.type ] ) {
+		LibraryItemForm = forms[ item.type ]
 	}
 
 	return (
@@ -46,21 +55,15 @@ export default () => {
 					<Icon.Trash />
 				</Button>
 			</Layout.Box>
-			<LibraryItemForm item={ item } />
+			<LibraryItemForm
+				item={ item }
+				setItem={ setItem }
+			/>
 		</Page>
 	)
 }
 
-const LibraryItemForm = ( { item } ) => {
-	switch ( item.type ) {
-		case 'post':
-			return <LibraryPostItem item={ item } />
-		break;
-	}
-	return <LibraryDefaultItem item={ item } />
-}
-
-const LibraryDefaultItem = ( { item } ) => {
+const LibraryDefaultItem = ( { item, setItem } ) => {
 	const fields = {
 		name: {
 			label: __( 'Name' ),
@@ -75,7 +78,13 @@ const LibraryDefaultItem = ( { item } ) => {
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.updateItem( item.id, values ).catch( error => {
+		const { name } = values
+		const data = {
+			name
+		}
+		return cloud.libraries.updateItem( item.id, data ).then( response => {
+			setItem( response.data )
+		} ).catch( error => {
 			setErrors( error.response.data.errors )
 		} )
 	}

@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Button, Form } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 
-export default ( { item } ) => {
+export default ( { item, setItem } ) => {
 	const fields = {
 		post_title: {
 			label: __( 'Title' ),
@@ -25,58 +25,19 @@ export default ( { item } ) => {
 				}
 			}
 		},
-		guid: {
-			label: __( 'URL' ),
-			component: 'url',
-
-		},
-		post_status: {
-			label: __( 'Status' ),
-			labelPlacement: 'beside',
-			component: 'plain-text',
-
-		},
-		post_date: {
-			label: __( 'Publish Date' ),
-			labelPlacement: 'beside',
-			component: 'calender',
-		},
-		post_excerpt: {
-			label: __( 'Excerpt' ),
-			component: 'textarea',
-		},
-		post_thumbnail: {
-			label: __( 'Feature Image' ),
-			component: 'image',
-			src: item.data.post_thumbnail ? item.data.post_thumbnail.url : '',
-		},
-		comment_status: {
-			label: __( 'Allow Comments' ),
-			labelPlacement: 'beside',
-			component: 'plain-text',
-		},
-		ping_status: {
-			label: __( 'Allow Pingbacks' ),
-			labelPlacement: 'beside',
-			component: 'plain-text',
-			disable:true
-		},
-		comments: {
-			label: __( 'Comments' ),
-			fields: ( { fields } ) => {
-
-				return <List.WordPress
-				type={ 'comments' }
-				query={ { post__in: [ item.id ] } }
-				/>
-
-			}
-
-		}
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.updateItem( item.id, values ).catch( error => {
+		const requestData = {
+			name: values.post_title,
+			data: {
+				...item.data,
+				...values
+			}
+		}
+		return cloud.libraries.updateItem( item.id, requestData ).then( response => {
+			setItem( response.data )
+		} ).catch( error => {
 			setErrors( error.response.data.errors )
 		} )
 	}
