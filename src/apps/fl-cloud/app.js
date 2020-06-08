@@ -13,7 +13,7 @@ import Sites from './pages/sites'
 import NewLibrary from './pages/libraries/new-library'
 import NewLibraryItem from './pages/libraries/new-item'
 import Library from './pages/libraries/library'
-import LibraryItem from './pages/libraries/library-item'
+import LibraryItem from './pages/libraries/item'
 import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
 
