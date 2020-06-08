@@ -5,6 +5,8 @@ import * as updater from './updater'
 import * as sys from './system'
 import * as registry from './registry'
 
+import './app-core'
+
 export const api = {
 	...utils,
 	...app,
