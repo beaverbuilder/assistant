@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Form, Layout, Page } from 'assistant/ui'
-import NewPost from './new-post'
-import NewImage from './new-image'
-import NewSvg from './new-svg'
-import NewColor from './new-color'
+import NewPost from './post/new-post'
+import NewImage from './image/new-image'
+import NewSvg from './svg/new-svg'
+import NewColor from './color/new-color'
 
 export default () => {
 	const history = useHistory()
