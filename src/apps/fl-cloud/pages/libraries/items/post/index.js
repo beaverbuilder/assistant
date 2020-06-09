@@ -1,9 +1,41 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Button, Form } from 'assistant/ui'
+import { Button, Form, Layout, Nav, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 
 export default ( { item, setItem } ) => {
+	const { id, itemId } = useParams()
+
+	const tabs = [
+		{
+			handle: 'settings',
+			label: __( 'Settings' ),
+			path: `/fl-cloud/libraries/${ id }/items/${ itemId }`,
+			component: () => <ItemSettings item={ item } setItem={ setItem } />,
+			exact: true,
+		},
+		{
+			handle: 'import',
+			label: __( 'Import' ),
+			path: `/fl-cloud/libraries/${ id }/items/${ itemId }/import`,
+			component: () => <ItemImport item={ item } setItem={ setItem } />,
+		},
+	]
+
+	return (
+		<>
+			<Layout.Box padX={ false }>
+				<Nav.Tabs tabs={ tabs } />
+			</Layout.Box>
+			<Layout.Box padY={ false }>
+				<Nav.CurrentTab tabs={ tabs } />
+			</Layout.Box>
+		</>
+	)
+}
+
+const ItemSettings = ( { item, setItem } ) => {
 	const fields = {
 		post_title: {
 			label: __( 'Title' ),
@@ -58,6 +90,27 @@ export default ( { item, setItem } ) => {
 			<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
 				{ __( 'Update Item' ) }
 			</Button.Loading>
+		</>
+	)
+}
+
+const ItemImport = () => {
+	return (
+		<>
+			<Page.Section label={ __( 'Importing Posts' ) }>
+				<div>Clicking import should import the post into the site just like a standard WordPress import. A few things to keep in mind...</div>
+				<div>1. The status of imported posts should be draft.</div>
+				<div>2. The author should be the current user.</div>
+				<div>3. Give options to import meta and terms.</div>
+				<br />
+				<Button>{ __( 'Import to Site' ) }</Button>
+			</Page.Section>
+			<Page.Section label={ __( 'Overriding Posts' ) }>
+				<div>Clicking override should override the current post you are viewing with the library post...</div>
+				<div>1. Give options to override content, meta and terms.</div>
+				<br />
+				<Button>{ __( 'Override Current Post' ) }</Button>
+			</Page.Section>
 		</>
 	)
 }

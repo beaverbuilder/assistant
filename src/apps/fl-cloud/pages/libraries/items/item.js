@@ -34,10 +34,10 @@ export default () => {
 		<Page
 			title={ __( 'Library Item' ) }
 			shouldShowBackButton={ true }
+			padX={ false }
 		>
 			<Layout.Box
 				padY={ false }
-				padX={ false }
 				style={ {
 					flexDirection: 'row',
 					alignItems: 'center',
@@ -100,11 +100,11 @@ const LibraryDefaultItem = ( { item, setItem } ) => {
 	} )
 
 	return (
-		<>
+		<Layout.Box padY={ false }>
 			{ renderForm() }
 			<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
 				{ __( 'Update Item' ) }
 			</Button.Loading>
-		</>
+		</Layout.Box>
 	)
 }
