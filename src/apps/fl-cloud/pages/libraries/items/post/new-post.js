@@ -5,10 +5,12 @@ import cloud from 'assistant/utils/cloud'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getSystemConfig } from 'assistant/data'
 
+
 export default ( { libraryId, onCreate } ) => {
 	const [ type, setType ] = useState( null )
 	const [ posts, setPosts ] = useState( null )
 	const [ loading, setLoading ] = useState( false )
+	const [ postData, setpostData ] = useState( null )
 	const wpRest = getWpRest()
 	const { contentTypes } = getSystemConfig()
 
@@ -21,6 +23,7 @@ export default ( { libraryId, onCreate } ) => {
 			plural: __( 'Posts' ),
 		}
 	}
+
 
 	const fields = {
 		type: {
@@ -86,19 +89,19 @@ export default ( { libraryId, onCreate } ) => {
 	const onSubmit = ( { values, setErrors } ) => {
 		const { slug } = values
 		const post = posts.filter( post => post.slug === slug ).pop()
-		return cloud.libraries.createItem( libraryId, {
-			type: 'post',
-			name: post.title,
-			data: {
+		wpRest.posts().formedPost( post.id ).then( response => {
+			return cloud.libraries.createItem( libraryId, {
+				type: 'post',
+				name: post.title,
+				data: response.data
 
-				// TODO: Pull raw post, meta, terms, and comments (maybe) to store.
-				//post: post,
-			}
-		} ).then( () => {
-			onCreate()
-		} ).catch( error => {
-			setErrors( error.response.data.errors )
+			} ).then( () => {
+				onCreate()
+			} ).catch( error => {
+				setErrors( error.response.data.errors )
+			} )
 		} )
+
 	}
 
 	const {

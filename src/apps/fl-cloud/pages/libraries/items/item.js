@@ -3,49 +3,20 @@ import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Icon, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
+import LibraryPostItem from './post'
 
 export default () => {
+	const history = useHistory()
 	const { itemId } = useParams()
-	const [ item ] = cloud.libraries.useItem( itemId )
+	const [ item, setItem ] = cloud.libraries.useItem( itemId )
+	const forms = {
+		'default': LibraryDefaultItem,
+		'post': LibraryPostItem
+	}
 
 	if ( ! item ) {
 		return <Page.Loading />
 	}
-
-	return <Item item={ item } />
-}
-
-const Item = ( { item } ) => {
-	const history = useHistory()
-
-	const fields = {
-		name: {
-			label: __( 'Name' ),
-			component: 'text',
-			alwaysCommit: true,
-			validate: ( value, errors ) => {
-				if ( '' === value ) {
-					errors.push( __( 'Please enter a name.' ) )
-				}
-			}
-		},
-	}
-
-	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.updateItem( item.id, values ).catch( error => {
-			setErrors( error.response.data.errors )
-		} )
-	}
-
-	const {
-		renderForm,
-		submitForm,
-		isSubmitting
-	} = Form.useForm( {
-		fields,
-		onSubmit,
-		defaults: item,
-	} )
 
 	const deleteItem = () => {
 		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
@@ -54,14 +25,19 @@ const Item = ( { item } ) => {
 		}
 	}
 
+	let LibraryItemForm = forms.default
+	if ( forms[ item.type ] ) {
+		LibraryItemForm = forms[ item.type ]
+	}
+
 	return (
 		<Page
 			title={ __( 'Library Item' ) }
 			shouldShowBackButton={ true }
+			padX={ false }
 		>
 			<Layout.Box
 				padY={ false }
-				padX={ false }
 				style={ {
 					flexDirection: 'row',
 					alignItems: 'center',
@@ -79,10 +55,56 @@ const Item = ( { item } ) => {
 					<Icon.Trash />
 				</Button>
 			</Layout.Box>
+			<LibraryItemForm
+				item={ item }
+				setItem={ setItem }
+			/>
+		</Page>
+	)
+}
+
+const LibraryDefaultItem = ( { item, setItem } ) => {
+	const fields = {
+		name: {
+			label: __( 'Name' ),
+			component: 'text',
+			alwaysCommit: true,
+			validate: ( value, errors ) => {
+				if ( '' === value ) {
+					errors.push( __( 'Please enter a name.' ) )
+				}
+			}
+		},
+	}
+
+	const onSubmit = ( { values, setErrors } ) => {
+		const { name } = values
+		const data = {
+			name
+		}
+		return cloud.libraries.updateItem( item.id, data ).then( response => {
+			setItem( response.data )
+		} ).catch( error => {
+			setErrors( error.response.data.errors )
+		} )
+	}
+
+	const {
+		renderForm,
+		submitForm,
+		isSubmitting
+	} = Form.useForm( {
+		fields,
+		onSubmit,
+		defaults: item,
+	} )
+
+	return (
+		<Layout.Box padY={ false }>
 			{ renderForm() }
 			<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
 				{ __( 'Update Item' ) }
 			</Button.Loading>
-		</Page>
+		</Layout.Box>
 	)
 }
