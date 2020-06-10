@@ -1,3 +1,19 @@
-// Just a stub, nothing to see here
+import { createHttpClient } from './http'
+import * as session from './session'
+import endpoints from './api'
 
-export default () => console.log('Cloud!')
+export const createCloudClient = ( {
+	apiUrl = ''
+} ) => {
+	const http = createHttpClient( { apiUrl } )
+	const client = {
+		http,
+		session
+	}
+
+	for ( let key in endpoints ) {
+		client[ key ] = endpoints[ key ]( http )
+	}
+
+	return client
+}

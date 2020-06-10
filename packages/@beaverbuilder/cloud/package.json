@@ -15,6 +15,9 @@
         "url": "https://github.com/beaverbuilder/assistant.git",
         "directory": "packages/@beaverbuilder/cloud"
     },
+    "peerDependencies": {
+        "react": "^16.9.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.10.2",
         "@babel/plugin-external-helpers": "^7.10.1",
@@ -29,5 +32,10 @@
         "rollup-plugin-postcss": "^3.1.1",
         "rollup-plugin-url": "^3.0.1",
         "rollup-plugin-visualizer": "^4.0.4"
+    },
+    "dependencies": {
+        "axios": "^0.19.2",
+        "cookie": "^0.4.1",
+        "promise": "^8.1.0"
     }
 }
