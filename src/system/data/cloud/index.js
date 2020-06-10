@@ -8,9 +8,6 @@ import cloud from 'utils/cloud'
 const KEY = 'fl-assistant/cloud'
 
 const state = {
-	isCloudConnected: cloud.auth.isConnected(),
-	cloudToken: cloud.session.getToken(),
-	cloudUser: cloud.session.getUser(),
 	currentTeam: 0,
 }
 

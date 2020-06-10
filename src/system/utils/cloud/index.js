@@ -1,17 +1,23 @@
-import * as auth from './auth/auth'
-import * as session from './auth/session'
-import user from './api/user'
-import teams from './api/teams'
-import sites from './api/sites'
-import libraries from './api/libraries'
+import { createHttpClient } from './http'
+import * as session from './session'
+import endpoints from './api'
 
-auth.checkAccess()
+const createCloudClient = ( {
+	apiUrl = ''
+} ) => {
+	const http = createHttpClient( { apiUrl } )
+	const client = {
+		http,
+		session
+	}
 
-export default {
-	auth,
-	session,
-	user,
-	teams,
-	sites,
-	libraries
+	for ( let key in endpoints ) {
+		client[ key ] = endpoints[ key ]( http )
+	}
+
+	return client
 }
+
+export default createCloudClient( {
+	apiUrl: `${ FL_ASSISTANT_CONFIG.cloudUrl }/api`
+} )

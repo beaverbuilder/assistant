@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { useCloudState, getCloudActions } from 'assistant/data'
 import { Button, Form, Layout } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
 
 export const ProfileSettings = () => {
 	const [ successMessage, setSuccessMessage ] = useState( null )
 	const [ errorMessage, setErrorMessage ] = useState( null )
-	const { cloudUser } = useCloudState()
-	const { setCloudUser } = getCloudActions()
+	const cloudUser = cloud.session.getUser()
 
 	const fields = {
 		first_name: {
@@ -47,7 +45,7 @@ export const ProfileSettings = () => {
 		setErrorMessage( null )
 		setSuccessMessage( null )
 		return cloud.user.update( values ).then( response => {
-			setCloudUser( response.data )
+			cloud.session.setUser( response.data )
 			setSuccessMessage( true )
 		} ).catch( error => {
 			setErrors( error.response.data.errors )

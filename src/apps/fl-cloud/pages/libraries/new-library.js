@@ -1,14 +1,12 @@
 import React from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { Button, Form, Layout, Page } from 'assistant/ui'
-import { getCloudHooks } from 'assistant/data'
 import cloud from 'assistant/utils/cloud'
 
 export default ( { history } ) => {
 	const [ teams ] = cloud.teams.useAll()
-	const { useCloudUser, useCurrentTeam } = getCloudHooks()
-	const [ cloudUser ] = useCloudUser()
 	const [ currentTeam, setCurrentTeam ] = useCurrentTeam()
+	const cloudUser = cloud.session.getUser()
 
 	const getOwnerOptions = () => {
 		const options = {

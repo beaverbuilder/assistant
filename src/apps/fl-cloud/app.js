@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Nav } from 'assistant/ui'
-import { useCloudState } from 'assistant/data'
+import cloud from 'assistant/utils/cloud'
 
 import Login from './pages/auth/login'
 import Register from './pages/auth/register'
@@ -18,9 +18,9 @@ import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
 
 export default ( { baseURL } ) => {
-	const { isCloudConnected } = useCloudState()
 	const { pathname } = useLocation()
 	const history = useHistory()
+	const isCloudConnected = cloud.auth.isConnected()
 
 	if ( ! isCloudConnected && ! pathname.includes( '/auth/' ) ) {
 		history.replace( '/fl-cloud/auth/login' )
