@@ -6,14 +6,15 @@ export const createCloudClient = ( {
 	apiUrl = ''
 } ) => {
 	const http = createHttpClient( { apiUrl } )
-	const client = {
+	const api = {}
+
+	for ( let key in endpoints ) {
+		api[ key ] = endpoints[ key ]( http )
+	}
+
+	return {
+		...api,
 		http,
 		session
 	}
-
-	for ( let key in endpoints ) {
-		client[ key ] = endpoints[ key ]( http )
-	}
-
-	return client
 }

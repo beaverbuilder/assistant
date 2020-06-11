@@ -1,7 +1,7 @@
 import cookie from 'cookie'
 
-const FL_CLOUD_TOKEN_KEY = 'fl-asst-cloud-token'
-const FL_CLOUD_USER_KEY = 'fl-asst-cloud-user'
+const FL_CLOUD_TOKEN_KEY = 'fl-cloud-token'
+const FL_CLOUD_USER_KEY = 'fl-cloud-user'
 
 export const create = ( token, user ) => {
 	setToken( token )
