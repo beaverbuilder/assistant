@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 
 export const TeamInfo = ( {
 	team,

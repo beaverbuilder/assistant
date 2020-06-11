@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 
 export default ( { item, setItem } ) => {
 	const { id, itemId } = useParams()

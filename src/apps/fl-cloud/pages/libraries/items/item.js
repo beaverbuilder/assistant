@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Icon, Layout, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 import LibraryPostItem from './post'
 
 export default () => {

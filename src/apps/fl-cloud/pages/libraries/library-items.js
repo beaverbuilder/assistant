@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Filter, Icon, Layout, List, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 
 export default ( { library } ) => {
 	const [ loading, setLoading ] = useState( true )

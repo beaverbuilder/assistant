@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 import { Button, Layout, Page } from 'assistant/ui'
 import AppIcon from '../../icon'
 import Libraries from '../libraries'
