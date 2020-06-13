@@ -2,10 +2,11 @@ import cookie from 'cookie'
 
 const FL_CLOUD_TOKEN_KEY = 'fl-cloud-token'
 const FL_CLOUD_USER_KEY = 'fl-cloud-user'
+const FL_CLOUD_SESSION_LENGTH = 1000 * 60 * 60 * 24 * 14
 
-export const create = ( token, user ) => {
-	setToken( token )
-	setUser( user )
+export const create = ( token, user, remember ) => {
+	setToken( token, remember )
+	setUser( user, remember )
 }
 
 export const destroy = () => {
@@ -27,10 +28,11 @@ export const getToken = () => {
 	return cookies[ FL_CLOUD_TOKEN_KEY ] ? cookies[ FL_CLOUD_TOKEN_KEY ] : null
 }
 
-export const setToken = ( token ) => {
-	document.cookie = cookie.serialize( FL_CLOUD_TOKEN_KEY, token, {
-		expires: new Date( Date.now() + 1000 * 60 * 60 * 24 * 14 )
-	} )
+export const setToken = ( token, remember ) => {
+	const options = {
+		expires: new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
+	}
+	document.cookie = cookie.serialize( FL_CLOUD_TOKEN_KEY, token, remember ? options : {} )
 }
 
 export const removeToken = () => {
@@ -51,10 +53,11 @@ export const getUser = () => {
 	return cookies[ FL_CLOUD_USER_KEY ] ? JSON.parse( cookies[ FL_CLOUD_USER_KEY ] ) : null
 }
 
-export const setUser = ( user ) => {
-	document.cookie = cookie.serialize( FL_CLOUD_USER_KEY, JSON.stringify( user ), {
-		expires: new Date( Date.now() + 1000 * 60 * 60 * 24 * 14 )
-	} )
+export const setUser = ( user, remember ) => {
+	const options = {
+		expires: new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
+	}
+	document.cookie = cookie.serialize( FL_CLOUD_USER_KEY, JSON.stringify( user ), remember ? options : {} )
 }
 
 export const removeUser = () => {

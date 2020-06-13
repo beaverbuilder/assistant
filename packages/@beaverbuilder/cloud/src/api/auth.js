@@ -41,10 +41,11 @@ export default ( http ) => {
 		 *
 		 * @param email
 		 * @param password
+		 * @param remember
 		 * @param config
 		 * @returns Promise
 		 */
-		login: ( email, password, config = {} ) => {
+		login: ( email, password, remember, config = {} ) => {
 			return new Promise( ( resolve, reject ) => {
 				http.post( '/iam/authenticate', { email, password }, config )
 					.then( ( response ) => {
@@ -53,7 +54,7 @@ export default ( http ) => {
 							return
 						}
 						const { token, user } = response.data
-						session.create( token, user )
+						session.create( token, user, remember )
 						resolve( { token, user } )
 					} )
 					.catch( reject )
