@@ -102,6 +102,20 @@ export default ( http ) => {
 		},
 
 		/**
+		 * Sends the password reset email.
+		 *
+		 * @returns Promise
+		 */
+
+		resetPassword: ( email ) => {
+			return new Promise( ( resolve ) => {
+				setTimeout( () => {
+					resolve()
+				}, 1000 )
+			} )
+		},
+
+		/**
 		 * Checks to see if the user is still logged in.
 		 * If not, the session will be destroyed.
 		 *
