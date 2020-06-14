@@ -28,21 +28,20 @@ const getRouterProps = history => {
 }
 
 const HistoryManager = () => {
-    const location = useLocation()
+	const location = useLocation()
 	const history = useHistory()
 	const { setHistory } = getSystemActions()
 
-    // Whenever location changes, fire onChange handler.
+	// Whenever location changes, fire onChange handler.
 	useEffect( () => {
-		console.log('Location changed', location, history.entries, history.index )
 		setHistory( history.index, history.entries )
 	}, [ location ] )
 
-    return null
+	return null
 }
 
 // TEMP fluid root
-const FLUIDAppearanceRoot = ({ colorScheme = 'light', className, ...rest }) => {
+const FLUIDAppearanceRoot = ( { colorScheme = 'light', className, ...rest } ) => {
 	const classes = classname( {
 		'fluid': true,
 		'fl': true,
@@ -50,7 +49,7 @@ const FLUIDAppearanceRoot = ({ colorScheme = 'light', className, ...rest }) => {
 		[`fluid-color-scheme-${colorScheme}`]: colorScheme
 	}, className )
 	return (
-		<div className={classes} {...rest} />
+		<div className={ classes } { ...rest } />
 	)
 }
 
@@ -70,15 +69,8 @@ export const Assistant = () => {
 		// We only need history initially - we're not listening for changes
 		)
 	} )
-
-	const { setHistory } = getSystemActions()
 	const { brightness = 'light' } = appearance
-
-	const onHistoryChanged = history => setHistory( history.index, history.entries )
-
-	const windowClasses = classname( {
-		'fl-asst-window-sidebar-only': isAppHidden,
-	} )
+	const windowClasses = classname( { 'fl-asst-window-sidebar-only': isAppHidden } )
 
 	return (
 		<Root routerProps={ getRouterProps( history ) }>
