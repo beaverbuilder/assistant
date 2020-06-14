@@ -15,6 +15,10 @@
         "url": "https://github.com/beaverbuilder/assistant.git",
         "directory": "packages/@beaverbuilder/app-core"
     },
+    "peerDependencies": {
+        "react": "^16.9.0",
+        "react-router-dom": "^5.2.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.10.2",
         "@babel/plugin-external-helpers": "^7.10.1",

@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
+import { Root } from '@beaverbuilder/app-core'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
-import AppMain from '../app'
-import { App as FLUIDApp } from 'fluid/ui'
 import {
 	Appearance,
 	App,
@@ -12,6 +12,7 @@ import {
 	Page,
 	Env,
 } from 'assistant/ui'
+import AppMain from '../app'
 import Window from '../window'
 
 const getRouterProps = history => {
@@ -24,6 +25,33 @@ const getRouterProps = history => {
 		props.initialEntries = history.entries
 	}
 	return props
+}
+
+const HistoryManager = () => {
+    const location = useLocation()
+	const history = useHistory()
+	const { setHistory } = getSystemActions()
+
+    // Whenever location changes, fire onChange handler.
+	useEffect( () => {
+		console.log('Location changed', location, history.entries, history.index )
+		setHistory( history.index, history.entries )
+	}, [ location ] )
+
+    return null
+}
+
+// TEMP fluid root
+const FLUIDAppearanceRoot = ({ colorScheme = 'light', className, ...rest }) => {
+	const classes = classname( {
+		'fluid': true,
+		'fl': true,
+		'uid': true,
+		[`fluid-color-scheme-${colorScheme}`]: colorScheme
+	}, className )
+	return (
+		<div className={classes} {...rest} />
+	)
 }
 
 /**
@@ -53,21 +81,20 @@ export const Assistant = () => {
 	} )
 
 	return (
-		<FLUIDApp.Root
-			routerProps={ getRouterProps( history ) }
-			onHistoryChanged={ onHistoryChanged }
-			colorScheme={ brightness }
-		>
+		<Root routerProps={ getRouterProps( history ) }>
+			<HistoryManager />
 			<Env.Provider>
 				<App.Provider>
-					<Appearance brightness={ brightness }>
-						<MainWindow className={ windowClasses }>
-							<AppMain />
-						</MainWindow>
-					</Appearance>
+					<FLUIDAppearanceRoot colorScheme={ brightness }>
+						<Appearance brightness={ brightness }>
+							<MainWindow className={ windowClasses }>
+								<AppMain />
+							</MainWindow>
+						</Appearance>
+					</FLUIDAppearanceRoot>
 				</App.Provider>
 			</Env.Provider>
-		</FLUIDApp.Root>
+		</Root>
 	)
 }
 
