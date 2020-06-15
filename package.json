@@ -19,6 +19,7 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
+    "@beaverbuilder/app-core": "^0.1.1",
     "@beaverbuilder/fluid": "^0.3.9",
     "@popmotion/popcorn": "^0.4.4",
     "array-move": "^2.2.2",
