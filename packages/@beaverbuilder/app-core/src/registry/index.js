@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { createStore, bindActionCreators } from 'redux'
+
+import shouldUpdate from './should-update'
 import { createActions } from './actions'
 import { createReducers } from './reducers'
 import { createSelectors } from './selectors'
 import { createEnhancers } from './middleware'
+import createHooks from './hooks'
 
-export const createStoreRegistry = () => {
+const createStoreRegistry = () => {
 
 	/**
 	 * The main registry object. Holds all stores
@@ -55,15 +58,28 @@ export const createStoreRegistry = () => {
 		 * Custom hook for subscribing local state to changes
 		 * in a registry store. Returns the store's state object.
 		 */
-		useStore: ( key ) => {
+		useStore: ( key, needsRender = true ) => {
 			const { store } = registry[ key ]
-			const [ state, setState ] = useState( store.getState() )
+			const initial = store.getState()
+			const prevState = useRef( initial )
+			const [ state, setState ] = useState( initial )
+
 			useEffect( () => {
+
 				setState( store.getState() )
-				const unsubscribe = store.subscribe( () => setState( store.getState() ) )
-				return () => unsubscribe()
+
+				return store.subscribe( () => {
+					const newState = store.getState()
+					if ( shouldUpdate( needsRender, prevState.current, newState ) ) {
+
+						setState( { ...newState } )
+					}
+					prevState.current = newState
+				} )
+
 			}, [] )
-			return { ...state }
+
+			return state
 		},
 
 		/**
@@ -90,5 +106,16 @@ export const createStoreRegistry = () => {
 			const { selectors } = registry[ key ]
 			return selectors
 		},
+
+		/**
+		 * return all generated hooks for a store in the registry.
+		 */
+		getHooks: key => {
+			const { actions, store } = registry[ key ]
+			const actionCreators = bindActionCreators( actions, store.dispatch )
+			return createHooks( store, actionCreators )
+		}
 	}
 }
+
+export default createStoreRegistry

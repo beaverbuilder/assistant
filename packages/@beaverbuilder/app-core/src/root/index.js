@@ -1,5 +1,5 @@
 import React, { Fragment, Suspense, useEffect } from 'react'
-import { MemoryRouter, useLocation } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import Error from '../error'
 
 const AppCoreDefaultSuspenseFallback = () => (

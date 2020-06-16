@@ -1,4 +1,4 @@
-import { createStoreRegistry } from 'fluid/data'
+import { createStoreRegistry } from '@beaverbuilder/app-core'
 
 export const {
 	registerStore,
