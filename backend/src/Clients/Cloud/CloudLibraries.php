@@ -20,7 +20,7 @@ class CloudLibraries {
 	/**
 	 * @return object
 	 */
-	public function uploadItemFiles() {
-		// TODO: Use $this->client to make request.
+	public function createItem( $library_id, $data ) {
+		return $this->client->post( "/libraries/$library_id/library-items", $data );
 	}
 }

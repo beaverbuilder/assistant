@@ -22,20 +22,32 @@ class CloudClient {
 	 * @return object
 	 */
 	public function request( $route, $args = [] ) {
-		$url = FL_ASSISTANT_CLOUD_URL . "/api$route";
-		$token = isset( $_COOKIE['fl-cloud-token'] ) ? $_COOKIE['fl-cloud-token'] : '';
-
+		if ( ! isset( $args['method'] ) ) {
+			$args['method'] = 'GET';
+		}
 		if ( ! isset( $args['headers'] ) ) {
 			$args['headers'] = [];
 		}
 
-		$args['headers']['Authorization'] = "Bearer $token";
-		$args['sslverify'] = false;
+		$url = FL_ASSISTANT_CLOUD_URL . "/api$route";
+		$token = isset( $_COOKIE['fl-cloud-token'] ) ? $_COOKIE['fl-cloud-token'] : '';
+		$args['headers'][] = "Authorization: Bearer $token";
+		$curl = curl_init();
 
-		$response = wp_remote_request( $url, $args );
-		$body = wp_remote_retrieve_body( $response );
+		curl_setopt_array( $curl, [
+			CURLOPT_URL => $url,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_SSL_VERIFYHOST => false,
+			CURLOPT_USERAGENT => 'Assistant Plugin',
+			CURLOPT_CUSTOMREQUEST => $args['method'],
+			CURLOPT_HTTPHEADER => $args['headers'],
+			CURLOPT_POSTFIELDS => $args['data'],
+		] );
 
-		return json_decode( $body );
+		$response = curl_exec( $curl );
+
+		return json_decode( $response );
 	}
 
 	/**
@@ -50,21 +62,25 @@ class CloudClient {
 
 	/**
 	 * @param $route string
+	 * @param $data array
 	 * @param $args array
 	 * @return object
 	 */
-	public function post( $route, $args = [] ) {
+	public function post( $route, $data = [], $args = [] ) {
 		$args['method'] = 'POST';
+		$args['data'] = $data;
 		return $this->request( $route, $args );
 	}
 
 	/**
 	 * @param $route string
+	 * @param $data array
 	 * @param $args array
 	 * @return object
 	 */
-	public function put( $route, $args = [] ) {
+	public function put( $route, $data = [], $args = [] ) {
 		$args['method'] = 'PUT';
+		$args['data'] = $data;
 		return $this->request( $route, $args );
 	}
 
