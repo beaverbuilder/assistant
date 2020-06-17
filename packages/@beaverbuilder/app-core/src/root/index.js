@@ -16,11 +16,9 @@ const AppCoreRoot = ({
     loading: Loading = AppCoreDefaultSuspenseFallback,
 
     // Navigation API - for setting up the default router
-    router = MemoryRouter, // Set to false if not using react-router
+    router: Router = MemoryRouter,
     routerProps = {}
 }) => {
-
-    const Router = ( false !== router ) ? router : Fragment
 
     return (
         <Error.Boundary alternate={ error }>

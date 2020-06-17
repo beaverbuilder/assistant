@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { __ } from '@wordpress/i18n'
-import { List, App, Page, Layout, Filter } from 'assistant/ui'
+import { App } from '@beaverbuilder/app-core'
+import { List, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { addFilter } from 'assistant/hooks'
 import { defaultState } from '../'
 
 export const SummaryTab = () => {
-	const { handle } = useContext( App.Context )
+	const handle = 'fl-content'
 	const { getCount } = getSystemSelectors()
 	const { contentTypes } = getSystemConfig()
 	return (
@@ -66,9 +67,9 @@ export const SummaryTab = () => {
 }
 
 export const PostTypeTab = ( { type = 'post' } ) => {
-	const { handle } = useContext( App.Context )
-	const { query, listStyle } = useAppState( 'fl-content' )
-	const { setQuery, setListStyle } = getAppActions( 'fl-content' )
+	const handle = 'fl-content'
+	const { query, listStyle } = useAppState( handle )
+	const { setQuery, setListStyle } = getAppActions( handle )
 
 	const defaultQuery = defaultState.query
 
@@ -184,6 +185,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 }
 
 addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType } ) => {
+	const handle = 'fl-content'
 
 	if ( 'post' === listType ) {
 		const i = actions.findIndex( action => 'edit-post' === action.handle )
@@ -195,7 +197,7 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType } ) 
 			action.isShowing = true
 			action.title = __( 'Edit Details' )
 			action.to = {
-				pathname: `/fl-content/post/${item.id}`,
+				pathname: `/${handle}/post/${item.id}`,
 				state: { item }
 			}
 		}

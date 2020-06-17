@@ -1,4 +1,5 @@
 import React, { Component, createElement } from 'react'
+import { __ } from '@wordpress/i18n'
 
 const Error = {}
 
@@ -29,19 +30,30 @@ class Boundary extends Component {
 	}
 }
 
-const DefaultError = ( { error } ) => {
-	const style = {
+const DefaultError = ( {
+	error,
+	title = __( 'There seems to be an error' ),
+	children,
+	style = {},
+	...rest
+} ) => {
+	const boxStyle = {
+		...style,
 		display: 'flex',
 		flexDirection: 'column',
-		flex: '1 0 auto',
+		flex: '1 1 auto',
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: 20
+		padding: 40,
+		textAlign: 'center',
+		minHeight: 0,
+		maxHeight: '100%',
 	}
 	return (
-		<div className="fluid-default-error-message" style={ style }>
-			<div>There seems to be an error.</div>
-			<code>{error.message}</code>
+		<div style={ boxStyle } {...rest}>
+			<h1 style={{ marginBottom: 20 }}>{title}</h1>
+			<code style={{ padding: 10 }}>{error.message}</code>
+			{children}
 		</div>
 	)
 }
@@ -50,7 +62,7 @@ const DefaultError = ( { error } ) => {
 Error.Boundary = Boundary
 Error.Boundary.displayName = 'Error.Boundary'
 
-Error.DefaultError = DefaultError
-Error.DefaultError.displayName = 'Error.DefaultError'
+Error.Page = DefaultError
+Error.Page.displayName = 'Error.Page'
 
 export default Error

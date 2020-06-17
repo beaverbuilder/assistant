@@ -7,7 +7,7 @@ import { applyFilters } from 'assistant/hooks'
 import Comment from './comment'
 
 export default ( { baseURL } ) => {
-	const { type } = useAppState()
+	const { type } = useAppState( 'fl-comments' )
 	const env = Env.use()
 
 	return (

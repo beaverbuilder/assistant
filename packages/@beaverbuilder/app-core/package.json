@@ -17,7 +17,8 @@
     },
     "peerDependencies": {
         "react": "^16.9.0",
-        "react-router-dom": "^5.2.0"
+        "react-router-dom": "^5.2.0",
+        "@wordpress/i18n": "^3.13.0"
     },
     "dependencies": {
         "camelcase": "^5.3.1",

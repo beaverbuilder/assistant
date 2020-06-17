@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory, Route, Switch } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
-import { Root } from '@beaverbuilder/app-core'
+import { Root as AppCoreRoot } from '@beaverbuilder/app-core'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
 import {
 	Appearance,
@@ -65,28 +65,25 @@ export const Assistant = () => {
 		return (
 			state.appearance.brightness !== newState.appearance.brightness ||
 			state.isAppHidden !== newState.isAppHidden
-
-		// We only need history initially - we're not listening for changes
+			// We only need history initially - we're not listening for changes
 		)
 	} )
 	const { brightness = 'light' } = appearance
 	const windowClasses = classname( { 'fl-asst-window-sidebar-only': isAppHidden } )
 
 	return (
-		<Root routerProps={ getRouterProps( history ) }>
+		<AppCoreRoot routerProps={ getRouterProps( history ) }>
 			<HistoryManager />
 			<Env.Provider>
-				<App.Provider>
-					<FLUIDAppearanceRoot colorScheme={ brightness }>
-						<Appearance brightness={ brightness }>
-							<MainWindow className={ windowClasses }>
-								<AppMain />
-							</MainWindow>
-						</Appearance>
-					</FLUIDAppearanceRoot>
-				</App.Provider>
+				<FLUIDAppearanceRoot colorScheme={ brightness }>
+					<Appearance brightness={ brightness }>
+						<MainWindow className={ windowClasses }>
+							<AppMain />
+						</MainWindow>
+					</Appearance>
+				</FLUIDAppearanceRoot>
 			</Env.Provider>
-		</Root>
+		</AppCoreRoot>
 	)
 }
 
@@ -95,11 +92,9 @@ export const AssistantCore = () => {
 	const { appearance } = useSystemState( 'appearance' )
 	return (
 		<Env.Provider application='beaver-builder'>
-			<App.Provider>
-				<Appearance brightness={ appearance.brightness }>
-					<AppMain />
-				</Appearance>
-			</App.Provider>
+			<Appearance brightness={ appearance.brightness }>
+				<AppMain />
+			</Appearance>
 		</Env.Provider>
 	)
 }
@@ -124,7 +119,6 @@ const MainWindow = ( { children, ...rest } ) => {
 	const { window: mainWindow } = useSystemState( 'window' )
 	const { size, origin, isHidden, hiddenAppearance } = mainWindow
 	const { setWindow } = getSystemActions()
-
 	const onChanged = config => setWindow( { ...mainWindow, ...config } )
 
 	return (

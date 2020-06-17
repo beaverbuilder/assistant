@@ -1,16 +1,16 @@
 import React, { memo, Suspense, useEffect } from 'react'
 import classname from 'classnames'
-import { useLocation, Redirect, Route, Switch } from 'react-router-dom'
-import { App, Page, Env, Error } from 'assistant/ui'
-import { useSystemState, getSystemSelectors } from 'assistant/data'
+import { useLocation, useParams, Redirect, Route, Switch } from 'react-router-dom'
+import { App, Error } from '@beaverbuilder/app-core'
+import { Page, Env } from 'assistant/ui'
+import { useSystemState } from 'assistant/data'
 import Sidebar from './side-bar'
 import ErrorPage from './error-page'
 import './style.scss'
 
 const AppMain = () => {
 	const location = useLocation()
-	const { window, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
-	const { selectHomeKey } = getSystemSelectors()
+	const { apps, window, isAppHidden, homeKey } = useSystemState( [ 'apps', 'window', 'isAppHidden', 'homeKey' ] )
 	const side = window.origin[0]
 	const sideName = side ? 'right' : 'left'
 	const { isMobile } = Env.use()
@@ -22,46 +22,42 @@ const AppMain = () => {
 		'fl-asst-is-mobile': isMobile,
 	} )
 
-	const home = selectHomeKey()
-
 	return (
 		<div className={ classes } >
 			<Sidebar edge={ sideName } />
-
 			{ ! isAppHidden && (
-				<Error.Boundary alternate={ ErrorPage }>
-					<div className="fl-asst-main-content" >
-						<Switch location={ location }>
-							<Route exact path="/">
-								<Redirect to={ `/${home}` } />
-							</Route>
-							<Route path="/:app" component={ AppContent } />
-							<Route component={ Page.NotFound } />
-						</Switch>
-					</div>
-				</Error.Boundary>
+				<div className="fl-asst-main-content" >
+					<App.Content
+						apps={ apps }
+						defaultApp={ homeKey }
+					/>
+				</div>
 			)}
 		</div>
 	)
 }
 
+/*
 const AppContent = () => {
 	useSystemState( 'apps' )
+	const { app: appHandle } = useParams()
 	const { selectApp } = getSystemSelectors()
-	const { isAppRoot, app: appName = '' } = App.useApp()
-	const app = selectApp( appName )
+	const app = selectApp( appHandle )
+
+	// TEMP
+	const isAppRoot = false
 
 	if ( ! app ) {
 		return <Page.NotFound />
 	}
 
 	// Subsequent app changes
-	useEffect( () => app.onMount(), [ appName ] )
+	useEffect( () => app.onMount(), [ appHandle ] )
 
 	const appWrapClasses = classname( {
 		'fl-asst-screen-content': true,
 		'fl-asst-app-content': true,
-		[`fl-asst-app-${appName}`]: appName,
+		[`fl-asst-app-${appHandle}`]: appHandle,
 		'fl-asst-app-root': isAppRoot,
 	} )
 
@@ -83,5 +79,6 @@ const AppContent = () => {
 const AppRoot = memo( ( { root: Root, ...rest } ) => {
 	return Root ? <Root { ...rest } /> : <Page.NotFound />
 } )
+*/
 
 export default AppMain

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { App } from 'ui'
+import { App } from '@beaverbuilder/app-core'
 import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
 import {
@@ -44,16 +44,16 @@ export const registerAppStore = args => {
 export const getAppStore = key => getStore( `${ key }/state` )
 
 export const useAppState = ( key, needsRender = true ) => {
-	const app = key ? key : useContext( App.Context ).app
+	const app = key ? key : App.use().handle
 	return useStore( `${ app }/state`, needsRender )
 }
 
 export const getAppActions = ( key ) => {
-	const app = key ? key : useContext( App.Context ).app
+	const app = key ? key : App.use().handle
 	return getDispatch( `${ key ? key : app }/state` )
 }
 
 export const getAppSelectors = ( key ) => {
-	const app = key ? key : useContext( App.Context ).app
+	const app = key ? key : App.use().handle
 	return getSelectors( `${ key ? key : app }/state` )
 }
