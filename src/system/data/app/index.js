@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { App } from '@beaverbuilder/app-core'
 import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'

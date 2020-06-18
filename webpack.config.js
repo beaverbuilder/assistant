@@ -15,31 +15,39 @@ const alias = {
     'home': path.resolve( __dirname, './src/apps/fl-home' ),
     'home/ui': path.resolve( __dirname, './src/apps/fl-home/ui' ),
     'home/data': path.resolve( __dirname, './src/apps/fl-home/data' ),
+
+    // These allow the fluid/vendors bundle to address these directly without getting caught by externals
+    'vendor-react-router-dom'           : path.resolve( __dirname, './node_modules/react-router-dom/' ),
+    'vendor-classnames'                 : path.resolve( __dirname, './node_modules/classnames/' ),
+    'vendor-framer-motion'              : path.resolve( __dirname, './node_modules/framer-motion/' ),
+    'vendor-react-laag'                 : path.resolve( __dirname, './node_modules/react-laag/' ),
+    'vendor-resize-observer-polyfill'   : path.resolve( __dirname, './node_modules/resize-observer-polyfill/' ),
+    'vendor-redux'                      : path.resolve( __dirname, './node_modules/redux/' ),
+    //'vendor-app-core'                   : path.resolve( __dirname, './node_modules/@beaverbuilder/app-core/' ),
+    //'vendor-fluid'                      : path.resolve( __dirname, './node_modules/@beaverbuilder/fluid/' ),
 }
 
 const externals = [
 	{
-	    /* WordPress included (hopefully) vendors */
+	    // Vendors provided by WordPress
 	    'react'                         : 'React',
 	    'react-dom'                     : 'ReactDOM',
 	    'lodash'                        : 'lodash',
 
+        // Vendors set up by local fluid bundle
+        'react-router-dom'              : 'FL.vendors.ReactRouter',
+        'classnames'                    : 'FL.vendors.classnames',
+        'framer-motion'                 : 'FL.vendors.FramerMotion',
+        'react-laag'                    : 'FL.vendors.ReactLaag',
+        'resize-observer-polyfill'      : 'FL.vendors.ResizeObserver',
+        'redux'                         : 'FL.vendors.Redux',
+
+        // Our stuff
+        //'@beaverbuilder/app-core'       : 'FL.AppCore',
+        //'@beaverbuilder/fluid'          : 'FL.vendors.FLUID',
+
         /* FLUID environment */
-        'fluid'                         : 'FL.UID',
-        'fluid/ui'                      : 'FL.UID.ui',
-        'fluid/data'                    : 'FL.UID.data',
-
-        /* Vendors provided by FL.UID */
-
-        'react-router-dom'   		    : 'FL.UID.vendors.ReactRouter',
-        /*
-	    'redux'              		    : 'FL.UID.vendors.Redux',
-	    'classnames'         	        : 'FL.UID.vendors.classnames',
-	    'camelcase'						: 'FL.UID.vendors.camelcase',
-        'react-laag'                    : 'FL.UID.vendors.ReactLaag',
-        'resize-observer-polyfill'      : 'FL.UID.vendors.ResizeObserverPolyfill',
-        'framer-motion'                 : 'FL.UID.vendors.FramerMotion',
-        */
+        'fluid/ui'                      : 'FL.UID',
 
 	    /* wp */
 	    '@wordpress/i18n'               : 'wp.i18n',

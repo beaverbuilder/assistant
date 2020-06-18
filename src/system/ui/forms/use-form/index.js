@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Switch, Route, useHistory } from 'react-router-dom'
-import { Nav, Button, Form, Page, Layout } from 'ui'
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
+import { Button, Form, Page, Layout } from 'ui'
 import { useFormData } from '../use-form-data'
 import './style.scss'
 
@@ -54,7 +54,6 @@ export const useForm = ( {
 const Tabs = ( { config } ) => {
 	const history = useHistory()
 	const location = history.location
-	const { match } = Nav.useNavContext()
 
 	const setTab = path => history.replace( path, location.state )
 	return (
@@ -74,7 +73,7 @@ const Tabs = ( { config } ) => {
 					}
 					return (
 						<Button key={ i }
-							onClick={ () => setTab( path ? path : match.url ) }
+							onClick={ () => setTab( path ? path : location.pathname ) }
 							isSelected={ path === location.pathname }
 						>
 							{ label }
@@ -87,7 +86,7 @@ const Tabs = ( { config } ) => {
 }
 
 const TabsContent = ( { config, data } ) => {
-	const { match } = Nav.useNavContext()
+	const location = useLocation()
 	return (
 		<Switch>
 			{ Object.entries( config ).map( ( [ , tab ], i ) => {
@@ -98,7 +97,7 @@ const TabsContent = ( { config, data } ) => {
 				return (
 					<Route
 						key={ i }
-						path={ path ? path : match.url }
+						path={ path ? path : location.pathname }
 						exact={ exact }
 						render={ () => {
 							if ( 'function' === typeof sections ) {

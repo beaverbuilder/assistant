@@ -7,7 +7,6 @@ import { List } from './lists'
 import Layout from './layout'
 import { Page } from './pages'
 import Nav from './nav'
-import Error from './errors'
 import { Control, Filter } from './controls'
 import { Form } from './forms'
 import Media from './upload'
@@ -20,7 +19,6 @@ export * from './app'
 export * from './appearance'
 export * from './lists'
 export * from './pages'
-export * from './nav'
 export * from './button'
 export * from './art'
 export * from './controls'
@@ -32,7 +30,7 @@ export {
 	Notice,
 	Menu,
 	Media,
-	Error,
+	Nav,
 }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
@@ -48,7 +46,6 @@ export const api = {
 	List,
 	Layout,
 	Page,
-	Error,
 	Env,
 	Nav,
 	Notice,

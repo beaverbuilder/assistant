@@ -7,7 +7,6 @@ const useFocus = () => {
 		onFocus: () => setIsFocused( true ),
 		onBlur: () => setIsFocused( false ),
 	}
-
 	return [ isFocused, focusProps ]
 }
 

@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { App } from '@beaverbuilder/app-core'
 import { List, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { addFilter } from 'assistant/hooks'

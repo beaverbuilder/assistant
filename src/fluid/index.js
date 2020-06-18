@@ -1,7 +1,8 @@
-import FLUID from '@beaverbuilder/fluid'
-import '@beaverbuilder/fluid/dist/index.css'
+// Absolutely have to be set up first
+import './vendors'
 
-// Ensure FL exists
-window.FL = window.FL || {}
+// FL.UID
+import * as FLUID from '@beaverbuilder/fluid'
+import '@beaverbuilder/fluid/dist/index.css'
 
 FL.UID = FLUID

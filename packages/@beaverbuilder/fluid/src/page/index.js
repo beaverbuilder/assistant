@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react'
 import classname from 'classnames'
-import Nav from '../nav'
 import Section from './section'
 import Error from '../error'
 import Layout from '../layout'
@@ -34,7 +33,6 @@ const Page = ( {
 
 	...rest
 } ) => {
-	const { isRoot } = useContext( Nav.Context )
 	const classes = classname( 'fluid-page', className )
 
 	// Handle initial loading, like focusing.
@@ -45,7 +43,7 @@ const Page = ( {
 	if ( 'boolean' === typeof shouldShowBackButton ) {
 		showBackButton = shouldShowBackButton
 	} else if ( 'function' === typeof shouldShowBackButton ) {
-		showBackButton = shouldShowBackButton( ! isRoot )
+		showBackButton = shouldShowBackButton()
 	}
 
 	const Hero = ( { children } ) => {

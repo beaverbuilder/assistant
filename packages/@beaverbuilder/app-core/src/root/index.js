@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import Error from '../error'
 

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import { ToggleLayer, useHover, Arrow } from 'react-laag'
 import ResizeObserver from 'resize-observer-polyfill'
-import { useFocus } from '../../../utils'
+import useFocus from '../use-focus'
 import Button from '../base'
 
 const TooltipButton = forwardRef( ( props, ref ) => {

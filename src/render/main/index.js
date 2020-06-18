@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
-import { useLocation, useHistory, Route, Switch } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
-import { Root as AppCoreRoot } from '@beaverbuilder/app-core'
+import { Root as AppCoreRoot, Error } from '@beaverbuilder/app-core'
 import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
 import {
 	Appearance,
-	App,
 	Icon,
-	Error,
 	Page,
 	Env,
 } from 'assistant/ui'
@@ -65,7 +63,8 @@ export const Assistant = () => {
 		return (
 			state.appearance.brightness !== newState.appearance.brightness ||
 			state.isAppHidden !== newState.isAppHidden
-			// We only need history initially - we're not listening for changes
+
+		// We only need history initially - we're not listening for changes
 		)
 	} )
 	const { brightness = 'light' } = appearance

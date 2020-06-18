@@ -1,3 +1,3 @@
-import { Error } from 'fluid/ui'
+import { Error } from '@beaverbuilder/app-core'
 
 export default Error

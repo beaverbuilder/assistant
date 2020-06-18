@@ -1,7 +1,8 @@
 import React, { createContext } from 'react'
 import classname from 'classnames'
+import { App } from '@beaverbuilder/app-core'
 import { Page as FLUIDPage } from 'fluid/ui'
-import { App, Nav } from 'ui'
+import { Nav } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
 import { RegisteredSections } from './parts'
@@ -38,7 +39,7 @@ const Page = ( {
 	children,
 	...rest
 } ) => {
-	const { isAppRoot } = App.useApp()
+	const { isAppRoot } = App.use()
 	const classes = classname( {
 		'is-app-root': isAppRoot || showAsRoot,
 		'fl-asst-page-has-tabs': tabs,

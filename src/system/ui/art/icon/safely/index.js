@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import Icon from '../'
-import { Error } from 'ui'
+import { Error } from '@beaverbuilder/app-core'
 
 const Safely = ( {
 	icon: Tag = Icon.Placeholder,
