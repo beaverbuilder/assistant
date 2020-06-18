@@ -19,24 +19,19 @@ export const isValidToken = ( token ) => {
 }
 
 export const hasToken = () => {
-	const token = getToken()
-	return isValidToken( token )
+	return isValidToken( getToken() )
 }
 
 export const getToken = () => {
-	const cookies = cookie.parse( document.cookie )
-	return cookies[ FL_CLOUD_TOKEN_KEY ] ? cookies[ FL_CLOUD_TOKEN_KEY ] : null
+	return getCookie( FL_CLOUD_TOKEN_KEY )
 }
 
 export const setToken = ( token, remember ) => {
-	const options = {
-		expires: new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
-	}
-	document.cookie = cookie.serialize( FL_CLOUD_TOKEN_KEY, token, remember ? options : {} )
+	setCookie( FL_CLOUD_TOKEN_KEY, token, remember )
 }
 
 export const removeToken = () => {
-	document.cookie = cookie.serialize( FL_CLOUD_TOKEN_KEY, '' )
+	removeCookie( FL_CLOUD_TOKEN_KEY )
 }
 
 export const isValidUser = ( user ) => {
@@ -44,22 +39,47 @@ export const isValidUser = ( user ) => {
 }
 
 export const hasUser = () => {
-	const user = getUser()
-	return isValidUser( user )
+	return isValidUser( getUser() )
 }
 
 export const getUser = () => {
-	const cookies = cookie.parse( document.cookie )
-	return cookies[ FL_CLOUD_USER_KEY ] ? JSON.parse( cookies[ FL_CLOUD_USER_KEY ] ) : null
+	const user = getCookie( FL_CLOUD_USER_KEY )
+	return user ? JSON.parse( user ) : null
 }
 
 export const setUser = ( user, remember ) => {
-	const options = {
-		expires: new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
-	}
-	document.cookie = cookie.serialize( FL_CLOUD_USER_KEY, JSON.stringify( user ), remember ? options : {} )
+	setCookie( FL_CLOUD_USER_KEY, JSON.stringify( user ), remember )
 }
 
 export const removeUser = () => {
-	document.cookie = cookie.serialize( FL_CLOUD_USER_KEY, '' )
+	removeCookie( FL_CLOUD_USER_KEY )
+}
+
+/**
+ * Cookie helpers
+ *
+ * TODO: We're using localStorage here since cookies aren't working
+ * correctly with webpack-serve. This needs to be figured out
+ * at some point as localStorage isn't as secure as cookies.
+ */
+const setCookie = ( key, value, remember ) => {
+	// const options = {
+	// 	expires: new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
+	// }
+	// document.cookie = cookie.serialize( key, value, remember ? options : {} )
+
+	localStorage.setItem( key, value )
+}
+
+const getCookie = ( key ) => {
+	// const cookies = cookie.parse( document.cookie )
+	// return cookies[ key ] ? cookies[ key ] : null
+
+	return localStorage.getItem( key )
+}
+
+const removeCookie = ( key ) => {
+	// document.cookie = cookie.serialize( key, '' )
+
+	localStorage.setItem( key, '' )
 }
