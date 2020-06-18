@@ -1,28 +1,29 @@
 import React from 'react'
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
-import { useCloudState } from 'assistant/data'
+import cloud from 'assistant/cloud'
 
+import Connect from './pages/auth/connect'
 import Login from './pages/auth/login'
 import Register from './pages/auth/register'
-import ForgotPassword from './pages/auth/forgot-password'
 
 import Dashboard from './pages/dashboard'
 import Teams from './pages/teams'
 import NewTeam from './pages/teams/new-team'
 import Sites from './pages/sites'
 import NewLibrary from './pages/libraries/new-library'
-import NewLibraryItem from './pages/libraries/new-item'
+import NewLibraryItem from './pages/libraries/items/new-item'
 import Library from './pages/libraries/library'
-import LibraryItem from './pages/libraries/library-item'
+import LibraryItem from './pages/libraries/items/item'
 import Profile from './pages/profile/index.js'
 import Subscription from './pages/subscription'
 
 export default ( { baseURL } ) => {
-	const { isCloudConnected } = useCloudState()
 	const { pathname } = useLocation()
 	const history = useHistory()
+	const isCloudConnected = cloud.auth.isConnected()
 
 	if ( ! isCloudConnected && ! pathname.includes( '/auth/' ) ) {
+		//history.replace( '/fl-cloud/auth/connect' )
 		history.replace( '/fl-cloud/auth/login' )
 		return null
 	}
@@ -37,9 +38,9 @@ export default ( { baseURL } ) => {
 			<Route exact path={ `${baseURL}` } component={ Dashboard } />
 
 			{ /* Auth */ }
+			<Route path={ `${baseURL}/auth/connect` } component={ Connect } />
 			<Route path={ `${baseURL}/auth/login` } component={ Login } />
 			<Route path={ `${baseURL}/auth/register` } component={ Register } />
-			<Route path={ `${baseURL}/auth/forgot-password` } component={ ForgotPassword } />
 
 			{ /* Teams */ }
 			<Route exact path={ `${baseURL}/teams` } component={ Teams } />

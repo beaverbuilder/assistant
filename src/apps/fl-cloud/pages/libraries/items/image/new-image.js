@@ -1,32 +1,31 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 
 export default ( { libraryId, onCreate } ) => {
 
 	const fields = {
-		color: {
-			label: __( 'Hex Value' ),
-			component: 'text',
+		image: {
+			label: __( 'Image' ),
+			component: 'file',
 			alwaysCommit: true,
+			accept: 'image/png, image/jpeg',
 			validate: ( value, errors ) => {
 				if ( ! value ) {
-					errors.push( __( 'Please enter a hex value.' ) )
+					errors.push( __( 'Please choose a file.' ) )
 				}
 			}
 		},
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		const { color } = values
-		const data = {
-			type: 'color',
-			name: color,
-			data: {
-				hex: color
-			}
-		}
+		const { image } = values
+		const data = new FormData()
+
+		data.append( 'type', 'image' )
+		data.append( 'name', image[0].name )
+		data.append( 'media', image[0] )
 
 		return cloud.libraries.createItem( libraryId, data ).then( () => {
 			onCreate()
@@ -48,7 +47,7 @@ export default ( { libraryId, onCreate } ) => {
 		<>
 			{ renderForm() }
 			<Button.Loading isLoading={ isSubmitting } onClick={ submitForm }>
-				{ __( 'Add Color' ) }
+				{ __( 'Add Image' ) }
 			</Button.Loading>
 		</>
 	)

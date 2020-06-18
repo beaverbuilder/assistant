@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Icon, Form, Layout, Nav, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import { getCloudHooks } from 'assistant/data'
+import cloud from 'assistant/cloud'
 import { TeamMembers } from './members.js'
 import { TeamInvite } from './invite.js'
 import { TeamInfo } from './info.js'
 import './style.scss'
 
-export default ( { history, location } ) => {
-	const { id } = location.state ? location.state : {}
-	const [ currentTeamId, setCurrentTeamId ] = useState( id ? id : 0 )
+export default ( { history } ) => {
+	const { useCurrentTeam } = getCloudHooks()
+	const [ currentTeam, setCurrentTeam ] = useCurrentTeam()
 	const [ teams, setTeams ] = cloud.teams.useAll()
-	const [ team, setTeam ] = cloud.teams.useOne( currentTeamId )
+	const [ team, setTeam ] = cloud.teams.useOne( currentTeam )
 
 	useEffect( () => {
-		if ( ! currentTeamId && teams && teams.length ) {
-			setCurrentTeamId( teams[0].id )
+		if ( ! currentTeam && teams && teams.length ) {
+			setCurrentTeam( teams[0].id )
 		}
 	}, [ teams ] )
 
@@ -43,7 +44,7 @@ export default ( { history, location } ) => {
 	}
 
 	const onTeamDeleted = id => {
-		setCurrentTeamId( 0 )
+		setCurrentTeam( 0 )
 		setTeam( null )
 		setTeams( teams.filter( team => team.id !== id ) )
 	}
@@ -51,7 +52,7 @@ export default ( { history, location } ) => {
 	const leaveTeam = () => {
 		const { id } = team
 		if ( confirm( __( 'Do you really want to leave this team?' ) ) ) {
-			setCurrentTeamId( 0 )
+			setCurrentTeam( 0 )
 			setTeam( null )
 			cloud.teams.delete( id ).then( () => {
 				setTeams( teams.filter( team => team.id !== id ) )
@@ -103,18 +104,18 @@ export default ( { history, location } ) => {
 			padX={ false }
 			padY={ false }
 		>
-			{ ( ! teams || ! currentTeamId ) &&
+			{ ( ! teams || ! currentTeam ) &&
 				<Layout.Box>
 					<Layout.Loading style={ { alignSelf: 'center', alignItems: 'flex-start' } } />
 				</Layout.Box>
 			}
-			{ teams && !! currentTeamId &&
+			{ teams && !! currentTeam &&
 				<>
 					<Layout.Box style={ { flexDirection: 'row' } }>
 						<Form.SelectItem
 							options={ getTeamOptions() }
-							value={ currentTeamId }
-							onChange={ value => setCurrentTeamId( parseInt( value ) ) }
+							value={ currentTeam }
+							onChange={ value => setCurrentTeam( parseInt( value ) ) }
 						></Form.SelectItem>
 						<Button to='/fl-cloud/teams/new' style={ { marginLeft: '10px' } }>
 							<Icon.Plus />
@@ -133,12 +134,12 @@ export default ( { history, location } ) => {
 						padY={ false }
 					>
 						<Nav.Tabs tabs={ tabs } />
-						{ ( ! team || ( team.id !== currentTeamId ) ) &&
+						{ ( ! team || ( team.id !== currentTeam ) ) &&
 							<Layout.Box>
 								<Layout.Loading style={ { alignSelf: 'center', alignItems: 'flex-start' } } />
 							</Layout.Box>
 						}
-						{ team && team.id === currentTeamId &&
+						{ team && team.id === currentTeam &&
 							<Nav.CurrentTab tabs={ tabs } />
 						}
 					</Layout.Box>

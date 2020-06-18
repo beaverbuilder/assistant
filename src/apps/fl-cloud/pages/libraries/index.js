@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
+import { getCloudHooks } from 'assistant/data'
 import { Button, Form, Icon, Layout, List, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 import './style.scss'
 
 export default () => {
-	const location = useLocation()
-	const { team } = location.state ? location.state : {}
-	const [ ownerId, setOwnerId ] = useState( team )
+	const { useCurrentTeam } = getCloudHooks()
+	const [ currentTeam, setCurrentTeam ] = useCurrentTeam()
 	const [ teams ] = cloud.teams.useAll()
-	const [ libraries ] = cloud.libraries.useAll( ownerId )
+	const [ libraries ] = cloud.libraries.useAll( currentTeam )
 
 	if ( ! teams ) {
 		return <Page.Loading />
@@ -44,8 +43,8 @@ export default () => {
 			<Layout.Box padY={ false } style={ { flexDirection: 'row' } }>
 				<Form.SelectItem
 					options={ getOwnerOptions() }
-					value={ ownerId }
-					onChange={ value => setOwnerId( parseInt( value ) ) }
+					value={ currentTeam }
+					onChange={ value => setCurrentTeam( parseInt( value ) ) }
 				></Form.SelectItem>
 				<Button to='/fl-cloud/libraries/new' style={ { marginLeft: '10px' } }>
 					<Icon.Plus />

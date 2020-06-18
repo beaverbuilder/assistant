@@ -6,3 +6,14 @@
 		padding-bottom: 0 !important;
 	}
 }
+
+.fl-asst-table-cell {
+
+	&.fl-asst-table-cell-name {
+		display: flex;
+		align-items: center;
+	}
+	&.fl-asst-table-cell-actions {
+		flex: 0 1 auto;
+	}
+}

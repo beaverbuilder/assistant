@@ -64,6 +64,7 @@ const externals = [
         'assistant/ui'          		: 'FL.Assistant.ui',
         'assistant/utils'       		: 'FL.Assistant.utils',
         'assistant/hooks'               : 'FL.Assistant.hooks',
+        'assistant/cloud'               : 'FL.Assistant.cloud',
 	},
 	function( context, request, callback ) {
 		/* Nested util imports */

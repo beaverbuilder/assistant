@@ -1,14 +1,13 @@
-import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
+import { registerStore, useStore, getStore, getDispatch, getSelectors, getHooks } from '../registry'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
-import cloud from 'utils/cloud'
+
+const KEY = 'fl-assistant/cloud'
 
 const state = {
-	isCloudConnected: cloud.auth.isConnected(),
-	cloudToken: cloud.session.getToken(),
-	cloudUser: cloud.session.getUser()
+	currentTeam: 0,
 }
 
 registerStore( 'fl-assistant/cloud', {
@@ -19,18 +18,12 @@ registerStore( 'fl-assistant/cloud', {
 	selectors,
 } )
 
-export const useCloudState = () => {
-	return useStore( 'fl-assistant/cloud' )
-}
+export const useCloudState = shouldUpdate => useStore( KEY, shouldUpdate )
 
-export const getCloudStore = () => {
-	return getStore( 'fl-assistant/cloud' )
-}
+export const getCloudStore = () => getStore( KEY )
 
-export const getCloudActions = () => {
-	return getDispatch( 'fl-assistant/cloud' )
-}
+export const getCloudActions = () => getDispatch( KEY )
 
-export const getCloudSelectors = () => {
-	return getSelectors( 'fl-assistant/cloud' )
-}
+export const getCloudSelectors = () => getSelectors( KEY )
+
+export const getCloudHooks = () => getHooks( KEY )

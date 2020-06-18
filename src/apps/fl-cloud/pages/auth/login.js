@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import { getSystemConfig } from 'assistant/data'
+import cloud from 'assistant/cloud'
 import AuthLayout from './layout'
 
 export default ( { location, history } ) => {
+	const { cloudUrl } = getSystemConfig()
 	const { registered } = location.state ? location.state : {}
 	const [ errorMessage, setErrorMessage ] = useState( null )
 
@@ -89,7 +91,9 @@ export default ( { location, history } ) => {
 				<div className="fl-asst-auth-links">
 					<Nav.Link to="/fl-cloud/auth/register">{ __( 'Register' ) }</Nav.Link>
 					<span> | </span>
-					<Nav.Link to="/fl-cloud/auth/forgot-password">{ __( 'Forgot Password?' ) }</Nav.Link>
+					<a href={ `${ cloudUrl }/password/reset?external_redirect=${ encodeURIComponent( window.location.href ) }` }>
+						{ __( 'Forgot Password?' ) }
+					</a>
 				</div>
 			</div>
 		</AuthLayout>

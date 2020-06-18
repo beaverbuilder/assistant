@@ -1,3 +1,9 @@
+import moment from 'moment'
+
+export const formatDate = ( date, format ) => {
+	return moment( date ).format( format ? format : 'MMMM Do, YYYY' )
+}
+
 export const getTimestamp = () => {
 	return Math.round( new Date().getTime() / 1000 )
 }

@@ -1,8 +1,9 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Icon, Layout, Nav, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 import LibraryItems from './library-items'
+import LibraryCollections from './library-collections'
 import LibrarySettings from './library-settings'
 
 export default ( { match } ) => {
@@ -20,6 +21,12 @@ export default ( { match } ) => {
 			path: `/fl-cloud/libraries/${ id }`,
 			component: () => <LibraryItems library={ library } />,
 			exact: true,
+		},
+		{
+			handle: 'collections',
+			label: __( 'Collections' ),
+			path: `/fl-cloud/libraries/${ id }/tab/collections`,
+			component: () => <LibraryCollections library={ library } />,
 		},
 	]
 

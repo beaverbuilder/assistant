@@ -20,6 +20,7 @@
   "license": "GPL-2.0+",
   "dependencies": {
     "@beaverbuilder/app-core": "^0.1.4",
+    "@beaverbuilder/cloud": "^0.1.2",
     "@beaverbuilder/fluid": "^0.4.1",
     "@popmotion/popcorn": "^0.4.4",
     "array-move": "^2.2.2",
@@ -29,6 +30,7 @@
     "cookie": "^0.4.1",
     "framer-motion": "^1.11.1",
     "md5": "^2.2.1",
+    "moment": "^2.26.0",
     "promise": "^8.1.0",
     "qs": "^6.9.3",
     "react-clipboard.js": "^2.0.16",
