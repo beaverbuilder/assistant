@@ -3,6 +3,7 @@ import classname from 'classnames'
 import Section from './section'
 import Error from '../error'
 import Layout from '../layout'
+import { Button } from '../'
 import './style.scss'
 
 const Page = ( {
@@ -107,7 +108,7 @@ const Page = ( {
 						{ toolbar }
 						{ false !== toolbar && ! toolbar && (
 							<div className="fluid-toolbar fluid-page-top-toolbar">
-								{ showBackButton && <Nav.BackButton /> }
+								{ showBackButton && <Button.Back /> }
 								{ icon && (
 									<span className="fluid-page-title-icon">
 										{icon}
