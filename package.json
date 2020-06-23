@@ -29,6 +29,7 @@
     "classnames": "^2.2.6",
     "cookie": "^0.4.1",
     "framer-motion": "^1.11.1",
+    "history": "^5.0.0",
     "md5": "^2.2.1",
     "moment": "^2.26.0",
     "promise": "^8.1.0",

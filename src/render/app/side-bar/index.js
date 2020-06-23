@@ -1,7 +1,7 @@
 import React, { useState, memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Button, Icon, Env, List } from 'assistant/ui'
 import {
 	useSystemState,
@@ -40,8 +40,8 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 		return isMobile ? 3 : 5
 	}
 	const [ appOrder, setAppOrder ] = useAppOrder( { maxCount: getMaxCount() } )
-	const { pathname } = useLocation()
 	const history = useHistory()
+	const { pathname } = history.location
 
 	const isBeaverBuilder = 'beaver-builder' === application
 	const isRoot = 0 === history.index
@@ -57,10 +57,8 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 		const sizes = [ 'mini', 'normal' ]
 		const current = sizes.indexOf( window.size )
 		const next = ( current + 1 ) % sizes.length
-
 		setWindow( { ...window, size: sizes[next] } )
 	}
-
 	const goToRoot = () => {
 		history.go( -history.length )
 		history.replace( '/', {} )

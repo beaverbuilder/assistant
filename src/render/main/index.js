@@ -3,27 +3,21 @@ import { useLocation, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Root as AppCoreRoot, Error } from '@beaverbuilder/app-core'
-import { getSystemActions, useSystemState, getSystemStore } from 'assistant/data'
+import {
+	getSystemActions,
+	useSystemState,
+	getSystemStore,
+} from 'assistant/data'
+
 import {
 	Appearance,
 	Icon,
 	Page,
 	Env,
 } from 'assistant/ui'
+import AssistantRouter from './router'
 import AppMain from '../app'
 import Window from '../window'
-
-const getRouterProps = history => {
-	const props = {
-		initialIndex: history.index,
-
-		/* do NOT include a default for initialEntries */
-	}
-	if ( history.entries && history.entries.length ) {
-		props.initialEntries = history.entries
-	}
-	return props
-}
 
 const HistoryManager = () => {
 	const location = useLocation()
@@ -39,13 +33,15 @@ const HistoryManager = () => {
 }
 
 // TEMP fluid root
-const FLUIDAppearanceRoot = ( { colorScheme = 'light', className, ...rest } ) => {
-	const classes = classname( {
-		'fluid': true,
-		'fl': true,
-		'uid': true,
+const FLUIDAppearanceRoot = ( {
+	colorScheme = 'light',
+	className,
+	...rest
+} ) => {
+	const classes = classname( 'fluid fl uid', {
 		[`fluid-color-scheme-${colorScheme}`]: colorScheme
 	}, className )
+
 	return (
 		<div className={ classes } { ...rest } />
 	)
@@ -56,22 +52,18 @@ const FLUIDAppearanceRoot = ( { colorScheme = 'light', className, ...rest } ) =>
  */
 export const Assistant = () => {
 	const {
-		appearance,
-		history,
+		appearance: { brightness = 'light' },
 		isAppHidden
-	} = useSystemState( ( state, newState ) => {
-		return (
-			state.appearance.brightness !== newState.appearance.brightness ||
-			state.isAppHidden !== newState.isAppHidden
-
-		// We only need history initially - we're not listening for changes
-		)
+	} = useSystemState( ( a, b ) => (
+		a.appearance.brightness !== b.appearance.brightness ||
+		a.isAppHidden !== b.isAppHidden
+	) )
+	const windowClasses = classname( {
+		'fl-asst-window-sidebar-only': isAppHidden
 	} )
-	const { brightness = 'light' } = appearance
-	const windowClasses = classname( { 'fl-asst-window-sidebar-only': isAppHidden } )
 
 	return (
-		<AppCoreRoot routerProps={ getRouterProps( history ) }>
+		<AppCoreRoot router={ AssistantRouter } >
 			<HistoryManager />
 			<Env.Provider>
 				<FLUIDAppearanceRoot colorScheme={ brightness }>
@@ -102,8 +94,9 @@ export const getAssistantBBPanelConfig = () => {
 	const { setHistory } = getSystemActions()
 
 	const getProps = () => {
-		const { history } = getSystemStore().getState()
-		return getRouterProps( history )
+		//const { history } = getSystemStore().getState()
+		//return getRouterProps( history )
+		return {}
 	}
 
 	return {

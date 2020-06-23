@@ -5,6 +5,8 @@ import { __ } from '@wordpress/i18n'
 import { getSystemActions } from 'assistant/data'
 import './style.scss'
 
+import TestUI from './test'
+
 let mountNode = undefined
 
 const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode( mountNode )
@@ -74,3 +76,8 @@ if ( 'domReady' in wp ) {
 
 	} )
 }
+
+
+const tests = document.createElement( 'div' )
+document.body.appendChild( tests )
+render( <TestUI />, tests )

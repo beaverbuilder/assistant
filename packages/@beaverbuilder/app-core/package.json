@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/app-core",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "Utilities for managing apps via a redux store.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",

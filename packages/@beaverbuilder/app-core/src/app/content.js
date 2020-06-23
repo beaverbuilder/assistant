@@ -80,19 +80,13 @@ const AppRoot = memo( ( { root: Root, ...rest } ) => {
 	return Root ? <Root { ...rest } /> : <DefaultPageNotFound />
 } )
 
-const DefaultAppLoadingScreen = () => {
-    return (
-        <CenteredBox>{__('Loading...')}</CenteredBox>
-    )
-}
+const DefaultAppLoadingScreen = () => <CenteredBox>{__('Loading...')}</CenteredBox>
 
-const DefaultPageNotFound = () => {
-    return (
-        <CenteredBox>
-            <h1>{__('App Not Found')}</h1>
-        </CenteredBox>
-    )
-}
+const DefaultPageNotFound = () => (
+    <CenteredBox>
+        <h1>{__('App Not Found')}</h1>
+    </CenteredBox>
+)
 
 const DefaultErrorScreen = props => {
     const { label } = useAppContext()
@@ -104,20 +98,18 @@ const DefaultErrorScreen = props => {
     )
 }
 
-const CenteredBox = ({ children }) => {
-    return (
-        <div
-            style={{
-                flex: '1 1 auto',
-                minHeight: 0,
-                maxHeight: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}
-        >{children}</div>
-    )
-}
+const CenteredBox = ({ children }) => (
+    <div
+        style={{
+            flex: '1 1 auto',
+            minHeight: 0,
+            maxHeight: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}
+    >{children}</div>
+)
 
 export default Content

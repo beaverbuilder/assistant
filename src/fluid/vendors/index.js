@@ -10,15 +10,15 @@ window.FL = window.FL || {}
 const existing = FL.vendors || {}
 
 const vendors = {
-    ReactRouter,
-    Redux,
-    FramerMotion,
-    ReactLaag,
-    ResizeObserver,
-    classnames,
+	ReactRouter,
+	Redux,
+	FramerMotion,
+	ReactLaag,
+	ResizeObserver,
+	classnames,
 }
 
 FL.vendors = {
-    ...existing,
-    ...vendors
+	...existing,
+	...vendors
 }

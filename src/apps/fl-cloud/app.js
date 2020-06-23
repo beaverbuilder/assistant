@@ -23,6 +23,7 @@ export default ( { baseURL } ) => {
 	const isCloudConnected = cloud.auth.isConnected()
 
 	if ( ! isCloudConnected && ! pathname.includes( '/auth/' ) ) {
+
 		//history.replace( '/fl-cloud/auth/connect' )
 		history.replace( '/fl-cloud/auth/login' )
 		return null

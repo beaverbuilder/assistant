@@ -19,7 +19,6 @@ const AppCoreRoot = ({
     router: Router = MemoryRouter,
     routerProps = {}
 }) => {
-
     return (
         <Error.Boundary alternate={ error }>
             <Router {...routerProps}>
