@@ -243,6 +243,11 @@ const posts = () => {
 			config.cacheKey = 'posts'
 			return http.post( 'fl-assistant/v1/posts/override_lib_post', data, config )
 		},
+
+		saveToLibrary( id, libraryId, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, {}, config )
+		},
 	}
 }
 

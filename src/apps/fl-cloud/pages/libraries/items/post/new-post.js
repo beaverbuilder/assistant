@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { Button, Form } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { getSystemConfig } from 'assistant/data'
 

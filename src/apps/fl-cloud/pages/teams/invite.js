@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, List, Page } from 'assistant/ui'
 import { MembersListAccessory } from './components/members-list-accessory'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 
 export const TeamInvite = ( { team } ) => {
 	const [ email, setEmail ] = useState( '' )

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { getCloudHooks } from 'assistant/data'
 import { Button, Form, Icon, Layout, List, Page } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 import './style.scss'
 
 export default () => {

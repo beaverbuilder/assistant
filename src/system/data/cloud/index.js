@@ -3,14 +3,10 @@ import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
-import cloud from 'utils/cloud'
 
 const KEY = 'fl-assistant/cloud'
 
 const state = {
-	isCloudConnected: cloud.auth.isConnected(),
-	cloudToken: cloud.session.getToken(),
-	cloudUser: cloud.session.getUser(),
 	currentTeam: 0,
 }
 

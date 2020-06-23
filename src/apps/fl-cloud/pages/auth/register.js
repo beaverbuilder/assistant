@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav } from 'assistant/ui'
-import cloud from 'assistant/utils/cloud'
+import cloud from 'assistant/cloud'
 import AuthLayout from './layout'
 
 export default ( { history } ) => {
