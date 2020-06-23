@@ -231,12 +231,17 @@ const posts = () => {
 		 */
 		formedPost( id, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.get( `fl-assistant/v1/formed_posts/${id}`, config )
+			return http.get( `fl-assistant/v1/posts/formed_posts/${id}`, config )
 		},
 
 		importLibPost( data = {}, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( 'fl-assistant/v1/posts/import_lib_post', data, config )
+		},
+
+		overrideLibPost( data = {}, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( 'fl-assistant/v1/posts/override_lib_post', data, config )
 		},
 	}
 }

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Nav, Page } from 'assistant/ui'
 import cloud from 'assistant/utils/cloud'
+import { getWpRest } from 'assistant/utils/wordpress'
 
 export default ( { item, setItem } ) => {
 	const { id, itemId } = useParams()
@@ -74,6 +75,7 @@ const ItemSettings = ( { item, setItem } ) => {
 		} )
 	}
 
+
 	const {
 		renderForm,
 		submitForm,
@@ -94,7 +96,17 @@ const ItemSettings = ( { item, setItem } ) => {
 	)
 }
 
-const ItemImport = () => {
+const ItemImport = ( { item, setItem } ) => {
+
+
+	const overRidePost = () => {
+		const wpRest = getWpRest()
+		item.data.override_items = ['content','meta'];
+		setItem( item )
+		wpRest.posts().overrideLibPost( item.data ).then( response => {
+			console.log( response )
+		} )
+	}
 	return (
 		<>
 			<Page.Section label={ __( 'Importing Posts' ) }>
@@ -109,7 +121,7 @@ const ItemImport = () => {
 				<div>Clicking override should override the current post you are viewing with the library post...</div>
 				<div>1. Give options to override content, meta and terms.</div>
 				<br />
-				<Button>{ __( 'Override Current Post' ) }</Button>
+				<Button onClick={ overRidePost() }>{ __( 'Override Current Post' ) }</Button>
 			</Page.Section>
 		</>
 	)
