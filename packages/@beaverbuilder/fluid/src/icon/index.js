@@ -19,6 +19,11 @@ import Reply from './reply'
 import Approve from './approve'
 import Reject from './reject'
 import Clone from './clone'
+import Close from './close'
+import CloseCompact from './close-compact'
+import Search from './search'
+import Plus from './plus'
+import Return from './return'
 
 // Aliases
 const BackArrow = ArrowLeft
@@ -46,4 +51,9 @@ export {
 	Approve,
 	Reject,
 	Clone,
+	Close,
+	CloseCompact,
+	Search,
+	Plus,
+	Return,
 }

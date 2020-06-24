@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Pencil = ( { size = 45, ...rest } ) => {
+const Pencil = ( { size = 20, ...rest } ) => {
 
 	// View box is intentionally larger than art to offset the art to the top and left
 	return (

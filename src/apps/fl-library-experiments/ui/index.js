@@ -7,6 +7,8 @@ export const Main = () => {
 	return (
 		<Page
 			title={ __( 'Libraries yo' ) }
-		>Main yo</Page>
+		>
+			Should put something here.
+		</Page>
 	)
 }

@@ -46,6 +46,7 @@ const externals = [
 
         /* FLUID environment */
         'fluid/ui'                      : 'FL.UID',
+        'fluid'                      : 'FL.UID',
 
 	    /* wp */
 	    '@wordpress/i18n'               : 'wp.i18n',
