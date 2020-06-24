@@ -8,13 +8,11 @@ import Connect from './pages/connect'
 import Dashboard from './pages/dashboard'
 import Teams from './pages/teams'
 import NewTeam from './pages/teams/new-team'
-import Sites from './pages/sites'
 import NewLibrary from './pages/libraries/new-library'
 import NewLibraryItem from './pages/libraries/items/new-item'
 import Library from './pages/libraries/library'
 import LibraryItem from './pages/libraries/items/item'
 import Profile from './pages/profile/index.js'
-import Subscription from './pages/subscription'
 
 export default ( { baseURL } ) => {
 	const { pathname } = useLocation()
@@ -43,9 +41,6 @@ export default ( { baseURL } ) => {
 			<Nav.Route path={ `${baseURL}/teams/tab/:tab` } component={ Teams } />
 			<Nav.Route path={ `${baseURL}/teams/new` } component={ NewTeam } />
 
-			{ /* Sites */ }
-			<Nav.Route path={ `${baseURL}/sites` } component={ Sites } />
-
 			{ /* Libraries */ }
 			<Nav.Route path={ `${baseURL}/libraries/new` } component={ NewLibrary } />
 			<Nav.Route path={ `${baseURL}/libraries/:id/items/new` } component={ NewLibraryItem } />
@@ -56,9 +51,6 @@ export default ( { baseURL } ) => {
 			{ /* Profile */ }
 			<Nav.Route path={ `${baseURL}/profile` } component={ Profile } />
 			<Nav.Route path={ `${baseURL}/profile/tab/:tab` } component={ Profile } />
-
-			{ /* Subscription */ }
-			<Nav.Route path={ `${baseURL}/subscription` } component={ Subscription } />
 		</Nav.Switch>
 	)
 }
