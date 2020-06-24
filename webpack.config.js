@@ -82,7 +82,7 @@ const externals = [
 const entry = { // if you change a key here, you need to update the enqueue url to match
     system: './src/system',
     apps: './src/apps',
-    fluid: './src/fluid',
+    vendors: './src/vendors',
 }
 
 const config = {

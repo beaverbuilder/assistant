@@ -1,5 +1,5 @@
 import { toggleUI } from 'assistant'
-import { getSystemStore } from 'assistant/data'
+import { getSystemStore } from 'data'
 
 const store = getSystemStore()
 const { window } = store.getState()

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createRef, createContext, useContext } from 'react'
 import classname from 'classnames'
 import { Flipped, Flipper } from 'react-flip-toolkit'
-import { getSystemConfig, useSystemState } from 'assistant/data'
-import { Env } from 'assistant/ui'
+import { getSystemConfig, useSystemState } from 'data'
+import { Env } from 'ui'
 import './style.scss'
 
 const transition = {

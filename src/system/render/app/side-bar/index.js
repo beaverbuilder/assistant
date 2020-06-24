@@ -2,13 +2,13 @@ import React, { useState, memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
-import { Button, Icon, Env, List } from 'assistant/ui'
+import { Button, Icon, Env, List } from 'ui'
 import {
 	useSystemState,
 	getSystemActions,
 	getSystemSelectors,
 } from 'assistant/data'
-import { useMedia } from 'assistant/utils/react'
+import { useMedia } from 'utils/react'
 import useAppOrder from './use-app-order'
 import './style.scss'
 

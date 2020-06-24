@@ -1,8 +1,8 @@
 import React from 'react'
 import classname from 'classnames'
 import { App } from '@beaverbuilder/app-core'
-import { Env } from 'assistant/ui'
-import { useSystemState } from 'assistant/data'
+import { Env } from 'ui'
+import { useSystemState } from 'data'
 import Sidebar from './side-bar'
 
 //import ErrorPage from './error-page'

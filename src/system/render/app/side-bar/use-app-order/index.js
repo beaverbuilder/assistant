@@ -1,4 +1,4 @@
-import { useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
+import { useSystemState, getSystemActions, getSystemSelectors } from 'data'
 
 const defaults = { maxCount: null }
 
