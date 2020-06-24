@@ -1,35 +1,46 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Layout } from 'assistant/ui'
+import { Button, Layout, Page } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import { getQueryArgs, addQueryArgs } from 'assistant/utils/url'
 import cloud from 'assistant/cloud'
-import AuthLayout from './layout'
+import AppIcon from '../../icon'
 
 export default ( { location, history } ) => {
 	const { cloudAppUrl } = getSystemConfig()
 	const { href } = window.location
 	const { token, ...args } = getQueryArgs( href )
+	const [ isTokenValid, setIsTokenValid ] = useState( !! token )
 
-	if ( token ) {
-		cloud.session.create( token, { email: 'test@test.com' }, true )
-		history.replace( '/fl-cloud' )
-		window.location.href = addQueryArgs( href.split( '?' ).shift(), args )
-		return null
+	if ( token && isTokenValid ) {
+		cloud.session.setToken( token )
+		cloud.auth.refresh().then( response => {
+			cloud.session.create( response.token, response.user, true )
+			window.location.href = addQueryArgs( href.split( '?' ).shift(), args )
+		} ).catch( () => {
+			cloud.session.destroy()
+			setIsTokenValid( false )
+		} )
+		return <Page.Loading />
 	}
 
 	const connect = () => {
-		const redirect = encodeURIComponent( window.location.href )
+		const redirect = encodeURIComponent( href )
 		window.location.href = `${ cloudAppUrl }/login/connect?redirect=${ redirect }`
 	}
 
 	return (
-		<AuthLayout>
+		<Page
+			className='fl-asst-connect-layout'
+			title={ __( 'Cloud' ) }
+			icon={ <AppIcon context='sidebar' /> }
+			shouldShowBackButton={ false }
+		>
 			<Layout.Headline>{ __( 'Connect to Assistant Cloud' ) }</Layout.Headline>
 			<p>{ __( 'Click the button below to connect this site to your Assistant Cloud account.' ) }</p>
 			<Button status="primary" onClick={ connect }>
 				{ __( 'Connect' ) }
 			</Button>
-		</AuthLayout>
+		</Page>
 	)
 }

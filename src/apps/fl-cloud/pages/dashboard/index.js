@@ -1,5 +1,4 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import cloud from 'assistant/cloud'
 import { Button, Layout, Page } from 'assistant/ui'
@@ -20,12 +19,6 @@ export default () => {
 }
 
 const ElevatorButtons = () => {
-	const history = useHistory()
-	const logout = () => {
-		cloud.auth.logout()
-		history.replace( '/fl-cloud/auth/login' )
-	}
-
 	return (
 		<Layout.Box
 			padX={ false }
@@ -46,16 +39,6 @@ const ElevatorButtons = () => {
 					style={ { marginTop: '-8px' } }
 				></span>
 			</Button>
-			{/*<Button
-				appearance='elevator'
-				title={ __( 'Sites' ) }
-				to='/fl-cloud/sites'
-			>
-				<span
-					className="dashicons dashicons-networking"
-					style={ { marginTop: '-8px' } }
-				></span>
-			</Button>*/}
 			<Button
 				appearance='elevator'
 				title={ __( 'Profile' ) }
@@ -69,7 +52,7 @@ const ElevatorButtons = () => {
 			<Button
 				appearance='elevator'
 				title={ __( 'Logout' ) }
-				onClick={ logout }
+				onClick={ cloud.auth.logout }
 			>
 				<span
 					className="dashicons dashicons-lock"

@@ -5,12 +5,14 @@ import * as reducers from './reducers'
 import * as effects from './effects'
 import * as selectors from './selectors'
 import useAppList from './use-app-list'
+import cloud from '../../cloud'
 
 const KEY = 'fl-assistant/system'
 
 registerStore( KEY, {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
+		isCloudConnected: cloud.auth.isConnected(),
 	},
 	actions,
 	reducers,
