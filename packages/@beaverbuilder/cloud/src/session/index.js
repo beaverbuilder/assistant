@@ -31,7 +31,7 @@ export const destroy = () => {
  * Token methods
  */
 export const isValidToken = ( token ) => {
-	return token && 'string' === typeof token
+	return !! ( token && 'string' === typeof token )
 }
 
 export const hasToken = () => {
@@ -54,7 +54,7 @@ export const removeToken = () => {
  * User methods
  */
 export const isValidUser = ( user ) => {
-	return user && 'object' === typeof user && user.hasOwnProperty( 'email' )
+	return !! ( user && 'object' === typeof user && user.hasOwnProperty( 'email' ) )
 }
 
 export const hasUser = () => {
