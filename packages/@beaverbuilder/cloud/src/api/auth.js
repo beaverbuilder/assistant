@@ -93,7 +93,7 @@ export default ( http ) => {
 						}
 						const { token } = response.data
 						session.setToken( token )
-						resolve( token )
+						resolve( response.data )
 					} )
 					.catch( error => {
 						session.destroy()

@@ -35,7 +35,7 @@ export const removeToken = () => {
 }
 
 export const isValidUser = ( user ) => {
-	return ( 'object' === typeof user && user.hasOwnProperty( 'email' ) )
+	return user && 'object' === typeof user && user.hasOwnProperty( 'email' )
 }
 
 export const hasUser = () => {

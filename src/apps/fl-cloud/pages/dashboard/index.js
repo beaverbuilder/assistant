@@ -22,8 +22,9 @@ export default () => {
 const ElevatorButtons = () => {
 	const history = useHistory()
 	const logout = () => {
-		cloud.auth.logout()
-		history.replace( '/fl-cloud/auth/login' )
+		cloud.auth.logout().then( () => {
+			history.replace( '/fl-cloud/connect' )
+		} )
 	}
 
 	return (

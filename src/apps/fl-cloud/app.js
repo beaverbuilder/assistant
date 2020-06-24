@@ -3,10 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { Nav } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
-import Connect from './pages/auth/connect'
-import Login from './pages/auth/login'
-import Register from './pages/auth/register'
-
+import Connect from './pages/connect'
 import Dashboard from './pages/dashboard'
 import Teams from './pages/teams'
 import NewTeam from './pages/teams/new-team'
@@ -23,12 +20,11 @@ export default ( { baseURL } ) => {
 	const history = useHistory()
 	const isCloudConnected = cloud.auth.isConnected()
 
-	if ( ! isCloudConnected && ! pathname.includes( '/auth/' ) ) {
-		//history.replace( '/fl-cloud/auth/connect' )
-		history.replace( '/fl-cloud/auth/login' )
+	if ( ! isCloudConnected && ! pathname.includes( '/connect' ) ) {
+		history.replace( '/fl-cloud/connect' )
 		return null
 	}
-	if ( isCloudConnected && pathname.includes( '/auth/' ) ) {
+	if ( isCloudConnected && pathname.includes( '/connect' ) ) {
 		history.replace( '/fl-cloud' )
 		return null
 	}
@@ -39,9 +35,7 @@ export default ( { baseURL } ) => {
 			<Nav.Route exact path={ `${baseURL}` } component={ Dashboard } />
 
 			{ /* Auth */ }
-			<Nav.Route path={ `${baseURL}/auth/connect` } component={ Connect } />
-			<Nav.Route path={ `${baseURL}/auth/login` } component={ Login } />
-			<Nav.Route path={ `${baseURL}/auth/register` } component={ Register } />
+			<Nav.Route path={ `${baseURL}/connect` } component={ Connect } />
 
 			{ /* Teams */ }
 			<Nav.Route exact path={ `${baseURL}/teams` } component={ Teams } />
