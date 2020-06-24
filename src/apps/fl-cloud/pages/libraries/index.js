@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { getCloudHooks } from 'assistant/data'
 import { Button, Form, Icon, Layout, List, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 import './style.scss'
 
 export default () => {
-	const { useCurrentTeam } = getCloudHooks()
-	const [ currentTeam, setCurrentTeam ] = useCurrentTeam()
+	const [ currentTeam, setCurrentTeam ] = useState( 0 )
 	const [ teams ] = cloud.teams.useAll()
 	const [ libraries ] = cloud.libraries.useAll( currentTeam )
 
