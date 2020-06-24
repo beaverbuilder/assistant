@@ -1,8 +1,9 @@
 import React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
-import { Assistant, getAssistantBBPanelConfig } from '../main'
+import { Assistant, getAssistantBBPanelConfig } from './main'
 import { __ } from '@wordpress/i18n'
-import { getSystemActions } from 'assistant/data'
+import { getSystemActions } from 'data'
+import './admin-bar-item'
 import './style.scss'
 
 let mountNode = undefined
@@ -12,11 +13,10 @@ const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode
 const renderNormal = () => {
 
 	if ( undefined === mountNode ) {
-		mountNode = document.createElement( 'div' )
-		mountNode.classList.add( 'fl-asst', 'fl-asst-mount-node' )
-		document.body.appendChild( mountNode )
+        mountNode = document.createElement( 'div' )
+        mountNode.classList.add( 'fl-asst', 'fl-asst-mount-node' )
+        document.body.appendChild( mountNode )
 	}
-
 	render( <Assistant />, mountNode )
 }
 
@@ -47,9 +47,8 @@ if ( 'FLBuilder' in window ) {
 		} )
 	}
 } else {
-
 	// Render the standard Assistant app - We're not in Beaver Builder
-	renderNormal()
+	wp.domReady( renderNormal )
 }
 
 // Render skip link

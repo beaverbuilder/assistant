@@ -6,6 +6,12 @@ const app = {
     isEnabled: true
 }
 
+const options = {
+    appsKey: 'apps',
+    orderKey: 'order',
+    defaultApp: app,
+}
+
 const createAppState = ( defaultApp = app ) => {
     return {
         reducers: {

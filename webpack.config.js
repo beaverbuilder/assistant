@@ -7,10 +7,10 @@ const production = 'production' === process.env.NODE_ENV
 const isAnalyzing = 'analyze' === process.env.NODE_ENV
 
 const alias = {
-    ui: path.resolve( __dirname, './src/system/ui/'),
-    data: path.resolve( __dirname, './src/system/data'),
-    utils: path.resolve( __dirname, './src/system/utils' ),
-    hooks: path.resolve( __dirname, './src/system/hooks' ),
+    ui: path.resolve( __dirname, './src/system/api/ui/'),
+    data: path.resolve( __dirname, './src/system/api/data'),
+    utils: path.resolve( __dirname, './src/system/api/utils' ),
+    hooks: path.resolve( __dirname, './src/system/api/hooks' ),
 
     'home': path.resolve( __dirname, './src/apps/fl-home' ),
     'home/ui': path.resolve( __dirname, './src/apps/fl-home/ui' ),
@@ -80,7 +80,6 @@ const externals = [
 ]
 
 const entry = { // if you change a key here, you need to update the enqueue url to match
-    render: './src/render',
     system: './src/system',
     apps: './src/apps',
     fluid: './src/fluid',

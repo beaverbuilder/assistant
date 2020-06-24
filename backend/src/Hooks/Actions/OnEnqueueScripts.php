@@ -201,10 +201,6 @@ class OnEnqueueScripts {
 			// Apps - loaded in header
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', $js_deps, $ver, false );
 
-			// UI Render - loaded in footer
-			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [], $ver, null );
-			wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.js', $js_deps, $ver, true );
-
 			// WordPress Media Uploader
 			wp_enqueue_media();
 

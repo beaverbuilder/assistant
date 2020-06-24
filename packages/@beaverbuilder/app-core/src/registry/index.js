@@ -85,16 +85,13 @@ const createStoreRegistry = () => {
 		/**
 		 * Returns the main object for a store in the registry.
 		 */
-		getStore: ( key ) => {
-			const { store } = registry[ key ]
-			return store
-		},
+		getStore: key => registry[ key ].store,
 
 		/**
 		 * Returns an object with all actions bound to dispatch
 		 * for a store in the registry.
 		 */
-		getDispatch: ( key ) => {
+		getDispatch: key => {
 			const { actions, store } = registry[ key ]
 			return bindActionCreators( actions, store.dispatch )
 		},
@@ -102,10 +99,7 @@ const createStoreRegistry = () => {
 		/**
 		 * Returns all selectors for a store in the registry.
 		 */
-		getSelectors: ( key ) => {
-			const { selectors } = registry[ key ]
-			return selectors
-		},
+		getSelectors: key => registry[ key ].selectors,
 
 		/**
 		 * return all generated hooks for a store in the registry.
