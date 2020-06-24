@@ -1,5 +1,5 @@
 // Absolutely have to be set up first
-import './vendors'
+import './libs'
 
 // FL.UID
 import * as FLUID from '@beaverbuilder/fluid'
