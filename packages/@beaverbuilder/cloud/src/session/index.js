@@ -4,16 +4,32 @@ const FL_CLOUD_TOKEN_KEY = 'fl-cloud-token'
 const FL_CLOUD_USER_KEY = 'fl-cloud-user'
 const FL_CLOUD_SESSION_LENGTH = 1000 * 60 * 60 * 24 * 14
 
+const subscribers = []
+
+const notify = () => {
+	const state = { token: getToken(), user: getUser() }
+	subscribers.map( callback => callback( state ) )
+}
+
+export const subscribe = ( callback ) => {
+	subscribers.push( callback )
+}
+
 export const create = ( token, user, remember ) => {
 	setToken( token, remember )
 	setUser( user, remember )
+	notify()
 }
 
 export const destroy = () => {
 	removeToken()
 	removeUser()
+	notify()
 }
 
+/**
+ * Token methods
+ */
 export const isValidToken = ( token ) => {
 	return token && 'string' === typeof token
 }
@@ -34,6 +50,9 @@ export const removeToken = () => {
 	removeCookie( FL_CLOUD_TOKEN_KEY )
 }
 
+/**
+ * User methods
+ */
 export const isValidUser = ( user ) => {
 	return user && 'object' === typeof user && user.hasOwnProperty( 'email' )
 }
