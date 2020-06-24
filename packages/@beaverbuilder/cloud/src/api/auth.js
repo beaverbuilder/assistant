@@ -32,7 +32,6 @@ export default ( http ) => {
 						resolve()
 					} )
 					.catch( reject )
-
 			} )
 		},
 
@@ -68,10 +67,12 @@ export default ( http ) => {
 		 * @returns Promise
 		 */
 		logout: ( config = {} ) => {
-			return new Promise( ( resolve ) => {
+			return new Promise( ( resolve, reject ) => {
 				http.post( '/iam/token/destroy', {}, config )
-				session.destroy()
-				resolve()
+					.then( () => {
+						session.destroy()
+						resolve()
+					} ).catch( reject )
 			} )
 		},
 
@@ -90,9 +91,9 @@ export default ( http ) => {
 							reject( response )
 							return
 						}
-						const { plainTextToken } = response.data.token
-						session.setToken( plainTextToken )
-						resolve()
+						const { token } = response.data
+						session.setToken( token )
+						resolve( token )
 					} )
 					.catch( error => {
 						session.destroy()
@@ -113,22 +114,6 @@ export default ( http ) => {
 					resolve()
 				}, 1000 )
 			} )
-		},
-
-		/**
-		 * Checks to see if the user is still logged in.
-		 * If not, the session will be destroyed.
-		 *
-		 * @returns void
-		 */
-		checkAccess: async() => {
-			if ( api.isConnected() ) {
-				try {
-					await api.refresh()
-				} catch ( error ) {
-					console.log( error ) // eslint-disable-line no-console
-				}
-			}
 		},
 
 		/**

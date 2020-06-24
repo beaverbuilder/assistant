@@ -3,18 +3,20 @@ import * as session from './session'
 import endpoints from './api'
 
 export const createCloudClient = ( {
-	apiUrl = ''
+	apiUrl = '',
+	plugins = []
 } ) => {
 	const http = createHttpClient( { apiUrl } )
-	const api = {}
-
-	for ( let key in endpoints ) {
-		api[ key ] = endpoints[ key ]( http )
-	}
-
-	return {
-		...api,
+	const client = {
 		http,
 		session
 	}
+
+	for ( let key in endpoints ) {
+		client[ key ] = endpoints[ key ]( http )
+	}
+
+	plugins.map( plugin => plugin( client ) )
+
+	return client
 }

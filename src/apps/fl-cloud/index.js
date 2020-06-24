@@ -9,9 +9,6 @@ const App = lazy( () => import(
 ) )
 
 if ( ! __PRODUCTION__ ) {
-
-	cloud.auth.checkAccess()
-
 	registerApp( 'fl-cloud', {
 		label: __( 'Cloud' ),
 		root: App,
