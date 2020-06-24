@@ -3,7 +3,7 @@ import classname from 'classnames'
 import Section from './section'
 import Error from '../error'
 import Layout from '../layout'
-import { Button } from '../'
+import BackButton from './back-button'
 import './style.scss'
 
 const Page = ( {
@@ -40,12 +40,7 @@ const Page = ( {
 	useEffect( onLoad, [] )
 
 	// Handle whether or not to show the back button
-	let showBackButton = true
-	if ( 'boolean' === typeof shouldShowBackButton ) {
-		showBackButton = shouldShowBackButton
-	} else if ( 'function' === typeof shouldShowBackButton ) {
-		showBackButton = shouldShowBackButton()
-	}
+	const showBackButton = 'function' === typeof shouldShowBackButton ? shouldShowBackButton() : shouldShowBackButton
 
 	const Hero = ( { children } ) => {
 
@@ -106,14 +101,18 @@ const Page = ( {
 					<div className="fluid-sticky-element fluid-page-top-content" style={ topContentStyle }>
 
 						{ toolbar }
+
 						{ false !== toolbar && ! toolbar && (
 							<div className="fluid-toolbar fluid-page-top-toolbar">
-								{ showBackButton && <Button.Back /> }
+
+								{ showBackButton && <BackButton /> }
+
 								{ icon && (
 									<span className="fluid-page-title-icon">
 										{icon}
 									</span>
 								)}
+
 								{ title && <div className="fluid-page-toolbar-content">
 									<span
 										className="fluid-page-title"
@@ -121,7 +120,9 @@ const Page = ( {
 										aria-level="1" style={ { flex: '1 1 auto' } }
 									>{title}</span>
 								</div> }
+
 								{ actions && <span className="fluid-page-actions">{actions}</span> }
+
 							</div>
 						)}
 						{ header && <div className="fluid-toolbar fluid-page-header">{header}</div> }

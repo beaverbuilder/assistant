@@ -1,12 +1,5 @@
-import React, { createContext, useEffect, useContext } from 'react'
-import {
-	withRouter,
-	MemoryRouter,
-	Switch,
-	Route,
-	Link,
-	useHistory,
-} from 'react-router-dom'
+import React from 'react'
+import { Switch, Route, Link } from 'react-router-dom'
 
 import Button from '../button'
 import { Icon } from '../art'
@@ -21,19 +14,5 @@ Nav.Route.displayName = 'Nav.Route'
 
 Nav.Link = Link
 Nav.Link.displayName = 'Nav.Link'
-
-Nav.BackButton = props => {
-	const history = useHistory()
-	return (
-		<Button
-			className="fluid-back-button"
-			appearance="transparent"
-			onClick={ history.goBack }
-			{ ...props }
-		>
-			<Icon.BackArrow />
-		</Button>
-	)
-}
 
 export default Nav

@@ -1,3 +1,3 @@
-import Icon from './icon'
+import * as Icon from './icon'
 
 export { Icon }

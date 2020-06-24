@@ -1,17 +1,9 @@
 import React from 'react'
 import { Icon as FLUID_Icon } from 'fluid/ui'
-import Loading from './loading'
-import Error from './error'
+
 import Safely from './safely'
-import Pencil from './pencil'
-import Beaver from './beaver'
 
 const Icon = { ...FLUID_Icon }
-
-Icon.Loading = Loading
-Icon.Error = Error
-Icon.Pencil = Pencil
-Icon.Beaver = Beaver
 
 // Render a user-generated icon safely with Suspense and Error.Boundary
 Icon.Safely = Safely

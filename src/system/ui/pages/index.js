@@ -40,6 +40,7 @@ const Page = ( {
 	...rest
 } ) => {
 	const { isAppRoot } = App.use()
+
 	const classes = classname( {
 		'is-app-root': isAppRoot || showAsRoot,
 		'fl-asst-page-has-tabs': tabs,
@@ -58,6 +59,7 @@ const Page = ( {
 			onLoad={ onLoad }
 			toolbar={ tabs ? <Nav.TabsToolbar tabs={ tabs } /> : toolbar }
 			overlay={ overlay || ( notices && 0 < notices.length ) && <Overlay /> }
+			shouldShowBackButton={true}
 			{ ...rest }
 		>
 			{children}
