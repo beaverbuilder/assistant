@@ -1,6 +1,5 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
-import { Nav } from 'assistant/ui'
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
 import { useSystemState } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
@@ -29,28 +28,28 @@ export default ( { baseURL } ) => {
 	}
 
 	return (
-		<Nav.Switch>
+		<Switch>
 			{ /* Dashboard */ }
-			<Nav.Route exact path={ `${baseURL}` } component={ Dashboard } />
+			<Route exact path={ `${baseURL}` } component={ Dashboard } />
 
 			{ /* Auth */ }
-			<Nav.Route path={ `${baseURL}/connect` } component={ Connect } />
+			<Route path={ `${baseURL}/connect` } component={ Connect } />
 
 			{ /* Teams */ }
-			<Nav.Route exact path={ `${baseURL}/teams` } component={ Teams } />
-			<Nav.Route path={ `${baseURL}/teams/tab/:tab` } component={ Teams } />
-			<Nav.Route path={ `${baseURL}/teams/new` } component={ NewTeam } />
+			<Route exact path={ `${baseURL}/teams` } component={ Teams } />
+			<Route path={ `${baseURL}/teams/tab/:tab` } component={ Teams } />
+			<Route path={ `${baseURL}/teams/new` } component={ NewTeam } />
 
 			{ /* Libraries */ }
-			<Nav.Route path={ `${baseURL}/libraries/new` } component={ NewLibrary } />
-			<Nav.Route path={ `${baseURL}/libraries/:id/items/new` } component={ NewLibraryItem } />
-			<Nav.Route path={ `${baseURL}/libraries/:id/items/:itemId` } component={ LibraryItem } />
-			<Nav.Route path={ `${baseURL}/libraries/:id` } component={ Library } />
-			<Nav.Route path={ `${baseURL}/libraries/:id/tab/:tab` } component={ Library } />
+			<Route path={ `${baseURL}/libraries/new` } component={ NewLibrary } />
+			<Route path={ `${baseURL}/libraries/:id/items/new` } component={ NewLibraryItem } />
+			<Route path={ `${baseURL}/libraries/:id/items/:itemId` } component={ LibraryItem } />
+			<Route path={ `${baseURL}/libraries/:id` } component={ Library } />
+			<Route path={ `${baseURL}/libraries/:id/tab/:tab` } component={ Library } />
 
 			{ /* Profile */ }
-			<Nav.Route path={ `${baseURL}/profile` } component={ Profile } />
-			<Nav.Route path={ `${baseURL}/profile/tab/:tab` } component={ Profile } />
-		</Nav.Switch>
+			<Route path={ `${baseURL}/profile` } component={ Profile } />
+			<Route path={ `${baseURL}/profile/tab/:tab` } component={ Profile } />
+		</Switch>
 	)
 }

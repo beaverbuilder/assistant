@@ -5,8 +5,8 @@ import { Filter } from 'assistant/ui'
 import { statuses, defaultStatus } from '../../../data'
 
 const Filters = () => {
-	const { type } = useAppState()
-	const { setType } = getAppActions()
+	const { type } = useAppState( 'fl-comments' )
+	const { setType } = getAppActions( 'fl-comments' )
 	return (
 		<Filter>
 			<Filter.RadioGroupItem

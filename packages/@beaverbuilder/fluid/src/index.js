@@ -1,28 +1,19 @@
-import * as ReactRouter from 'react-router-dom'
-import * as Redux from 'redux'
-import classnames from 'classnames'
-import camelcase from 'camelcase'
-import * as ReactLaag from 'react-laag'
-import ResizeObserverPolyfill from 'resize-observer-polyfill'
-import * as FramerMotion from 'framer-motion'
+import Error from './error'
+import Nav from './nav'
+import Page from './page'
+import Button from './button'
+import Layout from './layout'
+import * as Icon from './icon'
+import { IconSheet } from './guides'
 
-import * as data from './data'
-import * as ui from './ui'
-import * as utils from './utils'
+import './style.scss'
 
-const FLUID = {
-	data,
-	ui,
-	utils,
-	vendors: {
-		ReactRouter,
-		Redux,
-		classnames,
-		camelcase,
-		ReactLaag,
-		ResizeObserverPolyfill,
-		FramerMotion,
-	}
+export {
+	Error,
+	Nav,
+	Page,
+	Button,
+	Icon,
+	IconSheet,
+	Layout
 }
-
-export default FLUID

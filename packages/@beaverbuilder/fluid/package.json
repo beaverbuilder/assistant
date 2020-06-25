@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.3.9",
+    "version": "0.4.3",
     "description": "Common UI environment for Beaver Builder and Assistant projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -18,16 +18,14 @@
     "peerDependencies": {
         "react": "^16.9.0",
         "react-dom": "^16.9.0",
-        "lodash": "^4.17.15"
-    },
-    "dependencies": {
-        "camelcase": "^5.3.1",
+        "react-router-dom": "^5.2.0",
         "classnames": "^2.2.6",
         "framer-motion": "^1.11.0",
         "react-laag": "^1.7.3",
-        "react-router-dom": "^5.2.0",
-        "redux": "^4.0.5",
         "resize-observer-polyfill": "^1.5.1"
+    },
+    "dependencies": {
+        "camelcase": "^5.3.1"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",
