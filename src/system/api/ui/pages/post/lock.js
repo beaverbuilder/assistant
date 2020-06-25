@@ -1,15 +1,12 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import classname from 'classnames'
 
 export const LockView = props => {
 	const { children, className, isLock } = props
 
-	const classes = classname(
-		{
+	const classes = classname({
 			'fl-asst-lock-view': isLock ? true : false
-		},
-		className
-	)
+		}, className )
 
 	const merged = {
 		...props,
@@ -17,10 +14,8 @@ export const LockView = props => {
 	}
 
 	return (
-		<Fragment>
-			<div { ...merged }>
-				<div>{children}</div>
-			</div>
-		</Fragment>
+		<div { ...merged }>
+			<div>{children}</div>
+		</div>
 	)
 }

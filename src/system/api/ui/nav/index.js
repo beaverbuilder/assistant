@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { Nav as FLUID_Nav } from 'fluid/ui'
 import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
-import { Button } from 'ui'
+import { Button, Icon } from 'ui'
 import './style.scss'
 
 const Nav = { ...FLUID_Nav }
@@ -41,6 +41,7 @@ Nav.Tabs.displayName = 'Nav.Tabs'
 Nav.TabsToolbar = ( { tabs } ) => {
 	const history = useHistory()
 	const location = useLocation()
+
 	return (
 		<div className="fl-asst-tabs-toolbar">
 			<Button.Group
@@ -48,7 +49,13 @@ Nav.TabsToolbar = ( { tabs } ) => {
 				shouldHandleOverflow={ true }
 				role="tablist"
 			>
-				<Nav.BackButton excludeFromMenu={ true } />
+				<Button
+					className="fluid-back-button"
+					appearance="transparent"
+					onClick={ history.goBack }
+				>
+					<Icon.BackArrow />
+				</Button>
 
 				{ Object.entries( tabs ).map( ( [ , tab ], i ) => {
 					const { isVisible, label, path } = tab
