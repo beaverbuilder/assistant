@@ -9,6 +9,7 @@ import { getRequestConfig } from './config'
 export default props => {
 	const { config } = getRequestConfig()
 	const { baseURL } = props
+
 	return (
 		<App.Config
 			pages={ {

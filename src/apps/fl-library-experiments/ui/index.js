@@ -4,9 +4,11 @@ import { Page } from 'assistant/ui'
 
 export const Main = () => {
 
-    return (
-        <Page
-            title={__('Libraries yo')}
-        >Main yo</Page>
-    )
+	return (
+		<Page
+			title={ __( 'Libraries yo' ) }
+		>
+			Should put something here.
+		</Page>
+	)
 }

@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || die();
 
-define( 'FL_ASSISTANT_VERSION', '0.5.0' );
+define( 'FL_ASSISTANT_VERSION', '0.6.0' );
 define( 'FL_ASSISTANT_FILE', trailingslashit( __FILE__ ) );
 define( 'FL_ASSISTANT_DIR', plugin_dir_path( FL_ASSISTANT_FILE ) );
 define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
