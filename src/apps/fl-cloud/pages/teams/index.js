@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Icon, Form, Layout, Nav, Page } from 'assistant/ui'
-import { getCloudHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
 import { TeamMembers } from './members.js'
 import { TeamInvite } from './invite.js'
@@ -9,8 +8,7 @@ import { TeamInfo } from './info.js'
 import './style.scss'
 
 export default ( { history } ) => {
-	const { useCurrentTeam } = getCloudHooks()
-	const [ currentTeam, setCurrentTeam ] = useCurrentTeam()
+	const [ currentTeam, setCurrentTeam ] = useState( 0 )
 	const [ teams, setTeams ] = cloud.teams.useAll()
 	const [ team, setTeam ] = cloud.teams.useOne( currentTeam )
 
