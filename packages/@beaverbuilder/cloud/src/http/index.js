@@ -8,7 +8,7 @@ export const createHttpClient = ( {
 } ) => {
 
 	const http = axios.create( {
-		baseURL: `${ apiUrl }`,
+		baseURL: `${ apiUrl }/api`,
 		crossDomain: true,
 		headers: {
 			common: {

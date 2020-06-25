@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useApiResource, useApiCollection } from '../hooks'
 
 export default ( http ) => {
 
@@ -37,23 +38,13 @@ export default ( http ) => {
 
 	const hooks = {
 
-		useAll: () => {
-			const [ teams, setTeams ] = useState( null )
-			useEffect( () => {
-				api.getAll().then( response => setTeams( response.data ) )
-			}, [] )
-			return [ teams, setTeams ]
-		},
+		useAll: () => useApiCollection( {
+			getter: api.getAll
+		} ),
 
-		useOne: ( id ) => {
-			const [ team, setTeam ] = useState( null )
-			useEffect( () => {
-				if ( id ) {
-					api.get( id ).then( response => setTeam( response.data ) )
-				}
-			}, [ id ] )
-			return [ team, setTeam ]
-		},
+		useOne: ( id ) => useApiResource( id, {
+			getter: api.get
+		} ),
 	}
 
 	return { ...api, ...hooks }

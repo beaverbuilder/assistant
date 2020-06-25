@@ -21,7 +21,9 @@
     "dependencies": {
         "axios": "^0.19.2",
         "cookie": "^0.4.1",
-        "promise": "^8.1.0"
+        "laravel-echo": "^1.8.0",
+        "promise": "^8.1.0",
+        "pusher-js": "^6.0.3"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",

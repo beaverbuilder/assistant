@@ -15,5 +15,11 @@ class CloudServiceProvider extends ServiceProviderAbstract {
 		if ( ! defined( 'FL_ASSISTANT_CLOUD_APP_URL' ) ) {
 			define( 'FL_ASSISTANT_CLOUD_APP_URL', '' );
 		}
+		if ( ! defined( 'FL_ASSISTANT_PUSHER_KEY' ) ) {
+			define( 'FL_ASSISTANT_PUSHER_KEY', 'd167736b3fc37d384caf' );
+		}
+		if ( ! defined( 'FL_ASSISTANT_PUSHER_CLUSTER' ) ) {
+			define( 'FL_ASSISTANT_PUSHER_CLUSTER', 'mt1' );
+		}
 	}
 }
