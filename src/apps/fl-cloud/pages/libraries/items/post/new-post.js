@@ -89,17 +89,10 @@ export default ( { libraryId, onCreate } ) => {
 	const onSubmit = ( { values, setErrors } ) => {
 		const { slug } = values
 		const post = posts.filter( post => post.slug === slug ).pop()
-		wpRest.posts().formedPost( post.id ).then( response => {
-			return cloud.libraries.createItem( libraryId, {
-				type: 'post',
-				name: post.title,
-				data: response.data
-
-			} ).then( () => {
-				onCreate()
-			} ).catch( error => {
-				setErrors( error.response.data.errors )
-			} )
+		wpRest.posts().saveToLibrary( post.id, libraryId ).then( response => {
+			onCreate()
+		} ).catch( error => {
+			setErrors( error.response.data.errors )
 		} )
 
 	}
