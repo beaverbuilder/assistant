@@ -1,6 +1,7 @@
 import { createContext } from 'react'
 import { Form, Section, Item, Footer, Input } from './parts'
 import { useFormData } from './use-form-data'
+import './style.scss'
 
 // Form Context
 Form.Context = createContext( {} )
