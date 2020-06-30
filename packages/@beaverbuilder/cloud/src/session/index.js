@@ -79,9 +79,12 @@ export const removeUser = () => {
  */
 const setCookie = ( key, value, remember ) => {
 	const options = {
-		expires: new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
+		path: '/'
 	}
-	document.cookie = cookie.serialize( key, value, remember ? options : {} )
+	if ( remember ) {
+		options.expires = new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
+	}
+	document.cookie = cookie.serialize( key, value, options )
 }
 
 const getCookie = ( key ) => {
