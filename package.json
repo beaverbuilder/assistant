@@ -20,8 +20,9 @@
   "license": "GPL-2.0+",
   "dependencies": {
     "@beaverbuilder/app-core": "^0.1.4",
-    "@beaverbuilder/cloud": "^0.1.4",
+    "@beaverbuilder/cloud": "^0.1.6",
     "@beaverbuilder/fluid": "^0.4.3",
+    "@beaverbuilder/forms": "^0.1.0",
     "@popmotion/popcorn": "^0.4.4",
     "array-move": "^2.2.2",
     "axios": "0.18.1",

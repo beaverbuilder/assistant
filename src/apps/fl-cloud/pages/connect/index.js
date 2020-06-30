@@ -7,7 +7,7 @@ import cloud from 'assistant/cloud'
 import AppIcon from '../../icon'
 
 export default ( { location, history } ) => {
-	const { cloudAppUrl } = getSystemConfig()
+	const { cloudConfig } = getSystemConfig()
 	const { href } = window.location
 	const { token, ...args } = getQueryArgs( href )
 	const [ isTokenValid, setIsTokenValid ] = useState( !! token )
@@ -26,7 +26,7 @@ export default ( { location, history } ) => {
 
 	const connect = () => {
 		const redirect = encodeURIComponent( href )
-		window.location.href = `${ cloudAppUrl }/login/connect?redirect=${ redirect }`
+		window.location.href = `${ cloudConfig.appUrl }/login/connect?redirect=${ redirect }`
 	}
 
 	return (

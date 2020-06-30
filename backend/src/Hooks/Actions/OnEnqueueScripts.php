@@ -106,8 +106,6 @@ class OnEnqueueScripts {
 			'adminURLs'         => $this->site->get_admin_urls(),
 			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
 			'apiRoot'           => esc_url_raw( get_rest_url() ),
-			'cloudUrl'          => FL_ASSISTANT_CLOUD_URL,
-			'cloudAppUrl'       => FL_ASSISTANT_CLOUD_APP_URL,
 			'contentTypes'      => $this->posts->get_types(),
 			'contentStatus'     => $this->posts->get_stati(),
 			'currentPageView'   => $this->site->get_current_view(),
@@ -127,6 +125,12 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
+			'cloudConfig'		=> [
+				'apiUrl'          	=> FL_ASSISTANT_CLOUD_URL,
+				'appUrl'       		=> FL_ASSISTANT_CLOUD_APP_URL,
+				'pusherKey'       	=> FL_ASSISTANT_PUSHER_KEY,
+				'pusherCluster'     => FL_ASSISTANT_PUSHER_CLUSTER,
+			]
 		];
 	}
 

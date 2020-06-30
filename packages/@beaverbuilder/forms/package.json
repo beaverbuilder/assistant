@@ -1,7 +1,7 @@
 {
-    "name": "@beaverbuilder/cloud",
-    "version": "0.1.6",
-    "description": "Access cloud data.",
+    "name": "@beaverbuilder/forms",
+    "version": "0.1.0",
+    "description": "Hooks and components for easily building complex forms in React.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
     "main": "dist/index.js",
@@ -13,17 +13,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/beaverbuilder/assistant.git",
-        "directory": "packages/@beaverbuilder/cloud"
+        "directory": "packages/@beaverbuilder/forms"
     },
     "peerDependencies": {
         "react": "^16.9.0"
-    },
-    "dependencies": {
-        "axios": "^0.19.2",
-        "cookie": "^0.4.1",
-        "laravel-echo": "^1.8.0",
-        "promise": "^8.1.0",
-        "pusher-js": "^6.0.3"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",

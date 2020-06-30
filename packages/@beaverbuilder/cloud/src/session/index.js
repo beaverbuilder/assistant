@@ -76,29 +76,19 @@ export const removeUser = () => {
 
 /**
  * Cookie helpers
- *
- * TODO: We're using localStorage here since cookies aren't working
- * correctly with webpack-serve. This needs to be figured out
- * at some point as localStorage isn't as secure as cookies.
  */
 const setCookie = ( key, value, remember ) => {
-	// const options = {
-	// 	expires: new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
-	// }
-	// document.cookie = cookie.serialize( key, value, remember ? options : {} )
-
-	localStorage.setItem( key, value )
+	const options = {
+		expires: new Date( Date.now() + FL_CLOUD_SESSION_LENGTH )
+	}
+	document.cookie = cookie.serialize( key, value, remember ? options : {} )
 }
 
 const getCookie = ( key ) => {
-	// const cookies = cookie.parse( document.cookie )
-	// return cookies[ key ] ? cookies[ key ] : null
-
-	return localStorage.getItem( key )
+	const cookies = cookie.parse( document.cookie )
+	return cookies[ key ] ? cookies[ key ] : null
 }
 
 const removeCookie = ( key ) => {
-	// document.cookie = cookie.serialize( key, '' )
-
-	localStorage.setItem( key, '' )
+	document.cookie = cookie.serialize( key, '' )
 }

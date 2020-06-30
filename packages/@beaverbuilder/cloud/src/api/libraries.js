@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import { useApiResource, useApiCollection } from '../hooks'
+import * as session from '../session'
 
-export default ( http ) => {
+export default ( http, sockets ) => {
 
 	const api = {
 
@@ -26,6 +28,19 @@ export default ( http ) => {
 
 		delete: ( id ) => {
 			return http.delete( `/libraries/${ id }` )
+		},
+
+		subscribe: ( id, event, callback ) => {
+			if ( id ) {
+				sockets.private( `library.${ id }` ).listen( `.library.${ event }`, callback )
+			} else {
+				sockets.private( `libraries.${ session.getUser().id }` ).listen( `.library.${ event }`, callback )
+			}
+		},
+
+		unsubscribe: ( id ) => {
+			sockets.leave( `library.${ id }` )
+			sockets.leave( `libraries.${ session.getUser().id }` )
 		},
 
 		/**
@@ -77,64 +92,41 @@ export default ( http ) => {
 
 	const hooks = {
 
-		useAll: ( teamId = 0 ) => {
-			const [ libraries, setLibraries ] = useState( null )
-			useEffect( () => {
-				setLibraries( null )
-				api.getAll( teamId ).then( response => setLibraries( response.data ) )
-			}, [ teamId ] )
-			return [ libraries, setLibraries ]
-		},
+		useAll: ( teamId = 0 ) => useApiCollection( {
+			model: 'library',
+			getter: useCallback( () => api.getAll( teamId ), [ teamId ] ),
+			subscribe: api.subscribe,
+			unsubscribe: api.unsubscribe
+		} ),
 
-		useOne: ( id ) => {
-			const [ library, setLibrary ] = useState( null )
-			useEffect( () => {
-				if ( id ) {
-					api.get( id ).then( response => setLibrary( response.data ) )
-				}
-			}, [ id ] )
-			return [ library, setLibrary ]
-		},
+		useOne: ( id ) => useApiResource( id, {
+			model: 'library',
+			getter: api.get,
+			subscribe: api.subscribe,
+			unsubscribe: api.unsubscribe
+		} ),
 
 		/**
 		 * Collection specific hooks
 		 */
-		useCollections: ( libraryId ) => {
-			const [ collections, setCollections ] = useState( null )
-			useEffect( () => {
-				setCollections( null )
-				api.getCollections( libraryId ).then( response => setCollections( response.data ) )
-			}, [ libraryId ] )
-			return [ collections, setCollections ]
-		},
+ 		useCollections: ( libraryId ) => useApiCollection( {
+ 			getter: useCallback( () => api.getCollections( libraryId ), [ libraryId ] )
+ 		} ),
 
-		useCollection: ( collectionId ) => {
-			const [ collection, setCollection ] = useState( null )
-			useEffect( () => {
-				api.getCollection( collectionId ).then( response => setCollection( response.data ) )
-			}, [ collectionId ] )
-			return [ collection, setCollection ]
-		},
+		useCollection: ( id ) => useApiResource( id, {
+			getter: api.getCollection
+		} ),
 
 		/**
 		 * Item specific hooks
 		 */
-		useItems: ( libraryId ) => {
-			const [ items, setItems ] = useState( null )
-			useEffect( () => {
-				setItems( null )
-				api.getItems( libraryId ).then( response => setItems( response.data ) )
-			}, [ libraryId ] )
-			return [ items, setItems ]
-		},
+ 		useItems: ( libraryId ) => useApiCollection( {
+ 			getter: useCallback( () => api.getItems( libraryId ), [ libraryId ] )
+ 		} ),
 
-		useItem: ( itemId ) => {
-			const [ item, setItem ] = useState( null )
-			useEffect( () => {
-				api.getItem( itemId ).then( response => setItem( response.data ) )
-			}, [ itemId ] )
-			return [ item, setItem ]
-		},
+		useItem: ( id ) => useApiResource( id, {
+			getter: api.getItem
+		} ),
 	}
 
 	return { ...api, ...hooks }

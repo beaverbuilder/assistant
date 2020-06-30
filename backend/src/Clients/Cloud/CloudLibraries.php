@@ -23,4 +23,11 @@ class CloudLibraries {
 	public function createItem( $library_id, $data ) {
 		return $this->client->post( "/libraries/$library_id/library-items", $data );
 	}
+
+	/**
+	 * @return object
+	 */
+	public function getItem( $item_id ) {
+		return $this->client->get( "/library-items/$item_id" );
+	}
 }
