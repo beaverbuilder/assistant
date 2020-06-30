@@ -223,17 +223,6 @@ const posts = () => {
 			return notations().deleteLabel( 'post', postId, labelId, config )
 		},
 
-		/**
-		 * get post with raw data by ID
-		 * @param id
-		 * @param config
-		 * @returns {Promise<*>}
-		 */
-		formedPost( id, config = {} ) {
-			config.cacheKey = 'posts'
-			return http.get( `fl-assistant/v1/posts/formed_posts/${id}`, config )
-		},
-
 		importLibPost( data = {}, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( 'fl-assistant/v1/posts/import_lib_post', data, config )

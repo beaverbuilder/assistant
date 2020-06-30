@@ -146,31 +146,6 @@ class PostsController extends ControllerAbstract {
 				],
 			]
 		);
-
-
-
-		$this->route(
-			'/posts/(?P<id>\d+)/library/(?P<library_id>\d+)',
-			[
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'save_to_library' ],
-					'args'                => [
-						'id' => [
-							'required' => true,
-							'type'     => 'number',
-						],
-						'library_id' => [
-							'required' => true,
-							'type'     => 'number',
-						],
-					],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
 	}
 
 	/**
@@ -465,31 +440,4 @@ class PostsController extends ControllerAbstract {
 			]
 		);
 	}
-
-
-
-
-
-	function save_to_library( $request ) {
-		$id = $request->get_param( 'id' );
-		$library_id = $request->get_param( 'library_id' );
-		$post = get_post( $id );
-		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
-
-		$media_path = get_attached_file( get_post_thumbnail_id( $post ) );
-		$media = $media_path ? curl_file_create( $media_path ) : null;
-
-		return $client->libraries->createItem( $library_id,
-			[
-				'name' => $post->post_title,
-				'type' => 'post',
-				'data' => [
-					'post' => $post,
-					'meta' => get_post_meta( $id ),
-				],
-				'media' => $media,
-			]
-		);
-	}
-
 }

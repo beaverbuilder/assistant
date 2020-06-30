@@ -78,70 +78,31 @@ class CloudPostsController extends ControllerAbstract {
 				],
 			]
 		);
+
+		$this->route(
+			'/posts/(?P<id>\d+)/library/(?P<library_id>\d+)',
+			[
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'save_to_library' ],
+					'args'                => [
+						'id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+						'library_id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_others_posts' );
+					},
+				],
+			]
+		);
 	}
 
-	/**
-	 * Returns formed data for a single post.
-	 */
-	public function get_formed_post( $request ) {
-		$id = $request->get_param( 'id' );
-		$comments = get_comments( [ 'post_id' => $id ] );
-		$postmeta = get_post_meta( $id );
-
-		$taxonomies = get_taxonomies( '', 'names' );
-		$post_taxonomies = wp_get_object_terms( $id, $taxonomies );
-
-		$media = get_attached_media( '', $id );
-		$thumbnail_id = get_post_thumbnail_id( $id );
-		$thumbnail_data = $this->get_post_feature_media( $thumbnail_id );
-
-		if ( current_user_can( 'edit_post', $id ) ) {
-			$post = get_post( $id );
-			$post->post_comments = $comments;
-			$post->post_meta = $postmeta;
-			$post->post_taxonomies = $post_taxonomies;
-			$post->post_media = $media;
-			$post->post_thumbnail = $thumbnail_data;
-			return $post;
-		}
-
-		return [];
-	}
-
-
-	public function get_post_feature_media( $thumbnail_id ) {
-		if ( $thumbnail_id ) {
-			$thumb = [];
-			$thumb_id = $thumbnail_id;
-
-			// first grab all of the info on the image... title/description/alt/etc.
-			$args = [
-				'post_type' => 'attachment',
-				'include'   => $thumb_id,
-			];
-			$thumbs = get_posts( $args );
-			if ( $thumbs ) {
-				// now create the new array
-				$thumb['id'] = $thumbs[0]->ID;
-				$thumb['title'] = $thumbs[0]->post_title;
-				$thumb['description'] = $thumbs[0]->post_content;
-				$thumb['caption'] = $thumbs[0]->post_excerpt;
-				$thumb['alt'] = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
-				$thumb['sizes'] = [
-					'full' => wp_get_attachment_image_src( $thumb_id, 'full', false ),
-				];
-				// add the additional image sizes
-				foreach ( get_intermediate_image_sizes() as $size ) {
-					$thumb['sizes'][ $size ] = wp_get_attachment_image_src( $thumb_id, $size, false );
-				}
-				$thumb['url'] = $thumb['sizes']['full'][0];
-
-				return $thumb;
-			} else {
-				return $thumb;
-			}
-		}
-	}
 
 	function check_exist_post( $request ) {
 		$post_data = $request->get_params();
@@ -269,4 +230,76 @@ class CloudPostsController extends ControllerAbstract {
 		}
 
 	}
+
+
+	public function get_post_feature_media( $thumbnail_id ) {
+		if ( $thumbnail_id ) {
+			$thumb = [];
+			$thumb_id = $thumbnail_id;
+
+			// first grab all of the info on the image... title/description/alt/etc.
+			$args = [
+				'post_type' => 'attachment',
+				'include'   => $thumb_id,
+			];
+			$thumbs = get_posts( $args );
+			if ( $thumbs ) {
+				// now create the new array
+				$thumb['id'] = $thumbs[0]->ID;
+				$thumb['title'] = $thumbs[0]->post_title;
+				$thumb['description'] = $thumbs[0]->post_content;
+				$thumb['caption'] = $thumbs[0]->post_excerpt;
+				$thumb['alt'] = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+				$thumb['sizes'] = [
+					'full' => wp_get_attachment_image_src( $thumb_id, 'full', false ),
+				];
+				// add the additional image sizes
+				foreach ( get_intermediate_image_sizes() as $size ) {
+					$thumb['sizes'][ $size ] = wp_get_attachment_image_src( $thumb_id, $size, false );
+				}
+				$thumb['url'] = $thumb['sizes']['full'][0];
+
+				return $thumb;
+			} else {
+				return $thumb;
+			}
+		}
+	}
+
+
+
+	function save_to_library( $request ) {
+		$id = $request->get_param( 'id' );
+		$library_id = $request->get_param( 'library_id' );
+
+		$post = get_post( $id );
+		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
+
+		$media_path = get_attached_file( get_post_thumbnail_id( $post ) );
+		$media = $media_path ? curl_file_create( $media_path ) : null;
+
+		$taxonomies = get_taxonomies( '', 'names' );
+		$post_taxonomies = wp_get_object_terms( $id, $taxonomies );
+
+		$comments = get_comments( [ 'post_id' => $id ] );
+
+		$thumbnail_id = get_post_thumbnail_id( $id );
+		$thumbnail_data = $this->get_post_feature_media( $thumbnail_id );
+
+		return $client->libraries->createItem( $library_id,
+			[
+				'name' => $post->post_title,
+				'type' => $post->post_type,
+				'data' => [
+					'post' => $post,
+					'meta' => get_post_meta( $id ),
+					'terms' => $post_taxonomies,
+					'comments' => $comments,
+					'thumbnail' => $thumbnail_data,
+				],
+				'media' => $media,
+			]
+		);
+	}
+
 }
