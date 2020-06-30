@@ -147,63 +147,7 @@ class PostsController extends ControllerAbstract {
 			]
 		);
 
-		$this->route(
-			'/formed_posts/(?P<id>\d+)',
-			[
-				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'get_formed_post' ],
-					'args'                => [
-						'id' => [
-							'required' => true,
-							'type'     => 'number',
-						],
-					],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
 
-		$this->route(
-			'/posts/import_lib_post',
-			[
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'import_lib_post' ],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
-
-		$this->route(
-			'/posts/check_exist_post',
-			[
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'check_exist_post' ],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
-
-		$this->route(
-			'/posts/override_lib_post',
-			[
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'override_lib_post' ],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
 
 		$this->route(
 			'/posts/(?P<id>\d+)/library/(?P<library_id>\d+)',
