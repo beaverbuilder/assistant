@@ -1,7 +1,7 @@
 import React from 'react'
 import classname from 'classnames'
 
-const Form = ( {
+export const Form = ( {
 	className,
 	context = Form.defaults,
 	onSubmit = e => e.preventDefault(),
@@ -16,5 +16,3 @@ const Form = ( {
 		</Form.Context.Provider>
 	)
 }
-
-export default Form

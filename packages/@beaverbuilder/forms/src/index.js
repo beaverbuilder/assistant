@@ -1,6 +1,7 @@
 import { createContext } from 'react'
-import { Form, Section, Item, Footer, Input } from './parts'
 import { useFormData } from './use-form-data'
+import { Form, Section, Item, Footer } from './parts'
+import * as Items from './items'
 import './style.scss'
 
 // Form Context
@@ -24,7 +25,9 @@ Form.Section = Section
 Form.Section.displayName = 'Form.Section'
 
 // Form Item Components
-Form.Input = Input
-Form.Input.displayName = 'Form.Input'
+Object.keys( Items ).map( key => {
+	Form[ key ] = Items[ key ]
+	Form[ key ].displayName = `Form.${ key }`
+} )
 
 export default Form

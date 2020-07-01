@@ -2,7 +2,7 @@ import React from 'react'
 import classname from 'classnames'
 import './style.scss'
 
-const Input = ( {
+export const Input = ( {
 	className,
 	appearance,
 	before,
@@ -23,5 +23,3 @@ const Input = ( {
 		</div>
 	)
 }
-
-export default Input
