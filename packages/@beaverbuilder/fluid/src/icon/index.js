@@ -24,6 +24,8 @@ import CloseCompact from './close-compact'
 import Search from './search'
 import Plus from './plus'
 import Return from './return'
+import More from './more'
+import Ellipsis from './ellipsis'
 
 // Aliases
 const BackArrow = ArrowLeft
@@ -56,4 +58,6 @@ export {
 	Search,
 	Plus,
 	Return,
+	More,
+	Ellipsis,
 }

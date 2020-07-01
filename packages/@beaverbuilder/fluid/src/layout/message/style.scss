@@ -1,5 +1,5 @@
-.fl-asst {
-	.fl-asst-message {
+.fluid {
+	.fluid-message {
 	    flex: 0 0 auto;
 	    display: inline-flex;
 	    flex-direction: row;
@@ -15,10 +15,9 @@
 		margin-top: 15px;
         margin-bottom: 10px;
 	}
-	.fl-msg-icon{
+	.fluid-message-icon {
 		margin-right: 7px;
 		height: 100%;
 		width: 7%;
 	}
-
 }

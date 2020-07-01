@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import classname from 'classnames'
 import Section from './section'
 import Error from '../error'
-import Layout from '../layout'
+import * as Layout from '../layout'
 import BackButton from './back-button'
 import './style.scss'
 
@@ -140,6 +140,5 @@ const Page = ( {
 }
 
 Page.Section = Section
-Page.Section.displayName = 'Page.Section'
 
 export default Page

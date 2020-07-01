@@ -19,9 +19,9 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
-    "@beaverbuilder/app-core": "^0.1.4",
+    "@beaverbuilder/app-core": "^0.1.8",
     "@beaverbuilder/cloud": "^0.1.7",
-    "@beaverbuilder/fluid": "^0.4.4",
+    "@beaverbuilder/fluid": "^0.4.5",
     "@beaverbuilder/forms": "^0.1.0",
     "@popmotion/popcorn": "^0.4.4",
     "array-move": "^2.2.2",
@@ -43,6 +43,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "resize-observer-polyfill": "^1.5.1",
+    "tiny-invariant": "^1.1.0",
     "use-media": "^1.4.0"
   },
   "devDependencies": {

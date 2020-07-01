@@ -1,6 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
-import { Layout } from '../../'
+import * as Layout from '../../layout'
 import './style.scss'
 
 const Section = ( {

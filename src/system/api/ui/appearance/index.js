@@ -2,7 +2,6 @@ import React from 'react'
 import { Env } from 'ui'
 import classname from 'classnames'
 
-import './reset.scss'
 import './style.scss'
 import './forms.scss'
 
@@ -14,7 +13,6 @@ export const Appearance = ( {
 	const { application } = Env.use()
 
 	const classes = classname( {
-		'fl-asst-appearance': true,
 		[`fluid-color-scheme-${brightness}`]: brightness && ( 'beaver-builder' !== application ),
 	}, className )
 

@@ -1,5 +1,5 @@
-.fl-asst {
-    .fl-asst-menu {
+.fluid {
+    .fluid-menu {
         width: 180px;
         background: var(--fluid-background);
         border-top: 2px solid var(--fluid-accent);
@@ -13,7 +13,7 @@
             margin-top: 0;
         }
 
-        .fl-asst-menu-item {
+        .fluid-menu-item {
             flex: 0 0 var(--fluid-target-size);
             justify-content: flex-start;
             border-radius: 0;
@@ -25,7 +25,7 @@
         }
     }
     .fluid-color-scheme-dark {
-        .fl-asst-menu {
+        .fluid-menu {
             background: var(--fluid-box-background);
         }
     }

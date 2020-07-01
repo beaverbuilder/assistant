@@ -5,11 +5,8 @@ import { Page as FLUIDPage } from 'fluid/ui'
 import { Nav } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
-import { RegisteredSections } from './parts'
-
 import { Post } from './post'
 import { CreatePost } from './post/create'
-import { User } from './user'
 import { Term } from './term'
 import { Attachment } from './attachment'
 import { Plugin, Theme } from './themes-plugins'
@@ -59,7 +56,7 @@ const Page = ( {
 			onLoad={ onLoad }
 			toolbar={ tabs ? <Nav.TabsToolbar tabs={ tabs } /> : toolbar }
 			overlay={ overlay || ( notices && 0 < notices.length ) && <Overlay /> }
-			shouldShowBackButton={true}
+			shouldShowBackButton={ true }
 			{ ...rest }
 		>
 			{children}
@@ -67,6 +64,7 @@ const Page = ( {
 	)
 }
 
+// Pass along from FLUID
 Page.Section = FLUIDPage.Section
 
 
@@ -76,43 +74,19 @@ Page.defaults = {
 }
 
 Page.Context = createContext( Page.defaults )
-Page.Context.displayName = 'Page.Context'
-
-Page.RegisteredSections = RegisteredSections
-Page.RegisteredSections.displayName = 'Page.RegisteredSections'
 
 /* ------ Page Types ------ */
 Page.Comment = Comment
-Page.Comment.displayName = 'Page.Comment'
-
 Page.Post = Post
-Page.Post.displayName = 'Page.Post'
-
 Page.CreatePost = CreatePost
-Page.CreatePost.displayName = 'Page.CreatePost'
-
 Page.Term = Term
-Page.Term.displayName = 'Page.Term'
-
 Page.Attachment = Attachment
-Page.Attachment.displayName = 'Page.Attachment'
-
-Page.User = User
-Page.User.displayName = 'Page.User'
-
 Page.Plugin = Plugin
-Page.Plugin.displayName = 'Page.Plugin'
-
 Page.Theme = Theme
-Page.Theme.displayName = 'Page.Theme'
-
 Page.NotFound = PageNotFound
-Page.NotFound.displayName = 'Page.NotFound'
-
 Page.Loading = Loading
-Page.Loading.displayName = 'Page.Loading'
-
 Page.Error = Error
-Page.Error.displayName = 'Page.Error'
 
 export { Page }
+
+export default Page

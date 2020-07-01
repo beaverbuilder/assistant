@@ -1,16 +1,16 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page } from 'assistant/ui'
-import { List, Layout } from 'fluid'
+import { List } from 'fluid'
 
 const FLUID = () => {
-    return (
-        <Page title={__('FLUID')} padX={false}>
+	return (
+		<Page title={ __( 'FLUID' ) } padX={ false }>
 
-            <List.Test />
+			<List.Test />
 
-        </Page>
-    )
+		</Page>
+	)
 }
 
 export default FLUID

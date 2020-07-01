@@ -1,5 +1,5 @@
-.fl-asst {
-    .fl-asst-loading-bar {
+.fluid {
+    .fluid-loading-bar {
         flex: 1 1 auto;
         border-radius: 10px;
         min-height: 20px;
@@ -9,7 +9,7 @@
         justify-content: flex-start;
         align-items: center;
 
-        .fl-asst-load-dot {
+        .fluid-dot {
             display: inline-flex;
             flex: 0 0 auto;
             width: 6px;
@@ -48,7 +48,7 @@
         }
         40% {
             -webkit-transform: scale(1.0);
-        transform: scale(1.0);
+            transform: scale(1.0);
         }
     }
 }

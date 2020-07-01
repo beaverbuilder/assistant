@@ -1,7 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Icon } from '../'
+import * as Icon from '../icon'
 import TooltipButton from './tooltip-button'
+import Group from './group'
 import './style.scss'
 
 const Button = TooltipButton
@@ -20,5 +21,7 @@ Button.Back = props => {
 		</Button>
 	)
 }
+
+Button.Group = Group
 
 export default Button

@@ -14,5 +14,5 @@ registerApp( 'fl-home', {
 	shouldShowInAppList: false,
 	state: {
 		keyword: ''
-	}
+	},
 } )

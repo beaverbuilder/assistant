@@ -14,7 +14,7 @@ const Error = ( {
 				margin: 'auto',
 				textAlign: 'center'
 			} }>
-				<Icon.Pencil />
+				<Icon.Pencil size={ 60 } />
 				<h1>{headline}</h1>
 				<p>{message}</p>
 				{ error && <code>{error.message}</code> }
