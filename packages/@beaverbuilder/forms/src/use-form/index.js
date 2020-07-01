@@ -1,7 +1,10 @@
 import React, { useMemo } from 'react'
+import camelCase from 'camelcase'
 import { __ } from '@wordpress/i18n'
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
-import { Button, Form, Page, Layout } from 'ui'
+import { Button, Layout, Page } from '@beaverbuilder/fluid'
+import { Form, Item } from '../parts'
+import { useFormData } from '../use-form-data'
 import './style.scss'
 
 export const useForm = ( {
@@ -10,14 +13,14 @@ export const useForm = ( {
 	fields = {},
 	defaults = {},
 	renderTabs = true,
-	...options // See Form.useFormData
+	...options // See useFormData
 } ) => {
 	const tabData = useMemo( () => tabs, [ JSON.stringify( tabs ) ] )
 	const sectionData = useMemo( () => sections, [ JSON.stringify( sections ) ] )
 	const fieldData = useMemo( () => fields, [ JSON.stringify( fields ) ] )
 	const fieldConfig = getFieldConfig( tabData, sectionData, fieldData, defaults )
 	const defaultValues = getDefaultValues( fieldConfig, defaults )
-	const formData = Form.useFormData( { fields: fieldConfig, defaults: defaultValues, ...options } )
+	const formData = useFormData( { fields: fieldConfig, defaults: defaultValues, ...options } )
 	const { form } = formData
 
 	const renderForm = () => {
@@ -157,7 +160,7 @@ const Fields = ( { config, data } ) => {
 		}
 		const Field = getFieldComponent( component )
 		return (
-			<Form.Item
+			<Item
 				key={ i }
 				label={ label }
 				labelPlacement={ labelPlacement }
@@ -169,36 +172,21 @@ const Fields = ( { config, data } ) => {
 				errors={ errors }
 			>
 				<Field id={ id } { ...rest } />
-			</Form.Item>
+			</Item>
 		)
 	} )
 }
 
 const getFieldComponent = key => {
-	const map = {
-		'actions': Form.ActionsItem,
-		'checkbox': Form.CheckboxItem,
-		'datetime': Form.DateTimeItem,
-		'file': Form.FileItem,
-		'labels': Form.LabelsItem,
-		'plain-text': Form.PlainTextItem,
-		'select': Form.SelectItem,
-		'suggest': Form.SuggestItem,
-		'taxonomy-terms': Form.TaxonomyTermsItem,
-		'text': Form.TextItem,
-		'textarea': Form.TextareaItem,
-		'url': Form.UrlItem,
-		'parent-terms': Form.ParentTermItems,
-		'image': Form.ImageItem,
-		'button': Form.ButtonItem,
-		'calender': Form.CalenderItem
-	}
 	let Component = Form.TextItem
 
 	if ( 'function' === typeof key ) {
 		Component = key
-	} else if ( map[ key ] ) {
-		Component = map[ key ]
+	} else {
+		const name = `${ camelCase( key, { pascalCase: true } ) }Item`
+		if ( Form[ name ] ) {
+			Component = Form[ name ]
+		}
 	}
 
 	return Component

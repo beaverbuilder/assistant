@@ -22,7 +22,7 @@
     "@beaverbuilder/app-core": "^0.1.9",
     "@beaverbuilder/cloud": "^0.1.7",
     "@beaverbuilder/fluid": "^0.4.5",
-    "@beaverbuilder/forms": "^0.1.2",
+    "@beaverbuilder/forms": "^0.1.3",
     "@popmotion/popcorn": "^0.4.4",
     "array-move": "^2.2.2",
     "axios": "0.18.1",

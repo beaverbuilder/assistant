@@ -1,6 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
-import Loading from '../../temp-components/loading'
+import { Layout } from '@beaverbuilder/fluid'
 
 export const Item = props => {
 	const {
