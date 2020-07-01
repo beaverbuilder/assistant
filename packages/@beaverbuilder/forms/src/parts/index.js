@@ -1,9 +1,11 @@
 import React from 'react'
 import classname from 'classnames'
-import { Icon, Layout, Page } from 'ui'
+import { Page } from '@beaverbuilder/fluid'
+import Loading from '../temp-components/loading'
+import Form from './form'
 import Input from './input'
 
-export { Input }
+export { Form, Input }
 
 export const Section = props => (
 	<Page.Section className="fl-asst-form-section" { ...props } />
@@ -40,7 +42,7 @@ export const Item = props => {
 			{ label &&
 				<label htmlFor={ labelFor }>
 					{label}
-					{ isRequired && <abbr title="required"><Icon name="asterisk" /></abbr> }
+					{ isRequired && <abbr title="required">*</abbr> }
 					{ isLoading && <Layout.Loading /> }
 				</label>
 			}

@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/forms",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "description": "Hooks and components for easily building complex forms in React.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -15,8 +15,15 @@
         "url": "https://github.com/beaverbuilder/assistant.git",
         "directory": "packages/@beaverbuilder/forms"
     },
+    "dependencies": {
+        "@beaverbuilder/fluid": "^0.4.4"
+    },
     "peerDependencies": {
-        "react": "^16.9.0"
+        "@wordpress/i18n": "^3.13.0",
+        "classnames": "^2.2.6",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
+        "react-router-dom": "^5.2.0"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",
