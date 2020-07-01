@@ -30,6 +30,9 @@
     // Accent Color
     --fluid-accent: hsl( var(--fluid-hue), 100%, 43%);
 
+    // Dimmed/Muted Text
+    --fluid-muted-text-color: hsl( var(--fluid-hue), 18%, 60% );
+
     // Outlines and Separators
     --fluid-line-color: #F1F5F9;
     --fluid-dark-line-color: black;
@@ -40,18 +43,124 @@
     --fluid-lg-space: 20px;
 
     // Base Sizes
-    --fluid-font-size: 13px;
-    --fluid-radius: 3px;
+    --fluid-radius: 5px;
     --fluid-target-size: 36px; // Minimum click target
-
+    --fluid-font-size: 13px;
     --fluid-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-.fl.uid {
+.fluid {
     color: var(--fluid-color);
+    font-family: var(--fluid-font-family);
     font-size: var(--fluid-font-size);
     font-weight: normal;
-    line-height: 1.3;
+    line-height: 1.2;
+
+    // Reset
+    div, span { box-sizing: border-box; }
+
+    // Media
+    img {
+        display: block;
+        max-width: 100%;
+        object-fit: cover;
+        height: auto;
+        width: auto;
+    }
+    video { display: block; }
+    svg { display: inline-block; }
+
+    // General Content
+    a, button {
+        box-sizing: border-box;
+        -moz-user-select:none; // Yep, still need it.
+        user-select: none;
+        cursor: pointer;
+        letter-spacing: normal;
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        background: transparent;
+        border: none;
+        border-radius: var(--fluid-radius);
+        user-select: none;
+        padding:0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+
+        &:hover {
+            color: inherit;
+            top:0;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+        &:focus {
+            color: inherit;
+            top:0;
+            border: none;
+        }
+
+        &[ disabled ] {
+            color: inherit;
+            opacity: .5;
+            pointer-events: none;
+        }
+
+        &:visited {
+            color: inherit;
+        }
+    }
+    a {
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    button {
+        min-height: var(--fluid-target-size);
+        min-width: var(--fluid-target-size);
+
+        &:focus {
+            box-shadow: 0px 0px 0px 2px rgba(128, 128, 128, .5);
+        }
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+        margin: var(--fluid-med-space) 0;
+
+        &::before {
+            all: unset !important;
+        }
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    h1 {
+        font-size: calc( var(--fluid-font-size) + 6px );
+    }
+    h2 {
+        font-size: calc( var(--fluid-font-size) + 2px );
+    }
+    p {
+        font-size: calc( var(--fluid-font-size) + 1px );
+        margin: var(--fluid-lg-space) 0;
+    }
+
+    ul, ol {
+        list-style:none;
+        margin: var(--fluid-med-space) 0;
+        padding:0;
+
+        li {
+            margin:0;
+            padding:0;
+        }
+    }
 
     .fluid-status-primary {
         --fluid-box-background: var(--fluid-primary-background);

@@ -1,6 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
-import { Layout } from 'fluid/ui'
+import Box from '../box'
 import './style.scss'
 
 const AspectBox = ( {
@@ -13,7 +13,7 @@ const AspectBox = ( {
 	...rest
 } ) => {
 
-	const classes = classname( 'fl-asst-aspect-box', className )
+	const classes = classname( 'fluid-aspect-box', className )
 
 	const paddingForRatio = () => {
 
@@ -39,7 +39,7 @@ const AspectBox = ( {
 	}
 
 	return (
-		<Layout.Box
+		<Box
 			padY={ false }
 			padX={ false }
 			className={ classes }
@@ -47,7 +47,7 @@ const AspectBox = ( {
 			{ ...rest }
 		>
 			<div>{children}</div>
-		</Layout.Box>
+		</Box>
 	)
 }
 

@@ -6,7 +6,6 @@ import { Root as AppCoreRoot, Error } from '@beaverbuilder/app-core'
 import {
 	getSystemActions,
 	useSystemState,
-	getSystemStore,
 } from 'assistant/data'
 
 import {
@@ -94,6 +93,7 @@ export const getAssistantBBPanelConfig = () => {
 	const { setHistory } = getSystemActions()
 
 	const getProps = () => {
+
 		//const { history } = getSystemStore().getState()
 		//return getRouterProps( history )
 		return {}

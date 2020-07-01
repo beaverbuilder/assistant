@@ -44,12 +44,12 @@ export const Updates = ( {
 					return (
 						<>
 						{ updating &&
-							<Button tabIndex="-1">
+							<Button appearance="normal">
 								<Icon.Loading />
 							</Button>
 						}
 						{ ! updating &&
-							<Button tabIndex="-1" onClick={ () => setUpdateQueueItem( item ) }>
+							<Button appearance="normal" onClick={ () => setUpdateQueueItem( item ) }>
 								{__( 'Update' )}
 							</Button>
 						}

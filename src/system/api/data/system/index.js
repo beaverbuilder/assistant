@@ -6,6 +6,7 @@ import {
 	getSelectors,
 	getHooks
 } from '../registry'
+
 import getSystemHistory from './history'
 import { getWpRest } from 'utils/wordpress'
 import * as actions from './actions'

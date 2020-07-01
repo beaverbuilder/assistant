@@ -1,10 +1,9 @@
 import React, { memo } from 'react'
-import { Nav as FLUID_Nav } from 'fluid/ui'
 import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
 import { Button, Icon } from 'ui'
 import './style.scss'
 
-const Nav = { ...FLUID_Nav }
+const Nav = {}
 
 Nav.Tabs = ( { tabs = [], ...rest } ) => {
 	const history = useHistory()

@@ -9,6 +9,7 @@ import './fl-updates'
 import './fl-labels'
 import './fl-cloud'
 import './fl-library-experiments'
+import './fluid'
 
 //import './examples'
 
