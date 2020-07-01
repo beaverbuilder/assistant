@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
 import { useSystemState } from 'assistant/data'
-import cloud from 'assistant/cloud'
 
 import Connect from './pages/connect'
 import Dashboard from './pages/dashboard'

@@ -1,5 +1,3 @@
-import React from 'react'
-import classname from 'classnames'
 import Form from '@beaverbuilder/forms'
 import * as Items from './items'
 import '@beaverbuilder/forms/dist/index.css'
