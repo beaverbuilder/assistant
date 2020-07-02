@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Filter, Icon, Layout, List, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
@@ -121,7 +120,6 @@ export default ( { library } ) => {
 
 const ItemActions = ( { library, item, actions } ) => {
 	const { removeItem } = actions
-	const history = useHistory()
 	const deleteItem = () => {
 		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
 			cloud.libraries.deleteItem( item.id )
