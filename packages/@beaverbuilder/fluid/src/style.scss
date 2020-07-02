@@ -57,7 +57,7 @@
     line-height: 1.2;
 
     // Reset
-    div, span { box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
     // Media
     img {
@@ -68,7 +68,7 @@
         width: auto;
     }
     video { display: block; }
-    svg { display: inline-block; }
+    svg { display: block; }
 
     // General Content
     a, button {

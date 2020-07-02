@@ -93,6 +93,9 @@
                 min-width: 20px;
                 margin-right: 1em;
                 color: var(--fluid-accent);
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             &.fluid-size-lg .fluid-item-content {
