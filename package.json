@@ -20,7 +20,7 @@
   "license": "GPL-2.0+",
   "dependencies": {
     "@beaverbuilder/app-core": "^0.1.9",
-    "@beaverbuilder/cloud": "^0.1.8",
+    "@beaverbuilder/cloud": "^0.1.9",
     "@beaverbuilder/fluid": "^0.4.6",
     "@beaverbuilder/forms": "^0.1.4",
     "@popmotion/popcorn": "^0.4.4",
