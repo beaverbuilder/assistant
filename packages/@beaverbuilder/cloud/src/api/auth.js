@@ -142,6 +142,45 @@ export default ( http ) => {
 		},
 
 		/**
+		 * Verify a user's email address.
+		 *
+		 * @returns Promise
+		 */
+		verifyEmail: ( url, config = {} ) => {
+			return new Promise( ( resolve, reject ) => {
+				http.get( url, config )
+					.then( ( response ) => {
+						if ( response.response ) {
+							reject( response.response.data )
+							return
+						}
+						session.setUser( response.data.user )
+						resolve( response )
+					} )
+					.catch( reject )
+			} )
+		},
+
+		/**
+		 * Resend the verification email.
+		 *
+		 * @returns Promise
+		 */
+		resendVerificationEmail: ( config = {} ) => {
+			return new Promise( ( resolve, reject ) => {
+				http.get( '/iam/verification/resend', config )
+					.then( ( response ) => {
+						if ( response.response ) {
+							reject( response.response.data )
+							return
+						}
+						resolve( response )
+					} )
+					.catch( reject )
+			} )
+		},
+
+		/**
 		 * Checks if the session has a token and user.
 		 *
 		 * @returns bool

@@ -95,15 +95,15 @@ export default ( http, sockets ) => {
 		useAll: ( teamId = 0 ) => useApiCollection( {
 			model: 'library',
 			getter: useCallback( () => api.getAll( teamId ), [ teamId ] ),
-			subscribe: api.subscribe,
-			unsubscribe: api.unsubscribe
+			// subscribe: api.subscribe,
+			// unsubscribe: api.unsubscribe
 		} ),
 
 		useOne: ( id ) => useApiResource( id, {
 			model: 'library',
 			getter: api.get,
-			subscribe: api.subscribe,
-			unsubscribe: api.unsubscribe
+			// subscribe: api.subscribe,
+			// unsubscribe: api.unsubscribe
 		} ),
 
 		/**
