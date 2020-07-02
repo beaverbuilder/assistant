@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/app-core",
-    "version": "0.1.5",
+    "version": "0.1.9",
     "description": "Utilities for managing apps via a redux store.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -19,7 +19,8 @@
         "react": "^16.9.0",
         "react-router-dom": "^5.2.0",
         "@wordpress/i18n": "^3.13.0",
-        "redux": "^4.0.5"
+        "redux": "^4.0.5",
+        "tiny-invariant": "^1.1.0"
     },
     "dependencies": {
         "camelcase": "^5.3.1",

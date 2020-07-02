@@ -307,7 +307,7 @@ export const Post = ( { location, match, history } ) => {
 						removeFeatureimg: {
 							id: 'remove_post_feature_img',
 							text: 'Remove',
-							btnclass: 'fl-asst-remove-feature-img',
+							btnClass: 'fl-asst-remove-feature-img',
 							isVisible: featureThumbnail,
 							component: 'button',
 							onClick: removeFeatureImage,

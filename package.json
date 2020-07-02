@@ -19,11 +19,12 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
-    "@beaverbuilder/app-core": "^0.1.4",
-    "@beaverbuilder/cloud": "^0.1.6",
-    "@beaverbuilder/fluid": "^0.4.3",
-    "@beaverbuilder/forms": "^0.1.0",
+    "@beaverbuilder/app-core": "^0.1.9",
+    "@beaverbuilder/cloud": "^0.1.9",
+    "@beaverbuilder/fluid": "^0.4.6",
+    "@beaverbuilder/forms": "^0.1.4",
     "@popmotion/popcorn": "^0.4.4",
+    "@wordpress/i18n": "^3.14.0",
     "array-move": "^2.2.2",
     "axios": "0.18.1",
     "axios-cache-adapter": "^2.5.0",
@@ -43,6 +44,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "resize-observer-polyfill": "^1.5.1",
+    "tiny-invariant": "^1.1.0",
     "use-media": "^1.4.0"
   },
   "devDependencies": {

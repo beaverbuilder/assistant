@@ -34,190 +34,30 @@
 }
 
 .fluid {
-    font-family: var(--fluid-font-family);
-    font-size: var(--fluid-font-size);
 
-    & * {
-        box-sizing: border-box;
-        line-height: 1.3;
-    }
-
-    // Visuals
-    img {
-        display: block;
-        max-width: 100%;
-        object-fit: cover;
-        height: auto;
-        width: auto;
-    }
-    video {
-        display: block;
-    }
-    svg {
-        display: inline-block;
-    }
-
-    a, button {
-        font-family: inherit;
-        font-size: inherit;
-        color: inherit;
-        background: transparent;
-        border: none;
-        border-radius: var(--fluid-radius);
-        user-select: none;
-        padding:0;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-
-        &:hover {
-            color: inherit;
-            top:0;
-            box-shadow: none;
-            border: none;
-            background: transparent;
-        }
-        &:focus {
-            color: inherit;
-            top:0;
-            border: none;
-        }
-
-        &[disabled] {
-            color: inherit;
-            opacity: .5;
-            pointer-events: none;
-        }
-
-        &:visited {
-            color: inherit;
-        }
-    }
-    a {
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-    button {
-        min-height: var(--fluid-target-size);
-        min-width: var(--fluid-target-size);
-
-        &:focus {
-            box-shadow: 0px 0px 0px 2px rgba(128, 128, 128, .5);
-        }
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        color: inherit;
-        margin: var(--fl-asst-inner-space) 0;
-
-        &::before {
-            all: unset !important;
-        }
-        &:first-child {
-            margin-top: 0;
-        }
-    }
-    h1 {
-        font-size: calc( var(--fluid-font-size) + 6px );
-    }
-    h2 {
-        font-size: calc( var(--fluid-font-size) + 2px );
-    }
-    p {
-        font-size: calc( var(--fluid-font-size) + 1px );
-        margin: var(--fl-asst-outer-space) 0;
-    }
-
-    ul, ol {
-        list-style:none;
-        margin: var(--fl-asst-inner-space) 0;
-        padding:0;
-
-        li {
-            margin:0;
-            padding:0;
-        }
-    }
-
-    // Dividers - generally should be <hr/>
-    hr {
-        all: initial;
-        display: block;
-        background-color: var(--fl-asst-secondary-surface-background);
-        background-image: none;
-        height: 2px;
-        width: auto;
-        border-radius: 2px;
-        margin: 0;
-
-        &.fl-asst-divider::before,
-        &.fl-asst-divider::after {
-            display:none !important;
-            content: '' !important;
-        }
-
-        &.fl-asst-shortie-divider {
-            height: 3px;
-            width: 100px;
-            margin: 0 auto;
-            border-radius: 3px;
-        }
-    }
-    .fl-asst-divider.fl-asst-horizontal-divider {
-        box-sizing: border-box;
-        background: var(--fl-asst-surface-background);
-    }
-    .fl-asst-divider.fl-asst-vertical-divider {
-        box-sizing: border-box;
-        background: var(--fl-asst-surface-background);
-        width: 2px;
-        height: auto;
-    }
-
-    // Helpers
-    .fl-asst-is-hidden { visibility: hidden; }
-
-    .fl-asst-rounded { border-radius: var(--fluid-radius); }
-
-    .fl-asst-padded { padding: var(--fluid-lg-space); }
-
-    // Brightness Setups
-    .fl-asst-appearance {
-
-        // Semantic Color Defaults - Light Appearance
+    .fluid-color-scheme-light {
         --fl-asst-surface-color: var(--fl-asst-light-text);
         --fl-asst-surface-background: var(--fl-asst-light-1);
 
-        --fl-asst-accent-color: var(--fl-asst-light-text);
+        --fl-asst-secondary-surface-color: var(--fluid-box-color);
+        --fl-asst-secondary-surface-background: var(--fluid-box-background);
 
-        &.fluid-color-scheme-light {
-            --fl-asst-surface-color: var(--fl-asst-light-text);
-            --fl-asst-surface-background: var(--fl-asst-light-1);
-
-            --fl-asst-secondary-surface-color: var(--fluid-box-color);
-            --fl-asst-secondary-surface-background: var(--fluid-box-background);
-
-            --fl-asst-translucent-background: var(--fl-asst-light-translucent);
-            --fl-asst-dim-text: var(--fl-asst-dark-5);
-        }
-
-        &.fluid-color-scheme-dark {
-            --fl-asst-surface-color: var(--fl-asst-dark-text);
-            --fl-asst-surface-background: var(--fl-asst-dark-2);
-
-            --fl-asst-secondary-surface-color: var(--fl-asst-light-4);
-            --fl-asst-secondary-surface-background: var(--fl-asst-dark-1);
-
-            --fl-asst-accent-color: var(--fl-asst-dark-text);
-
-            --fl-asst-translucent-background: var(--fl-asst-dark-translucent);
-            --fl-asst-dim-text: var(--fl-asst-light-5);
-        }
+        --fl-asst-translucent-background: var(--fl-asst-light-translucent);
+        --fl-asst-dim-text: var(--fl-asst-dark-5);
     }
 
     .fluid-color-scheme-dark {
+        --fl-asst-surface-color: var(--fl-asst-dark-text);
+        --fl-asst-surface-background: var(--fl-asst-dark-2);
+
+        --fl-asst-secondary-surface-color: var(--fl-asst-light-4);
+        --fl-asst-secondary-surface-background: var(--fl-asst-dark-1);
+
+        --fl-asst-accent-color: var(--fl-asst-dark-text);
+
+        --fl-asst-translucent-background: var(--fl-asst-dark-translucent);
+        --fl-asst-dim-text: var(--fl-asst-light-5);
+
         --fl-asst-input-background: hsl( var(--fluid-hue), 15%, 12% );
     }
 

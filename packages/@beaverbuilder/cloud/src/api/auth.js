@@ -107,12 +107,76 @@ export default ( http ) => {
 		 *
 		 * @returns Promise
 		 */
+		forgotPassword: ( email, config = {} ) => {
+			return new Promise( ( resolve, reject ) => {
+				http.post( '/iam/password/forgot', { email }, config )
+					.then( ( response ) => {
+						if ( response.response ) {
+							reject( response.response.data )
+							return
+						}
+						resolve()
+					} )
+					.catch( reject )
+			} )
+		},
 
-		resetPassword: ( email ) => {
-			return new Promise( ( resolve ) => {
-				setTimeout( () => {
-					resolve()
-				}, 1000 )
+		/**
+		 * Resets a user's password.
+		 *
+		 * @returns Promise
+		 */
+		resetPassword: ( email, password, password_confirmation, token, config = {} ) => {
+			const data = { email, password, password_confirmation, token }
+			return new Promise( ( resolve, reject ) => {
+				http.post( '/iam/password/reset', data, config )
+					.then( ( response ) => {
+						if ( response.response ) {
+							reject( response.response.data )
+							return
+						}
+						resolve()
+					} )
+					.catch( reject )
+			} )
+		},
+
+		/**
+		 * Verify a user's email address.
+		 *
+		 * @returns Promise
+		 */
+		verifyEmail: ( url, config = {} ) => {
+			return new Promise( ( resolve, reject ) => {
+				http.get( url, config )
+					.then( ( response ) => {
+						if ( response.response ) {
+							reject( response.response.data )
+							return
+						}
+						session.setUser( response.data.user )
+						resolve( response )
+					} )
+					.catch( reject )
+			} )
+		},
+
+		/**
+		 * Resend the verification email.
+		 *
+		 * @returns Promise
+		 */
+		resendVerificationEmail: ( config = {} ) => {
+			return new Promise( ( resolve, reject ) => {
+				http.get( '/iam/verification/resend', config )
+					.then( ( response ) => {
+						if ( response.response ) {
+							reject( response.response.data )
+							return
+						}
+						resolve( response )
+					} )
+					.catch( reject )
 			} )
 		},
 

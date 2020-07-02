@@ -1,7 +1,7 @@
 import React from 'react'
 import { formatDate } from 'utils/datetime'
 
-export const DateTimeItem = ( {
+export const DatetimeItem = ( {
 	id,
 	value,
 	format,

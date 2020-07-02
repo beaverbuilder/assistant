@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.4.3",
+    "version": "0.4.6",
     "description": "Common UI environment for Beaver Builder and Assistant projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -22,7 +22,8 @@
         "classnames": "^2.2.6",
         "framer-motion": "^1.11.0",
         "react-laag": "^1.7.3",
-        "resize-observer-polyfill": "^1.5.1"
+        "resize-observer-polyfill": "^1.5.1",
+        "@wordpress/i18n": "^3.14.0"
     },
     "dependencies": {
         "camelcase": "^5.3.1"

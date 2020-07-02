@@ -56,7 +56,7 @@ const Results = ( {
 				} }
 			/>
 			<Layout.Row padY={ true }>
-				<Icon.Pencil />
+				<Icon.Pencil size={ 45 } />
 			</Layout.Row>
 		</Layout.Box>
 	)

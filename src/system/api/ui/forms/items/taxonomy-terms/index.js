@@ -197,12 +197,12 @@ export const TaxonomyTermsItem = ( { taxonomy, value, onChange } ) => {
 				<div className='fl-asst-new-term-form'>
 					{addingNew && (
 						<>
-							<label>{sprintf( __( 'New %s Name' ), tax.labels.singular )}</label>
+							<label>{ sprintf( 'New %s Name', tax.labels.singular ) }</label>
 							<Form.TextItem
 								value={ newTerm }
 								onChange={ name => setNewTerm( name ) }
 							/>
-							<label>{sprintf( __( 'New %s Parent' ), tax.labels.singular )}</label>
+							<label>{ sprintf( 'New %s Parent', tax.labels.singular ) }</label>
 							<Form.SelectItem
 								options={ {
 									'': __( 'None' ),
@@ -212,6 +212,7 @@ export const TaxonomyTermsItem = ( { taxonomy, value, onChange } ) => {
 								onChange={ v => setNewTermParent( v ) }
 							/>
 							<Button
+								appearance="normal"
 								onClick={ () => {
 									setAddingNew( false )
 									addNewTerm( newTerm, newTermParent )
@@ -223,6 +224,7 @@ export const TaxonomyTermsItem = ( { taxonomy, value, onChange } ) => {
 					)}
 					{! addingNew && (
 						<Button
+							appearance="normal"
 							onClick={ () => {
 								setNewTerm( '' )
 								setNewTermParent( '' )

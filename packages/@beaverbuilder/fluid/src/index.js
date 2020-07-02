@@ -1,19 +1,26 @@
+import './style.scss'
+import * as Icon from './icon'
+import * as Text from './text'
+import * as Layout from './layout'
 import Error from './error'
-import Nav from './nav'
 import Page from './page'
 import Button from './button'
-import Layout from './layout'
-import * as Icon from './icon'
+import Menu from './menu'
+import * as List from './list'
+
+// Styleguide content
 import { IconSheet } from './guides'
 
-import './style.scss'
-
 export {
+	Text,
 	Error,
-	Nav,
 	Page,
 	Button,
 	Icon,
 	IconSheet,
-	Layout
+	Layout,
+	List,
+	Menu,
 }
+
+console.log('FLUID')
