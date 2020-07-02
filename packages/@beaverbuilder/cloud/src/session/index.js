@@ -6,9 +6,8 @@ const FL_CLOUD_SESSION_LENGTH = 1000 * 60 * 60 * 24 * 14
 
 const subscribers = []
 
-const notify = () => {
-	const state = { token: getToken(), user: getUser() }
-	subscribers.map( callback => callback( state ) )
+const notify = ( token = null, user = null ) => {
+	subscribers.map( callback => callback( { token, user } ) )
 }
 
 export const subscribe = ( callback ) => {
@@ -18,7 +17,7 @@ export const subscribe = ( callback ) => {
 export const create = ( token, user, remember ) => {
 	setToken( token, remember )
 	setUser( user, remember )
-	notify()
+	notify( token, user )
 }
 
 export const destroy = () => {
@@ -93,5 +92,9 @@ const getCookie = ( key ) => {
 }
 
 const removeCookie = ( key ) => {
-	document.cookie = cookie.serialize( key, '' )
+	const options = {
+		path: '/',
+		expires: new Date( Date.now() - FL_CLOUD_SESSION_LENGTH )
+	}
+	document.cookie = cookie.serialize( key, '', options )
 }
