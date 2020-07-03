@@ -41,11 +41,17 @@ class CloudPostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/import_lib_post',
+			'/posts/import_from_library',
 			[
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'import_lib_post' ],
+					'callback'            => [ $this, 'import_from_library' ],
+					'args'                => [
+						'item_id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_others_posts' );
 					},
@@ -300,6 +306,15 @@ class CloudPostsController extends ControllerAbstract {
 				'media' => $media,
 			]
 		);
+	}
+
+
+	function import_from_library( $request ) {
+		$item_id = $request->get_param( 'item_id' );
+		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
+		$response = $client->libraries->getItem( $item_id );
+		print_r($response);
+
 	}
 
 }

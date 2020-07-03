@@ -99,11 +99,9 @@ const ItemSettings = ( { item, setItem } ) => {
 const ItemImport = ( { item, setItem } ) => {
 
 
-	const overRidePost = () => {
+	const importFromLibrary = () => {
 		const wpRest = getWpRest()
-		item.data.override_items = ['content','meta'];
-		setItem( item )
-		wpRest.posts().overrideLibPost( item.data ).then( response => {
+		wpRest.posts().importFromLibrary( item.id ).then( response => {
 			console.log( response )
 		} )
 	}
@@ -115,7 +113,7 @@ const ItemImport = ( { item, setItem } ) => {
 				<div>2. The author should be the current user.</div>
 				<div>3. Give options to import meta and terms.</div>
 				<br />
-				<Button>{ __( 'Import to Site' ) }</Button>
+				<Button onClick={importFromLibrary}>{ __( 'Import to Site' ) }</Button>
 			</Page.Section>
 			<Page.Section label={ __( 'Overriding Posts' ) }>
 				<div>Clicking override should override the current post you are viewing with the library post...</div>

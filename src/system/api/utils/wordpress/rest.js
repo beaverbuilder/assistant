@@ -223,11 +223,6 @@ const posts = () => {
 			return notations().deleteLabel( 'post', postId, labelId, config )
 		},
 
-		importLibPost( data = {}, config = {} ) {
-			config.cacheKey = 'posts'
-			return http.post( 'fl-assistant/v1/posts/import_lib_post', data, config )
-		},
-
 		overrideLibPost( data = {}, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( 'fl-assistant/v1/posts/override_lib_post', data, config )
@@ -236,6 +231,11 @@ const posts = () => {
 		saveToLibrary( id, libraryId, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, {}, config )
+		},
+
+		importFromLibrary( itemId, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/import_from_library/${itemId}`, {}, config )
 		},
 	}
 }
