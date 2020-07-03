@@ -22,10 +22,12 @@ const PublishBar = ( {
 			{ message && <div className="fl-asst-publish-bar-message">{message}</div> }
 			<div className="fl-asst-publish-bar-actions">
 				<Button
+					appearance="normal"
 					status="primary"
 					onClick={ onPublish }
 				>{__( 'Publish' )}</Button>
 				<Button
+					appearance="normal"
 					onClick={ onDiscard }
 				>{__( 'Discard Changes' )}</Button>
 			</div>

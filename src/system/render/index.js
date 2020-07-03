@@ -13,9 +13,9 @@ const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode
 const renderNormal = () => {
 
 	if ( undefined === mountNode ) {
-        mountNode = document.createElement( 'div' )
-        mountNode.classList.add( 'fl-asst', 'fl-asst-mount-node' )
-        document.body.appendChild( mountNode )
+		mountNode = document.createElement( 'div' )
+		mountNode.classList.add( 'fl-asst', 'fl-asst-mount-node' )
+		document.body.appendChild( mountNode )
 	}
 	render( <Assistant />, mountNode )
 }
@@ -47,6 +47,7 @@ if ( 'FLBuilder' in window ) {
 		} )
 	}
 } else {
+
 	// Render the standard Assistant app - We're not in Beaver Builder
 	wp.domReady( renderNormal )
 }

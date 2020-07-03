@@ -41,17 +41,6 @@ const createAppState = ( defaultApp = app ) => {
             		return state
             	}
             },
-            order: ( state = [], action ) => {
-                switch ( action.type ) {
-                case 'REGISTER_APP':
-
-                    // Is it already in the array?
-                    // If not, push it on the end
-
-                default:
-                    return state
-                }
-            },
         },
         actions: {
             registerApp: ( handle = '', config = {} ) => ({

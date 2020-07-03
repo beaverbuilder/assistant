@@ -6,7 +6,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background: var(--fluid-box-background);
+        background: transparent;
         border-radius: var(--fluid-radius);
         box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
         min-height: var(--fluid-target-size);
@@ -40,6 +40,10 @@
             height: 45px;
             width: 45px;
             border-radius: 50%;
+        }
+
+        &.fluid-appearance-normal {
+            background: var(--fluid-box-background);
         }
 
         &.fluid-appearance-transparent {

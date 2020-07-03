@@ -1,13 +1,10 @@
 import React, { useRef } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Page } from 'assistant/ui'
-import { getCloudHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
 export default ( { history, location } ) => {
 	const { welcome } = location.state ? location.state : {}
-	const { useCurrentTeam } = getCloudHooks()
-	const [ currentTeam, setCurrentTeam ] = useCurrentTeam()
 	const timeout = useRef( null )
 
 	const checkName = ( name ) => {
@@ -51,7 +48,6 @@ export default ( { history, location } ) => {
 			name
 		}
 		return cloud.teams.create( data ).then( response => {
-			setCurrentTeam( response.data.id )
 			history.replace( '/fl-cloud/teams' )
 		} ).catch( error => setErrors( error.response.data.errors ) )
 	}

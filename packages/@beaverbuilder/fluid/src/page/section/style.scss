@@ -1,48 +1,50 @@
 .fl.uid {
-    .fluid-section {
-        display: flex;
-        flex-direction: column;
-        flex: 0 0 auto;
-        margin: 0 calc( 0px - var(--fluid-lg-space) );
-
-        .fluid-section-title {
-            flex: 0 0 auto;
-            display: flex;
-            flex-direction: row;
-            align-items: flex-end;
-            padding: 9px var(--fluid-lg-space) 0;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--fluid-line-color);
-            min-height: var(--fluid-target-size);
-
-            .fluid-section-title-text {
-                display: inline-flex;
-                max-width: 70%;
-                box-shadow: 0px 2px 0px 0px currentColor;
-                align-items: flex-end;
-                padding: 0 0 5px;
-                font-weight: 500;
-            }
-        }
-        .fluid-section-description {
-            flex: 0 0 auto;
+    .fluid-page {
+        .fluid-section {
             display: flex;
             flex-direction: column;
-            padding: var(--fluid-lg-space);
-            padding-bottom: 0;
-            font-style: italic;
+            flex: 0 0 auto;
+            margin: 0 calc( 0px - var(--fluid-lg-space) );
 
-            & > :first-child {
-                margin-top: 0;
+            .fluid-section-title {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+                padding: 9px var(--fluid-lg-space) 0;
+                text-transform: uppercase;
+                border-bottom: 2px solid var(--fluid-line-color);
+                min-height: var(--fluid-target-size);
+
+                .fluid-section-title-text {
+                    display: inline-flex;
+                    max-width: 70%;
+                    box-shadow: 0px 2px 0px 0px currentColor;
+                    align-items: flex-end;
+                    padding: 0 0 5px;
+                    font-weight: 500;
+                }
             }
-            & > :last-child {
-                margin-bottom: 0;
+            .fluid-section-description {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: column;
+                padding: var(--fluid-lg-space);
+                padding-bottom: 0;
+                font-style: italic;
+
+                & > :first-child {
+                    margin-top: 0;
+                }
+                & > :last-child {
+                    margin-bottom: 0;
+                }
             }
-        }
-        .fluid-section-content {
-            flex: 1 0 auto;
-            display: grid;
-            grid-row-gap: var(--fluid-sm-space);
+            .fluid-section-content {
+                flex: 1 0 auto;
+                display: grid;
+                grid-row-gap: var(--fluid-sm-space);
+            }
         }
     }
 }

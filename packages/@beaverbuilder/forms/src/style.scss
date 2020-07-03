@@ -1,0 +1,283 @@
+.fl-asst {
+
+    form {
+        padding: 0 0 var(--fl-asst-outer-space);
+        color: inherit;
+        margin: 0;
+
+        .fl-asst-form-section {
+            display: flex;
+            flex-direction: column;
+
+            .fl-asst-form-section-title {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 3px var(--fl-asst-outer-space) 0;
+                text-transform: uppercase;
+                background-color: var(--fl-asst-surface-background);
+                border-bottom: 2px solid var(--fl-asst-secondary-surface-background);
+
+                // Yea, all this for sticky headers
+                position: -webkit-sticky;
+                position: -moz-sticky;
+                position: -ms-sticky;
+                position: -o-sticky;
+                position: sticky;
+                top:0;
+
+                .fl-asst-form-section-title-text {
+                    display: inline-flex;
+                    align-items: center;
+                    min-height: var(--fluid-target-size);
+                    max-width: 70%;
+                    box-shadow: 0px 2px 0px 0px currentColor;
+                    align-items: flex-end;
+                    padding: 0 0 5px;
+                }
+            }
+            .fl-asst-form-section-content {
+                flex: 1 1 auto;
+                padding: var(--fl-asst-outer-space) 0;
+                display: grid;
+                grid-row-gap: var(--fl-asst-inner-space);
+            }
+        }
+
+        .fl-asst-form-footer {
+            padding: var(--fl-asst-inner-space) var(--fl-asst-outer-space);
+            position: -webkit-sticky;
+            position: sticky;
+            bottom:0;
+            background: var(--fl-asst-surface-background);
+            border-top: 5px solid var(--fl-asst-secondary-surface-background);
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .fl-asst-form-item {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5px var(--fl-asst-outer-space);
+            margin: 0 calc( 0px - var(--fl-asst-outer-space) );
+            min-height: var(--fluid-target-size);
+            box-shadow: none;
+            transition-property: box-shadow;
+            transition-duration: .25s;
+
+            p {
+                margin:0;
+            }
+
+            &.fl-asst-form-item-placement-beside {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+
+                label {
+                    margin:0;
+                    margin-right: var(--fluid-med-space);
+                    flex: 0 0 auto;
+                }
+
+                .fl-asst-form-item-content {
+                    text-align: right;
+                    justify-content: flex-end;
+                    flex: 1 1 auto;
+                }
+            }
+
+            .fl-asst-form-item-content {
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                align-content: center;
+                flex-wrap: wrap;
+                word-break: break-word;
+
+                button {
+                    flex: 0 0 auto;
+                }
+
+                label {
+                    font-weight: normal;
+                }
+            }
+        }
+
+        .fl-asst-form-item:focus-within {
+            box-shadow: inset 3px 0px 0px 0px var(--fluid-accent);
+        }
+
+        &.fl-asst-highlight-changes {
+            .fl-asst-form-item-has-changes {
+                box-shadow: inset 3px 0px 0px 0px var(--fluid-primary-color);
+            }
+        }
+
+		.fl-asst-form-item-has-errors {
+			box-shadow: inset 3px 0px 0px 0px var(--fl-asst-red) !important;
+
+			label {
+				color: var(--fl-asst-red) !important;
+			}
+			.fl-asst-form-item-error {
+				color: var(--fl-asst-red);
+				padding: var(--fl-asst-tiny-space) 0 0;
+			}
+
+		}
+    } // form
+
+    label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: inherit;
+        font-weight: 500;
+        line-height: 1.2;
+        color: var(--fl-asst-text-color);
+        text-transform: none;
+        text-decoration: none;
+        text-shadow: none;
+        margin: 0 0 var(--fl-asst-small-space);
+
+        abbr {
+            display: flex;
+            text-decoration: none;
+            margin-left: 5px;
+            color: var(--fl-asst-base-art-color);
+        }
+
+		.fl-asst-loading-bar {
+			padding-top: 0;
+			padding-bottom: 0;
+			min-height: auto;
+		}
+    }
+
+    .fl-asst-form-input,
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="password"],
+    input[type="search"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="color"],
+    textarea {
+        --fl-asst-highlight-color: var(--fl-asst-accent-color);
+
+        display: block;
+        box-sizing: border-box;
+        flex-grow: 1;
+        flex-shrink: 1;
+        color: inherit;
+        padding: var(--fluid-sm-space);
+        margin:0;
+        background-color: var(--fl-asst-input-background);
+        background-image: none;
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
+        border-radius: 3px;
+        height: auto;
+        min-height: var(--fluid-target-size);
+
+        &:focus,
+        &:invalid {
+            background-color: var(--fluid-box-background);
+            border: none;
+            outline: none;
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                        0px 0px 0px 2px var(--fluid-accent);
+        }
+        &:invalid {
+            --fl-asst-highlight-color: var(--fl-asst-error-color);
+
+            &:focus {
+                --fl-asst-highlight-color: var(--fl-asst-accent-color);
+            }
+        }
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        flex: 1 0 100%;
+    }
+
+    input[type="range"] {
+        -webkit-appearance: slider-horizontal;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+        flex: 0 0 auto;
+        margin: 0;
+        margin-right: var(--fl-asst-small-space);
+
+        &:checked:before {
+            display: none !important;
+            content: '' !important;
+        }
+    }
+    input[type="radio"] {
+        width: auto;
+    }
+
+    select {
+        height: var(--fluid-target-size);
+        background-color: var(--fluid-background);
+        color: var(--fluid-color);
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-line-color);
+        border-radius: 3px;
+        padding: var(--fluid-sm-space);
+        padding-right: 30px;
+
+        &:focus {
+            background-color: var(--fluid-box-background);
+            color: var(--fluid-color) !important;
+            border: none;
+            outline: none;
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                        0px 0px 0px 2px var(--fluid-accent);
+        }
+
+        &:-moz-focusring {
+            color: transparent;
+            text-shadow: 0 0 0 #000;
+        }
+        &::-ms-expand {
+            display: none;
+        }
+
+        &[multiple] {
+            height: auto;
+            padding: 10px 7px 0;
+            background-image: none;
+
+            option {
+                padding: 2px 7px;
+                margin: 1px 0;
+                border-radius: 3px;
+                font-weight: normal;
+            }
+        }
+    }
+    .fl-asst-form-item-placement-beside {
+        select {
+            flex: 0 0 auto;
+            width: auto;
+        }
+    }
+}

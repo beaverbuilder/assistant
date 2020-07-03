@@ -1,0 +1,159 @@
+.fl.uid {
+    .fluid-list {
+        margin: 0;
+        padding: 0;
+
+        ul {
+            margin: 0;
+        }
+
+        .fluid-item {
+
+            .fluid-item-content {
+                position: relative;
+                //background: hsla( 360, 60%, 82%, .3 );
+                border-radius: var(--fluid-radius);
+                padding: 0;
+                padding-left: 25px;
+                padding-right: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                margin-bottom: 5px;
+
+                &:hover {
+                    background: #ddd;
+                }
+
+                .fluid-item-primary-action {
+                    background: transparent;
+                    flex: 1 1 auto;
+                    font-size: inherit;
+                    font-weight: inherit;
+                    text-align: left;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+
+                    &:focus {
+                        color: var(--fluid-primary-color);
+                        background: var(--fluid-primary-background);
+                        box-shadow: none;
+                    }
+                }
+
+                .fluid-item-actions {
+                    flex: 0 0 auto;
+                    padding-right: 10px;
+
+                    svg {
+                        color: var(--fluid-accent);
+                    }
+                }
+
+                .fluid-item-gutter-content {
+                    position: absolute;
+                    left: -5px;
+                    top:0;
+                    bottom:0;
+                    width: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    line-height: 1;
+                    color: var(--fluid-muted-text-color);
+                    background: transparent;
+                    border-top-left-radius: var(--fluid-radius);
+                    border-bottom-left-radius: var(--fluid-radius);
+
+                    button {
+                        flex: 1 1 auto;
+                        min-width: 0;
+                        min-height: 28px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        &:hover {
+                            background: transparent;
+                            color: var(--fluid-color);
+                        }
+                        &:focus {
+                            color: var(--fluid-primary-color);
+                            background: transparent;
+                            box-shadow: none;
+                        }
+                    }
+                }
+            }
+
+            .fluid-item-thumbnail {
+                min-height: 20px;
+                min-width: 20px;
+                margin-right: 1em;
+                color: var(--fluid-accent);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &.fluid-size-lg .fluid-item-content {
+                min-height: 40px;
+
+                .fluid-item-gutter-content button { min-height: 40px; }
+            }
+            &.fluid-size-med .fluid-item-content {
+                min-height: 32px;
+
+                .fluid-item-gutter-content button { min-height: 32px; }
+            }
+            &.fluid-size-sm .fluid-item-content {
+                min-height: 28px;
+            }
+
+            ul {
+                padding-left: 20px;
+            }
+        }
+    }
+
+    .fluid-list-section {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+
+        .fluid-list-section-title {
+            display: flex;
+            flex-direction: row;
+            padding: 0 20px;
+            z-index: 1; // up above section content for the underline to sit on top
+
+            span {
+                display: inline-flex;
+                align-items: center;
+                font-size: 12px;
+                font-weight: normal;
+                text-transform: uppercase;
+                padding-bottom: 5px;
+                box-shadow: 0px 2px 0px currentColor;
+            }
+        }
+
+        .fluid-list-section-content {
+            padding: 20px 5px;
+            border-top: 2px solid var(--fluid-line-color);
+        }
+        &:first-child {
+            .fluid-list-section-content {
+                padding-top: 0;
+                border-top: none;
+            }
+        }
+        &:last-child {
+            border-bottom: none;
+        }
+
+    }
+}

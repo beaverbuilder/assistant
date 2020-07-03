@@ -4,19 +4,19 @@ import { __, sprintf } from '@wordpress/i18n'
 import { AppContext, defaultAppContext, useAppContext } from './context'
 import Error from '../error'
 
+const CoreError = props => (
+    <Error.Page
+        title={__( "App Core: There seems to be an issue rendering current app." )}
+        {...props}
+    />
+)
+
 const Content = ({
     apps = {},
     defaultApp = 'home', // handle for default app
     notFound: NotFound = DefaultPageNotFound,
     loading: AppLoading = DefaultAppLoadingScreen
 }) => {
-
-    const CoreError = props => (
-        <Error.Page
-            title={__( "App Core: There seems to be an issue rendering current app." )}
-            {...props}
-        />
-    )
 
     return (
         <Error.Boundary alternate={ CoreError }>
@@ -46,7 +46,23 @@ const CurrentApp = ({
 }) => {
     const location = useLocation()
     const { app: handle } = useParams()
-    const { label, root, onMount = () => {} } = apps[ handle ]
+
+    // Subsequent app changes
+	useEffect( () => {
+        if ( apps[handle] && 'function' === typeof apps[handle].onMount ) {
+            return apps[handle].onMount()
+        }
+    }, [ handle ] )
+
+    if ( ! apps[handle] ) {
+        return <LoadingScreen />
+    }
+
+    const {
+        label = '',
+        root = () => {},
+        onMount = () => {}
+    } = apps[ handle ]
 	const isAppRoot = 2 >= location.pathname.split( '/' ).length
 
     const context = {
@@ -56,13 +72,6 @@ const CurrentApp = ({
         label,
         isAppRoot,
     }
-
-    // Subsequent app changes
-	useEffect( () => {
-        if ( onMount && 'function' === typeof onMount ) {
-            return onMount()
-        }
-    }, [ handle ] )
 
     return (
         <AppContext.Provider value={ context }>
@@ -80,7 +89,7 @@ const AppRoot = memo( ( { root: Root, ...rest } ) => {
 	return Root ? <Root { ...rest } /> : <DefaultPageNotFound />
 } )
 
-const DefaultAppLoadingScreen = () => <CenteredBox>{__('Loading...')}</CenteredBox>
+const DefaultAppLoadingScreen = () => null
 
 const DefaultPageNotFound = () => (
     <CenteredBox>

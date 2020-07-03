@@ -10,7 +10,7 @@ import './style.scss'
 const Cap = () => {
 	return (
 		<Layout.Row padY={ true }>
-			<Icon.Pencil size={50} />
+			<Icon.Pencil size={ 50 } />
 		</Layout.Row>
 	)
 }

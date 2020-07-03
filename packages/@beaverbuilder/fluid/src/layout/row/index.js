@@ -1,7 +1,7 @@
 import React from 'react'
 import classname from 'classnames'
 import { getSpacingValue } from '../utils'
-import Layout from '../'
+import Box from '../box'
 
 const Row = ( {
 	className,
@@ -43,7 +43,7 @@ const Row = ( {
 	const classes = classname( 'fluid-row', className )
 
 	return (
-		<Layout.Box
+		<Box
 			padX={ padX }
 			padY={ padY }
 			className={ classes }

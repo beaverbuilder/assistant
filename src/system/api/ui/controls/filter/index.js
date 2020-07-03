@@ -87,6 +87,7 @@ const Item = ( { title, subtitle, children, hasLoadedItems = true } ) => {
 						onClick={ toggle }
 						className="fl-asst-filter-button"
 						status="primary"
+						appearance="normal"
 					>
 						<span className="fl-asst-filter-button-content">
 							<span className="fl-asst-filter-button-title">{title}</span>
@@ -112,7 +113,7 @@ const ButtonItem = ( { children, className, ...rest } ) => {
 	const classes = classname( 'fl-asst-filter-button', className )
 	return (
 		<li className="fl-asst-filter-item">
-			<Button status="primary" className={ classes } { ...rest }>{children}</Button>
+			<Button status="primary" appearance="normal" className={ classes } { ...rest }>{children}</Button>
 		</li>
 	)
 }

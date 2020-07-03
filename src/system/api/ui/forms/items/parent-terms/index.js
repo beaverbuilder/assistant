@@ -3,7 +3,7 @@ import { isCancel, CancelToken } from 'axios'
 import { getWpRest } from 'utils/wordpress'
 import './style.scss'
 
-export const ParentTermItems = ( {
+export const ParentTermsItem = ( {
 	id,
 	value,
 	termId,

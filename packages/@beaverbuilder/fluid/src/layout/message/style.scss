@@ -1,0 +1,23 @@
+.fluid {
+	.fluid-message {
+	    flex: 0 0 auto;
+	    display: inline-flex;
+	    flex-direction: row;
+	    justify-content: center;
+	    align-items: center;
+	    background: var(--fluid-box-background);
+	    color: var(--fluid-box-color);
+	    border-radius: var(--fluid-radius);
+	    min-height: var(--fluid-target-size);
+	    padding: 0 var(--fluid-med-space);
+		text-decoration: none;
+		padding: 10px;
+		margin-top: 15px;
+        margin-bottom: 10px;
+	}
+	.fluid-message-icon {
+		margin-right: 7px;
+		height: 100%;
+		width: 7%;
+	}
+}
