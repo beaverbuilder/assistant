@@ -141,13 +141,13 @@
         }
     }
     h1 {
-        font-size: calc( var(--fluid-font-size) + 6px );
+        font-size: calc( var(--fluid-font-size) + 10px );
     }
     h2 {
-        font-size: calc( var(--fluid-font-size) + 2px );
+        font-size: calc( var(--fluid-font-size) + 6px );
     }
     p {
-        font-size: calc( var(--fluid-font-size) + 1px );
+        font-size: 20px;
         margin: var(--fluid-lg-space) 0;
     }
 

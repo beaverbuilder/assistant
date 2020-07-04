@@ -22,4 +22,20 @@ const Title = ({
     )
 }
 
-export { Title }
+// Keeps content centered and at a ledgible line length
+const ContentArea = ({ tag: Tag = 'div', style = {}, ...rest }) => {
+    const styles = {
+        maxWidth: '60ch',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        ...style,
+    }
+    return (
+        <Tag style={styles} {...rest} />
+    )
+}
+
+export {
+    Title,
+    ContentArea,
+}

@@ -28,6 +28,7 @@ import More from './more'
 import Ellipsis from './ellipsis'
 import Person from './person'
 import Library from './library'
+import Sidebar from './sidebar'
 
 // Aliases
 const BackArrow = ArrowLeft
@@ -64,4 +65,5 @@ export {
 	Ellipsis,
 	Person,
 	Library,
+	Sidebar,
 }

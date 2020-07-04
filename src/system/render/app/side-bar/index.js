@@ -81,10 +81,9 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 	const manage = selectApp( 'fl-manage' )
 
 	return (
-		<div className={ classes }
-			style={ {
-				[`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-line-color)' }
-			}
+		<div
+			className={ classes }
+			style={ { [`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-line-color)' } }
 		>
 			{ ! isBeaverBuilder && (
 				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top disable-while-sorting">

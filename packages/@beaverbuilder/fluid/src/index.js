@@ -22,5 +22,3 @@ export {
 	List,
 	Menu,
 }
-
-console.log('FLUID')

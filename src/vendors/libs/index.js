@@ -4,7 +4,6 @@ import * as FramerMotion from 'vendor-framer-motion'
 import * as ReactLaag from 'vendor-react-laag'
 import * as ResizeObserver from 'vendor-resize-observer-polyfill'
 import * as Redux from 'vendor-redux'
-import moment from 'vendor-moment'
 
 // Ensure FL exists
 window.FL = window.FL || {}
@@ -17,7 +16,6 @@ const vendors = {
 	ReactLaag,
 	ResizeObserver,
 	classnames,
-	moment,
 }
 
 FL.vendors = {

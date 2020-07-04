@@ -5,6 +5,8 @@ import AspectBox from './aspect-box'
 import Row from './row'
 import Loading from './loading'
 import Message from './message'
+import Split from './split'
+import Toolbar from './toolbar'
 import './style.scss'
 
 // Headline
@@ -21,5 +23,7 @@ export {
 	Loading,
 	Headline,
 	Message,
-	AspectBox
+	AspectBox,
+	Split,
+	Toolbar,
 }

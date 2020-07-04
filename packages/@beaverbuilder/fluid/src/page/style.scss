@@ -16,15 +16,6 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    .fluid-toolbar {
-        flex: 0 0 auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: stretch;
-        padding: 5px;
-    }
-
     .fluid-pad {
         @include flex_column;
         padding: var(--fluid-lg-space);

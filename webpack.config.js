@@ -23,7 +23,6 @@ const alias = {
     'vendor-react-laag'                 : path.resolve( __dirname, './node_modules/react-laag/' ),
     'vendor-resize-observer-polyfill'   : path.resolve( __dirname, './node_modules/resize-observer-polyfill/' ),
     'vendor-redux'                      : path.resolve( __dirname, './node_modules/redux/' ),
-    'vendor-moment'                     : path.resolve( __dirname, './node_modules/moment/' ),
 }
 
 const externals = [
@@ -40,11 +39,6 @@ const externals = [
         'react-laag'                    : 'FL.vendors.ReactLaag',
         'resize-observer-polyfill'      : 'FL.vendors.ResizeObserver',
         'redux'                         : 'FL.vendors.Redux',
-        'moment'                        : 'FL.vendors.moment',
-
-        // Our stuff
-        //'@beaverbuilder/app-core'       : 'FL.AppCore',
-        //'@beaverbuilder/fluid'          : 'FL.vendors.FLUID',
 
         /* FLUID environment */
         'fluid/ui'                      : 'FL.UID',
