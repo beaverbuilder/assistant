@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/forms",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Hooks and components for easily building complex forms in React.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -16,7 +16,7 @@
         "directory": "packages/@beaverbuilder/forms"
     },
     "dependencies": {
-        "@beaverbuilder/fluid": "^0.4.4",
+        "@beaverbuilder/fluid": "^0.4.6",
         "camelcase": "^6.0.0"
     },
     "peerDependencies": {
