@@ -21,7 +21,7 @@
   "dependencies": {
     "@beaverbuilder/app-core": "^0.1.9",
     "@beaverbuilder/cloud": "^0.1.9",
-    "@beaverbuilder/fluid": "^0.4.6",
+    "@beaverbuilder/fluid": "^0.4.7",
     "@beaverbuilder/forms": "^0.1.4",
     "@popmotion/popcorn": "^0.4.4",
     "@wordpress/i18n": "^3.14.0",
@@ -30,6 +30,7 @@
     "axios-cache-adapter": "^2.5.0",
     "classnames": "^2.2.6",
     "cookie": "^0.4.1",
+    "date-fns": "^2.14.0",
     "framer-motion": "^1.11.1",
     "history": "^5.0.0",
     "md5": "^2.2.1",

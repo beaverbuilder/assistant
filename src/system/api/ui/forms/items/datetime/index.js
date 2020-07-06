@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatDate } from 'utils/datetime'
+import format from 'date-fns/format'
 
 export const DatetimeItem = ( {
 	id,
@@ -12,7 +12,7 @@ export const DatetimeItem = ( {
 			id={ id }
 			{ ...rest }
 		>
-			{ formatDate( value, format ) }
+			{ format( value, format ) }
 		</div>
 	)
 }

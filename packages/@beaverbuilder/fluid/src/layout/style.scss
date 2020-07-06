@@ -27,4 +27,21 @@
         font-weight: 600;
         word-break: break-word;
     }
+
+    .fluid-toolbar {
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: -ms-sticky;
+        position: -o-sticky;
+        position: sticky;
+        top: 0;
+        flex: 0 0 60px;
+        display: flex;
+        flex-direction: row;
+        align-items: center; // vertical centering
+        height: 60px;
+        padding: 2px 10px;
+        background: var(--fluid-background);
+        z-index: 1;
+    }
 }
