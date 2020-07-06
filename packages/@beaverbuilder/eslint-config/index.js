@@ -35,7 +35,12 @@ module.exports = {
 		],
 		'indent': [
 			'error',
-			'tab'
+			'tab',
+			{
+				'ignoredNodes': [
+					'TemplateLiteral'
+				]
+			}
 		],
 		'linebreak-style': [
 			'error',

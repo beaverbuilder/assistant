@@ -13,7 +13,6 @@
     "build:stats": "webpack --env production --json > stats.json",
     "dev": "webpack --watch",
     "fix": "eslint src --fix",
-    "fix:fluid": "eslint packages/@beaverbuilder/fluid/src --fix",
     "test": "eslint src",
     "analyze": "NODE_ENV=analyze webpack --watch"
   },
