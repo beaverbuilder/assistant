@@ -119,7 +119,7 @@ const ItemImport = ( { item, setItem } ) => {
 				<div>Clicking override should override the current post you are viewing with the library post...</div>
 				<div>1. Give options to override content, meta and terms.</div>
 				<br />
-				<Button onClick={ overRidePost() }>{ __( 'Override Current Post' ) }</Button>
+				<Button>{ __( 'Override Current Post' ) }</Button>
 			</Page.Section>
 		</>
 	)

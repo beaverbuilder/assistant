@@ -223,15 +223,27 @@ const posts = () => {
 			return notations().deleteLabel( 'post', postId, labelId, config )
 		},
 
+		/**
+		 * Override WP post data with library post item data
+		 */
+
 		overrideLibPost( data = {}, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( 'fl-assistant/v1/posts/override_lib_post', data, config )
 		},
 
+		/**
+		 * Export WP post data into library
+		 */
+
 		saveToLibrary( id, libraryId, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, {}, config )
 		},
+
+		/**
+		 * Import library post item into WP
+		 */
 
 		importFromLibrary( itemId, config = {} ) {
 			config.cacheKey = 'posts'

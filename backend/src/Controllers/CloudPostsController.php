@@ -41,7 +41,7 @@ class CloudPostsController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/import_from_library',
+			'/posts/import_from_library/(?P<item_id>\d+)',
 			[
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
@@ -170,22 +170,62 @@ class CloudPostsController extends ControllerAbstract {
 
 	}
 
-	function import_lib_post( $request ) {
+
+
+	function save_to_library( $request ) {
+		$id = $request->get_param( 'id' );
+		$library_id = $request->get_param( 'library_id' );
+
+		$post = get_post( $id );
+		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
+
+		$media_path = get_attached_file( get_post_thumbnail_id( $post ) );
+		$media = $media_path ? curl_file_create( $media_path ) : null;
+
+		$taxonomies = get_taxonomies( '', 'names' );
+		$post_taxonomies = wp_get_object_terms( $id, $taxonomies );
+
+		$comments = get_comments( [ 'post_id' => $id ] );
+
+
+		return $client->libraries->createItem( $library_id,
+			[
+				'name' => $post->post_title,
+				'type' => $post->post_type,
+				'data' => [
+					'post' => $post,
+					'meta' => get_post_meta( $id ),
+					'terms' => $post_taxonomies,
+					'comments' => $comments,
+				],
+				'media' => $media,
+			]
+		);
+	}
+
+
+	function import_from_library( $request ) {
 
 		global $wpdb;
-		$post_data = $request->get_params();
+
+		$item_id = $request->get_param( 'item_id' );
+		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
+		$response = $client->libraries->getItem( $item_id );
+		$post_data = $response->data->post;
+		$post_meta = $response->data->meta;
+		$post_cat  = $response->data->terms;
 		$current_user = wp_get_current_user();
 
 		$newpost_data = [
 			'post_author'  => $current_user->ID,
-			'post_content' => $post_data['post_content'] ? $post_data['post_content'] : '',
-			'post_excerpt' => $post_data['post_excerpt'] ? $post_data['post_excerpt'] : '',
-			'post_name'    => $post_data['post_name'] ? $post_data['post_name'] : '',
+			'post_content' => $post_data->post_content ? $post_data->post_content : '',
+			'post_excerpt' => $post_data->post_excerpt ? $post_data->post_excerpt : '',
+			'post_name'    => $post_data->post_name ? $post_data->post_name : '',
 			'post_status'  => 'draft',
-			'post_title'   => $post_data['post_title'],
-			'post_type'    => $post_data['post_type'],
-			'to_ping'      => $post_data['ping_status'],
-			'menu_order'   => $post_data['menu_order'],
+			'post_title'   => $post_data->post_title,
+			'post_type'    => $post_data->post_type,
+			'to_ping'      => $post_data->ping_status,
+			'menu_order'   => $post_data->menu_order,
 		];
 
 		$new_post_id = wp_insert_post( $newpost_data );
@@ -201,8 +241,6 @@ class CloudPostsController extends ControllerAbstract {
 		} else {
 
 			wp_set_post_terms( $new_post_id, null, 'category' );
-			$post_meta = $post_data['post_meta'];
-			$post_cat  = $post_data['post_taxonomies'];
 
 			if ( is_array( $post_meta ) && count( $post_meta ) !== 0 ) {
 				foreach ( $post_meta as $key => $value ) {
@@ -221,9 +259,9 @@ class CloudPostsController extends ControllerAbstract {
 
 				foreach ( $post_cat as $category ) {
 
-					   $term = term_exists( $category['slug'], $category['taxonomy'] );
+					   $term = term_exists( $category->slug, $category->taxonomy );
 
-					   wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category['taxonomy'], true );
+					   wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
 
 				}
 			}
@@ -234,86 +272,6 @@ class CloudPostsController extends ControllerAbstract {
 				]
 			);
 		}
-
-	}
-
-
-	public function get_post_feature_media( $thumbnail_id ) {
-		if ( $thumbnail_id ) {
-			$thumb = [];
-			$thumb_id = $thumbnail_id;
-
-			// first grab all of the info on the image... title/description/alt/etc.
-			$args = [
-				'post_type' => 'attachment',
-				'include'   => $thumb_id,
-			];
-			$thumbs = get_posts( $args );
-			if ( $thumbs ) {
-				// now create the new array
-				$thumb['id'] = $thumbs[0]->ID;
-				$thumb['title'] = $thumbs[0]->post_title;
-				$thumb['description'] = $thumbs[0]->post_content;
-				$thumb['caption'] = $thumbs[0]->post_excerpt;
-				$thumb['alt'] = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
-				$thumb['sizes'] = [
-					'full' => wp_get_attachment_image_src( $thumb_id, 'full', false ),
-				];
-				// add the additional image sizes
-				foreach ( get_intermediate_image_sizes() as $size ) {
-					$thumb['sizes'][ $size ] = wp_get_attachment_image_src( $thumb_id, $size, false );
-				}
-				$thumb['url'] = $thumb['sizes']['full'][0];
-
-				return $thumb;
-			} else {
-				return $thumb;
-			}
-		}
-	}
-
-
-
-	function save_to_library( $request ) {
-		$id = $request->get_param( 'id' );
-		$library_id = $request->get_param( 'library_id' );
-
-		$post = get_post( $id );
-		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
-
-		$media_path = get_attached_file( get_post_thumbnail_id( $post ) );
-		$media = $media_path ? curl_file_create( $media_path ) : null;
-
-		$taxonomies = get_taxonomies( '', 'names' );
-		$post_taxonomies = wp_get_object_terms( $id, $taxonomies );
-
-		$comments = get_comments( [ 'post_id' => $id ] );
-
-		$thumbnail_id = get_post_thumbnail_id( $id );
-		$thumbnail_data = $this->get_post_feature_media( $thumbnail_id );
-
-		return $client->libraries->createItem( $library_id,
-			[
-				'name' => $post->post_title,
-				'type' => $post->post_type,
-				'data' => [
-					'post' => $post,
-					'meta' => get_post_meta( $id ),
-					'terms' => $post_taxonomies,
-					'comments' => $comments,
-					'thumbnail' => $thumbnail_data,
-				],
-				'media' => $media,
-			]
-		);
-	}
-
-
-	function import_from_library( $request ) {
-		$item_id = $request->get_param( 'item_id' );
-		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
-		$response = $client->libraries->getItem( $item_id );
-		print_r($response);
 
 	}
 
