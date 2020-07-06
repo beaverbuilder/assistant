@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { useApiResource, useApiCollection } from '../hooks'
+import { useApiResource, useApiCollection } from '../http'
 import * as session from '../session'
 
 export default ( http, sockets ) => {

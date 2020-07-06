@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useApiResource, useApiCollection } from '../hooks'
+import { useApiResource, useApiCollection } from '../http'
 
 export default ( http ) => {
 
