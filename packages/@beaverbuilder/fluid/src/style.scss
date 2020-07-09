@@ -3,13 +3,13 @@
 
     // Opaque Scale
     --fluid-opaque-0: black;
-    --fluid-opaque-1: hsl( var(--fluid-hue), 18%, 10% );
-    --fluid-opaque-2: hsl( var(--fluid-hue), 19%, 15% );
-    --fluid-opaque-3: hsl( var(--fluid-hue), 20%, 20% );
-    --fluid-opaque-4: hsl( var(--fluid-hue), 20%, 25% );
-    --fluid-opaque-5: hsl( var(--fluid-hue), 20%, 30% );
-    --fluid-opaque-6: hsl( var(--fluid-hue), 20%, 35% );
-    --fluid-opaque-7: hsl( var(--fluid-hue), 14%, 50% ); // Middle Grey
+    --fluid-opaque-1: hsl( var(--fluid-hue), 10%, 10% );
+    --fluid-opaque-2: hsl( var(--fluid-hue), 10%, 15% );
+    --fluid-opaque-3: hsl( var(--fluid-hue), 10%, 20% );
+    --fluid-opaque-4: hsl( var(--fluid-hue), 10%, 25% );
+    --fluid-opaque-5: hsl( var(--fluid-hue), 10%, 30% );
+    --fluid-opaque-6: hsl( var(--fluid-hue), 10%, 35% );
+    --fluid-opaque-7: hsl( var(--fluid-hue), 10%, 50% ); // Middle Grey
     --fluid-opaque-8: hsl( var(--fluid-hue), 27%, 87% );
     --fluid-opaque-9: hsl( var(--fluid-hue), 33%, 89% );
     --fluid-opaque-10: hsl( var(--fluid-hue), 33%, 91% );
@@ -20,19 +20,19 @@
 
     // Transparent Scale
     // There is no level 0 - black
-    --fluid-transparent-1: hsla( var(--fluid-hue), 18%, 12%, 80% );
-    --fluid-transparent-2: hsla( var(--fluid-hue), 19%, 19%, 80% );
-    --fluid-transparent-3: hsla( var(--fluid-hue), 20%, 25%, 80% );
-    --fluid-transparent-4: hsla( var(--fluid-hue), 20%, 32%, 80% );
-    --fluid-transparent-5: hsla( var(--fluid-hue), 20%, 37%, 80% );
-    --fluid-transparent-6: hsla( var(--fluid-hue), 21%, 43%, 80% );
+    --fluid-transparent-1: hsla( var(--fluid-hue), 10%, 12%, 80% );
+    --fluid-transparent-2: hsla( var(--fluid-hue), 10%, 19%, 80% );
+    --fluid-transparent-3: hsla( var(--fluid-hue), 10%, 25%, 80% );
+    --fluid-transparent-4: hsla( var(--fluid-hue), 10%, 31%, 80% );
+    --fluid-transparent-5: hsla( var(--fluid-hue), 10%, 38%, 80% );
+    --fluid-transparent-6: hsla( var(--fluid-hue), 10%, 44%, 80% );
     // There is no level 7 - middle grey
-    --fluid-transparent-8: hsla( var(--fluid-hue), 27%, 79%, 60% );
-    --fluid-transparent-9: hsla( var(--fluid-hue), 33%, 82%, 60% );
-    --fluid-transparent-10: hsla( var(--fluid-hue), 33%, 85%, 60% );
-    --fluid-transparent-11: hsla( var(--fluid-hue), 34%, 88%, 60% );
-    --fluid-transparent-12: hsla( var(--fluid-hue), 38%, 92%, 60% );
-    --fluid-transparent-13: hsla( var(--fluid-hue), 38%, 97%, 60% );
+    --fluid-transparent-8: hsla( var(--fluid-hue), 27%, 84%, 80% );
+    --fluid-transparent-9: hsla( var(--fluid-hue), 33%, 86%, 80% );
+    --fluid-transparent-10: hsla( var(--fluid-hue), 33%, 89%, 80% );
+    --fluid-transparent-11: hsla( var(--fluid-hue), 34%, 90%, 80% );
+    --fluid-transparent-12: hsla( var(--fluid-hue), 38%, 94%, 80% );
+    --fluid-transparent-13: hsla( var(--fluid-hue), 38%, 98%, 80% );
     // There is no level 14 - white
 
     /**
