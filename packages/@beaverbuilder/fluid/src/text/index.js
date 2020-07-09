@@ -1,5 +1,5 @@
 import React from 'react'
-import classname from 'classnames'
+import c from 'classnames'
 import './style.scss'
 
 const Title = ({
@@ -12,7 +12,7 @@ const Title = ({
     className,
     ...rest
 }) => {
-    const classes = classname( 'fluid-text-title', className )
+    const classes = c( 'fluid-text-title', className )
     return (
         <Tag className={classes} {...rest}>
             { eyebrow && <Eyebrow className="fluid-text-eyebrow">{eyebrow}</Eyebrow> }
@@ -23,15 +23,13 @@ const Title = ({
 }
 
 // Keeps content centered and at a ledgible line length
-const ContentArea = ({ tag: Tag = 'div', style = {}, ...rest }) => {
-    const styles = {
-        maxWidth: '60ch',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        ...style,
-    }
+const ContentArea = ({
+    tag: Tag = 'div',
+    className,
+    ...rest
+}) => {
     return (
-        <Tag style={styles} {...rest} />
+        <Tag className={ c( 'fluid-content-area', className ) } {...rest} />
     )
 }
 

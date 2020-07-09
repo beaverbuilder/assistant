@@ -1,7 +1,7 @@
 .fluid {
 
     #cards {
-        --fl-asst-card-background: #F8FAFC;
+        --fl-asst-card-background: var(--fluid-opaque-13);
         .fluid-page-header {
             padding: 0;
         }
@@ -25,7 +25,7 @@
     &.fluid-color-scheme-dark {
         #cards {
             --shadow-color: transparent;
-            --fl-asst-card-background: #0B0D0F !important;
+            --fl-asst-card-background: var(--fluid-opaque-0) !important;
 
             .fluid-page-content {
                 background: var(--fl-asst-card-background);

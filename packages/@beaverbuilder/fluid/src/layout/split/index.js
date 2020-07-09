@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import c from 'classnames'
-import { AnimatePresence, motion } from 'framer-motion'
 import { Icon, Button } from '../../'
 import './style.scss'
 
@@ -34,7 +33,7 @@ const Pane = ({
 const Split = ({
     tag: Tag = 'div',
     panes = [],
-    sizes = [],
+    sizes = [ 240 ],
     leading: Leading,
     showLeading,
     className,

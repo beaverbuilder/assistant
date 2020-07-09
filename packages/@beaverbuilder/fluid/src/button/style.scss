@@ -6,19 +6,23 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background: transparent;
+        background: var(--fluid-box-background);
+        color: var(--fluid-box-color);
         border-radius: var(--fluid-radius);
         box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
         min-height: var(--fluid-target-size);
-        padding: 0 var(--fluid-med-space);
+        padding: 5px 8px;
         text-decoration: none;
         font-weight: normal;
+        text-transform: none;
+        transition-property: background, box-shadow;
+        transition-duration: .15s;
 
         &:hover,
         &.is-hovering {
             text-decoration: none;
             background: var(--fluid-box-hover-background);
-            color: var(--fluid-box-color);
+            color: var(--fluid-box-hover-color);
         }
 
         &:focus,
@@ -28,7 +32,13 @@
             outline: none;
             text-decoration: none;
             box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
-                        0px 0px 0px 2px var(--fluid-accent);
+                        0px 0px 0px 1.5px var(--fluid-accent);
+        }
+
+        &:active,
+        &.is-active {
+            background: var(--fluid-light-3);
+            box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         &.is-selected {
@@ -43,7 +53,12 @@
         }
 
         &.fluid-appearance-normal {
-            background: var(--fluid-box-background);
+            background-color: var(--fluid-box-background);
+
+            &:hover,
+            &.is-hovering {
+                background: var(--fluid-box-hover-background);
+            }
         }
 
         &.fluid-appearance-transparent {
@@ -54,14 +69,23 @@
 
             &:hover,
             &.is-hovering {
-                background: var(--fluid-box-hover-background);
+                background: var(--fluid-transparent-12);
             }
 
             &:focus,
             &.is-focused {
                 box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
-                            0px 0px 0px 2px var(--fluid-accent);
+                            0px 0px 0px 1.5px var(--fluid-accent);
             }
+            &:active,
+            &.is-active {
+                background: var(--fluid-transparent-12);
+                box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .fluid-button-icon {
+            margin-right: 1em;
         }
     }
 }

@@ -107,6 +107,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 						status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
 						onClick={ () => navOrHideApp( isRoot, goToRoot ) }
 						className="disable-while-sorting"
+						title={home.label}
 					>
 						<Icon.Safely icon={ home.icon } />
 					</Button>
@@ -121,7 +122,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 				>
 					{ key => {
 						const app = selectApp( key )
-						const { handle, icon } = app
+						const { handle, icon, label } = app
 
 						const location = {
 							pathname: `/${handle}`,
@@ -142,6 +143,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 								onClick={ () => {
 									navOrHideApp( isSelected, () => history.push( location ) )
 								} }
+								title={label}
 							>
 								<AppIcon { ...iconProps } />
 							</Button>
@@ -158,6 +160,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 							state: manage
 						} ) ) }
 						className="disable-while-sorting"
+						title={manage.label}
 					>
 						<Icon.Safely icon={ manage.icon } />
 					</Button>

@@ -1,10 +1,11 @@
 import React from 'react'
-import * as icons from '../icon'
+import * as Text from '../../text'
+import * as icons from '../../icon'
 
-export const IconSheet = () => {
+export default () => {
     return (
-        <div>
-            <h1>FL.UID Icons</h1>
+        <Text.ContentArea>
+            <h1>Icons</h1>
             <p>These are icons include in the fluid package.</p>
 
             <div
@@ -25,6 +26,6 @@ export const IconSheet = () => {
                     )
                 })}
             </div>
-        </div>
+        </Text.ContentArea>
     )
 }

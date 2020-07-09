@@ -22,4 +22,10 @@
     .fluid-size-sm .fluid-text-title {
         font-size: 13px;
     }
+
+    .fluid-content-area {
+        width: clamp( 40ch, 80ch, 100% );
+        margin: 0 auto;
+        padding: 0 var(--fluid-lg-space);
+    }
 }

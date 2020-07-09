@@ -1,43 +1,48 @@
 import React, { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
-import classname from 'classnames'
+import c from 'classnames'
+import * as Icon from '../../icon'
 
 const Button = forwardRef( ( props, ref ) => {
 	const {
+		tag,
 		className,
 		to,
 		href,
 		onClick,
 		isSelected = false,
-		appearance,
+		appearance = 'normal',
 		status,
+		icon,
+		loading = false,
+		children,
 		...rest
 	} = props
 
-	const classes = classname( {
-		'fluid-button': true,
+	const classes = c( 'fluid-button', {
 		'is-selected': isSelected,
 		[`fluid-status-${status}`]: status,
 		[`fluid-appearance-${appearance}`]: appearance
 	}, className )
 
 	let newProps = {
-		...rest,
 		ref,
 		className: classes,
 		role: 'button',
+		...rest
 	}
 
 	// Determine the tag for this button based on props.
-	let Tag = 'button'
-	if ( to || href ) {
+	let Component = 'button'
 
-		// Routing Link
-		Tag = 'a'
+	if ( tag ) { // Passing a component overrides everything
+		Component = tag
+	} else if ( to || href ) {
+		Component = 'a'
 		if ( href ) {
 			newProps.href = href
 		} else {
-			Tag = Link
+			Component = Link
 			newProps.to = to
 		}
 	} else {
@@ -45,7 +50,12 @@ const Button = forwardRef( ( props, ref ) => {
 	}
 
 	return (
-		<Tag { ...newProps } />
+		<Component { ...newProps }>
+			{ icon || loading && (
+				<span className="fluid-button-icon">{ true === loading ? <Icon.Loading /> : icon }</span>
+			) }
+			{ children }
+		</Component>
 	)
 } )
 
