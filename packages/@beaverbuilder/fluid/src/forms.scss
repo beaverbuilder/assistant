@@ -19,17 +19,14 @@
         box-sizing: border-box;
         width: 100%;
         max-width: 100%;
-
         flex: 1 1 auto;
-
         font-family: inherit;
         font-size: inherit;
         font-weight: normal;
         line-height: inherit;
         text-align: left;
-
-        padding: var(--fl-asst-tiny-space);
-        color: var(--fl-asst-secondary-surface-color);
+        padding: var(--fluid-sm-space);
+        color: var(--fluid-color);
         border-radius: var(--fluid-radius);
         border:none;
         outline: none;
@@ -39,30 +36,29 @@
         // Yes, these have to be separate rules.
         &::-webkit-input-placeholder{
             text-align: left;
-            color: var(--fl-asst-dim-text);
+            color: var(--fluid-muted-text-color);
         }
         &::-ms-input-placeholder{
             text-align: left;
-            color: var(--fl-asst-dim-text);
+            color: var(--fluid-muted-text-color);
         }
         &::placeholder {
             text-align: left;
-            color: var(--fl-asst-dim-text);
+            color: var(--fluid-muted-text-color);
         }
 
         &:focus {
-
             &::-webkit-input-placeholder{
                 text-align: left;
-                color: var(--fl-asst-surface-color);
+                color: var(--fluid-color);
             }
             &::-ms-input-placeholder{
                 text-align: left;
-                color: var(--fl-asst-surface-color);
+                color: var(--fluid-color);
             }
             &::placeholder {
                 text-align: left;
-                color: var(--fl-asst-surface-color);
+                color: var(--fluid-color);
             }
         }
     }
@@ -70,12 +66,12 @@
     input[disabled],
     select[disabled],
     textarea[disabled],
-    [aria-disabled=true]
+    [aria-disabled=true],
     .fl-asst-is-disabled {
         pointer-events: none;
         opacity: .5;
         font-style: italic;
-        color: var(--fl-asst-dim-text);
+        color: var(--fluid-muted-text-color);
     }
 
     @supports( -webkit-appearance: none ) {
@@ -91,8 +87,8 @@
 
             &:focus {
                 outline: none;
-                box-shadow: 0px 0px 0px 2px var(--fl-asst-accent-color),
-                            inset 0px 0px 0px 2px var(--fl-asst-surface-background);
+                box-shadow: 0px 0px 0px 2px var(--fluid-accent),
+                            inset 0px 0px 0px 2px var(--fluid-background);
             }
 
             &:checked {
@@ -101,10 +97,9 @@
 
                 &:focus {
                     outline: none;
-                    box-shadow: 0px 0px 0px 2px var(--fl-asst-accent-color),
+                    box-shadow: 0px 0px 0px 2px var(--fluid-accent),
                                 inset 0px 0px 0px 2px var(--fluid-background);
                 }
-
                 &:after {
                     display: block;
                     content: "\2713";
@@ -127,13 +122,9 @@
         select {
             -moz-appearance: none;
             -webkit-appearance: none;
-
             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E');
-
         	background-repeat: no-repeat;
-        	// arrow icon position (1em from the right, 50% vertical) , then gradient position
         	background-position: right 10px center;
-        	// icon size, then gradient
         	background-size: 14px;
             padding-right: 30px;
         }

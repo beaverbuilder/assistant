@@ -154,13 +154,11 @@
             top:0;
             border: none;
         }
-
-        &[ disabled ] {
+        &[disabled] {
             color: inherit;
-            opacity: .5;
+            opacity: .6;
             pointer-events: none;
         }
-
         &:visited {
             color: inherit;
         }

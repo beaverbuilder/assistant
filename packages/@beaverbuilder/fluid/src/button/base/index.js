@@ -1,7 +1,21 @@
 import React, { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 import c from 'classnames'
+import camelcase from 'camelcase'
 import * as Icon from '../../icon'
+
+const capitalize = value => value.charAt(0).toUpperCase() + value.slice(1)
+
+const matchIcon = value => {
+	if ( 'string' === typeof value ) {
+		const name = capitalize( camelcase( value ) )
+		if ( Object.keys( Icon ).includes( name ) ) {
+			const FoundIcon = Icon[name]
+			return <FoundIcon />
+		}
+	}
+	return value
+}
 
 const Button = forwardRef( ( props, ref ) => {
 	const {
@@ -14,7 +28,8 @@ const Button = forwardRef( ( props, ref ) => {
 		appearance = 'normal',
 		status,
 		icon,
-		loading = false,
+		isLoading = false,
+		disabled,
 		children,
 		...rest
 	} = props
@@ -29,6 +44,7 @@ const Button = forwardRef( ( props, ref ) => {
 		ref,
 		className: classes,
 		role: 'button',
+		disabled: disabled || isLoading,
 		...rest
 	}
 
@@ -51,8 +67,10 @@ const Button = forwardRef( ( props, ref ) => {
 
 	return (
 		<Component { ...newProps }>
-			{ icon || loading && (
-				<span className="fluid-button-icon">{ true === loading ? <Icon.Loading /> : icon }</span>
+			{ ( icon || isLoading ) && (
+				<span className="fluid-button-icon">
+					{ true === isLoading ? <Icon.Loading /> : matchIcon( icon ) }
+				</span>
 			) }
 			{ children }
 		</Component>

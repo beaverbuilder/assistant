@@ -8,8 +8,8 @@ const Loading = ( { ...rest } ) => {
 				cy="10"
 				fill="none"
 				stroke="currentColor"
-				strokeWidth="2"
-				strokeDasharray="50"
+				strokeWidth="1.5"
+				strokeDasharray="45"
 				strokeLinecap="round"
 				r="9"
 			/>

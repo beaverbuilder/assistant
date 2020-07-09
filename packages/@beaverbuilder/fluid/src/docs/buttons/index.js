@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '../../button'
 import * as Text from '../../text'
 import * as Icon from '../../icon'
+import * as Layout from '../../layout'
 
 export default () => {
 	return (
@@ -100,6 +101,28 @@ export default () => {
 					<tr>
 						<td>Disabled</td>
 						<td><Button appearance="elevator" disabled><Icon.Edit /></Button></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>Icon Buttons</h2>
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<Button icon="view">Icon Button</Button>
+						</td>
+						<td>
+							<Button isLoading>Loading</Button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<Button icon={ <Icon.BookmarkSolid /> }>Bookmark</Button>
+						</td>
+						<td>
+							<Button icon="bookmark-solid">Bookmark</Button>
+						</td>
 					</tr>
 				</tbody>
 			</table>
