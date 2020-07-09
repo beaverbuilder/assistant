@@ -87,7 +87,7 @@
 
             &:focus {
                 outline: none;
-                box-shadow: 0px 0px 0px 2px var(--fluid-accent),
+                box-shadow: 0px 0px 0px 1.5px var(--fluid-accent),
                             inset 0px 0px 0px 2px var(--fluid-background);
             }
 
@@ -97,7 +97,7 @@
 
                 &:focus {
                     outline: none;
-                    box-shadow: 0px 0px 0px 2px var(--fluid-accent),
+                    box-shadow: 0px 0px 0px 1.5px var(--fluid-accent),
                                 inset 0px 0px 0px 2px var(--fluid-background);
                 }
                 &:after {

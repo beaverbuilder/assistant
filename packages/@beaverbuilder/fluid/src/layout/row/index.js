@@ -1,6 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
-import { getSpacingValue } from '../utils'
+import { getSpacingValue } from '../../utils'
 import Box from '../box'
 
 const Row = ( {

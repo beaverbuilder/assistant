@@ -105,6 +105,7 @@ export default () => {
 			</table>
 
 			<h2>Icon Buttons</h2>
+			<p>Buttons support the <code>icon</code> prop. It can recieve a rendered component or the name of an icon that it will look up from the icon library. If you are referring to a multi-word icon (ex <code>Icon.BookmarkSolid</code> ) change the name to lowercase with dashes between words <code>icon="bookmark-solid"</code>.</p>
 			<table>
 				<tbody>
 					<tr>
