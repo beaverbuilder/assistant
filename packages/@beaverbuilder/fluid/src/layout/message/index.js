@@ -11,13 +11,13 @@ const Message = ( {
 	...rest
 } ) => {
 	const classes = classname( 'fluid-message', {
-		'fluid-status-alert'		: 'alert' == status,
-		'fluid-status-destructive'	: 'destructive' == status,
-		'fluid-status-primary'		: 'primary' == status
+		'fluid-status-alert': 'alert' == status,
+		'fluid-status-destructive': 'destructive' == status,
+		'fluid-status-primary': 'primary' == status
 	}, className )
 
 	return (
-		<Tag className={ classes } {...rest}>
+		<Tag className={ classes } { ...rest }>
 			{ Icon && (
 				<div className="fluid-message-icon">
 					<Icon />

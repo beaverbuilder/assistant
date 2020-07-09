@@ -1,12 +1,11 @@
-import React from 'react'
 import ButtonSheet from './buttons'
 import ColorSheet from './color'
 import IconSheet from './icons'
 import IntroSheet from './intro'
 
 export {
-    IntroSheet,
-    ButtonSheet,
-    ColorSheet,
-    IconSheet
+	IntroSheet,
+	ButtonSheet,
+	ColorSheet,
+	IconSheet
 }
