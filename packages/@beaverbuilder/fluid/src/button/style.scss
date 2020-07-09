@@ -1,15 +1,19 @@
 .fl.uid {
     .fluid-button {
+        --color: var(--fluid-opaque-5);
+        --background: var(--fluid-transparent-12);
+        --hover: var(--fluid-transparent-10);
+        --hover-color: var(--fluid-opaque-0);
         box-sizing: border-box;
         flex: 0 0 auto;
         display: inline-flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background: var(--fluid-box-background);
-        color: var(--fluid-box-color);
+        background: var(--background);
+        color: var(--color);
         border-radius: var(--fluid-radius);
-        box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+        box-shadow: 0px 0px 0px transparent;
         min-height: var(--fluid-target-size);
         padding: 5px 8px;
         text-decoration: none;
@@ -21,8 +25,8 @@
         &:hover,
         &.is-hovering {
             text-decoration: none;
-            background: var(--fluid-box-hover-background);
-            color: var(--fluid-box-hover-color);
+            background: var(--hover);
+            color: var(--hover-color);
         }
 
         &:focus,
@@ -37,8 +41,8 @@
 
         &:active,
         &.is-active {
-            background: var(--fluid-light-3);
-            box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
+            background: var(--hover);
+            box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
         }
 
         &.is-selected {
@@ -53,34 +57,22 @@
         }
 
         &.fluid-appearance-normal {
-            background-color: var(--fluid-box-background);
-
             &:hover,
             &.is-hovering {
-                background: var(--fluid-box-hover-background);
+                //background: var(--fluid-box-hover-background);
             }
         }
 
         &.fluid-appearance-transparent {
-            background: transparent;
+            --background: transparent;
             box-shadow: none;
             border: none;
             outline: none;
-
-            &:hover,
-            &.is-hovering {
-                background: var(--fluid-transparent-12);
-            }
 
             &:focus,
             &.is-focused {
                 box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
                             0px 0px 0px 1.5px var(--fluid-accent);
-            }
-            &:active,
-            &.is-active {
-                background: var(--fluid-transparent-12);
-                box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.2);
             }
         }
 
@@ -88,9 +80,20 @@
             margin-right: .5em;
         }
     }
-}
+    .fluid-color-scheme-dark {
+        .fluid-button {
+            --color: var(--fluid-opaque-10);
+            --background: var(--fluid-transparent-1);
+            --hover: var(--fluid-transparent-3);
+            --hover-color: var(--fluid-opaque-14);
 
-/* outside of .fl-asst on purpose */
-.fl-asst-tooltip {
-    font-family: sans-serif;
+            &.fluid-appearance-transparent {
+                --background: transparent;
+            }
+            &:focus,
+            &.is-focused {
+                box-shadow: 0px 0px 0px 1.5px var(--fluid-accent);
+            }
+        }
+    }
 }

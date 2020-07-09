@@ -2,11 +2,10 @@ import React from 'react'
 import Button from '../../button'
 import * as Text from '../../text'
 import * as Icon from '../../icon'
-import * as Layout from '../../layout'
 
 export default () => {
 	return (
-		<Text.ContentArea style={{ paddingBottom: 60 }}>
+		<Text.ContentArea style={ { paddingBottom: 60 } }>
 			<h1>Buttons</h1>
 			<p>Buttons defined the most basic interaction control in fluid. They can be used for handling click actions, navigating between routes, and navigating away from the page entirely.</p>
 
@@ -41,7 +40,7 @@ export default () => {
 				</tbody>
 			</table>
 
-			<h2>Primary Status</h2>
+			<h2>Transparent Appearance</h2>
 			<table>
 				<thead>
 					<tr>
@@ -52,23 +51,23 @@ export default () => {
 				<tbody>
 					<tr>
 						<td>Normal</td>
-						<td><Button status="primary">Button</Button></td>
+						<td><Button appearance="transparent">Button</Button></td>
 					</tr>
 					<tr>
 						<td>Hover</td>
-						<td><Button status="primary" className="is-hovering">Button</Button></td>
+						<td><Button appearance="transparent" className="is-hovering">Button</Button></td>
 					</tr>
 					<tr>
 						<td>Active</td>
-						<td><Button status="primary" className="is-active">Button</Button></td>
+						<td><Button appearance="transparent" className="is-active">Button</Button></td>
 					</tr>
 					<tr>
 						<td>Focused</td>
-						<td><Button status="primary" className="is-focused">Button</Button></td>
+						<td><Button appearance="transparent" className="is-focused">Button</Button></td>
 					</tr>
 					<tr>
 						<td>Disabled</td>
-						<td><Button status="primary" disabled>Button</Button></td>
+						<td><Button appearance="transparent" disabled>Button</Button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -123,6 +122,38 @@ export default () => {
 						<td>
 							<Button icon="bookmark-solid">Bookmark</Button>
 						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>Primary Status</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>State</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Normal</td>
+						<td><Button status="primary">Button</Button></td>
+					</tr>
+					<tr>
+						<td>Hover</td>
+						<td><Button status="primary" className="is-hovering">Button</Button></td>
+					</tr>
+					<tr>
+						<td>Active</td>
+						<td><Button status="primary" className="is-active">Button</Button></td>
+					</tr>
+					<tr>
+						<td>Focused</td>
+						<td><Button status="primary" className="is-focused">Button</Button></td>
+					</tr>
+					<tr>
+						<td>Disabled</td>
+						<td><Button status="primary" disabled>Button</Button></td>
 					</tr>
 				</tbody>
 			</table>

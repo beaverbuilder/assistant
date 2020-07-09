@@ -35,17 +35,6 @@
     --fluid-transparent-13: hsla( var(--fluid-hue), 38%, 97%, 60% );
     // There is no level 14 - white
 
-    // Light Greys
-    --fluid-light-1: hsla( var(--fluid-hue), 67%, 47%, 5% );
-    --fluid-light-2: hsla( var(--fluid-hue), 67%, 47%, 10% );
-    --fluid-light-3: hsla( var(--fluid-hue), 67%, 47%, 15% );
-
-    // Dark Greys
-    --fluid-dark-1: hsla( var(--fluid-hue), 78%, 75%, 20% );
-    --fluid-dark-2: hsla( var(--fluid-hue), 78%, 75%, 30% );
-    --fluid-dark-3: hsla( var(--fluid-hue), 78%, 75%, 40% );
-
-
     /**
     * Dynamic Colors - Colors that change depending on color scheme & context
     */

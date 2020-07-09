@@ -4,7 +4,9 @@ import c from 'classnames'
 import camelcase from 'camelcase'
 import * as Icon from '../../icon'
 
-const capitalize = value => value.charAt(0).toUpperCase() + value.slice(1)
+const appearances = [ 'normal', 'transparent', 'elevator' ]
+
+const capitalize = value => value.charAt( 0 ).toUpperCase() + value.slice( 1 )
 
 const matchIcon = value => {
 	if ( 'string' === typeof value ) {
@@ -37,7 +39,7 @@ const Button = forwardRef( ( props, ref ) => {
 	const classes = c( 'fluid-button', {
 		'is-selected': isSelected,
 		[`fluid-status-${status}`]: status,
-		[`fluid-appearance-${appearance}`]: appearance
+		[`fluid-appearance-${appearance}`]: appearances.includes( appearance )
 	}, className )
 
 	let newProps = {
