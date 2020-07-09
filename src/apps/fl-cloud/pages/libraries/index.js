@@ -37,7 +37,7 @@ export default () => {
 	}
 
 	return (
-		<Page.Section label={ __( 'Libraries' ) } padX={ false }>
+		<Page.Section padX={ false }>
 			<Layout.Box padY={ false } style={ { flexDirection: 'row' } }>
 				<Form.SelectItem
 					options={ getOwnerOptions() }
