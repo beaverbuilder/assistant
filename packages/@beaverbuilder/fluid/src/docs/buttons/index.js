@@ -1,10 +1,11 @@
 import React from 'react'
 import Button from '../../button'
 import * as Text from '../../text'
+import * as Icon from '../../icon'
 
 export default () => {
 	return (
-		<Text.ContentArea>
+		<Text.ContentArea style={{ paddingBottom: 60 }}>
 			<h1>Buttons</h1>
 			<p>Buttons defined the most basic interaction control in fluid. They can be used for handling click actions, navigating between routes, and navigating away from the page entirely.</p>
 
@@ -67,6 +68,38 @@ export default () => {
 					<tr>
 						<td>Disabled</td>
 						<td><Button status="primary" disabled>Button</Button></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>Elevator Appearance</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>State</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Normal</td>
+						<td><Button appearance="elevator"><Icon.Edit /></Button></td>
+					</tr>
+					<tr>
+						<td>Hover</td>
+						<td><Button appearance="elevator" className="is-hovering"><Icon.Edit /></Button></td>
+					</tr>
+					<tr>
+						<td>Active</td>
+						<td><Button appearance="elevator" className="is-active"><Icon.Edit /></Button></td>
+					</tr>
+					<tr>
+						<td>Focused</td>
+						<td><Button appearance="elevator" className="is-focused"><Icon.Edit /></Button></td>
+					</tr>
+					<tr>
+						<td>Disabled</td>
+						<td><Button appearance="elevator" disabled><Icon.Edit /></Button></td>
 					</tr>
 				</tbody>
 			</table>

@@ -3,7 +3,6 @@ import { Env } from 'ui'
 import classname from 'classnames'
 
 import './style.scss'
-import './forms.scss'
 
 export const Appearance = ( {
 	className,

@@ -1,5 +1,6 @@
 // Imported first before component styles
 import './style.scss'
+import './forms.scss'
 
 // Components
 import * as Icon from './icon'
