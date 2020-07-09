@@ -1,7 +1,5 @@
 import React, { Component, createElement } from 'react'
 
-const Error = props => props.children
-
 class ErrorBoundary extends Component {
 	constructor( props ) {
 		super( props )
@@ -50,11 +48,4 @@ const DefaultError = ( { error } ) => {
 	)
 }
 
-// Ensure the proper display name in the react dev tools tree
-Error.Boundary = ErrorBoundary
-Error.Boundary.displayName = 'Error.Boundary'
-
-Error.DefaultError = DefaultError
-Error.DefaultError.displayName = 'Error.DefaultError'
-
-export default Error
+export default ErrorBoundary

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import classname from 'classnames'
 import Section from './section'
-import Error from '../error'
+import ErrorBoundary from './error-boundary'
 import * as Layout from '../layout'
 import BackButton from './back-button'
 import './style.scss'
@@ -129,7 +129,7 @@ const Page = ( {
 					</div>
 
 					<Layout.Box padX={ padX } padY={ padY } style={ contentBoxStyle }>
-						<Error.Boundary>{children}</Error.Boundary>
+						<ErrorBoundary>{children}</ErrorBoundary>
 					</Layout.Box>
 				</div>
 			</div>
