@@ -43,7 +43,7 @@ export default () => {
 			</Button>
 			<Layout.Box padX={ false }>
 				<a href={ `${ cloudConfig.appUrl }/register` } target='blank'>
-					{ __( "Don't have an account? Register now!" ) }
+					{ __( 'Don\'t have an account? Register now!' ) }
 				</a>
 			</Layout.Box>
 		</Page>

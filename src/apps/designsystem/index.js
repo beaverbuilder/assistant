@@ -5,7 +5,7 @@ import App from './app'
 
 if ( ! __PRODUCTION__ ) {
 	registerApp( 'designsystem', {
-		label: 'Design System',
+		label: __( 'Design System' ),
 		root: App,
 		icon: Icon.Pencil
 	} )
