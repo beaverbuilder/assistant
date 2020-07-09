@@ -38,9 +38,14 @@ export default () => {
 		>
 			<Layout.Headline>{ __( 'Connect to Assistant Cloud' ) }</Layout.Headline>
 			<p>{ __( 'Click the button below to connect this site to your Assistant Cloud account.' ) }</p>
-			<Button status="primary" onClick={ connect }>
+			<Button appearance="normal" onClick={ connect }>
 				{ __( 'Connect' ) }
 			</Button>
+			<Layout.Box padX={ false }>
+				<a href={ `${ cloudConfig.appUrl }/register` } target='blank'>
+					{ __( "Don't have an account? Register now!" ) }
+				</a>
+			</Layout.Box>
 		</Page>
 	)
 }
