@@ -1,11 +1,11 @@
 import React from 'react'
-import * as Text from '../../text'
+import * as Layout from '../../layout'
 
 export default () => (
-    <Text.ContentArea>
+    <Layout.ContentBoundary>
         <h1>Layout</h1>
 
         <h2 id="box">Box</h2>
         <p>Something about the box component</p>
-    </Text.ContentArea>
+    </Layout.ContentBoundary>
 )

@@ -1,9 +1,9 @@
 import React from 'react'
-import * as Text from '../../text'
+import * as Layout from '../../layout'
 
 export default () => {
 	return (
-		<Text.ContentArea>
+		<Layout.ContentBoundary>
 			<h1>FLUID Design Language</h1>
 			<p>Fluid is a library of styles and react components that establishes a visual environment for creating a variety of different UI experiences.</p>
 
@@ -28,7 +28,6 @@ export default () => {
 					</tr>
 				</tbody>
 			</table>
-
-		</Text.ContentArea>
+		</Layout.ContentBoundary>
 	)
 }

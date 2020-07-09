@@ -51,4 +51,10 @@
         &.fluid-size-med { height: 50px; }
         &.fluid-size-sm  { height: 40px; }
     }
+
+    .fluid-content-boundary {
+        width: clamp( 40ch, 80ch, 100% );
+        margin: 0 auto;
+        padding: 0 var(--fluid-lg-space);
+    }
 }

@@ -7,6 +7,7 @@ import Loading from './loading'
 import Message from './message'
 import Split from './split'
 import Toolbar from './toolbar'
+import ContentBoundary from './content-boundary'
 import './style.scss'
 
 // Headline
@@ -26,4 +27,5 @@ export {
 	AspectBox,
 	Split,
 	Toolbar,
+	ContentBoundary,
 }

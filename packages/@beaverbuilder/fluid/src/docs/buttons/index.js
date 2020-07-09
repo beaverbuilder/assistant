@@ -1,11 +1,11 @@
 import React from 'react'
 import Button from '../../button'
-import * as Text from '../../text'
+import * as Layout from '../../layout'
 import * as Icon from '../../icon'
 
 export default () => {
 	return (
-		<Text.ContentArea style={ { paddingBottom: 60 } }>
+		<Layout.ContentBoundary style={ { paddingBottom: 60 } }>
 			<h1>Buttons</h1>
 			<p>Buttons defined the most basic interaction control in fluid. They can be used for handling click actions, navigating between routes, and navigating away from the page entirely.</p>
 
@@ -158,6 +158,6 @@ export default () => {
 					</tr>
 				</tbody>
 			</table>
-		</Text.ContentArea>
+		</Layout.ContentBoundary>
 	)
 }

@@ -23,13 +23,13 @@ const Title = ( {
 }
 
 // Keeps content centered and at a ledgible line length
-const ContentArea = ( {
-	tag: Tag = 'div',
-	className,
-	...rest
-} ) => {
+const ContentArea = ( { tag: Tag = 'div', className, ...rest } ) => {
+	console.warn('Use Layout.ContentBoundary instead of Text.ContentArea')
 	return (
-		<Tag className={ c( 'fluid-content-area', className ) } { ...rest } />
+		<Tag
+			className={ c( 'fluid-content-area', className ) }
+			{ ...rest }
+		/>
 	)
 }
 

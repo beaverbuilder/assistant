@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Text from '../../text'
+import * as Layout from '../../layout'
 
 const ColorBlock = ( { value, style, ...rest } ) => (
 	<div
@@ -18,7 +18,7 @@ const ColorBlock = ( { value, style, ...rest } ) => (
 )
 
 export default () => (
-	<Text.ContentArea>
+	<Layout.ContentBoundary>
 		<h1>Color</h1>
 
 		<h2>Value Scale</h2>
@@ -68,5 +68,5 @@ export default () => (
 				<ColorBlock value="transparent" style={ { opacity: .5 } } >No Transparent 14</ColorBlock>
 			</div>
 		</div>
-	</Text.ContentArea>
+	</Layout.ContentBoundary>
 )

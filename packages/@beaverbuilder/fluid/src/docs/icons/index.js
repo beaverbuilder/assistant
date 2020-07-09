@@ -1,10 +1,10 @@
 import React from 'react'
-import * as Text from '../../text'
+import * as Layout from '../../layout'
 import * as icons from '../../icon'
 
 export default () => {
 	return (
-		<Text.ContentArea>
+		<Layout.ContentBoundary>
 			<h1>Icons</h1>
 			<p>These are icons include in the fluid package.</p>
 
@@ -26,6 +26,6 @@ export default () => {
 					)
 				} )}
 			</div>
-		</Text.ContentArea>
+		</Layout.ContentBoundary>
 	)
 }

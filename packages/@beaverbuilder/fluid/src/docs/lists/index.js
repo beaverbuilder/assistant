@@ -1,9 +1,9 @@
 import React from 'react'
-import * as Text from '../../text'
+import * as Layout from '../../layout'
 
 export default () => (
-    <Text.ContentArea>
+    <Layout.ContentBoundary>
         <h1>Lists</h1>
         <p>Lists are how you list things...</p>
-    </Text.ContentArea>
+    </Layout.ContentBoundary>
 )
