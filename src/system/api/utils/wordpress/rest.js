@@ -227,9 +227,9 @@ const posts = () => {
 		 * Override WP post data with library post item data
 		 */
 
-		overrideLibPost( data = {}, config = {} ) {
+		overrideLibPost(id, itemId, overrideType, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( 'fl-assistant/v1/posts/override_lib_post', data, config )
+			return http.post( `fl-assistant/v1/posts/override_lib_post/${id}/${itemId}/${overrideType}`, {}, config )
 		},
 
 		/**

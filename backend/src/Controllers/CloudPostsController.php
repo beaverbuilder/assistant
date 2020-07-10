@@ -21,24 +21,6 @@ class CloudPostsController extends ControllerAbstract {
 	 * Register routes.
 	 */
 	public function register_routes() {
-		$this->route(
-			'/posts/formed_posts/(?P<id>\d+)',
-			[
-				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'get_formed_post' ],
-					'args'                => [
-						'id' => [
-							'required' => true,
-							'type'     => 'number',
-						],
-					],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
 
 		$this->route(
 			'/posts/import_from_library/(?P<item_id>\d+)',
@@ -59,25 +41,27 @@ class CloudPostsController extends ControllerAbstract {
 			]
 		);
 
-		$this->route(
-			'/posts/check_exist_post',
-			[
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'check_exist_post' ],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
 
 		$this->route(
-			'/posts/override_lib_post',
+			'/posts/override_lib_post/(?P<id>\d+)/(?P<item_id>\d+)/(?P<override_type>\d+)',
 			[
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'override_lib_post' ],
+					'args'                => [
+						'id'            => [
+							'required' => true,
+							'type'     => 'number',
+						],
+						'item_id'       => [
+							'required' => true,
+							'type'     => 'number',
+						],
+						'override_type' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_others_posts' );
 					},
@@ -92,7 +76,7 @@ class CloudPostsController extends ControllerAbstract {
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'save_to_library' ],
 					'args'                => [
-						'id' => [
+						'id'         => [
 							'required' => true,
 							'type'     => 'number',
 						],
@@ -110,46 +94,65 @@ class CloudPostsController extends ControllerAbstract {
 	}
 
 
-	function check_exist_post( $request ) {
-		$post_data = $request->get_params();
-		$post_title = $post_data['data']['post_title'];
-
-		if ( ! function_exists( 'post_exists' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/post.php';
-		}
-		$post_exist = post_exists( $post_title, '', '', $post_data['data']['post_type'] );
-
-		if ( $post_exist === ' 0 ' ) {
-
-			return rest_ensure_response(
-				[
-					'success'    => true,
-					'post_exist' => false,
-				]
-			);
-		} else {
-
-			return rest_ensure_response(
-				[
-					'success'    => true,
-					'post_exist' => true,
-					'post_id'    => $post_exist,
-				]
-			);
-		}
-
-	}
 
 	function override_lib_post( $request ) {
-		$post_data = $request->get_params();
 
-		$override_items = $post_data['data']['override_items'];
-		$post_id = $post_data['data']['ID'];
+		global $wpdb;
+		$post_id = $request->get_param( 'id' );
+		$item_id = $request->get_param( 'item_id' );
+		$override_type = $request->get_param( 'override_type' );
+
+		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
+		$response = $client->libraries->getItem( $item_id );
+
+		$post_data = $response->data->post;
+		$post_meta = $response->data->meta;
+		$post_cat  = $response->data->terms;
+
 		$override_post = [];
-		$override_post['ID'] = $post_data['data']['existing_post_id'];
-		foreach ( $override_items as $override_item ) {
-			if ( $override_item === 'content' ) {
-				$override_post['post_content'] = $post_data['data']['post_content'];
+		$override_post['ID'] = $post_id;
+
+		if ( $post_meta && count( $post_meta ) !== 0 ) {
+
+			foreach ( $post_meta as $key => $value ) {
+
+				$meta_key   = $key ? $key : '';
+				$meta_value = $value[0] ? addslashes( $value[0] ) : '';
+				if ( '' !== $meta_key && '' !== $meta_value ) {
+
+					$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+				}
+			}
+		}
+
+		if ( '2' === $override_type ) {
+
+			$override_post['post_content'] = $post_data->post_content;
+		} elseif ( '3' === $override_type ) {
+
+			if ( is_array( $post_cat ) && count( $post_cat ) !== 0 ) {
+
+				foreach ( $post_cat as $category ) {
+
+					   $term = term_exists( $category->slug, $category->taxonomy );
+
+					   wp_set_post_terms( $post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+
+				}
+			}
+		} else {
+
+			$override_post['post_content'] = $post_data->post_content;
+			if ( is_array( $post_cat ) && count( $post_cat ) !== 0 ) {
+
+				foreach ( $post_cat as $category ) {
+
+					   $term = term_exists( $category->slug, $category->taxonomy );
+
+					   wp_set_post_terms( $post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+
+				}
 			}
 		}
 
@@ -187,15 +190,15 @@ class CloudPostsController extends ControllerAbstract {
 
 		$comments = get_comments( [ 'post_id' => $id ] );
 
-
-		return $client->libraries->createItem( $library_id,
+		return $client->libraries->createItem(
+			$library_id,
 			[
-				'name' => $post->post_title,
-				'type' => $post->post_type,
-				'data' => [
-					'post' => $post,
-					'meta' => get_post_meta( $id ),
-					'terms' => $post_taxonomies,
+				'name'  => $post->post_title,
+				'type'  => 'post',
+				'data'  => [
+					'post'     => $post,
+					'meta'     => get_post_meta( $id ),
+					'terms'    => $post_taxonomies,
 					'comments' => $comments,
 				],
 				'media' => $media,
@@ -242,12 +245,13 @@ class CloudPostsController extends ControllerAbstract {
 
 			wp_set_post_terms( $new_post_id, null, 'category' );
 
-			if ( is_array( $post_meta ) && count( $post_meta ) !== 0 ) {
+			if ( $post_meta && count( $post_meta ) !== 0 ) {
+
 				foreach ( $post_meta as $key => $value ) {
 
 					$meta_key   = $key ? $key : '';
-					$meta_value = $value ? addslashes( $value ) : '';
-					if ( $meta_key !== '' && $meta_value !== '' ) {
+					$meta_value = $value[0] ? addslashes( $value[0] ) : '';
+					if ( '' !== $meta_key && '' !== $meta_value ) {
 
 						$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
