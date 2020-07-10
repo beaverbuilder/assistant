@@ -8,57 +8,25 @@ import Libraries from '../libraries'
 export default () => {
 	return (
 		<Page
-			title={ __( 'Cloud' ) }
+			title={ __( 'Libraries' ) }
 			icon={ <AppIcon context="sidebar" /> }
 			shouldShowBackButton={ false }
+			actions={ <PageActions /> }
 		>
-			<ElevatorButtons />
 			<Libraries />
 		</Page>
 	)
 }
 
-const ElevatorButtons = () => {
+const PageActions = () => {
 	return (
-		<Layout.Box
-			padX={ false }
-			style={ {
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'space-evenly',
-				flex: '0 0 auto',
-			} }
+		<Button
+			title={ __( 'Logout' ) }
+			onClick={ cloud.auth.logout }
 		>
-			<Button
-				appearance='elevator'
-				title={ __( 'Teams' ) }
-				to='/fl-cloud/teams'
-			>
-				<span
-					className="dashicons dashicons-buddicons-buddypress-logo"
-					style={ { marginTop: '-8px' } }
-				></span>
-			</Button>
-			<Button
-				appearance='elevator'
-				title={ __( 'Profile' ) }
-				to='/fl-cloud/profile'
-			>
-				<span
-					className="dashicons dashicons-admin-users"
-					style={ { marginTop: '-8px' } }
-				></span>
-			</Button>
-			<Button
-				appearance='elevator'
-				title={ __( 'Logout' ) }
-				onClick={ cloud.auth.logout }
-			>
-				<span
-					className="dashicons dashicons-lock"
-					style={ { marginTop: '-8px' } }
-				></span>
-			</Button>
-		</Layout.Box>
+			<span
+				className="dashicons dashicons-lock"
+			></span>
+		</Button>
 	)
 }

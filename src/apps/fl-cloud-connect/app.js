@@ -1,12 +1,34 @@
 import React, { useState } from 'react'
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
+import { useSystemState, getSystemConfig } from 'assistant/data'
 import { Button, Layout, Page } from 'assistant/ui'
-import { getSystemConfig } from 'assistant/data'
 import { getQueryArgs, addQueryArgs } from 'assistant/utils/url'
 import cloud from 'assistant/cloud'
-import AppIcon from '../../icon'
+import AppIcon from './icon'
 
-export default () => {
+export default ( { baseURL } ) => {
+	const { pathname } = useLocation()
+	const history = useHistory()
+	const { isCloudConnected } = useSystemState( 'isCloudConnected' )
+
+	if ( ! isCloudConnected && ! pathname.includes( '/fl-cloud-connect' ) ) {
+		history.replace( '/fl-cloud-connect' )
+		return null
+	}
+	if ( isCloudConnected && pathname.includes( '/fl-cloud-connect' ) ) {
+		history.replace( '/fl-cloud' )
+		return null
+	}
+
+	return (
+		<Switch>
+			<Route path={ baseURL } component={ Main } />
+		</Switch>
+	)
+}
+
+const Main = () => {
 	const { cloudConfig } = getSystemConfig()
 	const { href } = window.location
 	const { token, ...args } = getQueryArgs( href )
