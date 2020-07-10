@@ -13,6 +13,13 @@
         overflow-x: hidden; // Firefox flips out with auto.
         position: relative;
 
+        .fluid-button {
+            &:hover,
+            &.is-hovering {
+                transform: scale(1); // Cancel out button scaling effect
+            }
+        }
+
         &.fluid-button-group-row {
             align-self: center; // will center self within flex columns
             justify-content: flex-start;

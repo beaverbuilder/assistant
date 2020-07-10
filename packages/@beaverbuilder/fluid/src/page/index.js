@@ -52,6 +52,7 @@ const Page = ( {
 		const style = {
 			transformOrigin: '0 0',
 			flex: '0 0 auto',
+			borderBottom: '2px solid var(--fluid-line-color)'
 		}
 
 		return (

@@ -19,7 +19,7 @@
         text-decoration: none;
         font-weight: normal;
         text-transform: none;
-        transition-property: background, box-shadow;
+        transition-property: background, box-shadow, transform;
         transition-duration: .15s;
 
         &:hover,
@@ -27,6 +27,7 @@
             text-decoration: none;
             background: var(--hover);
             color: var(--hover-color);
+            transform: scale(1.04);
         }
 
         &:focus,
@@ -43,6 +44,7 @@
         &.is-active {
             background: var(--hover);
             box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+            transform: scale(1);
         }
 
         &.is-selected {
@@ -83,7 +85,7 @@
     .fluid-color-scheme-dark {
         .fluid-button {
             --color: var(--fluid-opaque-10);
-            --background: var(--fluid-transparent-1);
+            --background: var(--fluid-transparent-2);
             --hover: var(--fluid-transparent-3);
             --hover-color: var(--fluid-opaque-14);
 

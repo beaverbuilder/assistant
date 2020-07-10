@@ -44,7 +44,7 @@
     --fluid-color: var(--fluid-opaque-0); // black
 
     // Dark Colors
-    --fluid-dark-background: var(--fluid-opaque-1);
+    --fluid-dark-background: var(--fluid-opaque-2);
     --fluid-dark-color: var(--fluid-opaque-11);
 
     // Box Colors
@@ -75,8 +75,8 @@
     --fluid-muted-text-color: var(--fluid-opaque-7);
 
     // Outlines and Separators
-    --fluid-line-color: var(--fluid-opaque-11);
-    --fluid-dark-line-color: var(--fluid-opaque-3);
+    --fluid-line-color: var(--fluid-transparent-11);
+    --fluid-dark-line-color: var(--fluid-opaque-0);
 
     // Spacing
     --fluid-sm-space: 5px;
@@ -239,8 +239,6 @@
     &.fluid-color-scheme-dark {
         --fluid-background: var(--fluid-dark-background);
         --fluid-color: var(--fluid-dark-color);
-        // Accent Color
-        --fluid-accent: #ffffff;
         --fluid-line-color: var(--fluid-dark-line-color);
 
         // Box Colors
