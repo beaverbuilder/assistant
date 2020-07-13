@@ -2,7 +2,7 @@ import React, { useState, memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
-import { Button, Icon, Env, List } from 'ui'
+import { Button, Icon, Env, List } from 'assistant/ui'
 import {
 	useSystemState,
 	getSystemActions,

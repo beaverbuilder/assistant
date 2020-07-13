@@ -2,7 +2,7 @@ import React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import { Assistant, getAssistantBBPanelConfig } from './main'
 import { __ } from '@wordpress/i18n'
-import { getSystemActions } from 'data'
+import { getSystemActions } from 'assistant/data'
 import './admin-bar-item'
 import './style.scss'
 

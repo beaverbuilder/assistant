@@ -1,6 +1,6 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
-import { useSystemState } from 'data'
+import { useSystemState } from 'assistant/data'
 
 const AssistantRouter = ( { children } ) => {
 	const { history } = useSystemState( false )
