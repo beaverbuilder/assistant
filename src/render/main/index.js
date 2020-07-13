@@ -81,11 +81,12 @@ export const Assistant = () => {
 export const AssistantCore = () => {
 	const { appearance } = useSystemState( 'appearance' )
 	return (
-		<Env.Provider application='beaver-builder'>
-			<Appearance brightness={ appearance.brightness }>
-				<AppMain />
-			</Appearance>
-		</Env.Provider>
+		<AppCoreRoot router={ AssistantRouter } >
+			<HistoryManager />
+			<Env.Provider application='beaver-builder'>
+				<AppMain allowHidingApps={false} />
+			</Env.Provider>
+		</AppCoreRoot>
 	)
 }
 
@@ -101,9 +102,12 @@ export const getAssistantBBPanelConfig = () => {
 
 	return {
 		className: 'fl-asst',
-		render: () => <AssistantCore />,
+		label: __('Assistant'),
+		root: AssistantCore,
+		/*
 		routerProps: getProps,
 		onHistoryChanged: history => setHistory( history.index, history.entries )
+		*/
 	}
 }
 

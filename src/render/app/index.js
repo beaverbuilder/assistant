@@ -8,7 +8,7 @@ import Sidebar from './side-bar'
 //import ErrorPage from './error-page'
 import './style.scss'
 
-const AppMain = () => {
+const AppMain = ({ allowHidingApps = true }) => {
 	const { apps, window, isAppHidden, homeKey } = useSystemState( [ 'apps', 'window', 'isAppHidden', 'homeKey' ] )
 	const side = window.origin[0]
 	const sideName = side ? 'right' : 'left'
@@ -24,7 +24,7 @@ const AppMain = () => {
 	return (
 		<div className={ classes } >
 			<Sidebar edge={ sideName } />
-			{ ! isAppHidden && (
+			{ ( ! isAppHidden || ! allowHidingApps ) && (
 				<div className="fl-asst-main-content" >
 					<App.Content
 						apps={ apps }

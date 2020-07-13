@@ -6,20 +6,18 @@ import cloud from './cloud'
 
 const api = window.FL || {}
 const asst = FL.Assistant || {}
-const {
-	registerApp,
-	toggleIsShowingUI,
-} = data.getSystemActions()
+const { registerApp, toggleIsShowingUI } = data.getSystemActions()
 
 const Assistant = {
 	...asst,
-	registerApp,
-	toggleUI: toggleIsShowingUI,
 	data,
 	ui,
 	utils,
 	hooks,
 	cloud,
+	// Top-level convenience functions
+	registerApp,
+	toggleUI: toggleIsShowingUI,
 }
 
 window.FL = {

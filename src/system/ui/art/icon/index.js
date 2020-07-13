@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon as FLUID_Icon } from 'fluid/ui'
+import { Icon as FLUID_Icon } from 'fluid'
 
 import Safely from './safely'
 

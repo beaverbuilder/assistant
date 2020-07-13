@@ -80,6 +80,10 @@
 
         .fluid-button-icon {
             margin-right: .5em;
+
+            &:last-child {
+                margin-right: 0;
+            }
         }
     }
     .fluid-color-scheme-dark {

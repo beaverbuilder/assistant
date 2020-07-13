@@ -17,37 +17,37 @@ const renderNormal = () => {
 		mountNode.classList.add( 'fl-asst', 'fl-asst-mount-node' )
 		document.body.appendChild( mountNode )
 	}
+
 	render( <Assistant />, mountNode )
 }
 
+// In Beaver Builder?
 if ( 'FLBuilder' in window ) {
 
 	if ( 'domReady' in wp ) {
 		wp.domReady( () => {
 
-			// Listen for BB publish out (without refresh)
+			// Listen for BB publish out (without refresh) and render standalone assistant
 			FLBuilder.addHook( 'endEditingSession', renderNormal )
 
-			// Listen for BB re-enter editing
+			// Listen for BB re-enter editing and ummount standalone assistant
 			FLBuilder.addHook( 'restartEditingSession', unmountAssistant )
 
-			// Setup Builder Panel
-			if ( 'Builder' in FL && 'registerPanel' in FL.Builder && 'togglePanel' in FL.Builder ) {
+			// Setup Assistant panel in Beaver Builder
+			if ( 'Builder' in FL && 'registerApp' in FL.Builder ) {
 
-				const { registerPanel, togglePanel } = FL.Builder
+				const { registerApp, toggleAppsPanel } = FL.Builder
 
-				registerPanel( 'fl/assistant', getAssistantBBPanelConfig() )
+				registerApp( 'fl-assistant', getAssistantBBPanelConfig() )
 
 				// Setup Trigger Button
 				const button = document.querySelector( '.fl-builder-fl-assistant-button' )
-
-				button.addEventListener( 'click', () => togglePanel( 'fl/assistant' ) )
+				button.addEventListener( 'click', () => toggleAppsPanel() )
 			}
 
 		} )
 	}
 } else {
-
 	// Render the standard Assistant app - We're not in Beaver Builder
 	wp.domReady( renderNormal )
 }
