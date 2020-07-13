@@ -42,7 +42,7 @@ class CloudClient {
 			CURLOPT_USERAGENT => 'Assistant Plugin',
 			CURLOPT_CUSTOMREQUEST => $args['method'],
 			CURLOPT_HTTPHEADER => $args['headers'],
-			CURLOPT_POSTFIELDS => http_build_query( $args['data'] ),
+			CURLOPT_POSTFIELDS => isset( $args['data'] ) ? http_build_query( $args['data'] ) : '',
 		] );
 
 		$response = curl_exec( $curl );
