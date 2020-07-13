@@ -9,7 +9,7 @@ const App = lazy( () => import(
 
 if ( ! __PRODUCTION__ ) {
 	registerApp( 'fl-cloud', {
-		label: __( 'Cloud' ),
+		label: __( 'Libraries' ),
 		root: App,
 		icon: AppIcon,
 	} )

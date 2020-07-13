@@ -8,7 +8,9 @@
     "module": "dist/index.es.js",
     "scripts": {
         "build": "rollup -c --environment IS_PRODUCTION",
-        "dev": "rollup -c -w"
+        "dev": "rollup -c -w",
+        "fix": "eslint src --fix",
+        "test": "eslint src"
     },
     "repository": {
         "type": "git",
@@ -32,6 +34,7 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
         "@babel/preset-env": "^7.10.2",
         "@babel/preset-react": "^7.10.1",
+        "@beaverbuilder/eslint-config": "0.0.5",
         "rollup": "^2.14.0",
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",

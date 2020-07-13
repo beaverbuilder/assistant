@@ -125,7 +125,7 @@ const Page = ( {
 
 							</div>
 						)}
-						{ header && <div className="fluid-toolbar fluid-page-header">{header}</div> }
+						{ header && <Layout.Toolbar size="sm" className="fluid-page-header">{header}</Layout.Toolbar > }
 					</div>
 
 					<Layout.Box padX={ padX } padY={ padY } style={ contentBoxStyle }>

@@ -1,0 +1,137 @@
+.fluid {
+
+    // Things that look like a text field
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="number"],
+    input[type="search"],
+    input[type="url"],
+    select,
+    textarea {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        flex: 1 1 auto;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: normal;
+        line-height: inherit;
+        text-align: left;
+        padding: var(--fluid-sm-space);
+        color: var(--fluid-color);
+        border-radius: var(--fluid-radius);
+        border:none;
+        outline: none;
+        box-shadow: none;
+        min-height: var(--fluid-target-size);
+
+        // Yes, these have to be separate rules.
+        &::-webkit-input-placeholder{
+            text-align: left;
+            color: var(--fluid-muted-text-color);
+        }
+        &::-ms-input-placeholder{
+            text-align: left;
+            color: var(--fluid-muted-text-color);
+        }
+        &::placeholder {
+            text-align: left;
+            color: var(--fluid-muted-text-color);
+        }
+
+        &:focus {
+            &::-webkit-input-placeholder{
+                text-align: left;
+                color: var(--fluid-color);
+            }
+            &::-ms-input-placeholder{
+                text-align: left;
+                color: var(--fluid-color);
+            }
+            &::placeholder {
+                text-align: left;
+                color: var(--fluid-color);
+            }
+        }
+    }
+
+    input[disabled],
+    select[disabled],
+    textarea[disabled],
+    [aria-disabled=true],
+    .fl-asst-is-disabled {
+        pointer-events: none;
+        opacity: .5;
+        font-style: italic;
+        color: var(--fluid-muted-text-color);
+    }
+
+    @supports( -webkit-appearance: none ) {
+        input[type="checkbox"] {
+            -moz-appearace: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: var(--fluid-box-background);
+            box-shadow: none;
+            border: none;
+            border-radius: var(--fluid-radius);
+
+            &:focus {
+                outline: none;
+                box-shadow: 0px 0px 0px 2px var(--fluid-accent),
+                            inset 0px 0px 0px 2px var(--fluid-background);
+            }
+
+            &:checked {
+                background-color: var(--fl-asst-blue);
+                box-shadow: none;
+
+                &:focus {
+                    outline: none;
+                    box-shadow: 0px 0px 0px 2px var(--fluid-accent),
+                                inset 0px 0px 0px 2px var(--fluid-background);
+                }
+                &:after {
+                    display: block;
+                    content: "\2713";
+                    color: white;
+                    font-family: var(--fluid-font-family);
+                    font-size: 18px !important;
+                    line-height: 1;
+                    font-weight: bold;
+                    text-align: center;
+                    margin-left: -1px;
+                    margin-top: 1px;
+                }
+                &:before {
+                    content: '';
+                    display: none;
+                }
+            }
+        }
+
+        select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E');
+        	background-repeat: no-repeat;
+        	background-position: right 10px center;
+        	background-size: 14px;
+            padding-right: 30px;
+        }
+
+        // Hide arrow in IE
+        select::-ms-expand {
+        	display: none;
+        }
+    }
+}

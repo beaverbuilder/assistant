@@ -1,11 +1,21 @@
 import React from 'react'
 import c from 'classnames'
 
-const Toolbar = ({ className, ...rest }) => (
-    <div
-        className={ c( 'fluid-toolbar', className ) }
-        { ...rest }
-    />
+const sizes = [ 'lg', 'med', 'sm' ]
+
+const Toolbar = ( {
+	className,
+	size = 'lg',
+	isSticky = true,
+	...rest
+} ) => (
+	<div
+		className={ c( 'fluid-toolbar', {
+			[`fluid-size-${size}`]: sizes.includes( size ),
+			'fluid-is-sticky': isSticky
+		}, className ) }
+		{ ...rest }
+	/>
 )
 
 export default Toolbar

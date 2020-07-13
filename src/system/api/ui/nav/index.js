@@ -93,7 +93,6 @@ Nav.CurrentTab = ( { tabs = [] } ) => {
 		</Switch>
 	)
 }
-Nav.CurrentTab.displayName = 'Nav.CurrentTab'
 
 export { Nav }
 

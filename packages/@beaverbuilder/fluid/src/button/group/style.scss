@@ -1,12 +1,11 @@
 .fluid {
-
     .fluid-button-group {
         box-sizing: border-box;
         display: inline-flex;
         flex-direction: row;
 	    flex-wrap: wrap;
-        background: var(--fl-asst-secondary-surface-background);
-        color: var(--fl-asst-secondary-surface-color);
+        background: var(--fluid-box-background);
+        color: var(--fluid-box-color);
         border-radius: 5px;
         padding: 3px;
         min-height: calc( var(--fluid-target-size) + 6px );
@@ -30,13 +29,13 @@
                 border-radius: 3px;
 
                 &.fl-asst-is-selected {
-                    background: var(--fl-asst-surface-background);
-                    color: var(--fl-asst-surface-color);
+                    background: var(--fluid-background);
+                    color: var(--fluid-color);
                     box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
 
                     &:focus {
-                        box-shadow: inset 0px 0px 0px 2px var(--fl-asst-secondary-surface-background),
-                                    0px 0px 0px 2px var(--fl-asst-accent-color);
+                        box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                                    0px 0px 0px 2px var(--fluid-accent);
                     }
                 }
             }
@@ -49,8 +48,8 @@
             overflow: visible;
 
             .fluid-button {
-                margin-right: var(--fl-asst-tiny-space);
-				margin-bottom: var(--fl-asst-tiny-space);
+                margin-right: var(--fluid-sm-space);
+				margin-bottom: var(--fluid-sm-space);
 
                 &:last-child {
                     margin-right: 0;
@@ -63,7 +62,7 @@
             background: var(--fluid-box-background);
             padding: 0 var(--fluid-med-space);
             padding-right: 2px;
-            height: 50px;
+            min-height: 40px;
             border-radius: 0;
             overflow: auto;
             justify-content: flex-start;
@@ -120,13 +119,17 @@
 
         .fluid-vertical-divider {
             flex: 0 0 auto;
-            margin: var(--fl-asst-tiny-space) 0;
-            background: var(--fl-asst-surface-background);
+            margin: var(--fluid-sm-space) 0;
+            background: var(--fluid-background);
+            border: none;
+            border-radius: 2px;
         }
         .fluid-horizontal-divider {
             flex: 0 0 auto;
-            margin: 0 var(--fl-asst-tiny-space);
-            background: var(--fl-asst-surface-background);
+            margin: 0 var(--fluid-sm-space);
+            background: var(--fluid-background);
+            border: none;
+            border-radius: 2px;
         }
         .fluid-is-selected + .fluid-divider {
             visibility: hidden;
@@ -136,7 +139,7 @@
             background: transparent;
             flex: 1 1 auto;
             display: grid;
-            grid-gap: var(--fl-asst-tiny-space);
+            grid-gap: var(--fluid-sm-space);
             grid-template-columns: 1fr 1fr;
             margin: -3px;
         }
@@ -144,19 +147,19 @@
 
     .fluid-divider.fluid-horizontal-divider {
         box-sizing: border-box;
-        background: var(--fl-asst-surface-background);
+        background: var(--fluid-background);
     }
     .fluid-divider.fluid-vertical-divider {
         box-sizing: border-box;
-        background: var(--fl-asst-surface-background);
+        background: var(--fluid-background);
         width: 2px;
         height: auto;
     }
     .fluid-is-hidden { visibility: hidden; }
 
     .fluid-more-menu {
-        background: var(--fl-asst-secondary-surface-background);
-        color: var(--fl-asst-secondary-surface-color);
+        background: var(--fluid-box-background);
+        color: var(--fluid-box-color);
         border-radius: var(--fluid-radius);
         padding: 3px;
         display: flex;

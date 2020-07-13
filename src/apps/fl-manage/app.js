@@ -30,11 +30,9 @@ const MainScreen = () => {
 			icon={ <AppIcon context="sidebar" /> }
 		>
 			<Form>
-				<Page.Section>
+				<Page.Section contentStyle={ { paddingTop: 0 } }>
 					<p style={ { marginTop: 0 } }>{__( 'You can reorder the apps below. The top 5 will appear in the sidebar for quick access.' )}</p>
-
 					<AppList />
-
 				</Page.Section>
 
 				<UIColorPreferences />

@@ -1,4 +1,8 @@
+// Imported first before component styles
 import './style.scss'
+import './forms.scss'
+
+// Components
 import * as Icon from './icon'
 import * as Text from './text'
 import * as Layout from './layout'
@@ -9,7 +13,7 @@ import Menu from './menu'
 import * as List from './list'
 
 // Styleguide content
-import { IconSheet } from './guides'
+import * as Docs from './docs'
 
 export {
 	Text,
@@ -17,8 +21,10 @@ export {
 	Page,
 	Button,
 	Icon,
-	IconSheet,
 	Layout,
 	List,
-	Menu,
+	Menu, // Planning to have menu subsumed by button
+
+	// Docs - probably won't stay forever
+	Docs,
 }
