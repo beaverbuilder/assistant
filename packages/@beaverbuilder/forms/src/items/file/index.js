@@ -4,7 +4,6 @@ export const FileItem = ( {
 	id,
 	onChange = () => {},
 	accept = '*',
-	...rest
 } ) => {
 	const ref = useRef()
 
@@ -16,8 +15,6 @@ export const FileItem = ( {
 			type='file'
 			accept={ accept }
 			onChange={ () => onChange( ref.current.files ) }
-			value='' // Throws an error without this
-			{ ...rest }
 		/>
 	)
 }
