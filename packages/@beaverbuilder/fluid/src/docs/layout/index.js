@@ -6,8 +6,10 @@ export default () => (
         <Layout.ContentBoundary>
             <h1>Layout</h1>
 
-            <h2 id="box">Box</h2>
-            <p>Something about the box component</p>
+            <h2 id="box">Layout.DropArea</h2>
+            <p>The DropArea component is a transparent container that listens for file drops and makes the files available via an onDrop callback as well as a context. The onDrop prop accepts a function and will pass the <code>(files, setFiles) => {}</code> arguments.</p>
+            <p>Alternatively you can read the provided context from a child component like this:</p>
+            <code>const {"{ files, setFiles }"} = Layout.DropArea.use()</code>
 
             <DropContents />
 

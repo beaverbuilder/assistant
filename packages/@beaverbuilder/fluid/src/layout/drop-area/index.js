@@ -53,7 +53,8 @@ const DropArea = ({
     const [files, setFiles] = useState([])
 
     const context = {
-        files
+        files,
+        setFiles,
     }
 
     const classes = c( 'fluid-drop-area', {
