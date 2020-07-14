@@ -8,6 +8,7 @@ import Message from './message'
 import Split from './split'
 import Toolbar from './toolbar'
 import ContentBoundary from './content-boundary'
+import DropArea from './drop-area'
 import './style.scss'
 
 // Headline
@@ -28,4 +29,5 @@ export {
 	Split,
 	Toolbar,
 	ContentBoundary,
+	DropArea
 }
