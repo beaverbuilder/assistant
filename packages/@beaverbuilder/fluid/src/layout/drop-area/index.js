@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext } from 'react'
-import ContentBoundary from '../content-boundary'
 import c from 'classnames'
+import { __ } from '@wordpress/i18n'
+import { motion } from 'framer-motion'
 
 // Can we handle dragging?
 /*
@@ -18,11 +19,23 @@ const stopEvents = e => {
     e.stopPropagation()
 }
 
-const HoverMessage = () => {
+const HoverScreen = ({ children }) => {
     return (
-        <ContentBoundary>
-            <h1>You're Hovering!</h1>
-        </ContentBoundary>
+        <motion.div
+            initial={{ scale: .8 }}
+            animate={{ scale: 1 }}
+            style={{
+                background: 'var(--fluid-box-background)',
+                border: '2px solid var(--fluid-line-color)',
+                flex: '1 1 auto',
+                pointerEvents: 'none',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            {children}
+        </motion.div>
     )
 }
 
@@ -32,6 +45,8 @@ const DropArea = ({
     tag: Tag = 'div',
     children,
     className,
+    onDrop = () => {},
+    hoverMessage = <h1>{__("You're Hovering...")}</h1>,
     ...rest
 }) => {
     const [isHovering, setIsHovering] = useState(false)
@@ -68,13 +83,19 @@ const DropArea = ({
                 onDragEnter={startHover}
                 onDragEnd={endHover}
                 onDrop={ e => {
-                    setFiles( Array.from( e.nativeEvent.dataTransfer.files ) )
+                    const files = Array.from( e.nativeEvent.dataTransfer.files )
+                    setFiles( files )
                     setIsHovering( false )
+
+                    if ( files.length > 0 ) {
+                        onDrop( files, setFiles )
+                    }
+
                     e.preventDefault()
                     e.stopPropagation()
                 }}
             >
-                { isHovering ? <HoverMessage /> : children}
+                { isHovering ? <HoverScreen>{hoverMessage}</HoverScreen> : children}
             </Tag>
         </DropAreaContext.Provider>
     )

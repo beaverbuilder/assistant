@@ -2,7 +2,7 @@ import React from 'react'
 import * as Layout from '../../layout'
 
 export default () => (
-    <Layout.DropArea>
+    <Layout.DropArea onDrop={ ( files, setFiles ) => console.log( 'onDrop', files, setFiles )}>
         <Layout.ContentBoundary>
             <h1>Layout</h1>
 
@@ -10,6 +10,7 @@ export default () => (
             <p>Something about the box component</p>
 
             <DropContents />
+
         </Layout.ContentBoundary>
     </Layout.DropArea>
 )
@@ -19,15 +20,12 @@ const DropContents = () => {
     return (
         <>
             { 1 > files.length && <h2>Drop some files maybe?</h2> }
-
             { files.length > 0 && (
                 <>
                     <h2>We have {files.length} files!</h2>
                     { files.map( ( file, i ) => {
-                        console.log( file, i )
                         const isImage = file.type.startsWith('image/')
                         const url = URL.createObjectURL( file )
-
                         return (
                             <Layout.Box key={i}>
                                 { isImage && <img src={url} /> }
