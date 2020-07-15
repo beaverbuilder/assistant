@@ -213,7 +213,7 @@ const ItemImport = ({ item, setItem }) => {
 		if (confirm(__('Are you sure want to override?'))) {
 			wpRest
 				.posts()
-				.overrideLibPost(post, item.id, overrideData)
+				.syncFromLib(post, item.id, overrideData)
 				.then(response => {
 					console.log(response)
 				})

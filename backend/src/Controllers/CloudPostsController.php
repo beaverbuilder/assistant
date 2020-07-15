@@ -41,9 +41,8 @@ class CloudPostsController extends ControllerAbstract {
 			]
 		);
 
-
 		$this->route(
-			'/posts/override_lib_post/(?P<id>\d+)/(?P<item_id>\d+)/(?P<override_type>\d+)',
+			'/posts/sync_from_library/(?P<id>\d+)/(?P<item_id>\d+)/(?P<override_type>\d+)',
 			[
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
@@ -95,7 +94,7 @@ class CloudPostsController extends ControllerAbstract {
 
 
 
-	function override_lib_post( $request ) {
+	function sync_from_library( $request ) {
 
 		global $wpdb;
 		$post_id = $request->get_param( 'id' );
@@ -107,7 +106,7 @@ class CloudPostsController extends ControllerAbstract {
 
 		$post_data = $response->data->post;
 		$post_meta = $response->data->meta;
-		$post_cat  = $response->data->terms;
+		$post_terms  = $response->data->terms;
 
 		$override_post = [];
 		$override_post['ID'] = $post_id;
@@ -119,9 +118,13 @@ class CloudPostsController extends ControllerAbstract {
 				$meta_key   = $key ? $key : '';
 				$meta_value = $value[0] ? addslashes( $value[0] ) : '';
 				if ( '' !== $meta_key && '' !== $meta_value ) {
+					if ( metadata_exists( 'post', $post_id, '_' . $meta_key ) ) {
 
-					$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+						update_metadata( 'post', $post_id, $meta_key, $meta_value );
 
+					} else {
+						$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					}
 				}
 			}
 		}
@@ -131,27 +134,53 @@ class CloudPostsController extends ControllerAbstract {
 			$override_post['post_content'] = $post_data->post_content;
 		} elseif ( '3' === $override_type ) {
 
-			if ( is_array( $post_cat ) && count( $post_cat ) !== 0 ) {
+			if ( is_array( $post_terms ) && count( $post_terms ) !== 0 ) {
 
-				foreach ( $post_cat as $category ) {
+				foreach ( $post_terms as $category ) {
+					if ( taxonomy_exists( $category->taxonomy ) ) {
+						$term = term_exists( $category->slug, $category->taxonomy );
+						if ( $term !== 0 && $term !== null ) {
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						} else {
+							wp_insert_term(
+								$category->name,   // the term
+								$category->taxonomy, // the taxonomy
+								[
+									'description' => $category->description,
+									'slug'        => $category->slug,
+									'parent'      => $category->parent,
+								]
+							);
 
-					   $term = term_exists( $category->slug, $category->taxonomy );
-
-					   wp_set_post_terms( $post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
-
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						}
+					}
 				}
 			}
 		} else {
 
 			$override_post['post_content'] = $post_data->post_content;
-			if ( is_array( $post_cat ) && count( $post_cat ) !== 0 ) {
+			if ( is_array( $post_terms ) && count( $post_terms ) !== 0 ) {
 
-				foreach ( $post_cat as $category ) {
+				foreach ( $post_terms as $category ) {
+					if ( taxonomy_exists( $category->taxonomy ) ) {
+						$term = term_exists( $category->slug, $category->taxonomy );
+						if ( $term !== 0 && $term !== null ) {
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						} else {
+							wp_insert_term(
+								$category->name,   // the term
+								$category->taxonomy, // the taxonomy
+								[
+									'description' => $category->description,
+									'slug'        => $category->slug,
+									'parent'      => $category->parent,
+								]
+							);
 
-					   $term = term_exists( $category->slug, $category->taxonomy );
-
-					   wp_set_post_terms( $post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
-
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						}
+					}
 				}
 			}
 		}
@@ -216,7 +245,7 @@ class CloudPostsController extends ControllerAbstract {
 		$response = $client->libraries->getItem( $item_id );
 		$post_data = $response->data->post;
 		$post_meta = $response->data->meta;
-		$post_cat  = $response->data->terms;
+		$post_terms  = $response->data->terms;
 		$current_user = wp_get_current_user();
 
 		$newpost_data = [
@@ -227,7 +256,6 @@ class CloudPostsController extends ControllerAbstract {
 			'post_status'  => 'draft',
 			'post_title'   => $post_data->post_title,
 			'post_type'    => $post_data->post_type,
-			'to_ping'      => $post_data->ping_status,
 			'menu_order'   => $post_data->menu_order,
 		];
 
@@ -243,14 +271,13 @@ class CloudPostsController extends ControllerAbstract {
 
 		} else {
 
-			wp_set_post_terms( $new_post_id, null, 'category' );
-
 			if ( $post_meta && count( $post_meta ) !== 0 ) {
 
 				foreach ( $post_meta as $key => $value ) {
 
 					$meta_key   = $key ? $key : '';
 					$meta_value = $value[0] ? addslashes( $value[0] ) : '';
+
 					if ( '' !== $meta_key && '' !== $meta_value ) {
 
 						$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -259,14 +286,27 @@ class CloudPostsController extends ControllerAbstract {
 				}
 			}
 
-			if ( is_array( $post_cat ) && count( $post_cat ) !== 0 ) {
+			if ( is_array( $post_terms ) && count( $post_terms ) !== 0 ) {
 
-				foreach ( $post_cat as $category ) {
+				foreach ( $post_terms as $category ) {
+					if ( taxonomy_exists( $category->taxonomy ) ) {
+						$term = term_exists( $category->slug, $category->taxonomy );
+						if ( $term !== 0 && $term !== null ) {
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						} else {
+							wp_insert_term(
+								$category->name,   // the term
+								$category->taxonomy, // the taxonomy
+								[
+									'description' => $category->description,
+									'slug'        => $category->slug,
+									'parent'      => $category->parent,
+								]
+							);
 
-					   $term = term_exists( $category->slug, $category->taxonomy );
-
-					   wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
-
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						}
+					}
 				}
 			}
 
