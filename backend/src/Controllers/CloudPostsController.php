@@ -113,17 +113,25 @@ class CloudPostsController extends ControllerAbstract {
 
 		if ( $post_meta && count( $post_meta ) !== 0 ) {
 
-			foreach ( $post_meta as $key => $value ) {
+			foreach ( $post_meta as $key => $meta_value ) {
 
 				$meta_key   = $key ? $key : '';
-				$meta_value = $value[0] ? addslashes( $value[0] ) : '';
-				if ( '' !== $meta_key && '' !== $meta_value ) {
+
+
+
+				if ( '' !== $meta_key ) {
 					if ( metadata_exists( 'post', $post_id, '_' . $meta_key ) ) {
 
 						update_metadata( 'post', $post_id, $meta_key, $meta_value );
 
 					} else {
-						$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+						if( count( $meta_value ) >= 1 ){
+							foreach( $meta_value as $value ){
+								$value = $value ? addslashes( $value ) : '';
+								$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+							}
+						}
 					}
 				}
 			}
@@ -249,14 +257,15 @@ class CloudPostsController extends ControllerAbstract {
 		$current_user = wp_get_current_user();
 
 		$newpost_data = [
-			'post_author'  => $current_user->ID,
-			'post_content' => $post_data->post_content ? $post_data->post_content : '',
-			'post_excerpt' => $post_data->post_excerpt ? $post_data->post_excerpt : '',
-			'post_name'    => $post_data->post_name ? $post_data->post_name : '',
-			'post_status'  => 'draft',
-			'post_title'   => $post_data->post_title,
-			'post_type'    => $post_data->post_type,
-			'menu_order'   => $post_data->menu_order,
+			'post_author'    => $current_user->ID,
+			'post_content'   => $post_data->post_content ? $post_data->post_content : '',
+			'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
+			'post_name'      => $post_data->post_name ? $post_data->post_name : '',
+			'post_status'    => 'draft',
+			'post_title'     => $post_data->post_title,
+			'post_type'      => $post_data->post_type,
+			'menu_order'     => $post_data->menu_order,
+			'post_mime_type' => $post_data->post_mime_type,
 		];
 
 		$new_post_id = wp_insert_post( $newpost_data );
@@ -273,14 +282,19 @@ class CloudPostsController extends ControllerAbstract {
 
 			if ( $post_meta && count( $post_meta ) !== 0 ) {
 
-				foreach ( $post_meta as $key => $value ) {
+				foreach ( $post_meta as $key => $meta_value ) {
 
 					$meta_key   = $key ? $key : '';
-					$meta_value = $value[0] ? addslashes( $value[0] ) : '';
 
-					if ( '' !== $meta_key && '' !== $meta_value ) {
 
-						$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					if ( '' !== $meta_key ) {
+						if ( count( $meta_value ) >= 1 ) {
+							foreach ( $meta_value as $value ) {
+								$value = $value ? addslashes( $value ) : '';
+								$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+							}
+						}
+
 
 					}
 				}

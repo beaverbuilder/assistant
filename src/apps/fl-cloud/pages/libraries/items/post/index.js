@@ -38,11 +38,13 @@ export default ({ item, setItem }) => {
 }
 
 const ItemSettings = ({ item, setItem }) => {
+
 	const fields = {
 		post_title: {
 			label: __('Title'),
 			component: 'text',
 			alwaysCommit: true,
+			value:item.data.post.post_title,
 			validate: (value, errors) => {
 				if ('' === value) {
 					errors.push(__('Please enter a title.'))
@@ -53,6 +55,7 @@ const ItemSettings = ({ item, setItem }) => {
 			label: __('Slug'),
 			component: 'text',
 			alwaysCommit: true,
+			value:item.data.post.post_name,
 			validate: (value, errors) => {
 				if ('' === value) {
 					errors.push(__('Please enter a slug.'))
