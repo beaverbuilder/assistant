@@ -1,16 +1,57 @@
 :root {
     --fluid-hue: 210;
-    --fluid-background: hsl( var(--fluid-hue), 40%, 100% ); // white
-    --fluid-color: hsl( var(--fluid-hue), 40%, 0% ); // black
+
+    // Opaque Scale
+    --fluid-opaque-0: black;
+    --fluid-opaque-1: hsl( var(--fluid-hue), 10%, 10% );
+    --fluid-opaque-2: hsl( var(--fluid-hue), 10%, 15% );
+    --fluid-opaque-3: hsl( var(--fluid-hue), 10%, 20% );
+    --fluid-opaque-4: hsl( var(--fluid-hue), 10%, 25% );
+    --fluid-opaque-5: hsl( var(--fluid-hue), 10%, 30% );
+    --fluid-opaque-6: hsl( var(--fluid-hue), 10%, 35% );
+    --fluid-opaque-7: hsl( var(--fluid-hue), 10%, 50% ); // Middle Grey
+    --fluid-opaque-8: hsl( var(--fluid-hue), 27%, 87% );
+    --fluid-opaque-9: hsl( var(--fluid-hue), 33%, 89% );
+    --fluid-opaque-10: hsl( var(--fluid-hue), 33%, 91% );
+    --fluid-opaque-11: hsl( var(--fluid-hue), 33%, 93% );
+    --fluid-opaque-12: hsl( var(--fluid-hue), 33%, 95% );
+    --fluid-opaque-13: hsl( var(--fluid-hue), 33%, 98% );
+    --fluid-opaque-14: white;
+
+    // Transparent Scale
+    // There is no level 0 - black
+    --fluid-transparent-1: hsla( var(--fluid-hue), 10%, 12%, 80% );
+    --fluid-transparent-2: hsla( var(--fluid-hue), 10%, 19%, 80% );
+    --fluid-transparent-3: hsla( var(--fluid-hue), 10%, 25%, 80% );
+    --fluid-transparent-4: hsla( var(--fluid-hue), 10%, 31%, 80% );
+    --fluid-transparent-5: hsla( var(--fluid-hue), 10%, 38%, 80% );
+    --fluid-transparent-6: hsla( var(--fluid-hue), 10%, 44%, 80% );
+    // There is no level 7 - middle grey
+    --fluid-transparent-8: hsla( var(--fluid-hue), 27%, 84%, 80% );
+    --fluid-transparent-9: hsla( var(--fluid-hue), 33%, 86%, 80% );
+    --fluid-transparent-10: hsla( var(--fluid-hue), 33%, 89%, 80% );
+    --fluid-transparent-11: hsla( var(--fluid-hue), 34%, 90%, 80% );
+    --fluid-transparent-12: hsla( var(--fluid-hue), 38%, 94%, 80% );
+    --fluid-transparent-13: hsla( var(--fluid-hue), 38%, 98%, 80% );
+    // There is no level 14 - white
+
+    /**
+    * Dynamic Colors - Colors that change depending on color scheme & context
+    */
+
+    // Light Colors
+    --fluid-background: var(--fluid-opaque-14); // white
+    --fluid-color: var(--fluid-opaque-0); // black
 
     // Dark Colors
-    --fluid-dark-background: hsl( var(--fluid-hue), 13%, 16%);
-    --fluid-dark-color: hsl( var(--fluid-hue), 15%, 90%);
+    --fluid-dark-background: var(--fluid-opaque-2);
+    --fluid-dark-color: var(--fluid-opaque-11);
 
     // Box Colors
-    --fluid-box-background: hsl( var(--fluid-hue), 40%, 96%);
-    --fluid-box-color: hsl( var(--fluid-hue), 40%, 0% );
-    --fluid-box-hover-background: hsl( var(--fluid-hue), 37%, 92%);;
+    --fluid-box-background: var(--fluid-transparent-12);
+    --fluid-box-color: var(--fluid-opaque-3);
+    --fluid-box-hover-background: var(--fluid-transparent-10);
+    --fluid-box-hover-color: var(--fluid-opaque-0);
 
     // Primary Colors
     --fluid-primary-background: #EFF8FF;
@@ -31,11 +72,11 @@
     --fluid-accent: hsl( var(--fluid-hue), 100%, 43%);
 
     // Dimmed/Muted Text
-    --fluid-muted-text-color: hsl( var(--fluid-hue), 18%, 60% );
+    --fluid-muted-text-color: var(--fluid-opaque-7);
 
     // Outlines and Separators
-    --fluid-line-color: #F1F5F9;
-    --fluid-dark-line-color: black;
+    --fluid-line-color: var(--fluid-transparent-11);
+    --fluid-dark-line-color: var(--fluid-opaque-0);
 
     // Spacing
     --fluid-sm-space: 5px;
@@ -102,13 +143,11 @@
             top:0;
             border: none;
         }
-
-        &[ disabled ] {
+        &[disabled] {
             color: inherit;
-            opacity: .5;
+            opacity: .6;
             pointer-events: none;
         }
-
         &:visited {
             color: inherit;
         }
@@ -131,7 +170,7 @@
 
     h1, h2, h3, h4, h5, h6 {
         color: inherit;
-        margin: var(--fluid-med-space) 0;
+        margin: var(--fluid-lg-space) 0 var(--fluid-lg-space);
 
         &::before {
             all: unset !important;
@@ -147,7 +186,6 @@
         font-size: calc( var(--fluid-font-size) + 6px );
     }
     p {
-        font-size: 20px;
         margin: var(--fluid-lg-space) 0;
     }
 
@@ -159,6 +197,18 @@
         li {
             margin:0;
             padding:0;
+        }
+    }
+
+    table {
+        font-size: var(--fluid-font-size);
+        width: 100%;
+        border-collapse: collapse;
+
+        th, td {
+            text-align: left;
+            padding: var(--fluid-med-space);
+            border: 2px solid var(--fluid-line-color);
         }
     }
 
@@ -189,14 +239,12 @@
     &.fluid-color-scheme-dark {
         --fluid-background: var(--fluid-dark-background);
         --fluid-color: var(--fluid-dark-color);
-        // Accent Color
-        --fluid-accent: #ffffff;
         --fluid-line-color: var(--fluid-dark-line-color);
 
         // Box Colors
-        --fluid-box-background: hsl( var(--fluid-hue), 17%, 5%);
-        --fluid-box-color: hsl( var(--fluid-hue), 11%, 65%);
-        --fluid-box-hover-background: hsl( var(--fluid-hue), 17%, 10%);
+        --fluid-box-background: var(--fluid-opaque-1);
+        --fluid-box-color: var(--fluid-dark-color);
+        --fluid-box-hover-background: var(--fluid-opaque-3);
 
         // Primary Colors
         --fluid-primary-background: hsl(206, 100%, 9%);

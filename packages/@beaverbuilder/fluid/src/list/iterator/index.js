@@ -1,27 +1,51 @@
 import React from 'react'
 
-const Iterator = () => {
+const prepare = items => {
+    if ( ! Array.isArray( items ) ) {
+        return Object.values( items )
+    }
+    return items
+}
 
+const defaultMapProps = ( props, key ) => {
+    return {
+        key,
+        children: 'test children'
+    }
+}
 
-    return null
+const Iterator = ({
+    items,
+    mapProps = defaultMapProps,
+    tag: Tag = 'div',
+}) => {
+
+    return prepare( items ).map( ( item, i ) => {
+        const props = mapProps( item, i )
+        return (
+            <Tag {...props} />
+        )
+    })
 }
 
 export default Iterator
 
-
 /*
+[string, string, string]
+[{}, {}, {}]
+{ item: {}, item: {}, item: {} }
+
 <Iterator
-    items={ items } Array || Object
-    filterItems={ item => true }
+    items={ data }
     sortItems={ item => 0 }
-    getComponent={ () => Component }
 />
 
-
-<Scroller>
-    <Section>
+<Wrapper>
+    <Before>
         <Item />
         <Item>
-            <Item>
+            <SubItem />
         </Item>
+    </After>
+</Wrapper>
 */

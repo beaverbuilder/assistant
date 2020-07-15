@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import classname from 'classnames'
 import Section from './section'
-import Error from '../error'
+import ErrorBoundary from './error-boundary'
 import * as Layout from '../layout'
 import BackButton from './back-button'
 import './style.scss'
@@ -52,6 +52,7 @@ const Page = ( {
 		const style = {
 			transformOrigin: '0 0',
 			flex: '0 0 auto',
+			borderBottom: '2px solid var(--fluid-line-color)'
 		}
 
 		return (
@@ -125,11 +126,11 @@ const Page = ( {
 
 							</div>
 						)}
-						{ header && <div className="fluid-toolbar fluid-page-header">{header}</div> }
+						{ header && <Layout.Toolbar size="sm" className="fluid-page-header">{header}</Layout.Toolbar > }
 					</div>
 
 					<Layout.Box padX={ padX } padY={ padY } style={ contentBoxStyle }>
-						<Error.Boundary>{children}</Error.Boundary>
+						<ErrorBoundary>{children}</ErrorBoundary>
 					</Layout.Box>
 				</div>
 			</div>

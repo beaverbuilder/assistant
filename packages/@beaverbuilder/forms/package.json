@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/forms",
-    "version": "0.1.4",
+    "version": "0.1.7",
     "description": "Hooks and components for easily building complex forms in React.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -8,7 +8,9 @@
     "module": "dist/index.es.js",
     "scripts": {
         "build": "rollup -c --environment IS_PRODUCTION",
-        "dev": "rollup -c -w"
+        "dev": "rollup -c -w",
+        "fix": "eslint src --fix",
+        "test": "eslint src"
     },
     "repository": {
         "type": "git",
@@ -16,7 +18,6 @@
         "directory": "packages/@beaverbuilder/forms"
     },
     "dependencies": {
-        "@beaverbuilder/fluid": "^0.4.6",
         "camelcase": "^6.0.0"
     },
     "peerDependencies": {
@@ -24,7 +25,8 @@
         "classnames": "^2.2.6",
         "react": "^16.9.0",
         "react-dom": "^16.9.0",
-        "react-router-dom": "^5.2.0"
+        "react-router-dom": "^5.2.0",
+        "@beaverbuilder/fluid": "^0.5.0"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",
@@ -32,6 +34,7 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
         "@babel/preset-env": "^7.10.2",
         "@babel/preset-react": "^7.10.1",
+        "@beaverbuilder/eslint-config": "0.0.5",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^8.0.1",
         "rollup": "^2.12.0",

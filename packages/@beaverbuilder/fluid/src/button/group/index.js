@@ -1,7 +1,7 @@
 import React, { Children, useState, useLayoutEffect, useRef } from 'react'
 import classname from 'classnames'
 import Menu from '../../menu'
-import Button from '../tooltip-button'
+import Button from '../base'
 import * as Icon from '../../icon'
 import './style.scss'
 
