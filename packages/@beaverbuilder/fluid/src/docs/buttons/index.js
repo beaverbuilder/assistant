@@ -2,16 +2,8 @@ import React from 'react'
 import Button from '../../button'
 import * as Layout from '../../layout'
 import * as Icon from '../../icon'
-import Menu from '../../menu'
 
 export default () => {
-
-
-	const MenuContent = () => {
-		return (
-			<div>hi</div>
-		)
-	}
 
 	return (
 		<Layout.ContentBoundary style={ { paddingBottom: 60 } }>
@@ -249,7 +241,7 @@ export default () => {
 							<Layout.Toolbar>
 								<Button size="sm">Small Button</Button>
 								<Button size="sm" icon="clone" />
-								<Button size="sm" icon="reply" appearance="transparent" style={{ marginLeft: 'auto' }} />
+								<Button size="sm" icon="reply" appearance="transparent" style={ { marginLeft: 'auto' } } />
 								<Button size="sm" icon="approve" appearance="transparent" />
 								<Button size="sm" icon="trash" appearance="transparent" status="destructive" />
 								<Button size="sm" icon="ellipsis" appearance="transparent" />
@@ -262,7 +254,7 @@ export default () => {
 							<Layout.Toolbar>
 								<Button size="med">Medium Button</Button>
 								<Button size="med" icon="clone" />
-								<Button icon="ellipsis" appearance="transparent" style={{ marginLeft: 'auto' }} />
+								<Button icon="ellipsis" appearance="transparent" style={ { marginLeft: 'auto' } } />
 								<Button size="med" icon="trash" status="destructive" appearance="transparent" />
 							</Layout.Toolbar>
 						</td>
@@ -273,7 +265,7 @@ export default () => {
 							<Layout.Toolbar>
 								<Button size="lg">Large Button</Button>
 								<Button size="lg" icon="clone" />
-								<Button icon="trash" status="destructive" appearance="elevator" style={{ marginLeft: 'auto' }} />
+								<Button icon="trash" status="destructive" appearance="elevator" style={ { marginLeft: 'auto' } } />
 							</Layout.Toolbar>
 						</td>
 					</tr>

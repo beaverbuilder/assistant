@@ -15,91 +15,91 @@ const canReadFiles = () => 'FileReader' in window
 */
 
 const stopEvents = e => {
-    e.preventDefault()
-    e.stopPropagation()
+	e.preventDefault()
+	e.stopPropagation()
 }
 
-const HoverScreen = ({ children }) => {
-    return (
-        <motion.div
-            initial={{ scale: .8 }}
-            animate={{ scale: 1 }}
-            style={{
-                background: 'var(--fluid-box-background)',
-                border: '2px solid var(--fluid-line-color)',
-                flex: '1 1 auto',
-                pointerEvents: 'none',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}
-        >
-            {children}
-        </motion.div>
-    )
+const HoverScreen = ( { children } ) => {
+	return (
+		<motion.div
+			initial={ { scale: .8 } }
+			animate={ { scale: 1 } }
+			style={ {
+				background: 'var(--fluid-box-background)',
+				border: '2px solid var(--fluid-line-color)',
+				flex: '1 1 auto',
+				pointerEvents: 'none',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center'
+			} }
+		>
+			{children}
+		</motion.div>
+	)
 }
 
 const DropAreaContext = createContext()
 
-const DropArea = ({
-    tag: Tag = 'div',
-    children,
-    className,
-    onDrop = () => {},
-    hoverMessage = <h1>{__("You're Hovering...")}</h1>,
-    ...rest
-}) => {
-    const [isHovering, setIsHovering] = useState(false)
-    const [files, setFiles] = useState([])
+const DropArea = ( {
+	tag: Tag = 'div',
+	children,
+	className,
+	onDrop = () => {},
+	hoverMessage = <h1>{__( 'You\'re Hovering...' )}</h1>,
+	...rest
+} ) => {
+	const [ isHovering, setIsHovering ] = useState( false )
+	const [ files, setFiles ] = useState( [] )
 
-    const context = {
-        files,
-        setFiles,
-    }
+	const context = {
+		files,
+		setFiles,
+	}
 
-    const classes = c( 'fluid-drop-area', {
-        'is-hovering' : isHovering
-    }, className )
+	const classes = c( 'fluid-drop-area', {
+		'is-hovering': isHovering
+	}, className )
 
-    const startHover = e => {
-        setIsHovering( true )
-        e.preventDefault()
-        e.stopPropagation()
-    }
-    const endHover = e => {
-        setIsHovering( false )
-        e.preventDefault()
-        e.stopPropagation()
-    }
+	const startHover = e => {
+		setIsHovering( true )
+		e.preventDefault()
+		e.stopPropagation()
+	}
+	const endHover = e => {
+		setIsHovering( false )
+		e.preventDefault()
+		e.stopPropagation()
+	}
 
-    return (
-        <DropAreaContext.Provider value={context}>
-            <Tag
-                className={ classes }
-                {...rest}
-                onDrag={stopEvents}
-                onDragStart={stopEvents}
-                onDragOver={startHover}
-                onDragLeave={endHover}
-                onDragEnter={startHover}
-                onDragEnd={endHover}
-                onDrop={ e => {
-                    const files = Array.from( e.nativeEvent.dataTransfer.files )
-                    setFiles( files )
-                    setIsHovering( false )
+	return (
+		<DropAreaContext.Provider value={ context }>
+			<Tag
+				className={ classes }
+				{ ...rest }
+				onDrag={ stopEvents }
+				onDragStart={ stopEvents }
+				onDragOver={ startHover }
+				onDragLeave={ endHover }
+				onDragEnter={ startHover }
+				onDragEnd={ endHover }
+				onDrop={ e => {
+					const files = Array.from( e.nativeEvent.dataTransfer.files )
+					setFiles( files )
+					setIsHovering( false )
 
-                    if ( files.length > 0 ) {
-                        onDrop( files, setFiles )
-                    }
+					if ( 0 < files.length ) {
+						onDrop( files, setFiles )
+					}
 
-                    e.preventDefault()
-                    e.stopPropagation()
-                }}
-            >
-                { isHovering ? <HoverScreen>{hoverMessage}</HoverScreen> : children}
-            </Tag>
-        </DropAreaContext.Provider>
-    )
+					e.preventDefault()
+					e.stopPropagation()
+				} }
+			>
+				{ isHovering ? <HoverScreen>{hoverMessage}</HoverScreen> : children}
+			</Tag>
+		</DropAreaContext.Provider>
+	)
 }
 
 DropArea.use = () => useContext( DropAreaContext )

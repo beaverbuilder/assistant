@@ -18,10 +18,10 @@ const AspectBox = ( {
 			padY={ false }
 			padX={ false }
 			className={ c( 'fluid-aspect-box', className ) }
-			style={{
+			style={ {
 				...style,
 				paddingTop: getHeightForRatio( ratio, width, height ),
-			}}
+			} }
 			{ ...rest }
 		>
 			<div>{children}</div>
