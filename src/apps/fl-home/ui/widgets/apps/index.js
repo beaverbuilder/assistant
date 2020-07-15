@@ -43,14 +43,7 @@ const AppsWidget = memo ( ( { ...rest } ) => {
 							flexDirection: 'row'
 						} }
 					>
-						<Button
-							appearance="transparent"
-							to={ `/${handle}` }
-							style={ {
-								flex: '1 1 auto',
-								justifyContent: 'flex-start'
-							} }
-						>
+						<Button appearance="transparent" to={ `/${handle}` } style={{ flex: '1 1 auto' }} className="fl-asst-apps-widget-item">
 							<span style={ { marginRight: 15 } }>
 								<Icon.Safely icon={ icon } context="sidebar" />
 							</span>

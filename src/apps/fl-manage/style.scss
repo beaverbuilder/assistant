@@ -36,6 +36,10 @@
                 flex-direction: row;
                 align-items: center;
                 min-height: 40px;
+
+                & > span {
+                    justify-content: flex-start;
+                }
             }
 
             .fl-asst-item-icon {
