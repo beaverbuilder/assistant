@@ -30,6 +30,7 @@ export {
 	Notice,
 	Menu,
 	Media,
+	Color
 }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
