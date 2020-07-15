@@ -1,11 +1,9 @@
 import React, { memo } from 'react'
 import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
-import { Button, Icon } from 'ui'
+import { Button } from 'ui'
 import './style.scss'
 
-const Nav = {}
-
-Nav.Tabs = ( { tabs = [], ...rest } ) => {
+const Tabs = ( { tabs = [], ...rest } ) => {
 	const history = useHistory()
 	const location = useLocation()
 	return (
@@ -35,9 +33,8 @@ Nav.Tabs = ( { tabs = [], ...rest } ) => {
 		</>
 	)
 }
-Nav.Tabs.displayName = 'Nav.Tabs'
 
-Nav.TabsToolbar = ( { tabs } ) => {
+const TabsToolbar = ( { tabs } ) => {
 	const history = useHistory()
 	const location = useLocation()
 
@@ -52,9 +49,8 @@ Nav.TabsToolbar = ( { tabs } ) => {
 					className="fluid-back-button"
 					appearance="transparent"
 					onClick={ history.goBack }
-				>
-					<Icon.BackArrow />
-				</Button>
+					icon="back-arrow"
+				/>
 
 				{ Object.entries( tabs ).map( ( [ , tab ], i ) => {
 					const { isVisible, label, path } = tab
@@ -75,7 +71,7 @@ Nav.TabsToolbar = ( { tabs } ) => {
 	)
 }
 
-Nav.CurrentTab = ( { tabs = [] } ) => {
+const CurrentTab = ( { tabs = [] } ) => {
 	return (
 		<Switch>
 			{ tabs.map( ( tab, i ) => {
@@ -94,6 +90,8 @@ Nav.CurrentTab = ( { tabs = [] } ) => {
 	)
 }
 
-export { Nav }
-
-export default Nav
+export {
+	Tabs,
+	TabsToolbar,
+	CurrentTab,
+}

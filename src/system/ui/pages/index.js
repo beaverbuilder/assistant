@@ -2,7 +2,7 @@ import React, { createContext } from 'react'
 import classname from 'classnames'
 import { App } from '@beaverbuilder/app-core'
 import { Page as FLUIDPage } from 'fluid/ui'
-import { Nav } from 'ui'
+import { Layout } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
 import { Post } from './post'
@@ -54,7 +54,7 @@ const Page = ( {
 		<FLUIDPage
 			className={ classes }
 			onLoad={ onLoad }
-			toolbar={ tabs ? <Nav.TabsToolbar tabs={ tabs } /> : toolbar }
+			toolbar={ tabs ? <Layout.TabsToolbar tabs={ tabs } /> : toolbar }
 			overlay={ overlay || ( notices && 0 < notices.length ) && <Overlay /> }
 			shouldShowBackButton={ true }
 			{ ...rest }

@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Redirect, Switch, Route } from 'react-router-dom'
 import { getSystemConfig } from 'assistant/data'
-import { Page, Nav } from 'assistant/ui'
+import { Page, Layout } from 'assistant/ui'
 import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
 import './style.scss'
@@ -39,7 +39,7 @@ const Main = () => {
 
 	const Header = () => {
 		return (
-			<Nav.Tabs tabs={ tabs } shouldHandleOverflow={ true } />
+			<Layout.Tabs tabs={ tabs } shouldHandleOverflow={ true } />
 		)
 	}
 
@@ -65,7 +65,7 @@ const Main = () => {
 			showAsRoot={ true }
 			onLoad={ onLoad }
 		>
-			<Nav.CurrentTab tabs={ tabs } />
+			<Layout.CurrentTab tabs={ tabs } />
 		</Page>
 	)
 }

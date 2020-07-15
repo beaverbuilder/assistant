@@ -6,7 +6,6 @@ import { Icon, Color } from './art'
 import { List } from './lists'
 import Layout from './layout'
 import Page from './pages'
-import Nav from './nav'
 import { Control, Filter } from './controls'
 import { Form } from './forms'
 import Media from './media'
@@ -30,7 +29,6 @@ export {
 	Notice,
 	Menu,
 	Media,
-	Nav,
 }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
@@ -47,7 +45,6 @@ export const api = {
 	Layout,
 	Page,
 	Env,
-	Nav,
 	Notice,
 	Media,
 	Menu,

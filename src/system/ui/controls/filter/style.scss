@@ -9,9 +9,11 @@
             flex-direction: row;
 
             .fl-asst-filter-button {
-                padding: 10px;
                 flex: 1 1 auto;
-                border-radius: 3px;
+
+                & > span {
+                    padding: 10px;
+                }
 
                 .fl-asst-filter-button-content {
                     flex: 1 1 auto;
@@ -20,7 +22,6 @@
                     align-items: flex-start;
                     font-size: 12px;
                     line-height: 1.1;
-                    color: var(--fluid-box-color);
                     text-align: left;
 
                     .fl-asst-filter-button-title {
@@ -38,6 +39,7 @@
                 .fl-asst-filter-button-caret {
                     flex: 0 0 auto;
                     display: flex;
+                    margin-left: auto;
 
                     svg {
                         display: block;
