@@ -98,7 +98,9 @@
     line-height: 1.2;
 
     // Reset
-    * { box-sizing: border-box; }
+    * {
+        box-sizing: border-box;
+    }
 
     // Media
     img {
@@ -107,6 +109,7 @@
         object-fit: cover;
         height: auto;
         width: auto;
+        border: 0;
     }
     video { display: block; }
     svg { display: block; }
@@ -168,25 +171,40 @@
         }
     }
 
-    h1, h2, h3, h4, h5, h6 {
-        color: inherit;
-        margin: var(--fluid-lg-space) 0 var(--fluid-lg-space);
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    blockquote,
+    pre,
+    form,
+    table {
+        margin: var(--fluid-lg-space) 0 0;
 
-        &::before {
-            all: unset !important;
-        }
         &:first-child {
             margin-top: 0;
         }
     }
+    h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+        font-family: var(--fluid-font-family);
+        font-weight: bold;
+
+        &::before {
+            all: unset !important;
+        }
+    }
     h1 {
-        font-size: calc( var(--fluid-font-size) + 10px );
+        font-size: calc( var(--fluid-font-size) + 14px );
     }
     h2 {
-        font-size: calc( var(--fluid-font-size) + 6px );
+        font-size: calc( var(--fluid-font-size) + 10px );
     }
-    p {
-        margin: var(--fluid-lg-space) 0;
+    h3 {
+        font-size: calc( var(--fluid-font-size) + 6px );
     }
 
     ul, ol {
@@ -210,30 +228,6 @@
             padding: var(--fluid-med-space);
             border: 2px solid var(--fluid-line-color);
         }
-    }
-
-    .fluid-status-primary {
-        --fluid-box-background: var(--fluid-primary-background);
-        --fluid-box-color: var(--fluid-primary-color);
-        --fluid-box-hover-background: var(--fluid-primary-hover-background);
-
-        color: var(--fluid-box-color);
-    }
-    .fluid-status-alert {
-        --fluid-box-background: var(--fluid-alert-background);
-        --fluid-box-color: var(--fluid-alert-color);
-        --fluid-box-hover-background: var(--fluid-alert-hover-background);
-        --fluid-accent: var(--fluid-alert-color);
-
-        color: var(--fluid-box-color);
-    }
-    .fluid-status-destructive {
-        --fluid-box-background: var(--fluid-destructive-background);
-        --fluid-box-color: var(--fluid-destructive-color);
-        --fluid-box-hover-background: var(--fluid-destructive-hover-background);
-        --fluid-accent: var(--fluid-destructive-color);
-
-        color: var(--fluid-box-color);
     }
 
     &.fluid-color-scheme-dark {

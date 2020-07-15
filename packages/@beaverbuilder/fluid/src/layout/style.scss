@@ -50,6 +50,12 @@
         &.fluid-size-lg  { height: 60px; }
         &.fluid-size-med { height: 50px; }
         &.fluid-size-sm  { height: 40px; }
+
+        .fluid-button {
+            margin-right: var(--fluid-sm-space);
+
+            &:last-child { margin-right: 0; }
+        }
     }
 
     .fluid-content-boundary {

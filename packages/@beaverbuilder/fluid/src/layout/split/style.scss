@@ -8,6 +8,7 @@
         max-height: 100%;
 
         .fluid-split-pane {
+            position: relative;
             flex: 1 1 auto;
             display: flex;
             flex-direction: column;
@@ -15,6 +16,7 @@
             max-height: 100%;
             overflow: auto;
             border-right: 2px solid var(--fluid-line-color);
+            -ms-overflow-style: -ms-autohiding-scrollbar;
 
             &:last-child {
                 border-right: none;

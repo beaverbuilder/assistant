@@ -53,8 +53,9 @@
         }
 
         &.fluid-appearance-elevator {
-            height: 45px;
-            width: 45px;
+            height: 44px;
+            width: 44px;
+            padding: 5px 12px;
             border-radius: 50%;
         }
 
@@ -76,6 +77,38 @@
                 box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
                             0px 0px 0px 1.5px var(--fluid-accent);
             }
+        }
+
+        &.fluid-status-primary {
+            --color: var(--fluid-primary-color);
+            --hover-color: var(--fluid-primary-color);
+        }
+        &.fluid-status-alert {
+            --fluid-accent: var(--fluid-alert-color);
+            --hover-color: var(--fluid-alert-color);
+            --color: var(--fluid-alert-color);
+        }
+        &.fluid-status-destructive {
+            --fluid-accent: var(--fluid-destructive-color);
+            --hover-color: var(--fluid-destructive-color);
+            --color: var(--fluid-destructive-color);
+        }
+
+        &.fluid-size-sm {
+            font-size: 12px;
+            padding: 5px;
+            min-height: 30px;
+            min-width: 30px;
+        }
+        &.fluid-size-med {
+            min-height: var(--fluid-target-size);
+            min-width: var(--fluid-target-size);
+        }
+        &.fluid-size-lg {
+            font-size: 16px;
+            padding: 5px 12px;
+            min-height: 44px;
+            min-width: 44px;
         }
 
         .fluid-button-icon {

@@ -5,6 +5,7 @@ import camelcase from 'camelcase'
 import * as Icon from '../../icon'
 
 const appearances = [ 'normal', 'transparent', 'elevator' ]
+const sizes = [ 'sm', 'med', 'lg' ]
 
 const capitalize = value => value.charAt( 0 ).toUpperCase() + value.slice( 1 )
 
@@ -30,6 +31,7 @@ const Button = forwardRef( ( props, ref ) => {
 		appearance = 'normal',
 		status,
 		icon,
+		size,
 		isLoading = false,
 		disabled,
 		children,
@@ -39,6 +41,7 @@ const Button = forwardRef( ( props, ref ) => {
 	const classes = c( 'fluid-button', {
 		'is-selected': isSelected,
 		[`fluid-status-${status}`]: status,
+		[`fluid-size-${size}`]: sizes.includes( size ),
 		[`fluid-appearance-${appearance}`]: appearances.includes( appearance )
 	}, className )
 
@@ -74,7 +77,7 @@ const Button = forwardRef( ( props, ref ) => {
 					{ true === isLoading ? <Icon.Loading /> : matchIcon( icon ) }
 				</span>
 			) }
-			{ children }
+			{ children && <span>{ children }</span> }
 		</Component>
 	)
 } )
