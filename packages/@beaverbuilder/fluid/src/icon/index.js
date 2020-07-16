@@ -29,6 +29,7 @@ import Ellipsis from './ellipsis'
 import Person from './person'
 import Library from './library'
 import Sidebar from './sidebar'
+import Cog from './cog'
 
 // Aliases
 const BackArrow = ArrowLeft
@@ -58,6 +59,7 @@ export {
 	Clone,
 	Close,
 	CloseCompact,
+	Cog,
 	Search,
 	Plus,
 	Return,

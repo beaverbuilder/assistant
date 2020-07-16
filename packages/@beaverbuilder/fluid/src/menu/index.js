@@ -35,7 +35,6 @@ const Menu = ( {
 					>
 						{content}
 					</div>
-
 				)
 			} }
 		>
