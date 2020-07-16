@@ -35,6 +35,14 @@
                     flex-direction: row;
                     justify-content: flex-start;
 
+                    & > span {
+                        justify-content: flex-start;
+                    }
+
+                    &:hover {
+                        transform: none;
+                    }
+
                     &:focus {
                         color: var(--fluid-primary-color);
                         background: var(--fluid-primary-background);

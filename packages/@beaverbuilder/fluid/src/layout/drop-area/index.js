@@ -51,10 +51,12 @@ const DropArea = ( {
 } ) => {
 	const [ isHovering, setIsHovering ] = useState( false )
 	const [ files, setFiles ] = useState( [] )
+	const removeFile = name => setFiles( files.filter( file => file.name !== name ) )
 
 	const context = {
 		files,
 		setFiles,
+		removeFile,
 	}
 
 	const classes = c( 'fluid-drop-area', {
@@ -89,7 +91,7 @@ const DropArea = ( {
 					setIsHovering( false )
 
 					if ( 0 < files.length ) {
-						onDrop( files, setFiles )
+						onDrop( files, removeFile )
 					}
 
 					e.preventDefault()
