@@ -15,6 +15,7 @@ const Assistant = {
 	utils,
 	hooks,
 	cloud,
+
 	// Top-level convenience functions
 	registerApp,
 	toggleUI: toggleIsShowingUI,

@@ -227,7 +227,7 @@ const posts = () => {
 		 * Override WP post data with library post item data
 		 */
 
-		syncFromLib(id, itemId, overrideType, config = {} ) {
+		syncFromLib( id, itemId, overrideType, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/sync_from_library/${id}/${itemId}/${overrideType}`, {}, config )
 		},
