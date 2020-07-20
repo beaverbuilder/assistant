@@ -1,6 +1,6 @@
 import './style.scss'
 
-export const Color = {
+const Color = {
 
 	/**
 	 * Note: Colors changed here need to be changed in
@@ -30,3 +30,5 @@ export const Color = {
 		purple: 'var(--fl-asst-purple)',
 	},
 }
+
+export default Color

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from 'fluid/ui'
+import { Layout } from 'fluid'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { Button } from 'ui'

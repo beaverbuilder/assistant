@@ -1,31 +1,31 @@
 import React from 'react'
 
 const prepare = items => {
-    if ( ! Array.isArray( items ) ) {
-        return Object.values( items )
-    }
-    return items
+	if ( ! Array.isArray( items ) ) {
+		return Object.values( items )
+	}
+	return items
 }
 
 const defaultMapProps = ( props, key ) => {
-    return {
-        key,
-        children: 'test children'
-    }
+	return {
+		key,
+		children: 'test children'
+	}
 }
 
-const Iterator = ({
-    items,
-    mapProps = defaultMapProps,
-    tag: Tag = 'div',
-}) => {
+const Iterator = ( {
+	items,
+	mapProps = defaultMapProps,
+	tag: Tag = 'div',
+} ) => {
 
-    return prepare( items ).map( ( item, i ) => {
-        const props = mapProps( item, i )
-        return (
-            <Tag {...props} />
-        )
-    })
+	return prepare( items ).map( ( item, i ) => {
+		const props = mapProps( item, i )
+		return (
+			<Tag key={ i } { ...props } />
+		)
+	} )
 }
 
 export default Iterator
