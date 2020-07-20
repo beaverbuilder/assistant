@@ -9,6 +9,7 @@ class CloudServiceProvider extends ServiceProviderAbstract {
 
 	public function bootstrap() {
 
+
 		if ( ! defined( 'FL_ASSISTANT_CLOUD_URL' ) ) {
 			define( 'FL_ASSISTANT_CLOUD_URL', '' );
 		}
