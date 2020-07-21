@@ -220,7 +220,6 @@ class CloudPostsController extends ControllerAbstract {
 		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
 
 		$media_path = get_attached_file( get_post_thumbnail_id( $post ) );
-		$media = $media_path ? curl_file_create( $media_path ) : null;
 
 		$taxonomies = get_taxonomies( '', 'names' );
 		$post_taxonomies = wp_get_object_terms( $id, $taxonomies );
@@ -238,7 +237,9 @@ class CloudPostsController extends ControllerAbstract {
 					'terms'    => $post_taxonomies,
 					'comments' => $comments,
 				],
-				'media' => $media,
+			],
+			[
+				$media_path
 			]
 		);
 	}
