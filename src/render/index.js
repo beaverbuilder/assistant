@@ -48,6 +48,7 @@ if ( 'FLBuilder' in window ) {
 		} )
 	}
 } else {
+
 	// Render the standard Assistant app - We're not in Beaver Builder
 	wp.domReady( renderNormal )
 }

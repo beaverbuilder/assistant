@@ -224,24 +224,30 @@ const posts = () => {
 		},
 
 		/**
-		 * get post with raw data by ID
-		 * @param id
-		 * @param config
-		 * @returns {Promise<*>}
+		 * Override WP post data with library post item data
 		 */
-		formedPost( id, config = {} ) {
+
+		syncFromLib( id, itemId, overrideType, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.get( `fl-assistant/v1/formed_posts/${id}`, config )
+			return http.post( `fl-assistant/v1/posts/sync_from_library/${id}/${itemId}/${overrideType}`, {}, config )
 		},
 
-		importLibPost( data = {}, config = {} ) {
-			config.cacheKey = 'posts'
-			return http.post( 'fl-assistant/v1/posts/import_lib_post', data, config )
-		},
+		/**
+		 * Export WP post data into library
+		 */
 
 		saveToLibrary( id, libraryId, config = {} ) {
 			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, {}, config )
+		},
+
+		/**
+		 * Import library post item into WP
+		 */
+
+		importFromLibrary( itemId, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/import_from_library/${itemId}`, {}, config )
 		},
 	}
 }

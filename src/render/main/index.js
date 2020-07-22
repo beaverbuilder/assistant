@@ -84,7 +84,7 @@ export const AssistantCore = () => {
 		<AppCoreRoot router={ AssistantRouter } >
 			<HistoryManager />
 			<Env.Provider application='beaver-builder'>
-				<AppMain allowHidingApps={false} />
+				<AppMain allowHidingApps={ false } />
 			</Env.Provider>
 		</AppCoreRoot>
 	)
@@ -102,8 +102,9 @@ export const getAssistantBBPanelConfig = () => {
 
 	return {
 		className: 'fl-asst',
-		label: __('Assistant'),
+		label: __( 'Assistant' ),
 		root: AssistantCore,
+
 		/*
 		routerProps: getProps,
 		onHistoryChanged: history => setHistory( history.index, history.entries )

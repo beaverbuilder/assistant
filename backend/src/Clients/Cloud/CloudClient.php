@@ -42,7 +42,7 @@ class CloudClient {
 			CURLOPT_USERAGENT => 'Assistant Plugin',
 			CURLOPT_CUSTOMREQUEST => $args['method'],
 			CURLOPT_HTTPHEADER => $args['headers'],
-			CURLOPT_POSTFIELDS => $args['data'],
+			CURLOPT_POSTFIELDS => isset( $args['data'] ) ? $this->build_query( $args['data'] ) : '',
 		] );
 
 		$response = curl_exec( $curl );
@@ -92,5 +92,27 @@ class CloudClient {
 	public function delete( $route, $args = [] ) {
 		$args['method'] = 'DELETE';
 		return $this->request( $route, $args );
+	}
+
+	/**
+	 * @param $data array
+ 	 * @param $prefix string
+	 * @return array
+	 */
+	protected function build_query( $data, $prefix = null ) {
+		$query = [];
+
+		foreach ( $data as $key => $value ) {
+			$new_key = $prefix ? "{$prefix}[{$key}]" : $key;
+			if ( is_object( $value ) && 'CURLFile' === get_class( $value ) ) {
+				$query[ $new_key ] = $value;
+			} else if ( is_array( $value ) || is_object( $value ) ) {
+				$query += $this->build_query( $value, $new_key );
+			} else {
+				$query[ $new_key ] = $value;
+			}
+		}
+
+		return $query;
 	}
 }
