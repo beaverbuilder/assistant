@@ -4,7 +4,7 @@ export const apps = ( state = {}, action ) => {
 		handle: null,
 		app: null,
 		label: null,
-		isEnabled: true,
+		enabled: true,
 		shouldShowInAppList: true,
 	}
 
