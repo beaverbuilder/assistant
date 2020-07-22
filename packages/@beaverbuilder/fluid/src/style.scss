@@ -222,11 +222,30 @@
         font-size: var(--fluid-font-size);
         width: 100%;
         border-collapse: collapse;
+        border: none;
 
         th, td {
             text-align: left;
-            padding: var(--fluid-med-space);
-            border: 2px solid var(--fluid-line-color);
+            padding: var(--fluid-sm-space) var(--fluid-med-space);
+            border: none;
+            border-right: 2px solid var(--fluid-line-color);
+
+            &:first-child {
+                border-top-left-radius: var(--fluid-radius);
+                barder-bottom-left-radius: var(--fluid-radius);
+            }
+
+            &:last-child {
+                border-right: 0;
+                border-top-right-radius: var(--fluid-radius);
+                barder-bottom-right-radius: var(--fluid-radius);
+            }
+        }
+
+        tr:nth-child(even) {
+            th, td {
+                background: var(--fluid-opaque-13);
+            }
         }
     }
 

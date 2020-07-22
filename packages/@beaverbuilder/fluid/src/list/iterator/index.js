@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 const prepare = items => {
 	if ( ! Array.isArray( items ) ) {
@@ -7,45 +7,37 @@ const prepare = items => {
 	return items
 }
 
-const defaultMapProps = ( props, key ) => {
-	return {
-		key,
-		children: 'test children'
-	}
+const defaultGetCellProps = ( cellName, props, defaults = {} ) => {
+	return defaults
 }
 
 const Iterator = ( {
-	items,
-	mapProps = defaultMapProps,
-	tag: Tag = 'div',
+	items = [],
+
+	getCell = () => Fragment,
+	getCellProps = defaultGetCellProps,
+	getCellNames = () => [ 'main' ],
+
+	getRow = () => Fragment,
+	getRowProps = () => {},
 } ) => {
+	const cellNames = getCellNames( items )
+	const Row = getRow( items )
 
 	return prepare( items ).map( ( item, i ) => {
-		const props = mapProps( item, i )
+		const props = getRowProps( item )
 		return (
-			<Tag key={ i } { ...props } />
+			<Row key={i} {...props}>
+			{ cellNames.map( ( name, i ) => {
+				const Cell = getCell( name, item )
+				const props = getCellProps( name, item, i )
+				return (
+					<Cell key={ i } {...props} />
+				)
+			})}
+			</Row>
 		)
 	} )
 }
 
 export default Iterator
-
-/*
-[string, string, string]
-[{}, {}, {}]
-{ item: {}, item: {}, item: {} }
-
-<Iterator
-    items={ data }
-    sortItems={ item => 0 }
-/>
-
-<Wrapper>
-    <Before>
-        <Item />
-        <Item>
-            <SubItem />
-        </Item>
-    </After>
-</Wrapper>
-*/
