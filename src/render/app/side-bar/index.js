@@ -122,11 +122,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 				>
 					{ key => {
 						const app = selectApp( key )
-						const { handle, icon, label, isEnabled, isHidden } = app
-
-						if ( ! isEnabled || isHidden ) {
-							return null
-						}
+						const { handle, icon, label } = app
 
 						const location = {
 							pathname: `/${handle}`,
