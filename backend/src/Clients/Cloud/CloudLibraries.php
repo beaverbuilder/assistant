@@ -22,7 +22,9 @@ class CloudLibraries {
 	 */
 	public function createItem( $library_id, $data, $media = [] ) {
 		foreach ( $media as $i => $path ) {
-		    $data["media[$i]"] = curl_file_create( $path );
+			if ( $path ) {
+				$data["media[$i]"] = curl_file_create( $path );
+			}
 		}
 		return $this->client->post( "/libraries/$library_id/library-items", $data );
 	}
