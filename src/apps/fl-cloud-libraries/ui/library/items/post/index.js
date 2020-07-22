@@ -13,14 +13,14 @@ export default ( { item, setItem } ) => {
 		{
 			handle: 'settings',
 			label: __( 'Settings' ),
-			path: `/fl-cloud/libraries/${id}/items/${itemId}`,
+			path: `/fl-cloud-libraries/${id}/items/${itemId}`,
 			component: () => <ItemSettings item={ item } setItem={ setItem } />,
 			exact: true
 		},
 		{
 			handle: 'import',
 			label: __( 'Import' ),
-			path: `/fl-cloud/libraries/${id}/items/${itemId}/import`,
+			path: `/fl-cloud-libraries/${id}/items/${itemId}/import`,
 			component: () => <ItemImport item={ item } setItem={ setItem } />
 		}
 	]

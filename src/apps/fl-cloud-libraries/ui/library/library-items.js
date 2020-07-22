@@ -29,7 +29,7 @@ export default ( { library } ) => {
 			shouldAlwaysShowThumbnail: true,
 			thumbnail: item.media && item.media.length ? item.media[0].thumb : null,
 			to: {
-				pathname: `/fl-cloud/libraries/${library.id}/items/${item.id}`,
+				pathname: `/fl-cloud-libraries/${library.id}/items/${item.id}`,
 				state: { item }
 			},
 			extras: () => (
@@ -70,7 +70,7 @@ export default ( { library } ) => {
 					{ __( 'This library doesn\'t have any items yet.' ) }
 				</div>
 				<div>
-					<Button to={ `/fl-cloud/libraries/${ library.id }/items/new` }>
+					<Button to={ `/fl-cloud-libraries/${ library.id }/items/new` }>
 						{ __( 'Add Item' ) }
 					</Button>
 				</div>
@@ -135,7 +135,7 @@ const ItemActions = ( { library, item, actions } ) => {
 				tabIndex="-1"
 				appearance="transparent"
 				to={ {
-					pathname: `/fl-cloud/libraries/${library.id}/items/${item.id}`,
+					pathname: `/fl-cloud-libraries/${library.id}/items/${item.id}`,
 					state: { item }
 				} }
 			>

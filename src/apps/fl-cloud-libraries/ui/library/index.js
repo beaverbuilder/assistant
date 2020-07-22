@@ -5,6 +5,7 @@ import cloud from 'assistant/cloud'
 import LibraryItems from './library-items'
 import LibraryCollections from './library-collections'
 import LibrarySettings from './library-settings'
+import './style.scss'
 
 export default ( { match } ) => {
 	const { id } = match.params
@@ -18,14 +19,14 @@ export default ( { match } ) => {
 		{
 			handle: 'items',
 			label: __( 'Items' ),
-			path: `/fl-cloud/libraries/${ id }`,
+			path: `/fl-cloud-libraries/${ id }`,
 			component: () => <LibraryItems library={ library } />,
 			exact: true,
 		},
 		{
 			handle: 'collections',
 			label: __( 'Collections' ),
-			path: `/fl-cloud/libraries/${ id }/tab/collections`,
+			path: `/fl-cloud-libraries/${ id }/tab/collections`,
 			component: () => <LibraryCollections library={ library } />,
 		},
 	]
@@ -34,7 +35,7 @@ export default ( { match } ) => {
 		tabs.push( {
 			handle: 'settings',
 			label: __( 'Settings' ),
-			path: `/fl-cloud/libraries/${ id }/tab/settings`,
+			path: `/fl-cloud-libraries/${ id }/tab/settings`,
 			component: () => <LibrarySettings library={ library } />,
 		} )
 	}
@@ -63,7 +64,7 @@ export default ( { match } ) => {
 					}
 				</div>
 				<Button
-					to={ `/fl-cloud/libraries/${ library.id }/items/new` }
+					to={ `/fl-cloud-libraries/${ library.id }/items/new` }
 					style={ { marginLeft: '10px' } }
 				>
 					<Icon.Plus />

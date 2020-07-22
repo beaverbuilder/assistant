@@ -44,7 +44,7 @@ export default ( { library } ) => {
 	const deleteLibrary = () => {
 		if ( confirm( __( 'Do you really want to delete this library?' ) ) ) {
 			cloud.libraries.delete( library.id ).then( () => {
-				history.replace( '/fl-cloud' )
+				history.replace( '/fl-cloud-libraries' )
 			} )
 		}
 	}

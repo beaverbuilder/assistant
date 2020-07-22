@@ -33,6 +33,7 @@ class CloudClient {
 		$token = isset( $_COOKIE['fl-cloud-token'] ) ? $_COOKIE['fl-cloud-token'] : '';
 		$args['headers'][] = "Authorization: Bearer $token";
 		$curl = curl_init();
+		$fields = isset( $args['data'] ) ? $this->build_query( $args['data'] ) : '';
 
 		curl_setopt_array( $curl, [
 			CURLOPT_URL => $url,
@@ -42,7 +43,7 @@ class CloudClient {
 			CURLOPT_USERAGENT => 'Assistant Plugin',
 			CURLOPT_CUSTOMREQUEST => $args['method'],
 			CURLOPT_HTTPHEADER => $args['headers'],
-			CURLOPT_POSTFIELDS => isset( $args['data'] ) ? $this->build_query( $args['data'] ) : '',
+			CURLOPT_POSTFIELDS => $fields,
 		] );
 
 		$response = curl_exec( $curl );

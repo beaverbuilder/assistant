@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
+import { Switch, Route, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemConfig } from 'assistant/data'
 import { Button, Layout, Page } from 'assistant/ui'
@@ -8,16 +8,11 @@ import cloud from 'assistant/cloud'
 import AppIcon from './icon'
 
 export default ( { baseURL } ) => {
-	const { pathname } = useLocation()
 	const history = useHistory()
 	const { isCloudConnected } = useSystemState( 'isCloudConnected' )
 
-	if ( ! isCloudConnected && ! pathname.includes( '/fl-cloud-connect' ) ) {
-		history.replace( '/fl-cloud-connect' )
-		return null
-	}
-	if ( isCloudConnected && pathname.includes( '/fl-cloud-connect' ) ) {
-		history.replace( '/fl-cloud' )
+	if ( isCloudConnected ) {
+		history.replace( '/fl-cloud-libraries' )
 		return null
 	}
 

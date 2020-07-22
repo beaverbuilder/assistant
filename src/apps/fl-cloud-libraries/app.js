@@ -2,11 +2,11 @@ import React from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { useSystemState } from 'assistant/data'
 
-import Dashboard from './pages/dashboard'
-import NewLibrary from './pages/libraries/new-library'
-import NewLibraryItem from './pages/libraries/items/new-item'
-import Library from './pages/libraries/library'
-import LibraryItem from './pages/libraries/items/item'
+import Libraries from './ui/libraries'
+import NewLibrary from './ui/new-library'
+import Library from './ui/library'
+import NewLibraryItem from './ui/library/items/new-item'
+import LibraryItem from './ui/library/items/item'
 
 export default ( { baseURL } ) => {
 	const history = useHistory()
@@ -19,12 +19,12 @@ export default ( { baseURL } ) => {
 
 	return (
 		<Switch>
-			<Route exact path={ `${baseURL}` } component={ Dashboard } />
-			<Route path={ `${baseURL}/libraries/new` } component={ NewLibrary } />
-			<Route path={ `${baseURL}/libraries/:id/items/new` } component={ NewLibraryItem } />
-			<Route path={ `${baseURL}/libraries/:id/items/:itemId` } component={ LibraryItem } />
-			<Route path={ `${baseURL}/libraries/:id` } component={ Library } />
-			<Route path={ `${baseURL}/libraries/:id/tab/:tab` } component={ Library } />
+			<Route exact path={ `${baseURL}` } component={ Libraries } />
+			<Route path={ `${baseURL}/new` } component={ NewLibrary } />
+			<Route path={ `${baseURL}/:id/items/new` } component={ NewLibraryItem } />
+			<Route path={ `${baseURL}/:id/items/:itemId` } component={ LibraryItem } />
+			<Route path={ `${baseURL}/:id` } component={ Library } />
+			<Route path={ `${baseURL}/:id/tab/:tab` } component={ Library } />
 		</Switch>
 	)
 }
