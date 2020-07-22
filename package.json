@@ -20,7 +20,7 @@
   "dependencies": {
     "@beaverbuilder/app-core": "^0.1.9",
     "@beaverbuilder/cloud": "^0.2.5",
-    "@beaverbuilder/fluid": "^0.5.2",
+    "@beaverbuilder/fluid": "^0.5.3",
     "@beaverbuilder/forms": "^0.1.7",
     "@popmotion/popcorn": "^0.4.4",
     "@wordpress/i18n": "^3.14.0",
