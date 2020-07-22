@@ -102,12 +102,18 @@ const AppList = memo( () => {
 					icon,
 					isFirst,
 					isLast,
+					isEnabled,
+					isHidden,
 					moveUp,
 					moveDown,
 				} = app
 				const location = {
 					pathname: `/${handle}`,
 					state: app,
+				}
+
+				if ( ! isEnabled || isHidden ) {
+					return null
 				}
 
 				return (

@@ -12,5 +12,6 @@ if ( ! __PRODUCTION__ ) {
 		label: __( 'Cloud Connect' ),
 		root: App,
 		icon: AppIcon,
+		isHidden: true,
 	} )
 }
