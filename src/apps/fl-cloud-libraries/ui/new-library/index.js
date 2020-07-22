@@ -52,7 +52,7 @@ export default ( { history } ) => {
 		}
 		return cloud.libraries.create( data ).then( response => {
 			const { id } = response.data
-			history.replace( `/fl-cloud/libraries/${ id }` )
+			history.replace( `/fl-cloud-libraries/${ id }` )
 		} ).catch( error => {
 			setErrors( error.response.data.errors )
 		} )
