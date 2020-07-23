@@ -127,7 +127,7 @@ class PostsRepository extends RepositoryAbstract {
 		$data  = [];
 		$types = get_post_types(
 			[
-				'public' => true,
+				'show_ui' => true,
 			],
 			'objects'
 		);
