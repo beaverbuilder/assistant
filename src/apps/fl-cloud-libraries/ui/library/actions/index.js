@@ -56,16 +56,10 @@ const AddNewMenu = ( { library } ) => {
 		return (
 			<>
 				<Menu.Item onClick={ () => goto( `${ basePath }/add/posts` ) }>
-					{ __( 'Posts' ) }
+					{ __( 'Content' ) }
 				</Menu.Item>
-				<Menu.Item onClick={ () => goto( `${ basePath }/add/images` ) }>
-					{ __( 'Images' ) }
-				</Menu.Item>
-				<Menu.Item onClick={ () => goto( `${ basePath }/add/svg` ) }>
-					{ __( 'SVG' ) }
-				</Menu.Item>
-				<Menu.Item onClick={ () => goto( `${ basePath }/add/colors` ) }>
-					{ __( 'Colors' ) }
+				<Menu.Item onClick={ () => goto( `${ basePath }/add/media` ) }>
+					{ __( 'Media' ) }
 				</Menu.Item>
 			</>
 		)

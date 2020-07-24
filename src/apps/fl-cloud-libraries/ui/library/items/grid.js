@@ -27,7 +27,7 @@ export default ( { categories } ) => {
 								cursor: 'pointer'
 							} }
 							onClick={ () => {
-								// history.push( `${baseURL}/item/${item.id}`)
+								history.push( `${baseURL}/items/${item.id}` )
 							} }
 						>
 							<ItemThumb item={ item } />

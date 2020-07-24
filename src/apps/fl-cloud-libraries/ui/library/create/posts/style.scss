@@ -1,0 +1,26 @@
+.fl-asst-library-add-post-results {
+	border-top: 2px solid var(--fluid-line-color);
+	padding-bottom: 0;
+
+	ul {
+
+		li {
+			display: flex;
+			padding: var(--fluid-med-space);
+
+			a {
+				margin-left: auto;
+
+				svg {
+					width: 15px;
+					height: 15px;
+				}
+			}
+
+			&:hover {
+				background: var(--fluid-box-hover-background);
+				border-radius: var(--fluid-radius);
+			}
+		}
+	}
+}

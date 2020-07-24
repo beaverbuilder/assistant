@@ -1,10 +1,14 @@
 import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Layout, Page } from 'assistant/ui'
+import { Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
-import LibraryItems from './library-items'
-import LibraryCollections from './library-collections'
-import LibrarySettings from './library-settings'
+
+import Actions from './actions'
+import Items from './items'
+import Settings from './settings'
+import CreatePosts from './create/posts'
+import CreateMedia from './create/media'
 import './style.scss'
 
 export default ( { match } ) => {
@@ -15,67 +19,20 @@ export default ( { match } ) => {
 		return <Page.Loading />
 	}
 
-	let tabs = [
-		{
-			handle: 'items',
-			label: __( 'Items' ),
-			path: `/fl-cloud-libraries/${ id }`,
-			component: () => <LibraryItems library={ library } />,
-			exact: true,
-		},
-		{
-			handle: 'collections',
-			label: __( 'Collections' ),
-			path: `/fl-cloud-libraries/${ id }/tab/collections`,
-			component: () => <LibraryCollections library={ library } />,
-		},
-	]
-
-	if ( library.permissions.update ) {
-		tabs.push( {
-			handle: 'settings',
-			label: __( 'Settings' ),
-			path: `/fl-cloud-libraries/${ id }/tab/settings`,
-			component: () => <LibrarySettings library={ library } />,
-		} )
-	}
-
 	return (
 		<Page
 			title={ __( 'Library' ) }
 			shouldShowBackButton={ true }
+			actions={ <Actions library={ library } /> }
 			padX={ false }
 			padY={ false }
 		>
-			<Layout.Box
-				padY={ false }
-				style={ {
-					flexDirection: 'row',
-					alignItems: 'center',
-					paddingTop: 'var(--fluid-sm-space)'
-				} }
-			>
-				<div style={ { width: '100%' } }>
-					<Layout.Headline>{ library.name }</Layout.Headline>
-					{ library.description &&
-						<div style={ { marginTop: 'var(--fluid-sm-space)' } }>
-							{ library.description }
-						</div>
-					}
-				</div>
-				<Button
-					to={ `/fl-cloud-libraries/${ library.id }/items/new` }
-					style={ { marginLeft: '10px' } }
-				>
-					<Icon.Plus />
-				</Button>
-			</Layout.Box>
-			<Layout.Box
-				padX={ false }
-			>
-				<Layout.Tabs tabs={ tabs } />
-				<Layout.CurrentTab tabs={ tabs } />
-			</Layout.Box>
+			<Switch>
+				<Route exact path={ `/fl-cloud-libraries/:id` } component={ () => <Items library={ library } /> } />
+				<Route path={ `/fl-cloud-libraries/:id/settings` } render={ () => <Settings library={ library } /> } />
+				<Route path={ `/fl-cloud-libraries/:id/add/posts` } render={ () => <CreatePosts library={ library } /> } />
+				<Route path={ `/fl-cloud-libraries/:id/add/media` } render={ () => <CreateMedia library={ library } /> } />
+			</Switch>
 		</Page>
 	)
 }
