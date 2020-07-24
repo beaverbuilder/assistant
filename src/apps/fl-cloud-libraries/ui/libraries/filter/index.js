@@ -7,7 +7,7 @@ export default ( { teams, onChange } ) => {
 	const cloudUser = cloud.session.getUser()
 
 	const defaultFilter = {
-		owner: null,
+		owner: '0',
 		order_by: 'name',
 	}
 
@@ -20,7 +20,7 @@ export default ( { teams, onChange } ) => {
 
 	const getOwnerOptions = () => {
 		const options = {
-			0: sprintf( __( '%s (You)' ), cloudUser.name ),
+			0: cloudUser.name,
 		}
 		if ( teams ) {
 			teams.map( team => options[ team.id ] = team.name )

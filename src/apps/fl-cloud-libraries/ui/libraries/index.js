@@ -4,12 +4,12 @@ import { Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
 import AppIcon from '../../icon'
-import PageActions from './actions'
+import UserLinks from '../user-links'
 import LibrariesFilter from './filter'
 import LibrariesGrid from './grid'
 
 export default () => {
-	const [ owner, setOwner ] = useState( null )
+	const [ owner, setOwner ] = useState( 0 )
 	const [ query, setQuery ] = useState( null )
 	const [ teams ] = cloud.teams.useAll()
 	const cloudUser = cloud.session.getUser()
@@ -19,7 +19,7 @@ export default () => {
 			title={ __( 'Libraries' ) }
 			icon={ <AppIcon context="sidebar" /> }
 			shouldShowBackButton={ false }
-			actions={ <PageActions /> }
+			actions={ <UserLinks /> }
 			padX={ false }
 			padY={ false }
 		>

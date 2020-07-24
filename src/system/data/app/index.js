@@ -42,6 +42,11 @@ export const registerAppStore = args => {
 
 export const getAppStore = key => getStore( `${ key }/state` )
 
+export const getAppState = ( key ) => {
+	const app = key ? key : App.use().handle
+	return getStore( `${ app }/state` ).getState()
+}
+
 export const useAppState = ( key, needsRender = true ) => {
 	const app = key ? key : App.use().handle
 	return useStore( `${ app }/state`, needsRender )
