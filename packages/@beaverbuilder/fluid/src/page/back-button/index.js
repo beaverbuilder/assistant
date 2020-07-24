@@ -8,6 +8,7 @@ const BackButton = props => {
 	return (
 		<Button
 			className="fluid-back-button"
+			appearance="transparent"
 			onClick={ history.goBack }
 			{ ...props }
 		>

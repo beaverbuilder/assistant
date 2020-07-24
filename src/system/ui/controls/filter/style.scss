@@ -10,9 +10,11 @@
 
             .fl-asst-filter-button {
                 flex: 1 1 auto;
+                padding: 0;
 
                 & > span {
                     padding: 10px;
+                    flex: 1 1 auto;
                 }
 
                 .fl-asst-filter-button-content {

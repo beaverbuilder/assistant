@@ -1,13 +1,26 @@
 import React from 'react'
+import { useLocation, Switch, Route } from 'react-router-dom'
 import Button from '../../button'
 import * as Layout from '../../layout'
 import * as Icon from '../../icon'
+import GroupPage from './group'
 
 export default () => {
+	const baseURL = '/designsystem/buttons'
+	return (
+		<>
+			<Switch>
+				<Route exact path={ `${baseURL}/` } component={ Main } />
+			</Switch>
+		</>
+	)
+}
 
+const Main = () => {
 	return (
 		<Layout.ContentBoundary style={ { paddingBottom: 60 } }>
 			<h1>Buttons</h1>
+
 			<p>Buttons defined the most basic interaction control in fluid. They can be used for handling click actions, navigating between routes, and navigating away from the page entirely.</p>
 
 			<table>
