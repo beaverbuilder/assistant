@@ -1,41 +1,33 @@
 import React, { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Layout, Menu } from 'assistant/ui'
+import { Button, Icon, Menu } from 'assistant/ui'
+import UserLinks from '../../user-links'
 
 export default ( { library } ) => {
 	const history = useHistory()
 	const { pathname } = useLocation()
 	const basePath = `/fl-cloud-libraries/${ library.id }`
+	const teamId = 'team' === library.owner_type ? library.owner_id : 0
 
 	return (
-		<Layout.Toolbar>
-			<div>{ __( 'View By:' ) }</div>
-			<Button
-				appearance={ pathname === basePath ? '' : 'transparent' }
-				onClick={ () => history.replace( basePath ) }
-			>
-				{ __( 'Type' ) }
-			</Button>
-			<Button
-				appearance={ pathname.includes( '/collections' ) ? '' : 'transparent' }
-				onClick={ () => history.replace( `${ basePath }/collections` ) }
-			>
-				{ __( 'Collection' ) }
-			</Button>
-			{ library.permissions.update &&
-				<>
-					<AddNewMenu library={ library } />
-					<Button
-						size='sm'
-						appearance={ pathname.includes( '/settings' ) ? '' : 'transparent' }
-						onClick={ () => history.replace( `${ basePath }/settings` ) }
-					>
-						<Icon.Cog />
-					</Button>
-				</>
-			}
-		</Layout.Toolbar>
+		<div
+			style={ {
+				display: 'flex',
+				alignItems: 'center'
+			} }
+		>
+		<AddNewMenu library={ library } />
+		<Button
+			size='sm'
+			appearance={ pathname.includes( '/settings' ) ? '' : 'transparent' }
+			onClick={ () => history.push( `${ basePath }/settings` ) }
+			style={ { marginRight: 'var(--fluid-sm-space)' } }
+		>
+			<Icon.Cog />
+		</Button>
+			<UserLinks teamId={ teamId } showLogout={ false } />
+		</div>
 	)
 }
 
@@ -46,7 +38,7 @@ const AddNewMenu = ( { library } ) => {
 
 	const goto = ( route ) => {
 		setIsMenuShowing( false )
-		history.replace( route )
+		history.push( route )
 	}
 
 	const MenuContent = () => {

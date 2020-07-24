@@ -4,7 +4,6 @@ import { useSystemState } from 'assistant/data'
 
 import Libraries from './ui/libraries'
 import Library from './ui/library-new'
-import NewLibraryItem from './ui/library/items/new-item'
 import LibraryItem from './ui/library/items/item'
 
 export default ( { baseURL } ) => {
@@ -20,7 +19,6 @@ export default ( { baseURL } ) => {
 		<Switch>
 			<Route exact path={ `${baseURL}` } component={ Libraries } />
 			<Route path={ `${baseURL}/:id` } component={ Library } />
-			<Route path={ `${baseURL}/:id/items/new` } component={ NewLibraryItem } />
 			<Route path={ `${baseURL}/:id/items/:itemId` } component={ LibraryItem } />
 		</Switch>
 	)
