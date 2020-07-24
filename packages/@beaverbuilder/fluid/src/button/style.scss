@@ -24,7 +24,7 @@
         transition-duration: .15s;
 
         & > span {
-            flex: 1 1 auto;
+            flex: 0 0 auto;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -57,8 +57,8 @@
         }
 
         &.is-selected {
-            background: var(--fluid-primary-background);
-            color: var(--fluid-primary-color);
+            background: var(--fluid-primary-color);
+            color: var(--fluid-opaque-14);
         }
 
         &.fluid-appearance-elevator {
@@ -121,6 +121,7 @@
         }
 
         .fluid-button-icon {
+            flex: 0 0 auto;
             margin-right: .5em;
 
             &:last-child {
