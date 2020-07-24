@@ -4,7 +4,7 @@ import { Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
 import AppIcon from '../../icon'
-import UserLinks from '../user-links'
+import Actions from './actions'
 import LibrariesFilter from './filter'
 import LibrariesGrid from './grid'
 
@@ -19,7 +19,7 @@ export default () => {
 			title={ __( 'Libraries' ) }
 			icon={ <AppIcon context="sidebar" /> }
 			shouldShowBackButton={ false }
-			actions={ <UserLinks /> }
+			actions={ <Actions /> }
 			padX={ false }
 			padY={ false }
 		>
