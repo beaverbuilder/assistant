@@ -5,7 +5,6 @@ import { Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
 import Actions from './actions'
-import Header from './header'
 import Items from './items'
 import Settings from './settings'
 import CreatePosts from './create/posts'
@@ -27,7 +26,6 @@ export default ( { match } ) => {
 			padX={ false }
 			padY={ false }
 		>
-			<Header library={ library } />
 			<Switch>
 				<Route exact path={ `/fl-cloud-libraries/:id` } component={ () => <Items library={ library } /> } />
 				<Route path={ `/fl-cloud-libraries/:id/settings` } render={ () => <Settings library={ library } /> } />
