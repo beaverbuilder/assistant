@@ -10,6 +10,14 @@ export default ( { library } ) => {
 	const basePath = `/fl-cloud-libraries/${ library.id }`
 	const teamId = 'team' === library.owner_type ? library.owner_id : 0
 
+	const goto = ( route ) => {
+		if ( pathname === basePath ) {
+			history.push( route )
+		} else {
+			history.replace( route )
+		}
+	}
+
 	return (
 		<div
 			style={ {
@@ -21,7 +29,7 @@ export default ( { library } ) => {
 		<Button
 			size='sm'
 			appearance={ pathname.includes( '/settings' ) ? '' : 'transparent' }
-			onClick={ () => history.push( `${ basePath }/settings` ) }
+			onClick={ () => goto( `${ basePath }/settings` ) }
 			style={ { marginRight: 'var(--fluid-sm-space)' } }
 		>
 			<Icon.Cog />
@@ -34,12 +42,18 @@ export default ( { library } ) => {
 const AddNewMenu = ( { library } ) => {
 	const [ isMenuShowing, setIsMenuShowing ] = useState( false )
 	const history = useHistory()
+	const { pathname } = useLocation()
 	const basePath = `/fl-cloud-libraries/${ library.id }/add`
 
 	const goto = ( route ) => {
 		setIsMenuShowing( false )
-		history.push( route )
+		if ( pathname === basePath ) {
+			history.push( route )
+		} else {
+			history.replace( route )
+		}
 	}
+
 
 	const MenuContent = () => {
 		return (
