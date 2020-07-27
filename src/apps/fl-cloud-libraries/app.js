@@ -3,7 +3,7 @@ import { Switch, Route, useHistory } from 'react-router-dom'
 import { useSystemState } from 'assistant/data'
 
 import Libraries from './ui/libraries'
-import Library from './ui/library-new'
+import Library from './ui/library'
 import LibraryItem from './ui/library-item'
 
 export default ( { baseURL } ) => {

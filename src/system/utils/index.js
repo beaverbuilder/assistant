@@ -5,6 +5,7 @@ import * as wordpress from 'utils/wordpress'
 import * as react from 'utils/react'
 import * as dom from 'utils/dom'
 import * as mockup from './mockup'
+import * as text from './text'
 
 // Anything from utils that needs to be exposed publicly can go here
 export default {
@@ -14,5 +15,6 @@ export default {
 	wordpress,
 	react,
 	dom,
-	mockup
+	mockup,
+	text
 }
