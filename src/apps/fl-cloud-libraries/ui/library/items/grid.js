@@ -14,35 +14,30 @@ export default ( { categories } ) => {
 		return (
 			<Layout.Box key={ i }>
 				<h3>{ category.name }</h3>
-				<Layout.Box style={ {
-					flexDirection: 'row',
-					flexWrap: 'wrap',
-					padding: 0
-				} }>
+				<div style={{
+					display: 'grid',
+					gridTemplateColumns: 'repeat( 2, minmax(0, 1fr) )',
+					gridGap: 'var(--fluid-med-space)'
+				}}>
 					{ category.items.map( ( item, k ) =>
 						<Layout.Box
 							key={ k }
 							style={ {
-								width: '50%',
 								cursor: 'pointer'
 							} }
 							onClick={ () => {
 								history.push( `${baseURL}/items/${item.id}` )
 							} }
+							padX={false}
+							padY={false}
 						>
 							<ItemThumb item={ item } />
-							<div style={ {
-								textAlign: 'center',
-								textOverflow: 'ellipsis',
-								whiteSpace: 'nowrap',
-								overflow: 'hidden',
-								paddingTop: 'var(--fluid-lg-space)'
-							} }>
+							<div className="fl-asst-library-item-title" >
 								{ item.name }
 							</div>
 						</Layout.Box>
 					) }
-				</Layout.Box>
+				</div>
 			</Layout.Box>
 		)
 	} )
