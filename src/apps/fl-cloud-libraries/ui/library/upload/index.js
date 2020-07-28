@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Text } from 'fluid'
-import { Button, Icon, Layout, Uploader } from 'assistant/ui'
+import { Button, Icon, Layout } from 'assistant/ui'
 
 import MediaUpload from './media'
 import PostsUpload from './posts'
