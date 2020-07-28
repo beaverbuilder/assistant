@@ -8,11 +8,21 @@ const filter = {
 	order: 'ASC',
 }
 
+const itemsFilter = {
+	view_by: 'type',
+	type: 'all',
+	collection: 'all',
+	order_by: 'name',
+	order: 'ASC'
+}
+
 export const state = {
 	teams: [],
 	libraries: {},
 	defaultFilter: filter,
 	filter: filter,
+	defaultItemsFilter: itemsFilter,
+	itemsFilter: itemsFilter,
 	itemTypes: {
 		post: {
 			singular: __( 'Post' ),
@@ -25,10 +35,6 @@ export const state = {
 		svg: {
 			singular: __( 'SVG' ),
 			plural: __( 'SVG' ),
-		},
-		color: {
-			singular: __( 'Color' ),
-			plural: __( 'Colors' ),
 		},
 	}
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Layout } from 'assistant/ui'
+import { useAppState } from 'assistant/data'
 
 import ItemsHeader from './header'
 import ItemsFilter from './filter'
@@ -11,12 +12,12 @@ import { getFilteredItems } from './utils'
 import './style.scss'
 
 export default () => {
+	const { itemsFilter } = useAppState( 'fl-cloud-libraries', 'itemsFilter' )
 	const { items, showUpload, setShowUpload, setUploadTab, uploader } = LibraryContext.use()
 	const { handleDrop } = uploader
-	const [ filter, setFilter ] = useState( null )
 
 	useEffect( () => {
-		if ( items && ! items.length && ! filter ) {
+		if ( items && ! items.length && ! itemsFilter ) {
 			setShowUpload( true )
 		}
 	}, [ items ] )
@@ -31,7 +32,7 @@ export default () => {
 		<Layout.DropArea onDrop={ onDrop }>
 
 			{ items && !! items.length && (
-				<ItemsFilter onChange={ values => setFilter( values ) } />
+				<ItemsFilter />
 			)}
 
 			<ItemsHeader />
@@ -40,8 +41,7 @@ export default () => {
 
 			{ items && !! items.length &&
 				<>
-
-					<ItemsGrid categories={ getFilteredItems( filter, items ) } />
+					<ItemsGrid categories={ getFilteredItems( itemsFilter, items ) } />
 				</>
 			}
 
