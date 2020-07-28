@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Text } from 'fluid'
 import { Icon, Layout } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
 import cloud from 'assistant/cloud'
+import LibraryContext from '../../context'
 
 export default ( { results } ) => {
 
 	if ( ! results ) {
 		return null
+	}
+
+	if ( results && ! results.length ) {
+		return (
+			<Layout.Box padY={ false } style={ { textAlign: 'center' } }>
+				{ __( 'No results found' ) }
+			</Layout.Box>
+		)
 	}
 
 	return results.map( ( result, key ) => {
@@ -18,18 +26,15 @@ export default ( { results } ) => {
 			<Layout.Box
 				key={ key }
 				className='fl-asst-library-add-post-results'
+				padX={ false }
+				padY={ false }
 			>
 				<Text.Title>
 					{ label }
 				</Text.Title>
 				<ul>
 					{ items.map( ( item, key ) =>
-						<li key={ key }>
-							<div>
-								{ item.title }
-							</div>
-							<AddPostLink post={ item } />
-						</li>
+						<PostItem key={ key } post={ item } />
 					) }
 				</ul>
 			</Layout.Box>
@@ -37,15 +42,17 @@ export default ( { results } ) => {
 	} )
 }
 
-const AddPostLink = ( { post } ) => {
-	const { id } = useParams()
+const PostItem = ( { post } ) => {
+	const { library, items, setItems } = LibraryContext.use()
 	const [ adding, setAdding ] = useState( false )
 	const [ added, setAdded ] = useState( false )
 
-	const addPost = ( post ) => {
+	const addPost = () => {
 		const api = getWpRest().posts()
 		setAdding( true )
-		api.saveToLibrary( post.id, id ).then( response => {
+		api.saveToLibrary( post.id, library.id ).then( response => {
+			items.push( response.data )
+			setItems( [ ...items ] )
 			setAdded( true )
 		} ).finally( () => {
 			setAdding( false )
@@ -53,7 +60,10 @@ const AddPostLink = ( { post } ) => {
 	}
 
 	return (
-		<>
+		<li onClick={ addPost }>
+			<div>
+				{ post.title }
+			</div>
 			{ adding &&
 				<a><Icon.Loading /></a>
 			}
@@ -61,8 +71,8 @@ const AddPostLink = ( { post } ) => {
 				<a>{ __( 'Added!' ) }</a>
 			}
 			{ ! adding && ! added &&
-				<a onClick={ () => addPost( post ) }>{ __( 'Add' ) }</a>
+				<a>{ __( 'Add' ) }</a>
 			}
-		</>
+		</li>
 	)
 }

@@ -1,19 +1,25 @@
 import React, { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Menu } from 'assistant/ui'
+import { Button, Icon } from 'assistant/ui'
+import LibraryContext from '../context'
 
-export default ( { library } ) => {
+export default () => {
 	const history = useHistory()
 	const { pathname } = useLocation()
+	const { library, showUpload, setShowUpload } = LibraryContext.use()
 	const basePath = `/fl-cloud-libraries/${ library.id }`
-	const teamId = 'team' === library.owner_type ? library.owner_id : 0
 
-	const goto = ( route ) => {
+	const goToUpload = () => {
+		setShowUpload( true )
+		if ( pathname !== basePath ) {
+			history.goBack()
+		}
+	}
+
+	const goToSettings = () => {
 		if ( pathname === basePath ) {
-			history.push( route )
-		} else {
-			history.replace( route )
+			history.push( `${ basePath }/settings` )
 		}
 	}
 
@@ -24,63 +30,23 @@ export default ( { library } ) => {
 				alignItems: 'center'
 			} }
 		>
-			<AddNewMenu library={ library } />
 			<Button
 				size='sm'
-				appearance={ pathname.includes( '/settings' ) ? '' : 'transparent' }
-				onClick={ () => goto( `${ basePath }/settings` ) }
-			>
-				<Icon.Cog />
-			</Button>
-		</div>
-	)
-}
-
-const AddNewMenu = ( { library } ) => {
-	const [ isMenuShowing, setIsMenuShowing ] = useState( false )
-	const history = useHistory()
-	const { pathname } = useLocation()
-	const basePath = `/fl-cloud-libraries/${ library.id }`
-
-	const goto = ( route ) => {
-		setIsMenuShowing( false )
-		if ( pathname === basePath ) {
-			history.push( route )
-		} else {
-			history.replace( route )
-		}
-	}
-
-
-	const MenuContent = () => {
-		return (
-			<>
-				<Menu.Item onClick={ () => goto( `${ basePath }/add/posts` ) }>
-					{ __( 'Content' ) }
-				</Menu.Item>
-				<Menu.Item onClick={ () => goto( `${ basePath }/add/media` ) }>
-					{ __( 'Media' ) }
-				</Menu.Item>
-			</>
-		)
-	}
-
-	return (
-		<Menu
-			content={ <MenuContent /> }
-			isShowing={ isMenuShowing }
-			onOutsideClick={ () => setIsMenuShowing( false ) }
-		>
-			<Button
-				size='sm'
-				appearance='transparent'
-				onClick={ () => setIsMenuShowing( ! isMenuShowing ) }
+				appearance={ showUpload && ! pathname.includes( '/settings' ) ? '' : 'transparent' }
+				onClick={ goToUpload }
 				style={ {
 					marginLeft: 'auto'
 				} }
 			>
 				<Icon.Plus />
 			</Button>
-		</Menu>
+			<Button
+				size='sm'
+				appearance={ pathname.includes( '/settings' ) ? '' : 'transparent' }
+				onClick={ goToSettings }
+			>
+				<Icon.Cog />
+			</Button>
+		</div>
 	)
 }

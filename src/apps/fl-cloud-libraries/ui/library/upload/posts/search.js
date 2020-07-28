@@ -64,18 +64,11 @@ export default ( { onChange } ) => {
 	}, [ keyword ] )
 
 	return (
-		<Layout.Box>
-			<Layout.Headline
-				style={ {
-					paddingBottom: 'var(--fluid-med-space)'
-				} }
-			>
-				{ __( 'Add Content' ) }
-			</Layout.Headline>
+		<Layout.Box padX={ false }>
 			<div style={ { position: 'relative' } }>
 				<input
 					type='text'
-					placeholder={ __( 'Search content...' ) }
+					placeholder={ __( 'Search Posts, Pages, etc...' ) }
 					value={ keyword }
 					onChange={ e => setKeyword( e.target.value ) }
 				/>

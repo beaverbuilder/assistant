@@ -4,10 +4,12 @@ import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
+import LibraryContext from '../context'
 import LibraryCollections from './collections'
 
-export default ( { library } ) => {
+export default () => {
 	const history = useHistory()
+	const { library } = LibraryContext.use()
 
 	const fields = {
 		name: {

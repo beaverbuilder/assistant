@@ -1,10 +1,16 @@
 .fl-asst-library-add-post-results {
-	border-top: 2px solid var(--fluid-line-color);
-	padding-bottom: 0;
+	border-bottom: 2px solid var(--fluid-line-color);
+	margin-bottom: var(--fluid-lg-space);
+
+	&:last-child {
+		border-bottom: none;
+		margin-bottom: 0;
+	}
 
 	ul {
 
 		li {
+			cursor: pointer;
 			display: flex;
 			padding: var(--fluid-med-space);
 

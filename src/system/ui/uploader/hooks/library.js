@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import cloud from 'cloud'
 import { useUploader } from './base'
 
-export const useLibrary = ( id ) => {
+export const useLibrary = ( id, args ) => {
 
 	const getFileError = ( file ) => {
 		if ( ! file.type.startsWith( 'image/' ) ) {
@@ -20,8 +20,8 @@ export const useLibrary = ( id ) => {
 		data.append( 'name', file.name )
 		data.append( 'media', file )
 
-		cloud.libraries.createItem( id, data ).then( () => {
-			resolve()
+		cloud.libraries.createItem( id, data ).then( response => {
+			resolve( response.data )
 		} ).catch( error => {
 			reject( error.response.data.message )
 		} )
@@ -40,8 +40,8 @@ export const useLibrary = ( id ) => {
 
 		reader.onload = e => {
 			data.data = { xml: e.target.result }
-			cloud.libraries.createItem( id, data ).then( () => {
-				resolve()
+			cloud.libraries.createItem( id, data ).then( response => {
+				resolve( response.data )
 			} ).catch( error => {
 				reject( error.response.data.message )
 			} )
@@ -63,5 +63,5 @@ export const useLibrary = ( id ) => {
 		} )
 	}
 
-	return useUploader( { onUpload } )
+	return useUploader( { onUpload, ...args } )
 }

@@ -3,6 +3,8 @@ import { __ } from '@wordpress/i18n'
 
 export const useUploader = ( {
 	onUpload,
+	onUploadComplete,
+	onUploadError
 } ) => {
 	const [ queuedFiles, setQueuedFiles ] = useState( [] )
 	const [ finishedFiles, setFinishedFiles ] = useState( [] )
@@ -46,18 +48,18 @@ export const useUploader = ( {
 		setQueuedFiles( [ ...queuedFiles ] )
 
 		if ( onUpload ) {
-			onUpload( file ).then( () => {
-				uploadComplete( file )
+			onUpload( file ).then( response => {
+				finishUpload( file )
+				onUploadComplete && onUploadComplete( response )
 			} ).catch( error => {
 				file.error = error
-				uploadComplete( file )
+				finishUpload( file )
+				onUploadError && onUploadError( file )
 			} )
-		} else {
-			uploadComplete( file )
 		}
 	}
 
-	const uploadComplete = ( file ) => {
+	const finishUpload = ( file ) => {
 		queuedFiles.shift()
 		setQueuedFiles( [ ...queuedFiles ] )
 
@@ -67,9 +69,14 @@ export const useUploader = ( {
 		uploadNextFile()
 	}
 
+	const errorFiles = finishedFiles.filter( file => {
+		return !! file.error
+	} )
+
 	return {
 		queuedFiles,
 		finishedFiles,
+		errorFiles,
 		handleDrop,
 		handleSelect
 	}

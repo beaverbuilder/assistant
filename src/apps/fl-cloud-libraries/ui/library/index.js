@@ -1,38 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Layout, Page } from 'assistant/ui'
+import { Page, Uploader } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
-import Actions from './actions'
-import Items from './items'
-import Settings from './settings'
-import CreatePosts from './create/posts'
-import CreateMedia from './create/media'
+import LibraryActions from './actions'
+import LibraryItems from './items'
+import LibrarySettings from './settings'
+import LibraryContext from './context'
+
 import './style.scss'
 
 export default ( { match } ) => {
 	const { id } = match.params
-	const [ library ] = cloud.libraries.useOne( id )
+	const [ library, setLibrary ] = cloud.libraries.useOne( id )
+	const [ items, setItems ] = cloud.libraries.useItems( id )
+	const [ showUpload, setShowUpload ] = useState( false )
+	const [ uploadTab, setUploadTab ] = useState( 'posts' )
+
+	const uploader = Uploader.useLibrary( id, {
+		onUploadComplete: item => {
+			items.push( item )
+			setItems( [ ...items ] )
+		}
+	} )
 
 	if ( ! library ) {
 		return <Page.Loading />
 	}
 
+	const context = {
+		library,
+		setLibrary,
+		items,
+		setItems,
+		showUpload,
+		setShowUpload,
+		uploadTab,
+		setUploadTab,
+		uploader
+	}
+
 	return (
-		<Page
-			title={ __( 'Library' ) }
-			shouldShowBackButton={ true }
-			actions={ <Actions library={ library } /> }
-			padX={ false }
-			padY={ false }
-		>
-			<Switch>
-				<Route exact path={ `/fl-cloud-libraries/:id` } component={ () => <Items library={ library } /> } />
-				<Route path={ `/fl-cloud-libraries/:id/settings` } render={ () => <Settings library={ library } /> } />
-				<Route path={ `/fl-cloud-libraries/:id/add/posts` } render={ () => <CreatePosts library={ library } /> } />
-				<Route path={ `/fl-cloud-libraries/:id/add/media` } render={ () => <CreateMedia library={ library } /> } />
-			</Switch>
-		</Page>
+		<LibraryContext.Provider value={ context }>
+			<Page
+				title={ __( 'Library' ) }
+				shouldShowBackButton={ true }
+				actions={ <LibraryActions /> }
+				padX={ false }
+				padY={ false }
+			>
+				<Switch>
+					<Route exact path={ `/fl-cloud-libraries/:id` } component={ LibraryItems } />
+					<Route path={ `/fl-cloud-libraries/:id/settings` } component={ LibrarySettings } />
+				</Switch>
+			</Page>
+		</LibraryContext.Provider>
 	)
 }
