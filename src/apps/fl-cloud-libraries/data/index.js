@@ -1,6 +1,13 @@
 import { __ } from '@wordpress/i18n'
 
+const filter = {
+	owner: 'all',
+	order_by: 'name',
+}
+
 export const state = {
+	defaultFilter: filter,
+	filter: filter,
 	itemTypes: {
 		post: {
 			singular: __( 'Post' ),

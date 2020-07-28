@@ -1,7 +1,8 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Text } from 'fluid'
-import { Layout, Uploader } from 'assistant/ui'
+import { Uploader } from '@beaverbuilder/cloud-ui'
+import { Layout } from 'assistant/ui'
 import LibraryContext from '../../context'
 
 export default () => {

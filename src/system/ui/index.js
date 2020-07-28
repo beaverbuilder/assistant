@@ -13,7 +13,6 @@ import Media from './media'
 import Env from './env'
 import Notice from './notices'
 import Menu from './menu'
-import { Uploader } from '@beaverbuilder/cloud-ui'
 
 // Export for use inside system bundle - import from 'ui'
 export * from './app'
@@ -51,5 +50,4 @@ export const api = {
 	Notice,
 	Media,
 	Menu,
-	Uploader,
 }

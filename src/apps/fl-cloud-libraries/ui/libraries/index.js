@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page } from 'assistant/ui'
+import { useAppState } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
 import AppIcon from '../../icon'
 import Actions from './actions'
 import LibrariesFilter from './filter'
 import LibrariesGrid from './grid'
+import './style.scss'
 
 export default () => {
-	const [ owner, setOwner ] = useState( 0 )
-	const [ query, setQuery ] = useState( null )
+	const { filter } = useAppState( 'fl-cloud-libraries', 'filter' )
+	const { owner, ...query } = filter
 	const [ teams ] = cloud.teams.useAll()
 	const cloudUser = cloud.session.getUser()
 
@@ -25,30 +27,27 @@ export default () => {
 		>
 			<LibrariesFilter
 				teams={ teams }
-				onChange={ filter => {
-					const { owner, ...rest } = filter
-					setOwner( null === owner ? null : parseInt( owner ) )
-					setQuery( rest )
-				} }
 			/>
-			{ ! owner &&
-				<LibrariesGrid
-					headline={ cloudUser.name }
-					query={ query }
-				/>
-			}
-			{ teams && teams.map( ( team, i ) => {
-				if ( null === owner || owner === team.id ) {
-					return (
-						<LibrariesGrid
-							key={ i }
-							headline={ team.name }
-							team={ team }
-							query={ query }
-						/>
-					)
+			<div className='fl-asst-libraries'>
+				{ ( 'all' === owner || 'user' === owner ) &&
+					<LibrariesGrid
+						headline={ cloudUser.name }
+						query={ query }
+					/>
 				}
-			} ) }
+				{ teams && teams.map( ( team, i ) => {
+					if ( 'all' === owner || `team_${ team.id }` === owner ) {
+						return (
+							<LibrariesGrid
+								key={ i }
+								headline={ team.name }
+								team={ team }
+								query={ query }
+							/>
+						)
+					}
+				} ) }
+			</div>
 		</Page>
 	)
 }

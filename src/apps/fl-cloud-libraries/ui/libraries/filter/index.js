@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Filter } from 'assistant/ui'
+import { getAppHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
-export default ( { teams, onChange } ) => {
+export default ( { teams } ) => {
+	const { useDefaultFilter, useFilter } = getAppHooks( 'fl-cloud-libraries' )
+	const [ defaultFilter ] = useDefaultFilter()
+	const [ filter, setFilter ] = useFilter()
 	const cloudUser = cloud.session.getUser()
-
-	const defaultFilter = {
-		owner: '0',
-		order_by: 'name',
-	}
-
-	const [ filter, setFilter ] = useState( defaultFilter )
-
-	const updateFilter = ( newFilter ) => {
-		setFilter( newFilter )
-		onChange( newFilter )
-	}
 
 	const getOwnerOptions = () => {
 		const options = {
-			0: cloudUser.name,
+			all: __( 'All' ),
+			user: cloudUser.name,
 		}
 		if ( teams ) {
-			teams.map( team => options[ team.id ] = team.name )
+			teams.map( team => options[ `team_${ team.id }` ] = team.name )
 		}
 		return options
 	}
@@ -35,7 +28,7 @@ export default ( { teams, onChange } ) => {
 				items={ getOwnerOptions() }
 				value={ filter.owner }
 				defaultValue={ defaultFilter.owner }
-				onChange={ value => updateFilter( { ...filter, owner: value } ) }
+				onChange={ value => setFilter( { ...filter, owner: value } ) }
 			/>
 			<Filter.RadioGroupItem
 				title={ __( 'Sort By' ) }
@@ -46,9 +39,9 @@ export default ( { teams, onChange } ) => {
 				} }
 				value={ filter.order_by }
 				defaultValue={ defaultFilter.order_by }
-				onChange={ value => updateFilter( { ...filter, order_by: value } ) }
+				onChange={ value => setFilter( { ...filter, order_by: value } ) }
 			/>
-			<Filter.Button onClick={ () => updateFilter( defaultFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
+			<Filter.Button onClick={ () => setFilter( defaultFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
 		</Filter>
 	)
 }

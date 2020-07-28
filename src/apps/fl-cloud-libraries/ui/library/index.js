@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Page, Uploader } from 'assistant/ui'
+import { Uploader } from '@beaverbuilder/cloud-ui'
+import { Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
 import LibraryActions from './actions'

@@ -1,0 +1,10 @@
+.fl-asst-libraries {
+
+	.fl-asst-libraries-grid {
+		border-bottom: 2px solid var(--fluid-line-color);
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+}

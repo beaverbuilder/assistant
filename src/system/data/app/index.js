@@ -1,6 +1,6 @@
 import { App } from '@beaverbuilder/app-core'
 import { getCache, setCache } from 'utils/cache'
-import { registerStore, useStore, getStore, getDispatch, getSelectors } from '../registry'
+import { registerStore, useStore, getStore, getDispatch, getSelectors, getHooks } from '../registry'
 import {
 	defaultState,
 	defaultActions,
@@ -60,4 +60,9 @@ export const getAppActions = ( key ) => {
 export const getAppSelectors = ( key ) => {
 	const app = key ? key : App.use().handle
 	return getSelectors( `${ key ? key : app }/state` )
+}
+
+export const getAppHooks = ( key ) => {
+	const app = key ? key : App.use().handle
+	return getHooks( `${ key ? key : app }/state` )
 }

@@ -12,6 +12,7 @@ export default ( {
 	const history = useHistory()
 	const teamId = team ? team.id : 0
 	const [ libraries, setLibraries ] = cloud.libraries.useAll( teamId )
+	const [ showAll, setShowAll ] = useState( false )
 
 	const canAddNew = team ? team.user_permissions.update : true
 	const [ isAddingNew, setIsAddingNew ] = useState( false )
@@ -39,8 +40,16 @@ export default ( {
 		} )
 	}
 
+	const getVisibleLibraries = () => {
+		return showAll ? libraries : [ ...libraries ].splice( 0, 4 )
+	}
+
 	return (
-		<>
+		<Layout.Box
+			className='fl-asst-libraries-grid'
+			padX={ false }
+			padY={ false }
+		>
 			{ ! isAddingNew &&
 				<Layout.Toolbar>
 					<Layout.Headline>
@@ -103,7 +112,7 @@ export default ( {
 					flexWrap: 'wrap',
 					padding: 0,
 				} }>
-					{ libraries.map( ( library, i ) =>
+					{ getVisibleLibraries().map( ( library, i ) =>
 						<Layout.Box
 							key={ i }
 							style={ {
@@ -124,6 +133,19 @@ export default ( {
 					) }
 				</Layout.Box>
 			}
-		</>
+
+			{ libraries && libraries.length > 4 &&
+				<Layout.Box style={ {
+					paddingTop: 0,
+				} }>
+					<Button
+						appearance='transparent'
+						onClick={ () => setShowAll( ! showAll ) }
+					>
+						{ showAll ? __( 'Show Less' ) :  __( 'Show All' ) }
+					</Button>
+				</Layout.Box>
+			}
+		</Layout.Box>
 	)
 }
