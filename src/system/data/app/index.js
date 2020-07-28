@@ -1,5 +1,4 @@
 import { App } from '@beaverbuilder/app-core'
-import { getCache, setCache } from 'utils/cache'
 import { registerStore, useStore, getStore, getDispatch, getSelectors, getHooks } from '../registry'
 import {
 	defaultState,
@@ -19,24 +18,16 @@ export const registerAppStore = args => {
 	} = args
 
 	const storeKey = `${ key }/state`
-	const cache = getCache( 'app-state', key )
 	const state = {
 		...defaultState,
 		...initialState,
 	}
 
 	registerStore( storeKey, {
-		state: cache ? { ...state, ...cache } : state,
+		state,
 		actions: { ...defaultActions, ...actions },
 		reducers: { ...defaultReducers, ...reducers },
 		effects: { ...defaultEffects, ...effects },
-	} )
-
-	getStore( storeKey ).subscribe( () => {
-		const state = serialize( getStore( storeKey ).getState() )
-		if ( false !== state ) {
-			setCache( 'app-state', key, state, false )
-		}
 	} )
 }
 
