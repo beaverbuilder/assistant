@@ -149,9 +149,17 @@
                 align-items: stretch;
                 justify-content: flex-start;
 
+                & > span {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: stretch;
+                    max-width: 100%;
+                }
+
                 &:hover {
                     color: var(--fluid-color);
                     background: transparent;
+                    transform: scale(1);
                 }
             }
 

@@ -79,6 +79,15 @@
             .fluid-button {
                 pointer-events: auto;
                 padding: 0;
+                height: 44px;
+                max-width: 44px;
+                border-radius: 50%;
+            }
+
+            li {
+                display: flex;
+                justify-content: center;
+                padding: 5px 0;
             }
         }
 

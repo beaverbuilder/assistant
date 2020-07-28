@@ -104,7 +104,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 				{ home && (
 					<Button
 						appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
-						status={ ( isRoot && ! isAppHidden ) ? 'primary' : '' }
+						isSelected={ isRoot && ! isAppHidden }
 						onClick={ () => navOrHideApp( isRoot, goToRoot ) }
 						className="disable-while-sorting"
 						title={ home.label }
@@ -154,7 +154,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 				{ manage && (
 					<Button
 						appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
-						status={ ( isManage && ! isAppHidden ) ? 'primary' : '' }
+						isSelected={ isManage && ! isAppHidden }
 						onClick={ () => navOrHideApp( isManage, () => history.push( {
 							pathname: `/${manage.handle}`,
 							state: manage

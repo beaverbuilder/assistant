@@ -12,7 +12,6 @@ const Gutter = ( { isPending = false, isSpam = false, isTrash = false } ) => {
 	return (
 		<div className="fl-asst-comment-gutter">
 			<div className="fl-asst-thread-line" />
-
 			<div className="fl-asst-gutter-dot-area">
 				<div className={ classname( {
 					'fl-asst-dot': true,
@@ -21,7 +20,6 @@ const Gutter = ( { isPending = false, isSpam = false, isTrash = false } ) => {
 					'is-trash': isTrash
 				} ) } />
 			</div>
-
 		</div>
 	)
 }
