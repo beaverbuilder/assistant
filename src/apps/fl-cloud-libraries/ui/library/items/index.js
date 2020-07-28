@@ -8,6 +8,7 @@ import Members from './members'
 import ItemsFilter from './filter'
 import ItemsGrid from './grid'
 import { getFilteredItems } from './utils'
+import './style.scss'
 
 export default ( { library } ) => {
 	const [ items, setItems ] = cloud.libraries.useItems( library.id )
