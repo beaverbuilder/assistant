@@ -4,13 +4,11 @@
         display: inline-flex;
         flex-direction: row;
 	    flex-wrap: wrap;
-        background: var(--fluid-box-background);
-        color: var(--fluid-box-color);
-        border-radius: 5px;
-        padding: 3px;
-        min-height: calc( var(--fluid-target-size) + 6px );
+        background: var(--fluid-transparent-12);
+        color: var(--fluid-color);
+        border-radius: var(--fluid-radius);
+        min-height: var(--fluid-target-size);
         max-width:100%;
-        overflow-x: hidden; // Firefox flips out with auto.
         position: relative;
 
         .fluid-button {
@@ -33,12 +31,10 @@
                 background: transparent;
                 z-index:1;
                 white-space: nowrap;
-                border-radius: 3px;
 
-                &.fl-asst-is-selected {
-                    background: var(--fluid-background);
-                    color: var(--fluid-color);
-                    box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+                &.is-selected {
+                    background: var(--fluid-primary-color);
+                    color: var(--fluid-opaque-14);
 
                     &:focus {
                         box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
@@ -71,7 +67,6 @@
             padding-right: 2px;
             min-height: 40px;
             border-radius: 0;
-            overflow: auto;
             justify-content: flex-start;
             align-self: stretch;
             overflow: visible;
@@ -95,7 +90,6 @@
                 &.is-selected {
                     color: var(--fluid-accent);
                     background: var(--fluid-background);
-                    box-shadow: 0px -2px 0px var(--fluid-accent);
                     border-radius: 0;
 
                     &:focus {

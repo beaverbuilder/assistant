@@ -11,7 +11,7 @@ export default () => {
 	const basePath = `/fl-cloud-libraries/${ library.id }`
 
 	const goToUpload = () => {
-		setShowUpload( true )
+		setShowUpload( ! showUpload )
 		if ( pathname !== basePath ) {
 			history.goBack()
 		}
@@ -24,16 +24,11 @@ export default () => {
 	}
 
 	return (
-		<div
-			style={ {
-				display: 'flex',
-				alignItems: 'center'
-			} }
-		>
+		<>
 			<Button
-				size='sm'
 				appearance={ showUpload && ! pathname.includes( '/settings' ) ? '' : 'transparent' }
 				onClick={ goToUpload }
+				isSelected={ showUpload }
 				style={ {
 					marginLeft: 'auto'
 				} }
@@ -41,12 +36,11 @@ export default () => {
 				<Icon.Plus />
 			</Button>
 			<Button
-				size='sm'
 				appearance={ pathname.includes( '/settings' ) ? '' : 'transparent' }
 				onClick={ goToSettings }
 			>
 				<Icon.Cog />
 			</Button>
-		</div>
+		</>
 	)
 }

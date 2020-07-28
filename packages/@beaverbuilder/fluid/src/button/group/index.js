@@ -56,12 +56,7 @@ const Group = ( {
 		const isFirst = 0 === i
 		const shouldInsertDivider = ! isFirst && shouldInsertDividers
 		const shouldHideDivider = child.props.isSelected
-		return (
-			<>
-				{ shouldInsertDivider && <Rule direction={ dividerDirection } isHidden={ shouldHideDivider } /> }
-				{ child }
-			</>
-		)
+		return child
 	} )
 
 	useLayoutEffect( () => {

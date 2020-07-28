@@ -15,9 +15,10 @@ export default () => {
 					paddingTop: 0
 				} }
 			>
-				<Layout.Headline>
+				<Layout.Headline style={{ margin: 10 }}>
 					{ library.name }
 				</Layout.Headline>
+
 				{ library.description &&
 					<div style={ { marginTop: 'var(--fluid-sm-space)' } }>
 						{ library.description }

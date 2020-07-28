@@ -29,15 +29,18 @@ export default () => {
 
 	return (
 		<Layout.DropArea onDrop={ onDrop }>
+
+			{ items && !! items.length && (
+				<ItemsFilter onChange={ values => setFilter( values ) } />
+			)}
+
 			<ItemsHeader />
 
-			{ showUpload &&
-				<ItemsUpload />
-			}
+			{ showUpload && <ItemsUpload /> }
 
 			{ items && !! items.length &&
 				<>
-					<ItemsFilter onChange={ values => setFilter( values ) } />
+
 					<ItemsGrid categories={ getFilteredItems( filter, items ) } />
 				</>
 			}

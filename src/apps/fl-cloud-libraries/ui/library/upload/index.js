@@ -14,7 +14,7 @@ export default () => {
 	return (
 		<Layout.Box
 			style={ {
-				backgroundColor: 'var(--fluid-transparent-13)',
+				backgroundColor: 'var(--fluid-opaque-13)',
 				borderRadius: 'var(--fluid-radius)',
 				margin: '0 var(--fluid-sm-space)'
 			} }
@@ -29,11 +29,10 @@ export default () => {
 					{ __( 'Add Items' ) }
 				</Text.Title>
 				<Button
-					size='sm'
 					appearance='transparent'
 					onClick={ () => setShowUpload( false ) }
 				>
-					<Icon.Close />
+					<Icon.CloseCompact />
 				</Button>
 			</Layout.Row>
 
@@ -42,10 +41,16 @@ export default () => {
 			</Layout.Box>
 
 			<Button.Group>
-				<Button onClick={ () => setUploadTab( 'posts' ) }>
+				<Button
+					onClick={ () => setUploadTab( 'posts' ) }
+					isSelected={ 'posts' === uploadTab }
+				>
 					{ __( 'Posts' ) }
 				</Button>
-				<Button onClick={ () => setUploadTab( 'media' ) }>
+				<Button
+					onClick={ () => setUploadTab( 'media' ) }
+					isSelected={ 'media' === uploadTab }
+				>
 					{ __( 'Media' ) }
 				</Button>
 			</Button.Group>
