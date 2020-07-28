@@ -8,9 +8,10 @@ export default ( { teamId } ) => {
 	if ( ! team ) {
 		return null
 	}
+	const members = [ ...team.users ].splice( 0, 5 )
 	return (
 		<Layout.Row style={ { padding: '0 0 var(--fluid-lg-space) 0' } }>
-			{ team.users.map( ( member, i ) =>
+			{ members.map( ( member, i ) =>
 				<img
 					key={ i }
 					src={ member.gravatar.sm }
