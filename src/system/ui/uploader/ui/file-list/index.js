@@ -1,11 +1,10 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Icon, Layout } from 'assistant/ui'
-import { truncate } from 'assistant/utils/text'
+import { Icon, Layout } from 'ui'
+import { truncate } from 'utils/text'
 
-export default  ( {
+export const FileList = ( {
 	files = [],
-	isLoading = false
 } ) => {
 	if ( ! files.length ) {
 		return null
@@ -53,16 +52,16 @@ export default  ( {
 					</span>
 				</div>
 				<div>
-					{ isLoading && 0 === i &&
+					{ file.uploading && 0 === i &&
 						<Icon.Loading />
 					}
-					{ isLoading && i > 0 &&
+					{ file.uploading && i > 0 &&
 						__( 'Waiting' )
 					}
-					{ ! isLoading && ! file.error &&
+					{ ! file.uploading && ! file.error &&
 						__( 'Uploaded' )
 					}
-					{ ! isLoading && file.error &&
+					{ ! file.uploading && file.error &&
 						<span style={ {
 							color: 'var(--fluid-destructive-color)',
 							fontWeight: 'bold'

@@ -11,6 +11,7 @@ const alias = {
     data: path.resolve( __dirname, './src/system/data'),
     utils: path.resolve( __dirname, './src/system/utils' ),
     hooks: path.resolve( __dirname, './src/system/hooks' ),
+    cloud: path.resolve( __dirname, './src/system/cloud' ),
 
     'home': path.resolve( __dirname, './src/apps/fl-home' ),
     'home/ui': path.resolve( __dirname, './src/apps/fl-home/ui' ),
