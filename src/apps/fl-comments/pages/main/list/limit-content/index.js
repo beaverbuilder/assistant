@@ -61,14 +61,13 @@ const LimitContent = ( {
 					<Button
 						className="fl-asst-limit-content-expand-button"
 						appearance="transparent"
+						icon="ellipsis"
 						onClick={ e => {
 							toggleIsOpen()
 							e.stopPropagation()
 							e.preventDefault()
 						} }
-					>
-						<span><Icon.Ellipsis /></span>
-					</Button>
+					/>
 
 				</Layout.Row>
 			) }
