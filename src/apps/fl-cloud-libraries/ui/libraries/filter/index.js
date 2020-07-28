@@ -4,10 +4,11 @@ import { Filter } from 'assistant/ui'
 import { getAppHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
-export default ( { teams } ) => {
-	const { useDefaultFilter, useFilter } = getAppHooks( 'fl-cloud-libraries' )
+export default () => {
+	const { useDefaultFilter, useFilter, useTeams } = getAppHooks( 'fl-cloud-libraries' )
 	const [ defaultFilter ] = useDefaultFilter()
 	const [ filter, setFilter ] = useFilter()
+	const [ teams ] = useTeams()
 	const cloudUser = cloud.session.getUser()
 
 	const getOwnerOptions = () => {
@@ -15,9 +16,7 @@ export default ( { teams } ) => {
 			all: __( 'All' ),
 			user: cloudUser.name,
 		}
-		if ( teams ) {
-			teams.map( team => options[ `team_${ team.id }` ] = team.name )
-		}
+		teams.map( team => options[ `team_${ team.id }` ] = team.name )
 		return options
 	}
 

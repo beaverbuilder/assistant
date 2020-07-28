@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Icon, Layout } from 'assistant/ui'
+import { getAppHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
 export default ( {
@@ -11,8 +12,10 @@ export default ( {
 } ) => {
 	const history = useHistory()
 	const teamId = team ? team.id : 0
-	const [ libraries, setLibraries ] = cloud.libraries.useAll( teamId )
 	const [ showAll, setShowAll ] = useState( false )
+	const { useLibraries } = getAppHooks( 'fl-cloud-libraries' )
+	const [ libraries, setLibraries ] = useLibraries()
+	const ownerLibraries = libraries[ teamId ]
 
 	const canAddNew = team ? team.user_permissions.update : true
 	const [ isAddingNew, setIsAddingNew ] = useState( false )
@@ -31,8 +34,8 @@ export default ( {
 		setIsAddingNew( false )
 		setLoading( true )
 		cloud.libraries.create( data ).then( response => {
-			libraries.unshift( response.data )
-			setLibraries( [ ...libraries ] )
+			ownerLibraries.unshift( response.data )
+			setLibraries( { ...libraries, [ teamId ]: ownerLibraries } )
 		} ).catch( error => {
 			alert( __( 'Something went wrong. Please try again.' ) )
 		} ).finally( () => {
@@ -41,7 +44,7 @@ export default ( {
 	}
 
 	const getVisibleLibraries = () => {
-		return showAll ? libraries : [ ...libraries ].splice( 0, 4 )
+		return showAll ? ownerLibraries : [ ...ownerLibraries ].splice( 0, 4 )
 	}
 
 	return (
@@ -100,13 +103,13 @@ export default ( {
 				</Layout.Toolbar>
 			}
 
-			{ libraries && 0 === libraries.length &&
+			{ ownerLibraries && 0 === ownerLibraries.length &&
 				<Layout.Box style={ { textAlign: 'center' } }>
 					{ __( 'No libraries found.' ) }
 				</Layout.Box>
 			}
 
-			{ libraries && 0 !== libraries.length &&
+			{ ownerLibraries && 0 !== ownerLibraries.length &&
 				<Layout.Box style={ {
 					flexDirection: 'row',
 					flexWrap: 'wrap',
@@ -134,7 +137,7 @@ export default ( {
 				</Layout.Box>
 			}
 
-			{ libraries && libraries.length > 4 &&
+			{ ownerLibraries && ownerLibraries.length > 4 &&
 				<Layout.Box style={ {
 					paddingTop: 0,
 				} }>

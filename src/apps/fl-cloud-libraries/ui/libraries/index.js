@@ -11,9 +11,8 @@ import LibrariesGrid from './grid'
 import './style.scss'
 
 export default () => {
-	const { filter } = useAppState( 'fl-cloud-libraries', 'filter' )
+	const { filter, teams } = useAppState( 'fl-cloud-libraries', [ 'filter', 'teams' ] )
 	const { owner, ...query } = filter
-	const [ teams ] = cloud.teams.useAll()
 	const cloudUser = cloud.session.getUser()
 
 	return (
@@ -25,9 +24,7 @@ export default () => {
 			padX={ false }
 			padY={ false }
 		>
-			<LibrariesFilter
-				teams={ teams }
-			/>
+			<LibrariesFilter />
 			<div className='fl-asst-libraries'>
 				{ ( 'all' === owner || 'user' === owner ) &&
 					<LibrariesGrid
@@ -35,7 +32,7 @@ export default () => {
 						query={ query }
 					/>
 				}
-				{ teams && teams.map( ( team, i ) => {
+				{ teams.map( ( team, i ) => {
 					if ( 'all' === owner || `team_${ team.id }` === owner ) {
 						return (
 							<LibrariesGrid

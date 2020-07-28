@@ -26,9 +26,9 @@ export default () => {
 	return (
 		<>
 			<Button
-				appearance={ showUpload && ! pathname.includes( '/settings' ) ? '' : 'transparent' }
+				appearance='transparent'
+				isSelected={ showUpload && ! pathname.includes( '/settings' ) }
 				onClick={ goToUpload }
-				isSelected={ showUpload }
 				style={ {
 					marginLeft: 'auto'
 				} }
@@ -36,7 +36,8 @@ export default () => {
 				<Icon.Plus />
 			</Button>
 			<Button
-				appearance={ pathname.includes( '/settings' ) ? '' : 'transparent' }
+				appearance='transparent'
+				isSelected={ pathname.includes( '/settings' ) }
 				onClick={ goToSettings }
 			>
 				<Icon.Cog />
