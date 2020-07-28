@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Filter } from 'assistant/ui'
 import { getAppHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
+import { loadLibraries } from '../../../data'
 
 export default () => {
 	const { useDefaultFilter, useFilter, useTeams } = getAppHooks( 'fl-cloud-libraries' )
@@ -20,6 +21,11 @@ export default () => {
 		return options
 	}
 
+	const updateFilter = ( data ) => {
+		setFilter( data )
+		loadLibraries()
+	}
+
 	return (
 		<Filter>
 			<Filter.RadioGroupItem
@@ -27,7 +33,7 @@ export default () => {
 				items={ getOwnerOptions() }
 				value={ filter.owner }
 				defaultValue={ defaultFilter.owner }
-				onChange={ value => setFilter( { ...filter, owner: value } ) }
+				onChange={ value => updateFilter( { ...filter, owner: value } ) }
 			/>
 			<Filter.RadioGroupItem
 				title={ __( 'Sort By' ) }
@@ -38,9 +44,19 @@ export default () => {
 				} }
 				value={ filter.order_by }
 				defaultValue={ defaultFilter.order_by }
-				onChange={ value => setFilter( { ...filter, order_by: value } ) }
+				onChange={ value => updateFilter( { ...filter, order_by: value } ) }
 			/>
-			<Filter.Button onClick={ () => setFilter( defaultFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
+			<Filter.RadioGroupItem
+				title={ __( 'Order' ) }
+				items={ {
+					ASC: __( 'Ascending' ),
+					DESC: __( 'Descending' ),
+				} }
+				value={ filter.order }
+				defaultValue={ defaultFilter.order }
+				onChange={ value => updateFilter( { ...filter, order: value } ) }
+			/>
+			<Filter.Button onClick={ () => updateFilter( defaultFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
 		</Filter>
 	)
 }
