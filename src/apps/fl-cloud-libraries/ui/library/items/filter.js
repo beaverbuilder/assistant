@@ -3,8 +3,10 @@ import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Filter } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
+import LibraryContext from '../context'
 
 export default () => {
+	const { library } = LibraryContext.use()
 	const { useItemsFilter } = getAppHooks( 'fl-cloud-libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
 	const { defaultItemsFilter } = useAppState( 'fl-cloud-libraries', 'defaultItemsFilter' )
@@ -19,6 +21,16 @@ export default () => {
 		}
 		Object.keys( Libraries.itemTypes ).map( key => {
 			options[ key ] = Libraries.itemTypes[ key ].plural
+		} )
+		return options
+	}
+
+	const getCollectionOptions = () => {
+		const options = {
+			all: __( 'All' ),
+		}
+		library.collections.map( collection => {
+			options[ collection.slug ] = collection.name
 		} )
 		return options
 	}
@@ -38,9 +50,7 @@ export default () => {
 		return (
 			<Filter.RadioGroupItem
 				title={ __( 'Collection' ) }
-				items={ {
-					all: __( 'All' ),
-				} }
+				items={ getCollectionOptions() }
 				value={ itemsFilter.collection }
 				defaultValue={ defaultItemsFilter.collection }
 				onChange={ value => updateFilter( { ...itemsFilter, collection: value } ) }
