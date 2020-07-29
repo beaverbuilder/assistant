@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { __ } from '@wordpress/i18n'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Filter } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 
 export default () => {
 	const { useItemsFilter } = getAppHooks( 'fl-cloud-libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
-
-	const {
-		defaultItemsFilter,
-		itemTypes
-	} = useAppState( 'fl-cloud-libraries', [
-		'defaultItemsFilter',
-		'itemTypes'
-	] )
+	const { defaultItemsFilter } = useAppState( 'fl-cloud-libraries', 'defaultItemsFilter' )
 
 	const updateFilter = ( newFilter ) => {
 		setItemsFilter( newFilter )
@@ -23,8 +17,8 @@ export default () => {
 		const options = {
 			all: __( 'All' ),
 		}
-		Object.keys( itemTypes ).map( key => {
-			options[ key ] = itemTypes[ key ].plural
+		Object.keys( Libraries.itemTypes ).map( key => {
+			options[ key ] = Libraries.itemTypes[ key ].plural
 		} )
 		return options
 	}

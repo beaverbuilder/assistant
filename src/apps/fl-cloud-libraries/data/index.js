@@ -23,20 +23,6 @@ export const state = {
 	filter: filter,
 	defaultItemsFilter: itemsFilter,
 	itemsFilter: itemsFilter,
-	itemTypes: {
-		post: {
-			singular: __( 'Post' ),
-			plural: __( 'Posts' ),
-		},
-		image: {
-			singular: __( 'Image' ),
-			plural: __( 'Images' ),
-		},
-		svg: {
-			singular: __( 'SVG' ),
-			plural: __( 'SVG' ),
-		},
-	}
 }
 
 export const loadLibraries = () => {

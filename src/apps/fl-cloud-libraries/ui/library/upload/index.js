@@ -45,7 +45,7 @@ export default () => {
 					onClick={ () => setUploadTab( 'posts' ) }
 					isSelected={ 'posts' === uploadTab }
 				>
-					{ __( 'Posts' ) }
+					{ __( 'Content' ) }
 				</Button>
 				<Button
 					onClick={ () => setUploadTab( 'media' ) }

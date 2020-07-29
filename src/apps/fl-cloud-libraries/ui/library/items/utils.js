@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n'
-import { getAppState } from 'assistant/data'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 
 export const getFilteredItems = ( filter, items ) => {
 	const viewBy = filter ? filter.view_by : 'type'
@@ -55,12 +55,11 @@ export const getItemsByCollection = ( items ) => {
 }
 
 export const getItemsByType = ( items ) => {
-	const { itemTypes } = getAppState( 'fl-cloud-libraries' )
 	const types = {}
 	items.map( item => {
 		if ( ! types[ item.type ] ) {
 			types[ item.type ] = {
-				name: itemTypes[ item.type ].plural,
+				name: Libraries.itemTypes[ item.type ].plural,
 				items: []
 			}
 		}
