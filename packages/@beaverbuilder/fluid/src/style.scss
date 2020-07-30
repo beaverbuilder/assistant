@@ -35,6 +35,25 @@
     --fluid-transparent-13: hsla( var(--fluid-hue), 38%, 98%, 80% );
     // There is no level 14 - white
 
+    // Blue Scale
+    --fluid-blue-hue: 210;
+    --fluid-blue-0: black;
+    --fluid-blue-1: hsl( var(--fluid-blue-hue), 100%, 10% );
+    --fluid-blue-2: hsl( var(--fluid-blue-hue), 100%, 15% );
+    --fluid-blue-3: hsl( var(--fluid-blue-hue), 100%, 20% );
+    --fluid-blue-4: hsl( var(--fluid-blue-hue), 100%, 25% );
+    --fluid-blue-5: hsl( var(--fluid-blue-hue), 100%, 30% );
+    --fluid-blue-6: hsl( var(--fluid-blue-hue), 100%, 35% );
+    --fluid-blue-7: hsl( var(--fluid-blue-hue), 100%, 45% ); // Main Blue
+    --fluid-blue-8: hsl( var(--fluid-blue-hue), 100%, 87% );
+    --fluid-blue-9: hsl( var(--fluid-blue-hue), 100%, 89% );
+    --fluid-blue-10: hsl( var(--fluid-blue-hue), 100%, 91% );
+    --fluid-blue-11: hsl( var(--fluid-blue-hue), 100%, 93% );
+    --fluid-blue-12: hsl( var(--fluid-blue-hue), 100%, 95% );
+    --fluid-blue-13: hsl( var(--fluid-blue-hue), 100%, 98% );
+    --fluid-blue-14: white;
+
+
     /**
     * Dynamic Colors - Colors that change depending on color scheme & context
     */
@@ -182,7 +201,7 @@
     pre,
     form,
     table {
-        margin: var(--fluid-lg-space) 0 0;
+        margin: var(--fluid-lg-space) 0;
 
         &:first-child {
             margin-top: 0;
@@ -191,7 +210,7 @@
     h1, h2, h3, h4, h5, h6 {
         color: inherit;
         font-family: var(--fluid-font-family);
-        font-weight: bold;
+        font-weight: normal;
 
         &::before {
             all: unset !important;
@@ -205,6 +224,11 @@
     }
     h3 {
         font-size: calc( var(--fluid-font-size) + 6px );
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 1.3;
     }
 
     ul, ol {

@@ -61,7 +61,7 @@
     .fluid-content-boundary {
         width: clamp( 40ch, 80ch, 100% );
         margin: 0 auto;
-        padding: 0 var(--fluid-lg-space);
+        padding: 0 var(--fluid-lg-space) var(--fluid-lg-space);
     }
 
     .fluid-drop-area {

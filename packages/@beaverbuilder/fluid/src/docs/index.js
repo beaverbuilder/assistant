@@ -4,6 +4,7 @@ import IconSheet from './icons'
 import IntroSheet from './intro'
 import ListSheet from './lists'
 import LayoutSheet from './layout'
+import HTMLSheet from './html'
 
 export {
 	IntroSheet,
@@ -11,5 +12,6 @@ export {
 	ColorSheet,
 	IconSheet,
 	ListSheet,
-	LayoutSheet
+	LayoutSheet,
+	HTMLSheet,
 }
