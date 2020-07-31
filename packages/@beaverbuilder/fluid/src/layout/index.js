@@ -12,6 +12,7 @@ import DropArea from './drop-area'
 import './style.scss'
 
 // Headline
+// @deprecated - this is going to get replaced with something on the Text API
 const Headline = ( { className, children, ...rest } ) => {
 	const classes = classname( 'fluid-headline', className )
 	return (
@@ -29,5 +30,5 @@ export {
 	Split,
 	Toolbar,
 	ContentBoundary,
-	DropArea
+	DropArea,
 }

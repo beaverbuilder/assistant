@@ -2,8 +2,8 @@
     .fl-asst-inline-item {
 
         .fl-asst-list-item-thumbnail {
-            background-color: var(--fluid-primary-background);
-            color: var(--fluid-primary-color);
+            background-color: var(--fluid-blue-13);
+            color: var(--fluid-blue-7);
         }
         .fl-asst-list-item-subject {
             margin: auto;
@@ -11,14 +11,14 @@
     }
     .fl-asst-inline-create-item {
         &:focus-within {
-            box-shadow: inset 3px 0 0 var(--fluid-primary-color);
+            box-shadow: inset 3px 0 0 var(--fluid-blue-7);
         }
 
         .fl-asst-form-input {
             font-weight: 500;
             font-size: 14px;
             font-style: italic;
-            color: var(--fluid-primary-color);
+            color: var(--fluid-blue-6);
 
             &:focus {
                 color: var(--fluid-color);
@@ -37,6 +37,19 @@
                 &:-moz-placeholder { /* Firefox 18- */
                     opacity: .1;
                 }
+            }
+        }
+    }
+    .fluid-color-scheme-dark {
+        .fl-asst-inline-item {
+            .fl-asst-list-item-thumbnail {
+                background-color: var(--fluid-blue-1);
+                color: var(--fluid-blue-7);
+            }
+        }
+        .fl-asst-inline-create-item {
+            .fl-asst-form-input {
+                color: var(--fluid-blue-11);
             }
         }
     }

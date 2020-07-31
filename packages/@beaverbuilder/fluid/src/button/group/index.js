@@ -144,7 +144,7 @@ const Group = ( {
 				>
 					<Button
 						className='fluid-more-button'
-						status={ isShowing ? 'primary' : '' }
+						isSelected={ isShowing }
 						onClick={ () => setIsShowing( ! isShowing ) }
 					>
 						<Icon.More />

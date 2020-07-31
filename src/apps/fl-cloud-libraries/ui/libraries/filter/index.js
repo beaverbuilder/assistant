@@ -56,6 +56,16 @@ export default () => {
 				defaultValue={ defaultFilter.order }
 				onChange={ value => updateFilter( { ...filter, order: value } ) }
 			/>
+			<Filter.RadioGroupItem
+				title={ __( 'Display As' ) }
+				items={ {
+					grid: __( 'Grid' ),
+					list: __( 'List' ),
+				} }
+				value={ filter.displayAs }
+				defaultValue={ defaultFilter.displayAs }
+				onChange={ value => updateFilter( { ...filter, displayAs: value } ) }
+			/>
 			<Filter.Button onClick={ () => updateFilter( defaultFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
 		</Filter>
 	)

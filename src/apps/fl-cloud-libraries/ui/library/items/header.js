@@ -12,7 +12,7 @@ export default () => {
 			<Layout.Box
 				style={ {
 					textAlign: 'center',
-					paddingTop: 0
+					padding: 0
 				} }
 			>
 				<Layout.Headline style={{ margin: 10 }}>

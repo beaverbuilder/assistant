@@ -23,6 +23,7 @@ import Close from './close'
 import CloseCompact from './close-compact'
 import Search from './search'
 import Plus from './plus'
+import PlusSmall from './plus-small'
 import Return from './return'
 import More from './more'
 import Ellipsis from './ellipsis'
@@ -62,6 +63,7 @@ export {
 	Cog,
 	Search,
 	Plus,
+	PlusSmall,
 	Return,
 	More,
 	Ellipsis,

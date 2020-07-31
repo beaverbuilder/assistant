@@ -8,7 +8,6 @@ import AppIcon from '../../icon'
 import Actions from './actions'
 import LibrariesFilter from './filter'
 import LibrariesGrid from './grid'
-import './style.scss'
 
 export default () => {
 	const { filter, teams } = useAppState( 'fl-cloud-libraries', [ 'filter', 'teams' ] )

@@ -28,19 +28,7 @@
 
         &.fluid-button-group-appearance-normal {
             .fluid-button {
-                background: transparent;
-                z-index:1;
                 white-space: nowrap;
-
-                &.is-selected {
-                    background: var(--fluid-primary-color);
-                    color: var(--fluid-opaque-14);
-
-                    &:focus {
-                        box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
-                                    0px 0px 0px 2px var(--fluid-accent);
-                    }
-                }
             }
         }
 
@@ -88,14 +76,12 @@
                 }
 
                 &.is-selected {
-                    color: var(--fluid-accent);
-                    background: var(--fluid-background);
                     border-radius: 0;
+                    background: var(--fluid-blue-7);
 
                     &:focus {
-                        border-radius: 3px;
                         box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
-                                    0px 0px 0px 2px var(--fluid-accent),
+                                    0px 0px 0px 1.5 var(--fluid-accent),
                                     0px 4px 4px 0px rgba(0, 0, 0, 0.1);
                     }
                 }

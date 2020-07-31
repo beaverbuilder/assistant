@@ -104,6 +104,8 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 				{ home && (
 					<Button
 						appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
+						shape="round"
+						size="lg"
 						isSelected={ isRoot && ! isAppHidden }
 						onClick={ () => navOrHideApp( isRoot, goToRoot ) }
 						className="disable-while-sorting"
@@ -139,6 +141,8 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 						return (
 							<Button
 								appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
+								shape="round"
+								size="lg"
 								isSelected={ isSelected }
 								onClick={ () => {
 									navOrHideApp( isSelected, () => history.push( location ) )
@@ -154,6 +158,8 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 				{ manage && (
 					<Button
 						appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
+						shape="round"
+						size="lg"
 						isSelected={ isManage && ! isAppHidden }
 						onClick={ () => navOrHideApp( isManage, () => history.push( {
 							pathname: `/${manage.handle}`,

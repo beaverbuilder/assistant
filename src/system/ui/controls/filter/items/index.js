@@ -54,7 +54,7 @@ export const LabelsItem = ( { ...rest } ) => {
 	const items = {
 		0: (
 			<>
-				<Dot outline="var(--fluid-primary-color)" />
+				<Dot outline="var(--fluid-blue-7)" />
 				{__( 'Any' )}
 			</>
 		)

@@ -22,6 +22,10 @@
             &.is-selected {
                 box-shadow: inset 3px 0 0 var(--fluid-accent);
             }
+
+            &:hover {
+                transform: scale(1) !important;
+            }
         }
     }
     .fluid-color-scheme-dark {

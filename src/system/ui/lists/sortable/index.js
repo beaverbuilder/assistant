@@ -128,7 +128,9 @@ const Item = ( {
 			} }
 			onDrag={ ( e, { point } ) => moveItem( i, point.y ) }
 
-			positionTransition={ info => {
+			layout
+
+			transition={ info => {
 				const { delta } = info
 				if ( isDragging ) {
 					dragOriginY.set( dragOriginY.get() + delta.y )

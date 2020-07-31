@@ -10,6 +10,7 @@ import Page from './page'
 import Button from './button'
 import Menu from './menu'
 import * as List from './list'
+import Collection from './collection'
 
 // Styleguide content
 import * as Docs from './docs'
@@ -22,6 +23,7 @@ export {
 	Icon,
 	Layout,
 	List,
+	Collection,
 
 	// Docs - probably won't stay forever
 	Docs,

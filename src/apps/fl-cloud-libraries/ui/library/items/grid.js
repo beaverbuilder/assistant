@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Layout } from 'assistant/ui'
+import { Layout, Collection, Text, Icon } from 'assistant/ui'
 
 export default ( { categories } ) => {
 	const history = useHistory()
@@ -12,43 +12,43 @@ export default ( { categories } ) => {
 			return null
 		}
 		return (
-			<Layout.Box key={ i }>
-				<h3>{ category.name }</h3>
-				<div style={{
-					display: 'grid',
-					gridTemplateColumns: 'repeat( 2, minmax(0, 1fr) )',
-					gridGap: 'var(--fluid-med-space)'
-				}}>
-					{ category.items.map( ( item, k ) =>
-						<Layout.Box
-							key={ k }
-							style={ {
-								cursor: 'pointer'
-							} }
-							onClick={ () => {
-								history.push( `${baseURL}/items/${item.id}` )
-							} }
-							padX={false}
-							padY={false}
-						>
-							<ItemThumb item={ item } />
-							<div className="fl-asst-library-item-title" >
-								{ item.name }
-							</div>
-						</Layout.Box>
-					) }
-				</div>
+			<Layout.Box key={ i } padX={false} padY={false}>
+				<Layout.Toolbar style={{ paddingLeft: 20 }}>
+					<Text.Title>{ category.name }</Text.Title>
+				</Layout.Toolbar>
+				<Collection>
+					{ category.items.map( ( item, k ) => {
+						return (
+							<Collection.Item
+								key={ item.id }
+								title={ item.name }
+								thumbnail={ <ItemThumb {...item} /> }
+								onClick={ () => {
+									history.push( `${baseURL}/items/${item.id}` )
+								} }
+							/>
+						)
+					} ) }
+				</Collection>
 			</Layout.Box>
 		)
 	} )
 }
 
-const ItemThumb = ( { item } ) => {
-	return (
-		<Layout.AspectBox>
-			{ !! item.media.length &&
-				<img src={ item.media[0].thumb } />
-			}
-		</Layout.AspectBox>
-	)
+const ItemThumb = ( { type, data, media } ) => {
+
+	if ( !! media.length ) {
+		return <img src={ media[0].thumb } />
+	}
+	if ( 'svg' === type ) {
+		return (
+			<div
+				dangerouslySetInnerHTML={{
+					__html: data.xml
+				}}
+				className="fl-asst-item-svg-container"
+			/>
+		)
+	}
+	return null
 }

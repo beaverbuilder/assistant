@@ -7,6 +7,7 @@ const Box = ( {
 	padX = true,
 	padY = true,
 	outset = false,
+	tag: Tag = 'div',
 	...rest
 } ) => {
 
@@ -18,7 +19,7 @@ const Box = ( {
 	}, className )
 
 	return (
-		<div className={ classes } style={ style } { ...rest } />
+		<Tag className={ classes } style={ style } { ...rest } />
 	)
 }
 

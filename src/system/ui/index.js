@@ -1,4 +1,5 @@
 // Public API
+import { Text, Collection } from 'fluid'
 import { Appearance } from './appearance'
 import { App } from './app'
 import { Button } from './button'
@@ -30,7 +31,9 @@ export {
 	Notice,
 	Menu,
 	Media,
-	Color
+	Color,
+	Text,
+	Collection,
 }
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
@@ -40,6 +43,7 @@ export const api = {
 	Button,
 	Icon,
 	Color,
+	Collection,
 	Filter,
 	Form,
 	Control,
@@ -50,4 +54,5 @@ export const api = {
 	Notice,
 	Media,
 	Menu,
+	Text,
 }

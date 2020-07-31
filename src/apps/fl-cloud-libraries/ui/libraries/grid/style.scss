@@ -1,0 +1,32 @@
+.fl-asst {
+    .fl-asst-inline-library-create {
+        box-shadow: none;
+        background: var(--fluid-box-background);
+        border-radius: var(--fluid-radius);
+
+        input {
+            padding-left: 0;
+
+            &:focus {
+                background: transparent;
+            }
+
+            &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                color: var(--fluid-blue-7);
+                opacity: 1;
+            }
+            &::-moz-placeholder { /* Firefox 19+ */
+                color: var(--fluid-blue-7);
+                opacity: 1;
+            }
+            &:-ms-input-placeholder { /* IE 10+ */
+                color: var(--fluid-blue-7);
+                opacity: 1;
+            }
+            &:-moz-placeholder { /* Firefox 18- */
+                color: var(--fluid-blue-7);
+                opacity: 1;
+            }
+        }
+    }
+}

@@ -73,9 +73,9 @@
     --fluid-box-hover-color: var(--fluid-opaque-0);
 
     // Primary Colors
-    --fluid-primary-background: #EFF8FF;
-    --fluid-primary-color: #006AD4;
-    --fluid-primary-hover-background: #D8ECFF;
+    --fluid-primary-background: var(--fluid-blue-7);
+    --fluid-primary-color: white;
+    --fluid-primary-hover-background: var(--fluid-blue-6);
 
     // Alert Colors
     --fluid-alert-background: #FEF4EA;
@@ -282,11 +282,6 @@
         --fluid-box-background: var(--fluid-opaque-1);
         --fluid-box-color: var(--fluid-dark-color);
         --fluid-box-hover-background: var(--fluid-opaque-3);
-
-        // Primary Colors
-        --fluid-primary-background: hsl(206, 100%, 9%);
-        --fluid-primary-color: hsl(210, 100%, 80%);
-        --fluid-primary-hover-background: hsl(206, 80%, 14%);
 
         // Alert Colors
         --fluid-alert-background: hsl(31, 55%, 10%);

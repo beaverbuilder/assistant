@@ -6,6 +6,7 @@ import * as Icon from '../../icon'
 
 const appearances = [ 'normal', 'transparent', 'elevator' ]
 const sizes = [ 'sm', 'med', 'lg' ]
+const shapes = [ 'round' ]
 
 const capitalize = value => value.charAt( 0 ).toUpperCase() + value.slice( 1 )
 
@@ -32,6 +33,7 @@ const Button = forwardRef( ( props, ref ) => {
 		status,
 		icon,
 		size,
+		shape,
 		isLoading = false,
 		disabled,
 		children,
@@ -42,7 +44,8 @@ const Button = forwardRef( ( props, ref ) => {
 		'is-selected': isSelected,
 		[`fluid-status-${status}`]: status,
 		[`fluid-size-${size}`]: sizes.includes( size ),
-		[`fluid-appearance-${appearance}`]: appearances.includes( appearance )
+		[`fluid-appearance-${appearance}`]: appearances.includes( appearance ),
+		[`fluid-shape-${shape}`]: shape && shapes.includes( shape )
 	}, className )
 
 	let newProps = {
