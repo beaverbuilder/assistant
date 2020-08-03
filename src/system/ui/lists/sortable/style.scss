@@ -1,0 +1,7 @@
+.fluid {
+    .is-sorting {
+        & > *:not(.is-dragging) {
+            pointer-events: none; // prevent trigging hovers on other items while dragging
+        }
+    }
+}

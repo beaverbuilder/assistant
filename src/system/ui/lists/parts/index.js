@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
-import { Page, Layout } from 'ui'
+import { Page, Layout, Button, Icon } from 'ui'
 import { isColor } from 'utils/color'
 import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'
@@ -238,8 +238,8 @@ const MessageBox = ( { children, ...rest } ) => {
 			<Layout.Box
 				{ ...rest }
 				style={ {
-					background: 'var(--fluid-primary-background)',
-					color: 'var(--fluid-primary-color)',
+					background: 'var(--fluid-box-background)',
+					color: 'var(--fluid-box-color)',
 					borderRadius: '7px',
 					display: 'flex',
 					alignItems: 'center',
@@ -258,7 +258,21 @@ export const NoResultsMessage = ( { message } ) => {
 
 export const EndMessage = () => {
 	return (
-		<MessageBox>{__( 'End Of Results' )}</MessageBox>
+		<Layout.Row>
+			<Button
+				tag='span'
+				role={false}
+				size="lg"
+				style={{
+					borderRadius: '50%',
+					width: 60,
+					height: 60,
+					padding: 5,
+					pointerEvents: 'none'
+				}} >
+				<Icon.Pencil size={30} />
+			</Button>
+		</Layout.Row>
 	)
 }
 
