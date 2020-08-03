@@ -1,19 +1,12 @@
 import React from 'react'
 
-const Apps = () => {
-	return (
-		<svg width="20px" height="14px" viewBox="0 0 21 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g fill="currentColor" fillRule="nonzero">
-				<circle cx="2.5" cy="2.5" r="2.5"/>
-				<circle cx="10.5" cy="2.5" r="2.5"/>
-				<circle cx="18.5" cy="2.5" r="2.5"/>
-
-				<circle cx="2.5" cy="11.5" r="2.5"/>
-				<circle cx="10.5" cy="11.5" r="2.5"/>
-				<circle cx="18.5" cy="11.5" r="2.5"/>
-			</g>
-		</svg>
-	)
-}
-
-export default Apps
+export default () => (
+	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<circle cx="3" cy="6.5" r="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+		<circle cx="17" cy="6.5" r="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+		<circle cx="10" cy="6.5" r="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+		<circle cx="3" cy="13.5" r="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+		<circle cx="17" cy="13.5" r="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+		<circle cx="10" cy="13.5" r="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+	</svg>
+)
