@@ -31,6 +31,8 @@ import Person from './person'
 import Library from './library'
 import Sidebar from './sidebar'
 import Cog from './cog'
+import Moon from './moon'
+import Sun from './sun'
 
 // Aliases
 const BackArrow = ArrowLeft
@@ -70,4 +72,6 @@ export {
 	Person,
 	Library,
 	Sidebar,
+	Moon,
+	Sun,
 }

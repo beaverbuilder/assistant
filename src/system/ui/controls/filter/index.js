@@ -37,7 +37,6 @@ const Filter = ( { className, children, ...rest } ) => {
 				<div className="fl-asst-filter-more">
 					<Button
 						appearance="transparent"
-						status="primary"
 						title={ __( 'More Options' ) }
 						onClick={ () => setShowAll( ! showAll ) }
 					>
