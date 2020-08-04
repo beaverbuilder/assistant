@@ -1,15 +1,18 @@
 import React from 'react'
 import { Layout } from 'assistant/ui'
+import ItemContext from '../context'
 
-export default ( props ) => {
+export default () => {
 	return (
-		<Layout.AspectBox>
-			<HeroImage { ...props } />
+		<Layout.AspectBox ratio='16:9'>
+			<HeroImage />
 		</Layout.AspectBox>
 	)
 }
 
-const HeroImage = ( { type, data, media } ) => {
+const HeroImage = () => {
+	const { item } = ItemContext.use()
+	const { type, data, media } = item
 
 	if ( !! media.length ) {
 		return <img src={ media[0].url } />
