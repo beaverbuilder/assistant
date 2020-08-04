@@ -3,16 +3,14 @@ import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Icon, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
-import LibraryPostItem from './post'
+
+import ItemHero from './hero'
+import ItemForm from './form'
 
 export default () => {
 	const history = useHistory()
 	const { itemId } = useParams()
 	const [ item, setItem ] = cloud.libraries.useItem( itemId )
-	const forms = {
-		'default': LibraryDefaultItem,
-		'post': LibraryPostItem
-	}
 
 	if ( ! item ) {
 		return <Page.Loading />
@@ -25,16 +23,12 @@ export default () => {
 		}
 	}
 
-	let LibraryItemForm = forms.default
-	if ( forms[ item.type ] ) {
-		LibraryItemForm = forms[ item.type ]
-	}
-
 	return (
 		<Page
 			title={ __( 'Library Item' ) }
 			shouldShowBackButton={ true }
 			padX={ false }
+			hero={ <ItemHero { ...item } /> }
 		>
 			<Layout.Box
 				padY={ false }
@@ -55,56 +49,10 @@ export default () => {
 					<Icon.Trash />
 				</Button>
 			</Layout.Box>
-			<LibraryItemForm
+			<ItemForm
 				item={ item }
 				setItem={ setItem }
 			/>
 		</Page>
-	)
-}
-
-const LibraryDefaultItem = ( { item, setItem } ) => {
-	const fields = {
-		name: {
-			label: __( 'Name' ),
-			component: 'text',
-			alwaysCommit: true,
-			validate: ( value, errors ) => {
-				if ( '' === value ) {
-					errors.push( __( 'Please enter a name.' ) )
-				}
-			}
-		},
-	}
-
-	const onSubmit = ( { values, setErrors } ) => {
-		const { name } = values
-		const data = {
-			name
-		}
-		return cloud.libraries.updateItem( item.id, data ).then( response => {
-			setItem( response.data )
-		} ).catch( error => {
-			setErrors( error.response.data.errors )
-		} )
-	}
-
-	const {
-		renderForm,
-		submitForm,
-		isSubmitting
-	} = Form.useForm( {
-		fields,
-		onSubmit,
-		defaults: item,
-	} )
-
-	return (
-		<Layout.Box padY={ false }>
-			{ renderForm() }
-			<Button.Loading onClick={ submitForm } isLoading={ isSubmitting }>
-				{ __( 'Update Item' ) }
-			</Button.Loading>
-		</Layout.Box>
 	)
 }
