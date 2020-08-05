@@ -37,7 +37,7 @@ const AppsWidget = memo ( ( { ...rest } ) => {
 				return (
 					<motion.div
 						key={ handle }
-						positionTransition
+						layout
 						style={ {
 							display: 'flex',
 							flexDirection: 'row'

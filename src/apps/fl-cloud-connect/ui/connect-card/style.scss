@@ -1,0 +1,18 @@
+.fl.uid {
+    .fl-asst-connect-card {
+        background: var(--fluid-blue-12);
+        border-radius: 10px;
+        align-items: center;
+        margin-bottom: var(--fluid-lg-space);
+        padding: 30px;
+
+        p {
+            text-align: center;
+        }
+    }
+    .fluid-color-scheme-dark {
+        .fl-asst-connect-card {
+            background: var(--fluid-blue-1);
+        }
+    }
+}

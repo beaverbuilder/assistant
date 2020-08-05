@@ -1,6 +1,7 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
+import c from 'classnames'
 import {
 	App,
 	Page,
@@ -87,7 +88,7 @@ const AppList = memo( () => {
 
 	return (
 		<List.Sortable
-			className="fl-asst-manage-app-order-list"
+			className='fl-asst-manage-app-order-list'
 			items={ apps }
 			setItems={ items => {
 				const keys = items.map( item => item.handle )

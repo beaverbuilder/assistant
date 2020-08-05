@@ -56,9 +56,9 @@ export default ( {
 			cloud.libraries.delete( id ).then( response => {
 				const newOwnerLibraries = libraries[ teamId ].filter( lib => lib.id !== id )
 				setLibraries( { ...libraries, [ teamId ]: newOwnerLibraries } )
-			}).catch( error => {
+			} ).catch( error => {
 				alert( __( 'Something went wrong. Please try deleting again.' ) )
-			})
+			} )
 		}
 	}
 
@@ -120,8 +120,8 @@ export default ( {
 						<Collection.Item
 							key={ library.id }
 							title={ library.name }
-							thumbnail={true}
-							thumbnailProps={{
+							thumbnail={ true }
+							thumbnailProps={ {
 								ratio: '4:3',
 								style: {
 									backgroundImage: `url(${library.thumb})`,
@@ -129,17 +129,17 @@ export default ( {
 									backgroundPosition: 'center',
 									borderRadius: 'var(--fluid-radius)',
 								}
-							}}
+							} }
 							onClick={ () => history.push( `/fl-cloud-libraries/${ library.id }` ) }
 						>
 
 							{ false && <Button icon="trash" onClick={ e => {
 								e.stopPropagation()
 								deleteLibrary( library.id )
-							}} />}
+							} } />}
 						</Collection.Item>
 					)
-				}) }
+				} ) }
 			</Collection>
 
 			{ hasLibraries && ownerLibraries.length > maxItems && (

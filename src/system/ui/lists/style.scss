@@ -74,12 +74,6 @@
             &.fl-asst-is-clickable {
                 cursor: pointer;
             }
-
-            &.fl-asst-is-current-page {
-                background: var(--fluid-primary-background);
-                box-shadow: inset 3px 0px 0px var(--fluid-primary-color);
-                color: var(--fluid-primary-color);
-            }
         }
 
         &.fl-asst-user-list {
@@ -323,5 +317,4 @@
 	.fl-asst-list-section-footer {
 		padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) var(--fl-asst-outer-space);
 	}
-
 }

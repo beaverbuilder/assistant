@@ -1,5 +1,5 @@
 import React from 'react'
-import classname from 'classnames'
+import c from 'classnames'
 import Box from './box'
 import AspectBox from './aspect-box'
 import Row from './row'
@@ -13,12 +13,14 @@ import './style.scss'
 
 // Headline
 // @deprecated - this is going to get replaced with something on the Text API
-const Headline = ( { className, children, ...rest } ) => {
-	const classes = classname( 'fluid-headline', className )
-	return (
-		<div className={ classes } role="heading" aria-level="2" { ...rest }>{children}</div>
-	)
-}
+const Headline = ( { className, ...rest } ) => (
+	<div
+		className={ c( 'fluid-headline', className ) }
+		role="heading"
+		aria-level="2"
+		{ ...rest }
+	/>
+)
 
 export {
 	Box,

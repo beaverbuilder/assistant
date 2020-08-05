@@ -120,10 +120,7 @@ const Group = ( {
 				return null
 			}
 			return (
-				<Menu.Item
-					key={ i }
-					{ ...child.props }
-				/>
+				<Menu.Item key={ i } { ...child.props } />
 			)
 		} )
 	}

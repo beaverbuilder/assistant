@@ -27,7 +27,7 @@
                     text-align: left;
 
                     .fl-asst-filter-button-title {
-                        margin-bottom: 2px;
+                        margin-bottom: var(--fluid-sm-space);
                     }
                     .fl-asst-filter-button-subtitle {
                         font-size: 13px;
@@ -56,16 +56,33 @@
         display: flex;
         flex-direction: column;
         padding: 0 var(--fluid-sm-space);
+        margin: -5px 0;
 
         .fluid-button {
             padding: var(--fluid-sm-space);
             border-radius: 3px;
-            min-height: 0;
             opacity: .5;
+            z-index: 2;
+            min-height: 24px;
 
-            &:hover,
+            & > span {
+                padding: 2px;
+                border-radius: 4px;
+            }
+
+            &:hover {
+                opacity: 1;
+                transform: scale(1); // cancel out hover scaling
+            }
             &:focus {
                 opacity: 1;
+                box-shadow: none !important;
+
+                & > span {
+                    color: var(--fluid-accent);
+                    box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
+                                0px 0px 0px 1.5px var(--fluid-accent);
+                }
             }
         }
     }

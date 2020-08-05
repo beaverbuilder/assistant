@@ -12,8 +12,8 @@ export default ( { categories } ) => {
 			return null
 		}
 		return (
-			<Layout.Box key={ i } padX={false} padY={false}>
-				<Layout.Toolbar style={{ paddingLeft: 20 }}>
+			<Layout.Box key={ i } padX={ false } padY={ false }>
+				<Layout.Toolbar style={ { paddingLeft: 20 } }>
 					<Text.Title>{ category.name }</Text.Title>
 				</Layout.Toolbar>
 				<Collection>
@@ -22,7 +22,7 @@ export default ( { categories } ) => {
 							<Collection.Item
 								key={ item.id }
 								title={ item.name }
-								thumbnail={ <ItemThumb {...item} /> }
+								thumbnail={ <ItemThumb { ...item } /> }
 								onClick={ () => {
 									history.push( `${baseURL}/items/${item.id}` )
 								} }
@@ -37,15 +37,15 @@ export default ( { categories } ) => {
 
 const ItemThumb = ( { type, data, media } ) => {
 
-	if ( !! media.length ) {
+	if ( media.length ) {
 		return <img src={ media[0].thumb } />
 	}
 	if ( 'svg' === type ) {
 		return (
 			<div
-				dangerouslySetInnerHTML={{
+				dangerouslySetInnerHTML={ {
 					__html: data.xml
-				}}
+				} }
 				className="fl-asst-item-svg-container"
 			/>
 		)

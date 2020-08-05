@@ -64,8 +64,8 @@ export default ( { match } ) => {
 				padY={ false }
 			>
 				<Switch>
-					<Route exact path={ `/fl-cloud-libraries/:id` } component={ LibraryItems } />
-					<Route path={ `/fl-cloud-libraries/:id/settings` } component={ LibrarySettings } />
+					<Route exact path={ '/fl-cloud-libraries/:id' } component={ LibraryItems } />
+					<Route path={ '/fl-cloud-libraries/:id/settings' } component={ LibrarySettings } />
 				</Switch>
 			</Page>
 		</LibraryContext.Provider>

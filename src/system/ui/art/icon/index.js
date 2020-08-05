@@ -8,44 +8,38 @@ const Icon = { ...FLUID_Icon }
 // Render a user-generated icon safely with Suspense and Error.Boundary
 Icon.Safely = Safely
 
-Icon.DragHandle = () => {
-	return (
-		<svg width="7px" height="14px" viewBox="0 0 7 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-				<path d="M1,1 L6,1"></path>
-				<path d="M1,5 L6,5"></path>
-				<path d="M1,9 L6,9"></path>
-				<path d="M1,13 L6,13"></path>
-			</g>
-		</svg>
-	)
-}
+Icon.DragHandle = () => (
+	<svg width="7px" height="14px" viewBox="0 0 7 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+			<path d="M1,1 L6,1"></path>
+			<path d="M1,5 L6,5"></path>
+			<path d="M1,9 L6,9"></path>
+			<path d="M1,13 L6,13"></path>
+		</g>
+	</svg>
+)
 
-Icon.Expand = () => {
-	return (
-		<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-				<polyline points="1 5 1 1 5 1"></polyline>
-				<polyline points="9 1 13 1 13 5"></polyline>
-				<polyline points="13 9 13 13 9 13"></polyline>
-				<polyline points="5 13 1 13 1 9"></polyline>
-			</g>
-		</svg>
-	)
-}
+Icon.Expand = () => (
+	<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<g stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+			<polyline points="1 5 1 1 5 1"></polyline>
+			<polyline points="9 1 13 1 13 5"></polyline>
+			<polyline points="13 9 13 13 9 13"></polyline>
+			<polyline points="5 13 1 13 1 9"></polyline>
+		</g>
+	</svg>
+)
 
-Icon.Collapse = () => {
-	return (
-		<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
-			<g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-				<polyline points="1 5 5 5 5 1"></polyline>
-				<polyline points="9 1 9 5 13 5"></polyline>
-				<polyline points="13 9 9 9 9 13"></polyline>
-				<polyline points="5 13 5 9 1 9"></polyline>
-			</g>
-		</svg>
-	)
-}
+Icon.Collapse = () => (
+	<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<g stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+			<polyline points="1 5 5 5 5 1"></polyline>
+			<polyline points="9 1 9 5 13 5"></polyline>
+			<polyline points="13 9 9 9 9 13"></polyline>
+			<polyline points="5 13 5 9 1 9"></polyline>
+		</g>
+	</svg>
+)
 
 Icon.SmallSpinner = () => {
 	return (
@@ -67,25 +61,7 @@ Icon.Spinner = () => {
 	)
 }
 
-Icon.Brightness = () => (
-	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M10.0029 7C11.6398 7 13 8.35749 13 9.99706C13 11.6366 11.6398 13 10.0029 13C8.36016 13 7 11.6366 7 9.99706C7 8.35749 8.36016 7 10.0029 7Z" stroke="currentColor" strokeWidth="2" fill="none" />
-		<rect x="9" y="1" width="2" height="3" rx="1" fill="currentColor"/>
-		<rect x="15.6567" y="2.92896" width="2" height="3" rx="1" transform="rotate(45 15.6567 2.92896)" fill="currentColor"/>
-		<rect x="9" y="16" width="2" height="3" rx="1" fill="currentColor"/>
-		<rect x="5.05029" y="13.5356" width="2" height="3" rx="1" transform="rotate(45 5.05029 13.5356)" fill="currentColor"/>
-		<rect x="16" y="9" width="3" height="2" rx="1" fill="currentColor"/>
-		<rect x="14.9497" y="13.5356" width="3" height="2" rx="1" transform="rotate(45 14.9497 13.5356)" fill="currentColor"/>
-		<rect x="1" y="9" width="3" height="2" rx="1" fill="currentColor"/>
-		<rect x="4.34326" y="2.92896" width="3" height="2" rx="1" transform="rotate(45 4.34326 2.92896)" fill="currentColor"/>
-	</svg>
-)
-
-Icon.Moon = () => (
-	<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M12.5454 11.8065C13.3007 11.8065 14.05 11.6973 14.6727 11.5571C13.6062 13.4684 11.1995 15 8.3852 15C4.14468 15 1 12.0208 1 7.87097C1 5.15153 2.46609 2.59685 4.64661 1.36934C4.46112 2.1296 4.35226 3.01956 4.35226 3.70161C4.35226 6.10561 5.1287 8.15603 6.60223 9.60594C8.07382 11.0539 10.1423 11.8065 12.5454 11.8065Z" stroke="currentColor" strokeWidth="2" fill="none" />
-	</svg>
-)
+Icon.Brightness = Icon.Sun
 
 Icon.RightCaret = () => (
 	<svg width="9px" height="14px" viewBox="0 0 9 14" version="1.1" xmlns="http://www.w3.org/2000/svg">

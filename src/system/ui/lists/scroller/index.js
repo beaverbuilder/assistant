@@ -55,6 +55,7 @@ export const Scroller = ( {
 	after,
 	scrollerClassName,
 	noResultsMessage,
+	endcap: EndCap = List.EndMessage,
 	...rest
 } ) => {
 	const scrollRef = useRef()
@@ -76,15 +77,21 @@ export const Scroller = ( {
 		<div className={ classes } ref={ scrollRef }>
 			{before}
 			<List items={ items } { ...rest } />
-			<div style={ { minHeight: 100 } }>
-				{ isFetching && <List.Loading /> }
-				{ ! isFetching && ! hasMoreItems && ! items.length &&
+			{ isFetching && (
+				<div style={ { minHeight: 100 } }>
+					<List.Loading />
+				</div>
+			) }
+			{ ! isFetching && ! hasMoreItems && ! items.length && (
+				<div style={ { minHeight: 100 } }>
 					<List.NoResultsMessage message={ noResultsMessage } />
-				}
-				{ ! isFetching && ! hasMoreItems && !! items.length && (
-					<List.EndMessage />
-				)}
-			</div>
+				</div>
+			)}
+			{ ! isFetching && ! hasMoreItems && !! items.length && (
+				<div style={ { minHeight: 100 } }>
+					<EndCap />
+				</div>
+			)}
 			{after}
 		</div>
 	)

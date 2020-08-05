@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n'
 import cloud from 'assistant/cloud'
 import { getAppState, getAppActions } from 'assistant/data'
 

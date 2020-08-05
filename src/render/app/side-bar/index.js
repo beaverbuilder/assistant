@@ -130,7 +130,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 							pathname: `/${handle}`,
 							state: app,
 						}
-						const isSelected = pathname.startsWith( `/${handle}` )
+						const isSelected = handle === pathname.split( '/' )[1]
 
 						const iconProps = {
 							icon,

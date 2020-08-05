@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemConfig } from 'assistant/data'
-import { Button, Layout, Page } from 'assistant/ui'
+import { Page } from 'assistant/ui'
 import { getQueryArgs, addQueryArgs } from 'assistant/utils/url'
 import cloud from 'assistant/cloud'
 import AppIcon from './icon'
+import { ConnectCard, ConnectButton } from './ui'
 
 export default ( { baseURL } ) => {
 	const history = useHistory()
@@ -49,20 +50,25 @@ const Main = () => {
 	return (
 		<Page
 			className='fl-asst-connect-layout'
-			title={ __( 'Cloud' ) }
+			title={ __( 'Connect to Assistant Pro' ) }
 			icon={ <AppIcon context='sidebar' /> }
 			shouldShowBackButton={ false }
 		>
-			<Layout.Headline>{ __( 'Connect to Assistant Cloud' ) }</Layout.Headline>
-			<p>{ __( 'Click the button below to connect this site to your Assistant Cloud account.' ) }</p>
-			<Button appearance="normal" onClick={ connect }>
-				{ __( 'Connect' ) }
-			</Button>
-			<Layout.Box padX={ false }>
-				<a href={ `${ cloudConfig.appUrl }/register` } target='blank'>
-					{ __( 'Don\'t have an account? Register now!' ) }
-				</a>
-			</Layout.Box>
+
+			<p>{__( 'To use libraries, you’ll need an Assistant Pro account.' )}</p>
+
+			<ConnectCard>
+				<p>{__( 'Assistant Pro joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them.' )}</p>
+				<ConnectButton onClick={ connect }>
+					{__( 'Get Connected' )}
+				</ConnectButton>
+
+				<div style={ { marginTop: 20 } }>
+					<a href={ `${ cloudConfig.appUrl }/register` } target='blank'>
+						{ __( 'Don\'t have an account? Register now!' ) }
+					</a>
+				</div>
+			</ConnectCard>
 		</Page>
 	)
 }

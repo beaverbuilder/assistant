@@ -14,15 +14,15 @@ const HeroImage = () => {
 	const { item } = ItemContext.use()
 	const { type, data, media } = item
 
-	if ( !! media.length ) {
+	if ( media.length ) {
 		return <img src={ media[0].url } />
 	}
 	if ( 'svg' === type ) {
 		return (
 			<div
-				dangerouslySetInnerHTML={{
+				dangerouslySetInnerHTML={ {
 					__html: data.xml
-				}}
+				} }
 				className="fl-asst-item-svg-container"
 			/>
 		)

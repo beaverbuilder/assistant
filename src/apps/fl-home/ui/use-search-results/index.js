@@ -30,6 +30,10 @@ export default () => {
 			} ).then( response => {
 				const results = []
 
+				console.log( response.data )
+
+				// TODO: Check response.data format before mapping
+
 				response.data.map( ( result, key ) => {
 					const { label, format } = config[ key ]
 					if ( ! result.items || ! result.items.length ) {

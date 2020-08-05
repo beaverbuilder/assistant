@@ -10,7 +10,7 @@
         }
 
         // Card Box
-        --shadow-color: #EDF0F3;
+        --shadow-color: var(--fluid-transparent-11);
 
         .fl-asst-floating-box {
             background: var(--fluid-background);
@@ -25,7 +25,7 @@
     &.fluid-color-scheme-dark {
         #cards {
             --shadow-color: transparent;
-            --fl-asst-card-background: var(--fluid-opaque-0) !important;
+            --fl-asst-card-background: var(--fluid-opaque-1) !important;
 
             .fluid-page-content {
                 background: var(--fl-asst-card-background);

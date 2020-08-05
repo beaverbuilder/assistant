@@ -13,8 +13,7 @@ export const registerAppStore = args => {
 		state: initialState,
 		actions,
 		reducers,
-		effects,
-		serialize = state => state
+		effects
 	} = args
 
 	const storeKey = `${ key }/state`
