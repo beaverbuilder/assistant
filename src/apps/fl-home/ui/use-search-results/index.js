@@ -30,7 +30,8 @@ export default () => {
 			} ).then( response => {
 				const results = []
 
-				console.log(response.data)
+				console.log( response.data )
+
 				// TODO: Check response.data format before mapping
 
 				response.data.map( ( result, key ) => {

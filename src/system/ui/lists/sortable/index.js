@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import c from 'classnames'
 import usePositionReorder from './use-position-reorder'
 import Item from './item'
@@ -18,8 +18,8 @@ const Sortable = ( {
 	after,
 	...rest
 } ) => {
-	const [order, updatePosition, updateOrder] = usePositionReorder( items, setItems )
-	const [isSorting, setIsSorting] = useState( false )
+	const [ order, updatePosition, updateOrder ] = usePositionReorder( items, setItems )
+	const [ isSorting, setIsSorting ] = useState( false )
 
 	// Need to provide a unique key for each item
 	// Indexes do not work well here.
@@ -29,7 +29,7 @@ const Sortable = ( {
 
 	return (
 		<Tag
-		 	className={ c( { 'is-sorting' : isSorting }, className ) }
+			className={ c( { 'is-sorting': isSorting }, className ) }
 			{ ...rest }
 		>
 			{ before }
@@ -58,7 +58,6 @@ const Sortable = ( {
 		</Tag>
 	)
 }
-
 
 
 export default Sortable

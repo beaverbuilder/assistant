@@ -258,16 +258,16 @@ export const EndMessage = () => {
 		<Layout.Row>
 			<Button
 				tag='span'
-				role={false}
+				role={ false }
 				size="lg"
-				style={{
+				style={ {
 					borderRadius: '50%',
 					width: 60,
 					height: 60,
 					padding: 5,
 					pointerEvents: 'none'
-				}} >
-				<Icon.Pencil size={30} />
+				} } >
+				<Icon.Pencil size={ 30 } />
 			</Button>
 		</Layout.Row>
 	)

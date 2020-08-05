@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import useMeasurePosition from './use-measure-position'
 
 const defaultTransition = {
-    duration: 0.25,
-    ease: "easeInOut"
+	duration: 0.25,
+	ease: 'easeInOut'
 }
 
 const SortableItem = ( {
@@ -18,7 +18,7 @@ const SortableItem = ( {
 	children,
 	onSortStart,
 	onSortEnd,
-    transition = defaultTransition,
+	transition = defaultTransition,
 
 	...rest
 } ) => {
@@ -38,7 +38,7 @@ const SortableItem = ( {
 
 	return (
 		<motion.li
-            className={ classes }
+			className={ classes }
 			ref={ ref }
 			layout
 			initial={ false }
@@ -55,7 +55,7 @@ const SortableItem = ( {
 				onSortEnd()
 			} }
 			onViewportBoxUpdate={ ( vBox, delta ) => isDragging && updateOrder( i, delta.y.translate ) }
-            transition={transition}
+			transition={ transition }
 			{ ...rest }
 		>
 			{children}

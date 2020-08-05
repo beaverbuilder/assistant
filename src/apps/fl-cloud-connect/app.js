@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemConfig } from 'assistant/data'
-import { Button, Layout, Page } from 'assistant/ui'
+import { Page } from 'assistant/ui'
 import { getQueryArgs, addQueryArgs } from 'assistant/utils/url'
 import cloud from 'assistant/cloud'
 import AppIcon from './icon'
@@ -55,15 +55,15 @@ const Main = () => {
 			shouldShowBackButton={ false }
 		>
 
-			<p>{__('To use libraries, you’ll need an Assistant Pro account.')}</p>
+			<p>{__( 'To use libraries, you’ll need an Assistant Pro account.' )}</p>
 
 			<ConnectCard>
-				<p>{__('Assistant Pro joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them.')}</p>
+				<p>{__( 'Assistant Pro joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them.' )}</p>
 				<ConnectButton onClick={ connect }>
-					{__('Get Connected')}
+					{__( 'Get Connected' )}
 				</ConnectButton>
 
-				<div style={{ marginTop: 20 }}>
+				<div style={ { marginTop: 20 } }>
 					<a href={ `${ cloudConfig.appUrl }/register` } target='blank'>
 						{ __( 'Don\'t have an account? Register now!' ) }
 					</a>

@@ -15,7 +15,7 @@ export default () => {
 					padding: 0
 				} }
 			>
-				<Layout.Headline style={{ margin: 10 }}>
+				<Layout.Headline style={ { margin: 10 } }>
 					{ library.name }
 				</Layout.Headline>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Filter } from 'assistant/ui'
 import { getAppHooks } from 'assistant/data'
