@@ -1,6 +1,5 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { __ } from '@wordpress/i18n'
 import { Notice, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 import ItemContext from './context'

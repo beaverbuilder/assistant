@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-import { __ } from '@wordpress/i18n'
-import { Layout } from 'assistant/ui'
-import cloud from 'assistant/cloud'
 import './style.scss'
 
 import Search from './search'

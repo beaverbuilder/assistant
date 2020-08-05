@@ -1,7 +1,6 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
-import c from 'classnames'
 import {
 	App,
 	Page,

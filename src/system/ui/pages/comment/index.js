@@ -348,7 +348,6 @@ export const Comment = () => {
 					( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 					<Button
 						appearance='elevator'
-						status='primary'
 						title={ __( 'Approve' ) }
 						onClick={ approveComment }
 					>
