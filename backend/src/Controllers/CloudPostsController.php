@@ -4,6 +4,7 @@ namespace FL\Assistant\Controllers;
 
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\System\View;
+use FL\Assistant\Data\Transformers\PostTransformer;
 use WP_REST_Server;
 
 /**
@@ -11,9 +12,11 @@ use WP_REST_Server;
  */
 class CloudPostsController extends ControllerAbstract {
 
+	protected $posts;
 	protected $view;
 
-	public function __construct( View $view ) {
+	public function __construct( PostTransformer $posts, View $view ) {
+		$this->posts = $posts;
 		$this->view = $view;
 	}
 
@@ -326,9 +329,9 @@ class CloudPostsController extends ControllerAbstract {
 			}
 
 			return rest_ensure_response(
-				[
-					'success' => true,
-				]
+				$this->posts->transform(
+					get_post( $new_post_id )
+				)
 			);
 		}
 
