@@ -1,5 +1,4 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
 import { Layout  } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
@@ -17,7 +16,6 @@ export default ( { teamId } ) => {
 					src={ member.gravatar.sm }
 					style={ {
 						width: '25px',
-						marginRight: 'var(--fluid-sm-space)',
 						borderRadius: '100%',
 						marginRight: '-5px'
 					} }

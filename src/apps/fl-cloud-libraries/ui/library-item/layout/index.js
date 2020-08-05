@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Form, Layout, Page } from 'assistant/ui'
+import { Form, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 import { getFormSections, getFormDefaults, getFormData } from '../form'
 import ItemContext from '../context'
@@ -22,7 +22,6 @@ export default () => {
 		renderForm,
 		submitForm,
 		resetForm,
-		isSubmitting,
 		hasChanges
 	} = Form.useForm( {
 		defaults: getFormDefaults( item ),

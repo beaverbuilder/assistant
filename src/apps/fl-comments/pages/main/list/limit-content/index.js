@@ -1,6 +1,6 @@
 import React, { useState, useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Button, Icon, Layout } from 'assistant/ui'
+import { Button, Layout } from 'assistant/ui'
 import './style.scss'
 
 const LimitContent = ( {

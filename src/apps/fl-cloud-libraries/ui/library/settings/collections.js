@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Form, Layout, Page } from 'assistant/ui'
+import { Button, Icon, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 
 export default ( { library } ) => {

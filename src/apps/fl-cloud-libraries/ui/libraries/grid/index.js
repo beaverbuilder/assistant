@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Layout, Text, Form, Collection } from 'assistant/ui'
-import { getAppHooks, useAppState } from 'assistant/data'
+import { Button, Icon, Layout, Text, Collection } from 'assistant/ui'
+import { getAppHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
 import LibraryInlineCreate from './inline-create'
 import './style.scss'
@@ -11,7 +10,6 @@ import './style.scss'
 export default ( {
 	headline = '',
 	team = null,
-	query = null,
 } ) => {
 	const history = useHistory()
 	const teamId = team ? team.id : 0
@@ -44,7 +42,7 @@ export default ( {
 		cloud.libraries.create( data ).then( response => {
 			ownerLibraries.unshift( response.data )
 			setLibraries( { ...libraries, [ teamId ]: ownerLibraries } )
-		} ).catch( error => {
+		} ).catch( () => {
 			alert( __( 'Something went wrong. Please try again.' ) )
 		} ).finally( () => {
 			setLoading( false )
@@ -53,10 +51,10 @@ export default ( {
 
 	const deleteLibrary = id => {
 		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-			cloud.libraries.delete( id ).then( response => {
+			cloud.libraries.delete( id ).then( () => {
 				const newOwnerLibraries = libraries[ teamId ].filter( lib => lib.id !== id )
 				setLibraries( { ...libraries, [ teamId ]: newOwnerLibraries } )
-			} ).catch( error => {
+			} ).catch( () => {
 				alert( __( 'Something went wrong. Please try deleting again.' ) )
 			} )
 		}
@@ -115,7 +113,7 @@ export default ( {
 				appearance={ filter.displayAs }
 				maxItems={ ! showAll ? maxItems : null }
 			>
-				{ hasLibraries && ownerLibraries.map( ( library, i ) => {
+				{ hasLibraries && ownerLibraries.map( library => {
 					return (
 						<Collection.Item
 							key={ library.id }

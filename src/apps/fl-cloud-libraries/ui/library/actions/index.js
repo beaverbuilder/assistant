@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { __ } from '@wordpress/i18n'
 import { Button, Icon } from 'assistant/ui'
 import LibraryContext from '../context'
 

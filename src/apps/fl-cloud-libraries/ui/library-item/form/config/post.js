@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'

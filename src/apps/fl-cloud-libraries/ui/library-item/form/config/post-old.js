@@ -216,7 +216,7 @@ const ItemImport = ( { item } ) => {
 			wpRest
 				.posts()
 				.syncFromLib( post, item.id, overrideData )
-				.then( response => {
+				.then( () => {
 					alert( __( 'Post Synced Successfully' ) )
 				} )
 				.catch( error => {

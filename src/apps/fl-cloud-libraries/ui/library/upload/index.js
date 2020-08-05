@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Text } from 'fluid'
 import { Button, Icon, Layout } from 'assistant/ui'

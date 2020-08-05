@@ -29,7 +29,7 @@
                     background: var(--line-color);
 
                     &.is-pending {
-                        background: var(--fluid-primary-color);
+                        background: var(--fluid-blue-7);
                     }
                     &.is-spam {
                         background: var(--fluid-alert-color);
@@ -80,8 +80,8 @@
             .fl-asst-comment-meta {
                 padding: var(--fluid-med-space);
                 margin-bottom: var(--fluid-med-space);
-                background: var(--fluid-primary-background);
-                color: var(--fluid-primary-color);
+                background: var(--fluid-box-background);
+                color: var(--fluid-box-color);
                 border-radius: var(--fluid-radius);
                 display: flex;
                 flex-direction: column;
@@ -128,9 +128,9 @@
             }
         }
 
-        .is-pending .fl-asst-comment-author-name {
+        /*.is-pending .fl-asst-comment-author-name {
             color: var(--fluid-primary-color);
-        }
+        }*/
         .is-spam .fl-asst-comment-author-name {
             color: var(--fluid-alert-color);
         }
