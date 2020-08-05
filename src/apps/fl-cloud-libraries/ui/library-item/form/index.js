@@ -102,7 +102,10 @@ export const getFormActions = ( item ) => {
  */
 export const getFormDefaults = ( item ) => {
 	const { type, name, collections } = item
-	const defaults = { name, collections }
+	const defaults = {
+		name,
+		collections: collections.map( collection => collection.name )
+	}
 	if ( methods[ type ] ) {
 		return methods[ type ].getDefaults( item, defaults )
 	}

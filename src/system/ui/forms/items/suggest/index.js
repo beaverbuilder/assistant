@@ -21,8 +21,10 @@ export const SuggestItem = ( {
 		}
 		const newOptions = []
 		Object.keys( options ).map( key => {
-			if ( options[ key ].includes( inputValue ) ) {
-				newOptions[ key ] = options[ key ]
+			if ( options[ key ].toLowerCase().includes( inputValue.toLowerCase() ) ) {
+				if ( ! value.includes( key ) ) {
+					newOptions[ key ] = options[ key ]
+				}
 			}
 		} )
 		setSuggestOptions( Object.keys( newOptions ).length ? newOptions : null )
@@ -31,12 +33,10 @@ export const SuggestItem = ( {
 	const getTags = () => {
 		const tags = []
 		value.map( v => {
-			if ( options[ v ] ) {
-				tags.push( {
-					id: v,
-					label: options[ v ],
-				} )
-			}
+			tags.push( {
+				id: v,
+				label: options[ v ] ? options[ v ] : v,
+			} )
 		} )
 		return tags
 	}

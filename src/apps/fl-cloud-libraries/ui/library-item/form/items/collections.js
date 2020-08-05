@@ -9,22 +9,42 @@ export default ( {
 	libraryId
 } ) => {
 	const [ collections, setCollections ] = cloud.libraries.useCollections( libraryId )
+	const options = []
 
 	if ( ! collections ) {
 		return null
 	}
 
+	collections.map( collection => {
+		options[ collection.name ] = collection.name
+	} )
+
+	const addCollection = ( name ) => {
+		const newValue = [ ...value ]
+
+		if ( ! name ) {
+			return
+		}
+		if ( ! newValue.includes( name ) ) {
+			newValue.push( name )
+		}
+
+		onChange( newValue )
+	}
+
+	const removeCollection = ( name ) => {
+		const newValue = [ ...value ]
+		newValue.splice( newValue.indexOf( name ), 1 )
+		onChange( newValue )
+	}
+
 	return (
 		<Form.SuggestItem
 			placeholder={ __( 'New Collection' ) }
-			options={ [] }
-			value={ [] }
-			onRemove={ v => {
-				console.log( v )
-			} }
-			onAdd={ name => {
-				console.log( name )
-			} }
+			options={ options }
+			value={ value }
+			onAdd={ addCollection }
+			onRemove={ removeCollection }
 		/>
 	)
 }
