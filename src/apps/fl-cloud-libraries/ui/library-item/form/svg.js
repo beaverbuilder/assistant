@@ -6,15 +6,11 @@ export const getSections = ( item, sections ) => {
 	}
 }
 
-export const getActions = ( item ) => {
+export const getActions = () => {
 
-	const importSvg = () => {
+	const importSvg = () => {}
 
-	}
-
-	const replaceSvg = () => {
-
-	}
+	const replaceSvg = () => {}
 
 	return [
 		{

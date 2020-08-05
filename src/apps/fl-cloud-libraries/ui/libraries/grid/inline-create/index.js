@@ -17,7 +17,7 @@ const InlinePlusIcon = () => (
 			color: 'var(--fluid-blue-14)',
 			borderRadius: '50%'
 		} }>
-		      <Icon.PlusSmall />
+			<Icon.PlusSmall />
 		</span>
 	</span>
 )
