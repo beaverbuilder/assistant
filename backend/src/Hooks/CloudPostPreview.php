@@ -22,7 +22,7 @@ class CloudPostPreview {
 	public function override_posts_results( $posts ) {
 		remove_filter( 'posts_results', [ $this, 'override_posts_results' ], PHP_INT_MAX );
 
-		$post_id = absint( $_GET['page_id'] );
+		$post_id = absint( $_GET['p'] );
 		$preview = get_post( $post_id );
 		$preview->post_status = 'publish';
 
