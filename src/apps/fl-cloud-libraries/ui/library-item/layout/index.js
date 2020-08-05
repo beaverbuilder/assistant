@@ -10,7 +10,7 @@ export default () => {
 	const { item, setItem, renderNotices } = ItemContext.use()
 
 	const onSubmit = ( { values, setErrors } ) => {
-		const data = getFormData( values )
+		const data = getFormData( item, values )
 		return cloud.libraries.updateItem( item.id, data ).then( response => {
 			setItem( response.data )
 		} ).catch( error => {
@@ -24,8 +24,8 @@ export default () => {
 		resetForm,
 		hasChanges
 	} = Form.useForm( {
-		defaults: getFormDefaults(),
-		sections: getFormSections(),
+		defaults: getFormDefaults( item ),
+		sections: getFormSections( item ),
 		onSubmit,
 	} )
 

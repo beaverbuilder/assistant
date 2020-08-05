@@ -1,8 +1,6 @@
 <?php
 
-
 namespace FL\Assistant\Providers;
-
 
 use FL\Assistant\Hooks\Actions\OnEditUserProfile;
 use FL\Assistant\Hooks\Actions\OnEnqueueScripts;
@@ -12,6 +10,7 @@ use FL\Assistant\Hooks\Actions\OnBeforeDeletePost;
 use FL\Assistant\Hooks\Actions\OnDeleteTerm;
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
+use FL\Assistant\Hooks\CloudPostPreview;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 use FL\Assistant\Data\Transformers\NotationsTransformer;
 use FL\Assistant\Data\Repository\NotationsRepository;
@@ -33,6 +32,8 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 		$this->actions();
 		$this->filters();
+
+		new CloudPostPreview();
 	}
 
 	public function actions() {

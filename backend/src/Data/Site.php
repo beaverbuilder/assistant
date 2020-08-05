@@ -117,7 +117,7 @@ class Site {
 		$data['intro']   = $intro;
 		$data['name']    = $name;
 		$data['type']    = $type;
-		
+
 		$data['actions'] = $this->filter_actions_by_capability( $actions );
 
 		$theme         = wp_get_theme();
@@ -201,6 +201,7 @@ class Site {
 		$urls['dashboard'] = admin_url();
 
 		$urls['createPost'] = admin_url( 'post-new.php' );
+		$urls['editPost'] = admin_url( 'post.php?action=edit&post=' );
 
 		$url = static::get_customize_url();
 		if ( $url ) {
