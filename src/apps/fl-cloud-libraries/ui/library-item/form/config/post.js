@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import ItemContext from '../context'
+import ItemContext from '../../context'
 
 export const getSections = ( item, sections ) => {
 	return {

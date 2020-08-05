@@ -2,9 +2,12 @@ import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import cloud from 'assistant/cloud'
 
-import * as post from './post'
-import * as image from './image'
-import * as svg from './svg'
+import * as post from './config/post'
+import * as image from './config/image'
+import * as svg from './config/svg'
+
+import ItemContext from '../context'
+import CollectionsItem from './items/collections'
 
 const methods = {
 	post,
@@ -16,6 +19,7 @@ const methods = {
  * Item specific form section config.
  */
 export const getFormSections = ( item ) => {
+	const { libraryId } = ItemContext.use()
 	const { type } = item
 
 	let sections = {
@@ -32,10 +36,8 @@ export const getFormSections = ( item ) => {
 				},
 				collections: {
 					label: __( 'Collections' ),
-					component: 'select',
-					options: {
-						'': __( 'Choose...' ),
-					},
+					component: CollectionsItem,
+					libraryId
 				},
 			},
 		}

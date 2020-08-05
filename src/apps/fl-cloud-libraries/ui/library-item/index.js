@@ -7,7 +7,7 @@ import ItemContext from './context'
 import ItemLayout from './layout'
 
 export default () => {
-	const { itemId } = useParams()
+	const { id, itemId } = useParams()
 	const [ item, setItem ] = cloud.libraries.useItem( itemId )
 	const { renderNotices, createNotice } = Notice.useNotices()
 
@@ -16,6 +16,7 @@ export default () => {
 	}
 
 	const context = {
+		libraryId: id,
 		item,
 		setItem,
 		renderNotices,
