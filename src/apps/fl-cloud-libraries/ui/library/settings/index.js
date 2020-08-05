@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Form, Layout, Page } from 'assistant/ui'
+import { getAppHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
 import LibraryContext from '../context'
@@ -9,7 +10,9 @@ import LibraryCollections from './collections'
 
 export default () => {
 	const history = useHistory()
-	const { library } = LibraryContext.use()
+	const { useLibraries } = getAppHooks( 'fl-cloud-libraries' )
+	const [ libraries, setLibraries ] = useLibraries()
+	const { library, setLibrary } = LibraryContext.use()
 
 	const fields = {
 		name: {
@@ -30,7 +33,15 @@ export default () => {
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.update( library.id, values ).catch( error => {
+		return cloud.libraries.update( library.id, values ).then( response => {
+			const library = response.data
+			const owner = 'team' === library.owner_type ? library.owner_id : 0
+			setLibraries( {
+				...libraries,
+				[ owner ]: libraries[ owner ].map( entry => entry.id === library.id ? library : entry )
+			} )
+			setLibrary( library )
+		} ).catch( error => {
 			setErrors( error.response.data.errors )
 		} )
 	}
@@ -47,9 +58,13 @@ export default () => {
 
 	const deleteLibrary = () => {
 		if ( confirm( __( 'Do you really want to delete this library?' ) ) ) {
-			cloud.libraries.delete( library.id ).then( () => {
-				history.replace( '/fl-cloud-libraries' )
+			cloud.libraries.delete( library.id )
+			const owner = 'team' === library.owner_type ? library.owner_id : 0
+			setLibraries( {
+				...libraries,
+				[ owner ]: libraries[ owner ].filter( entry => entry.id !== library.id )
 			} )
+			history.replace( '/fl-cloud-libraries' )
 		}
 	}
 
