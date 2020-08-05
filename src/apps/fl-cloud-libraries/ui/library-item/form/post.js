@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
+import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 import ItemContext from '../context'
 
-export const getSections = ( sections ) => {
+export const getSections = ( item, sections ) => {
 	return {
 		...sections,
 		info: {
@@ -21,8 +22,8 @@ export const getSections = ( sections ) => {
 	}
 }
 
-export const getActions = () => {
-	const { item, createNotice } = ItemContext.use()
+export const getActions = ( item ) => {
+	const { createNotice } = ItemContext.use()
 	const [ importing, setImporting ] = useState( false )
 	const [ previewing, setPreviewing ] = useState( false )
 	const history = useHistory()
@@ -87,8 +88,7 @@ export const getActions = () => {
 	]
 }
 
-export const getDefaults = ( defaults ) => {
-	const { item } = ItemContext.use()
+export const getDefaults = ( item, defaults ) => {
 	const { post } = item.data
 	const { contentTypes } = getSystemConfig()
 	let postType = post.post_type
@@ -103,6 +103,9 @@ export const getDefaults = ( defaults ) => {
 	}
 }
 
-export const getData = ( values, data ) => {
+export const getData = ( item, values, data ) => {
+	data.data = item.data
+	data.data.post.post_title = data.name
+	data.data.post.post_name = createSlug( data.name )
 	return data
 }

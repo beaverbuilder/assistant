@@ -1,12 +1,12 @@
 import { __ } from '@wordpress/i18n'
 
-export const getSections = ( sections ) => {
+export const getSections = ( item, sections ) => {
 	return {
 		...sections,
 	}
 }
 
-export const getActions = () => {
+export const getActions = ( item ) => {
 
 	const importImage = () => {
 
@@ -28,12 +28,12 @@ export const getActions = () => {
 	]
 }
 
-export const getDefaults = ( defaults ) => {
+export const getDefaults = ( item, defaults ) => {
 	return {
 		...defaults,
 	}
 }
 
-export const getData = ( values, data ) => {
+export const getData = ( item, values, data ) => {
 	return data
 }

@@ -1,7 +1,6 @@
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import cloud from 'assistant/cloud'
-import ItemContext from '../context'
 
 import * as post from './post'
 import * as image from './image'
@@ -16,8 +15,7 @@ const methods = {
 /**
  * Item specific form section config.
  */
-export const getFormSections = () => {
-	const { item } = ItemContext.use()
+export const getFormSections = ( item ) => {
 	const { type } = item
 
 	let sections = {
@@ -44,7 +42,7 @@ export const getFormSections = () => {
 	}
 
 	if ( methods[ type ] ) {
-		sections = methods[ type ].getSections( sections )
+		sections = methods[ type ].getSections( item, sections )
 	}
 
 	sections.actions = {
@@ -52,7 +50,7 @@ export const getFormSections = () => {
 		fields: {
 			actions: {
 				component: 'actions',
-				options: args => getFormActions(),
+				options: args => getFormActions( item ),
 			},
 		},
 	}
@@ -63,8 +61,7 @@ export const getFormSections = () => {
 /**
  * Item specific form actions.
  */
-export const getFormActions = () => {
-	const { item } = ItemContext.use()
+export const getFormActions = ( item ) => {
 	const { id, type } = item
 	const history = useHistory()
 
@@ -92,7 +89,7 @@ export const getFormActions = () => {
 	]
 
 	if ( methods[ type ] ) {
-		return methods[ type ].getActions().concat( actions )
+		return methods[ type ].getActions( item ).concat( actions )
 	}
 
 	return actions
@@ -101,12 +98,11 @@ export const getFormActions = () => {
 /**
  * Item specific form defaults.
  */
-export const getFormDefaults = () => {
-	const { item } = ItemContext.use()
+export const getFormDefaults = ( item ) => {
 	const { type, name, collections } = item
 	const defaults = { name, collections }
 	if ( methods[ type ] ) {
-		return methods[ type ].getDefaults( defaults )
+		return methods[ type ].getDefaults( item, defaults )
 	}
 	return defaults
 }
@@ -114,11 +110,12 @@ export const getFormDefaults = () => {
 /**
  * Item specific data sent to the API.
  */
-export const getFormData = ( values ) => {
-	const { type, name, collections } = values
+export const getFormData = ( item, values ) => {
+	const { type } = item
+	const { name, collections } = values
 	const data = { name, collections }
 	if ( methods[ type ] ) {
-		return methods[ type ].getData( values, data )
+		return methods[ type ].getData( item, values, data )
 	}
 	return data
 }
