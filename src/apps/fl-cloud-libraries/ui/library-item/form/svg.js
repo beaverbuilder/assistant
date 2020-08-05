@@ -12,10 +12,18 @@ export const getActions = () => {
 
 	}
 
+	const replaceSvg = () => {
+
+	}
+
 	return [
 		{
 			label: __( 'Import' ),
 			onClick: importSvg,
+		},
+		{
+			label: __( 'Replace File' ),
+			onClick: replaceSvg,
 		}
 	]
 }

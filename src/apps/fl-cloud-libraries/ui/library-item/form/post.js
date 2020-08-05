@@ -24,53 +24,65 @@ export const getSections = ( sections ) => {
 export const getActions = () => {
 	const { item, createNotice } = ItemContext.use()
 	const [ importing, setImporting ] = useState( false )
+	const [ previewing, setPreviewing ] = useState( false )
 	const history = useHistory()
+	const postsApi = getWpRest().posts()
 
 	const importPost = () => {
 		setImporting( true )
-		getWpRest()
-			.posts()
-			.importFromLibrary( item.id )
-			.then( response => {
-				setImporting( false )
-				if ( response.data.error ) {
-					createNotice( {
-						id: 'import-error',
-						status: 'error',
-						content: __( 'Error importing content.' )
-					} )
-				} else {
-					createNotice( {
-						id: 'import-success',
-						status: 'success',
-						content: (
-							<>
-								{ __( 'Content imported!' ) }
-								<a
-									style={ {
-										textDecoration: 'underline',
-										marginLeft: 'var(--fluid-sm-space)'
-									} }
-									onClick={ () => {
-										history.push( `/fl-content/post/${ response.data.id }`, {
-											item: response.data
-										} )
-									} }
-								>
-									{ __( 'View content.' ) }
-								</a>
-							</>
-						)
-					} )
-				}
-			} )
+		postsApi.importFromLibrary( item.id ).then( response => {
+			setImporting( false )
+			if ( response.data.error ) {
+				createNotice( {
+					id: 'import-error',
+					status: 'error',
+					content: __( 'Error importing content.' )
+				} )
+			} else {
+				createNotice( {
+					id: 'import-success',
+					status: 'success',
+					content: (
+						<>
+							{ __( 'Content imported!' ) }
+							<a
+								style={ {
+									textDecoration: 'underline',
+									marginLeft: 'var(--fluid-sm-space)'
+								} }
+								onClick={ () => {
+									history.push( `/fl-content/post/${ response.data.id }`, {
+										item: response.data
+									} )
+								} }
+							>
+								{ __( 'View content.' ) }
+							</a>
+						</>
+					)
+				} )
+			}
+		} )
+	}
+
+	const previewPost = () => {
+		setPreviewing( true )
+		postsApi.previewLibraryPost( item.id ).then( response => {
+			setPreviewing( false )
+			window.open( response.data.url )
+		} )
 	}
 
 	return [
 		{
 			label: __( 'Import' ),
 			onClick: importPost,
-			disabled: importing
+			disabled: importing,
+		},
+		{
+			label: __( 'Preview' ),
+			onClick: previewPost,
+			disabled: previewing,
 		}
 	]
 }

@@ -12,10 +12,18 @@ export const getActions = () => {
 
 	}
 
+	const replaceImage = () => {
+
+	}
+
 	return [
 		{
 			label: __( 'Import' ),
 			onClick: importImage,
+		},
+		{
+			label: __( 'Replace File' ),
+			onClick: replaceImage,
 		}
 	]
 }

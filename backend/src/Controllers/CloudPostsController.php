@@ -93,6 +93,25 @@ class CloudPostsController extends ControllerAbstract {
 				],
 			]
 		);
+
+		$this->route(
+			'/posts/preview_library_post/(?P<item_id>\d+)',
+			[
+				[
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'preview_library_post' ],
+					'args'                => [
+						'item_id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_others_posts' );
+					},
+				],
+			]
+		);
 	}
 
 
@@ -197,7 +216,6 @@ class CloudPostsController extends ControllerAbstract {
 		}
 
 		if ( is_wp_error( wp_update_post( $override_post ) ) ) {
-
 			return rest_ensure_response(
 				[
 					'error' => true,
@@ -205,9 +223,9 @@ class CloudPostsController extends ControllerAbstract {
 			);
 		} else {
 			return rest_ensure_response(
-				[
-					'success' => true,
-				]
+				$this->posts->transform(
+					get_post( $post_id )
+				)
 			);
 		}
 
@@ -335,6 +353,46 @@ class CloudPostsController extends ControllerAbstract {
 			);
 		}
 
+	}
+
+
+	function preview_library_post( $request ) {
+		global $wpdb;
+
+		$item_id = $request->get_param( 'item_id' );
+
+		$meta = $wpdb->get_row( $wpdb->prepare(
+			"SELECT * FROM $wpdb->postmeta
+			 WHERE meta_key = '_fl_asst_preview_library_item_id'
+			 AND meta_value = %s",
+			 $item_id
+		) );
+
+		if ( $meta ) {
+			$request->set_param( 'id', $meta->post_id );
+			$response = $this->sync_from_library( $request );
+		} else {
+			$response = $this->import_from_library( $request );
+		}
+
+		if ( isset( $response->data['error'] ) ) {
+			return $response;
+		}
+
+		$post_id = $response->data['id'];
+
+		wp_update_post( [
+			'ID' => $post_id,
+			'post_status' => 'auto-draft',
+		] );
+
+		update_post_meta( $post_id, '_fl_asst_preview_library_item_id', $item_id );
+
+		return rest_ensure_response(
+			[
+				'url' => home_url( "/?page_id=$post_id&fl_asst_library_item_preview=1" ),
+			]
+		);
 	}
 
 }
