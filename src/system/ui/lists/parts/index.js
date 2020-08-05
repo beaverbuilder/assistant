@@ -103,9 +103,6 @@ const InfoItem = ( {
 	}
 
 	let Tag = 'div'
-	let newProps = {
-
-	}
 
 	const thumbClasses = classname( {
 		'fl-asst-list-item-thumbnail': true,
@@ -124,7 +121,7 @@ const InfoItem = ( {
 	} )
 
 	return (
-		<Tag className={ classes } { ...newProps }>
+		<Tag className={ classes }>
 			{ before && <div className="fl-asst-list-item-before-content">{before}</div> }
 			<div className="fl-asst-list-item-default-content-row">
 				{ ( hasThumbnail || shouldAlwaysShowThumbnail ) &&

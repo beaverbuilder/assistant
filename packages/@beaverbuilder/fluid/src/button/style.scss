@@ -43,7 +43,7 @@
         &:focus,
         &.is-focused {
             top:0;
-            z-index: 2; // ensure box shadow doesn't get obscured
+            z-index: 3; // ensure box shadow doesn't get obscured
             outline: none;
             text-decoration: none;
             box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
@@ -168,16 +168,17 @@
     .fluid-color-scheme-dark {
         .fluid-button {
             --color: var(--fluid-opaque-10);
-            --background: var(--fluid-transparent-2);
+            --background: var(--fluid-transparent-1);
             --hover: var(--fluid-transparent-3);
             --hover-color: var(--fluid-opaque-14);
 
-            &.fluid-appearance-transparent {
-                --background: transparent;
-            }
             &:focus,
             &.is-focused {
-                box-shadow: 0px 0px 0px 1.5px var(--fluid-accent);
+                background: var(--fluid-opaque-0);
+            }
+
+            &.fluid-appearance-transparent {
+                --background: transparent;
             }
 
             &.fluid-status-primary {

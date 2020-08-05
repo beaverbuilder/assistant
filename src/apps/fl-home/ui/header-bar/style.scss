@@ -85,10 +85,11 @@
 .fluid-color-scheme-dark {
     .fl-asst-home-search-header {
         &.fluid-sticky-element {
+            // Matches --fluid-opaque-1 background on page
             background: linear-gradient( 180deg,
-                                         hsla(210, 40%, 0%, 1 ),
-                                         hsla(210, 40%, 0%, 1 ) 50%,
-                                         hsla(210, 40%, 0%, 0 )
+                                         hsla( var(--fluid-hue), 10%, 10%, 1 ),
+                                         hsla( var(--fluid-hue), 10%, 10%, 1 ) 50%,
+                                         hsla( var(--fluid-hue), 10%, 10%, 0 )
                                         ) !important;
         }
         .fl-asst-floating-element {

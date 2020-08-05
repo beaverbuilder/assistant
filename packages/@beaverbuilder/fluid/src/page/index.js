@@ -29,6 +29,9 @@ const Page = ( {
 	contentWrapStyle = null,
 
 	tag: Tag = 'div',
+	contentBoxTag: ContentTag = 'div',
+	contentBoxProps = {},
+	contentBoxStyle = null,
 
 	overlay,
 
@@ -80,7 +83,14 @@ const Page = ( {
 		flexDirection: 'column'
 	}
 
-	const contentBoxStyle = {
+	const contentBoxStyles = {
+		maxHeight: shouldScroll ? '' : '100%',
+		minHeight: 0,
+		flexShrink: shouldScroll ? 0 : 1,
+		...contentBoxStyle
+	}
+
+	const contentWrapperStyle = {
 		flexGrow: 1,
 		flexShrink: 1,
 		minHeight: 0,
@@ -94,11 +104,7 @@ const Page = ( {
 
 				{ hero && <Hero>{hero}</Hero> }
 
-				<div className="fluid-page-content" style={ {
-					maxHeight: shouldScroll ? '' : '100%',
-					minHeight: 0,
-					flexShrink: shouldScroll ? 0 : 1,
-				} }>
+				<ContentTag className="fluid-page-content" {...contentBoxProps} style={ contentBoxStyles }>
 					<div className="fluid-sticky-element fluid-page-top-content" style={ topContentStyle }>
 
 						{ toolbar }
@@ -129,10 +135,10 @@ const Page = ( {
 						{ header && <Layout.Toolbar size="sm" className="fluid-page-header">{header}</Layout.Toolbar > }
 					</div>
 
-					<Layout.Box padX={ padX } padY={ padY } style={ contentBoxStyle }>
+					<Layout.Box padX={ padX } padY={ padY } style={ contentWrapperStyle }>
 						<ErrorBoundary>{children}</ErrorBoundary>
 					</Layout.Box>
-				</div>
+				</ContentTag>
 			</div>
 			{ footer && <div className="fluid-page-footer">{footer}</div> }
 			{ overlay && <div className="fluid-page-overlay">{overlay}</div> }

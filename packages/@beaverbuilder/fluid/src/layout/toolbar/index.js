@@ -7,9 +7,10 @@ const Toolbar = ( {
 	className,
 	size = 'lg',
 	isSticky = true,
+	tag: Tag = 'div',
 	...rest
 } ) => (
-	<div
+	<Tag
 		className={ c( 'fluid-toolbar', {
 			[`fluid-size-${size}`]: sizes.includes( size ),
 			'fluid-is-sticky': isSticky
