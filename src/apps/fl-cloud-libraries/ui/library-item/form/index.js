@@ -1,13 +1,12 @@
-import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import cloud from 'assistant/cloud'
 
 import * as post from './config/post'
 import * as image from './config/image'
 import * as svg from './config/svg'
 
 import ItemContext from '../context'
-import CollectionsItem from './items/collections'
+import CollectionsField from './fields/collections'
+import ActionsField from './fields/actions'
 
 const methods = {
 	post,
@@ -36,7 +35,7 @@ export const getFormSections = ( item ) => {
 				},
 				collections: {
 					label: __( 'Collections' ),
-					component: CollectionsItem,
+					component: CollectionsField,
 					libraryId
 				},
 			},
@@ -51,8 +50,8 @@ export const getFormSections = ( item ) => {
 		label: __( 'Actions' ),
 		fields: {
 			actions: {
-				component: 'actions',
-				options: args => getFormActions( item ),
+				component: ActionsField,
+				options: () => getFormActions( item ),
 			},
 		},
 	}
@@ -64,37 +63,11 @@ export const getFormSections = ( item ) => {
  * Item specific form actions.
  */
 export const getFormActions = ( item ) => {
-	const { id, type } = item
-	const history = useHistory()
-
-	const moveItem = () => {
-
-	}
-
-	const deleteItem = () => {
-		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-			cloud.libraries.deleteItem( id )
-			history.goBack()
-		}
-	}
-
-	const actions = [
-		{
-			label: __( 'Move To...' ),
-			onClick: moveItem,
-		},
-		{
-			label: __( 'Delete Item' ),
-			onClick: deleteItem,
-			status: 'destructive'
-		},
-	]
-
+	const { type } = item
 	if ( methods[ type ] ) {
-		return methods[ type ].getActions( item ).concat( actions )
+		return methods[ type ].getActions( item )
 	}
-
-	return actions
+	return []
 }
 
 /**
