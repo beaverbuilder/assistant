@@ -1,9 +1,9 @@
 import React from 'react'
 
 export default () => {
-    return (
+	return (
         <>
             <h1>Group Page</h1>
         </>
-    )
+	)
 }

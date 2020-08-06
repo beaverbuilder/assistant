@@ -1,6 +1,6 @@
 .fl-asst {
-    --fl-asst-window-zone-color: hsl(210, 100%, 42%);
-    --fl-asst-window-zone-background: hsla(210, 100%, 36%, .2 );
+    --fl-asst-window-zone-color: var(--fluid-blue-7);
+    --fl-asst-window-zone-background: hsla(210, 100%, 36%, .25 );
 
     .fl-asst-window {
         --fl-asst-window-size: calc( var(--fl-asst-side-toolbar-width) + var(--fl-asst-panel-size) );
@@ -16,12 +16,12 @@
         border-radius: 0;
         transition-property: background, box-shadow, border-radius;
         transition-duration: .25s;
-        box-shadow: 0 0 0 2px rgba(0,0,0,.05),
+        box-shadow: 0 0 0 1.5px hsla(214, 10%, 90%, 0.1 ),
                     0 10px 15px 0 hsla(214, 17%, 41%, 0.2);
 
         .fluid-color-scheme-dark & {
             border-color: transparent;
-            box-shadow: 0 0 0 3px hsla(0, 0%, 26%, .1), 0 1px 5px 0 hsla(0,0,0, .2);
+            box-shadow: 0 0 0 1.5px hsla(0, 0%, 26%, .1), 0 1px 5px 0 hsla(0,0,0, .2);
         }
 
         &.fl-asst-window-mini {
@@ -82,11 +82,11 @@
 
     .fl-asst-window-layer-is-dragging {
         .fl-asst-window-mini {
-            box-shadow: 0 0 0 3px var(--fl-asst-window-zone-color),
+            box-shadow: 0 0 0 1.5px var(--fl-asst-window-zone-color),
                         0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
         }
         .fl-asst-window-normal {
-            box-shadow: 0 0 0 3px var(--fl-asst-window-zone-color),
+            box-shadow: 0 0 0 1.5px var(--fl-asst-window-zone-color),
                         0 15px 45px 0 hsla(214, 17%, 41%, 0.25);
             border-radius: 5px;
         }
@@ -97,7 +97,7 @@
         align-items: center;
         width: 50px;
         height: 50px;
-        border-radius: 10px;
+        border-radius: var(--fluid-radius);
         background: var(--fluid-background) !important;
         overflow: hidden;
         padding:0;
@@ -148,7 +148,7 @@
             --edge-pad: 5px;
             --bordered-edge: calc( var(--edge-pad) + 3px );
             pointer-events: auto;
-            box-shadow: inset 0px 0px 0px 4px var(--fl-asst-window-zone-color);
+            box-shadow: inset 0px 0px 0px 1.5px var(--fl-asst-window-zone-color);
             background-color: var(--fl-asst-window-zone-background);
 
             &:after {
@@ -160,7 +160,7 @@
                 width: 50px;
                 height: 50px;
                 background: var(--fl-asst-window-zone-color);
-                border-radius: 3px;
+                border-radius: var(--fluid-radius);
                 z-index: -1;
             }
             &.fl-asst-window-layer-origin-top-left:after {

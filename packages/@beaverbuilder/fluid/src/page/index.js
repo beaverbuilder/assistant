@@ -104,21 +104,17 @@ const Page = ( {
 
 				{ hero && <Hero>{hero}</Hero> }
 
-				<ContentTag className="fluid-page-content" {...contentBoxProps} style={ contentBoxStyles }>
+				<ContentTag className="fluid-page-content" { ...contentBoxProps } style={ contentBoxStyles }>
 					<div className="fluid-sticky-element fluid-page-top-content" style={ topContentStyle }>
 
 						{ toolbar }
 
 						{ false !== toolbar && ! toolbar && (
-							<div className="fluid-toolbar fluid-page-top-toolbar">
+							<Layout.Toolbar className="fluid-page-top-toolbar">
 
 								{ showBackButton && <BackButton /> }
 
-								{ icon && (
-									<span className="fluid-page-title-icon">
-										{icon}
-									</span>
-								)}
+								{ icon && <span className="fluid-page-title-icon">{icon}</span> }
 
 								{ title && <div className="fluid-page-toolbar-content">
 									<span
@@ -130,7 +126,7 @@ const Page = ( {
 
 								{ actions && <span className="fluid-page-actions">{actions}</span> }
 
-							</div>
+							</Layout.Toolbar>
 						)}
 						{ header && <Layout.Toolbar size="sm" className="fluid-page-header">{header}</Layout.Toolbar > }
 					</div>

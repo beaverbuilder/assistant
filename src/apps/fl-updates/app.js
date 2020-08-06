@@ -118,7 +118,7 @@ const UpdatesMain = ( { handle } ) => {
 	return (
 		<Page
 			title={ __( 'Updates' ) }
-			icon={ <AppIcon context="sidebar" /> }
+			icon={ <AppIcon /> }
 			shouldShowBackButton={ false }
 			actions={ <HeaderActions /> }
 			padY={ false }

@@ -2,6 +2,7 @@ import React, { useState, memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { Button, Icon, Env, List } from 'assistant/ui'
 import {
 	useSystemState,
@@ -81,10 +82,7 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 	const manage = selectApp( 'fl-manage' )
 
 	return (
-		<div
-			className={ classes }
-			style={ { [`${edgeProp}`]: isAppHidden ? '' : '2px solid var(--fluid-line-color)' } }
-		>
+		<div className={ classes }>
 			{ ! isBeaverBuilder && (
 				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top disable-while-sorting">
 					<Button
@@ -102,17 +100,23 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
 			>
 				{ home && (
-					<Button
-						appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
-						shape="round"
-						size="lg"
-						isSelected={ isRoot && ! isAppHidden }
-						onClick={ () => navOrHideApp( isRoot, goToRoot ) }
-						className="disable-while-sorting"
-						title={ home.label }
+					<motion.div
+						tag={motion.a}
+						layout
+						transition={{ layoutX: { duration: 0 } }}
 					>
-						<Icon.Safely icon={ home.icon } />
-					</Button>
+						<Button
+							appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
+							shape="round"
+							size="lg"
+							isSelected={ isRoot && ! isAppHidden }
+							onClick={ () => navOrHideApp( isRoot, goToRoot ) }
+							className="disable-while-sorting"
+							title={ home.label }
+						>
+							<Icon.Safely icon={ home.icon } isSelected={ isRoot && ! isAppHidden }  />
+						</Button>
+					</motion.div>
 				)}
 
 				<List.Sortable
@@ -156,20 +160,26 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 				</List.Sortable>
 
 				{ manage && (
-					<Button
-						appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
-						shape="round"
-						size="lg"
-						isSelected={ isManage && ! isAppHidden }
-						onClick={ () => navOrHideApp( isManage, () => history.push( {
-							pathname: `/${manage.handle}`,
-							state: manage
-						} ) ) }
-						className="disable-while-sorting"
-						title={ manage.label }
+					<motion.div
+						tag={motion.a}
+						layout
+						transition={{ layoutX: { duration: 0 } }}
 					>
-						<Icon.Safely icon={ manage.icon } />
-					</Button>
+						<Button
+							appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
+							shape="round"
+							size="lg"
+							isSelected={ isManage && ! isAppHidden }
+							onClick={ () => navOrHideApp( isManage, () => history.push( {
+								pathname: `/${manage.handle}`,
+								state: manage
+							} ) ) }
+							className="disable-while-sorting"
+							title={ manage.label }
+						>
+							<Icon.Safely icon={ manage.icon } isSelected={ isManage && ! isAppHidden } />
+						</Button>
+					</motion.div>
 				)}
 			</div>
 

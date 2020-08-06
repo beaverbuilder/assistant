@@ -10,7 +10,7 @@ import LibrariesFilter from './filter'
 import LibrariesGrid from './grid'
 
 export default () => {
-	const { filter, teams } = useAppState( 'fl-cloud-libraries', [ 'filter', 'teams' ] )
+	const { filter, teams, isLoadingLibraries } = useAppState( 'fl-cloud-libraries' )
 	const { owner, ...query } = filter
 	const cloudUser = cloud.session.getUser()
 
@@ -24,11 +24,13 @@ export default () => {
 			padY={ false }
 		>
 			<LibrariesFilter />
+
 			<div className='fl-asst-libraries'>
 				{ ( 'all' === owner || 'user' === owner ) &&
 					<LibrariesGrid
 						headline={ cloudUser.name }
 						query={ query }
+						isFetching={ isLoadingLibraries }
 					/>
 				}
 				{ teams.map( ( team, i ) => {

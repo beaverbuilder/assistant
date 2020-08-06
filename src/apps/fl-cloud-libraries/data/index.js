@@ -39,19 +39,22 @@ export const loadLibraries = () => {
 
 	const { order_by, order } = filter
 
-	const search = ( query ) => {
+	const search = query => {
 		query.sort( ( 'ASC' === order ? '' : '-' ) + order_by )
 		return query
 	}
 
-	setIsLoadingLibraries( true )
+	if ( ! Object.keys( libraries ).length ) {
+		setIsLoadingLibraries( true )
+	}
+
 	cloud.libraries.search( null, search ).then( response => {
 		libraries[ 0 ] = response.data
 		setLibraries( { ...libraries } )
 		setIsLoadingLibraries( false )
 	} )
 
-	const setTeamLibraries = ( teams ) => {
+	const setTeamLibraries = teams => {
 		teams.map( team => {
 			cloud.libraries.search( team.id, search ).then( response => {
 				libraries[ team.id ] = response.data
@@ -63,6 +66,7 @@ export const loadLibraries = () => {
 
 	if ( ! teams.length ) {
 		setIsLoadingTeams( true )
+
 		cloud.teams.getAll().then( response => {
 			setTeams( response.data )
 			setTeamLibraries( response.data )

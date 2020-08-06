@@ -10,38 +10,38 @@ export default () => {
 		const items = [
 			{
 				id: 1,
-				firstName: "Justin",
-				lastName: "Busa",
+				firstName: 'Justin',
+				lastName: 'Busa',
 			},
 			{
 				id: 2,
-				firstName: "Billy",
-				lastName: "Young",
+				firstName: 'Billy',
+				lastName: 'Young',
 			},
 			{
 				id: 3,
-				firstName: "Robby",
-				lastName: "McCullough",
+				firstName: 'Robby',
+				lastName: 'McCullough',
 			},
 			{
 				id: 4,
-				firstName: "Anthony",
-				lastName: "Tran",
+				firstName: 'Anthony',
+				lastName: 'Tran',
 			},
 			{
 				id: 5,
-				firstName: "Brent",
-				lastName: "Jett",
+				firstName: 'Brent',
+				lastName: 'Jett',
 			},
 		]
 
-		const Row = props => <tr {...props } />
-		const Cell = props => <td className="cell" {...props} />
-		const MainCell = ({ title, description, ...rest }) => {
+		const Row = props => <tr { ...props } />
+		const Cell = props => <td className="cell" { ...props } />
+		const MainCell = ( { title, description, ...rest } ) => {
 			return (
-				<td className="cell main-cell" {...rest}>
+				<td className="cell main-cell" { ...rest }>
 					<Text.Title
-						subtitle={description}
+						subtitle={ description }
 					>{title}</Text.Title>
 				</td>
 			)
@@ -54,12 +54,12 @@ export default () => {
 				<table>
 					<tbody>
 						<List.Iterator
-							items={items}
+							items={ items }
 							getRow={ () => Row }
-							getCell={getCell}
-							getCellNames={ () => [ 'main', 'first', 'last' ]}
+							getCell={ getCell }
+							getCellNames={ () => [ 'main', 'first', 'last' ] }
 							getCellProps={ ( cellName, item, defaults ) => {
-								switch( cellName ) {
+								switch ( cellName ) {
 								case 'last':
 									return {
 										...defaults,
@@ -77,7 +77,7 @@ export default () => {
 										description: `id: ${item.id}`
 									}
 								}
-							}}
+							} }
 						/>
 					</tbody>
 				</table>
@@ -86,18 +86,18 @@ export default () => {
 	}
 
 	const SimpleListExample = () => {
-		const items = ['red', 'green', 'blue', 'orange', 'yellow']
+		const items = [ 'red', 'green', 'blue', 'orange', 'yellow' ]
 		return (
 			<>
 				<h2>Simple Unordered List</h2>
 				<ul>
 					<List.Iterator
-						items={items}
+						items={ items }
 						getCell={ () => 'li' }
-						getCellProps={ ( cellName, item, defaults ) => ({
+						getCellProps={ ( cellName, item, defaults ) => ( {
 							...defaults,
 							children: item
-						})}
+						} ) }
 					/>
 				</ul>
 			</>

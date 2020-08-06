@@ -1,9 +1,8 @@
 import React from 'react'
-import { useLocation, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Button from '../../button'
 import * as Layout from '../../layout'
 import * as Icon from '../../icon'
-import GroupPage from './group'
 
 export default () => {
 	const baseURL = '/designsystem/buttons'

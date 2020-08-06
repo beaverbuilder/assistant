@@ -8,6 +8,7 @@
         flex-basis: 60px;
         cursor: move;
         z-index: 1;
+        box-shadow: 0 0 0 1.5px var(--fluid-line-color);
 
         .disable-while-sorting {
             transition-property: opacity;
@@ -20,9 +21,6 @@
                 opacity: .3;
             }
         }
-    }
-    .fl-asst-main-sidebar-only .fl-asst-sidebar {
-        flex-basis: 58px;
     }
     .fl-asst-is-mobile {
         .fl-asst-sidebar {
@@ -71,14 +69,20 @@
         align-items: stretch;
 
         &.fl-asst-sidebar-cell-middle {
-            padding: 20px var(--fluid-sm-space);
+            padding: 20px 0;
             flex: 0 0 auto;
-            align-items: center;
+            align-items: stretch;
             margin: auto 0;
             pointer-events: none;
 
             .fluid-button {
                 pointer-events: auto;
+            }
+
+            & > div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
             li {

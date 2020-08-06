@@ -1,7 +1,7 @@
-import { createContext, useContext } from 'react'
+import { createContext } from 'react'
 
 const defaultContext = {
-    appearance: 'grid'
+	appearance: 'grid'
 }
 
 const CollectionContext = createContext( defaultContext )

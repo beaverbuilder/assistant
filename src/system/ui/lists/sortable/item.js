@@ -4,8 +4,11 @@ import { motion } from 'framer-motion'
 import useMeasurePosition from './use-measure-position'
 
 const defaultTransition = {
-	duration: 0.25,
-	ease: 'easeInOut'
+	layoutX: { duration: 0 },
+	layoutY: {
+		duration: 0.25,
+		ease: 'easeInOut'
+	},
 }
 
 const SortableItem = ( {

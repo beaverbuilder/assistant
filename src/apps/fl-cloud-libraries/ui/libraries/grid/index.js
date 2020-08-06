@@ -10,6 +10,7 @@ import './style.scss'
 export default ( {
 	headline = '',
 	team = null,
+	isFetching = false,
 } ) => {
 	const history = useHistory()
 	const teamId = team ? team.id : 0
@@ -103,7 +104,7 @@ export default ( {
 				</Layout.Toolbar>
 			}
 
-			{ ! hasLibraries && ! loading && (
+			{ ! isFetching && ! hasLibraries && ! loading && (
 				<Layout.Box style={ { textAlign: 'center' } }>
 					{ __( 'You don\'t currently have any libraries. Create one to get started!' ) }
 				</Layout.Box>
@@ -112,6 +113,7 @@ export default ( {
 			<Collection
 				appearance={ filter.displayAs }
 				maxItems={ ! showAll ? maxItems : null }
+				isLoading={ isFetching }
 			>
 				{ hasLibraries && ownerLibraries.map( library => {
 					return (

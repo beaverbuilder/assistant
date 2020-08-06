@@ -27,14 +27,14 @@ const Iterator = ( {
 	return prepare( items ).map( ( item, i ) => {
 		const props = getRowProps( item )
 		return (
-			<Row key={i} {...props}>
-			{ cellNames.map( ( name, i ) => {
-				const Cell = getCell( name, item )
-				const props = getCellProps( name, item, i )
-				return (
-					<Cell key={ i } {...props} />
-				)
-			})}
+			<Row key={ i } { ...props }>
+				{ cellNames.map( ( name, i ) => {
+					const Cell = getCell( name, item )
+					const props = getCellProps( name, item, i )
+					return (
+						<Cell key={ i } { ...props } />
+					)
+				} )}
 			</Row>
 		)
 	} )

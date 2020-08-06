@@ -45,7 +45,7 @@ const AppsWidget = memo ( ( { ...rest } ) => {
 					>
 						<Button appearance="transparent" to={ `/${handle}` } style={ { flex: '1 1 auto' } } className="fl-asst-apps-widget-item">
 							<span style={ { marginRight: 15 } }>
-								<Icon.Safely icon={ icon } context="sidebar" />
+								<Icon.Safely icon={ icon } context="widget" />
 							</span>
 							{label}
 						</Button>
