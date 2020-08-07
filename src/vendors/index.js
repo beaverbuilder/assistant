@@ -14,3 +14,6 @@ import * as FLUID from '@beaverbuilder/fluid'
 import '@beaverbuilder/fluid/dist/index.css'
 
 FL.UID = FLUID
+
+// Cloud UI
+import '@beaverbuilder/cloud-ui/dist/index.css'

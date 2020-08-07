@@ -258,10 +258,11 @@ class CloudPostsController extends ControllerAbstract {
 					'terms'    => $post_taxonomies,
 					'comments' => $comments,
 				],
+				'media' => [
+					'thumb' => $media_path,
+					'attachments' => [$media_path, $media_path, $media_path],
+				]
 			],
-			[
-				$media_path
-			]
 		);
 	}
 

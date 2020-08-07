@@ -35,13 +35,11 @@ export const getActions = ( item ) => {
 			setImporting( false )
 			if ( response.data.error ) {
 				createNotice( {
-					id: 'import-error',
 					status: 'error',
 					content: __( 'Error importing content.' )
 				} )
 			} else {
 				createNotice( {
-					id: 'import-success',
 					status: 'success',
 					content: (
 						<>

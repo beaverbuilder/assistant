@@ -1,31 +1,13 @@
 import React from 'react'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Layout } from 'assistant/ui'
 import ItemContext from '../context'
 
 export default () => {
+	const { item } = ItemContext.use()
 	return (
 		<Layout.AspectBox ratio='16:9'>
-			<HeroImage />
+			<Libraries.ItemThumb size='large' { ...item } />
 		</Layout.AspectBox>
 	)
-}
-
-const HeroImage = () => {
-	const { item } = ItemContext.use()
-	const { type, data, media } = item
-
-	if ( media.length ) {
-		return <img src={ media[0].url } />
-	}
-	if ( 'svg' === type ) {
-		return (
-			<div
-				dangerouslySetInnerHTML={ {
-					__html: data.xml
-				} }
-				className="fl-asst-item-svg-container"
-			/>
-		)
-	}
-	return null
 }

@@ -113,27 +113,28 @@ export default ( {
 				appearance={ filter.displayAs }
 				maxItems={ ! showAll ? maxItems : null }
 			>
-				{ hasLibraries && ownerLibraries.map( library => {
+				{ hasLibraries && ownerLibraries.map( ( { id, name, media } ) => {
+					const { thumb } = media
 					return (
 						<Collection.Item
-							key={ library.id }
-							title={ library.name }
+							key={ id }
+							title={ name }
 							thumbnail={ true }
 							thumbnailProps={ {
 								ratio: '4:3',
 								style: {
-									backgroundImage: `url(${library.thumb})`,
+									backgroundImage: thumb && thumb.sizes ? `url(${ thumb.sizes.thumb.url })` : '',
 									backgroundSize: 'cover',
 									backgroundPosition: 'center',
 									borderRadius: 'var(--fluid-radius)',
 								}
 							} }
-							onClick={ () => history.push( `/fl-cloud-libraries/${ library.id }` ) }
+							onClick={ () => history.push( `/fl-cloud-libraries/${ id }` ) }
 						>
 
 							{ false && <Button icon="trash" onClick={ e => {
 								e.stopPropagation()
-								deleteLibrary( library.id )
+								deleteLibrary( id )
 							} } />}
 						</Collection.Item>
 					)
