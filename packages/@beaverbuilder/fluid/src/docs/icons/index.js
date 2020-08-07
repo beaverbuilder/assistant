@@ -11,8 +11,8 @@ export default () => {
 			<div
 				style={ {
 					display: 'grid',
-					gridTemplateColumns: 'repeat( auto-fit, minmax( 80px, 120px ) )',
-					gridAutoRows: 100,
+					gridTemplateColumns: 'repeat( auto-fit, minmax( 80px, 1fr ) )',
+					gridAutoRows: 90,
 					gridGap: 5
 				} }
 			>

@@ -4,8 +4,6 @@ import { App } from '@beaverbuilder/app-core'
 import { Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
 import Sidebar from './side-bar'
-
-//import ErrorPage from './error-page'
 import './style.scss'
 
 const AppMain = ( { allowHidingApps = true } ) => {

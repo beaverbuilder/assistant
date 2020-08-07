@@ -52,6 +52,7 @@
     --fluid-blue-12: hsl( var(--fluid-blue-hue), 100%, 95% );
     --fluid-blue-13: hsl( var(--fluid-blue-hue), 100%, 98% );
     --fluid-blue-14: white;
+    --fluid-blue: var(--fluid-blue-7);
 
 
     /**
@@ -94,7 +95,7 @@
     --fluid-muted-text-color: var(--fluid-opaque-7);
 
     // Outlines and Separators
-    --fluid-line-color: var(--fluid-transparent-11);
+    --fluid-line-color: var(--fluid-transparent-12);
     --fluid-dark-line-color: var(--fluid-opaque-0);
 
     // Spacing

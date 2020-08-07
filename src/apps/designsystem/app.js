@@ -11,7 +11,7 @@ const ToggleBrightness = () => {
 	const isDark = 'dark' === appearance.brightness
 	return (
 		<Button onClick={ () => setBrightness( isDark ? 'light' : 'dark' ) }>
-			{ isDark ? <Icon.Brightness /> : <Icon.Moon /> }
+			{ isDark ? <Icon.Sun /> : <Icon.Moon /> }
 		</Button>
 	)
 }

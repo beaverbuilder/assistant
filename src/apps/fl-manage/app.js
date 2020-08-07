@@ -144,7 +144,7 @@ const AppList = memo( () => {
 										appearance="transparent"
 										title={ __( 'Move Up' ) }
 									>
-										<Icon.UpCaret />
+										<Icon.CaretUp />
 									</Button>
 								)}
 							</span>
@@ -155,7 +155,7 @@ const AppList = memo( () => {
 										appearance="transparent"
 										title={ __( 'Move Down' ) }
 									>
-										<Icon.DownCaret />
+										<Icon.CaretDown />
 									</Button>
 								)}
 							</span>
@@ -196,7 +196,7 @@ const UIColorPreferences = () => {
 							isSelected={ 'light' === appearance.brightness }
 							onClick={ () => setBrightness( 'light' ) }
 						>
-							<Icon.Brightness />&nbsp;&nbsp;{__( 'Light' )}
+							<Icon.Sun />&nbsp;&nbsp;{__( 'Light' )}
 						</Button>
 
 						<Button

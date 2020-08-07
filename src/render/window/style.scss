@@ -14,7 +14,7 @@
         pointer-events: auto;
         touch-action: none;
         border-radius: 0;
-        transition-property: background, box-shadow, border-radius;
+        transition-property: box-shadow, border-radius;
         transition-duration: .25s;
         box-shadow: 0 0 0 1.5px hsla(214, 10%, 90%, 0.1 ),
                     0 10px 15px 0 hsla(214, 17%, 41%, 0.2);

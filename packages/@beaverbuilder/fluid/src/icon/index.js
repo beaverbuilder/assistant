@@ -34,6 +34,10 @@ import Cog from './cog'
 import Moon from './moon'
 import Sun from './sun'
 import Expand from './expand'
+import CaretDown from './caret-down'
+import CaretRight from './caret-right'
+import CaretLeft from './caret-left'
+import CaretUp from './caret-up'
 
 // Aliases
 const BackArrow = ArrowLeft
@@ -76,4 +80,8 @@ export {
 	Moon,
 	Sun,
 	Expand,
+	CaretDown,
+	CaretRight,
+	CaretLeft,
+	CaretUp,
 }

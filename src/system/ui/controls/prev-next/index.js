@@ -15,10 +15,10 @@ export const NextPrev = ( {
 	return (
 		<div className={ classes } { ...rest }>
 			<Button appearance="transparent" onClick={ e => onPrev( e ) }>
-				<Icon.LeftCaret />
+				<Icon.CaretLeft />
 			</Button>
 			<Button appearance="transparent" onClick={ e => onNext( e ) }>
-				<Icon.RightCaret />
+				<Icon.CaretRight />
 			</Button>
 		</div>
 	)

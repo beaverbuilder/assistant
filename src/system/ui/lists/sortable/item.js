@@ -5,10 +5,7 @@ import useMeasurePosition from './use-measure-position'
 
 const defaultTransition = {
 	layoutX: { duration: 0 },
-	layoutY: {
-		duration: 0.25,
-		ease: 'easeInOut'
-	},
+	layoutY: {},
 }
 
 const SortableItem = ( {

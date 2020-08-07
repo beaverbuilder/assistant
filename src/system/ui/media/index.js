@@ -78,7 +78,7 @@ export const Uploader = ( { children } ) => {
 		return (
 
 			<div className="fl-asst-file-uploading-text fl-asst-file-drop-file-wrapper">
-				<Icon.SmallSpinner /> Uploading {current} of {items.length}
+				<Icon.Loading /> Uploading {current} of {items.length}
 			</div>
 
 		)

@@ -255,20 +255,8 @@ export const NoResultsMessage = ( { message } ) => {
 
 export const EndMessage = () => {
 	return (
-		<Layout.Row>
-			<Button
-				tag='span'
-				role={ false }
-				size="lg"
-				style={ {
-					borderRadius: '50%',
-					width: 60,
-					height: 60,
-					padding: 5,
-					pointerEvents: 'none'
-				} } >
-				<Icon.Pencil size={ 30 } />
-			</Button>
+		<Layout.Row padY={true}>
+			<Icon.Pencil size={ 50 } />
 		</Layout.Row>
 	)
 }
