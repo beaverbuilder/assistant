@@ -3,7 +3,7 @@ import { Icon } from 'ui'
 import { registerStore, useStore, getStore, getDispatch } from 'data/registry'
 import { getWpRest } from 'utils/wordpress'
 import './style.scss'
-import { FileDropListener } from './drop-listner'
+import { FileDropListener } from './drop-listener'
 
 const Media = {}
 
@@ -92,6 +92,5 @@ export const Uploader = ( { children } ) => {
 }
 
 Media.Uploader = Uploader
-Media.Uploader.displayName = 'Media.Uploader'
 
 export default Media

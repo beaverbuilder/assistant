@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Layout, Collection, Text } from 'assistant/ui'
 
 export default ( { categories } ) => {
@@ -22,7 +23,7 @@ export default ( { categories } ) => {
 							<Collection.Item
 								key={ item.id }
 								title={ item.name }
-								thumbnail={ <ItemThumb { ...item } /> }
+								thumbnail={ <Libraries.ItemThumb { ...item } /> }
 								onClick={ () => {
 									history.push( `${baseURL}/items/${item.id}` )
 								} }
@@ -33,22 +34,4 @@ export default ( { categories } ) => {
 			</Layout.Box>
 		)
 	} )
-}
-
-const ItemThumb = ( { type, data, media } ) => {
-
-	if ( media.length ) {
-		return <img src={ media[0].thumb } />
-	}
-	if ( 'svg' === type ) {
-		return (
-			<div
-				dangerouslySetInnerHTML={ {
-					__html: data.xml
-				} }
-				className="fl-asst-item-svg-container"
-			/>
-		)
-	}
-	return null
 }

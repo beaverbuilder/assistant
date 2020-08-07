@@ -137,9 +137,7 @@ class CloudPostsController extends ControllerAbstract {
 
 			foreach ( $post_meta as $key => $meta_value ) {
 
-				$meta_key   = $key ? $key : '';
-
-
+				$meta_key = $key ? $key : '';
 
 				if ( '' !== $meta_key ) {
 					if ( metadata_exists( 'post', $post_id, '_' . $meta_key ) ) {
@@ -147,8 +145,8 @@ class CloudPostsController extends ControllerAbstract {
 						update_metadata( 'post', $post_id, $meta_key, $meta_value );
 
 					} else {
-						if( count( $meta_value ) >= 1 ){
-							foreach( $meta_value as $value ){
+						if ( count( $meta_value ) >= 1 ) {
+							foreach ( $meta_value as $value ) {
 								$value = $value ? addslashes( $value ) : '';
 								$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
@@ -258,10 +256,11 @@ class CloudPostsController extends ControllerAbstract {
 					'terms'    => $post_taxonomies,
 					'comments' => $comments,
 				],
+				'media' => [
+					'thumb'       => $media_path,
+					'attachments' => [ $media_path, $media_path, $media_path ],
+				],
 			],
-			[
-				$media_path
-			]
 		);
 	}
 
@@ -306,8 +305,7 @@ class CloudPostsController extends ControllerAbstract {
 
 				foreach ( $post_meta as $key => $meta_value ) {
 
-					$meta_key   = $key ? $key : '';
-
+					$meta_key = $key ? $key : '';
 
 					if ( '' !== $meta_key ) {
 						if ( count( $meta_value ) >= 1 ) {
@@ -316,8 +314,6 @@ class CloudPostsController extends ControllerAbstract {
 								$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 							}
 						}
-
-
 					}
 				}
 			}
@@ -361,12 +357,14 @@ class CloudPostsController extends ControllerAbstract {
 
 		$item_id = $request->get_param( 'item_id' );
 
-		$meta = $wpdb->get_row( $wpdb->prepare(
-			"SELECT * FROM $wpdb->postmeta
+		$meta = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM $wpdb->postmeta
 			 WHERE meta_key = '_fl_asst_preview_library_item_id'
 			 AND meta_value = %s",
-			 $item_id
-		) );
+				$item_id
+			)
+		);
 
 		if ( $meta ) {
 			$request->set_param( 'id', $meta->post_id );
@@ -382,10 +380,12 @@ class CloudPostsController extends ControllerAbstract {
 		$post_id = $response->data['id'];
 		$post_type = $response->data['type'];
 
-		wp_update_post( [
-			'ID' => $post_id,
-			'post_status' => 'auto-draft',
-		] );
+		wp_update_post(
+			[
+				'ID'          => $post_id,
+				'post_status' => 'auto-draft',
+			]
+		);
 
 		update_post_meta( $post_id, '_fl_asst_preview_library_item_id', $item_id );
 

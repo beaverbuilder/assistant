@@ -1,5 +1,5 @@
 // Public API
-import { Text, Collection } from 'fluid'
+import { Text, Collection, Menu } from 'fluid'
 import { Appearance } from './appearance'
 import { App } from './app'
 import { Button } from './button'
@@ -13,7 +13,6 @@ import { Form } from './forms'
 import Media from './media'
 import Env from './env'
 import Notice from './notices'
-import Menu from './menu'
 
 // Export for use inside system bundle - import from 'ui'
 export * from './app'

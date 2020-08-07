@@ -38,21 +38,21 @@ class CommentTransformer {
 			'thumbnail'   => get_avatar_url( $comment->comment_author_email ),
 
 			'author'      => [
-				'name'    => $comment->comment_author,
-				'email'   => $comment->comment_author_email,
-				'ip'      => $comment->comment_author_IP,
-				'url'     => get_comment_author_url( $comment->comment_ID ),
-				'avatar'  => get_avatar_url( $comment->comment_author_email ),
+				'name'   => $comment->comment_author,
+				'email'  => $comment->comment_author_email,
+				'ip'     => $comment->comment_author_IP,
+				'url'    => get_comment_author_url( $comment->comment_ID ),
+				'avatar' => get_avatar_url( $comment->comment_author_email ),
 			],
 
 			// Post Meta
 			'postId'      => $post->ID,
 			'postTitle'   => $post->post_title,
-			'post'		  => [
+			'post'        => [
 				'id'        => $post->ID,
 				'title'     => $post->post_title,
-				'thumbnail' => ''
-			]
+				'thumbnail' => '',
+			],
 		];
 	}
 }

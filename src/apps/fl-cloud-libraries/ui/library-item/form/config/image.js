@@ -1,4 +1,7 @@
+import React, { useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
+import cloud from 'assistant/cloud'
+import ItemContext from '../../context'
 
 export const getSections = ( item, sections ) => {
 	return {
@@ -7,13 +10,47 @@ export const getSections = ( item, sections ) => {
 }
 
 export const getActions = ( item ) => {
+	const { setItem, createNotice } = ItemContext.use()
+	const [ replacing, setReplacing ] = useState( false )
+	const inputRef = useRef()
 
 	const importImage = () => {
 
 	}
 
-	const replaceImage = () => {
+	const replaceImage = ( e ) => {
+		const data = new FormData()
+		data.append( 'media[file]', e.target.files[0] )
+		setReplacing( true )
 
+		cloud.libraries.updateItem( item.id, data ).then( response => {
+			setItem( response.data )
+			createNotice( {
+				status: 'success',
+				content: __( 'File replaced!' )
+			} )
+		} ).catch( error => {
+			createNotice( {
+				status: 'error',
+				content: error.response.data.message
+			} )
+		} ).finally( () => {
+			setReplacing( false )
+		} )
+	}
+
+	const NewFileInput = () => {
+		return (
+			<input
+				type='file'
+				onChange={ replaceImage }
+				ref={ inputRef }
+				accept='image/jpg,image/gif,image/png'
+				style={ {
+					display: 'none'
+				} }
+			/>
+		)
 	}
 
 	return [
@@ -22,8 +59,14 @@ export const getActions = ( item ) => {
 			onClick: importImage,
 		},
 		{
-			label: __( 'Replace File' ),
-			onClick: replaceImage,
+			label: (
+				<>
+					{ __( 'Replace File' ) }
+					<NewFileInput />
+				</>
+			),
+			onClick: () => inputRef.current.click(),
+			disabled: replacing,
 		}
 	]
 }

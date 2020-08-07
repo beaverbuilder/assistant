@@ -130,7 +130,7 @@ class Site {
 
 		$default_icon = plugins_url( 'img/icon-128x128.jpg', FL_ASSISTANT_FILE );
 		$data['site'] = [
-			'defaultIcon'        => $default_icon,
+			'defaultIcon' => $default_icon,
 			'icon'        => get_site_icon_url( 120, $default_icon ),
 			'title'       => get_bloginfo( 'name' ),
 			'description' => get_bloginfo( 'description' ),
