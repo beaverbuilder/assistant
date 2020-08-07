@@ -115,7 +115,7 @@ class OnEnqueueScripts {
 			'isShowingAdminBar' => is_admin_bar_showing(),
 			'isAdmin'           => is_admin(),
 			'isSiteAdmin'       => is_super_admin(),
-			'mockup'			=> Mockup::get(),
+			'mockup'            => Mockup::get(),
 			'nonce'             => [
 				'api'             => wp_create_nonce( 'wp_rest' ),
 				'reply'           => wp_create_nonce( 'replyto-comment' ),
@@ -125,12 +125,12 @@ class OnEnqueueScripts {
 			'pluginURL'         => FL_ASSISTANT_URL,
 			'taxonomies'        => $this->posts->get_taxononies(),
 			'userRoles'         => $this->users->get_roles(),
-			'cloudConfig'		=> [
-				'apiUrl'          	=> FL_ASSISTANT_CLOUD_URL,
-				'appUrl'       		=> FL_ASSISTANT_CLOUD_APP_URL,
-				'pusherKey'       	=> FL_ASSISTANT_PUSHER_KEY,
-				'pusherCluster'     => FL_ASSISTANT_PUSHER_CLUSTER,
-			]
+			'cloudConfig'       => [
+				'apiUrl'        => FL_ASSISTANT_CLOUD_URL,
+				'appUrl'        => FL_ASSISTANT_CLOUD_APP_URL,
+				'pusherKey'     => FL_ASSISTANT_PUSHER_KEY,
+				'pusherCluster' => FL_ASSISTANT_PUSHER_CLUSTER,
+			],
 		];
 	}
 

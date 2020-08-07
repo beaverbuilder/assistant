@@ -19,24 +19,24 @@ class UserState {
 	 * Default state for the current user.
 	 */
 	public static $default_state = [
-		'appOrder'           => [],
-		'window'             => [
+		'appOrder'          => [],
+		'window'            => [
 			'origin'           => [ 1, 0 ],
 			'size'             => 'normal',
 			'isHidden'         => false,
 			'hiddenAppearance' => '',
 			'overlayToolbar'   => false,
 		],
-		'appearance'         => [
+		'appearance'        => [
 			'brightness' => 'light',
 		],
-		'history'            => [
+		'history'           => [
 			'index'   => 0,
 			'entries' => [],
 		],
-		'searchHistory'      => [],
-		'shouldShowInAdmin'  => true,
-		'isAppHidden'        => true,
+		'searchHistory'     => [],
+		'shouldShowInAdmin' => true,
+		'isAppHidden'       => true,
 	];
 
 	/**

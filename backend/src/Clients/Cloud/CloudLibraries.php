@@ -26,12 +26,12 @@ class CloudLibraries {
 			foreach ( $data['media'] as $key => $media ) {
 				if ( ! $media ) {
 					continue;
-				} else if ( is_array( $media ) ) {
+				} elseif ( is_array( $media ) ) {
 					foreach ( $media as $i => $path ) {
-						$data["media[$key][$i]"] = curl_file_create( $path );
+						$data[ "media[$key][$i]" ] = curl_file_create( $path );
 					}
 				} else {
-					$data["media[$key]"] = curl_file_create( $media );
+					$data[ "media[$key]" ] = curl_file_create( $media );
 				}
 			}
 			unset( $data['media'] );

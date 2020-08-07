@@ -3,7 +3,7 @@ namespace FL\Assistant\Data;
 
 class Mockup {
 
-    static public function get() {
-        return [];
-    }
+	static public function get() {
+		return [];
+	}
 }

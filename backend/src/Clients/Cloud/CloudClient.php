@@ -35,16 +35,18 @@ class CloudClient {
 		$curl = curl_init();
 		$fields = isset( $args['data'] ) ? $this->build_query( $args['data'] ) : '';
 
-		curl_setopt_array( $curl, [
-			CURLOPT_URL => $url,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_SSL_VERIFYPEER => false,
-			CURLOPT_SSL_VERIFYHOST => false,
-			CURLOPT_USERAGENT => 'Assistant Plugin',
-			CURLOPT_CUSTOMREQUEST => $args['method'],
-			CURLOPT_HTTPHEADER => $args['headers'],
-			CURLOPT_POSTFIELDS => $fields,
-		] );
+		curl_setopt_array(
+			$curl, [
+				CURLOPT_URL            => $url,
+				CURLOPT_RETURNTRANSFER => 1,
+				CURLOPT_SSL_VERIFYPEER => false,
+				CURLOPT_SSL_VERIFYHOST => false,
+				CURLOPT_USERAGENT      => 'Assistant Plugin',
+				CURLOPT_CUSTOMREQUEST  => $args['method'],
+				CURLOPT_HTTPHEADER     => $args['headers'],
+				CURLOPT_POSTFIELDS     => $fields,
+			]
+		);
 
 		$response = curl_exec( $curl );
 
@@ -97,7 +99,7 @@ class CloudClient {
 
 	/**
 	 * @param $data array
- 	 * @param $prefix string
+	 * @param $prefix string
 	 * @return array
 	 */
 	protected function build_query( $data, $prefix = null ) {
@@ -107,7 +109,7 @@ class CloudClient {
 			$new_key = $prefix ? "{$prefix}[{$key}]" : $key;
 			if ( is_object( $value ) && 'CURLFile' === get_class( $value ) ) {
 				$query[ $new_key ] = $value;
-			} else if ( is_array( $value ) || is_object( $value ) ) {
+			} elseif ( is_array( $value ) || is_object( $value ) ) {
 				$query += $this->build_query( $value, $new_key );
 			} else {
 				$query[ $new_key ] = $value;
