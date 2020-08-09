@@ -90,25 +90,33 @@ export const getActions = ( item ) => {
 	]
 }
 
-export const getDefaults = ( item, defaults ) => {
-	const { post } = item.data
+export const getDefaults = ( { data, media }, defaults ) => {
+	const { post } = data
 	const { contentTypes } = getSystemConfig()
 	let postType = post.post_type
+	let thumb = null
 
 	if ( contentTypes[ postType ] ) {
 		postType = contentTypes[ postType ].labels.singular
 	}
 
+	if ( media.thumb ) {
+		thumb = media.thumb.sizes.thumb.url
+	}
+
 	return {
 		...defaults,
-		postType
+		postType,
+		thumb
 	}
 }
 
 export const getData = ( item, values, data ) => {
 	const { thumb } = values
-	if ( thumb ) {
-		data.append( 'media[thumb]', thumb[0] )
+	if ( thumb && thumb instanceof File ) {
+		data.append( 'media[thumb]', thumb )
+	} else if ( ! thumb ) {
+		data.append( 'media[thumb]', null )
 	}
 	item.data.post.post_title = values.name
 	item.data.post.post_name = createSlug( values.name )
