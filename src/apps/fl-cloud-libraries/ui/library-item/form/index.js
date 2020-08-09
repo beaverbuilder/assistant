@@ -91,7 +91,9 @@ export const getFormDefaults = ( item ) => {
 export const getFormData = ( item, values ) => {
 	const { type } = item
 	const { name, collections } = values
-	const data = { name, collections }
+	const data = new FormData()
+	data.append( 'name', name )
+	data.append( 'collections', JSON.stringify( collections ) )
 	if ( methods[ type ] ) {
 		return methods[ type ].getData( item, values, data )
 	}

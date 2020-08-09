@@ -7,6 +7,10 @@ import { getWpRest } from 'assistant/utils/wordpress'
 import ItemContext from '../../context'
 
 export const getSections = ( item, sections ) => {
+	sections.general.fields.thumb = {
+		label: __( 'Featured Image' ),
+		component: 'file',
+	}
 	return {
 		...sections,
 		info: {
@@ -102,8 +106,12 @@ export const getDefaults = ( item, defaults ) => {
 }
 
 export const getData = ( item, values, data ) => {
-	data.data = item.data
-	data.data.post.post_title = data.name
-	data.data.post.post_name = createSlug( data.name )
+	const { thumb } = values
+	if ( thumb ) {
+		data.append( 'media[thumb]', thumb[0] )
+	}
+	item.data.post.post_title = values.name
+	item.data.post.post_name = createSlug( values.name )
+	data.append( 'data', JSON.stringify( item.data ) )
 	return data
 }

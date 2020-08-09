@@ -114,7 +114,7 @@ export default ( { library } ) => {
 	} )
 
 	return (
-		<Layout.Box>
+		<Layout.Box padY={ false }>
 			<Page.Section label={ __( 'Library Collections' ) }>
 				<Layout.Table rows={ rows } />
 				<input

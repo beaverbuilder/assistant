@@ -18,7 +18,6 @@ export default () => {
 		name: {
 			label: __( 'Name' ),
 			component: 'text',
-			alwaysCommit: true,
 			validate: ( value, errors ) => {
 				if ( '' === value ) {
 					errors.push( __( 'Please enter a name.' ) )
@@ -28,7 +27,10 @@ export default () => {
 		description: {
 			label: __( 'Description' ),
 			component: 'text',
-			alwaysCommit: true
+		},
+		thumb: {
+			label: __( 'Featured Image' ),
+			component: 'file',
 		},
 	}
 
@@ -49,7 +51,8 @@ export default () => {
 	const {
 		renderForm,
 		submitForm,
-		isSubmitting
+		isSubmitting,
+		hasChanges
 	} = Form.useForm( {
 		fields,
 		onSubmit,
@@ -70,12 +73,14 @@ export default () => {
 
 	return (
 		<>
-			<Layout.Box>
+			<Layout.Box padY={ false }>
 				<Page.Section label={ __( 'Library Settings' ) }>
 					{ renderForm() }
-					<Button onClick={ submitForm } disabled={ isSubmitting }>
-						{ __( 'Update Library' ) }
-					</Button>
+					{ hasChanges &&
+						<Button onClick={ submitForm } disabled={ isSubmitting }>
+							{ __( 'Update Library' ) }
+						</Button>
+					}
 				</Page.Section>
 			</Layout.Box>
 
