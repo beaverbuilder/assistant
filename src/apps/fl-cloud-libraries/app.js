@@ -4,7 +4,6 @@ import { useSystemState } from 'assistant/data'
 
 import Libraries from './ui/libraries'
 import Library from './ui/library'
-import LibraryItem from './ui/library-item'
 
 export default ( { baseURL } ) => {
 	const history = useHistory()
@@ -18,7 +17,6 @@ export default ( { baseURL } ) => {
 	return (
 		<Switch>
 			<Route exact path={ `${baseURL}` } component={ Libraries } />
-			<Route path={ `${baseURL}/:id/items/:itemId` } component={ LibraryItem } />
 			<Route path={ `${baseURL}/:id` } component={ Library } />
 		</Switch>
 	)

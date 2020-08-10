@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { useLocation, useParams, Switch, Route } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Uploader } from '@beaverbuilder/cloud-ui'
 import { Page } from 'assistant/ui'
@@ -8,13 +8,15 @@ import cloud from 'assistant/cloud'
 
 import LibraryActions from './actions'
 import LibraryItems from './items'
+import LibraryItem from '../library-item'
 import LibrarySettings from './settings'
 import LibraryContext from './context'
 
 import './style.scss'
 
-export default ( { match } ) => {
-	const { id } = match.params
+export default () => {
+	const { pathname } = useLocation()
+	const { id } = useParams()
 	const [ library, setLibrary ] = cloud.libraries.useOne( id )
 	const [ items, setItems ] = useState( null )
 	const { itemsFilter } = useAppState( 'fl-cloud-libraries', 'itemsFilter' )
@@ -56,18 +58,28 @@ export default ( { match } ) => {
 
 	return (
 		<LibraryContext.Provider value={ context }>
-			<Page
-				title={ __( 'Library' ) }
-				shouldShowBackButton={ true }
-				actions={ <LibraryActions /> }
-				padX={ false }
-				padY={ false }
+			<div
+				style={ {
+					visibility: pathname.includes( '/items/' ) ? 'hidden' : '',
+					width: '100%'
+				} }
 			>
-				<Switch>
-					<Route exact path={ '/fl-cloud-libraries/:id' } component={ LibraryItems } />
-					<Route path={ '/fl-cloud-libraries/:id/settings' } component={ LibrarySettings } />
-				</Switch>
-			</Page>
+				<Page
+					title={ __( 'Library' ) }
+					shouldShowBackButton={ true }
+					actions={ <LibraryActions /> }
+					padX={ false }
+					padY={ false }
+				>
+					<Switch>
+						<Route path='/fl-cloud-libraries/:id/settings' component={ LibrarySettings } />
+						<Route path='/fl-cloud-libraries/:id' component={ LibraryItems } />
+					</Switch>
+				</Page>
+			</div>
+			<Switch>
+				<Route path='/fl-cloud-libraries/:id/items/:itemId' component={ LibraryItem } />
+			</Switch>
 		</LibraryContext.Provider>
 	)
 }
