@@ -61,7 +61,9 @@ export default () => {
 			<div
 				style={ {
 					visibility: pathname.includes( '/items/' ) ? 'hidden' : '',
-					width: '100%'
+					width: '100%',
+					flex: '1 1 auto',
+					display: 'flex'
 				} }
 			>
 				<Page
