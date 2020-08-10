@@ -18,6 +18,7 @@ use FL\Assistant\Controllers\SearchController;
 use FL\Assistant\Controllers\TermsController;
 use FL\Assistant\Controllers\UpdatesController;
 use FL\Assistant\Controllers\UsersController;
+use FL\Assistant\Controllers\Cloud\Libraries\LibraryItemSvgController;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 
 /**
@@ -45,6 +46,7 @@ class RestServiceProvider extends ServiceProviderAbstract {
 		UpdatesController::class,
 		UsersController::class,
 		SearchController::class,
+		LibraryItemSvgController::class,
 		BatchController::class, // Must be last
 	];
 
