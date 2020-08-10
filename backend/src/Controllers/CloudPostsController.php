@@ -379,6 +379,7 @@ class CloudPostsController extends ControllerAbstract {
 
 		$post_id = $response->data['id'];
 		$post_type = $response->data['type'];
+		$var_name = 'page' === $post_type ? 'page_id' : 'p';
 
 		wp_update_post(
 			[
@@ -391,7 +392,7 @@ class CloudPostsController extends ControllerAbstract {
 
 		return rest_ensure_response(
 			[
-				'url' => home_url( "/?post_type=$post_type&p=$post_id&fl_asst_library_item_preview=1" ),
+				'url' => home_url( "/?post_type=$post_type&$var_name=$post_id&fl_asst_library_item_preview=1" ),
 			]
 		);
 	}

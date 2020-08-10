@@ -28,7 +28,9 @@ class CloudLibraries {
 					continue;
 				} elseif ( is_array( $media ) ) {
 					foreach ( $media as $i => $path ) {
-						$data[ "media[$key][$i]" ] = curl_file_create( $path );
+						if ( $path ) {
+							$data[ "media[$key][$i]" ] = curl_file_create( $path );
+						}
 					}
 				} else {
 					$data[ "media[$key]" ] = curl_file_create( $media );
