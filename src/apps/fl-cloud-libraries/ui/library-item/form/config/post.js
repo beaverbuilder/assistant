@@ -5,6 +5,7 @@ import { getSystemConfig } from 'assistant/data'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 import ItemContext from '../../context'
+import PostMedia from '../fields/post-media'
 
 export const getTabs = ( item, tabs ) => {
 	tabs.settings.sections.general.fields.thumb = {
@@ -21,6 +22,10 @@ export const getTabs = ( item, tabs ) => {
 				component: 'plain-text',
 			},
 		},
+	}
+	tabs.media = {
+		label: __( 'Media' ),
+		sections: () => <PostMedia item={ item } />
 	}
 	return tabs
 }
