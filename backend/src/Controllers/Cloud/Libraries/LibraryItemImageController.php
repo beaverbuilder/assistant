@@ -3,6 +3,7 @@
 namespace FL\Assistant\Controllers\Cloud\Libraries;
 
 use FL\Assistant\System\Contracts\ControllerAbstract;
+use FL\Assistant\Services\MediaLibraryService;
 
 class LibraryItemImageController extends ControllerAbstract {
 
@@ -24,10 +25,6 @@ class LibraryItemImageController extends ControllerAbstract {
 	 * Import an image library item into the site.
 	 */
 	public function import( $request ) {
-		require_once( ABSPATH . 'wp-admin/includes/image.php' );
-		require_once( ABSPATH . 'wp-admin/includes/file.php' );
-		require_once( ABSPATH . 'wp-admin/includes/media.php' );
-
 		$item = $request->get_param( 'item' );
 
 		if ( ! is_array( $item ) || ! isset( $item['media']['file'] ) ) {
@@ -35,45 +32,9 @@ class LibraryItemImageController extends ControllerAbstract {
 		}
 
 		$url = $item['media']['file']['url'];
-		$url_filename = basename( parse_url( $url, PHP_URL_PATH ) );
-		$tmp_file = wp_tempnam( $url_filename );
+		$service = new MediaLibraryService();
+		$response = $service->import_image( $url, $item['name'] );
 
-		if ( ! $tmp_file ) {
-			return rest_ensure_response( [ 'error' => __( 'Error creating temp file.' ) ] );
-		}
-
-		$response = wp_remote_get(
-			$url,
-			[
-				'timeout'   => 300,
-				'stream'    => true,
-				'filename'  => $tmp_file,
-				'sslverify' => false,
-			]
-		);
-
-		$response_code = wp_remote_retrieve_response_code( $response );
-
-		if ( 200 != $response_code ) {
-			@unlink( $tmp_file );
-			return rest_ensure_response( [ 'error' => __( 'Error downloading image file.' ) ] );
-		}
-
-		$id = media_handle_sideload(
-			[
-				'name' => sanitize_file_name( $item['name'] ),
-				'tmp_name' => $tmp_file
-			]
-		);
-
-		if ( is_wp_error( $id ) ) {
-			@unlink( $tmp_file );
-			return rest_ensure_response( [ 'error' => __( 'Error importing image file.' ) ] );
-		}
-
-		return rest_ensure_response( [
-			'id' => $id,
-			'url' => wp_get_attachment_url( $id ),
-		] );
+		return rest_ensure_response( $response );
 	}
 }
