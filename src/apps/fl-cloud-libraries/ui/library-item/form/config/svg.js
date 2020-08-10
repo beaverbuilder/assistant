@@ -1,21 +1,51 @@
 import React, { useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
+import { getWpRest } from 'assistant/utils/wordpress'
 import cloud from 'assistant/cloud'
 import ItemContext from '../../context'
 
-export const getSections = ( item, sections ) => {
+export const getTabs = ( item, tabs ) => {
+	tabs.editor = {
+		label: __( 'Editor' ),
+		sections: {
+			general: {
+				fields: {
+					xml: {
+						component: 'textarea',
+						rows: 20,
+						className: 'fl-asst-svg-editor'
+					}
+				}
+			}
+		}
+	}
 	return {
-		...sections,
+		...tabs,
 	}
 }
 
 export const getActions = ( item ) => {
 	const { setItem, createNotice } = ItemContext.use()
+	const [ importing, setImporting ] = useState( false )
 	const [ replacing, setReplacing ] = useState( false )
 	const inputRef = useRef()
+	const wpRest = getWpRest()
 
 	const importSvg = () => {
-
+		setImporting( true )
+		wpRest.libraries().importItem( item ).then( () => {
+			createNotice( {
+				status: 'success',
+				content: __( 'Item imported!' )
+			} )
+		} ).catch( error => {
+			createNotice( {
+				status: 'error',
+				content: error.response.data.message
+			} )
+		} ).finally( () => {
+			setImporting( false )
+		} )
 	}
 
 	const replaceSvg = ( e ) => {
@@ -69,6 +99,7 @@ export const getActions = ( item ) => {
 		{
 			label: __( 'Import' ),
 			onClick: importSvg,
+			disabled: importing
 		},
 		{
 			label: (
@@ -84,11 +115,15 @@ export const getActions = ( item ) => {
 }
 
 export const getDefaults = ( item, defaults ) => {
+	const { xml } = item.data
 	return {
 		...defaults,
+		xml
 	}
 }
 
 export const getData = ( item, values, data ) => {
+	item.data.xml = values.xml
+	data.append( 'data', JSON.stringify( item.data ) )
 	return data
 }

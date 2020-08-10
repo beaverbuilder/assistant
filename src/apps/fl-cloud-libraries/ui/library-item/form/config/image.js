@@ -3,9 +3,24 @@ import { __ } from '@wordpress/i18n'
 import cloud from 'assistant/cloud'
 import ItemContext from '../../context'
 
-export const getSections = ( item, sections ) => {
+export const getTabs = ( item, tabs ) => {
+	tabs.settings.sections.info = {
+		label: __( 'Info' ),
+		fields: {
+			type: {
+				label: __( 'Type' ),
+				labelPlacement: 'beside',
+				component: 'plain-text',
+			},
+			size: {
+				label: __( 'Size' ),
+				labelPlacement: 'beside',
+				component: 'plain-text',
+			},
+		},
+	}
 	return {
-		...sections,
+		...tabs,
 	}
 }
 
@@ -72,6 +87,11 @@ export const getActions = ( item ) => {
 }
 
 export const getDefaults = ( item, defaults ) => {
+	const { media } = item
+	if ( media.file ) {
+		defaults.type = media.file.mime_type.split( '/' ).pop()
+		defaults.size = media.file.size
+	}
 	return {
 		...defaults,
 	}

@@ -78,6 +78,7 @@ export const getWpRest = () => {
 		updates,
 		search,
 		notations,
+		libraries,
 		getPagedContent,
 		getContent
 	}
@@ -643,6 +644,17 @@ const notations = () => {
 			return notations().delete( 'label', objectType, objectId, {
 				fl_asst_notation_label_id: labelId,
 			}, config )
+		},
+	}
+}
+
+/**
+ * Methods for making library REST requests.
+ */
+const libraries = () => {
+	return {
+		importItem( item ) {
+			return http.post( `fl-assistant/v1/library-items/import/${ item.type }`, { item } )
 		},
 	}
 }

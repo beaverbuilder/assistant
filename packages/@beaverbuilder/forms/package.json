@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/forms",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "description": "Hooks and components for easily building complex forms in React.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",

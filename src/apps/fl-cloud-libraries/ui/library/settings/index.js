@@ -18,7 +18,6 @@ export default () => {
 		name: {
 			label: __( 'Name' ),
 			component: 'text',
-			alwaysCommit: true,
 			validate: ( value, errors ) => {
 				if ( '' === value ) {
 					errors.push( __( 'Please enter a name.' ) )
@@ -28,12 +27,28 @@ export default () => {
 		description: {
 			label: __( 'Description' ),
 			component: 'text',
-			alwaysCommit: true
+		},
+		thumb: {
+			label: __( 'Featured Image' ),
+			component: 'file',
+			accept: 'image/jpg,image/png,image/gif'
 		},
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.update( library.id, values ).then( response => {
+		const { name, description, thumb } = values
+		const data = new FormData()
+
+		data.append( 'name', name )
+		data.append( 'description', description )
+
+		if ( thumb && thumb instanceof File ) {
+			data.append( 'media[thumb]', thumb )
+		} else if ( ! thumb ) {
+			data.append( 'media[thumb]', null )
+		}
+
+		return cloud.libraries.update( library.id, data ).then( response => {
 			const library = response.data
 			const owner = 'team' === library.owner_type ? library.owner_id : 0
 			setLibraries( {
@@ -46,14 +61,26 @@ export default () => {
 		} )
 	}
 
+	const getDefaults = () => {
+		const { name, description, media } = library
+		const defaults = { name, description }
+
+		if ( media.thumb && 'library' === media.thumb.model_type ) {
+			defaults.thumb = media.thumb.sizes.thumb.url
+		}
+
+		return defaults
+	}
+
 	const {
 		renderForm,
 		submitForm,
-		isSubmitting
+		isSubmitting,
+		hasChanges
 	} = Form.useForm( {
 		fields,
 		onSubmit,
-		defaults: library,
+		defaults: getDefaults(),
 	} )
 
 	const deleteLibrary = () => {
@@ -70,12 +97,14 @@ export default () => {
 
 	return (
 		<>
-			<Layout.Box>
+			<Layout.Box padY={ false }>
 				<Page.Section label={ __( 'Library Settings' ) }>
 					{ renderForm() }
-					<Button onClick={ submitForm } disabled={ isSubmitting }>
-						{ __( 'Update Library' ) }
-					</Button>
+					{ hasChanges &&
+						<Button onClick={ submitForm } disabled={ isSubmitting }>
+							{ __( 'Update Library' ) }
+						</Button>
+					}
 				</Page.Section>
 			</Layout.Box>
 
