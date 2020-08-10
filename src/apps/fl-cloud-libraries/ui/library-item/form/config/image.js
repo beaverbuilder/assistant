@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n'
+import { getWpRest } from 'assistant/utils/wordpress'
 import cloud from 'assistant/cloud'
 import ItemContext from '../../context'
 
@@ -26,11 +27,26 @@ export const getTabs = ( item, tabs ) => {
 
 export const getActions = ( item ) => {
 	const { setItem, createNotice } = ItemContext.use()
+	const [ importing, setImporting ] = useState( false )
 	const [ replacing, setReplacing ] = useState( false )
 	const inputRef = useRef()
+	const wpRest = getWpRest()
 
 	const importImage = () => {
-
+		setImporting( true )
+		wpRest.libraries().importItem( item ).then( () => {
+			createNotice( {
+				status: 'success',
+				content: __( 'Item imported!' )
+			} )
+		} ).catch( error => {
+			createNotice( {
+				status: 'error',
+				content: error.response.data.message
+			} )
+		} ).finally( () => {
+			setImporting( false )
+		} )
 	}
 
 	const replaceImage = ( e ) => {
@@ -72,6 +88,7 @@ export const getActions = ( item ) => {
 		{
 			label: __( 'Import' ),
 			onClick: importImage,
+			disabled: importing
 		},
 		{
 			label: (
