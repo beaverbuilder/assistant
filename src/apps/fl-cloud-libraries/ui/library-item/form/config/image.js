@@ -34,10 +34,10 @@ export const getActions = ( item ) => {
 
 	const importImage = () => {
 		setImporting( true )
-		wpRest.libraries().importItem( item ).then( () => {
+		wpRest.libraries().importItem( item ).then( response => {
 			createNotice( {
-				status: 'success',
-				content: __( 'Item imported!' )
+				status: response.data.error ? 'error' : 'success',
+				content: response.data.error ? response.data.error : __( 'Item imported!' )
 			} )
 		} ).catch( error => {
 			createNotice( {
