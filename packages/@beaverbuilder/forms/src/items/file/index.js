@@ -71,8 +71,10 @@ export const FileItem = ( {
 const FileThumb = ( { value } ) => {
 	let src = null
 	if ( value ) {
-		if ( value instanceof File && value.type.startsWith( 'image/' ) ) {
-			src = URL.createObjectURL( value )
+		if ( value instanceof File ) {
+			if ( value.type.startsWith( 'image/' ) ) {
+				src = URL.createObjectURL( value )
+			}
 		} else if ( value.match(/\.(jpeg|jpg|gif|png)$/) != null ) {
 			src = value
 		}
