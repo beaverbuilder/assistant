@@ -10,5 +10,6 @@ import './fl-labels'
 import './fl-cloud-connect'
 import './fl-cloud-libraries'
 import './designsystem'
+import './detail-experiment'
 
 import './integrations'

@@ -3,7 +3,7 @@ import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { ToggleLayer } from 'react-laag'
 import ResizeObserver from 'resize-observer-polyfill'
-import { Button, Icon } from '../../'
+import { Button, Icon } from '../'
 import { RadioGroupItem, LabelsItem } from './items'
 import './style.scss'
 
@@ -104,9 +104,10 @@ const Item = ( { title, subtitle, children, hasLoadedItems = true } ) => {
 }
 
 Filter.Item = Item
-Filter.Item.displayName = 'Filter.Item'
+Filter.RadioGroupItem = RadioGroupItem
+Filter.LabelsItem = LabelsItem
 
-const ButtonItem = ( { children, className, ...rest } ) => {
+Filter.Button = ( { children, className, ...rest } ) => {
 	const classes = classname( 'fl-asst-filter-button', className )
 	return (
 		<li className="fl-asst-filter-item">
@@ -114,14 +115,5 @@ const ButtonItem = ( { children, className, ...rest } ) => {
 		</li>
 	)
 }
-
-Filter.Button = ButtonItem
-Filter.Button.displayName = 'Filter.Button'
-
-Filter.RadioGroupItem = RadioGroupItem
-Filter.RadioGroupItem.displayName = 'Filter.RadioGroupItem'
-
-Filter.LabelsItem = LabelsItem
-Filter.LabelsItem.displayName = 'Filter.LabelsItem'
 
 export default Filter

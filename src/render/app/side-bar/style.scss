@@ -7,7 +7,7 @@
         flex-grow: 0;
         flex-basis: 60px;
         cursor: move;
-        z-index: 1;
+        z-index: 3;
         box-shadow: 0 0 0 1.5px var(--fluid-line-color);
 
         .disable-while-sorting {

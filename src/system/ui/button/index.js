@@ -44,6 +44,4 @@ Button.renderActions = actions => {
 	} )
 }
 
-export { Button }
-
 export default Button

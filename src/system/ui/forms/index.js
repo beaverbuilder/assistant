@@ -6,4 +6,4 @@ Object.keys( Items ).map( key => {
 	Form[ key ] = Items[ key ]
 } )
 
-export { Form }
+export default Form
