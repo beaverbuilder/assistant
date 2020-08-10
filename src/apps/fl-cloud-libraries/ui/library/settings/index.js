@@ -40,7 +40,7 @@ export default () => {
 		const data = new FormData()
 
 		data.append( 'name', name )
-		data.append( 'description', description )
+		data.append( 'description', description ? description : '' )
 
 		if ( thumb && thumb instanceof File ) {
 			data.append( 'media[thumb]', thumb )
@@ -63,7 +63,10 @@ export default () => {
 
 	const getDefaults = () => {
 		const { name, description, media } = library
-		const defaults = { name, description }
+		const defaults = {
+			name,
+			description: description ? description : ''
+		}
 
 		if ( media.thumb && 'library' === media.thumb.model_type ) {
 			defaults.thumb = media.thumb.sizes.thumb.url
