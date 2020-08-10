@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 
 import * as post from './config/post'
@@ -15,38 +16,47 @@ const methods = {
 }
 
 /**
- * Item specific form section config.
+ * Item specific form tab config.
  */
-export const getFormSections = ( item ) => {
+export const getFormTabs = ( item ) => {
+	const { pathname } = useLocation()
+	const basePath = pathname.split( '/edit/' ).shift()
 	const { libraryId } = ItemContext.use()
 	const { type } = item
 
-	let sections = {
-		general: {
-			fields: {
-				name: {
-					label: __( 'Name' ),
-					component: 'text',
-					validate: ( value, errors ) => {
-						if ( '' === value ) {
-							errors.push( __( 'Please enter a name.' ) )
-						}
+	let tabs = {
+		settings: {
+			label: __( 'Settings' ),
+			path: basePath,
+			exact: true,
+			sections: {
+				general: {
+					fields: {
+						name: {
+							label: __( 'Name' ),
+							component: 'text',
+							validate: ( value, errors ) => {
+								if ( '' === value ) {
+									errors.push( __( 'Please enter a name.' ) )
+								}
+							},
+						},
+						collections: {
+							label: __( 'Collections' ),
+							component: CollectionsField,
+							libraryId
+						},
 					},
-				},
-				collections: {
-					label: __( 'Collections' ),
-					component: CollectionsField,
-					libraryId
-				},
-			},
+				}
+			}
 		}
 	}
 
 	if ( methods[ type ] ) {
-		sections = methods[ type ].getSections( item, sections )
+		tabs = methods[ type ].getTabs( item, tabs )
 	}
 
-	sections.actions = {
+	tabs.settings.sections.actions = {
 		label: __( 'Actions' ),
 		fields: {
 			actions: {
@@ -56,7 +66,21 @@ export const getFormSections = ( item ) => {
 		},
 	}
 
-	return sections
+	if ( 1 === Object.keys( tabs ).length ) {
+		return {
+			sections: tabs.settings.sections
+		}
+	} else {
+		Object.keys( tabs ).map( key => {
+			if ( ! tabs[ key ].path ) {
+				tabs[ key ].path = `${ basePath }/edit/${ key }`
+			}
+		} )
+	}
+
+	return {
+		tabs
+	}
 }
 
 /**

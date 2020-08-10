@@ -3,9 +3,23 @@ import { __ } from '@wordpress/i18n'
 import cloud from 'assistant/cloud'
 import ItemContext from '../../context'
 
-export const getSections = ( item, sections ) => {
+export const getTabs = ( item, tabs ) => {
+	tabs.editor = {
+		label: __( 'Editor' ),
+		sections: {
+			general: {
+				fields: {
+					xml: {
+						component: 'textarea',
+						rows: 20,
+						className: 'fl-asst-svg-editor'
+					}
+				}
+			}
+		}
+	}
 	return {
-		...sections,
+		...tabs,
 	}
 }
 
@@ -84,11 +98,15 @@ export const getActions = ( item ) => {
 }
 
 export const getDefaults = ( item, defaults ) => {
+	const { xml } = item.data
 	return {
 		...defaults,
+		xml
 	}
 }
 
 export const getData = ( item, values, data ) => {
+	item.data.xml = values.xml
+	data.append( 'data', JSON.stringify( item.data ) )
 	return data
 }

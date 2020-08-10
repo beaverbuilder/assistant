@@ -4,6 +4,7 @@ import { Notice, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 import ItemContext from './context'
 import ItemLayout from './layout'
+import './style.scss'
 
 export default () => {
 	const { id, itemId } = useParams()

@@ -1,0 +1,19 @@
+.fl-asst-library-item {
+
+	.fluid-page-content {
+
+		> .fluid-box {
+			padding-top: 0;
+
+			> .fluid-box-outset {
+				margin-top: 0 !important;
+			}
+		}
+	}
+
+	.fl-asst-svg-editor {
+		font-family: monospace;
+		padding: var(--fluid-med-space);
+		line-height: 1.6;
+	}
+}

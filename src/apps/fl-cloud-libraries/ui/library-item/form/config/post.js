@@ -6,25 +6,23 @@ import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 import ItemContext from '../../context'
 
-export const getSections = ( item, sections ) => {
-	sections.general.fields.thumb = {
+export const getTabs = ( item, tabs ) => {
+	tabs.settings.sections.general.fields.thumb = {
 		label: __( 'Featured Image' ),
 		component: 'file',
 		accept: 'image/jpg,image/png,image/gif'
 	}
-	return {
-		...sections,
-		info: {
-			label: __( 'Info' ),
-			fields: {
-				postType: {
-					label: __( 'Type' ),
-					labelPlacement: 'beside',
-					component: 'plain-text',
-				},
+	tabs.settings.sections.info = {
+		label: __( 'Info' ),
+		fields: {
+			postType: {
+				label: __( 'Type' ),
+				labelPlacement: 'beside',
+				component: 'plain-text',
 			},
-		}
+		},
 	}
+	return tabs
 }
 
 export const getActions = ( item ) => {

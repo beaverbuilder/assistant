@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Form, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
-import { getFormSections, getFormDefaults, getFormData } from '../form'
+import { getFormTabs, getFormDefaults, getFormData } from '../form'
 import ItemContext from '../context'
 import ItemHero from '../hero'
 
@@ -24,8 +24,8 @@ export default () => {
 		resetForm,
 		hasChanges
 	} = Form.useForm( {
+		...getFormTabs( item ),
 		defaults: getFormDefaults( item ),
-		sections: getFormSections( item ),
 		onSubmit,
 	} )
 
@@ -45,6 +45,7 @@ export default () => {
 			notices={ renderNotices() }
 			hero={ <ItemHero /> }
 			footer={ hasChanges && <PublishActions /> }
+			className='fl-asst-library-item'
 		>
 			{ renderForm() }
 		</Page>

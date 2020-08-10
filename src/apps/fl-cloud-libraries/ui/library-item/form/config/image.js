@@ -3,9 +3,9 @@ import { __ } from '@wordpress/i18n'
 import cloud from 'assistant/cloud'
 import ItemContext from '../../context'
 
-export const getSections = ( item, sections ) => {
+export const getTabs = ( item, tabs ) => {
 	return {
-		...sections,
+		...tabs,
 	}
 }
 
