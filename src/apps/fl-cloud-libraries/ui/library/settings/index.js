@@ -31,11 +31,24 @@ export default () => {
 		thumb: {
 			label: __( 'Featured Image' ),
 			component: 'file',
+			accept: 'image/jpg,image/png,image/gif'
 		},
 	}
 
 	const onSubmit = ( { values, setErrors } ) => {
-		return cloud.libraries.update( library.id, values ).then( response => {
+		const { name, description, thumb } = values
+		const data = new FormData()
+
+		data.append( 'name', name )
+		data.append( 'description', description )
+
+		if ( thumb && thumb instanceof File ) {
+			data.append( 'media[thumb]', thumb )
+		} else if ( ! thumb ) {
+			data.append( 'media[thumb]', null )
+		}
+
+		return cloud.libraries.update( library.id, data ).then( response => {
 			const library = response.data
 			const owner = 'team' === library.owner_type ? library.owner_id : 0
 			setLibraries( {
@@ -48,6 +61,17 @@ export default () => {
 		} )
 	}
 
+	const getDefaults = () => {
+		const { name, description, media } = library
+		const defaults = { name, description }
+
+		if ( media.thumb && 'library' === media.thumb.model_type ) {
+			defaults.thumb = media.thumb.sizes.thumb.url
+		}
+
+		return defaults
+	}
+
 	const {
 		renderForm,
 		submitForm,
@@ -56,7 +80,7 @@ export default () => {
 	} = Form.useForm( {
 		fields,
 		onSubmit,
-		defaults: library,
+		defaults: getDefaults(),
 	} )
 
 	const deleteLibrary = () => {

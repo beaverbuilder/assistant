@@ -10,6 +10,7 @@ export const getSections = ( item, sections ) => {
 	sections.general.fields.thumb = {
 		label: __( 'Featured Image' ),
 		component: 'file',
+		accept: 'image/jpg,image/png,image/gif'
 	}
 	return {
 		...sections,
