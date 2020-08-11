@@ -1,9 +1,9 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Filter } from 'assistant/ui'
 import { getAppHooks } from 'assistant/data'
 import cloud from 'assistant/cloud'
-import { loadLibraries } from '../../../data'
 
 export default () => {
 	const { useDefaultFilter, useFilter, useTeams } = getAppHooks( 'libraries' )
@@ -23,7 +23,7 @@ export default () => {
 
 	const updateFilter = ( data ) => {
 		setFilter( data )
-		loadLibraries()
+		Libraries.loadAppState()
 	}
 
 	return (
