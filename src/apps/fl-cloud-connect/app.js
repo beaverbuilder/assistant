@@ -34,7 +34,6 @@ const Main = () => {
 		cloud.session.setToken( token )
 		cloud.auth.refresh().then( response => {
 			cloud.session.create( response.token, response.user, true )
-			window.location.href = addQueryArgs( href.split( '?' ).shift(), args )
 		} ).catch( () => {
 			cloud.session.destroy()
 			setIsTokenValid( false )
