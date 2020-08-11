@@ -10,7 +10,7 @@ import ItemContext from '../context'
 import ItemHero from '../hero'
 
 export default () => {
-	const { itemTypes } = useAppState( 'fl-cloud-libraries', 'itemTypes' )
+	const { itemTypes } = useAppState( 'libraries', 'itemTypes' )
 	const { items, setItems } = LibraryContext.use()
 	const { item, setItem, renderNotices } = ItemContext.use()
 

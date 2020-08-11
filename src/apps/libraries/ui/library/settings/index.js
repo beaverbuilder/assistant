@@ -10,8 +10,8 @@ import LibraryCollections from './collections'
 
 export default () => {
 	const history = useHistory()
-	const { libraries } = useAppState( 'fl-cloud-libraries', 'libraries' )
-	const { updateLibrary, removeLibrary } = getAppActions( 'fl-cloud-libraries' )
+	const { libraries } = useAppState( 'libraries', 'libraries' )
+	const { updateLibrary, removeLibrary } = getAppActions( 'libraries' )
 	const { library, setLibrary } = LibraryContext.use()
 
 	const fields = {
@@ -85,7 +85,7 @@ export default () => {
 		if ( confirm( __( 'Do you really want to delete this library?' ) ) ) {
 			cloud.libraries.delete( library.id )
 			removeLibrary( library.id )
-			history.replace( '/fl-cloud-libraries' )
+			history.replace( '/libraries' )
 		}
 	}
 

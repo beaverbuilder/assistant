@@ -14,8 +14,8 @@ import './style.scss'
 export default () => {
 	const { items, showUpload, setShowUpload, setUploadTab, uploader } = LibraryContext.use()
 	const { handleDrop } = uploader
-	const { defaultItemsFilter } = useAppState( 'fl-cloud-libraries', 'defaultItemsFilter' )
-	const { useItemsFilter } = getAppHooks( 'fl-cloud-libraries' )
+	const { defaultItemsFilter } = useAppState( 'libraries', 'defaultItemsFilter' )
+	const { useItemsFilter } = getAppHooks( 'libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
 	const filteredItems = getFilteredItems( itemsFilter, items )
 	const hasItems = items && !! items.length

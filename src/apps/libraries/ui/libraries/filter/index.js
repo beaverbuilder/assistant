@@ -6,7 +6,7 @@ import cloud from 'assistant/cloud'
 import { loadLibraries } from '../../../data'
 
 export default () => {
-	const { useDefaultFilter, useFilter, useTeams } = getAppHooks( 'fl-cloud-libraries' )
+	const { useDefaultFilter, useFilter, useTeams } = getAppHooks( 'libraries' )
 	const [ defaultFilter ] = useDefaultFilter()
 	const [ filter, setFilter ] = useFilter()
 	const [ teams ] = useTeams()

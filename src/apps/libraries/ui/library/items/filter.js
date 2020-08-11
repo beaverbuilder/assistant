@@ -7,9 +7,9 @@ import LibraryContext from '../context'
 
 export default () => {
 	const { library } = LibraryContext.use()
-	const { useItemsFilter } = getAppHooks( 'fl-cloud-libraries' )
+	const { useItemsFilter } = getAppHooks( 'libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
-	const { defaultItemsFilter, itemTypes } = useAppState( 'fl-cloud-libraries', [
+	const { defaultItemsFilter, itemTypes } = useAppState( 'libraries', [
 		'defaultItemsFilter', 'itemTypes'
 	] )
 

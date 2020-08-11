@@ -13,7 +13,7 @@ export default ( { baseURL } ) => {
 	const { isCloudConnected } = useSystemState( 'isCloudConnected' )
 
 	if ( isCloudConnected ) {
-		history.replace( '/fl-cloud-libraries' )
+		history.replace( '/libraries' )
 		return null
 	}
 

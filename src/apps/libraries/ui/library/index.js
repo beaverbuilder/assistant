@@ -19,7 +19,7 @@ export default () => {
 	const { id } = useParams()
 	const [ library, setLibrary ] = cloud.libraries.useOne( id )
 	const [ items, setItems ] = useState( null )
-	const { itemsFilter } = useAppState( 'fl-cloud-libraries', 'itemsFilter' )
+	const { itemsFilter } = useAppState( 'libraries', 'itemsFilter' )
 	const [ showUpload, setShowUpload ] = useState( false )
 	const [ uploadTab, setUploadTab ] = useState( 'posts' )
 
@@ -74,13 +74,13 @@ export default () => {
 					padY={ false }
 				>
 					<Switch>
-						<Route path='/fl-cloud-libraries/:id/settings' component={ LibrarySettings } />
-						<Route path='/fl-cloud-libraries/:id' component={ LibraryItems } />
+						<Route path='/libraries/:id/settings' component={ LibrarySettings } />
+						<Route path='/libraries/:id' component={ LibraryItems } />
 					</Switch>
 				</Page>
 			</div>
 			<Switch>
-				<Route path='/fl-cloud-libraries/:id/items/:itemId' component={ LibraryItem } />
+				<Route path='/libraries/:id/items/:itemId' component={ LibraryItem } />
 			</Switch>
 		</LibraryContext.Provider>
 	)

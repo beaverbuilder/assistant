@@ -15,8 +15,8 @@ export const reducers = {
 }
 
 export const loadLibraries = () => {
-	const state = getAppState( 'fl-cloud-libraries' )
-	const actions = getAppActions( 'fl-cloud-libraries' )
+	const state = getAppState( 'libraries' )
+	const actions = getAppActions( 'libraries' )
 
 	Libraries.loadAppState( cloud, state, actions )
 }

@@ -15,8 +15,8 @@ export default ( {
 	const history = useHistory()
 	const teamId = team ? team.id : 0
 	const [ showAll, setShowAll ] = useState( false )
-	const { useLibraries, useFilter } = getAppHooks( 'fl-cloud-libraries' )
-	const { addLibrary, removeLibrary } = getAppActions( 'fl-cloud-libraries' )
+	const { useLibraries, useFilter } = getAppHooks( 'libraries' )
+	const { addLibrary, removeLibrary } = getAppActions( 'libraries' )
 	const [ libraries ] = useLibraries()
 	const ownerLibraries = teamId ? libraries.team[ teamId ] : libraries.user
 	const hasLibraries = ownerLibraries && 0 < ownerLibraries.length
@@ -130,7 +130,7 @@ export default ( {
 									borderRadius: 'var(--fluid-radius)',
 								}
 							} }
-							onClick={ () => history.push( `/fl-cloud-libraries/${ id }` ) }
+							onClick={ () => history.push( `/libraries/${ id }` ) }
 						>
 
 							{ false && <Button icon="trash" onClick={ e => {

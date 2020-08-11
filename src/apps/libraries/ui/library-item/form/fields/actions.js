@@ -54,7 +54,7 @@ const DeleteButton = () => {
 }
 
 const MoveButton = () => {
-	const { libraries, teams } = useAppState( 'fl-cloud-libraries', [ 'libraries', 'teams' ] )
+	const { libraries, teams } = useAppState( 'libraries', [ 'libraries', 'teams' ] )
 	const { library, items, setItems } = LibraryContext.use()
 	const { item, setItem, createNotice } = ItemContext.use()
 	const [ moving, setMoving ] = useState( false )

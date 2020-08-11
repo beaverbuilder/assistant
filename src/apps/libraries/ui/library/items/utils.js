@@ -55,7 +55,7 @@ export const getItemsByCollection = ( items ) => {
 }
 
 export const getItemsByType = ( items ) => {
-	const { itemTypes } = getAppState( 'fl-cloud-libraries' )
+	const { itemTypes } = getAppState( 'libraries' )
 	const types = {}
 	items.map( item => {
 		if ( ! types[ item.type ] ) {
