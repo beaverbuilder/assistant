@@ -1,9 +1,10 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import classname from 'classnames'
 import './style.scss'
 
 const Card = ( {
-	tag: Tag = 'div',
+	tag: Tag = motion.div,
 	className,
 	children,
 	title,
@@ -29,6 +30,7 @@ const Card = ( {
 				'fl-asst-card': true,
 				'fl-asst-card-pad-x': padX
 			}, className ) }
+			layout
 			{ ...rest }
 		>
 			<div className="fl-asst-card-header">
