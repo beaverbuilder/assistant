@@ -1,19 +1,15 @@
 import { lazy } from 'react'
-import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import AppIcon from './icon'
-import { state, loadLibraries } from './data'
 
 const App = lazy( () => import(
 	/* webpackChunkName: "app-cloud-libraries" */ './app'
 ) )
 
 if ( ! __PRODUCTION__ ) {
-	registerApp( 'fl-cloud-libraries', {
-		label: __( 'Libraries' ),
+	Libraries.setupApp( {
 		root: App,
 		icon: AppIcon,
-		onMount: loadLibraries,
-		state,
 	} )
 }

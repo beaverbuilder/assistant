@@ -6,7 +6,7 @@ import { Layout, Collection, Text } from 'assistant/ui'
 export default ( { categories } ) => {
 	const history = useHistory()
 	const { id } = useParams()
-	const baseURL = `/fl-cloud-libraries/${id}`
+	const baseURL = `/libraries/${id}`
 
 	return Object.values( categories ).map( ( category, i ) => {
 		if ( ! category.items.length ) {

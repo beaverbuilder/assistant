@@ -7,7 +7,7 @@ export default () => {
 	const history = useHistory()
 	const { pathname } = useLocation()
 	const { library, showUpload, setShowUpload } = LibraryContext.use()
-	const basePath = `/fl-cloud-libraries/${ library.id }`
+	const basePath = `/libraries/${ library.id }`
 
 	const goToUpload = () => {
 		setShowUpload( ! showUpload )

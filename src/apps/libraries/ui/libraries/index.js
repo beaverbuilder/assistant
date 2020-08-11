@@ -10,7 +10,7 @@ import LibrariesFilter from './filter'
 import LibrariesGrid from './grid'
 
 export default () => {
-	const { filter, teams, isLoadingLibraries } = useAppState( 'fl-cloud-libraries' )
+	const { filter, teams, isLoadingLibraries } = useAppState( 'libraries' )
 	const { owner, ...query } = filter
 	const cloudUser = cloud.session.getUser()
 

@@ -7,9 +7,11 @@ import LibraryContext from '../context'
 
 export default () => {
 	const { library } = LibraryContext.use()
-	const { useItemsFilter } = getAppHooks( 'fl-cloud-libraries' )
+	const { useItemsFilter } = getAppHooks( 'libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
-	const { defaultItemsFilter } = useAppState( 'fl-cloud-libraries', 'defaultItemsFilter' )
+	const { defaultItemsFilter, itemTypes } = useAppState( 'libraries', [
+		'defaultItemsFilter', 'itemTypes'
+	] )
 
 	const updateFilter = ( newFilter ) => {
 		setItemsFilter( newFilter )
@@ -19,8 +21,8 @@ export default () => {
 		const options = {
 			all: __( 'All' ),
 		}
-		Object.keys( Libraries.itemTypes ).map( key => {
-			options[ key ] = Libraries.itemTypes[ key ].plural
+		Object.keys( itemTypes ).map( key => {
+			options[ key ] = itemTypes[ key ].labels.plural
 		} )
 		return options
 	}

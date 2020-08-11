@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Button, Icon, Layout, Text, Collection } from 'assistant/ui'
-import { getAppHooks } from 'assistant/data'
+import { getAppHooks, getAppActions } from 'assistant/data'
 import cloud from 'assistant/cloud'
 import LibraryInlineCreate from './inline-create'
 import './style.scss'
@@ -15,9 +15,10 @@ export default ( {
 	const history = useHistory()
 	const teamId = team ? team.id : 0
 	const [ showAll, setShowAll ] = useState( false )
-	const { useLibraries, useFilter } = getAppHooks( 'fl-cloud-libraries' )
-	const [ libraries, setLibraries ] = useLibraries()
-	const ownerLibraries = libraries[ teamId ]
+	const { useLibraries, useFilter } = getAppHooks( 'libraries' )
+	const { addLibrary, removeLibrary } = getAppActions( 'libraries' )
+	const [ libraries ] = useLibraries()
+	const ownerLibraries = teamId ? libraries.team[ teamId ] : libraries.user
 	const hasLibraries = ownerLibraries && 0 < ownerLibraries.length
 
 	const [ filter ] = useFilter()
@@ -41,8 +42,7 @@ export default ( {
 		setLoading( true )
 
 		cloud.libraries.create( data ).then( response => {
-			ownerLibraries.unshift( response.data )
-			setLibraries( { ...libraries, [ teamId ]: ownerLibraries } )
+			addLibrary( response.data )
 		} ).catch( () => {
 			alert( __( 'Something went wrong. Please try again.' ) )
 		} ).finally( () => {
@@ -53,8 +53,7 @@ export default ( {
 	const deleteLibrary = id => {
 		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
 			cloud.libraries.delete( id ).then( () => {
-				const newOwnerLibraries = libraries[ teamId ].filter( lib => lib.id !== id )
-				setLibraries( { ...libraries, [ teamId ]: newOwnerLibraries } )
+				removeLibrary( id )
 			} ).catch( () => {
 				alert( __( 'Something went wrong. Please try deleting again.' ) )
 			} )
@@ -131,7 +130,7 @@ export default ( {
 									borderRadius: 'var(--fluid-radius)',
 								}
 							} }
-							onClick={ () => history.push( `/fl-cloud-libraries/${ id }` ) }
+							onClick={ () => history.push( `/libraries/${ id }` ) }
 						>
 
 							{ false && <Button icon="trash" onClick={ e => {

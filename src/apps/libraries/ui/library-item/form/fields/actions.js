@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { Button, Icon, Layout } from 'assistant/ui'
 import { useAppState } from 'assistant/data'
 import cloud from 'assistant/cloud'
+import LibraryContext from '../../../library/context'
 import ItemContext from '../../context'
 
 export default ( {
@@ -26,6 +27,7 @@ export default ( {
 
 const DeleteButton = () => {
 	const history = useHistory()
+	const { items, setItems } = LibraryContext.use()
 	const { item } = ItemContext.use()
 	const [ deleting, setDeleting ] = useState( false )
 
@@ -34,6 +36,7 @@ const DeleteButton = () => {
 			setDeleting( true )
 			cloud.libraries.deleteItem( item.id ).then( () => {
 				setDeleting( false )
+				setItems( items.filter( obj => obj.id !== item.id ) )
 				history.goBack()
 			} )
 		}
@@ -51,8 +54,9 @@ const DeleteButton = () => {
 }
 
 const MoveButton = () => {
-	const { libraries, teams } = useAppState( 'fl-cloud-libraries', [ 'libraries', 'teams' ] )
-	const { item, createNotice } = ItemContext.use()
+	const { libraries, teams } = useAppState( 'libraries', [ 'libraries', 'teams' ] )
+	const { library, items, setItems } = LibraryContext.use()
+	const { item, setItem, createNotice } = ItemContext.use()
 	const [ moving, setMoving ] = useState( false )
 
 	const moveItem = ( libraryId ) => {
@@ -60,8 +64,14 @@ const MoveButton = () => {
 			return
 		}
 		setMoving( true )
-		cloud.libraries.moveItem( libraryId, item.id ).then( () => {
+		cloud.libraries.moveItem( libraryId, item.id ).then( response => {
 			setMoving( false )
+			setItem( response.data )
+			if ( libraryId === library.id ) {
+				setItems( items.concat( [ item ] ) )
+			} else {
+				setItems( items.filter( obj => obj.id !== item.id ) )
+			}
 			createNotice( {
 				id: 'import-success',
 				status: 'success',
@@ -88,17 +98,17 @@ const MoveButton = () => {
 					{ ! moving && __( 'Move To...' ) }
 					{ moving && __( 'Moving...' ) }
 				</option>
-				{ libraries[0] &&
+				{ libraries.user &&
 					<optgroup label={ __( 'Your Libraries' ) }>
-						{ libraries[0].map( ( { id, name }, i ) =>
-							<option key={ i } value={ id }>{ name }</option>
+						{ libraries.user.map( ( { id, name }, i ) =>
+							id !== item.library_id && <option key={ i } value={ id }>{ name }</option>
 						) }
 					</optgroup>
 				}
 				{ teams.map( ( { id, name }, i ) =>
 					<optgroup key={ i } label={ name }>
-						{ libraries[ id ] && libraries[ id ].map( ( { id, name }, i ) =>
-							<option key={ i } value={ id }>{ name }</option>
+						{ libraries.team[ id ] && libraries.team[ id ].map( ( { id, name }, i ) =>
+							id !== item.library_id && <option key={ i } value={ id }>{ name }</option>
 						) }
 					</optgroup>
 				) }

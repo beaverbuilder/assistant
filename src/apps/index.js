@@ -8,7 +8,7 @@ import './fl-comments'
 import './fl-updates'
 import './fl-labels'
 import './fl-cloud-connect'
-import './fl-cloud-libraries'
+import './libraries'
 import './designsystem'
 import './detail-experiment'
 
