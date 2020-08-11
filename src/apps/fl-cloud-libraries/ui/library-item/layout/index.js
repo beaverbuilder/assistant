@@ -2,6 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Form, Layout, Page } from 'assistant/ui'
+import { useAppState } from 'assistant/data'
 import cloud from 'assistant/cloud'
 import { getFormTabs, getFormDefaults, getFormData } from '../form'
 import LibraryContext from '../../library/context'
@@ -9,6 +10,7 @@ import ItemContext from '../context'
 import ItemHero from '../hero'
 
 export default () => {
+	const { itemTypes } = useAppState( 'fl-cloud-libraries', 'itemTypes' )
 	const { items, setItems } = LibraryContext.use()
 	const { item, setItem, renderNotices } = ItemContext.use()
 
@@ -43,9 +45,8 @@ export default () => {
 	}
 
 	const getPageTitle = () => {
-		const labels = Libraries.itemTypes[ item.type ]
-		if ( labels ) {
-			return labels.singular
+		if ( itemTypes[ item.type ] ) {
+			return itemTypes[ item.type ].labels.singular
 		}
 		return __( 'Library Item' )
 	}

@@ -1,8 +1,8 @@
 import { lazy } from 'react'
-import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
+import { registerApp } from 'assistant'
 import AppIcon from './icon'
-import { state, loadLibraries } from './data'
+import { state, actions, reducers, loadLibraries } from './data'
 
 const App = lazy( () => import(
 	/* webpackChunkName: "app-cloud-libraries" */ './app'
@@ -15,5 +15,7 @@ if ( ! __PRODUCTION__ ) {
 		icon: AppIcon,
 		onMount: loadLibraries,
 		state,
+		actions,
+		reducers
 	} )
 }
