@@ -27,6 +27,10 @@
             box-shadow: none;
             min-height: var(--box-size);
             min-width: var(--box-size);
+
+            &:hover {
+                background: var(--fluid-transparent-11);
+            }
         }
 
         .fl-asst-form-input {
