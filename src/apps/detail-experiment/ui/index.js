@@ -1,32 +1,30 @@
 import React, { useRef, useState } from 'react'
 import c from 'classnames'
-import { motion, useElementScroll, AnimateSharedLayout, AnimatePresence, transform, useTransform, useMotionTemplate } from 'framer-motion'
+import { motion, useElementScroll, useTransform, useMotionTemplate } from 'framer-motion'
 import { Layout, Button, Icon } from 'assistant/ui'
 import './style.scss'
 
 export default () => {
 	const ref = useRef()
-	const { scrollYProgress } = useElementScroll(ref)
-	const [currentTab, setCurrentTab] = useState('general')
+	const { scrollYProgress } = useElementScroll( ref )
+	const [ currentTab, setCurrentTab ] = useState( 'general' )
 
 	const tabs = {
-		general: "General",
-		details: "Details",
-		content: "Content",
-		comments: "Comments"
+		general: 'General',
+		details: 'Details',
+		content: 'Content',
+		comments: 'Comments'
 	}
 
-	const inputRange = [0, 50]
-	const outputRange = [0, 20]
+	const inputRange = [ 0, 50 ]
+	const outputRange = [ 0, 20 ]
 	const depth = useTransform( scrollYProgress, inputRange, outputRange )
 	const shadow = useMotionTemplate`0 ${depth}px ${depth}px rgba(0,0,0,0.1)`
 
-	console.log( shadow, depth)
-
 	return (
 		<div
-			ref={ref}
-			style={{
+			ref={ ref }
+			style={ {
 				flex: '1 1 auto',
 				display: 'flex',
 				flexDirection: 'column',
@@ -35,35 +33,35 @@ export default () => {
 				maxHeight: '100%',
 				overflowY: 'scroll',
 				paddingBottom: 100
-			}}
+			} }
 		>
 			<motion.div
-				style={{
+				style={ {
 					position: 'sticky',
 					top: 0,
 					paddingBottom: 10,
 					zIndex: 2,
 					background: 'var(--fluid-background)',
 					boxShadow: shadow,
-				}}
+				} }
 			>
 
 				<Layout.Toolbar>
 					<Button icon="arrow-left" appearance="transparent" />
 
-					{ Object.entries( tabs ).map( ([ key, label ]) => {
+					{ Object.entries( tabs ).map( ( [ key, label ] ) => {
 						const isSelected = currentTab === key
 						return (
 							<button
-								key={key}
+								key={ key }
 								className={ c( 'fluid-button', {
-									'is-selected' : isSelected,
+									'is-selected': isSelected,
 									'fluid-appearance-transparent': ! isSelected,
 								} ) }
 								onClick={ () => setCurrentTab( key ) }
 							>{label}</button>
 						)
-					})}
+					} )}
 				</Layout.Toolbar>
 
 				<Hero />
@@ -90,13 +88,13 @@ export default () => {
 const Hero = () => {
 	return (
 		<motion.div
-			style={{
+			style={ {
 				borderRadius: 10,
 				background: 'var(--fluid-opaque-12)',
 				overflow: 'hidden',
 				flex: '0 0 auto',
 				margin: '0 10px'
-			}}
+			} }
 		>
 			<Layout.AspectBox ratio="4:3" />
 		</motion.div>
@@ -105,14 +103,14 @@ const Hero = () => {
 
 const Form = () => {
 	return (
-		<div style={{ marginTop: 20 }}>
+		<div style={ { marginTop: 20 } }>
 			<Section title="Title & Slug">
 				<Item label="Title">
 					Super Cool Post
 				</Item>
 				<Item label="URL">
 					<a href="#" appearance="transparent">http://www.whatever-site.com/super-cool-post</a>
-					<Button icon="edit" style={{ marginRight: 5 }} />
+					<Button icon="edit" style={ { marginRight: 5 } } />
 					<Button icon="link" />
 				</Item>
 			</Section>
@@ -120,9 +118,9 @@ const Form = () => {
 				<Item label="Status">Published</Item>
 				<Item label="Visibility">Public</Item>
 				<Item label="Publish Date">
-					<Button appearance="transparent" style={{ paddingRight: 0 }}>
+					<Button appearance="transparent" style={ { paddingRight: 0 } }>
 						August 32, 2020 1:13pm
-						<Icon.CaretDown style={{ marginLeft: 5 }} />
+						<Icon.CaretDown style={ { marginLeft: 5 } } />
 					</Button>
 				</Item>
 				<Item label="Author">Brent</Item>
@@ -138,7 +136,7 @@ const Form = () => {
 	)
 }
 
-const Section = ({ title, children }) => {
+const Section = ( { title, children } ) => {
 	return (
 		<div className="fluid-form-section">
 			<div className="fluid-form-section-header">{title}</div>
@@ -147,7 +145,7 @@ const Section = ({ title, children }) => {
 	)
 }
 
-const Item = ({ label, children }) => {
+const Item = ( { label, children } ) => {
 	return (
 		<div className="fluid-form-item">
 			<label>{label}</label>

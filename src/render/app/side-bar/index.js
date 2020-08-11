@@ -101,9 +101,9 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 			>
 				{ home && (
 					<motion.div
-						tag={motion.a}
+						tag={ motion.a }
 						layout
-						transition={{ layoutX: { duration: 0 } }}
+						transition={ { layoutX: { duration: 0 } } }
 					>
 						<Button
 							appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
@@ -161,9 +161,9 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 
 				{ manage && (
 					<motion.div
-						tag={motion.a}
+						tag={ motion.a }
 						layout
-						transition={{ layoutX: { duration: 0 } }}
+						transition={ { layoutX: { duration: 0 } } }
 					>
 						<Button
 							appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }

@@ -3,7 +3,7 @@ import { Switch, Route, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemConfig } from 'assistant/data'
 import { Page } from 'assistant/ui'
-import { getQueryArgs, addQueryArgs } from 'assistant/utils/url'
+import { getQueryArgs } from 'assistant/utils/url'
 import cloud from 'assistant/cloud'
 import AppIcon from './icon'
 import { ConnectCard, ConnectButton } from './ui'
@@ -27,7 +27,7 @@ export default ( { baseURL } ) => {
 const Main = () => {
 	const { cloudConfig } = getSystemConfig()
 	const { href } = window.location
-	const { token, ...args } = getQueryArgs( href )
+	const { token } = getQueryArgs( href )
 	const [ isTokenValid, setIsTokenValid ] = useState( !! token )
 
 	if ( token && isTokenValid ) {

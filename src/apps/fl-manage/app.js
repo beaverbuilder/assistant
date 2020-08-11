@@ -130,7 +130,7 @@ const AppList = memo( () => {
 							} }
 						>
 							<span className="fl-asst-item-icon">
-								<Icon.Safely icon={ icon } context="manage" isSelected={false} />
+								<Icon.Safely icon={ icon } context="manage" isSelected={ false } />
 							</span>
 
 							{label}

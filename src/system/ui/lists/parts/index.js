@@ -255,7 +255,7 @@ export const NoResultsMessage = ( { message } ) => {
 
 export const EndMessage = () => {
 	return (
-		<Layout.Row padY={true}>
+		<Layout.Row padY={ true }>
 			<Icon.Pencil size={ 50 } />
 		</Layout.Row>
 	)

@@ -32,6 +32,7 @@ export {
 	Form,
 	Control,
 	Button,
+
 	// Straight out of FLUID
 	Text,
 	Collection,

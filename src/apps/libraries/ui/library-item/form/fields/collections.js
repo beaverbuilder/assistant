@@ -8,7 +8,7 @@ export default ( {
 	onChange,
 	libraryId
 } ) => {
-	const [ collections, setCollections ] = cloud.libraries.useCollections( libraryId )
+	const [ collections ] = cloud.libraries.useCollections( libraryId )
 	const options = []
 
 	if ( ! collections ) {

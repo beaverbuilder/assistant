@@ -1,5 +1,4 @@
 import { lazy } from 'react'
-import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import AppIcon from './icon'
 

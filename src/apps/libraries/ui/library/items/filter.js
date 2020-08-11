@@ -1,6 +1,5 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Filter } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 import LibraryContext from '../context'

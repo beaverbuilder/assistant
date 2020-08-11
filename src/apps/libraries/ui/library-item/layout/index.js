@@ -1,6 +1,5 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Form, Layout, Page } from 'assistant/ui'
 import { useAppState } from 'assistant/data'
 import cloud from 'assistant/cloud'
