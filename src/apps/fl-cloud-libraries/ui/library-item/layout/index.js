@@ -1,5 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Form, Layout, Page } from 'assistant/ui'
 import cloud from 'assistant/cloud'
 import { getFormTabs, getFormDefaults, getFormData } from '../form'
@@ -41,6 +42,14 @@ export default () => {
 		)
 	}
 
+	const getPageTitle = () => {
+		const labels = Libraries.itemTypes[ item.type ]
+		if ( labels ) {
+			return labels.singular
+		}
+		return __( 'Library Item' )
+	}
+
 	return (
 		<div
 			style={ {
@@ -53,7 +62,7 @@ export default () => {
 			} }
 		>
 			<Page
-				title={ __( 'Library Item' ) }
+				title={ getPageTitle() }
 				shouldShowBackButton={ true }
 				notices={ renderNotices() }
 				hero={ <ItemHero /> }
