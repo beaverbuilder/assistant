@@ -62,12 +62,15 @@ const HeaderBar = ( {
 					/>
 					<motion.button
 						className="fluid-button fluid-shape-round fl-asst-inset-element"
-						style={ { width: 40, height: 40 } }
+						style={ {
+							width: 40,
+							height: 40,
+							fontSize: 18,
+							fontWeight: 500
+						} }
 						onClick={ () => setIsShowingHelp( ! isShowingHelp ) }
 						layoutId="help"
-					>
-						<Icon.Placeholder />
-					</motion.button>
+					>?</motion.button>
 					<Button
 						icon="ellipsis"
 						shape="round"
