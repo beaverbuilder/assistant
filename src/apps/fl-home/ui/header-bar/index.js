@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Layout, Form, Icon, Button } from 'assistant/ui'
+import { motion, AnimatePresence } from 'framer-motion'
 import SearchSuggestions from './search-suggestions'
+import Help from './help'
 import './style.scss'
 
 const noop = () => {}
@@ -14,6 +16,7 @@ const HeaderBar = ( {
 	keyword = '',
 } ) => {
 	const [ isFocused, setIsFocused ] = useState( false )
+	const [ isShowingHelp, setIsShowingHelp ] = useState( true )
 
 	const SearchIcon = () => (
 		<span className="search-icon-wrapper">
@@ -37,11 +40,11 @@ const HeaderBar = ( {
 	}
 
 	return (
-        <>
+		<>
 			<div className="fl-asst-home-search-header fluid-sticky-element" >
 				<Layout.Row className="fl-asst-button-row">
 					<Form.Input
-						className="fl-asst-floating-element"
+						className="fl-asst-inset-element"
 						before={ '' !== keyword ? <Back /> : <SearchIcon /> }
 						value={ keyword }
 						placeholder={ __( 'Search WordPress' ) }
@@ -53,13 +56,32 @@ const HeaderBar = ( {
 						} }
 						onFocus={ () => {
 							setIsFocused( true )
+							setIsShowingHelp( false )
 							onFocus()
 						} }
 					/>
+					<motion.button
+						className="fluid-button fluid-shape-round"
+						style={ { width: 40, height: 40 } }
+						onClick={ () => setIsShowingHelp( ! isShowingHelp ) }
+						layoutId="help"
+						layout={false}
+					>
+						<Icon.Placeholder />
+					</motion.button>
+					<Button
+						icon="ellipsis"
+						shape="round"
+						style={ { width: 40, height: 40 } }
+					/>
 				</Layout.Row>
 			</div>
-            { ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick }/> }
-        </>
+			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick }/> }
+
+			<AnimatePresence>
+				{ isShowingHelp && <Help onClose={ () => setIsShowingHelp( false ) } /> }
+			</AnimatePresence>
+		</>
 	)
 }
 
