@@ -101,6 +101,9 @@
         .fl-asst-floating-element {
             box-shadow: none;
         }
+        .fl-asst-inset-element {
+            background: var(--fluid-transparent-2);
+        }
         .fl-asst-form-input {
             &:focus-within {
                 box-shadow: 0px 0px 0px 2px var(--fluid-accent);

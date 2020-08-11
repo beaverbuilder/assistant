@@ -8,17 +8,12 @@ const Help = ( { onClose = () => {} } ) => {
 	return (
 		<motion.div
 			layoutId="help"
-			style={ {
-				borderRadius: 20,
-				background: 'var(--fluid-transparent-12)',
-				padding: 10,
-				margin: '0 10px 20px'
-			} }
+			className="fl-asst-help-wrap"
 			transition={ {
 				duration: 0.25
 			} }
 		>
-			<Layout.Row>
+			<Layout.Row style={ { paddingLeft: 10, minHeight: 50, alignItems: 'center' } } >
 				<Text.Title>{__( 'Assistant Apps' )}</Text.Title>
 				<Button
 					onClick={ onClose }

@@ -16,7 +16,7 @@ const HeaderBar = ( {
 	keyword = '',
 } ) => {
 	const [ isFocused, setIsFocused ] = useState( false )
-	const [ isShowingHelp, setIsShowingHelp ] = useState( true )
+	const [ isShowingHelp, setIsShowingHelp ] = useState( false )
 
 	const SearchIcon = () => (
 		<span className="search-icon-wrapper">
@@ -61,17 +61,17 @@ const HeaderBar = ( {
 						} }
 					/>
 					<motion.button
-						className="fluid-button fluid-shape-round"
+						className="fluid-button fluid-shape-round fl-asst-inset-element"
 						style={ { width: 40, height: 40 } }
 						onClick={ () => setIsShowingHelp( ! isShowingHelp ) }
 						layoutId="help"
-						layout={false}
 					>
 						<Icon.Placeholder />
 					</motion.button>
 					<Button
 						icon="ellipsis"
 						shape="round"
+						className="fl-asst-inset-element"
 						style={ { width: 40, height: 40 } }
 					/>
 				</Layout.Row>
