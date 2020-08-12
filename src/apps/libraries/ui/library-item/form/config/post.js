@@ -1,37 +1,13 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { getSystemConfig } from 'assistant/data'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import ItemContext from '../../context'
-import PostMedia from '../fields/post-media'
 
-export const getTabs = ( item, tabs ) => {
-	tabs.settings.sections.general.fields.thumb = {
-		label: __( 'Featured Image' ),
-		component: 'file',
-		accept: 'image/jpg,image/png,image/gif'
-	}
-	tabs.settings.sections.info = {
-		label: __( 'Info' ),
-		fields: {
-			postType: {
-				label: __( 'Type' ),
-				labelPlacement: 'beside',
-				component: 'plain-text',
-			},
-		},
-	}
-	tabs.media = {
-		label: __( 'Media' ),
-		sections: () => <PostMedia item={ item } />
-	}
-	return tabs
-}
-
-export const getActions = ( item ) => {
-	const { createNotice } = ItemContext.use()
+export const getActions = ( item, actions ) => {
+	const { createNotice } = Libraries.ItemContext.use()
 	const [ importing, setImporting ] = useState( false )
 	const [ previewing, setPreviewing ] = useState( false )
 	const history = useHistory()
@@ -80,50 +56,17 @@ export const getActions = ( item ) => {
 		} )
 	}
 
-	return [
-		{
-			label: __( 'Import' ),
-			onClick: importPost,
-			disabled: importing,
-		},
-		{
-			label: __( 'Preview' ),
-			onClick: previewPost,
-			disabled: previewing,
-		}
-	]
-}
+	actions.push( {
+		label: __( 'Import' ),
+		onClick: importPost,
+		disabled: importing,
+	} )
 
-export const getDefaults = ( { data, media }, defaults ) => {
-	const { post } = data
-	const { contentTypes } = getSystemConfig()
-	let postType = post.post_type
-	let thumb = null
+	actions.push( {
+		label: __( 'Preview' ),
+		onClick: previewPost,
+		disabled: previewing,
+	} )
 
-	if ( contentTypes[ postType ] ) {
-		postType = contentTypes[ postType ].labels.singular
-	}
-
-	if ( media.thumb ) {
-		thumb = media.thumb.sizes.thumb.url
-	}
-
-	return {
-		...defaults,
-		postType,
-		thumb
-	}
-}
-
-export const getData = ( item, values, data ) => {
-	const { thumb } = values
-	if ( thumb && thumb instanceof File ) {
-		data.append( 'media[thumb]', thumb )
-	} else if ( ! thumb ) {
-		data.append( 'media[thumb]', null )
-	}
-	item.data.post.post_title = values.name
-	item.data.post.post_name = createSlug( values.name )
-	data.append( 'data', JSON.stringify( item.data ) )
-	return data
+	return actions
 }
