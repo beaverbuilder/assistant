@@ -1,12 +1,12 @@
 import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Button, Icon } from 'assistant/ui'
-import LibraryContext from '../context'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 
 export default () => {
 	const history = useHistory()
 	const { pathname } = useLocation()
-	const { library, showUpload, setShowUpload } = LibraryContext.use()
+	const { library, showUpload, setShowUpload } = Libraries.LibraryContext.use()
 	const basePath = `/libraries/${ library.id }`
 
 	const goToUpload = () => {

@@ -3,23 +3,11 @@ import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Filter } from 'assistant/ui'
 import { getAppHooks } from 'assistant/data'
-import cloud from 'assistant/cloud'
 
 export default () => {
-	const { useDefaultFilter, useFilter, useTeams } = getAppHooks( 'libraries' )
+	const { useDefaultFilter, useFilter } = getAppHooks( 'libraries' )
 	const [ defaultFilter ] = useDefaultFilter()
 	const [ filter, setFilter ] = useFilter()
-	const [ teams ] = useTeams()
-	const cloudUser = cloud.session.getUser()
-
-	const getOwnerOptions = () => {
-		const options = {
-			all: __( 'All' ),
-			user: cloudUser.name,
-		}
-		teams.map( team => options[ `team_${ team.id }` ] = team.name )
-		return options
-	}
 
 	const updateFilter = ( data ) => {
 		setFilter( data )
@@ -30,7 +18,7 @@ export default () => {
 		<Filter>
 			<Filter.RadioGroupItem
 				title={ __( 'Owner' ) }
-				items={ getOwnerOptions() }
+				items={ Libraries.getLibraryOwnerOptions() }
 				value={ filter.owner }
 				defaultValue={ defaultFilter.owner }
 				onChange={ value => updateFilter( { ...filter, owner: value } ) }
@@ -42,9 +30,9 @@ export default () => {
 					created_at: __( 'Date Created' ),
 					updated_at: __( 'Last Updated' ),
 				} }
-				value={ filter.order_by }
-				defaultValue={ defaultFilter.order_by }
-				onChange={ value => updateFilter( { ...filter, order_by: value } ) }
+				value={ filter.orderBy }
+				defaultValue={ defaultFilter.orderBy }
+				onChange={ value => updateFilter( { ...filter, orderBy: value } ) }
 			/>
 			<Filter.RadioGroupItem
 				title={ __( 'Order' ) }

@@ -1,10 +1,10 @@
 import React from 'react'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Layout } from 'assistant/ui'
 import Members from './members'
-import LibraryContext from '../context'
 
 export default () => {
-	const { library } = LibraryContext.use()
+	const { library } = Libraries.LibraryContext.use()
 	const { owner_type, owner_id } = library
 
 	return (

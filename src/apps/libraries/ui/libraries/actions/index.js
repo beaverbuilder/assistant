@@ -10,24 +10,6 @@ export default () => {
 	return (
 		<>
 			<Button
-				title={ __( 'Logout' ) }
-				onClick={ cloud.auth.logout }
-				appearance='transparent'
-				size='sm'
-				style={ {
-					height: '25px',
-					width: '25px',
-					marginRight: 'var(--fluid-med-space)',
-					borderRadius: '100%',
-					minHeight: '0',
-					minWidth: '0'
-				} }
-			>
-				<span
-					className="dashicons dashicons-lock"
-				></span>
-			</Button>
-			<Button
 				className='fl-asst-cloud-gravatar-link'
 				href={ cloudConfig.appUrl }
 				target='_blank'

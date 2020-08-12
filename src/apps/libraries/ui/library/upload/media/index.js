@@ -1,9 +1,8 @@
 import React from 'react'
-import { Uploader } from '@beaverbuilder/cloud-ui'
-import LibraryContext from '../../context'
+import { Libraries, Uploader } from '@beaverbuilder/cloud-ui'
 
 export default () => {
-	const { uploader } = LibraryContext.use()
+	const { uploader } = Libraries.LibraryContext.use()
 	const { queuedFiles, errorFiles, handleSelect } = uploader
 
 	return (
