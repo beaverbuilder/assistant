@@ -8,7 +8,7 @@ export const Form = ( {
 	additionalClasses, /* used by form hook */
 	...rest
 } ) => {
-	const classes = classname( 'fl-asst-form', className, additionalClasses )
+	const classes = classname( 'fluid-form', className, additionalClasses )
 
 	return (
 		<Form.Context.Provider value={ context }>

@@ -5,11 +5,11 @@
         color: inherit;
         margin: 0;
 
-        .fl-asst-form-section {
+        .fluid-form-section {
             display: flex;
             flex-direction: column;
 
-            .fl-asst-form-section-title {
+            .fluid-form-section-title {
                 flex: 0 0 auto;
                 display: flex;
                 flex-direction: row;
@@ -27,7 +27,7 @@
                 position: sticky;
                 top:0;
 
-                .fl-asst-form-section-title-text {
+                .fluid-form-section-title-text {
                     display: inline-flex;
                     align-items: center;
                     min-height: var(--fluid-target-size);
@@ -37,7 +37,7 @@
                     padding: 0 0 5px;
                 }
             }
-            .fl-asst-form-section-content {
+            .fluid-form-section-content {
                 flex: 1 1 auto;
                 padding: var(--fluid-lg-space) 0;
                 display: grid;
@@ -213,6 +213,7 @@
         flex: 0 0 auto;
         margin: 0;
         margin-right: var(--fluid-med-space);
+        color: white;
 
         &:checked:before {
             display: none !important;

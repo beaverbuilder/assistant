@@ -67,7 +67,7 @@
     select[disabled],
     textarea[disabled],
     [aria-disabled=true],
-    .fl-asst-is-disabled {
+    .fluid-is-disabled {
         pointer-events: none;
         opacity: .5;
         font-style: italic;
@@ -80,10 +80,10 @@
             -webkit-appearance: none;
             width: 20px;
             height: 20px;
-            background-color: var(--fluid-box-background);
+            background-color: var(--fluid-blue);
             box-shadow: none;
             border: none;
-            border-radius: var(--fluid-radius);
+            border-radius: 3px;
 
             &:focus {
                 outline: none;
@@ -92,7 +92,7 @@
             }
 
             &:checked {
-                background-color: var(--fl-asst-blue);
+                background-color: var(--fluid-blue);
                 box-shadow: none;
 
                 &:focus {
