@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Text } from 'fluid'
 import { Icon, Layout } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
 import cloud from 'assistant/cloud'
-import LibraryContext from '../../context'
 
 export default ( { results } ) => {
 
@@ -43,7 +43,7 @@ export default ( { results } ) => {
 }
 
 const PostItem = ( { post } ) => {
-	const { library, items, setItems } = LibraryContext.use()
+	const { library, items, setItems } = Libraries.LibraryContext.use()
 	const [ adding, setAdding ] = useState( false )
 	const [ added, setAdded ] = useState( false )
 

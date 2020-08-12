@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useParams, Switch, Route } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Uploader } from '@beaverbuilder/cloud-ui'
+import { Libraries, Uploader } from '@beaverbuilder/cloud-ui'
 import { Page } from 'assistant/ui'
 import { useAppState } from 'assistant/data'
 import cloud from 'assistant/cloud'
@@ -10,7 +10,6 @@ import LibraryActions from './actions'
 import LibraryItems from './items'
 import LibraryItem from '../library-item'
 import LibrarySettings from './settings'
-import LibraryContext from './context'
 
 import './style.scss'
 
@@ -57,7 +56,7 @@ export default () => {
 	}
 
 	return (
-		<LibraryContext.Provider value={ context }>
+		<Libraries.LibraryContext.Provider value={ context }>
 			<div
 				style={ {
 					visibility: pathname.includes( '/items/' ) ? 'hidden' : '',
@@ -82,6 +81,6 @@ export default () => {
 			<Switch>
 				<Route path='/libraries/:id/items/:itemId' component={ LibraryItem } />
 			</Switch>
-		</LibraryContext.Provider>
+		</Libraries.LibraryContext.Provider>
 	)
 }

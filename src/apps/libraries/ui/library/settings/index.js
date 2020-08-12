@@ -1,18 +1,17 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Button, Form, Layout, Page } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
 import cloud from 'assistant/cloud'
-
-import LibraryContext from '../context'
 import LibraryCollections from './collections'
 
 export default () => {
 	const history = useHistory()
 	const { libraries } = useAppState( 'libraries', 'libraries' )
 	const { updateLibrary, removeLibrary } = getAppActions( 'libraries' )
-	const { library, setLibrary } = LibraryContext.use()
+	const { library, setLibrary } = Libraries.LibraryContext.use()
 
 	const fields = {
 		name: {

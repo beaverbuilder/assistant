@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Button, Layout } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 
@@ -7,12 +8,18 @@ import ItemsHeader from './header'
 import ItemsFilter from './filter'
 import ItemsGrid from './grid'
 import ItemsUpload from '../upload'
-import LibraryContext from '../context'
 import { getFilteredItems } from './utils'
 import './style.scss'
 
 export default () => {
-	const { items, showUpload, setShowUpload, setUploadTab, uploader } = LibraryContext.use()
+	const {
+		items,
+		showUpload,
+		setShowUpload,
+		setUploadTab,
+		uploader
+	} = Libraries.LibraryContext.use()
+
 	const { handleDrop } = uploader
 	const { defaultItemsFilter } = useAppState( 'libraries', 'defaultItemsFilter' )
 	const { useItemsFilter } = getAppHooks( 'libraries' )
