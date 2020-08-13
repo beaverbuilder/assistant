@@ -22,7 +22,7 @@
             box-shadow: 0px 9px 18px var(--shadow-color);
         }
     }
-    &.fluid-color-scheme-dark {
+    .fluid-color-scheme-dark {
         #cards {
             --shadow-color: transparent;
             --fl-asst-card-background: var(--fluid-opaque-1) !important;

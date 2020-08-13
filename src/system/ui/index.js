@@ -1,9 +1,9 @@
 // Public API
+import './style.scss'
 import { Text, Collection, Menu } from 'fluid'
-import { Appearance } from './appearance'
 import { App } from './app'
 import Button from './button'
-import { Icon } from './art'
+import Icon from './icon'
 import Color from './color'
 import { List } from './lists'
 import Layout from './layout'
@@ -17,7 +17,6 @@ import Filter from './filter'
 
 // Export for use inside system bundle - import from 'ui'
 export * from './app'
-export * from './appearance'
 export * from './lists'
 export * from './pages'
 export * from './button'
@@ -32,6 +31,7 @@ export {
 	Form,
 	Control,
 	Button,
+	Icon,
 
 	// Straight out of FLUID
 	Text,
@@ -41,7 +41,6 @@ export {
 
 // Export public API for use inside other bundles - import from 'assistant/ui'
 export const api = {
-	Appearance,
 	App,
 	Button,
 	Icon,

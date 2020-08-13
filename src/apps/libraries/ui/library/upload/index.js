@@ -8,8 +8,7 @@ import MediaUpload from './media'
 import PostsUpload from './posts'
 
 export default () => {
-	const { uploader, setShowUpload, uploadTab, setUploadTab } = Libraries.LibraryContext.use()
-	const { queuedFiles, handleSelect } = uploader
+	const { setShowUpload, uploadTab, setUploadTab } = Libraries.LibraryContext.use()
 
 	return (
 		<Layout.Box

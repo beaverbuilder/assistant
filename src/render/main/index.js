@@ -3,17 +3,9 @@ import { useLocation, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { Root as AppCoreRoot, Error } from '@beaverbuilder/app-core'
-import {
-	getSystemActions,
-	useSystemState,
-} from 'assistant/data'
+import { getSystemActions, useSystemState } from 'assistant/data'
+import { Icon, Page, Env } from 'assistant/ui'
 
-import {
-	Appearance,
-	Icon,
-	Page,
-	Env,
-} from 'assistant/ui'
 import AssistantRouter from './router'
 import AppMain from '../app'
 import Window from '../window'
@@ -37,7 +29,7 @@ const FLUIDAppearanceRoot = ( {
 	className,
 	...rest
 } ) => {
-	const classes = classname( 'fluid fl uid', {
+	const classes = classname( {
 		[`fluid-color-scheme-${colorScheme}`]: colorScheme
 	}, className )
 
@@ -66,11 +58,9 @@ export const Assistant = () => {
 			<HistoryManager />
 			<Env.Provider>
 				<FLUIDAppearanceRoot colorScheme={ brightness }>
-					<Appearance brightness={ brightness }>
-						<MainWindow className={ windowClasses }>
-							<AppMain />
-						</MainWindow>
-					</Appearance>
+					<MainWindow className={ windowClasses }>
+						<AppMain />
+					</MainWindow>
 				</FLUIDAppearanceRoot>
 			</Env.Provider>
 		</AppCoreRoot>
@@ -79,7 +69,6 @@ export const Assistant = () => {
 
 // Used for Beaver Builder panel - doesn't have Window Frame or FLUID root.
 export const AssistantCore = () => {
-	const { appearance } = useSystemState( 'appearance' )
 	return (
 		<AppCoreRoot router={ AssistantRouter } >
 			<HistoryManager />

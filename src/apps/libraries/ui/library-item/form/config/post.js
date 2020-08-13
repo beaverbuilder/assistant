@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
-import { getSystemConfig } from 'assistant/data'
-import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 
 export const getActions = ( item, actions ) => {

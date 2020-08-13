@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { getWpRest } from 'assistant/utils/wordpress'
-import cloud from 'assistant/cloud'
 
 export const getActions = ( item, actions ) => {
-	const { setItem, createNotice } = Libraries.ItemContext.use()
+	const { createNotice } = Libraries.ItemContext.use()
 	const [ importing, setImporting ] = useState( false )
 	const wpRest = getWpRest()
 
