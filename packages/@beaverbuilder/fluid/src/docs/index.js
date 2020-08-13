@@ -5,6 +5,7 @@ import IntroSheet from './intro'
 import ListSheet from './lists'
 import LayoutSheet from './layout'
 import HTMLSheet from './html'
+import FormSheet from './form'
 
 export {
 	IntroSheet,
@@ -14,4 +15,5 @@ export {
 	ListSheet,
 	LayoutSheet,
 	HTMLSheet,
+	FormSheet,
 }

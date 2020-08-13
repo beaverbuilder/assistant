@@ -77,6 +77,7 @@
             &:focus {
                 opacity: 1;
                 box-shadow: none !important;
+                background-color: transparent !important;
 
                 & > span {
                     color: var(--fluid-accent);

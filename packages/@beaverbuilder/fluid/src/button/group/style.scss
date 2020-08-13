@@ -152,4 +152,10 @@
         display: flex;
         flex-direction: column;
     }
+
+    .fluid-color-scheme-dark {
+        .fluid-button-group {
+            background: var(--fluid-transparent-1);
+        }
+    }
 }

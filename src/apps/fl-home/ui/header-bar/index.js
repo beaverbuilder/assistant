@@ -71,12 +71,6 @@ const HeaderBar = ( {
 						onClick={ () => setIsShowingHelp( ! isShowingHelp ) }
 						layoutId="help"
 					>?</motion.button>
-					<Button
-						icon="ellipsis"
-						shape="round"
-						className="fl-asst-inset-element"
-						style={ { width: 40, height: 40 } }
-					/>
 				</Layout.Row>
 			</div>
 			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick }/> }
