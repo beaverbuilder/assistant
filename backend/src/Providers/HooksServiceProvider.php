@@ -11,6 +11,7 @@ use FL\Assistant\Hooks\Actions\OnDeleteTerm;
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
 use FL\Assistant\Hooks\CloudPostPreview;
+use FL\Assistant\Hooks\PostScreenshotPreview;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 use FL\Assistant\Data\Transformers\NotationsTransformer;
 use FL\Assistant\Data\Repository\NotationsRepository;
@@ -34,6 +35,7 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 		$this->filters();
 
 		new CloudPostPreview();
+		new PostScreenshotPreview();
 	}
 
 	public function actions() {

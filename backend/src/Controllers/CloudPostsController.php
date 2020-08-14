@@ -231,6 +231,16 @@ class CloudPostsController extends ControllerAbstract {
 
 
 
+	function get_screenshot_html( $post ) {
+		$url = add_query_arg( 'fl_asst_screenshot_preview', 1, get_permalink( $post ) );
+		$response = wp_remote_get( $url, [
+			'cookies' => $_COOKIE,
+		] );
+		return wp_remote_retrieve_body( $response );
+	}
+
+
+
 	function save_to_library( $request ) {
 		$id = $request->get_param( 'id' );
 		$library_id = $request->get_param( 'library_id' );
@@ -255,6 +265,7 @@ class CloudPostsController extends ControllerAbstract {
 					'meta'     => get_post_meta( $id ),
 					'terms'    => $post_taxonomies,
 					'comments' => $comments,
+					'html' 	   => $this->get_screenshot_html( $post ),
 				],
 				'media' => [
 					'thumb'       => $media_path,
