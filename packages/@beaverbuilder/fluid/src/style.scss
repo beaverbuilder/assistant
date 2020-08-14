@@ -274,7 +274,7 @@
         }
     }
 
-    &.fluid-color-scheme-dark {
+    .fluid-color-scheme-dark {
         --fluid-background: var(--fluid-dark-background);
         --fluid-color: var(--fluid-dark-color);
         --fluid-line-color: var(--fluid-dark-line-color);
@@ -293,5 +293,13 @@
         --fluid-destructive-background: hsl(0, 100%, 7%);
         --fluid-destructive-color: hsl(3, 100%, 67%);
         --fluid-destructive-hover-background: hsl(0, 80%, 12%);
+
+        table {
+            tr:nth-child(even) {
+                th, td {
+                    background: var(--fluid-opaque-1);
+                }
+            }
+        }
     }
 }

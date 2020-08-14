@@ -23,7 +23,7 @@ const CollectionContainer = ( {
 	className,
 	children,
 	isLoading = false,
-	loadingItems = 4,
+	loadingItems,
 	...rest
 } ) => {
 	const classes = c( 'fluid-collection', {
@@ -49,15 +49,8 @@ const CollectionContainer = ( {
 	)
 }
 
-const LoadingItems = ({ total = 4 }) => {
-	return (
-		<>
-			<LoadingItem />
-			<LoadingItem />
-			<LoadingItem />
-			<LoadingItem />
-		</>
-	)
+const LoadingItems = ( { total = 4 } ) => {
+	return Array( total ).fill( 0 ).map( ( item, i ) => <LoadingItem key={ i } /> )
 }
 
 export default CollectionContainer

@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.5.8",
+    "version": "0.6.0",
     "description": "Common UI environment for Beaver Builder and Assistant projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",

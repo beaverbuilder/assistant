@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Button, Layout } from 'assistant/ui'

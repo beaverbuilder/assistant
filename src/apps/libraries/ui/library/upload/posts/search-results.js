@@ -4,7 +4,6 @@ import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Text } from 'fluid'
 import { Icon, Layout } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
-import cloud from 'assistant/cloud'
 
 export default ( { results } ) => {
 

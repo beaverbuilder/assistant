@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
-import { Page, Layout, Button, Icon } from 'ui'
+import { Page, Layout, Icon } from 'ui'
 import { isColor } from 'utils/color'
 import { isURL } from 'utils/url'
 import { __ } from '@wordpress/i18n'

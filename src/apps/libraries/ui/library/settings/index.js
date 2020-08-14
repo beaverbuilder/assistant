@@ -9,7 +9,7 @@ import LibraryCollections from './collections'
 
 export default () => {
 	const history = useHistory()
-	const { libraries } = useAppState( 'libraries', 'libraries' )
+	useAppState( 'libraries', 'libraries' ) // @TODO Still needed? "libraries" variable was unused
 	const { updateLibrary, removeLibrary } = getAppActions( 'libraries' )
 	const { library, setLibrary } = Libraries.LibraryContext.use()
 

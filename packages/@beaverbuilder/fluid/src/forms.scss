@@ -1,36 +1,65 @@
 .fluid {
 
+    label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: inherit;
+        font-weight: 500;
+        line-height: 1.2;
+        color: var(--fl-asst-text-color);
+        text-transform: none;
+        text-decoration: none;
+        text-shadow: none;
+        margin: 0 0 var(--fluid-med-space);
+
+        abbr {
+            display: flex;
+            text-decoration: none;
+            margin-left: 5px;
+            color: var(--fl-asst-base-art-color);
+        }
+    }
+
     // Things that look like a text field
+    .fl-asst-form-input,
+    input,
     input[type="text"],
-    input[type="password"],
     input[type="email"],
+    input[type="url"],
+    input[type="password"],
+    input[type="search"],
+    input[type="number"],
     input[type="tel"],
     input[type="date"],
     input[type="month"],
     input[type="week"],
     input[type="time"],
+    input[type="datetime"],
     input[type="datetime-local"],
-    input[type="number"],
-    input[type="search"],
-    input[type="url"],
-    select,
-    textarea {
+    input[type="color"],
+    textarea,
+    select {
         display: block;
         box-sizing: border-box;
         width: 100%;
         max-width: 100%;
+        height: auto;
         flex: 1 1 auto;
         font-family: inherit;
         font-size: inherit;
         font-weight: normal;
         line-height: inherit;
+        letter-spacing: normal;
         text-align: left;
+        margin: 0;
         padding: var(--fluid-sm-space);
-        color: var(--fluid-color);
+        color: inherit;
         border-radius: var(--fluid-radius);
         border:none;
         outline: none;
-        box-shadow: none;
+        background-color: var(--fluid-transparent-13);
+        box-shadow: inset 0px 0px 0px 1.5px var(--fluid-line-color);
         min-height: var(--fluid-target-size);
 
         // Yes, these have to be separate rules.
@@ -47,7 +76,15 @@
             color: var(--fluid-muted-text-color);
         }
 
-        &:focus {
+        &:focus,
+        &:invalid {
+            background-color: var(--fluid-box-background);
+            border: none;
+            outline: none;
+            box-shadow: inset 0px 0px 0px 1.5px var(--fluid-background),
+                        0px 0px 0px 1.5px var(--fluid-accent);
+
+
             &::-webkit-input-placeholder{
                 text-align: left;
                 color: var(--fluid-color);
@@ -63,62 +100,112 @@
         }
     }
 
+    input[type="range"] {
+        -webkit-appearance: slider-horizontal;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+        -moz-appearace: none;
+        -webkit-appearance: none;
+        flex: 0 0 auto;
+        margin: 0;
+        margin-right: var(--fluid-med-space);
+        color: white;
+        width: 22px;
+        height: 22px;
+        max-width: 22px;
+        max-height: 22px;
+        min-height: 0;
+        min-width: 0;
+        border-radius: var(--fluid-radius);
+        box-shadow: none;
+        border: none;
+        background-color: var(--fluid-transparent-11);
+
+        &:focus {
+            box-shadow: inset 0px 0px 0px 1.5px var(--fluid-background),
+                        0px 0px 0px 1.5px var(--fluid-accent);
+        }
+
+        &:checked {
+            background-color: var(--fluid-blue);
+            box-shadow: none;
+
+            &:focus {
+                box-shadow: inset 0px 0px 0px 1.5px var(--fluid-background),
+                            0px 0px 0px 1.5px var(--fluid-accent);
+            }
+
+            &:after {
+                display: block;
+                content: "\2713";
+                color: white;
+                font-family: var(--fluid-font-family);
+                font-size: 16px !important;
+                line-height: 1;
+                font-weight: bold;
+                text-align: center;
+                margin-left: -1px;
+                margin-top: -3px;
+            }
+            &:before {
+                content: '' !important;
+                display: none !important;
+            }
+        }
+    }
+
+    input[type="radio"] {
+        border-radus: 50%;
+    }
+
     input[disabled],
     select[disabled],
     textarea[disabled],
     [aria-disabled=true],
-    .fl-asst-is-disabled {
+    .fluid-is-disabled {
         pointer-events: none;
         opacity: .5;
         font-style: italic;
         color: var(--fluid-muted-text-color);
     }
 
-    @supports( -webkit-appearance: none ) {
-        input[type="checkbox"] {
-            -moz-appearace: none;
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+    select {
+        padding: var(--fluid-sm-space);
+        padding-right: 30px;
+
+        &:focus {
             background-color: var(--fluid-box-background);
-            box-shadow: none;
+            color: var(--fluid-color) !important;
             border: none;
-            border-radius: var(--fluid-radius);
-
-            &:focus {
-                outline: none;
-                box-shadow: 0px 0px 0px 1.5px var(--fluid-accent),
-                            inset 0px 0px 0px 2px var(--fluid-background);
-            }
-
-            &:checked {
-                background-color: var(--fl-asst-blue);
-                box-shadow: none;
-
-                &:focus {
-                    outline: none;
-                    box-shadow: 0px 0px 0px 1.5px var(--fluid-accent),
-                                inset 0px 0px 0px 2px var(--fluid-background);
-                }
-                &:after {
-                    display: block;
-                    content: "\2713";
-                    color: white;
-                    font-family: var(--fluid-font-family);
-                    font-size: 18px !important;
-                    line-height: 1;
-                    font-weight: bold;
-                    text-align: center;
-                    margin-left: -1px;
-                    margin-top: 1px;
-                }
-                &:before {
-                    content: '';
-                    display: none;
-                }
-            }
+            outline: none;
+            box-shadow: inset 0px 0px 0px 2px var(--fluid-box-background),
+                        0px 0px 0px 1.5px var(--fluid-accent);
         }
 
+        &:-moz-focusring {
+            color: transparent;
+            text-shadow: 0 0 0 #000;
+        }
+        &::-ms-expand {
+            display: none;
+        }
+
+        &[multiple] {
+            height: auto;
+            padding: 10px 7px 0;
+            background-image: none;
+
+            option {
+                padding: 2px 7px;
+                margin: 1px 0;
+                border-radius: 3px;
+                font-weight: normal;
+            }
+        }
+    }
+
+    @supports( -webkit-appearance: none ) {
         select {
             -moz-appearance: none;
             -webkit-appearance: none;
@@ -132,6 +219,38 @@
         // Hide arrow in IE
         select::-ms-expand {
         	display: none;
+        }
+    }
+
+    .fluid-color-scheme-dark {
+        .fl-asst-form-input,
+        input,
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="password"],
+        input[type="search"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="month"],
+        input[type="week"],
+        input[type="time"],
+        input[type="datetime"],
+        input[type="datetime-local"],
+        input[type="color"],
+        textarea,
+        select {
+            background-color: var(--fluid-transparent-1);
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            background-color: var(--fluid-opaque-0);
+
+            &:checked {
+                background-color: var(--fluid-blue);
+            }
         }
     }
 }

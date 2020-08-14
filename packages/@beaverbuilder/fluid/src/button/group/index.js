@@ -49,13 +49,10 @@ const Group = ( {
 	const shouldInsertDividers = 'normal' === appearance
 	const dividerDirection = 'row' === direction ? 'vertical' : 'horizontal'
 
-	let allChildren = Children.map( children, ( child, i ) => {
+	let allChildren = Children.map( children, child => {
 		if ( ! child ) {
 			return null
 		}
-		const isFirst = 0 === i
-		const shouldInsertDivider = ! isFirst && shouldInsertDividers
-		const shouldHideDivider = child.props.isSelected
 		return child
 	} )
 

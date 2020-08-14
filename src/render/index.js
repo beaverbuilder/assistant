@@ -14,10 +14,9 @@ const renderNormal = () => {
 
 	if ( undefined === mountNode ) {
 		mountNode = document.createElement( 'div' )
-		mountNode.classList.add( 'fl-asst', 'fl-asst-mount-node' )
+		mountNode.classList.add( 'fl-asst-mount', 'fl-asst', 'fluid', 'fl', 'uid' )
 		document.body.appendChild( mountNode )
 	}
-
 	render( <Assistant />, mountNode )
 }
 

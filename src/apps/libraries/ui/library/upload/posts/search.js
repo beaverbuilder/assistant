@@ -5,7 +5,6 @@ import { Button, Icon, Layout } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import { addQueryArgs } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import cloud from 'assistant/cloud'
 
 export default ( { onChange } ) => {
 	const [ keyword, setKeyword ] = useState( '' )
@@ -15,7 +14,7 @@ export default ( { onChange } ) => {
 	let source = CancelToken.source()
 
 	const getSearchRoutes = () => {
-		return Object.entries( contentTypes ).map( ( [ type, data ], key ) => {
+		return Object.entries( contentTypes ).map( ( [ type ] ) => {
 			return addQueryArgs( '/fl-assistant/v1/posts', {
 				post_type: type,
 				s: keyword,

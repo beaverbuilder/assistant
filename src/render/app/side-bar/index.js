@@ -13,7 +13,7 @@ import { useMedia } from 'utils/react'
 import useAppOrder from './use-app-order'
 import './style.scss'
 
-const Sidebar = memo( ( { edge = 'right' } ) => {
+const Sidebar = memo( () => {
 	const { window, isAppHidden  } = useSystemState()
 	const { selectApp, selectHomeApp } = getSystemSelectors()
 	const {
@@ -48,11 +48,6 @@ const Sidebar = memo( ( { edge = 'right' } ) => {
 	const isRoot = 0 === history.index
 	const isManage = pathname.startsWith( '/fl-manage' )
 	const toggleIsAppHidden = () => setIsAppHidden( ! isAppHidden )
-
-	let edgeProp = 'left' === edge ? 'borderRight' : 'borderLeft'
-	if ( isMobile ) {
-		edgeProp = 'borderTop'
-	}
 
 	const toggleWindowSize = () => {
 		const sizes = [ 'mini', 'normal' ]
