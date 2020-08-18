@@ -148,6 +148,7 @@ const config = {
 }
 
 if ( isAnalyzing ) {
+	config.devtool = false
 	config.plugins.push(
 		new BundleAnalyzerPlugin()
 	)
