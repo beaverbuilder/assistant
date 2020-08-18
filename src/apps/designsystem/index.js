@@ -1,6 +1,6 @@
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
-import { Icon } from 'fluid'
+import { Icon } from '@beaverbuilder/fluid'
 import App from './app'
 
 if ( ! __PRODUCTION__ ) {

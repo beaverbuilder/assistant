@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { Switch, Route } from 'react-router-dom'
 import { Page, Button, Icon, Layout } from 'assistant/ui'
 import { useSystemState, getSystemActions } from 'assistant/data'
-import { Docs } from 'fluid'
+import { Docs } from '@beaverbuilder/fluid'
 
 const ToggleBrightness = () => {
 	const { appearance } = useSystemState( 'appearance' )

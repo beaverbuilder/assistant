@@ -1,6 +1,6 @@
 // Public API
 import './style.scss'
-import { Text, Collection, Menu } from 'fluid'
+import { Text, Collection, Menu } from '@beaverbuilder/fluid'
 import { App } from './app'
 import Button from './button'
 import Icon from './icon'

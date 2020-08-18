@@ -1,7 +1,7 @@
 import React, { createContext } from 'react'
 import classname from 'classnames'
 import { App } from '@beaverbuilder/app-core'
-import { Page as FLUIDPage } from 'fluid'
+import { Page as FLUIDPage } from '@beaverbuilder/fluid'
 import { Layout } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 

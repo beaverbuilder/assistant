@@ -1,4 +1,4 @@
-import { Layout as FLUID_Layout } from 'fluid'
+import { Layout as FLUID_Layout } from '@beaverbuilder/fluid'
 import Attention from './attention'
 import PublishBar from './publish-bar'
 import Table from './table'

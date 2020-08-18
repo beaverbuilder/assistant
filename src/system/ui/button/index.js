@@ -1,6 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
-import { Button as FLUID_Button } from 'fluid'
+import { Button as FLUID_Button } from '@beaverbuilder/fluid'
 import { Icon } from 'ui'
 import './style.scss'
 

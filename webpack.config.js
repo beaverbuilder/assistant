@@ -25,10 +25,11 @@ const alias = {
 	'vendor-resize-observer-polyfill': path.resolve( __dirname, './node_modules/resize-observer-polyfill/' ),
 	'vendor-redux': path.resolve( __dirname, './node_modules/redux/' ),
 
-	// Our packages
+	// Our @beaverbuilder/ packages
 	'vendor-app-core': path.resolve( __dirname, './node_modules/@beaverbuilder/app-core' ),
 	'vendor-forms': path.resolve( __dirname, './node_modules/@beaverbuilder/forms' ),
 	'vendor-fluid': path.resolve( __dirname, './node_modules/@beaverbuilder/fluid' ),
+	'vendor-cloud': path.resolve( __dirname, './node_modules/@beaverbuilder/cloud' ),
 }
 
 const externals = [
@@ -48,9 +49,8 @@ const externals = [
 		'redux': 'FL.vendors.Redux',
 		'@beaverbuilder/app-core': 'FL.vendors.BBAppCore',
 		'@beaverbuilder/forms': 'FL.vendors.BBForms',
-
-		/* FLUID environment */
-		'fluid': 'FL.vendors.BBFluid',
+		'@beaverbuilder/fluid': 'FL.vendors.BBFluid',
+		'@beaverbuilder/cloud': 'FL.vendors.BBCloud',
 
 		/* wp */
 		'@wordpress/i18n': 'wp.i18n',
