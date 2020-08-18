@@ -7,13 +7,10 @@ FL.vendors.BBAppCore = BBAppCore
 
 // Forms
 import * as BBForms from 'vendor-forms'
+import 'vendor-forms/dist/index.css'
 FL.vendors.BBForms = BBForms
 
 // FL.UID
-import * as FLUID from '@beaverbuilder/fluid'
-import '@beaverbuilder/fluid/dist/index.css'
-
-FL.UID = FLUID
-
-// Cloud UI
-import '@beaverbuilder/cloud-ui/dist/index.css'
+import * as FLUID from 'vendor-fluid'
+import 'vendor-fluid/dist/index.css'
+FL.vendors.BBFluid = FLUID

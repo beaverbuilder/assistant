@@ -6,6 +6,8 @@
       "describe": "readable",
       "expect": "readable",
       "it": "readable",
+      "__dirname": "readable",
+      "process": "readable",
       "FL_ASSISTANT_INITIAL_STATE": "readable",
       "FL_ASSISTANT_CONFIG": "readable",
       "FL": "readable",

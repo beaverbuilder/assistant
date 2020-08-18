@@ -11,40 +11,40 @@ import resolve from '@rollup/plugin-node-resolve'
 const { IS_PRODUCTION } = process.env
 
 export default {
-    input: 'src/index.js',
-    output: [
-        {
-            file: pkg.main,
-            format: 'cjs',
-            sourcemap: ! IS_PRODUCTION
-        },
-        {
-            file: pkg.module,
-            format: 'es',
-            sourcemap: ! IS_PRODUCTION
-        }
-    ],
-    plugins: [
-        external(),
-        postcss({
-            extract: true
-        }),
-        url(),
-        babel({
-            exclude: 'node_modules/**',
-        }),
-        commonjs({
-            include: 'node_modules/**',
-            namedExports: {
-                'node_modules/react-is/index.js': ['isValidElementType']
-            }
-        }),
-        visualizer(),
-		resolve({
+	input: 'src/index.js',
+	output: [
+		{
+			file: pkg.main,
+			format: 'cjs',
+			sourcemap: ! IS_PRODUCTION
+		},
+		{
+			file: pkg.module,
+			format: 'es',
+			sourcemap: ! IS_PRODUCTION
+		}
+	],
+	plugins: [
+		external(),
+		postcss( {
+			extract: true
+		} ),
+		url(),
+		babel( {
+			exclude: 'node_modules/**',
+		} ),
+		commonjs( {
+			include: 'node_modules/**',
+			namedExports: {
+				'node_modules/react-is/index.js': [ 'isValidElementType' ]
+			}
+		} ),
+		visualizer(),
+		resolve( {
 			jsnext: true,
 			preferBuiltins: true,
 			browser: true
-		}),
+		} ),
 		json()
-    ]
+	]
 }

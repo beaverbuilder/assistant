@@ -1,10 +1,9 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Page } from 'assistant/ui'
+import { Page, Icon } from 'assistant/ui'
 import { useAppState } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
-import AppIcon from '../../icon'
 import Actions from './actions'
 import LibrariesFilter from './filter'
 import LibrariesGrid from './grid'
@@ -17,7 +16,7 @@ export default () => {
 	return (
 		<Page
 			title={ __( 'Libraries' ) }
-			icon={ <AppIcon context="sidebar" /> }
+			icon={ <Icon.Library context="sidebar" /> }
 			shouldShowBackButton={ false }
 			actions={ <Actions /> }
 			padX={ false }

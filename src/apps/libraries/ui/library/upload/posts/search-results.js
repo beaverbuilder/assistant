@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
-import { Text } from 'fluid'
-import { Icon, Layout } from 'assistant/ui'
+import { Icon, Layout, Text } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
 
 export default ( { results } ) => {

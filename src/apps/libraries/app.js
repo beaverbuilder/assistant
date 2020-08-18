@@ -1,9 +1,7 @@
 import React from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { useSystemState } from 'assistant/data'
-
-import Libraries from './ui/libraries'
-import Library from './ui/library'
+import { Library, Libraries } from './ui'
 
 export default ( { baseURL } ) => {
 	const history = useHistory()
