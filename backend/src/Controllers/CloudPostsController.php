@@ -265,11 +265,14 @@ class CloudPostsController extends ControllerAbstract {
 					'meta'     => get_post_meta( $id ),
 					'terms'    => $post_taxonomies,
 					'comments' => $comments,
-					'html' 	   => $this->get_screenshot_html( $post ),
 				],
 				'media' => [
 					'thumb'       => $media_path,
 					'attachments' => [ $media_path, $media_path, $media_path ],
+				],
+				'screenshot' => [
+					'type' => 'html',
+					'html' => $this->get_screenshot_html( $post ),
 				],
 			],
 		);
