@@ -298,7 +298,10 @@ export const useFormData = ( {
 
 	return {
 		form: {
-			onSubmit: e => e.preventDefault(),
+			onSubmit: e => {
+				e.preventDefault()
+				submitForm()
+			},
 			additionalClasses: classname( {
 				'fl-asst-highlight-changes': shouldHighlightChanges
 			} ),

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Control } from 'ui'
+import Control from '../../controls'
 import './style.scss'
 
 export const SuggestItem = ( {

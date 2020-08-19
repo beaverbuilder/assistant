@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useSystemState } from 'data'
-import { Button, Control, Form, Icon, Menu } from 'ui'
+import { Button, Color, Control, Form, Icon, Menu } from 'ui'
 import './style.scss'
 
 export const LabelsItem = ( {
@@ -68,6 +68,7 @@ export const LabelsItem = ( {
 			<Control.TagGroup
 				value={ tags }
 				onRemove={ removeLabel }
+				colors={ Color.knownColors }
 			>
 				<Menu
 					content={ <MenuContent /> }

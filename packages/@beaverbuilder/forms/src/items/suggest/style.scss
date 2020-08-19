@@ -14,7 +14,7 @@
 		input[type="text"] {
 		    flex: none;
 			display: inline-block;
-			margin: var(--fl-asst-tiny-space);
+			margin: var(--fluid-sm-space);
 			max-width: 100%;
 			width: auto;
 		}
@@ -28,19 +28,19 @@
 		z-index: 100;
 		max-height: 150px;
 	    overflow: scroll;
-		padding: var(--fl-asst-tiny-space);
-		background: var(--fl-asst-surface-background);
+		padding: var(--fluid-sm-space);
+		background: var(--fluid-background);
 		border-radius: var(--fluid-radius);
 		box-shadow: 0 0 10px rgba(0, 0, 0, .20);
 	}
 
 	.fl-asst-tag-group-suggest-item {
 		cursor: pointer;
-		padding: var(--fl-asst-tiny-space);
+		padding: var(--fluid-sm-space);
 		border-radius: var(--fluid-radius);
 
 		&:hover {
-			background: var(--fl-asst-secondary-surface-background);
+			background: var(--fluid-box-hover-background);
 		}
 	}
 }
