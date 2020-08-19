@@ -3,6 +3,7 @@ import { useFormData } from './use-form-data'
 import { useForm } from './use-form'
 import { Form, Section, Item, Footer } from './parts'
 import * as Items from './items'
+import Control from './controls'
 import './style.scss'
 
 // Form Context
@@ -24,4 +25,7 @@ Object.keys( Items ).map( key => {
 	Form[ key ].displayName = `Form.${ key }`
 } )
 
-export default Form
+export {
+	Form,
+	Control
+}

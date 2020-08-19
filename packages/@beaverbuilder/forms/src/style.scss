@@ -16,8 +16,8 @@
                 align-items: center;
                 padding: 3px var(--fluid-lg-space) 0;
                 text-transform: uppercase;
-                background-color: var(--fl-asst-surface-background);
-                border-bottom: 2px solid var(--fl-asst-secondary-surface-background);
+                background-color: var(--fluid-background);
+                border-bottom: 2px solid var(--fluid-box-hover-background);
 
                 // Yea, all this for sticky headers
                 position: -webkit-sticky;
@@ -50,8 +50,8 @@
             position: -webkit-sticky;
             position: sticky;
             bottom:0;
-            background: var(--fl-asst-surface-background);
-            border-top: 5px solid var(--fl-asst-secondary-surface-background);
+            background: var(--fluid-background);
+            border-top: 5px solid var(--fluid-box-background);
             display: flex;
             flex-direction: row;
             justify-content: flex-end;
@@ -113,13 +113,15 @@
 
 		.fl-asst-form-item-has-errors {
 			label {
-				color: var(--fl-asst-red) !important;
+				color: var(--fluid-destructive-color) !important;
+			}
+			input, select, textarea {
+				box-shadow: inset 0px 0px 0px 1.5px var(--fluid-destructive-color);
 			}
 			.fl-asst-form-item-error {
-				color: var(--fl-asst-red);
+				color: var(--fluid-destructive-color);
 				padding: var(--fluid-sm-space) 0 0;
 			}
-
 		}
 
         .fl-asst-form-item-placement-beside {
