@@ -1,7 +1,6 @@
 export * from './actions'
 export * from './datetime'
 export * from './labels'
-export * from './suggest'
 export * from './taxonomy-terms'
 export * from './url'
 export * from './parent-terms'
