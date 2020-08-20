@@ -180,11 +180,25 @@ export const useFormData = ( {
 		return changed
 	}
 
+	const selectErrors = () => {
+		const errors = {}
+		for ( let key in state ) {
+			errors[ key ] = state[ key ].errors
+		}
+		return errors
+	}
+
 	const setErrors = ( errors = {} ) => {
 		dispatch( {
 			type: 'SET_ERRORS',
 			errors
 		} )
+	}
+
+	const setError = ( key, error ) => {
+		const errors = selectErrors()
+		errors[ key ].push( error )
+		setErrors( errors )
 	}
 
 	const getFieldIDs = () => {
@@ -211,6 +225,7 @@ export const useFormData = ( {
 						value,
 						values,
 						setValue,
+						setError: error => setError( key, error )
 					}
 					setValue( key, value )
 					field.onChange( args )
@@ -267,13 +282,18 @@ export const useFormData = ( {
 	const submitForm = () => {
 		let hasErrors = false
 
-		Object.keys( values ).map( key => {
-			const errors = []
-			fields[ key ].validate( values[ key ], errors )
-			if ( errors.length ) {
-				setErrors( { [ key ]: errors } )
-				hasErrors = true
+		Object.entries( values ).map( ( [ key, value ] ) => {
+			const args = {
+				key,
+				value,
+				values,
+				setValue,
+				setError: error => {
+					hasErrors = true
+					setError( key, error )
+				}
 			}
+			fields[ key ].validate( args )
 		} )
 
 		if ( hasErrors ) {

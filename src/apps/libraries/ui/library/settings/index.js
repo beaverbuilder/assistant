@@ -17,9 +17,9 @@ export default () => {
 		name: {
 			label: __( 'Name' ),
 			component: 'text',
-			validate: ( value, errors ) => {
+			validate: ( { value, setError } ) => {
 				if ( '' === value ) {
-					errors.push( __( 'Please enter a name.' ) )
+					setError( __( 'Please enter a name.' ) )
 				}
 			}
 		},
