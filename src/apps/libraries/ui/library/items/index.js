@@ -11,6 +11,7 @@ import './style.scss'
 
 export default () => {
 	const {
+		library,
 		items,
 		showUpload,
 		onDrop,
@@ -34,8 +35,19 @@ export default () => {
 		return false
 	}
 
+	const Wrapper = ( { children } ) => {
+		if ( library.permissions.update ) {
+			return (
+				<Layout.DropArea onDrop={ onDrop }>
+					{ children }
+				</Layout.DropArea>
+			)
+		}
+		return <div>{ children }</div>
+	}
+
 	return (
-		<Layout.DropArea onDrop={ onDrop }>
+		<Wrapper>
 			{ hasItems && <ItemsFilter /> }
 			<ItemsHeader />
 			{ showUpload && <ItemsUpload /> }
@@ -57,6 +69,6 @@ export default () => {
 					{ __( 'This library doesn\'t have any items yet.' ) }
 				</Layout.Box>
 			}
-		</Layout.DropArea>
+		</Wrapper>
 	)
 }

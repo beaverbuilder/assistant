@@ -23,7 +23,7 @@ export default ( {
 
 	const [ filter ] = useFilter()
 
-	const canAddNew = team ? team.permissions.update : true
+	const canAddNew = team ? team.permissions.create_libraries : true
 	const [ isAddingNew, setIsAddingNew ] = useState( false )
 	const [ newName, setNewName ] = useState( '' )
 	const [ loading, setLoading ] = useState( false )

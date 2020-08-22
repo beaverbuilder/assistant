@@ -9,6 +9,10 @@ export default () => {
 	const { library, showUpload, setShowUpload } = Libraries.LibraryContext.use()
 	const basePath = `/libraries/${ library.id }`
 
+	if ( ! library.permissions.update ) {
+		return null
+	}
+
 	const goToUpload = () => {
 		setShowUpload( ! showUpload )
 		if ( pathname !== basePath ) {
