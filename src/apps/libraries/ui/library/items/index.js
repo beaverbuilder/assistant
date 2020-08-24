@@ -10,7 +10,7 @@ import ItemsUpload from '../upload'
 import './style.scss'
 
 const Wrapper = ( { library, onDrop, children } ) => {
-	if ( library.permissions.update ) {
+	if ( library.permissions.edit_items ) {
 		return (
 			<Layout.DropArea onDrop={ onDrop }>
 				{ children }

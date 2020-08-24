@@ -9,7 +9,7 @@ export default () => {
 	const { library, showUpload, setShowUpload } = Libraries.LibraryContext.use()
 	const basePath = `/libraries/${ library.id }`
 
-	if ( ! library.permissions.update ) {
+	if ( ! library.permissions.update && ! library.permissions.edit_items ) {
 		return null
 	}
 
@@ -28,23 +28,27 @@ export default () => {
 
 	return (
 		<>
-			<Button
-				appearance='transparent'
-				isSelected={ showUpload && ! pathname.includes( '/settings' ) }
-				onClick={ goToUpload }
-				style={ {
-					marginLeft: 'auto'
-				} }
-			>
-				<Icon.Plus />
-			</Button>
-			<Button
-				appearance='transparent'
-				isSelected={ pathname.includes( '/settings' ) }
-				onClick={ goToSettings }
-			>
-				<Icon.Cog />
-			</Button>
+			{ library.permissions.edit_items &&
+				<Button
+					appearance='transparent'
+					isSelected={ showUpload && ! pathname.includes( '/settings' ) }
+					onClick={ goToUpload }
+					style={ {
+						marginLeft: 'auto'
+					} }
+				>
+					<Icon.Plus />
+				</Button>
+			}
+			{ library.permissions.update &&
+				<Button
+					appearance='transparent'
+					isSelected={ pathname.includes( '/settings' ) }
+					onClick={ goToSettings }
+				>
+					<Icon.Cog />
+				</Button>
+			}
 		</>
 	)
 }

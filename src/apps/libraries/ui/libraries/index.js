@@ -9,7 +9,7 @@ import LibrariesFilter from './filter'
 import LibrariesGrid from './grid'
 
 export default () => {
-	const { filter, teams, isLoadingLibraries } = useAppState( 'libraries' )
+	const { filter, libraries, teams, isLoadingLibraries } = useAppState( 'libraries' )
 	const { owner, ...query } = filter
 	const cloudUser = cloud.session.getUser()
 
@@ -27,7 +27,15 @@ export default () => {
 			<div className='fl-asst-libraries'>
 				{ ( 'all' === owner || 'user' === owner ) &&
 					<LibrariesGrid
-						headline={ cloudUser.name }
+						headline={ cloudUser.name.endsWith( 's' ) ? `${ cloudUser.name }'` : `${ cloudUser.name }'s` }
+						query={ query }
+						isFetching={ isLoadingLibraries }
+					/>
+				}
+				{ !! libraries.shared.length &&
+					<LibrariesGrid
+						headline={ __( 'Shared Libraries' ) }
+						type='shared'
 						query={ query }
 						isFetching={ isLoadingLibraries }
 					/>
@@ -37,7 +45,8 @@ export default () => {
 						return (
 							<LibrariesGrid
 								key={ i }
-								headline={ team.name }
+								headline={ cloudUser.name.endsWith( 's' ) ? `${ team.name }'` : `${ team.name }'s` }
+								type='team'
 								team={ team }
 								query={ query }
 							/>

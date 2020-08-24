@@ -9,21 +9,22 @@ import './style.scss'
 
 export default ( {
 	headline = '',
+	type = 'user',
 	team = null,
 	isFetching = false,
 } ) => {
 	const history = useHistory()
-	const teamId = team ? team.id : 0
 	const [ showAll, setShowAll ] = useState( false )
 	const { useLibraries, useFilter } = getAppHooks( 'libraries' )
 	const { addLibrary, removeLibrary } = getAppActions( 'libraries' )
 	const [ libraries ] = useLibraries()
-	const ownerLibraries = teamId ? libraries.team[ teamId ] : libraries.user
+	const teamId = team ? team.id : 0
+	const ownerLibraries = teamId ? libraries[ type ][ teamId ] : libraries[ type ]
 	const hasLibraries = ownerLibraries && 0 < ownerLibraries.length
 
 	const [ filter ] = useFilter()
 
-	const canAddNew = team ? team.permissions.create_libraries : true
+	const canAddNew = team ? team.permissions.edit_libraries : true
 	const [ isAddingNew, setIsAddingNew ] = useState( false )
 	const [ newName, setNewName ] = useState( '' )
 	const [ loading, setLoading ] = useState( false )
@@ -73,7 +74,7 @@ export default ( {
 
 					{ loading && <Icon.Loading style={ { marginLeft: 'auto' } } /> }
 
-					{ canAddNew && ! loading && (
+					{ 'shared' !== type && canAddNew && ! loading && (
 						<Button
 							appearance="transparent"
 							shape="round"
