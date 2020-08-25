@@ -29,9 +29,11 @@ registerStore( KEY, {
 	selectors,
 } )
 
+export const getSystemStore = () => getStore( KEY )
+
 export const useSystemState = shouldUpdate => useStore( KEY, shouldUpdate )
 
-export const getSystemStore = () => getStore( KEY )
+export const getSystemState = () => getStore( KEY ).getState()
 
 export const getSystemActions = () => getDispatch( KEY )
 

@@ -9,8 +9,20 @@ import ItemsFilter from './filter'
 import ItemsUpload from '../upload'
 import './style.scss'
 
+const Wrapper = ( { library, onDrop, children } ) => {
+	if ( library.permissions.edit_items ) {
+		return (
+			<Layout.DropArea onDrop={ onDrop }>
+				{ children }
+			</Layout.DropArea>
+		)
+	}
+	return <div>{ children }</div>
+}
+
 export default () => {
 	const {
+		library,
 		items,
 		showUpload,
 		onDrop,
@@ -35,7 +47,7 @@ export default () => {
 	}
 
 	return (
-		<Layout.DropArea onDrop={ onDrop }>
+		<Wrapper library={ library } onDrop={ onDrop }>
 			{ hasItems && <ItemsFilter /> }
 			<ItemsHeader />
 			{ showUpload && <ItemsUpload /> }
@@ -57,6 +69,6 @@ export default () => {
 					{ __( 'This library doesn\'t have any items yet.' ) }
 				</Layout.Box>
 			}
-		</Layout.DropArea>
+		</Wrapper>
 	)
 }
