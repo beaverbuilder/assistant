@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Libraries } from '@beaverbuilder/cloud-ui'
+import { Libraries, Uploader } from '@beaverbuilder/cloud-ui'
 import { Button, Layout } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 
@@ -25,7 +25,7 @@ export default () => {
 		library,
 		items,
 		showUpload,
-		onDrop,
+		uploader,
 	} = Libraries.LibraryContext.use()
 
 	const { defaultItemsFilter } = useAppState( 'libraries', 'defaultItemsFilter' )
@@ -47,10 +47,15 @@ export default () => {
 	}
 
 	return (
-		<Wrapper library={ library } onDrop={ onDrop }>
+		<Wrapper library={ library } onDrop={ uploader.handleDrop }>
 			{ hasItems && <ItemsFilter /> }
 			<ItemsHeader />
 			{ showUpload && <ItemsUpload /> }
+			{ !! uploader.queuedFiles.length &&
+				<Layout.Box padY={ false }>
+					<Uploader.FileList files={ uploader.queuedFiles } />
+				</Layout.Box>
+			}
 			{ hasItems && <Libraries.ItemsList />}
 			{ shouldShowNoResults() && ! showUpload &&
 				<>

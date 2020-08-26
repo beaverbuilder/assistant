@@ -41,19 +41,17 @@ export default ( { results } ) => {
 }
 
 const PostItem = ( { post } ) => {
-	const { library, items, setItems } = Libraries.LibraryContext.use()
+	const { uploader } = Libraries.LibraryContext.use()
 	const [ adding, setAdding ] = useState( false )
-	const [ added, setAdded ] = useState( false )
 
 	const addPost = () => {
-		const api = getWpRest().posts()
 		setAdding( true )
-		api.saveToLibrary( post.id, library.id ).then( response => {
-			items.push( response.data )
-			setItems( [ ...items ] )
-			setAdded( true )
-		} ).finally( () => {
-			setAdding( false )
+		uploader.addFile( {
+			id: post.id,
+			name: post.title,
+			type: 'post',
+			tempUrl: post.thumbnail,
+			onComplete: () => setAdding( false )
 		} )
 	}
 
@@ -65,10 +63,7 @@ const PostItem = ( { post } ) => {
 			{ adding &&
 				<a><Icon.Loading /></a>
 			}
-			{ added &&
-				<a>{ __( 'Added!' ) }</a>
-			}
-			{ ! adding && ! added &&
+			{ ! adding &&
 				<a>{ __( 'Add' ) }</a>
 			}
 		</li>

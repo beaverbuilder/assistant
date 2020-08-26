@@ -8,8 +8,6 @@ export default () => {
 	return (
 		<div style={ { marginTop: 'var(--fluid-lg-space)' } }>
 			<Uploader.SelectBox onSelect={ handleSelect } />
-			<Uploader.FileList files={ queuedFiles } />
-			<Uploader.FileList files={ errorFiles } />
 		</div>
 	)
 }
