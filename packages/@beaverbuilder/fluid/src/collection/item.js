@@ -56,7 +56,7 @@ const Item = ( {
 	return (
 		<Tag
 			layout
-			initial="initial"
+			initial={ false }
 			animate="normal"
 			exit="initial"
 			variants={ variants }

@@ -3,11 +3,13 @@ import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Button, Icon, Env, List } from 'assistant/ui'
+import { App, Button, Icon, Env, List } from 'assistant/ui'
 import {
 	useSystemState,
 	getSystemActions,
 	getSystemSelectors,
+	useTestState,
+	getTestActions,
 } from 'assistant/data'
 import { useMedia } from 'utils/react'
 import useAppOrder from './use-app-order'
@@ -40,7 +42,7 @@ const Sidebar = memo( () => {
 		}
 		return isMobile ? 3 : 5
 	}
-	const [ appOrder, setAppOrder ] = useAppOrder( { maxCount: getMaxCount() } )
+
 	const history = useHistory()
 	const { pathname } = history.location
 
@@ -94,7 +96,38 @@ const Sidebar = memo( () => {
 			<div
 				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
 			>
-				{ home && (
+
+				<App.List>
+					{ ( { label, handle, icon } ) => {
+
+						const location = {
+							pathname: `/${handle}`
+						}
+						const isSelected = handle === pathname.split( '/' )[1]
+
+						const iconProps = {
+							icon,
+							context: 'sidebar',
+							isSelected
+						}
+						return (
+							<Button
+								appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
+								shape="round"
+								size="lg"
+								isSelected={ isSelected }
+								onClick={ () => {
+									navOrHideApp( isSelected, () => history.push( location ) )
+								} }
+								title={ label }
+							>
+								<AppIcon { ...iconProps } />
+							</Button>
+						)
+					}}
+				</App.List>
+
+				{ /*false && home && (
 					<motion.div
 						tag={ motion.a }
 						layout
@@ -112,9 +145,9 @@ const Sidebar = memo( () => {
 							<Icon.Safely icon={ home.icon } isSelected={ isRoot && ! isAppHidden }  />
 						</Button>
 					</motion.div>
-				)}
+				) */}
 
-				<List.Sortable
+				{ /* <List.Sortable
 					items={ appOrder }
 					setItems={ setAppOrder }
 					keyProp={ item => item }
@@ -152,9 +185,9 @@ const Sidebar = memo( () => {
 							</Button>
 						)
 					}}
-				</List.Sortable>
+				</List.Sortable> */ }
 
-				{ manage && (
+				{ /* manage && (
 					<motion.div
 						tag={ motion.a }
 						layout
@@ -175,7 +208,7 @@ const Sidebar = memo( () => {
 							<Icon.Safely icon={ manage.icon } isSelected={ isManage && ! isAppHidden } />
 						</Button>
 					</motion.div>
-				)}
+				) */}
 			</div>
 
 			{ ! isBeaverBuilder && ! isMobile && (

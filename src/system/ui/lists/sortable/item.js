@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import c from 'classnames'
 import { motion } from 'framer-motion'
 import useMeasurePosition from './use-measure-position'
@@ -25,6 +25,7 @@ const SortableItem = ( {
 	const [ isDragging, setDragging ] = useState( false )
 	const ref = useMeasurePosition( pos => updatePosition( i, pos ) )
 	const classes = c( { 'is-dragging': isDragging }, className )
+	const lastY = useRef( 0 )
 
 	// Spring configs
 	const onTop = {
@@ -44,8 +45,6 @@ const SortableItem = ( {
 			initial={ false }
 			animate={ isDragging ? onTop : flat }
 			drag="y"
-			dragConstraints={ { top: 0, bottom: 0 } }
-			dragElastic={ 1 }
 			onDragStart={ () => {
 				onSortStart()
 				setDragging( true )
@@ -54,7 +53,14 @@ const SortableItem = ( {
 				setDragging( false )
 				onSortEnd()
 			} }
-			onViewportBoxUpdate={ ( vBox, delta ) => isDragging && updateOrder( i, delta.y.translate ) }
+			onViewportBoxUpdate={ ( vBox, delta ) => {
+				const y = Math.round( delta.y.translate )
+				if ( isDragging && y !== lastY.current ) {
+					console.log('call update', y, lastY.current )
+					updateOrder( i, y )
+					lastY.current = y
+				}
+			} }
 			transition={ transition }
 			{ ...rest }
 		>

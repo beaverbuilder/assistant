@@ -1,0 +1,15 @@
+.fl-asst {
+	.fl-asst-app-list {
+		li {
+			display: flex;
+			flex-direction: row;
+			min-height: 36px;
+			align-items: center;
+			padding: 2px 0;
+
+			.fluid-button {
+				flex: 1 1 auto;
+			}
+		}
+	}
+}

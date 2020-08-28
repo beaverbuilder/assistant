@@ -42,11 +42,11 @@ const Sortable = ( {
 						updateOrder={ updateOrder }
 						onSortStart={ () => {
 							setIsSorting( true )
-							'function' === typeof onSortStart && onSortStart()
+							'function' === typeof onSortStart && onSortStart( order )
 						} }
 						onSortEnd={ () => {
 							setIsSorting( false )
-							'function' === typeof onSortEnd && onSortEnd()
+							'function' === typeof onSortEnd && onSortEnd( order )
 						} }
 						{ ...itemProps }
 					>

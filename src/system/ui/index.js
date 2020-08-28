@@ -14,6 +14,7 @@ import Media from './media'
 import Env from './env'
 import Notice from './notices'
 import Filter from './filter'
+import Widget from './widget'
 
 // Export for use inside system bundle - import from 'ui'
 export * from './app'
@@ -32,6 +33,7 @@ export {
 	Control,
 	Button,
 	Icon,
+	Widget,
 
 	// Straight out of FLUID
 	Text,
@@ -57,4 +59,5 @@ export const api = {
 	Media,
 	Menu,
 	Text,
+	Widget,
 }

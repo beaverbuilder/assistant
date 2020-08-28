@@ -1,5 +1,6 @@
 .fl-asst {
     .fl-asst-card {
+        flex: 1 1 auto;
         background: var(--fluid-background);
         border-radius: var(--fluid-med-space);
         box-shadow: 0px 9px 18px var(--shadow-color);
