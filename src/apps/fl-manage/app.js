@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
 import {
@@ -9,12 +9,10 @@ import {
 	Form,
 	Layout,
 	Env,
-	List,
 } from 'assistant/ui'
-import { useSystemState, getSystemActions, getSystemSelectors, useAppList } from 'assistant/data'
+import { useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
 import AppIcon from './icon'
-import useAppOrder from './use-app-order'
-import { DragHandleBox, TestList } from './ui'
+import { DragHandleBox, AppList } from './ui'
 import './style.scss'
 
 export default props => (
@@ -25,7 +23,6 @@ export default props => (
 )
 
 const MainScreen = () => {
-
 	return (
 		<Page
 			title={ __( 'Apps & Settings' ) }
@@ -35,14 +32,10 @@ const MainScreen = () => {
 			<Form>
 				<Page.Section contentStyle={ { paddingTop: 0 } }>
 					<p style={ { marginTop: 0 } }>{__( 'You can reorder the apps below. The top 5 will appear in the sidebar for quick access.' )}</p>
-
-
-					<TestList />
+					<AppList before={ <Home /> } />
 				</Page.Section>
-
 				<UIColorPreferences />
 			</Form>
-
 		</Page>
 	)
 }
@@ -72,98 +65,6 @@ const Home = memo( () => {
 				{home.label}
 			</Button>
 		</li>
-	)
-} )
-
-const AppList = memo( () => {
-	const { apps: initialApps } = useSystemState()
-	//const initialApps = useAppList()
-	//const { resetAppOrder } = getSystemActions()
-	const { apps, setApps } = useAppOrder()
-
-	const move = ( arr, from, to ) => arr.splice( to, 0, arr.splice( from, 1 )[0] )
-
-	const moveItem = ( handle, to ) => {
-		//const from = appOrder.findIndex( app => handle === app.handle )
-		//setApps( move( apps, from, to ) )
-	}
-
-	return (
-		<List.Sortable
-			className='fl-asst-manage-app-order-list'
-			items={ apps }
-			setItems={ apps => setApps( apps ) }
-			onSortEnd={ apps => {
-				console.log('end', apps )
-				//resetAppOrder( order )
-			} }
-			before={ <Home /> }
-		>
-			{ ( app, i ) => {
-				const {
-					handle,
-					label,
-					icon,
-					isFirst = false,
-					isLast = false,
-				} = app
-
-				const location = {
-					pathname: `/${handle}`
-				}
-				const moveUp = () => moveItem( handle, i - 1 )
-				const moveDown = () => moveItem( handle, i + 1 )
-
-				return (
-					<>
-						<DragHandleBox>
-							<Icon.DragHandle />
-						</DragHandleBox>
-						<Button
-							to={ location }
-							appearance="transparent"
-							style={ {
-								flex: '1 1 auto',
-								marginRight: 'auto',
-								justifyContent: 'flex-start',
-							} }
-							onDragStart={ e => e.preventDefault() }
-						>
-							<span className="fl-asst-item-icon">
-								<Icon.Safely icon={ icon } context="manage" isSelected={ false } />
-							</span>
-
-							{label}
-						</Button>
-
-						<span className="fl-asst-item-reorder-buttons">
-							<span className="fl-asst-button-space">
-								{ ! isFirst && (
-									<Button
-										onClick={ moveUp }
-										appearance="transparent"
-										title={ __( 'Move Up' ) }
-									>
-										<Icon.CaretUp />
-									</Button>
-								) }
-							</span>
-							<span className="fl-asst-button-space">
-								{ ! isLast && (
-									<Button
-										onClick={ moveDown }
-										appearance="transparent"
-										title={ __( 'Move Down' ) }
-									>
-										<Icon.CaretDown />
-									</Button>
-								) }
-							</span>
-						</span>
-					</>
-				)
-			}}
-		</List.Sortable>
 	)
 } )
 

@@ -54,9 +54,11 @@ const SortableItem = ( {
 				onSortEnd()
 			} }
 			onViewportBoxUpdate={ ( vBox, delta ) => {
-				const y = Math.round( delta.y.translate )
-				if ( isDragging && y !== lastY.current ) {
-					console.log('call update', y, lastY.current )
+				const y = delta.y.translate
+				const buffer = 10
+
+				// Need to be the dragging element AND at least buffer more or less than lastY
+				if ( isDragging && ( y >= lastY.current + buffer || y <= lastY.current - buffer ) ) {
 					updateOrder( i, y )
 					lastY.current = y
 				}

@@ -2,10 +2,13 @@ import React from 'react'
 import { Button, Icon, App } from 'assistant/ui'
 import './style.scss'
 
-export const TestList = () => {
+export const AppList = ( { ...rest } ) => {
 
 	return (
-		<App.List className="fl-asst-manage-app-order-list">
+		<App.List
+			className="fl-asst-manage-app-order-list"
+			{ ...rest }
+		>
 			{ ( { handle, label, icon } ) => {
 				return (
 					<>

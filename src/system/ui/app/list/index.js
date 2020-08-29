@@ -21,10 +21,17 @@ const AppList = memo( ( {
 		'is-sorting': isSorting
 	}, className )
 
+	const filtered = appOrder.filter( handle => {
+		return (
+			Object.keys( apps ).includes( handle ) &&
+			false !== apps[ handle ].shouldShowInAppList
+		)
+	} )
+
 	return (
 		<List.Sortable
 			className={ classes }
-			items={ appOrder }
+			items={ filtered }
 			keyProp={ item => item }
 			setItems={ items => setAppOrder( items ) }
 			onSortStart={ items => {
