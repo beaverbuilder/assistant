@@ -6,6 +6,7 @@ import AppsWidget from './apps'
 import RecentContentWidget from './recent-content'
 import CurrentlyViewingWidget from './currently-viewing'
 import SubscribeWidget from './subscribe'
+
 //import Welcome from './welcome'
 import './style.scss'
 

@@ -9,6 +9,7 @@ const AppList = memo( ( {
 	onSortStart = () => {},
 	onSortEnd = () => {},
 	children: Item,
+	limit,
 	...rest
 } ) => {
 	const { appOrder } = useSystemState()
@@ -26,21 +27,39 @@ const AppList = memo( ( {
 			Object.keys( apps ).includes( handle ) &&
 			false !== apps[ handle ].shouldShowInAppList
 		)
+	} ).filter( ( _, i ) => {
+
+		if ( limit ) {
+			return ( i + 1 ) <= limit
+		}
+		return true
 	} )
+
+	const setOrder = ( items, persist = false ) => {
+
+		// If we're limiting the items, we need to put back the unlisted items before saving
+		if ( limit ) {
+			const remaining = appOrder.filter( ( _, i ) => {
+				return ( i + 1 ) > limit
+			} )
+			setAppOrder( [ ...items, ...remaining ], persist )
+		}
+		setAppOrder( items, persist )
+	}
 
 	return (
 		<List.Sortable
 			className={ classes }
 			items={ filtered }
 			keyProp={ item => item }
-			setItems={ items => setAppOrder( items ) }
+			setItems={ items => setOrder( items ) }
 			onSortStart={ items => {
 				setIsSorting( true )
 				onSortStart( items )
 			} }
 			onSortEnd={ items => {
 				setIsSorting( false )
-				setAppOrder( items, true ) // persist to backend
+				setOrder( items, true ) // persist to backend
 				onSortEnd( items )
 			} }
 			{ ...rest }

@@ -1,18 +1,15 @@
-import React, { useState, memo } from 'react'
+import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { App, Button, Icon, Env, List } from 'assistant/ui'
+import { App, Button, Icon, Env } from 'assistant/ui'
 import {
 	useSystemState,
 	getSystemActions,
 	getSystemSelectors,
-	useTestState,
-	getTestActions,
 } from 'assistant/data'
 import { useMedia } from 'utils/react'
-import useAppOrder from './use-app-order'
 import './style.scss'
 
 const Sidebar = memo( () => {
@@ -147,6 +144,7 @@ const Sidebar = memo( () => {
 				<App.List
 					before={ <HomeItem /> }
 					after={ <ManageItem /> }
+					limit={ getMaxCount() }
 				>
 					{ ( { label, handle, icon } ) => {
 
