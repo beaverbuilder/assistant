@@ -20,7 +20,7 @@
   "dependencies": {
     "@beaverbuilder/app-core": "^0.1.9",
     "@beaverbuilder/cloud": "^0.3.7",
-    "@beaverbuilder/cloud-ui": "^0.3.3",
+    "@beaverbuilder/cloud-ui": "^0.3.4",
     "@beaverbuilder/fluid": "^0.6.1",
     "@beaverbuilder/forms": "^0.2.3",
     "@popmotion/popcorn": "^0.4.4",
@@ -33,7 +33,7 @@
     "date-fns": "^2.14.0",
     "framer-motion": "^2.6.2",
     "history": "^5.0.0",
-    "lodash.throttle": "^4.1.1",
+    "html2canvas": "^1.0.0-rc.7",
     "md5": "^2.2.1",
     "moment": "^2.26.0",
     "promise": "^8.1.0",
