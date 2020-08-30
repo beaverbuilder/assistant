@@ -37,14 +37,17 @@ const AppList = memo( ( {
 
 	const setOrder = ( items, persist = false ) => {
 
-		// If we're limiting the items, we need to put back the unlisted items before saving
-		if ( limit ) {
+		// If we're limiting the items,
+		// we need to put back the unlisted items before saving
+		if ( limit && items.length !== appOrder.length ) {
 			const remaining = appOrder.filter( ( _, i ) => {
 				return ( i + 1 ) > limit
 			} )
-			setAppOrder( [ ...items, ...remaining ], persist )
+			const all = [ ...items, ...remaining ]
+			setAppOrder( all, persist )
+		} else {
+			setAppOrder( items, persist )
 		}
-		setAppOrder( items, persist )
 	}
 
 	return (
