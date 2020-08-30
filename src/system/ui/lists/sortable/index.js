@@ -34,6 +34,7 @@ const Sortable = ( {
 		>
 			{ before }
 			{ order.map( ( item, i ) => {
+
 				return (
 					<Item
 						key={ getItemKey( item, i ) }
@@ -50,7 +51,7 @@ const Sortable = ( {
 						} }
 						{ ...itemProps }
 					>
-						{ children( item ) }
+						{ children( item, i ) }
 					</Item>
 				)
 			} )}

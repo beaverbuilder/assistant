@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
+import { UP, DOWN } from '@wordpress/keycodes'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -15,19 +16,11 @@ import './style.scss'
 const Sidebar = memo( () => {
 	const { window, isAppHidden  } = useSystemState()
 	const { selectApp, selectHomeApp } = getSystemSelectors()
-	const {
-		isMobile,
-		isCompactHeight,
-		application
-	} = Env.use()
-
-	const {
-		toggleIsShowingUI,
-		setWindow,
-		setIsAppHidden,
-	} = getSystemActions()
-
+	const { isMobile, isCompactHeight, application } = Env.use()
+	const { toggleIsShowingUI, setWindow, setIsAppHidden } = getSystemActions()
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
+	const history = useHistory()
+	const { pathname } = history.location
 
 	const getMaxCount = () => {
 		if ( isVeryCompactHeight ) {
@@ -38,9 +31,6 @@ const Sidebar = memo( () => {
 		}
 		return isMobile ? 3 : 5
 	}
-
-	const history = useHistory()
-	const { pathname } = history.location
 
 	const isBeaverBuilder = 'beaver-builder' === application
 	const isRoot = 0 === history.index
@@ -78,10 +68,7 @@ const Sidebar = memo( () => {
 		}
 
 		return (
-			<motion.li
-				layout
-				transition={ { layoutX: { duration: 0 } } }
-			>
+			<motion.li layout transition={ { layoutX: { duration: 0 } } } >
 				<Button
 					appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
 					shape="round"
@@ -100,10 +87,7 @@ const Sidebar = memo( () => {
 	const ManageItem = () => {
 		const manage = selectApp( 'fl-manage' )
 		return (
-			<motion.li
-				layout
-				transition={ { layoutX: { duration: 0 } } }
-			>
+			<motion.li layout transition={ { layoutX: { duration: 0 } } } >
 				<Button
 					appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
 					shape="round"
@@ -146,7 +130,7 @@ const Sidebar = memo( () => {
 					after={ <ManageItem /> }
 					limit={ getMaxCount() }
 				>
-					{ ( { label, handle, icon } ) => {
+					{ ( { label, handle, icon, moveDown, moveUp } ) => {
 
 						const location = {
 							pathname: `/${handle}`
@@ -168,6 +152,16 @@ const Sidebar = memo( () => {
 									navOrHideApp( isSelected, () => history.push( location ) )
 								} }
 								title={ label }
+								onKeyDown={ e => {
+									if ( e.keyCode === DOWN ) {
+										moveDown()
+										e.preventDefault()
+									}
+									if ( e.keyCode === UP ) {
+										moveUp()
+										e.preventDefault()
+									}
+								} }
 							>
 								<AppIcon { ...iconProps } />
 							</Button>
@@ -191,6 +185,6 @@ const Sidebar = memo( () => {
 	)
 } )
 
-const AppIcon = memo(  ( { icon, ...rest } ) => <Icon.Safely icon={ icon } { ...rest } /> )
+const AppIcon = memo(  props => <Icon.Safely { ...props } /> )
 
 export default Sidebar

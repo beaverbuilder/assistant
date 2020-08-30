@@ -1,5 +1,6 @@
 import React, { useState, memo } from 'react'
 import c from 'classnames'
+import move from 'array-move'
 import { useSystemState, getSystemActions, getSystemState } from 'data'
 import { List } from 'ui'
 import './style.scss'
@@ -49,6 +50,7 @@ const AppList = memo( ( {
 			setAppOrder( items, persist )
 		}
 	}
+	const moveItem = ( from, to ) => setOrder( move( filtered, from, to ), true )
 
 	return (
 		<List.Sortable
@@ -71,6 +73,8 @@ const AppList = memo( ( {
 				<Item
 					isFirst={ 0 === i }
 					isLast={ i === appOrder.length - 1 }
+					moveUp={ () => moveItem( i, i - 1 ) }
+					moveDown={ () => moveItem( i, i + 1 ) }
 					{ ...apps[ handle ] }
 				/>
 			) }

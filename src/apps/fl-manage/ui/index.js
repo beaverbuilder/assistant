@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Icon, App } from 'assistant/ui'
+import { UP, DOWN } from '@wordpress/keycodes'
 import './style.scss'
 
 export const AppList = ( { ...rest } ) => {
@@ -9,7 +10,7 @@ export const AppList = ( { ...rest } ) => {
 			className="fl-asst-manage-app-order-list"
 			{ ...rest }
 		>
-			{ ( { handle, label, icon } ) => {
+			{ ( { handle, label, icon, moveUp, moveDown } ) => {
 				return (
 					<>
 						<DragHandleBox>
@@ -19,6 +20,16 @@ export const AppList = ( { ...rest } ) => {
 							to={ `/${ handle }` }
 							onDragStart={ e => e.preventDefault() }
 							appearance="transparent"
+							onKeyDown={ e => {
+								if ( e.keyCode === DOWN ) {
+									moveDown()
+									e.preventDefault()
+								}
+								if ( e.keyCode === UP ) {
+									moveUp()
+									e.preventDefault()
+								}
+							} }
 						>
 							<span className="fl-asst-item-icon">
 								<Icon.Safely
