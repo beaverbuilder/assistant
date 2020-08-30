@@ -6,6 +6,7 @@ import AppsWidget from './apps'
 import RecentContentWidget from './recent-content'
 import CurrentlyViewingWidget from './currently-viewing'
 import SubscribeWidget from './subscribe'
+import Welcome from './welcome'
 
 //import Welcome from './welcome'
 import './style.scss'
@@ -95,11 +96,11 @@ const Widgets = () => {
 
 	return (
 		<ul className="fl-asst-widget-list" ref={ ref }>
-			{/*<li>
+			<li>
 				<Welcome />
-			</li>*/}
+			</li>
 
-			{ /* order.map( itemID => {
+			{ order.map( itemID => {
 				const item = items.find( item => item.id === itemID )
 				return (
 					<Item
@@ -108,7 +109,7 @@ const Widgets = () => {
 						{ ...item }
 					/>
 				)
-			} ) */ }
+			} ) }
 
 			<li>
 				<CurrentlyViewingWidget />
