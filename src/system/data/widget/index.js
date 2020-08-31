@@ -36,6 +36,12 @@ const defaultLayout = [
 		settings: {}
 	},
 	{
+		id: 6,
+		size: 'sm',
+		type: 'media',
+		settings: {}
+	},
+	{
 		id: 3,
 		size: 'med',
 		type: 'currently-viewing',
