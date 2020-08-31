@@ -235,9 +235,9 @@ const posts = () => {
 		/**
 		 * Export WP post data into library
 		 */
-		saveToLibrary( id, libraryId, config = {} ) {
+		saveToLibrary( id, libraryId, data = {}, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, {}, config )
+			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, data, config )
 		},
 
 		/**

@@ -115,6 +115,7 @@ class OnEnqueueScripts {
 			'isShowingAdminBar' => is_admin_bar_showing(),
 			'isAdmin'           => is_admin(),
 			'isSiteAdmin'       => is_super_admin(),
+			'isLocalhost'       => false,
 			'mockup'            => Mockup::get(),
 			'nonce'             => [
 				'api'             => wp_create_nonce( 'wp_rest' ),

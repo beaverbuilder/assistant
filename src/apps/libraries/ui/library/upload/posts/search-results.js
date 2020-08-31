@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Icon, Layout, Text } from 'assistant/ui'
-import { getWpRest } from 'assistant/utils/wordpress'
 
 export default ( { results } ) => {
 
@@ -51,6 +50,8 @@ const PostItem = ( { post } ) => {
 			name: post.title,
 			type: 'post',
 			tempUrl: post.thumbnail,
+			thumbnail: post.thumbnail,
+			url: post.url,
 			onComplete: () => setAdding( false )
 		} )
 	}
