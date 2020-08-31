@@ -7,6 +7,7 @@ import cloud from './cloud'
 const api = window.FL || {}
 const asst = FL.Assistant || {}
 const { registerApp, toggleIsShowingUI } = data.getSystemActions()
+const { registerWidget } = data.getWidgetActions()
 
 const Assistant = {
 	...asst,
@@ -18,6 +19,7 @@ const Assistant = {
 
 	// Top-level convenience functions
 	registerApp,
+	registerWidget,
 	toggleUI: toggleIsShowingUI,
 }
 

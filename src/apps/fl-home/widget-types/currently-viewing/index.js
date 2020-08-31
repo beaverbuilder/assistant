@@ -1,17 +1,14 @@
 import React from 'react'
-import { Layout, Button } from 'assistant/ui'
+import { Layout, Button, Text } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
-import { Card } from 'home/ui'
 
 const CurrentlyViewing = () => {
 	const { currentPageView } = getSystemConfig()
 	const { intro, name, actions } = currentPageView
 
 	return (
-		<Card
-			eyebrow={ intro }
-			title={ name }
-		>
+		<>
+			<Text.Title eyebrow={ intro }>{name}</Text.Title>
 			{ actions && (
 				<Layout.Row style={ { padding: 5, paddingTop: 2 } }>
 					{ actions.map( ( action, i ) => {
@@ -26,7 +23,7 @@ const CurrentlyViewing = () => {
 					} )}
 				</Layout.Row>
 			)}
-		</Card>
+		</>
 	)
 }
 

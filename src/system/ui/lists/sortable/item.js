@@ -10,7 +10,7 @@ const defaultTransition = {
 
 const SortableItem = ( {
 	i,
-
+	wrap,
 	updatePosition = () => {},
 	updateOrder = () => {},
 
@@ -45,6 +45,8 @@ const SortableItem = ( {
 			initial={ false }
 			animate={ isDragging ? onTop : flat }
 			drag="y"
+			dragConstraints={ wrap }
+			dragElastic={ 0.1 }
 			onDragStart={ () => {
 				onSortStart()
 				setDragging( true )

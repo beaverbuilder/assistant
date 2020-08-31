@@ -1,0 +1,22 @@
+.fluid {
+	.fluid-widget-type-post-count {
+
+		.post-count-total {
+			font-size: 40px;
+		}
+	}
+	.fluid-widget.fluid-widget-type-media {
+		.fluid-widget-content {
+			padding: 0;
+			flex-direction: row;
+			justify-content: flex-start;
+			
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+	}
+}

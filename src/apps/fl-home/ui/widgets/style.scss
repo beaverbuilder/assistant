@@ -6,7 +6,7 @@
 
         display: grid;
         grid-template-columns: repeat( 2, 1fr );
-        grid-gap: var(--fluid-lg-space);
+        grid-gap: var(--fluid-med-space) var(--fluid-lg-space);
         max-width: 100%;
 
         & > li {
@@ -14,8 +14,13 @@
             display: flex;
             flex-direction: column;
 
+            &.fl-asst-widget {
+                cursor: move;
+            }
+
             &.fl-asst-widget-sm {
                 grid-column-start: span 1;
+
                 .fluid-widget-content {
                     height: 150px;
                 }
@@ -38,7 +43,7 @@
     }
 
     .fluid-text-title.fl-asst-welcome-text {
-        margin: 20px 0;
+        margin: 10px 0 20px;
         font-size: 20px;
 
         .fluid-text-subtitle {
