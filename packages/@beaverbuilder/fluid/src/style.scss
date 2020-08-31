@@ -122,6 +122,11 @@
         box-sizing: border-box;
     }
 
+    hr {
+        margin: 10px 0;
+        padding: 0;
+    }
+
     // Media
     img {
         display: block;
@@ -228,7 +233,7 @@
     }
 
     p {
-        font-size: 16px;
+        font-size: 14px;
         line-height: 1.3;
     }
 

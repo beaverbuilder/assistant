@@ -30,3 +30,6 @@ Thumbs.db
 
 # nvm
 .nvmrc
+
+# Ignore editor symbols file
+.tags

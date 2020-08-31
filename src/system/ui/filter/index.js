@@ -41,7 +41,7 @@ const Filter = ( { className, children, ...rest } ) => {
 						onClick={ () => setShowAll( ! showAll ) }
 					>
 						<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+							<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
 						</svg>
 					</Button>
 				</div>

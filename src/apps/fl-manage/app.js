@@ -9,10 +9,10 @@ import {
 	Form,
 	Layout,
 	Env,
-	List,
 } from 'assistant/ui'
-import { useAppList, useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
+import { useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
 import AppIcon from './icon'
+import { DragHandleBox, AppList } from './ui'
 import './style.scss'
 
 export default props => (
@@ -32,26 +32,13 @@ const MainScreen = () => {
 			<Form>
 				<Page.Section contentStyle={ { paddingTop: 0 } }>
 					<p style={ { marginTop: 0 } }>{__( 'You can reorder the apps below. The top 5 will appear in the sidebar for quick access.' )}</p>
-					<AppList />
+					<AppList before={ <Home /> } />
 				</Page.Section>
-
 				<UIColorPreferences />
 			</Form>
-
 		</Page>
 	)
 }
-
-const DragHandleBox = ( { children } ) => (
-	<div className="fl-asst-app-drag-handle-box" style={ {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: 20,
-		marginLeft: 10
-	} } >{ children }</div>
-)
 
 const Home = memo( () => {
 	const history = useHistory()
@@ -78,92 +65,6 @@ const Home = memo( () => {
 				{home.label}
 			</Button>
 		</li>
-	)
-} )
-
-const AppList = memo( () => {
-	const apps = useAppList()
-	const { resetAppOrder } = getSystemActions()
-
-	return (
-		<List.Sortable
-			className='fl-asst-manage-app-order-list'
-			items={ apps }
-			setItems={ items => {
-				const keys = items.map( item => item.handle )
-				resetAppOrder( keys )
-			} }
-			before={ <Home /> }
-		>
-			{ app => {
-				const {
-					handle,
-					label,
-					icon,
-					isFirst,
-					isLast,
-					moveUp,
-					moveDown,
-				} = app
-				const location = {
-					pathname: `/${handle}`,
-					state: app,
-				}
-
-				return (
-					<>
-						<DragHandleBox>
-							<Icon.DragHandle />
-						</DragHandleBox>
-						<Button
-							to={ location }
-							appearance="transparent"
-							style={ {
-								flex: '1 1 auto',
-								marginRight: 'auto',
-								justifyContent: 'flex-start',
-							} }
-							onDragStart={ e => {
-
-								// prevent link dragging behavior
-								e.preventDefault()
-							} }
-						>
-							<span className="fl-asst-item-icon">
-								<Icon.Safely icon={ icon } context="manage" isSelected={ false } />
-							</span>
-
-							{label}
-						</Button>
-
-						<span className="fl-asst-item-reorder-buttons">
-							<span className="fl-asst-button-space">
-								{ ! isFirst && (
-									<Button
-										onClick={ moveUp }
-										appearance="transparent"
-										title={ __( 'Move Up' ) }
-									>
-										<Icon.CaretUp />
-									</Button>
-								)}
-							</span>
-							<span className="fl-asst-button-space">
-								{ ! isLast && (
-									<Button
-										onClick={ moveDown }
-										appearance="transparent"
-										title={ __( 'Move Down' ) }
-									>
-										<Icon.CaretDown />
-									</Button>
-								)}
-							</span>
-						</span>
-					</>
-				)
-			}}
-		</List.Sortable>
 	)
 } )
 

@@ -3,11 +3,10 @@
         margin:0;
         display: flex;
         flex-direction: column;
-        position: relative;
 
         li {
             flex: 0 0 auto;
-            padding: 1px 0;
+            padding: 2px 0;
             margin: 0;
             margin-left: -20px;
             display: flex;
@@ -25,6 +24,12 @@
             }
 
             .fl-asst-app-drag-handle-box {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 20px;
+                margin-left: 10px;
                 opacity: .15;
             }
             &:hover .fl-asst-app-drag-handle-box {
@@ -46,7 +51,7 @@
             .fl-asst-item-icon {
                 display: inline-flex;
                 flex: 0 0 20px;
-                margin-right: var(--fluid-lg-space);
+                margin-right: 1em;
                 justify-content: center;
             }
 

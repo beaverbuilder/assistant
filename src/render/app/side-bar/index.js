@@ -1,35 +1,26 @@
-import React, { useState, memo } from 'react'
+import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
+import { UP, DOWN } from '@wordpress/keycodes'
 import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Button, Icon, Env, List } from 'assistant/ui'
+import { App, Button, Icon, Env } from 'assistant/ui'
 import {
 	useSystemState,
 	getSystemActions,
 	getSystemSelectors,
 } from 'assistant/data'
 import { useMedia } from 'utils/react'
-import useAppOrder from './use-app-order'
 import './style.scss'
 
 const Sidebar = memo( () => {
 	const { window, isAppHidden  } = useSystemState()
 	const { selectApp, selectHomeApp } = getSystemSelectors()
-	const {
-		isMobile,
-		isCompactHeight,
-		application
-	} = Env.use()
-
-	const {
-		toggleIsShowingUI,
-		setWindow,
-		setIsAppHidden,
-	} = getSystemActions()
-
-	const [ isSorting, setIsSorting ] = useState( false )
+	const { isMobile, isCompactHeight, application } = Env.use()
+	const { toggleIsShowingUI, setWindow, setIsAppHidden } = getSystemActions()
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
+	const history = useHistory()
+	const { pathname } = history.location
 
 	const getMaxCount = () => {
 		if ( isVeryCompactHeight ) {
@@ -40,9 +31,6 @@ const Sidebar = memo( () => {
 		}
 		return isMobile ? 3 : 5
 	}
-	const [ appOrder, setAppOrder ] = useAppOrder( { maxCount: getMaxCount() } )
-	const history = useHistory()
-	const { pathname } = history.location
 
 	const isBeaverBuilder = 'beaver-builder' === application
 	const isRoot = 0 === history.index
@@ -70,11 +58,53 @@ const Sidebar = memo( () => {
 
 	const classes = classname( 'fl-asst-sidebar', {
 		'fl-asst-sidebar-compact': isCompactHeight,
-		'is-sorting': isSorting,
 	} )
 
-	const home = selectHomeApp()
-	const manage = selectApp( 'fl-manage' )
+	const HomeItem = () => {
+		const home = selectHomeApp()
+
+		if ( ! home ) {
+			return null
+		}
+
+		return (
+			<motion.li layout transition={ { layoutX: { duration: 0 } } } >
+				<Button
+					appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
+					shape="round"
+					size="lg"
+					isSelected={ isRoot && ! isAppHidden }
+					onClick={ () => navOrHideApp( isRoot, goToRoot ) }
+					className="disable-while-sorting"
+					title={ home.label }
+				>
+					<Icon.Safely icon={ home.icon } isSelected={ isRoot && ! isAppHidden }  />
+				</Button>
+			</motion.li>
+		)
+	}
+
+	const ManageItem = () => {
+		const manage = selectApp( 'fl-manage' )
+		return (
+			<motion.li layout transition={ { layoutX: { duration: 0 } } } >
+				<Button
+					appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
+					shape="round"
+					size="lg"
+					isSelected={ isManage && ! isAppHidden }
+					onClick={ () => navOrHideApp( isManage, () => history.push( {
+						pathname: `/${manage.handle}`,
+						state: manage
+					} ) ) }
+					className="disable-while-sorting"
+					title={ manage.label }
+				>
+					<Icon.Safely icon={ manage.icon } isSelected={ isManage && ! isAppHidden } />
+				</Button>
+			</motion.li>
+		)
+	}
 
 	return (
 		<div className={ classes }>
@@ -94,40 +124,16 @@ const Sidebar = memo( () => {
 			<div
 				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
 			>
-				{ home && (
-					<motion.div
-						tag={ motion.a }
-						layout
-						transition={ { layoutX: { duration: 0 } } }
-					>
-						<Button
-							appearance={ ( isRoot && ! isAppHidden ) ? 'normal' : 'transparent' }
-							shape="round"
-							size="lg"
-							isSelected={ isRoot && ! isAppHidden }
-							onClick={ () => navOrHideApp( isRoot, goToRoot ) }
-							className="disable-while-sorting"
-							title={ home.label }
-						>
-							<Icon.Safely icon={ home.icon } isSelected={ isRoot && ! isAppHidden }  />
-						</Button>
-					</motion.div>
-				)}
 
-				<List.Sortable
-					items={ appOrder }
-					setItems={ setAppOrder }
-					keyProp={ item => item }
-					onSortStart={ () => setIsSorting( true ) }
-					onSortEnd={ () => setIsSorting( false ) }
+				<App.List
+					before={ <HomeItem /> }
+					after={ <ManageItem /> }
+					limit={ getMaxCount() }
 				>
-					{ key => {
-						const app = selectApp( key )
-						const { handle, icon, label } = app
+					{ ( { label, handle, icon, moveDown, moveUp } ) => {
 
 						const location = {
-							pathname: `/${handle}`,
-							state: app,
+							pathname: `/${handle}`
 						}
 						const isSelected = handle === pathname.split( '/' )[1]
 
@@ -136,7 +142,6 @@ const Sidebar = memo( () => {
 							context: 'sidebar',
 							isSelected
 						}
-
 						return (
 							<Button
 								appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
@@ -147,35 +152,22 @@ const Sidebar = memo( () => {
 									navOrHideApp( isSelected, () => history.push( location ) )
 								} }
 								title={ label }
+								onKeyDown={ e => {
+									if ( e.keyCode === DOWN ) {
+										moveDown()
+										e.preventDefault()
+									}
+									if ( e.keyCode === UP ) {
+										moveUp()
+										e.preventDefault()
+									}
+								} }
 							>
 								<AppIcon { ...iconProps } />
 							</Button>
 						)
 					}}
-				</List.Sortable>
-
-				{ manage && (
-					<motion.div
-						tag={ motion.a }
-						layout
-						transition={ { layoutX: { duration: 0 } } }
-					>
-						<Button
-							appearance={ ( isManage && ! isAppHidden ) ? 'normal' : 'transparent' }
-							shape="round"
-							size="lg"
-							isSelected={ isManage && ! isAppHidden }
-							onClick={ () => navOrHideApp( isManage, () => history.push( {
-								pathname: `/${manage.handle}`,
-								state: manage
-							} ) ) }
-							className="disable-while-sorting"
-							title={ manage.label }
-						>
-							<Icon.Safely icon={ manage.icon } isSelected={ isManage && ! isAppHidden } />
-						</Button>
-					</motion.div>
-				)}
+				</App.List>
 			</div>
 
 			{ ! isBeaverBuilder && ! isMobile && (
@@ -193,6 +185,6 @@ const Sidebar = memo( () => {
 	)
 } )
 
-const AppIcon = memo(  ( { icon, ...rest } ) => <Icon.Safely icon={ icon } { ...rest } /> )
+const AppIcon = memo(  props => <Icon.Safely { ...props } /> )
 
 export default Sidebar

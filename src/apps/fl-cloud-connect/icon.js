@@ -1,10 +1,8 @@
 import React from 'react'
 import { Icon } from 'assistant/ui'
 
-export default ( { context } ) => {
-	const width = 'sidebar' === context ? 20 : 40
-
+export default () => {
 	return (
-		<Icon.Link width={ width } height={ width } />
+		<Icon.Link />
 	)
 }

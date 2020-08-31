@@ -205,6 +205,7 @@ class OnEnqueueScripts {
 
 			// Apps - loaded in header
 			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', [ 'fl-assistant-system' ], $ver, false );
+			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', [ 'fl-assistant-system' ], $ver, null );
 
 			// Render - loaded in footer
 			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [ 'fl-assistant-system' ], $ver, null );

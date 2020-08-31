@@ -23,14 +23,19 @@ export const before = {
  */
 export const after = {
 
+	/*
 	SET_APP_POSITION: ( action, store ) => {
 		const { appOrder } = store.getState()
 		wpapi.users().updateState( { appOrder } )
 	},
+	*/
 
-	RESET_APP_ORDER: ( action, store ) => {
+	SET_APP_ORDER: ( action, store ) => {
 		const { appOrder, apps } = store.getState()
-		wpapi.users().updateState( { appOrder } )
+
+		if ( action.persist ) {
+			wpapi.users().updateState( { appOrder } )
+		}
 
 		const remove = appOrder.filter( handle => ! Object.keys( apps ).includes( handle ) )
 		if ( 0 < remove.length ) {
