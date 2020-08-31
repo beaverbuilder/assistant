@@ -12,6 +12,7 @@ use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
 use FL\Assistant\Hooks\CloudPostPreview;
 use FL\Assistant\Hooks\PostScreenshotPreview;
+use FL\Assistant\Hooks\ImageProxy;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 use FL\Assistant\Data\Transformers\NotationsTransformer;
 use FL\Assistant\Data\Repository\NotationsRepository;
@@ -36,6 +37,7 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 		new CloudPostPreview();
 		new PostScreenshotPreview();
+		new ImageProxy();
 	}
 
 	public function actions() {

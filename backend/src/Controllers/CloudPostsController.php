@@ -231,12 +231,25 @@ class CloudPostsController extends ControllerAbstract {
 
 
 
-	function get_screenshot_html( $post ) {
+	function get_screenshot( $request, $post ) {
+		$screenshot = $request->get_param( 'screenshot' );
+
+		if ( $screenshot ) {
+			return [
+				'type' => 'base64',
+				'data' => $screenshot,
+			];
+		}
+
 		$url = add_query_arg( 'fl_asst_screenshot_preview', 1, get_permalink( $post ) );
 		$response = wp_remote_get( $url, [
 			'cookies' => $_COOKIE,
 		] );
-		return wp_remote_retrieve_body( $response );
+
+		return [
+			'type' => 'html',
+			'html' => wp_remote_retrieve_body( $response ),
+		];
 	}
 
 
@@ -270,10 +283,7 @@ class CloudPostsController extends ControllerAbstract {
 					'thumb'       => $media_path,
 					'attachments' => [ $media_path, $media_path, $media_path ],
 				],
-				'screenshot' => [
-					'type' => 'html',
-					'html' => $this->get_screenshot_html( $post ),
-				],
+				'screenshot' => $this->get_screenshot( $request, $post ),
 			],
 		);
 	}
