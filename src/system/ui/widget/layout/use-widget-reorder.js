@@ -59,6 +59,11 @@ export const findIndex = ( i, offset, axis, positions ) => {
 			target = i - 1
 
 			if ( 'sm' === size && 'y' === axis ) {
+
+				// WIP
+				// If it's a small item and moving vertically
+				// TODO: AND if it's in the second position
+				// double the increment
 				target = i - 2
 			}
 		}
