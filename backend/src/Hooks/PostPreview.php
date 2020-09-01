@@ -2,28 +2,60 @@
 
 namespace FL\Assistant\Hooks;
 
-class PostScreenshotPreview {
+class PostPreview {
+
+	protected $post_id;
 
 	public function __construct() {
-		if ( isset( $_GET['fl_asst_screenshot_preview'] ) ) {
-			add_action( 'parse_query', [ $this, 'parse_query' ], PHP_INT_MAX );
+		if ( isset( $_GET['fl_asst_post_preview'] ) ) {
+			self::init();
+		}
+	}
+
+	public function init() {
+		if ( isset( $_GET['p'] ) ) {
+			$this->post_id = absint( $_GET['p'] );
+		} else if ( isset( $_GET['page_id'] ) ) {
+			$this->post_id = absint( $_GET['page_id'] );
+		} else {
+			return;
+		}
+
+		add_action( 'parse_query', [ $this, 'parse_query' ], PHP_INT_MAX );
+		add_filter( 'redirect_canonical', '__return_false', PHP_INT_MAX );
+
+		if ( isset( $_GET['fl_asst_screenshot'] ) ) {
 			add_action( 'wp', [ $this, 'disable_known_theme_parts' ], PHP_INT_MAX );
 			add_filter( 'body_class', [ $this, 'body_class' ] );
 		}
 	}
 
 	public function parse_query( $query ) {
-		wp_set_current_user( 0 );
+		if ( $query->is_main_query() ) {
+			if ( current_user_can( 'edit_others_posts' ) ) {
+				add_filter( 'posts_results', [ $this, 'override_posts_results' ], PHP_INT_MAX );
+				wp_set_current_user( 0 );
+			}
+		}
+	}
+
+	public function override_posts_results( $posts ) {
+		remove_filter( 'posts_results', [ $this, 'override_posts_results' ], PHP_INT_MAX );
+
+		$preview = get_post( $this->post_id );
+		$preview->post_status = 'publish';
+
+		return [ $preview ];
 	}
 
 	public function disable_known_theme_parts() {
-		self::disable_bb_theme();
-		self::disable_generate_press();
-		self::disable_genesis();
+		$this->disable_bb_theme();
+		$this->disable_generate_press();
+		$this->disable_genesis();
 	}
 
 	public function body_class( $classes ) {
-		$classes[] = 'fl-asst-sceenshot-preview';
+		$classes[] = 'fl-asst-sceenshot';
 		return $classes;
 	}
 

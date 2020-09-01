@@ -5,6 +5,7 @@ namespace FL\Assistant\Controllers;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\System\View;
 use FL\Assistant\Data\Transformers\PostTransformer;
+use FL\Assistant\Helpers\PostHelper;
 use WP_REST_Server;
 
 /**
@@ -241,7 +242,7 @@ class CloudPostsController extends ControllerAbstract {
 			];
 		}
 
-		$url = add_query_arg( 'fl_asst_screenshot_preview', 1, get_permalink( $post ) );
+		$url = PostHelper::get_preview_url( $post );
 		$response = wp_remote_get( $url, [
 			'cookies' => $_COOKIE,
 		] );
@@ -402,8 +403,6 @@ class CloudPostsController extends ControllerAbstract {
 		}
 
 		$post_id = $response->data['id'];
-		$post_type = $response->data['type'];
-		$var_name = 'page' === $post_type ? 'page_id' : 'p';
 
 		wp_update_post(
 			[
@@ -416,7 +415,7 @@ class CloudPostsController extends ControllerAbstract {
 
 		return rest_ensure_response(
 			[
-				'url' => home_url( "/?post_type=$post_type&$var_name=$post_id&fl_asst_library_item_preview=1" ),
+				'url' => PostHelper::get_preview_url( $post_id ),
 			]
 		);
 	}

@@ -10,7 +10,7 @@ use FL\Assistant\Hooks\Actions\OnBeforeDeletePost;
 use FL\Assistant\Hooks\Actions\OnDeleteTerm;
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
-use FL\Assistant\Hooks\CloudPostPreview;
+use FL\Assistant\Hooks\PostPreview;
 use FL\Assistant\Hooks\PostScreenshotPreview;
 use FL\Assistant\Hooks\ImageProxy;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
@@ -35,8 +35,7 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 		$this->actions();
 		$this->filters();
 
-		new CloudPostPreview();
-		new PostScreenshotPreview();
+		new PostPreview();
 		new ImageProxy();
 	}
 

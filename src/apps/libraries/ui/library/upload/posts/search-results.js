@@ -49,9 +49,8 @@ const PostItem = ( { post } ) => {
 			id: post.id,
 			name: post.title,
 			type: 'post',
-			tempUrl: post.thumbnail,
 			thumbnail: post.thumbnail,
-			url: post.url,
+			previewUrl: post.previewUrl,
 			onComplete: () => setAdding( false )
 		} )
 	}
