@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { clamp, distance } from '@popmotion/popcorn'
 import move from 'array-move'
 
-const useWidgetReorder = ( order, setOrder ) => {
+const useWidgetReorder = ( order = [], setOrder ) => {
 
 	// We need to collect an array of height and position data for all of this component's
 	// `Item` children, so we can later us that in calculations to decide when a dragging
@@ -43,11 +43,19 @@ export const findIndex = ( i, offset, axis, positions ) => {
 		const swapOffset = distance( bottom, nextItem.top + nextItem.height / 2 ) + buffer
 		if ( offset > swapOffset ) {
 			target = i + 1
+
+			if ( 'sm' === size && 'y' === axis ) {
+
+				// Item is in the first position
+				if ( 'sm' === nextItem.size ) {
+					target = i + 2
+				}
+			}
 		}
 
 	// If moving up
 	} else if ( 0 > offset ) {
-		const prevItem = positions[i - 1]
+		const prevItem = positions[ i - 1 ]
 
 		if ( prevItem === undefined ) {
 			return i
@@ -60,11 +68,10 @@ export const findIndex = ( i, offset, axis, positions ) => {
 
 			if ( 'sm' === size && 'y' === axis ) {
 
-				// WIP
-				// If it's a small item and moving vertically
-				// TODO: AND if it's in the second position
-				// double the increment
-				target = i - 2
+				// Item is in the second position
+				if ( 'sm' === prevItem.size ) {
+					target = i - 2
+				}
 			}
 		}
 	}

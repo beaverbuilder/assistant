@@ -38,8 +38,10 @@ const defaultLayout = [
 	{
 		id: 6,
 		size: 'sm',
-		type: 'media',
-		settings: {}
+		type: 'post-count',
+		settings: {
+			type: 'page'
+		}
 	},
 	{
 		id: 3,
