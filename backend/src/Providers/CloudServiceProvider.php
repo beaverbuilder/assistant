@@ -10,10 +10,10 @@ class CloudServiceProvider extends ServiceProviderAbstract {
 	public function bootstrap() {
 
 		if ( ! defined( 'FL_ASSISTANT_CLOUD_URL' ) ) {
-			define( 'FL_ASSISTANT_CLOUD_URL', '' );
+			define( 'FL_ASSISTANT_CLOUD_URL', 'https://dev-api-nyc3.wpassistant.cloud' );
 		}
 		if ( ! defined( 'FL_ASSISTANT_CLOUD_APP_URL' ) ) {
-			define( 'FL_ASSISTANT_CLOUD_APP_URL', '' );
+			define( 'FL_ASSISTANT_CLOUD_APP_URL', 'https://dev-app-nyc3.wpassistant.cloud' );
 		}
 		if ( ! defined( 'FL_ASSISTANT_PUSHER_KEY' ) ) {
 			define( 'FL_ASSISTANT_PUSHER_KEY', 'd167736b3fc37d384caf' );
