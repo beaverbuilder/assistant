@@ -23,7 +23,7 @@ registerWidget( 'post-count', {
 		const { counts } = useSystemState()
 		const config = getSystemConfig()
 		const count = counts[`content/${type}`] ? counts[`content/${type}`] : 0
-		const label = config.contentTypes[ type ].labels.singular
+		const label = config.contentTypes[ type ].labels.plural
 
 		return (
 			<>

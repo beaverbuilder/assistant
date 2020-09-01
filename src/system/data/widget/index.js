@@ -36,6 +36,14 @@ const defaultLayout = [
 		settings: {}
 	},
 	{
+		id: 6,
+		size: 'sm',
+		type: 'post-count',
+		settings: {
+			type: 'page'
+		}
+	},
+	{
 		id: 3,
 		size: 'med',
 		type: 'currently-viewing',
