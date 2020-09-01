@@ -155,6 +155,11 @@ class OnEnqueueScripts {
 			return false;
 		}
 
+		// Don't show in post previews.
+		if ( isset( $_GET['fl_asst_post_preview'] ) ) {
+			return false;
+		}
+
 		// User is logged in, and the current request is not customizer or an iframe
 		$state = UserState::get();
 
