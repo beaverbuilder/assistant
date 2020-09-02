@@ -12,7 +12,7 @@ export default () => {
 	] )
 
 	const TypeOrCollectionFilter = () => {
-		if ( 'type' === itemsFilter.view_by ) {
+		if ( 'type' === itemsFilter.viewBy ) {
 			return (
 				<Filter.RadioGroupItem
 					title={ __( 'Type' ) }

@@ -35,11 +35,11 @@ export default () => {
 	const hasItems = items && !! items.length
 
 	const shouldShowNoResults = () => {
-		const { view_by, type, collection } = itemsFilter
+		const { viewBy, type, collection } = itemsFilter
 		if ( items && ! Object.keys( filteredItems ).length ) {
-			if ( 'type' === view_by && 'all' !== type ) {
+			if ( 'type' === viewBy && 'all' !== type ) {
 				return true
-			} else if ( 'collection' === view_by && 'all' !== collection ) {
+			} else if ( 'collection' === viewBy && 'all' !== collection ) {
 				return true
 			}
 		}
