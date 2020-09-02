@@ -1,10 +1,13 @@
 const webpack = require( 'webpack' )
 const path = require( 'path' )
+const pckg = require( './package.json' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin
 const production = 'production' === process.env.NODE_ENV
 const isAnalyzing = 'analyze' === process.env.NODE_ENV
+
+console.log( pckg.version )
 
 const alias = {
 	ui: path.resolve( __dirname, './src/system/ui/' ),
@@ -97,7 +100,7 @@ const config = {
 	output: {
 		path: path.resolve( __dirname, 'build' ),
 		filename: 'fl-assistant-[name].bundle.js',
-		chunkFilename: 'fl-chunk-[name].js'
+		chunkFilename: `fl-chunk-[name].js?var=${ pckg.version }`
 	},
 	resolve: { alias },
 	devtool: 'source-map',
@@ -152,6 +155,7 @@ if ( isAnalyzing ) {
 }
 
 if ( production ) {
+
 	// config.mode = 'production'
 	config.stats = false
 	config.watch = false
