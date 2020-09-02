@@ -152,7 +152,7 @@ if ( isAnalyzing ) {
 }
 
 if ( production ) {
-	config.mode = 'production'
+	// config.mode = 'production'
 	config.stats = false
 	config.watch = false
 	config.devtool = false
