@@ -60,6 +60,7 @@
             overflow: visible;
             flex-wrap: nowrap;
             max-width: 100%;
+            min-width: 0;
 
             .fluid-button {
                 margin: 0;

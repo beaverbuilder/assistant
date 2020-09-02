@@ -33,6 +33,7 @@ const Rule = ( {
  * Button.Group
  */
 const Group = ( {
+	tag: Tag = 'div',
 	children,
 	className,
 	direction = 'row',
@@ -69,7 +70,6 @@ const Group = ( {
 			const moreBtn = wrap.querySelector( '.fluid-more-button' )
 			const areaWidth = wrap.clientWidth - pad
 			const contentWidth = moreBtn ? wrap.scrollWidth - ( pad + moreBtn.offsetWidth ) : wrap.scrollWidth - pad
-
 
 			if ( contentWidth > areaWidth ) {
 				setShouldShowMoreBtn( true )
@@ -111,7 +111,6 @@ const Group = ( {
 		if ( moreMenu ) {
 			return moreMenu
 		}
-
 		return Children.map( children, ( child, i ) => {
 			if ( ! child || child.props.excludeFromMenu ) {
 				return null
@@ -124,7 +123,6 @@ const Group = ( {
 
 	const MoreBtn = () => {
 		const [ isShowing, setIsShowing ] = useState( false )
-
 		return (
 			<>
 				{ shouldInsertDividers && <Rule
@@ -151,10 +149,10 @@ const Group = ( {
 	return (
 		<>
 			{ label && <label>{label}</label> }
-			<div { ...props }>
+			<Tag { ...props }>
 				{ limitChildren( allChildren, maxChildren ) }
 				{ shouldShowMoreBtn && <MoreBtn /> }
-			</div>
+			</Tag>
 		</>
 	)
 }

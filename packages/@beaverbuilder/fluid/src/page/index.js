@@ -79,6 +79,8 @@ const Page = ( {
 		position: 'relative',
 		minHeight: 0,
 		maxHeight: '100%',
+		minWidth: 0,
+		maxWidth: '100%',
 		display: 'flex',
 		flexDirection: 'column'
 	}
