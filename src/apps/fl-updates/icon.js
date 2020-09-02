@@ -5,7 +5,7 @@ const AppIcon = ( { context, isSelected = false } ) => {
 	const { counts } = useSystemState()
 	const total = counts['update/total'] ? counts['update/total'] : 0
 	const shouldHighlight = 'sidebar' === context && 0 < total
-	const color = ( shouldHighlight && ! isSelected ) ? 'var(--fl-asst-orange)' : 'currentColor'
+	const color = ( shouldHighlight && ! isSelected ) ? 'var(--fluid-blue)' : 'currentColor'
 
 	return (
 		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
