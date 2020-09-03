@@ -17,6 +17,7 @@ const renderNormal = () => {
 		mountNode.classList.add( 'fl-asst-mount', 'fl-asst', 'fluid', 'fl', 'uid' )
 		document.body.appendChild( mountNode )
 	}
+
 	render( <Assistant />, mountNode )
 }
 

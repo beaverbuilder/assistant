@@ -4,9 +4,16 @@ import { useSystemState } from 'assistant/data'
 
 const AssistantRouter = ( { children } ) => {
 	const { history } = useSystemState( false )
-	const entries = history.entries && history.entries.length ? history.entries : null
+
+	const props = {
+		initialIndex: history.index
+	}
+	if ( history.entries && history.entries.length ) {
+		props.initialEntries = history.entries
+	}
+
 	return (
-		<MemoryRouter initialIndex={ history.index } initialEntries={ entries } >
+		<MemoryRouter { ...props } >
 			{ children }
 		</MemoryRouter>
 	)
