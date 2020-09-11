@@ -11,6 +11,7 @@ const { registerWidget } = data.getWidgetActions()
 
 const Assistant = {
 	...asst,
+	env: 'wordpress',
 	data,
 	ui,
 	utils,

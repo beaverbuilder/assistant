@@ -1,12 +1,12 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Libraries, Uploader } from '@beaverbuilder/cloud-ui'
+import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Button, Layout } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 
+import ItemUpload from '../upload'
 import ItemsHeader from './header'
 import ItemsFilter from './filter'
-import ItemsUpload from '../upload'
 import './style.scss'
 
 const Wrapper = ( { library, onDrop, children } ) => {
@@ -50,12 +50,7 @@ export default () => {
 		<Wrapper library={ library } onDrop={ uploader.handleDrop }>
 			{ hasItems && <ItemsFilter /> }
 			<ItemsHeader />
-			{ showUpload && <ItemsUpload /> }
-			{ !! uploader.queuedFiles.length &&
-				<Layout.Box padY={ false }>
-					<Uploader.FileList files={ uploader.queuedFiles } />
-				</Layout.Box>
-			}
+			<ItemUpload />
 			{ hasItems && <Libraries.ItemsList />}
 			{ shouldShowNoResults() && ! showUpload &&
 				<>
