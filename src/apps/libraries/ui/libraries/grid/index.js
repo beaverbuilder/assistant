@@ -44,6 +44,7 @@ export default ( {
 
 		cloud.libraries.create( data ).then( response => {
 			addLibrary( response.data )
+			history.push( `/libraries/${ response.data.id }` )
 		} ).catch( () => {
 			alert( __( 'Something went wrong. Please try again.' ) )
 		} ).finally( () => {
