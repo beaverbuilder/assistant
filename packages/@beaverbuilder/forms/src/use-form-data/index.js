@@ -21,6 +21,7 @@ export const useFormData = ( {
 	fields = {},
 	defaults = {},
 	shouldHighlightChanges = true,
+	autoSubmit = false,
 	onSubmit = () => {},
 	onChange = () => {},
 	onReset = () => {},
@@ -261,6 +262,7 @@ export const useFormData = ( {
 	const values = selectValues()
 	const changed = selectChangedValues()
 	const fieldConfig = getFieldConfig()
+	const hasChanges = 0 < Object.keys( changed ).length
 
 	const callbackArgs = {
 		ids: getFieldIDs(),
@@ -280,6 +282,10 @@ export const useFormData = ( {
 	}
 
 	const submitForm = () => {
+		if ( ! hasChanges ) {
+			return
+		}
+
 		let hasErrors = false
 
 		Object.entries( values ).map( ( [ key, value ] ) => {
@@ -316,6 +322,18 @@ export const useFormData = ( {
 		}
 	}
 
+	useEffect( () => {
+		if ( autoSubmit ) {
+			window.addEventListener( 'beforeunload', submitForm )
+			return () => {
+				if ( ! isMounted.current ) {
+					submitForm()
+				}
+				window.removeEventListener( 'beforeunload', submitForm )
+			}
+		}
+	} )
+
 	return {
 		form: {
 			onSubmit: e => {
@@ -331,7 +349,7 @@ export const useFormData = ( {
 			},
 		},
 		fields: fieldConfig,
-		hasChanges: 0 < Object.keys( changed ).length,
+		hasChanges,
 		values,
 		changed,
 		resetForm,
