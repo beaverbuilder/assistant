@@ -1,15 +1,12 @@
 .fl-asst {
-    .fl-asst-inline-library-create {
+    .fl-asst-inline-create-item {
         box-shadow: none;
         background: var(--fluid-box-background);
         border-radius: var(--fluid-radius);
 
         input {
+			background: transparent;
             padding-left: 0;
-
-            &:focus {
-                background: transparent;
-            }
 
             &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
                 color: var(--fluid-blue-7);

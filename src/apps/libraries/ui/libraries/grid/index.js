@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { Button, Icon, Layout, Text, Collection } from 'assistant/ui'
-import { getAppHooks, getAppActions } from 'assistant/data'
-import cloud from 'assistant/cloud'
-import LibraryInlineCreate from './inline-create'
+import { Libraries } from '@beaverbuilder/cloud-ui'
+import { Button, Layout, Text, Collection } from 'assistant/ui'
+import { getAppHooks } from 'assistant/data'
 import './style.scss'
 
 export default ( {
@@ -16,51 +15,14 @@ export default ( {
 	const history = useHistory()
 	const [ showAll, setShowAll ] = useState( false )
 	const { useLibraries, useFilter } = getAppHooks( 'libraries' )
-	const { addLibrary, removeLibrary } = getAppActions( 'libraries' )
 	const [ libraries ] = useLibraries()
 	const teamId = team ? team.id : 0
 	const ownerLibraries = teamId ? libraries[ type ][ teamId ] : libraries[ type ]
 	const hasLibraries = ownerLibraries && 0 < ownerLibraries.length
-
-	const [ filter ] = useFilter()
-
 	const canAddNew = team ? team.permissions.edit_libraries : true
 	const [ isAddingNew, setIsAddingNew ] = useState( false )
-	const [ newName, setNewName ] = useState( '' )
-	const [ loading, setLoading ] = useState( false )
 	const maxItems = 4
-
-	const createLibrary = () => {
-		if ( ! newName ) {
-			return
-		}
-		const data = {
-			name: newName,
-			team_id: teamId
-		}
-		setNewName( '' )
-		setIsAddingNew( false )
-		setLoading( true )
-
-		cloud.libraries.create( data ).then( response => {
-			addLibrary( response.data )
-			history.push( `/libraries/${ response.data.id }` )
-		} ).catch( () => {
-			alert( __( 'Something went wrong. Please try again.' ) )
-		} ).finally( () => {
-			setLoading( false )
-		} )
-	}
-
-	const deleteLibrary = id => {
-		if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-			cloud.libraries.delete( id ).then( () => {
-				removeLibrary( id )
-			} ).catch( () => {
-				alert( __( 'Something went wrong. Please try deleting again.' ) )
-			} )
-		}
-	}
+	const [ filter ] = useFilter()
 
 	return (
 		<Layout.Box
@@ -73,9 +35,7 @@ export default ( {
 
 					<Text.Title>{ headline }</Text.Title>
 
-					{ loading && <Icon.Loading style={ { marginLeft: 'auto' } } /> }
-
-					{ 'shared' !== type && canAddNew && ! loading && (
+					{ 'shared' !== type && canAddNew && (
 						<Button
 							appearance="transparent"
 							shape="round"
@@ -89,23 +49,16 @@ export default ( {
 
 			{ isAddingNew &&
 				<Layout.Toolbar>
-					<LibraryInlineCreate
-						name={ newName }
-						onInput={ e => setNewName( e.target.value ) }
-						create={ createLibrary }
-					/>
+					<Libraries.LibraryInlineCreate teamId={ teamId } />
 					<Button
 						icon="close-compact"
-						onClick={ () => {
-							setIsAddingNew( false )
-							setNewName( '' )
-						} }
+						onClick={ () => setIsAddingNew( false ) }
 						style={ { marginLeft: 5 } }
 					/>
 				</Layout.Toolbar>
 			}
 
-			{ ! isFetching && ! hasLibraries && ! loading && (
+			{ ! isFetching && ! hasLibraries && (
 				<Layout.Box style={ { textAlign: 'center' } }>
 					{ __( 'You don\'t currently have any libraries. Create one to get started!' ) }
 				</Layout.Box>
@@ -133,13 +86,7 @@ export default ( {
 								}
 							} }
 							onClick={ () => history.push( `/libraries/${ id }` ) }
-						>
-
-							{ false && <Button icon="trash" onClick={ e => {
-								e.stopPropagation()
-								deleteLibrary( id )
-							} } />}
-						</Collection.Item>
+						/>
 					)
 				} ) }
 			</Collection>
