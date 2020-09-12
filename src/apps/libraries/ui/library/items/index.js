@@ -5,7 +5,7 @@ import { Button, Layout } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 
 import ItemUpload from '../upload'
-import ItemsHeader from './header'
+import ItemsHeader from '../header'
 import ItemsFilter from './filter'
 import './style.scss'
 

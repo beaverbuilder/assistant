@@ -1,11 +1,9 @@
 import React from 'react'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Layout } from 'assistant/ui'
-import Members from './members'
 
 export default () => {
 	const { library } = Libraries.LibraryContext.use()
-	const { owner_type, owner_id } = library
 
 	return (
 		<>
@@ -26,9 +24,7 @@ export default () => {
 				}
 			</Layout.Box>
 
-			{ 'team' === owner_type &&
-				<Members teamId={ owner_id } />
-			}
+			<Libraries.LibraryMemberThumbs />
 		</>
 	)
 }
