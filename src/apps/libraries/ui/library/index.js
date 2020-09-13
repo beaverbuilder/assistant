@@ -9,8 +9,6 @@ import LibraryItems from './items'
 import LibraryItem from '../library-item'
 import LibrarySettings from './settings'
 
-import './style.scss'
-
 export default () => {
 	const { pathname } = useLocation()
 	return (

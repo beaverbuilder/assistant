@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
-import { useSystemState, getSystemConfig } from 'assistant/data'
+import { useSystemState, getSystemConfig, useAppState } from 'assistant/data'
 import { Page } from 'assistant/ui'
-import { getQueryArgs } from 'assistant/utils/url'
-import cloud from 'assistant/cloud'
 import AppIcon from './icon'
 import { ConnectCard, ConnectButton } from './ui'
 
@@ -26,18 +24,10 @@ export default ( { baseURL } ) => {
 
 const Main = () => {
 	const { cloudConfig } = getSystemConfig()
+	const { isValidating } = useAppState( 'fl-cloud-connect' )
 	const { href } = window.location
-	const { token } = getQueryArgs( href )
-	const [ isTokenValid, setIsTokenValid ] = useState( !! token )
 
-	if ( token && isTokenValid ) {
-		cloud.session.setToken( token )
-		cloud.auth.refresh().then( response => {
-			cloud.session.create( response.token, response.user, true )
-		} ).catch( () => {
-			cloud.session.destroy()
-			setIsTokenValid( false )
-		} )
+	if ( isValidating ) {
 		return <Page.Loading />
 	}
 

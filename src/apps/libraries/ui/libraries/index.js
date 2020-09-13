@@ -6,10 +6,10 @@ import cloud from 'assistant/cloud'
 
 import Actions from './actions'
 import LibrariesFilter from './filter'
-import LibrariesGrid from './grid'
+import LibrariesList from './list'
 
 export default () => {
-	const { filter, libraries, teams, isLoadingLibraries } = useAppState( 'libraries' )
+	const { filter, libraries, teams } = useAppState( 'libraries' )
 	const { owner, ...query } = filter
 	const cloudUser = cloud.session.getUser()
 
@@ -26,24 +26,22 @@ export default () => {
 
 			<div className='fl-asst-libraries'>
 				{ ( 'all' === owner || 'user' === owner ) &&
-					<LibrariesGrid
+					<LibrariesList
 						headline={ cloudUser.name.endsWith( 's' ) ? `${ cloudUser.name }'` : `${ cloudUser.name }'s` }
 						query={ query }
-						isFetching={ isLoadingLibraries }
 					/>
 				}
 				{ !! libraries.shared.length &&
-					<LibrariesGrid
+					<LibrariesList
 						headline={ __( 'Shared Libraries' ) }
 						type='shared'
 						query={ query }
-						isFetching={ isLoadingLibraries }
 					/>
 				}
 				{ teams.map( ( team, i ) => {
 					if ( 'all' === owner || `team_${ team.id }` === owner ) {
 						return (
-							<LibrariesGrid
+							<LibrariesList
 								key={ i }
 								headline={ cloudUser.name.endsWith( 's' ) ? `${ team.name }'` : `${ team.name }'s` }
 								type='team'
