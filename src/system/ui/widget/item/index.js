@@ -57,6 +57,7 @@ const Item = ( {
 			className={ c( {
 				'fl-asst-widget': true,
 				[ `fl-asst-widget-${size}` ]: size,
+				'is-dragging': isDragging
 			}, className ) }
 			layout
 			animate={ isDragging ? onTop : flat }

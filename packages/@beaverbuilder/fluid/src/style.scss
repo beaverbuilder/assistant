@@ -299,6 +299,8 @@
         --fluid-destructive-color: hsl(3, 100%, 67%);
         --fluid-destructive-hover-background: hsl(0, 80%, 12%);
 
+        color: var(--fluid-color);
+
         table {
             tr:nth-child(even) {
                 th, td {
