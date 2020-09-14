@@ -26,6 +26,7 @@ const Item = ( {
 	thumbnail,
 	thumbnailProps,
 	truncateTitle = true,
+	icon,
 
 	onClick,
 	href,
@@ -44,6 +45,7 @@ const Item = ( {
 		thumbnail,
 		thumbnailProps,
 		description,
+		icon,
 	}
 	const btnProps = {
 		onClick,
@@ -85,7 +87,13 @@ const Thumbnail = ( { children, ratio = '4:3', ...rest } ) => {
 	)
 }
 
-const Text = ( { title, description, truncate, ...rest } ) => {
+const Text = ( {
+	title,
+	description,
+	truncate,
+	icon,
+	...rest
+} ) => {
 
 	if ( ! title && ! description ) {
 		return null
@@ -97,33 +105,57 @@ const Text = ( { title, description, truncate, ...rest } ) => {
 
 	return (
 		<div className="fluid-collection-item-text" { ...rest }>
-			{ title && <div className={ titleClasses }>{title}</div> }
+			{ ( title || icon ) && (
+				<div className={ titleClasses }>
+					{ icon && <span>{icon}</span> }
+					{title}
+				</div>
+			) }
 			{ description && <div>{description}</div> }
 		</div>
 	)
 }
 
-const GridItem = ( { title, description, truncateTitle, thumbnail, thumbnailProps } ) => {
+const GridItem = ( {
+	title,
+	description,
+	truncateTitle,
+	thumbnail,
+	thumbnailProps,
+	icon,
+	tag: Tag = 'div',
+	...rest
+} ) => {
 	return (
-		<div className="fluid-collection-item-grid-content">
+		<Tag className="fluid-collection-item-grid-content" { ...rest }>
 			{ thumbnail && <Thumbnail { ...thumbnailProps }>{thumbnail}</Thumbnail>}
 			<Text
 				title={ title }
 				truncate={ truncateTitle }
 				description={ description }
+				icon={ icon }
 			/>
-		</div>
+		</Tag>
 	)
 }
 
-const ListItem = ( { title, description, truncateTitle, thumbnail, thumbnailProps } ) => {
+const ListItem = ( {
+	title,
+	description,
+	truncateTitle,
+	thumbnail,
+	thumbnailProps,
+	icon,
+	...rest
+} ) => {
 	return (
-		<div className="fluid-collection-item-list-content">
+		<div className="fluid-collection-item-list-content" { ...rest }>
 			{ thumbnail && <Thumbnail { ...thumbnailProps }>{thumbnail}</Thumbnail>}
 			<Text
 				title={ title }
 				truncate={ truncateTitle }
 				description={ description }
+				icon={ icon }
 			/>
 		</div>
 	)

@@ -39,7 +39,15 @@
             align-items: flex-start;
 
             .fluid-item-title {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
                 max-width: 100%;
+
+                // Icon wrap
+                span {
+                    margin-right: 5px;
+                }
 
                 &.fluid-truncate {
                     overflow: hidden;
@@ -88,7 +96,6 @@
             }
             .fluid-item-title {
                 font-size: 12px;
-                margin: auto;
             }
         }
     }
