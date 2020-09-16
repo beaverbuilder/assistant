@@ -251,7 +251,6 @@ const WindowLayer = ( {
 		left: windowX ? 'auto' : pad,
 		justifyContent: windowY ? 'flex-end' : 'flex-start',
 		maxHeight: '100vh',
-		willChange: 'transform',
 		pointerEvents: 'none',
 		transform,
 	}
@@ -264,7 +263,6 @@ const WindowLayer = ( {
 			bottom: 0,
 			right: windowX ? 0 : 'auto',
 			left: windowX ? 'auto' : 0,
-			willChange: 'transform',
 			pointerEvents: 'none',
 			transform,
 		}
@@ -289,7 +287,6 @@ const WindowPanel = ( {
 	const classes = classname( {
 		'fl-asst-window': true,
 		[`fl-asst-window-${size}`]: size,
-		'fl-asst-primary-content': true,
 		'fl-asst-window-is-mobile': isMobile,
 	}, className )
 
@@ -325,6 +322,7 @@ const WindowPanel = ( {
 	return (
 		<Flipped flipId="window" spring={ transition }>
 			<div className={ classes } style={ styles } { ...rest }>
+				<div className="fl-asst-window-backdrop" />
 				<GrabBar />
 				<div className="fl-asst-window-content">{children}</div>
 			</div>

@@ -34,6 +34,14 @@
             height: 100%;
         }
 
+        .fl-asst-window-backdrop {
+            position: absolute;
+            top:0;
+            left:0;
+            bottom: 0;
+            right: 0;
+        }
+
         .fl-asst-window-content {
             box-sizing: border-box;
             flex: 1 1 auto;
@@ -227,6 +235,31 @@
     .fl-asst {
         .fl-asst-window {
             --fl-asst-admin-bar-height: 46px;
+        }
+    }
+}
+
+.fluid {
+    .fl-asst-window-backdrop {
+        background: var(--fluid-background);
+        position: absolute;
+        top:0;
+        left:0;
+        bottom: 0;
+        right: 0;
+    }
+}
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .fluid {
+        .fl-asst-window-backdrop {
+            -webkit-backdrop-filter: saturate(250%) blur(50px);
+            backdrop-filter: saturate(250%) blur(50px);
+            background: var(--fluid-transparent-12);
+        }
+        .fluid-color-scheme-dark {
+            .fl-asst-window-backdrop {
+                background: hsla(214, 30%, 5%, .9);
+            }
         }
     }
 }
