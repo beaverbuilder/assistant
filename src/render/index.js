@@ -3,6 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom'
 import { Assistant, getAssistantBBPanelConfig } from './main'
 import { __ } from '@wordpress/i18n'
 import { getSystemActions } from 'assistant/data'
+import { Icon } from 'assistant/ui'
 import './admin-bar-item'
 import './style.scss'
 
@@ -51,6 +52,23 @@ if ( 'FLBuilder' in window ) {
 
 	// Render the standard Assistant app - We're not in Beaver Builder
 	wp.domReady( renderNormal )
+}
+
+// Gutenberg more menu link
+if ( wp && 'plugins' in wp ) {
+	wp.plugins.registerPlugin( 'fl-asst-more-menu-item', {
+		render: () => {
+			const { PluginMoreMenuItem } = wp.editPost
+			return (
+				<PluginMoreMenuItem
+					icon={ <Icon.Pencil /> }
+					onClick={ FL.Assistant.toggleUI }
+				>
+					{ __( 'Assistant' ) }
+				</PluginMoreMenuItem>
+			)
+		}
+	} )
 }
 
 // Render skip link
