@@ -14,7 +14,6 @@
 
 		.fluid-toolbar {
 			padding: var(--fluid-sm-space) var(--fluid-med-space);
-			min-height: 80px;
 
 			h2 {
 				margin: 0;
@@ -31,6 +30,21 @@
 			background: var(--fluid-transparent-13);
 			border-radius: var(--fluid-radius);
 			margin-bottom: 5px;
+		}
+	}
+}
+.fluid-color-scheme-dark {
+	.fl-asst-widget-library {
+		background: var(--fluid-opaque-3);
+		box-shadow: 0 0 20px var(--fluid-opaque-0);
+
+		.fluid-toolbar {
+			background: var(--fluid-opaque-3);
+		}
+	}
+	ul.fl-asst-widget-library-items {
+		li {
+			background: var(--fluid-opaque-1);
 		}
 	}
 }

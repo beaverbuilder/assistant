@@ -77,6 +77,7 @@ const HeaderBar = ( {
 						icon='plus'
 						shape="round"
 						onClick={ () => setIsShowingWidgetLib( ! isShowingWidgetLib ) }
+						className="fl-asst-inset-element"
 						style={ { minWidth: 40, minHeight: 40 } }
 					/>
 				</Layout.Row>

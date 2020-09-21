@@ -34,9 +34,17 @@ const WidgetLibrary = ( {
 					icon="close"
 					shape="round"
 					onClick={ onClose }
-					style={ { marginLeft: 'auto' } }
+					style={ {
+						marginLeft: 'auto',
+						width: 40,
+						height: 40
+					} }
 				/>
 			</Layout.Toolbar>
+
+			<div style={ { padding: '0 var(--fluid-med-space) 20px' } }>
+				{__( 'You can drag or click items below to add new widgets to your home screen.' )}
+			</div>
 
 			<ul className="fl-asst-widget-library-items">
 				{ items.map( ( item, i ) => {

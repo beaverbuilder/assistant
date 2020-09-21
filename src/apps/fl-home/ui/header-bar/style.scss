@@ -108,6 +108,10 @@
         }
         .fl-asst-inset-element {
             background: var(--fluid-transparent-2);
+
+            &:hover {
+                background: var(--fluid-transparent-3);
+            }
         }
         .fl-asst-form-input {
             &:focus-within {

@@ -36,7 +36,7 @@ const WidgetLayout = ( {
 	const onDrop = e => {
 		e.preventDefault()
 		const data = e.dataTransfer.getData( 'text/plain' )
-		if ( ! data ) {
+		if ( ! data || ! data.startsWith( '{' ) ) {
 			return false
 		}
 		const item = JSON.parse( data )
