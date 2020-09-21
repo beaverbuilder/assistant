@@ -77,6 +77,8 @@
 
             .fluid-button {
                 pointer-events: auto;
+                -webkit-backdrop-filter: blur(5px);
+                backdrop-filter: blur(5px);
             }
 
             & > div {
