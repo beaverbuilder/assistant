@@ -36,25 +36,11 @@ const defaultLayout = [
 		settings: {}
 	},
 	{
-		id: 6,
-		size: 'sm',
-		type: 'post-count',
-		settings: {
-			type: 'page'
-		}
-	},
-	{
 		id: 3,
 		size: 'med',
 		type: 'currently-viewing',
 		settings: {}
 	},
-	{
-		id: 4,
-		size: 'lg',
-		type: 'fl-empty',
-		settings: {}
-	}
 ]
 
 registerStore( KEY, {
@@ -78,7 +64,3 @@ export const useWidgetState = shouldUpdate => useStore( KEY, shouldUpdate )
 export const getWidgetState = () => getStore( KEY ).getState()
 
 export const getWidgetActions = () => getDispatch( KEY )
-
-//export const getWidgetSelectors = () => getSelectors( KEY )
-
-//export const getWidgetHooks = () => getHooks( KEY )

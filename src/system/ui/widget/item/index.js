@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { Button } from 'ui'
+import { getWidgetActions } from 'data'
 import { motion } from 'framer-motion'
 import c from 'classnames'
 import Widget from '../'
@@ -31,6 +33,7 @@ const Item = ( {
 	const [ isDragging, setIsDragging ] = useState( false )
 	const ref = useRef( null )
 	const lastPos = useRef( 0 )
+	const { deleteWidget } = getWidgetActions()
 
 	useEffect( () => {
 		setDimensions( i, {
@@ -48,6 +51,20 @@ const Item = ( {
 		title,
 		type,
 		settings,
+	}
+
+	const Title = () => {
+		return (
+			<>
+				{title}
+				<Button
+					icon="trash"
+					appearance="transparent"
+					status="destructive"
+					onClick={ () => deleteWidget( 'home', id ) }
+				/>
+			</>
+		)
 	}
 
 	return (
@@ -87,7 +104,7 @@ const Item = ( {
 			} }
 			{ ...rest }
 		>
-			<Widget title={ title } size={ size } type={ type }>
+			<Widget title={ <Title /> } size={ size } type={ type }>
 				<Content { ...props } />
 			</Widget>
 		</motion.li>

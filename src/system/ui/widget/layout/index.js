@@ -1,7 +1,9 @@
 import React, { useRef } from 'react'
 import c from 'classnames'
+import { __ } from '@wordpress/i18n'
 import useWidgetReorder from './use-widget-reorder'
 import { useWidgetState, getWidgetActions } from 'data'
+import { Layout } from 'ui'
 import Item from '../item'
 
 const defaultWidgetType = {
@@ -57,7 +59,16 @@ const WidgetLayout = ( {
 		>
 			{ before }
 
-			{ widgets.map( ( widget, i ) => {
+			{ 0 === widgets.length && (
+				<li style={ {
+					margin: 'auto',
+					flex: '1 1 auto',
+					minHeight: 300,
+					justifyContent: 'center'
+				} }>{__( 'No widgets, bummer. Hit the + and add some.' )}</li>
+			) }
+
+			{ 0 < widgets.length && widgets.map( ( widget, i ) => {
 				const type = ( 'type' in widget && widget.type in types ) ? types[ widget.type ] : defaultWidgetType
 				const rest = { ...type, ...widget }
 

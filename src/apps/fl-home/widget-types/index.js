@@ -6,16 +6,6 @@ import CurrentlyViewing from './currently-viewing'
 import Media from './media'
 import './style.scss'
 
-registerWidget( 'fl-empty', {
-	title: __( 'Empty Widget' ),
-	render: ( { size, id } ) => (
-		<>
-			<div>Empty: {id}</div>
-			<div>Size: {size}</div>
-		</>
-	)
-} )
-
 registerWidget( 'post-count', {
 	title: __( 'Post Count' ),
 	render: ( { settings } ) => {

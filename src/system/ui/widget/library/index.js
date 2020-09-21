@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Layout } from 'ui'
-import { useWidgetState } from 'data'
+import { useWidgetState, getWidgetActions } from 'data'
 import './style.scss'
 
 // Convert registered widget types into list of library items
@@ -11,15 +11,19 @@ const getLibraryItems = types => {
 	Object.entries( types ).map( ( [ handle, item ] ) => {
 		output.push( {
 			type: handle,
-			label: item.title,
+			label: `${item.title} - Medium Size`,
 			size: item.defaultSize
 		} )
 	} )
 	return output
 }
 
-const WidgetLibrary = ( { onClose = () => {} } ) => {
+const WidgetLibrary = ( {
+	layout = 'home',
+	onClose = () => {}
+} ) => {
 	const { types } = useWidgetState( 'types' )
+	const { insertWidget } = getWidgetActions()
 	const items = getLibraryItems( types )
 
 	return (
@@ -45,6 +49,7 @@ const WidgetLibrary = ( { onClose = () => {} } ) => {
 								e.dataTransfer.setData( 'text/plain', JSON.stringify( data ) )
 							} }
 							key={ i }
+							onClick={ () => insertWidget( layout, item ) }
 						>{label}</li>
 					)
 				} ) }

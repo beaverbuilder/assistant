@@ -36,7 +36,6 @@ export const types = ( state = {}, action ) => {
 * Layouts are stored arrays of widget instances.
 */
 export const layouts = ( state = {}, action ) => {
-
 	switch ( action.type ) {
 	case 'SET_WIDGETS':
 		return {
@@ -47,16 +46,27 @@ export const layouts = ( state = {}, action ) => {
 		return {
 			...state,
 			[ action.layout ]: [
-				...state[ action.layout ],
 				{
 					...defaultWidget,
 					id: uuid(),
 					type: action.config.type,
 					size: 'size' in action.config ? action.config.size : defaultWidget.size,
 					setting: 'settings' in action.config ? action.config.settings : defaultWidget.settings
-				}
+				},
+				...state[ action.layout ]
 			]
 		}
+	case 'DELETE_WIDGET':
+		const i = state[ action.layout ].findIndex( item => item.id === action.id )
+		if ( -1 !== i ) {
+			const layout = [ ...state[ action.layout ] ]
+			layout.splice( i, 1 )
+			return {
+				...state,
+				[ action.layout ]: layout
+			}
+		}
+		return state
 	default:
 		return state
 	}

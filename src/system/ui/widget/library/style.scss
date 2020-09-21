@@ -3,15 +3,17 @@
 		background: var(--fluid-background);
 
 		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
+		top: 10px;
+		left: 10px;
+		right: 10px;
+		border-radius: 10px;
 		max-height: 400px;
-		box-shadow: 0 0 20px var(--fluid-transparent-3);
+		box-shadow: 0 0 20px var(--fluid-opaque-10);
+		overflow: hidden;
 		z-index: 9;
 
 		.fluid-toolbar {
-			padding: var(--fluid-sm-space) var(--fluid-lg-space);
+			padding: var(--fluid-sm-space) var(--fluid-med-space);
 			min-height: 80px;
 
 			h2 {
@@ -21,7 +23,7 @@
 	}
 	ul.fl-asst-widget-library-items {
 		margin: 0;
-		padding: var(--fluid-lg-space);
+		padding: var(--fluid-med-space);
 		padding-top: 0;
 
 		li {

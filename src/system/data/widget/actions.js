@@ -17,3 +17,9 @@ export const insertWidget = ( layout, config, position = null ) => ( {
 	config,
 	position
 } )
+
+export const deleteWidget = ( layout, id ) => ( {
+	type: 'DELETE_WIDGET',
+	layout,
+	id
+} )
