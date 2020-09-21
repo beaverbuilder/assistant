@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Layout, Form, Icon, Button } from 'assistant/ui'
+import { Layout, Form, Icon, Button, Widget } from 'assistant/ui'
 import { motion, AnimatePresence } from 'framer-motion'
 import SearchSuggestions from './search-suggestions'
 import Help from './help'
@@ -17,6 +17,8 @@ const HeaderBar = ( {
 } ) => {
 	const [ isFocused, setIsFocused ] = useState( false )
 	const [ isShowingHelp, setIsShowingHelp ] = useState( false )
+	const [ isShowingWidgetLib, setIsShowingWidgetLib ] = useState( false )
+
 
 	const SearchIcon = () => (
 		<span className="search-icon-wrapper">
@@ -60,7 +62,7 @@ const HeaderBar = ( {
 							onFocus()
 						} }
 					/>
-					<motion.button
+					{ /* <motion.button
 						className="fluid-button fluid-shape-round fl-asst-inset-element"
 						style={ {
 							width: 40,
@@ -70,7 +72,13 @@ const HeaderBar = ( {
 						} }
 						onClick={ () => setIsShowingHelp( ! isShowingHelp ) }
 						layoutId="help"
-					>?</motion.button>
+					>?</motion.button> */ }
+					<Button
+						icon='plus'
+						shape="round"
+						onClick={ () => setIsShowingWidgetLib( ! isShowingWidgetLib ) }
+						style={ { minWidth: 40, minHeight: 40 } }
+					/>
 				</Layout.Row>
 			</div>
 			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick }/> }
@@ -78,6 +86,7 @@ const HeaderBar = ( {
 			<AnimatePresence>
 				{ isShowingHelp && <Help onClose={ () => setIsShowingHelp( false ) } /> }
 			</AnimatePresence>
+			{ isShowingWidgetLib && <Widget.Library onClose={ () => setIsShowingWidgetLib( false ) } /> }
 		</>
 	)
 }

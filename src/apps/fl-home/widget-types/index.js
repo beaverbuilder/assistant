@@ -19,7 +19,7 @@ registerWidget( 'fl-empty', {
 registerWidget( 'post-count', {
 	title: __( 'Post Count' ),
 	render: ( { settings } ) => {
-		const { type } = settings
+		const { type = 'post' } = settings
 		const { counts } = useSystemState()
 		const config = getSystemConfig()
 		const count = counts[`content/${type}`] ? counts[`content/${type}`] : 0

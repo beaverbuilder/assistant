@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import c from 'classnames'
 import useWidgetReorder from './use-widget-reorder'
 import { useWidgetState, getWidgetActions } from 'data'
 import Item from '../item'
@@ -17,7 +18,7 @@ const WidgetLayout = ( {
 } ) => {
 	const ref = useRef( null ) // Container ref for drag boundary
 	const { types, layouts } = useWidgetState()
-	const { setLayout } = getWidgetActions()
+	const { setLayout, insertWidget } = getWidgetActions()
 	const layout = handle in layouts ? layouts[ handle ] : []
 	const setWidgets = widgets => setLayout( handle, widgets )
 	const [ widgets, updatePosition, updateOrder ] = useWidgetReorder( layout, setWidgets )
@@ -26,8 +27,34 @@ const WidgetLayout = ( {
 		return null
 	}
 
+	const onDragOver = e => {
+		e.preventDefault()
+	}
+
+	const onDrop = e => {
+		e.preventDefault()
+		const data = e.dataTransfer.getData( 'text/plain' )
+		if ( ! data ) {
+			return false
+		}
+		const item = JSON.parse( data )
+
+		if ( 'dragType' in item && 'widget' === item.dragType ) {
+			insertWidget( handle, item )
+		}
+	}
+
 	return (
-		<Tag className="fl-asst-widget-list" ref={ ref } { ...rest }>
+		<Tag
+			className={ c( 'fl-asst-widget-list', {
+				'is-over': false
+			} ) }
+			ref={ ref }
+			onDragOver={ onDragOver }
+			onDragEnter={ e => e.preventDefault() }
+			onDrop={ onDrop }
+			{ ...rest }
+		>
 			{ before }
 
 			{ widgets.map( ( widget, i ) => {

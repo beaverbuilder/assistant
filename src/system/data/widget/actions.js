@@ -10,3 +10,10 @@ export const setLayout = ( layout, widgets ) => ( {
 	layout,
 	widgets
 } )
+
+export const insertWidget = ( layout, config, position = null ) => ( {
+	type: 'INSERT_WIDGET',
+	layout,
+	config,
+	position
+} )

@@ -1,9 +1,19 @@
+import md5 from 'md5'
 
-const defaultWidget = {
+const uuid = () => md5( Math.random() )
+
+const defaultWidgetType = {
 	title: 'Untitled Widget',
 	render: () => null,
 	defaultSize: 'med',
 	supportsSizes: [ 'sm', 'med', 'lg' ]
+}
+
+const defaultWidget = {
+	id: null,
+	size: 'med',
+	type: '',
+	settings: {}
 }
 
 /**
@@ -15,7 +25,7 @@ export const types = ( state = {}, action ) => {
 	case 'REGISTER_WIDGET':
 		return {
 			...state,
-			[ action.handle ]: { ...defaultWidget, ...action.config }
+			[ action.handle ]: { ...defaultWidgetType, ...action.config }
 		}
 	default:
 		return state
@@ -32,6 +42,20 @@ export const layouts = ( state = {}, action ) => {
 		return {
 			...state,
 			[ action.layout ]: [ ...action.widgets ]
+		}
+	case 'INSERT_WIDGET':
+		return {
+			...state,
+			[ action.layout ]: [
+				...state[ action.layout ],
+				{
+					...defaultWidget,
+					id: uuid(),
+					type: action.config.type,
+					size: 'size' in action.config ? action.config.size : defaultWidget.size,
+					setting: 'settings' in action.config ? action.config.settings : defaultWidget.settings
+				}
+			]
 		}
 	default:
 		return state

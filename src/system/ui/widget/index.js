@@ -1,6 +1,7 @@
 import React from 'react'
 import c from 'classnames'
 import WidgetLayout from './layout'
+import WidgetLibrary from './library'
 import './style.scss'
 
 const Widget = ( { title, children, size, type, className, ...rest } ) => {
@@ -19,5 +20,6 @@ const Widget = ( { title, children, size, type, className, ...rest } ) => {
 }
 
 Widget.Layout = WidgetLayout
+Widget.Library = WidgetLibrary
 
 export default Widget
