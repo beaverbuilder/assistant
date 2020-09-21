@@ -1,40 +1,38 @@
-.fluid {
-    .fluid-menu {
-        width: 180px;
-        background: var(--fluid-background);
-        box-shadow: 0px 0px 10px rgba(0,0,0,.25);
-        border-radius: var(--fluid-med-space);
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        padding: var(--fluid-sm-space);
+.fluid-menu {
+    width: 180px;
+    background: var(--fluid-background);
+    box-shadow: 0px 0px 10px rgba(0,0,0,.25);
+    border-radius: var(--fluid-med-space);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--fluid-sm-space);
 
-        & > :first-child {
-            margin-top: 0;
+    & > :first-child {
+        margin-top: 0;
+    }
+
+    .fluid-menu-item.fluid-button {
+        flex: 0 0 var(--fluid-target-size);
+        justify-content: flex-start;
+        padding: 0 var(--fluid-lg-space);
+
+        & > span {
+            justify-content: flex-start;
+            flex: 1 1 auto;
         }
 
-        .fluid-menu-item.fluid-button {
-            flex: 0 0 var(--fluid-target-size);
-            justify-content: flex-start;
-            padding: 0 var(--fluid-lg-space);
+        &.is-selected {
+            box-shadow: inset 3px 0 0 var(--fluid-accent);
+        }
 
-            & > span {
-                justify-content: flex-start;
-                flex: 1 1 auto;
-            }
-
-            &.is-selected {
-                box-shadow: inset 3px 0 0 var(--fluid-accent);
-            }
-
-            &:hover {
-                transform: scale(1) !important;
-            }
+        &:hover {
+            transform: scale(1) !important;
         }
     }
-    .fluid-color-scheme-dark {
-        .fluid-menu {
-            background: var(--fluid-box-background);
-        }
+}
+.fluid-color-scheme-dark {
+    .fluid-menu {
+        background: var(--fluid-box-background);
     }
 }

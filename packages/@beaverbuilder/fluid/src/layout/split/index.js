@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import c from 'classnames'
 import './style.scss'
 
@@ -34,10 +34,21 @@ const Split = ( {
 	panes = [],
 	sizes = [ 240 ],
 	className,
+
+	// Drive internal state with props
+	isShowingFirstPane = true,
+	onToggleFirstPane = () => {},
 	...rest
 } ) => {
-	const [ showFirst, setShowFirst ] = useState( true )
-	const toggleFirstPane = () => setShowFirst( ! showFirst )
+	const [ showFirst, setShowFirst ] = useState( isShowingFirstPane )
+	const toggleFirstPane = () => {
+		const val = ! showFirst
+		setShowFirst( val )
+		onToggleFirstPane( val )
+	}
+
+	// Keep state consistent with prop
+	useEffect( () => setShowFirst( isShowingFirstPane ), [ isShowingFirstPane ] )
 
 	const paneProps = {
 		...rest,
