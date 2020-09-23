@@ -1,9 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import c from 'classnames'
 import { __ } from '@wordpress/i18n'
 import useWidgetReorder from './use-widget-reorder'
 import { useWidgetState, getWidgetActions } from 'data'
-import { Layout } from 'ui'
 import Item from '../item'
 
 const defaultWidgetType = {
@@ -24,36 +23,49 @@ const WidgetLayout = ( {
 	const layout = handle in layouts ? layouts[ handle ] : []
 	const setWidgets = widgets => setLayout( handle, widgets )
 	const [ widgets, updatePosition, updateOrder ] = useWidgetReorder( layout, setWidgets )
+	const [ isDraggingOver, setIsDraggingOver ] = useState( false )
 
 	if ( ! handle || ! layout ) {
 		return null
 	}
 
-	const onDragOver = e => {
-		e.preventDefault()
+	const onDragEnter = e => {
+
+		// Cuts down on the number of times it fires
+		// No need to worry about child items
+		if ( ! e.target.classList.contains( 'fl-asst-widget-list' ) ) {
+			return
+		}
+
+		// Do we have a valid widget item being dragged?
+		// You can't simply read the dataTransfer value before drop #becausesecurity
+		if ( e.dataTransfer.types.includes( 'fl-asst-widget' )  ) {
+			e.dataTransfer.dropEffect = 'copy'
+		}
 	}
 
+	// Required for drop listening
+	const onDragOver = e => e.preventDefault()
+
+	// Insert the dropped widget
 	const onDrop = e => {
 		e.preventDefault()
 		const data = e.dataTransfer.getData( 'text/plain' )
 		if ( ! data || ! data.startsWith( '{' ) ) {
 			return false
 		}
-		const item = JSON.parse( data )
-
-		if ( 'dragType' in item && 'widget' === item.dragType ) {
+		if ( event.dataTransfer.types.includes( 'fl-asst-widget' )  ) {
+			const item = JSON.parse( data )
 			insertWidget( handle, item )
 		}
 	}
 
 	return (
 		<Tag
-			className={ c( 'fl-asst-widget-list', {
-				'is-over': false
-			} ) }
+			className={ c( 'fl-asst-widget-list' ) }
 			ref={ ref }
+			onDragEnter={ onDragEnter }
 			onDragOver={ onDragOver }
-			onDragEnter={ e => e.preventDefault() }
 			onDrop={ onDrop }
 			{ ...rest }
 		>

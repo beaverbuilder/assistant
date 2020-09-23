@@ -53,8 +53,14 @@ const WidgetLibrary = ( {
 						<li
 							draggable
 							onDragStart={ e => {
-								const data = { dragType: 'widget', ...item }
-								e.dataTransfer.setData( 'text/plain', JSON.stringify( data ) )
+
+								e.dataTransfer.effectAllowed = 'copy'
+
+								// This allows us to check if its a widget being dragged before drop
+								e.dataTransfer.setData( 'fl-asst-widget', 'true' )
+
+								// Transfer the widget configuration object as a string
+								e.dataTransfer.setData( 'text/plain', JSON.stringify( item ) )
 							} }
 							key={ i }
 							onClick={ () => insertWidget( layout, item ) }
