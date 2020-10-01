@@ -28,11 +28,11 @@ class CloudLibraries {
 					continue;
 				} elseif ( is_array( $media ) ) {
 					foreach ( $media as $i => $path ) {
-						if ( $path ) {
+						if ( $path && file_exists( $path ) ) {
 							$data[ "media[$key][$i]" ] = curl_file_create( $path );
 						}
 					}
-				} else {
+				} else if ( file_exists( $media ) ) {
 					$data[ "media[$key]" ] = curl_file_create( $media );
 				}
 			}
