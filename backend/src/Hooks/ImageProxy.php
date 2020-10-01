@@ -5,14 +5,16 @@ namespace FL\Assistant\Hooks;
 class ImageProxy {
 
 	public function __construct() {
-		add_action( 'init', function() {
-			if ( ! current_user_can( 'edit_others_posts' ) ) {
-				return;
+		add_action(
+			'init', function() {
+				if ( ! current_user_can( 'edit_others_posts' ) ) {
+					return;
+				}
+				if ( isset( $_GET['fl_asst_image_proxy'] ) ) {
+					self::render_image();
+				}
 			}
-			if ( isset( $_GET['fl_asst_image_proxy'] ) ) {
-				self::render_image();
-			}
-		} );
+		);
 	}
 
 	public function render_image() {
@@ -34,7 +36,7 @@ class ImageProxy {
 
 		if ( ! isset( $headers['content-type'] ) ) {
 			return;
-		} else if ( 0 !== strpos( $headers['content-type'], 'image/' ) ) {
+		} elseif ( 0 !== strpos( $headers['content-type'], 'image/' ) ) {
 			return;
 		}
 

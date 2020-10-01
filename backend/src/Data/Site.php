@@ -260,9 +260,9 @@ class Site {
 	public function is_local() {
 		$ips = [ '127.0.0.1', '::1' ];
 		$domain = '.local';
-	    if ( ! in_array( $_SERVER['REMOTE_ADDR'], $ips ) ) {
-	        return substr_compare( $_SERVER['SERVER_NAME'], $domain, -strlen( $domain ) ) === 0;
-	    }
-	    return true;
+		if ( ! in_array( $_SERVER['REMOTE_ADDR'], $ips, true ) ) {
+			return substr_compare( $_SERVER['SERVER_NAME'], $domain, -strlen( $domain ) ) === 0;
+		}
+		return true;
 	}
 }

@@ -15,7 +15,7 @@ class PostPreview {
 	public function init() {
 		if ( isset( $_GET['p'] ) ) {
 			$this->post_id = absint( $_GET['p'] );
-		} else if ( isset( $_GET['page_id'] ) ) {
+		} elseif ( isset( $_GET['page_id'] ) ) {
 			$this->post_id = absint( $_GET['page_id'] );
 		} else {
 			return;
