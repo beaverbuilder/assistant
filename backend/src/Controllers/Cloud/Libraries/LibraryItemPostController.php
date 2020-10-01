@@ -297,8 +297,6 @@ class LibraryItemPostController extends ControllerAbstract {
 		$taxonomies = get_taxonomies( '', 'names' );
 		$post_taxonomies = wp_get_object_terms( $id, $taxonomies );
 
-		$comments = get_comments( [ 'post_id' => $id ] );
-
 		return $client->libraries->create_item(
 			$library_id,
 			[
@@ -308,8 +306,6 @@ class LibraryItemPostController extends ControllerAbstract {
 					'post'      => $post,
 					'meta'      => get_post_meta( $id ),
 					'terms'     => $post_taxonomies,
-					'comments'  => $comments,
-					//'html'       => $this->get_screenshot_html( $post ),
 					'raw_media' => $this->unfilter_media,
 
 				],
