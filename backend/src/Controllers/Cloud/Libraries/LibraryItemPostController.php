@@ -7,16 +7,19 @@ use FL\Assistant\System\View;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Helpers\PostHelper;
-use WP_REST_Server;
+use FL\Assistant\Clients\Cloud\CloudClient;
 
 class LibraryItemPostController extends ControllerAbstract {
 
-	public $output = [];
-	public $unfilter_media = [];
-	public $postmeta_images = [];
 	protected $posts;
 	protected $view;
+	protected $unfiltered_media = [];
 
+	/**
+	 * Controller constructor.
+	 *
+	 * @return void
+	 */
 	public function __construct( PostTransformer $posts, View $view ) {
 		$this->posts = $posts;
 		$this->view = $view;
@@ -24,14 +27,58 @@ class LibraryItemPostController extends ControllerAbstract {
 
 	/**
 	 * Register routes.
+	 *
+	 * @return void
 	 */
 	public function register_routes() {
+
+		$this->route(
+			'/posts/preview_library_post/(?P<item_id>\d+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'preview_library_post' ],
+					'args'                => [
+						'item_id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_others_posts' );
+					},
+				],
+			]
+		);
+
+		$this->route(
+			'/posts/(?P<id>\d+)/library/(?P<library_id>\d+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'save_to_library' ],
+					'args'                => [
+						'id'         => [
+							'required' => true,
+							'type'     => 'number',
+						],
+						'library_id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_others_posts' );
+					},
+				],
+			]
+		);
 
 		$this->route(
 			'/posts/import_from_library/(?P<item_id>\d+)',
 			[
 				[
-					'methods'             => WP_REST_Server::CREATABLE,
+					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'import_from_library' ],
 					'args'                => [
 						'item_id' => [
@@ -50,7 +97,7 @@ class LibraryItemPostController extends ControllerAbstract {
 			'/posts/sync_from_library/(?P<id>\d+)/(?P<item_id>\d+)/(?P<override_type>\d+)',
 			[
 				[
-					'methods'             => WP_REST_Server::CREATABLE,
+					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'override_lib_post' ],
 					'args'                => [
 						'id'            => [
@@ -72,201 +119,68 @@ class LibraryItemPostController extends ControllerAbstract {
 				],
 			]
 		);
-
-		$this->route(
-			'/posts/(?P<id>\d+)/library/(?P<library_id>\d+)',
-			[
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'save_to_library' ],
-					'args'                => [
-						'id'         => [
-							'required' => true,
-							'type'     => 'number',
-						],
-						'library_id' => [
-							'required' => true,
-							'type'     => 'number',
-						],
-					],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
-
-		$this->route(
-			'/posts/preview_library_post/(?P<item_id>\d+)',
-			[
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'preview_library_post' ],
-					'args'                => [
-						'item_id' => [
-							'required' => true,
-							'type'     => 'number',
-						],
-					],
-					'permission_callback' => function () {
-						return current_user_can( 'edit_others_posts' );
-					},
-				],
-			]
-		);
 	}
 
-
-
-	function sync_from_library( $request ) {
-
+	/**
+	 * Handles previewing a post from a cloud library.
+	 *
+	 * @param object $request
+	 * @return array
+	 */
+	public function preview_library_post( $request ) {
 		global $wpdb;
-		$post_id = $request->get_param( 'id' );
+
 		$item_id = $request->get_param( 'item_id' );
-		$override_type = $request->get_param( 'override_type' );
 
-		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
-		$response = $client->libraries->get_item( $item_id );
+		$meta = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM $wpdb->postmeta
+				WHERE meta_key = '_fl_asst_preview_library_item_id'
+				AND meta_value = %s",
+				$item_id
+			)
+		);
 
-		$post_data = $response->data->post;
-		$post_meta = $response->data->meta;
-		$post_terms  = $response->data->terms;
-
-		$override_post = [];
-		$override_post['ID'] = $post_id;
-
-		if ( $post_meta && count( $post_meta ) !== 0 ) {
-
-			foreach ( $post_meta as $key => $meta_value ) {
-
-				$meta_key = $key ? $key : '';
-
-				if ( '' !== $meta_key ) {
-					if ( metadata_exists( 'post', $post_id, '_' . $meta_key ) ) {
-
-						update_metadata( 'post', $post_id, $meta_key, $meta_value );
-
-					} else {
-						if ( count( $meta_value ) >= 1 ) {
-							foreach ( $meta_value as $value ) {
-								$value = $value ? addslashes( $value ) : '';
-								$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-
-							}
-						}
-					}
-				}
-			}
-		}
-
-		if ( '2' === $override_type ) {
-
-			$override_post['post_content'] = $post_data->post_content;
-		} elseif ( '3' === $override_type ) {
-
-			if ( is_array( $post_terms ) && count( $post_terms ) !== 0 ) {
-
-				foreach ( $post_terms as $category ) {
-					if ( taxonomy_exists( $category->taxonomy ) ) {
-						$term = term_exists( $category->slug, $category->taxonomy );
-						if ( 0 !== $term && null !== $term ) {
-							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
-						} else {
-							wp_insert_term(
-								$category->name,   // the term
-								$category->taxonomy, // the taxonomy
-								[
-									'description' => $category->description,
-									'slug'        => $category->slug,
-									'parent'      => $category->parent,
-								]
-							);
-
-							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
-						}
-					}
-				}
-			}
+		if ( $meta ) {
+			$request->set_param( 'id', $meta->post_id );
+			$response = $this->sync_from_library( $request );
 		} else {
-
-			$override_post['post_content'] = $post_data->post_content;
-			if ( is_array( $post_terms ) && count( $post_terms ) !== 0 ) {
-
-				foreach ( $post_terms as $category ) {
-					if ( taxonomy_exists( $category->taxonomy ) ) {
-						$term = term_exists( $category->slug, $category->taxonomy );
-						if ( 0 !== $term && null !== $term ) {
-							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
-						} else {
-							wp_insert_term(
-								$category->name,   // the term
-								$category->taxonomy, // the taxonomy
-								[
-									'description' => $category->description,
-									'slug'        => $category->slug,
-									'parent'      => $category->parent,
-								]
-							);
-
-							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
-						}
-					}
-				}
-			}
+			$response = $this->import_from_library( $request );
 		}
 
-		if ( is_wp_error( wp_update_post( $override_post ) ) ) {
-			return rest_ensure_response(
-				[
-					'error' => true,
-				]
-			);
-		} else {
-			return rest_ensure_response(
-				$this->posts->transform(
-					get_post( $post_id )
-				)
-			);
+		if ( isset( $response->data['error'] ) ) {
+			return $response;
 		}
 
-	}
+		$post_id = $response->data['id'];
 
-
-
-	function get_screenshot( $request, $post ) {
-		$screenshot = $request->get_param( 'screenshot' );
-
-		if ( $screenshot ) {
-			return [
-				'type' => 'base64',
-				'data' => $screenshot,
-			];
-		}
-
-		$url = PostHelper::get_preview_url( $post );
-		$response = wp_remote_get(
-			$url, [
-				'cookies' => $_COOKIE,
+		wp_update_post(
+			[
+				'ID'          => $post_id,
+				'post_status' => 'auto-draft',
 			]
 		);
 
-		return [
-			'type' => 'html',
-			'html' => wp_remote_retrieve_body( $response ),
-		];
+		update_post_meta( $post_id, '_fl_asst_preview_library_item_id', $item_id );
+
+		return rest_ensure_response(
+			[
+				'url' => PostHelper::get_preview_url( $post_id ),
+			]
+		);
 	}
 
-
-
-	function save_to_library( $request ) {
-
+	/**
+	 * Saves a post to a cloud library.
+	 *
+	 * @param object $request
+	 * @return array
+	 */
+	public function save_to_library( $request ) {
 		$id = $request->get_param( 'id' );
 		$library_id = $request->get_param( 'library_id' );
-
 		$post = get_post( $id );
-
 		$post_content_images = $this->get_all_images( $post->post_content );
-
 		$post_meta = get_post_meta( $id );
 		$post_meta_images = [];
 
@@ -306,7 +220,7 @@ class LibraryItemPostController extends ControllerAbstract {
 					'post'      => $post,
 					'meta'      => get_post_meta( $id ),
 					'terms'     => $post_taxonomies,
-					'raw_media' => $this->unfilter_media,
+					'raw_media' => $this->unfiltered_media,
 
 				],
 				'media'      => [
@@ -319,13 +233,48 @@ class LibraryItemPostController extends ControllerAbstract {
 
 	}
 
+	/**
+	 * Returns the screenshot data for a post.
+	 *
+	 * @param object $request
+	 * @param object $post
+	 * @return array
+	 */
+	public function get_screenshot( $request, $post ) {
+		$screenshot = $request->get_param( 'screenshot' );
 
+		if ( $screenshot ) {
+			return [
+				'type' => 'base64',
+				'data' => $screenshot,
+			];
+		}
+
+		$url = PostHelper::get_preview_url( $post );
+		$response = wp_remote_get(
+			$url, [
+				'cookies' => $_COOKIE,
+			]
+		);
+
+		return [
+			'type' => 'html',
+			'html' => wp_remote_retrieve_body( $response ),
+		];
+	}
+
+	/**
+	 * Imports a post from a library to the site.
+	 *
+	 * @param object $request
+	 * @return array
+	 */
 	function import_from_library( $request ) {
 
 		global $wpdb;
 
 		$item_id = $request->get_param( 'item_id' );
-		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
+		$client = new CloudClient;
 		$response = $client->libraries->get_item( $item_id );
 
 		$post_data = $response->data->post;
@@ -392,7 +341,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 					$replaced_post_content = get_post_field( 'post_content', $new_post_id );
 					$content_images = $this->get_all_images( $replaced_post_content );
-					$content_images = $this->unfilter_media;
+					$content_images = $this->unfiltered_media;
 
 					$update_post = [];
 					$update_post['ID'] = $new_post_id;
@@ -475,7 +424,7 @@ class LibraryItemPostController extends ControllerAbstract {
 					$update_post['ID'] = $new_post_id;
 					$replaced_post_content = get_post_field( 'post_content', $new_post_id );
 					$content_images = $this->get_all_images( $replaced_post_content );
-					$content_images = $this->unfilter_media;
+					$content_images = $this->unfiltered_media;
 
 					foreach ( $content_images[0] as $content_image ) {
 						if ( strpos( $content_image, $item->file_name ) ) {
@@ -601,23 +550,148 @@ class LibraryItemPostController extends ControllerAbstract {
 
 	}
 
+	/**
+	 * Syncs a library post with a post on the site.
+	 *
+	 * @param object $request
+	 * @return array
+	 */
+	function sync_from_library( $request ) {
 
+		global $wpdb;
+		$post_id = $request->get_param( 'id' );
+		$item_id = $request->get_param( 'item_id' );
+		$override_type = $request->get_param( 'override_type' );
 
+		$client = new CloudClient;
+		$response = $client->libraries->get_item( $item_id );
+
+		$post_data = $response->data->post;
+		$post_meta = $response->data->meta;
+		$post_terms  = $response->data->terms;
+
+		$override_post = [];
+		$override_post['ID'] = $post_id;
+
+		if ( $post_meta && count( $post_meta ) !== 0 ) {
+
+			foreach ( $post_meta as $key => $meta_value ) {
+
+				$meta_key = $key ? $key : '';
+
+				if ( '' !== $meta_key ) {
+					if ( metadata_exists( 'post', $post_id, '_' . $meta_key ) ) {
+
+						update_metadata( 'post', $post_id, $meta_key, $meta_value );
+
+					} else {
+						if ( count( $meta_value ) >= 1 ) {
+							foreach ( $meta_value as $value ) {
+								$value = $value ? addslashes( $value ) : '';
+								$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if ( '2' === $override_type ) {
+
+			$override_post['post_content'] = $post_data->post_content;
+		} elseif ( '3' === $override_type ) {
+
+			if ( is_array( $post_terms ) && count( $post_terms ) !== 0 ) {
+
+				foreach ( $post_terms as $category ) {
+					if ( taxonomy_exists( $category->taxonomy ) ) {
+						$term = term_exists( $category->slug, $category->taxonomy );
+						if ( 0 !== $term && null !== $term ) {
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						} else {
+							wp_insert_term(
+								$category->name,   // the term
+								$category->taxonomy, // the taxonomy
+								[
+									'description' => $category->description,
+									'slug'        => $category->slug,
+									'parent'      => $category->parent,
+								]
+							);
+
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						}
+					}
+				}
+			}
+		} else {
+
+			$override_post['post_content'] = $post_data->post_content;
+			if ( is_array( $post_terms ) && count( $post_terms ) !== 0 ) {
+
+				foreach ( $post_terms as $category ) {
+					if ( taxonomy_exists( $category->taxonomy ) ) {
+						$term = term_exists( $category->slug, $category->taxonomy );
+						if ( 0 !== $term && null !== $term ) {
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						} else {
+							wp_insert_term(
+								$category->name,   // the term
+								$category->taxonomy, // the taxonomy
+								[
+									'description' => $category->description,
+									'slug'        => $category->slug,
+									'parent'      => $category->parent,
+								]
+							);
+
+							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
+						}
+					}
+				}
+			}
+		}
+
+		if ( is_wp_error( wp_update_post( $override_post ) ) ) {
+			return rest_ensure_response(
+				[
+					'error' => true,
+				]
+			);
+		} else {
+			return rest_ensure_response(
+				$this->posts->transform(
+					get_post( $post_id )
+				)
+			);
+		}
+
+	}
+
+	/**
+	 * @param string $post_content
+	 * @return array
+	 */
 	function get_all_images( $post_content = '' ) {
-
 		ob_start();
 		ob_end_clean();
 		//preg_match_all( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_content, $matches );
 		preg_match_all( '@src="([^"]+)"@', $post_content, $match );
 		$src = array_pop( $match );
-		array_push( $this->unfilter_media, $src );
+		array_push( $this->unfiltered_media, $src );
 		$upload_media_path = $this->filter_uploads_path( $src );
 		return $upload_media_path;
 	}
 
-
-
+	/**
+	 * @param array $input
+	 * @param bool $keys
+	 * @return array
+	 */
 	public function preg_grep_recursive( $input = [], $keys = false ) {
+
+		$output = [];
 
 		if ( is_object( $input ) || is_array( $input ) ) {
 
@@ -632,22 +706,21 @@ class LibraryItemPostController extends ControllerAbstract {
 
 						if ( isset( $matches[0][0] ) && '' !== $matches[0][0] ) {
 
-								  $this->$postmeta_images[] = $matches[0][0];
-
+							$postmeta_images[] = $matches[0][0];
 						}
 
-						if ( isset( $matches[0][0] ) && '' !== $matches[0][0] && ! in_array( $matches[0][0], $this->output, true ) ) {
+						if ( isset( $matches[0][0] ) && '' !== $matches[0][0] && ! in_array( $matches[0][0], $output, true ) ) {
 
 							if ( $matches[0][0] ) {
 
-								array_push( $this->unfilter_media, $matches[0][0] );
+								array_push( $this->unfiltered_media, $matches[0][0] );
 
-								array_push( $this->output, $upload_media_path );
+								array_push( $output, $upload_media_path );
 
 								$upload_media_path = $this->filter_uploads_path( $matches[0][0] );
 
 								if ( $upload_media_path ) {
-									array_push( $this->output, $upload_media_path );
+									array_push( $output, $upload_media_path );
 								}
 							}
 						}
@@ -657,59 +730,16 @@ class LibraryItemPostController extends ControllerAbstract {
 		}
 
 		if ( true === $keys ) {
-			return $this->$postmeta_images;
+			return $postmeta_images;
 		}
-		return $this->output;
 
+		return $output;
 	}
 
-
-
-	function preview_library_post( $request ) {
-		global $wpdb;
-
-		$item_id = $request->get_param( 'item_id' );
-
-		$meta = $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT * FROM $wpdb->postmeta
-			 WHERE meta_key = '_fl_asst_preview_library_item_id'
-			 AND meta_value = %s",
-				$item_id
-			)
-		);
-
-		if ( $meta ) {
-			$request->set_param( 'id', $meta->post_id );
-			$response = $this->sync_from_library( $request );
-		} else {
-			$response = $this->import_from_library( $request );
-		}
-
-		if ( isset( $response->data['error'] ) ) {
-			return $response;
-		}
-
-		$post_id = $response->data['id'];
-
-		wp_update_post(
-			[
-				'ID'          => $post_id,
-				'post_status' => 'auto-draft',
-			]
-		);
-
-		update_post_meta( $post_id, '_fl_asst_preview_library_item_id', $item_id );
-
-		return rest_ensure_response(
-			[
-				'url' => PostHelper::get_preview_url( $post_id ),
-			]
-		);
-	}
-
-
-
+	/**
+	 * @param array|string $image_path
+	 * @return array
+	 */
 	function filter_uploads_path( $image_path ) {
 
 		$upload_dir_path = wp_get_upload_dir();
@@ -735,8 +765,13 @@ class LibraryItemPostController extends ControllerAbstract {
 
 	}
 
-
-
+	/**
+	 * @param array $input
+ 	 * @param string $search
+ 	 * @param string $replace
+ 	 * @param string $pos_needle
+	 * @return array
+	 */
 	function search_replace_array( $input = [], $search = '', $replace = '', $pos_needle = '' ) {
 
 		if ( is_object( $input ) || is_array( $input ) ) {
