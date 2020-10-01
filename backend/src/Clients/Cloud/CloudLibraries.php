@@ -20,7 +20,7 @@ class CloudLibraries {
 	/**
 	 * @return object
 	 */
-	public function createItem( $library_id, $data ) {
+	public function create_item( $library_id, $data ) {
 
 		if ( isset( $data['media'] ) ) {
 			foreach ( $data['media'] as $key => $media ) {
@@ -32,7 +32,7 @@ class CloudLibraries {
 							$data[ "media[$key][$i]" ] = curl_file_create( $path );
 						}
 					}
-				} else if ( file_exists( $media ) ) {
+				} elseif ( file_exists( $media ) ) {
 					$data[ "media[$key]" ] = curl_file_create( $media );
 				}
 			}
@@ -45,7 +45,7 @@ class CloudLibraries {
 	/**
 	 * @return object
 	 */
-	public function getItem( $item_id ) {
+	public function get_item( $item_id ) {
 		return $this->client->get( "/library-items/$item_id" );
 	}
 }
