@@ -1,20 +1,15 @@
 <?php
 
-namespace FL\Assistant\Controllers;
+namespace FL\Assistant\Controllers\Cloud\Libraries;
 
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\System\View;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Helpers\PostHelper;
-
 use WP_REST_Server;
 
-/**
- * REST API logic for exporting posts.
- */
-class CloudPostsController extends ControllerAbstract {
-
+class LibraryItemPostController extends ControllerAbstract {
 
 	public $output = [];
 	public $unfilter_media = [];

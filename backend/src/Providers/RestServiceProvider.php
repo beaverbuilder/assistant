@@ -13,13 +13,13 @@ use FL\Assistant\Controllers\NotationsController;
 use FL\Assistant\Controllers\NotificationsController;
 use FL\Assistant\Controllers\PostsController;
 use FL\Assistant\Controllers\PostsExportController;
-use FL\Assistant\Controllers\CloudPostsController;
 use FL\Assistant\Controllers\SearchController;
 use FL\Assistant\Controllers\TermsController;
 use FL\Assistant\Controllers\UpdatesController;
 use FL\Assistant\Controllers\UsersController;
 use FL\Assistant\Controllers\Cloud\Libraries\LibraryItemSvgController;
 use FL\Assistant\Controllers\Cloud\Libraries\LibraryItemImageController;
+use FL\Assistant\Controllers\Cloud\Libraries\LibraryItemPostController;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 
 /**
@@ -42,13 +42,13 @@ class RestServiceProvider extends ServiceProviderAbstract {
 		NotificationsController::class,
 		PostsController::class,
 		PostsExportController::class,
-		CloudPostsController::class,
 		TermsController::class,
 		UpdatesController::class,
 		UsersController::class,
 		SearchController::class,
 		LibraryItemSvgController::class,
 		LibraryItemImageController::class,
+		LibraryItemPostController::class,
 		BatchController::class, // Must be last
 	];
 
