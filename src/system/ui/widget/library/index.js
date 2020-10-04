@@ -9,10 +9,14 @@ const getLibraryItems = types => {
 	const output = []
 
 	Object.entries( types ).map( ( [ handle, item ] ) => {
-		output.push( {
-			type: handle,
-			label: `${item.title} - Medium Size`,
-			size: item.defaultSize
+
+		// What sizes does this type support?
+		item.supportsSizes.map( size => {
+			output.push( {
+				type: handle,
+				label: `${item.title} - ${size} Size`,
+				size
+			} )
 		} )
 	} )
 	return output
@@ -57,7 +61,7 @@ const WidgetLibrary = ( {
 								e.dataTransfer.effectAllowed = 'copy'
 
 								// This allows us to check if its a widget being dragged before drop
-								e.dataTransfer.setData( 'fl-asst-widget', 'true' )
+								e.dataTransfer.setData( 'fl-asst/widget', JSON.stringify( item ) )
 
 								// Transfer the widget configuration object as a string
 								e.dataTransfer.setData( 'text/plain', JSON.stringify( item ) )

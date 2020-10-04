@@ -72,8 +72,7 @@ const Item = ( {
 			key={ id }
 			ref={ ref }
 			className={ c( {
-				'fl-asst-widget': true,
-				[ `fl-asst-widget-${size}` ]: size,
+				[ `fl-asst-cell-${size}` ]: size,
 				'is-dragging': isDragging
 			}, className ) }
 			layout

@@ -1,23 +1,21 @@
 import React from 'react'
 import { Layout, Icon, Widget } from 'assistant/ui'
-import Welcome from './welcome'
 import './style.scss'
 
-const Cap = () => {
+const EndCap = () => {
 	return (
 		<Layout.Row padY={ true }>
 			<Icon.Pencil size={ 50 } />
 		</Layout.Row>
 	)
 }
-const Widgets = () => {
+
+export default props => {
 	return (
 		<Widget.Layout
 			handle='home'
-			before={ <li><Welcome /></li> }
-			after={ <li><Cap /></li> }
+			after={ <li><EndCap /></li> }
+			{ ...props }
 		/>
 	)
 }
-
-export default Widgets

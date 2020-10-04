@@ -18,39 +18,23 @@
                 cursor: move;
             }
 
-            &.fl-asst-widget-sm {
+            &.fl-asst-cell-sm {
                 grid-column-start: span 1;
 
                 .fluid-widget-content {
-                    height: 150px;
+                    height: 130px;
                 }
             }
-            &.fl-asst-widget-med {
+            &.fl-asst-cell-med {
                 .fluid-widget-content {
-                    height: 150px;
+                    height: 130px;
                 }
             }
-            &.fl-asst-widget-lg {
+            &.fl-asst-cell-lg {
                 .fluid-widget-content {
                     height: 320px;
                 }
             }
-        }
-    }
-    .fluid-button.fl-asst-apps-widget-item > span {
-        flex: 1 1 auto;
-        justify-content: flex-start;
-    }
-
-    .fluid-text-title.fl-asst-welcome-text {
-        margin: 10px 0 20px;
-        font-size: 20px;
-
-        .fluid-text-subtitle {
-            font-size: 13px;
-            font-weight: normal;
-            line-height: 1.4;
-            margin-top: 2px;
         }
     }
 }

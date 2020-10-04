@@ -23,7 +23,8 @@ const WidgetLayout = ( {
 	const layout = handle in layouts ? layouts[ handle ] : []
 	const setWidgets = widgets => setLayout( handle, widgets )
 	const [ widgets, updatePosition, updateOrder ] = useWidgetReorder( layout, setWidgets )
-	const [ isDraggingOver, setIsDraggingOver ] = useState( false )
+
+	//const [ isDraggingOver, setIsDraggingOver ] = useState( false )
 
 	if ( ! handle || ! layout ) {
 		return null
@@ -39,7 +40,7 @@ const WidgetLayout = ( {
 
 		// Do we have a valid widget item being dragged?
 		// You can't simply read the dataTransfer value before drop #becausesecurity
-		if ( e.dataTransfer.types.includes( 'fl-asst-widget' )  ) {
+		if ( e.dataTransfer.types.includes( 'fl-asst/widget' )  ) {
 			e.dataTransfer.dropEffect = 'copy'
 		}
 	}
@@ -50,11 +51,17 @@ const WidgetLayout = ( {
 	// Insert the dropped widget
 	const onDrop = e => {
 		e.preventDefault()
-		const data = e.dataTransfer.getData( 'text/plain' )
-		if ( ! data || ! data.startsWith( '{' ) ) {
-			return false
-		}
-		if ( event.dataTransfer.types.includes( 'fl-asst-widget' )  ) {
+
+		// Lets make sure it really is a widget
+		// Our library should include a widget type string - fl-asst/widget
+		if ( event.dataTransfer.types.includes( 'fl-asst/widget' )  ) {
+
+			// Let's make sure there is actual JSON data here
+			const data = e.dataTransfer.getData( 'fl-asst/widget' )
+			if ( ! data || ! data.startsWith( '{' ) ) {
+				return false
+			}
+
 			const item = JSON.parse( data )
 			insertWidget( handle, item )
 		}

@@ -33,6 +33,6 @@ registerWidget( 'currently-viewing', {
 registerWidget( 'media', {
 	title: __( 'Media' ),
 	defaultSize: 'sm',
-	supportedSizes: [ 'sm' ],
+	supportsSizes: [ 'sm' ],
 	render: Media,
 } )

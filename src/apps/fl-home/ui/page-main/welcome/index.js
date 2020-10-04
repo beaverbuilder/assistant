@@ -2,6 +2,7 @@ import React from 'react'
 import { Text } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import { __, sprintf } from '@wordpress/i18n'
+import './style.scss'
 
 const Welcome = () => {
 	const { currentUser } = getSystemConfig()

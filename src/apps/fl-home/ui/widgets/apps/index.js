@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Button, Icon } from 'assistant/ui'
 import { useAppList } from 'assistant/data'
 import { Card } from 'home/ui'
+import './style.scss'
 
 const AppsWidget = memo ( ( { ...rest } ) => {
 	const apps = useAppList()

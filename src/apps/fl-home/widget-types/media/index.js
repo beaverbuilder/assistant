@@ -97,7 +97,15 @@ const Media = () => {
 					background: 'rgba(0,0,0,.15)'
 				} }
 			>
-				<Button to="/fl-media" shape="round" style={ { height: 60, width: 60 } }>
+				<Button
+					to="/fl-media"
+					shape="round"
+					style={ {
+						height: 60,
+						width: 60,
+						backdropFilter: 'blur(10px)',
+						background: 'rgba(255,255,255, .5)'
+					} }>
 					<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M1 11V1H8.87175" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
 						<path d="M8.00023 1H19.0002V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
