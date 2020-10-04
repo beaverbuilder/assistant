@@ -31,15 +31,15 @@ class MediaLibraryService {
 
 		$response_code = wp_remote_retrieve_response_code( $response );
 
-		if ( 200 != $response_code ) {
+		if ( 200 !== intval( $response_code ) ) {
 			@unlink( $tmp_path );
 			return [ 'error' => __( 'Error downloading image file.' ) ];
 		}
 
 		$id = media_handle_sideload(
 			[
-				'name' => sanitize_file_name( $name ),
-				'tmp_name' => $tmp_path
+				'name'     => sanitize_file_name( $name ),
+				'tmp_name' => $tmp_path,
 			],
 			$post_id
 		);
@@ -50,7 +50,7 @@ class MediaLibraryService {
 		}
 
 		return [
-			'id' => $id,
+			'id'  => $id,
 			'url' => wp_get_attachment_url( $id ),
 		];
 	}
@@ -73,8 +73,8 @@ class MediaLibraryService {
 		$this->add_svg_import_filters();
 		$id = media_handle_sideload(
 			[
-				'name' => sanitize_file_name( $name ),
-				'tmp_name' => $tmp_path
+				'name'     => sanitize_file_name( $name ),
+				'tmp_name' => $tmp_path,
 			],
 			$post_id
 		);
@@ -85,7 +85,7 @@ class MediaLibraryService {
 		}
 
 		return [
-			'id' => $id,
+			'id'  => $id,
 			'url' => wp_get_attachment_url( $id ),
 		];
 	}
@@ -94,26 +94,31 @@ class MediaLibraryService {
 	 * WP core media filters for allowing svg upload.
 	 */
 	private function add_svg_import_filters() {
-		add_filter( 'upload_mimes', function( $mimes ) {
-			$mimes['svg'] = 'image/svg+xml';
-			$mimes['svgz'] = 'image/svg+xml';
-			return $mimes;
-		}, 99 );
+		add_filter(
+			'upload_mimes', function( $mimes ) {
+				$mimes['svg'] = 'image/svg+xml';
+				$mimes['svgz'] = 'image/svg+xml';
+				return $mimes;
+			}, 99
+		);
 
-		add_filter( 'wp_check_filetype_and_ext', function ( $checked, $file, $filename, $mimes ) {
-			if ( ! $checked['type'] ) {
-				$check_filetype		= wp_check_filetype( $filename, $mimes );
-				$ext				= $check_filetype['ext'];
-				$type				= $check_filetype['type'];
-				$proper_filename	= $filename;
+		add_filter(
+			'wp_check_filetype_and_ext', function ( $checked, $file, $filename, $mimes ) {
+				if ( ! $checked['type'] ) {
+					$check_filetype     = wp_check_filetype( $filename, $mimes );
+					$ext                = $check_filetype['ext'];
+					$type               = $check_filetype['type'];
+					$proper_filename    = $filename;
 
-				if ( $type && 0 === strpos( $type, 'image/' ) && $ext !== 'svg' ) {
-					$ext = $type = false;
+					if ( $type && 0 === strpos( $type, 'image/' ) && 'svg' !== $ext ) {
+						$type = false;
+						$ext = false;
+					}
+
+					$checked = compact( 'ext', 'type', 'proper_filename' );
 				}
-
-				$checked = compact( 'ext','type','proper_filename' );
-			}
-			return $checked;
-		}, 10, 4 );
+				return $checked;
+			}, 10, 4
+		);
 	}
 }

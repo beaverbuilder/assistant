@@ -77,7 +77,7 @@ class PostTransformer {
 			'excerpt'          => $post->post_excerpt,
 			'date'             => $date,
 			'editUrl'          => get_edit_post_link( $post->ID, '' ),
-			'previewUrl'	   => PostHelper::get_preview_url( $post ),
+			'previewUrl'       => PostHelper::get_preview_url( $post ),
 			'id'               => $post->ID,
 			'labels'           => [],
 			'order'            => $post->menu_order,
