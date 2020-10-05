@@ -7,8 +7,6 @@ const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzer
 const production = 'production' === process.env.NODE_ENV
 const isAnalyzing = 'analyze' === process.env.NODE_ENV
 
-console.log( pckg.version )
-
 const alias = {
 	ui: path.resolve( __dirname, './src/system/ui/' ),
 	data: path.resolve( __dirname, './src/system/data' ),
@@ -156,7 +154,7 @@ if ( isAnalyzing ) {
 
 if ( production ) {
 
-	// config.mode = 'production'
+	config.mode = 'production'
 	config.stats = false
 	config.watch = false
 	config.devtool = false
