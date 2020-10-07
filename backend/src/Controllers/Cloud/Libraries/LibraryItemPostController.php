@@ -195,7 +195,17 @@ class LibraryItemPostController extends ControllerAbstract {
 				'name'       => $post->post_title,
 				'type'       => 'post',
 				'data'       => [
-					'post'      => $post,
+					'post'      => [
+						'comment_status' 	=> $post->comment_status,
+						'menu_order' 		=> $post->menu_order,
+						'ping_status' 		=> $post->ping_status,
+						'post_content' 		=> $post->post_content,
+						'post_excerpt' 		=> $post->post_excerpt,
+						'post_mime_type' 	=> $post->post_mime_type,
+						'post_name' 		=> $post->post_name,
+						'post_title' 		=> $post->post_title,
+						'post_type' 		=> $post->post_type,
+					],
 					'meta'      => $meta,
 					'terms'     => $terms,
 					'raw_media' => $this->raw_media,
@@ -261,15 +271,17 @@ class LibraryItemPostController extends ControllerAbstract {
 		$current_user = wp_get_current_user();
 
 		$newpost_data = [
-			'post_author'    => $current_user->ID,
-			'post_content'   => $post_data->post_content ? $post_data->post_content : '',
-			'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
-			'post_name'      => $post_data->post_name ? $post_data->post_name : '',
-			'post_status'    => 'draft',
-			'post_title'     => $post_data->post_title,
-			'post_type'      => $post_data->post_type,
+			'comment_status' => $post_data->comment_status,
 			'menu_order'     => $post_data->menu_order,
+			'ping_status' 	 => $post_data->ping_status,
+			'post_author'    => $current_user->ID,
+			'post_content'   => $post_data->post_content,
+			'post_excerpt'	 => $post_data->post_excerpt,
 			'post_mime_type' => $post_data->post_mime_type,
+			'post_name' 	 => $post_data->post_name,
+			'post_status'    => 'draft',
+			'post_title' 	 => $post_data->post_title,
+			'post_type' 	 => $post_data->post_type,
 		];
 
 		$new_post_id = wp_insert_post( $newpost_data );
