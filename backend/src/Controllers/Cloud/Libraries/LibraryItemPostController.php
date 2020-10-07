@@ -13,7 +13,9 @@ class LibraryItemPostController extends ControllerAbstract {
 
 	protected $posts;
 	protected $view;
-	protected $unfiltered_media = [];
+	protected $raw_media = [];
+	protected $postmeta_images = [];
+	protected $output = [];
 
 	/**
 	 * Controller constructor.
@@ -180,36 +182,12 @@ class LibraryItemPostController extends ControllerAbstract {
 		$id = $request->get_param( 'id' );
 		$library_id = $request->get_param( 'library_id' );
 		$post = get_post( $id );
-		$post_content_images = $this->get_all_images( $post->post_content );
-		$post_meta = get_post_meta( $id );
-		$post_meta_images = [];
-
-		if ( $post_meta && count( $post_meta ) !== 0 ) {
-
-			foreach ( $post_meta as $key => $meta_value ) {
-
-				$meta_key = $key ? $key : '';
-
-				if ( '' !== $meta_key ) {
-					if ( count( $meta_value ) >= 1 ) {
-						foreach ( $meta_value as $value ) {
-							$post_meta_images = $this->preg_grep_recursive( maybe_unserialize( $value ) );
-
-						}
-					}
-				}
-			}
-		}
-
-		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
-
-		$thumb_path = get_attached_file( get_post_thumbnail_id( $post ) );
-
-		$media_merge = array_merge( $post_content_images, $post_meta_images );
-		$media_array = array_values( array_unique( $media_merge ) );
-
+		$meta = get_post_meta( $id );
 		$taxonomies = get_taxonomies( '', 'names' );
-		$post_taxonomies = wp_get_object_terms( $id, $taxonomies );
+		$terms = wp_get_object_terms( $id, $taxonomies );
+		$thumb = get_attached_file( get_post_thumbnail_id( $post ) );
+		$attachments = $this->get_post_image_paths( $post );
+		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
 
 		return $client->libraries->create_item(
 			$library_id,
@@ -218,14 +196,14 @@ class LibraryItemPostController extends ControllerAbstract {
 				'type'       => 'post',
 				'data'       => [
 					'post'      => $post,
-					'meta'      => get_post_meta( $id ),
-					'terms'     => $post_taxonomies,
-					'raw_media' => $this->unfiltered_media,
+					'meta'      => $meta,
+					'terms'     => $terms,
+					'raw_media' => $this->raw_media,
 
 				],
 				'media'      => [
-					'thumb'       => $thumb_path,
-					'attachments' => $media_array,
+					'thumb'       => $thumb,
+					'attachments' => $attachments,
 				],
 				'screenshot' => $this->get_screenshot( $request, $post ),
 			],
@@ -269,7 +247,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @param object $request
 	 * @return array
 	 */
-	function import_from_library( $request ) {
+	public function import_from_library( $request ) {
 
 		global $wpdb;
 
@@ -340,8 +318,8 @@ class LibraryItemPostController extends ControllerAbstract {
 					/*Get all media url from post content */
 
 					$replaced_post_content = get_post_field( 'post_content', $new_post_id );
-					$content_images = $this->get_all_images( $replaced_post_content );
-					$content_images = $this->unfiltered_media;
+					$content_images = $this->get_post_content_image_paths( $replaced_post_content );
+					$content_images = $this->raw_media;
 
 					$update_post = [];
 					$update_post['ID'] = $new_post_id;
@@ -423,8 +401,8 @@ class LibraryItemPostController extends ControllerAbstract {
 					$update_post = [];
 					$update_post['ID'] = $new_post_id;
 					$replaced_post_content = get_post_field( 'post_content', $new_post_id );
-					$content_images = $this->get_all_images( $replaced_post_content );
-					$content_images = $this->unfiltered_media;
+					$content_images = $this->get_post_content_image_paths( $replaced_post_content );
+					$content_images = $this->raw_media;
 
 					foreach ( $content_images[0] as $content_image ) {
 						if ( strpos( $content_image, $item->file_name ) ) {
@@ -556,7 +534,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @param object $request
 	 * @return array
 	 */
-	function sync_from_library( $request ) {
+	public function sync_from_library( $request ) {
 
 		global $wpdb;
 		$post_id = $request->get_param( 'id' );
@@ -670,18 +648,114 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
-	 * @param string $post_content
+	 * @param object $post
 	 * @return array
 	 */
-	function get_all_images( $post_content = '' ) {
-		ob_start();
-		ob_end_clean();
-		//preg_match_all( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_content, $matches );
-		preg_match_all( '@src="([^"]+)"@', $post_content, $match );
-		$src = array_pop( $match );
-		array_push( $this->unfiltered_media, $src );
-		$upload_media_path = $this->filter_uploads_path( $src );
-		return $upload_media_path;
+	public function get_post_image_paths( $post ) {
+		$content_image_paths = $this->get_post_content_image_paths( $post->post_content );
+		$meta_image_paths = $this->get_post_meta_image_paths( $post );
+		$all_image_paths = array_merge( $content_image_paths, $meta_image_paths );
+		return array_values( array_unique( $all_image_paths ) );
+	}
+
+	/**
+	 * @param string $content
+	 * @return array
+	 */
+	public function get_post_content_image_paths( $content = '' ) {
+		preg_match_all( '@src="([^"]+)"@', $content, $matches );
+		$urls = array_pop( $matches );
+		$paths = $this->get_image_paths_from_urls( $urls );
+		array_push( $this->raw_media, $urls );
+		return $paths;
+	}
+
+	/**
+	 * @param object $post
+	 * @return array
+	 */
+	public function get_post_meta_image_paths( $post ) {
+		$meta = get_post_meta( $post->ID );
+		$paths = [];
+
+		if ( $meta && count( $meta ) > 0 ) {
+			$urls = $this->get_image_urls_from_meta( $meta );
+			$paths = $this->get_image_paths_from_urls( $urls );
+		}
+
+		return $paths;
+	}
+
+	/**
+	 * @param string $url
+	 * @return string
+	 */
+	public function get_image_path_from_url( $url ) {
+		$upload_dir = wp_get_upload_dir();
+		$base_url = preg_replace( '/https?:\/\//', '', $upload_dir['baseurl'] );
+		$url = preg_replace( '/https?:\/\//', '', $url );
+		$path = null;
+
+		if ( stristr( $url, $base_url ) ) {
+			$path = $upload_dir['basedir'] . str_ireplace( $base_url, '', $url );
+		}
+
+		return $path;
+	}
+
+	/**
+	 * @param array $urls
+	 * @return array
+	 */
+	public function get_image_paths_from_urls( $urls = [] ) {
+		$paths = [];
+
+		foreach ( $urls as $url ) {
+			$path = $this->get_image_path_from_url( $url );
+			if ( $path ) {
+				$paths[] = $path;
+			}
+		}
+
+		return $paths;
+	}
+
+	/**
+	 * @param mixed $meta
+	 * @return array
+	 */
+	public function get_image_urls_from_meta( $meta ) {
+		$urls = [];
+
+		foreach ( $meta as $key => $val ) {
+			$val = maybe_unserialize( $val );
+
+			if ( is_object( $val ) || is_array( $val ) ) {
+				$urls = array_merge( $urls, $this->get_image_urls_from_meta( $val ) );
+			} else {
+				$urls = array_merge( $urls, $this->get_image_urls_from_string( $val ) );
+			}
+		}
+
+		return $urls;
+	}
+
+	/**
+	 * @param string $string
+	 * @return array
+	 */
+	public function get_image_urls_from_string( $string ) {
+		$pattern = '#http?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/)\.(jpg|jpeg|png|gif))#';
+		$urls = [];
+
+		if ( preg_match_all( $pattern, $string, $matches ) ) {
+			if ( isset( $matches[0] ) && ! empty( $matches[0] ) ) {
+				$urls = $matches[0];
+				array_push( $this->raw_media, $matches[0] );
+			}
+		}
+
+		return $urls;
 	}
 
 	/**
@@ -690,8 +764,6 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function preg_grep_recursive( $input = [], $keys = false ) {
-
-		$output = [];
 
 		if ( is_object( $input ) || is_array( $input ) ) {
 
@@ -706,21 +778,19 @@ class LibraryItemPostController extends ControllerAbstract {
 
 						if ( isset( $matches[0][0] ) && '' !== $matches[0][0] ) {
 
-							$postmeta_images[] = $matches[0][0];
+							$this->postmeta_images[] = $matches[0][0];
 						}
 
-						if ( isset( $matches[0][0] ) && '' !== $matches[0][0] && ! in_array( $matches[0][0], $output, true ) ) {
+						if ( isset( $matches[0][0] ) && '' !== $matches[0][0] && ! in_array( $matches[0][0], $this->output, true ) ) {
 
 							if ( $matches[0][0] ) {
 
-								array_push( $this->unfiltered_media, $matches[0][0] );
+								array_push( $this->raw_media, $matches[0][0] );
 
-								array_push( $output, $upload_media_path );
-
-								$upload_media_path = $this->filter_uploads_path( $matches[0][0] );
+								$upload_media_path = $this->get_image_path_from_url( $matches[0][0] );
 
 								if ( $upload_media_path ) {
-									array_push( $output, $upload_media_path );
+									array_push( $this->output, $upload_media_path );
 								}
 							}
 						}
@@ -730,39 +800,10 @@ class LibraryItemPostController extends ControllerAbstract {
 		}
 
 		if ( true === $keys ) {
-			return $postmeta_images;
+			return $this->postmeta_images;
 		}
 
-		return $output;
-	}
-
-	/**
-	 * @param array|string $image_path
-	 * @return array
-	 */
-	function filter_uploads_path( $image_path ) {
-
-		$upload_dir_path = wp_get_upload_dir();
-
-		if ( is_array( $image_path ) ) {
-			$media_urls = [];
-			foreach ( $image_path as $path ) {
-				$parts = explode( '/uploads/', $path );
-				if ( $parts[1] && $path ) {
-					$media_urls[] = $upload_dir_path['basedir'] . '/' . $parts[1];
-				}
-			}
-		} else {
-			$parts = explode( '/uploads/', $image_path );
-			if ( $parts[1] && $image_path ) {
-				$media_urls = $upload_dir_path['basedir'] . '/' . $parts[1];
-			} else {
-				$media_urls = '';
-			}
-		}
-
-		return $media_urls;
-
+		return $this->output;
 	}
 
 	/**
@@ -772,7 +813,7 @@ class LibraryItemPostController extends ControllerAbstract {
  	 * @param string $pos_needle
 	 * @return array
 	 */
-	function search_replace_array( $input = [], $search = '', $replace = '', $pos_needle = '' ) {
+	public function search_replace_array( $input = [], $search = '', $replace = '', $pos_needle = '' ) {
 
 		if ( is_object( $input ) || is_array( $input ) ) {
 
