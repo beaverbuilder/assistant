@@ -182,11 +182,6 @@ class LibraryItemPostController extends ControllerAbstract {
 		$id = $request->get_param( 'id' );
 		$library_id = $request->get_param( 'library_id' );
 		$post = get_post( $id );
-		$meta = get_post_meta( $id );
-		$taxonomies = get_taxonomies( '', 'names' );
-		$terms = wp_get_object_terms( $id, $taxonomies );
-		$thumb = get_attached_file( get_post_thumbnail_id( $post ) );
-		$attachments = $this->get_post_image_paths( $post );
 		$client = new \FL\Assistant\Clients\Cloud\CloudClient;
 
 		return $client->libraries->create_item(
@@ -206,49 +201,18 @@ class LibraryItemPostController extends ControllerAbstract {
 						'post_title' 		=> $post->post_title,
 						'post_type' 		=> $post->post_type,
 					],
-					'meta'      => $meta,
-					'terms'     => $terms,
+					'meta'      => get_post_meta( $id ),
+					'terms'     => $this->get_post_terms( $post ),
 					'raw_media' => $this->raw_media,
 
 				],
 				'media'      => [
-					'thumb'       => $thumb,
-					'attachments' => $attachments,
+					'thumb'       => get_attached_file( get_post_thumbnail_id( $post ) ),
+					'attachments' => $this->get_post_image_paths( $post ),
 				],
-				'screenshot' => $this->get_screenshot( $request, $post ),
+				'screenshot' => $this->get_post_screenshot( $request, $post ),
 			],
 		);
-
-	}
-
-	/**
-	 * Returns the screenshot data for a post.
-	 *
-	 * @param object $request
-	 * @param object $post
-	 * @return array
-	 */
-	public function get_screenshot( $request, $post ) {
-		$screenshot = $request->get_param( 'screenshot' );
-
-		if ( $screenshot ) {
-			return [
-				'type' => 'base64',
-				'data' => $screenshot,
-			];
-		}
-
-		$url = PostHelper::get_preview_url( $post );
-		$response = wp_remote_get(
-			$url, [
-				'cookies' => $_COOKIE,
-			]
-		);
-
-		return [
-			'type' => 'html',
-			'html' => wp_remote_retrieve_body( $response ),
-		];
 	}
 
 	/**
@@ -515,13 +479,12 @@ class LibraryItemPostController extends ControllerAbstract {
 						if ( 0 !== $term && null !== $term ) {
 							wp_set_post_terms( $new_post_id, [ $term['term_taxonomy_id'] ], $category->taxonomy, true );
 						} else {
-							wp_insert_term(
+							$term = wp_insert_term(
 								$category->name,   // the term
 								$category->taxonomy, // the taxonomy
 								[
 									'description' => $category->description,
 									'slug'        => $category->slug,
-									'parent'      => $category->parent,
 								]
 							);
 
@@ -656,7 +619,55 @@ class LibraryItemPostController extends ControllerAbstract {
 				)
 			);
 		}
+	}
 
+	/**
+	 * @param object $post
+	 * @return array
+	 */
+	public function get_post_terms( $post ) {
+		$taxonomies = get_taxonomies( '', 'names' );
+		$object_terms = wp_get_object_terms( $post->ID, $taxonomies );
+		$terms = [];
+
+		foreach ( $object_terms as $term ) {
+			$terms[] = [
+				'description' 	=> $term->description,
+				'name'			=> $term->name,
+				'slug'			=> $term->slug,
+				'taxonomy' 		=> $term->taxonomy,
+			];
+		}
+
+		return $terms;
+	}
+
+	/**
+	 * @param object $request
+	 * @param object $post
+	 * @return array
+	 */
+	public function get_post_screenshot( $request, $post ) {
+		$screenshot = $request->get_param( 'screenshot' );
+
+		if ( $screenshot ) {
+			return [
+				'type' => 'base64',
+				'data' => $screenshot,
+			];
+		}
+
+		$url = PostHelper::get_preview_url( $post );
+		$response = wp_remote_get(
+			$url, [
+				'cookies' => $_COOKIE,
+			]
+		);
+
+		return [
+			'type' => 'html',
+			'html' => wp_remote_retrieve_body( $response ),
+		];
 	}
 
 	/**
