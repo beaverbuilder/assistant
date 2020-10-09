@@ -3,28 +3,22 @@
 namespace FL\Assistant\Controllers\Cloud\Libraries;
 
 use FL\Assistant\System\Contracts\ControllerAbstract;
-use FL\Assistant\System\View;
 use FL\Assistant\Data\Transformers\PostTransformer;
-use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Helpers\PostHelper;
+use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Clients\Cloud\CloudClient;
 
 class LibraryItemPostController extends ControllerAbstract {
 
 	protected $posts;
-	protected $view;
-	protected $raw_media = [];
-	protected $postmeta_images = [];
-	protected $output = [];
 
 	/**
 	 * Controller constructor.
 	 *
 	 * @return void
 	 */
-	public function __construct( PostTransformer $posts, View $view ) {
+	public function __construct( PostTransformer $posts ) {
 		$this->posts = $posts;
-		$this->view = $view;
 	}
 
 	/**
@@ -197,9 +191,8 @@ class LibraryItemPostController extends ControllerAbstract {
 						'post_title' 		=> $post->post_title,
 						'post_type' 		=> $post->post_type,
 					],
-					'meta'      => get_post_meta( $id ),
-					'terms'     => $this->get_post_terms( $post ),
-					'raw_media' => $this->raw_media,
+					'meta'   => get_post_meta( $id ),
+					'terms'  => $this->get_post_terms( $post ),
 
 				],
 				'media'      => [
@@ -245,9 +238,9 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
-		$this->import_post_media_from_library( $new_post_id, $response->media );
 		$this->import_post_meta_from_library( $new_post_id, $response->data->meta );
 		$this->import_post_terms_from_library( $new_post_id, $response->data->terms );
+		$this->import_post_media_from_library( $new_post_id, $response->media );
 
 		return rest_ensure_response(
 			$this->posts->transform(
@@ -289,55 +282,6 @@ class LibraryItemPostController extends ControllerAbstract {
 				get_post( $post_id )
 			)
 		);
-	}
-
-	/**
-	 * @param int $post_id
- 	 * @param object $media
-	 * @return void
-	 */
-	public function import_post_media_from_library( $post_id, $media ) {
-		if ( isset( $media->thumb ) ) {
-			$this->import_post_thumb_from_library( $post_id, $media->thumb );
-		}
-		if ( isset( $media->attachments ) ) {
-			$this->import_post_attachments_from_library( $post_id, $media->attachments );
-		}
-	}
-
-	/**
-	 * @param int $post_id
-	 * @return void
-	 */
-	public function import_post_thumb_from_library( $post_id, $thumb ) {
-		global $wpdb;
-
-		$row = $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT * FROM $wpdb->postmeta
-				WHERE meta_key = '_fl_asst_post_media_uuid'
-				AND meta_value = %s",
-				$thumb->uuid
-			)
-		);
-
-		if ( $row ) {
-			$attachment_url = wp_get_attachment_url( $row->post_id );
-			set_post_thumbnail( $post_id, $row->post_id );
-		} else {
-			$service = new MediaLibraryService();
-			$response = $service->import_image( $thumb->url, $thumb->file_name, $post_id );
-			update_post_meta( $response['id'], '_fl_asst_post_media_uuid', $thumb->uuid );
-			set_post_thumbnail( $post_id, $response['id'] );
-		}
-	}
-
-	/**
-	 * @param int $post_id
-	 * @return void
-	 */
-	public function import_post_attachments_from_library( $post_id, $attachments ) {
-
 	}
 
 	/**
@@ -458,6 +402,191 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * @param int $post_id
+ 	 * @param object $media
+	 * @return void
+	 */
+	public function import_post_media_from_library( $post_id, $media ) {
+		if ( isset( $media->thumb ) ) {
+			$this->import_post_thumb_from_library( $post_id, $media->thumb );
+		}
+		if ( isset( $media->attachments ) ) {
+			$this->import_post_attachments_from_library( $post_id, $media->attachments );
+		}
+	}
+
+	/**
+	 * @param int $post_id
+ 	 * @param object $thumb
+	 * @return void
+	 */
+	public function import_post_thumb_from_library( $post_id, $thumb ) {
+		$imported_id = $this->is_media_imported( $thumb->uuid );
+
+		if ( $imported_id ) {
+			$attachment_url = wp_get_attachment_url( $imported_id );
+			set_post_thumbnail( $post_id, $imported_id );
+		} else {
+			$service = new MediaLibraryService();
+			$response = $service->import_image( $thumb->url, $thumb->file_name, $post_id );
+			update_post_meta( $response['id'], '_fl_asst_post_media_uuid', $thumb->uuid );
+			set_post_thumbnail( $post_id, $response['id'] );
+		}
+	}
+
+	/**
+	 * @param int $post_id
+ 	 * @param array $attachments
+	 * @return void
+	 */
+	public function import_post_attachments_from_library( $post_id, $attachments ) {
+		$imported = [];
+
+		foreach ( $attachments as $attachment ) {
+			$imported_id = $this->is_media_imported( $attachment->uuid );
+
+			if ( ! $imported_id ) {
+				$service = new MediaLibraryService();
+				$response = $service->import_image( $attachment->url, $attachment->file_name, $post_id );
+				$imported_id = $response['id'];
+				update_post_meta( $imported_id, '_fl_asst_post_media_uuid', $attachment->uuid );
+			}
+
+			$imported[ $attachment->file_name ] = wp_get_attachment_metadata( $imported_id );
+			$imported[ $attachment->file_name ]['id'] = $imported_id;
+		}
+
+		$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
+		$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
+	}
+
+	/**
+	 * @param int $post_id
+ 	 * @param array $imported
+	 * @return void
+	 */
+	public function replace_imported_attachment_urls_in_content( $post_id, $imported ) {
+		$content = get_post_field( 'post_content', $post_id );
+		$content = $this->replace_imported_attachment_urls_in_string( $content, $imported );
+
+		wp_update_post(
+			[
+				'ID'           => $post_id,
+				'post_content' => $content,
+			]
+		);
+	}
+
+	/**
+	 * @param int $post_id
+ 	 * @param array $imported
+	 * @return void
+	 */
+	public function replace_imported_attachment_urls_in_meta( $post_id, $imported ) {
+		$meta = get_post_meta( $post_id );
+
+		foreach ( $meta as $key => $val ) {
+			$val = maybe_unserialize( $val[0] );
+
+			if ( is_object( $val ) || is_array( $val ) ) {
+				$val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
+			} else {
+				$val = $this->replace_imported_attachment_urls_in_string( $val, $imported );
+			}
+
+			update_post_meta( $post_id, $key, $val );
+		}
+	}
+
+	/**
+ 	 * @param object|array|string $data
+ 	 * @param array $imported
+	 * @return object|array|string
+	 */
+	public function replace_imported_attachment_urls_in_data( $data, $imported ) {
+		if ( is_object( $data ) || is_array( $data ) ) {
+			foreach ( $data as $key => $val ) {
+				if ( is_object( $val ) || is_array( $val ) ) {
+					$new_val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
+				} else {
+					$new_val = $this->replace_imported_attachment_urls_in_string( $val, $imported );
+				}
+
+				if ( is_object( $data ) ) {
+					$data->$key = $new_val;
+				} else {
+					$data[ $key ] = $new_val;
+				}
+			}
+		} else {
+			$data = $this->replace_imported_attachment_urls_in_string( $data, $imported );
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @param string $string
+ 	 * @param array $imported
+	 * @return string
+	 */
+	public function replace_imported_attachment_urls_in_string( $string, $imported ) {
+		$urls = $this->get_image_urls_from_string( $string );
+
+		foreach ( $urls as $url ) {
+			$url_info = $this->get_image_info_from_url( $url );
+
+			if ( ! isset( $imported[ $url_info['file_name'] ] ) ) {
+				continue;
+			}
+
+			$import_data = $imported[ $url_info['file_name'] ];
+			$new_url = null;
+
+			if ( $url_info['width'] && $url_info['height'] ) {
+				foreach ( $import_data['sizes'] as $size => $size_data ) {
+					if ( $url_info['width'] <= $size_data['width'] && $url_info['height'] <= $size_data['height'] ) {
+						$size_src = wp_get_attachment_image_src( $import_data['id'], $size );
+						if ( $size_src ) {
+							$new_url = $size_src[0];
+							break;
+						}
+					}
+				}
+			}
+
+			if ( ! $new_url ) {
+				$new_url = wp_get_attachment_url( $import_data['id'] );
+			}
+
+			if ( $new_url ) {
+				$string = str_replace( $url, $new_url, $string );
+			}
+		}
+
+		return $string;
+	}
+
+	/**
+	 * @param string $uuid
+	 * @return int|null
+	 */
+	public function is_media_imported( $uuid ) {
+		global $wpdb;
+
+		$row = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM $wpdb->postmeta
+				WHERE meta_key = '_fl_asst_post_media_uuid'
+				AND meta_value = %s",
+				$uuid
+			)
+		);
+
+		return $row ? $row->post_id : null;
+	}
+
+	/**
 	 * @param object $post
 	 * @return array
 	 */
@@ -473,10 +602,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function get_post_content_image_paths( $content = '' ) {
-		preg_match_all( '@src="([^"]+)"@', $content, $matches );
-		$urls = array_pop( $matches );
+		$urls = $this->get_image_urls_from_string( $content );
 		$paths = $this->get_image_paths_from_urls( $urls );
-		array_push( $this->raw_media, $urls );
 		return $paths;
 	}
 
@@ -497,32 +624,6 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
-	 * Converts a media library URL to the server path of the full size image.
-	 *
-	 * @param string $url
-	 * @return string
-	 */
-	public function get_image_path_from_url( $url ) {
-		$upload_dir = wp_get_upload_dir();
-		$base_url = preg_replace( '/https?:\/\//', '', $upload_dir['baseurl'] );
-		$url = preg_replace( '/https?:\/\//', '', $url );
-		$path = null;
-
-		// Make sure we have the full size image url...
-		preg_match_all( '/(-\d+x\d+)\.(jpg|jpeg|png|gif)/', $url, $matches );
-
-		if ( isset( $matches[1] ) && ! empty( $matches[1] ) ) {
-			$url = str_replace( $matches[1], '', $url );
-		}
-
-		if ( stristr( $url, $base_url ) ) {
-			$path = $upload_dir['basedir'] . str_ireplace( $base_url, '', $url );
-		}
-
-		return $path;
-	}
-
-	/**
 	 * @param array $urls
 	 * @return array
 	 */
@@ -537,6 +638,26 @@ class LibraryItemPostController extends ControllerAbstract {
 		}
 
 		return $paths;
+	}
+
+	/**
+	 * Converts a media library URL to the server path of the full size image.
+	 *
+	 * @param string $url
+	 * @return string
+	 */
+	public function get_image_path_from_url( $url ) {
+		$upload_dir = wp_get_upload_dir();
+		$base_url = preg_replace( '/https?:\/\//', '', $upload_dir['baseurl'] );
+		$url_info = $this->get_image_info_from_url( $url );
+		$url = preg_replace( '/https?:\/\//', '', $url_info['full_size_url'] );
+		$path = null;
+
+		if ( stristr( $url, $base_url ) ) {
+			$path = $upload_dir['basedir'] . str_ireplace( $base_url, '', $url );
+		}
+
+		return $path;
 	}
 
 	/**
@@ -570,7 +691,6 @@ class LibraryItemPostController extends ControllerAbstract {
 		if ( preg_match_all( $pattern, $string, $matches ) ) {
 			if ( isset( $matches[0] ) && ! empty( $matches[0] ) ) {
 				$urls = $matches[0];
-				array_push( $this->raw_media, $matches[0] );
 			}
 		}
 
@@ -578,36 +698,38 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
-	 * @param array $input
- 	 * @param string $search
- 	 * @param string $replace
- 	 * @param string $pos_needle
+	 * @param string $url
 	 * @return array
 	 */
-	public function search_replace_array( $input = [], $search = '', $replace = '', $pos_needle = '' ) {
+	public function get_image_info_from_url( $url ) {
+		$info = [
+			'url' 			=> $url,
+			'full_size_url' => $url,
+			'file_name' 	=> null,
+			'width' 		=> null,
+			'height' 		=> null,
+			'ext'			=> null,
+		];
 
-		if ( is_object( $input ) || is_array( $input ) ) {
+		preg_match_all( '/(-(\d+)x(\d+))\.(jpg|jpeg|png|gif)/', $url, $matches );
 
-			foreach ( $input as $key => $val ) {
-
-				if ( is_object( $val ) || is_array( $val ) ) {
-
-					$this->search_replace_array( $val, $search, $replace );
-
-				} else {
-
-						$value = str_replace( $search, $replace, $val );
-
-					if ( is_object( $input ) ) {
-						$input->$key = $value;
-					} else {
-						$input[ $key ] = $value;
-					}
-				}
-			}
+		if ( isset( $matches[1] ) && ! empty( $matches[1] ) ) {
+			$info['full_size_url'] = str_replace( $matches[1], '', $url );
 		}
 
-		return $input;
+		$parts = explode( '/', $info['full_size_url'] );
+		$info['file_name'] = array_pop( $parts );
 
+		if ( isset( $matches[2] ) && ! empty( $matches[2] ) ) {
+			$info['width'] = $matches[2][0];
+		}
+		if ( isset( $matches[3] ) && ! empty( $matches[3] ) ) {
+			$info['height'] = $matches[3][0];
+		}
+		if ( isset( $matches[4] ) && ! empty( $matches[4] ) ) {
+			$info['ext'] = $matches[4][0];
+		}
+
+		return $info;
 	}
 }
