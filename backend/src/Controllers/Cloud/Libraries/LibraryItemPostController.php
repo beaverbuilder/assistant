@@ -245,6 +245,7 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
+		$this->import_post_media_from_library( $new_post_id, $response->media );
 		$this->import_post_meta_from_library( $new_post_id, $response->data->meta );
 		$this->import_post_terms_from_library( $new_post_id, $response->data->terms );
 
@@ -291,10 +292,59 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * @param int $post_id
+ 	 * @param object $media
+	 * @return void
+	 */
+	public function import_post_media_from_library( $post_id, $media ) {
+		if ( isset( $media->thumb ) ) {
+			$this->import_post_thumb_from_library( $post_id, $media->thumb );
+		}
+		if ( isset( $media->attachments ) ) {
+			$this->import_post_attachments_from_library( $post_id, $media->attachments );
+		}
+	}
+
+	/**
+	 * @param int $post_id
+	 * @return void
+	 */
+	public function import_post_thumb_from_library( $post_id, $thumb ) {
+		global $wpdb;
+
+		$row = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM $wpdb->postmeta
+				WHERE meta_key = '_fl_asst_post_media_uuid'
+				AND meta_value = %s",
+				$thumb->uuid
+			)
+		);
+
+		if ( $row ) {
+			$attachment_url = wp_get_attachment_url( $row->post_id );
+			set_post_thumbnail( $post_id, $row->post_id );
+		} else {
+			$service = new MediaLibraryService();
+			$response = $service->import_image( $thumb->url, $thumb->file_name, $post_id );
+			update_post_meta( $response['id'], '_fl_asst_post_media_uuid', $thumb->uuid );
+			set_post_thumbnail( $post_id, $response['id'] );
+		}
+	}
+
+	/**
+	 * @param int $post_id
+	 * @return void
+	 */
+	public function import_post_attachments_from_library( $post_id, $attachments ) {
+
+	}
+
+	/**
 	 * Imports meta for a library post to the site.
 	 *
 	 * @param int $post_id
-	 * @param array $meta
+	 * @param object $meta
 	 * @return void
 	 */
 	public function import_post_meta_from_library( $post_id, $meta ) {
