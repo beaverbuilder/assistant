@@ -221,7 +221,7 @@ class LibraryItemPostController extends ControllerAbstract {
 			'menu_order'     => $post_data->menu_order,
 			'ping_status' 	 => $post_data->ping_status,
 			'post_author'    => wp_get_current_user()->ID,
-			'post_content'   => $post_data->post_content,
+			'post_content'   => $post_data->post_content ? $post_data->post_content : '',
 			'post_excerpt'	 => $post_data->post_excerpt ? $post_data->post_excerpt : '',
 			'post_mime_type' => $post_data->post_mime_type,
 			'post_name' 	 => $post_data->post_name,
