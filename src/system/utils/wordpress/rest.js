@@ -225,11 +225,11 @@ const posts = () => {
 		},
 
 		/**
-		 * Override WP post data with library post item data
+		 * Preview a library post item
 		 */
-		syncFromLib( id, itemId, overrideType, config = {} ) {
+		previewLibraryPost( itemId, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/sync_from_library/${id}/${itemId}/${overrideType}`, {}, config )
+			return http.post( `fl-assistant/v1/posts/preview_library_post/${itemId}`, {}, config )
 		},
 
 		/**
@@ -249,11 +249,11 @@ const posts = () => {
 		},
 
 		/**
-		 * Preview a library post item
+		 * Override WP post data with library post item data
 		 */
-		previewLibraryPost( itemId, config = {} ) {
+		syncFromLibrary( id, itemId, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/preview_library_post/${itemId}`, {}, config )
+			return http.post( `fl-assistant/v1/posts/${id}/sync_from_library/${itemId}`, {}, config )
 		},
 	}
 }
