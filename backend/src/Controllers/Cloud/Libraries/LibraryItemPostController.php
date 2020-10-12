@@ -429,15 +429,15 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function import_post_thumb_from_library( $post_id, $thumb ) {
-		$imported_id = $this->is_media_imported( $thumb->uuid );
+		$service = new MediaLibraryService();
+		$imported_id = $service->is_cloud_media_imported( $thumb );
 
 		if ( $imported_id ) {
 			$attachment_url = wp_get_attachment_url( $imported_id );
 			set_post_thumbnail( $post_id, $imported_id );
 		} else {
-			$service = new MediaLibraryService();
 			$response = $service->import_image( $thumb->url, $thumb->file_name, $post_id );
-			update_post_meta( $response['id'], '_fl_asst_post_media_uuid', $thumb->uuid );
+			update_post_meta( $response['id'], '_fl_asst_imported_media_hash', $thumb->upload_hash );
 			set_post_thumbnail( $post_id, $response['id'] );
 		}
 	}
@@ -450,16 +450,16 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function import_post_attachments_from_library( $post_id, $attachments ) {
+		$service = new MediaLibraryService();
 		$imported = [];
 
 		foreach ( $attachments as $attachment ) {
-			$imported_id = $this->is_media_imported( $attachment->uuid );
+			$imported_id = $service->is_cloud_media_imported( $attachment );
 
 			if ( ! $imported_id ) {
-				$service = new MediaLibraryService();
 				$response = $service->import_image( $attachment->url, $attachment->file_name, $post_id );
 				$imported_id = $response['id'];
-				update_post_meta( $imported_id, '_fl_asst_post_media_uuid', $attachment->uuid );
+				update_post_meta( $imported_id, '_fl_asst_imported_media_hash', $attachment->upload_hash );
 			}
 
 			$imported[ $attachment->file_name ] = wp_get_attachment_metadata( $imported_id );
@@ -583,27 +583,6 @@ class LibraryItemPostController extends ControllerAbstract {
 		}
 
 		return $string;
-	}
-
-	/**
-	 * Checks if a media item was already imported.
-	 *
-	 * @param string $uuid
-	 * @return int|null
-	 */
-	public function is_media_imported( $uuid ) {
-		global $wpdb;
-
-		$row = $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT * FROM $wpdb->postmeta
-				WHERE meta_key = '_fl_asst_post_media_uuid'
-				AND meta_value = %s",
-				$uuid
-			)
-		);
-
-		return $row ? $row->post_id : null;
 	}
 
 	/**

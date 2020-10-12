@@ -5,6 +5,48 @@ namespace FL\Assistant\Services;
 class MediaLibraryService {
 
 	/**
+	 * Checks if a media item was already imported.
+	 *
+	 * @param object $media
+	 * @return int|null
+	 */
+	public function is_cloud_media_imported( $media ) {
+		global $wpdb;
+
+		// Check if a file with this name and sha1 hash exists.
+		$parts = explode( '.', $media->file_name );
+		$name = array_shift( $parts );
+
+		$row = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM $wpdb->posts
+				WHERE post_type = 'attachment'
+				AND post_name = %s",
+				$name
+			)
+		);
+
+		if ( $row ) {
+			$path = get_attached_file( $row->ID );
+			if ( $path && sha1_file( $path ) === $media->upload_hash ) {
+				return $row->ID;
+			}
+		}
+
+		// Check if we've already imported this file using the original sha1.
+		$row = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM $wpdb->postmeta
+				WHERE meta_key = '_fl_asst_imported_media_hash'
+				AND meta_value = %s",
+				$media->upload_hash
+			)
+		);
+
+		return $row ? $row->post_id : null;
+	}
+
+	/**
 	 * Import an image into the media library.
 	 */
 	public function import_image( $url, $name, $post_id = 0 ) {
