@@ -353,6 +353,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Returns an array of all terms for a post.
+	 *
 	 * @param object $post
 	 * @return array
 	 */
@@ -374,6 +376,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Returns the screenshot data for a post.
+	 *
 	 * @param object $request
 	 * @param object $post
 	 * @return array
@@ -402,6 +406,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Imports the media for a post.
+	 *
 	 * @param int $post_id
  	 * @param object $media
 	 * @return void
@@ -416,6 +422,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Imports the thumbnail image for a post.
+	 *
 	 * @param int $post_id
  	 * @param object $thumb
 	 * @return void
@@ -435,6 +443,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Imports the attachments for a post.
+	 *
 	 * @param int $post_id
  	 * @param array $attachments
 	 * @return void
@@ -461,6 +471,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Replaces the imported attachment urls in post content.
+	 *
 	 * @param int $post_id
  	 * @param array $imported
 	 * @return void
@@ -478,6 +490,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Replaces the imported attachment urls in post meta.
+	 *
 	 * @param int $post_id
  	 * @param array $imported
 	 * @return void
@@ -499,6 +513,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Replaces the imported attachment in an object or array.
+	 *
  	 * @param object|array|string $data
  	 * @param array $imported
 	 * @return object|array|string
@@ -526,6 +542,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Replaces the imported attachment in a string.
+	 *
 	 * @param string $string
  	 * @param array $imported
 	 * @return string
@@ -568,6 +586,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Checks if a media item was already imported.
+	 *
 	 * @param string $uuid
 	 * @return int|null
 	 */
@@ -587,43 +607,28 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Get the server paths to all images associated with a post.
+	 *
 	 * @param object $post
 	 * @return array
 	 */
 	public function get_post_image_paths( $post ) {
-		$content_image_paths = $this->get_post_content_image_paths( $post->post_content );
-		$meta_image_paths = $this->get_post_meta_image_paths( $post );
-		$all_image_paths = array_merge( $content_image_paths, $meta_image_paths );
-		return array_values( array_unique( $all_image_paths ) );
-	}
-
-	/**
-	 * @param string $content
-	 * @return array
-	 */
-	public function get_post_content_image_paths( $content = '' ) {
-		$urls = $this->get_image_urls_from_string( $content );
-		$paths = $this->get_image_paths_from_urls( $urls );
-		return $paths;
-	}
-
-	/**
-	 * @param object $post
-	 * @return array
-	 */
-	public function get_post_meta_image_paths( $post ) {
+		$content_urls = $this->get_image_urls_from_string( $post->post_content );
+		$content_paths = $this->get_image_paths_from_urls( $content_urls );
 		$meta = get_post_meta( $post->ID );
-		$paths = [];
+		$meta_paths = [];
 
 		if ( $meta && count( $meta ) > 0 ) {
-			$urls = $this->get_image_urls_from_meta( $meta );
-			$paths = $this->get_image_paths_from_urls( $urls );
+			$meta_urls = $this->get_image_urls_from_meta( $meta );
+			$meta_paths = $this->get_image_paths_from_urls( $meta_urls );
 		}
 
-		return $paths;
+		return array_unique( array_merge( $content_paths, $meta_paths ) );
 	}
 
 	/**
+	 * Get the server paths to all images in an array of urls.
+	 *
 	 * @param array $urls
 	 * @return array
 	 */
@@ -661,6 +666,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Get the urls to all images in a post meta object.
+	 *
 	 * @param mixed $meta
 	 * @return array
 	 */
@@ -681,6 +688,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Get the urls to all images in a string.
+	 *
 	 * @param string $string
 	 * @return array
 	 */
@@ -698,6 +707,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Get the info for a media library image from a url.
+	 *
 	 * @param string $url
 	 * @return array
 	 */
