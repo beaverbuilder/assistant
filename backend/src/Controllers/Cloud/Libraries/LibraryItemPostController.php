@@ -300,7 +300,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		foreach ( $meta as $meta_key => $meta_value ) {
 			if ( metadata_exists( 'post', $post_id, $meta_key ) ) {
-				update_metadata( 'post', $post_id, $meta_key, $meta_value );
+				update_metadata( 'post', $post_id, $meta_key, maybe_unserialize( $meta_value[0] ) );
 			} else {
 				foreach ( $meta_value as $value ) {
 					$value = addslashes( $value );
