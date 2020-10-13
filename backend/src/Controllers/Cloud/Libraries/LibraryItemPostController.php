@@ -5,6 +5,7 @@ namespace FL\Assistant\Controllers\Cloud\Libraries;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\Helpers\PostHelper;
+use FL\Assistant\Helpers\JsonHelper;
 use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Clients\Cloud\CloudClient;
 
@@ -311,14 +312,14 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		foreach ( $meta as $meta_key => $meta_value ) {
 			if ( metadata_exists( 'post', $post_id, $meta_key ) ) {
-				update_metadata( 'post', $post_id, $meta_key, maybe_unserialize( $meta_value[0] ) );
-			} else {
-				foreach ( $meta_value as $value ) {
-					$value = addslashes( $value );
-					// @codingStandardsIgnoreStart
-					$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" );
-					// @codingStandardsIgnoreEnd
-				}
+				delete_metadata( 'post', $post_id, $meta_key );
+			}
+
+			foreach ( $meta_value as $value ) {
+				$value = addslashes( $value );
+				// @codingStandardsIgnoreStart
+				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" );
+				// @codingStandardsIgnoreEnd
 			}
 		}
 	}
@@ -486,6 +487,10 @@ class LibraryItemPostController extends ControllerAbstract {
 
 			if ( is_object( $val ) || is_array( $val ) ) {
 				$val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
+			} else if ( JsonHelper::is_string_json( $val ) ) {
+				$val = json_decode( $val );
+				$val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
+				$val = wp_slash( json_encode( $val ) );
 			} else {
 				$val = $this->replace_imported_attachment_urls_in_string( $val, $imported );
 			}
@@ -679,6 +684,9 @@ class LibraryItemPostController extends ControllerAbstract {
 
 			if ( is_object( $val ) || is_array( $val ) ) {
 				$urls = array_merge( $urls, $this->get_image_urls_from_meta( $val ) );
+			} else if ( JsonHelper::is_string_json( $val ) ) {
+				$val = wp_unslash( $val );
+				$urls = array_merge( $urls, $this->get_image_urls_from_string( $val ) );
 			} else {
 				$urls = array_merge( $urls, $this->get_image_urls_from_string( $val ) );
 			}
