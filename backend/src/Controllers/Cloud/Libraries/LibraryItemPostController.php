@@ -416,7 +416,7 @@ class LibraryItemPostController extends ControllerAbstract {
 		$service = new MediaLibraryService();
 
 		// Import post thumbnail
-		if ( isset( $media->thumb ) ) {
+		if ( isset( $media->thumb ) && 'screenshot.png' !== $media->thumb->file_name ) {
 			$response = $service->import_cloud_media( $media->thumb, $post_id );
 			set_post_thumbnail( $post_id, $response['id'] );
 		}
