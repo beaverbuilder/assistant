@@ -28,10 +28,10 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env
 		href: bbEditUrl,
 		isShowing: bbCanEdit,
 		icon: (
-            <>
-                <Icon.Beaver />
-                { bbIsEnabled && <span className="fl-asst-extra-dot" /> }
-            </>
+			<>
+				<Icon.Beaver />
+				{ bbIsEnabled && <span className="fl-asst-extra-dot" /> }
+			</>
 		),
 	}
 

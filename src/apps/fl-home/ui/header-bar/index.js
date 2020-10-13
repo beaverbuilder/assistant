@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Layout, Form, Icon, Button, Widget } from 'assistant/ui'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Layout, Form, Icon, Button, Menu, Widget } from 'assistant/ui'
+import { AnimatePresence } from 'framer-motion'
 import SearchSuggestions from './search-suggestions'
 import Help from './help'
 import './style.scss'
@@ -15,10 +15,10 @@ const HeaderBar = ( {
 	onSuggestionClick = noop,
 	keyword = '',
 } ) => {
+	const [ isShowingMoreMenu, setIsShowingMoreMenu ] = useState( false )
 	const [ isFocused, setIsFocused ] = useState( false )
 	const [ isShowingHelp, setIsShowingHelp ] = useState( false )
 	const [ isShowingWidgetLib, setIsShowingWidgetLib ] = useState( false )
-
 
 	const SearchIcon = () => (
 		<span className="search-icon-wrapper">
@@ -38,6 +38,19 @@ const HeaderBar = ( {
 			>
 				<Icon.BackArrow />
 			</Button>
+		)
+	}
+
+	const MenuContent = () => {
+		return (
+			<>
+				<Menu.Item
+					onClick={ () => {
+						setIsShowingWidgetLib( true )
+						setIsShowingMoreMenu( false )
+					} }
+				>{ __( 'Show Widget Library' ) }</Menu.Item>
+			</>
 		)
 	}
 
@@ -73,13 +86,19 @@ const HeaderBar = ( {
 						onClick={ () => setIsShowingHelp( ! isShowingHelp ) }
 						layoutId="help"
 					>?</motion.button> */ }
-					<Button
-						icon='plus'
-						shape="round"
-						onClick={ () => setIsShowingWidgetLib( ! isShowingWidgetLib ) }
-						className="fl-asst-inset-element"
-						style={ { minWidth: 40, minHeight: 40 } }
-					/>
+					<Menu
+						content={ <MenuContent /> }
+						isShowing={ isShowingMoreMenu }
+						onOutsideClick={ () => setIsShowingMoreMenu( false ) }
+					>
+						<Button
+							icon='more'
+							shape="round"
+							className="fl-asst-inset-element"
+							style={ { minWidth: 40, minHeight: 40 } }
+							onClick={ () => setIsShowingMoreMenu( ! isShowingMoreMenu ) }
+						/>
+					</Menu>
 				</Layout.Row>
 			</div>
 			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick }/> }

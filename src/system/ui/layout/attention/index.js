@@ -8,7 +8,7 @@ const Attention = ( { children, className, ...rest } ) => {
 	}, className )
 
 	return (
-        <>
+		<>
 			<svg width="0" height="0" viewBox="0 0 360 554" xmlns="http://www.w3.org/2000/svg">
 				<defs>
 					<mask id="attention-mask" maskunits="objectBoundingBox"
@@ -18,8 +18,8 @@ const Attention = ( { children, className, ...rest } ) => {
 					</mask>
 				</defs>
 			</svg>
-            <div className={ classes } { ...rest }>{children}</div>
-        </>
+			<div className={ classes } { ...rest }>{children}</div>
+		</>
 	)
 }
 

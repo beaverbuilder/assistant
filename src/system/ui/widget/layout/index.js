@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import c from 'classnames'
 import { __ } from '@wordpress/i18n'
 import useWidgetReorder from './use-widget-reorder'

@@ -43,16 +43,16 @@ export const Updates = ( {
 
 					return (
 						<>
-						{ updating &&
+							{ updating &&
 							<Button appearance="normal">
 								<Icon.Loading />
 							</Button>
-						}
-						{ ! updating &&
+							}
+							{ ! updating &&
 							<Button appearance="normal" onClick={ () => setUpdateQueueItem( item ) }>
 								{__( 'Update' )}
 							</Button>
-						}
+							}
 						</>
 					)
 				}
