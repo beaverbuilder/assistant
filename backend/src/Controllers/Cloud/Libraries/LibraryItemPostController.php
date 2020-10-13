@@ -81,6 +81,10 @@ class LibraryItemPostController extends ControllerAbstract {
 							'required' => true,
 							'type'     => 'number',
 						],
+						'import_media' => [
+							'type'     => 'number',
+							'default'  => 1,
+						],
 					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_others_posts' );
@@ -103,6 +107,10 @@ class LibraryItemPostController extends ControllerAbstract {
 						'item_id'       => [
 							'required' => true,
 							'type'     => 'number',
+						],
+						'import_media' => [
+							'type'     => 'number',
+							'default'  => 1,
 						],
 					],
 					'permission_callback' => function () {
@@ -212,6 +220,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 */
 	public function import_from_library( $request ) {
 		$item_id = $request->get_param( 'item_id' );
+		$import_media = !! $request->get_param( 'import_media' );
 		$client = new CloudClient;
 		$response = $client->libraries->get_item( $item_id );
 		$post_data = $response->data->post;
@@ -240,7 +249,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$this->import_post_meta_from_library( $new_post_id, $response->data->meta );
 		$this->import_post_terms_from_library( $new_post_id, $response->data->terms );
-		$this->import_post_media_from_library( $new_post_id, $response->media );
+		$this->import_post_media_from_library( $new_post_id, $response->media, $import_media );
 
 		return rest_ensure_response(
 			$this->posts->transform(
@@ -258,6 +267,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	public function sync_from_library( $request ) {
 		$post_id = $request->get_param( 'id' );
 		$item_id = $request->get_param( 'item_id' );
+		$import_media = !! $request->get_param( 'import_media' );
 		$client = new CloudClient;
 		$response = $client->libraries->get_item( $item_id );
 
@@ -276,6 +286,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$this->import_post_meta_from_library( $post_id, $response->data->meta );
 		$this->import_post_terms_from_library( $post_id, $response->data->terms );
+		$this->import_post_media_from_library( $post_id, $response->media, $import_media );
 
 		return rest_ensure_response(
 			$this->posts->transform(
@@ -410,13 +421,14 @@ class LibraryItemPostController extends ControllerAbstract {
 	 *
 	 * @param int $post_id
  	 * @param object $media
+ 	 * @param bool $import
 	 * @return void
 	 */
-	public function import_post_media_from_library( $post_id, $media ) {
+	public function import_post_media_from_library( $post_id, $media, $import = true ) {
 		$service = new MediaLibraryService();
 
 		// Import post thumbnail
-		if ( isset( $media->thumb ) && 'screenshot.png' !== $media->thumb->file_name ) {
+		if ( $import && isset( $media->thumb ) && 'screenshot.png' !== $media->thumb->file_name ) {
 			$response = $service->import_cloud_media( $media->thumb, $post_id );
 			set_post_thumbnail( $post_id, $response['id'] );
 		}
@@ -426,9 +438,13 @@ class LibraryItemPostController extends ControllerAbstract {
 			$imported = [];
 
 			foreach ( $media->attachments as $attachment ) {
-				$response = $service->import_cloud_media( $attachment, $post_id );
-				$imported[ $attachment->file_name ] = wp_get_attachment_metadata( $response['id'] );
-				$imported[ $attachment->file_name ]['id'] = $response['id'];
+				if ( $import ) {
+					$response = $service->import_cloud_media( $attachment, $post_id );
+					$imported[ $attachment->file_name ] = wp_get_attachment_metadata( $response['id'] );
+					$imported[ $attachment->file_name ]['id'] = $response['id'];
+				} else {
+					$imported[ $attachment->file_name ] = $attachment;
+				}
 			}
 
 			$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
@@ -524,23 +540,34 @@ class LibraryItemPostController extends ControllerAbstract {
 				continue;
 			}
 
-			$import_data = $imported[ $url_info['file_name'] ];
+			$import_data = (array) $imported[ $url_info['file_name'] ];
+			$sizes = $this->get_ordered_image_sizes( (array) $import_data['sizes'] );
 			$new_url = null;
 
 			if ( $url_info['width'] && $url_info['height'] ) {
-				foreach ( $import_data['sizes'] as $size => $size_data ) {
+				foreach ( $sizes as $size => $size_data ) {
+					$size_data = (array) $size_data;
 					if ( $url_info['width'] <= $size_data['width'] && $url_info['height'] <= $size_data['height'] ) {
-						$size_src = wp_get_attachment_image_src( $import_data['id'], $size );
-						if ( $size_src ) {
-							$new_url = $size_src[0];
+						if ( isset( $size_data['url'] ) ) {
+							$new_url = $size_data['url'];
 							break;
+						} else if ( isset( $import_data['id'] ) ) {
+							$size_src = wp_get_attachment_image_src( $import_data['id'], $size );
+							if ( $size_src ) {
+								$new_url = $size_src[0];
+								break;
+							}
 						}
 					}
 				}
 			}
 
 			if ( ! $new_url ) {
-				$new_url = wp_get_attachment_url( $import_data['id'] );
+				if ( isset( $import_data['url'] ) ) {
+					$new_url = $import_data['url'];
+				} else if ( isset( $import_data['id'] ) ) {
+					$new_url = wp_get_attachment_url( $import_data['id'] );
+				}
 			}
 
 			if ( $new_url ) {
@@ -549,6 +576,34 @@ class LibraryItemPostController extends ControllerAbstract {
 		}
 
 		return $string;
+	}
+
+	/**
+	 * Returns an array or ordered image sizes.
+	 *
+	 * @param array $sizes
+	 * @return array
+	 */
+	public function get_ordered_image_sizes( $sizes ) {
+		$keys = [];
+		$ordered = [];
+
+		foreach ( $sizes as $size => $data ) {
+			if ( 'thumb' === $size || 'thumbnail' === $size ) {
+				continue;
+			}
+			$data = (array) $data;
+			$key = $data['width'] + $data['height'];
+			$keys[ $key ] = $size;
+		}
+
+		ksort( $keys );
+
+		foreach ( $keys as $key ) {
+			$ordered[ $key ] = $sizes[ $key ];
+		}
+
+		return $ordered;
 	}
 
 	/**
