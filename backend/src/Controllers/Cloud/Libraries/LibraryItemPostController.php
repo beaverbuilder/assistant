@@ -413,61 +413,27 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function import_post_media_from_library( $post_id, $media ) {
-		if ( isset( $media->thumb ) ) {
-			$this->import_post_thumb_from_library( $post_id, $media->thumb );
-		}
-		if ( isset( $media->attachments ) ) {
-			$this->import_post_attachments_from_library( $post_id, $media->attachments );
-		}
-	}
-
-	/**
-	 * Imports the thumbnail image for a post.
-	 *
-	 * @param int $post_id
- 	 * @param object $thumb
-	 * @return void
-	 */
-	public function import_post_thumb_from_library( $post_id, $thumb ) {
 		$service = new MediaLibraryService();
-		$imported_id = $service->is_cloud_media_imported( $thumb );
 
-		if ( $imported_id ) {
-			$attachment_url = wp_get_attachment_url( $imported_id );
-			set_post_thumbnail( $post_id, $imported_id );
-		} else {
-			$response = $service->import_image( $thumb->url, $thumb->file_name, $post_id );
-			update_post_meta( $response['id'], '_fl_asst_imported_media_hash', $thumb->upload_hash );
+		// Import post thumbnail
+		if ( isset( $media->thumb ) ) {
+			$response = $service->import_cloud_media( $media->thumb, $post_id );
 			set_post_thumbnail( $post_id, $response['id'] );
 		}
-	}
 
-	/**
-	 * Imports the attachments for a post.
-	 *
-	 * @param int $post_id
- 	 * @param array $attachments
-	 * @return void
-	 */
-	public function import_post_attachments_from_library( $post_id, $attachments ) {
-		$service = new MediaLibraryService();
-		$imported = [];
+		// Import post attachments
+		if ( isset( $media->attachments ) ) {
+			$imported = [];
 
-		foreach ( $attachments as $attachment ) {
-			$imported_id = $service->is_cloud_media_imported( $attachment );
-
-			if ( ! $imported_id ) {
-				$response = $service->import_image( $attachment->url, $attachment->file_name, $post_id );
-				$imported_id = $response['id'];
-				update_post_meta( $imported_id, '_fl_asst_imported_media_hash', $attachment->upload_hash );
+			foreach ( $media->attachments as $attachment ) {
+				$response = $service->import_cloud_media( $attachment, $post_id );
+				$imported[ $attachment->file_name ] = wp_get_attachment_metadata( $response['id'] );
+				$imported[ $attachment->file_name ]['id'] = $response['id'];
 			}
 
-			$imported[ $attachment->file_name ] = wp_get_attachment_metadata( $imported_id );
-			$imported[ $attachment->file_name ]['id'] = $imported_id;
+			$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
+			$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
 		}
-
-		$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
-		$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
 	}
 
 	/**
