@@ -31,9 +31,9 @@ class LibraryItemImageController extends ControllerAbstract {
 			return rest_ensure_response( [ 'error' => __( 'Missing item data.' ) ] );
 		}
 
-		$url = $item['media']['file']['url'];
+		$media = (object) $item['media']['file'];
 		$service = new MediaLibraryService();
-		$response = $service->import_image( $url, $item['name'] );
+		$response = $service->import_cloud_media( $media );
 
 		return rest_ensure_response( $response );
 	}

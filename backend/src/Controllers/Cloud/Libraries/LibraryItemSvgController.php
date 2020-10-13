@@ -27,12 +27,13 @@ class LibraryItemSvgController extends ControllerAbstract {
 	public function import( $request ) {
 		$item = $request->get_param( 'item' );
 
-		if ( ! is_array( $item ) || ! isset( $item['data']['xml'] ) ) {
+		if ( ! is_array( $item ) || ! isset( $item['media']['file'] ) ) {
 			return rest_ensure_response( [ 'error' => __( 'Missing item data.' ) ] );
 		}
 
+		$media = (object) $item['media']['file'];
 		$service = new MediaLibraryService();
-		$response = $service->import_svg_from_string( $item['data']['xml'], $item['name'] );
+		$response = $service->import_cloud_media( $media );
 
 		return rest_ensure_response( $response );
 	}
