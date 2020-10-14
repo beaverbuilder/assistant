@@ -78,13 +78,13 @@ class LibraryItemPostController extends ControllerAbstract {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'import_from_library' ],
 					'args'                => [
-						'item_id' => [
+						'item_id'      => [
 							'required' => true,
 							'type'     => 'number',
 						],
 						'import_media' => [
-							'type'     => 'number',
-							'default'  => 1,
+							'type'    => 'number',
+							'default' => 1,
 						],
 					],
 					'permission_callback' => function () {
@@ -101,17 +101,17 @@ class LibraryItemPostController extends ControllerAbstract {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'sync_from_library' ],
 					'args'                => [
-						'id'            => [
+						'id'           => [
 							'required' => true,
 							'type'     => 'number',
 						],
-						'item_id'       => [
+						'item_id'      => [
 							'required' => true,
 							'type'     => 'number',
 						],
 						'import_media' => [
-							'type'     => 'number',
-							'default'  => 1,
+							'type'    => 'number',
+							'default' => 1,
 						],
 					],
 					'permission_callback' => function () {
@@ -189,19 +189,19 @@ class LibraryItemPostController extends ControllerAbstract {
 				'name'       => $post->post_title,
 				'type'       => 'post',
 				'data'       => [
-					'post'      => [
-						'comment_status' 	=> $post->comment_status,
-						'menu_order' 		=> $post->menu_order,
-						'ping_status' 		=> $post->ping_status,
-						'post_content' 		=> $post->post_content,
-						'post_excerpt' 		=> $post->post_excerpt,
-						'post_mime_type' 	=> $post->post_mime_type,
-						'post_name' 		=> $post->post_name,
-						'post_title' 		=> $post->post_title,
-						'post_type' 		=> $post->post_type,
+					'post'  => [
+						'comment_status' => $post->comment_status,
+						'menu_order'     => $post->menu_order,
+						'ping_status'    => $post->ping_status,
+						'post_content'   => $post->post_content,
+						'post_excerpt'   => $post->post_excerpt,
+						'post_mime_type' => $post->post_mime_type,
+						'post_name'      => $post->post_name,
+						'post_title'     => $post->post_title,
+						'post_type'      => $post->post_type,
 					],
-					'meta'   => get_post_meta( $id ),
-					'terms'  => $this->get_post_terms( $post ),
+					'meta'  => get_post_meta( $id ),
+					'terms' => $this->get_post_terms( $post ),
 
 				],
 				'media'      => [
@@ -221,24 +221,26 @@ class LibraryItemPostController extends ControllerAbstract {
 	 */
 	public function import_from_library( $request ) {
 		$item_id = $request->get_param( 'item_id' );
-		$import_media = !! $request->get_param( 'import_media' );
+		$import_media = ! ! $request->get_param( 'import_media' );
 		$client = new CloudClient;
 		$response = $client->libraries->get_item( $item_id );
 		$post_data = $response->data->post;
 
-		$new_post_id = wp_insert_post( [
-			'comment_status' => $post_data->comment_status,
-			'menu_order'     => $post_data->menu_order,
-			'ping_status' 	 => $post_data->ping_status,
-			'post_author'    => wp_get_current_user()->ID,
-			'post_content'   => $post_data->post_content ? $post_data->post_content : '',
-			'post_excerpt'	 => $post_data->post_excerpt ? $post_data->post_excerpt : '',
-			'post_mime_type' => $post_data->post_mime_type,
-			'post_name' 	 => $post_data->post_name,
-			'post_status'    => 'draft',
-			'post_title' 	 => $post_data->post_title,
-			'post_type' 	 => $post_data->post_type,
-		] );
+		$new_post_id = wp_insert_post(
+			[
+				'comment_status' => $post_data->comment_status,
+				'menu_order'     => $post_data->menu_order,
+				'ping_status'    => $post_data->ping_status,
+				'post_author'    => wp_get_current_user()->ID,
+				'post_content'   => $post_data->post_content ? $post_data->post_content : '',
+				'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
+				'post_mime_type' => $post_data->post_mime_type,
+				'post_name'      => $post_data->post_name,
+				'post_status'    => 'draft',
+				'post_title'     => $post_data->post_title,
+				'post_type'      => $post_data->post_type,
+			]
+		);
 
 		if ( is_wp_error( $new_post_id ) ) {
 			return rest_ensure_response(
@@ -268,14 +270,16 @@ class LibraryItemPostController extends ControllerAbstract {
 	public function sync_from_library( $request ) {
 		$post_id = $request->get_param( 'id' );
 		$item_id = $request->get_param( 'item_id' );
-		$import_media = !! $request->get_param( 'import_media' );
+		$import_media = ! ! $request->get_param( 'import_media' );
 		$client = new CloudClient;
 		$response = $client->libraries->get_item( $item_id );
 
-		$updated = wp_update_post( [
-			'ID' => $post_id,
-			'post_content' => $response->data->post->post_content,
-		] );
+		$updated = wp_update_post(
+			[
+				'ID'           => $post_id,
+				'post_content' => $response->data->post->post_content,
+			]
+		);
 
 		if ( is_wp_error( $updated ) ) {
 			return rest_ensure_response(
@@ -344,7 +348,7 @@ class LibraryItemPostController extends ControllerAbstract {
 			}
 
 			$existing_term = term_exists( $term->slug, $term->taxonomy );
-			$is_hierarchical = !! $taxonomies[ $term->taxonomy ]->hierarchical;
+			$is_hierarchical = ! ! $taxonomies[ $term->taxonomy ]->hierarchical;
 
 			if ( is_array( $existing_term ) ) {
 				$term_id = $is_hierarchical ? $existing_term['term_taxonomy_id'] : $term->name;
@@ -377,10 +381,10 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		foreach ( $object_terms as $term ) {
 			$terms[] = [
-				'description' 	=> $term->description,
-				'name'			=> $term->name,
-				'slug'			=> $term->slug,
-				'taxonomy' 		=> $term->taxonomy,
+				'description' => $term->description,
+				'name'        => $term->name,
+				'slug'        => $term->slug,
+				'taxonomy'    => $term->taxonomy,
 			];
 		}
 
@@ -421,8 +425,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * Imports the media for a post.
 	 *
 	 * @param int $post_id
- 	 * @param object $media
- 	 * @param bool $import
+	 * @param object $media
+	 * @param bool $import
 	 * @return void
 	 */
 	public function import_post_media_from_library( $post_id, $media, $import = true ) {
@@ -457,7 +461,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * Replaces the imported attachment urls in post content.
 	 *
 	 * @param int $post_id
- 	 * @param array $imported
+	 * @param array $imported
 	 * @return void
 	 */
 	public function replace_imported_attachment_urls_in_content( $post_id, $imported ) {
@@ -476,7 +480,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * Replaces the imported attachment urls in post meta.
 	 *
 	 * @param int $post_id
- 	 * @param array $imported
+	 * @param array $imported
 	 * @return void
 	 */
 	public function replace_imported_attachment_urls_in_meta( $post_id, $imported ) {
@@ -487,7 +491,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 			if ( is_object( $val ) || is_array( $val ) ) {
 				$val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
-			} else if ( JsonHelper::is_string_json( $val ) ) {
+			} elseif ( JsonHelper::is_string_json( $val ) ) {
 				$val = json_decode( $val );
 				$val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
 				$val = wp_slash( json_encode( $val ) );
@@ -502,8 +506,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	/**
 	 * Replaces the imported attachment in an object or array.
 	 *
- 	 * @param object|array|string $data
- 	 * @param array $imported
+	 * @param object|array|string $data
+	 * @param array $imported
 	 * @return object|array|string
 	 */
 	public function replace_imported_attachment_urls_in_data( $data, $imported ) {
@@ -532,7 +536,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * Replaces the imported attachment in a string.
 	 *
 	 * @param string $string
- 	 * @param array $imported
+	 * @param array $imported
 	 * @return string
 	 */
 	public function replace_imported_attachment_urls_in_string( $string, $imported ) {
@@ -556,7 +560,7 @@ class LibraryItemPostController extends ControllerAbstract {
 						if ( isset( $size_data['url'] ) ) {
 							$new_url = $size_data['url'];
 							break;
-						} else if ( isset( $import_data['id'] ) ) {
+						} elseif ( isset( $import_data['id'] ) ) {
 							$size_src = wp_get_attachment_image_src( $import_data['id'], $size );
 							if ( $size_src ) {
 								$new_url = $size_src[0];
@@ -570,7 +574,7 @@ class LibraryItemPostController extends ControllerAbstract {
 			if ( ! $new_url ) {
 				if ( isset( $import_data['url'] ) ) {
 					$new_url = $import_data['url'];
-				} else if ( isset( $import_data['id'] ) ) {
+				} elseif ( isset( $import_data['id'] ) ) {
 					$new_url = wp_get_attachment_url( $import_data['id'] );
 				}
 			}
@@ -684,7 +688,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 			if ( is_object( $val ) || is_array( $val ) ) {
 				$urls = array_merge( $urls, $this->get_image_urls_from_meta( $val ) );
-			} else if ( JsonHelper::is_string_json( $val ) ) {
+			} elseif ( JsonHelper::is_string_json( $val ) ) {
 				$val = wp_unslash( $val );
 				$urls = array_merge( $urls, $this->get_image_urls_from_string( $val ) );
 			} else {
@@ -722,12 +726,12 @@ class LibraryItemPostController extends ControllerAbstract {
 	 */
 	public function get_image_info_from_url( $url ) {
 		$info = [
-			'url' 			=> $url,
+			'url'           => $url,
 			'full_size_url' => $url,
-			'file_name' 	=> null,
-			'width' 		=> null,
-			'height' 		=> null,
-			'ext'			=> null,
+			'file_name'     => null,
+			'width'         => null,
+			'height'        => null,
+			'ext'           => null,
 		];
 
 		preg_match_all( '/(-(\d+)x(\d+))\.(jpg|jpeg|png|gif)/', $url, $matches );
