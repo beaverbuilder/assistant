@@ -11,9 +11,11 @@ export const registerAppStore = args => {
 	const {
 		key,
 		state: initialState,
+		cache,
 		actions,
 		reducers,
-		effects
+		effects,
+		selectors,
 	} = args
 
 	const storeKey = `${ key }/state`
@@ -24,9 +26,11 @@ export const registerAppStore = args => {
 
 	registerStore( storeKey, {
 		state,
+		cache,
 		actions: { ...defaultActions, ...actions },
 		reducers: { ...defaultReducers, ...reducers },
 		effects: { ...defaultEffects, ...effects },
+		selectors,
 	} )
 }
 

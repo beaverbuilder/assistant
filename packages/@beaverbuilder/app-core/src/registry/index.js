@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { createStore, bindActionCreators } from 'redux'
 
 import shouldUpdate from './should-update'
+import { createCachedState, setupStateCaching } from './state'
 import { createActions } from './actions'
 import { createReducers } from './reducers'
 import { createSelectors } from './selectors'
@@ -30,6 +31,7 @@ const createStoreRegistry = () => {
 		  */
 		registerStore: ( key, {
 			state = {},
+			cache = [],
 			actions = {},
 			reducers = {},
 			selectors = {},
@@ -42,16 +44,20 @@ const createStoreRegistry = () => {
 				throw new Error( `A store with the key '${ key }' already exists.` )
 			}
 
+			const cachedState = createCachedState( key, state )
+
 			registry[ key ] = {
-				actions: createActions( actions, reducers, state ),
+				actions: createActions( actions, reducers, cachedState ),
 				store: createStore(
-					createReducers( reducers, state ),
-					state,
+					createReducers( reducers, cachedState ),
+					cachedState,
 					createEnhancers( key, effects )
 				),
 			}
 
 			registry[ key ].selectors = createSelectors( selectors, registry[ key ].store )
+
+			setupStateCaching( key, registry[ key ].store, cache )
 		},
 
 		/**

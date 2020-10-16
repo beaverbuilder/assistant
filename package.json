@@ -18,7 +18,7 @@
   },
   "license": "GPL-2.0+",
   "dependencies": {
-    "@beaverbuilder/app-core": "^0.1.9",
+    "@beaverbuilder/app-core": "^0.2.0",
     "@beaverbuilder/cloud": "^0.3.7",
     "@beaverbuilder/cloud-ui": "^0.5.0",
     "@beaverbuilder/fluid": "^0.6.5",
