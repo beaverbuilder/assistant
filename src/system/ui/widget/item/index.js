@@ -33,7 +33,7 @@ const Item = ( {
 	const [ isDragging, setIsDragging ] = useState( false )
 	const ref = useRef( null )
 	const lastPos = useRef( 0 )
-	const { deleteWidget } = getWidgetActions()
+	//const { deleteWidget } = getWidgetActions()
 
 	useEffect( () => {
 		setDimensions( i, {
@@ -57,12 +57,6 @@ const Item = ( {
 		return (
 			<>
 				{title}
-				<Button
-					icon="trash"
-					appearance="transparent"
-					status="destructive"
-					onClick={ () => deleteWidget( 'home', id ) }
-				/>
 			</>
 		)
 	}
