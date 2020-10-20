@@ -21,7 +21,7 @@
     "@beaverbuilder/app-core": "^0.2.0",
     "@beaverbuilder/cloud": "^0.3.7",
     "@beaverbuilder/cloud-ui": "^0.5.1",
-    "@beaverbuilder/fluid": "^0.6.5",
+    "@beaverbuilder/fluid": "^0.6.7",
     "@beaverbuilder/forms": "^0.2.4",
     "@popmotion/popcorn": "^0.4.4",
     "@wordpress/i18n": "^3.16.0",
@@ -49,7 +49,8 @@
     "redux": "^4.0.5",
     "resize-observer-polyfill": "^1.5.1",
     "tiny-invariant": "^1.1.0",
-    "use-media": "^1.4.0"
+    "use-media": "^1.4.0",
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.0",

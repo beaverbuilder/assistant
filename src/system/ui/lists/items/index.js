@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import uuidv1 from 'uuid/v1'
+import { v1 as uuidv1 } from 'uuid'
 
 export const useListItems = () => {
 	const [ items, setItems ] = useState( [] )
@@ -67,5 +67,3 @@ export const useListItems = () => {
 		cloneItem,
 	}
 }
-
-
