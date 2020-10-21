@@ -15,7 +15,6 @@ import './style.scss'
 import { isRenderProp } from 'utils/react'
 
 import {
-	defaultItemProps, // eslint-disable-line no-unused-vars
 	getDefaultItemProps,
 	getItemType,
 	getDefaultSectionProps,
@@ -28,7 +27,7 @@ export const List = ( {
 
 	direction = 'vertical',
 
-	defaultItemProps = defaultItemProps,
+	defaultItemProps = { thumbnailSize: 'med' },
 
 	getItemProps = getDefaultItemProps,
 
