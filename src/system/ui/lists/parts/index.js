@@ -9,10 +9,6 @@ import { ENTER } from '@wordpress/keycodes'
 import InlineCreate from './inline-create'
 import Loading from './loading'
 
-export const defaultItemProps = {
-	thumbnailSize: 'med',
-}
-
 export const getDefaultItemProps = ( item, defaultProps ) => {
 	let props = { ...defaultProps }
 
