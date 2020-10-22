@@ -1,8 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Button from '../../button'
-import * as Layout from '../../layout'
-import * as Icon from '../../icon'
+import { Button, Layout, Icon } from '@beaverbuilder/fluid'
 
 export default () => {
 	const baseURL = '/designsystem/buttons'

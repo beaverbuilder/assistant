@@ -1,7 +1,5 @@
 import React from 'react'
-import * as Layout from '../../layout'
-import * as List from '../../list'
-import * as Text from '../../text'
+import { Layout, List, Text } from '@beaverbuilder/fluid'
 
 export default () => {
 

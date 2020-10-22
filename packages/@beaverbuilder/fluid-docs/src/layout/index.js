@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Layout from '../../layout'
+import { Layout } from '@beaverbuilder/fluid'
 
 export default () => (
 	<Layout.DropArea>
@@ -20,11 +20,11 @@ export default () => (
 const DropContents = () => {
 	const { files } = Layout.DropArea.use()
 	return (
-        <>
-            { 1 > files.length && <h2>Drop some files maybe?</h2> }
-            { 0 < files.length && (
-                <>
-                    <h2>We have {files.length} files!</h2>
+		<>
+			{ 1 > files.length && <h2>Drop some files maybe?</h2> }
+			{ 0 < files.length && (
+				<>
+					<h2>We have {files.length} files!</h2>
 					{ files.map( ( file, i ) => {
 						const isImage = file.type.startsWith( 'image/' )
 						const url = URL.createObjectURL( file )
@@ -35,8 +35,8 @@ const DropContents = () => {
 							</Layout.Box>
 						)
 					} )}
-                </>
-            )}
-        </>
+				</>
+			)}
+		</>
 	)
 }

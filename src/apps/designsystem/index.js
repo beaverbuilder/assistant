@@ -1,7 +1,11 @@
+import { lazy } from 'react'
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
-import { Icon } from '@beaverbuilder/fluid'
-import App from './app'
+import { Icon } from 'assistant/ui'
+
+const App = lazy( () => import(
+	/* webpackChunkName: "app-designsystem" */ './app'
+) )
 
 if ( ! __PRODUCTION__ ) {
 	registerApp( 'designsystem', {

@@ -12,9 +12,6 @@ import Menu from './menu'
 import * as List from './list'
 import Collection from './collection'
 
-// Styleguide content
-import * as Docs from './docs'
-
 export {
 	Text,
 	Page,
@@ -24,7 +21,4 @@ export {
 	Layout,
 	List,
 	Collection,
-
-	// Docs - probably won't stay forever
-	Docs,
 }

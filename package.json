@@ -1,7 +1,7 @@
 {
   "name": "fl-assistant",
   "title": "Assistant",
-  "version": "0.6.0-mvp.0.3",
+  "version": "0.6.0",
   "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "@beaverbuilder/cloud": "^0.3.7",
     "@beaverbuilder/cloud-ui": "^0.5.1",
     "@beaverbuilder/fluid": "^0.6.7",
+    "@beaverbuilder/fluid-docs": "0.0.1",
     "@beaverbuilder/forms": "^0.2.4",
     "@popmotion/popcorn": "^0.4.4",
     "@wordpress/i18n": "^3.16.0",
