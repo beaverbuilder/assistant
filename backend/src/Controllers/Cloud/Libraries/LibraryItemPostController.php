@@ -708,7 +708,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function get_image_urls_from_string( $string ) {
-		$pattern = '#http?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/)\.(jpg|jpeg|png|gif))#';
+		$pattern = '#https?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/)\.(jpg|jpeg|png|gif))#';
 		$urls = [];
 
 		if ( preg_match_all( $pattern, $string, $matches ) ) {
