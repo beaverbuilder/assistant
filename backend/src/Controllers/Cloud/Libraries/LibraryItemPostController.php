@@ -253,6 +253,7 @@ class LibraryItemPostController extends ControllerAbstract {
 		$this->import_post_meta_from_library( $new_post_id, $response->data->meta );
 		$this->import_post_terms_from_library( $new_post_id, $response->data->terms );
 		$this->import_post_media_from_library( $new_post_id, $response->media, $import_media );
+		$this->regenerate_builder_cache( $response );
 
 		return rest_ensure_response(
 			$this->posts->transform(
@@ -292,6 +293,7 @@ class LibraryItemPostController extends ControllerAbstract {
 		$this->import_post_meta_from_library( $post_id, $response->data->meta );
 		$this->import_post_terms_from_library( $post_id, $response->data->terms );
 		$this->import_post_media_from_library( $post_id, $response->media, $import_media );
+		$this->regenerate_builder_cache( $response );
 
 		return rest_ensure_response(
 			$this->posts->transform(
@@ -754,5 +756,19 @@ class LibraryItemPostController extends ControllerAbstract {
 		}
 
 		return $info;
+	}
+
+	/**
+	 * Regenerate the asset cache for posts created with a builder.
+	 *
+	 * @param object $item
+	 * @return void
+	 */
+	public function regenerate_builder_cache( $item ) {
+		$meta = (array) $item->data->meta;
+
+		if ( isset( $meta['_elementor_data'] ) && class_exists( 'Elementor\Plugin' ) ) {
+			\Elementor\Plugin::$instance->files_manager->clear_cache();
+		}
 	}
 }
