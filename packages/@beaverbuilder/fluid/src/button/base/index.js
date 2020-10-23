@@ -1,25 +1,11 @@
 import React, { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 import c from 'classnames'
-import camelcase from 'camelcase'
-import * as Icon from '../../icon'
+import { Loading as LoadingIcon } from '@beaverbuilder/icons'
 
 const appearances = [ 'normal', 'transparent', 'elevator' ]
 const sizes = [ 'sm', 'med', 'lg' ]
 const shapes = [ 'round' ]
-
-const capitalize = value => value.charAt( 0 ).toUpperCase() + value.slice( 1 )
-
-const matchIcon = value => {
-	if ( 'string' === typeof value ) {
-		const name = capitalize( camelcase( value ) )
-		if ( Object.keys( Icon ).includes( name ) ) {
-			const FoundIcon = Icon[name]
-			return <FoundIcon />
-		}
-	}
-	return value
-}
 
 const Button = forwardRef( ( props, ref ) => {
 	const {
@@ -77,7 +63,7 @@ const Button = forwardRef( ( props, ref ) => {
 		<Component { ...newProps }>
 			{ ( icon || isLoading ) && (
 				<span className="fluid-button-icon">
-					{ true === isLoading ? <Icon.Loading /> : matchIcon( icon ) }
+					{ true === isLoading ? <LoadingIcon /> : icon }
 				</span>
 			) }
 			{ children && <span>{ children }</span> }

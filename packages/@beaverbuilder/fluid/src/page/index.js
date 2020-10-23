@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import classname from 'classnames'
+import c from 'classnames'
 import Section from './section'
 import ErrorBoundary from './error-boundary'
 import * as Layout from '../layout'
@@ -37,7 +37,7 @@ const Page = ( {
 
 	...rest
 } ) => {
-	const classes = classname( 'fluid-page', className )
+	const classes = c( 'fluid-page', className )
 
 	// Handle initial loading, like focusing.
 	useEffect( onLoad, [] )

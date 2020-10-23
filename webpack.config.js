@@ -4,6 +4,7 @@ const pckg = require( './package.json' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
 const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin
+//const FLCommonEnvironment = require( './packages/@beaverbuilder/webpack-common/dist' )
 const production = 'production' === process.env.NODE_ENV
 const isAnalyzing = 'analyze' === process.env.NODE_ENV
 
@@ -82,8 +83,20 @@ const externals = [
 	},
 ]
 
+const vendors = {
+	'vendor-classnames': './src/vendors/classnames',
+	'vendor-redux': './src/vendors/redux',
+	'vendor-react-router-dom': './src/vendors/react-router-dom',
+	'vendor-framer-motion': './src/vendors/framer-motion',
+	'vendor-react-laag': './src/vendors/react-laag',
+	'vendor-bb-cloud': './src/vendors/bb-cloud',
+	'vendor-bb-forms': './src/vendors/bb-forms',
+	'vendor-bb-app-core': './src/vendors/bb-app-core',
+	'vendor-bb-fluid': './src/vendors/bb-fluid',
+}
+
 const entry = { // if you change a key here, you need to update the enqueue url to match
-	vendors: './src/vendors',
+	...vendors,
 	system: './src/system',
 	render: './src/render',
 	apps: './src/apps',
@@ -97,8 +110,8 @@ const config = {
 	watch: true,
 	output: {
 		path: path.resolve( __dirname, 'build' ),
-		filename: 'fl-assistant-[name].bundle.js',
-		chunkFilename: `fl-chunk-[name].js?var=${ pckg.version }`
+		filename: 'fl-asst-[name].bundle.js',
+		chunkFilename: `chunk-[name].js?var=${ pckg.version }`
 	},
 	resolve: { alias },
 	devtool: 'source-map',
@@ -137,7 +150,7 @@ const config = {
 	},
 	plugins: [
 		new MiniCssExtractPlugin( {
-			filename: 'fl-assistant-[name].bundle.css',
+			filename: 'fl-asst-[name].bundle.css',
 		} ),
 		new webpack.DefinePlugin( {
 			__PRODUCTION__: production,

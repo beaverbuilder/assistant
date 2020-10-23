@@ -44,4 +44,19 @@ Button.renderActions = actions => {
 	} )
 }
 
+/*
+const capitalize = value => value.charAt( 0 ).toUpperCase() + value.slice( 1 )
+
+const matchIcon = value => {
+	const Icon = {}
+	if ( 'string' === typeof value ) {
+		const name = capitalize( camelcase( value ) )
+		if ( Object.keys( Icon ).includes( name ) ) {
+			const FoundIcon = Icon[name]
+			return <FoundIcon />
+		}
+	}
+	return value
+}*/
+
 export default Button

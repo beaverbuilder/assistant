@@ -1,7 +1,7 @@
 {
-    "name": "@beaverbuilder/fluid",
-    "version": "0.6.7",
-    "description": "Common UI environment for Beaver Builder and Assistant projects.",
+    "name": "@beaverbuilder/icons",
+    "version": "0.0.1",
+    "description": "FLUID Icon Library",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
     "main": "dist/index.js",
@@ -15,17 +15,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/beaverbuilder/assistant.git",
-        "directory": "packages/@beaverbuilder/fluid"
+        "directory": "packages/@beaverbuilder/icons"
     },
     "peerDependencies": {
-        "react": "^16.9.0",
-        "react-dom": "^16.9.0",
-        "react-router-dom": "^5.2.0",
-        "classnames": "^2.2.6",
-        "framer-motion": "^2.3.0",
-        "react-laag": "^1.7.3",
-        "@wordpress/i18n": "^3.14.0",
-        "@beaverbuilder/icons ": "^0.0.1"
+        "react": "^16.9.0"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",

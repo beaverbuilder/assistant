@@ -22,6 +22,4 @@ const Title = ( {
 	)
 }
 
-export {
-	Title
-}
+export { Title }

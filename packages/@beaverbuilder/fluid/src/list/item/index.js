@@ -1,5 +1,5 @@
 import React, { Children, useState } from 'react'
-import classname from 'classnames'
+import c from 'classnames'
 import * as Text from '../../text'
 import Button from '../../button'
 
@@ -47,7 +47,7 @@ const Item = ( {
 	const [ showChildren, setShowChildren ] = useState( _showChildren )
 	const hasChildren = 0 < Children.count( children )
 
-	const classes = classname( 'fluid-item', {
+	const classes = c( 'fluid-item', {
 		'fluid-size-sm': 'sm' === size,
 		'fluid-size-med': 'med' === size,
 		'fluid-size-lg': 'lg' === size,

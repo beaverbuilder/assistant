@@ -1,5 +1,5 @@
 import React from 'react'
-import classname from 'classnames'
+import c from 'classnames'
 
 const Section = ( {
 	tag: Tag = 'div',
@@ -11,7 +11,7 @@ const Section = ( {
 } ) => {
 	return (
 		<Tag
-			className={ classname( 'fluid-list-section', className ) }
+			className={ c( 'fluid-list-section', className ) }
 			{ ...rest }
 		>
 			{ title && (

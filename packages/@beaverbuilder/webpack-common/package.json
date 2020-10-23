@@ -1,0 +1,14 @@
+{
+    "name": "@beaverbuilder/webpack-common",
+    "version": "0.0.1",
+    "description": "A webpack plugin to add the common setup to each product.",
+    "author": "The Beaver Builder Team",
+    "license": "GPL-2.0+",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/beaverbuilder/assistant.git",
+        "directory": "packages/@beaverbuilder/webpack-common"
+    }
+}

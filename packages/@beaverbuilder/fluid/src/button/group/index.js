@@ -2,7 +2,7 @@ import React, { Children, useState, useLayoutEffect, useRef } from 'react'
 import classname from 'classnames'
 import Menu from '../../menu'
 import Button from '../base'
-import * as Icon from '../../icon'
+import { More as MoreIcon } from '@beaverbuilder/icons'
 import './style.scss'
 
 const limitChildren = ( children, count = null ) => {
@@ -139,7 +139,7 @@ const Group = ( {
 						isSelected={ isShowing }
 						onClick={ () => setIsShowing( ! isShowing ) }
 					>
-						<Icon.More />
+						<MoreIcon />
 					</Button>
 				</Menu>
 			</>

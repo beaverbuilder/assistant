@@ -1,5 +1,5 @@
 import React from 'react'
-import classname from 'classnames'
+import c from 'classnames'
 
 const Box = ( {
 	className,
@@ -11,7 +11,7 @@ const Box = ( {
 	...rest
 } ) => {
 
-	const classes = classname( {
+	const classes = c( {
 		'fluid-box': true,
 		'fluid-pad-x': padX && ! outset,
 		'fluid-pad-y': padY,

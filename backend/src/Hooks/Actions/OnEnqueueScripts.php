@@ -184,8 +184,45 @@ class OnEnqueueScripts {
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
-		wp_register_script( 'fl-fluid', $url . 'build/fl-assistant-vendors.bundle.js', [ 'react', 'react-dom', 'lodash', 'wp-i18n' ], $ver, false );
-		wp_register_style( 'fl-fluid', $url . 'build/fl-assistant-vendors.bundle.css', [], $ver, null );
+		// Bundled vendors
+		// classnames
+		wp_register_script( 'classnames', $url . 'build/fl-asst-vendor-classnames.bundle.js', [], $ver, false );
+
+		// redux
+		wp_register_script( 'redux', $url . 'build/fl-asst-vendor-redux.bundle.js', [], $ver, false );
+
+		// react-router-dom
+		wp_register_script( 'react-router-dom', $url . 'build/fl-asst-vendor-react-router-dom.bundle.js', [ 'react' ], $ver, false );
+
+		// framer-motion
+		wp_register_script( 'framer-motion', $url . 'build/fl-asst-vendor-framer-motion.bundle.js', [ 'react' ], $ver, false );
+
+		// react-laag
+		wp_register_script( 'react-laag', $url . 'build/fl-asst-vendor-react-laag.bundle.js', [ 'react' ], $ver, false );
+
+		// @beaverbuilder/app-core
+		wp_register_script( 'bb-app-core', $url . 'build/fl-asst-vendor-bb-app-core.bundle.js', [ 'react', 'redux' ], $ver, false );
+
+		// @beaverbuilder/cloud
+		wp_register_script( 'bb-cloud', $url . 'build/fl-asst-vendor-bb-cloud.bundle.js', [ 'react' ], $ver, false );
+
+		// @beaverbuilder/fluid
+		$fluid_deps = [
+			'react',
+			'react-dom',
+			'redux',
+			'react-router-dom',
+			'classnames',
+			'framer-motion',
+			'react-laag',
+			'wp-i18n',
+		];
+		wp_register_script( 'bb-fluid', $url . 'build/fl-asst-vendor-bb-fluid.bundle.js', $fluid_deps, $ver, false );
+		wp_register_style( 'bb-fluid', $url . 'build/fl-asst-vendor-bb-fluid.bundle.css', [], $ver, null );
+
+		// @beaverbuilder/forms
+		wp_register_script( 'bb-forms', $url . 'build/fl-asst-vendor-bb-forms.bundle.js', [ 'bb-fluid' ], $ver, false );
+		wp_register_style( 'bb-forms', $url . 'build/fl-asst-vendor-bb-forms.bundle.css', [ 'bb-fluid' ], $ver, null );
 
 		if ( $this->should_enqueue() ) {
 
@@ -194,27 +231,35 @@ class OnEnqueueScripts {
 
 			// API - loaded in header
 			$js_deps = [
-				'fl-fluid',
 				'wp-i18n',
 				'wp-keycodes',
 				'wp-dom-ready',
 				'wp-components',
 				'wp-date',
+				'bb-fluid',
+				'bb-forms',
+				'bb-app-core',
+				'bb-cloud'
+			];
+			$css_deps = [
+				'bb-fluid',
+				'bb-forms',
+				'wp-components'
 			];
 
-			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.css', [ 'fl-fluid', 'wp-components' ], $ver, null );
-			wp_enqueue_script( 'fl-assistant-system', $url . 'build/fl-assistant-system.bundle.js', $js_deps, $ver, false );
+			wp_enqueue_style( 'fl-assistant-system', $url . 'build/fl-asst-system.bundle.css', $css_deps, $ver, null );
+			wp_enqueue_script( 'fl-assistant-system', $url . 'build/fl-asst-system.bundle.js', $js_deps, $ver, false );
 
 			wp_localize_script( 'fl-assistant-system', 'FL_ASSISTANT_CONFIG', $config );
 			wp_localize_script( 'fl-assistant-system', 'FL_ASSISTANT_INITIAL_STATE', $state );
 
 			// Apps - loaded in header
-			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.js', [ 'fl-assistant-system' ], $ver, false );
-			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-assistant-apps.bundle.css', [ 'fl-assistant-system' ], $ver, null );
+			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/fl-asst-apps.bundle.js', [ 'fl-assistant-system' ], $ver, false );
+			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/fl-asst-apps.bundle.css', [ 'fl-assistant-system' ], $ver, null );
 
 			// Render - loaded in footer
-			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.css', [ 'fl-assistant-system' ], $ver, null );
-			wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-assistant-render.bundle.js', [ 'fl-assistant-system' ], $ver, true );
+			wp_enqueue_style( 'fl-assistant-render', $url . 'build/fl-asst-render.bundle.css', [ 'fl-assistant-system' ], $ver, null );
+			wp_enqueue_script( 'fl-assistant-render', $url . 'build/fl-asst-render.bundle.js', [ 'fl-assistant-system' ], $ver, true );
 
 			// WordPress Media Uploader
 			wp_enqueue_media();

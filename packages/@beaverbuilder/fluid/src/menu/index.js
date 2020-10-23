@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react'
 import { ToggleLayer } from 'react-laag'
-import classname from 'classnames'
+import c from 'classnames'
 import Button from '../button'
 import './style.scss'
 
@@ -31,7 +31,7 @@ const Menu = ( {
 							...style,
 							...layerProps.style,
 						} }
-						className={ classname( 'fluid-menu', layerProps.className, className ) }
+						className={ c( 'fluid-menu', layerProps.className, className ) }
 					>
 						{content}
 					</div>
@@ -44,7 +44,7 @@ const Menu = ( {
 }
 
 const Item = ( { className, ...rest } ) => {
-	const classes = classname( 'fluid-menu-item', className )
+	const classes = c( 'fluid-menu-item', className )
 	return (
 		<Button
 			className={ classes }

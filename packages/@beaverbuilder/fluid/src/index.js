@@ -3,7 +3,6 @@ import './style.scss'
 import './forms.scss'
 
 // Components
-import * as Icon from './icon'
 import * as Text from './text'
 import * as Layout from './layout'
 import Page from './page'
@@ -17,7 +16,6 @@ export {
 	Page,
 	Button,
 	Menu, // Planning to have menu subsumed by button
-	Icon,
 	Layout,
 	List,
 	Collection,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import * as Icon from '../../icon'
+import { BackArrow } from '@beaverbuilder/icons'
 import Button from '../../button'
 
 const BackButton = props => {
@@ -12,7 +12,7 @@ const BackButton = props => {
 			onClick={ history.goBack }
 			{ ...props }
 		>
-			<Icon.BackArrow />
+			<BackArrow />
 		</Button>
 	)
 }

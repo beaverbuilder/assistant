@@ -1,5 +1,5 @@
 import React from 'react'
-import classname from 'classnames'
+import c from 'classnames'
 import * as Layout from '../../layout'
 import './style.scss'
 
@@ -16,8 +16,7 @@ const Section = ( {
 	...rest
 } ) => {
 
-	const classes = classname( {
-		'fluid-section': true,
+	const classes = c( 'fluid-section', {
 		[`${handle}-section`]: handle,
 	}, className )
 
