@@ -3,10 +3,8 @@ const path = require( 'path' )
 const pckg = require( './package.json' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
-const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin
-//const FLCommonEnvironment = require( './packages/@beaverbuilder/webpack-common/dist' )
+const commonWebpackConfig = require( '@beaverbuilder/webpack-config' )
 const production = 'production' === process.env.NODE_ENV
-const isAnalyzing = 'analyze' === process.env.NODE_ENV
 
 const alias = {
 	ui: path.resolve( __dirname, './src/system/ui/' ),
@@ -31,6 +29,10 @@ const alias = {
 	'vendor-cloud': path.resolve( __dirname, './node_modules/@beaverbuilder/cloud' ),
 }
 
+/**
+ * Externals simply declare where a certain module is going to be access from on the DOM.
+ * This ensures that, in the event that this package is included, there is only one copy on the page.
+ */
 const externals = [
 	{
 
@@ -46,6 +48,8 @@ const externals = [
 		'react-laag': 'FL.vendors.ReactLaag',
 		'resize-observer-polyfill': 'FL.vendors.ResizeObserver',
 		'redux': 'FL.vendors.Redux',
+
+		// Our own packages provided as vendors
 		'@beaverbuilder/app-core': 'FL.vendors.BBAppCore',
 		'@beaverbuilder/forms': 'FL.vendors.BBForms',
 		'@beaverbuilder/fluid': 'FL.vendors.BBFluid',
@@ -105,16 +109,12 @@ const entry = { // if you change a key here, you need to update the enqueue url 
 const config = {
 	entry,
 	externals,
-	mode: 'development',
-	target: 'web',
-	watch: true,
 	output: {
 		path: path.resolve( __dirname, 'build' ),
 		filename: 'fl-asst-[name].bundle.js',
 		chunkFilename: `chunk-[name].js?var=${ pckg.version }`
 	},
 	resolve: { alias },
-	devtool: 'source-map',
 	module: {
 		rules: [
 			{
@@ -158,29 +158,20 @@ const config = {
 	]
 }
 
-if ( isAnalyzing ) {
-	config.devtool = false
-	config.plugins.push(
-		new BundleAnalyzerPlugin()
-	)
-}
-
 if ( production ) {
-
-	config.mode = 'production'
-	config.stats = false
-	config.watch = false
-	config.devtool = false
 	config.plugins.push(
 		new OptimizeCSSAssets( {
 			cssProcessorOptions: {
 				safe: true,
 			}
-		} ),
-		new webpack.DefinePlugin( {
-			'process.env.NODE_ENV': JSON.stringify( 'production' ),
-		} ),
+		} )
 	)
 }
 
-module.exports = config
+/* Look at @beaverbuilder/webpack-common for additional config.
+* - production setup
+* - analyzing setup
+* - CleanWebpackPlugin
+*/
+
+module.exports = commonWebpackConfig( config )

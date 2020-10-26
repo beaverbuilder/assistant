@@ -78,7 +78,7 @@ module.exports = {
 		'react/no-unescaped-entities': [
 			'off'
 		],
-		'react/jsx-curly-spacing' : [
+		'react/jsx-curly-spacing': [
 			'error',
 			'always'
 		]
