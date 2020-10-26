@@ -14,7 +14,10 @@ const commonWebpackConfig = options => {
 		devtool: 'source-map',
 		plugins: [
 			new CleanWebpackPlugin(),
-		]
+			new webpack.DefinePlugin( {
+				__PRODUCTION__: isProduction,
+			} ),
+		],
 	}
 
 	const config = merge( options, common )

@@ -1,4 +1,3 @@
-const webpack = require( 'webpack' )
 const path = require( 'path' )
 const pckg = require( './package.json' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
@@ -151,10 +150,7 @@ const config = {
 	plugins: [
 		new MiniCssExtractPlugin( {
 			filename: 'fl-asst-[name].bundle.css',
-		} ),
-		new webpack.DefinePlugin( {
-			__PRODUCTION__: production,
-		} ),
+		} )
 	]
 }
 

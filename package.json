@@ -60,7 +60,7 @@
     "@babel/preset-env": "^7.12.0",
     "@babel/preset-react": "^7.7.4",
     "@beaverbuilder/eslint-config": "0.0.5",
-    "@beaverbuilder/webpack-config": "0.0.1",
+    "@beaverbuilder/webpack-config": "0.0.3",
     "@wordpress/babel-preset-default": "^4.19.0",
     "axios-mock-adapter": "^1.18.1",
     "babel-jest": "^26.5.0",

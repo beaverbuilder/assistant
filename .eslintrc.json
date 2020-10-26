@@ -8,11 +8,11 @@
       "it": "readable",
       "__dirname": "readable",
       "process": "readable",
+      "__PRODUCTION__": "readable",
+      "__webpack_public_path__": "writable",
       "FL_ASSISTANT_INITIAL_STATE": "readable",
       "FL_ASSISTANT_CONFIG": "readable",
       "FL": "readable",
-      "FLBuilder": "readable",
-      "__PRODUCTION__": "readable",
-      "__webpack_public_path__": "writable"
+      "FLBuilder": "readable"
     }
 }
