@@ -97,7 +97,7 @@ const config = {
 	externals,
 	output: {
 		path: path.resolve( __dirname, 'build' ),
-		filename: 'fl-asst-[name].bundle.js',
+		filename: `[name].js?var=${ pckg.version }`,
 		chunkFilename: `chunk-[name].js?var=${ pckg.version }`
 	},
 	resolve: { alias },
@@ -136,7 +136,7 @@ const config = {
 	},
 	plugins: [
 		new MiniCssExtractPlugin( {
-			filename: 'fl-asst-[name].bundle.css',
+			filename: '[name].css',
 		} )
 	]
 }

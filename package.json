@@ -19,7 +19,7 @@
   "license": "GPL-2.0+",
   "dependencies": {
     "@beaverbuilder/app-core": "^0.2.0",
-    "@beaverbuilder/cloud": "^0.3.7",
+    "@beaverbuilder/cloud": "^0.3.8",
     "@beaverbuilder/cloud-ui": "^0.5.2",
     "@beaverbuilder/fluid": "^0.6.7",
     "@beaverbuilder/fluid-docs": "0.0.2",
@@ -60,7 +60,7 @@
     "@babel/preset-env": "^7.12.0",
     "@babel/preset-react": "^7.7.4",
     "@beaverbuilder/eslint-config": "0.0.5",
-    "@beaverbuilder/webpack-config": "0.0.4",
+    "@beaverbuilder/webpack-config": "0.0.5",
     "@wordpress/babel-preset-default": "^4.19.0",
     "axios-mock-adapter": "^1.18.1",
     "babel-jest": "^26.5.0",

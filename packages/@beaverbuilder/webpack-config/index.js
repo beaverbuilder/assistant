@@ -5,6 +5,7 @@ const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzer
 const isProduction = 'production' === process.env.NODE_ENV
 const isAnalyzing = 'analyze' === process.env.NODE_ENV
 
+// @wordpress packages exposed via externals
 const wpExternals = {
 	'@wordpress/i18n': 'wp.i18n',
 	'@wordpress/keycodes': 'wp.keycodes',
@@ -24,17 +25,17 @@ const sharedWebpackConfig = projectConfig => {
 		mode: isProduction ? 'production' : 'development',
 		stats: ! isProduction,
 		watch: ! isProduction,
-		devtool: ! isProduction && ! isAnalyzing ? 'source-map' : false,
+		devtool: ! isProduction && ! isAnalyzing ? 'cheap-module-source-map' : false,
 		externals: [ wpExternals ],
 		plugins: [
 			new CleanWebpackPlugin(),
 			new webpack.DefinePlugin( {
 				__PRODUCTION__: isProduction,
-			} ),
+			} )
 		],
 		optimization: {
 			minimize: isProduction
-		}
+		},
 	}
 
 	if ( isAnalyzing ) {
