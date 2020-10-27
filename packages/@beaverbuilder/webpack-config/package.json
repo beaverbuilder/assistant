@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/webpack-config",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A webpack plugin to add the common setup to each product.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -18,5 +18,7 @@
         "webpack-merge": "^5.2.0",
         "wildcard": "^2.0.0"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "uglifyjs-webpack-plugin": "^2.2.0"
+    }
 }

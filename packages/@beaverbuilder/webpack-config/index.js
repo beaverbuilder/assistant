@@ -5,43 +5,55 @@ const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzer
 const isProduction = 'production' === process.env.NODE_ENV
 const isAnalyzing = 'analyze' === process.env.NODE_ENV
 
-const commonWebpackConfig = options => {
+const wpExternals = {
+	'@wordpress/i18n': 'wp.i18n',
+	'@wordpress/keycodes': 'wp.keycodes',
+	'@wordpress/dom': 'wp.dom',
+	'@wordpress/element': 'wp.element',
+	'@wordpress/components': 'wp.components',
+	'@wordpress/heartbeat': 'wp.heartbeat',
+	'@wordpress/hooks': 'wp.hooks',
+	'@wordpress/dom-ready': 'wp.domReady',
+	'@wordpress/date': 'wp.date',
+}
 
-	const common = {
-		mode: 'development',
+const sharedWebpackConfig = projectConfig => {
+
+	const config = {
 		target: 'web',
-		watch: true,
-		devtool: 'source-map',
+		mode: isProduction ? 'production' : 'development',
+		stats: ! isProduction,
+		watch: ! isProduction,
+		devtool: ! isProduction && ! isAnalyzing ? 'source-map' : false,
+		externals: [ wpExternals ],
 		plugins: [
 			new CleanWebpackPlugin(),
 			new webpack.DefinePlugin( {
 				__PRODUCTION__: isProduction,
 			} ),
 		],
+		optimization: {
+			minimize: isProduction
+		}
 	}
 
-	const config = merge( options, common )
-
 	if ( isAnalyzing ) {
-		config.devtool = false
 		config.plugins.push(
 			new BundleAnalyzerPlugin()
 		)
 	}
 
 	if ( isProduction ) {
-		config.mode = 'production'
-		config.stats = false
-		config.watch = false
-		config.devtool = false
 		config.plugins.push(
 			new webpack.DefinePlugin( {
 				'process.env.NODE_ENV': JSON.stringify( 'production' ),
-			} ),
+			} )
 		)
 	}
 
-	return config
+	const merged = merge( config, projectConfig )
+
+	return merged
 }
 
-module.exports = commonWebpackConfig
+module.exports = sharedWebpackConfig

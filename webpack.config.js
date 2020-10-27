@@ -2,8 +2,8 @@ const path = require( 'path' )
 const pckg = require( './package.json' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
-const commonWebpackConfig = require( '@beaverbuilder/webpack-config' )
-const production = 'production' === process.env.NODE_ENV
+const sharedConfig = require( '@beaverbuilder/webpack-config' )
+const isProduction = 'production' === process.env.NODE_ENV
 
 const alias = {
 	ui: path.resolve( __dirname, './src/system/ui/' ),
@@ -54,17 +54,6 @@ const externals = [
 		'@beaverbuilder/fluid': 'FL.vendors.BBFluid',
 		'@beaverbuilder/cloud': 'FL.vendors.BBCloud',
 
-		/* wp */
-		'@wordpress/i18n': 'wp.i18n',
-		'@wordpress/keycodes': 'wp.keycodes',
-		'@wordpress/dom': 'wp.dom',
-		'@wordpress/element': 'wp.element',
-		'@wordpress/components': 'wp.components',
-		'@wordpress/heartbeat': 'wp.heartbeat',
-		'@wordpress/hooks': 'wp.hooks',
-		'@wordpress/dom-ready': 'wp.domReady',
-		'@wordpress/date': 'wp.date',
-
 		/* system bundle */
 		'assistant': 'FL.Assistant',
 		'assistant/data': 'FL.Assistant.data',
@@ -98,15 +87,13 @@ const vendors = {
 	'vendor-bb-fluid': './src/vendors/bb-fluid',
 }
 
-const entry = { // if you change a key here, you need to update the enqueue url to match
-	...vendors,
-	system: './src/system',
-	render: './src/render',
-	apps: './src/apps',
-}
-
 const config = {
-	entry,
+	entry: { // if you change a key here, you need to update the enqueue url to match
+		...vendors,
+		system: './src/system',
+		render: './src/render',
+		apps: './src/apps',
+	},
 	externals,
 	output: {
 		path: path.resolve( __dirname, 'build' ),
@@ -127,20 +114,20 @@ const config = {
 					{
 						loader: 'style-loader',
 						options: {
-							sourceMap: production ? false : true
+							sourceMap: isProduction
 						}
 					},
 					MiniCssExtractPlugin.loader,
 					{
 						loader: 'css-loader',
 						options: {
-							sourceMap: production ? false : true
+							sourceMap: isProduction
 						}
 					},
 					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: production ? false : true
+							sourceMap: isProduction
 						}
 					},
 				],
@@ -154,7 +141,7 @@ const config = {
 	]
 }
 
-if ( production ) {
+if ( isProduction ) {
 	config.plugins.push(
 		new OptimizeCSSAssets( {
 			cssProcessorOptions: {
@@ -170,4 +157,4 @@ if ( production ) {
 * - CleanWebpackPlugin
 */
 
-module.exports = commonWebpackConfig( config )
+module.exports = sharedConfig( config )
