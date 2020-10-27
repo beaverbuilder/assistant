@@ -12,7 +12,7 @@ export const Attachment = () => {
 	const { item } = history.location.state
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
-	const { renderNotices, createNotice } = Notice.useNotices()
+	const { createNotice } = Notice.useNotices()
 	const { id, title, type, subtype } = item
 
 	const onSubmit = ( { changed, ids } ) => {
@@ -241,7 +241,6 @@ export const Attachment = () => {
 			title={ __( 'Attachment' ) }
 			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }
-			notices={ renderNotices() }
 		>
 			<Layout.Headline>{title}</Layout.Headline>
 			{renderForm()}

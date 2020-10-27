@@ -1,70 +1,45 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import Notice from '../notice'
+import { useSystemState, getSystemActions } from 'data'
 
-const defaultNotice = {
-	id: null,
-	isDismissible: true,
-	content: '',
-	spokenMessage: null,
-	status: 'info',
-	actions: [],
-}
+const NOTICE_TIMEOUT_LENGTH = 3000
 
-const reducer = ( state = [], action ) => {
-	switch ( action.type ) {
-	case 'CREATE_NOTICE':
-		const item = {
-			...action.config,
-			id: action.config.id ? action.config.id : Date.now()
-		}
-		return [ ...state, item ]
-	case 'REMOVE_NOTICE':
-		return state.filter( notice => notice.id !== action.id )
-	default:
-		return state
-	}
-}
-
-const useNotices = ( initial = [] ) => {
-	const [ state, dispatch ] = useReducer( reducer, initial )
-
-	const createNotice = ( args = {} ) => dispatch( {
-		type: 'CREATE_NOTICE',
-		config: {
-			...defaultNotice,
-			...args
-		}
-	} )
-
-	const removeNotice = id => dispatch( {
-		type: 'REMOVE_NOTICE',
-		id,
-	} )
+export const useNotices = () => {
+	const { createNotice, removeNotice } = getSystemActions()
+	const { notices } = useSystemState( 'notices' )
 
 	const renderNotices = () => {
-		return state.map( ( notice, i ) => {
-
-			if ( i !== state.length - 1 ) {
-				return null
-			}
-
-			const { id, content, ...rest } = notice
-			return (
-				<Notice
-					key={ i }
-					{ ...rest }
-					onRemove={ () => removeNotice( id ) }
-				>{content}</Notice>
-			)
-		} )
+		if ( ! notices.length ) {
+			return null
+		}
+		return (
+			<div className='fl-asst-notices'>
+				{ notices.map( ( notice, i ) => {
+					if ( i !== notices.length - 1 ) {
+						return null
+					}
+					const { id, content, shouldDismiss, ...rest } = notice
+					if ( shouldDismiss ) {
+						setTimeout( () => removeNotice( id ), NOTICE_TIMEOUT_LENGTH )
+					}
+					return (
+						<Notice
+							key={ i }
+							{ ...rest }
+							onRemove={ () => removeNotice( id ) }
+						>
+							{ content }
+						</Notice>
+					)
+				} ) }
+			</div>
+		)
 	}
 
 	return {
-		renderNotices,
-		notices: state,
 		createNotice,
 		removeNotice,
+		renderNotices,
+		notices,
 	}
 }
-
-export default useNotices
