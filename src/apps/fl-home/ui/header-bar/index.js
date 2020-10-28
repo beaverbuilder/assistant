@@ -92,12 +92,13 @@ const HeaderBar = ( {
 						onOutsideClick={ () => setIsShowingMoreMenu( false ) }
 					>
 						<Button
-							icon='more'
 							shape="round"
 							className="fl-asst-inset-element"
 							style={ { minWidth: 40, minHeight: 40 } }
 							onClick={ () => setIsShowingMoreMenu( ! isShowingMoreMenu ) }
-						/>
+						>
+							<Icon.More />
+						</Button>
 					</Menu>
 				</Layout.Row>
 			</div>

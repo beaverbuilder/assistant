@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Layout } from 'ui'
+import { Button, Layout, Icon } from 'ui'
 import { useWidgetState, getWidgetActions } from 'data'
 import './style.scss'
 
@@ -35,7 +35,6 @@ const WidgetLibrary = ( {
 			<Layout.Toolbar>
 				<h2>{__( 'Widgets' )}</h2>
 				<Button
-					icon="close"
 					shape="round"
 					onClick={ onClose }
 					style={ {
@@ -43,7 +42,9 @@ const WidgetLibrary = ( {
 						width: 40,
 						height: 40
 					} }
-				/>
+				>
+					<Icon.Close />
+				</Button>
 			</Layout.Toolbar>
 
 			<div style={ { padding: '0 var(--fluid-med-space) 20px' } }>

@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
-import { Button } from 'ui'
+import { Button, Icon } from 'ui'
 import './style.scss'
 
 const Tabs = ( { tabs = [], ...rest } ) => {
@@ -49,8 +49,9 @@ const TabsToolbar = ( { tabs } ) => {
 					className="fluid-back-button"
 					appearance="transparent"
 					onClick={ history.goBack }
-					icon="back-arrow"
-				/>
+				>
+					<Icon.BackArrow />
+				</Button>
 
 				{ Object.entries( tabs ).map( ( [ , tab ], i ) => {
 					const { isVisible, label, path } = tab
