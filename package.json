@@ -23,7 +23,7 @@
     "@beaverbuilder/cloud-ui": "^0.5.5",
     "@beaverbuilder/fluid": "^0.6.8",
     "@beaverbuilder/fluid-docs": "0.0.2",
-    "@beaverbuilder/forms": "^0.2.6",
+    "@beaverbuilder/forms": "^0.2.7",
     "@beaverbuilder/icons": "0.0.1",
     "@popmotion/popcorn": "^0.4.4",
     "@wordpress/i18n": "^3.16.0",
