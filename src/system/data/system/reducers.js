@@ -227,3 +227,22 @@ export const hasSubscribed = ( state = false, action ) => {
 		return state ? true : false
 	}
 }
+
+// Notices
+export const notices = ( state = [], action ) => {
+	switch ( action.type ) {
+	case 'CREATE_NOTICE':
+		const item = {
+			id: action.config.id ? action.config.id : Date.now(),
+			isDismissible: true,
+			shouldDismiss: true,
+			status: 'info',
+			...action.config,
+		}
+		return [ ...state, item ]
+	case 'REMOVE_NOTICE':
+		return state.filter( notice => notice.id !== action.id )
+	default:
+		return state
+	}
+}

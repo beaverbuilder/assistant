@@ -17,7 +17,7 @@ export const Post = ( { location, match, history } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes, contentStatus, taxonomies, isSiteAdmin } = getSystemConfig()
-	const { renderNotices, createNotice } = Notice.useNotices()
+	const { createNotice } = Notice.useNotices()
 	const { isHierarchical, labels, supports, templates } = contentTypes[ item.type ]
 	const [ passwordVisible, setPasswordVisible ] = useState( 'protected' === item.visibility )
 	const [ featureThumbnail, setFeatureThumbnail ] = useState( item.thumbnailData )
@@ -544,7 +544,6 @@ export const Post = ( { location, match, history } ) => {
 		<Page
 			title={ labels.editItem }
 			hero={ <Hero /> }
-			notices={ renderNotices() }
 			footer={ hasChanges && false === item.hasLock && <Footer /> }
 			tabs={ tabs }
 			onLoad={ focusFirstInput }

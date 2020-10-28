@@ -150,3 +150,25 @@ export const setHasSubscribed = value => {
 		value,
 	}
 }
+
+// Notices
+export const createNotice = ( args, content = '' ) => {
+	let config = args
+	if ( 'string' === typeof args ) {
+		config = {
+			status: args,
+			content
+		}
+	}
+	return {
+		type: 'CREATE_NOTICE',
+		config
+	}
+}
+
+export const removeNotice = ( id ) => {
+	return {
+		type: 'REMOVE_NOTICE',
+		id,
+	}
+}

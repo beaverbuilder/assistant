@@ -2,7 +2,7 @@ import React, { createContext } from 'react'
 import classname from 'classnames'
 import { App } from '@beaverbuilder/app-core'
 import { Page as FLUIDPage } from '@beaverbuilder/fluid'
-import { Layout } from 'ui'
+import { Layout, Notice } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
 import { Post } from './post'
@@ -31,12 +31,12 @@ const Page = ( {
 	onLoad = focusFirstElement,
 	tabs,
 	toolbar,
-	notices,
 	overlay,
 	children,
 	...rest
 } ) => {
 	const { isAppRoot } = App.use()
+	const { notices, renderNotices } = Notice.useNotices()
 
 	const classes = classname( {
 		'is-app-root': isAppRoot || showAsRoot,
@@ -46,7 +46,7 @@ const Page = ( {
 	const Overlay = () => (
 		<>
 			{overlay}
-			{notices}
+			{renderNotices()}
 		</>
 	)
 
