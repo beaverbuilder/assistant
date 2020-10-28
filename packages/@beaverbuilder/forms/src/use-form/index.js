@@ -142,6 +142,7 @@ const Fields = ( { config, data } ) => {
 		const Component = config
 		return <Component { ...data } />
 	}
+	console.log( 'fields', config, data )
 	return Object.entries( config ).map( ( [ key ], i ) => {
 		const {
 			component,

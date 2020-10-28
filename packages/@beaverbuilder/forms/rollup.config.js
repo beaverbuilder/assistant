@@ -8,6 +8,7 @@ import visualizer from 'rollup-plugin-visualizer'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
+import cleaner from 'rollup-plugin-cleaner'
 
 const { IS_PRODUCTION } = process.env
 
@@ -47,6 +48,9 @@ export default {
 			browser: true
 		} ),
 		json(),
-		terser()
+		terser(),
+		cleaner( {
+			targets: [ './dist/' ]
+		} )
 	]
 }
