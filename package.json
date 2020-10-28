@@ -20,10 +20,10 @@
   "dependencies": {
     "@beaverbuilder/app-core": "^0.2.0",
     "@beaverbuilder/cloud": "^0.3.8",
-    "@beaverbuilder/cloud-ui": "^0.5.2",
-    "@beaverbuilder/fluid": "^0.6.7",
+    "@beaverbuilder/cloud-ui": "^0.5.5",
+    "@beaverbuilder/fluid": "^0.6.8",
     "@beaverbuilder/fluid-docs": "0.0.2",
-    "@beaverbuilder/forms": "^0.2.4",
+    "@beaverbuilder/forms": "^0.2.6",
     "@beaverbuilder/icons": "0.0.1",
     "@popmotion/popcorn": "^0.4.4",
     "@wordpress/i18n": "^3.16.0",

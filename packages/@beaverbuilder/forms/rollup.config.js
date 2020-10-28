@@ -7,6 +7,7 @@ import pkg from './package.json'
 import visualizer from 'rollup-plugin-visualizer'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
+import { terser } from 'rollup-plugin-terser'
 
 const { IS_PRODUCTION } = process.env
 
@@ -45,6 +46,7 @@ export default {
 			preferBuiltins: true,
 			browser: true
 		} ),
-		json()
+		json(),
+		terser()
 	]
 }

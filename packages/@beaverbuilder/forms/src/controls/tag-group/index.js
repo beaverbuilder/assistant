@@ -1,6 +1,7 @@
 import React from 'react'
 import classname from 'classnames'
-import { Button, Icon } from '@beaverbuilder/fluid'
+import { Button } from '@beaverbuilder/fluid'
+import { CloseCompact } from '@beaverbuilder/icons'
 import './style.scss'
 
 export const TagGroup = ( {
@@ -56,7 +57,7 @@ export const Tag = ( {
 			{ tagColor && <div className="fl-asst-tag-color" style={ { background: tagColor } } /> }
 			{ label && <div className="fl-asst-tag-label">{ label }</div> }
 			<Button className="fl-asst-tag-remove-btn" appearance="transparent" onClick={ onRemove }>
-				<Icon.CloseCompact />
+				<CloseCompact />
 			</Button>
 		</div>
 	)
