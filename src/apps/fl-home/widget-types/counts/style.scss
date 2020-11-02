@@ -1,0 +1,17 @@
+.fl-asst {
+
+	.fl-asst-count-grid {
+		display: grid;
+		grid-column-gap: 10px;
+		grid-row-gap: 8px;
+		grid-template-columns: auto 1fr;
+		align-items: baseline;
+		line-height: 1.1;
+
+		.fl-asst-count-metric {
+			font-size: 18px;
+			color: var(--fluid-blue);
+			text-align: right;
+		}
+	}
+}

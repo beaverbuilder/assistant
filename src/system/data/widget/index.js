@@ -16,10 +16,7 @@ const defaultLayout = [
 	{
 		id: 1,
 		size: 'sm',
-		type: 'post-count',
-		settings: {
-			type: 'post'
-		}
+		type: 'counts',
 	},
 	{
 		id: 3,
@@ -29,8 +26,14 @@ const defaultLayout = [
 	},
 	{
 		id: 4,
-		size: 'med',
+		size: 'lg',
 		type: 'currently-viewing',
+		settings: {}
+	},
+	{
+		id: 5,
+		size: 'lg',
+		type: 'recent-posts',
 		settings: {}
 	},
 ]

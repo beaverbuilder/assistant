@@ -5,13 +5,13 @@ const uuid = () => md5( Math.random() )
 const defaultWidgetType = {
 	title: 'Untitled Widget',
 	render: () => null,
-	defaultSize: 'med',
-	supportsSizes: [ 'sm', 'med', 'lg' ]
+	defaultSize: 'lg',
+	supportsSizes: [ 'sm', 'lg' ]
 }
 
 const defaultWidget = {
 	id: null,
-	size: 'med',
+	size: 'lg',
 	type: '',
 	settings: {}
 }

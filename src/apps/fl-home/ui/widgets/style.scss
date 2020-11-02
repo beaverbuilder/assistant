@@ -25,14 +25,9 @@
                     height: 130px;
                 }
             }
-            &.fl-asst-cell-med {
-                .fluid-widget-content {
-                    height: 130px;
-                }
-            }
             &.fl-asst-cell-lg {
                 .fluid-widget-content {
-                    height: 320px;
+                    min-height: 100px;
                 }
             }
         }

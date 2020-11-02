@@ -10,6 +10,7 @@ const Widget = ( { title, children, size, type, className, ...rest } ) => {
 			className={ c( 'fluid-widget', {
 				[`fluid-widget-size-${size}`]: size,
 				[`fluid-widget-type-${type}`]: type,
+				[`fl-asst-widget-type-${type}`]: type,
 			}, className ) }
 			{ ...rest }
 		>
