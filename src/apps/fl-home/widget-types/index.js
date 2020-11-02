@@ -5,6 +5,7 @@ import Media from './media'
 import RecentPosts from './recent-posts'
 import Counts from './counts'
 import Subscribe from './subscribe'
+import Apps from './apps'
 
 registerWidget( 'counts', {
 	title: __( 'Counts' ),
@@ -35,6 +36,13 @@ registerWidget( 'recent-posts', {
 registerWidget( 'asst-email-signup', {
 	title: __( 'Stay up-to-date with Assistant' ),
 	render: Subscribe,
+	supportsSizes: [ 'lg' ],
+	defaultSize: 'lg'
+} )
+
+registerWidget( 'apps', {
+	title: __( 'Apps' ),
+	render: Apps,
 	supportsSizes: [ 'lg' ],
 	defaultSize: 'lg'
 } )

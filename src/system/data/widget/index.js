@@ -37,6 +37,11 @@ const defaultLayout = [
 		settings: {}
 	},
 	{
+		id: 7,
+		size: 'lg',
+		type: 'apps'
+	},
+	{
 		id: 6,
 		size: 'lg',
 		type: 'asst-email-signup'

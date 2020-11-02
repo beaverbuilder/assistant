@@ -14,10 +14,6 @@
             display: flex;
             flex-direction: column;
 
-            &.fl-asst-widget {
-                cursor: move;
-            }
-
             &.fl-asst-cell-sm {
                 grid-column-start: span 1;
 

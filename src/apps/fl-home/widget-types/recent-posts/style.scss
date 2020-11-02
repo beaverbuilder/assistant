@@ -2,7 +2,19 @@
 	.fluid-widget-type-recent-posts {
 		.fluid-widget-content {
 			padding: 0;
-			height: 360px;
+			height: 320px;
+
+			.fl-asst-list {
+				.fl-asst-list-item-content-info {
+					padding: 10px 0;
+				}
+				.fl-asst-list-item-loading {
+					.fl-asst-list-item-thumbnail {
+						width: 30px;
+						height: 30px;
+					}
+				}
+			}
 		}
 	}
 }

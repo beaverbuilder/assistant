@@ -110,43 +110,17 @@ export const List = ( {
 }
 
 List.Item = Item
-List.Item.displayName = 'List.Item'
-
 List.Scroller = Scroller
-List.Scroller.displayName = 'List.Scroller'
-
 List.WordPress = WordPress
-List.WordPress.displayName = 'List.WordPress'
-
 List.Comments = Comments
-List.Comments.displayName = 'List.Comments'
-
 List.Posts = Posts
-List.Posts.displayName = 'List.Posts'
-
 List.Users = Users
-List.Users.displayName = 'List.Users'
-
 List.Updates = Updates
-List.Updates.displayName = 'List.Updates'
-
 List.Attachments = Attachments
-List.Attachments.displayName = 'List.Attachments'
-
 List.Loading = Loading
-List.Loading.displayName = 'List.Loading'
-
 List.NoResultsMessage = NoResultsMessage
-List.NoResultsMessage.displayName = 'List.NoResultsMessage'
-
 List.EndMessage = EndMessage
-List.EndMessage.displayName = 'List.EndMessage'
-
 List.useScrollLoader = useScrollLoader
 List.useListItems = useListItems
-
 List.InlineCreate = InlineCreate
-List.InlineCreate.displayName = 'List.InlineCreate'
-
 List.Sortable = Sortable
-List.Sortable.displayName = 'List.Sortable'
