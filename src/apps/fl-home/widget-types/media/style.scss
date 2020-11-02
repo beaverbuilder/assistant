@@ -1,0 +1,11 @@
+.fl-asst {
+	.fluid-widget.fluid-widget-type-media {
+		.fluid-widget-content {
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+	}
+}

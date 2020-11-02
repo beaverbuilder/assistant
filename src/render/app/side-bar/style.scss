@@ -8,7 +8,7 @@
         flex-basis: 60px;
         cursor: move;
         z-index: 3;
-        box-shadow: 0 0 0 1.5px var(--fluid-line-color);
+        //box-shadow: 0 0 0 1.5px var(--fluid-line-color);
 
         .disable-while-sorting {
             transition-property: opacity;

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Button } from 'ui'
 import { getWidgetActions } from 'data'
 import { motion } from 'framer-motion'
 import c from 'classnames'
@@ -18,6 +17,7 @@ const flat = {
 const Item = ( {
 	i,
 	id,
+	layoutHandle,
 	size,
 	type,
 	title,
@@ -33,7 +33,7 @@ const Item = ( {
 	const [ isDragging, setIsDragging ] = useState( false )
 	const ref = useRef( null )
 	const lastPos = useRef( 0 )
-	//const { deleteWidget } = getWidgetActions()
+	const { deleteWidget } = getWidgetActions()
 
 	useEffect( () => {
 		setDimensions( i, {
@@ -51,14 +51,7 @@ const Item = ( {
 		title,
 		type,
 		settings,
-	}
-
-	const Title = () => {
-		return (
-			<>
-				{title}
-			</>
-		)
+		remove: () => deleteWidget( layoutHandle, id )
 	}
 
 	return (
@@ -77,7 +70,6 @@ const Item = ( {
 			dragElastic={ 0.1 }
 			onDragStart={ () => setIsDragging( true ) }
 			onDragEnd={ () => setIsDragging( false ) }
-			whileTap={ { scale: 1.05 } }
 			onViewportBoxUpdate={ ( vBox, delta ) => {
 				const x = delta.x.translate
 				const y = delta.y.translate
@@ -97,7 +89,7 @@ const Item = ( {
 			} }
 			{ ...rest }
 		>
-			<Widget title={ <Title /> } size={ size } type={ type }>
+			<Widget title={ title } size={ size } type={ type }>
 				<Content { ...props } />
 			</Widget>
 		</motion.li>

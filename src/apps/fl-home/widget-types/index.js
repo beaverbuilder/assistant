@@ -4,11 +4,13 @@ import CurrentlyViewing from './currently-viewing'
 import Media from './media'
 import RecentPosts from './recent-posts'
 import Counts from './counts'
-import './style.scss'
+import Subscribe from './subscribe'
 
 registerWidget( 'counts', {
 	title: __( 'Counts' ),
-	render: Counts
+	render: Counts,
+	supportsSizes: [ 'sm' ],
+	defaultSize: 'sm'
 } )
 
 registerWidget( 'currently-viewing', {
@@ -26,4 +28,13 @@ registerWidget( 'media', {
 registerWidget( 'recent-posts', {
 	title: __( 'Recent Posts' ),
 	render: RecentPosts,
+	supportsSizes: [ 'lg' ],
+	defaultSize: 'lg'
+} )
+
+registerWidget( 'asst-email-signup', {
+	title: __( 'Stay up-to-date with Assistant' ),
+	render: Subscribe,
+	supportsSizes: [ 'lg' ],
+	defaultSize: 'lg'
 } )

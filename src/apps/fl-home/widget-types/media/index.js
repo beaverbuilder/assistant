@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { Layout, Button } from 'assistant/ui'
 import { wrap } from '@popmotion/popcorn'
+import './style.scss'
 
 const variants = {
 	enter: direction => {

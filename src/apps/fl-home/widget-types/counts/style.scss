@@ -1,5 +1,4 @@
 .fl-asst {
-
 	.fl-asst-count-grid {
 		display: grid;
 		grid-column-gap: 10px;
@@ -9,6 +8,7 @@
 		line-height: 1.1;
 
 		.fl-asst-count-metric {
+			min-width: 2ch;
 			font-size: 18px;
 			color: var(--fluid-blue);
 			text-align: right;

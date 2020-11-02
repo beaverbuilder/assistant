@@ -264,9 +264,6 @@ class OnEnqueueScripts {
 			// WordPress Media Uploader
 			wp_enqueue_media();
 
-			// Drip email script
-			//wp_enqueue_script( 'fl-assistant-drip', 'https://tag.getdrip.com/3112548.js', [], $ver, false );
-
 			do_action( 'fl_assistant_enqueue' );
 		}
 	}

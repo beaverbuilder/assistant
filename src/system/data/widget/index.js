@@ -36,6 +36,11 @@ const defaultLayout = [
 		type: 'recent-posts',
 		settings: {}
 	},
+	{
+		id: 6,
+		size: 'lg',
+		type: 'asst-email-signup'
+	}
 ]
 
 registerStore( KEY, {

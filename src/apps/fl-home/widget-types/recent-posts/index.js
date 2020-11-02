@@ -1,6 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, Layout, Button, Text } from 'assistant/ui'
+import './style.scss'
 
 const RecentPosts = () => {
 

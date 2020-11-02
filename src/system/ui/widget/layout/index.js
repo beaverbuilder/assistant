@@ -24,8 +24,6 @@ const WidgetLayout = ( {
 	const setWidgets = widgets => setLayout( handle, widgets )
 	const [ widgets, updatePosition, updateOrder ] = useWidgetReorder( layout, setWidgets )
 
-	//const [ isDraggingOver, setIsDraggingOver ] = useState( false )
-
 	if ( ! handle || ! layout ) {
 		return null
 	}
@@ -98,6 +96,7 @@ const WidgetLayout = ( {
 						wrap={ ref }
 						setDimensions={ updatePosition }
 						updateOrder={ updateOrder }
+						layoutHandle={ handle }
 						{ ...rest }
 					/>
 				)
