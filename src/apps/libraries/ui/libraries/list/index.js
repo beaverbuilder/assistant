@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
-import { Button, Layout, Text } from 'assistant/ui'
+import { Button, Layout, Text, Icon } from 'assistant/ui'
 import { useAppState } from 'assistant/data'
 import './style.scss'
 
@@ -30,10 +30,11 @@ export default ( {
 						<Button
 							appearance="transparent"
 							shape="round"
-							icon="plus-small"
 							onClick={ () => setIsAddingNew( true ) }
 							style={ { marginLeft: 'auto' } }
-						/>
+						>
+							<Icon.PlusSmall />
+						</Button>
 					) }
 				</Layout.Toolbar>
 			}
@@ -42,10 +43,11 @@ export default ( {
 				<Layout.Toolbar>
 					<Libraries.LibraryInlineCreate teamId={ teamId } />
 					<Button
-						icon="close-compact"
 						onClick={ () => setIsAddingNew( false ) }
 						style={ { marginLeft: 5 } }
-					/>
+					>
+						<Icon.CloseCompact />
+					</Button>
 				</Layout.Toolbar>
 			}
 
