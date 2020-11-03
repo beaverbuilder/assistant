@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button } from '@beaverbuilder/fluid'
 import './style.scss'
@@ -17,10 +17,10 @@ export const FileItem = ( {
 			if ( value instanceof File ) {
 				filename = value.name
 			} else {
-				filename = value.split( '/' ).pop()
+				filename = value.split( '/' ).pop().split( '?' ).shift()
 			}
 		}
-		return filename.length <= 25 ? filename : filename.substring( 0, 24 ) + '...'
+		return 25 > filename.length ? filename : filename.substring( 0, 24 ) + '...'
 	}
 
 	return (
@@ -75,7 +75,7 @@ const FileThumb = ( { value } ) => {
 			if ( value.type.startsWith( 'image/' ) ) {
 				src = URL.createObjectURL( value )
 			}
-		} else if ( value.match(/\.(jpeg|jpg|gif|png)$/) != null ) {
+		} else if ( null != value.split( '?' ).shift().match( /\.(jpeg|jpg|gif|png)$/ ) ) {
 			src = value
 		}
 	}

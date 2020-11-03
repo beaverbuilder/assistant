@@ -48,7 +48,6 @@ export default {
 			browser: true
 		} ),
 		json(),
-		terser(),
 		cleaner( {
 			targets: [ './dist/' ]
 		} )
