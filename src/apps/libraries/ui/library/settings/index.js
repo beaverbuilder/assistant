@@ -2,6 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Layout, Page } from 'assistant/ui'
+import ImportLibrary from './import'
 
 export default () => {
 	const { library } = Libraries.LibraryContext.use()
@@ -9,7 +10,7 @@ export default () => {
 	return (
 		<>
 			<Layout.Box padY={ false }>
-				<Page.Section label={ __( 'Library Settings' ) }>
+				<Page.Section label={ __( 'Library Settings' ) } padY={ false }>
 					<Libraries.LibrarySettingsForm />
 				</Page.Section>
 			</Layout.Box>
@@ -17,6 +18,12 @@ export default () => {
 			<Layout.Box padY={ false }>
 				<Page.Section label={ __( 'Library Collections' ) }>
 					<Libraries.LibraryCollectionsForm />
+				</Page.Section>
+			</Layout.Box>
+
+			<Layout.Box padY={ false }>
+				<Page.Section label={ __( 'Import Library' ) }>
+					<ImportLibrary />
 				</Page.Section>
 			</Layout.Box>
 
