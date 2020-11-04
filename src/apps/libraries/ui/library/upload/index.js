@@ -5,7 +5,7 @@ import { Layout } from 'assistant/ui'
 export default () => {
 	const { library, showUpload, uploader } = Libraries.LibraryContext.use()
 
-	if ( ! library.permissions.edit_items || ! showUpload ) {
+	if ( ! library.permissions.edit_items ) {
 		return null
 	}
 
