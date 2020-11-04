@@ -103,7 +103,7 @@ const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
 	}
 
 	return (
-		<Layout.Box className="fl-asst-inline-item fl-asst-inline-create-item fl-asst-list-item-content-info" padX={ false } padY={ false }>
+		<Layout.Box className="fl-asst-inline-item fl-asst-list-inline-create-item fl-asst-list-item-content-info" padX={ false } padY={ false }>
 			<Layout.Row className="fl-asst-list-item-default-content-row" gap="var(--fluid-med-space)">
 				<div className="fl-asst-list-item-thumbnail fl-asst-thumbnail-size-med">
 					<Icon.Plus />
