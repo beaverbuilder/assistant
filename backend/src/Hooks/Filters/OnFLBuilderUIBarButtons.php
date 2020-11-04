@@ -12,6 +12,11 @@ class OnFLBuilderUIBarButtons {
 	*/
 	public function __invoke( $buttons ) {
 
+		// Check build supports flag
+		if ( ! FL_ASST_SUPPORTS_BB ) {
+			return $buttons;
+		}
+
 		// Check if BB supports assistant (2.4+)
 		if (
 			! version_compare( FL_BUILDER_VERSION, '2.4-alpha.1', '>=' ) &&

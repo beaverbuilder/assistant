@@ -132,6 +132,7 @@ class OnEnqueueScripts {
 				'pusherKey'     => FL_ASSISTANT_PUSHER_KEY,
 				'pusherCluster' => FL_ASSISTANT_PUSHER_CLUSTER,
 			],
+			'embedInBB'			=> FL_ASST_SUPPORTS_BB,
 		];
 	}
 
