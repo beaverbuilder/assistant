@@ -122,7 +122,7 @@ const Main = () => {
 				<tbody>
 					<tr>
 						<td>
-							<Button icon="view">Icon Button</Button>
+							<Button icon={ <Icon.View /> }>Icon Button</Button>
 						</td>
 						<td>
 							<Button isLoading>Loading</Button>
@@ -133,15 +133,15 @@ const Main = () => {
 							<Button icon={ <Icon.BookmarkSolid /> }>Bookmark</Button>
 						</td>
 						<td>
-							<Button icon="bookmark-solid">Bookmark</Button>
+							<Button icon={ <Icon.BookmarkSolid /> }>Bookmark</Button>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<Button icon="view" />
+							<Button icon={ <Icon.View /> } />
 						</td>
 						<td>
-							<Button icon="edit" />
+							<Button icon={ <Icon.Edit /> } />
 						</td>
 					</tr>
 				</tbody>
@@ -251,11 +251,11 @@ const Main = () => {
 						<td>
 							<Layout.Toolbar>
 								<Button size="sm">Small Button</Button>
-								<Button size="sm" icon="clone" />
-								<Button size="sm" icon="reply" appearance="transparent" style={ { marginLeft: 'auto' } } />
-								<Button size="sm" icon="approve" appearance="transparent" />
-								<Button size="sm" icon="trash" appearance="transparent" status="destructive" />
-								<Button size="sm" icon="ellipsis" appearance="transparent" />
+								<Button size="sm" icon={ <Icon.Clone /> } />
+								<Button size="sm" icon={ <Icon.Reply /> } appearance="transparent" style={ { marginLeft: 'auto' } } />
+								<Button size="sm" icon={ <Icon.Approve /> } appearance="transparent" />
+								<Button size="sm" icon={ <Icon.Trash /> } appearance="transparent" status="destructive" />
+								<Button size="sm" icon={ <Icon.Ellipsis /> } appearance="transparent" />
 							</Layout.Toolbar>
 						</td>
 					</tr>
@@ -264,9 +264,9 @@ const Main = () => {
 						<td>
 							<Layout.Toolbar>
 								<Button size="med">Medium Button</Button>
-								<Button size="med" icon="clone" />
-								<Button icon="ellipsis" appearance="transparent" style={ { marginLeft: 'auto' } } />
-								<Button size="med" icon="trash" status="destructive" appearance="transparent" />
+								<Button size="med" icon={ <Icon.Clone /> } />
+								<Button icon={ <Icon.Ellipsis /> } appearance="transparent" style={ { marginLeft: 'auto' } } />
+								<Button size="med" icon={ <Icon.Trash /> } status="destructive" appearance="transparent" />
 							</Layout.Toolbar>
 						</td>
 					</tr>
@@ -275,8 +275,8 @@ const Main = () => {
 						<td>
 							<Layout.Toolbar>
 								<Button size="lg">Large Button</Button>
-								<Button size="lg" icon="clone" />
-								<Button icon="trash" status="destructive" appearance="elevator" style={ { marginLeft: 'auto' } } />
+								<Button size="lg" icon={ <Icon.Clone /> } />
+								<Button icon={ <Icon.Trash /> } status="destructive" appearance="elevator" style={ { marginLeft: 'auto' } } />
 							</Layout.Toolbar>
 						</td>
 					</tr>

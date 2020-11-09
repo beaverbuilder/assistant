@@ -1,5 +1,6 @@
 import React from 'react'
-import { Layout, Icon as icons } from '@beaverbuilder/fluid'
+import { Layout } from '@beaverbuilder/fluid'
+import * as icons from '@beaverbuilder/icons'
 
 export default () => {
 	return (
