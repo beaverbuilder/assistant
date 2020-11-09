@@ -20,7 +20,8 @@
     "peerDependencies": {
         "react": "^16.9.0",
         "react-router-dom": "^5.2.0",
-        "@beaverbuilder/fluid": "^0.6.7"
+        "@beaverbuilder/fluid": "^0.6.7",
+        "@beaverbuilder/icons": "^0.0.1"
     },
     "dependencies": {
         "camelcase": "^5.3.1"

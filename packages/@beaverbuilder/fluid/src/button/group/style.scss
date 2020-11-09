@@ -18,6 +18,22 @@
             }
         }
 
+        & > select {
+            background-color: var(--fluid-transparent-12);
+            box-shadow: none;
+            padding: var(--fluid-sm-space);
+            text-align-last: center;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--fluid-transparent-10);
+            }
+            &:focus {
+                box-shadow: inset 0px 0px 0px 1.5px var(--fluid-background),
+                            0px 0px 0px 1.5px var(--fluid-accent);
+            }
+        }
+
         &.fluid-button-group-row {
             align-self: center; // will center self within flex columns
             justify-content: flex-start;
@@ -124,7 +140,7 @@
         }
 
         &.fluid-button-group-appearance-grid {
-            background: transparent;
+            background: transparent !important;
             flex: 1 1 auto;
             display: grid;
             grid-gap: var(--fluid-sm-space);
@@ -157,6 +173,14 @@
     .fluid-color-scheme-dark {
         .fluid-button-group {
             background: var(--fluid-transparent-1);
+
+            & > select {
+                background-color: var(--fluid-transparent-1);
+
+                &:hover {
+                    background-color: var(--fluid-transparent-3);
+                }
+            }
         }
     }
 }

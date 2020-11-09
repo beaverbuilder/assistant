@@ -202,6 +202,12 @@
                     --hover-color: var(--fluid-blue-14);
                 }
             }
+
+            &.fluid-status-destructive {
+                --fluid-accent: var(--fluid-destructive-color);
+                --color: var(--fluid-destructive-color);
+                --hover-color: var(--fluid-destructive-color);
+            }
         }
     }
 }
