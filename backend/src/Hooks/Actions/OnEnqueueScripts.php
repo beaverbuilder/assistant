@@ -177,10 +177,7 @@ class OnEnqueueScripts {
 		return true;
 	}
 
-	/**
-	 * Enqueue all scripts and styles
-	 */
-	public function enqueue() {
+	public function register_vendors() {
 
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
@@ -208,6 +205,9 @@ class OnEnqueueScripts {
 		// @beaverbuilder/cloud
 		wp_register_script( 'bb-cloud', $url . 'build/vendor-bb-cloud.js', [ 'react' ], $ver, false );
 
+		// @beaverbuilder/icons
+		wp_register_script( 'bb-icons', $url . 'build/vendor-bb-icons.js', [ 'react' ], $ver, false );
+
 		// @beaverbuilder/fluid
 		$fluid_deps = [
 			'react',
@@ -218,6 +218,7 @@ class OnEnqueueScripts {
 			'framer-motion',
 			'react-laag',
 			'wp-i18n',
+			'bb-icons'
 		];
 		wp_register_script( 'bb-fluid', $url . 'build/vendor-bb-fluid.js', $fluid_deps, $ver, false );
 		wp_register_style( 'bb-fluid', $url . 'build/vendor-bb-fluid.css', [], $ver, null );
@@ -225,6 +226,18 @@ class OnEnqueueScripts {
 		// @beaverbuilder/forms
 		wp_register_script( 'bb-forms', $url . 'build/vendor-bb-forms.js', [ 'bb-fluid' ], $ver, false );
 		wp_register_style( 'bb-forms', $url . 'build/vendor-bb-forms.css', [ 'bb-fluid' ], $ver, null );
+
+	}
+
+	/**
+	 * Enqueue all scripts and styles
+	 */
+	public function enqueue() {
+
+		self::register_vendors();
+
+		$url = FL_ASSISTANT_URL;
+		$ver = FL_ASSISTANT_VERSION;
 
 		if ( $this->should_enqueue() ) {
 
@@ -241,7 +254,8 @@ class OnEnqueueScripts {
 				'bb-fluid',
 				'bb-forms',
 				'bb-app-core',
-				'bb-cloud'
+				'bb-cloud',
+				'bb-icons'
 			];
 			$css_deps = [
 				'bb-fluid',

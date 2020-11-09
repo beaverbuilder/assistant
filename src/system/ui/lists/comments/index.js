@@ -4,13 +4,11 @@ import { truncate } from 'utils/text'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { getWpRest } from 'utils/wordpress'
-export const Comments = ( {
 
+export const Comments = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
-	type = { type },
-	query = {
-		status: type,
-	},
+	type,
+	query = { status: type },
 	...rest
 } ) => {
 	const comments = getWpRest()

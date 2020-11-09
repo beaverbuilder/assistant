@@ -48,5 +48,15 @@
                 animation-delay: .4s;
             }
         }
+        .fl-asst-list-item-thumbnail {
+            background: var(--fluid-blue-12);
+        }
+    }
+}
+.fluid-color-scheme-dark {
+    .fl-asst-list-item-loading {
+        .fl-asst-list-item-thumbnail {
+            background: var(--fluid-blue-3);
+        }
     }
 }

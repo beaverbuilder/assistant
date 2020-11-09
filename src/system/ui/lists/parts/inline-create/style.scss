@@ -40,17 +40,18 @@
             }
         }
     }
-    .fluid-color-scheme-dark {
-        .fl-asst-inline-item {
-            .fl-asst-list-item-thumbnail {
-                background-color: var(--fluid-blue-1);
-                color: var(--fluid-blue-7);
-            }
+}
+.fluid-color-scheme-dark {
+    .fl-asst-inline-item {
+
+        .fl-asst-list-item-thumbnail {
+            background-color: var(--fluid-blue-1);
+            color: var(--fluid-blue-7);
         }
-        .fl-asst-inline-create-item {
-            .fl-asst-form-input {
-                color: var(--fluid-blue-11);
-            }
+    }
+    .fl-asst-list-inline-create-item {
+        .fl-asst-form-input input {
+            color: var(--fluid-blue-9) !important;
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Button, Layout } from 'assistant/ui'
+import { Button, Layout, Icon } from 'assistant/ui'
 import './style.scss'
 
 const LimitContent = ( {
@@ -61,13 +61,14 @@ const LimitContent = ( {
 					<Button
 						className="fl-asst-limit-content-expand-button"
 						appearance="transparent"
-						icon="ellipsis"
 						onClick={ e => {
 							toggleIsOpen()
 							e.stopPropagation()
 							e.preventDefault()
 						} }
-					/>
+					>
+						<Icon.Ellipsis />
+					</Button>
 
 				</Layout.Row>
 			) }

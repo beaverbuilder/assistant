@@ -138,6 +138,7 @@
         line-height: 1.5;
         word-break: break-word;
         margin-top: 4px;
+        color: var(--fluid-opaque-7);
     }
     .fl-asst-list-item-thumbnail {
         flex: 0 0 auto;
@@ -288,8 +289,7 @@
 
         .fl-asst-list-item-mark {
             font-size: 10px;
-            font-weight: 500;
-            text-transform: uppercase;
+            font-weight: normal;
             padding: 0 5px;
 
             .fl-asst-list-item-color-mark {

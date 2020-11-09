@@ -26,6 +26,7 @@ const alias = {
 	'vendor-forms': path.resolve( __dirname, './node_modules/@beaverbuilder/forms' ),
 	'vendor-fluid': path.resolve( __dirname, './node_modules/@beaverbuilder/fluid' ),
 	'vendor-cloud': path.resolve( __dirname, './node_modules/@beaverbuilder/cloud' ),
+	'vendor-icons': path.resolve( __dirname, './node_modules/@beaverbuilder/icons' ),
 }
 
 /**
@@ -53,6 +54,7 @@ const externals = [
 		'@beaverbuilder/forms': 'FL.vendors.BBForms',
 		'@beaverbuilder/fluid': 'FL.vendors.BBFluid',
 		'@beaverbuilder/cloud': 'FL.vendors.BBCloud',
+		'@beaverbuilder/icons': 'FL.vendors.BBIcons',
 
 		/* system bundle */
 		'assistant': 'FL.Assistant',
@@ -85,6 +87,7 @@ const vendors = {
 	'vendor-bb-forms': './src/vendors/bb-forms',
 	'vendor-bb-app-core': './src/vendors/bb-app-core',
 	'vendor-bb-fluid': './src/vendors/bb-fluid',
+	'vendor-bb-icons': './src/vendors/bb-icons',
 }
 
 const config = {
