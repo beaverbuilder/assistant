@@ -7,7 +7,6 @@ import {
 	getHooks
 } from '../registry'
 
-import getSystemHistory from './history'
 import { getWpRest } from 'utils/wordpress'
 import * as actions from './actions'
 import * as reducers from './reducers'
@@ -44,7 +43,7 @@ export const getSystemHooks = () => getHooks( KEY )
 
 export const getSystemConfig = () => ( { ...FL_ASSISTANT_CONFIG } )
 
-export { useAppList, getSystemHistory }
+export { useAppList }
 
 
 // Set up Counts

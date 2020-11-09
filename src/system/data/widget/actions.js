@@ -23,3 +23,8 @@ export const deleteWidget = ( layout, id ) => ( {
 	layout,
 	id
 } )
+
+export const resetWidgets = ( layout ) => ( {
+	type: 'RESET_WIDGETS',
+	layout,
+} )

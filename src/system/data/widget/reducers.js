@@ -67,6 +67,11 @@ export const layouts = ( state = {}, action ) => {
 			}
 		}
 		return state
+	case 'RESET_WIDGETS':
+		return {
+			...state,
+			[ action.layout ]: [ ...state.default ]
+		}
 	default:
 		return state
 	}

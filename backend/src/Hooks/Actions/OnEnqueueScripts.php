@@ -77,12 +77,12 @@ class OnEnqueueScripts {
 		}
 
 		return [
-			'appOrder'           => $user_state['appOrder'],
 			'shouldReduceMotion' => false, /* Disabled */
+			'shouldShowLabels'   => false, /* Disabled */
+			'appOrder'           => $user_state['appOrder'],
 			'appearance'         => $user_state['appearance'],
 			'history'            => $user_state['history'],
 			'searchHistory'      => $user_state['searchHistory'],
-			'shouldShowLabels'   => false, /* Disabled */
 			'window'             => $user_state['window'],
 			'isAppHidden'        => $user_state['isAppHidden'] ? true : false,
 			'hasSubscribed'      => isset( $user_state['hasSubscribed'] ) && $user_state['hasSubscribed'] ? true : false,
@@ -110,7 +110,7 @@ class OnEnqueueScripts {
 			'contentStatus'     => $this->posts->get_stati(),
 			'currentPageView'   => $this->site->get_current_view(),
 			'currentUser'       => $current_user,
-			'defaultAppName'    => 'fl-dashboard',
+			'defaultAppName'    => 'fl-home',
 			'emptyTrashDays'    => EMPTY_TRASH_DAYS,
 			'isShowingAdminBar' => is_admin_bar_showing(),
 			'isAdmin'           => is_admin(),
@@ -186,6 +186,7 @@ class OnEnqueueScripts {
 		$ver = FL_ASSISTANT_VERSION;
 
 		// Bundled vendors
+		// These vendors are special in that they attache a global reference to themselves on the FL.vendors object.
 		// classnames
 		wp_register_script( 'classnames', $url . 'build/vendor-classnames.js', [], $ver, false );
 
@@ -248,6 +249,7 @@ class OnEnqueueScripts {
 				'wp-components'
 			];
 
+			// System - loaded in header
 			wp_enqueue_style( 'fl-assistant', $url . 'build/system.css', $css_deps, $ver, null );
 			wp_enqueue_script( 'fl-assistant', $url . 'build/system.js', $js_deps, $ver, false );
 

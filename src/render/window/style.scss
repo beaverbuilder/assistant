@@ -249,6 +249,7 @@
         right: 0;
     }
 }
+
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
     .fluid {
         .fl-asst-window-backdrop {

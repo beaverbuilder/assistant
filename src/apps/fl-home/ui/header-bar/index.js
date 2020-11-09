@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Layout, Form, Icon, Button, Menu, Widget } from 'assistant/ui'
 import { AnimatePresence } from 'framer-motion'
+import { Layout, Form, Icon, Button, Menu, Widget } from 'assistant/ui'
+import { getWidgetActions } from 'assistant/data'
 import SearchSuggestions from './search-suggestions'
 import Help from './help'
 import './style.scss'
@@ -42,6 +43,7 @@ const HeaderBar = ( {
 	}
 
 	const MenuContent = () => {
+		const { resetWidgets } = getWidgetActions()
 		return (
 			<>
 				<Menu.Item
@@ -50,6 +52,12 @@ const HeaderBar = ( {
 						setIsShowingMoreMenu( false )
 					} }
 				>{ __( 'Show Widget Library' ) }</Menu.Item>
+				<Menu.Item
+					onClick={ () => {
+						resetWidgets( 'home' )
+						setIsShowingMoreMenu( false )
+					} }
+				>{ __( 'Reset Widgets' ) }</Menu.Item>
 			</>
 		)
 	}
