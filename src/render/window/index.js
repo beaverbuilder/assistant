@@ -245,7 +245,7 @@ const WindowLayer = ( {
 		display: 'flex',
 		flexDirection: 'column',
 		position: 'absolute',
-		top: isMobile ? 0 : adminBarSize() + ( pad - 3 ),
+		top: isMobile ? 0 : adminBarSize() + pad,
 		bottom: windowY ? pad : pad,
 		right: windowX ? pad : 'auto',
 		left: windowX ? 'auto' : pad,

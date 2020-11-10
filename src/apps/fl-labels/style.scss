@@ -24,7 +24,7 @@
 
 	.fl-asst-table-cell-edit {
 		padding: var(--fl-asst-outer-space) !important;
-		box-shadow: inset 3px 0px 0px var(--fluid-color), 0px 3px 20px 3px rgba(0, 0, 0, 0.15);
+		box-shadow: 0px 3px 20px 3px rgba(0, 0, 0, 0.15);
 		margin: 10px calc( 0px - var(--fluid-lg-space) );
 
 		.fl-asst-circle-picker {
@@ -39,6 +39,13 @@
 
 		input {
 			margin-right: var(--fl-asst-tiny-space);
+		}
+	}
+}
+.fluid-color-scheme-dark {
+	.fl-asst-edit-labels {
+		.fl-asst-table-cell-edit {
+			background: var(--fluid-opaque-3);
 		}
 	}
 }

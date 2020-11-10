@@ -46,12 +46,12 @@ const HeaderBar = ( {
 		const { resetWidgets } = getWidgetActions()
 		return (
 			<>
-				<Menu.Item
+				{ ! __PRODUCTION__ && <Menu.Item
 					onClick={ () => {
 						setIsShowingWidgetLib( true )
 						setIsShowingMoreMenu( false )
 					} }
-				>{ __( 'Show Widget Library' ) }</Menu.Item>
+				>{ __( 'Show Widget Library' ) }</Menu.Item> }
 				<Menu.Item
 					onClick={ () => {
 						resetWidgets( 'home' )

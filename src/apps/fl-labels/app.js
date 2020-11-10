@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
-import { App, Color, Control, Page, Layout, Button, Icon } from 'assistant/ui'
+import { App, Color, Control, Page, Layout, Button, Icon, Text } from 'assistant/ui'
 import { getSystemHooks } from 'assistant/data'
 import AppIcon from './icon'
 import './style.scss'
@@ -128,7 +128,7 @@ const Main = () => {
 			return {
 				edit: (
 					<>
-						<h2>Edit Label</h2>
+						<Text.Title style={ { marginBottom: 'var(--fluid-med-space)' } }>{__( 'Edit Label' )}</Text.Title>
 						<input
 							type='text'
 							value={ editingLabel.label }
@@ -177,14 +177,14 @@ const Main = () => {
 						onClick={ () => setEditingLabel( label ) }
 						title={ __( 'Edit Label Text' ) }
 						style={ { marginRight: 5 } }
-					><Icon.Edit /></Button>
+						icon={ <Icon.Edit /> }
+					/>
 					<Button
 						onClick={ () => deleteLabel( label.id ) }
 						status="destructive"
 						title={ __( 'Delete Label' ) }
-					>
-						<Icon.Trash />
-					</Button>
+						icon={ <Icon.Trash /> }
+					/>
 				</>
 			),
 		}
