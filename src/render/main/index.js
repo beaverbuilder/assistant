@@ -43,25 +43,31 @@ const FLUIDAppearanceRoot = ( {
  */
 export const Assistant = () => {
 	const {
+		window: { isHidden = false, hiddenAppearance = '' },
 		appearance: { brightness = 'light' },
 		isAppHidden
 	} = useSystemState( ( a, b ) => (
 		a.appearance.brightness !== b.appearance.brightness ||
-		a.isAppHidden !== b.isAppHidden
+		a.isAppHidden !== b.isAppHidden ||
+		a.window.isHidden !== b.window.isHidden
 	) )
 	const windowClasses = classname( {
 		'fl-asst-window-sidebar-only': isAppHidden
 	} )
 
+	const renderDOM = ! isHidden || 'admin_bar' !== hiddenAppearance
+
 	return (
 		<AppCoreRoot router={ AssistantRouter } >
 			<HistoryManager />
 			<Env.Provider>
-				<FLUIDAppearanceRoot colorScheme={ brightness }>
-					<MainWindow className={ windowClasses }>
-						<AppMain />
-					</MainWindow>
-				</FLUIDAppearanceRoot>
+				{ renderDOM && (
+					<FLUIDAppearanceRoot colorScheme={ brightness }>
+						<MainWindow className={ windowClasses }>
+							<AppMain />
+						</MainWindow>
+					</FLUIDAppearanceRoot>
+				) }
 			</Env.Provider>
 		</AppCoreRoot>
 	)
