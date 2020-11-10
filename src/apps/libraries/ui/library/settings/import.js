@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Button } from 'assistant/ui'
+import { getWpRest } from 'assistant/utils/wordpress'
 
 export default () => {
 	const { items } = Libraries.LibraryContext.use()
@@ -10,9 +11,22 @@ export default () => {
 
 	useEffect( () => {
 		if ( null !== currentItem ) {
-			setTimeout( importNextItem, 2000 )
+			importCurrentItem()
 		}
 	}, [ currentItem ] )
+
+	const importCurrentItem = () => {
+		const item = items[ currentItem ]
+		const wpRest = getWpRest()
+
+		if ( 'color' === item.type ) {
+			importNextItem()
+		} else if ( 'post' === item.type ) {
+			wpRest.posts().importFromLibrary( item.id ).finally( importNextItem )
+		} else {
+			wpRest.libraries().importItem( item ).finally( importNextItem )
+		}
+	}
 
 	const importNextItem = () => {
 		const nextItem = null === currentItem ? 0 : currentItem + 1
