@@ -213,7 +213,7 @@ export const Attachment = () => {
 		defaults,
 	} )
 
-	const Hero = () => {
+	const Hero = props => {
 		const { width, sizes, height, alt, type, url, mime } = item
 		const srcSet = getSrcSet( sizes )
 
@@ -231,7 +231,7 @@ export const Attachment = () => {
 		}
 
 		return (
-			<Layout.AspectBox height={ height } width={ width }>{mediaContent}</Layout.AspectBox>
+			<Layout.AspectBox height={ height } width={ width } { ...props }>{mediaContent}</Layout.AspectBox>
 		)
 	}
 
@@ -239,9 +239,11 @@ export const Attachment = () => {
 		<Page
 			id="fl-asst-attachment-detail"
 			title={ __( 'Attachment' ) }
-			hero={ <Hero /> }
 			footer={ hasChanges && <Footer /> }
 		>
+			<div style= { { margin: '-20px -20px 20px' } } >
+				<Hero />
+			</div>
 			<Layout.Headline>{title}</Layout.Headline>
 			{renderForm()}
 		</Page>

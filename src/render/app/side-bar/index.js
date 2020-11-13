@@ -115,6 +115,9 @@ const Sidebar = memo( () => {
 						onClick={ () => toggleIsShowingUI( false ) }
 						className="fl-asst-sidebar-close-button"
 						title={ __( 'Hide Panel' ) }
+						shape="round"
+						size="lg"
+						style={ { margin: '0 auto' } }
 					>
 						<Icon.Close />
 					</Button>
@@ -174,6 +177,9 @@ const Sidebar = memo( () => {
 				<div className="fl-asst-sidebar-cell disable-while-sorting">
 					<Button
 						appearance="transparent"
+						shape="round"
+						size="lg"
+						style={ { margin: '0 auto' } }
 						onClick={ toggleWindowSize }
 						title={ 'mini' === window.size ? __( 'Expand Panel' ) : __( 'Collapse Panel' ) }
 					>
