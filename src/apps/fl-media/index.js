@@ -4,28 +4,18 @@ import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
 import Icon from './icon'
+import { defaultState, effects } from './data'
 
 const App = lazy( () => import(
 	/* webpackChunkName: "app-media" */ './app'
 ) )
 
-export const defaultState = {
-	listStyle: 'grid',
-	query: {
-		post_mime_type: 'all',
-		order: 'DESC',
-		orderby: 'date',
-		label: '0',
-	}
-}
-
 registerApp( 'fl-media', {
 	label: __( 'Media' ),
 	root: App,
 	icon: Icon,
-	state: {
-		...defaultState,
-	},
+	state: { ...defaultState },
+	effects,
 	search: {
 		label: __( 'Media' ),
 		priority: 100,
@@ -36,11 +26,7 @@ registerApp( 'fl-media', {
 				offset,
 			} )
 		},
-		format: items => {
-			return items.map( item => ( {
-				...item,
-			} ) )
-		},
+		format: items => items.map( item => ( { ...item } ) ),
 		detail: {
 			component: Page.Attachment,
 			path: '/attachment/:id',

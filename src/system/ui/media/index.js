@@ -1,6 +1,5 @@
 import React from 'react'
-import { Icon } from 'ui'
-import { registerStore, useStore, getStore, getDispatch } from 'data/registry'
+import { registerStore, getStore, getDispatch } from 'data/registry'
 import { getWpRest } from 'utils/wordpress'
 import './style.scss'
 import { FileDropListener } from './drop-listener'
@@ -16,7 +15,6 @@ registerStore( 'fl-media/uploader', {
 
 export const Uploader = ( { children } ) => {
 
-	const { current, items } = useStore( 'fl-media/uploader' )
 	const { setCurrent, setItems } = getDispatch( 'fl-media/uploader' )
 	const wpRest = getWpRest()
 	const onFilesDropped = files => {
@@ -55,10 +53,7 @@ export const Uploader = ( { children } ) => {
 		} ).catch( ( error ) => {
 			onError( error )
 		} )
-
-
 	}
-
 
 	const onSuccess = () => {
 		const { current, items } = getStore( 'fl-media/uploader' ).getState()
@@ -72,16 +67,6 @@ export const Uploader = ( { children } ) => {
 	const onError = () => {
 		uploadNextItem()
 		alert( 'Error uploading media file.', { appearance: 'error' } )
-	}
-
-	if ( current ) {
-		return (
-
-			<div className="fl-asst-file-uploading-text fl-asst-file-drop-file-wrapper">
-				<Icon.Loading /> Uploading {current} of {items.length}
-			</div>
-
-		)
 	}
 
 	return (

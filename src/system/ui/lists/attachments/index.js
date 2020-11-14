@@ -134,6 +134,7 @@ const Attachments = ( {
 
 					return {
 						...defaultProps,
+						thumbnailSize: 'lg',
 						thumbnail: item.isTrashed ? '' : ( null !== item.thumbnail ? item.thumbnail : <ThumbIcon /> ),
 						shouldAlwaysShowThumbnail: true,
 						label: item.title ? item.title : __( 'Untitled' ),

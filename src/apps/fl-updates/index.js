@@ -19,9 +19,6 @@ registerApp( 'fl-updates', {
 	root: App,
 	icon: Icon,
 	enabled: currentUserCan( 'update_plugins' ) && currentUserCan( 'update_themes' ),
-	accent: {
-		color: '#00D281'
-	},
 	state: {
 		...defaultState,
 	}

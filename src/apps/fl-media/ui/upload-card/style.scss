@@ -1,0 +1,14 @@
+.fl-asst {
+	.fl-asst-upload-card {
+		background: var(--fluid-transparent-12);
+		padding: 20px;
+		border-radius: var(--fluid-radius);
+		margin: var(--fluid-med-space) var(--fluid-med-space) 0;
+	}
+}
+.fluid-color-scheme-dark {
+	.fl-asst-upload-card {
+		background: var(--fluid-transparent-1);
+		color: var(--fluid-color);
+	}
+}

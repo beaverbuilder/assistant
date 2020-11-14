@@ -14,6 +14,11 @@
     }
     .fl-asst-grid-list-item {
 
+        &:hover {
+            box-shadow: 0 0 0 3px var(--fluid-background),
+                        0 0 0 6px var(--fluid-blue) !important;
+        }
+
         &.fl-asst-grid-item-is-favorite {
             grid-column-end: span 2;
             grid-row-end: span 2;
@@ -27,7 +32,8 @@
             color: var(--fluid-color);
 
             .fluid-button {
-                width: 32px;
+                flex: 1 1 auto;
+                min-width: 32px;
                 padding: 0 2px;
             }
 

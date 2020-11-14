@@ -82,7 +82,7 @@ export const LabelsItem = ( {
 						onClick={ () => setIsMenuShowing( ! isMenuShowing ) }
 					>
 						<span style={ { marginRight: 'var(--fluid-med-space)' } }>
-							<Icon.Plus />
+							<Icon.PlusSmall />
 						</span>
 						{ __( 'Add Label' ) }
 					</Button>

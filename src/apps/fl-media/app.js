@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { App, Page, List, Filter } from 'assistant/ui'
+import { App, Page, List, Filter, Button, Icon } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
-import { defaultState } from './'
+import { defaultState, useMediaUploads } from './data'
+import { UploadCard } from './ui'
 import AppIcon from './icon'
 import './style.scss'
 
@@ -19,6 +20,8 @@ export default props => (
 const Main = ( { baseURL } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
+	const [ showUpload, setShowUpload ] = useState( true )
+	const { files, uploadFiles } = useMediaUploads()
 
 	const MediaFilter = () => {
 
@@ -91,7 +94,30 @@ const Main = ( { baseURL } ) => {
 		)
 	}
 
-	const onLoad = () => {
+	const UploadButton = () => (
+		<Button
+			isSelected={ showUpload }
+			shape="round"
+			icon={ <Icon.Plus /> }
+			onClick={ () => setShowUpload( ! showUpload ) }
+		/>
+	)
+
+	const Before = () => {
+		return (
+			<>
+				<MediaFilter />
+				{ showUpload && (
+					<UploadCard
+						files={ files }
+						onInput={ uploadFiles }
+					/>
+				) }
+			</>
+		)
+	}
+
+	const focusFirstButton = () => {
 		const item = document.querySelector( '.fl-asst-filter .fluid-button' )
 		if ( item ) {
 			item.focus()
@@ -101,19 +127,20 @@ const Main = ( { baseURL } ) => {
 	return (
 		<Page
 			title={ __( 'Media' ) }
-			icon={ <AppIcon context="sidebar" /> }
+			icon={ <AppIcon /> }
 			shouldShowBackButton={ false }
 			padX={ false }
 			padY={ false }
 			shouldScroll={ false }
-			onLoad={ onLoad }
+			onLoad={ focusFirstButton }
+			actions={ <UploadButton /> }
 		>
 			<List.Attachments
+				before={ <Before /> }
 				key={ listStyle }
 				baseURL={ baseURL }
 				query={ query }
 				listStyle={ listStyle }
-				before={ <MediaFilter /> }
 			/>
 		</Page>
 	)

@@ -18,7 +18,7 @@ registerApp( 'fl-comments', {
 	root: CommentsApp,
 	icon: Icon,
 	enabled: currentUserCan( 'moderate_comments' ),
-	state: defaultState,
+	state: { ...defaultState },
 	search: {
 		label,
 		priority: 300,

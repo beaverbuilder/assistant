@@ -1,6 +1,6 @@
 .fluid {
     .fl-asst-filter {
-        padding: var(--fluid-sm-space);
+        padding: var(--fluid-med-space);
         flex: 0 0 auto;
         margin: 0;
 
@@ -56,12 +56,12 @@
     .fl-asst-filter-more {
         display: flex;
         flex-direction: column;
-        padding: 0 var(--fluid-sm-space);
+        padding: 0 var(--fluid-med-space);
         margin: -5px 0;
 
         .fluid-button {
             padding: var(--fluid-sm-space);
-            border-radius: 3px;
+            border-radius: var(--fluid-radius);
             opacity: .5;
             z-index: 2;
             min-height: 24px;

@@ -231,7 +231,14 @@ export const Attachment = () => {
 		}
 
 		return (
-			<Layout.AspectBox height={ height } width={ width } { ...props }>{mediaContent}</Layout.AspectBox>
+			<Layout.AspectBox
+				className="fl-asst-hero-image"
+				height={ height }
+				width={ width }
+				{ ...props }
+			>
+				{mediaContent}
+			</Layout.AspectBox>
 		)
 	}
 

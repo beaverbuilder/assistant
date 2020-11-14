@@ -21,15 +21,17 @@
     }
 
     .fl-asst-list.fl-asst-grid-list {
+
+        --spacing: 10px;
         display: grid;
-        grid-gap: 5px;
+        grid-gap: var(--spacing);
         grid-template-columns: repeat(2, 1fr);
-        padding: var(--fl-asst-outer-space);
+        padding: var(--spacing);
 
         .fl-asst-grid-list-item {
             width: 100%;
             border: none;
-            border-radius: 3px;
+            border-radius: var(--fluid-radius);
             overflow: hidden;
 
             &:focus {
