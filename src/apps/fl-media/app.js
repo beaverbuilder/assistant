@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { App, Page, List, Filter, Button, Icon } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
 import { defaultState, useMediaUploads } from './data'
-import { UploadCard } from './ui'
+import { UploadCard, FileList } from './ui'
 import AppIcon from './icon'
 import './style.scss'
 
@@ -20,7 +20,7 @@ export default props => (
 const Main = ( { baseURL } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
-	const [ showUpload, setShowUpload ] = useState( true )
+	const [ showUpload, setShowUpload ] = useState( false )
 	const { files, uploadFiles } = useMediaUploads()
 
 	const MediaFilter = () => {
@@ -107,18 +107,14 @@ const Main = ( { baseURL } ) => {
 		return (
 			<>
 				<MediaFilter />
-				{ showUpload && (
-					<UploadCard
-						files={ files }
-						onInput={ uploadFiles }
-					/>
-				) }
+				{ showUpload && <UploadCard onInput={ uploadFiles } /> }
+				{ 0 < files.length && <FileList files={ files } />}
 			</>
 		)
 	}
 
 	const focusFirstButton = () => {
-		const item = document.querySelector( '.fl-asst-filter .fluid-button' )
+		const item = document.querySelector( '.fluid-button' )
 		if ( item ) {
 			item.focus()
 		}
@@ -137,7 +133,7 @@ const Main = ( { baseURL } ) => {
 		>
 			<List.Attachments
 				before={ <Before /> }
-				key={ listStyle }
+				key={ listStyle + files.length }
 				baseURL={ baseURL }
 				query={ query }
 				listStyle={ listStyle }

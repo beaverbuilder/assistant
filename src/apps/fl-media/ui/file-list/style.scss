@@ -1,0 +1,20 @@
+.fl-asst {
+	.fl-asst-file-list {
+		background: var(--fluid-transparent-12);
+		padding: var(--fluid-lg-space);
+		border-radius: var(--fluid-radius);
+		margin: var(--fluid-med-space) var(--fluid-med-space) 0;
+
+		li {
+			min-height: 36px;
+			display: flex;
+			align-items: center;
+		}
+	}
+}
+.fluid-color-scheme-dark {
+	.fl-asst-file-list {
+		background: var(--fluid-transparent-1);
+		color: var(--fluid-color);
+	}
+}

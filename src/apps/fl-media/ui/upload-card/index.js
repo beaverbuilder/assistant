@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import './style.scss'
 
-const UploadCard = ( { files = [], onInput = () => {} } ) => {
+const UploadCard = ( { onInput = () => {} } ) => {
 	return (
 		<div className="fl-asst-upload-card">
 			<p style= { { textAlign: 'center' } } >{ __( 'Upload Media' ) }</p>
@@ -12,16 +12,6 @@ const UploadCard = ( { files = [], onInput = () => {} } ) => {
 				accept="image/jpg,image/gif,image/png,image/svg+xml"
 				onInput={ e => onInput( e.target.files ) }
 			/>
-			<ul>
-				{ files.map( ( file, i ) => {
-
-					return (
-						<li key={ i }>
-							{file.name}
-						</li>
-					)
-				} ) }
-			</ul>
 		</div>
 	)
 }
