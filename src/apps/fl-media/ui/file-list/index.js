@@ -10,7 +10,9 @@ const FileList = ( { files = [], current } ) => {
 	}
 	*/
 
-	if ( current >= files.length ) {
+	console.log( 'files', files.length, current )
+
+	if ( current > files.length ) {
 		return null
 	}
 
