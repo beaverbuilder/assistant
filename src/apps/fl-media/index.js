@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
 import Icon from './icon'
-import { defaultState } from './data'
+import { defaultState, cache } from './data'
 
 const App = lazy( () => import(
 	/* webpackChunkName: "app-media" */ './app'
@@ -32,4 +32,5 @@ registerApp( 'fl-media', {
 			pathname: ( { id } ) => `/attachment/${ id }`
 		},
 	},
+	cache
 } )

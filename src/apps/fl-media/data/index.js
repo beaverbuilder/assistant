@@ -7,3 +7,5 @@ export const defaultState = {
 		label: '0',
 	}
 }
+
+export const cache = [ 'listStyle', 'query' ]

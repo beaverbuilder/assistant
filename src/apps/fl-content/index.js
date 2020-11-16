@@ -23,11 +23,14 @@ export const defaultState = {
 	}
 }
 
+export const cache = [ 'listStyle', 'query' ]
+
 registerApp( 'fl-content', {
 	label: __( 'Content' ),
 	root: App,
 	icon: Icon,
 	state: { ...defaultState },
+	cache,
 	search: Object.entries( contentTypes ).map( ( [ type, data ], key ) => {
 		return {
 			label: data.labels.plural,
