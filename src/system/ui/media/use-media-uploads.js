@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
-import { useStore, getStore, getDispatch } from 'assistant/data'
-import { getWpRest } from 'assistant/utils/wordpress'
+import { useStore, getStore, getDispatch } from 'data'
+import { getWpRest } from 'utils/wordpress'
 
 const key = 'fl-media/uploader'
 
@@ -35,26 +35,15 @@ const useMediaUploads = () => {
 
 		wpRest.attachments()
 			.create( data )
-			.then( onSuccess )
-			.catch( onError )
-	}
-
-	const onSuccess = () => {
-		const { items } = getStore( key ).getState()
-		uploadNext()
-
-		if ( current === items.length ) {
-			alert( __( 'Media upload complete!' ) )
-		}
-	}
-
-	const onError = err => {
-		console.error( err )
-		uploadNext()
+			.catch( () => {
+				alert( __( 'Error uploading media file.' ), { appearance: 'error' } )
+			} )
+			.finally( () => uploadNext() )
 	}
 
 	return {
 		files: items,
+		current,
 		uploadFiles
 	}
 }

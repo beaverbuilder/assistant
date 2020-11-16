@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 
@@ -40,7 +40,6 @@ export const useFileDrop = ( handleDrop = () => { } ) => {
 		if ( e.dataTransfer.files && 0 < e.dataTransfer.files.length ) {
 			handleDrop( e.dataTransfer.files )
 		}
-
 		setIsDragging( false )
 	}
 
@@ -55,11 +54,13 @@ export const useFileDrop = ( handleDrop = () => { } ) => {
 	}
 }
 
-const DraggingView = () => {
+const DraggingView = ( {
+	children = __( 'Drop files to begin uploading.' ),
+	className,
+	...rest
+} ) => {
 	return (
-
-		<div className="fl-asst-file-drop-file-wrapper">{__( 'Drop files to begin uploading.' )}</div>
-
+		<div className={ classname( 'fl-asst-file-drop-file-wrapper', className ) } { ...rest }>{ children }</div>
 	)
 }
 
@@ -88,11 +89,9 @@ export const FileDropListener = props => {
 	}
 
 	return (
-		<Fragment>
-			<div { ...merged }>
-				<div className="fl-asst-file-drop-content-view">{children}</div>
-				{ isDragging && <div className="fl-asst-file-drop-dragging-view">{draggingView}</div> }
-			</div>
-		</Fragment>
+		<div { ...merged }>
+			<div className="fl-asst-file-drop-content-view">{children}</div>
+			{ isDragging && <div className="fl-asst-file-drop-dragging-view">{draggingView}</div> }
+		</div>
 	)
 }

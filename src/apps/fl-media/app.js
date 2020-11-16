@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { App, Page, List, Filter, Button, Icon } from 'assistant/ui'
+import { App, Page, List, Filter, Button, Icon, Media } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
-import { defaultState, useMediaUploads } from './data'
+import { defaultState } from './data'
 import { UploadCard, FileList } from './ui'
 import AppIcon from './icon'
 import './style.scss'
@@ -21,7 +21,7 @@ const Main = ( { baseURL } ) => {
 	const { listStyle, query } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
 	const [ showUpload, setShowUpload ] = useState( false )
-	const { files, uploadFiles } = useMediaUploads()
+	const { files, uploadFiles, current } = Media.useMediaUploads()
 
 	const MediaFilter = () => {
 
@@ -113,7 +113,7 @@ const Main = ( { baseURL } ) => {
 						onDismiss={ () => setShowUpload( false ) }
 					/>
 				) }
-				{ 0 < files.length && <FileList files={ files } />}
+				{ 0 < files.length && <FileList files={ files } current={ current } />}
 			</>
 		)
 	}
@@ -138,7 +138,7 @@ const Main = ( { baseURL } ) => {
 		>
 			<List.Attachments
 				before={ <Before /> }
-				key={ listStyle + files.length }
+				key={ listStyle + current }
 				baseURL={ baseURL }
 				query={ query }
 				listStyle={ listStyle }

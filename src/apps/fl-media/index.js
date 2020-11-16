@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
 import Icon from './icon'
-import { defaultState, effects } from './data'
+import { defaultState } from './data'
 
 const App = lazy( () => import(
 	/* webpackChunkName: "app-media" */ './app'

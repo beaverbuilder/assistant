@@ -1,76 +1,18 @@
+import './store'
 import React from 'react'
-import { registerStore, getStore, getDispatch } from 'data/registry'
-import { getWpRest } from 'utils/wordpress'
-import './style.scss'
 import { FileDropListener } from './drop-listener'
+import useMediaUploads from './use-media-uploads'
+import './style.scss'
 
-const Media = {}
-
-registerStore( 'fl-media/uploader', {
-	state: {
-		current: 0,
-		items: [],
-	}
-} )
+const Media = {
+	useMediaUploads
+}
 
 export const Uploader = ( { children } ) => {
-
-	const { setCurrent, setItems } = getDispatch( 'fl-media/uploader' )
-	const wpRest = getWpRest()
-	const onFilesDropped = files => {
-		const { current, items } = getStore( 'fl-media/uploader' ).getState()
-
-		for ( let i = 0; i < files.length; i++ ) {
-			items.push( files.item( i ) )
-		}
-
-		setItems( [ ...items ] )
-
-		if ( ! current ) {
-
-			uploadNextItem()
-		}
-	}
-
-	const uploadNextItem = () => {
-
-		const { current, items } = getStore( 'fl-media/uploader' ).getState()
-		const file = items[current]
-		const data = new FormData()
-
-		if ( ! file ) {
-			setItems( [] )
-			setCurrent( 0 )
-			return
-		}
-
-		setCurrent( current + 1 )
-
-		data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
-
-		wpRest.attachments().create( data ).then( response => {
-			onSuccess( response )
-		} ).catch( ( error ) => {
-			onError( error )
-		} )
-	}
-
-	const onSuccess = () => {
-		const { current, items } = getStore( 'fl-media/uploader' ).getState()
-		uploadNextItem()
-		if ( current === items.length ) {
-			alert( 'Media upload complete!' )
-
-		}
-	}
-
-	const onError = () => {
-		uploadNextItem()
-		alert( 'Error uploading media file.', { appearance: 'error' } )
-	}
+	const { uploadFiles } = useMediaUploads()
 
 	return (
-		<FileDropListener onDrop={ onFilesDropped }>
+		<FileDropListener onDrop={ uploadFiles }>
 			{children}
 		</FileDropListener>
 	)

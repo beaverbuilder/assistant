@@ -122,6 +122,15 @@ const Attachments = ( {
 					const ThumbIcon = () => {
 						const { type, subtype, thumbnail } = item
 						const isDocument = ( 'application' === type || ( 'pdf' === subtype && ! thumbnail ) )
+
+						if ( item.isTrashed ) {
+							return (
+								<div className="fl-asst-list-thumb-icon" style={ { color: 'var(--fluid-destructive-color)' } }>
+									<Icon.Trash />
+								</div>
+							)
+						}
+
 						return (
 							<div className="fl-asst-list-thumb-icon">
 								{ 'video' === type && <Icon.Video /> }
@@ -134,7 +143,7 @@ const Attachments = ( {
 					return {
 						...defaultProps,
 						thumbnailSize: 'lg',
-						thumbnail: item.isTrashed ? '' : ( null !== item.thumbnail ? item.thumbnail : <ThumbIcon /> ),
+						thumbnail: ( null !== item.thumbnail && ! item.isTrashed ) ? item.thumbnail : <ThumbIcon />,
 						shouldAlwaysShowThumbnail: true,
 						label: item.title ? item.title : __( 'Untitled' ),
 						description: item.isTrashed ? '' : item.type + ' | ' + item.subtype,

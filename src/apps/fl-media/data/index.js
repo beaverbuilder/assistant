@@ -1,5 +1,3 @@
-import useMediaUploads from './use-media-uploads'
-
 export const defaultState = {
 	listStyle: 'grid',
 	query: {
@@ -9,12 +7,3 @@ export const defaultState = {
 		label: '0',
 	}
 }
-
-export const effects = {
-	after: {
-		SET_LISTSTYLE: () => console.log( 'set list style' ),
-		SET_QUERY: () => console.log( 'set query' )
-	}
-}
-
-export { useMediaUploads }
