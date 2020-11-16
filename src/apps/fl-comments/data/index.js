@@ -4,6 +4,8 @@ export const defaultState = {
 	type: 'hold',
 }
 
+export const cache = [ 'type' ]
+
 export const defaultStatus = 'hold'
 
 export const statuses = {

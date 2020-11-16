@@ -12,6 +12,10 @@
                 flex: 1 1 auto;
                 padding: 0;
 
+                &:hover {
+                    transform: scale(1); // override button hover effect
+                }
+
                 & > span {
                     padding: 10px;
                     flex: 1 1 auto;
