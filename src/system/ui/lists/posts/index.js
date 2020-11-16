@@ -238,8 +238,21 @@ export const Posts = ( {
 }
 
 const BigThumbnail = ( { item } ) => {
-	if ( ! item.thumbnail ) {
-		return null
+
+	const Wrap = props => (
+		<div
+			style={ { padding: '0 var(--fluid-lg-space) var(--fluid-med-space)' } }
+			{ ...props }
+		/>
+	)
+
+	if ( ! item.thumbnailData ) {
+		return (
+			<Wrap>
+				<Layout.AspectBox ratio="5:3">
+				</Layout.AspectBox>
+			</Wrap>
+		)
 	}
 
 	const {
@@ -250,11 +263,12 @@ const BigThumbnail = ( { item } ) => {
 		height,
 		width
 	} = item.thumbnailData
+
 	const srcset = getSrcSet( sizes )
 
 	// This sets up an aspect-ratio box around the image to prevent height changing during img load
 	return (
-		<div style={ { padding: '0 var(--fluid-lg-space) var(--fluid-med-space)' } }>
+		<Wrap>
 			<Layout.AspectBox width={ width } height={ height }>
 				<img
 					src={ thumbnail }
@@ -266,6 +280,6 @@ const BigThumbnail = ( { item } ) => {
 					loading="lazy"
 				/>
 			</Layout.AspectBox>
-		</div>
+		</Wrap>
 	)
 }

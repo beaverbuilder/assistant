@@ -15,7 +15,6 @@ registerApp( 'fl-media', {
 	root: App,
 	icon: Icon,
 	state: { ...defaultState },
-	effects,
 	search: {
 		label: __( 'Media' ),
 		priority: 100,

@@ -1,9 +1,49 @@
 .fl-asst {
 	.fl-asst-upload-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
 		background: var(--fluid-transparent-12);
-		padding: 20px;
+		padding: 30px 20px 20px;
 		border-radius: var(--fluid-radius);
 		margin: var(--fluid-med-space) var(--fluid-med-space) 0;
+
+		.close-action {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
+
+		label {
+			display: inline-flex;
+			position: relative;
+			cursor: pointer;
+			padding: var(--fluid-med-space);
+			border-radius: var(--fluid-radius);
+			background: var(--fluid-blue);
+			color: var(--fluid-opaque-14);
+			min-height: var(--fluid-target-size);
+			margin: auto;
+
+			&:hover {
+				background: var(--fluid-blue-6);
+			}
+
+			&:focus-within {
+				box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
+	                        0px 0px 0px 1.5px var(--fluid-accent);
+			}
+
+			input[type=file] {
+				background: transparent;
+				width: 0.1px;
+				height: 0.1px;
+				opacity: 0;
+				overflow: hidden;
+				position: absolute;
+				z-index: -1;
+			}
+		}
 	}
 }
 .fluid-color-scheme-dark {

@@ -134,7 +134,6 @@ const windowDefaults = {
 	size: 'normal', /* full sidebar */
 	isHidden: false,
 	hiddenAppearance: '',
-	overlayToolbar: false,
 }
 export const window = ( state = windowDefaults, action ) => {
 	switch ( action.type ) {
@@ -144,18 +143,12 @@ export const window = ( state = windowDefaults, action ) => {
 			size: state.size,
 			isHidden: state.isHidden,
 			hiddenAppearance: state.hiddenAppearance,
-			overlayToolbar: state.overlayToolbar,
 			...action.config,
 		}
 	case 'TOGGLE_IS_SHOWING_UI':
 		return {
 			...state,
 			isHidden: ! state.isHidden,
-		}
-	case 'SET_OVERLAY_TOOLBAR':
-		return {
-			...state,
-			overlayToolbar: action.value ? true : false
 		}
 	default:
 		return state
@@ -210,7 +203,7 @@ export const searchHistory = ( state = [], action ) => {
 	}
 }
 
-export const isAppHidden = ( state = true, action ) => {
+export const isAppHidden = ( state = false, action ) => {
 	switch ( action.type ) {
 	case 'SET_IS_APP_HIDDEN':
 		return action.value ? true : false

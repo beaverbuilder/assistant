@@ -2,6 +2,13 @@ import React from 'react'
 import './style.scss'
 
 const FileList = ( { files = [] } ) => {
+
+	/*
+	if ( file.type.startsWith( 'image/' )  ) {
+		file.thumbnail = URL.createObjectURL( file )
+	}
+	*/
+
 	return (
 		<ul className="fl-asst-file-list">
 			{ files.map( file => {
@@ -13,6 +20,7 @@ const FileList = ( { files = [] } ) => {
 								height: 36,
 								marginRight: 10
 							} }
+							src={ URL.createObjectURL( file ) }
 						/>
 						{ file.name }
 					</li>

@@ -1,16 +1,13 @@
 .fl-asst {
-    .fl-asst-attachment-list {
-        .fl-asst-list-item-thumbnail {
-            background: var(--fluid-primary-background);
-            color: var(--fluid-primary-color);
-        }
-    }
     .fl-asst-attachment-grid-item {
         height: 100%;
 
         & > img {
             height: 100%;
         }
+    }
+    .fl-asst-list-thumb-icon {
+        color: var(--fluid-blue);
     }
     .fl-asst-grid-list-item {
 

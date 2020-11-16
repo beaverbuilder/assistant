@@ -120,14 +120,13 @@ const Attachments = ( {
 					}
 
 					const ThumbIcon = () => {
-						const { type } = item
+						const { type, subtype, thumbnail } = item
+						const isDocument = ( 'application' === type || ( 'pdf' === subtype && ! thumbnail ) )
 						return (
-							<div style={ { padding: 5 } }>
+							<div className="fl-asst-list-thumb-icon">
 								{ 'video' === type && <Icon.Video /> }
 								{ 'audio' === type && <Icon.Audio /> }
-								{ 'application' === type && 'pdf' !== item.subtype && (
-									<Icon.Document />
-								)}
+								{ isDocument && <Icon.Document /> }
 							</div>
 						)
 					}
@@ -161,6 +160,8 @@ const Attachments = ( {
 const GridItem = ( { item, extras } ) => {
 	const { type, thumbnail, sizes, alt, title } = item
 
+	const isDocument = ( 'application' === type || ( 'pdf' === item.subtype && ! thumbnail ) )
+
 	const itemExtras = 'function' === typeof extras ? extras() : null
 	const stopProp = e => e.stopPropagation()
 
@@ -172,18 +173,21 @@ const GridItem = ( { item, extras } ) => {
 			smallSizes[key] = sizes[key]
 		}
 	}
-
 	return (
-		<Layout.AspectBox className="fl-asst-attachment-grid-item" style={ { width: '100%' } }>
-			<div style={ {
-				color: 'var(--fluid-primary-color)',
-				display: 'flex',
-				flexDirection: 'column',
-				justifyContent: 'center',
-				alignItems: 'center',
-				opacity: ( item.isTrashed || item.isTrashing ) ? .5 : 1
-			} }>
-				{ ( 'image' === type || 'pdf' === item.subtype ) && (
+		<Layout.AspectBox
+			className="fl-asst-attachment-grid-item" style={ { width: '100%' } }
+		>
+			<div className="fl-asst-list-thumb-icon"
+				style={ {
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center',
+					opacity: ( item.isTrashed || item.isTrashing ) ? .5 : 1
+				} }
+			>
+				{ ( 'image' === type || 'pdf' === item.subtype ) &&
+					thumbnail && (
 					<img
 						src={ thumbnail }
 						srcSet={ getSrcSet( smallSizes ) }
@@ -197,9 +201,7 @@ const GridItem = ( { item, extras } ) => {
 
 				{ 'video' === type && <Image.Video /> }
 				{ 'audio' === type && <Image.Audio /> }
-				{ 'application' === type && 'pdf' !== item.subtype && (
-					<Image.Doc />
-				)}
+				{ isDocument && <Image.Doc /> }
 
 				{ item.title && ( <div className="fl-asst-attachment-item-badge">
 					<span>{item.title}</span>

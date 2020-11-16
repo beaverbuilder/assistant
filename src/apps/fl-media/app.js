@@ -107,14 +107,19 @@ const Main = ( { baseURL } ) => {
 		return (
 			<>
 				<MediaFilter />
-				{ showUpload && <UploadCard onInput={ uploadFiles } /> }
+				{ showUpload && (
+					<UploadCard
+						onInput={ uploadFiles }
+						onDismiss={ () => setShowUpload( false ) }
+					/>
+				) }
 				{ 0 < files.length && <FileList files={ files } />}
 			</>
 		)
 	}
 
 	const focusFirstButton = () => {
-		const item = document.querySelector( '.fluid-button' )
+		const item = document.querySelector( '.fluid-page-content .fluid-button' )
 		if ( item ) {
 			item.focus()
 		}
