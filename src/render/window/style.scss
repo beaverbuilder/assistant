@@ -140,7 +140,7 @@
         left:0;
         bottom:0;
         right:0;
-        z-index: 99999;
+        z-index: 9999999999999; // Yea, cause popup maker pushes the admin bar higher than normal.
 
         background-color: transparent;
         box-shadow: inset 0px 0px 0px 0px white;
@@ -263,4 +263,12 @@
             }
         }
     }
+}
+
+// Elevate WP Media Modal
+div.media-modal-backdrop {
+    
+}
+div.media-modal {
+    z-index: 9999999991;
 }
