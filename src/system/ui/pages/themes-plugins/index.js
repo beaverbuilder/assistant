@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Form, Page, Layout } from 'ui'
+import { Form, Page, Layout, Text } from 'ui'
 import { useLocation } from 'react-router-dom'
 
 export const Plugin = () => {
@@ -69,8 +69,12 @@ export const Plugin = () => {
 	} )
 
 	return (
-		<Page title={ __( 'Plugin' ) } hero={ <Hero /> }>
-			<Layout.Headline>{title}</Layout.Headline>
+		<Page
+			title={ __( 'Plugin' ) }
+			hero={ <Hero /> }
+			padY={ false }
+		>
+			<Text.Title style={ { marginBottom: 10 } }>{title}</Text.Title>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
 		</Page>
@@ -121,8 +125,12 @@ export const Theme = () => {
 	}
 
 	return (
-		<Page title={ __( 'Theme' ) } hero={ <Hero /> }>
-			<Layout.Headline>{title}</Layout.Headline>
+		<Page
+			title={ __( 'Theme' ) }
+			hero={ <Hero /> }
+			padY={ false }
+		>
+			<Text.Title style={ { marginBottom: 10 } }>{title}</Text.Title>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
 		</Page>
