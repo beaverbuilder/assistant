@@ -2,7 +2,6 @@ import React, { Children, useState } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { ToggleLayer } from 'react-laag'
-import ResizeObserver from 'resize-observer-polyfill'
 import { Button, Icon } from '../'
 import { RadioGroupItem, LabelsItem } from './items'
 import './style.scss'
@@ -58,7 +57,6 @@ const Item = ( { title, subtitle, children, hasLoadedItems = true } ) => {
 		<li className="fl-asst-filter-item">
 			<ToggleLayer
 				isOpen={ isOpen }
-				ResizeObserver={ ResizeObserver }
 				placement={ {
 					anchor: 'BOTTOM_LEFT',
 					possibleAnchors: [ 'BOTTOM_LEFT', 'BOTTOM_RIGHT' ],

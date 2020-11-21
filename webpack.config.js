@@ -18,7 +18,6 @@ const alias = {
 	'vendor-classnames': path.resolve( __dirname, './node_modules/classnames/' ),
 	'vendor-framer-motion': path.resolve( __dirname, './node_modules/framer-motion/' ),
 	'vendor-react-laag': path.resolve( __dirname, './node_modules/react-laag/' ),
-	'vendor-resize-observer-polyfill': path.resolve( __dirname, './node_modules/resize-observer-polyfill/' ),
 	'vendor-redux': path.resolve( __dirname, './node_modules/redux/' ),
 	'vendor-html2canvas': path.resolve( __dirname, './node_modules/html2canvas/' ),
 
