@@ -199,6 +199,9 @@ class OnEnqueueScripts {
 		// react-laag
 		wp_register_script( 'react-laag', $url . 'build/vendor-react-laag.js', [ 'react' ], $ver, false );
 
+		// HTML2Canvas
+		wp_register_script( 'html2canvas', $url . 'build/vendor-html2canvas.js', [], $ver, false );
+
 		// @beaverbuilder/app-core
 		wp_register_script( 'bb-app-core', $url . 'build/vendor-bb-app-core.js', [ 'react', 'redux' ], $ver, false );
 
@@ -271,7 +274,7 @@ class OnEnqueueScripts {
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_INITIAL_STATE', $state );
 
 			// Apps - loaded in header
-			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/apps.js', [ 'fl-assistant' ], $ver, false );
+			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/apps.js', [ 'fl-assistant', 'html2canvas' ], $ver, false );
 			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/apps.css', [ 'fl-assistant' ], $ver, null );
 
 			// Render - loaded in footer

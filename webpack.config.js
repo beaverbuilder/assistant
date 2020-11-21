@@ -20,6 +20,7 @@ const alias = {
 	'vendor-react-laag': path.resolve( __dirname, './node_modules/react-laag/' ),
 	'vendor-resize-observer-polyfill': path.resolve( __dirname, './node_modules/resize-observer-polyfill/' ),
 	'vendor-redux': path.resolve( __dirname, './node_modules/redux/' ),
+	'vendor-html2canvas': path.resolve( __dirname, './node_modules/html2canvas/' ),
 
 	// Our @beaverbuilder/ packages
 	'vendor-app-core': path.resolve( __dirname, './node_modules/@beaverbuilder/app-core' ),
@@ -47,6 +48,7 @@ const externals = [
 		'framer-motion': 'FramerMotion',
 		'react-laag': 'ReactLaag',
 		'redux': 'Redux',
+		'html2canvas': 'HTML2Canvas',
 
 		// Our own packages provided as vendors
 		'@beaverbuilder/app-core': 'FL.vendors.BBAppCore',
@@ -82,6 +84,7 @@ const vendors = {
 	'vendor-react-router-dom': './src/vendors/react-router-dom',
 	'vendor-framer-motion': './src/vendors/framer-motion',
 	'vendor-react-laag': './src/vendors/react-laag',
+	'vendor-html2canvas': './src/vendors/html2canvas',
 	'vendor-bb-cloud': './src/vendors/bb-cloud',
 	'vendor-bb-forms': './src/vendors/bb-forms',
 	'vendor-bb-app-core': './src/vendors/bb-app-core',
