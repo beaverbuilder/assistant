@@ -35,13 +35,9 @@ const alias = {
  */
 const externals = [
 	{
-
-		// Vendors provided by WordPress
 		'react': 'React',
 		'react-dom': 'ReactDOM',
 		'lodash': 'lodash',
-
-		// Vendors set up by local fluid bundle
 		'react-router-dom': 'ReactRouterDOM',
 		'classnames': 'classnames',
 		'framer-motion': 'FramerMotion',
@@ -77,6 +73,7 @@ const externals = [
 	},
 ]
 
+// Vendor entry points
 const vendors = {
 	'vendor-classnames': './src/vendors/classnames',
 	'vendor-redux': './src/vendors/redux',

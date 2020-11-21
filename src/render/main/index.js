@@ -85,28 +85,6 @@ export const AssistantCore = () => {
 	)
 }
 
-export const getAssistantBBPanelConfig = () => {
-	const { setHistory } = getSystemActions()
-
-	const getProps = () => {
-
-		//const { history } = getSystemStore().getState()
-		//return getRouterProps( history )
-		return {}
-	}
-
-	return {
-		className: 'fl-asst',
-		label: __( 'Assistant' ),
-		root: AssistantCore,
-
-		/*
-		routerProps: getProps,
-		onHistoryChanged: history => setHistory( history.index, history.entries )
-		*/
-	}
-}
-
 const MainWindow = ( { children, ...rest } ) => {
 	const { window: mainWindow } = useSystemState( 'window' )
 	const { size, origin, isHidden, hiddenAppearance } = mainWindow

@@ -2,7 +2,7 @@ import React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
-import { Assistant, getAssistantBBPanelConfig } from './main'
+import { Assistant, AssistantCore } from './main'
 import renderSkipLink from './skip-link'
 import './admin-bar-item'
 import './style.scss'
@@ -32,15 +32,19 @@ if ( 'FLBuilder' in window ) {
 		FLBuilder.addHook( 'restartEditingSession', unmountAssistant )
 
 		// Setup Assistant panel in Beaver Builder
-		if ( 'Builder' in FL && 'registerApp' in FL.Builder ) {
+		if ( 'Builder' in FL && 'registerPanel' in FL.Builder ) {
 
-			const { registerApp, toggleAppsPanel } = FL.Builder
+			const { registerPanel, togglePanel } = FL.Builder
 
-			registerApp( 'fl-assistant', getAssistantBBPanelConfig() )
+			registerPanel( 'assistant', {
+				className: 'fl-asst fluid fl uid',
+				label: __( 'Assistant' ),
+				root: AssistantCore,
+			} )
 
 			// Setup Trigger Button
 			const button = document.querySelector( '.fl-builder-fl-assistant-button' )
-			button.addEventListener( 'click', () => toggleAppsPanel() )
+			button.addEventListener( 'click', () => togglePanel( 'assistant' ) )
 		}
 
 	} )

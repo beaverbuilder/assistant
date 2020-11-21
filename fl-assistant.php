@@ -17,7 +17,7 @@ define( 'FL_ASSISTANT_VERSION', '0.6.0-beta.0.2' );
 define( 'FL_ASSISTANT_FILE', trailingslashit( __FILE__ ) );
 define( 'FL_ASSISTANT_DIR', plugin_dir_path( FL_ASSISTANT_FILE ) );
 define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
-define( 'FL_ASST_SUPPORTS_BB', false );
+define( 'FL_ASST_SUPPORTS_BB', true );
 
 require_once( __DIR__ . '/backend/autoloader.php' );
 
