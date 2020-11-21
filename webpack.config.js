@@ -42,12 +42,11 @@ const externals = [
 		'lodash': 'lodash',
 
 		// Vendors set up by local fluid bundle
-		'react-router-dom': 'FL.vendors.ReactRouter',
-		'classnames': 'FL.vendors.classnames',
-		'framer-motion': 'FL.vendors.FramerMotion',
-		'react-laag': 'FL.vendors.ReactLaag',
-		'resize-observer-polyfill': 'FL.vendors.ResizeObserver',
-		'redux': 'FL.vendors.Redux',
+		'react-router-dom': 'ReactRouterDOM',
+		'classnames': 'classnames',
+		'framer-motion': 'FramerMotion',
+		'react-laag': 'ReactLaag',
+		'redux': 'Redux',
 
 		// Our own packages provided as vendors
 		'@beaverbuilder/app-core': 'FL.vendors.BBAppCore',
