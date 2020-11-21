@@ -6,6 +6,8 @@
         flex-shrink: 0;
         flex-grow: 0;
         flex-basis: 60px;
+        background: var(--fluid-opaque-13);
+        box-shadow: 0 0 1px var(--fluid-opaque-8);
         cursor: move;
         z-index: 3;
 
@@ -21,6 +23,14 @@
             }
         }
     }
+
+    @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+        .fl-asst-sidebar {
+            background: transparent;
+            box-shadow: none;
+        }
+    }
+
     .fl-asst-is-mobile {
         .fl-asst-sidebar {
             flex-direction: row-reverse;
@@ -162,6 +172,22 @@
         }
         .fl-asst-sidebar-close-button {
             pointer-events: auto;
+        }
+    }
+}
+
+// Dark Mode
+.fluid-color-scheme-dark {
+    .fl-asst-sidebar {
+        background: var(--fluid-opaque-2);
+        box-shadow: 0 0 2px black;
+    }
+}
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .fluid-color-scheme-dark {
+        .fl-asst-sidebar {
+            background: transparent;
+            box-shadow: none;
         }
     }
 }
