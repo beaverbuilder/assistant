@@ -2,7 +2,7 @@ import Placeholder from './placeholder'
 import Beaver from './beaver'
 import Loading from './loading'
 import Error from './error'
-import ArrowLeft from './arrow-left'
+import Arrow, { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from './arrow'
 import Pencil from './pencil'
 import Trash from './trash'
 import Restore from './restore'
@@ -34,10 +34,9 @@ import Cog from './cog'
 import Moon from './moon'
 import Sun from './sun'
 import Expand from './expand'
-import CaretDown from './caret-down'
-import CaretRight from './caret-right'
-import CaretLeft from './caret-left'
-import CaretUp from './caret-up'
+import Caret, { CaretUp, CaretDown, CaretRight, CaretLeft } from './caret'
+import Checkmark from './checkmark'
+import Audio from './audio'
 
 // Aliases
 const BackArrow = ArrowLeft
@@ -47,7 +46,11 @@ export {
 	Beaver,
 	Loading,
 	Error,
+	Arrow,
 	ArrowLeft,
+	ArrowRight,
+	ArrowUp,
+	ArrowDown,
 	BackArrow, // Alias to ArrowLeft
 	Pencil,
 	Trash,
@@ -80,8 +83,11 @@ export {
 	Moon,
 	Sun,
 	Expand,
+	Caret,
 	CaretDown,
 	CaretRight,
 	CaretLeft,
 	CaretUp,
+	Checkmark,
+	Audio,
 }
