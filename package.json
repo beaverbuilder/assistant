@@ -24,7 +24,7 @@
     "@beaverbuilder/fluid": "^0.6.9",
     "@beaverbuilder/fluid-docs": "0.0.3",
     "@beaverbuilder/forms": "^0.3.4",
-    "@beaverbuilder/icons": "0.0.1",
+    "@beaverbuilder/icons": "0.0.2",
     "@popmotion/popcorn": "^0.4.4",
     "@wordpress/i18n": "^3.16.0",
     "array-move": "^3.0.1",
