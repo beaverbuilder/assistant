@@ -22,8 +22,8 @@ const renderNormal = () => {
 
 if ( 'FLBuilder' in window ) {
 
-	if ( 'domReady' in wp ) {
-		wp.domReady( () => {
+	if ( 'addHook' in FLBuilder ) {
+		FLBuilder.addHook( 'didInitUI', () => {
 
 			// Listen for BB publish out (without refresh)
 			FLBuilder.addHook( 'endEditingSession', renderNormal )
@@ -41,9 +41,10 @@ if ( 'FLBuilder' in window ) {
 				// Setup Trigger Button
 				const button = document.querySelector( '.fl-builder-fl-assistant-button' )
 
-				button.addEventListener( 'click', () => togglePanel( 'fl/assistant' ) )
+				if ( button ) {
+					button.addEventListener( 'click', () => togglePanel( 'fl/assistant' ) )
+				}
 			}
-
 		} )
 	}
 } else {
