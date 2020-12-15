@@ -22,30 +22,29 @@ const renderNormal = () => {
 
 if ( 'FLBuilder' in window ) {
 
-	if ( 'domReady' in wp ) {
-		wp.domReady( () => {
+	FLBuilder.addHook( 'didInitUI', () => {
 
-			// Listen for BB publish out (without refresh)
-			FLBuilder.addHook( 'endEditingSession', renderNormal )
+		// Listen for BB publish out (without refresh)
+		FLBuilder.addHook( 'endEditingSession', renderNormal )
 
-			// Listen for BB re-enter editing
-			FLBuilder.addHook( 'restartEditingSession', unmountAssistant )
+		// Listen for BB re-enter editing
+		FLBuilder.addHook( 'restartEditingSession', unmountAssistant )
 
-			// Setup Builder Panel
-			if ( 'Builder' in FL && 'registerPanel' in FL.Builder && 'togglePanel' in FL.Builder ) {
+		// Setup Builder Panel
+		if ( 'Builder' in FL && 'registerPanel' in FL.Builder && 'togglePanel' in FL.Builder ) {
 
-				const { registerPanel, togglePanel } = FL.Builder
+			const { registerPanel, togglePanel } = FL.Builder
 
-				registerPanel( 'fl/assistant', getAssistantBBPanelConfig() )
+			registerPanel( 'fl/assistant', getAssistantBBPanelConfig() )
 
-				// Setup Trigger Button
-				const button = document.querySelector( '.fl-builder-fl-assistant-button' )
+			// Setup Trigger Button
+			const button = document.querySelector( '.fl-builder-fl-assistant-button' )
 
+			if ( button ) {
 				button.addEventListener( 'click', () => togglePanel( 'fl/assistant' ) )
 			}
-
-		} )
-	}
+		}
+	} )
 } else {
 
 	// Render the standard Assistant app - We're not in Beaver Builder
