@@ -12,6 +12,7 @@ const Button = forwardRef( ( props, ref ) => {
 		tag,
 		className,
 		to,
+		type = 'button',
 		href,
 		onClick,
 		isSelected = false,
@@ -57,8 +58,10 @@ const Button = forwardRef( ( props, ref ) => {
 		}
 	} else {
 		newProps.onClick = onClick
+		newProps['type'] = type
 	}
 
+	// TODO just checking
 	return (
 		<Component { ...newProps }>
 			{ ( icon || isLoading ) && (

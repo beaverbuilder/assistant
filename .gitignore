@@ -27,6 +27,7 @@ Thumbs.db
 # IDE generated files
 .vscode
 .idea
+.nova
 
 # nvm
 .nvmrc
