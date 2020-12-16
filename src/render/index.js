@@ -23,7 +23,7 @@ const renderAssistant = () => {
 
 // In Beaver Builder?
 if ( 'FLBuilder' in window ) {
-	wp.domReady( () => {
+	FLBuilder.addHook( 'didInitUI', () => {
 
 		// Listen for BB publish out (without refresh) and render standalone assistant
 		FLBuilder.addHook( 'endEditingSession', renderAssistant )
