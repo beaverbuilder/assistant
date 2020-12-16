@@ -263,12 +263,15 @@
             }
         }
     }
+    // Fix Beaver builder assistant panel background
+    .fl-builder-workspace .fl-asst.fl-builder-workspace-panel {
+        -webkit-backdrop-filter: saturate(250%) blur(50px);
+        backdrop-filter: saturate(250%) blur(50px);
+        background: var(--fluid-transparent-12);
+    }
 }
 
 // Elevate WP Media Modal
-div.media-modal-backdrop {
-    
-}
 div.media-modal {
     z-index: 9999999991;
 }
