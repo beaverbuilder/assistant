@@ -1,7 +1,7 @@
 const webpack = require( 'webpack' )
 const { merge } = require( 'webpack-merge' )
-const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' )
 const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin
+const TerserPlugin = require( 'terser-webpack-plugin' )
 const isProduction = 'production' === process.env.NODE_ENV
 const isAnalyzing = 'analyze' === process.env.NODE_ENV
 
@@ -28,13 +28,13 @@ const sharedWebpackConfig = projectConfig => {
 		devtool: ! isProduction && ! isAnalyzing ? 'cheap-module-source-map' : false,
 		externals: [ wpExternals ],
 		plugins: [
-			new CleanWebpackPlugin(),
 			new webpack.DefinePlugin( {
 				__PRODUCTION__: isProduction,
 			} )
 		],
 		optimization: {
-			minimize: isProduction
+			minimize: isProduction,
+			minimizer: []
 		},
 	}
 
@@ -50,11 +50,11 @@ const sharedWebpackConfig = projectConfig => {
 				'process.env.NODE_ENV': JSON.stringify( 'production' ),
 			} )
 		)
+		config.optimization.minimize = true
+		config.optimization.minimizer.push( new TerserPlugin() )
 	}
 
-	const merged = merge( config, projectConfig )
-
-	return merged
+	return merge( config, projectConfig )
 }
 
 module.exports = sharedWebpackConfig

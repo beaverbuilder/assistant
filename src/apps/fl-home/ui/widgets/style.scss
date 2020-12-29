@@ -6,7 +6,7 @@
 
         display: grid;
         grid-template-columns: repeat( 2, 1fr );
-        grid-gap: var(--fluid-med-space) var(--fluid-lg-space);
+        grid-gap: var(--fluid-lg-space) var(--fluid-lg-space);
         max-width: 100%;
 
         & > li {

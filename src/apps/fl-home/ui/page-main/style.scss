@@ -1,7 +1,7 @@
 .fluid {
 
     #cards {
-        --fl-asst-card-background: var(--fluid-opaque-13);
+        --fl-asst-card-background: var(--fluid-transparent-12);
         background: var(--fl-asst-card-background);
 
         .fluid-page-header {
@@ -32,13 +32,6 @@
             .fluid-page-content {
                 background: var(--fl-asst-card-background);
             }
-        }
-    }
-
-    @supports ( backdrop-filter: none ) {
-        #cards {
-            --fl-asst-card-background: hsla(214, 20%, 100%, 40%);
-            background: transparent;
         }
     }
 }

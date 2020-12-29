@@ -2,6 +2,7 @@ const path = require( 'path' )
 const pckg = require( './package.json' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const sharedConfig = require( '@beaverbuilder/webpack-config' )
 const isProduction = 'production' === process.env.NODE_ENV
 
@@ -136,6 +137,7 @@ const config = {
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin( {
 			filename: '[name].css',
 		} )
@@ -155,7 +157,6 @@ if ( isProduction ) {
 /* Look at @beaverbuilder/webpack-common for additional config.
 * - production setup
 * - analyzing setup
-* - CleanWebpackPlugin
 */
 
 module.exports = sharedConfig( config )

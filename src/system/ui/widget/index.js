@@ -4,7 +4,7 @@ import WidgetLayout from './layout'
 import WidgetLibrary from './library'
 import './style.scss'
 
-const Widget = ( { title, children, size, type, className, ...rest } ) => {
+const Widget = ( { title, children, size, type, className, showTitle = false, ...rest } ) => {
 	return (
 		<div
 			className={ c( 'fluid-widget', {
@@ -14,7 +14,7 @@ const Widget = ( { title, children, size, type, className, ...rest } ) => {
 			}, className ) }
 			{ ...rest }
 		>
-			<div className="fluid-widget-title">{title}</div>
+			{ showTitle && <div className="fluid-widget-title">{title}</div> }
 			<div className="fluid-widget-content">{children}</div>
 		</div>
 	)

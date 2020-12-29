@@ -8,8 +8,8 @@
         &.fluid-sticky-element {
             background-color: transparent;
             background: linear-gradient( 180deg,
-                                         hsla(210, 40%, 98%, 1 ),
-                                         hsla(210, 40%, 98%, 1 ) 50%,
+                                         var(--fl-asst-card-background),
+                                         var(--fl-asst-card-background) 50%,
                                          hsla(210, 40%, 98%, 0 )
                                         ) !important;
         }
@@ -22,11 +22,12 @@
             min-width: var(--box-size);
         }
         .fl-asst-inset-element {
-            background: var(--fluid-transparent-12);
+            background: var(--fluid-transparent-13);
             border-radius: 20px;
             box-shadow: none;
             min-height: var(--box-size);
             min-width: var(--box-size);
+			backdrop-filter: blur(5px);
 
             &:hover {
                 background: var(--fluid-transparent-11);
