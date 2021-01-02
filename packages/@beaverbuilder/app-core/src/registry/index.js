@@ -23,7 +23,7 @@ const createStoreRegistry = () => {
 	return {
 
 		/**
-		  * Addes a new store to the registry.
+		  * Adds a new store to the registry.
 		  *
 		  * Actions and reducers are optional! If you do not provide
 		  * an action or reducer for a state key, a setter will be

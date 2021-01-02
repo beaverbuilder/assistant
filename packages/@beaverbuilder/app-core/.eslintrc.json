@@ -1,6 +1,9 @@
 {
-    "root": true,
-    "extends": [
-        "@beaverbuilder/eslint-config"
-    ]
+  "root": true,
+  "extends": [
+    "@beaverbuilder/eslint-config"
+  ],
+  "globals": {
+    "process": "readable"
+  }
 }

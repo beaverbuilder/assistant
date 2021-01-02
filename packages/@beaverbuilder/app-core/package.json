@@ -1,7 +1,7 @@
 {
     "name": "@beaverbuilder/app-core",
-    "version": "0.2.0",
-    "description": "Utilities for managing apps via a redux store.",
+    "version": "0.2.1",
+    "description": "Utilities for managing an app registry.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
     "main": "dist/index.js",
@@ -21,27 +21,27 @@
         "react": "^16.9.0",
         "react-router-dom": "^5.2.0",
         "@wordpress/i18n": "^3.13.0",
-        "redux": "^4.0.5",
-        "tiny-invariant": "^1.1.0"
+        "redux": "^4.0.5"
     },
     "dependencies": {
         "camelcase": "^5.3.1",
         "lodash.isequal": "^4.5.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.10.2",
-        "@babel/plugin-external-helpers": "^7.10.1",
-        "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
-        "@babel/preset-env": "^7.10.2",
-        "@babel/preset-react": "^7.10.1",
+        "@babel/core": "^7.12.10",
+        "@babel/plugin-external-helpers": "^7.12.1",
+        "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+        "@babel/preset-env": "^7.12.11",
+        "@babel/preset-react": "^7.12.10",
         "@beaverbuilder/eslint-config": "0.0.5",
-        "rollup": "^2.14.0",
+        "rollup": "^2.35.1",
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",
-        "rollup-plugin-peer-deps-external": "^2.2.2",
-        "rollup-plugin-postcss": "^3.1.1",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-postcss": "^4.0.0",
         "rollup-plugin-url": "^3.0.1",
-        "rollup-plugin-visualizer": "^4.0.4"
+        "rollup-plugin-visualizer": "^4.2.0",
+        "rollup-plugin-terser": "^7.0.2"
     }
 }

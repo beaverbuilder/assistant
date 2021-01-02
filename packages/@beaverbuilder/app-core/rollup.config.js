@@ -6,36 +6,38 @@ import resolve from 'rollup-plugin-node-resolve'
 import url from 'rollup-plugin-url'
 import pkg from './package.json'
 import visualizer from 'rollup-plugin-visualizer'
+import { terser } from 'rollup-plugin-terser'
 
 const { IS_PRODUCTION } = process.env
 
 export default {
-    input: 'src/index.js',
-    output: [
-        {
-            file: pkg.main,
-            format: 'cjs',
-            sourcemap: ! IS_PRODUCTION
-        },
-        {
-            file: pkg.module,
-            format: 'es',
-            sourcemap: ! IS_PRODUCTION
-        }
-    ],
-    plugins: [
-        external(),
-        postcss({
-            extract: true
-        }),
-        url(),
-        babel({
-            exclude: 'node_modules/**',
-        }),
-        resolve(),
-        commonjs({
-            include: 'node_modules/**',
-        }),
-        visualizer()
-    ]
+	input: 'src/index.js',
+	output: [
+		{
+			file: pkg.main,
+			format: 'cjs',
+			sourcemap: ! IS_PRODUCTION
+		},
+		{
+			file: pkg.module,
+			format: 'es',
+			sourcemap: ! IS_PRODUCTION
+		}
+	],
+	plugins: [
+		external(),
+		postcss( {
+			extract: true
+		} ),
+		url(),
+		babel( {
+			exclude: 'node_modules/**',
+		} ),
+		resolve(),
+		commonjs( {
+			include: 'node_modules/**',
+		} ),
+		visualizer(),
+		terser()
+	]
 }
