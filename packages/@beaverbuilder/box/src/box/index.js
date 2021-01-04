@@ -1,5 +1,6 @@
 import React from 'react'
 import { getHeightForRatio } from '../utils'
+import ErrorBoundary from './error-boundary'
 
 const defaultPadding = {
 	sm: 5,
@@ -7,15 +8,15 @@ const defaultPadding = {
 	lg: 20
 }
 
-const padding = props => {
+const padding = ( pad, padX, padY ) => {
 	let styles = {}
 
 	// pad attribute
-	if ( props.pad ) {
-		if ( props.pad ) {
+	if ( pad ) {
+		if ( pad ) {
 			let value = defaultPadding.med
 
-			switch ( props.pad ) {
+			switch ( pad ) {
 			case 'sm':
 			case 'small':
 				value = defaultPadding.sm
@@ -30,18 +31,17 @@ const padding = props => {
 				value = defaultPadding.lg
 				break
 			default:
-				value = props.pad
+				value = pad
 			}
-
 			styles.padding = value
 		}
 	}
 
 	// padX attribute
-	if ( props.padX ) {
+	if ( padX ) {
 		let value = defaultPadding.med
 
-		switch ( props.padX ) {
+		switch ( padX ) {
 		case 'sm':
 		case 'small':
 			value = defaultPadding.sm
@@ -56,18 +56,17 @@ const padding = props => {
 			value = defaultPadding.lg
 			break
 		default:
-			value = props.padX
+			value = padX
 		}
-
 		styles.paddingTop = value
 		styles.paddingBottom = value
 	}
 
 	// padX attribute
-	if ( props.padY ) {
+	if ( padY ) {
 		let value = defaultPadding.med
 
-		switch ( props.padY ) {
+		switch ( padY ) {
 		case 'sm':
 		case 'small':
 			value = defaultPadding.sm
@@ -82,9 +81,8 @@ const padding = props => {
 			value = defaultPadding.lg
 			break
 		default:
-			value = props.padY
+			value = padY
 		}
-
 		styles.paddingLeft = value
 		styles.paddingRight = value
 	}
@@ -107,12 +105,19 @@ const layout = props => {
 }
 
 const handleProps = props => {
-	const { style, ratio, ...rest } = props
+	const {
+		style,
+		ratio,
+		pad,
+		padX,
+		padY,
+		...rest
+	} = props
 
 	const _style = {
 		boxSizing: 'border-box',
 		...layout( props ),
-		...padding( props ),
+		...padding( pad, padX, padY ),
 		...style
 	}
 
@@ -149,6 +154,7 @@ const Box = props => {
 		tag: Tag = 'div',
 		innerTag: Inner = 'div',
 		children,
+		errorBoundary,
 		...rest
 	} = handleProps( props )
 
@@ -156,8 +162,18 @@ const Box = props => {
 
 	return (
 		<Tag { ...rest }>
-			{ hasAspect && <Inner style={ innerStyle }>{children}</Inner> }
-			{ ! hasAspect && children }
+			{ errorBoundary && (
+				<ErrorBoundary alternate={ errorBoundary }>
+					{ hasAspect && <Inner style={ innerStyle }>{children}</Inner> }
+					{ ! hasAspect && children }
+				</ErrorBoundary>
+			) }
+			{ ! errorBoundary && (
+				<>
+					{ hasAspect && <Inner style={ innerStyle }>{children}</Inner> }
+					{ ! hasAspect && children }
+				</>
+			) }
 		</Tag>
 	)
 }

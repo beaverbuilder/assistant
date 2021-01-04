@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/box",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A tiny react box component suited to fast UI building.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -20,7 +20,6 @@
     "peerDependencies": {
         "react": "^17.0.1"
     },
-    "dependencies": {},
     "devDependencies": {
         "@babel/core": "^7.12.10",
         "@babel/plugin-external-helpers": "^7.12.1",
