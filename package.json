@@ -40,7 +40,7 @@
     "moment": "^2.29.0",
     "promise": "^8.1.0",
     "qs": "^6.9.3",
-    "query-string": "^6.13.5",
+    "query-string": "^6.13.8",
     "react": "^17.0.1",
     "react-clipboard.js": "^2.0.16",
     "react-color": "^2.18.1",
