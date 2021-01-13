@@ -83,18 +83,7 @@ const HeaderBar = ( {
 							onFocus()
 						} }
 					/>
-					{ /* <motion.button
-						className="fluid-button fluid-shape-round fl-asst-inset-element"
-						style={ {
-							width: 40,
-							height: 40,
-							fontSize: 18,
-							fontWeight: 500
-						} }
-						onClick={ () => setIsShowingHelp( ! isShowingHelp ) }
-						layoutId="help"
-					>?</motion.button> */ }
-					<Menu
+					{ /* <Menu
 						content={ <MenuContent /> }
 						isShowing={ isShowingMoreMenu }
 						onOutsideClick={ () => setIsShowingMoreMenu( false ) }
@@ -107,7 +96,7 @@ const HeaderBar = ( {
 						>
 							<Icon.More />
 						</Button>
-					</Menu>
+					</Menu> */ }
 				</Layout.Row>
 			</div>
 			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick }/> }
