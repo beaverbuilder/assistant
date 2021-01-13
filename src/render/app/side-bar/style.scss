@@ -24,13 +24,6 @@
         }
     }
 
-    @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-        .fl-asst-sidebar {
-            background: transparent;
-            box-shadow: none;
-        }
-    }
-
     .fl-asst-is-mobile {
         .fl-asst-sidebar {
             flex-direction: row-reverse;
@@ -179,15 +172,7 @@
 // Dark Mode
 .fluid-color-scheme-dark {
     .fl-asst-sidebar {
-        background: var(--fluid-opaque-2);
+        background: var(--fluid-opaque-1);
         box-shadow: 0 0 2px black;
-    }
-}
-@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-    .fluid-color-scheme-dark {
-        .fl-asst-sidebar {
-            background: transparent;
-            box-shadow: none;
-        }
     }
 }

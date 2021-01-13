@@ -28,7 +28,7 @@
             max-width: 100%;
             max-height: 70vh;
             height: 70vh;
-            border-radius: var(--fluid-lg-space);
+            border-radius: var(--fluid-med-space);
         }
         &.fl-asst-window-normal {
             height: 100%;
@@ -247,27 +247,6 @@
         left:0;
         bottom: 0;
         right: 0;
-    }
-}
-
-@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-    .fluid {
-        .fl-asst-window-backdrop {
-            -webkit-backdrop-filter: saturate(250%) blur(50px);
-            backdrop-filter: saturate(250%) blur(50px);
-            background: var(--fluid-transparent-12);
-        }
-        .fluid-color-scheme-dark {
-            .fl-asst-window-backdrop {
-                background: hsla(214, 30%, 5%, .8);
-            }
-        }
-    }
-    // Fix Beaver builder assistant panel background
-    .fl-builder-workspace .fl-asst.fl-builder-workspace-panel {
-        -webkit-backdrop-filter: saturate(250%) blur(50px);
-        backdrop-filter: saturate(250%) blur(50px);
-        background: var(--fluid-transparent-12);
     }
 }
 
