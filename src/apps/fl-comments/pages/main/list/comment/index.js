@@ -199,15 +199,11 @@ export default ( {
 	]
 
 	return (
-		<motion.li
-			className={ classname( {
-				'is-spam': isSpam,
-				'is-pending': isPending,
-				'is-trash': isTrash,
-			}, className ) }
-			initial={ { scale: .5 } }
-			animate={ { scale: 1 } }
-		>
+		<li className={ classname( {
+			'is-spam': isSpam,
+			'is-pending': isPending,
+			'is-trash': isTrash,
+		}, className ) } >
 			<Button to={ to } style={ { display: 'flex', flexDirection: 'row', padding: 0 } }>
 				<Gutter
 					isPending={ isPending }
@@ -236,6 +232,6 @@ export default ( {
 				</div>
 			</Button>
 			<Actions items={ [ ...actions, ...additional ] } />
-		</motion.li>
+		</li>
 	)
 }
