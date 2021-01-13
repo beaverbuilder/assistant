@@ -40,6 +40,7 @@ if ( 'FLBuilder' in window ) {
 				className: 'fl-asst fluid fl uid',
 				label: __( 'Assistant' ),
 				root: AssistantCore,
+				render: AssistantCore, /* legacy */
 			} )
 
 			// Setup Trigger Button
