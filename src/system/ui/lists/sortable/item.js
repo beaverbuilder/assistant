@@ -13,13 +13,11 @@ const SortableItem = ( {
 	wrap,
 	updatePosition = () => {},
 	updateOrder = () => {},
-
 	className,
 	children,
 	onSortStart,
 	onSortEnd,
 	transition = defaultTransition,
-
 	...rest
 } ) => {
 	const [ isDragging, setDragging ] = useState( false )
@@ -27,23 +25,19 @@ const SortableItem = ( {
 	const classes = c( { 'is-dragging': isDragging }, className )
 	const lastY = useRef( 0 )
 
-	// Spring configs
-	const onTop = {
-		zIndex: 9,
-		scale: 1.04,
-	}
-	const flat = {
-		zIndex: 0,
-		scale: 1,
-	}
-
 	return (
 		<motion.li
 			className={ classes }
 			ref={ ref }
 			layout
-			initial={ false }
-			animate={ isDragging ? onTop : flat }
+			initial={ {
+				zIndex: 0,
+				scale: 1,
+			} }
+			whileDrag={ {
+				zIndex: 9,
+				scale: 1.04,
+			} }
 			drag="y"
 			dragConstraints={ wrap }
 			dragElastic={ 0.1 }

@@ -64,7 +64,7 @@ const Item = ( {
 			}, className ) }
 			layout
 			animate={ isDragging ? onTop : flat }
-			drag={ 'sm' === size ? true : 'y' }
+			drag={ false /*'sm' === size ? true : 'y'*/ }
 			dragDirectionLock
 			dragConstraints={ wrap }
 			dragElastic={ 0.1 }
