@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 import { getSystemActions, useSystemState } from 'assistant/data'
 import { useEdgeInsets } from './utils'
@@ -6,6 +6,9 @@ import { useEdgeInsets } from './utils'
 const getHeight = insets => `calc( 100vh - ${ insets.top + insets.bottom }px )`
 const getWidth = isAppHidden => isAppHidden ? 60 : 420
 const getBoxShadow = isHidden => isHidden ? '0 0 0px hsla( 210, 0%, 0%, 0 )' : '0 0 20px hsla( 210, 30%, 50%, .5 )'
+const getLeft = ( originX = 0, width, insets ) => {
+	return originX ? `calc( 100vw - ${ width + insets.left }px )` : insets.left
+}
 
 const isRightEdge = x => x >= ( window.innerWidth / 2 )
 
@@ -36,6 +39,7 @@ const GrabBar = ( { ...rest } ) => {
  * Primary Frame Component
  */
 const Frame = ( { children, ...rest } ) => {
+	const [ dragArea, setDragArea ] = useState( false )
 	const animation = useAnimation()
 	const { setWindow } = getSystemActions()
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
@@ -49,10 +53,6 @@ const Frame = ( { children, ...rest } ) => {
 		let newOrigin = [ ...windowFrame.origin ]
 		newOrigin[0] = 'right' === edge ? 1 : 0
 		setWindow( { ...windowFrame, origin: newOrigin } )
-	}
-
-	const getLeft = ( originX = 0, width, insets ) => {
-		return originX ? `calc( 100vw - ${ width + insets.left }px )` : insets.left
 	}
 
 	// Handle insets changing when admin bar changes height
@@ -97,52 +97,83 @@ const Frame = ( { children, ...rest } ) => {
 	const distance = originX ? width : -Math.abs( width )
 
 	return (
-		<motion.div
+		<>
+			{ false !== dragArea && <DropIndicator left={ getLeft( dragArea, 60, insets ) } /> }
+			<motion.div
 
-			// Initial animatable styles
-			initial={ {
-				x: isHidden ? distance : 0,
-				top: insets.top,
-				left: originX ? `calc( 100vw - ${ getWidth( isHidden, isAppHidden ) + insets.left }px )` : insets.left,
-				width: getWidth( isAppHidden ),
-				height: getHeight( insets ),
-				boxShadow: getBoxShadow( isHidden ),
-			} }
+				// Initial animatable styles
+				initial={ {
+					x: isHidden ? distance : 0,
+					top: insets.top,
+					left: originX ? `calc( 100vw - ${ getWidth( isAppHidden ) + insets.left }px )` : insets.left,
+					width: getWidth( isAppHidden ),
+					height: getHeight( insets ),
+					boxShadow: getBoxShadow( isHidden ),
+				} }
 
-			// Attaches the animation controls object
-			animate={ animation }
-			transition={ { duration: .25 } }
+				// Attaches the animation controls object
+				animate={ animation }
+				transition={ { duration: .25 } }
 
-			// Non-animating stuff
+				// Non-animating stuff
+				style={ {
+					position: 'fixed',
+					overflow: 'hidden',
+					boxSizing: 'border-box',
+					background: 'var(--fluid-background)',
+					zIndex: 9999,
+					display: 'flex',
+					flexDirection: 'column',
+				} }
+
+				drag
+				onDrag={ ( e, info ) => {
+					if ( isRightEdge( info.point.x ) ) {
+						if ( 1 !== dragArea ) {
+							setDragArea( 1 )
+						}
+					} else {
+						if ( 0 !== dragArea ) {
+							setDragArea( 0 )
+						}
+					}
+				} }
+				onDragEnd={ ( e, info ) => {
+					setDragArea( false )
+
+					// Pins itself to whichever side of the screen you drop the mouse in
+					const newOriginX = isRightEdge( info.point.x ) ? 1 : 0
+
+					if ( originX !== newOriginX ) {
+						setEdge( newOriginX ? 'right' : 'left' )
+					} else {
+
+						// Snap back - no render required
+						animation.start( { x: 0, y: 0 } )
+					}
+				} }
+				{ ...rest }
+			>
+				<GrabBar />
+				{children}
+			</motion.div>
+		</>
+	)
+}
+
+const DropIndicator = ( { left, ...rest } ) => {
+	return (
+		<div
 			style={ {
 				position: 'fixed',
-				overflow: 'hidden',
-				boxSizing: 'border-box',
-				background: 'var(--fluid-background)',
-				zIndex: 9999,
-				display: 'flex',
-				flexDirection: 'column',
-			} }
-
-			drag
-			onDragEnd={ ( e, info ) => {
-
-				// Pins itself to whichever side of the screen you drop the mouse in
-				const newOriginX = isRightEdge( info.point.x ) ? 1 : 0
-
-				if ( originX !== newOriginX ) {
-					setEdge( newOriginX ? 'right' : 'left' )
-				} else {
-
-					// Snap back - no render required
-					animation.start( { x: 0, y: 0 } )
-				}
+				top: 0,
+				bottom: 0,
+				left,
+				width: 60,
+				background: 'var(--fluid-blue)',
 			} }
 			{ ...rest }
-		>
-			{ ! isHidden && <GrabBar /> }
-			{children}
-		</motion.div>
+		/>
 	)
 }
 
