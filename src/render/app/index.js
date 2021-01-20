@@ -11,7 +11,9 @@ const AppMain = ( { allowHidingApps = true } ) => {
 	const { apps, window, isAppHidden, homeKey } = useSystemState( [ 'apps', 'window', 'isAppHidden', 'homeKey' ] )
 	const side = window.origin[0]
 	const sideName = side ? 'right' : 'left'
-	const { isMobile } = Env.use()
+	const { isMobile, application } = Env.use()
+	const isBeaverBuilder = 'beaver-builder' === application
+	const rowDirection = ( 'right' === sideName || isBeaverBuilder ) ? 'row-reverse' : 'row'
 
 	const classes = classname( {
 		'fl-asst-main': true,
@@ -31,7 +33,7 @@ const AppMain = ( { allowHidingApps = true } ) => {
 	}
 
 	return (
-		<div className={ classes } style={ { flexDirection: 'right' === sideName ? 'row-reverse' : 'row' } }>
+		<div className={ classes } style={ { flexDirection: rowDirection } }>
 			<Sidebar />
 			<AnimatePresence initial={ false }>
 				{ ( ! isAppHidden || ! allowHidingApps ) && (
