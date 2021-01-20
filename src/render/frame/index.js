@@ -10,7 +10,7 @@ const getBoxShadow = ( isHidden, isAppHidden ) => {
 	if ( isHidden || isAppHidden ) {
 		return '0 0 0px hsla( 210, 0%, 0%, 0 )'
 	} else {
-		return '0 0 20px hsla( 210, 30%, 50%, .5 )'
+		return '0 0 20px hsla( 210, 20%, 30%, .15 )'
 	}
 }
 const getLeft = ( originX = 0, width, insets ) => {
@@ -65,6 +65,7 @@ const Frame = ( { children, ...rest } ) => {
 		animation.start( {
 			width,
 			left: getLeft( originX, width, insets ),
+			boxShadow: getBoxShadow( isHidden, isAppHidden ),
 		} )
 	}, [ isAppHidden ] )
 
