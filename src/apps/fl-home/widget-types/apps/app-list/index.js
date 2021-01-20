@@ -16,14 +16,7 @@ const AppList = () => {
 			{ apps.map( app => {
 				const { label, icon, handle } = app
 				return (
-					<div
-						key={ handle }
-						layout
-						style={ {
-							display: 'flex',
-							flexDirection: 'row'
-						} }
-					>
+					<div key={ handle } style={ { display: 'flex', flexDirection: 'row' } } >
 						<Button appearance="transparent" to={ `/${handle}` } style={ { flex: '1 1 auto' } } className="fl-asst-apps-widget-item">
 							<span style={ { marginRight: 15 } }>
 								<Icon.Safely icon={ icon } context="widget" />

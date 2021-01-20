@@ -10,7 +10,7 @@ const CurrentlyViewing = () => {
 		<>
 			<Text.Title eyebrow={ intro }>{name}</Text.Title>
 			{ actions && (
-				<Layout.Row style={ { padding: 5, paddingTop: 2 } }>
+				<Layout.Row style={ { padding: 5, paddingTop: 10 } }>
 					{ actions.map( ( action, i ) => {
 						const { label, isEnabled, ...rest } = action
 						return false !== isEnabled && (

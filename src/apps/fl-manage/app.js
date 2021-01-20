@@ -74,19 +74,8 @@ const UIColorPreferences = () => {
 	const { setBrightness, setWindow } = getSystemActions()
 	const { origin } = window
 
-	const origins = {
-		'0-0': __( 'Top Left' ),
-		'0-1': __( 'Bottom Left' ),
-		'1-0': __( 'Top Right' ),
-		'1-1': __( 'Bottom Right' )
-	}
-	const onChangeOrigin = value => {
-		const v = value.split( '-' )
-		setWindow( {
-			...window,
-			origin: [ parseInt( v[0] ), parseInt( v[1] ) ]
-		} )
-	}
+	const onChangeOrigin = origin => setWindow( { ...window, origin } )
+
 	return (
 		<Form.Section label={ __( 'Preferences' ) }>
 			{ 'beaver-builder' !== application && (
@@ -110,8 +99,22 @@ const UIColorPreferences = () => {
 				</Form.Item>
 			)}
 
-			<Form.Item label={ __( 'Anchor Pane To' ) } labelPlacement="beside">
-				<Form.SelectItem value={ origin.join( '-' ) } options={ origins } onChange={ onChangeOrigin } />
+			<Form.Item label={ __( 'Attach To' ) } labelPlacement="beside">
+				<Layout.Row gap={ 5 }>
+					<Button
+						isSelected={ ! origin[0] }
+						onClick={ () => onChangeOrigin( [ 0, 0 ] ) }
+					>
+						{ __( 'Left Edge' ) }
+					</Button>
+
+					<Button
+						isSelected={ origin[0] }
+						onClick={ () => onChangeOrigin( [ 1, 0 ] ) }
+					>
+						{ __( 'Right Edge' ) }
+					</Button>
+				</Layout.Row>
 			</Form.Item>
 		</Form.Section>
 	)
