@@ -1,39 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 import { getSystemActions, useSystemState } from 'assistant/data'
+import { Env } from 'assistant/ui'
 import { useEdgeInsets } from './utils'
 
 const getHeight = insets => `calc( 100vh - ${ insets.top + insets.bottom }px )`
 const getWidth = isAppHidden => isAppHidden ? 60 : 420
-const getBoxShadow = isHidden => isHidden ? '0 0 0px hsla( 210, 0%, 0%, 0 )' : '0 0 20px hsla( 210, 30%, 50%, .5 )'
+const getBoxShadow = ( isHidden, isAppHidden ) => {
+	if ( isHidden || isAppHidden ) {
+		return '0 0 0px hsla( 210, 0%, 0%, 0 )'
+	} else {
+		return '0 0 20px hsla( 210, 30%, 50%, .5 )'
+	}
+}
 const getLeft = ( originX = 0, width, insets ) => {
 	return originX ? `calc( 100vw - ${ width + insets.left }px )` : insets.left
 }
 
 const isRightEdge = x => x >= ( window.innerWidth / 2 )
-
-const GrabBar = ( { ...rest } ) => {
-	const styles = {
-		display: 'flex',
-		paddingTop: 4,
-		paddingBottom: 10,
-		alignItems: 'center',
-		justifyContent: 'center',
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		right: 0,
-		zIndex: 5,
-		cursor: 'move',
-	}
-	return (
-		<div className="fl-asst-window-grab-bar" style={ styles } { ...rest }>
-			<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
-				<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-			</svg>
-		</div>
-	)
-}
 
 /**
  * Primary Frame Component
@@ -45,6 +29,7 @@ const Frame = ( { children, ...rest } ) => {
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
 	const { isHidden } = windowFrame
 	const [ originX ] = windowFrame.origin
+	const isBeaverBuilder = 'beaver-builder' === Env.use().application
 
 	// An object describing how far from each edge of the window to place the frame against.
 	const insets = useEdgeInsets()
@@ -88,7 +73,7 @@ const Frame = ( { children, ...rest } ) => {
 		const distance = originX ? width : -Math.abs( width )
 		animation.start( {
 			x: isHidden ? distance : 0,
-			boxShadow: getBoxShadow( isHidden )
+			boxShadow: getBoxShadow( isHidden, isAppHidden )
 		} )
 	}, [ isHidden ] )
 
@@ -108,7 +93,7 @@ const Frame = ( { children, ...rest } ) => {
 					left: originX ? `calc( 100vw - ${ getWidth( isAppHidden ) + insets.left }px )` : insets.left,
 					width: getWidth( isAppHidden ),
 					height: getHeight( insets ),
-					boxShadow: getBoxShadow( isHidden ),
+					boxShadow: getBoxShadow( isHidden, isAppHidden ),
 				} }
 
 				// Attaches the animation controls object
@@ -154,10 +139,38 @@ const Frame = ( { children, ...rest } ) => {
 				} }
 				{ ...rest }
 			>
-				<GrabBar />
+				{ ! isBeaverBuilder && <GrabBar /> }
 				{children}
 			</motion.div>
 		</>
+	)
+}
+
+const GrabBar = ( { ...rest } ) => {
+	const styles = {
+		display: 'flex',
+		paddingTop: 4,
+		paddingBottom: 10,
+		alignItems: 'center',
+		justifyContent: 'center',
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		zIndex: 5,
+		cursor: 'move',
+	}
+	return (
+		<div className="fl-asst-window-grab-bar" style={ styles } { ...rest }>
+			<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M2,2 L38,2"
+					stroke="currentColor"
+					strokeWidth="4"
+					strokeLinecap="round"
+				/>
+			</svg>
+		</div>
 	)
 }
 
