@@ -10,13 +10,13 @@ const defaultEdgeInsets = {
 
 const useAdminBarHeight = () => {
 	const { isShowingAdminBar } = getSystemConfig()
-	const isMobile = useMedia( { maxWidth: 782 } )
+	const isSlim = useMedia( { maxWidth: 782 } )
+	const isMobile = useMedia( { maxWidth: 600 } )
 
-	if ( ! isShowingAdminBar ) {
+	if ( ! isShowingAdminBar || isMobile ) {
 		return 0
 	}
-
-	return isMobile ? 46 : 32
+	return isSlim ? 46 : 32
 }
 
 export const useEdgeInsets = ( insets = defaultEdgeInsets ) => {
