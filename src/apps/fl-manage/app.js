@@ -23,6 +23,8 @@ export default props => (
 )
 
 const MainScreen = () => {
+	const { application } = Env.use()
+	const isBeaverBuilder = 'beaver-builder' === application
 	return (
 		<Page
 			title={ __( 'Apps & Settings' ) }
@@ -34,7 +36,7 @@ const MainScreen = () => {
 					<p style={ { marginTop: 0 } }>{__( 'You can reorder the apps below. The top 5 will appear in the sidebar for quick access.' )}</p>
 					<AppList before={ <Home /> } />
 				</Page.Section>
-				<UIColorPreferences />
+				{ ! isBeaverBuilder && <UIColorPreferences /> }
 			</Form>
 		</Page>
 	)
