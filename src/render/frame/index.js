@@ -184,7 +184,7 @@ const DropIndicator = ( { left, ...rest } ) => {
 				left,
 				width: 60,
 				background: 'var(--fluid-blue)',
-				zIndex: 9
+				zIndex: 9998 /* Just below the frame */
 			} }
 			{ ...rest }
 		/>

@@ -49,17 +49,12 @@
 				color: var(--fluid-transparent-8);
 			}
 			.fluid-widget-content {
-				background: var(--fluid-opaque-1);
+				background: var(--fluid-opaque-3);
 				box-shadow: 0 6px 12px rgba(0,0,0, .1);
 
 				.fluid-toolbar {
 					background: transparent;
 				}
-			}
-
-			&:hover {
-				background: var(--fluid-opaque-0);
-				box-shadow: 0 0 0 3px var(--fluid-opaque-0);
 			}
 		}
 	}
