@@ -58,7 +58,7 @@ export const Assistant = () => {
 		<BaseProviders>
 			{ shouldRenderDOM && (
 				<FLUIDAppearanceRoot colorScheme={ appearance.brightness }>
-					<Frame >
+					<Frame>
 						<AppMain />
 					</Frame>
 				</FLUIDAppearanceRoot>

@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { motion, useAnimation } from 'framer-motion'
+import b from '@beaverbuilder/box'
+import useMedia from 'use-media'
 import { getSystemActions, useSystemState } from 'assistant/data'
-import { Env } from 'assistant/ui'
-import { useEdgeInsets } from './utils'
-
-const getHeight = insets => `calc( 100vh - ${ insets.top + insets.bottom }px )`
-const getWidth = isAppHidden => isAppHidden ? 60 : 420
-const getBoxShadow = ( isHidden, isAppHidden ) => {
-	if ( isHidden || isAppHidden ) {
-		return '0 0 0px hsla( 210, 0%, 0%, 0 )'
-	} else {
-		return '0 0 20px hsla( 210, 20%, 30%, .15 )'
-	}
-}
-const getLeft = ( originX = 0, width, insets ) => {
-	return originX ? `calc( 100vw - ${ width + insets.left }px )` : insets.left
-}
-
-const isRightEdge = x => x >= ( window.innerWidth / 2 )
+import {
+	useEdgeInsets,
+	getHeight,
+	getWidth,
+	getTop,
+	getLeft,
+	getBoxShadow,
+	isRightEdge
+} from './utils'
 
 /**
  * Primary Frame Component
@@ -25,14 +19,17 @@ const isRightEdge = x => x >= ( window.innerWidth / 2 )
 const Frame = ( { children, ...rest } ) => {
 	const [ dragArea, setDragArea ] = useState( false )
 	const animation = useAnimation()
+
 	const { setWindow } = getSystemActions()
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
 	const { isHidden } = windowFrame
 	const [ originX ] = windowFrame.origin
-	const isBeaverBuilder = 'beaver-builder' === Env.use().application
 
 	// An object describing how far from each edge of the window to place the frame against.
 	const insets = useEdgeInsets()
+
+	// Below 600px the admin bar jumps to absolute positioning / starts scrolling with the page.
+	const isMobile = useMedia( { maxWidth: 600 } )
 
 	const setEdge = edge => {
 		let newOrigin = [ ...windowFrame.origin ]
@@ -43,7 +40,7 @@ const Frame = ( { children, ...rest } ) => {
 	// Handle insets changing when admin bar changes height
 	useEffect( () => {
 		animation.set( {
-			top: insets.top,
+			top: getTop( insets ),
 			height: getHeight( insets )
 		} )
 	}, [ insets ] )
@@ -54,7 +51,7 @@ const Frame = ( { children, ...rest } ) => {
 		animation.start( {
 			x: 0,
 			y: 0,
-			top: insets.top,
+			top: getTop( insets ),
 			left: getLeft( originX, width, insets )
 		} )
 	}, [ originX ] )
@@ -90,7 +87,7 @@ const Frame = ( { children, ...rest } ) => {
 				// Initial animatable styles
 				initial={ {
 					x: isHidden ? distance : 0,
-					top: insets.top,
+					top: getTop( insets ),
 					left: originX ? `calc( 100vw - ${ getWidth( isAppHidden ) + insets.left }px )` : insets.left,
 					width: getWidth( isAppHidden ),
 					height: getHeight( insets ),
@@ -107,7 +104,7 @@ const Frame = ( { children, ...rest } ) => {
 					overflow: 'hidden',
 					boxSizing: 'border-box',
 					background: 'var(--fluid-background)',
-					zIndex: 9999,
+					zIndex: isMobile ? 99999 : 9999, /* we usually want to be under the admin bar menus */
 					display: 'flex',
 					flexDirection: 'column',
 				} }
@@ -130,66 +127,57 @@ const Frame = ( { children, ...rest } ) => {
 					// Pins itself to whichever side of the screen you drop the mouse in
 					const newOriginX = isRightEdge( info.point.x ) ? 1 : 0
 
+					/**
+					 * If we're on a different side of the screen than before, we want to trigger a render.
+					 * Otherwise we want to snap back to our original position, no render needed.
+					 */
 					if ( originX !== newOriginX ) {
 						setEdge( newOriginX ? 'right' : 'left' )
 					} else {
-
-						// Snap back - no render required
 						animation.start( { x: 0, y: 0 } )
 					}
 				} }
 				{ ...rest }
 			>
-				{ ! isBeaverBuilder && <GrabBar /> }
+				<GrabBar />
 				{children}
 			</motion.div>
 		</>
 	)
 }
 
-const GrabBar = ( { ...rest } ) => {
-	const styles = {
-		display: 'flex',
-		paddingTop: 4,
-		paddingBottom: 10,
-		alignItems: 'center',
-		justifyContent: 'center',
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		right: 0,
-		zIndex: 5,
-		cursor: 'move',
-	}
-	return (
-		<div className="fl-asst-window-grab-bar" style={ styles } { ...rest }>
-			<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
-				<path
-					d="M2,2 L38,2"
-					stroke="currentColor"
-					strokeWidth="4"
-					strokeLinecap="round"
-				/>
-			</svg>
-		</div>
-	)
-}
+const GrabBar = () => (
+	<b.row
+		style={ {
+			paddingTop: 4,
+			paddingBottom: 10,
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			right: 0,
+			zIndex: 5,
+			cursor: 'move',
+		} }
+	>
+		<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+		</svg>
+	</b.row>
+)
 
-const DropIndicator = ( { left, ...rest } ) => {
-	return (
-		<div
-			style={ {
-				position: 'fixed',
-				top: 0,
-				bottom: 0,
-				left,
-				width: 60,
-				background: 'var(--fluid-blue)',
-				zIndex: 9998 /* Just below the frame */
-			} }
-			{ ...rest }
-		/>
-	)
-}
+const DropIndicator = ( { left, ...rest } ) => (
+	<div
+		style={ {
+			position: 'fixed',
+			top: 0,
+			bottom: 0,
+			left,
+			width: 60,
+			background: 'var(--fluid-blue)',
+			zIndex: 9998 /* Just below the frame */
+		} }
+		{ ...rest }
+	/>
+)
 
 export default Frame

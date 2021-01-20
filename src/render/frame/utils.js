@@ -26,3 +26,23 @@ export const useEdgeInsets = ( insets = defaultEdgeInsets ) => {
 		top: insets.top + adminBar
 	}
 }
+
+export const getHeight = insets => `calc( 100vh - ${ insets.top + insets.bottom }px )`
+
+export const getWidth = isAppHidden => isAppHidden ? 60 : 420
+
+export const getTop = insets => insets.top
+
+export const getLeft = ( originX = 0, width, insets ) => {
+	return originX ? `calc( 100vw - ${ width + insets.left }px )` : insets.left
+}
+
+export const getBoxShadow = ( isHidden, isAppHidden ) => {
+	if ( isHidden || isAppHidden ) {
+		return '0 0 0px hsla( 210, 0%, 0%, 0 )'
+	} else {
+		return '0 0 20px hsla( 210, 20%, 30%, .15 )'
+	}
+}
+
+export const isRightEdge = x => x >= ( window.innerWidth / 2 )
