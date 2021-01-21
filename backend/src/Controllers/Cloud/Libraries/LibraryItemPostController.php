@@ -209,7 +209,7 @@ class LibraryItemPostController extends ControllerAbstract {
 					'attachments' => $this->get_post_image_paths( $post ),
 				],
 				'screenshot' => $this->get_post_screenshot( $request, $post ),
-			],
+			]
 		);
 	}
 
