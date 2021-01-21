@@ -66,6 +66,10 @@ const Frame = ( { children, ...rest } ) => {
 		animation.start( {
 			x: isHidden ? distance : 0,
 			boxShadow
+		} ).then( () => {
+			animation.set( {
+				pointerEvents: isHidden ? 'none' : 'auto'
+			} )
 		} )
 	}, [ isHidden ] )
 
@@ -103,6 +107,7 @@ const Frame = ( { children, ...rest } ) => {
 					zIndex: isMobile ? 99999 : 9999, /* we usually want to be under the admin bar menus */
 					display: 'flex',
 					flexDirection: 'column',
+					pointerEvents: isHidden ? 'none' : null,
 				} }
 
 				drag

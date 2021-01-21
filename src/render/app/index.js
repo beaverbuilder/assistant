@@ -8,9 +8,9 @@ import Sidebar from './side-bar'
 import './style.scss'
 
 const AppMain = ( { allowHidingApps = true } ) => {
-	const { apps, window, isAppHidden, homeKey } = useSystemState( [ 'apps', 'window', 'isAppHidden', 'homeKey' ] )
-	const side = window.origin[0]
-	const sideName = side ? 'right' : 'left'
+	const { apps, window: windowFrame, isAppHidden, homeKey } = useSystemState( [ 'apps', 'window', 'isAppHidden', 'homeKey' ] )
+	const { origin, isHidden } = windowFrame
+	const sideName = origin[0] ? 'right' : 'left'
 	const { isMobile, application } = Env.use()
 	const isBeaverBuilder = 'beaver-builder' === application
 	const rowDirection = ( 'right' === sideName || isBeaverBuilder ) ? 'row-reverse' : 'row'
@@ -36,7 +36,7 @@ const AppMain = ( { allowHidingApps = true } ) => {
 		<div className={ classes } style={ { flexDirection: rowDirection } }>
 			<Sidebar />
 			<AnimatePresence initial={ false }>
-				{ ( ! isAppHidden || ! allowHidingApps ) && (
+				{ ! isHidden && ( ! isAppHidden || ! allowHidingApps ) && (
 					<motion.div
 						key="main-content"
 						variants={ variants }
