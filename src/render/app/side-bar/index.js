@@ -97,10 +97,25 @@ const Sidebar = memo( () => {
 	}
 
 	const ToggleHiddenButton = () => {
+
+		let onClick = () => toggleIsShowingUI( false )
+		if ( isBeaverBuilder ) {
+			if ( undefined !== FL.Builder && 'function' === typeof FL.Builder.togglePanel ) {
+				onClick = () => {
+					FL.Builder.togglePanel()
+					toggleIsShowingUI( false )
+				}
+			} else {
+
+				// For older versions of BB, just hide the button.
+				return null
+			}
+		}
+
 		return (
 			<Button
 				appearance="transparent"
-				onClick={ () => toggleIsShowingUI( false ) }
+				onClick={ onClick }
 				className="fl-asst-sidebar-close-button"
 				title={ __( 'Hide Panel' ) }
 				shape="round"
@@ -114,11 +129,10 @@ const Sidebar = memo( () => {
 
 	return (
 		<div className={ classes } style={ { cursor: ! isBeaverBuilder && 'move' } } >
-			{ ! isBeaverBuilder && (
-				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top">
-					<ToggleHiddenButton />
-				</div>
-			) }
+
+			<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top">
+				<ToggleHiddenButton />
+			</div>
 
 			<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle">
 				<App.List
