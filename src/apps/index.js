@@ -7,8 +7,12 @@ import './fl-media'
 import './fl-comments'
 import './fl-updates'
 import './fl-labels'
+
+// Hidden from production builds for now
 import './fl-cloud-connect'
 import './libraries'
+
+// Hidden from production
 import './designsystem'
 
 import './integrations'
