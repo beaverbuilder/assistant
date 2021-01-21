@@ -78,7 +78,7 @@ const FloatingButton = ( { ...rest } ) => {
 				} }
 				{ ...rest }
 			>
-				<Icon.Pencil size={ 30 } />
+				<Icon.Pencil size={ 36 } />
 			</motion.button>
 		</>
 	)
