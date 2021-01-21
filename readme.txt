@@ -73,6 +73,10 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
+= 0.6.0 ( 2021-1-21 ) =
+* Add groundwork for upcoming Libraries feature
+* Fix trailing comma in method callsite
+
 = 0.5.1 ( 2020-06-05 ) =
 * Fix issue where sidebar shows incorrect number of app icons
 * Add item marks & actions to recent content widgets
