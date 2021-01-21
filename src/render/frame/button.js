@@ -16,9 +16,7 @@ const FloatingButton = ( { ...rest } ) => {
 	const insets = useEdgeInsets( 15 )
 
 	const getTop = ( originY, size, insets ) => {
-
-		//return originY ? `calc( 100vh - ${ size + insets.bottom } )` : insets.top
-		return insets.top
+		return originY ? `calc( 100vh - ${ size + insets.bottom }px )` : insets.top
 	}
 
 	// Handle origin change.
