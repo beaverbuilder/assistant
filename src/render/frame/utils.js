@@ -8,6 +8,9 @@ const defaultEdgeInsets = {
 	right: 0,
 }
 
+/**
+ * A hook that tracks the height of the WP Admin Bar at different breakpoints.
+ */
 const useAdminBarHeight = () => {
 	const { isShowingAdminBar } = getSystemConfig()
 	const isSlim = useMedia( { maxWidth: 782 } )
@@ -19,6 +22,11 @@ const useAdminBarHeight = () => {
 	return isSlim ? 46 : 32
 }
 
+/**
+ * A hook that tracks edge insets for the frame.
+ * Describes the distance to the edge of the viewport that the frame should rest against.
+ * Returns object like { top: 32, left: 0, right: 0, bottom: 0 }
+ */
 export const useEdgeInsets = ( insets = defaultEdgeInsets ) => {
 	const adminBar = useAdminBarHeight()
 	return {
@@ -27,12 +35,15 @@ export const useEdgeInsets = ( insets = defaultEdgeInsets ) => {
 	}
 }
 
-export const getHeight = insets => `calc( 100vh - ${ insets.top + insets.bottom }px )`
+/**
+ * Describes the panel width when collapsed or expanded
+ */
+const getWidth = isAppHidden => isAppHidden ? 60 : 420
 
-export const getWidth = isAppHidden => isAppHidden ? 60 : 420
-
-export const getTop = insets => insets.top
-
+/**
+ * For the sake of nice animation we always use left to describe the frame's position
+ * instead of switching between left or right css properties.
+ */
 export const getLeft = ( originX = 0, width, insets ) => {
 	return originX ? `calc( 100vw - ${ width + insets.left }px )` : insets.left
 }
@@ -42,6 +53,16 @@ export const getBoxShadow = ( isHidden, isAppHidden ) => {
 		return '0 0 0px hsla( 210, 0%, 0%, 0 )'
 	} else {
 		return '0 0 20px hsla( 210, 20%, 30%, .15 )'
+	}
+}
+
+export const getRect = ( originX, insets, isAppHidden = false ) => {
+	const width = getWidth( isAppHidden )
+	return {
+		top: insets.top,
+		left: getLeft( originX, width, insets ),
+		width,
+		height: `calc( 100vh - ${ insets.top + insets.bottom }px )`
 	}
 }
 

@@ -5,10 +5,8 @@ import useMedia from 'use-media'
 import { getSystemActions, useSystemState } from 'assistant/data'
 import {
 	useEdgeInsets,
-	getHeight,
-	getWidth,
-	getTop,
 	getLeft,
+	getRect,
 	getBoxShadow,
 	isRightEdge
 } from './utils'
@@ -17,67 +15,65 @@ import {
  * Primary Frame Component
  */
 const Frame = ( { children, ...rest } ) => {
-	const [ dragArea, setDragArea ] = useState( false )
-	const animation = useAnimation()
-
 	const { setWindow } = getSystemActions()
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
 	const { isHidden } = windowFrame
 	const [ originX ] = windowFrame.origin
 
-	// An object describing how far from each edge of the window to place the frame against.
+	/**
+	 * This is a control object that let's us manage animations directly.
+	 * See animate prop.
+	 */
+	const animation = useAnimation()
+
+	// Tracks whether a drop indicator should be showing and on which side.
+	const [ dragArea, setDragArea ] = useState( false )
+
+	/**
+	 * Insets is an object describing how far from each edge the panel should "pin".
+	 * For now this is only really handling the top distance.
+	 * Ex: { top: 32, left: 0, bottom: 0, right: 0 }
+	 */
 	const insets = useEdgeInsets()
+	const { top, left, width, height } = getRect( originX, insets, isAppHidden )
+	const boxShadow = getBoxShadow( isHidden, isAppHidden )
+
+	// How far to translate the frame to get it off the screen
+	const distance = originX ? width : -Math.abs( width )
 
 	// Below 600px the admin bar jumps to absolute positioning / starts scrolling with the page.
 	const isMobile = useMedia( { maxWidth: 600 } )
+
+	// Handle insets changing when admin bar changes height
+	useEffect( () => {
+
+		// Animation would be overkill here.
+		animation.set( { top, height } )
+	}, [ insets ] )
+
+	// Handle originX (left or right edge) change.
+	useEffect( () => {
+		animation.start( { x: 0, y: 0, top, left } )
+	}, [ originX ] )
+
+	// Handles isAppHidden changing in system state
+	useEffect( () => {
+		animation.start( { width, left, boxShadow } )
+	}, [ isAppHidden ] )
+
+	useEffect( () => {
+		const distance = originX ? width : -Math.abs( width )
+		animation.start( {
+			x: isHidden ? distance : 0,
+			boxShadow
+		} )
+	}, [ isHidden ] )
 
 	const setEdge = edge => {
 		let newOrigin = [ ...windowFrame.origin ]
 		newOrigin[0] = 'right' === edge ? 1 : 0
 		setWindow( { ...windowFrame, origin: newOrigin } )
 	}
-
-	// Handle insets changing when admin bar changes height
-	useEffect( () => {
-		animation.set( {
-			top: getTop( insets ),
-			height: getHeight( insets )
-		} )
-	}, [ insets ] )
-
-	// Handle originX (left or right edge) change.
-	useEffect( () => {
-		const width = getWidth( isAppHidden )
-		animation.start( {
-			x: 0,
-			y: 0,
-			top: getTop( insets ),
-			left: getLeft( originX, width, insets )
-		} )
-	}, [ originX ] )
-
-	// Handles isAppHidden changing in system state
-	useEffect( () => {
-		const width = getWidth( isAppHidden )
-		animation.start( {
-			width,
-			left: getLeft( originX, width, insets ),
-			boxShadow: getBoxShadow( isHidden, isAppHidden ),
-		} )
-	}, [ isAppHidden ] )
-
-	useEffect( () => {
-		const width = getWidth( isAppHidden )
-		const distance = originX ? width : -Math.abs( width )
-		animation.start( {
-			x: isHidden ? distance : 0,
-			boxShadow: getBoxShadow( isHidden, isAppHidden )
-		} )
-	}, [ isHidden ] )
-
-	// Setup initial
-	const width = getWidth( isAppHidden )
-	const distance = originX ? width : -Math.abs( width )
 
 	return (
 		<>
@@ -87,11 +83,11 @@ const Frame = ( { children, ...rest } ) => {
 				// Initial animatable styles
 				initial={ {
 					x: isHidden ? distance : 0,
-					top: getTop( insets ),
-					left: originX ? `calc( 100vw - ${ getWidth( isAppHidden ) + insets.left }px )` : insets.left,
-					width: getWidth( isAppHidden ),
-					height: getHeight( insets ),
-					boxShadow: getBoxShadow( isHidden, isAppHidden ),
+					top,
+					left,
+					width,
+					height,
+					boxShadow,
 				} }
 
 				// Attaches the animation controls object
