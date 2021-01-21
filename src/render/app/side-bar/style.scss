@@ -8,8 +8,7 @@
         flex-basis: 60px;
         background: var(--fluid-opaque-13);
         box-shadow: 0 0 1px var(--fluid-opaque-8);
-        cursor: move;
-        z-index: 3;
+        z-index: 4;
 
         .disable-while-sorting {
             transition-property: opacity;
@@ -100,9 +99,7 @@
             }
         }
 
-        .fluid-button {
-            height: 50px;
-        }
+        .fluid-button { height: 50px; }
 
         ul {
             margin:0;

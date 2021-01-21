@@ -62,7 +62,7 @@ const Item = ( {
 				[ `fl-asst-cell-${size}` ]: size,
 				'is-dragging': isDragging
 			}, className ) }
-			layout
+			layout={ false }
 			animate={ isDragging ? onTop : flat }
 			drag={ false /*'sm' === size ? true : 'y'*/ }
 			dragDirectionLock

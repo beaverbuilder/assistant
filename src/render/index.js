@@ -2,7 +2,7 @@ import React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
-import { Assistant, AssistantCore } from './main'
+import { Assistant, AssistantForBeaverBuilder } from './main'
 import renderSkipLink from './skip-link'
 import './admin-bar-item'
 import './style.scss'
@@ -39,8 +39,8 @@ if ( 'FLBuilder' in window ) {
 			registerPanel( 'assistant', {
 				className: 'fl-asst fluid fl uid',
 				label: __( 'Assistant' ),
-				root: AssistantCore,
-				render: AssistantCore, /* legacy */
+				root: AssistantForBeaverBuilder,
+				render: AssistantForBeaverBuilder, /* legacy */
 			} )
 
 			// Setup Trigger Button

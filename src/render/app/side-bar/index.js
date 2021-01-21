@@ -5,19 +5,15 @@ import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { App, Button, Icon, Env } from 'assistant/ui'
-import {
-	useSystemState,
-	getSystemActions,
-	getSystemSelectors,
-} from 'assistant/data'
+import { useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
 import { useMedia } from 'utils/react'
 import './style.scss'
 
 const Sidebar = memo( () => {
-	const { window, isAppHidden  } = useSystemState()
+	const { isAppHidden } = useSystemState()
 	const { selectApp, selectHomeApp } = getSystemSelectors()
 	const { isMobile, isCompactHeight, application } = Env.use()
-	const { toggleIsShowingUI, setWindow, setIsAppHidden } = getSystemActions()
+	const { toggleIsShowingUI, setIsAppHidden } = getSystemActions()
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
 	const history = useHistory()
 	const { pathname } = history.location
@@ -37,12 +33,6 @@ const Sidebar = memo( () => {
 	const isManage = pathname.startsWith( '/fl-manage' )
 	const toggleIsAppHidden = () => setIsAppHidden( ! isAppHidden )
 
-	const toggleWindowSize = () => {
-		const sizes = [ 'mini', 'normal' ]
-		const current = sizes.indexOf( window.size )
-		const next = ( current + 1 ) % sizes.length
-		setWindow( { ...window, size: sizes[next] } )
-	}
 	const goToRoot = () => {
 		history.go( -history.length )
 		history.replace( '/', {} )
@@ -106,28 +96,45 @@ const Sidebar = memo( () => {
 		)
 	}
 
-	return (
-		<div className={ classes }>
-			{ ! isBeaverBuilder && (
-				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top disable-while-sorting">
-					<Button
-						appearance="transparent"
-						onClick={ () => toggleIsShowingUI( false ) }
-						className="fl-asst-sidebar-close-button"
-						title={ __( 'Hide Panel' ) }
-						shape="round"
-						size="lg"
-						style={ { margin: '0 auto' } }
-					>
-						<Icon.Close />
-					</Button>
-				</div>
-			)}
+	const ToggleHiddenButton = () => {
 
-			<div
-				className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle"
+		let onClick = () => toggleIsShowingUI( false )
+		if ( isBeaverBuilder ) {
+			if ( undefined !== FL.Builder && 'function' === typeof FL.Builder.togglePanel ) {
+				onClick = () => {
+					FL.Builder.togglePanel()
+					toggleIsShowingUI( false )
+				}
+			} else {
+
+				// For older versions of BB, just hide the button.
+				return null
+			}
+		}
+
+		return (
+			<Button
+				appearance="transparent"
+				onClick={ onClick }
+				className="fl-asst-sidebar-close-button"
+				title={ __( 'Hide Panel' ) }
+				shape="round"
+				size="lg"
+				style={ { margin: '0 auto' } }
 			>
+				<Icon.Close />
+			</Button>
+		)
+	}
 
+	return (
+		<div className={ classes } style={ { cursor: ! isBeaverBuilder && 'move' } } >
+
+			<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top">
+				<ToggleHiddenButton />
+			</div>
+
+			<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle">
 				<App.List
 					before={ <HomeItem /> }
 					after={ <ManageItem /> }
@@ -150,7 +157,7 @@ const Sidebar = memo( () => {
 								appearance={ ( isSelected && ! isAppHidden ) ? 'normal' : 'transparent' }
 								shape="round"
 								size="lg"
-								isSelected={ isSelected }
+								isSelected={ isSelected && ! isAppHidden }
 								onClick={ () => {
 									navOrHideApp( isSelected, () => history.push( location ) )
 								} }
@@ -173,20 +180,13 @@ const Sidebar = memo( () => {
 				</App.List>
 			</div>
 
-			{ ! isBeaverBuilder && ! isMobile && (
-				<div className="fl-asst-sidebar-cell disable-while-sorting">
-					<Button
-						appearance="transparent"
-						shape="round"
-						size="lg"
-						style={ { margin: '0 auto' } }
-						onClick={ toggleWindowSize }
-						title={ 'mini' === window.size ? __( 'Expand Panel' ) : __( 'Collapse Panel' ) }
-					>
-						{ 'mini' === window.size ? <Icon.Expand /> : <Icon.Collapse /> }
-					</Button>
-				</div>
-			)}
+			{ /* Just here as a 60px offset right now */ }
+			{ ! isMobile && (
+				<div
+					className="fl-asst-sidebar-cell disable-while-sorting"
+					style={ { minHeight: 60 } }
+				/>
+			) }
 		</div>
 	)
 } )
