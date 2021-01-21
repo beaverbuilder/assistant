@@ -113,7 +113,7 @@ const Sidebar = memo( () => {
 	}
 
 	return (
-		<div className={ classes } >
+		<div className={ classes } style={ { cursor: ! isBeaverBuilder && 'move' } } >
 			{ ! isBeaverBuilder && (
 				<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-top">
 					<ToggleHiddenButton />
