@@ -47,22 +47,14 @@ const BaseProviders = ( { displayingIn, children } ) => (
  * The Normal Standalone Root Component
  */
 export const Assistant = () => {
-	const hasChanged = ( a, b ) => (
-		a.appearance.brightness !== b.appearance.brightness ||
-		a.window.isHidden !== b.window.isHidden
-	)
-	const { window: { isHidden, hiddenAppearance }, appearance } = useSystemState( hasChanged )
-	const shouldRenderDOM = ! isHidden || 'admin_bar' !== hiddenAppearance
-
+	const { appearance } = useSystemState( 'appearance' )
 	return (
 		<BaseProviders>
-			{ shouldRenderDOM && (
-				<FLUIDAppearanceRoot colorScheme={ appearance.brightness }>
-					<Frame>
-						<AppMain />
-					</Frame>
-				</FLUIDAppearanceRoot>
-			) }
+			<FLUIDAppearanceRoot colorScheme={ appearance.brightness }>
+				<Frame>
+					<AppMain />
+				</Frame>
+			</FLUIDAppearanceRoot>
 		</BaseProviders>
 	)
 }
