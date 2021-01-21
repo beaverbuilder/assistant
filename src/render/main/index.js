@@ -2,12 +2,13 @@ import React, { useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import classname from 'classnames'
 import { Root as AppCoreRoot } from '@beaverbuilder/app-core'
-import { getSystemActions, useSystemState } from 'assistant/data'
+import { getSystemActions, useSystemState, getSystemConfig } from 'assistant/data'
 import { Env } from 'assistant/ui'
 
 import Router from './router'
 import AppMain from '../app'
 import Frame from '../frame'
+import FloatingButton from '../frame/button'
 
 
 const HistoryManager = () => {
@@ -47,13 +48,17 @@ const BaseProviders = ( { displayingIn, children } ) => (
  * The Normal Standalone Root Component
  */
 export const Assistant = () => {
-	const { appearance } = useSystemState( 'appearance' )
+	const { isShowingAdminBar } = getSystemConfig()
+	const { appearance, window: win } = useSystemState( [ 'window', 'appearance' ] )
+	const { isHidden, hiddenAppearance } = win
+	const showButton = isHidden && ( 'admin_bar' !== hiddenAppearance || ! isShowingAdminBar )
 	return (
 		<BaseProviders>
 			<FLUIDAppearanceRoot colorScheme={ appearance.brightness }>
 				<Frame>
 					<AppMain />
 				</Frame>
+				{ showButton && <FloatingButton /> }
 			</FLUIDAppearanceRoot>
 		</BaseProviders>
 	)

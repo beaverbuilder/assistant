@@ -26,12 +26,19 @@ const useAdminBarHeight = () => {
  * A hook that tracks edge insets for the frame.
  * Describes the distance to the edge of the viewport that the frame should rest against.
  * Returns object like { top: 32, left: 0, right: 0, bottom: 0 }
+ * @param {Number || Object} initial inset(s)
  */
 export const useEdgeInsets = ( insets = defaultEdgeInsets ) => {
 	const adminBar = useAdminBarHeight()
+
+	let base = insets
+	if ( Number.isInteger( insets ) ) {
+		base = { top: insets, right: insets, bottom: insets, left: insets }
+	}
+
 	return {
-		...insets,
-		top: insets.top + adminBar
+		...base,
+		top: base.top + adminBar
 	}
 }
 
@@ -45,7 +52,7 @@ const getWidth = isAppHidden => isAppHidden ? 60 : 420
  * instead of switching between left or right css properties.
  */
 export const getLeft = ( originX = 0, width, insets ) => {
-	return originX ? `calc( 100vw - ${ width + insets.left }px )` : insets.left
+	return originX ? `calc( 100vw - ${ width + insets.right }px )` : insets.left
 }
 
 export const getBoxShadow = ( isHidden, isAppHidden ) => {
@@ -67,3 +74,12 @@ export const getRect = ( originX, insets, isAppHidden = false ) => {
 }
 
 export const isRightEdge = x => x >= ( window.innerWidth / 2 )
+export const isLeftEdge = x => x < ( window.innerWidth / 2 )
+export const isTopEdge = y => y < ( window.innerHeight / 2 )
+export const isBottomEdge = y => y >= ( window.innerHeight / 2 )
+
+export const getOrigin = ( { x, y } ) => {
+	return [ isRightEdge( x ) ? 1 : 0, isBottomEdge( y ) ? 1 : 0 ]
+}
+
+export const originHasChanged = ( a, b ) => typeof a !== typeof b || a[0] !== b[0] || a[1] !== b[1]

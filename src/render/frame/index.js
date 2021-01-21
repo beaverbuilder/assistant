@@ -3,6 +3,7 @@ import { motion, useAnimation } from 'framer-motion'
 import b from '@beaverbuilder/box'
 import useMedia from 'use-media'
 import { getSystemActions, useSystemState } from 'assistant/data'
+import FloatingButton from './button'
 import {
 	useEdgeInsets,
 	getLeft,
@@ -53,7 +54,11 @@ const Frame = ( { children, ...rest } ) => {
 
 	// Handle originX (left or right edge) change.
 	useEffect( () => {
-		animation.start( { x: 0, y: 0, top, left } )
+		if ( ! isHidden ) {
+			animation.start( { x: 0, y: 0, left } )
+		} else {
+			animation.set( { x: distance, left } )
+		}
 	}, [ originX ] )
 
 	// Handles isAppHidden changing in system state
