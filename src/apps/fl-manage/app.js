@@ -23,8 +23,6 @@ export default props => (
 )
 
 const MainScreen = () => {
-	const { application } = Env.use()
-	const isBeaverBuilder = 'beaver-builder' === application
 	return (
 		<Page
 			title={ __( 'Apps & Settings' ) }
@@ -36,7 +34,7 @@ const MainScreen = () => {
 					<p style={ { marginTop: 0 } }>{__( 'You can reorder the apps below. The top 5 will appear in the sidebar for quick access.' )}</p>
 					<AppList before={ <Home /> } />
 				</Page.Section>
-				{ ! isBeaverBuilder && <UIColorPreferences /> }
+				<UIColorPreferences />
 			</Form>
 		</Page>
 	)
@@ -82,7 +80,6 @@ const UIColorPreferences = () => {
 		<Form.Section label={ __( 'Preferences' ) }>
 			{ 'beaver-builder' !== application && (
 				<Form.Item label={ __( 'UI Brightness' ) } labelPlacement="beside">
-
 					<Layout.Row gap={ 5 }>
 						<Button
 							isSelected={ 'light' === appearance.brightness }
@@ -99,8 +96,7 @@ const UIColorPreferences = () => {
 						</Button>
 					</Layout.Row>
 				</Form.Item>
-			)}
-
+			) }
 			<Form.Item label={ __( 'Attach To' ) } labelPlacement="beside">
 				<Layout.Row gap={ 5 }>
 					<Button

@@ -37,7 +37,7 @@ if ( 'FLBuilder' in window ) {
 			const { registerPanel, togglePanel } = FL.Builder
 
 			registerPanel( 'assistant', {
-				className: 'fl-asst',
+				rootClassName: 'fl-asst',
 				label: __( 'Assistant' ),
 				root: AssistantForBeaverBuilder,
 				render: AssistantForBeaverBuilder, /* legacy */
