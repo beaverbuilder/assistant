@@ -114,6 +114,7 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 					display: 'flex',
 					flexDirection: 'column',
 					pointerEvents: isHidden ? 'none' : null,
+					contain: 'strict',
 				} }
 
 				drag
