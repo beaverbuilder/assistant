@@ -37,17 +37,17 @@ if ( 'FLBuilder' in window ) {
 			const { registerPanel, togglePanel } = FL.Builder
 
 			registerPanel( 'assistant', {
-				className: 'fl-asst fluid fl uid',
+				className: 'fl-asst',
 				label: __( 'Assistant' ),
 				root: AssistantForBeaverBuilder,
 				render: AssistantForBeaverBuilder, /* legacy */
+				frame: false,
 			} )
 
 			// Setup Trigger Button
 			const button = document.querySelector( '.fl-builder-fl-assistant-button' )
 			button.addEventListener( 'click', () => togglePanel( 'assistant' ) )
 		}
-
 	} )
 } else {
 

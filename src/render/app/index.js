@@ -7,13 +7,13 @@ import { useSystemState } from 'assistant/data'
 import Sidebar from './side-bar'
 import './style.scss'
 
-const AppMain = ( { allowHidingApps = true } ) => {
+const AppMain = () => {
 	const { apps, window: windowFrame, isAppHidden, homeKey } = useSystemState( [ 'apps', 'window', 'isAppHidden', 'homeKey' ] )
 	const { origin, isHidden } = windowFrame
 	const sideName = origin[0] ? 'right' : 'left'
 	const { isMobile, application } = Env.use()
+	const rowDirection = 'right' === sideName ? 'row-reverse' : 'row'
 	const isBeaverBuilder = 'beaver-builder' === application
-	const rowDirection = ( 'right' === sideName || isBeaverBuilder ) ? 'row-reverse' : 'row'
 
 	const classes = classname( {
 		'fl-asst-main': true,
@@ -32,11 +32,13 @@ const AppMain = ( { allowHidingApps = true } ) => {
 		} ),
 	}
 
+	const displayContent = isBeaverBuilder || ( ! isHidden && ! isAppHidden )
+
 	return (
 		<div className={ classes } style={ { flexDirection: rowDirection } }>
 			<Sidebar />
 			<AnimatePresence initial={ false }>
-				{ ! isHidden && ( ! isAppHidden || ! allowHidingApps ) && (
+				{ displayContent && (
 					<motion.div
 						key="main-content"
 						variants={ variants }

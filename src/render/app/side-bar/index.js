@@ -101,10 +101,7 @@ const Sidebar = memo( () => {
 		let onClick = () => toggleIsShowingUI( false )
 		if ( isBeaverBuilder ) {
 			if ( undefined !== FL.Builder && 'function' === typeof FL.Builder.togglePanel ) {
-				onClick = () => {
-					FL.Builder.togglePanel()
-					toggleIsShowingUI( false )
-				}
+				onClick = FL.Builder.togglePanel
 			} else {
 
 				// For older versions of BB, just hide the button.

@@ -1,4 +1,5 @@
 import useMedia from 'use-media'
+import { Env } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 
 const defaultEdgeInsets = {
@@ -15,6 +16,12 @@ const useAdminBarHeight = () => {
 	const { isShowingAdminBar } = getSystemConfig()
 	const isSlim = useMedia( { maxWidth: 782 } )
 	const isMobile = useMedia( { maxWidth: 600 } )
+	const { application } = Env.use()
+
+	// Beaver builder
+	if ( 'beaver-builder' === application ) {
+		return 45
+	}
 
 	if ( ! isShowingAdminBar || isMobile ) {
 		return 0
@@ -35,7 +42,6 @@ export const useEdgeInsets = ( insets = defaultEdgeInsets ) => {
 	if ( Number.isInteger( insets ) ) {
 		base = { top: insets, right: insets, bottom: insets, left: insets }
 	}
-
 	return {
 		...base,
 		top: base.top + adminBar

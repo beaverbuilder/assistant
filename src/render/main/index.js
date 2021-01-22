@@ -55,7 +55,7 @@ export const Assistant = () => {
 	return (
 		<BaseProviders>
 			<FLUIDAppearanceRoot colorScheme={ appearance.brightness }>
-				<Frame>
+				<Frame isHidden={ isHidden }>
 					<AppMain />
 				</Frame>
 				{ showButton && <FloatingButton /> }
@@ -67,6 +67,8 @@ export const Assistant = () => {
 // Used for Beaver Builder panel - doesn't have Window Frame or FLUID root.
 export const AssistantForBeaverBuilder = () => (
 	<BaseProviders displayingIn='beaver-builder'>
-		<AppMain allowHidingApps={ false } />
+		<Frame>
+			<AppMain />
+		</Frame>
 	</BaseProviders>
 )

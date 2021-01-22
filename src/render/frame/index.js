@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 import b from '@beaverbuilder/box'
 import useMedia from 'use-media'
+import { Env } from 'assistant/ui'
 import { getSystemActions, useSystemState } from 'assistant/data'
-import FloatingButton from './button'
 import {
 	useEdgeInsets,
 	getLeft,
@@ -15,11 +15,12 @@ import {
 /**
  * Primary Frame Component
  */
-const Frame = ( { children, ...rest } ) => {
+const Frame = ( { children, isHidden = false, ...rest } ) => {
 	const { setWindow } = getSystemActions()
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
-	const { isHidden } = windowFrame
 	const [ originX ] = windowFrame.origin
+	const { application } = Env.use()
+	const isBeaverBuilder = 'beaver-builder' === application
 
 	/**
 	 * This is a control object that let's us manage animations directly.
@@ -109,7 +110,7 @@ const Frame = ( { children, ...rest } ) => {
 					overflow: 'hidden',
 					boxSizing: 'border-box',
 					background: 'var(--fluid-background)',
-					zIndex: isMobile ? 99999 : 9999, /* we usually want to be under the admin bar menus */
+					zIndex: isMobile || isBeaverBuilder ? 999999 : 9999, /* we usually want to be under the admin bar menus */
 					display: 'flex',
 					flexDirection: 'column',
 					pointerEvents: isHidden ? 'none' : null,
