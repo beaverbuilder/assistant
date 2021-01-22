@@ -73,7 +73,7 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
-= 0.6.0 ( 2021-1-21 ) =
+= 0.6.0.beta.2 ( 2021-1-22 ) =
 * Add groundwork for upcoming Libraries feature
 * Refine overall appearance
 * Enhance media uploading UI

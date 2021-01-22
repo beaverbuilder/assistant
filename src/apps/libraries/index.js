@@ -6,7 +6,9 @@ const App = lazy( () => import(
 	/* webpackChunkName: "app-libraries" */ './app'
 ) )
 
-setupLibrariesApp( {
-	root: App,
-	icon: Icon.Library,
-} )
+if ( ! __PRODUCTION__ ) {
+	setupLibrariesApp( {
+		root: App,
+		icon: Icon.Library,
+	} )
+}

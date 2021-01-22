@@ -8,13 +8,15 @@ const App = lazy( () => import(
 	/* webpackChunkName: "app-cloud-connect" */ './app'
 ) )
 
-registerApp( 'fl-cloud-connect', {
-	label: __( 'Cloud Connect' ),
-	root: App,
-	icon: AppIcon,
-	shouldShowInAppList: false,
-	state: {
-		isValidating: false
-	},
-	onMount
-} )
+if ( ! __PRODUCTION__ ) {
+	registerApp( 'fl-cloud-connect', {
+		label: __( 'Cloud Connect' ),
+		root: App,
+		icon: AppIcon,
+		shouldShowInAppList: false,
+		state: {
+			isValidating: false
+		},
+		onMount
+	} )
+}
