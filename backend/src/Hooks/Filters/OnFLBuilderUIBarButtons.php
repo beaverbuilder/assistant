@@ -19,7 +19,7 @@ class OnFLBuilderUIBarButtons {
 
 		// Check if BB supports assistant (2.4+)
 		if (
-			! version_compare( FL_BUILDER_VERSION, '2.4-alpha.1', '>=' ) &&
+			! version_compare( FL_BUILDER_VERSION, '2.4.2', '>=' ) &&
 			'{FL_BUILDER_VERSION}' !== FL_BUILDER_VERSION
 		) {
 			return $buttons;
