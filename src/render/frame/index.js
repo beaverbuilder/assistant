@@ -46,21 +46,37 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 	// Below 600px the admin bar jumps to absolute positioning / starts scrolling with the page.
 	const isMobile = useMedia( { maxWidth: 600 } )
 
-	// Handle insets changing when admin bar changes height
+	// Handle mount and unmount
 	useEffect( () => {
+		const html = document.documentElement
+		html.classList.add( originX ? 'fl-asst-pinned-right' : 'fl-asst-pinned-left' )
 
-		// Animation would be overkill here.
-		animation.set( { top, height } )
-	}, [ insets ] )
+		return () => html.classList.remove( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
+	}, [] )
 
 	// Handle originX (left or right edge) change.
 	useEffect( () => {
+		const html = document.documentElement
+
 		if ( ! isHidden ) {
 			animation.start( { x: 0, y: 0, left } )
+
+			if ( originX ) {
+				html.classList.replace( 'fl-asst-pinned-left', 'fl-asst-pinned-right' )
+			} else {
+				html.classList.replace( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
+			}
+
 		} else {
 			animation.set( { x: distance, left } )
 		}
 	}, [ originX ] )
+
+	// Handle insets changing when admin bar changes height
+	// Animation would be overkill here.
+	useEffect( () => {
+		animation.set( { top, height } )
+	}, [ insets ] )
 
 	// Handles isAppHidden changing in system state
 	useEffect( () => {
@@ -77,6 +93,14 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 				pointerEvents: isHidden ? 'none' : 'auto'
 			} )
 		} )
+
+		const html = document.documentElement
+		if ( isHidden ) {
+			html.classList.remove( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
+		} else {
+			html.classList.add( originX ? 'fl-asst-pinned-right' : 'fl-asst-pinned-left' )
+		}
+
 	}, [ isHidden ] )
 
 	const setEdge = edge => {
