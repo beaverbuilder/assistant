@@ -9,3 +9,12 @@
 	--fl-asst-purple: #CC73E1;
 	--fl-asst-pink: #FF2968;
 }
+
+/* Checkbox fix - should move to fluid */
+.fluid input[type=checkbox]:checked:after,
+.fluid input[type=radio]:checked:after {
+	margin-left: 0;
+	margin-top: 0;
+	font-weight: 500;
+	line-height: 1.3;
+}
