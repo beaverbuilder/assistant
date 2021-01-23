@@ -26,12 +26,12 @@
             user-select: none;
 
             &:hover {
-                background-color: var(--fl-asst-secondary-surface-background);
+                background-color: var(--fluid-box-background);
             }
 
             &:focus,
             &:focus-within {
-                background-color: var(--fl-asst-secondary-surface-background);
+                background-color: var(--fluid-box-background);
                 outline: none;
                 box-shadow: inset 3px 0px 0px 0px var(--fluid-accent);
                 z-index: 1;
@@ -68,7 +68,7 @@
                 box-shadow: inset 3px 0px 0px var(--fluid-destructive-color);
 
                 button {
-                    background: var(--fl-asst-surface-background);
+                    background: var(--fluid-background);
                 }
             }
             &.fl-asst-is-clickable {
@@ -88,10 +88,10 @@
         &:hover,
         &:focus,
         &:focus-within {
-            background: var(--fl-asst-secondary-surface-background);
+            background: var(--fluid-box-background);
 
             .fl-asst-list-item-thumbnail {
-                background-color: var(--fl-asst-surface-background);
+                background-color: var(--fluid-background);
             }
         }
         &:hover {
@@ -226,10 +226,10 @@
             min-width: 40px;
 
             &:hover {
-                background: var(--fl-asst-surface-background);
+                background: var(--fluid-background);
             }
             &:focus {
-                background: var(--fl-asst-surface-background);
+                background: var(--fluid-background);
             }
 
             .fl-asst-extra-dot {
@@ -249,7 +249,7 @@
     .fl-asst-list-item:focus-within {
 
         .fl-asst-list-item-thumbnail {
-            background-color: var(--fl-asst-surface-background);
+            background-color: var(--fluid-background);
         }
         .fl-asst-item-extras {
             display: flex;

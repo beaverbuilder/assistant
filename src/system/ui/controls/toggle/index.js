@@ -34,7 +34,7 @@ export const ToggleControl = props => {
 
 	const style = {
 		transform: value ? 'translateX( 100% )' : 'translateX(0px)',
-		background: value ? 'var(--fl-asst-surface-color)' : 'transparent',
+		background: value ? 'var(--fluid-color)' : 'transparent',
 		borderColor: value ? 'transparent' : '',
 	}
 
