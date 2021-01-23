@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { List, Button, Icon, Image, Media, Layout } from 'ui'
+import { List, Button, Icon, Media, Layout } from 'ui'
 import Clipboard from 'react-clipboard.js'
 import { getSystemSelectors } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
+import Image from './art'
 import './style.scss'
 
 const Attachments = ( {

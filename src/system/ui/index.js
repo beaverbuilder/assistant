@@ -21,7 +21,6 @@ export * from './app'
 export * from './lists'
 export * from './pages'
 export * from './button'
-export * from './art'
 export {
 	Layout,
 	Env,
