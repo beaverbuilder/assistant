@@ -243,11 +243,6 @@
                 pointer-events: none;
             }
         }
-
-		.fl-asst-is-favorite {
-			color: var(--fl-asst-bookmark-color);
-		}
-
     }
     .fl-asst-list-item:hover,
     .fl-asst-list-item:focus,
@@ -316,6 +311,6 @@
     }
 
 	.fl-asst-list-section-footer {
-		padding: var(--fl-asst-tiny-space) var(--fl-asst-outer-space) var(--fl-asst-outer-space);
+		padding: var(--fluid-sm-space) var(--fluid-lg-space) var(--fluid-lg-space);
 	}
 }

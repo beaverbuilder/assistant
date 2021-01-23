@@ -3,7 +3,7 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 6px;
-        padding:4px var(--fl-asst-inner-space) var(--fl-asst-outer-space);
+        padding: 4px var(--fluid-med-space) var(--fluid-lg-space);
 
         a {
             border-radius: 0;
@@ -13,8 +13,8 @@
 
                 img {
                     border-radius: 5px;
-                    box-shadow: 0px 0px 0px 2px var(--fl-asst-surface-background),
-                                0px 0px 0px 4px var(--fl-asst-accent-color);
+                    box-shadow: 0px 0px 0px 2px var(--fluid-background),
+								0px 0px 0px 4px var(--fluid-accent);
                 }
             }
         }
