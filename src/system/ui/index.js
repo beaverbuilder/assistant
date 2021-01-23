@@ -17,8 +17,6 @@ import Filter from './filter'
 import Widget from './widget'
 
 // Export for use inside system bundle - import from 'ui'
-//export * from './lists'
-//export * from './pages'
 export {
 	App,
 	Button,
