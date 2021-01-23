@@ -1,12 +1,9 @@
-import './style.scss'
 
 const Color = {
 
 	/**
 	 * Note: Colors changed here need to be changed in
 	 * LabelsRepository on the backend as well.
-	 *
-	 * TODO: Load from server config.
 	 */
 	knownColors: {
 		blue: 'var(--fl-asst-blue)',
