@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react'
-import Icon from '../'
+import { Placeholder, Loading, Error as ErrorIcon } from '@beaverbuilder/icons'
 import { Error } from '@beaverbuilder/app-core'
 
 const Safely = ( {
-	icon: Tag = Icon.Placeholder,
-	alternate = Icon.Error,
-	fallback: Fallback = Icon.Loading,
+	icon: Tag = Placeholder,
+	alternate = ErrorIcon,
+	fallback: Fallback = Loading,
 	...rest
 } ) => {
 	return (
