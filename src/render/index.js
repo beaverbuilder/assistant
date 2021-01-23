@@ -21,7 +21,12 @@ const renderAssistant = () => {
 	render( <Assistant />, mountNode )
 }
 
-// In Beaver Builder?
+/**
+ * Register Assistant as a Beaver Builder panel.
+ *
+ * Assistant disables Beaver Builder's default frame and uses it's own.
+ * The only big difference is that we override Assistant's isHidden state so BB can mount/unmount it.
+ */
 if ( 'FLBuilder' in window ) {
 	FLBuilder.addHook( 'didInitUI', () => {
 
@@ -46,18 +51,23 @@ if ( 'FLBuilder' in window ) {
 
 			// Setup Trigger Button
 			const button = document.querySelector( '.fl-builder-fl-assistant-button' )
-			button.addEventListener( 'click', () => togglePanel( 'assistant' ) )
+			if ( button ) {
+				button.addEventListener( 'click', () => togglePanel( 'assistant' ) )
+			}
 		}
 	} )
 } else {
 
-	// Render the standard Assistant app - We're not in Beaver Builder
-	// Don't put this inside wp.domReady - things break.
+	// Render the standalone Assistant app - We're not in Beaver Builder
+	// Don't put this inside wp.domReady() - things break.
 	renderAssistant()
 }
 
-// Gutenberg more menu link
-// Be aware this shows up on other gutenberg screens than just post editor (Widgets, Nav, etc...)
+/**
+ * Gutenberg more menu link
+ * Be aware this shows up on other gutenberg screens than just post editor
+ * (Ex. Widgets, Nav, etc...)
+ */
 if ( wp && 'plugins' in wp && 'editPost' in wp ) {
 	wp.plugins.registerPlugin( 'fl-asst-more-menu-item', {
 		render: () => {
