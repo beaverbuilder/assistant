@@ -1,5 +1,5 @@
 import { api as data } from './data'
-import { api as ui } from './ui'
+import * as ui from './ui'
 import utils from './utils'
 import hooks from './hooks'
 import cloud from './cloud'
