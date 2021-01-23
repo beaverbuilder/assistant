@@ -20,7 +20,7 @@ import {
 	getDefaultSectionProps,
 } from './parts'
 
-export const List = ( {
+const List = ( {
 	children,
 
 	items, // [Any] | null
@@ -124,3 +124,7 @@ List.useScrollLoader = useScrollLoader
 List.useListItems = useListItems
 List.InlineCreate = InlineCreate
 List.Sortable = Sortable
+
+export { List }
+
+export default List
