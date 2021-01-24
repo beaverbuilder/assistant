@@ -18,3 +18,9 @@
 	font-weight: 500;
 	line-height: 1.3;
 }
+
+/* FLUID Layout.Message fix */
+.fluid .fluid-message-icon {
+	height: auto;
+	width: auto;
+}

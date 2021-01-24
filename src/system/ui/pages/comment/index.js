@@ -34,7 +34,7 @@ export const Comment = () => {
 	const [ trashStatus, setTrashStatus ] = useState( trash )
 	const [ spamStatus, setSpamStatus ] = useState( spam )
 	const [ editContent, setEditContent ] = useState( content )
-	const [ replyValue, setreplyValue ] = useState( '' )
+	const [ replyValue, setReplyValue ] = useState( '' )
 
 	const approveComment = () => {
 		comments
@@ -292,6 +292,8 @@ export const Comment = () => {
 		defaults: item
 	} )
 
+	const showButtons = 'edit' !== commentStatus && 'reply' !== commentStatus
+
 	return (
 		<Page
 			title={ __( 'Edit Comment' ) }
@@ -306,7 +308,7 @@ export const Comment = () => {
 					dangerouslySetInnerHTML={ { __html: item.content } }
 				/>
 			)}
-			{ 'edit' == commentStatus && (
+			{ 'edit' === commentStatus && (
 				<b.div padX>
 					<p className="fl-asst-edit-comment-title">{__( 'Edit Comment' )}</p>
 					<textarea
@@ -318,108 +320,110 @@ export const Comment = () => {
 					<UpdateCommentBtn />
 				</b.div>
 			)}
-			{ 'reply' == commentStatus && (
+			{ 'reply' === commentStatus && (
 				<b.div padX>
 					<p className="fl-asst-edit-comment-title">{__( 'Reply To Comment' )}</p>
 					<textarea
 						className="fl-asst-comment-text"
 						value={ replyValue }
-						onChange={ e => setreplyValue( e.target.value ) }
+						onChange={ e => setReplyValue( e.target.value ) }
 						rows={ 7 }
 					/>
 					<ReplyCommentBtn />
 				</b.div>
 			)}
-			<b.row
-				style={ {
-					justifyContent: 'space-evenly',
-					flex: '0 0 auto',
-					margin: '10px 0 20px'
-				} }
-			>
-				{false === trashStatus &&
-					false === spamStatus &&
-					false == approveStatus &&
-					( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button
-						appearance='elevator'
-						title={ __( 'Approve' ) }
-						onClick={ approveComment }
-					>
-						<Icon.Approve />
-					</Button>
-				)}
+			{ showButtons && (
+				<b.row
+					style={ {
+						justifyContent: 'space-evenly',
+						flex: '0 0 auto',
+						padding: '10px 0 20px'
+					} }
+				>
+					{ false === trashStatus &&
+						false === spamStatus &&
+						false == approveStatus &&
+						( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+						<Button
+							appearance='elevator'
+							title={ __( 'Approve' ) }
+							onClick={ approveComment }
+						>
+							<Icon.Approve />
+						</Button>
+					) }
 
-				{true === approveStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button
-						appearance='elevator'
-						status='alert'
-						title={ __( 'Reject' ) }
-						onClick={ unapproveComment }
-					>
-						<Icon.Reject />
-					</Button>
-				)}
-				{false === trashStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button
-						appearance='elevator'
-						title={ __( 'Reply' ) }
-						onClick={ replyComment }
-					>
-						<Icon.Reply />
-					</Button>
-				)}
-				{false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button
-						appearance='elevator'
-						status='alert'
-						title={ __( 'Spam' ) }
-						onClick={ spamComment }
-					>
-						<Icon.Spam />
-					</Button>
-				)}
-				{true === spamStatus && false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button
-						appearance='elevator'
-						status='primary'
-						title={ __( 'Unspam' ) }
-						onClick={ unspamComment }
-					>
-						<Icon.Unspam />
-					</Button>
-				)}
+					{true === approveStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+						<Button
+							appearance='elevator'
+							status='alert'
+							title={ __( 'Reject' ) }
+							onClick={ unapproveComment }
+						>
+							<Icon.Reject />
+						</Button>
+					)}
+					{false === trashStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+						<Button
+							appearance='elevator'
+							title={ __( 'Reply' ) }
+							onClick={ replyComment }
+						>
+							<Icon.Reply />
+						</Button>
+					)}
+					{false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+						<Button
+							appearance='elevator'
+							status='alert'
+							title={ __( 'Spam' ) }
+							onClick={ spamComment }
+						>
+							<Icon.Spam />
+						</Button>
+					)}
+					{true === spamStatus && false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+						<Button
+							appearance='elevator'
+							status='primary'
+							title={ __( 'Unspam' ) }
+							onClick={ unspamComment }
+						>
+							<Icon.Unspam />
+						</Button>
+					)}
 
-				{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button
-						appearance='elevator'
-						title={ __( 'Edit' ) }
-						onClick={ editComment }
-					>
-						<Icon.Edit />
-					</Button>
-				)}
-				{false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button
-						appearance='elevator'
-						status='destructive'
-						title={ __( 'Trash' ) }
-						onClick={ trashComment }
-					>
-						<Icon.Trash />
-					</Button>
-				)}
-				{true === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
-					<Button
-						appearance='elevator'
-						status='primary'
-						title={ __( 'UnTrash' ) }
-						onClick={ untrashComment }
-					>
-						<Icon.Restore />
-					</Button>
-				)}
-			</b.row>
+					{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+						<Button
+							appearance='elevator'
+							title={ __( 'Edit' ) }
+							onClick={ editComment }
+						>
+							<Icon.Edit />
+						</Button>
+					)}
+					{false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+						<Button
+							appearance='elevator'
+							status='destructive'
+							title={ __( 'Trash' ) }
+							onClick={ trashComment }
+						>
+							<Icon.Trash />
+						</Button>
+					)}
+					{true === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+						<Button
+							appearance='elevator'
+							status='primary'
+							title={ __( 'UnTrash' ) }
+							onClick={ untrashComment }
+						>
+							<Icon.Restore />
+						</Button>
+					)}
+				</b.row>
+			) }
 
 			{ responseMessage.message && (
 				<Layout.Message
