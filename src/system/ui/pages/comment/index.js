@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { useLocation } from 'react-router-dom'
-import { Form, Icon, Button, Page, Layout } from 'ui'
+import { Form, Icon, Button, Page, Layout, Text } from 'ui'
+import b from '@beaverbuilder/box'
 import { getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
 import './style.scss'
@@ -34,7 +35,6 @@ export const Comment = () => {
 	const [ spamStatus, setSpamStatus ] = useState( spam )
 	const [ editContent, setEditContent ] = useState( content )
 	const [ replyValue, setreplyValue ] = useState( '' )
-
 
 	const approveComment = () => {
 		comments
@@ -168,11 +168,10 @@ export const Comment = () => {
 
 	const UpdateCommentBtn = () => {
 		return (
-			<div className='cmt-btn-wrap'>
+			<b.row padX style={ { justifyContent: 'space-between' } }>
 				<Button className='cmt-cncl-btn' onClick={ resetEdit }>
 					{__( 'Cancel' )}
 				</Button>
-				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button
 					className='fl-asst-cmt-updt-btn'
 					type='submit'
@@ -181,7 +180,7 @@ export const Comment = () => {
 				>
 					{__( 'Save' )}
 				</Button>
-			</div>
+			</b.row>
 		)
 	}
 
@@ -209,11 +208,10 @@ export const Comment = () => {
 
 	const ReplyCommentBtn = () => {
 		return (
-			<div className='cmt-btn-wrap'>
+			<b.row padX style={ { justifyContent: 'space-between' } }>
 				<Button className='fl-asst-cmt-cncl-btn' onClick={ resetReply }>
 					{__( 'Cancel' )}
 				</Button>
-				<div style={ { flex: '1 1 auto', margin: 'auto' } } />
 				<Button
 					className='fl-asst-cmt-updt-btn'
 					type='submit'
@@ -222,7 +220,7 @@ export const Comment = () => {
 				>
 					{__( 'Reply' )}
 				</Button>
-			</div>
+			</b.row>
 		)
 	}
 
@@ -299,9 +297,8 @@ export const Comment = () => {
 			title={ __( 'Edit Comment' ) }
 			className="fl-asst-comment-details"
 		>
-
-			<Layout.Headline>{author.name}</Layout.Headline>
-			<div>{sprintf( 'commented on %s', date )}</div>
+			<Text.Title>{author.name}</Text.Title>
+			<b.div padX>{ sprintf( 'Commented on %s', date ) }</b.div>
 
 			{ 'edit' !== commentStatus && (
 				<div
@@ -310,33 +307,31 @@ export const Comment = () => {
 				/>
 			)}
 			{ 'edit' == commentStatus && (
-				<div className='fl-asst-cmt-text-wrap'>
-					<span className="edit-comment-title">Edit Comment</span>
+				<b.div padX>
+					<p className="fl-asst-edit-comment-title">{__( 'Edit Comment' )}</p>
 					<textarea
 						className="fl-asst-comment-text"
 						value={ editContent }
 						onChange={ e => setEditContent( e.target.value ) }
-						rows={ 6 }
+						rows={ 10 }
 					/>
 					<UpdateCommentBtn />
-				</div>
+				</b.div>
 			)}
 			{ 'reply' == commentStatus && (
-				<div className='fl-asst-cmt-text-wrap'>
-					<span className="fl-asst-edit-comment-title">{__( 'Reply To Comment' )}</span>
+				<b.div padX>
+					<p className="fl-asst-edit-comment-title">{__( 'Reply To Comment' )}</p>
 					<textarea
 						className="fl-asst-comment-text"
 						value={ replyValue }
 						onChange={ e => setreplyValue( e.target.value ) }
-						rows={ 6 }
+						rows={ 7 }
 					/>
 					<ReplyCommentBtn />
-				</div>
+				</b.div>
 			)}
-			<div
+			<b.row
 				style={ {
-					display: 'flex',
-					flexDirection: 'row',
 					justifyContent: 'space-evenly',
 					flex: '0 0 auto',
 					margin: '10px 0 20px'
@@ -424,7 +419,7 @@ export const Comment = () => {
 						<Icon.Restore />
 					</Button>
 				)}
-			</div>
+			</b.row>
 
 			{ responseMessage.message && (
 				<Layout.Message
