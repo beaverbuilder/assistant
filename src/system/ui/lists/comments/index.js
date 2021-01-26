@@ -4,6 +4,7 @@ import { truncate } from 'utils/text'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
 import { getWpRest } from 'utils/wordpress'
+import './style.scss'
 
 export const Comments = ( {
 	getItemProps = ( item, defaultProps ) => defaultProps,
