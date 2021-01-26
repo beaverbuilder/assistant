@@ -9,6 +9,7 @@
       "__dirname": "readable",
       "process": "readable",
       "__PRODUCTION__": "readable",
+      "__INCLUDE_PRO__": "readable",
       "__webpack_public_path__": "writable",
       "FL_ASSISTANT_INITIAL_STATE": "readable",
       "FL_ASSISTANT_CONFIG": "readable",

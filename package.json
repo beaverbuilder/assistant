@@ -9,7 +9,9 @@
   },
   "scripts": {
     "build": "NODE_ENV=production webpack",
-    "build:dist": "NODE_ENV=production webpack && node bin/build-dist.js",
+    "build:dist": "npm run build && node bin/build-dist.js",
+    "build:pro": "INCLUDE_PRO=true npm run build",
+    "build:pro:dist": "INCLUDE_PRO=true npm run build && node bin/build-dist.js",
     "build:stats": "webpack --env production --json > stats.json",
     "dev": "webpack --watch",
     "fix": "eslint src --fix",

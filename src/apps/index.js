@@ -9,6 +9,7 @@ import './fl-updates'
 import './fl-labels'
 
 // Hidden from production builds for now
+// Use npm run build:pro or npm run dev to enable these apps
 import './fl-cloud-connect'
 import './libraries'
 
