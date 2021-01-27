@@ -5,7 +5,8 @@ export const defaultState = {
 		order: 'DESC',
 		orderby: 'date',
 		label: '0',
-	}
+	},
+	showUploader: true,
 }
 
 export const cache = [ 'listStyle', 'query' ]

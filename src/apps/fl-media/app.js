@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { App, Page, List, Filter, Button, Icon, Media } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
@@ -18,9 +18,8 @@ export default props => (
 )
 
 const Main = ( { baseURL } ) => {
-	const { listStyle, query } = useAppState( 'fl-media' )
-	const { setListStyle, setQuery } = getAppActions( 'fl-media' )
-	const [ showUpload, setShowUpload ] = useState( false )
+	const { listStyle, query, showUploader } = useAppState( 'fl-media' )
+	const { setListStyle, setQuery, setShowUploader } = getAppActions( 'fl-media' )
 	const { files, uploadFiles, current } = Media.useMediaUploads()
 
 	const MediaFilter = () => {
@@ -96,10 +95,10 @@ const Main = ( { baseURL } ) => {
 
 	const UploadButton = () => (
 		<Button
-			isSelected={ showUpload }
+			isSelected={ showUploader }
 			shape="round"
 			icon={ <Icon.Plus /> }
-			onClick={ () => setShowUpload( ! showUpload ) }
+			onClick={ () => setShowUploader( ! showUploader ) }
 		/>
 	)
 
@@ -107,10 +106,10 @@ const Main = ( { baseURL } ) => {
 		return (
 			<>
 				<MediaFilter />
-				{ showUpload && (
+				{ showUploader && (
 					<UploadCard
 						onInput={ uploadFiles }
-						onDismiss={ () => setShowUpload( false ) }
+						onDismiss={ () => setShowUploader( false ) }
 					/>
 				) }
 				{ 0 < files.length && <FileList files={ files } current={ current } />}
