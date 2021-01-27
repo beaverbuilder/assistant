@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { motion, useAnimation } from 'framer-motion'
+import { motion, useAnimation, useDragControls } from 'framer-motion'
 import b from '@beaverbuilder/box'
 import useMedia from 'use-media'
 import { Env } from 'assistant/ui'
@@ -27,6 +27,12 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 	 * See animate prop.
 	 */
 	const animation = useAnimation()
+
+	/**
+	 * Drag controls allow us to check which element is triggering the drag and reject
+	 * the drag if needed.
+	 */
+	const drag = useDragControls()
 
 	// Tracks whether a drop indicator should be showing and on which side.
 	const [ dragArea, setDragArea ] = useState( false )
@@ -142,6 +148,15 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 				} }
 
 				drag
+				dragControls={ drag }
+				onDragStart={ ( e, info ) => {
+					if ( ! e.target.classList.contains( 'frame-drag-handle' ) ) {
+
+						// Stop the drag
+						// be sure to pass along the event & info or it gets angry
+						drag.componentControls.forEach( entry => entry.stop( e, info ) )
+					}
+				} }
 				onDrag={ ( e, info ) => {
 					if ( isRightEdge( info.point.x ) ) {
 						if ( 1 !== dragArea ) {
@@ -180,6 +195,7 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 
 const GrabBar = () => (
 	<b.row
+		className="frame-drag-handle"
 		style={ {
 			paddingTop: 4,
 			paddingBottom: 10,

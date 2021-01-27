@@ -46,7 +46,7 @@ const Sidebar = memo( () => {
 		}
 	}
 
-	const classes = classname( 'fl-asst-sidebar', {
+	const classes = classname( 'fl-asst-sidebar', 'frame-drag-handle', {
 		'fl-asst-sidebar-compact': isCompactHeight,
 	} )
 
