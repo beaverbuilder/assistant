@@ -73,11 +73,15 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
-= 0.6.0.beta.3 ( 2021-1-25 ) =
+= 0.6.0.beta.4 ( 2021-01-26 ) =
+* Style fixes for Safari and Firefox
+* Re-added ability to switch between page and post types on Recent widget.
+
+= 0.6.0.beta.3 ( 2021-01-25 ) =
 * Style hardening against Twenty Twenty-One theme
 * Remove unused code.
 
-= 0.6.0.beta.2 ( 2021-1-22 ) =
+= 0.6.0.beta.2 ( 2021-01-22 ) =
 * Add groundwork for upcoming Libraries feature
 * Refine overall appearance
 * Enhance media uploading UI
