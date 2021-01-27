@@ -62,7 +62,9 @@
 }
 
 /* @beaverbuilder/form fix */
-.fluid form {
+.fl.uid form {
+	padding-bottom: 100px; /* Need enough scroll-past to clear the footer when it appears */
+
 	.fl-asst-form-item.fl-asst-form-item-placement-beside {
 		label {
 			flex-grow: 1;
