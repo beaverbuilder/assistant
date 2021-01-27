@@ -9,6 +9,10 @@
 	padding: var(--fluid-med-space);
 	overflow:hidden;
 
+	.CalendarMonthGrid__horizontal {
+		left: -7px;
+	}
+
 	.components-datetime__time {
 		padding-bottom: 10px;
 
@@ -19,6 +23,16 @@
 		input {
 			flex: 0 0 auto;
 			width: 44px;
+		}
+
+		.components-datetime__time-wrapper {
+			flex-grow: 1;
+			justify-content: center;
+
+			/* month select */
+			.components-datetime__time-field.components-datetime__time-field-month {
+				flex-grow: 1;
+			}
 		}
 	}
 	.components-datetime__time-field {
@@ -34,6 +48,8 @@
 	}
 	td {
 		border: none;
+		padding: 0;
+		border-radius: 0;
 	}
 
 	.DayPicker__horizontal {
