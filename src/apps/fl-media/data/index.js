@@ -9,4 +9,4 @@ export const defaultState = {
 	showUploader: true,
 }
 
-export const cache = [ 'listStyle', 'query' ]
+export const cache = [ 'listStyle', 'query', 'showUploader' ]
