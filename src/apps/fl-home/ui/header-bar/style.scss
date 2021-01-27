@@ -8,10 +8,10 @@
         &.fluid-sticky-element {
             background-color: transparent;
             background: linear-gradient( 180deg,
-                                         var(--fl-asst-card-background),
-                                         var(--fl-asst-card-background) 50%,
-                                         hsla(210, 40%, 98%, 0 )
-                                        ) !important;
+				var(--fl-asst-card-background),
+				var(--fl-asst-card-background) 50%,
+				hsla( var(--fluid-hue), 40%, 98%, 0 )
+            ) !important;
         }
 
         .fl-asst-floating-element {
@@ -27,7 +27,6 @@
             box-shadow: none;
             min-height: var(--box-size);
             min-width: var(--box-size);
-			backdrop-filter: blur(5px);
 
             &:hover {
                 background: var(--fluid-transparent-11);
@@ -97,11 +96,22 @@
 .fluid-color-scheme-dark {
     .fl-asst-home-search-header {
 
+		&.fluid-sticky-element {
+			background-color: transparent;
+			background: linear-gradient( 180deg,
+				 var(--fl-asst-card-background),
+				 var(--fl-asst-card-background) 30%,
+				 hsla( var(--fluid-hue), 10%, 15%, 0 )
+			) !important;
+		}
+
         .fl-asst-floating-element {
             box-shadow: none;
         }
         .fl-asst-inset-element {
             background: var(--fluid-transparent-2);
+			-webkit-backdrop-filter: blur(5px) saturate(200%);
+			backdrop-filter: blur(5px) saturate(200%);
 
             &:hover {
                 background: var(--fluid-transparent-3);

@@ -105,6 +105,7 @@ const Media = () => {
 					to="/fl-media"
 					style={ {
 						backdropFilter: 'blur(10px) saturate(200%)',
+						webkitBackdropFilter: 'blur(10px) saturate(200%)',
 						background: isDark ? 'rgba(0,0,0,.4)' : 'rgba(255,255,255,.5)',
 						padding: '5px 15px',
 						margin: '0 auto',
