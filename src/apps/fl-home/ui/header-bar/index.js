@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { AnimatePresence } from 'framer-motion'
-import { Layout, Form, Icon, Button, Menu, Widget } from 'assistant/ui'
-import { getWidgetActions } from 'assistant/data'
+import { Layout, Form, Icon, Button, Widget } from 'assistant/ui'
 import SearchSuggestions from './search-suggestions'
-import Help from './help'
 import './style.scss'
 
 const noop = () => {}
@@ -16,9 +13,7 @@ const HeaderBar = ( {
 	onSuggestionClick = noop,
 	keyword = '',
 } ) => {
-	const [ isShowingMoreMenu, setIsShowingMoreMenu ] = useState( false )
 	const [ isFocused, setIsFocused ] = useState( false )
-	const [ isShowingHelp, setIsShowingHelp ] = useState( false )
 	const [ isShowingWidgetLib, setIsShowingWidgetLib ] = useState( false )
 
 	const SearchIcon = () => (
@@ -42,26 +37,6 @@ const HeaderBar = ( {
 		)
 	}
 
-	const MenuContent = () => {
-		const { resetWidgets } = getWidgetActions()
-		return (
-			<>
-				{ ! __PRODUCTION__ && <Menu.Item
-					onClick={ () => {
-						setIsShowingWidgetLib( true )
-						setIsShowingMoreMenu( false )
-					} }
-				>{ __( 'Show Widget Library' ) }</Menu.Item> }
-				<Menu.Item
-					onClick={ () => {
-						resetWidgets( 'home' )
-						setIsShowingMoreMenu( false )
-					} }
-				>{ __( 'Reset Widgets' ) }</Menu.Item>
-			</>
-		)
-	}
-
 	return (
 		<>
 			<div className="fl-asst-home-search-header fluid-sticky-element" >
@@ -79,31 +54,12 @@ const HeaderBar = ( {
 						} }
 						onFocus={ () => {
 							setIsFocused( true )
-							setIsShowingHelp( false )
 							onFocus()
 						} }
 					/>
-					{ /* <Menu
-						content={ <MenuContent /> }
-						isShowing={ isShowingMoreMenu }
-						onOutsideClick={ () => setIsShowingMoreMenu( false ) }
-					>
-						<Button
-							shape="round"
-							className="fl-asst-inset-element"
-							style={ { minWidth: 40, minHeight: 40 } }
-							onClick={ () => setIsShowingMoreMenu( ! isShowingMoreMenu ) }
-						>
-							<Icon.More />
-						</Button>
-					</Menu> */ }
 				</Layout.Row>
 			</div>
-			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick }/> }
-
-			<AnimatePresence>
-				{ isShowingHelp && <Help onClose={ () => setIsShowingHelp( false ) } /> }
-			</AnimatePresence>
+			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick } /> }
 			{ isShowingWidgetLib && <Widget.Library onClose={ () => setIsShowingWidgetLib( false ) } /> }
 		</>
 	)
