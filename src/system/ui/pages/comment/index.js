@@ -300,16 +300,19 @@ export const Comment = () => {
 			className="fl-asst-comment-details"
 		>
 			<Text.Title>{author.name}</Text.Title>
-			<b.div padX>{ sprintf( 'Commented on %s', date ) }</b.div>
+			<b.div padX>
+				{ sprintf( 'Commented on %s', date ) }
+			</b.div>
 
 			{ 'edit' !== commentStatus && (
 				<div
 					className='fl-asst-content-area'
 					dangerouslySetInnerHTML={ { __html: item.content } }
+					onClick={ () => setCommentStatus( 'edit' ) }
 				/>
 			)}
 			{ 'edit' === commentStatus && (
-				<b.div padX>
+				<div style={ { padding: '10px 0' } }>
 					<p className="fl-asst-edit-comment-title">{__( 'Edit Comment' )}</p>
 					<textarea
 						className="fl-asst-comment-text"
@@ -318,10 +321,10 @@ export const Comment = () => {
 						rows={ 10 }
 					/>
 					<UpdateCommentBtn />
-				</b.div>
-			)}
+				</div>
+			) }
 			{ 'reply' === commentStatus && (
-				<b.div padX>
+				<div style={ { padding: '10px 0' } }>
 					<p className="fl-asst-edit-comment-title">{__( 'Reply To Comment' )}</p>
 					<textarea
 						className="fl-asst-comment-text"
@@ -330,8 +333,8 @@ export const Comment = () => {
 						rows={ 7 }
 					/>
 					<ReplyCommentBtn />
-				</b.div>
-			)}
+				</div>
+			) }
 			{ showButtons && (
 				<b.row
 					style={ {
@@ -353,7 +356,7 @@ export const Comment = () => {
 						</Button>
 					) }
 
-					{true === approveStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					{ true === approveStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 						<Button
 							appearance='elevator'
 							status='alert'
@@ -362,8 +365,8 @@ export const Comment = () => {
 						>
 							<Icon.Reject />
 						</Button>
-					)}
-					{false === trashStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					) }
+					{ false === trashStatus && false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 						<Button
 							appearance='elevator'
 							title={ __( 'Reply' ) }
@@ -371,8 +374,8 @@ export const Comment = () => {
 						>
 							<Icon.Reply />
 						</Button>
-					)}
-					{false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					) }
+					{ false === spamStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 						<Button
 							appearance='elevator'
 							status='alert'
@@ -381,8 +384,8 @@ export const Comment = () => {
 						>
 							<Icon.Spam />
 						</Button>
-					)}
-					{true === spamStatus && false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					) }
+					{ true === spamStatus && false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 						<Button
 							appearance='elevator'
 							status='primary'
@@ -391,9 +394,9 @@ export const Comment = () => {
 						>
 							<Icon.Unspam />
 						</Button>
-					)}
+					) }
 
-					{'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					{ 'edit' !== commentStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 						<Button
 							appearance='elevator'
 							title={ __( 'Edit' ) }
@@ -402,7 +405,7 @@ export const Comment = () => {
 							<Icon.Edit />
 						</Button>
 					)}
-					{false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					{ false === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 						<Button
 							appearance='elevator'
 							status='destructive'
@@ -412,7 +415,7 @@ export const Comment = () => {
 							<Icon.Trash />
 						</Button>
 					)}
-					{true === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
+					{ true === trashStatus && ( 'edit' !== commentStatus && 'reply' !== commentStatus ) && (
 						<Button
 							appearance='elevator'
 							status='primary'
