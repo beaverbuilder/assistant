@@ -51,9 +51,7 @@ You can also try Assistant on a [demo site here](http://demo.wpbeaverbuilder.com
 
 6. Comments - Sort through comments, reply, approve, mark as spam, and trash.
 
-7. Updates - Keep up with Theme and Plugin updates without even going to the admin.
-
-8. Pin the panel to whatever edge or corner of the screen you prefer for quick access.
+7. Pin the panel to whatever edge or corner of the screen you prefer for quick access. Collapse it to a slim toolbar or hide it entirely.
 
 
 == Frequently Asked Questions ==
