@@ -60,3 +60,19 @@
 	height: auto;
 	width: auto;
 }
+
+/* @beaverbuilder/form fix */
+.fluid form {
+	.fl-asst-form-item.fl-asst-form-item-placement-beside {
+		label {
+			flex-grow: 1;
+		}
+		.fl-asst-form-item-content {
+			flex-grow: 0;
+
+			select {
+				max-width: 200px;
+			}
+		}
+	}
+}
