@@ -1,24 +1,41 @@
-import React from 'react'
-import { __ } from '@wordpress/i18n'
+import React, { useState } from 'react'
+import { __, sprintf } from '@wordpress/i18n'
 import { List, Layout, Button, Text } from 'assistant/ui'
+import { getSystemConfig } from 'assistant/data'
 import './style.scss'
 
 const RecentPosts = () => {
-
+	const { contentTypes } = getSystemConfig()
+	const [ type, setType ] = useState( 'page' )
 	const baseUrl = '/fl-content'
-	const type = 'post'
+	const label = sprintf( 'Recent %s', contentTypes[type].labels.plural )
+
+	const types = {
+		post: __( 'Posts' ),
+		page: __( 'Pages' ),
+	}
 
 	return (
 		<>
 			<Layout.Toolbar>
-				<Text.Title>{ __( 'Recent Posts' ) }</Text.Title>
+				<Text.Title>{label}</Text.Title>
 
-				<Button
-					appearance="transparent"
-					status="primary"
-					to={ `/fl-content/tab/${type}` }
-					style={ { marginLeft: 'auto' } }
-				>{__( 'View All' )}</Button>
+				<select
+					onChange={ e => setType( e.target.value ) }
+					style={ {
+						marginLeft: 'auto',
+						width: 'auto',
+						flexGrow: 0,
+					} }
+				>
+					{ Object.keys( types ).map( postType => (
+						<option
+							key={ postType }
+							value={ postType }
+							selected={ postType === type }
+						>{ types[postType] }</option>
+					) ) }
+				</select>
 			</Layout.Toolbar>
 			<List.Posts
 				query={ {
@@ -32,6 +49,7 @@ const RecentPosts = () => {
 							...defaultProps,
 							description: null,
 							thumbnailSize: 'sm',
+							marks: [],
 							to: {
 								pathname: `${baseUrl}/post/${item.id}`,
 								state: { item }

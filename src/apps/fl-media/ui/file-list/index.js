@@ -3,19 +3,9 @@ import { Icon } from 'assistant/ui'
 import './style.scss'
 
 const FileList = ( { files = [], current } ) => {
-
-	/*
-	if ( file.type.startsWith( 'image/' )  ) {
-		file.thumbnail = URL.createObjectURL( file )
-	}
-	*/
-
-	console.log( 'files', files.length, current )
-
 	if ( current > files.length ) {
 		return null
 	}
-
 	return (
 		<>
 			<ul className="fl-asst-file-list">
