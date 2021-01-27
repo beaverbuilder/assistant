@@ -126,7 +126,7 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 
 				// Attaches the animation controls object
 				animate={ animation }
-				transition={ { duration: .25 } }
+				transition={ { duration: .2 } }
 
 				// Non-animating stuff
 				style={ {
