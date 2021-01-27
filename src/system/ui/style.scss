@@ -60,6 +60,9 @@
 	height: auto;
 	width: auto;
 }
+.fl.uid .fluid-page-footer {
+	border-top: none;
+}
 
 /* @beaverbuilder/form fix */
 .fl.uid form {
