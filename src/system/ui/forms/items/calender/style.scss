@@ -56,3 +56,8 @@
 		width: auto;
 	}
 }
+
+.fluid .fluid-color-scheme-dark table tr:nth-child(even) th,
+.fluid .fluid-color-scheme-dark table tr:nth-child(even) td {
+	background: transparent;
+}

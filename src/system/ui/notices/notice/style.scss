@@ -35,3 +35,16 @@
         }
     }
 }
+.fluid-color-scheme-dark {
+	.fl-asst-notice {
+		&.is-success {
+			background: var(--fluid-blue-3);
+			color: var(--fluid-blue-12);
+			box-shadow: inset 3px 0 0 var(--fluid-blue);
+
+			button svg path {
+				fill: var(--fluid-blue);
+			}
+		}
+	}
+}
