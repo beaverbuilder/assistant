@@ -4,6 +4,7 @@ import DownCaretSmall from './down-caret-small'
 import DragHandle from './drag-handle'
 import Safely from './safely'
 import Video from './video'
+import PencilOutline from './pencil-outline'
 
 const Icon = {
 	...FLUID_Icon,
@@ -11,7 +12,8 @@ const Icon = {
 	DownCaretSmall,
 	DragHandle,
 	Safely, // Render a user-generated icon safely with Suspense and Error.Boundary
-	Video
+	Video,
+	PencilOutline,
 }
 
 export default Icon

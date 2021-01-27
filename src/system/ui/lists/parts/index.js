@@ -251,8 +251,8 @@ export const NoResultsMessage = ( { message } ) => {
 
 export const EndMessage = () => {
 	return (
-		<Layout.Row padY={ true }>
-			<Icon.Pencil size={ 50 } />
+		<Layout.Row padY={ true } style={ { color: 'var(--fluid-opaque-6)' } } >
+			<Icon.PencilOutline size={ 26 } />
 		</Layout.Row>
 	)
 }
