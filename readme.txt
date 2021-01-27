@@ -71,6 +71,11 @@ Our API for creating new apps and extending the existing ones is in development 
 
 == Changelog ==
 
+= 0.6.0.beta.5 ( 2021-01-27 ) =
+* Fix calendar component styling
+* Fix various dark mode issues
+* Change media to show uploader block by default.
+
 = 0.6.0.beta.4 ( 2021-01-26 ) =
 * Style fixes for Safari and Firefox
 * Re-added ability to switch between page and post types on Recent widget.
