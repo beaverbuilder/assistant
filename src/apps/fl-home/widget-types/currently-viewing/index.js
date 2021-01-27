@@ -17,7 +17,7 @@ const CurrentlyViewing = () => {
 		>
 			<Text.Title eyebrow={ intro }>{name}</Text.Title>
 			{ actions && (
-				<Layout.Row style={ { padding: '10px 0 0', justifyContent: 'flex-start' } }>
+				<Layout.Row style={ { padding: '10px 0 0', justifyContent: 'flex-start', gap: 5 } }>
 					{ actions.map( ( action, i ) => {
 						const { label, isEnabled, ...rest } = action
 						return false !== isEnabled && (

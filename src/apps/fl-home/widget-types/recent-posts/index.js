@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { List, Layout, Button, Text } from 'assistant/ui'
+import { List, Layout, Text } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import './style.scss'
 
@@ -26,6 +26,8 @@ const RecentPosts = () => {
 						marginLeft: 'auto',
 						width: 'auto',
 						flexGrow: 0,
+						padding: '10px 5px', /* Firefox vertical align fix */
+						paddingRight: 30
 					} }
 				>
 					{ Object.keys( types ).map( postType => (
