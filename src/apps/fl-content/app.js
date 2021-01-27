@@ -24,12 +24,6 @@ const Main = () => {
 	const getTabs = () => {
 		let tabs = []
 		Object.keys( contentTypes ).map( key => {
-
-			// Temp solution - Reusable Blocks doesn't make much sense in the Content app.
-			if ( 'wp_block' === key ) {
-				return
-			}
-
 			const type = contentTypes[key]
 			tabs.push( {
 				handle: key,
