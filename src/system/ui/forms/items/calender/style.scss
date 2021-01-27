@@ -1,37 +1,42 @@
-.fl-asst {
+/**
+ * DO NOT wrap this inside .fl-asst
+ * Menus exist outside of the root.
+*/
 
-	.fl-asst-menu.fl-asst-calendar-menu {
-		width: 260px;
-		padding: var(--fluid-med-space);
-		overflow:hidden;
+.fluid-menu.fl-asst-calendar-menu {
+	background: white; /* this is just to avoid dark mode madness */
+	width: 260px;
+	padding: var(--fluid-med-space);
+	overflow:hidden;
 
-		.components-datetime__time {
-			fieldset {
-				display: flex;
-				flex-direction: row;
-			}
-			input {
-				flex: 0 0 auto;
-				width: 44px;
-			}
-		}
-		.components-datetime__time-field {
+	.components-datetime__time {
+		padding-bottom: 10px;
+
+		fieldset {
 			display: flex;
 			flex-direction: row;
 		}
-		.components-datetime__time-separator {
-			margin: auto; // to center vertically
+		input {
+			flex: 0 0 auto;
+			width: 44px;
 		}
-		table {
-			margin: 0;
-			border: none;
-		}
-		td {
-			border: none;
-		}
+	}
+	.components-datetime__time-field {
+		display: flex;
+		flex-direction: row;
+	}
+	.components-datetime__time-separator {
+		margin: auto; // to center vertically
+	}
+	table {
+		margin: 0;
+		border: none;
+	}
+	td {
+		border: none;
+	}
 
-		.DayPicker__horizontal {
-			width: auto;
-		}
+	.DayPicker__horizontal {
+		width: auto;
 	}
 }
