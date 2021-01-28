@@ -110,7 +110,6 @@ const Text = ( {
 								alignItems: 'center',
 								width: 40,
 								height: 40,
-								marginRight: 5,
 							} }
 						>{icon}</div>
 					) }
