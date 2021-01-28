@@ -89,7 +89,7 @@ const Thumbnail = ( { children, ratio = '5:4', ...rest } ) => {
 
 const Text = ( {
 	title,
-	description = 'just testing',
+	description,
 	truncate = true,
 	icon,
 	...rest
