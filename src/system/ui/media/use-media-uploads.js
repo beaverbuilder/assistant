@@ -29,8 +29,6 @@ const useMediaUploads = () => {
 			return
 		}
 
-		setCurrent( current + 1 )
-
 		data.append( 'file', file, file.name || file.type.replace( '/', '.' ) )
 
 		wpRest.attachments()
@@ -38,7 +36,10 @@ const useMediaUploads = () => {
 			.catch( () => {
 				alert( __( 'Error uploading media file.' ), { appearance: 'error' } )
 			} )
-			.finally( () => uploadNext() )
+			.finally( () => {
+				setCurrent( current + 1 )
+				uploadNext()
+			} )
 	}
 
 	return {
