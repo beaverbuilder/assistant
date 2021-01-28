@@ -36,7 +36,7 @@ const CollectionContainer = ( {
 
 	return (
 		<CollectionContext.Provider value={ context }>
-			<AnimatePresence>
+			<AnimatePresence initial={ false }>
 				<Tag
 					className={ classes }
 					{ ...rest }

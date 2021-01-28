@@ -74,7 +74,7 @@ const Item = ( {
 	)
 }
 
-const Thumbnail = ( { children, ratio = '4:3', ...rest } ) => {
+const Thumbnail = ( { children, ratio = '5:4', ...rest } ) => {
 	return (
 		<div className="fluid-collection-item-thumbnail">
 			<Layout.AspectBox
@@ -89,29 +89,41 @@ const Thumbnail = ( { children, ratio = '4:3', ...rest } ) => {
 
 const Text = ( {
 	title,
-	description,
-	truncate,
+	description = 'just testing',
+	truncate = true,
 	icon,
 	...rest
 } ) => {
-
-	if ( ! title && ! description ) {
-		return null
-	}
-
-	const titleClasses = c( 'fluid-item-title', {
-		'fluid-truncate': truncate,
-	} )
-
 	return (
-		<div className="fluid-collection-item-text" { ...rest }>
+		<div
+			className={ c( 'fluid-collection-item-details', { 'item-has-icon': icon } ) }
+			{ ...rest }
+		>
 			{ ( title || icon ) && (
-				<div className={ titleClasses }>
-					{ icon && <span>{icon}</span> }
-					{title}
-				</div>
+				<>
+					{ icon && (
+						<div
+							style={ {
+								flex: '0 0 auto',
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+								width: 40,
+								height: 40,
+								marginRight: 5,
+							} }
+						>{icon}</div>
+					) }
+					<div className="fluid-collection-item-text">
+						<div
+							className={ c( 'fluid-collection-item-title', { 'fluid-truncate': truncate } ) }
+						>
+							{title}
+						</div>
+						{ description && <div className="fluid-collection-item-subtitle">{description}</div> }
+					</div>
+				</>
 			) }
-			{ description && <div>{description}</div> }
 		</div>
 	)
 }
