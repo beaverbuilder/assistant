@@ -58,7 +58,7 @@ const getWidth = isAppHidden => isAppHidden ? 60 : 420
  * instead of switching between left or right css properties.
  */
 export const getLeft = ( originX = 0, width, insets ) => {
-	return originX ? `calc( 100vw - ${ width + insets.right }px )` : insets.left
+	return originX ? `calc( 100% - ${ width + insets.right }px )` : insets.left
 }
 
 export const getBoxShadow = ( isHidden, isAppHidden ) => {
