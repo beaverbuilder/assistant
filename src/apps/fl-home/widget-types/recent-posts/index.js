@@ -40,6 +40,7 @@ const RecentPosts = () => {
 				</select>
 			</Layout.Toolbar>
 			<List.Posts
+				endcap={ false }
 				query={ {
 					post_type: type,
 					posts_per_page: 5,
