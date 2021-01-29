@@ -87,7 +87,7 @@ export const Scroller = ( {
 					<List.NoResultsMessage message={ noResultsMessage } />
 				</div>
 			)}
-			{ ! isFetching && ! hasMoreItems && !! items.length && (
+			{ false !== EndCap && ! isFetching && ! hasMoreItems && !! items.length && (
 				<div style={ { minHeight: 100 } }>
 					<EndCap />
 				</div>

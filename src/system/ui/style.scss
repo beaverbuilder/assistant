@@ -62,6 +62,8 @@
 }
 .fl.uid .fluid-page-footer {
 	border-top: none;
+	bottom: 0;
+	bottom: env(safe-area-inset-bottom);
 }
 
 /* @beaverbuilder/form fix */
