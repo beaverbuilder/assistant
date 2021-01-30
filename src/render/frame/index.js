@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { motion, useAnimation, useDragControls } from 'framer-motion'
+import { motion, useAnimation, useDragControls, useMotionValue, useTransform } from 'framer-motion'
 import b from '@beaverbuilder/box'
 import useMedia from 'use-media'
 import { Env } from 'assistant/ui'
@@ -18,9 +18,11 @@ import {
 const Frame = ( { children, isHidden = false, ...rest } ) => {
 	const { setWindow } = getSystemActions()
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
-	const [ originX ] = windowFrame.origin
+	const { width: openWidth, origin } = windowFrame
+	const [ originX ] = origin
 	const { application } = Env.use()
 	const isBeaverBuilder = 'beaver-builder' === application
+	const setOpenWidth = value => setWindow( { ...windowFrame, width: value } )
 
 	/**
 	 * This is a control object that let's us manage animations directly.
@@ -43,11 +45,23 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 	 * Ex: { top: 32, left: 0, bottom: 0, right: 0 }
 	 */
 	const insets = useEdgeInsets()
-	const { top, left, width, height } = getRect( originX, insets, isAppHidden )
+	const { top, left, width, height } = getRect( originX, insets, isAppHidden, openWidth )
 	const boxShadow = getBoxShadow( isHidden, isAppHidden )
 
+	const DRAG_HANDLE_WIDTH = 6
+	const MAX_RESIZABLE_WIDTH = 1000
+	const x = useMotionValue( originX ? -Math.abs( openWidth ) : openWidth )
+	const _width = useTransform( x, x => Math.abs( x ) )
+	const _left = useTransform( _width, _width => {
+		if ( originX ) {
+			return `calc( 100% - ${ _width + insets.right }px )`
+		} else {
+			return 0
+		}
+	} )
+
 	// How far to translate the frame to get it off the screen
-	const distance = originX ? width : -Math.abs( width )
+	const distance = originX ? _width : -Math.abs( _width )
 
 	// Below 600px the admin bar jumps to absolute positioning / starts scrolling with the page.
 	const isMobile = useMedia( { maxWidth: 600 } )
@@ -68,8 +82,10 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 			animation.start( { x: 0, y: 0, left } )
 
 			if ( originX ) {
+				x.set( -Math.abs( openWidth ) )
 				html.classList.replace( 'fl-asst-pinned-left', 'fl-asst-pinned-right' )
 			} else {
+				x.set( openWidth )
 				html.classList.replace( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
 			}
 
@@ -136,6 +152,8 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 
 				// Non-animating stuff
 				style={ {
+					width: _width,
+					left: _left,
 					position: 'fixed',
 					overflow: 'hidden',
 					boxSizing: 'border-box',
@@ -189,6 +207,40 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 				<GrabBar />
 				{children}
 			</motion.div>
+			{ false === dragArea && ! isAppHidden && (
+				<motion.div
+					drag="x"
+					dragMomentum={ false }
+					onDragEnd={ () => {
+						let newWidth = parseInt( Math.abs( x.get() ) )
+						if ( MAX_RESIZABLE_WIDTH < newWidth ) {
+							newWidth = MAX_RESIZABLE_WIDTH
+						}
+						setOpenWidth( 420 > newWidth ? 420 : newWidth )
+					} }
+					dragElastic={ 0 }
+					/*
+					dragConstraints={ {
+						left: originX ? MAX_RESIZABLE_WIDTH : 420,
+						right: originX ? 420 : MAX_RESIZABLE_WIDTH
+					} }*/
+					whileHover= { { opacity: 1 } }
+					whileTap= { { opacity: 1 } }
+					style={ {
+						x,
+						opacity: 0,
+						background: 'var(--fluid-blue)',
+						width: DRAG_HANDLE_WIDTH,
+						position: 'fixed',
+						top,
+						bottom: 0,
+						[ originX ? 'right' : 'left' ]: 0,
+						zIndex: 9999999,
+						cursor: 'col-resize',
+					} }
+					{ ...rest }
+				/>
+			) }
 		</>
 	)
 }

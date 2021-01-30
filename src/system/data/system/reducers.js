@@ -131,7 +131,7 @@ export const labels = ( state = [], action ) => {
 
 const windowDefaults = {
 	origin: [ 1, 0 ], /* top right */
-	size: 'normal', /* full sidebar */
+	width: 420,
 	isHidden: false,
 	hiddenAppearance: '',
 }
