@@ -45,7 +45,7 @@ const AppMain = () => {
 						initial="collapsed"
 						animate="expanded"
 						exit="collapsed"
-						transition={ { type: 'tween', duration: .25 } }
+						transition={ { type: 'tween', duration: 0 } }
 						custom={ { sideName } }
 						className="fl-asst-main-content"
 					>
