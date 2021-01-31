@@ -48,20 +48,20 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 	const { top, left, width, height } = getRect( originX, insets, isAppHidden, openWidth )
 	const boxShadow = getBoxShadow( isHidden, isAppHidden )
 
+	// Resize stuff
 	const DRAG_HANDLE_WIDTH = 6
-	const MAX_RESIZABLE_WIDTH = 1000
+	const minResizableWidth = 420
+	const maxResizableWidth = 1400
 	const x = useMotionValue( originX ? -Math.abs( openWidth ) : openWidth )
-	const _width = useTransform( x, x => Math.abs( x ) )
+	const _width = useTransform( x, x => {
+		return isAppHidden ? 60 : Math.abs( x )
+	} )
 	const _left = useTransform( _width, _width => {
-		if ( originX ) {
-			return `calc( 100% - ${ _width + insets.right }px )`
-		} else {
-			return 0
-		}
+		return originX ? `calc( 100% - ${ _width + insets.right }px )` : 0
 	} )
 
 	// How far to translate the frame to get it off the screen
-	const distance = originX ? _width : -Math.abs( _width )
+	const distance = originX ? width : -Math.abs( width )
 
 	// Below 600px the admin bar jumps to absolute positioning / starts scrolling with the page.
 	const isMobile = useMedia( { maxWidth: 600 } )
@@ -82,10 +82,18 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 			animation.start( { x: 0, y: 0, left } )
 
 			if ( originX ) {
+
+				// Put the drag resizer in the correct place
 				x.set( -Math.abs( openWidth ) )
+
+				// General class for knowing where Assistant is (especially for Beaver builder)
 				html.classList.replace( 'fl-asst-pinned-left', 'fl-asst-pinned-right' )
 			} else {
+
+				// Put the drag resizer in the correct place
 				x.set( openWidth )
+
+				// General class for knowing where Assistant is (especially for Beaver builder)
 				html.classList.replace( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
 			}
 
@@ -107,6 +115,7 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 
 	useEffect( () => {
 		const distance = originX ? width : -Math.abs( width )
+
 		animation.start( {
 			x: isHidden ? distance : 0,
 			boxShadow
@@ -207,23 +216,25 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 				<GrabBar />
 				{children}
 			</motion.div>
-			{ false === dragArea && ! isAppHidden && (
+			{ false === dragArea && ! isHidden && ! isAppHidden && (
 				<motion.div
 					drag="x"
 					dragMomentum={ false }
 					onDragEnd={ () => {
 						let newWidth = parseInt( Math.abs( x.get() ) )
-						if ( MAX_RESIZABLE_WIDTH < newWidth ) {
-							newWidth = MAX_RESIZABLE_WIDTH
+
+						if ( maxResizableWidth < newWidth ) {
+							newWidth = maxResizableWidth
+						} else if ( minResizableWidth > newWidth ) {
+							newWidth = minResizableWidth
 						}
-						setOpenWidth( 420 > newWidth ? 420 : newWidth )
+						setOpenWidth( newWidth )
 					} }
 					dragElastic={ 0 }
-					/*
 					dragConstraints={ {
-						left: originX ? MAX_RESIZABLE_WIDTH : 420,
-						right: originX ? 420 : MAX_RESIZABLE_WIDTH
-					} }*/
+						left: originX ? -Math.abs( maxResizableWidth ) : minResizableWidth,
+						right: originX ? -Math.abs( minResizableWidth ) : maxResizableWidth,
+					} }
 					whileHover= { { opacity: 1 } }
 					whileTap= { { opacity: 1 } }
 					style={ {
