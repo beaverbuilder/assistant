@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { motion, useAnimation, useDragControls, useMotionValue, useTransform } from 'framer-motion'
-import b from '@beaverbuilder/box'
 import useMedia from 'use-media'
-import { Env } from 'assistant/ui'
+import c from 'classnames'
+import { Env, Frame as _Frame } from 'assistant/ui'
 import { getSystemActions, useSystemState } from 'assistant/data'
 import {
 	useEdgeInsets,
@@ -11,18 +11,38 @@ import {
 	getBoxShadow,
 	isRightEdge
 } from './utils'
+import './style.scss'
 
 /**
  * Primary Frame Component
  */
-const Frame = ( { children, isHidden = false, ...rest } ) => {
-	const { setWindow } = getSystemActions()
+const Frame = ( { children, isHidden = false, className, ...rest } ) => {
+
+	console.log( 'start frame' )
+
+	/**
+	 * System Store
+	 */
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
 	const { width: openWidth, origin } = windowFrame
 	const [ originX ] = origin
+	const { setWindow } = getSystemActions()
+
+	// Convenience function for setting the resized frame width in system store.
+	const setOpenWidth = value => setWindow( { ...windowFrame, width: value } )
+
+	// Convenience function for pinning the frame to the left or right edge in system store.
+	const setEdge = ( edge = 'left' ) => {
+		let origin = [ ...windowFrame.origin ]
+		origin[0] = 'right' === edge ? 1 : 0
+		setWindow( { ...windowFrame, origin } )
+	}
+
+	/**
+	 * Env Context
+	 */
 	const { application } = Env.use()
 	const isBeaverBuilder = 'beaver-builder' === application
-	const setOpenWidth = value => setWindow( { ...windowFrame, width: value } )
 
 	/**
 	 * This is a control object that let's us manage animations directly.
@@ -45,6 +65,7 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 	 * Ex: { top: 32, left: 0, bottom: 0, right: 0 }
 	 */
 	const insets = useEdgeInsets()
+	const stringifiedInsets = JSON.stringify( insets )
 	const { top, left, width, height } = getRect( originX, insets, isAppHidden, openWidth )
 	const boxShadow = getBoxShadow( isHidden, isAppHidden )
 
@@ -68,10 +89,14 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 
 	// Handle mount and unmount
 	useEffect( () => {
+		console.log( 'mount' )
 		const html = document.documentElement
 		html.classList.add( originX ? 'fl-asst-pinned-right' : 'fl-asst-pinned-left' )
 
-		return () => html.classList.remove( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
+		return () => {
+			console.log( 'unmount' )
+			html.classList.remove( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
+		}
 	}, [] )
 
 	// Handle originX (left or right edge) change.
@@ -105,8 +130,9 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 	// Handle insets changing when admin bar changes height
 	// Animation would be overkill here.
 	useEffect( () => {
+		console.log( 'insets changed', insets )
 		animation.set( { top, height } )
-	}, [ insets ] )
+	}, [ stringifiedInsets ] )
 
 	// Handles isAppHidden changing in system state
 	useEffect( () => {
@@ -134,16 +160,22 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 
 	}, [ isHidden ] )
 
-	const setEdge = edge => {
-		let newOrigin = [ ...windowFrame.origin ]
-		newOrigin[0] = 'right' === edge ? 1 : 0
-		setWindow( { ...windowFrame, origin: newOrigin } )
-	}
+	const breakpoint = 600
+	const size = openWidth >= breakpoint ? 'medium' : 'compact'
+	const context = { size }
+	const classes = c( 'fl-asst-frame', {
+		[`fluid-frame-size-${size}`]: size
+	}, className )
 
 	return (
-		<>
+		<_Frame.Context.Provider value={ context }>
 			{ false !== dragArea && <DropIndicator left={ getLeft( dragArea, 60, insets ) } /> }
 			<motion.div
+				className={ classes }
+
+				// Attaches the animation controls object
+				animate={ animation }
+				transition={ { duration: .2 } }
 
 				// Initial animatable styles
 				initial={ {
@@ -154,10 +186,6 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 					height,
 					boxShadow,
 				} }
-
-				// Attaches the animation controls object
-				animate={ animation }
-				transition={ { duration: .2 } }
 
 				// Non-animating stuff
 				style={ {
@@ -218,6 +246,7 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 			</motion.div>
 			{ false === dragArea && ! isHidden && ! isAppHidden && (
 				<motion.div
+					className="fl-asst-frame-resize-handle"
 					drag="x"
 					dragMomentum={ false }
 					onDragEnd={ () => {
@@ -235,11 +264,8 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 						left: originX ? -Math.abs( maxResizableWidth ) : minResizableWidth,
 						right: originX ? -Math.abs( minResizableWidth ) : maxResizableWidth,
 					} }
-					whileHover= { { opacity: 1 } }
-					whileTap= { { opacity: 1 } }
 					style={ {
 						x,
-						opacity: 0,
 						background: 'var(--fluid-blue)',
 						width: DRAG_HANDLE_WIDTH,
 						position: 'fixed',
@@ -252,14 +278,16 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 					{ ...rest }
 				/>
 			) }
-		</>
+		</_Frame.Context.Provider>
 	)
 }
 
 const GrabBar = () => (
-	<b.row
+	<div
 		className="frame-drag-handle"
 		style={ {
+			display: 'flex',
+			justifyContent: 'center',
 			paddingTop: 4,
 			paddingBottom: 10,
 			position: 'absolute',
@@ -273,7 +301,7 @@ const GrabBar = () => (
 		<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
 		</svg>
-	</b.row>
+	</div>
 )
 
 const DropIndicator = ( { left, ...rest } ) => (
