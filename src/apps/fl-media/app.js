@@ -105,7 +105,6 @@ const Main = ( { baseURL } ) => {
 	const Before = () => {
 		return (
 			<>
-				<MediaFilter />
 				{ showUploader && (
 					<UploadCard
 						onInput={ uploadFiles }
@@ -117,6 +116,10 @@ const Main = ( { baseURL } ) => {
 		)
 	}
 
+	const Header = () => (
+		<MediaFilter />
+	)
+
 	const focusFirstButton = () => {
 		const item = document.querySelector( '.fluid-page-content .fluid-button' )
 		if ( item ) {
@@ -126,6 +129,7 @@ const Main = ( { baseURL } ) => {
 
 	return (
 		<Page
+			id="fl-asst-media-list-page"
 			title={ __( 'Media' ) }
 			icon={ <AppIcon /> }
 			shouldShowBackButton={ false }
@@ -134,6 +138,7 @@ const Main = ( { baseURL } ) => {
 			shouldScroll={ false }
 			onLoad={ focusFirstButton }
 			actions={ <UploadButton /> }
+			header={ <Header /> }
 		>
 			<List.Attachments
 				before={ <Before /> }

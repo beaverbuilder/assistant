@@ -20,6 +20,12 @@
         }
     }
 
+	#fl-asst-media-list-page {
+		.fluid-page-header {
+			padding: 0;
+		}
+	}
+
     .fl-asst-list.fl-asst-grid-list {
 
         --spacing: clamp( 10px, 4%, 40px );
