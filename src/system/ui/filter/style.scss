@@ -143,6 +143,18 @@
         }
     }
     .fluid-color-scheme-dark {
+		.fl-asst-filter {
+			background: var(--fluid-opaque-1);
+			--border-color: var(--fluid-opaque-3);
+
+			.fl-asst-filter-button {
+				.fl-asst-filter-button-content {
+					.fl-asst-filter-button-title {
+						color: var(--fluid-opaque-7);
+					}
+				}
+			}
+		}
         .fl-asst-filter-menu {
             background: var(--fluid-opaque-3);
         }

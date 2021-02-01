@@ -266,14 +266,11 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 					} }
 					style={ {
 						x,
-						background: 'var(--fluid-blue)',
 						width: DRAG_HANDLE_WIDTH,
 						position: 'fixed',
 						top,
 						bottom: 0,
-						[ originX ? 'right' : 'left' ]: 0,
-						zIndex: 9999999,
-						cursor: 'col-resize',
+						[ originX ? 'right' : 'left' ]: 0
 					} }
 					{ ...rest }
 				/>

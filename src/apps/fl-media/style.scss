@@ -22,10 +22,10 @@
 
     .fl-asst-list.fl-asst-grid-list {
 
-        --spacing: 10px;
+        --spacing: clamp( 10px, 4%, 40px );
         display: grid;
         grid-gap: var(--spacing);
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat( auto-fit, minmax( 150px, 1fr ) );
         padding: var(--spacing);
 
         .fl-asst-grid-list-item {
