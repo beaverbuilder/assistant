@@ -226,6 +226,10 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 				onDragEnd={ ( e, info ) => {
 					setDragArea( false )
 
+					if ( ! e.target.classList.contains( 'frame-drag-handle' ) ) {
+						return
+					}
+
 					// Pins itself to whichever side of the screen you drop the mouse in
 					const newOriginX = isRightEdge( info.point.x ) ? 1 : 0
 
