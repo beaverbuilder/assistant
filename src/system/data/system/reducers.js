@@ -140,7 +140,7 @@ export const window = ( state = windowDefaults, action ) => {
 	case 'SET_WINDOW':
 		return {
 			origin: state.origin,
-			size: state.size,
+			width: null === state.width ? 420 : state.width,
 			isHidden: state.isHidden,
 			hiddenAppearance: state.hiddenAppearance,
 			...action.config,

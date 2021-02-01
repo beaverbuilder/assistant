@@ -18,15 +18,15 @@ import './style.scss'
  */
 const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 
-	console.log( 'start frame' )
-
 	/**
 	 * System Store
 	 */
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
-	const { width: openWidth, origin } = windowFrame
+	const { width: openWidth = 420, origin } = windowFrame
 	const [ originX ] = origin
 	const { setWindow } = getSystemActions()
+
+	console.log( 'open width', openWidth )
 
 	// Convenience function for setting the resized frame width in system store.
 	const setOpenWidth = value => setWindow( { ...windowFrame, width: value } )
@@ -270,7 +270,8 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 						position: 'fixed',
 						top,
 						bottom: 0,
-						[ originX ? 'right' : 'left' ]: 0
+						left: originX ? 'auto' : 0,
+						right: originX ? 0 : 'auto',
 					} }
 					{ ...rest }
 				/>
