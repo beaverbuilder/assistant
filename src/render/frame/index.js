@@ -72,7 +72,7 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	// Resize stuff
 	const DRAG_HANDLE_WIDTH = 6
 	const minResizableWidth = 420
-	const maxResizableWidth = 1400
+	const maxResizableWidth = 1400 > window.innerWidth ? window.innerWidth : 1400
 	const x = useMotionValue( originX ? -Math.abs( openWidth ) : openWidth )
 	const _width = useTransform( x, x => {
 		return isAppHidden ? 60 : Math.abs( x )
