@@ -38,8 +38,6 @@ const useAdminBarHeight = () => {
 export const useEdgeInsets = ( insets = defaultEdgeInsets ) => {
 	const adminBar = useAdminBarHeight()
 
-	console.log( 'admin bar height', adminBar )
-
 	let base = insets
 	if ( Number.isInteger( insets ) ) {
 		base = { top: insets, right: insets, bottom: insets, left: insets }

@@ -26,8 +26,6 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	const [ originX ] = origin
 	const { setWindow } = getSystemActions()
 
-	console.log( 'open width', openWidth )
-
 	// Convenience function for setting the resized frame width in system store.
 	const setOpenWidth = value => setWindow( { ...windowFrame, width: value } )
 
@@ -89,12 +87,10 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 
 	// Handle mount and unmount
 	useEffect( () => {
-		console.log( 'mount' )
 		const html = document.documentElement
 		html.classList.add( originX ? 'fl-asst-pinned-right' : 'fl-asst-pinned-left' )
 
 		return () => {
-			console.log( 'unmount' )
 			html.classList.remove( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
 		}
 	}, [] )
@@ -130,7 +126,6 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	// Handle insets changing when admin bar changes height
 	// Animation would be overkill here.
 	useEffect( () => {
-		console.log( 'insets changed', insets )
 		animation.set( { top, height } )
 	}, [ stringifiedInsets ] )
 
