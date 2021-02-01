@@ -139,7 +139,10 @@ const Main = ( { baseURL } ) => {
 				before={ <Before /> }
 				key={ listStyle + current }
 				baseURL={ baseURL }
-				query={ query }
+				query={ {
+					...query,
+					posts_per_page: 36,
+				} }
 				listStyle={ listStyle }
 			/>
 		</Page>
