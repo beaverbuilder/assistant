@@ -80,7 +80,8 @@ export const getWpRest = () => {
 		notations,
 		libraries,
 		getPagedContent,
-		getContent
+		getContent,
+		http
 	}
 }
 
