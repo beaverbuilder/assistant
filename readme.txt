@@ -72,6 +72,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 0.6.1 =
+* ??? TBD
+
 = 0.6.0 ( 2021-01-28 ) =
 * Enhance media uploading UI
 * Improve drag performance of the UI frame.
