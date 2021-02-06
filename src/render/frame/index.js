@@ -159,7 +159,13 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 		return openWidth >= breakpoint ? 'medium' : 'compact'
 	}
 	const size = getSizeName( openWidth )
-	const context = { size }
+	const context = {
+		size,
+		isMedium: 'medium' === size,
+		isCompact: 'compact' === size,
+		isDragging: false === dragArea,
+	}
+
 	const classes = c( 'fl-asst-frame', {
 		[`fluid-frame-size-${size}`]: size
 	}, className )
