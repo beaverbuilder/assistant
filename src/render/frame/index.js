@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, useAnimation, useDragControls, useMotionValue, useTransform } from 'framer-motion'
 import useMedia from 'use-media'
 import c from 'classnames'
@@ -68,9 +68,8 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	const boxShadow = getBoxShadow( isHidden, isAppHidden )
 
 	// Resize stuff
-	const DRAG_HANDLE_WIDTH = 6
 	const minResizableWidth = 420
-	const maxResizableWidth = 1400 > window.innerWidth ? window.innerWidth : 1400
+	const maxResizableWidth = 1000 > window.innerWidth ? window.innerWidth : 1000
 	const x = useMotionValue( originX ? -Math.abs( openWidth ) : openWidth )
 	const _width = useTransform( x, x => {
 		return isAppHidden ? 60 : Math.abs( x )
@@ -155,12 +154,17 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 
 	}, [ isHidden ] )
 
-	const breakpoint = 600
-	const size = openWidth >= breakpoint ? 'medium' : 'compact'
+	const getSizeName = openWidth => {
+		const breakpoint = 600
+		return openWidth >= breakpoint ? 'medium' : 'compact'
+	}
+	const size = getSizeName( openWidth )
 	const context = { size }
 	const classes = c( 'fl-asst-frame', {
 		[`fluid-frame-size-${size}`]: size
 	}, className )
+
+	const shouldShowResizer = false === dragArea && ! isHidden && ! isAppHidden
 
 	return (
 		<_Frame.Context.Provider value={ context }>
@@ -243,39 +247,73 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 				<GrabBar />
 				{children}
 			</motion.div>
-			{ false === dragArea && ! isHidden && ! isAppHidden && (
-				<motion.div
-					className="fl-asst-frame-resize-handle"
-					drag="x"
-					dragMomentum={ false }
-					onDragEnd={ () => {
-						let newWidth = parseInt( Math.abs( x.get() ) )
-
-						if ( maxResizableWidth < newWidth ) {
-							newWidth = maxResizableWidth
-						} else if ( minResizableWidth > newWidth ) {
-							newWidth = minResizableWidth
-						}
-						setOpenWidth( newWidth )
-					} }
-					dragElastic={ 0 }
-					dragConstraints={ {
-						left: originX ? -Math.abs( maxResizableWidth ) : minResizableWidth,
-						right: originX ? -Math.abs( minResizableWidth ) : maxResizableWidth,
-					} }
-					style={ {
-						x,
-						width: DRAG_HANDLE_WIDTH,
-						position: 'fixed',
-						top,
-						bottom: 0,
-						left: originX ? 'auto' : 0,
-						right: originX ? 0 : 'auto',
-					} }
-					{ ...rest }
+			{ shouldShowResizer && (
+				<ResizeHandle
+					x={ x }
+					top={ top }
+					pinnedRight={ originX }
+					maxWidth={ maxResizableWidth }
+					minWidth={ minResizableWidth }
+					setWidth={ setOpenWidth }
+					size={ size }
+					getSizeName={ getSizeName }
 				/>
 			) }
 		</_Frame.Context.Provider>
+	)
+}
+
+const ResizeHandle = ( { x, top, pinnedRight, maxWidth, minWidth, setWidth, size, getSizeName } ) => {
+	const lastWidth = useRef( x.get() )
+	const lastSize = useRef( size )
+	const buffer = 10
+
+	return (
+		<motion.div
+			className="fl-asst-frame-resize-handle"
+			drag="x"
+			dragMomentum={ false }
+			onDrag={ () => {
+				let newWidth = parseInt( Math.abs( x.get() ) )
+
+				// Throttle how many times this checks w/ the buffer value
+				if ( newWidth > lastWidth.current + buffer || newWidth < lastWidth.current - buffer ) {
+
+					// Has the size name changed?
+					const maybeNewSize = getSizeName( newWidth )
+					if ( maybeNewSize !== lastSize.current ) {
+
+						setWidth( newWidth )
+						lastSize.current = maybeNewSize
+					}
+					lastWidth.current = newWidth
+				}
+			} }
+			onDragEnd={ () => {
+				let newWidth = parseInt( Math.abs( x.get() ) )
+
+				if ( maxWidth < newWidth ) {
+					newWidth = maxWidth
+				} else if ( minWidth > newWidth ) {
+					newWidth = minWidth
+				}
+				setWidth( newWidth )
+			} }
+			dragElastic={ 0 }
+			dragConstraints={ {
+				left: pinnedRight ? -Math.abs( maxWidth ) : minWidth,
+				right: pinnedRight ? -Math.abs( minWidth ) : maxWidth,
+			} }
+			style={ {
+				x,
+				width: 6,
+				position: 'fixed',
+				top,
+				bottom: 0,
+				left: pinnedRight ? 'auto' : 0,
+				right: pinnedRight ? 0 : 'auto',
+			} }
+		/>
 	)
 }
 
