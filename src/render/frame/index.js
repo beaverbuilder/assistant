@@ -155,7 +155,7 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	}, [ isHidden ] )
 
 	const getSizeName = openWidth => {
-		const breakpoint = 600
+		const breakpoint = 650
 		return openWidth >= breakpoint ? 'medium' : 'compact'
 	}
 	const size = getSizeName( openWidth )
