@@ -1,4 +1,4 @@
-import useMedia from 'use-media'
+import { useMediaLayout } from 'use-media'
 import { Env } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 
@@ -14,8 +14,8 @@ const defaultEdgeInsets = {
  */
 const useAdminBarHeight = () => {
 	const { isShowingAdminBar } = getSystemConfig()
-	const isSlim = useMedia( { maxWidth: 782 } )
-	const isMobile = useMedia( { maxWidth: 600 } )
+	const isSlim = useMediaLayout( { maxWidth: 782 } )
+	const isMobile = useMediaLayout( { maxWidth: 600 } )
 	const { application } = Env.use()
 
 	// Beaver builder
@@ -49,11 +49,6 @@ export const useEdgeInsets = ( insets = defaultEdgeInsets ) => {
 }
 
 /**
- * Describes the panel width when collapsed or expanded
- */
-const getWidth = isAppHidden => isAppHidden ? 60 : 420
-
-/**
  * For the sake of nice animation we always use left to describe the frame's position
  * instead of switching between left or right css properties.
  */
@@ -69,8 +64,8 @@ export const getBoxShadow = ( isHidden, isAppHidden ) => {
 	}
 }
 
-export const getRect = ( originX, insets, isAppHidden = false ) => {
-	const width = getWidth( isAppHidden )
+export const getRect = ( originX, insets, isAppHidden = false, _width = 420 ) => {
+	const width = isAppHidden ? 60 : _width
 	return {
 		top: insets.top,
 		left: getLeft( originX, width, insets ),

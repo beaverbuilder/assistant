@@ -8,22 +8,11 @@ import './style.scss'
 
 const Filter = ( { className, children, ...rest } ) => {
 	const [ showAll, setShowAll ] = useState( false )
-	const hasMore = 3 < Children.count( children )
-
-	const classes = classname( {
-		'fl-asst-filter': true,
-	}, className )
-
-	const style = {
-		display: 'grid',
-		gridTemplateColumns: 'repeat(3, 1fr)',
-		gridAutoRows: 'minmax(40px, 50px)',
-		gridGap: 'var(--fluid-sm-space)'
-	}
-
+	const hasMore = 6 < Children.count( children )
+	const classes = classname( 'fl-asst-filter', className )
 	return (
 		<>
-			<ul className={ classes } style={ style } { ...rest }>
+			<ul className={ classes } { ...rest }>
 				{ Children.map( children, ( child, i ) => {
 
 					if ( hasMore && ! showAll ) {
@@ -83,6 +72,7 @@ const Item = ( { title, subtitle, children, hasLoadedItems = true } ) => {
 						ref={ triggerRef }
 						onClick={ toggle }
 						className="fl-asst-filter-button"
+						appearance="transparent"
 					>
 						<span className="fl-asst-filter-button-content">
 							<span className="fl-asst-filter-button-title">{title}</span>
@@ -109,7 +99,11 @@ Filter.Button = ( { children, className, ...rest } ) => {
 	const classes = classname( 'fl-asst-filter-button', className )
 	return (
 		<li className="fl-asst-filter-item">
-			<Button className={ classes } { ...rest }>{children}</Button>
+			<Button
+				className={ classes }
+				appearance="transparent"
+				{ ...rest }
+			>{children}</Button>
 		</li>
 	)
 }

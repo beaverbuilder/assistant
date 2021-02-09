@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { motion, useAnimation, useDragControls } from 'framer-motion'
-import b from '@beaverbuilder/box'
+import React, { useState, useEffect, useRef } from 'react'
+import { motion, useAnimation, useDragControls, useMotionValue, useTransform } from 'framer-motion'
 import useMedia from 'use-media'
-import { Env } from 'assistant/ui'
+import c from 'classnames'
+import { Env, Frame as _Frame } from 'assistant/ui'
 import { getSystemActions, useSystemState } from 'assistant/data'
 import {
 	useEdgeInsets,
@@ -11,14 +11,34 @@ import {
 	getBoxShadow,
 	isRightEdge
 } from './utils'
+import './style.scss'
 
 /**
  * Primary Frame Component
  */
-const Frame = ( { children, isHidden = false, ...rest } ) => {
-	const { setWindow } = getSystemActions()
+const Frame = ( { children, isHidden = false, className, ...rest } ) => {
+
+	/**
+	 * System Store
+	 */
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
-	const [ originX ] = windowFrame.origin
+	const { width: openWidth = 420, origin } = windowFrame
+	const [ originX ] = origin
+	const { setWindow } = getSystemActions()
+
+	// Convenience function for setting the resized frame width in system store.
+	const setOpenWidth = value => setWindow( { ...windowFrame, width: value } )
+
+	// Convenience function for pinning the frame to the left or right edge in system store.
+	const setEdge = ( edge = 'left' ) => {
+		let origin = [ ...windowFrame.origin ]
+		origin[0] = 'right' === edge ? 1 : 0
+		setWindow( { ...windowFrame, origin } )
+	}
+
+	/**
+	 * Env Context
+	 */
 	const { application } = Env.use()
 	const isBeaverBuilder = 'beaver-builder' === application
 
@@ -43,8 +63,20 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 	 * Ex: { top: 32, left: 0, bottom: 0, right: 0 }
 	 */
 	const insets = useEdgeInsets()
-	const { top, left, width, height } = getRect( originX, insets, isAppHidden )
+	const stringifiedInsets = JSON.stringify( insets )
+	const { top, left, width, height } = getRect( originX, insets, isAppHidden, openWidth )
 	const boxShadow = getBoxShadow( isHidden, isAppHidden )
+
+	// Resize stuff
+	const minResizableWidth = 420
+	const maxResizableWidth = 1000 > window.innerWidth ? window.innerWidth : 1000
+	const x = useMotionValue( originX ? -Math.abs( openWidth ) : openWidth )
+	const _width = useTransform( x, x => {
+		return isAppHidden ? 60 : Math.abs( x )
+	} )
+	const _left = useTransform( _width, _width => {
+		return originX ? `calc( 100% - ${ _width + insets.right }px )` : 0
+	} )
 
 	// How far to translate the frame to get it off the screen
 	const distance = originX ? width : -Math.abs( width )
@@ -57,7 +89,9 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 		const html = document.documentElement
 		html.classList.add( originX ? 'fl-asst-pinned-right' : 'fl-asst-pinned-left' )
 
-		return () => html.classList.remove( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
+		return () => {
+			html.classList.remove( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
+		}
 	}, [] )
 
 	// Handle originX (left or right edge) change.
@@ -68,8 +102,18 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 			animation.start( { x: 0, y: 0, left } )
 
 			if ( originX ) {
+
+				// Put the drag resizer in the correct place
+				x.set( -Math.abs( openWidth ) )
+
+				// General class for knowing where Assistant is (especially for Beaver builder)
 				html.classList.replace( 'fl-asst-pinned-left', 'fl-asst-pinned-right' )
 			} else {
+
+				// Put the drag resizer in the correct place
+				x.set( openWidth )
+
+				// General class for knowing where Assistant is (especially for Beaver builder)
 				html.classList.replace( 'fl-asst-pinned-right', 'fl-asst-pinned-left' )
 			}
 
@@ -82,7 +126,7 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 	// Animation would be overkill here.
 	useEffect( () => {
 		animation.set( { top, height } )
-	}, [ insets ] )
+	}, [ stringifiedInsets ] )
 
 	// Handles isAppHidden changing in system state
 	useEffect( () => {
@@ -91,6 +135,7 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 
 	useEffect( () => {
 		const distance = originX ? width : -Math.abs( width )
+
 		animation.start( {
 			x: isHidden ? distance : 0,
 			boxShadow
@@ -109,16 +154,33 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 
 	}, [ isHidden ] )
 
-	const setEdge = edge => {
-		let newOrigin = [ ...windowFrame.origin ]
-		newOrigin[0] = 'right' === edge ? 1 : 0
-		setWindow( { ...windowFrame, origin: newOrigin } )
+	const getSizeName = openWidth => {
+		const breakpoint = 650
+		return openWidth >= breakpoint ? 'medium' : 'compact'
+	}
+	const size = getSizeName( openWidth )
+	const context = {
+		size,
+		isMedium: 'medium' === size,
+		isCompact: 'compact' === size,
+		isDragging: false === dragArea,
 	}
 
+	const classes = c( 'fl-asst-frame', {
+		[`fluid-frame-size-${size}`]: size
+	}, className )
+
+	const shouldShowResizer = false === dragArea && ! isHidden && ! isAppHidden
+
 	return (
-		<>
+		<_Frame.Context.Provider value={ context }>
 			{ false !== dragArea && <DropIndicator left={ getLeft( dragArea, 60, insets ) } /> }
 			<motion.div
+				className={ classes }
+
+				// Attaches the animation controls object
+				animate={ animation }
+				transition={ { duration: .2 } }
 
 				// Initial animatable styles
 				initial={ {
@@ -130,12 +192,10 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 					boxShadow,
 				} }
 
-				// Attaches the animation controls object
-				animate={ animation }
-				transition={ { duration: .2 } }
-
 				// Non-animating stuff
 				style={ {
+					width: _width,
+					left: _left,
 					position: 'fixed',
 					overflow: 'hidden',
 					boxSizing: 'border-box',
@@ -171,6 +231,10 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 				onDragEnd={ ( e, info ) => {
 					setDragArea( false )
 
+					if ( ! e.target.classList.contains( 'frame-drag-handle' ) ) {
+						return
+					}
+
 					// Pins itself to whichever side of the screen you drop the mouse in
 					const newOriginX = isRightEdge( info.point.x ) ? 1 : 0
 
@@ -189,14 +253,82 @@ const Frame = ( { children, isHidden = false, ...rest } ) => {
 				<GrabBar />
 				{children}
 			</motion.div>
-		</>
+			{ shouldShowResizer && (
+				<ResizeHandle
+					x={ x }
+					top={ top }
+					pinnedRight={ originX }
+					maxWidth={ maxResizableWidth }
+					minWidth={ minResizableWidth }
+					setWidth={ setOpenWidth }
+					size={ size }
+					getSizeName={ getSizeName }
+				/>
+			) }
+		</_Frame.Context.Provider>
+	)
+}
+
+const ResizeHandle = ( { x, top, pinnedRight, maxWidth, minWidth, setWidth, size, getSizeName } ) => {
+	const lastWidth = useRef( x.get() )
+	const lastSize = useRef( size )
+	const buffer = 10
+
+	return (
+		<motion.div
+			className="fl-asst-frame-resize-handle"
+			drag="x"
+			dragMomentum={ false }
+			onDrag={ () => {
+				let newWidth = parseInt( Math.abs( x.get() ) )
+
+				// Throttle how many times this checks w/ the buffer value
+				if ( newWidth > lastWidth.current + buffer || newWidth < lastWidth.current - buffer ) {
+
+					// Has the size name changed?
+					const maybeNewSize = getSizeName( newWidth )
+					if ( maybeNewSize !== lastSize.current ) {
+
+						setWidth( newWidth )
+						lastSize.current = maybeNewSize
+					}
+					lastWidth.current = newWidth
+				}
+			} }
+			onDragEnd={ () => {
+				let newWidth = parseInt( Math.abs( x.get() ) )
+
+				if ( maxWidth < newWidth ) {
+					newWidth = maxWidth
+				} else if ( minWidth > newWidth ) {
+					newWidth = minWidth
+				}
+				setWidth( newWidth )
+			} }
+			dragElastic={ 0 }
+			dragConstraints={ {
+				left: pinnedRight ? -Math.abs( maxWidth ) : minWidth,
+				right: pinnedRight ? -Math.abs( minWidth ) : maxWidth,
+			} }
+			style={ {
+				x,
+				width: 6,
+				position: 'fixed',
+				top,
+				bottom: 0,
+				left: pinnedRight ? 'auto' : 0,
+				right: pinnedRight ? 0 : 'auto',
+			} }
+		/>
 	)
 }
 
 const GrabBar = () => (
-	<b.row
+	<div
 		className="frame-drag-handle"
 		style={ {
+			display: 'flex',
+			justifyContent: 'center',
 			paddingTop: 4,
 			paddingBottom: 10,
 			position: 'absolute',
@@ -210,7 +342,7 @@ const GrabBar = () => (
 		<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
 			<path d="M2,2 L38,2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
 		</svg>
-	</b.row>
+	</div>
 )
 
 const DropIndicator = ( { left, ...rest } ) => (
