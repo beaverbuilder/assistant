@@ -64,7 +64,9 @@ const Dashboard = () => {
 	)
 }
 
-registerApp( 'widget-test', {
-	label: 'Widget Test',
-	root: App,
-} )
+if ( ! __PRODUCTION__ ) {
+	registerApp( 'widget-test', {
+		label: 'Widget Test',
+		root: App,
+	} )
+}
