@@ -42,8 +42,8 @@ const CreateButton = ( { item } ) => {
 				createPostComplete( response )
 			} else {
 				importPostComplete( response )
+				setAction( null )
 			}
-			setAction( null )
 		} )
 	}
 
