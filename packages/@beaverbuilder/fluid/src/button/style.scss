@@ -21,8 +21,6 @@
         font-weight: normal;
         text-transform: none;
         line-height: 1.1;
-        transition-property: background, box-shadow, transform;
-        transition-duration: .15s;
 
         & > span {
             flex: 0 0 auto;
@@ -38,7 +36,6 @@
             text-decoration: none;
             background: var(--hover);
             color: var(--hover-color);
-            transform: scale(1.04);
             z-index: 1;
         }
 
@@ -56,7 +53,6 @@
         &.is-active {
             background: var(--hover);
             box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
-            transform: scale(1);
         }
 
         &.is-selected {

@@ -1,4 +1,4 @@
-:root {
+.fluid {
     --fluid-hue: 210;
 
     // Opaque Scale
@@ -108,9 +108,8 @@
     --fluid-target-size: 36px; // Minimum click target
     --fluid-font-size: 13px;
     --fluid-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-}
 
-.fluid {
+	/* Root .fluid Element */
     color: var(--fluid-color);
     font-family: var(--fluid-font-family);
     font-size: var(--fluid-font-size);
