@@ -69,11 +69,6 @@
 
             &:hover {
                 background-color: var(--fluid-transparent-13);
-                transform: scale(1); // Cancel out scale effect
-
-                .fluid-collection-item-thumbnail {
-                    transform: scale(1.02);
-                }
             }
         }
 

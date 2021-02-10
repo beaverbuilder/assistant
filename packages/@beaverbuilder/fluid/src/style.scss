@@ -247,7 +247,7 @@
         }
     }
 
-    table {
+    table.fluid-table {
         font-size: var(--fluid-font-size);
         width: 100%;
         border-collapse: collapse;
@@ -300,7 +300,7 @@
 
         color: var(--fluid-color);
 
-        table {
+        table.fluid-table {
             tr:nth-child(even) {
                 th, td {
                     background: var(--fluid-opaque-1);

@@ -1,209 +1,209 @@
 .fl.uid {
-    .fluid-button {
-        --color: var(--fluid-opaque-5);
-        --background: var(--fluid-transparent-12);
-        --hover: var(--fluid-transparent-10);
-        --hover-color: var(--fluid-opaque-0);
-        box-sizing: border-box;
+.fluid-button {
+    --color: var(--fluid-opaque-5);
+    --background: var(--fluid-transparent-12);
+    --hover: var(--fluid-transparent-10);
+    --hover-color: var(--fluid-opaque-0);
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: var(--background);
+    color: var(--color);
+    border-radius: var(--fluid-radius);
+    box-shadow: 0px 0px 0px transparent;
+    min-height: var(--fluid-target-size);
+    min-width: var(--fluid-target-size);
+    padding: 5px 8px;
+    text-decoration: none;
+    font-weight: normal;
+    text-transform: none;
+    line-height: 1.1;
+
+    & > span {
         flex: 0 0 auto;
-        display: inline-flex;
+        display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background: var(--background);
-        color: var(--color);
-        border-radius: var(--fluid-radius);
-        box-shadow: 0px 0px 0px transparent;
-        min-height: var(--fluid-target-size);
-        min-width: var(--fluid-target-size);
-        padding: 5px 8px;
+        min-width: 0;
+    }
+
+    &:hover,
+    &.is-hovering {
         text-decoration: none;
-        font-weight: normal;
-        text-transform: none;
-        line-height: 1.1;
+        background: var(--hover);
+        color: var(--hover-color);
+        z-index: 1;
+    }
 
-        & > span {
-            flex: 0 0 auto;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            min-width: 0;
-        }
+    &:focus,
+    &.is-focused {
+        top:0;
+        z-index: 3; // ensure box shadow doesn't get obscured
+        outline: none;
+        text-decoration: none;
+        box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
+                    0px 0px 0px 1.5px var(--fluid-accent);
+    }
 
-        &:hover,
-        &.is-hovering {
-            text-decoration: none;
-            background: var(--hover);
-            color: var(--hover-color);
-            z-index: 1;
-        }
+    &:active,
+    &.is-active {
+        background: var(--hover);
+        box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    &.is-selected {
+        background: var(--fluid-blue-7);
+        color: var(--fluid-blue-14);
 
         &:focus,
         &.is-focused {
-            top:0;
-            z-index: 3; // ensure box shadow doesn't get obscured
-            outline: none;
-            text-decoration: none;
+            background: var(--fluid-blue-7) !important;
+            color: var(--fluid-blue-14);
+        }
+    }
+
+    &.fluid-shape-round {
+        border-radius: 50%;
+
+        &.fluid-size-sm {
+            padding: 3px;
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            min-height: 30px;
+            max-width: 30px;
+            max-height: 30px;
+        }
+        &.fluid-size-med {
+            padding: 3px;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            min-height: 36px;
+            max-width: 36px;
+            max-height: 36px;
+        }
+        &.fluid-size-lg {
+            padding: 3px;
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            min-height: 44px;
+            max-width: 44px;
+            max-height: 44px;
+        }
+    }
+
+    &.fluid-appearance-elevator {
+        height: 44px;
+        width: 44px;
+        padding: 5px 12px;
+        border-radius: 50%;
+    }
+
+    &.fluid-appearance-transparent {
+        --background: transparent;
+        box-shadow: none;
+        border: none;
+        outline: none;
+
+        &:focus,
+        &.is-focused {
             box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
                         0px 0px 0px 1.5px var(--fluid-accent);
         }
+    }
 
-        &:active,
-        &.is-active {
-            background: var(--hover);
-            box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+    &.fluid-status-primary {
+        --background: var(--fluid-blue-12);
+        --color: var(--fluid-blue-5);
+        --hover: var(--fluid-blue-10);
+        --hover-color: var(--fluid-blue-3);
+
+        &.fluid-appearance-transparent {
+            --background: transparent;
+            --color: var(--fluid-blue-6);
+            --hover: var(--fluid-blue-12);
+            --hover-color: var(--fluid-blue-5);
+
         }
+    }
+    &.fluid-status-alert {
+        --fluid-accent: var(--fluid-alert-color);
+        --hover-color: var(--fluid-alert-color);
+        --color: var(--fluid-alert-color);
+    }
+    &.fluid-status-destructive {
+        --fluid-accent: var(--fluid-destructive-color);
+        --hover-color: var(--fluid-destructive-color);
+        --color: var(--fluid-destructive-color);
+    }
 
-        &.is-selected {
-            background: var(--fluid-blue-7);
-            color: var(--fluid-blue-14);
+    &.fluid-size-sm {
+        font-size: 12px;
+        padding: 5px;
+        min-height: 30px;
+        min-width: 30px;
+    }
+    &.fluid-size-med {
+        min-height: var(--fluid-target-size);
+        min-width: var(--fluid-target-size);
+    }
+    &.fluid-size-lg {
+        font-size: 16px;
+        padding: 5px 12px;
+        min-height: 44px;
+        min-width: 44px;
+    }
 
-            &:focus,
-            &.is-focused {
-                background: var(--fluid-blue-7) !important;
-                color: var(--fluid-blue-14);
-            }
+    .fluid-button-icon {
+        flex: 0 0 auto;
+        margin-right: .5em;
+
+        &:last-child {
+            margin-right: 0;
         }
+    }
+}
+.fluid-color-scheme-dark {
+    .fluid-button {
+        --color: var(--fluid-opaque-10);
+        --background: var(--fluid-transparent-1);
+        --hover: var(--fluid-transparent-3);
+        --hover-color: var(--fluid-opaque-14);
 
-        &.fluid-shape-round {
-            border-radius: 50%;
-
-            &.fluid-size-sm {
-                padding: 3px;
-                width: 30px;
-                height: 30px;
-                min-width: 30px;
-                min-height: 30px;
-                max-width: 30px;
-                max-height: 30px;
-            }
-            &.fluid-size-med {
-                padding: 3px;
-                width: 36px;
-                height: 36px;
-                min-width: 36px;
-                min-height: 36px;
-                max-width: 36px;
-                max-height: 36px;
-            }
-            &.fluid-size-lg {
-                padding: 3px;
-                width: 44px;
-                height: 44px;
-                min-width: 44px;
-                min-height: 44px;
-                max-width: 44px;
-                max-height: 44px;
-            }
-        }
-
-        &.fluid-appearance-elevator {
-            height: 44px;
-            width: 44px;
-            padding: 5px 12px;
-            border-radius: 50%;
+        &:focus,
+        &.is-focused {
+            background: var(--fluid-opaque-0);
         }
 
         &.fluid-appearance-transparent {
             --background: transparent;
-            box-shadow: none;
-            border: none;
-            outline: none;
-
-            &:focus,
-            &.is-focused {
-                box-shadow: inset 0px 0px 0px 2px var(--fluid-background),
-                            0px 0px 0px 1.5px var(--fluid-accent);
-            }
         }
 
         &.fluid-status-primary {
-            --background: var(--fluid-blue-12);
-            --color: var(--fluid-blue-5);
-            --hover: var(--fluid-blue-10);
-            --hover-color: var(--fluid-blue-3);
+            --color: var(--fluid-blue-14);
+            --background: var(--fluid-blue-7);
+            --hover: var(--fluid-blue-6);
+            --hover-color: var(--fluid-blue-13);
 
             &.fluid-appearance-transparent {
                 --background: transparent;
-                --color: var(--fluid-blue-6);
-                --hover: var(--fluid-blue-12);
-                --hover-color: var(--fluid-blue-5);
-
+                --color: var(--fluid-blue-8);
+                --hover: var(--fluid-blue-4);
+                --hover-color: var(--fluid-blue-14);
             }
         }
-        &.fluid-status-alert {
-            --fluid-accent: var(--fluid-alert-color);
-            --hover-color: var(--fluid-alert-color);
-            --color: var(--fluid-alert-color);
-        }
+
         &.fluid-status-destructive {
             --fluid-accent: var(--fluid-destructive-color);
-            --hover-color: var(--fluid-destructive-color);
             --color: var(--fluid-destructive-color);
-        }
-
-        &.fluid-size-sm {
-            font-size: 12px;
-            padding: 5px;
-            min-height: 30px;
-            min-width: 30px;
-        }
-        &.fluid-size-med {
-            min-height: var(--fluid-target-size);
-            min-width: var(--fluid-target-size);
-        }
-        &.fluid-size-lg {
-            font-size: 16px;
-            padding: 5px 12px;
-            min-height: 44px;
-            min-width: 44px;
-        }
-
-        .fluid-button-icon {
-            flex: 0 0 auto;
-            margin-right: .5em;
-
-            &:last-child {
-                margin-right: 0;
-            }
+            --hover-color: var(--fluid-destructive-color);
         }
     }
-    .fluid-color-scheme-dark {
-        .fluid-button {
-            --color: var(--fluid-opaque-10);
-            --background: var(--fluid-transparent-1);
-            --hover: var(--fluid-transparent-3);
-            --hover-color: var(--fluid-opaque-14);
-
-            &:focus,
-            &.is-focused {
-                background: var(--fluid-opaque-0);
-            }
-
-            &.fluid-appearance-transparent {
-                --background: transparent;
-            }
-
-            &.fluid-status-primary {
-                --color: var(--fluid-blue-14);
-                --background: var(--fluid-blue-7);
-                --hover: var(--fluid-blue-6);
-                --hover-color: var(--fluid-blue-13);
-
-                &.fluid-appearance-transparent {
-                    --background: transparent;
-                    --color: var(--fluid-blue-8);
-                    --hover: var(--fluid-blue-4);
-                    --hover-color: var(--fluid-blue-14);
-                }
-            }
-
-            &.fluid-status-destructive {
-                --fluid-accent: var(--fluid-destructive-color);
-                --color: var(--fluid-destructive-color);
-                --hover-color: var(--fluid-destructive-color);
-            }
-        }
-    }
+}
 }

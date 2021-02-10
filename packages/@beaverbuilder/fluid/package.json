@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.7.0",
+    "version": "0.7.3",
     "description": "Common UI environment for Beaver Builder and Assistant projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -21,11 +21,12 @@
         "react": "^16.9.0",
         "react-dom": "^16.9.0",
         "react-router-dom": "^5.2.0",
-        "classnames": "^2.2.6",
         "framer-motion": "^2.3.0",
         "react-laag": "^1.7.3",
-        "@wordpress/i18n": "^3.15.0",
         "@beaverbuilder/icons": "^0.0.2"
+    },
+    "dependencies": {
+      "classnames": "^2.2.6"
     },
     "devDependencies": {
         "@babel/core": "^7.12.13",

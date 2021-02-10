@@ -1,37 +1,20 @@
 import React, { useContext } from 'react'
 import c from 'classnames'
-import { motion } from 'framer-motion'
 import CollectionContext from './context'
 import * as Layout from '../layout'
 import Button from '../button'
 
-const variants = {
-	initial: {
-		scale: 0
-	},
-	normal: {
-		scale: 1
-	},
-}
-const transition = {
-	layoutX: { duration: 0 },
-	layoutY: false,
-}
-
 const Item = ( {
-	tag: Tag = motion.li,
-
+	tag: Tag = 'li',
 	title,
 	description,
 	thumbnail,
 	thumbnailProps,
 	truncateTitle = true,
 	icon,
-
 	onClick,
 	href,
 	to,
-
 	className,
 	children,
 	...rest
@@ -57,12 +40,6 @@ const Item = ( {
 
 	return (
 		<Tag
-			layout
-			initial={ false }
-			animate="normal"
-			exit="initial"
-			variants={ variants }
-			transition={ transition }
 			className={ c( 'fluid-collection-item', className ) }
 			{ ...rest }
 		>
