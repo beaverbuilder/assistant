@@ -5,46 +5,8 @@ import { Libraries } from '@beaverbuilder/cloud-ui'
 import { getWpRest } from 'assistant/utils/wordpress'
 
 export const getActions = ( item, actions ) => {
-	const { createNotice } = Libraries.ItemContext.use()
-	const [ importing, setImporting ] = useState( false )
 	const [ previewing, setPreviewing ] = useState( false )
-	const history = useHistory()
 	const postsApi = getWpRest().posts()
-
-	const importPost = () => {
-		setImporting( true )
-		postsApi.importFromLibrary( item.id ).then( response => {
-			setImporting( false )
-			if ( response.data.error ) {
-				createNotice( {
-					status: 'error',
-					content: __( 'Error importing content.' )
-				} )
-			} else {
-				createNotice( {
-					status: 'success',
-					content: (
-						<>
-							{ __( 'Content imported!' ) }
-							<a
-								style={ {
-									textDecoration: 'underline',
-									marginLeft: 'var(--fluid-sm-space)'
-								} }
-								onClick={ () => {
-									history.push( `/fl-content/post/${ response.data.id }`, {
-										item: response.data
-									} )
-								} }
-							>
-								{ __( 'View content.' ) }
-							</a>
-						</>
-					)
-				} )
-			}
-		} )
-	}
 
 	const previewPost = () => {
 		setPreviewing( true )
@@ -55,9 +17,7 @@ export const getActions = ( item, actions ) => {
 	}
 
 	actions.push( {
-		label: __( 'Import' ),
-		onClick: importPost,
-		disabled: importing,
+		component: <CreateButton item={ item } />
 	} )
 
 	actions.push( {
@@ -67,4 +27,83 @@ export const getActions = ( item, actions ) => {
 	} )
 
 	return actions
+}
+
+const CreateButton = ( { item } ) => {
+	const history = useHistory()
+	const { createNotice } = Libraries.ItemContext.use()
+	const [ action, setAction ] = useState( null )
+	const postsApi = getWpRest().posts()
+
+	const createPost = ( action ) => {
+		setAction( action )
+		postsApi.importFromLibrary( item.id ).then( response => {
+			if ( 'create' === action ) {
+				createPostComplete( response )
+			} else {
+				importPostComplete( response )
+			}
+			setAction( null )
+		} )
+	}
+
+	const createPostComplete = ( response ) => {
+		const { type } = item.data.builder
+		const { bbEditUrl, editUrl } = response.data
+
+		if ( 'beaver-builder' === type && bbEditUrl ) {
+			window.location.href = bbEditUrl
+		} else {
+			window.location.href = editUrl
+		}
+	}
+
+	const importPostComplete = ( response ) => {
+		if ( response.data.error ) {
+			createNotice( {
+				status: 'error',
+				content: __( 'Error importing content.' )
+			} )
+		} else {
+			createNotice( {
+				status: 'success',
+				content: (
+					<>
+						{ __( 'Content imported!' ) }
+						<a
+							style={ {
+								textDecoration: 'underline',
+								marginLeft: 'var(--fluid-sm-space)'
+							} }
+							onClick={ () => {
+								history.push( `/fl-content/post/${ response.data.id }`, {
+									item: response.data
+								} )
+							} }
+						>
+							{ __( 'View content.' ) }
+						</a>
+					</>
+				)
+			} )
+		}
+	}
+
+	return (
+		<>
+			<select
+				value={ '' }
+				onChange={ e => createPost( e.target.value ) }
+				disabled={ action }
+			>
+				<option value=''>
+					{ ! action && __( 'Create New...' ) }
+					{ 'create' === action && __( 'Creating...' ) }
+					{ 'import' === action && __( 'Importing...' ) }
+				</option>
+				<option value='create'>{ __( 'Create and Edit' ) }</option>
+				<option value='import'>{ __( 'Import' ) }</option>
+			</select>
+		</>
+	)
 }
