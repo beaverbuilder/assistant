@@ -11,7 +11,7 @@ export const createEnhancers = ( name, effects ) => {
 }
 
 /**
- * Applys before and after effects to store actions.
+ * Applies before and after effects to store actions.
  */
 export const applyEffects = effects => {
 	const { before, after } = effects

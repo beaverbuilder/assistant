@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 
 export const defaultAppContext = {
 	handle: null,
-    label: null,
+	label: null,
 	isAppRoot: false
 }
 

@@ -1,5 +1,4 @@
 import React, { Component, createElement } from 'react'
-import { __ } from '@wordpress/i18n'
 
 const Error = {}
 
@@ -32,7 +31,7 @@ class Boundary extends Component {
 
 const DefaultError = ( {
 	error,
-	title = __( 'There seems to be an error' ),
+	title = 'There seems to be an error',
 	children,
 	style = {},
 	...rest
@@ -50,9 +49,9 @@ const DefaultError = ( {
 		maxHeight: '100%',
 	}
 	return (
-		<div style={ boxStyle } {...rest}>
-			<h1 style={{ marginBottom: 20 }}>{title}</h1>
-			<code style={{ padding: 10 }}>{error.message}</code>
+		<div style={ boxStyle } { ...rest }>
+			<h1 style={ { marginBottom: 20 } }>{title}</h1>
+			<code style={ { padding: 10 } }>{error.message}</code>
 			{children}
 		</div>
 	)
@@ -60,9 +59,7 @@ const DefaultError = ( {
 
 // Ensure the proper display name in the react dev tools tree
 Error.Boundary = Boundary
-Error.Boundary.displayName = 'Error.Boundary'
 
 Error.Page = DefaultError
-Error.Page.displayName = 'Error.Page'
 
 export default Error
