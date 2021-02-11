@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
-import { Page, Form, Layout, Notice } from 'ui'
+import { Page, Form, Layout, Notice, Button } from 'ui'
 import { getSrcSet } from 'utils/image'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
@@ -188,15 +188,6 @@ export const Attachment = () => {
 		},
 	}
 
-	const Footer = () => {
-		return (
-			<Layout.PublishBar
-				onPublish={ submitForm }
-				onDiscard={ resetForm }
-			/>
-		)
-	}
-
 	const defaults = {
 		...item,
 		type: type + '/' + subtype,
@@ -212,6 +203,20 @@ export const Attachment = () => {
 		onSubmit,
 		defaults,
 	} )
+
+	const ToolbarActions = () => {
+		return (
+			<>
+				<Button
+					disabled={ ! hasChanges }
+					isSelected={ hasChanges }
+					onClick={ submitForm }
+				>
+					{ hasChanges ? __( 'Update' ) : __( 'Saved' ) }
+				</Button>
+			</>
+		)
+	}
 
 	const Hero = props => {
 		const { width, sizes, height, alt, type, url, mime } = item
@@ -243,17 +248,15 @@ export const Attachment = () => {
 	}
 
 	return (
-		<Page
+		<Page.Detail
 			id="fl-asst-attachment-detail"
-			title={ __( 'Attachment' ) }
-			footer={ hasChanges && <Footer /> }
+			toolbarTitle={ __( 'Edit Attachment' ) }
+			toolbarActions={ <ToolbarActions /> }
+			title={ title }
+			thumbnail={ <Hero /> }
 		>
-			<div style= { { margin: '-20px -20px 20px' } } >
-				<Hero />
-			</div>
-			<Layout.Headline>{title}</Layout.Headline>
-			{renderForm()}
-		</Page>
+			{ renderForm() }
+		</Page.Detail>
 
 	)
 }

@@ -5,6 +5,7 @@ import { Page as FLUIDPage } from '@beaverbuilder/fluid'
 import { Layout, Notice } from 'ui'
 import { getFirstFocusableChild } from 'utils/dom'
 
+import DetailPage from './detail'
 import { Post } from './post'
 import { CreatePost } from './post/create'
 import { Term } from './term'
@@ -86,6 +87,7 @@ Page.Theme = Theme
 Page.NotFound = PageNotFound
 Page.Loading = Loading
 Page.Error = Error
+Page.Detail = DetailPage
 
 export { Page }
 
