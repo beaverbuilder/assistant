@@ -37,7 +37,11 @@ const Main = ( { baseURL } ) => {
 				/>
 			) }
 
-			{ '' === keyword && <Widgets before={ <li><Welcome /></li> } /> }
+			{ '' === keyword && (
+				<div style={ { margin: '0 auto', maxWidth: 450 } }>
+					<Widgets before={ <li><Welcome /></li> } />
+				</div>
+			) }
 		</Page>
 	)
 }
