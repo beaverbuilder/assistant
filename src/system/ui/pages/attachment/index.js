@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
 import { Page, Form, Layout, Notice, Button } from 'ui'
@@ -107,7 +107,6 @@ export const Attachment = () => {
 					id: 'post_content',
 					rows: 4,
 				},
-
 			},
 		},
 		info: {
@@ -195,9 +194,9 @@ export const Attachment = () => {
 
 	const {
 		hasChanges,
-		resetForm,
 		submitForm,
 		renderForm,
+		values,
 	} = Form.useForm( {
 		sections,
 		onSubmit,
@@ -218,45 +217,43 @@ export const Attachment = () => {
 		)
 	}
 
-	const Hero = props => {
-		const { width, sizes, height, alt, type, url, mime } = item
-		const srcSet = getSrcSet( sizes )
-
-		// Temp - Handle non-image heroes.
-		if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! item.thumbnail ) {
-			return null
-		}
-
-		let mediaContent = ''
-
-		if ( 'audio' == type || 'video' == type ) {
-			mediaContent = <video width="100%" controls><source src={ url } type={ mime } /></video>
-		} else {
-			mediaContent = <img src={ item.thumbnail } srcSet={ srcSet } height={ height } width={ width } alt={ alt } loading="lazy" />
-		}
-
-		return (
-			<Layout.AspectBox
-				className="fl-asst-hero-image"
-				height={ height }
-				width={ width }
-				{ ...props }
-			>
-				{mediaContent}
-			</Layout.AspectBox>
-		)
-	}
-
 	return (
 		<Page.Detail
 			id="fl-asst-attachment-detail"
 			toolbarTitle={ __( 'Edit Attachment' ) }
 			toolbarActions={ <ToolbarActions /> }
-			title={ title }
-			thumbnail={ <Hero /> }
+			title={ values.title }
+			thumbnail={ <Hero { ...item } /> }
 		>
 			{ renderForm() }
 		</Page.Detail>
 
 	)
 }
+
+const Hero = memo( ( { width, sizes, height, alt, type, url, mime, thumbnail } ) => {
+	const srcSet = getSrcSet( sizes )
+
+	// Temp - Handle non-image heroes.
+	if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! thumbnail ) {
+		return null
+	}
+
+	let mediaContent = ''
+
+	if ( 'audio' == type || 'video' == type ) {
+		mediaContent = <video width="100%" controls><source src={ url } type={ mime } /></video>
+	} else {
+		mediaContent = <img src={ thumbnail } srcSet={ srcSet } height={ height } width={ width } alt={ alt } loading="lazy" />
+	}
+
+	return (
+		<Layout.AspectBox
+			className="fl-asst-hero-image"
+			height={ height }
+			width={ width }
+		>
+			{mediaContent}
+		</Layout.AspectBox>
+	)
+} )
