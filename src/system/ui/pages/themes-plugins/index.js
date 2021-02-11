@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Form, Page, Layout, Text } from 'ui'
+import { Form, Page, Layout } from 'ui'
 import { useLocation } from 'react-router-dom'
 
 export const Plugin = () => {
