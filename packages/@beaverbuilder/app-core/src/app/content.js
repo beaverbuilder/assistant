@@ -11,6 +11,7 @@ const CoreError = props => (
 )
 
 const DefaultAppLoadingScreen = () => {
+	console.log( 'default loading screen' )
 	return (
 		<h1 style={ { margin: 'auto' } }>Loading...</h1>
 	)
@@ -19,15 +20,22 @@ const DefaultAppLoadingScreen = () => {
 const Content = ( {
 	apps = {},
 	defaultApp = 'home', // handle for default app
-	loading: AppLoading = DefaultAppLoadingScreen
+	loading: AppLoading = DefaultAppLoadingScreen,
 } ) => {
+
+	if ( ! Object.keys( apps ).length ) {
+		console.warn( 'App Core: You have no apps.' )
+		return null
+	}
 
 	return (
 		<Error.Boundary alternate={ CoreError }>
 			<Switch>
-				<Route exact path="/">
-					<Redirect to={ `/${defaultApp}` } />
-				</Route>
+				{ defaultApp && (
+					<Route exact path="/">
+						<Redirect to={ `/${defaultApp}` } />
+					</Route>
+				) }
 				<Route
 					path="/:app"
 					render={ () => (
