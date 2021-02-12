@@ -2,7 +2,7 @@ import React from 'react'
 import classname from 'classnames'
 import { motion, AnimatePresence } from 'framer-motion'
 import { App } from '@beaverbuilder/app-core'
-import { Env } from 'assistant/ui'
+import { Page, Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
 import Sidebar from './side-bar'
 import './style.scss'
@@ -52,6 +52,7 @@ const AppMain = () => {
 						<App.Content
 							apps={ apps }
 							defaultApp={ homeKey }
+							loading={ Page.Loading }
 						/>
 					</motion.div>
 				) }
