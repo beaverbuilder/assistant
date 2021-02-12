@@ -25,9 +25,12 @@ const DetailPage = ( {
 			<div className="fluid-detail-sidebar-backdrop" />
 			<div className="fluid-detail-page-toolbar">
 				<div className="fluid-detail-page-toolbar-area">
-					<Button appearance="transparent" onClick={ goBack }>
-						<Icon.ArrowLeft />
-					</Button>
+					<Button
+						appearance="transparent"
+						shape="round"
+						onClick={ goBack }
+						icon={ <Icon.ArrowLeft /> }
+					/>
 					{ toolbarTitle && <Text.Title>{toolbarTitle}</Text.Title> }
 				</div>
 				{ toolbarActions && (
