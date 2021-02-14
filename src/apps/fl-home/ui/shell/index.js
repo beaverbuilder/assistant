@@ -21,17 +21,19 @@ const Shell = ( {
 						minHeight: 80,
 						display: 'flex',
 						alignItems: 'center',
-						padding: 20
+						padding: 20,
+						paddingLeft: 25
 					} }
 				>
 					<Icon.PencilOutline
 						style={ {
-							marginRight: 10
+							marginRight: '1em'
 						} }
 					/>
 					{ __( 'Assistant' ) }
 				</div>
 				<AppsSection />
+				<ShortcutsSection />
 			</nav>
 			<div className="fl-asst-home-shell-content">
 				{children}
@@ -43,12 +45,7 @@ const Shell = ( {
 const AppsSection = () => {
 	const history = useHistory()
 	return (
-		<div className="fl-asst-home-shell-sidebar-section">
-			<div
-				style={ {
-					padding: '5px var(--fluid-med-space)'
-				} }
-			>{ __( 'Apps', 'fl-assistant' ) }</div>
+		<SidebarSection title={ __( 'Apps', 'fl-assistant' ) }>
 			<App.List limit={ 5 }>
 				{ ( { label, handle, icon, moveDown, moveUp } ) => {
 
@@ -83,6 +80,65 @@ const AppsSection = () => {
 					)
 				} }
 			</App.List>
+		</SidebarSection>
+	)
+}
+
+const ShortcutsSection = () => {
+
+	const shortcuts = [
+		{
+			label: __( 'Dashboard', 'fl-assistant' ),
+			href: '/wp-admin'
+		},
+	]
+
+	if ( 1 > shortcuts.length ) {
+		return null
+	}
+
+	return (
+		<SidebarSection
+			title="Shortcuts"
+			className="fl-asst-home-shortcut-list"
+		>
+			<ul>
+				{ shortcuts.map( ( { label, href } ) => {
+					return (
+						<li key={ href }>
+							<Button
+								href={ href }
+								target="_blank"
+								appearance="transparent"
+								icon={ <Icon.Placeholder /> }
+							>
+								{ label }
+							</Button>
+						</li>
+					)
+				} ) }
+			</ul>
+		</SidebarSection>
+	)
+}
+
+const SidebarSection = ( {
+	title,
+	className,
+	children,
+	...rest
+} ) => {
+
+	const classes = c( 'fl-asst-home-shell-sidebar-section', className )
+
+	return (
+		<div className={ classes } { ...rest }>
+			<div className="fl-asst-home-shell-sidebar-section-title">
+				{title}
+			</div>
+			<div>
+				{children}
+			</div>
 		</div>
 	)
 }

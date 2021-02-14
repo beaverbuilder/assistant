@@ -13,6 +13,20 @@
 
 			.fl-asst-home-shell-sidebar-section {
 				padding: 15px;
+
+				.fl-asst-home-shell-sidebar-section-title {
+					padding: 5px var(--fluid-med-space);
+				}
+			}
+			.fl-asst-home-shortcut-list {
+				li {
+					display: flex;
+					flex-direction: row;
+
+					a, button {
+						flex: 1 1 auto;
+					}
+				}
 			}
 			.fl-asst-app-list {
 				margin: 0;
@@ -52,6 +66,13 @@
 
 			.fl-asst-home-shell-content {
 				grid-column-start: 2;
+			}
+		}
+	}
+	.fluid-color-scheme-dark {
+		.fluid-page.fl-asst-home-shell {
+			.fl-asst-home-shell-sidebar {
+				background: hsl( var(--fluid-hue), 10%, 12% );
 			}
 		}
 	}
