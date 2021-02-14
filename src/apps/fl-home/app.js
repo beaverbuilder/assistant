@@ -11,7 +11,7 @@ export default props => {
 	const { baseURL } = props
 
 	return (
-		<Shell>
+		<Shell baseURL={ baseURL }>
 			<App.Config
 				pages={ {
 					default: Main,

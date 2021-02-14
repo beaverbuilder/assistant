@@ -9,6 +9,7 @@ import './style.scss'
 const Shell = ( {
 	className,
 	children,
+	baseURL,
 	...rest
 } ) => {
 
@@ -18,6 +19,7 @@ const Shell = ( {
 			<nav className="fl-asst-home-shell-sidebar">
 				<div
 					style={ {
+						fontSize: 18,
 						minHeight: 80,
 						display: 'flex',
 						alignItems: 'center',
@@ -27,11 +29,12 @@ const Shell = ( {
 				>
 					<Icon.PencilOutline
 						style={ {
-							marginRight: '1em'
+							marginRight: 13
 						} }
 					/>
 					{ __( 'Assistant' ) }
 				</div>
+				<FeatureSidebarSection baseURL={ baseURL } />
 				<AppsSection />
 				<ShortcutsSection />
 			</nav>
@@ -39,6 +42,25 @@ const Shell = ( {
 				{children}
 			</div>
 		</div>
+	)
+}
+
+const FeatureSidebarSection = ( { baseURL = '' } ) => {
+	return (
+		<SidebarSection>
+			<ul>
+				<li>
+					<Button
+						to={ `${baseURL}/` }
+						appearance="transparent"
+						icon={ <Icon.Placeholder /> }
+						isSelected
+					>
+						{ __( 'Dashboard', 'fl-assistant' ) }
+					</Button>
+				</li>
+			</ul>
+		</SidebarSection>
 	)
 }
 
@@ -133,9 +155,11 @@ const SidebarSection = ( {
 
 	return (
 		<div className={ classes } { ...rest }>
-			<div className="fl-asst-home-shell-sidebar-section-title">
-				{title}
-			</div>
+			{ title && (
+				<div className="fl-asst-home-shell-sidebar-section-title">
+					{title}
+				</div>
+			) }
 			<div>
 				{children}
 			</div>

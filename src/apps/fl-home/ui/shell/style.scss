@@ -17,14 +17,21 @@
 				.fl-asst-home-shell-sidebar-section-title {
 					padding: 5px var(--fluid-med-space);
 				}
-			}
-			.fl-asst-home-shortcut-list {
-				li {
-					display: flex;
-					flex-direction: row;
+				ul {
+					margin: 0;
 
-					a, button {
-						flex: 1 1 auto;
+					li {
+						display: flex;
+						flex-direction: row;
+
+						a, button {
+							flex: 1 1 auto;
+
+							&.is-selected {
+								background: var(--fluid-opaque-12);
+								color: var(--fluid-blue);
+							}
+						}
 					}
 				}
 			}
