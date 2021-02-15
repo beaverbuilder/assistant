@@ -12,7 +12,6 @@ const Shell = ( {
 	baseURL,
 	...rest
 } ) => {
-
 	const classes = c( 'fluid-page', 'fl-asst-home-shell', className )
 	return (
 		<div className={ classes } { ...rest }>
@@ -39,6 +38,29 @@ const Shell = ( {
 				<ShortcutsSection />
 			</nav>
 			<div className="fl-asst-home-shell-content">
+				{children}
+			</div>
+		</div>
+	)
+}
+
+const SidebarSection = ( {
+	title,
+	className,
+	children,
+	...rest
+} ) => {
+
+	const classes = c( 'fl-asst-home-shell-sidebar-section', className )
+
+	return (
+		<div className={ classes } { ...rest }>
+			{ title && (
+				<div className="fl-asst-home-shell-sidebar-section-title">
+					{title}
+				</div>
+			) }
+			<div>
 				{children}
 			</div>
 		</div>
@@ -114,11 +136,9 @@ const ShortcutsSection = () => {
 			href: '/wp-admin'
 		},
 	]
-
 	if ( 1 > shortcuts.length ) {
 		return null
 	}
-
 	return (
 		<SidebarSection
 			title="Shortcuts"
@@ -141,29 +161,6 @@ const ShortcutsSection = () => {
 				} ) }
 			</ul>
 		</SidebarSection>
-	)
-}
-
-const SidebarSection = ( {
-	title,
-	className,
-	children,
-	...rest
-} ) => {
-
-	const classes = c( 'fl-asst-home-shell-sidebar-section', className )
-
-	return (
-		<div className={ classes } { ...rest }>
-			{ title && (
-				<div className="fl-asst-home-shell-sidebar-section-title">
-					{title}
-				</div>
-			) }
-			<div>
-				{children}
-			</div>
-		</div>
 	)
 }
 
