@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/app-core",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "Utilities for managing an app registry.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -20,21 +20,19 @@
     "peerDependencies": {
         "react": "^16.9.0",
         "react-router-dom": "^5.2.0",
-        "@wordpress/i18n": "^3.13.0",
         "redux": "^4.0.5"
     },
     "dependencies": {
-        "camelcase": "^5.3.1",
-        "lodash.isequal": "^4.5.0"
+        "camelcase": "^5.3.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.12.10",
-        "@babel/plugin-external-helpers": "^7.12.1",
-        "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
-        "@babel/preset-env": "^7.12.11",
-        "@babel/preset-react": "^7.12.10",
+        "@babel/core": "^7.12.13",
+        "@babel/plugin-external-helpers": "^7.12.13",
+        "@babel/plugin-proposal-object-rest-spread": "^7.12.13",
+        "@babel/preset-env": "^7.12.13",
+        "@babel/preset-react": "^7.12.13",
         "@beaverbuilder/eslint-config": "0.0.5",
-        "rollup": "^2.35.1",
+        "rollup": "^2.38.5",
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",

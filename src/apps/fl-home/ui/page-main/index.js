@@ -1,10 +1,7 @@
 import React from 'react'
-import { Page } from 'assistant/ui'
 import { HeaderBar, SearchResults, Widgets, useSearchResults } from 'home/ui'
 import Welcome from './welcome'
 import './style.scss'
-
-const noop = () => {}
 
 const Main = ( { baseURL } ) => {
 	const { keyword, setKeyword, results, clearResults, isLoading } = useSearchResults()
@@ -14,13 +11,7 @@ const Main = ( { baseURL } ) => {
 	}
 
 	return (
-		<Page
-			id="cards"
-			padX={ false }
-			padY={ false }
-			toolbar={ false }
-			onLoad={ noop }
-		>
+		<div id="cards">
 			<HeaderBar
 				keyword={ keyword }
 				onClear={ clearSearch }
@@ -37,8 +28,12 @@ const Main = ( { baseURL } ) => {
 				/>
 			) }
 
-			{ '' === keyword && <Widgets before={ <li><Welcome /></li> } /> }
-		</Page>
+			{ '' === keyword && (
+				<div style={ { margin: '0 auto', maxWidth: 450 } }>
+					<Widgets before={ <li><Welcome /></li> } />
+				</div>
+			) }
+		</div>
 	)
 }
 

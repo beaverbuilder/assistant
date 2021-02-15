@@ -5,6 +5,7 @@ import ViewAll from './page-view-all'
 import Widgets from './widgets'
 import Card from './card'
 import useSearchResults from './use-search-results'
+import Shell from './shell'
 
 export {
 	Card,
@@ -13,5 +14,6 @@ export {
 	Main,
 	ViewAll,
 	Widgets,
-	useSearchResults
+	useSearchResults,
+	Shell,
 }

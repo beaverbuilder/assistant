@@ -31,24 +31,9 @@ export const apps = ( state = {}, action ) => {
 export const appOrder = ( state = [], action ) => {
 	switch ( action.type ) {
 
-	/*
-	case 'RESET_APP_ORDER':
-
-		const newKeys = [
-			...action.keys,
-			...state.filter( i => ! action.keys.includes( i ) )
-		]
-
-		return newKeys
-	*/
-
 	case 'SET_APP_ORDER':
-		return action.keys
+		return [ ...new Set( action.keys ) ]
 
-		/*
-	case 'CLEAN_UP_ORDER':
-		return [ ...state.filter( key => ! action.remove.includes( key ) ) ]
-	*/
 
 	case 'REGISTER_APP':
 	case 'SET_APP_POSITION':
