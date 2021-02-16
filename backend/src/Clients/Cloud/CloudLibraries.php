@@ -21,7 +21,30 @@ class CloudLibraries {
 	 * @return object
 	 */
 	public function create_item( $library_id, $data ) {
+		$data = $this->normalize_media( $data );
+		return $this->client->post( "/libraries/$library_id/library-items", $data );
+	}
 
+	/**
+	 * @return object
+	 */
+	public function update_item( $item_id, $data ) {
+		$data = $this->normalize_media( $data );
+		$data['_method'] = 'PUT';
+		return $this->client->post( "/library-items/$item_id", $data );
+	}
+
+	/**
+	 * @return object
+	 */
+	public function get_item( $item_id ) {
+		return $this->client->get( "/library-items/$item_id" );
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function normalize_media( $data ) {
 		if ( isset( $data['media'] ) ) {
 			foreach ( $data['media'] as $key => $media ) {
 				if ( ! $media ) {
@@ -38,14 +61,6 @@ class CloudLibraries {
 			}
 			unset( $data['media'] );
 		}
-
-		return $this->client->post( "/libraries/$library_id/library-items", $data );
-	}
-
-	/**
-	 * @return object
-	 */
-	public function get_item( $item_id ) {
-		return $this->client->get( "/library-items/$item_id" );
+		return $data;
 	}
 }

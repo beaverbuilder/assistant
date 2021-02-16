@@ -22,8 +22,8 @@
   "dependencies": {
     "@beaverbuilder/app-core": "^0.2.2",
     "@beaverbuilder/box": "0.0.2",
-    "@beaverbuilder/cloud": "^0.3.9",
-    "@beaverbuilder/cloud-ui": "^0.5.9",
+    "@beaverbuilder/cloud": "^0.4.0",
+    "@beaverbuilder/cloud-ui": "^0.6.3",
     "@beaverbuilder/fluid": "^0.7.3",
     "@beaverbuilder/fluid-docs": "0.0.3",
     "@beaverbuilder/forms": "^0.3.4",

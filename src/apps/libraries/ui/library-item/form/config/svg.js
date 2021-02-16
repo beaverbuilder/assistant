@@ -25,7 +25,7 @@ export const getActions = ( item, actions ) => {
 		} )
 	}
 
-	actions.push( {
+	actions.unshift( {
 		label: __( 'Import' ),
 		onClick: importSvg,
 		disabled: importing

@@ -23,6 +23,11 @@ const useAdminBarHeight = () => {
 		return 45
 	}
 
+	// Gutenberg
+	if ( document.body.classList.contains( 'block-editor-page' ) ) {
+		return 61
+	}
+
 	if ( ! isShowingAdminBar || isMobile ) {
 		return 0
 	}
