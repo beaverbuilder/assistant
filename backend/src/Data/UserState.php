@@ -36,6 +36,7 @@ class UserState {
 		'searchHistory'     => [],
 		'shouldShowInAdmin' => true,
 		'isAppHidden'       => true,
+		'shortcuts'         => [],
 	];
 
 	/**

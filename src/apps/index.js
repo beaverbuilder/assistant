@@ -17,5 +17,3 @@ import './libraries'
 import './designsystem'
 
 import './integrations'
-
-import './widget-test'
