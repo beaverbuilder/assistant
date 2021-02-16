@@ -26,4 +26,17 @@
             }
         }
     }
+
+	.fl-asst-libraries-grid {
+		.fluid-collection-appearance-grid {
+			grid-template-columns: repeat( 2 , 1fr );
+		}
+	}
+	.fluid-frame-size-medium {
+		.fl-asst-libraries-grid {
+			.fluid-collection-appearance-grid {
+				grid-template-columns: repeat( 3 , 1fr );
+			}
+		}
+	}
 }
