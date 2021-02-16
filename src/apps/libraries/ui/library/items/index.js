@@ -9,15 +9,15 @@ import ItemsHeader from '../header'
 import ItemsFilter from './filter'
 import './style.scss'
 
-const Wrapper = ( { library, onDrop, children } ) => {
+const Wrapper = ( { library, onDrop, children, ...rest } ) => {
 	if ( library.permissions.edit_items ) {
 		return (
-			<Layout.DropArea onDrop={ onDrop }>
+			<Layout.DropArea onDrop={ onDrop } { ...rest }>
 				{ children }
 			</Layout.DropArea>
 		)
 	}
-	return <div>{ children }</div>
+	return <div { ...rest }>{ children }</div>
 }
 
 export default () => {
@@ -47,7 +47,7 @@ export default () => {
 	}
 
 	return (
-		<Wrapper library={ library } onDrop={ uploader.handleDrop }>
+		<Wrapper library={ library } onDrop={ uploader.handleDrop } className="fl-asst-library-content">
 			{ hasItems && <ItemsFilter /> }
 			<ItemsHeader />
 			<ItemUpload />
