@@ -241,6 +241,14 @@ const posts = () => {
 		},
 
 		/**
+		 * Override library post item data with WP post data
+		 */
+		syncToLibrary( id, itemId, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/${id}/sync_to_library/${itemId}`, {}, config )
+		},
+
+		/**
 		 * Import library post item into WP
 		 */
 		importFromLibrary( itemId, config = {} ) {

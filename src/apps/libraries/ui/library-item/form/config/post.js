@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
+import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 
 export const getActions = ( item, actions ) => {
@@ -18,6 +19,10 @@ export const getActions = ( item, actions ) => {
 
 	actions.push( {
 		component: <CreateButton item={ item } />
+	} )
+
+	actions.push( {
+		component: <ReplaceButton item={ item } />
 	} )
 
 	actions.push( {
@@ -103,6 +108,93 @@ const CreateButton = ( { item } ) => {
 				</option>
 				<option value='create'>{ __( 'Create and Edit' ) }</option>
 				<option value='import'>{ __( 'Import' ) }</option>
+			</select>
+		</>
+	)
+}
+
+const ReplaceButton = ( { item } ) => {
+	const { contentTypes } = getSystemConfig()
+	const { post_type } = item.data.post
+	const { createNotice } = Libraries.ItemContext.use()
+	const [ post, setPost ] = useState( null )
+	const [ posts, setPosts ] = useState( null )
+	const postsApi = getWpRest().posts()
+	const label = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.plural : `${ post_type }s`
+
+	useEffect( () => {
+		postsApi.findWhere( {
+			post_type,
+			posts_per_page: -1,
+			orderby: 'post_title',
+			order: 'ASC'
+		} ).then( response => {
+			setPosts( response.data.items )
+		} ).catch( () => {
+			setPosts( [] )
+		} )
+	}, [] )
+
+	const replacePost = ( id ) => {
+		if ( ! id ) {
+			return
+		} else if ( ! confirm( __( 'Are you sure you want to replace this library item?' ) ) ) {
+			return
+		}
+		setPost( id )
+		postsApi.syncToLibrary( id, item.id ).then( response => {
+			replacePostComplete( response )
+		} ).catch( () => {
+			replacePostComplete()
+		} ).finally( () => {
+			setPost( null )
+		} )
+	}
+
+	const replacePostComplete = ( response ) => {
+		if ( ! response || ! response.data ) {
+			createNotice( {
+				status: 'error',
+				content: __( 'Error replacing content.' )
+			} )
+		} else {
+			createNotice( {
+				status: 'success',
+				content: __( 'Content replaced!' )
+			} )
+		}
+	}
+
+	const ReplaceButtonOptions = () => {
+		return posts.map( ( post, i ) => {
+			return (
+				<option key={ i } value={ post.id }>
+					{ post.title }
+				</option>
+			)
+		} )
+	}
+
+	return (
+		<>
+			<select
+				value={ '' }
+				onChange={ e => replacePost( e.target.value ) }
+				disabled={ post }
+			>
+				<option value=''>
+					{ ! post && __( 'Replace With...' ) }
+					{ post && __( 'Replacing...' ) }
+				</option>
+				{ null === posts &&
+					<optgroup label={ __( 'Loading...' ) } />
+				}
+				{ null !== posts && ! posts.length &&
+					<optgroup label={ sprintf( __( 'No %s found' ), label.toLowerCase() ) } />
+				}
+				{ null !== posts && !! posts.length &&
+					<ReplaceButtonOptions />
+				}
 			</select>
 		</>
 	)
