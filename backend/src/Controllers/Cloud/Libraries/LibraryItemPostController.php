@@ -6,6 +6,7 @@ use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\Data\Transformers\PostTransformer;
 use FL\Assistant\Helpers\PostHelper;
 use FL\Assistant\Helpers\JsonHelper;
+use FL\Assistant\Helpers\MediaPathHelper;
 use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Clients\Cloud\CloudClient;
 
@@ -468,7 +469,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 */
 	public function replace_imported_attachment_urls_in_content( $post_id, $imported ) {
 		$content = get_post_field( 'post_content', $post_id );
-		$content = $this->replace_imported_attachment_urls_in_string( $content, $imported );
+		$content = MediaPathHelper::replace_imported_attachment_urls_in_string( $content, $imported );
 
 		wp_update_post(
 			[
@@ -492,129 +493,17 @@ class LibraryItemPostController extends ControllerAbstract {
 			$val = maybe_unserialize( $val[0] );
 
 			if ( is_object( $val ) || is_array( $val ) ) {
-				$val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
+				$val = MediaPathHelper::replace_imported_attachment_urls_in_data( $val, $imported );
 			} elseif ( JsonHelper::is_string_json( $val ) ) {
 				$val = json_decode( $val );
-				$val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
+				$val = MediaPathHelper::replace_imported_attachment_urls_in_data( $val, $imported );
 				$val = wp_slash( json_encode( $val ) );
 			} else {
-				$val = $this->replace_imported_attachment_urls_in_string( $val, $imported );
+				$val = MediaPathHelper::replace_imported_attachment_urls_in_string( $val, $imported );
 			}
 
 			update_post_meta( $post_id, $key, $val );
 		}
-	}
-
-	/**
-	 * Replaces the imported attachment in an object or array.
-	 *
-	 * @param object|array|string $data
-	 * @param array $imported
-	 * @return object|array|string
-	 */
-	public function replace_imported_attachment_urls_in_data( $data, $imported ) {
-		if ( is_object( $data ) || is_array( $data ) ) {
-			foreach ( $data as $key => $val ) {
-				if ( is_object( $val ) || is_array( $val ) ) {
-					$new_val = $this->replace_imported_attachment_urls_in_data( $val, $imported );
-				} else {
-					$new_val = $this->replace_imported_attachment_urls_in_string( $val, $imported );
-				}
-
-				if ( is_object( $data ) ) {
-					$data->$key = $new_val;
-				} else {
-					$data[ $key ] = $new_val;
-				}
-			}
-		} else {
-			$data = $this->replace_imported_attachment_urls_in_string( $data, $imported );
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Replaces the imported attachment in a string.
-	 *
-	 * @param string $string
-	 * @param array $imported
-	 * @return string
-	 */
-	public function replace_imported_attachment_urls_in_string( $string, $imported ) {
-		$urls = $this->get_image_urls_from_string( $string );
-
-		foreach ( $urls as $url ) {
-			$url_info = $this->get_image_info_from_url( $url );
-
-			if ( ! isset( $imported[ $url_info['file_name'] ] ) ) {
-				continue;
-			}
-
-			$import_data = (array) $imported[ $url_info['file_name'] ];
-			$sizes = $this->get_ordered_image_sizes( (array) $import_data['sizes'] );
-			$new_url = null;
-
-			if ( $url_info['width'] && $url_info['height'] ) {
-				foreach ( $sizes as $size => $size_data ) {
-					$size_data = (array) $size_data;
-					if ( $url_info['width'] <= $size_data['width'] && $url_info['height'] <= $size_data['height'] ) {
-						if ( isset( $size_data['url'] ) ) {
-							$new_url = $size_data['url'];
-							break;
-						} elseif ( isset( $import_data['id'] ) ) {
-							$size_src = wp_get_attachment_image_src( $import_data['id'], $size );
-							if ( $size_src ) {
-								$new_url = $size_src[0];
-								break;
-							}
-						}
-					}
-				}
-			}
-
-			if ( ! $new_url ) {
-				if ( isset( $import_data['url'] ) ) {
-					$new_url = $import_data['url'];
-				} elseif ( isset( $import_data['id'] ) ) {
-					$new_url = wp_get_attachment_url( $import_data['id'] );
-				}
-			}
-
-			if ( $new_url ) {
-				$string = str_replace( $url, $new_url, $string );
-			}
-		}
-
-		return $string;
-	}
-
-	/**
-	 * Returns an array or ordered image sizes.
-	 *
-	 * @param array $sizes
-	 * @return array
-	 */
-	public function get_ordered_image_sizes( $sizes ) {
-		$keys = [];
-		$ordered = [];
-
-		foreach ( $sizes as $size => $data ) {
-			if ( 'thumb' === $size || 'thumbnail' === $size ) {
-				continue;
-			}
-			$data = (array) $data;
-			$key = $data['width'] + $data['height'];
-			$keys[ $key ] = $size;
-		}
-
-		ksort( $keys );
-
-		foreach ( $keys as $key ) {
-			$ordered[ $key ] = $sizes[ $key ];
-		}
-
-		return $ordered;
 	}
 
 	/**
@@ -624,138 +513,17 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function get_post_image_paths( $post ) {
-		$content_urls = $this->get_image_urls_from_string( $post->post_content );
-		$content_paths = $this->get_image_paths_from_urls( $content_urls );
+		$content_urls = MediaPathHelper::get_image_urls_from_string( $post->post_content );
+		$content_paths = MediaPathHelper::get_image_paths_from_urls( $content_urls );
 		$meta = get_post_meta( $post->ID );
 		$meta_paths = [];
 
 		if ( $meta && count( $meta ) > 0 ) {
-			$meta_urls = $this->get_image_urls_from_meta( $meta );
-			$meta_paths = $this->get_image_paths_from_urls( $meta_urls );
+			$meta_urls = MediaPathHelper::get_image_urls_from_meta( $meta );
+			$meta_paths = MediaPathHelper::get_image_paths_from_urls( $meta_urls );
 		}
 
 		return array_unique( array_merge( $content_paths, $meta_paths ) );
-	}
-
-	/**
-	 * Get the server paths to all images in an array of urls.
-	 *
-	 * @param array $urls
-	 * @return array
-	 */
-	public function get_image_paths_from_urls( $urls = [] ) {
-		$paths = [];
-
-		foreach ( $urls as $url ) {
-			$path = $this->get_image_path_from_url( $url );
-			if ( $path ) {
-				$paths[] = $path;
-			}
-		}
-
-		return $paths;
-	}
-
-	/**
-	 * Converts a media library URL to the server path of the full size image.
-	 *
-	 * @param string $url
-	 * @return string
-	 */
-	public function get_image_path_from_url( $url ) {
-		$upload_dir = wp_get_upload_dir();
-		$base_url = preg_replace( '/https?:\/\//', '', $upload_dir['baseurl'] );
-		$url_info = $this->get_image_info_from_url( $url );
-		$url = preg_replace( '/https?:\/\//', '', $url_info['full_size_url'] );
-		$path = null;
-
-		if ( stristr( $url, $base_url ) ) {
-			$path = $upload_dir['basedir'] . str_ireplace( $base_url, '', $url );
-		}
-
-		return $path;
-	}
-
-	/**
-	 * Get the urls to all images in a post meta object.
-	 *
-	 * @param mixed $meta
-	 * @return array
-	 */
-	public function get_image_urls_from_meta( $meta ) {
-		$urls = [];
-
-		foreach ( $meta as $key => $val ) {
-			$val = maybe_unserialize( $val );
-
-			if ( is_object( $val ) || is_array( $val ) ) {
-				$urls = array_merge( $urls, $this->get_image_urls_from_meta( $val ) );
-			} elseif ( JsonHelper::is_string_json( $val ) ) {
-				$val = wp_unslash( $val );
-				$urls = array_merge( $urls, $this->get_image_urls_from_string( $val ) );
-			} else {
-				$urls = array_merge( $urls, $this->get_image_urls_from_string( $val ) );
-			}
-		}
-
-		return $urls;
-	}
-
-	/**
-	 * Get the urls to all images in a string.
-	 *
-	 * @param string $string
-	 * @return array
-	 */
-	public function get_image_urls_from_string( $string ) {
-		$pattern = '#https?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/)\.(jpg|jpeg|png|gif))#';
-		$urls = [];
-
-		if ( preg_match_all( $pattern, $string, $matches ) ) {
-			if ( isset( $matches[0] ) && ! empty( $matches[0] ) ) {
-				$urls = $matches[0];
-			}
-		}
-
-		return $urls;
-	}
-
-	/**
-	 * Get the info for a media library image from a url.
-	 *
-	 * @param string $url
-	 * @return array
-	 */
-	public function get_image_info_from_url( $url ) {
-		$info = [
-			'url'           => $url,
-			'full_size_url' => $url,
-			'file_name'     => null,
-			'width'         => null,
-			'height'        => null,
-			'ext'           => null,
-		];
-
-		preg_match_all( '/(-(\d+)x(\d+))\.(jpg|jpeg|png|gif)/', $url, $matches );
-
-		if ( isset( $matches[1] ) && ! empty( $matches[1] ) ) {
-			$info['full_size_url'] = str_replace( $matches[1], '', $url );
-		}
-
-		$parts = explode( '/', $info['full_size_url'] );
-		$info['file_name'] = array_pop( $parts );
-
-		if ( isset( $matches[2] ) && ! empty( $matches[2] ) ) {
-			$info['width'] = $matches[2][0];
-		}
-		if ( isset( $matches[3] ) && ! empty( $matches[3] ) ) {
-			$info['height'] = $matches[3][0];
-		}
-		if ( isset( $matches[4] ) && ! empty( $matches[4] ) ) {
-			$info['ext'] = $matches[4][0];
-		}
-
-		return $info;
 	}
 
 	/**
