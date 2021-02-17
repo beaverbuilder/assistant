@@ -1,4 +1,5 @@
 import * as FLUID_Icon from '@beaverbuilder/icons'
+import Dashboard from './dashboard'
 import Document from './document'
 import DownCaretSmall from './down-caret-small'
 import DragHandle from './drag-handle'
@@ -8,6 +9,7 @@ import PencilOutline from './pencil-outline'
 
 const Icon = {
 	...FLUID_Icon,
+	Dashboard,
 	Document,
 	DownCaretSmall,
 	DragHandle,

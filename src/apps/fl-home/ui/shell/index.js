@@ -75,7 +75,7 @@ const FeatureSidebarSection = ( { baseURL = '' } ) => {
 					<Button
 						to={ `${baseURL}/` }
 						appearance="transparent"
-						icon={ <Icon.Placeholder /> }
+						icon={ <Icon.Dashboard /> }
 						isSelected
 					>
 						{ __( 'Dashboard', 'fl-assistant' ) }
@@ -132,7 +132,7 @@ const ShortcutsSection = () => {
 
 	const shortcuts = [
 		{
-			label: __( 'Dashboard', 'fl-assistant' ),
+			label: __( 'WordPress Admin', 'fl-assistant' ),
 			href: '/wp-admin'
 		},
 	]
