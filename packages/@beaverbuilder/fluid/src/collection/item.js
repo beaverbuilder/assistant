@@ -67,8 +67,9 @@ const Thumbnail = ( { children, ratio = '4:3', ...rest } ) => {
 const Text = ( {
 	title,
 	description,
-	truncate,
 	icon,
+	truncate = true,
+	className,
 	...rest
 } ) => {
 
@@ -76,19 +77,23 @@ const Text = ( {
 		return null
 	}
 
-	const titleClasses = c( 'fluid-item-title', {
-		'fluid-truncate': truncate,
-	} )
+	const classes = c( 'fluid-collection-item-text', {
+		'item-has-icon': icon,
+	}, className )
 
 	return (
-		<div className="fluid-collection-item-text" { ...rest }>
+		<div className={ classes } { ...rest }>
 			{ ( title || icon ) && (
-				<div className={ titleClasses }>
-					{ icon && <span>{icon}</span> }
-					{title}
-				</div>
+				<>
+					{ icon && <span className="fluid-collection-item-icon">{icon}</span> }
+					<div className="fluid-item-title">
+						<span className={ c( 'fluid-item-title-text', { 'fluid-truncate': truncate } ) } >
+							{title}
+						</span>
+						{ description && <span className="fluid-item-description fluid-truncate">{description}</span> }
+					</div>
+				</>
 			) }
-			{ description && <div>{description}</div> }
 		</div>
 	)
 }

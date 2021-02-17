@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/fluid",
-    "version": "0.7.3",
+    "version": "0.7.4",
     "description": "Common UI environment for Beaver Builder and Assistant projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
@@ -29,14 +29,14 @@
         "classnames": "^2.2.6"
     },
     "devDependencies": {
-        "@babel/core": "^7.12.13",
+        "@babel/core": "^7.12.16",
         "@babel/plugin-external-helpers": "^7.12.13",
         "@babel/plugin-proposal-object-rest-spread": "^7.12.13",
-        "@babel/preset-env": "^7.12.13",
+        "@babel/preset-env": "^7.12.16",
         "@babel/preset-react": "^7.12.13",
         "@beaverbuilder/eslint-config": "0.0.5",
-        "postcss": "^8.2.5",
-        "rollup": "^2.38.5",
+        "postcss": "^8.2.6",
+        "rollup": "^2.39.0",
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",

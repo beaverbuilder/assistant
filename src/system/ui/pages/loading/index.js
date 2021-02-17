@@ -16,7 +16,7 @@ const Loading = () => {
 				width: 90,
 				height: 90,
 				borderRadius: 45,
-				background: 'var(--fluid-blue-13)',
+				background: 'var(--fluid-box-background)',
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',

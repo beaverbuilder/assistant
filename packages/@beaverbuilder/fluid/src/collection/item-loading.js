@@ -4,7 +4,7 @@ import Item from './item'
 const LoadingItem = ( { ...rest } ) => (
 	<Item
 		thumbnail={ true }
-		title="loading..."
+		title="Loading..."
 		{ ...rest }
 	/>
 )
