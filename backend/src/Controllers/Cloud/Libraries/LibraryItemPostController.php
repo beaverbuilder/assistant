@@ -404,6 +404,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 */
 	public function get_post_screenshot( $request, $post ) {
 		$url = PreviewHelper::get_post_preview_url( $post );
+		$url = add_query_arg( 'fl_asst_screenshot', '1', $url );
 		return ScreenshotHelper::get_for_request( $request, $url );
 	}
 
