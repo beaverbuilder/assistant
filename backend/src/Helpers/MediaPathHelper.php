@@ -119,6 +119,30 @@ class MediaPathHelper {
 	}
 
 	/**
+	 * Get the server paths to all images in a string.
+	 *
+	 * @param string $string
+	 * @return array
+	 */
+	static public function get_image_paths_from_string( $string ) {
+		$urls = self::get_image_urls_from_string( $string );
+		$paths = self::get_image_paths_from_urls( $urls );
+		return $paths;
+	}
+
+	/**
+	 * Get the server paths to all images in an array or object.
+	 *
+	 * @param mixed $data
+	 * @return array
+	 */
+	static public function get_image_paths_from_data( $data ) {
+		$urls = self::get_image_urls_from_data( $data );
+		$paths = self::get_image_paths_from_urls( $urls );
+		return $paths;
+	}
+
+	/**
 	 * Get the server paths to all images in an array of urls.
 	 *
 	 * @param array $urls
@@ -177,19 +201,19 @@ class MediaPathHelper {
 	}
 
 	/**
-	 * Get the urls to all images in a post meta object.
+	 * Get the urls to all images in an object or array.
 	 *
-	 * @param mixed $meta
+	 * @param mixed $data
 	 * @return array
 	 */
-	static public function get_image_urls_from_meta( $meta ) {
+	static public function get_image_urls_from_data( $data ) {
 		$urls = [];
 
-		foreach ( $meta as $key => $val ) {
+		foreach ( $data as $key => $val ) {
 			$val = maybe_unserialize( $val );
 
 			if ( is_object( $val ) || is_array( $val ) ) {
-				$urls = array_merge( $urls, self::get_image_urls_from_meta( $val ) );
+				$urls = array_merge( $urls, self::get_image_urls_from_data( $val ) );
 			} elseif ( JsonHelper::is_string_json( $val ) ) {
 				$val = wp_unslash( $val );
 				$urls = array_merge( $urls, self::get_image_urls_from_string( $val ) );

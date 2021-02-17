@@ -5,6 +5,7 @@ namespace FL\Assistant\Controllers\Cloud\Libraries;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\Clients\Cloud\CloudClient;
 use FL\Assistant\Services\CustomizerService;
+use FL\Assistant\Helpers\MediaPathHelper;
 
 class LibraryItemThemeSettingsController extends ControllerAbstract {
 
@@ -44,7 +45,9 @@ class LibraryItemThemeSettingsController extends ControllerAbstract {
 				'name'  => sprintf( _x( '%s Settings', '%s theme name', 'fl-assistant' ), $theme->Name ),
 				'type'  => 'theme_settings',
 				'data'  => $data,
-				'media' => [],
+				'media' => [
+					'attachments' => MediaPathHelper::get_image_paths_from_data( $data )
+				],
 			]
 		);
 	}

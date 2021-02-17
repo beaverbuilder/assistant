@@ -513,14 +513,12 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function get_post_image_paths( $post ) {
-		$content_urls = MediaPathHelper::get_image_urls_from_string( $post->post_content );
-		$content_paths = MediaPathHelper::get_image_paths_from_urls( $content_urls );
+		$content_paths = MediaPathHelper::get_image_paths_from_string( $post->post_content );
 		$meta = get_post_meta( $post->ID );
 		$meta_paths = [];
 
 		if ( $meta && count( $meta ) > 0 ) {
-			$meta_urls = MediaPathHelper::get_image_urls_from_meta( $meta );
-			$meta_paths = MediaPathHelper::get_image_paths_from_urls( $meta_urls );
+			$meta_paths = MediaPathHelper::get_image_paths_from_data( $meta );
 		}
 
 		return array_unique( array_merge( $content_paths, $meta_paths ) );
