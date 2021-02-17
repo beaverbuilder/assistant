@@ -2,7 +2,7 @@
 
 namespace FL\Assistant\Helpers;
 
-class PostHelper {
+class PreviewHelper {
 
 	/**
 	 * Retrieve the preview url for a post.
@@ -10,7 +10,7 @@ class PostHelper {
 	 * @param object $post
 	 * @return string
 	 */
-	public static function get_preview_url( $post ) {
+	public static function get_post_preview_url( $post ) {
 		$post = get_post( $post );
 		$post_id = $post->ID;
 		$post_type = $post->post_type;

@@ -4,9 +4,10 @@ namespace FL\Assistant\Controllers\Cloud\Libraries;
 
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\Data\Transformers\PostTransformer;
-use FL\Assistant\Helpers\PostHelper;
+use FL\Assistant\Helpers\PreviewHelper;
 use FL\Assistant\Helpers\JsonHelper;
 use FL\Assistant\Helpers\MediaPathHelper;
+use FL\Assistant\Helpers\ScreenshotHelper;
 use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Clients\Cloud\CloudClient;
 
@@ -167,7 +168,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		return rest_ensure_response(
 			[
-				'url' => PostHelper::get_preview_url( $post_id ),
+				'url' => PreviewHelper::get_post_preview_url( $post_id ),
 			]
 		);
 	}
@@ -402,26 +403,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function get_post_screenshot( $request, $post ) {
-		$screenshot = $request->get_param( 'screenshot' );
-
-		if ( $screenshot ) {
-			return [
-				'type' => 'base64',
-				'data' => $screenshot,
-			];
-		}
-
-		$url = PostHelper::get_preview_url( $post );
-		$response = wp_remote_get(
-			$url, [
-				'cookies' => $_COOKIE,
-			]
-		);
-
-		return [
-			'type' => 'html',
-			'html' => wp_remote_retrieve_body( $response ),
-		];
+		$url = PreviewHelper::get_post_preview_url( $post );
+		return ScreenshotHelper::get_for_request( $request, $url );
 	}
 
 	/**

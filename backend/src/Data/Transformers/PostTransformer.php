@@ -5,7 +5,7 @@ namespace FL\Assistant\Data\Transformers;
 use FL\Assistant\Data\Repository\NotationsRepository;
 use FL\Assistant\Data\Repository\TermsRepository;
 use FL\Assistant\System\Integrations\BeaverBuilder;
-use FL\Assistant\Helpers\PostHelper;
+use FL\Assistant\Helpers\PreviewHelper;
 
 /**
  * Class PostTransformer
@@ -77,7 +77,7 @@ class PostTransformer {
 			'excerpt'          => $post->post_excerpt,
 			'date'             => $date,
 			'editUrl'          => get_edit_post_link( $post->ID, '' ),
-			'previewUrl'       => PostHelper::get_preview_url( $post ),
+			'previewUrl'       => PreviewHelper::get_post_preview_url( $post ),
 			'id'               => $post->ID,
 			'labels'           => [],
 			'order'            => $post->menu_order,

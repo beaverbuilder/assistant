@@ -6,6 +6,7 @@ use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\Clients\Cloud\CloudClient;
 use FL\Assistant\Services\CustomizerService;
 use FL\Assistant\Helpers\MediaPathHelper;
+use FL\Assistant\Helpers\ScreenshotHelper;
 
 class LibraryItemThemeSettingsController extends ControllerAbstract {
 
@@ -48,6 +49,7 @@ class LibraryItemThemeSettingsController extends ControllerAbstract {
 				'media' => [
 					'attachments' => MediaPathHelper::get_image_paths_from_data( $data )
 				],
+				'screenshot' => ScreenshotHelper::get_for_request( $request, home_url(), false ),
 			]
 		);
 	}
@@ -59,7 +61,6 @@ class LibraryItemThemeSettingsController extends ControllerAbstract {
 			return rest_ensure_response( [ 'error' => __( 'Missing item data.' ) ] );
 		}
 
-		// TODO: Figure out what response to send.
 		return rest_ensure_response( [] );
 	}
 }
