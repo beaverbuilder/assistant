@@ -90,7 +90,7 @@ const AppsSection = () => {
 	const history = useHistory()
 	return (
 		<SidebarSection title={ __( 'Apps', 'fl-assistant' ) }>
-			<App.List limit={ 5 }>
+			<App.List>
 				{ ( { label, handle, icon, moveDown, moveUp } ) => {
 
 					const location = {
