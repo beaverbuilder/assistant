@@ -8,7 +8,15 @@ class ThemeService {
 	 * @return array
 	 */
 	public function get_current_theme_data() {
-		$theme = wp_get_theme();
+		return $this->get_theme_data();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_theme_data( $slug = '' ) {
+		$theme = wp_get_theme( $slug );
+		$template = $theme->get( 'Template' );
 
 		$data = [
 			'name' => $theme->get( 'Name' ),
@@ -17,8 +25,7 @@ class ThemeService {
 			'author' => $theme->get( 'Author' ),
 			'author_url' => $theme->get( 'AuthorURI' ),
 			'slug' => get_stylesheet(),
-			'parent_slug' => get_template(),
-			'is_child' => is_child_theme()
+			'parent' => $template ? $this->get_theme_data( $template ) : null
 		];
 
 		return $data;
