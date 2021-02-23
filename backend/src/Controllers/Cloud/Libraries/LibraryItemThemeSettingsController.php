@@ -5,6 +5,7 @@ namespace FL\Assistant\Controllers\Cloud\Libraries;
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\Clients\Cloud\CloudClient;
 use FL\Assistant\Services\CustomizerService;
+use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Helpers\MediaPathHelper;
 use FL\Assistant\Helpers\ScreenshotHelper;
 
@@ -71,16 +72,36 @@ class LibraryItemThemeSettingsController extends ControllerAbstract {
 			return rest_ensure_response( [ 'error' => __( 'Missing item data.' ) ] );
 		}
 
-		$result = $service->import_settings( $item['data'] );
+		$can_import = $service->can_import_settings( $item['data'] );
 
-		if ( is_wp_error( $result ) ) {
+		if ( is_wp_error( $can_import ) ) {
 			return rest_ensure_response( [
-				'error' => $result->get_error_message()
+				'error' => $can_import->get_error_message()
 			] );
 		}
+
+		$data = $this->import_media_from_library( $item );
+		$service->import_settings( $data );
 
 		return rest_ensure_response( [
 			'success' => true
 		] );
+	}
+
+	public function import_media_from_library( $item ) {
+		$service = new MediaLibraryService();
+		$data = $item['data'];
+		$media = $item['media'];
+
+		if ( isset( $media['attachments'] ) ) {
+			$imported = [];
+			foreach ( $media['attachments'] as $attachment ) {
+				$response = $service->import_cloud_media( $attachment );
+				$imported[ $attachment['file_name'] ] = wp_get_attachment_metadata( $response['id'] );
+				$imported[ $attachment['file_name'] ]['id'] = $response['id'];
+			}
+		}
+
+		return MediaPathHelper::replace_imported_attachment_urls_in_data( $data, $imported );
 	}
 }

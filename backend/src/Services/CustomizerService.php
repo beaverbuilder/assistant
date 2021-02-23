@@ -39,10 +39,10 @@ class CustomizerService {
 		$settings = $wp_customize->settings();
 
 		foreach ( $mods as $key => $value ) {
-				if ( in_array( $key, $ignore ) ) {
-					continue;
-				}
-				$data['mods'][ $key ] = $value;
+			if ( in_array( $key, $ignore ) ) {
+				continue;
+			}
+			$data['mods'][ $key ] = $value;
 		}
 
 		foreach ( $settings as $key => $setting ) {
@@ -65,13 +65,25 @@ class CustomizerService {
 
 	/**
 	 * @param array $data
-	 * @return void
+	 * @return bool|WP_Error
+	 */
+	public function can_import_settings( $data ) {
+		if ( $data['theme']['slug'] !== get_stylesheet() ) {
+			return new \WP_Error( 'import', __( 'Import failed! These settings are not for the current theme.' ) );
+		}
+		return true;
+	}
+
+	/**
+	 * @param array $data
+	 * @return bool|WP_Error
 	 */
 	public function import_settings( $data ) {
 		$wp_customize = $this->init_customizer();
+		$can_import = $this->can_import_settings( $data );
 
-		if ( $data['theme']['slug'] !== get_stylesheet() ) {
-			return new \WP_Error( 'import', __( 'Import failed! These settings are not for the current theme.' ) );
+		if ( is_wp_error( $can_import ) ) {
+			return $can_import;
 		}
 
 		foreach ( $data['options'] as $option_key => $option_value ) {
