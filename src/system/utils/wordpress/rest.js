@@ -627,14 +627,14 @@ const libraries = () => {
 		 * Import library item into WP
 		 */
 		importItem( item ) {
-			return http.post( `fl-assistant/v1/library-items/import/${ item.type }`, { item } )
+			const type = item.type.replaceAll( '_', '-' )
+			return http.post( `fl-assistant/v1/library-items/import/${ type }`, { item } )
 		},
 
 		/**
 		 * Export WP post data into library
 		 */
 		exportPost( id, libraryId, data = {}, config = {} ) {
-			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, data, config )
 		},
 
@@ -658,7 +658,6 @@ const libraries = () => {
 		 * Preview a library post item
 		 */
 		previewPost( itemId, config = {} ) {
-			config.cacheKey = 'posts'
 			return http.post( `fl-assistant/v1/posts/preview_library_post/${itemId}`, {}, config )
 		},
 

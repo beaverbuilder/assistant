@@ -3,6 +3,7 @@
 namespace FL\Assistant\Services;
 
 use FL\Assistant\Services\ThemeService;
+use FL\Assistant\Helpers\CustomizerOptionHelper;
 
 class CustomizerService {
 
@@ -68,6 +69,34 @@ class CustomizerService {
 	 */
 	public function import_settings( $data ) {
 		$wp_customize = $this->init_customizer();
+
+		if ( $data['theme']['slug'] !== get_stylesheet() ) {
+			return new \WP_Error( 'import', __( 'Import failed! These settings are not for the current theme.' ) );
+		}
+
+		foreach ( $data['options'] as $option_key => $option_value ) {
+			$option = new CustomizerOptionHelper( $wp_customize, $option_key, array(
+				'default'		=> '',
+				'type'			=> 'option',
+				'capability'	=> 'edit_theme_options'
+			) );
+			$option->import( $option_value );
+		}
+
+		if( function_exists( 'wp_update_custom_css_post' ) && $data['css'] ) {
+			wp_update_custom_css_post( $data['css'] );
+		}
+
+		do_action( 'customize_save', $wp_customize );
+
+		foreach ( $data['mods'] as $key => $val ) {
+			do_action( 'customize_save_' . $key, $wp_customize );
+			set_theme_mod( $key, $val );
+		}
+
+		do_action( 'customize_save_after', $wp_customize );
+
+		return true;
 	}
 
 	/**

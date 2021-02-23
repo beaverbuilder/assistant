@@ -4,9 +4,9 @@ namespace FL\Assistant\Helpers;
 
 /**
  * A class that extends WP_Customize_Setting so we can access
- * the protected updated method when importing settings.
+ * the protected import method when importing options.
  */
-class CustomizerSettingHelper extends WP_Customize_Setting {
+class CustomizerOptionHelper extends WP_Customize_Setting {
 
 	/**
 	 * Import a value for this setting.

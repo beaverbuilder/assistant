@@ -26,7 +26,10 @@ class LibraryItemThemeSettingsController extends ControllerAbstract {
 						return current_user_can( 'edit_others_posts' );
 					},
 				],
-			],
+			]
+		);
+
+		$this->route(
 			'/library-items/import/theme-settings', [
 				[
 					'methods'             => \WP_REST_Server::CREATABLE,
@@ -62,11 +65,22 @@ class LibraryItemThemeSettingsController extends ControllerAbstract {
 
 	public function import( $request ) {
 		$item = $request->get_param( 'item' );
+		$service = new CustomizerService();
 
 		if ( ! is_array( $item ) || empty( $item['data'] ) ) {
 			return rest_ensure_response( [ 'error' => __( 'Missing item data.' ) ] );
 		}
 
-		return rest_ensure_response( [] );
+		$result = $service->import_settings( $item['data'] );
+
+		if ( is_wp_error( $result ) ) {
+			return rest_ensure_response( [
+				'error' => $result->get_error_message()
+			] );
+		}
+
+		return rest_ensure_response( [
+			'success' => true
+		] );
 	}
 }
