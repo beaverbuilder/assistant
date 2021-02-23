@@ -9,11 +9,11 @@ export const getActions = ( item, actions ) => {
 	const [ importing, setImporting ] = useState( false )
 	const [ previewing, setPreviewing ] = useState( false )
 	const history = useHistory()
-	const postsApi = getWpRest().posts()
+	const api = getWpRest().libraries()
 
 	const importPost = () => {
 		setImporting( true )
-		postsApi.importFromLibrary( item.id ).then( response => {
+		api.importPost( item.id ).then( response => {
 			setImporting( false )
 			if ( response.data.error ) {
 				createNotice( {
@@ -48,7 +48,7 @@ export const getActions = ( item, actions ) => {
 
 	const previewPost = () => {
 		setPreviewing( true )
-		postsApi.previewLibraryPost( item.id ).then( response => {
+		api.previewPost( item.id ).then( response => {
 			setPreviewing( false )
 			window.open( response.data.url )
 		} )

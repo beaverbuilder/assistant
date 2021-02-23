@@ -224,38 +224,6 @@ const posts = () => {
 			clearWpRestCache( 'posts' )
 			return notations().deleteLabel( 'post', postId, labelId, config )
 		},
-
-		/**
-		 * Preview a library post item
-		 */
-		previewLibraryPost( itemId, config = {} ) {
-			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/preview_library_post/${itemId}`, {}, config )
-		},
-
-		/**
-		 * Export WP post data into library
-		 */
-		saveToLibrary( id, libraryId, data = {}, config = {} ) {
-			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, data, config )
-		},
-
-		/**
-		 * Import library post item into WP
-		 */
-		importFromLibrary( itemId, config = {} ) {
-			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/import_from_library/${itemId}`, {}, config )
-		},
-
-		/**
-		 * Override WP post data with library post item data
-		 */
-		syncFromLibrary( id, itemId, config = {} ) {
-			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/${id}/sync_from_library/${itemId}`, {}, config )
-		},
 	}
 }
 
@@ -654,8 +622,51 @@ const notations = () => {
  */
 const libraries = () => {
 	return {
+
+		/**
+		 * Import library item into WP
+		 */
 		importItem( item ) {
 			return http.post( `fl-assistant/v1/library-items/import/${ item.type }`, { item } )
+		},
+
+		/**
+		 * Export WP post data into library
+		 */
+		exportPost( id, libraryId, data = {}, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/${id}/library/${libraryId}`, data, config )
+		},
+
+		/**
+		 * Import library post item into WP
+		 */
+		importPost( itemId, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/import_from_library/${itemId}`, {}, config )
+		},
+
+		/**
+		 * Override WP post data with library post item data
+		 */
+		syncPost( id, itemId, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/${id}/sync_from_library/${itemId}`, {}, config )
+		},
+
+		/**
+		 * Preview a library post item
+		 */
+		previewPost( itemId, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/preview_library_post/${itemId}`, {}, config )
+		},
+
+		/**
+		 * Export WP Customizer settings into library
+		 */
+		exportThemeSettings( libraryId, data = {}, config = {} ) {
+			return http.post( `fl-assistant/v1/library/${libraryId}/library-items/export/theme-settings`, data, config )
 		},
 	}
 }

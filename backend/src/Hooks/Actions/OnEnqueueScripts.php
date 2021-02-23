@@ -112,6 +112,7 @@ class OnEnqueueScripts {
 			'currentUser'       => $current_user,
 			'defaultAppName'    => 'fl-home',
 			'emptyTrashDays'    => EMPTY_TRASH_DAYS,
+			'homeUrl' 			=> home_url(),
 			'isShowingAdminBar' => is_admin_bar_showing(),
 			'isAdmin'           => is_admin(),
 			'isSiteAdmin'       => is_super_admin(),

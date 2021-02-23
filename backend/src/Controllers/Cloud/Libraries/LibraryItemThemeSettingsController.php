@@ -12,10 +12,16 @@ class LibraryItemThemeSettingsController extends ControllerAbstract {
 
 	public function register_routes() {
 		$this->route(
-			'/library-items/export/theme-settings', [
+			'/library/(?P<library_id>\d+)/library-items/export/theme-settings', [
 				[
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'export' ],
+					'args'                => [
+						'library_id' => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_others_posts' );
 					},
