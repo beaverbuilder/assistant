@@ -32,7 +32,7 @@ export const getActions = ( item, actions ) => {
 	}
 
 	actions.push( {
-		label: __( 'Import' ),
+		label: __( 'Apply to Theme' ),
 		onClick: importThemeSettings,
 		disabled: importing,
 	} )
