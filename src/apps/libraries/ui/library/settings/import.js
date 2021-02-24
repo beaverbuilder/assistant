@@ -19,7 +19,7 @@ export default () => {
 		const item = items[ currentItem ]
 		const api = getWpRest().libraries()
 
-		if ( 'color' === item.type ) {
+		if ( 'color' === item.type || 'theme_settings' === item.type ) {
 			importNextItem()
 		} else if ( 'post' === item.type ) {
 			api.importPost( item.id ).finally( importNextItem )
