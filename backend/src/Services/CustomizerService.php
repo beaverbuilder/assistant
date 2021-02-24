@@ -68,9 +68,16 @@ class CustomizerService {
 	 * @return bool|WP_Error
 	 */
 	public function can_import_settings( $data ) {
-		if ( $data['theme']['slug'] !== get_stylesheet() ) {
+		$theme = $data['theme'];
+		$slug = $theme['slug'];
+		$parentSlug = $theme['parent'] ? $theme['parent']['slug'] : null;
+		$stylesheet = get_stylesheet();
+		$template = get_template();
+
+		if ( $slug !== $stylesheet && $slug !== $template && $parentSlug !== $stylesheet ) {
 			return new \WP_Error( 'import', __( 'Import failed! These settings are not for the current theme.' ) );
 		}
+
 		return true;
 	}
 

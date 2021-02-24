@@ -90,6 +90,7 @@ class CustomizerPreview {
 		$theme = $this->item->data->theme;
 		$mods = $this->item->data->mods;
 		$current_mods = get_theme_mods();
+		$slug = get_stylesheet();
 		$user_id = get_current_user_id();
 		$content = [];
 
@@ -97,7 +98,7 @@ class CustomizerPreview {
 			if ( isset( $current_mods[ $key ] ) && $value === $current_mods[ $key ] ) {
 				continue;
 			}
-			$content[ "{$theme->slug}::{$key}" ] = [
+			$content[ "{$slug}::{$key}" ] = [
 				'value' => wp_slash( $value ),
 				'type' => 'theme_mod',
 				'user_id' => $user_id,

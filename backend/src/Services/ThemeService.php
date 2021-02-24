@@ -24,7 +24,7 @@ class ThemeService {
 			'url' => $theme->get( 'ThemeURI' ),
 			'author' => $theme->get( 'Author' ),
 			'author_url' => $theme->get( 'AuthorURI' ),
-			'slug' => get_stylesheet(),
+			'slug' => $theme->get_stylesheet(),
 			'parent' => $template ? $this->get_theme_data( $template ) : null
 		];
 
