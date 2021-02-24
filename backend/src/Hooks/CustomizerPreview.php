@@ -96,6 +96,7 @@ class CustomizerPreview {
 	public function create_changeset_content() {
 		$theme = $this->item->data->theme;
 		$mods = $this->item->data->mods;
+		$css = $this->item->data->css;
 		$current_mods = get_theme_mods();
 		$slug = get_stylesheet();
 		$user_id = get_current_user_id();
@@ -108,6 +109,15 @@ class CustomizerPreview {
 			$content[ "{$slug}::{$key}" ] = [
 				'value' => wp_slash( $value ),
 				'type' => 'theme_mod',
+				'user_id' => $user_id,
+				'date_modified_gmt' => date( 'Y-m-d h:i:s' )
+			];
+		}
+
+		if ( $css ) {
+			$content[ "custom_css[{$slug}]" ] = [
+				'value' => wp_slash( $value ),
+				'type' => 'custom_css',
 				'user_id' => $user_id,
 				'date_modified_gmt' => date( 'Y-m-d h:i:s' )
 			];
