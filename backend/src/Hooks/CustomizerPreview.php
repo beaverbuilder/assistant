@@ -24,8 +24,13 @@ class CustomizerPreview {
 			$this->redirect_to_changeset();
 		}
 
-		if ( isset( $_GET['fl-asst-customizer-preview'] ) ) {
-			add_action( 'customize_controls_print_styles', [ $this, 'print_styles' ] );
+		if ( isset( $_GET['fl-asst-customizer-preview'] ) && wp_is_uuid( $_GET['fl-asst-customizer-preview'] ) ) {
+			if ( ! isset( $_GET['changeset_uuid'] ) ) {
+				$this->uuid = $_GET['fl-asst-customizer-preview'];
+				$this->redirect_to_changeset();
+			} else {
+				add_action( 'customize_controls_print_styles', [ $this, 'print_styles' ] );
+			}
 		}
 
 		add_action( 'customize_preview_init', [ $this, 'init_preview_frame' ] );
@@ -112,10 +117,10 @@ class CustomizerPreview {
 	}
 
 	public function redirect_to_changeset() {
-		if ( $this->item && $this->uuid ) {
+		if ( $this->uuid ) {
 			$args = [
 				'changeset_uuid' => $this->uuid,
-				'fl-asst-customizer-preview' => 1
+				'fl-asst-customizer-preview' => $this->uuid
 			];
 			wp_redirect( add_query_arg( $args, admin_url( 'customize.php' ) ) );
 			die();
