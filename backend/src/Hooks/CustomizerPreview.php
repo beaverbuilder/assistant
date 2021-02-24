@@ -6,7 +6,7 @@ use FL\Assistant\Clients\Cloud\CloudClient;
 
 class CustomizerPreview {
 
-	protected $data;
+	protected $item;
 	protected $uuid;
 
 	public function __construct() {
@@ -19,8 +19,8 @@ class CustomizerPreview {
 		}
 
 		if ( isset( $_GET['fl-asst-customizer-preview-init'] ) ) {
-			$this->load_data();
-			$this->create_changeset();
+			$this->load_item();
+			$this->load_changeset();
 			$this->redirect_to_changeset();
 		}
 
@@ -29,21 +29,48 @@ class CustomizerPreview {
 		}
 	}
 
-	public function load_data() {
+	public function load_item() {
 		$item_id = absint( $_GET['fl-asst-customizer-preview-init'] );
 
 		if ( $item_id ) {
 			$client = new CloudClient;
 			$item = $client->libraries->get_item( $item_id );
 
-			if ( $item && $item->data ) {
-				$this->data = $item->data;
+			if ( $item ) {
+				$this->item = $item;
 			}
 		}
 	}
 
+	public function load_changeset() {
+		if ( $this->item ) {
+			$posts = get_posts( [
+				'post_type' => 'customize_changeset',
+				'post_status' => 'auto-draft',
+				'meta_key' => 'fl_asst_changeset_item_id',
+				'meta_value' => $this->item->id,
+			] );
+
+			if ( count( $posts ) ) {
+				$this->uuid = $posts[0]->post_name;
+				$this->update_changeset( $posts[0]->ID );
+			} else {
+				$this->create_changeset();
+			}
+		}
+	}
+
+	public function update_changeset( $post_id ) {
+		if ( $this->item ) {
+			wp_update_post( [
+				'ID' => $post_id,
+				'post_content' => $this->create_changeset_content(),
+			] );
+		}
+	}
+
 	public function create_changeset() {
-		if ( $this->data ) {
+		if ( $this->item ) {
 			$this->uuid = wp_generate_uuid4();
 			wp_insert_post( [
 				'post_type' => 'customize_changeset',
@@ -52,26 +79,16 @@ class CustomizerPreview {
 				'post_name' => $this->uuid,
 				'post_content' => $this->create_changeset_content(),
 				'meta_input' => [
-					'_customize_restore_dismissed' => 1
+					'fl_asst_changeset_item_id' => $this->item->id,
+					'_customize_restore_dismissed' => 1,
 				]
 			] );
 		}
 	}
 
-	public function redirect_to_changeset() {
-		if ( $this->data && $this->uuid ) {
-			$args = [
-				'changeset_uuid' => $this->uuid,
-				'fl-asst-customizer-preview' => 1
-			];
-			wp_redirect( add_query_arg( $args, admin_url( 'customize.php' ) ) );
-			die();
-		}
-	}
-
 	public function create_changeset_content() {
-		$theme = $this->data->theme;
-		$mods = $this->data->mods;
+		$theme = $this->item->data->theme;
+		$mods = $this->item->data->mods;
 		$current_mods = get_theme_mods();
 		$user_id = get_current_user_id();
 		$content = [];
@@ -89,6 +106,17 @@ class CustomizerPreview {
 		}
 
 		return json_encode( $content, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	}
+
+	public function redirect_to_changeset() {
+		if ( $this->item && $this->uuid ) {
+			$args = [
+				'changeset_uuid' => $this->uuid,
+				'fl-asst-customizer-preview' => 1
+			];
+			wp_redirect( add_query_arg( $args, admin_url( 'customize.php' ) ) );
+			die();
+		}
 	}
 
 	public function print_styles() {
