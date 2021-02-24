@@ -17,6 +17,7 @@ use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
 use FL\Assistant\Hooks\AdminColumns;
 use FL\Assistant\Hooks\ImageProxy;
 use FL\Assistant\Hooks\PostPreview;
+use FL\Assistant\Hooks\CustomizerPreview;
 
 class HooksServiceProvider extends ServiceProviderAbstract {
 
@@ -37,6 +38,7 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 		new AdminColumns();
 		new ImageProxy();
 		new PostPreview();
+		new CustomizerPreview();
 	}
 
 	public function actions() {
