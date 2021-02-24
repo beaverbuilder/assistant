@@ -27,6 +27,8 @@ class CustomizerPreview {
 		if ( isset( $_GET['fl-asst-customizer-preview'] ) ) {
 			add_action( 'customize_controls_print_styles', [ $this, 'print_styles' ] );
 		}
+
+		add_action( 'customize_preview_init', [ $this, 'init_preview_frame' ] );
 	}
 
 	public function load_item() {
@@ -124,6 +126,29 @@ class CustomizerPreview {
 		echo '<style>';
 		echo '.wp-customizer .wp-full-overlay { margin: 0 !important; }';
 		echo '.wp-customizer #customize-controls { display: none !important; }';
+		echo '</style>';
+	}
+
+	public function init_preview_frame() {
+		if ( ! isset( $_GET['customize_changeset_uuid'] ) || ! wp_is_uuid( $_GET['customize_changeset_uuid'] ) ) {
+			return;
+		}
+
+		$posts = get_posts( [
+			'post_type' => 'customize_changeset',
+			'post_status' => 'auto-draft',
+			'post_name' => $_GET['customize_changeset_uuid'],
+			'meta_key' => 'fl_asst_changeset_item_id'
+		] );
+
+		if ( count( $posts ) ) {
+			add_action( 'wp_head', [ $this, 'print_preview_frame_styles' ] );
+		}
+	}
+
+	public function print_preview_frame_styles() {
+		echo '<style>';
+		echo '.customize-partial-edit-shortcut { display: none !important; }';
 		echo '</style>';
 	}
 }
