@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
+import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 
 export const getActions = ( item, actions ) => {
@@ -31,10 +32,20 @@ export const getActions = ( item, actions ) => {
 		} )
 	}
 
+	const previewThemeSettings = () => {
+		const { adminURLs } = getSystemConfig()
+		window.open( `${ adminURLs.customizeBase }?fl-asst-customizer-preview-init=${ item.id }` )
+	}
+
 	actions.push( {
 		label: __( 'Apply to Theme' ),
 		onClick: importThemeSettings,
 		disabled: importing,
+	} )
+
+	actions.push( {
+		label: __( 'Preview' ),
+		onClick: previewThemeSettings,
 	} )
 
 	return actions
