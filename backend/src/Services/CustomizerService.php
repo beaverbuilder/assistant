@@ -46,7 +46,7 @@ class CustomizerService {
 		}
 
 		foreach ( $settings as $key => $setting ) {
-			if ( 'option' == $setting->type ) {
+			if ( 'option' === $setting->type ) {
 				if ( 0 === strpos( $key, 'widget_' ) || 0 === strpos( $key, 'sidebars_' ) ) {
 					continue;
 				} elseif ( in_array( $key, $ignore ) ) {

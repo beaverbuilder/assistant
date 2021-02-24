@@ -10,7 +10,8 @@ class CustomizerPreview {
 	protected $uuid;
 
 	public function __construct() {
-		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'customize_register', [ $this, 'init' ], PHP_INT_MAX );
+		add_action( 'customize_preview_init', [ $this, 'init_preview_frame' ] );
 	}
 
 	public function init() {
@@ -32,8 +33,6 @@ class CustomizerPreview {
 				add_action( 'customize_controls_print_styles', [ $this, 'print_styles' ] );
 			}
 		}
-
-		add_action( 'customize_preview_init', [ $this, 'init_preview_frame' ] );
 	}
 
 	public function load_item() {
@@ -94,12 +93,17 @@ class CustomizerPreview {
 	}
 
 	public function create_changeset_content() {
+		global $wp_customize;
+
 		$theme = $this->item->data->theme;
 		$mods = $this->item->data->mods;
+		$options = $this->item->data->options;
 		$css = $this->item->data->css;
 		$current_mods = get_theme_mods();
+		$settings = $wp_customize->settings();
 		$slug = get_stylesheet();
 		$user_id = get_current_user_id();
+		$date = date( 'Y-m-d h:i:s' );
 		$content = [];
 
 		foreach ( $mods as $key => $value ) {
@@ -110,8 +114,21 @@ class CustomizerPreview {
 				'value' => wp_slash( $value ),
 				'type' => 'theme_mod',
 				'user_id' => $user_id,
-				'date_modified_gmt' => date( 'Y-m-d h:i:s' )
+				'date_modified_gmt' => $date
 			];
+		}
+
+		foreach ( $settings as $key => $setting ) {
+			if ( 'option' === $setting->type ) {
+				if ( isset( $options->$key ) && $options->$key !== $setting->value() ) {
+					$content[ $key ] = [
+						'value' => wp_slash( $options->$key ),
+						'type' => 'option',
+						'user_id' => $user_id,
+						'date_modified_gmt' => $date
+					];
+				}
+			}
 		}
 
 		if ( $css ) {
@@ -119,7 +136,7 @@ class CustomizerPreview {
 				'value' => wp_slash( $value ),
 				'type' => 'custom_css',
 				'user_id' => $user_id,
-				'date_modified_gmt' => date( 'Y-m-d h:i:s' )
+				'date_modified_gmt' => $date
 			];
 		}
 
