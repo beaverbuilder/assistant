@@ -1,12 +1,12 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Form, Page, Layout, Text } from 'ui'
+import { Form, Page, Layout } from 'ui'
 import { useLocation } from 'react-router-dom'
 
 export const Plugin = () => {
 	const { item } = useLocation().state
 	const {
-		banner,
+		thumbnail,
 		title,
 		content,
 		author,
@@ -17,10 +17,9 @@ export const Plugin = () => {
 	const Hero = () => {
 		return (
 			<Layout.AspectBox
-				width={ 1544 }
-				height={ 500 }
+				ratio="square"
 				style={ {
-					backgroundImage: `url(${banner})`,
+					backgroundImage: `url(${thumbnail})`,
 					backgroundSize: 'cover'
 				} }
 			/>
@@ -69,15 +68,14 @@ export const Plugin = () => {
 	} )
 
 	return (
-		<Page
-			title={ __( 'Plugin' ) }
-			hero={ <Hero /> }
-			padY={ false }
+		<Page.Detail
+			title={ title }
+			toolbarTitle={ __( 'Plugin' ) }
+			thumbnail={ thumbnail && <Hero /> }
 		>
-			<Text.Title style={ { marginBottom: 10 } }>{title}</Text.Title>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
-		</Page>
+		</Page.Detail>
 	)
 }
 
@@ -126,11 +124,11 @@ export const Theme = () => {
 
 	return (
 		<Page
-			title={ __( 'Theme' ) }
-			hero={ <Hero /> }
+			toolbarTitle={ __( 'Theme' ) }
+			title={ title }
+			hero={ banner && <Hero /> }
 			padY={ false }
 		>
-			<Text.Title style={ { marginBottom: 10 } }>{title}</Text.Title>
 			<div dangerouslySetInnerHTML={ { __html: content } } />
 			{renderForm()}
 		</Page>

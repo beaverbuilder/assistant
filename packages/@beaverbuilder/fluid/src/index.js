@@ -8,7 +8,6 @@ import * as Layout from './layout'
 import Page from './page'
 import Button from './button'
 import Menu from './menu'
-import * as List from './list'
 import Collection from './collection'
 
 export {
@@ -17,6 +16,5 @@ export {
 	Button,
 	Menu, // Planning to have menu subsumed by button
 	Layout,
-	List,
 	Collection,
 }

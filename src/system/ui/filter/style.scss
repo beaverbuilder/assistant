@@ -1,23 +1,47 @@
-.fluid {
+.fl.uid {
     .fl-asst-filter {
-        padding: var(--fluid-med-space);
+
+		--border-color: var(--fluid-opaque-10);
+		background: var(--fluid-opaque-13);
         flex: 0 0 auto;
         margin: 0;
+		display: grid;
+		grid-template-columns: repeat( auto-fit, minmax( 100px, 1fr ) );
+		grid-auto-rows: 46px;
+		grid-gap: 1px;
+		border-color: var(--border-color);
+		border-style: solid;
+		border-width: 1px 0;
 
         li {
             display: flex;
             flex-direction: row;
+			box-shadow: 0 0 0 1px var(--border-color);
 
             .fl-asst-filter-button {
                 flex: 1 1 auto;
                 padding: 0;
+				border-radius: 0;
+				transition-property: none;
 
                 &:hover {
                     transform: scale(1); // override button hover effect
                 }
+				&:focus {
+					color: var(--fluid-blue);
+					box-shadow: inset 0px 0px 0px 1px var(--fluid-accent),
+								inset 0px 0px 0px 3px var(--fluid-background);
+
+					.fl-asst-filter-button-content {
+						.fl-asst-filter-button-title,
+						.fl-asst-filter-button-subtitle {
+							color: var(--fluid-blue);
+						}
+					}
+				}
 
                 & > span {
-                    padding: 10px;
+                    padding: 8px 12px;
                     flex: 1 1 auto;
                 }
 
@@ -31,11 +55,13 @@
                     text-align: left;
 
                     .fl-asst-filter-button-title {
-                        margin-bottom: var(--fluid-sm-space);
+						color: var(--fluid-opaque-6);
+                        margin-bottom: 3px;
                     }
                     .fl-asst-filter-button-subtitle {
+						color: var(--fluid-color);
                         font-size: 13px;
-                        font-weight: 600;
+                        font-weight: normal;
                         line-height: 1.3;
                         white-space: nowrap;
                         overflow: hidden;
@@ -117,6 +143,18 @@
         }
     }
     .fluid-color-scheme-dark {
+		.fl-asst-filter {
+			background: var(--fluid-opaque-1);
+			--border-color: var(--fluid-opaque-3);
+
+			.fl-asst-filter-button {
+				.fl-asst-filter-button-content {
+					.fl-asst-filter-button-title {
+						color: var(--fluid-opaque-7);
+					}
+				}
+			}
+		}
         .fl-asst-filter-menu {
             background: var(--fluid-opaque-3);
         }

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
-import { Page, Form, Layout, Notice } from 'ui'
+import { Page, Form, Layout, Notice, Button } from 'ui'
 import { getSrcSet } from 'utils/image'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
@@ -107,7 +107,6 @@ export const Attachment = () => {
 					id: 'post_content',
 					rows: 4,
 				},
-
 			},
 		},
 		info: {
@@ -188,15 +187,6 @@ export const Attachment = () => {
 		},
 	}
 
-	const Footer = () => {
-		return (
-			<Layout.PublishBar
-				onPublish={ submitForm }
-				onDiscard={ resetForm }
-			/>
-		)
-	}
-
 	const defaults = {
 		...item,
 		type: type + '/' + subtype,
@@ -204,56 +194,66 @@ export const Attachment = () => {
 
 	const {
 		hasChanges,
-		resetForm,
 		submitForm,
 		renderForm,
+		values,
 	} = Form.useForm( {
 		sections,
 		onSubmit,
 		defaults,
 	} )
 
-	const Hero = props => {
-		const { width, sizes, height, alt, type, url, mime } = item
-		const srcSet = getSrcSet( sizes )
-
-		// Temp - Handle non-image heroes.
-		if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! item.thumbnail ) {
-			return null
-		}
-
-		let mediaContent = ''
-
-		if ( 'audio' == type || 'video' == type ) {
-			mediaContent = <video width="100%" controls><source src={ url } type={ mime } /></video>
-		} else {
-			mediaContent = <img src={ item.thumbnail } srcSet={ srcSet } height={ height } width={ width } alt={ alt } loading="lazy" />
-		}
-
+	const ToolbarActions = () => {
 		return (
-			<Layout.AspectBox
-				className="fl-asst-hero-image"
-				height={ height }
-				width={ width }
-				{ ...props }
-			>
-				{mediaContent}
-			</Layout.AspectBox>
+			<>
+				<Button
+					disabled={ ! hasChanges }
+					isSelected={ hasChanges }
+					onClick={ submitForm }
+				>
+					{ hasChanges ? __( 'Update' ) : __( 'Saved' ) }
+				</Button>
+			</>
 		)
 	}
 
 	return (
-		<Page
+		<Page.Detail
 			id="fl-asst-attachment-detail"
-			title={ __( 'Attachment' ) }
-			footer={ hasChanges && <Footer /> }
+			toolbarTitle={ __( 'Edit Attachment' ) }
+			toolbarActions={ <ToolbarActions /> }
+			title={ values.title }
+			thumbnail={ <Hero { ...item } /> }
 		>
-			<div style= { { margin: '-20px -20px 20px' } } >
-				<Hero />
-			</div>
-			<Layout.Headline>{title}</Layout.Headline>
-			{renderForm()}
-		</Page>
+			{ renderForm() }
+		</Page.Detail>
 
 	)
 }
+
+const Hero = memo( ( { width, sizes, height, alt, type, url, mime, thumbnail } ) => {
+	const srcSet = getSrcSet( sizes )
+
+	// Temp - Handle non-image heroes.
+	if ( ( 'image' !== type && 'audio' !== type && 'video' !== type ) && ! thumbnail ) {
+		return null
+	}
+
+	let mediaContent = ''
+
+	if ( 'audio' == type || 'video' == type ) {
+		mediaContent = <video width="100%" controls><source src={ url } type={ mime } /></video>
+	} else {
+		mediaContent = <img src={ thumbnail } srcSet={ srcSet } height={ height } width={ width } alt={ alt } loading="lazy" />
+	}
+
+	return (
+		<Layout.AspectBox
+			className="fl-asst-hero-image"
+			height={ height }
+			width={ width }
+		>
+			{mediaContent}
+		</Layout.AspectBox>
+	)
+} )

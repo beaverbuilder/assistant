@@ -38,6 +38,8 @@ const AppList = memo( ( {
 
 	const setOrder = ( items, persist = false ) => {
 
+		let keys = items
+
 		// If we're limiting the items,
 		// we need to put back the unlisted items before saving
 		if ( limit && items.length !== appOrder.length ) {
@@ -45,10 +47,11 @@ const AppList = memo( ( {
 				return ( i + 1 ) > limit
 			} )
 			const all = [ ...items, ...remaining ]
-			setAppOrder( all, persist )
-		} else {
-			setAppOrder( items, persist )
+			keys = all
 		}
+
+		// De-dupe the values
+		setAppOrder( [ ...new Set( keys ) ], persist )
 	}
 	const moveItem = ( from, to ) => setOrder( move( filtered, from, to ), true )
 

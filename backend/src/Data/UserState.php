@@ -22,10 +22,9 @@ class UserState {
 		'appOrder'          => [],
 		'window'            => [
 			'origin'           => [ 1, 0 ],
-			'size'             => 'normal',
+			'width'            => 420,
 			'isHidden'         => false,
 			'hiddenAppearance' => '',
-			'overlayToolbar'   => false,
 		],
 		'appearance'        => [
 			'brightness' => 'light',
@@ -37,6 +36,7 @@ class UserState {
 		'searchHistory'     => [],
 		'shouldShowInAdmin' => true,
 		'isAppHidden'       => true,
+		'shortcuts'         => [],
 	];
 
 	/**

@@ -5,9 +5,9 @@ import Error from './error'
 import App from './app'
 
 export {
-    Root,
-    Error,
-    App,
-    createStoreRegistry,
-    createAppState
+	Root,
+	Error,
+	App,
+	createStoreRegistry,
+	createAppState
 }

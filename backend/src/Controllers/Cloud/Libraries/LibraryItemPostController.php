@@ -74,6 +74,29 @@ class LibraryItemPostController extends ControllerAbstract {
 		);
 
 		$this->route(
+			'/posts/(?P<id>\d+)/sync_to_library/(?P<item_id>\d+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'sync_to_library' ],
+					'args'                => [
+						'id'           => [
+							'required' => true,
+							'type'     => 'number',
+						],
+						'item_id'      => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_others_posts' );
+					},
+				],
+			]
+		);
+
+		$this->route(
 			'/posts/import_from_library/(?P<item_id>\d+)',
 			[
 				[
@@ -174,6 +197,41 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
+	 * Gets the data for saving to a library or updating a library item.
+	 *
+	 * @param object $request
+	 * @param object $post
+	 * @return array
+	 */
+	public function get_save_data( $request, $post ) {
+		return [
+			'name'       => $post->post_title,
+			'type'       => 'post',
+			'data'       => [
+				'post'  => [
+					'comment_status' => $post->comment_status,
+					'menu_order'     => $post->menu_order,
+					'ping_status'    => $post->ping_status,
+					'post_content'   => $post->post_content,
+					'post_excerpt'   => $post->post_excerpt,
+					'post_mime_type' => $post->post_mime_type,
+					'post_name'      => $post->post_name,
+					'post_title'     => $post->post_title,
+					'post_type'      => $post->post_type,
+				],
+				'meta'  => get_post_meta( $post->ID ),
+				'terms' => $this->get_post_terms( $post ),
+
+			],
+			'media'      => [
+				'thumb'       => get_attached_file( get_post_thumbnail_id( $post ) ),
+				'attachments' => $this->get_post_image_paths( $post ),
+			],
+			'screenshot' => $this->get_post_screenshot( $request, $post ),
+		];
+	}
+
+	/**
 	 * Saves a post to a cloud library.
 	 *
 	 * @param object $request
@@ -187,31 +245,25 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		return $client->libraries->create_item(
 			$library_id,
-			[
-				'name'       => $post->post_title,
-				'type'       => 'post',
-				'data'       => [
-					'post'  => [
-						'comment_status' => $post->comment_status,
-						'menu_order'     => $post->menu_order,
-						'ping_status'    => $post->ping_status,
-						'post_content'   => $post->post_content,
-						'post_excerpt'   => $post->post_excerpt,
-						'post_mime_type' => $post->post_mime_type,
-						'post_name'      => $post->post_name,
-						'post_title'     => $post->post_title,
-						'post_type'      => $post->post_type,
-					],
-					'meta'  => get_post_meta( $id ),
-					'terms' => $this->get_post_terms( $post ),
+			$this->get_save_data( $request, $post )
+		);
+	}
 
-				],
-				'media'      => [
-					'thumb'       => get_attached_file( get_post_thumbnail_id( $post ) ),
-					'attachments' => $this->get_post_image_paths( $post ),
-				],
-				'screenshot' => $this->get_post_screenshot( $request, $post ),
-			]
+	/**
+	 * Replaces a library post with a post on this site.
+	 *
+	 * @param object $request
+	 * @return array
+	 */
+	public function sync_to_library( $request ) {
+		$id = $request->get_param( 'id' );
+		$item_id = $request->get_param( 'item_id' );
+		$post = get_post( $id );
+		$client = new CloudClient;
+
+		return $client->libraries->update_item(
+			$item_id,
+			$this->get_save_data( $request, $post )
 		);
 	}
 
@@ -265,7 +317,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
-	 * Syncs a library post with a post on the site.
+	 * Replaces a post on this site with a post from a library.
 	 *
 	 * @param object $request
 	 * @return array

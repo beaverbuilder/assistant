@@ -1,12 +1,26 @@
-import isEqual from 'lodash.isequal'
+const isEqual = ( a, b ) => {
+
+	if ( typeof a !== typeof b ) {
+		return false
+	}
+	if ( 'string' === typeof a || 'number' === typeof a ) {
+		return a === b
+	} else {
+		return JSON.stringify( a ) === JSON.stringify( b )
+	}
+}
 
 const shouldUpdate = ( needsRender, a, b ) => {
 
 	// Handle bool
-	if ( 'boolean' === typeof needsRender ) return needsRender
+	if ( 'boolean' === typeof needsRender ) {
+		return needsRender
+	}
 
 	// Handle Function
-	if ( 'function' === typeof needsRender ) return needsRender( a, b )
+	if ( 'function' === typeof needsRender ) {
+		return needsRender( a, b )
+	}
 
 	// Handle String as property key
 	if ( 'string' === typeof needsRender ) {

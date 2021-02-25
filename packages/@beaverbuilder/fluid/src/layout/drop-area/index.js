@@ -1,6 +1,5 @@
 import React, { useState, createContext, useContext } from 'react'
 import c from 'classnames'
-import { __ } from '@wordpress/i18n'
 import { motion } from 'framer-motion'
 
 // Can we handle dragging?
@@ -46,7 +45,7 @@ const DropArea = ( {
 	children,
 	className,
 	onDrop = () => {},
-	hoverMessage = <h1>{__( 'You\'re Hovering...' )}</h1>,
+	hoverMessage = <h1>{ 'You\'re Hovering...' }</h1>,
 	...rest
 } ) => {
 	const [ isHovering, setIsHovering ] = useState( false )

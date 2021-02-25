@@ -7,4 +7,11 @@
         white-space: nowrap;
         padding: var(--fluid-med-space) 0;
     }
+	.fluid-frame-size-medium {
+		.fl-asst-library-content {
+			.fluid-collection-appearance-grid {
+				grid-template-columns: repeat( 3 , 1fr );
+			}
+		}
+	}
 }

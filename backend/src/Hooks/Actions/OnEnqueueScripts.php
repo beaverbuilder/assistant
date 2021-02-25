@@ -77,6 +77,10 @@ class OnEnqueueScripts {
 			$user_state['window']['hiddenAppearance'] = 'admin_bar';
 		}
 
+		if ( ! isset( $user_state['window']['width'] ) || null === $user_state['window']['width'] ) {
+			$user_state['window']['width'] = 420;
+		}
+
 		return [
 			'shouldReduceMotion' => false, /* Disabled */
 			'shouldShowLabels'   => false, /* Disabled */

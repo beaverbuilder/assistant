@@ -1,0 +1,12 @@
+.fluid {
+	.fl-asst-frame-resize-handle {
+		opacity: 0;
+		background: var(--fluid-blue);
+		z-index: 9999999;
+		cursor: col-resize;
+
+		&:active, &:hover {
+			opacity: 1;
+		}
+	}
+}

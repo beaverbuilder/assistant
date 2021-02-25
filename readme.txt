@@ -72,6 +72,10 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 0.6.1.alpha.2 =
+* The panel can now resize to give you more space!
+* Fix issue where screen goes blank after disabling an app
+
 = 0.6.0 ( 2021-01-28 ) =
 * Enhance media uploading UI
 * Improve drag performance of the UI frame.

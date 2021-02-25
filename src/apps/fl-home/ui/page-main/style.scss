@@ -1,8 +1,9 @@
 .fluid {
 
     #cards {
-        --fl-asst-card-background: var(--fluid-transparent-12);
+        --fl-asst-card-background: var(--fluid-transparent-14);
         background: var(--fl-asst-card-background);
+		flex: 1 1 auto;
 
         .fluid-page-header {
             padding: 0;

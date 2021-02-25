@@ -14,6 +14,7 @@ import Media from './media'
 import Env from './env'
 import Notice from './notices'
 import Filter from './filter'
+import Frame from './frame'
 import Widget from './widget'
 
 // Export for use inside system bundle - import from 'ui'
@@ -25,6 +26,7 @@ export {
 	Env,
 	Filter,
 	Form,
+	Frame,
 	Icon,
 	Layout,
 	List,
