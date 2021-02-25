@@ -17,14 +17,14 @@ export default () => {
 
 	const importCurrentItem = () => {
 		const item = items[ currentItem ]
-		const wpRest = getWpRest()
+		const api = getWpRest().libraries()
 
-		if ( 'color' === item.type ) {
+		if ( 'color' === item.type || 'theme_settings' === item.type ) {
 			importNextItem()
 		} else if ( 'post' === item.type ) {
-			wpRest.posts().importFromLibrary( item.id ).finally( importNextItem )
+			api.importPost( item.id ).finally( importNextItem )
 		} else {
-			wpRest.libraries().importItem( item ).finally( importNextItem )
+			api.importItem( item ).finally( importNextItem )
 		}
 	}
 

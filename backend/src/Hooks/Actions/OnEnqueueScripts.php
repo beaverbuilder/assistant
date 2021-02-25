@@ -8,6 +8,7 @@ use FL\Assistant\Data\Site;
 use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
 use FL\Assistant\Data\Mockup;
+use FL\Assistant\Services\ThemeService;
 use FLBuilderModel;
 
 /**
@@ -105,6 +106,8 @@ class OnEnqueueScripts {
 	public function generate_frontend_config() {
 
 		$current_user = $this->users->current( $this->user_transform );
+		$theme_service = new ThemeService();
+		$theme = $theme_service->get_current_theme_data();
 
 		return [
 			'adminURLs'         => $this->site->get_admin_urls(),
@@ -116,6 +119,7 @@ class OnEnqueueScripts {
 			'currentUser'       => $current_user,
 			'defaultAppName'    => 'fl-home',
 			'emptyTrashDays'    => EMPTY_TRASH_DAYS,
+			'homeUrl' 			=> home_url(),
 			'isShowingAdminBar' => is_admin_bar_showing(),
 			'isAdmin'           => is_admin(),
 			'isSiteAdmin'       => is_super_admin(),
@@ -137,6 +141,8 @@ class OnEnqueueScripts {
 				'pusherCluster' => FL_ASSISTANT_PUSHER_CLUSTER,
 			],
 			'embedInBB'			=> FL_ASST_SUPPORTS_BB,
+			'themeSlug'			=> $theme['slug'],
+			'themeParentSlug'	=> $theme['parent'] ? $theme['parent']['slug'] : null,
 		];
 	}
 

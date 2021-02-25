@@ -3,13 +3,14 @@ import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Layout, Page } from 'assistant/ui'
 import ImportLibrary from './import'
+import './style.scss'
 
 export default () => {
 	const { library } = Libraries.LibraryContext.use()
 
 	return (
 		<>
-			<Layout.Box padY={ false }>
+			<Layout.Box padY={ false } className='fl-asst-library-settings'>
 				<Page.Section label={ __( 'Library Settings' ) } padY={ false }>
 					<Libraries.LibrarySettingsForm />
 				</Page.Section>

@@ -14,6 +14,7 @@ class MediaLibraryService {
 		global $wpdb;
 
 		// Check if a file with this name and sha1 hash exists.
+		$media = (object) $media;
 		$parts = explode( '.', $media->file_name );
 		$name = array_shift( $parts );
 
@@ -51,6 +52,7 @@ class MediaLibraryService {
 	 */
 	public function import_cloud_media( $media, $post_id = 0 ) {
 		$response = null;
+		$media = (object) $media;
 		$imported_id = $this->is_cloud_media_imported( $media );
 
 		if ( $imported_id ) {

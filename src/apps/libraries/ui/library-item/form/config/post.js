@@ -7,11 +7,11 @@ import { getWpRest } from 'assistant/utils/wordpress'
 
 export const getActions = ( item, actions ) => {
 	const [ previewing, setPreviewing ] = useState( false )
-	const postsApi = getWpRest().posts()
+	const api = getWpRest().libraries()
 
 	const previewPost = () => {
 		setPreviewing( true )
-		postsApi.previewLibraryPost( item.id ).then( response => {
+		api.previewPost( item.id ).then( response => {
 			setPreviewing( false )
 			window.open( response.data.url )
 		} )
@@ -38,11 +38,11 @@ const CreateButton = ( { item } ) => {
 	const history = useHistory()
 	const { createNotice } = Libraries.ItemContext.use()
 	const [ action, setAction ] = useState( null )
-	const postsApi = getWpRest().posts()
+	const api = getWpRest().libraries()
 
 	const createPost = ( action ) => {
 		setAction( action )
-		postsApi.importFromLibrary( item.id ).then( response => {
+		api.importPost( item.id ).then( response => {
 			if ( 'create' === action ) {
 				createPostComplete( response )
 			} else {
@@ -120,6 +120,7 @@ const ReplaceButton = ( { item } ) => {
 	const [ post, setPost ] = useState( null )
 	const [ posts, setPosts ] = useState( null )
 	const postsApi = getWpRest().posts()
+	const librariesApi = getWpRest().libraries()
 	const label = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.plural : `${ post_type }s`
 
 	useEffect( () => {
@@ -142,7 +143,7 @@ const ReplaceButton = ( { item } ) => {
 			return
 		}
 		setPost( id )
-		postsApi.syncToLibrary( id, item.id ).then( response => {
+		librariesApi.syncPost( id, item.id ).then( response => {
 			replacePostComplete( response )
 		} ).catch( () => {
 			replacePostComplete()

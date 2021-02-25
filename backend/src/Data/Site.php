@@ -202,6 +202,7 @@ class Site {
 
 		$urls['createPost'] = admin_url( 'post-new.php' );
 		$urls['editPost'] = admin_url( 'post.php?action=edit&post=' );
+		$urls['customizeBase'] = admin_url( 'customize.php' );
 
 		$url = static::get_customize_url();
 		if ( $url ) {
