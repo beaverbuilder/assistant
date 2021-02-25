@@ -3,9 +3,8 @@ import { __ } from '@wordpress/i18n'
 import { App, Page, List, Filter, Button, Icon, Media } from 'assistant/ui'
 import { useAppState, getAppActions } from 'assistant/data'
 import { defaultState } from './data'
-import { UploadCard, FileList } from './ui'
+import { UploadCard, FileList, Shell } from './ui'
 import AppIcon from './icon'
-import './style.scss'
 
 export default props => (
 	<App.Config
@@ -16,6 +15,16 @@ export default props => (
 		{ ...props }
 	/>
 )
+
+const Home = () => {
+
+	return (
+		<Shell>Test</Shell>
+	)
+}
+
+
+
 
 const Main = ( { baseURL } ) => {
 	const { listStyle, query, showUploader } = useAppState( 'fl-media' )
