@@ -1,0 +1,18 @@
+.fl-asst-media-app-list-scroller {
+	flex: 1 1 auto;
+	max-height: 100%;
+	min-height: 0;
+	overflow: auto;
+}
+ul.fl-asst-media-app-list {
+	display: grid;
+	grid-gap: var(--fluid-lg-space);
+	grid-template-columns: repeat( auto-fill, minmax( 150px, 1fr ) );
+	padding: var(--fluid-lg-space);
+	margin: 0;
+}
+.fluid-frame-size-medium {
+	ul.fl-asst-media-app-list {
+		padding: 30px;
+	}
+}

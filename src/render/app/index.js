@@ -32,7 +32,7 @@ const AppMain = () => {
 		} ),
 	}
 
-	const displayContent = ! isAppHidden && ( ! isHidden || isBeaverBuilder )
+	const displayContent = ! isAppHidden
 
 	return (
 		<div className={ classes } style={ { flexDirection: rowDirection } }>

@@ -1,31 +1,27 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
+//import { __ } from '@wordpress/i18n'
 import { App, Page, List, Filter, Button, Icon, Media } from 'assistant/ui'
-import { useAppState, getAppActions } from 'assistant/data'
-import { defaultState } from './data'
-import { UploadCard, FileList, Shell } from './ui'
-import AppIcon from './icon'
+//import { useAppState, getAppActions } from 'assistant/data'
+//import { defaultState } from './config'
+import { MediaAppProvider } from './data'
+import { Main, UploadCard, FileList } from './ui'
+//import AppIcon from './icon'
 
-export default props => (
-	<App.Config
-		pages={ {
-			default: Main,
-			'attachment/:id': Page.Attachment
-		} }
-		{ ...props }
-	/>
-)
-
-const Home = () => {
-
+export default props => {
 	return (
-		<Shell>Test</Shell>
+		<MediaAppProvider>
+			<App.Config
+				pages={ {
+					default: Main,
+					'attachment/:id': Page.Attachment
+				} }
+				{ ...props }
+			/>
+		</MediaAppProvider>
 	)
 }
 
-
-
-
+/*
 const Main = ( { baseURL } ) => {
 	const { listStyle, query, showUploader } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery, setShowUploader } = getAppActions( 'fl-media' )
@@ -162,3 +158,4 @@ const Main = ( { baseURL } ) => {
 		</Page>
 	)
 }
+*/
