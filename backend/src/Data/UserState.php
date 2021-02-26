@@ -50,6 +50,20 @@ class UserState {
 			true
 		);
 
+		// Filter Window
+		if ( isset( $saved['window'] ) ) {
+			$window = $saved['window'];
+
+			// Remove deprecated
+			if ( isset( $window['size'] ) ) {
+				unset( $window['size'] );
+			}
+			if ( isset( $window['overlayToolbar'] ) ) {
+				unset( $window['overlayToolbar'] );
+			}
+			$saved['window'] = $window;
+		}
+
 		return array_replace_recursive(
 			static::$default_state,
 			$saved ? (array) $saved : []
