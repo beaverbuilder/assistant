@@ -82,7 +82,6 @@ class OnEnqueueScripts {
 		}
 
 		return [
-			'shouldReduceMotion' => false, /* Disabled */
 			'shouldShowLabels'   => false, /* Disabled */
 			'appOrder'           => $user_state['appOrder'],
 			'appearance'         => $user_state['appearance'],
