@@ -16,6 +16,7 @@ const cache = setupCache( {
 	maxAge: 15 * 60 * 1000,
 	exclude: {
 		query: false,
+		paths: [ 'fl-assistant/v1/current-user/state' ]
 	},
 	key: ( req ) => {
 		let key = req.url + qs.stringify( req.params, { addQueryPrefix: true } )

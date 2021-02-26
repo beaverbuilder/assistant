@@ -71,18 +71,33 @@ class OnEnqueueScripts {
 
 		$user_state = UserState::get();
 
+
+		// Ensure shape of window property
+		$window = $user_state['window'];
+		if ( ! isset( $window['width'] ) || null === $window['width'] ) {
+			$window['width'] = 420;
+		}
+		if ( ! isset( $window['origin'] ) || ! is_array( $window['origin'] ) ) {
+			$window['origin'] = array( 1, 0 ); // Top/Right Position
+		}
+
+		// Remove Deprecated properties
+		if ( isset( $window['size'] ) ) {
+			unset( $window['size'] );
+		}
+		if ( isset( $window['overlayToolbar'] ) ) {
+			unset( $window['overlayToolbar'] );
+		}
+
 		// Always show in admin bar and hidden in wp-admin.
 		if ( is_admin() ) {
-			$user_state['window']['isHidden'] = true;
-			$user_state['window']['hiddenAppearance'] = 'admin_bar';
+			$window['isHidden'] = true;
+			$window['hiddenAppearance'] = 'admin_bar';
 		}
 
-		if ( ! isset( $user_state['window']['width'] ) || null === $user_state['window']['width'] ) {
-			$user_state['window']['width'] = 420;
-		}
+		$user_state['window'] = $window;
 
 		return [
-			'shouldReduceMotion' => false, /* Disabled */
 			'shouldShowLabels'   => false, /* Disabled */
 			'appOrder'           => $user_state['appOrder'],
 			'appearance'         => $user_state['appearance'],
