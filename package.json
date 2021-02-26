@@ -31,7 +31,7 @@
     "@popmotion/popcorn": "^0.4.4",
     "array-move": "^3.0.1",
     "axios": "0.21.1",
-    "axios-cache-adapter": "^2.5.0",
+    "axios-cache-adapter": "^2.7.0",
     "classnames": "^2.2.6",
     "cookie": "^0.4.1",
     "date-fns": "^2.14.0",
