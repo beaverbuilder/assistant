@@ -397,10 +397,13 @@ class LibraryItemPostController extends ControllerAbstract {
 		}
 
 		$taxonomies = get_taxonomies( '', 'objects' );
+		$taxonomy_terms = [];
 
 		foreach ( $terms as $term ) {
 			if ( ! taxonomy_exists( $term->taxonomy ) ) {
 				continue;
+			} elseif ( ! isset( $taxonomy_terms ) ) {
+				$taxonomy_terms[ $term->taxonomy ] = [];
 			}
 
 			$existing_term = term_exists( $term->slug, $term->taxonomy );
@@ -408,7 +411,6 @@ class LibraryItemPostController extends ControllerAbstract {
 
 			if ( is_array( $existing_term ) ) {
 				$term_id = $is_hierarchical ? $existing_term['term_taxonomy_id'] : $term->name;
-				wp_set_post_terms( $post_id, [ $term_id ], $term->taxonomy, true );
 			} else {
 				$new_term = wp_insert_term(
 					$term->name,
@@ -419,8 +421,14 @@ class LibraryItemPostController extends ControllerAbstract {
 					]
 				);
 				$term_id = $is_hierarchical ? $new_term['term_taxonomy_id'] : $term->name;
-				wp_set_post_terms( $post_id, [ $new_term['term_taxonomy_id'] ], $term->taxonomy, true );
 			}
+
+			$taxonomy_terms[ $term->taxonomy ] = $term_id;
+		}
+
+		foreach ( $taxonomy_terms as $taxonomy => $terms ) {
+			wp_delete_object_term_relationships( $post_id, $taxonomy );
+			wp_set_post_terms( $post_id, $terms, $taxonomy, true );
 		}
 	}
 
