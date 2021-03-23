@@ -1,0 +1,66 @@
+.fl-asst {
+	.fl-asst-sidebar-backdrop {
+		display: none;
+		background: hsl( var(--fluid-hue), 33%, 97% ); /* Slightly different from --fluid-opaque-13 */
+		padding-top: 80px; /* usually under toolbar */
+	}
+	.fluid-frame-size-medium {
+		.fl-asst-sidebar-backdrop {
+			display: block;
+			grid-column: 1 / 2;
+			grid-row: 1 / -1;
+		}
+	}
+	.fluid-color-scheme-dark {
+		.fl-asst-sidebar-backdrop {
+			background: hsl( var(--fluid-hue), 10%, 12% );
+		}
+	}
+
+
+	.fl-asst-sidebar-section {
+		padding: 15px;
+
+		.fl-asst-sidebar-section-title {
+			padding: 5px var(--fluid-med-space);
+		}
+		ul {
+			margin: 0;
+
+			li {
+				display: flex;
+				flex-direction: row;
+
+				.fluid-button {
+					flex: 1 1 auto;
+					justify-content: flex-start;
+					background: transparent;
+
+					.fluid-button-icon {
+						color: var(--fluid-accent);
+						margin-right: 10px;
+					}
+
+					&.is-selected,
+					&:focus.is-selected {
+						background: var(--fluid-opaque-11) !important;
+						color: var(--fluid-blue);
+					}
+				}
+			}
+		}
+	}
+	.fluid-color-scheme-dark {
+		.fl-asst-sidebar-section ul li {
+			.fluid-button {
+				color: var(--fluid-opaque-8);
+
+				&.is-selected,
+				&:focus.is-selected {
+					color: var(--fluid-opaque-14);
+					background: var(--fluid-opaque-3) !important;
+				}
+			}
+		}
+	}
+}

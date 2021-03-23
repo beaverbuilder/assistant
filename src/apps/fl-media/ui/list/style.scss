@@ -7,12 +7,37 @@
 ul.fl-asst-media-app-list {
 	display: grid;
 	grid-gap: var(--fluid-lg-space);
-	grid-template-columns: repeat( auto-fill, minmax( 150px, 1fr ) );
+	grid-template-columns: repeat( auto-fill, minmax( 135px, 1fr ) );
 	padding: var(--fluid-lg-space);
+	padding-top: 0;
 	margin: 0;
+
+	li {
+		a, button {
+			display: block;
+		}
+		.fluid-aspect-box {
+			border-radius: var(--fluid-radius);
+			z-index: 2;
+			filter: brightness( 98% );
+		}
+	}
+
+	.fl-asst-media-app-list-endcap {
+		grid-column: 1 / -1;
+		min-height: 80px;
+		padding: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 }
 .fluid-frame-size-medium {
 	ul.fl-asst-media-app-list {
+		max-width: 688px;
+		margin: 0 auto;
 		padding: 30px;
+		padding-top: 0;
+		grid-gap: 30px;
 	}
 }

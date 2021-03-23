@@ -7,6 +7,7 @@ export const defaultState = {
 		label: '0',
 	},
 	showUploader: true,
+	lastViewed: null,
 }
 
 export const cache = [ 'listStyle', 'query', 'showUploader' ]

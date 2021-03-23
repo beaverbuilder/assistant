@@ -18,6 +18,9 @@
 			z-index: 1;
 			padding: 20px;
 		}
+		.fl-asst-primary-toolbar-area {
+			padding-left: 25px; // Logo offset
+		}
 		.fl-asst-secondary-toolbar-area {
 			justify-content: flex-end;
 		}
@@ -34,22 +37,19 @@
 	.fl-asst-media-app-content {
 		grid-row: 2 / -1;
 		grid-column: 1 / -1;
+		display: flex;
+		flex-direction: column;
 
 		/* Scroller stuff */
 		min-height: 0;
 		max-height: 100%;
 		overflow: auto;
 	}
-
-	.fl-asst-media-app-sidebar-backdrop {
-		display: none;
-		background: hsl( var(--fluid-hue), 33%, 97% ); /* Slightly different from --fluid-opaque-13 */
-	}
 }
 
 .fluid-frame-size-medium {
 	.fl-asst-media-app-shell {
-		grid-template-columns: minmax( 120px, 200px ) 1fr;
+		grid-template-columns: minmax( 120px, 220px ) 1fr;
 
 		.fl-asst-toolbar {
 			display: contents; /* promote children to grid items */
@@ -67,18 +67,6 @@
 		.fl-asst-media-app-content {
 			grid-row: 2 / -1;
 			grid-column: 2 / -1;
-		}
-		.fl-asst-media-app-sidebar-backdrop {
-			display: block;
-			grid-column: 1 / 2;
-			grid-row: 1 / -1;
-		}
-	}
-}
-.fluid-color-scheme-dark {
-	.fl-asst-media-app-shell {
-		.fl-asst-media-app-sidebar-backdrop {
-			background: hsl( var(--fluid-hue), 10%, 12% );
 		}
 	}
 }

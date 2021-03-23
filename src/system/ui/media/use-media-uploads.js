@@ -10,15 +10,15 @@ const useMediaUploads = () => {
 	const { current, items } = useStore( key )
 	const { setCurrent, setItems } = getDispatch( key )
 
-	const uploadFiles = files => {
+	const uploadFiles = ( files, callback = () => {} ) => {
 		setItems( [ ...items, ...files ] )
 
 		if ( ! current ) {
-			uploadNext()
+			uploadNext( callback )
 		}
 	}
 
-	const uploadNext = () => {
+	const uploadNext = callback => {
 		const { current, items } = getStore( key ).getState()
 		const file = items[current]
 		const data = new FormData()
@@ -26,6 +26,7 @@ const useMediaUploads = () => {
 		if ( ! file ) {
 			setItems( [] )
 			setCurrent( 0 )
+			callback()
 			return
 		}
 
@@ -38,7 +39,7 @@ const useMediaUploads = () => {
 			} )
 			.finally( () => {
 				setCurrent( current + 1 )
-				uploadNext()
+				uploadNext( callback )
 			} )
 	}
 

@@ -1,6 +1,6 @@
 {
     "name": "@beaverbuilder/app-core",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "Utilities for managing an app registry.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",

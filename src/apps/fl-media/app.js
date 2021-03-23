@@ -1,23 +1,30 @@
 import React from 'react'
-//import { __ } from '@wordpress/i18n'
-import { App, Page, List, Filter, Button, Icon, Media } from 'assistant/ui'
-//import { useAppState, getAppActions } from 'assistant/data'
-//import { defaultState } from './config'
+import { AnimateSharedLayout } from 'framer-motion'
+import { App, Page } from 'assistant/ui'
+import { Shell, MediaList } from './ui'
 import { MediaAppProvider } from './data'
-import { Main, UploadCard, FileList } from './ui'
-//import AppIcon from './icon'
 
 export default props => {
 	return (
-		<MediaAppProvider>
-			<App.Config
-				pages={ {
-					default: Main,
-					'attachment/:id': Page.Attachment
-				} }
-				{ ...props }
-			/>
+		<MediaAppProvider { ...props }>
+			<AnimateSharedLayout>
+				<App.Config
+					pages={ {
+						default: Main,
+						'attachment/:id': Page.Attachment
+					} }
+					{ ...props }
+				/>
+			</AnimateSharedLayout>
 		</MediaAppProvider>
+	)
+}
+
+const Main = () => {
+	return (
+		<Shell>
+			<MediaList />
+		</Shell>
 	)
 }
 

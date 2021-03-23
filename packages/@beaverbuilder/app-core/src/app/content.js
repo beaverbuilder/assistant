@@ -51,7 +51,7 @@ const Content = ( {
 }
 
 const CurrentApp = ( {
-	loading: LoadingScreen,
+	loading: defaultLoadingScreen,
 	error: ErrorScreen = DefaultErrorScreen,
 	apps,
 } ) => {
@@ -72,7 +72,7 @@ const CurrentApp = ( {
 		return null
 	}
 
-	const { label = '', root } = apps[ handle ]
+	const { label = '', root, loading: appLoadingScreen } = apps[ handle ]
 	const isAppRoot = 2 >= location.pathname.split( '/' ).length
 
 	const context = {
@@ -82,6 +82,8 @@ const CurrentApp = ( {
 		label,
 		isAppRoot,
 	}
+
+	const LoadingScreen = appLoadingScreen ? appLoadingScreen : defaultLoadingScreen
 
 	return (
 		<AppContext.Provider value={ context }>

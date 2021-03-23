@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { Page, Form, Layout, Notice, Button } from 'ui'
 import { getSrcSet } from 'utils/image'
 import { getWpRest } from 'utils/wordpress'
@@ -13,7 +14,7 @@ export const Attachment = () => {
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 	const { createNotice } = Notice.useNotices()
-	const { id, title, type, subtype } = item
+	const { id, type, subtype } = item
 
 	const onSubmit = ( { changed, ids } ) => {
 		const data = {
@@ -231,7 +232,7 @@ export const Attachment = () => {
 	)
 }
 
-const Hero = memo( ( { width, sizes, height, alt, type, url, mime, thumbnail } ) => {
+const Hero = memo( ( { width, sizes, height, alt, type, url, mime, thumbnail, id } ) => {
 	const srcSet = getSrcSet( sizes )
 
 	// Temp - Handle non-image heroes.
@@ -249,9 +250,12 @@ const Hero = memo( ( { width, sizes, height, alt, type, url, mime, thumbnail } )
 
 	return (
 		<Layout.AspectBox
+			tag={ motion.div }
+			layoutId={ `thumbnail-${id}` }
 			className="fl-asst-hero-image"
 			height={ height }
 			width={ width }
+			style={ { zIndex: 9 } }
 		>
 			{mediaContent}
 		</Layout.AspectBox>

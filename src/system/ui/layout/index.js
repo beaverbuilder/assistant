@@ -3,6 +3,7 @@ import Attention from './attention'
 import PublishBar from './publish-bar'
 import Table from './table'
 import { Tabs, TabsToolbar, CurrentTab } from './nav'
+import { SidebarBackdrop, SidebarSection } from './sidebar'
 
 const Layout = {
 	...FLUID_Layout,
@@ -11,7 +12,9 @@ const Layout = {
 	Table,
 	Tabs,
 	TabsToolbar,
-	CurrentTab
+	CurrentTab,
+	SidebarBackdrop,
+	SidebarSection,
 }
 
 export default Layout
