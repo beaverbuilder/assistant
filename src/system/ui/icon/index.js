@@ -6,6 +6,8 @@ import DragHandle from './drag-handle'
 import Safely from './safely'
 import Video from './video'
 import PencilOutline from './pencil-outline'
+import LockClosed from './lock-closed'
+import LockOpen from './lock-open'
 
 const Icon = {
 	...FLUID_Icon,
@@ -16,6 +18,8 @@ const Icon = {
 	Safely, // Render a user-generated icon safely with Suspense and Error.Boundary
 	Video,
 	PencilOutline,
+	LockClosed,
+	LockOpen,
 }
 
 export default Icon
