@@ -64,8 +64,6 @@ export const useAttachments = ( _query = {} ) => {
 			return
 		}
 
-		console.log( 'load items', offset, replace )
-
 		setIsFetching( true )
 
 		return getPagedContent( 'attachments', query, offset, {

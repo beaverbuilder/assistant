@@ -41,7 +41,7 @@ const AppMain = () => {
 					<motion.div
 						key="main-content"
 						variants={ variants }
-						initial="collapsed"
+						initial="expanded"
 						animate="expanded"
 						exit="collapsed"
 						transition={ { type: 'tween', duration: 0 } }

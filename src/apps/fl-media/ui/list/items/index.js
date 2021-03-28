@@ -39,7 +39,7 @@ export const AttachmentItem = props => {
 
 	return (
 		<Link to={ to } onClick={ onClick }>
-			<Layout.AspectBox tag={ motion.div } layoutId={ `thumbnail-${id}` }>
+			<motion.div className="fl-asst-media-item-box" layoutId={ `thumbnail-${id}` } >
 				{ ( 'image' === type || 'pdf' === subtype ) && thumbnail && (
 					<img
 						src={ thumbnail }
@@ -47,14 +47,12 @@ export const AttachmentItem = props => {
 						alt={ alt }
 						title={ title }
 						loading="lazy"
-						height={ 215 }
-						width={ 215 }
 					/>
 				) }
 				{ 'video' === type && <Image.Video /> }
 				{ 'audio' === type && <Image.Audio /> }
 				{ isDocument && <Image.Doc /> }
-			</Layout.AspectBox>
+			</motion.div>
 		</Link>
 	)
 }

@@ -14,8 +14,6 @@ export const MediaAppProvider = ( { children } ) => {
 	const attachments = useAttachments( query )
 	const { files, uploadFiles: _uploadFiles, current } = Media.useMediaUploads()
 
-	console.log( 'use media app' )
-
 	const uploadFiles = files => {
 		setQuery( { ...query } )
 		_uploadFiles( files, () => {

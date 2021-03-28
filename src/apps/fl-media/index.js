@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from 'assistant/utils/url'
 import { Page } from 'assistant/ui'
 import Icon from './icon'
-import LoadingScreen from './loading'
+import LoadingScreen from './loading-screen'
 import { defaultState, cache } from './config'
 
 const App = lazy( () => import(

@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Text, Media } from 'assistant/ui'
+import { Text } from 'assistant/ui'
 import { useMediaApp } from '../../data'
 import { AttachmentItem, PlaceholderItem } from './items'
 import UploadCard from '../upload-card'
@@ -79,7 +79,7 @@ const MediaList = () => {
 
 				{ items.map( item => {
 					return (
-						<li key={ item.id } id={ `attachment-${item.id}` }>
+						<li key={ item.id } id={ `attachment-${item.id}` } tabIndex="0">
 							<AttachmentItem
 								onClick={ () => setLastViewed( item.id ) }
 								{ ...item }
