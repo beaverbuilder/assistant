@@ -6,6 +6,7 @@ import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 
 export const getActions = ( item, actions ) => {
+	const { library } = Libraries.ItemContext.use()
 	const [ previewing, setPreviewing ] = useState( false )
 	const api = getWpRest().libraries()
 
@@ -17,18 +18,19 @@ export const getActions = ( item, actions ) => {
 		} )
 	}
 
-	actions.push( {
-		component: <CreateButton item={ item } />
-	} )
-
-	actions.push( {
-		component: <ReplaceButton item={ item } />
-	} )
-
-	actions.push( {
+	actions.unshift( {
 		label: __( 'Preview' ),
 		onClick: previewPost,
 		disabled: previewing,
+	} )
+
+	actions.unshift( {
+		component: <ReplaceButton item={ item } />,
+		shouldRender: library.permissions.edit_items
+	} )
+
+	actions.unshift( {
+		component: <CreateButton item={ item } />
 	} )
 
 	return actions

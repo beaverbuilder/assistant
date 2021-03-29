@@ -61,13 +61,13 @@ export const getActions = ( item, actions ) => {
 		}
 	}
 
-	actions.push( {
+	actions.unshift( {
 		label: __( 'Apply to Theme' ),
 		onClick: importThemeSettings,
 		disabled: importing,
 	} )
 
-	actions.push( {
+	actions.unshift( {
 		label: __( 'Preview' ),
 		onClick: previewThemeSettings,
 	} )
