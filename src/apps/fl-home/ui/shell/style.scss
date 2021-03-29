@@ -80,6 +80,18 @@
 		.fluid-page.fl-asst-home-shell {
 			.fl-asst-home-shell-sidebar {
 				background: hsl( var(--fluid-hue), 10%, 12% );
+
+				.fl-asst-home-shell-sidebar-section {
+					ul {
+						li {
+							a, button {
+								&.is-selected {
+									background: var(--fluid-opaque-3);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}

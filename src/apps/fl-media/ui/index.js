@@ -1,4 +1,6 @@
 import UploadCard from './upload-card'
-import FileList from './file-list'
+import MediaList from './list'
+import Shell from './shell'
+import './style.scss'
 
-export { UploadCard, FileList }
+export { UploadCard, Shell, MediaList }

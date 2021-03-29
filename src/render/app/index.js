@@ -9,11 +9,10 @@ import './style.scss'
 
 const AppMain = () => {
 	const { apps, window: windowFrame, isAppHidden, homeKey } = useSystemState( [ 'apps', 'window', 'isAppHidden', 'homeKey' ] )
-	const { origin, isHidden } = windowFrame
+	const { origin } = windowFrame
 	const sideName = origin[0] ? 'right' : 'left'
-	const { isMobile, application } = Env.use()
+	const { isMobile } = Env.use()
 	const rowDirection = 'right' === sideName ? 'row-reverse' : 'row'
-	const isBeaverBuilder = 'beaver-builder' === application
 
 	const classes = classname( {
 		'fl-asst-main': true,
@@ -32,17 +31,17 @@ const AppMain = () => {
 		} ),
 	}
 
-	const displayContent = ! isAppHidden && ( ! isHidden || isBeaverBuilder )
+	const displayContent = ! isAppHidden
 
 	return (
 		<div className={ classes } style={ { flexDirection: rowDirection } }>
 			<Sidebar />
-			<AnimatePresence initial={ false }>
+			<>
 				{ displayContent && (
 					<motion.div
 						key="main-content"
 						variants={ variants }
-						initial="collapsed"
+						initial="expanded"
 						animate="expanded"
 						exit="collapsed"
 						transition={ { type: 'tween', duration: 0 } }
@@ -56,7 +55,7 @@ const AppMain = () => {
 						/>
 					</motion.div>
 				) }
-			</AnimatePresence>
+			</>
 		</div>
 	)
 }

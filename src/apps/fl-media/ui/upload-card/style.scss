@@ -1,9 +1,4 @@
 .fl-asst {
-	.fl-asst-upload-card-wrapper {
-		max-width: 550px;
-		margin: 0 auto;
-		padding-top: 20px;
-	}
 	.fl-asst-upload-card {
 
 		--space-around: clamp( 10px, 4%, 40px );
@@ -13,7 +8,6 @@
 		background: var(--fluid-transparent-12);
 		padding: 30px 20px 20px;
 		border-radius: var(--fluid-radius);
-		margin: 0 var(--space-around);
 
 		.close-action {
 			position: absolute;

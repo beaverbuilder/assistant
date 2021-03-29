@@ -2,7 +2,7 @@ import React from 'react'
 import c from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Button, Icon, Text, Frame } from 'ui'
+import { Button, Icon, Text, Frame, Layout } from 'ui'
 import './style.scss'
 
 const DetailPage = ( {
@@ -22,7 +22,7 @@ const DetailPage = ( {
 	const classes = c( 'fluid-page', 'fluid-detail-page', className )
 	return (
 		<Tag className={ classes } { ...rest }>
-			<div className="fluid-detail-sidebar-backdrop" />
+			<Layout.SidebarBackdrop />
 			<div className="fluid-detail-page-toolbar">
 				<div className="fluid-detail-page-toolbar-area">
 					<Button
