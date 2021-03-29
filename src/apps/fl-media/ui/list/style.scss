@@ -35,6 +35,7 @@ ul.fl-asst-media-app-list {
 			width: 100%;
 			height: 100%;
 			object-fit: contain;
+			border-radius: 5px;
 		}
 
 		.fl-asst-media-item-box {
@@ -50,6 +51,15 @@ ul.fl-asst-media-app-list {
 
 			z-index: 2;
 			filter: brightness( 98% );
+		}
+	}
+
+	.fl-asst-media-upload-card-area {
+		grid-column: 1 / -1;
+		align-items: stretch;
+
+		&:before {
+			display: none;
 		}
 	}
 

@@ -56,7 +56,7 @@ const MediaList = () => {
 			<ul className="fl-asst-media-app-list">
 
 				{ showUploader && (
-					<li style={ { gridColumn: '1 / -1' } }>
+					<li className="fl-asst-media-upload-card-area">
 						<UploadCard
 							onInput={ uploadFiles }
 							onDismiss={ () => setShowUploader( false ) }
