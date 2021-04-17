@@ -74,6 +74,9 @@ const FloatingButton = ( { ...rest } ) => {
 						animation.start( { x: 0, y: 0 } )
 					}
 				} }
+				aria-label="Assistant"
+				aria-expanded={ false }
+				aria-disabled={ false }
 				{ ...rest }
 			>
 				<Icon.Pencil size={ 36 } />
