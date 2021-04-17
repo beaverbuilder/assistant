@@ -1,5 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { App } from '@beaverbuilder/app-core'
 import { Page, Env } from 'assistant/ui'
@@ -14,11 +15,14 @@ const AppMain = () => {
 	const { isMobile, application } = Env.use()
 	const rowDirection = 'right' === sideName ? 'row-reverse' : 'row'
 	const isBeaverBuilder = 'beaver-builder' === application
+	const location = useLocation()
+	const appHandle = location.pathname.split( '/' )[1]
 
 	const classes = classname( {
 		'fl-asst-main': true,
 		'fl-asst-main-sidebar-only': isAppHidden,
 		'fl-asst-is-mobile': isMobile,
+		[ `fl-asst-app-${appHandle}` ]: appHandle
 	} )
 
 	const variants = {
