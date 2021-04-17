@@ -262,12 +262,12 @@ class OnEnqueueScripts {
 	 */
 	public function enqueue() {
 
-		self::register_vendors();
-
 		$url = FL_ASSISTANT_URL;
 		$ver = FL_ASSISTANT_VERSION;
 
 		if ( $this->should_enqueue() ) {
+
+			self::register_vendors();
 
 			$config = $this->generate_frontend_config();
 			$state  = $this->generate_initial_state();
@@ -298,13 +298,13 @@ class OnEnqueueScripts {
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_CONFIG', $config );
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_INITIAL_STATE', $state );
 
-			// Apps - loaded in header
-			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/apps.js', [ 'fl-assistant', 'html2canvas' ], $ver, false );
+			// Apps - loaded in footer
+			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/apps.js', [ 'fl-assistant', 'html2canvas' ], $ver, true );
 			wp_enqueue_style( 'fl-assistant-apps', $url . 'build/apps.css', [ 'fl-assistant' ], $ver, null );
 
 			// Render - loaded in footer
-			wp_enqueue_style( 'fl-assistant-render', $url . 'build/render.css', [ 'fl-assistant' ], $ver, null );
 			wp_enqueue_script( 'fl-assistant-render', $url . 'build/render.js', [ 'fl-assistant' ], $ver, true );
+			wp_enqueue_style( 'fl-assistant-render', $url . 'build/render.css', [ 'fl-assistant' ], $ver, null );
 
 			// WordPress Media Uploader
 			wp_enqueue_media();
