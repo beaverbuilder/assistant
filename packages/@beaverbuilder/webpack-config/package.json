@@ -4,7 +4,6 @@
     "description": "A webpack plugin to add the common setup to each product.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
-    "main": "index.js",
     "module": "index.js",
     "repository": {
         "type": "git",

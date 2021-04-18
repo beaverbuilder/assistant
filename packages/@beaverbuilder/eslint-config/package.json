@@ -4,7 +4,7 @@
     "description": "Shared ESLint config for all Beaver Builder projects.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
-    "main": "index.js",
+    "module": "index.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/beaverbuilder/assistant.git",

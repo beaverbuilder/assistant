@@ -4,8 +4,7 @@
     "description": "Hooks and components for easily building complex forms in React.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
-    "main": "dist/index.js",
-    "module": "dist/index.es.js",
+    "module": "src/index.js",
     "scripts": {
         "build": "rollup -c --environment IS_PRODUCTION",
         "dev": "rollup -c -w",
@@ -18,15 +17,15 @@
         "directory": "packages/@beaverbuilder/forms"
     },
     "dependencies": {
-        "camelcase": "^6.0.0"
+        "camelcase": "^6.2.0"
     },
     "peerDependencies": {
         "@wordpress/i18n": "^3.13.0",
         "classnames": "^2.2.6",
-        "react": "^16.14.0",
+        "react": "^17.0.2",
         "react-router-dom": "^5.2.0",
-        "@beaverbuilder/fluid": "^0.6.8",
-        "@beaverbuilder/icons": "0.0.1"
+        "@beaverbuilder/fluid": "^0.7.4",
+        "@beaverbuilder/icons": "0.0.3"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",

@@ -1,46 +1,22 @@
 {
     "name": "@beaverbuilder/fluid-docs",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "React doc pages for fluid.",
     "author": "The Beaver Builder Team",
     "license": "GPL-2.0+",
-    "main": "dist/index.js",
-    "module": "dist/index.es.js",
-    "scripts": {
-        "build": "rollup -c --environment IS_PRODUCTION",
-        "dev": "rollup -c -w",
-        "fix": "eslint src --fix",
-        "test": "eslint src"
-    },
+    "module": "src/index.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/beaverbuilder/assistant.git",
         "directory": "packages/@beaverbuilder/fluid-docs"
     },
     "peerDependencies": {
-        "react": "^16.9.0",
+        "react": "^17.0.2",
         "react-router-dom": "^5.2.0",
-        "@beaverbuilder/fluid": "^0.6.7",
-        "@beaverbuilder/icons": "^0.0.1"
+        "@beaverbuilder/fluid": "^0.7.4",
+        "@beaverbuilder/icons": "^0.0.3"
     },
     "dependencies": {
         "camelcase": "^5.3.1"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.10.2",
-        "@babel/plugin-external-helpers": "^7.10.1",
-        "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
-        "@babel/preset-env": "^7.10.2",
-        "@babel/preset-react": "^7.10.1",
-        "@beaverbuilder/eslint-config": "0.0.5",
-        "rollup": "^2.12.0",
-        "rollup-plugin-babel": "^4.4.0",
-        "rollup-plugin-commonjs": "^10.1.0",
-        "rollup-plugin-node-resolve": "^5.2.0",
-        "rollup-plugin-peer-deps-external": "^2.2.2",
-        "rollup-plugin-postcss": "^3.1.1",
-        "rollup-plugin-terser": "^7.0.2",
-        "rollup-plugin-url": "^3.0.1",
-        "rollup-plugin-visualizer": "^4.0.4"
     }
 }
