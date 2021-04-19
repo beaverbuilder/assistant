@@ -400,7 +400,9 @@ class LibraryItemPostController extends ControllerAbstract {
 		$taxonomy_terms = [];
 
 		foreach ( $terms as $term ) {
-			if ( ! taxonomy_exists( $term->taxonomy ) ) {
+			if ( ! isset( $term->name ) || ! isset( $term->taxonomy ) ) {
+				continue;
+			} else if ( ! taxonomy_exists( $term->taxonomy ) ) {
 				continue;
 			} elseif ( ! isset( $taxonomy_terms ) ) {
 				$taxonomy_terms[ $term->taxonomy ] = [];
