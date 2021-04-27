@@ -38,6 +38,8 @@ import Caret, { CaretUp, CaretDown, CaretRight, CaretLeft } from './caret'
 import Checkmark from './checkmark'
 import Audio from './audio'
 
+console.log( 'uncompiled icons package' )
+
 // Aliases
 const BackArrow = ArrowLeft
 

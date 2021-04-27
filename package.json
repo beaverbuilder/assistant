@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/beaverbuilder/assistant.git"
   },
+  "workspaces": [
+    "./packages/@beaverbuilder/icons"
+  ],
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "build:dist": "npm run build && node bin/build-dist.js",
