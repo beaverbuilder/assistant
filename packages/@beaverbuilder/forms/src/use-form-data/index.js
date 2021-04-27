@@ -28,6 +28,7 @@ export const useFormData = ( {
 } ) => {
 	const [ isSubmitting, setIsSubmitting ] = useState( false )
 	const isMounted = useRef( false )
+	const autoSubmitInterval = useRef( null )
 
 	useEffect( () => {
 		isMounted.current = true
@@ -324,11 +325,14 @@ export const useFormData = ( {
 
 	useEffect( () => {
 		if ( autoSubmit ) {
+			clearInterval( autoSubmitInterval.current )
+			autoSubmitInterval.current = setInterval( submitForm, 1000 )
 			window.addEventListener( 'beforeunload', submitForm )
 			return () => {
 				if ( ! isMounted.current ) {
 					submitForm()
 				}
+				clearInterval( autoSubmitInterval.current )
 				window.removeEventListener( 'beforeunload', submitForm )
 			}
 		}
