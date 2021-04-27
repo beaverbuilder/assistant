@@ -12,7 +12,7 @@ export const TextItem = ( {
 			type={ type }
 			key={ id }
 			id={ id }
-			value={ value }
+			value={ null === value ? '' : value }
 			onChange={ e => onChange( e.target.value, e ) }
 			{ ...rest }
 		/>

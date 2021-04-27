@@ -18,10 +18,10 @@
         "directory": "packages/@beaverbuilder/forms"
     },
     "dependencies": {
-        "camelcase": "^6.0.0"
+        "camelcase": "^6.0.0",
+        "@wordpress/i18n": "^3.13.0"
     },
     "peerDependencies": {
-        "@wordpress/i18n": "^3.13.0",
         "classnames": "^2.2.6",
         "react": "^16.14.0",
         "react-router-dom": "^5.2.0",
