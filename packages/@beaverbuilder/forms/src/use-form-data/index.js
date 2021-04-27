@@ -199,8 +199,10 @@ export const useFormData = ( {
 
 	const setError = ( key, error ) => {
 		const errors = selectErrors()
-		errors[ key ].push( error )
-		setErrors( errors )
+		if ( ! errors[ key ].includes( error ) ) {
+			errors[ key ].push( error )
+			setErrors( errors )
+		}
 	}
 
 	const getFieldIDs = () => {
