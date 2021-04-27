@@ -26,7 +26,7 @@
     "@beaverbuilder/cloud-ui": "^0.7.0",
     "@beaverbuilder/fluid": "^0.7.4",
     "@beaverbuilder/fluid-docs": "0.0.3",
-    "@beaverbuilder/forms": "^0.3.4",
+    "@beaverbuilder/forms": "^0.3.5",
     "@beaverbuilder/icons": "0.0.2",
     "@popmotion/popcorn": "^0.4.4",
     "array-move": "^3.0.1",
