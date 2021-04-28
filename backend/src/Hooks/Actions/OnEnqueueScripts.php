@@ -73,12 +73,18 @@ class OnEnqueueScripts {
 
 
 		// Ensure shape of window property
+		$min_width = 460;
 		$window = $user_state['window'];
 		if ( ! isset( $window['width'] ) || null === $window['width'] ) {
-			$window['width'] = 420;
+			$window['width'] = $min_width;
 		}
 		if ( ! isset( $window['origin'] ) || ! is_array( $window['origin'] ) ) {
 			$window['origin'] = array( 1, 0 ); // Top/Right Position
+		}
+
+		// Update defaults
+		if ( $min_width > $window['width'] ) {
+			$window['width'] = $min_width;
 		}
 
 		// Remove Deprecated properties

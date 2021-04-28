@@ -1,0 +1,103 @@
+.fl-asst {
+	.fl-asst-swiper {
+		position: relative;
+		max-width: 100%;
+
+		.fl-asst-swiper-scroller {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			scroll-snap-type: x mandatory;
+			-webkit-overflow-scrolling: touch;
+			overscroll-behavior-x: contain;
+			overflow-x: auto;
+			margin: 0;
+			padding-left: var(--margin);
+			padding-right: var(--margin);
+			scroll-padding-left: var(--margin);
+			scroll-padding-right: var(--margin);
+			scroll-behavior: smooth;
+
+			/* Hiding scrollbars - possibly bad idea */
+			-ms-overflow-style: none;
+			&::-webkit-scrollbar {
+				display: none;
+			}
+
+			.fl-asst-swiper-item {
+				width: 100%;
+				flex: 0 0 auto;
+				scroll-snap-align: start;
+				scroll-snap-stop: always;
+				margin: 0;
+				margin-right: var(--fluid-lg-space);
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+
+			&:after {
+				display: block;
+				flex: 0 0 40px;
+				content: '';
+				width: var(--margin);
+				height: 1px;
+				background: transparent;
+				pointer-events: none;
+			}
+
+			/* Cause browsers are dumb and margin right doesn't work here */
+			.fl-asst-right-inset {
+				width: var(--margin) !important;
+				height: 1px;
+				opacity: 0;
+			}
+		}
+
+		.fl-asst-swiper-nav {
+			position: absolute;
+			top:0;
+			left:0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			display: flex;
+			flex-direction: row;
+			align-items: stretch;
+			justify-content: space-between;
+			opacity: 0;
+
+			.fluid-button {
+				pointer-events: auto;
+				background: transparent;
+				width: var(--margin);
+
+				.fluid-button-icon {
+					width: 30px;
+					height: 30px;
+					border-radius: 15px;
+					background: var(--fluid-transparent-13);
+				}
+
+				&:hover {
+					background: transparent;
+					color: var(--fluid-accent);
+
+					.fluid-button-icon {
+						background: var(--fluid-box-background);
+					}
+				}
+				&:focus {
+					box-shadow: none;
+					color: var(--fluid-accent);
+				}
+			}
+		}
+		&:hover {
+			.fl-asst-swiper-nav {
+				opacity: 1;
+			}
+		}
+	}
+}

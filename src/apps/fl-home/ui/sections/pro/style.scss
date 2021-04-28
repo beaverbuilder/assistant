@@ -1,0 +1,18 @@
+.fl-asst {
+	.pro-libraries-grid {
+
+		.fl-asst-swiper-scroller {
+			.fl-asst-swiper-item {
+				background: var(--fluid-box-background);
+				width: 170px;
+				height: 180px;
+				margin-right: 20px;
+				border-radius: 5px;
+
+				&:last-child {
+					scroll-margin-right: 30px;
+				}
+			}
+		}
+	}
+}

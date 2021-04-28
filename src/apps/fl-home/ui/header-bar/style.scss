@@ -3,8 +3,14 @@
         --box-size: 40px;
         --shadow-color: #EDF0F3;
 
-        padding: var(--fluid-lg-space);
+		background: var(--fluid-background);
+        padding: var(--fluid-med-space) var(--fluid-lg-space);
+		min-height: 70px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 
+		/*
         &.fluid-sticky-element {
             background-color: transparent;
             background: linear-gradient( 180deg,
@@ -12,7 +18,7 @@
 				var(--fl-asst-card-background) 50%,
 				hsla( var(--fluid-hue), 40%, 98%, 0 )
             ) !important;
-        }
+        }*/
 
         .fl-asst-floating-element {
             background: var(--fluid-background);
@@ -22,7 +28,7 @@
             min-width: var(--box-size);
         }
         .fl-asst-inset-element {
-            background: var(--fluid-opaque-14);
+            background: var(--fluid-opaque-12);
             border-radius: 20px;
             box-shadow: none;
             min-height: var(--box-size);
@@ -96,6 +102,7 @@
 .fluid-color-scheme-dark {
     .fl-asst-home-search-header {
 
+		/*
 		&.fluid-sticky-element {
 			background-color: transparent;
 			background: linear-gradient( 180deg,
@@ -103,13 +110,13 @@
 				 var(--fl-asst-card-background) 30%,
 				 hsla( var(--fluid-hue), 10%, 15%, 0 )
 			) !important;
-		}
+		}*/
 
         .fl-asst-floating-element {
             box-shadow: none;
         }
         .fl-asst-inset-element {
-            background: var(--fluid-transparent-2);
+            background: var(--fluid-transparent-1);
 			-webkit-backdrop-filter: blur(5px) saturate(200%);
 			backdrop-filter: blur(5px) saturate(200%);
 

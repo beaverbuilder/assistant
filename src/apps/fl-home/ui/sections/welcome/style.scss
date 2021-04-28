@@ -1,0 +1,27 @@
+.fl-asst {
+	.home-welcome-section {
+		.home-pro-banner{
+			background: var(--fl-brand-light-blue);
+			background-position: bottom right;
+			background-size: contain;
+			background-repeat: no-repeat;
+			height: 200px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			padding: 20px;
+			padding-left: var(--margin);
+			color: #0A607A;
+
+			img {
+				height: inherit;
+				width: inherit;
+			}
+
+			.pro-logo {
+				width: 210px;
+				height: 38px;
+			}
+		}
+	}
+}

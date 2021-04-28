@@ -1,0 +1,16 @@
+.fl-asst {
+	.fl-asst-apps-feature-section {
+		.fl-asst-swiper {
+
+			.fl-asst-swiper-item {
+				background: var(--fl-brand-red);
+				color: white;
+				padding: 20px;
+				border-radius: 20px;
+				width: calc( 100% - 40px );
+				max-width: 400px;
+				min-height: 240px;
+			}
+		}
+	}
+}

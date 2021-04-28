@@ -22,7 +22,7 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	 * System Store
 	 */
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
-	const { width: openWidth = 420, origin } = windowFrame
+	const { width: openWidth = 460, origin } = windowFrame
 	const [ originX ] = origin
 	const { setWindow } = getSystemActions()
 
@@ -68,7 +68,7 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	const boxShadow = getBoxShadow( isHidden, isAppHidden )
 
 	// Resize stuff
-	const minResizableWidth = 420
+	const minResizableWidth = 460
 	const maxResizableWidth = 1000 > window.innerWidth ? window.innerWidth : 1000
 	const x = useMotionValue( originX ? -Math.abs( openWidth ) : openWidth )
 	const _width = useTransform( x, x => {
