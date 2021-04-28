@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 import useMedia from 'use-media'
+import useResizeObserver from './use-resize-observer'
 
-export { useMedia }
+export { useMedia, useResizeObserver }
 
 /**
  * Check if a given prop (most likely children) is a function to be rendered.
