@@ -19,7 +19,10 @@
 			scroll-behavior: smooth;
 
 			/* Hiding scrollbars - possibly bad idea */
-			-ms-overflow-style: none;
+			/*FireFox*/
+			scrollbar-width: none;
+			/*IE10+*/
+			-ms-overflow-style: -ms-autohiding-scrollbar;
 			&::-webkit-scrollbar {
 				display: none;
 			}

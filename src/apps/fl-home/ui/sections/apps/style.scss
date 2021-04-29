@@ -3,13 +3,41 @@
 		.fl-asst-swiper {
 
 			.fl-asst-swiper-item {
-				background: var(--fl-brand-red);
-				color: white;
-				padding: 20px;
+				--card-bg:var(--fl-brand-red);
+				--card-color: var(--fl-brand-tan);
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				background: var(--card-bg);
+				color: var(--card-color);
 				border-radius: 20px;
 				width: calc( 100% - 40px );
-				max-width: 400px;
-				min-height: 240px;
+				max-width: 360px;
+				height: 330px;
+				background-repeat: no-repeat;
+				background-position: top center;
+				background-size: 360px;
+
+				.fluid-text-title {
+					font-size: 22px;
+					font-weight: norma;
+					margin-bottom: 5px;
+				}
+
+				p {
+					margin: 0;
+					font-size: 13px;
+					font-weight: normal;
+				}
+
+				.card-bottom-toolbar {
+					flex: 0 0 60px;
+					height: 60px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					padding: 5px 20px;
+				}
 			}
 		}
 	}
