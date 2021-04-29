@@ -12,6 +12,7 @@ const AppsSection = () => {
 		<Section
 			className="fl-asst-apps-feature-section"
 			title={ __( 'Get Started With Apps' ) }
+			description={ __( 'Assistant apps give you quick access to some of your most frequent tasks.' ) }
 			padContent={ false }
 		>
 			<Swiper>
