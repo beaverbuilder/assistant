@@ -71,16 +71,13 @@ const Home = memo( () => {
 
 const UIColorPreferences = () => {
 	const { application } = Env.use()
-	const { appearance, window } = useSystemState()
-	const { setBrightness, setWindow } = getSystemActions()
-	const { origin } = window
-
-	const onChangeOrigin = origin => setWindow( { ...window, origin } )
+	const { appearance } = useSystemState()
+	const { setBrightness } = getSystemActions()
 
 	return (
-		<Form.Section label={ __( 'Preferences' ) }>
+		<Form.Section label={ __( 'Appearance' ) }>
 			{ 'beaver-builder' !== application && (
-				<Form.Item label={ __( 'UI Brightness' ) } labelPlacement="beside">
+				<Form.Item label={ __( 'Color Scheme' ) } labelPlacement="beside">
 					<Layout.Row gap={ 5 }>
 						<Button
 							isSelected={ 'light' === appearance.brightness }
@@ -98,23 +95,6 @@ const UIColorPreferences = () => {
 					</Layout.Row>
 				</Form.Item>
 			) }
-			<Form.Item label={ __( 'Attach To' ) } labelPlacement="beside">
-				<Layout.Row gap={ 5 }>
-					<Button
-						isSelected={ ! origin[0] }
-						onClick={ () => onChangeOrigin( [ 0, 0 ] ) }
-					>
-						{ __( 'Left Edge' ) }
-					</Button>
-
-					<Button
-						isSelected={ origin[0] }
-						onClick={ () => onChangeOrigin( [ 1, 0 ] ) }
-					>
-						{ __( 'Right Edge' ) }
-					</Button>
-				</Layout.Row>
-			</Form.Item>
 		</Form.Section>
 	)
 }
@@ -122,13 +102,29 @@ const UIColorPreferences = () => {
 const DefaultsSection = () => {
 	const { window } = useSystemState()
 	const { setWindow } = getSystemActions()
+	const onChangeOrigin = origin => setWindow( { ...window, origin } )
+	const resetFrame = () => setWindow( { ...window, width: 560 } )
 
-	const resetFrame = () => {
-		setWindow( { ...window, width: 560 } )
-	}
 	return (
-		<Form.Section label={ __( 'Defaults' ) }>
-			<Form.Item label={ __( 'Reset Frame Width' ) } labelPlacement="beside">
+		<Form.Section label={ __( 'Panel' ) }>
+			<Form.Item label={ __( 'Display On' ) } labelPlacement="beside">
+				<Layout.Row gap={ 5 }>
+					<Button
+						isSelected={ ! window.origin[0] }
+						onClick={ () => onChangeOrigin( [ 0, 0 ] ) }
+					>
+						{ __( 'Left Edge' ) }
+					</Button>
+
+					<Button
+						isSelected={ window.origin[0] }
+						onClick={ () => onChangeOrigin( [ 1, 0 ] ) }
+					>
+						{ __( 'Right Edge' ) }
+					</Button>
+				</Layout.Row>
+			</Form.Item>
+			<Form.Item label={ __( 'Panel Width' ) } labelPlacement="beside">
 				<Button onClick={ resetFrame } >{ __( 'Reset to Default' ) }</Button>
 			</Form.Item>
 		</Form.Section>

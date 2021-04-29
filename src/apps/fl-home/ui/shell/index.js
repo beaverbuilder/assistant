@@ -26,12 +26,7 @@ const Shell = ( {
 						paddingLeft: 25
 					} }
 				>
-					<Icon.PencilOutline
-						style={ {
-							marginRight: 13
-						} }
-					/>
-					{ __( 'Assistant' ) }
+					<Branding />
 				</div>
 				<FeatureSidebarSection baseURL={ baseURL } />
 				<AppsSection />
@@ -43,6 +38,13 @@ const Shell = ( {
 		</div>
 	)
 }
+
+const Branding = () => (
+	<>
+		<Icon.PencilOutline style={ { marginRight: 13 } } />
+		{ __( 'Assistant' ) }
+	</>
+)
 
 const SidebarSection = ( {
 	title,
