@@ -23,9 +23,9 @@ const WelcomeSection = () => {
 const ProBanner = ( { pluginURL } ) => {
 	const imgURL = `${pluginURL}/img/apps/fl-home/`
 	const { ref, width } = useResizeObserver()
-	const threshold = 600
+	const threshold = 490
 	const bgFilename = width >= threshold ? 'laptop-girl-med.png' : 'laptop-girl-slim.png'
-	const bgLeft = width >= threshold ? 290 : 230
+	const bgLeft = width >= threshold ? 250 : 230
 	return (
 		<div
 			className="home-pro-banner"
