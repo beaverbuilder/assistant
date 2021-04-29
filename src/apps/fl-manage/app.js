@@ -35,6 +35,7 @@ const MainScreen = () => {
 					<AppList before={ <Home /> } />
 				</Page.Section>
 				<UIColorPreferences />
+				<DefaultsSection />
 			</Form>
 		</Page>
 	)
@@ -113,6 +114,22 @@ const UIColorPreferences = () => {
 						{ __( 'Right Edge' ) }
 					</Button>
 				</Layout.Row>
+			</Form.Item>
+		</Form.Section>
+	)
+}
+
+const DefaultsSection = () => {
+	const { window } = useSystemState()
+	const { setWindow } = getSystemActions()
+
+	const resetFrame = () => {
+		setWindow( { ...window, width: 560 } )
+	}
+	return (
+		<Form.Section label={ __( 'Defaults' ) }>
+			<Form.Item label={ __( 'Reset Frame Width' ) } labelPlacement="beside">
+				<Button onClick={ resetFrame } >{ __( 'Reset to Default' ) }</Button>
 			</Form.Item>
 		</Form.Section>
 	)

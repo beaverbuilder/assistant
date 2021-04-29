@@ -70,21 +70,26 @@ class OnEnqueueScripts {
 		}
 
 		$user_state = UserState::get();
+		$config = self::generate_frontend_config();
+		$frame = $config[ 'frameDefaults' ];
 
 
 		// Ensure shape of window property
-		$min_width = 460;
 		$window = $user_state['window'];
+		// Ensure is set
 		if ( ! isset( $window['width'] ) || null === $window['width'] ) {
-			$window['width'] = $min_width;
+			$window['width'] = $frame[ 'defaultWidth' ];
 		}
-		if ( ! isset( $window['origin'] ) || ! is_array( $window['origin'] ) ) {
-			$window['origin'] = array( 1, 0 ); // Top/Right Position
+		// Respect min and max width
+		if ( $frame[ 'minWidth' ] > $window['width'] ) {
+			$window['width'] = $frame[ 'minWidth' ];
+		} else if ( $frame[ 'maxWidth' ] < $window[ 'width' ] ) {
+			$window['width'] = $frame[ 'maxWidth' ];
 		}
 
-		// Update defaults
-		if ( $min_width > $window['width'] ) {
-			$window['width'] = $min_width;
+		// Set frame origin to top/right if not set.
+		if ( ! isset( $window['origin'] ) || ! is_array( $window['origin'] ) ) {
+			$window['origin'] = $frame[ 'defaultOrigin' ];
 		}
 
 		// Remove Deprecated properties
@@ -131,39 +136,46 @@ class OnEnqueueScripts {
 		$theme = $theme_service->get_current_theme_data();
 
 		return [
-			'adminURLs'         => $this->site->get_admin_urls(),
-			'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
-			'apiRoot'           => esc_url_raw( get_rest_url() ),
-			'contentTypes'      => $this->posts->get_types(),
-			'contentStatus'     => $this->posts->get_stati(),
-			'currentPageView'   => $this->site->get_current_view(),
-			'currentUser'       => $current_user,
-			'defaultAppName'    => 'fl-home',
-			'emptyTrashDays'    => EMPTY_TRASH_DAYS,
-			'homeUrl' 			=> home_url(),
-			'isShowingAdminBar' => is_admin_bar_showing(),
-			'isAdmin'           => is_admin(),
-			'isSiteAdmin'       => is_super_admin(),
-			'isLocalhost'       => $this->site->is_local(),
-			'mockup'            => Mockup::get(),
-			'nonce'             => [
+			'adminURLs'           => $this->site->get_admin_urls(),
+			'ajaxUrl'             => admin_url( 'admin-ajax.php' ),
+			'apiRoot'             => esc_url_raw( get_rest_url() ),
+			'contentTypes'        => $this->posts->get_types(),
+			'contentStatus'       => $this->posts->get_stati(),
+			'currentPageView'     => $this->site->get_current_view(),
+			'currentUser'         => $current_user,
+			'defaultAppName'      => 'fl-home',
+			'emptyTrashDays'      => EMPTY_TRASH_DAYS,
+			'frameDefaults'       => [
+				'minWidth'        => 460,
+				'maxWidth'        => 900,
+				'defaultWidth'    => 560,
+				'defaultOrigin'   => [ 1, 0 ],
+				'breakpoint'      => 650,
+			],
+			'homeUrl' 			  => home_url(),
+			'isShowingAdminBar'   => is_admin_bar_showing(),
+			'isAdmin'             => is_admin(),
+			'isSiteAdmin'         => is_super_admin(),
+			'isLocalhost'         => $this->site->is_local(),
+			'mockup'              => Mockup::get(),
+			'nonce'               => [
 				'api'             => wp_create_nonce( 'wp_rest' ),
 				'reply'           => wp_create_nonce( 'replyto-comment' ),
 				'replyUnfiltered' => wp_create_nonce( 'unfiltered-html-comment' ),
 				'updates'         => wp_create_nonce( 'updates' ),
 			],
-			'pluginURL'         => FL_ASSISTANT_URL,
-			'taxonomies'        => $this->posts->get_taxononies(),
-			'userRoles'         => $this->users->get_roles(),
-			'cloudConfig'       => [
-				'apiUrl'        => FL_ASSISTANT_CLOUD_URL,
-				'appUrl'        => FL_ASSISTANT_CLOUD_APP_URL,
-				'pusherKey'     => FL_ASSISTANT_PUSHER_KEY,
-				'pusherCluster' => FL_ASSISTANT_PUSHER_CLUSTER,
+			'pluginURL'           => FL_ASSISTANT_URL,
+			'taxonomies'          => $this->posts->get_taxononies(),
+			'userRoles'           => $this->users->get_roles(),
+			'cloudConfig'         => [
+				'apiUrl'          => FL_ASSISTANT_CLOUD_URL,
+				'appUrl'          => FL_ASSISTANT_CLOUD_APP_URL,
+				'pusherKey'       => FL_ASSISTANT_PUSHER_KEY,
+				'pusherCluster'   => FL_ASSISTANT_PUSHER_CLUSTER,
 			],
-			'embedInBB'			=> FL_ASST_SUPPORTS_BB,
-			'themeSlug'			=> $theme['slug'],
-			'themeParentSlug'	=> $theme['parent'] ? $theme['parent']['slug'] : null,
+			'embedInBB'           => FL_ASST_SUPPORTS_BB,
+			'themeSlug'           => $theme['slug'],
+			'themeParentSlug'     => $theme['parent'] ? $theme['parent']['slug'] : null,
 		];
 	}
 

@@ -3,7 +3,7 @@ import { motion, useAnimation, useDragControls, useMotionValue, useTransform } f
 import useMedia from 'use-media'
 import c from 'classnames'
 import { Env, Frame as _Frame } from 'assistant/ui'
-import { getSystemActions, useSystemState } from 'assistant/data'
+import { getSystemActions, useSystemState, getSystemConfig } from 'assistant/data'
 import {
 	useEdgeInsets,
 	getLeft,
@@ -22,11 +22,17 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	 * System Store
 	 */
 	const { window: windowFrame, isAppHidden } = useSystemState( [ 'window', 'isAppHidden' ] )
-	const { width: openWidth = 460, origin } = windowFrame
+	const { width: openWidth = defaultWidth, origin } = windowFrame
 	const [ originX ] = origin
 	const { setWindow } = getSystemActions()
 
-	// Convenience function for setting the resized frame width in system store.
+	// System Defaults
+	const { minWidth, maxWidth, defaultWidth, breakpoint } = getSystemConfig().frameDefaults
+
+	/**
+	 * Convenience function for setting the resized frame width in system store.
+	 * This only saves the data - it does not cause a visual change to the frame.
+	 */
 	const setOpenWidth = value => setWindow( { ...windowFrame, width: value } )
 
 	// Convenience function for pinning the frame to the left or right edge in system store.
@@ -39,11 +45,10 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	/**
 	 * Env Context
 	 */
-	const { application } = Env.use()
-	const isBeaverBuilder = 'beaver-builder' === application
+	const isBeaverBuilder = 'beaver-builder' === Env.use().application
 
 	/**
-	 * This is a control object that let's us manage animations directly.
+	 * This is a control object that lets us manage animations directly.
 	 * See animate prop.
 	 */
 	const animation = useAnimation()
@@ -68,12 +73,11 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 	const boxShadow = getBoxShadow( isHidden, isAppHidden )
 
 	// Resize stuff
-	const minResizableWidth = 460
-	const maxResizableWidth = 1000 > window.innerWidth ? window.innerWidth : 1000
+	const minResizableWidth = minWidth
+	const maxResizableWidth = maxWidth > window.innerWidth ? window.innerWidth : maxWidth
+
 	const x = useMotionValue( originX ? -Math.abs( openWidth ) : openWidth )
-	const _width = useTransform( x, x => {
-		return isAppHidden ? 60 : Math.abs( x )
-	} )
+	const _width = useTransform( x, x => isAppHidden ? 60 : Math.abs( x ) )
 	const _left = useTransform( _width, _width => {
 		return originX ? `calc( 100% - ${ _width + insets.right }px )` : 0
 	} )
@@ -133,6 +137,7 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 		animation.start( { width, left, boxShadow } )
 	}, [ isAppHidden ] )
 
+	// Handles isHidden changes
 	useEffect( () => {
 		const distance = originX ? width : -Math.abs( width )
 
@@ -154,10 +159,16 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 
 	}, [ isHidden ] )
 
-	const getSizeName = openWidth => {
-		const breakpoint = 650
-		return openWidth >= breakpoint ? 'medium' : 'compact'
-	}
+	// Handle external frame resize
+	useEffect( () => {
+		const currentWidth = Math.floor( _width.get() )
+		if ( openWidth !== currentWidth ) {
+			x.set( originX ? -Math.abs( openWidth ) : openWidth )
+		}
+	}, [ openWidth ] )
+
+	// Prep vars
+	const getSizeName = openWidth => openWidth >= breakpoint ? 'medium' : 'compact'
 	const size = getSizeName( openWidth )
 	const context = {
 		size,
@@ -165,11 +176,7 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 		isCompact: 'compact' === size,
 		isDragging: false === dragArea,
 	}
-
-	const classes = c( 'fl-asst-frame', {
-		[`fluid-frame-size-${size}`]: size
-	}, className )
-
+	const classes = c( 'fl-asst-frame', { [`fluid-frame-size-${size}`]: size }, className )
 	const shouldShowResizer = false === dragArea && ! isHidden && ! isAppHidden
 
 	return (

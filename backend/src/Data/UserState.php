@@ -22,7 +22,7 @@ class UserState {
 		'appOrder'          => [],
 		'window'            => [
 			'origin'           => [ 1, 0 ],
-			'width'            => 420,
+			'width'            => 560,
 			'isHidden'         => false,
 			'hiddenAppearance' => '',
 		],

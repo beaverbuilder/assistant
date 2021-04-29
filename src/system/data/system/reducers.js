@@ -114,18 +114,30 @@ export const labels = ( state = [], action ) => {
 	}
 }
 
+const { defaultOrigin, defaultWidth, maxWidth, minWidth } = FL_ASSISTANT_CONFIG.frameDefaults
 const windowDefaults = {
-	origin: [ 1, 0 ], /* top right */
-	width: 420,
+	origin: defaultOrigin,
+	width: defaultWidth,
 	isHidden: false,
 	hiddenAppearance: '',
 }
 export const window = ( state = windowDefaults, action ) => {
+
+	let newWidth = state.width
+	if ( null === newWidth || '' === newWidth || undefined === newWidth ) {
+		newWidth = defaultWidth
+	} else if ( newWidth < minWidth ) {
+		newWidth = minWidth
+	} else if ( newWidth > maxWidth ) {
+		newWidth = maxWidth
+	}
+
 	switch ( action.type ) {
 	case 'SET_WINDOW':
 		return {
+			...windowDefaults,
 			origin: state.origin,
-			width: null === state.width ? 420 : state.width,
+			width: newWidth,
 			isHidden: state.isHidden,
 			hiddenAppearance: state.hiddenAppearance,
 			...action.config,
