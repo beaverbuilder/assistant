@@ -21,8 +21,12 @@ registerStore( KEY, {
 	state: {
 		...FL_ASSISTANT_INITIAL_STATE,
 		isCloudConnected: cloud.auth.isConnected(),
+		cloudUser: null,
 		notices: [],
 	},
+	cache: [
+		'cloudUser'
+	],
 	actions,
 	reducers,
 	effects,
