@@ -9,6 +9,9 @@ import PencilOutline from './pencil-outline'
 import LockClosed from './lock-closed'
 import LockOpen from './lock-open'
 
+// ArrowRight - Temp fix util I fix it in @beaverbuilder/icons
+import ArrowRight from './arrow-right-fix'
+
 const Icon = {
 	...FLUID_Icon,
 	Dashboard,
@@ -20,6 +23,7 @@ const Icon = {
 	PencilOutline,
 	LockClosed,
 	LockOpen,
+	ArrowRight,
 }
 
 export default Icon
