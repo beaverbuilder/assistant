@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import c from 'classnames'
 import { Icon, Button } from 'assistant/ui'
 import Swiper from './swiper'
@@ -12,12 +12,20 @@ const Section = ( {
 	children,
 	padContent = true,
 	canCollapse = true,
+	isCollapsed = false,
 	headerActions,
 	description,
 	footer,
 	...rest
 } ) => {
-	const [ showContent, setShowContent ] = useState( true )
+	const [ showContent, setShowContent ] = useState( ! isCollapsed )
+
+	// Handle external prop control
+	useEffect( () => {
+		if ( showContent === isCollapsed ) {
+			setShowContent( ! isCollapsed )
+		}
+	}, [ isCollapsed ] )
 
 	const classes = c( 'fl-asst-feature-section', {
 		'pad-content': padContent

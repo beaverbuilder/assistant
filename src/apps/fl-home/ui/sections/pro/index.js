@@ -11,6 +11,7 @@ const ProSection = () => {
 			title={ <TitleWithBadge /> }
 			description={ __( 'Libraries let you collect your templates, images, and other assets and access them across all your sites.' ) }
 			padContent={ false }
+			isCollapsed={ true }
 			footer={ (
 				<>
 					<Button appearance="transparent">View All</Button>
