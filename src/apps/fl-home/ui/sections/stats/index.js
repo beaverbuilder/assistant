@@ -8,7 +8,7 @@ import './style.scss'
 const StatsSection = () => {
 	return (
 		<Section
-			title={ __( 'Stats' ) }
+			title={ __( 'At A Glance' ) }
 			className="home-stats-section"
 			padContent={ false }
 		>

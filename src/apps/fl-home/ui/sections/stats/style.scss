@@ -1,6 +1,6 @@
 .fl-asst {
 	.home-stats-section {
-		--stroke-weight: 1.5px;
+		--stroke-weight: 1px;
 		--space-around: 20px;
 
 		.fl-asst-swiper-scroller {
@@ -11,13 +11,20 @@
 
 			.fl-asst-swiper-item {
 				width: auto;
-				background: var(--fluid-background);
-				border-radius: var(--space-around);
-				padding: var(--space-around);
 				/* using box shadow instead of border because it can display half pixels */
-				box-shadow: 0 0 0 var(--stroke-weight) var(--fluid-color);
+				//box-shadow: 0 0 0 var(--stroke-weight) var(--fluid-color);
 				min-height: 80px;
-				margin-right: calc( 20px + ( var(--stroke-weight) * 2 ) );
+				margin-right: 0;
+				border-right: 2px solid var(--fluid-opaque-10);
+				padding: 0 40px;
+
+				&:first-child {
+					padding-left: 0;
+				}
+
+				&:last-child {
+					border-right: none;
+				}
 			}
 		}
 
@@ -25,7 +32,7 @@
 			display: grid;
 			grid-auto-flow: column;
 			grid-template-rows: 1fr 1fr;
-			grid-gap: calc( var(--space-around) / 2 );
+			grid-gap: var(--space-around);
 			align-items: end;
 		}
 		.home-stat-count {
@@ -45,9 +52,9 @@
 		.home-currently-viewing {
 			display: flex;
 			flex-direction: column;
+			flex: 0 0 auto !important;
+			max-width: 85%;
 			font-size: 13px;
-			max-width: 320px;
-			flex: 1 0 90% !important;
 			padding-bottom: 10px;
 
 			.home-currently-viewing-eyebrow {
@@ -62,6 +69,7 @@
 				display: flex;
 				flex-direction: row;
 				margin-top: auto;
+				margin-left: -10px;
 			}
 		}
 	}
