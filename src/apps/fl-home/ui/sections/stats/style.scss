@@ -2,6 +2,7 @@
 	.home-stats-section {
 		--stroke-weight: 1px;
 		--space-around: 20px;
+		--divider-color: var(--fluid-opaque-10);
 
 		.fl-asst-swiper-scroller {
 
@@ -15,8 +16,8 @@
 				//box-shadow: 0 0 0 var(--stroke-weight) var(--fluid-color);
 				min-height: 80px;
 				margin-right: 0;
-				border-right: 2px solid var(--fluid-opaque-10);
-				padding: 0 40px;
+				border-right: 2px solid var(--divider-color);
+				padding: 0 30px;
 
 				&:first-child {
 					padding-left: 0;
@@ -71,6 +72,11 @@
 				margin-top: auto;
 				margin-left: -10px;
 			}
+		}
+	}
+	.fluid-color-scheme-dark {
+		.home-stats-section {
+			--divider-color: var(--fluid-opaque-0);
 		}
 	}
 }
