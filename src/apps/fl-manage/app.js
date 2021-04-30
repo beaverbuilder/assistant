@@ -125,7 +125,7 @@ const DefaultsSection = () => {
 				</Layout.Row>
 			</Form.Item>
 			<Form.Item label={ __( 'Panel Width' ) } labelPlacement="beside">
-				<Button onClick={ resetFrame } >{ __( 'Reset to Default' ) }</Button>
+				<Button onClick={ resetFrame } >{ __( 'Reset' ) }</Button>
 			</Form.Item>
 		</Form.Section>
 	)
