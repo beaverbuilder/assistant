@@ -4,11 +4,13 @@ import RecentPostsSection from './recent-posts'
 import WelcomeSection from './welcome'
 import AppsSection from './apps'
 import MediaSection from './media'
+import QuickStats from './stats'
 
 const HomeSections = () => {
 	return (
 		<>
 			<WelcomeSection />
+			<QuickStats />
 			<ProSection />
 			<AppsSection />
 			<RecentPostsSection />
