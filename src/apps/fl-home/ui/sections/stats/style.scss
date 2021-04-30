@@ -52,8 +52,8 @@
 		.home-currently-viewing {
 			display: flex;
 			flex-direction: column;
-			flex: 0 0 auto !important;
-			max-width: 85%;
+			flex: 0 0 85% !important;
+			max-width: 300px;
 			font-size: 13px;
 			padding-bottom: 10px;
 
