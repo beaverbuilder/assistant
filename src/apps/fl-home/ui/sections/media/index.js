@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
 import c from 'classnames'
-import { Button } from 'assistant/ui'
+import { Button, Media } from 'assistant/ui'
 import { getSystemConfig, useSystemState } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import Section, { Swiper } from '../generic'
@@ -12,8 +12,10 @@ const MediaSection = () => {
 	const { attachmentTypes } = getSystemConfig()
 	const placeholders = Array( minItems ).fill( null, 0, minItems )
 	const { attachments } = getWpRest()
+	const [ isLoading, setIsLoading ] = useState( true )
 	const [ images, setImages ] = useState( placeholders )
 	const [ type, setType ] = useState( 'image' )
+	const { files: uploadingFiles = [] } = Media.useMediaUploads()
 	const query = {
 		post_mime_type: type,
 		posts_per_page: 36
@@ -28,7 +30,8 @@ const MediaSection = () => {
 					const dummyCount = minItems - data.items.length
 					dummies = Array( dummyCount ).fill( null, 0, dummyCount )
 				}
-				setImages( [ ...dummies, ...data.items ] )
+				setImages( [ ...data.items, ...dummies ] )
+				setIsLoading( false )
 			}
 		} )
 	}, [ type ] )
@@ -45,14 +48,16 @@ const MediaSection = () => {
 			headerActions={ <HeaderActions /> }
 			padContent={ false }
 		>
-			<Swiper>
-				<MediaGrid
-					images={ images }
-					type={ type }
-					types={ Object.entries( attachmentTypes ) }
-					setType={ setType }
-				/>
-			</Swiper>
+			<Media.Uploader draggingView={ <HoverView /> }>
+				<Swiper disabled={ isLoading }>
+					<MediaGrid
+						images={ images }
+						type={ type }
+						types={ Object.entries( attachmentTypes ) }
+						setType={ setType }
+					/>
+				</Swiper>
+			</Media.Uploader>
 		</Section>
 	)
 }
@@ -117,6 +122,14 @@ const MediaGrid = ( {
 					/>
 				)
 			} ) }
+		</div>
+	)
+}
+
+const HoverView = () => {
+	return (
+		<div className="media-hover-display">
+			{ __( 'You can just drop that anywhere' ) }
 		</div>
 	)
 }

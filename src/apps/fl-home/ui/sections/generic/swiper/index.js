@@ -8,10 +8,13 @@ const Swiper = ( {
 	className,
 	children,
 	scrollBy = 360,
+	disabled = false,
 	...rest
 } ) => {
 	const ref = useRef( null )
-	const classes = c( 'fl-asst-swiper', className )
+	const classes = c( 'fl-asst-swiper', {
+		'is-disabled': true === disabled
+	}, className )
 
 	const go = ( back = false ) => {
 		if ( ref.current ) {
@@ -29,18 +32,20 @@ const Swiper = ( {
 			<div className="fl-asst-swiper-scroller" ref={ ref }>
 				{children}
 			</div>
-			<div className="fl-asst-swiper-nav">
-				<Button
-					appearance="transparent"
-					icon={ <Icon.CaretLeft /> }
-					onClick={ () => go( true ) }
-				/>
-				<Button
-					appearance="transparent"
-					icon={ <Icon.CaretRight /> }
-					onClick={ () => go( false ) }
-				/>
-			</div>
+			{ ! disabled && (
+				<div className="fl-asst-swiper-nav">
+					<Button
+						appearance="transparent"
+						icon={ <Icon.CaretLeft /> }
+						onClick={ () => go( true ) }
+					/>
+					<Button
+						appearance="transparent"
+						icon={ <Icon.CaretRight /> }
+						onClick={ () => go( false ) }
+					/>
+				</div>
+			) }
 		</Tag>
 	)
 }

@@ -102,5 +102,12 @@
 				opacity: 1;
 			}
 		}
+
+		&.is-disabled {
+			.fl-asst-swiper-scroller {
+				pointer-events: none;
+				overflow-x: hidden;
+			}
+		}
 	}
 }
