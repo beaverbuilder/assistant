@@ -1,6 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button } from 'assistant/ui'
+import { Button, Layout } from 'assistant/ui'
 import { useSystemState, getSystemConfig } from 'assistant/data'
 import Section, { Swiper } from '../generic'
 import './style.scss'
@@ -23,6 +23,7 @@ const StatsSection = () => {
 const CurrentlyViewing = () => {
 	const { currentPageView } = getSystemConfig()
 	const { intro, name, actions } = currentPageView
+
 	return (
 		<div className="fl-asst-swiper-item home-currently-viewing">
 			<div>
@@ -78,6 +79,28 @@ const Counts = () => {
 					<div className="home-stat-label">{ label }</div>
 				</div>
 			) ) }
+		</div>
+	)
+}
+
+const Theme = () => {
+	const { currentPageView } = getSystemConfig()
+	const { name, screenshot, team, version } = currentPageView.theme
+
+	return (
+		<div className="fl-asst-swiper-item home-theme-card">
+			<div style={ { width: 100 } }>
+				<Layout.AspectBox
+					ratio="4:3"
+					style={ {
+						background: `url(${screenshot})`,
+						backgroundSize: 'cover',
+					} }
+				/>
+			</div>
+			<div>Theme</div>
+			<div>{ name }</div>
+			<div>Version: { version }</div>
 		</div>
 	)
 }

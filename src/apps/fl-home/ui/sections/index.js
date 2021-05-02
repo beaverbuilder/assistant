@@ -11,10 +11,10 @@ const HomeSections = () => {
 		<>
 			<WelcomeSection />
 			<QuickStats />
+			<MediaSection />
 			<ProSection />
 			<AppsSection />
 			<RecentPostsSection />
-			<MediaSection />
 		</>
 	)
 }

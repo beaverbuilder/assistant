@@ -139,6 +139,13 @@ class OnEnqueueScripts {
 			'adminURLs'           => $this->site->get_admin_urls(),
 			'ajaxUrl'             => admin_url( 'admin-ajax.php' ),
 			'apiRoot'             => esc_url_raw( get_rest_url() ),
+			'attachmentTypes'     => [
+				'all'             => __( 'All', 'fl-assistant' ),
+				'image'           => __( 'Image', 'fl-assistant' ),
+				'document'        => __( 'Documents', 'fl-assistant' ),
+				'video'           => __( 'Video', 'fl-assistant' ),
+				'audio'           => __( 'Audio', 'fl-assistant' ),
+			],
 			'contentTypes'        => $this->posts->get_types(),
 			'contentStatus'       => $this->posts->get_stati(),
 			'currentPageView'     => $this->site->get_current_view(),

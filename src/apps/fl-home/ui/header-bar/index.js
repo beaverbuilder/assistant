@@ -40,24 +40,22 @@ const HeaderBar = ( {
 	return (
 		<>
 			<div className="fl-asst-home-search-header fluid-sticky-element" >
-				<Layout.Row className="fl-asst-button-row">
-					<Form.Input
-						className="fl-asst-inset-element"
-						before={ '' !== keyword ? <Back /> : <SearchIcon /> }
-						value={ keyword }
-						placeholder={ __( 'Search WordPress' ) }
-						onInput={ e => {
-							onInput( e.target.value )
-							if ( '' === e.target.value ) {
-								onClear()
-							}
-						} }
-						onFocus={ () => {
-							setIsFocused( true )
-							onFocus()
-						} }
-					/>
-				</Layout.Row>
+				<Form.Input
+					className="fl-asst-inset-element"
+					before={ '' !== keyword ? <Back /> : <SearchIcon /> }
+					value={ keyword }
+					placeholder={ __( 'Search WordPress' ) }
+					onInput={ e => {
+						onInput( e.target.value )
+						if ( '' === e.target.value ) {
+							onClear()
+						}
+					} }
+					onFocus={ () => {
+						setIsFocused( true )
+						onFocus()
+					} }
+				/>
 			</div>
 			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick } /> }
 			{ isShowingWidgetLib && <Widget.Library onClose={ () => setIsShowingWidgetLib( false ) } /> }

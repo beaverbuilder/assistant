@@ -14,6 +14,7 @@ const WelcomeSection = () => {
 			title={ sprintf( 'Welcome, %s', currentUser.displayName ) }
 			className="home-welcome-section"
 			padContent={ false }
+			isCollapsed={ true }
 		>
 			<ProBanner pluginURL={ pluginURL } />
 		</Section>
