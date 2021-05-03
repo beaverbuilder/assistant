@@ -141,8 +141,8 @@ class OnEnqueueScripts {
 			'apiRoot'             => esc_url_raw( get_rest_url() ),
 			'attachmentTypes'     => [
 				'all'             => __( 'All', 'fl-assistant' ),
-				'image'           => __( 'Image', 'fl-assistant' ),
-				'document'        => __( 'Documents', 'fl-assistant' ),
+				'image'           => __( 'Photo', 'fl-assistant' ),
+				'document'        => __( 'Document', 'fl-assistant' ),
 				'video'           => __( 'Video', 'fl-assistant' ),
 				'audio'           => __( 'Audio', 'fl-assistant' ),
 			],

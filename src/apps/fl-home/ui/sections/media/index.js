@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import c from 'classnames'
-import { Button, Media } from 'assistant/ui'
+import { Button, Media, Icon } from 'assistant/ui'
 import { getSystemConfig, useSystemState } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import Section, { Swiper } from '../generic'
+import Art from './art'
 import './style.scss'
 
 /**
@@ -70,6 +71,7 @@ const MediaGrid = ( {
 } ) => {
 	const { counts } = useSystemState( 'counts' )
 	const baseURL = '/fl-media'
+	const allowedTypes = [ 'image', 'video' ]
 
 	return (
 		<div className="media-section-grid">
@@ -78,7 +80,7 @@ const MediaGrid = ( {
 
 				{ types.map( ( [ handle, label ] ) => {
 
-					if ( 'all' === handle ) {
+					if ( ! allowedTypes.includes( handle ) ) {
 						return null
 					}
 
@@ -110,27 +112,39 @@ const MediaGrid = ( {
 					)
 				}
 
+				// Handle files currently uploading
 				if ( item instanceof File ) {
 					return (
-						<img
+						<div
 							src={ URL.createObjectURL( item ) }
 							alt={ sprintf( 'Uploading %s', item.name ) }
 							style={ {
 								paddingTop: 0,
-								width: '100%',
-								height: '100%',
-								objectFit: 'cover',
-								filter: 'contrast(0.5) brightness(80%)'
+								filter: 'contrast(0.5) brightness(80%)',
+								backgroundImage: `url( ${ URL.createObjectURL( item ) } )`,
+								backgroundSize: 'cover',
+								color: 'white'
 							} }
-						/>
+						>
+							<Icon.Loading />
+						</div>
 					)
 				}
 
+				const { type, subtype, thumbnail } = item
 				const src = ( 'sizes' in item && 'medium' in item.sizes ) ? item.sizes.medium.url : item.url
+				const classes = c( 'media-grid-item', {
+					[`media-grid-item-type-${type}`]: type
+				} )
+				//const isDocument = ( 'application' === type || ( 'pdf' === subtype && ! thumbnail ) )
+
+				if ( 'video' === type ) {
+					console.log( item )
+				}
 				return (
 					<Button
 						key={ i }
-						className="media-grid-item"
+						className={ classes }
 						to={ {
 							pathname: `${baseURL}/attachment/${item.id}`,
 							state: { item }
@@ -142,7 +156,14 @@ const MediaGrid = ( {
 							backgroundSize: 'cover',
 							backgroundPosition: 'center'
 						} }
-					/>
+					>
+						{ 'audio' === type && <Icon.Audio /> }
+						{ 'video' === type && (
+							<video src={ item.url }>
+								<source type={ `video/${subtype}` } src={ item.url } />
+							</video>
+						) }
+					</Button>
 				)
 			} ) }
 		</div>

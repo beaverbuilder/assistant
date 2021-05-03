@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { App, Page, List, Filter, Button, Icon, Media } from 'assistant/ui'
-import { useAppState, getAppActions } from 'assistant/data'
+import { useAppState, getAppActions, getSystemConfig } from 'assistant/data'
 import { defaultState } from './data'
 import { UploadCard, FileList } from './ui'
 import AppIcon from './icon'
@@ -20,17 +20,10 @@ export default props => (
 const Main = ( { baseURL } ) => {
 	const { listStyle, query, showUploader } = useAppState( 'fl-media' )
 	const { setListStyle, setQuery, setShowUploader } = getAppActions( 'fl-media' )
+	const { attachmentTypes } = getSystemConfig()
 	const { files, uploadFiles, current } = Media.useMediaUploads()
 
 	const MediaFilter = () => {
-
-		const types = {
-			all: __( 'All' ),
-			image: __( 'Image' ),
-			video: __( 'Video' ),
-			audio: __( 'Audio' ),
-			document: __( 'Documents' ),
-		}
 
 		const sorts = {
 			ID: __( 'ID' ),
@@ -57,7 +50,7 @@ const Main = ( { baseURL } ) => {
 			<Filter>
 				<Filter.RadioGroupItem
 					title={ __( 'Type' ) }
-					items={ types }
+					items={ attachmentTypes }
 					value={ query.post_mime_type }
 					defaultValue={ '' }
 					onChange={ value => setQuery( { ...query, post_mime_type: value } ) }
