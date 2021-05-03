@@ -20,7 +20,7 @@ const padWidthDummieItems = ( items = [], minItems = 12 ) => {
 	return [ ...items, ...dummies ]
 }
 
-const MediaSection = () => {
+const MediaSection = ( { ...rest } ) => {
 	const { attachmentTypes } = getSystemConfig()
 	const { attachments } = getWpRest()
 	const [ isLoading, setIsLoading ] = useState( true )
@@ -48,6 +48,7 @@ const MediaSection = () => {
 			title={ __( 'Media' ) }
 			headerActions={ <HeaderActions /> }
 			padContent={ false }
+			{ ...rest }
 		>
 			<Media.Uploader draggingView={ <HoverView /> }>
 				<Swiper disabled={ isLoading }>
@@ -131,16 +132,12 @@ const MediaGrid = ( {
 					)
 				}
 
-				const { type, subtype, thumbnail } = item
+				const { type, subtype } = item
 				const src = ( 'sizes' in item && 'medium' in item.sizes ) ? item.sizes.medium.url : item.url
 				const classes = c( 'media-grid-item', {
 					[`media-grid-item-type-${type}`]: type
 				} )
-				//const isDocument = ( 'application' === type || ( 'pdf' === subtype && ! thumbnail ) )
 
-				if ( 'video' === type ) {
-					console.log( item )
-				}
 				return (
 					<Button
 						key={ i }

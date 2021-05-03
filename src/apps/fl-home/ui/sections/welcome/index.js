@@ -6,7 +6,7 @@ import { useResizeObserver } from 'assistant/utils/react'
 import Section from '../generic'
 import './style.scss'
 
-const WelcomeSection = () => {
+const WelcomeSection = ( { ...rest } ) => {
 	const { currentUser, pluginURL } = getSystemConfig()
 
 	return (
@@ -14,6 +14,7 @@ const WelcomeSection = () => {
 			title={ sprintf( 'Welcome, %s', currentUser.displayName ) }
 			className="home-welcome-section"
 			padContent={ false }
+			{ ...rest }
 		>
 			<ProBanner pluginURL={ pluginURL } />
 		</Section>

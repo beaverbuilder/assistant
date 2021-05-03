@@ -4,7 +4,7 @@ import { Button } from 'assistant/ui'
 import Section, { Swiper } from '../generic'
 import './style.scss'
 
-const ProSection = () => {
+const ProSection = ( { ...rest } ) => {
 
 	return (
 		<Section
@@ -17,6 +17,7 @@ const ProSection = () => {
 					<Button appearance="transparent">View All</Button>
 				</>
 			) }
+			{ ...rest }
 		>
 			<LibrariesGrid />
 		</Section>

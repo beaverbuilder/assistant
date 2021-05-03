@@ -16,6 +16,7 @@ const Section = ( {
 	headerActions,
 	description,
 	footer,
+	onToggle = () => {},
 	...rest
 } ) => {
 	const [ showContent, setShowContent ] = useState( ! isCollapsed )
@@ -37,7 +38,13 @@ const Section = ( {
 				title={ title }
 				showCaret={ canCollapse }
 				isExpanded={ showContent }
-				toggleExpanded={ () => canCollapse && setShowContent( ! showContent ) }
+				toggleExpanded={ () => {
+					if ( canCollapse ) {
+						const newValue = ! showContent
+						setShowContent( newValue )
+						onToggle( newValue )
+					}
+				} }
 				actions={ headerActions }
 			/>
 			{ showContent && (

@@ -16,4 +16,5 @@ registerApp( 'fl-home', {
 		keyword: '',
 		collapsedSections: [],
 	},
+	cache: [ 'collapsedSections' ]
 } )

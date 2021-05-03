@@ -1,6 +1,6 @@
 import React from 'react'
 import { sprintf } from '@wordpress/i18n'
-import { getSystemConfig } from 'assistant/data'
+import { getSystemConfig, useAppState, getAppActions } from 'assistant/data'
 import RecentPostsSection from './recent-posts'
 import AppsSection from './apps'
 import MediaSection from './media'
@@ -18,14 +18,45 @@ const WelcomeMessage = () => {
 }
 
 const HomeSections = () => {
-	return (
-		<>
-			<QuickStats title={ <WelcomeMessage /> } />
-			<MediaSection />
-			<AppsSection />
-			<RecentPostsSection />
-		</>
-	)
+	const { collapsedSections } = useAppState( 'fl-home' )
+	const { setCollapsedSections } = getAppActions( 'fl-home' )
+	const sections = [
+		{
+			handle: 'stats',
+			render: props => <QuickStats title={ <WelcomeMessage /> } { ...props } />
+		},
+		{
+			handle: 'media',
+			render: MediaSection
+		},
+		{
+			handle: 'apps',
+			render: AppsSection
+		},
+		{
+			handle: 'posts',
+			render: RecentPostsSection
+		},
+	]
+
+	/**
+	 * Caches the expanded/collapsed state in app state
+	 */
+	return sections.map( ( { handle, render: Component } ) => (
+		<Component
+			key={ handle }
+			isCollapsed={ collapsedSections.includes( handle ) }
+			onToggle={ value => {
+
+				if ( false === value && ! collapsedSections.includes( handle ) ) {
+					setCollapsedSections( [ ...collapsedSections, handle ] )
+				}
+				if ( true === value && collapsedSections.includes( handle ) ) {
+					setCollapsedSections( [ ...collapsedSections.filter( name => name !== handle ) ] )
+				}
+			} }
+		/>
+	) )
 }
 
 export default HomeSections

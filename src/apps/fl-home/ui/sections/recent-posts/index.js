@@ -4,7 +4,7 @@ import { List } from 'assistant/ui'
 import Section from '../generic'
 import './style.scss'
 
-const RecentPostsSection = () => {
+const RecentPostsSection = ( { ...rest } ) => {
 	const type = 'post'
 	const baseUrl = '/fl-content'
 
@@ -13,6 +13,7 @@ const RecentPostsSection = () => {
 			title={ __( 'Recent Posts' ) }
 			className="recent-posts-feature-section"
 			padContent={ false }
+			{ ...rest }
 		>
 			<List.Posts
 				endcap={ false }

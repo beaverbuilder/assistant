@@ -1,5 +1,5 @@
 import React from 'react'
-import { __, sprintf } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { Button, Icon, Text } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import Section, { Swiper } from '../generic'
@@ -15,8 +15,8 @@ const GoToButton = ( { children, ...rest } ) => (
 	</Button>
 )
 
-const AppsSection = () => {
-	const { pluginURL, currentUser } = getSystemConfig()
+const AppsSection = ( { ...rest } ) => {
+	const { pluginURL } = getSystemConfig()
 	const imgURL = `${pluginURL}/img/apps/fl-home/`
 	return (
 		<Section
@@ -24,6 +24,7 @@ const AppsSection = () => {
 			title={ __( 'Get Started with Apps' ) }
 			description={ __( 'Assistant apps give you quick access to some of your most frequent tasks.' ) }
 			padContent={ false }
+			{ ...rest }
 		>
 			<Swiper>
 				<Card
