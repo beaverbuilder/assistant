@@ -1,5 +1,5 @@
 import React from 'react'
-import ProSection from './pro'
+import LibrariesSection from './pro'
 import RecentPostsSection from './recent-posts'
 import WelcomeSection from './welcome'
 import AppsSection from './apps'
@@ -10,10 +10,10 @@ const HomeSections = () => {
 	return (
 		<>
 			<WelcomeSection />
-			<QuickStats />
-			<MediaSection />
-			<ProSection />
 			<AppsSection />
+			<QuickStats />
+			<LibrariesSection />
+			<MediaSection />
 			<RecentPostsSection />
 		</>
 	)
