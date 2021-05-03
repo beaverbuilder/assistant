@@ -1,17 +1,16 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Icon } from 'assistant/ui'
-import { useAppState } from 'assistant/data'
-import cloud from 'assistant/cloud'
+import { useAppState, useSystemState } from 'assistant/data'
 
 import Actions from './actions'
 import LibrariesFilter from './filter'
 import LibrariesList from './list'
 
 export default () => {
+	const { cloudUser } = useSystemState()
 	const { filter, libraries, teams } = useAppState( 'libraries' )
 	const { owner, ...query } = filter
-	const cloudUser = cloud.session.getUser()
 
 	return (
 		<Page

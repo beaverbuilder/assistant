@@ -1,11 +1,10 @@
 import React from 'react'
 import { Button } from 'assistant/ui'
-import { getSystemConfig } from 'assistant/data'
-import cloud from 'assistant/cloud'
+import { getSystemConfig, useSystemState } from 'assistant/data'
 
 export default () => {
 	const { cloudConfig } = getSystemConfig()
-	const cloudUser = cloud.session.getUser()
+	const { cloudUser } = useSystemState()
 	return (
 		<>
 			<Button
