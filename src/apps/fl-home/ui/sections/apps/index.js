@@ -21,7 +21,7 @@ const AppsSection = () => {
 	return (
 		<Section
 			className="fl-asst-apps-feature-section"
-			title={ sprintf( 'Welcome, %s', currentUser.displayName ) }
+			title={ __( 'Get Started with Apps' ) }
 			description={ __( 'Assistant apps give you quick access to some of your most frequent tasks.' ) }
 			padContent={ false }
 		>

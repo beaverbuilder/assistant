@@ -5,12 +5,13 @@ import { useSystemState, getSystemConfig } from 'assistant/data'
 import Section, { Swiper } from '../generic'
 import './style.scss'
 
-const StatsSection = () => {
+const StatsSection = ( { ...rest } ) => {
 	return (
 		<Section
 			title={ __( 'At A Glance' ) }
 			className="home-stats-section"
 			padContent={ false }
+			{ ...rest }
 		>
 			<Swiper>
 				<CurrentlyViewing />
