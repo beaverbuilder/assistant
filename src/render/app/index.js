@@ -25,42 +25,21 @@ const AppMain = () => {
 		[ `fl-asst-app-${appHandle}` ]: appHandle
 	} )
 
-	const variants = {
-		collapsed: ( { sideName } ) => ( {
-			originX: 'right' === sideName ? 1 : 0,
-			x: 'right' === sideName ? 100 : -100
-		} ),
-		expanded: ( { sideName } ) => ( {
-			originX: 'right' === sideName ? 1 : 0,
-			x: 0
-		} ),
-	}
-
-	const displayContent = ! isAppHidden && ( ! isHidden || isBeaverBuilder )
+	//const displayContent = ! isAppHidden && ( ! isHidden || isBeaverBuilder )
+	const displayContent = ! isAppHidden || isBeaverBuilder
 
 	return (
 		<div className={ classes } style={ { flexDirection: rowDirection } }>
 			<Sidebar />
-			<AnimatePresence initial={ false }>
-				{ displayContent && (
-					<motion.div
-						key="main-content"
-						variants={ variants }
-						initial="collapsed"
-						animate="expanded"
-						exit="collapsed"
-						transition={ { type: 'tween', duration: 0 } }
-						custom={ { sideName } }
-						className="fl-asst-main-content"
-					>
-						<App.Content
-							apps={ apps }
-							defaultApp={ homeKey }
-							loading={ Page.Loading }
-						/>
-					</motion.div>
-				) }
-			</AnimatePresence>
+			{ displayContent && (
+				<div className="fl-asst-main-content" >
+					<App.Content
+						apps={ apps }
+						defaultApp={ homeKey }
+						loading={ Page.Loading }
+					/>
+				</div>
+			) }
 		</div>
 	)
 }

@@ -212,6 +212,7 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 					flexDirection: 'column',
 					pointerEvents: isHidden ? 'none' : null,
 					contain: 'strict',
+					willChange: 'transform'
 				} }
 
 				drag
@@ -344,6 +345,7 @@ const GrabBar = () => (
 			right: 0,
 			zIndex: 5,
 			cursor: 'move',
+			color: 'var(--fluid-opaque-7)'
 		} }
 	>
 		<svg width="40" height="4" viewBox="0 0 40 4" version="1.1" xmlns="http://www.w3.org/2000/svg">
