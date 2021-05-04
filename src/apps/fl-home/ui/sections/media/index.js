@@ -73,9 +73,12 @@ const MediaGrid = ( {
 	const { counts } = useSystemState( 'counts' )
 	const baseURL = '/fl-media'
 	const allowedTypes = [ 'image', 'video' ]
+	const classes = c( 'media-section-grid', {
+		[`media-grid-type-${type}`]: type
+	} )
 
 	return (
-		<div className="media-section-grid">
+		<div className={ classes }>
 
 			<ul className="media-grid-nav">
 
