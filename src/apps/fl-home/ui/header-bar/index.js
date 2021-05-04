@@ -56,6 +56,14 @@ const HeaderBar = ( {
 						onFocus()
 					} }
 				/>
+				<Button
+					appearance="transparent"
+					href="/wp-admin"
+					shape="round"
+					target="_blank"
+				>
+					<Icon.WordPress />
+				</Button>
 			</div>
 			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick } /> }
 			{ isShowingWidgetLib && <Widget.Library onClose={ () => setIsShowingWidgetLib( false ) } /> }

@@ -4,21 +4,20 @@
         --shadow-color: #EDF0F3;
 
 		background: var(--fluid-background);
-        padding: var(--fluid-med-space) var(--fluid-lg-space);
+        padding: var(--fluid-med-space);
+		padding-left: 20px;
 		min-height: 70px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 
-		/*
-        &.fluid-sticky-element {
-            background-color: transparent;
-            background: linear-gradient( 180deg,
-				var(--fl-asst-card-background),
-				var(--fl-asst-card-background) 50%,
-				hsla( var(--fluid-hue), 40%, 98%, 0 )
-            ) !important;
-        }*/
+		& > * {
+			margin-right: 5px;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
 
         .fl-asst-floating-element {
             background: var(--fluid-background);
