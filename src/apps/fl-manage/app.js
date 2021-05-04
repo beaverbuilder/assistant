@@ -10,7 +10,12 @@ import {
 	Layout,
 	Env,
 } from 'assistant/ui'
-import { useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
+import {
+	useSystemState,
+	getSystemActions,
+	getSystemSelectors,
+	getSystemConfig
+} from 'assistant/data'
 import AppIcon from './icon'
 import { DragHandleBox, AppList } from './ui'
 import './style.scss'
@@ -100,10 +105,11 @@ const UIColorPreferences = () => {
 }
 
 const DefaultsSection = () => {
+	const { frameDefaults } = getSystemConfig()
 	const { window } = useSystemState()
 	const { setWindow } = getSystemActions()
 	const onChangeOrigin = origin => setWindow( { ...window, origin } )
-	const resetFrame = () => setWindow( { ...window, width: 560 } )
+	const resetFrame = () => setWindow( { ...window, width: frameDefaults.defaultWidth } )
 
 	return (
 		<Form.Section label={ __( 'Panel' ) }>

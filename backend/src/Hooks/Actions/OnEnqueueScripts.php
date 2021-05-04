@@ -155,7 +155,7 @@ class OnEnqueueScripts {
 			'frameDefaults'       => [
 				'minWidth'        => 460,
 				'maxWidth'        => 900,
-				'defaultWidth'    => 560,
+				'defaultWidth'    => 520,
 				'defaultOrigin'   => [ 1, 0 ],
 				'breakpoint'      => 650,
 			],
