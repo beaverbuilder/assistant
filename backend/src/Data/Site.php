@@ -75,11 +75,6 @@ class Site {
 				$type      = $post_type;
 				$name      = $obj->post_title;
 
-				if ( is_attachment() ) {
-					$meta = wp_get_attachment_metadata( $obj->ID );
-					$name = basename( $meta['file'] );
-				}
-
 				$actions[] = [
 					'label'      => $labels->edit_item,
 					'href'       => get_edit_post_link( $obj->ID, '' ),
