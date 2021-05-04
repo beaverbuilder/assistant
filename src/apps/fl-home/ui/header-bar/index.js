@@ -57,10 +57,10 @@ const HeaderBar = ( {
 					} }
 				/>
 				<Button
-					appearance="transparent"
 					href="/wp-admin"
 					shape="round"
 					target="_blank"
+					style={ { width: 40, height: 40 } }
 				>
 					<Icon.WordPress />
 				</Button>

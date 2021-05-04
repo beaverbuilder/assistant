@@ -10,11 +10,7 @@ import QuickStats from './stats'
 
 const WelcomeMessage = () => {
 	const { currentUser } = getSystemConfig()
-	return (
-		<>
-			{ sprintf( 'Welcome, %s', currentUser.displayName ) }
-		</>
-	)
+	return sprintf( 'Welcome, %s', currentUser.displayName )
 }
 
 const HomeSections = () => {

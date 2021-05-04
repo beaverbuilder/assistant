@@ -15,6 +15,11 @@ registerApp( 'fl-home', {
 	state: {
 		keyword: '',
 		collapsedSections: [],
+		recentPostsQuery: {
+			post_type: 'post',
+			posts_per_page: 10,
+			post_status: 'any'
+		},
 	},
-	cache: [ 'collapsedSections' ]
+	cache: [ 'collapsedSections', 'recentPostsQuery' ]
 } )
