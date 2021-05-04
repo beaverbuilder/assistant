@@ -9,7 +9,9 @@ export const useFileDrop = ( handleDrop = () => { } ) => {
 		e.preventDefault()
 		e.stopPropagation()
 
-		if ( e.dataTransfer.items ) {
+		const hasFiles = -1 != e.dataTransfer.types.indexOf( 'Files' )
+
+		if ( hasFiles ) {
 			e.dataTransfer.effectAllowed = 'copy'
 			setIsDragging( true )
 		}
