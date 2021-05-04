@@ -135,8 +135,7 @@ const MediaGrid = ( {
 					)
 				}
 
-				const { type, subtype } = item
-				const src = ( 'sizes' in item && 'medium' in item.sizes ) ? item.sizes.medium.url : item.url
+				const { type, subtype, thumbnail } = item
 				const classes = c( 'media-grid-item', {
 					[`media-grid-item-type-${type}`]: type
 				} )
@@ -151,7 +150,7 @@ const MediaGrid = ( {
 						} }
 						style={ {
 							borderRadius: 0,
-							backgroundImage: `url( ${src} )`,
+							backgroundImage: `url( ${thumbnail} )`,
 							backgroundRepeat: 'no-repeat',
 							backgroundSize: 'cover',
 							backgroundPosition: 'center'

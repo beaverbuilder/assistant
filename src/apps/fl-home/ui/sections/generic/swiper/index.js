@@ -29,7 +29,10 @@ const Swiper = ( {
 
 	return (
 		<Tag className={ classes } { ...rest }>
-			<div className="fl-asst-swiper-scroller" ref={ ref }>
+			<div
+				className="fl-asst-swiper-scroller"
+				ref={ ref }
+			>
 				{children}
 			</div>
 			{ ! disabled && (
