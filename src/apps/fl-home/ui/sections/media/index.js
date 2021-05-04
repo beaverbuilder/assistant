@@ -33,6 +33,7 @@ const MediaSection = ( { ...rest } ) => {
 	}
 
 	useEffect( () => {
+		setItems( [] )
 		attachments().findWhere( query ).then( ( { data } ) => {
 			if ( data.items ) {
 				setItems( [ ...data.items ] )
