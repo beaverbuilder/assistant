@@ -2,9 +2,9 @@ import React from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemConfig, useAppState } from 'assistant/data'
-import { Page } from 'assistant/ui'
+import { Page, Text } from 'assistant/ui'
 import AppIcon from './icon'
-import { ConnectCard, ConnectButton } from './ui'
+import { ConnectButton } from './ui'
 
 export default ( { baseURL } ) => {
 	const history = useHistory()
@@ -74,6 +74,8 @@ const Main = () => {
 					margin: '0 auto'
 				} }
 			>
+				<Text.Title style={ { fontSize: 20 } }>{ __( 'Coming Soon!' ) }</Text.Title>
+
 				<p style={ { marginBottom: 30 } }>{__( 'Assistant Pro joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them. To use libraries, you’ll need an Assistant Pro account.' )}</p>
 
 				<ConnectButton onClick={ connect }>{ __( 'Connect to Pro' ) }</ConnectButton>
