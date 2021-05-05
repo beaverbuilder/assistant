@@ -72,7 +72,10 @@
 				display: flex;
 				flex-direction: row;
 				margin-top: auto;
-				margin-left: -10px;
+
+				& > * {
+					margin-right: var(--fluid-med-space);
+				}
 			}
 		}
 	}

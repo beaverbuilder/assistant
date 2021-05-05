@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Layout } from 'assistant/ui'
+import { Button, Layout, Icon } from 'assistant/ui'
 import { useSystemState, getSystemConfig } from 'assistant/data'
+import { getWpRest } from 'assistant/utils/wordpress'
 import Section, { Swiper } from '../generic'
 import './style.scss'
 
@@ -21,29 +22,99 @@ const StatsSection = ( { ...rest } ) => {
 	)
 }
 
+const useCurrentItem = () => {
+	const wpRest = getWpRest()
+	const { currentPageView } = getSystemConfig()
+	const { id, isSingular, isAttachment } = currentPageView
+	const [ item, setItem ] = useState( null )
+
+	useLayoutEffect( () => {
+		if ( isAttachment ) {
+			wpRest.attachments().findById( id ).then( response => {
+				setItem( response.data )
+			} )
+
+		} else if ( isSingular ) {
+			wpRest.posts().findById( id ).then( response => {
+				setItem( response.data )
+			} )
+		}
+	}, [] )
+
+	return item
+}
+
 const CurrentlyViewing = () => {
 	const { currentPageView } = getSystemConfig()
-	const { intro, name, actions } = currentPageView
+	const { id, intro, name, actions: _actions, isSingular, isAttachment } = currentPageView
+	const item = useCurrentItem()
+
+	let actions = [ ..._actions ]
+
+	if ( isSingular ) {
+		let pathname = `/fl-content/post/${id}`
+
+		if ( isAttachment ) {
+			pathname = `/fl-media/attachment/${id}`
+		}
+		actions.push( {
+			handle: 'detail',
+			label: __( 'Edit Details' ),
+			to: {
+				pathname,
+				state: { item }
+			}
+		} )
+	}
 
 	return (
 		<div className="fl-asst-swiper-item home-currently-viewing">
-			<div>
+			<div style={ { marginBottom: 10 } }>
 				<div className="home-currently-viewing-eyebrow">{ intro }</div>
 				<div className="home-currently-viewing-title">{ name }</div>
 			</div>
 			<div className="home-currently-viewing-actions">
-				{ actions.map( ( { label, isEnabled = true, href }, i ) => {
+				{ actions.map( ( { handle = '', label, isEnabled = true, ...rest }, i ) => {
 
 					if ( ! isEnabled ) {
 						return null
 					}
-					return (
-						<Button
-							key={ i }
-							appearance="transparent"
-							href={ href }
-						>{ label }</Button>
-					)
+
+					const btn = {
+						key: i,
+						title: label,
+						shape: 'round',
+						size: 'lg',
+						...rest,
+					}
+
+					switch ( handle ) {
+					case 'edit':
+						return (
+							<Button { ...btn } >
+								<Icon.Edit />
+							</Button>
+						)
+					case 'fl-builder':
+						return (
+							<Button { ...btn } >
+								<Icon.Beaver />
+							</Button>
+						)
+					case 'detail':
+						return (
+							<Button { ...btn } disabled={ null === item }>
+								<Icon.View />
+							</Button>
+						)
+					default:
+						return (
+							<Button { ...btn } >
+								{ label }
+							</Button>
+						)
+					}
+
 				} ) }
 			</div>
 		</div>
