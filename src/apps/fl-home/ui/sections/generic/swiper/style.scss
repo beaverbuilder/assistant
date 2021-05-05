@@ -34,8 +34,6 @@
 				scroll-snap-stop: always;
 				margin: 0;
 				margin-right: var(--fluid-lg-space);
-				-ms-touch-action: none;
-				touch-action: none;
 
 				&:last-child {
 					margin-right: 0;
