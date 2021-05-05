@@ -1,7 +1,6 @@
 import React from 'react'
 import classname from 'classnames'
 import { useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import { App } from '@beaverbuilder/app-core'
 import { Page, Env } from 'assistant/ui'
 import { useSystemState } from 'assistant/data'
@@ -10,7 +9,7 @@ import './style.scss'
 
 const AppMain = () => {
 	const { apps, window: windowFrame, isAppHidden, homeKey } = useSystemState( [ 'apps', 'window', 'isAppHidden', 'homeKey' ] )
-	const { origin, isHidden } = windowFrame
+	const { origin } = windowFrame
 	const sideName = origin[0] ? 'right' : 'left'
 	const { isMobile, application } = Env.use()
 	const rowDirection = 'right' === sideName ? 'row-reverse' : 'row'

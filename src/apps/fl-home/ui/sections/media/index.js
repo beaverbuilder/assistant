@@ -5,7 +5,6 @@ import { Button, Media, Icon } from 'assistant/ui'
 import { getSystemConfig, useSystemState } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import Section, { Swiper } from '../generic'
-import Art from './art'
 import './style.scss'
 
 /**
