@@ -8,6 +8,10 @@ import Video from './video'
 import PencilOutline from './pencil-outline'
 import LockClosed from './lock-closed'
 import LockOpen from './lock-open'
+import WordPress from './wordpress'
+
+// ArrowRight - Temp fix util I fix it in @beaverbuilder/icons
+import ArrowRight from './arrow-right-fix'
 
 const Icon = {
 	...FLUID_Icon,
@@ -20,6 +24,8 @@ const Icon = {
 	PencilOutline,
 	LockClosed,
 	LockOpen,
+	ArrowRight,
+	WordPress,
 }
 
 export default Icon

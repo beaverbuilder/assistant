@@ -13,7 +13,7 @@ export const Attachment = () => {
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 	const { createNotice } = Notice.useNotices()
-	const { id, title, type, subtype } = item
+	const { id, type, subtype } = item
 
 	const onSubmit = ( { changed, ids } ) => {
 		const data = {

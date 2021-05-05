@@ -61,6 +61,7 @@ class Site {
 				$name  = $obj->name;
 
 				$actions[] = [
+					'handle'     => 'edit',
 					'label'      => $labels->edit_item,
 					'href'       => get_edit_term_link( $obj->term_id, $obj->taxonomy, null ),
 					'capability' => 'manage_categories',
@@ -75,12 +76,8 @@ class Site {
 				$type      = $post_type;
 				$name      = $obj->post_title;
 
-				if ( is_attachment() ) {
-					$meta = wp_get_attachment_metadata( $obj->ID );
-					$name = basename( $meta['file'] );
-				}
-
 				$actions[] = [
+					'handle'     => 'edit',
 					'label'      => $labels->edit_item,
 					'href'       => get_edit_post_link( $obj->ID, '' ),
 					'capability' => 'edit_pages',
@@ -94,6 +91,7 @@ class Site {
 						$enabled = get_post_meta( $wp_the_query->post->ID, '_fl_builder_enabled', true );
 
 						$actions[] = [
+							'handle'     => 'fl-builder',
 							'label'      => \FLBuilderModel::get_branding(),
 							'href'       => \FLBuilderModel::get_edit_url( $wp_the_query->post->ID ),
 							'capability' => 'edit_pages',
@@ -143,6 +141,8 @@ class Site {
 		$data['isDate'] = is_date();
 		$data['isPostTypeArchive'] = is_post_type_archive();
 		$data['isSingular'] = is_singular();
+		$data['isSingle'] = is_single();
+		$data['isPage'] = is_page();
 		$data['isAttachment'] = is_attachment();
 		$data['isCategory'] = is_tax();
 		$data['isCategory'] = is_category();

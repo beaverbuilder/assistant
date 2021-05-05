@@ -60,6 +60,7 @@ export default ( {
 			<Libraries.LibrariesList
 				type={ type }
 				team={ team }
+				maxItems={ 6 }
 			/>
 		</Layout.Box>
 	)

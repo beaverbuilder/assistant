@@ -26,12 +26,7 @@ const Shell = ( {
 						paddingLeft: 25
 					} }
 				>
-					<Icon.PencilOutline
-						style={ {
-							marginRight: 13
-						} }
-					/>
-					{ __( 'Assistant' ) }
+					<Branding />
 				</div>
 				<FeatureSidebarSection baseURL={ baseURL } />
 				<AppsSection />
@@ -43,6 +38,13 @@ const Shell = ( {
 		</div>
 	)
 }
+
+const Branding = () => (
+	<>
+		<Icon.PencilOutline style={ { marginRight: 13 } } />
+		{ __( 'Assistant' ) }
+	</>
+)
 
 const SidebarSection = ( {
 	title,
@@ -133,7 +135,8 @@ const ShortcutsSection = () => {
 	const shortcuts = [
 		{
 			label: __( 'WordPress Admin', 'fl-assistant' ),
-			href: '/wp-admin'
+			href: '/wp-admin',
+			icon: Icon.WordPress
 		},
 	]
 	if ( 1 > shortcuts.length ) {
@@ -145,14 +148,18 @@ const ShortcutsSection = () => {
 			className="fl-asst-home-shortcut-list"
 		>
 			<ul>
-				{ shortcuts.map( ( { label, href } ) => {
+				{ shortcuts.map( ( {
+					label,
+					href,
+					icon: ShortcutIcon = Icon.Placeholder
+				} ) => {
 					return (
 						<li key={ href }>
 							<Button
 								href={ href }
 								target="_blank"
 								appearance="transparent"
-								icon={ <Icon.Placeholder /> }
+								icon={ <ShortcutIcon /> }
 							>
 								{ label }
 							</Button>

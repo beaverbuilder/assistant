@@ -28,7 +28,7 @@
 							flex: 1 1 auto;
 
 							&.is-selected {
-								background: var(--fluid-opaque-12);
+								background: var(--fluid-box-background);
 								color: var(--fluid-blue);
 							}
 						}
@@ -50,6 +50,7 @@
 		}
 
 		.fl-asst-home-shell-content {
+			position: relative;
 			grid-column: 1 / -1;
 			grid-row: 1 / -1;
 			display: flex;
@@ -57,12 +58,13 @@
 			max-height: 100%;
 			min-height: 0;
 			overflow: auto;
+			overscroll-behavior: contain;
 		}
 	}
 
 	.fluid-frame-size-medium {
 		.fluid-page.fl-asst-home-shell {
-			grid-template-columns: minmax( 160px, 220px ) minmax( 400px, 1fr );
+			grid-template-columns: minmax( 140px, 200px ) minmax( 400px, 1fr );
 
 			.fl-asst-home-shell-sidebar {
 				display: block;

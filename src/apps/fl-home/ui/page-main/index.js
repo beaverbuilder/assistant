@@ -1,6 +1,7 @@
 import React from 'react'
 import { HeaderBar, SearchResults, Widgets, useSearchResults } from 'home/ui'
 import Welcome from './welcome'
+import HomeSections from '../sections'
 import './style.scss'
 
 const Main = ( { baseURL } ) => {
@@ -29,9 +30,16 @@ const Main = ( { baseURL } ) => {
 			) }
 
 			{ '' === keyword && (
-				<div style={ { margin: '0 auto', maxWidth: 450 } }>
-					<Widgets before={ <li><Welcome /></li> } />
-				</div>
+				<>
+					{ false && <Welcome /> }
+					<HomeSections />
+
+					{ false && (
+						<div style={ { margin: '0 auto', maxWidth: 450 } }>
+							<Widgets />
+						</div>
+					) }
+				</>
 			) }
 		</div>
 	)

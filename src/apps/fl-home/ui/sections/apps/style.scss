@@ -1,0 +1,60 @@
+.fl-asst {
+	.fl-asst-apps-feature-section {
+		.fl-asst-swiper {
+
+			.fl-asst-swiper-item {
+				--card-bg:var(--fl-brand-red);
+				--card-color: var(--fl-brand-tan);
+				--card-radius: 20px;
+				display: grid;
+				grid-template-rows: 1fr 80px 60px;
+				background: var(--card-bg);
+				color: var(--card-color);
+				border-radius: var(--card-radius);
+				width: calc( 100% - 40px );
+				max-width: 320px;
+				height: 330px;
+				background-repeat: no-repeat;
+				background-position: top center;
+				background-size: 360px;
+
+				.card-content {
+					grid-row-start: 2;
+					padding: 0 20px;
+				}
+
+				.fluid-text-title {
+					font-size: 22px;
+					font-weight: norma;
+					margin-bottom: 5px;
+				}
+
+				p {
+					margin: 0;
+					font-size: 13px;
+					font-weight: normal;
+				}
+
+				.card-bottom-toolbar {
+					grid-row-start: 3;
+					height: 60px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: flex-end;
+					padding: 5px 20px;
+					padding-right: 12px; /* cause transparent buttons have their own spacing */
+
+					.fluid-button {
+						color: var(--card-color) !important; /* fix for dark mode too */
+						border-radius: calc( var(--card-radius) - 12px );
+
+						&:hover {
+							background: rgba( 0,0,0, .1 );
+						}
+					}
+				}
+			}
+		}
+	}
+}

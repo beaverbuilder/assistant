@@ -10,7 +10,12 @@ import {
 	Layout,
 	Env,
 } from 'assistant/ui'
-import { useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
+import {
+	useSystemState,
+	getSystemActions,
+	getSystemSelectors,
+	getSystemConfig
+} from 'assistant/data'
 import AppIcon from './icon'
 import { DragHandleBox, AppList } from './ui'
 import './style.scss'
@@ -35,6 +40,7 @@ const MainScreen = () => {
 					<AppList before={ <Home /> } />
 				</Page.Section>
 				<UIColorPreferences />
+				<DefaultsSection />
 			</Form>
 		</Page>
 	)
@@ -70,16 +76,13 @@ const Home = memo( () => {
 
 const UIColorPreferences = () => {
 	const { application } = Env.use()
-	const { appearance, window } = useSystemState()
-	const { setBrightness, setWindow } = getSystemActions()
-	const { origin } = window
-
-	const onChangeOrigin = origin => setWindow( { ...window, origin } )
+	const { appearance } = useSystemState()
+	const { setBrightness } = getSystemActions()
 
 	return (
-		<Form.Section label={ __( 'Preferences' ) }>
+		<Form.Section label={ __( 'Appearance' ) }>
 			{ 'beaver-builder' !== application && (
-				<Form.Item label={ __( 'UI Brightness' ) } labelPlacement="beside">
+				<Form.Item label={ __( 'Color Scheme' ) } labelPlacement="beside">
 					<Layout.Row gap={ 5 }>
 						<Button
 							isSelected={ 'light' === appearance.brightness }
@@ -97,22 +100,38 @@ const UIColorPreferences = () => {
 					</Layout.Row>
 				</Form.Item>
 			) }
-			<Form.Item label={ __( 'Attach To' ) } labelPlacement="beside">
+		</Form.Section>
+	)
+}
+
+const DefaultsSection = () => {
+	const { frameDefaults } = getSystemConfig()
+	const { window } = useSystemState()
+	const { setWindow } = getSystemActions()
+	const onChangeOrigin = origin => setWindow( { ...window, origin } )
+	const resetFrame = () => setWindow( { ...window, width: frameDefaults.defaultWidth } )
+
+	return (
+		<Form.Section label={ __( 'Panel' ) }>
+			<Form.Item label={ __( 'Display On' ) } labelPlacement="beside">
 				<Layout.Row gap={ 5 }>
 					<Button
-						isSelected={ ! origin[0] }
+						isSelected={ ! window.origin[0] }
 						onClick={ () => onChangeOrigin( [ 0, 0 ] ) }
 					>
 						{ __( 'Left Edge' ) }
 					</Button>
 
 					<Button
-						isSelected={ origin[0] }
+						isSelected={ window.origin[0] }
 						onClick={ () => onChangeOrigin( [ 1, 0 ] ) }
 					>
 						{ __( 'Right Edge' ) }
 					</Button>
 				</Layout.Row>
+			</Form.Item>
+			<Form.Item label={ __( 'Panel Width' ) } labelPlacement="beside">
+				<Button onClick={ resetFrame } >{ __( 'Reset' ) }</Button>
 			</Form.Item>
 		</Form.Section>
 	)

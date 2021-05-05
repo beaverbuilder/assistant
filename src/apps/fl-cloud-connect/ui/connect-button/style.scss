@@ -1,25 +1,21 @@
 .fluid {
     .fluid-button.fl-asst-connect-button {
-        background: var(--fluid-background);
-        box-shadow: 0px 0px 0px 1.5px currentColor;
-        color: var(--fluid-blue-7);
+		--fluid-accent: var(--fl-brand-red);
+        background-color: var(--fl-brand-red);
+        color: white;
         padding: 0 30px !important;
         transition-property: none;
 
         &:hover {
-            color: var(--fluid-blue-6);
-            background: var(--fluid-background);
+			color: white;
+			background-color: var(--fl-brand-red);
+			filter: brightness(.9);
             transform: scale(1); // cancel out scaling effect
         }
-    }
-    .fluid-color-scheme-dark {
-        .fluid-button.fl-asst-connect-button {
-            background: var(--fluid-blue-1);
-            color: var(--fluid-blue-13);
-
-            &:hover {
-                background: var(--fluid-blue-2);
-            }
-        }
+		&:focus {
+			color: white;
+			background-color: var(--fl-brand-red);
+			transform: scale(1); // cancel out scaling effect
+		}
     }
 }
