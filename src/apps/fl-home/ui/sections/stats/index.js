@@ -98,7 +98,7 @@ const CurrentlyViewing = () => {
 					case 'fl-builder':
 						return (
 							<Button { ...btn } >
-								<Icon.Beaver />
+								<Icon.Beaver size={ 30 } />
 							</Button>
 						)
 					case 'detail':

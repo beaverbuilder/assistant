@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Layout, Form, Icon, Button, Widget } from 'assistant/ui'
+import { Form, Icon, Button, Widget, Menu } from 'assistant/ui'
+import { useSystemState, getSystemActions } from 'assistant/data'
 import SearchSuggestions from './search-suggestions'
 import './style.scss'
 
@@ -57,6 +58,7 @@ const HeaderBar = ( {
 					} }
 				/>
 				<Button
+					appearance="transparent"
 					href="/wp-admin"
 					shape="round"
 					target="_blank"
@@ -64,10 +66,55 @@ const HeaderBar = ( {
 				>
 					<Icon.WordPress />
 				</Button>
+				<MoreMenu />
 			</div>
 			{ ( '' !== keyword || isFocused ) && <SearchSuggestions onClick={ onSuggestionClick } /> }
 			{ isShowingWidgetLib && <Widget.Library onClose={ () => setIsShowingWidgetLib( false ) } /> }
 		</>
+	)
+}
+
+const ColorSchemeMenuItem = () => {
+	const { appearance } = useSystemState( 'appearance' )
+	const { setBrightness } = getSystemActions()
+	const toggleColorScheme = () => {
+		setBrightness( 'dark' === appearance.brightness ? 'light' : 'dark' )
+	}
+
+	return (
+		<Menu.Item onClick={ toggleColorScheme }>
+			{ __( 'Toggle Color Scheme' ) }
+		</Menu.Item>
+	)
+}
+
+const MoreMenu = () => {
+	const [ isShowing, setIsShowing ] = useState( false )
+
+	const MenuContent = () => {
+		return (
+			<>
+				<ColorSchemeMenuItem />
+			</>
+		)
+	}
+
+	return (
+		<Menu
+			content={ <MenuContent /> }
+			isShowing={ isShowing }
+			onOutsideClick={ () => setIsShowing( false ) }
+			style={ { zIndex: 9 } }
+		>
+			<Button
+				appearance="transparent"
+				shape="round"
+				style={ { width: 40, height: 40 } }
+				onClick={ () => setIsShowing( ! isShowing ) }
+			>
+				<Icon.More />
+			</Button>
+		</Menu>
 	)
 }
 
