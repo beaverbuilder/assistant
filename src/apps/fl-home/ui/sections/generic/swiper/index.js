@@ -26,6 +26,8 @@ const Swiper = ( {
 			} )
 		}
 	}
+	let showBack = true
+	let showForward = true
 
 	return (
 		<Tag className={ classes } { ...rest }>
@@ -37,16 +39,20 @@ const Swiper = ( {
 			</div>
 			{ ! disabled && (
 				<div className="fl-asst-swiper-nav">
-					<Button
-						appearance="transparent"
-						icon={ <Icon.CaretLeft /> }
-						onClick={ () => go( true ) }
-					/>
-					<Button
-						appearance="transparent"
-						icon={ <Icon.CaretRight /> }
-						onClick={ () => go( false ) }
-					/>
+					{ showBack && (
+						<Button
+							appearance="transparent"
+							icon={ <Icon.CaretLeft /> }
+							onClick={ () => go( true ) }
+						/>
+					) }
+					{ showForward && (
+						<Button
+							appearance="transparent"
+							icon={ <Icon.CaretRight /> }
+							onClick={ () => go( false ) }
+						/>
+					) }
 				</div>
 			) }
 		</Tag>

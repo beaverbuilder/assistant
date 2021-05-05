@@ -74,16 +74,16 @@ const HeaderBar = ( {
 	)
 }
 
-const ColorSchemeMenuItem = () => {
+const ColorSchemeMenuItem = ( { onClick = () => {} } ) => {
 	const { appearance } = useSystemState( 'appearance' )
 	const { setBrightness } = getSystemActions()
-	const toggleColorScheme = () => {
+	const toggleColorScheme = e => {
 		setBrightness( 'dark' === appearance.brightness ? 'light' : 'dark' )
+		onClick( e.nativeEvent )
 	}
-
 	return (
 		<Menu.Item onClick={ toggleColorScheme }>
-			{ __( 'Toggle Color Scheme' ) }
+			{ 'dark' === appearance.brightness ? __( 'Light Color Scheme' ) : __( 'Dark Color Scheme' ) }
 		</Menu.Item>
 	)
 }
@@ -94,7 +94,7 @@ const MoreMenu = () => {
 	const MenuContent = () => {
 		return (
 			<>
-				<ColorSchemeMenuItem />
+				<ColorSchemeMenuItem onClick={ () => setIsShowing( false ) } />
 			</>
 		)
 	}
