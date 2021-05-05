@@ -93,6 +93,12 @@
 						}
 					}
 
+					&:focus, &.is-selected:focus {
+						.media-grid-type-label {
+							color: var(--fluid-accent);
+						}
+					}
+
 					.media-grid-type-count {
 						font-size: 12px;
 						font-weight: 500;
