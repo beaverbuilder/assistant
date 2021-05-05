@@ -72,9 +72,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
-= 0.6.1.alpha.2 =
+= 0.7.0 =
 * The panel can now resize to give you more space!
-* Fix issue where screen goes blank after disabling an app
+* All new home screen
+* You can now drop media directly on the "Media" home screen section to upload.
+* Fixed issue where screen goes blank after disabling an app
 
 = 0.6.0 ( 2021-01-28 ) =
 * Enhance media uploading UI
