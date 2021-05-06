@@ -92,12 +92,14 @@ const DefaultsSection = () => {
 					<Layout.Row gap={ 5 }>
 						<Button
 							isSelected={ 'light' === appearance.brightness }
+							appearance="transparent"
 							onClick={ () => setBrightness( 'light' ) }
 						>
 							<Icon.Sun />&nbsp;&nbsp;{__( 'Light' )}
 						</Button>
 						<Button
 							isSelected={ 'dark' === appearance.brightness }
+							appearance="transparent"
 							onClick={ () => setBrightness( 'dark' ) }
 						>
 							<Icon.Moon />&nbsp;&nbsp;{__( 'Dark' )}
@@ -109,16 +111,20 @@ const DefaultsSection = () => {
 				<Layout.Row gap={ 5 }>
 					<Button
 						isSelected={ ! window.origin[0] }
+						appearance="transparent"
 						onClick={ () => onChangeOrigin( [ 0, 0 ] ) }
+						icon={ <Icon.Sidebar /> }
 					>
-						{ __( 'Left Edge' ) }
+						{ __( 'Left' ) }
 					</Button>
 
 					<Button
 						isSelected={ window.origin[0] }
+						appearance="transparent"
 						onClick={ () => onChangeOrigin( [ 1, 0 ] ) }
+						icon={ <Icon.Sidebar side="right" /> }
 					>
-						{ __( 'Right Edge' ) }
+						{ __( 'Right' ) }
 					</Button>
 				</Layout.Row>
 			</Form.Item>

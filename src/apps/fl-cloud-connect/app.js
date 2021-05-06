@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemConfig, useAppState } from 'assistant/data'
-import { Page, Text } from 'assistant/ui'
+import { Page, Text, Icon } from 'assistant/ui'
 import AppIcon from './icon'
 import { ConnectButton } from './ui'
 
@@ -57,7 +57,7 @@ const Main = () => {
 		<Page
 			className='fl-asst-connect-layout'
 			title={ __( 'Connect to Assistant Pro' ) }
-			icon={ <AppIcon context='sidebar' /> }
+			icon={ <Icon.Library /> }
 			shouldShowBackButton={ false }
 			padX={ false }
 			padY={ false }
