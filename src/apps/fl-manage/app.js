@@ -17,12 +17,15 @@ import {
 	getSystemConfig
 } from 'assistant/data'
 import AppIcon from './icon'
-import { DragHandleBox, AppList } from './ui'
+import { DragHandleBox, AppList, LabelsScreen } from './ui'
 import './style.scss'
 
 export default props => (
 	<App.Config
-		pages={ { default: MainScreen } }
+		pages={ {
+			default: MainScreen,
+			'labels': LabelsScreen
+		} }
 		{ ...props }
 	/>
 )
@@ -39,8 +42,8 @@ const MainScreen = () => {
 					<p style={ { marginTop: 0 } }>{__( 'You can reorder the apps below. The top 5 will appear in the sidebar for quick access.' )}</p>
 					<AppList before={ <Home /> } />
 				</Page.Section>
-				<UIColorPreferences />
 				<DefaultsSection />
+				<LabelsSection />
 			</Form>
 		</Page>
 	)
@@ -74,13 +77,16 @@ const Home = memo( () => {
 	)
 } )
 
-const UIColorPreferences = () => {
+const DefaultsSection = () => {
 	const { application } = Env.use()
-	const { appearance } = useSystemState()
-	const { setBrightness } = getSystemActions()
+	const { frameDefaults } = getSystemConfig()
+	const { window, appearance } = useSystemState()
+	const { setWindow, setBrightness } = getSystemActions()
+	const onChangeOrigin = origin => setWindow( { ...window, origin } )
+	const resetFrame = () => setWindow( { ...window, width: frameDefaults.defaultWidth } )
 
 	return (
-		<Form.Section label={ __( 'Appearance' ) }>
+		<Form.Section label={ __( 'UI Appearance' ) }>
 			{ 'beaver-builder' !== application && (
 				<Form.Item label={ __( 'Color Scheme' ) } labelPlacement="beside">
 					<Layout.Row gap={ 5 }>
@@ -90,7 +96,6 @@ const UIColorPreferences = () => {
 						>
 							<Icon.Sun />&nbsp;&nbsp;{__( 'Light' )}
 						</Button>
-
 						<Button
 							isSelected={ 'dark' === appearance.brightness }
 							onClick={ () => setBrightness( 'dark' ) }
@@ -100,20 +105,7 @@ const UIColorPreferences = () => {
 					</Layout.Row>
 				</Form.Item>
 			) }
-		</Form.Section>
-	)
-}
-
-const DefaultsSection = () => {
-	const { frameDefaults } = getSystemConfig()
-	const { window } = useSystemState()
-	const { setWindow } = getSystemActions()
-	const onChangeOrigin = origin => setWindow( { ...window, origin } )
-	const resetFrame = () => setWindow( { ...window, width: frameDefaults.defaultWidth } )
-
-	return (
-		<Form.Section label={ __( 'Panel' ) }>
-			<Form.Item label={ __( 'Display On' ) } labelPlacement="beside">
+			<Form.Item label={ __( 'Display Panel On' ) } labelPlacement="beside">
 				<Layout.Row gap={ 5 }>
 					<Button
 						isSelected={ ! window.origin[0] }
@@ -131,8 +123,16 @@ const DefaultsSection = () => {
 				</Layout.Row>
 			</Form.Item>
 			<Form.Item label={ __( 'Panel Width' ) } labelPlacement="beside">
-				<Button onClick={ resetFrame } >{ __( 'Reset' ) }</Button>
+				<Button onClick={ resetFrame } >{ __( 'Reset To Default' ) }</Button>
 			</Form.Item>
+		</Form.Section>
+	)
+}
+
+const LabelsSection = () => {
+	return (
+		<Form.Section label={ __( 'Manage Labels' ) }>
+			<LabelsScreen />
 		</Form.Section>
 	)
 }

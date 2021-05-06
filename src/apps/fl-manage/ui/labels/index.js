@@ -4,7 +4,6 @@ import { createSlug } from 'assistant/utils/url'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { Color, Control, Page, Layout, Button, Icon, Text } from 'assistant/ui'
 import { getSystemHooks } from 'assistant/data'
-import AppIcon from './icon'
 import './style.scss'
 
 const Labels = () => {
@@ -184,23 +183,14 @@ const Labels = () => {
 	} )
 
 	return (
-		<Page
-			title={ __( 'Labels' ) }
-			icon={ <AppIcon context="sidebar" /> }
-			shouldShowBackButton={ false }
-		>
-			<Page.Section
-				className='fl-asst-edit-labels'
-				contentStyle={ { paddingTop: 0 } }
-			>
-				<p style={ { marginTop: 0 } }>
-					{ __( 'Labels allow you to mark posts or pages for organization and collaborate with other users. Below you can add more labels and change the name of existing ones. Add labels to posts inside the Content app.' ) }
-				</p>
-				<Layout.Table rows={ rows } />
-			</Page.Section>
+		<div className="fl-asst-edit-labels">
+			<p style={ { marginTop: 0 } }>
+				{ __( 'Labels allow you to mark posts or pages for organization and collaborate with other users. Below you can add more labels and change the name of existing ones. Add labels to posts inside the Content app.' ) }
+			</p>
+			<Layout.Table rows={ rows } />
 
 			<Page.Section
-				label={ __( 'Add New Label' ) }
+				label={ __( 'Create New Label' ) }
 				className='fl-asst-add-label'
 				style={ { marginTop: 'auto' } }
 			>
@@ -214,9 +204,9 @@ const Labels = () => {
 					value={ newColor }
 					onChange={ value => setNewColor( value ) }
 				/>
-				<Button onClick={ addLabel }>{ __( 'Add New Label' ) }</Button>
+				<Button onClick={ addLabel }>{ __( 'Create New Label' ) }</Button>
 			</Page.Section>
-		</Page>
+		</div>
 	)
 }
 

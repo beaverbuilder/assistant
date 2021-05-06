@@ -1,10 +1,12 @@
 import React from 'react'
 import { Button, Icon, App } from 'assistant/ui'
 import { UP, DOWN } from '@wordpress/keycodes'
+import LabelsScreen from './labels'
 import './style.scss'
 
-export const AppList = ( { ...rest } ) => {
+export { LabelsScreen }
 
+export const AppList = ( { ...rest } ) => {
 	return (
 		<App.List
 			className="fl-asst-manage-app-order-list"
