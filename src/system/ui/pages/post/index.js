@@ -469,16 +469,8 @@ export const Post = ( { location, match, history } ) => {
 	}
 
 	const Hero = () => {
-		const { pluginURL } = getSystemConfig()
 		if ( ! featureThumbnail ) {
-			return (
-				<Layout.AspectBox
-					ratio="4:1"
-					style={ {
-						background: `url("${pluginURL}img/dark-triangles.png")`,
-					} }
-				/>
-			)
+			return null
 		}
 		const { alt, title, height, width } = featureThumbnail
 
