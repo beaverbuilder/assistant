@@ -3,6 +3,7 @@
 		--stroke-weight: 1px;
 		--space-around: 20px;
 		--divider-color: var(--fluid-opaque-10);
+		--subtitle-color: var(--fluid-opaque-6);
 
 		.fl-asst-swiper-scroller {
 
@@ -48,7 +49,7 @@
 			.home-stat-label {
 				font-size: 1em;
 				margin-top: 2px;
-				color: var(--fluid-opaque-7);
+				color: var(--subtitle-color);
 			}
 		}
 
@@ -63,6 +64,13 @@
 			.home-currently-viewing-eyebrow {
 				font-size: 1em;
 				margin-bottom: 5px;
+				display: flex;
+				align-items: center;
+				color: var(--subtitle-color);
+
+				svg {
+					margin-right: 10px;
+				}
 			}
 			.home-currently-viewing-title {
 				font-size: 1.5em;
@@ -86,6 +94,8 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: flex-start;
+			border-radius: 0;
+
 
 			&:hover {
 				text-decoration: none;
@@ -95,7 +105,8 @@
 			.theme-card-title {
 				flex: 0 0 auto;
 				margin-bottom: 10px;
-				font-size: 16px;
+				font-size: 15px;
+				color: var(--subtitle-color);
 			}
 
 			.theme-details {
@@ -107,6 +118,7 @@
 					flex: 0 0 100px;
 					width: 100px;
 					margin-right: 20px;
+					filter: brightness( 0.98 );
 				}
 				.theme-meta {
 					flex: 1 1 auto;
@@ -135,6 +147,7 @@
 	.fluid-color-scheme-dark {
 		.home-stats-section {
 			--divider-color: var(--fluid-opaque-0);
+			--subtitle-color: var(--fluid-opaque-8);
 		}
 	}
 }

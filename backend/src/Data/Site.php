@@ -210,7 +210,7 @@ class Site {
 		}
 
 		if ( current_user_can( 'switch_themes' ) ) {
-			$urls['switchThemes'] = '';
+			$urls['switchThemes'] = admin_url( 'themes.php' );
 		}
 
 		// Your User Profile

@@ -71,7 +71,9 @@ const CurrentlyViewing = () => {
 	return (
 		<div className="fl-asst-swiper-item home-currently-viewing">
 			<div style={ { marginBottom: 10 } }>
-				<div className="home-currently-viewing-eyebrow">{ intro }</div>
+				<div className="home-currently-viewing-eyebrow">
+					{ intro }
+				</div>
 				<div className="home-currently-viewing-title">{ name }</div>
 			</div>
 			<div className="home-currently-viewing-actions">
@@ -157,11 +159,15 @@ const Counts = () => {
 }
 
 const Theme = () => {
-	const { currentPageView } = getSystemConfig()
+	const { currentPageView, adminURLs } = getSystemConfig()
 	const { name, screenshot, team, version } = currentPageView.theme
 
+	if ( undefined === adminURLs.switchThemes ) {
+		return null
+	}
+
 	return (
-		<a href="#" className="fl-asst-swiper-item home-theme-card">
+		<a href={ adminURLs.switchThemes } className="fl-asst-swiper-item home-theme-card" target="_blank" rel="noreferrer">
 			<div className="theme-card-title">{ __( 'Active Theme' ) }</div>
 			<div className="theme-details">
 				<div className="theme-thumbnail">
