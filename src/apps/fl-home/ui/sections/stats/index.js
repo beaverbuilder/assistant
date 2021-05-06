@@ -17,6 +17,7 @@ const StatsSection = ( { ...rest } ) => {
 			<Swiper>
 				<CurrentlyViewing />
 				<Counts />
+				<Theme />
 			</Swiper>
 		</Section>
 	)
@@ -160,20 +161,25 @@ const Theme = () => {
 	const { name, screenshot, team, version } = currentPageView.theme
 
 	return (
-		<div className="fl-asst-swiper-item home-theme-card">
-			<div style={ { width: 100 } }>
-				<Layout.AspectBox
-					ratio="4:3"
-					style={ {
-						background: `url(${screenshot})`,
-						backgroundSize: 'cover',
-					} }
-				/>
+		<a href="#" className="fl-asst-swiper-item home-theme-card">
+			<div className="theme-card-title">{ __( 'Active Theme' ) }</div>
+			<div className="theme-details">
+				<div className="theme-thumbnail">
+					<Layout.AspectBox
+						ratio="4:3"
+						style={ {
+							background: `url(${screenshot})`,
+							backgroundSize: 'cover',
+						} }
+					/>
+				</div>
+				<div className="theme-meta">
+					<div className="theme-title">{ name }</div>
+					<div>Version: { version }</div>
+					<div>Author: { team }</div>
+				</div>
 			</div>
-			<div>Theme</div>
-			<div>{ name }</div>
-			<div>Version: { version }</div>
-		</div>
+		</a>
 	)
 }
 
