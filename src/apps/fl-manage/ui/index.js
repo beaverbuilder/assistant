@@ -22,6 +22,7 @@ export const AppList = ( { ...rest } ) => {
 							to={ `/${ handle }` }
 							onDragStart={ e => e.preventDefault() }
 							appearance="transparent"
+							size="lg"
 							onKeyDown={ e => {
 								if ( e.keyCode === DOWN ) {
 									moveDown()

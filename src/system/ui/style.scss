@@ -66,6 +66,14 @@
 	}
 }
 
+.fluid {
+	.fluid-menu {
+		.fluid-button {
+			justify-content: flex-start;
+		}
+	}
+}
+
 /* FLUID Layout.Message fix */
 .fluid .fluid-message-icon {
 	height: auto;

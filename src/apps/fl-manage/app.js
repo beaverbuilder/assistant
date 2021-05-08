@@ -61,6 +61,7 @@ const Home = memo( () => {
 			<Button
 				onClick={ goToRoot }
 				appearance="transparent"
+				size="lg"
 				style={ {
 					flex: '1 1 auto',
 					marginRight: 'auto',
