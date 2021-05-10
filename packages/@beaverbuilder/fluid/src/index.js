@@ -9,6 +9,7 @@ import Page from './page'
 import Button from './button'
 import Menu from './menu'
 import Collection from './collection'
+import Dialog from './dialogs'
 
 export {
 	Text,
@@ -17,4 +18,5 @@ export {
 	Menu, // Planning to have menu subsumed by button
 	Layout,
 	Collection,
+	Dialog,
 }
