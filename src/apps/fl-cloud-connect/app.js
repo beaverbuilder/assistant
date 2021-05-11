@@ -3,7 +3,6 @@ import { Switch, Route, useHistory } from 'react-router-dom'
 import { __ } from '@wordpress/i18n'
 import { useSystemState, getSystemConfig, useAppState } from 'assistant/data'
 import { Page, Text, Icon } from 'assistant/ui'
-import AppIcon from './icon'
 import { ConnectButton } from './ui'
 
 export default ( { baseURL } ) => {
@@ -59,6 +58,7 @@ const Main = () => {
 			title={ __( 'Connect to Assistant Pro' ) }
 			icon={ <Icon.Library /> }
 			shouldShowBackButton={ false }
+			toolbar={ false }
 			padX={ false }
 			padY={ false }
 		>
