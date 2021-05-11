@@ -47,7 +47,9 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env
 	return actions
 } )
 
-
+/**
+ * Update the item props for BB Templates
+ */
 addFilter( 'list-item-props', 'fl-assistant', ( props, args ) => {
 	if ( 'fl-builder-template' === args.item.type ) {
 		return {
@@ -58,9 +60,9 @@ addFilter( 'list-item-props', 'fl-assistant', ( props, args ) => {
 	return props
 } )
 
-
+/**
+ * Add Beaver Icon to Currently Viewing action */
 addFilter( 'currently-viewing-actions', 'fl-assistant', actions => actions.map( action => {
-
 	if ( 'fl-builder' === action.handle ) {
 		return {
 			...action,
