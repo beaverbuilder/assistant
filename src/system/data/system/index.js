@@ -33,6 +33,13 @@ registerStore( KEY, {
 	selectors,
 } )
 
+if ( cloud.auth.isConnected() ) {
+	cloud.user.get().then( response => {
+		const { setCloudUser } = getDispatch( KEY )
+		setCloudUser( response.data )
+	} )
+}
+
 export const getSystemStore = () => getStore( KEY )
 
 export const useSystemState = shouldUpdate => useStore( KEY, shouldUpdate )
