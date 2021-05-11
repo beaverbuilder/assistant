@@ -41,7 +41,7 @@ export default ( {
 
 			{ isAddingNew &&
 				<Layout.Toolbar>
-					<Libraries.LibraryInlineCreate teamId={ teamId } />
+					<Libraries.LibraryInlineCreate team={ team } />
 					<Button
 						onClick={ () => setIsAddingNew( false ) }
 						style={ { marginLeft: 5 } }

@@ -1,6 +1,6 @@
 // Public API
 import './style.scss'
-import { Text, Collection, Menu } from '@beaverbuilder/fluid'
+import { Text, Collection, Menu, Dialog } from '@beaverbuilder/fluid'
 import App from './app'
 import Button from './button'
 import Icon from './icon'
@@ -37,4 +37,5 @@ export {
 	Text,
 	Collection,
 	Menu,
+	Dialog,
 }
