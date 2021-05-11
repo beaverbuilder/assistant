@@ -66,32 +66,22 @@ const DraggingView = ( {
 	)
 }
 
-export const FileDropListener = props => {
-	const {
-		children,
-		className,
-		onDrop = () => { },
-		draggingView = <DraggingView />
-	} = props
-
-	const onFilesDropped = files => {
-		onDrop( files )
-	}
+export const FileDropListener = ( {
+	children,
+	className,
+	onDrop = () => {},
+	draggingView = <DraggingView />,
+	...rest
+} ) => {
+	const onFilesDropped = files => onDrop( files )
 	const { bind, isDragging } = useFileDrop( onFilesDropped )
 
-	const classes = classname( {
-		'fl-asst-file-drop': true,
+	const classes = classname( 'fl-asst-file-drop', {
 		'fl-asst-file-drop-is-dragging': isDragging,
 	}, className )
 
-	const merged = {
-		...props,
-		...bind,
-		className: classes,
-	}
-
 	return (
-		<div { ...merged }>
+		<div className={ classes } { ...rest } { ...bind }>
 			<div className="fl-asst-file-drop-content-view">{children}</div>
 			{ isDragging && <div className="fl-asst-file-drop-dragging-view">{draggingView}</div> }
 		</div>
