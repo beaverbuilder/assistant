@@ -1,10 +1,10 @@
 import React, { useState, useLayoutEffect } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Button, Layout, Icon } from 'assistant/ui'
+import { Button, Layout, Icon, Env } from 'assistant/ui'
 import { useSystemState, getSystemConfig } from 'assistant/data'
+import { applyFilters } from 'assistant/hooks'
 import { getWpRest } from 'assistant/utils/wordpress'
 import Section, { Swiper } from '../generic'
-import Beaver from './beaver'
 import './style.scss'
 
 const StatsSection = ( { ...rest } ) => {
@@ -50,8 +50,9 @@ const CurrentlyViewing = () => {
 	const { currentPageView } = getSystemConfig()
 	const { id, intro, name, actions: _actions, isSingular, isAttachment } = currentPageView
 	const item = useCurrentItem()
+	const env = Env.use()
 
-	let actions = [ ..._actions ]
+	let actions = [ ..._actions ] /* Start with actions from the server */
 
 	if ( isSingular ) {
 		let pathname = `/fl-content/post/${id}`
@@ -68,6 +69,7 @@ const CurrentlyViewing = () => {
 			}
 		} )
 	}
+	actions = applyFilters( 'currently-viewing-actions', actions, { currentPageView, item, env } )
 
 	return (
 		<div className="fl-asst-swiper-item home-currently-viewing">
@@ -98,12 +100,6 @@ const CurrentlyViewing = () => {
 						return (
 							<Button { ...btn } >
 								<Icon.Edit />
-							</Button>
-						)
-					case 'fl-builder':
-						return (
-							<Button { ...btn } >
-								<Beaver />
 							</Button>
 						)
 					case 'detail':

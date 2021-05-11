@@ -6,13 +6,11 @@ import './fl-content'
 import './fl-media'
 import './fl-comments'
 import './fl-updates'
-
-// Hidden from production builds for now
-// Use npm run build:pro or npm run dev to enable these apps
 import './fl-cloud-connect'
 import './libraries'
 
+// Product integrations
+import './integrations'
+
 // Hidden from production
 import './designsystem'
-
-import './integrations'

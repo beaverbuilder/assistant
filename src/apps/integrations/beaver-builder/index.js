@@ -1,7 +1,7 @@
 import React from 'react'
 import { addFilter, applyFilters } from 'assistant/hooks'
 import { sprintf } from '@wordpress/i18n'
-import { Icon } from 'assistant/ui'
+import Beaver from './beaver'
 
 const integrationEnabled = () => applyFilters( 'enable-default-integration', true, 'beaver-builder' )
 
@@ -29,7 +29,7 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env
 		isShowing: bbCanEdit,
 		icon: (
 			<>
-				<Icon.Beaver />
+				<Beaver />
 				{ bbIsEnabled && <span className="fl-asst-extra-dot" /> }
 			</>
 		),
@@ -57,3 +57,15 @@ addFilter( 'list-item-props', 'fl-assistant', ( props, args ) => {
 	}
 	return props
 } )
+
+
+addFilter( 'currently-viewing-actions', 'fl-assistant', actions => actions.map( action => {
+
+	if ( 'fl-builder' === action.handle ) {
+		return {
+			...action,
+			label: <Beaver />
+		}
+	}
+	return action
+} ) )
