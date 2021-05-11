@@ -46,7 +46,7 @@ const AppsSection = ( { ...rest } ) => {
 					footer={ <GoToButton to="/fl-media">{ __( 'Go To Media App' ) }</GoToButton> }
 				/>
 				<Card
-					headline={ <div>Share <strong>Libraries</strong> across all your sites</div> }
+					headline={ <div>Coming Soon: Share <strong>Libraries</strong> across all your sites</div> }
 					style={ {
 						'--card-bg': 'var(--fl-brand-light-blue)',
 						'--card-color': '#125F77', /* little darker than normal dark blue */

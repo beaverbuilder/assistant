@@ -1,18 +1,19 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
+import { sprintf } from '@wordpress/i18n'
 import { List } from 'assistant/ui'
-import { useAppState, getAppActions } from 'assistant/data'
+import { useAppState, getAppActions, getSystemConfig } from 'assistant/data'
 import Section from '../generic'
 import './style.scss'
 
 const RecentPostsSection = ( { ...rest } ) => {
 	const { recentPostsQuery: query } = useAppState( 'fl-home' )
 	const { setRecentPostsQuery: setQuery } = getAppActions( 'fl-home' )
+	const { contentTypes } = getSystemConfig()
 	const baseUrl = '/fl-content'
-
-	const types = {
-		post: 'Post',
-		page: 'Page'
+	const postType = contentTypes[ query[ 'post_type' ] ]
+	let postTypeLabel = 'Posts'
+	if ( undefined !== postType ) {
+		postTypeLabel = postType.labels.plural
 	}
 
 	const Actions = () => (
@@ -21,14 +22,14 @@ const RecentPostsSection = ( { ...rest } ) => {
 				setQuery( { ...query, post_type: e.target.value } )
 			} }
 		>
-			{ Object.entries( types ).map( ( [ value, label ] ) => {
+			{ Object.entries( contentTypes ).map( ( [ value, def ] ) => {
 				return (
 					<option
 						key={ value }
 						value={ value }
 						selected={ value === query.post_type }
 					>
-						{ label }
+						{ def.labels.plural }
 					</option>
 				)
 			} ) }
@@ -37,7 +38,7 @@ const RecentPostsSection = ( { ...rest } ) => {
 
 	return (
 		<Section
-			title={ __( 'Recent Posts' ) }
+			title={ sprintf( 'Recent %s', postTypeLabel ) }
 			className="recent-posts-feature-section"
 			padContent={ false }
 			headerActions={ <Actions /> }

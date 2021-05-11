@@ -41,7 +41,7 @@
 			position: sticky;
 			top: 70px;
 			background: var(--fluid-background);
-			z-index: 1;
+			z-index: 2;
 
 			.gutter-space {
 				flex: 0 0 var(--margin);
@@ -62,6 +62,25 @@
 
 			.header-actions {
 				margin-left: auto;
+			}
+		}
+	}
+	@supports ( backdrop-filter: blur( 0px ) ) or ( -webkit-backdrop-filter: blur( 0px ) ) {
+		.fl-asst-feature-section {
+			--bg-effect: blur( 7px ) saturate( 300% );
+			.fl-asst-feature-section-header {
+				background: hsla( 0, 0%, 100%, .9 );
+				-webkit-backdrop-filter: var(--bg-effect);
+				backdrop-filter: var(--bg-effect);
+			}
+		}
+		.fluid-color-scheme-dark {
+			.fl-asst-feature-section {
+				.fl-asst-feature-section-header {
+					background: hsla( 210deg, 10%, 15%, .9 ); /* 90% transparent version of --fluid-background */
+					-webkit-backdrop-filter: var(--bg-effect);
+					backdrop-filter: var(--bg-effect);
+				}
 			}
 		}
 	}

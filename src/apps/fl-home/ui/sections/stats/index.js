@@ -4,6 +4,7 @@ import { Button, Layout, Icon } from 'assistant/ui'
 import { useSystemState, getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import Section, { Swiper } from '../generic'
+import Beaver from './beaver'
 import './style.scss'
 
 const StatsSection = ( { ...rest } ) => {
@@ -102,13 +103,13 @@ const CurrentlyViewing = () => {
 					case 'fl-builder':
 						return (
 							<Button { ...btn } >
-								<Icon.Beaver size={ 30 } />
+								<Beaver />
 							</Button>
 						)
 					case 'detail':
 						return (
 							<Button { ...btn } disabled={ null === item }>
-								<Icon.View />
+								{ null === item ? <Icon.Loading /> : <Icon.ArrowRight /> }
 							</Button>
 						)
 					default:
