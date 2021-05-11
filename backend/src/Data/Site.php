@@ -11,6 +11,8 @@ class Site {
 	 * Get info about the current page view.
 	 */
 	public function get_current_view() {
+		global $wp_the_query;
+
 		$data    = [];
 		$actions = [];
 		$intro   = __( 'Currently Viewing', 'fl-assistant' );
@@ -80,11 +82,12 @@ class Site {
 					'handle'     => 'edit',
 					'label'      => $labels->edit_item,
 					'href'       => get_edit_post_link( $obj->ID, '' ),
+					'target'     => '_blank',
+					'rel'        => 'noopener',
 					'capability' => 'edit_pages',
 				];
 
 				// Add Beaver Builder edit link
-				global $wp_the_query;
 				if ( class_exists( '\FLBuilderModel' ) ) {
 					if ( \FLBuilderModel::is_post_editable() && is_object( $wp_the_query->post ) ) {
 
