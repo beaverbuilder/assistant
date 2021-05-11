@@ -6,7 +6,6 @@ import './fl-content'
 import './fl-media'
 import './fl-comments'
 import './fl-updates'
-//import './fl-labels'
 
 // Hidden from production builds for now
 // Use npm run build:pro or npm run dev to enable these apps
