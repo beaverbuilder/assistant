@@ -12,7 +12,6 @@ const alias = {
 	ui: path.resolve( __dirname, './src/system/ui/' ),
 	data: path.resolve( __dirname, './src/system/data' ),
 	utils: path.resolve( __dirname, './src/system/utils' ),
-	hooks: path.resolve( __dirname, './src/system/hooks' ),
 	cloud: path.resolve( __dirname, './src/system/cloud' ),
 	home: path.resolve( __dirname, './src/apps/fl-home' ),
 
@@ -60,7 +59,6 @@ const externals = [
 		'assistant/data': 'FL.Assistant.data',
 		'assistant/ui': 'FL.Assistant.ui',
 		'assistant/utils': 'FL.Assistant.utils',
-		'assistant/hooks': 'FL.Assistant.hooks',
 		'assistant/cloud': 'FL.Assistant.cloud',
 	},
 	function( context, request, callback ) {

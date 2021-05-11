@@ -2,7 +2,7 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { List, Page, Layout, Filter } from 'assistant/ui'
 import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
-import { addFilter } from 'assistant/hooks'
+import { addFilter } from '@wordpress/hooks'
 import { defaultState } from '../'
 
 export const SummaryTab = () => {
@@ -183,7 +183,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 	)
 }
 
-addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType } ) => {
+addFilter( 'fl-asst.list-item-actions', 'fl-assistant', ( actions, { item, listType } ) => {
 	const handle = 'fl-content'
 
 	if ( 'post' === listType ) {

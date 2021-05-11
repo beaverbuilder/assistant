@@ -1,7 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import classname from 'classnames'
-import { applyFilters } from 'hooks'
+import { applyFilters } from '@wordpress/hooks'
 import { Button, Icon, Env } from 'ui'
 
 const ItemActions = ( {
@@ -22,7 +22,7 @@ const ItemActions = ( {
 		return null
 	}
 
-	const actions = applyFilters( 'list-item-actions', [
+	const actions = applyFilters( 'fl-asst.list-item-actions', [
 		{
 			handle: 'view-post',
 			href: item.url,

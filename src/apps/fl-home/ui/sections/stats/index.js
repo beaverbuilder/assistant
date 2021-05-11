@@ -2,7 +2,7 @@ import React, { useState, useLayoutEffect } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Button, Layout, Icon, Env } from 'assistant/ui'
 import { useSystemState, getSystemConfig } from 'assistant/data'
-import { applyFilters } from 'assistant/hooks'
+import { applyFilters } from '@wordpress/hooks'
 import { getWpRest } from 'assistant/utils/wordpress'
 import Section, { Swiper } from '../generic'
 import './style.scss'
@@ -69,7 +69,7 @@ const CurrentlyViewing = () => {
 			}
 		} )
 	}
-	actions = applyFilters( 'currently-viewing-actions', actions, { currentPageView, item, env } )
+	actions = applyFilters( 'fl-asst.currently-viewing-actions', actions, { currentPageView, item, env } )
 
 	return (
 		<div className="fl-asst-swiper-item home-currently-viewing">

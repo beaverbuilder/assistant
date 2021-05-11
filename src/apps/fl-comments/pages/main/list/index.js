@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { AnimatePresence } from 'framer-motion'
 import { List, Icon, Env } from 'assistant/ui'
 import { useAppState } from 'assistant/data'
-import { applyFilters } from 'assistant/hooks'
+import { applyFilters } from '@wordpress/hooks'
 import Comment from './comment'
 
 export default ( { baseURL } ) => {
@@ -38,7 +38,7 @@ export default ( { baseURL } ) => {
 						state: { item }
 					}
 
-					const actions = applyFilters( 'list-item-actions', [
+					const actions = applyFilters( 'fl-asst.list-item-actions', [
 						{
 							handle: 'view-comment',
 							href: item.url,

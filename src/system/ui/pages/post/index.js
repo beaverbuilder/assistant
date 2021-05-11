@@ -6,7 +6,7 @@ import { getWpRest } from 'utils/wordpress'
 import { createSlug } from 'utils/url'
 import { getSrcSet } from 'utils/image'
 import { getFirstFocusableChild } from 'utils/dom'
-import { applyFilters } from 'hooks'
+import { applyFilters } from '@wordpress/hooks'
 import { getPostActions } from './actions'
 import { useParentOptions } from './parent'
 import { LockView } from './lock'
@@ -67,7 +67,7 @@ export const Post = ( { location, match, history } ) => {
 		post: item,
 		baseURL: match.url,
 	}
-	const additionalTabs = applyFilters( 'post-tabs', {}, args )
+	const additionalTabs = applyFilters( 'fl-asst.post-tabs', {}, args )
 
 	const tabs = {
 		general: {

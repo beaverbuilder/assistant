@@ -5,7 +5,7 @@ import { List, Button, Icon, Layout } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
 import { getSystemConfig, getSystemSelectors } from 'data'
-import { applyFilters } from 'hooks'
+import { applyFilters } from '@wordpress/hooks'
 import ItemActions from './item-actions'
 
 export const Posts = ( {
@@ -229,8 +229,7 @@ export const Posts = ( {
 					favoritePost,
 					clonePost,
 				}
-
-				return applyFilters( 'list-item-props', props, filterArgs )
+				return applyFilters( 'fl-asst.list-item-props', props, filterArgs )
 			} }
 			{ ...rest }
 		/>

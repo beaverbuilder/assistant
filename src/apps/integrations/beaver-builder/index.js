@@ -1,11 +1,11 @@
 import React from 'react'
-import { addFilter, applyFilters } from 'assistant/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { sprintf } from '@wordpress/i18n'
 import Beaver from './beaver'
 
-const integrationEnabled = () => applyFilters( 'enable-default-integration', true, 'beaver-builder' )
+const integrationEnabled = () => applyFilters( 'fl-asst.enable-default-integration', true, 'beaver-builder' )
 
-addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env } ) => {
+addFilter( 'fl-asst.list-item-actions', 'fl-assistant', ( actions, { item, listType, env } ) => {
 
 	// Allow default integration to be overridden
 	if (
@@ -50,7 +50,7 @@ addFilter( 'list-item-actions', 'fl-assistant', ( actions, { item, listType, env
 /**
  * Update the item props for BB Templates
  */
-addFilter( 'list-item-props', 'fl-assistant', ( props, args ) => {
+addFilter( 'fl-asst.list-item-props', 'fl-assistant', ( props, args ) => {
 	if ( 'fl-builder-template' === args.item.type ) {
 		return {
 			...props,
@@ -62,7 +62,7 @@ addFilter( 'list-item-props', 'fl-assistant', ( props, args ) => {
 
 /**
  * Add Beaver Icon to Currently Viewing action */
-addFilter( 'currently-viewing-actions', 'fl-assistant', actions => actions.map( action => {
+addFilter( 'fl-asst.currently-viewing-actions', 'fl-assistant', actions => actions.map( action => {
 	if ( 'fl-builder' === action.handle ) {
 		return {
 			...action,
