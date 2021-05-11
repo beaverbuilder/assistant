@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import classname from 'classnames'
 import Button from '../../button'
 import './style.scss'
@@ -16,7 +17,12 @@ const Dialog = ( {
 		return null
 	}
 
-	return (
+	const getRoot = () => {
+		const root = document.getElementById( 'fluid-dialog-root' )
+		return root ? root : document.body
+	}
+
+	return ReactDOM.createPortal( (
 		<div className={ classname( 'fl-asst-dialog', className ) }>
 			<div className='fl-asst-dialog-window'>
 				{ title &&
@@ -46,7 +52,7 @@ const Dialog = ( {
 				</div>
 			</div>
 		</div>
-	)
+	), getRoot() )
 }
 
 export default Dialog
