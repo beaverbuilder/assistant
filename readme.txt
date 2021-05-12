@@ -75,6 +75,7 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 = 0.7.0 =
 * The panel can now resize to give you more space!
 * All new home screen
+* Coming Soon - Assistant Pro lets you create libraries to share templates and assets across all your WordPress sites.
 * You can now drop media directly on the "Media" home screen section to upload.
 * Fixed issue where screen goes blank after disabling an app
 
