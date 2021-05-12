@@ -6,10 +6,12 @@ import { Button, Icon } from '../'
 import { RadioGroupItem, LabelsItem } from './items'
 import './style.scss'
 
-const Filter = ( { className, children, ...rest } ) => {
+const Filter = ( { className, isSticky, children, ...rest } ) => {
 	const [ showAll, setShowAll ] = useState( false )
 	const hasMore = 6 < Children.count( children )
-	const classes = classname( 'fl-asst-filter', className )
+	const classes = classname( 'fl-asst-filter', {
+		'is-sticky': isSticky
+	}, className )
 	return (
 		<>
 			<ul className={ classes } { ...rest }>

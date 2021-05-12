@@ -95,7 +95,7 @@ const UpdatesMain = ( { handle } ) => {
 		}
 
 		return (
-			<Filter>
+			<Filter isSticky>
 				<Filter.RadioGroupItem
 					title={ __( 'Type' ) }
 					items={ types }
