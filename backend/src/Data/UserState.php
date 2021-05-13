@@ -15,10 +15,18 @@ class UserState {
 	 */
 	const FL_ASSISTANT_STATE = 'fl_assistant_state';
 
+	private static $frame_defaults = [
+		'minWidth'        => 460,
+		'maxWidth'        => 900,
+		'defaultWidth'    => 520,
+		'defaultOrigin'   => [ 1, 0 ],
+		'breakpoint'      => 650,
+	];
+
 	/**
 	 * Default state for the current user.
 	 */
-	public static $default_state = [
+	protected static $default_state = [
 		'appOrder'          => [],
 		'window'            => [
 			'origin'           => [ 1, 0 ],
@@ -35,9 +43,13 @@ class UserState {
 		],
 		'searchHistory'     => [],
 		'shouldShowInAdmin' => true,
-		'isAppHidden'       => true,
+		'isAppHidden'       => false,
 		'shortcuts'         => [],
 	];
+
+	public static function get_default_state() {
+		return static::$default_state;
+	}
 
 	/**
 	 * Get the saved state for the current user.
@@ -65,7 +77,7 @@ class UserState {
 		}
 
 		return array_replace_recursive(
-			static::$default_state,
+			static::get_default_state(),
 			$saved ? (array) $saved : []
 		);
 	}
@@ -82,6 +94,10 @@ class UserState {
 			static::FL_ASSISTANT_STATE,
 			array_merge( $saved, $state )
 		);
+	}
+
+	public static function getFrameDefaults() {
+		return static::$frame_defaults;
 	}
 
 }
