@@ -74,7 +74,7 @@
 
 			.fluid-button {
 				pointer-events: auto;
-				background: transparent;
+				background: transparent !important;
 				width: var(--margin);
 
 				.fluid-button-icon {
