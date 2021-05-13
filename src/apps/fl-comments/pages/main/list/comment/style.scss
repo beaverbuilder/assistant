@@ -190,14 +190,25 @@
                 --line-color: var(--fluid-box-background);
             }
 
-            li:hover {
-                --thread-background-color: var(--fluid-box-background);
-                background: var(--fluid-box-background);
+			li {
+				& > .fluid-button {
+					--background: transparent;
 
-                .fl-asst-comment-gutter {
-                    --line-color: var(--fluid-background);
-                }
-            }
+					&:hover {
+						--background: var(--fluid-box-background);
+						background-color: var(--background) !important;
+
+						.fl-asst-limit-content-fadeout {
+							/* for the fadeout gradient */
+							--thread-background-color: var(--fluid-box-background);
+						}
+
+						.fl-asst-comment-gutter {
+							--line-color: var(--fluid-background);
+						}
+					}
+				}
+			}
         }
     }
 }
