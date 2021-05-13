@@ -128,9 +128,6 @@
             }
         }
 
-        /*.is-pending .fl-asst-comment-author-name {
-            color: var(--fluid-primary-color);
-        }*/
         .is-spam .fl-asst-comment-author-name {
             color: var(--fluid-alert-color);
         }
@@ -142,7 +139,7 @@
             position: relative;
 
             & > .fluid-button {
-                background: transparent;
+                --background: transparent;
                 padding: 0;
                 display: flex;
                 flex-direction: row;
@@ -174,8 +171,12 @@
                 padding-bottom: 20px;
             }
             &:hover {
-                background: #F8FAFC;
-                --thread-background-color: #F8FAFC;
+                --background: #F8FAFC;
+
+				.fl-asst-limit-content-fadeout {
+					/* for the fadeout gradient */
+					--thread-background-color: var(--background);
+				}
 
                 .fl-asst-item-extras {
                     display: flex;
