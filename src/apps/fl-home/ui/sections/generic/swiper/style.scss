@@ -110,5 +110,20 @@
 				overflow-x: hidden;
 			}
 		}
+
+		&.scroll-start {
+			.fl-asst-swiper-nav {
+				.fluid-button:first-child {
+					visibility: hidden;
+				}
+			}
+		}
+		&.scroll-end {
+			.fl-asst-swiper-nav {
+				.fluid-button:last-child {
+					visibility: hidden;
+				}
+			}
+		}
 	}
 }

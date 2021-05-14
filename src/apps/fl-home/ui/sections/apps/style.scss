@@ -50,7 +50,7 @@
 						border-radius: calc( var(--card-radius) - 12px );
 
 						&:hover {
-							background: rgba( 0,0,0, .1 );
+							background-color: rgba( 0,0,0, .1 ) !important;
 						}
 					}
 				}

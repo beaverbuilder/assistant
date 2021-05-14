@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import c from 'classnames'
 import { Button, Icon } from 'assistant/ui'
 import './style.scss'
@@ -15,6 +15,40 @@ const Swiper = ( {
 	const classes = c( 'fl-asst-swiper', {
 		'is-disabled': true === disabled
 	}, className )
+
+	useEffect( () => {
+		if ( ref.current ) {
+			const scroller = ref.current
+
+			const setScrollClasses = el => {
+				const { scrollLeft, scrollWidth, clientWidth, parentNode } = el
+				const parentClasses = parentNode.classList
+
+				// Toggle Start and End classes
+				if ( 0 === scrollLeft ) {
+					parentClasses.add( 'scroll-start' )
+					parentClasses.remove( 'scroll-end' )
+				} else if ( scrollWidth === ( scrollLeft + clientWidth ) ) {
+					parentClasses.remove( 'scroll-start' )
+					parentClasses.add( 'scroll-end' )
+				} else {
+					if ( parentClasses.contains( 'scroll-start' ) ) {
+						parentClasses.remove( 'scroll-start' )
+					}
+					if ( parentClasses.contains( 'scroll-end' ) ) {
+						parentClasses.remove( 'scroll-end' )
+					}
+				}
+			}
+
+			// Initial check
+			setScrollClasses( scroller )
+
+			const handleScroll = e => setScrollClasses( e.target )
+			scroller.addEventListener( 'scroll', handleScroll )
+			return () => scroller.removeEventListener( 'scroll', handleScroll )
+		}
+	}, [] )
 
 	const go = ( back = false ) => {
 		if ( ref.current ) {
