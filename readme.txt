@@ -40,7 +40,7 @@ You can also try Assistant on a [demo site here](http://demo.wpbeaverbuilder.com
 
 == Screenshots ==
 
-1. Home App - Get a quick info about the current screen and recent posts. Quickly jump into search or other apps.
+1. Home App - Get a quick info about the current screen and recent posts. Quickly jump into search, the WP Admin or other Assistant apps.
 
 2. Content App - The Content app can help you find posts and pages and quickly navigate to them.
 
