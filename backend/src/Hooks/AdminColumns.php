@@ -19,11 +19,12 @@ class AdminColumns {
 		foreach ( $types as $type => $info ) {
 			add_filter( "manage_{$type}_posts_columns", [ $this, 'add_columns' ] );
 			add_action( "manage_{$type}_posts_custom_column", [ $this, 'render_column' ], 10, 2 );
+			add_filter( "default_hidden_columns", [ $this, 'defualt_hidden_columns' ], 10, 2 );
 		}
 	}
 
 	public function add_columns( $columns ) {
-		$columns['fl_assistant'] = __( 'Assistant', 'fl-assistant' );
+		$columns['fl_assistant'] = __( 'Labels', 'fl-assistant' );
 		return $columns;
 	}
 
@@ -56,5 +57,13 @@ class AdminColumns {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Make our custom column hidden by default.
+	 */
+	public function defualt_hidden_columns( $hidden, $screen ) {
+		$hidden[] = 'fl_assistant';
+		return $hidden;
 	}
 }
