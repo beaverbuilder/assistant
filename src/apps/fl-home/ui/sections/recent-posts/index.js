@@ -5,7 +5,7 @@ import { useAppState, getAppActions, getSystemConfig } from 'assistant/data'
 import Section from '../generic'
 import './style.scss'
 
-const RecentPostsSection = ( { ...rest } ) => {
+const RecentPostsSection = ( { isCollapsed, ...rest } ) => {
 	const { recentPostsQuery: query } = useAppState( 'fl-home' )
 	const { setRecentPostsQuery: setQuery } = getAppActions( 'fl-home' )
 	const { contentTypes } = getSystemConfig()
@@ -41,7 +41,8 @@ const RecentPostsSection = ( { ...rest } ) => {
 			title={ sprintf( 'Recent %s', postTypeLabel ) }
 			className="recent-posts-feature-section"
 			padContent={ false }
-			headerActions={ <Actions /> }
+			headerActions={ ! isCollapsed && <Actions /> }
+			isCollapsed={ isCollapsed }
 			{ ...rest }
 		>
 			<List.Posts
