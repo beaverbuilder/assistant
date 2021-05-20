@@ -72,12 +72,13 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
-= 0.7.0 =
-* The panel can now resize to give you more space!
-* All new home screen
-* Coming Soon - Assistant Pro lets you create libraries to share templates and assets across all your WordPress sites.
+= 0.7.0 ( 2021-05-20 ) =
+* Panel Size - The panel can now resize to give you more space!
+* New Home App - Things are more easily glanceable on the new home screen.
 * You can now drop media directly on the "Media" home screen section to upload.
+* Labels App - Labels is no longer a separate app. You can now manage your labels from the Settings app.
 * Fixed issue where screen goes blank after disabling an app
+* Libraries App (beta) - Coming Soon: Assistant Pro will let you create libraries to share templates and assets across all your WordPress sites. Contact us if you're interested in beta testing Assistant Pro!
 
 = 0.6.0 ( 2021-01-28 ) =
 * Enhance media uploading UI
