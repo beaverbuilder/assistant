@@ -1,9 +1,12 @@
+import React from 'react'
 import { __ } from '@wordpress/i18n'
-import { getSystemConfig } from 'data'
+import { Dialog } from 'ui'
+import { getSystemConfig, useSystemState } from 'data'
 import { getWpRest } from 'utils/wordpress'
 
 export const getPostActions = ( { history, values, setValue, createNotice } ) => {
-	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
+	const { contentTypes, currentUser, emptyTrashDays , cloudConfig} = getSystemConfig()
+	const { isCloudConnected } = useSystemState()
 	const wpRest = getWpRest()
 
 	const {
@@ -94,6 +97,49 @@ export const getPostActions = ( { history, values, setValue, createNotice } ) =>
 			} )
 	}
 
+	const [ showLibraryDialog, LibraryDialog ] = Dialog.useDialog( {
+		title: __( 'Save to Library' ),
+		message: __( 'Select a library below to save this post.' ),
+		buttons: [
+			{
+				label: __( 'Cancel' ),
+				onClick: ( { closeDialog } ) => closeDialog()
+			},
+			{
+				label: __( 'Save to Library' ),
+				onClick: () => {},
+				isSelected: true
+			}
+		]
+	} )
+
+	const [ showConnectDialog, ConnectDialog ] = Dialog.useDialog( {
+		title: __( 'Connect to Assistant Pro' ),
+		message: __( 'Libraries require a connection to Assistant Pro. Would you like to connect now?' ),
+		buttons: [
+			{
+				label: __( 'Cancel' ),
+				onClick: ( { closeDialog } ) => closeDialog()
+			},
+			{
+				label: __( 'Connect' ),
+				onClick: () => {
+					const redirect = encodeURIComponent( window.location )
+					window.location.href = `${ cloudConfig.appUrl }/login/connect?redirect=${ redirect }`
+				},
+				isSelected: true
+			}
+		]
+	} )
+
+	const saveToLibrary = () => {
+		if ( isCloudConnected ) {
+			showLibraryDialog()
+		} else {
+			showConnectDialog()
+		}
+	}
+
 	return [
 		{
 			label: contentTypes[type].labels.viewItem,
@@ -113,12 +159,22 @@ export const getPostActions = ( { history, values, setValue, createNotice } ) =>
 			onClick: clonePost,
 		},
 		{
-			label: isFavorite ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
-			onClick: favoritePost,
+			label: (
+				<>
+					<span>{ __( 'Save to Library' ) }</span>
+					<LibraryDialog />
+					<ConnectDialog />
+				</>
+			),
+			onClick: saveToLibrary
 		},
 		{
 			label: __( 'Export' ),
 			onClick: exportPost,
+		},
+		{
+			label: isFavorite ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
+			onClick: favoritePost,
 		},
 		{
 			label: 'Trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
