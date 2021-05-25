@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import classname from 'classnames'
-import Button from '../../button'
+import Button from '../../../button'
 import './style.scss'
 
 const Dialog = ( {
@@ -18,22 +18,22 @@ const Dialog = ( {
 	}
 
 	const getRoot = () => {
-		const root = document.getElementById( 'fluid-dialog-root' )
+		const root = document.getElementById( 'fluid-modal-root' )
 		return root ? root : document.body
 	}
 
 	return ReactDOM.createPortal( (
-		<div className={ classname( 'fl-asst-dialog', className ) }>
-			<div className='fl-asst-dialog-window'>
+		<div className={ classname( 'fluid-dialog', className ) }>
+			<div className='fluid-dialog-window'>
 				{ title &&
-					<div className='fl-asst-dialog-title'>
+					<div className='fluid-dialog-title'>
 						{ title }
 					</div>
 				}
-				<div className='fl-asst-dialog-message'>
+				<div className='fluid-dialog-message'>
 					{ message }
 				</div>
-				<div className='fl-asst-dialog-buttons'>
+				<div className='fluid-dialog-buttons'>
 					{ buttons.map( ( { label, onClick, ...rest }, i ) =>
 						<Button
 							key={ i }
