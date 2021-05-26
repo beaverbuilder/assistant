@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { __ } from '@wordpress/i18n'
-import { Dialog, Layout } from 'ui'
+import { Modal, Layout } from 'ui'
 import { getSystemConfig, useSystemState } from 'data'
 import cloud from 'cloud'
 
@@ -75,7 +75,7 @@ export const getLibrarySaveAction = () => {
 	const { isCloudConnected } = useSystemState()
 	const [ library, setLibrary ] = useState( null )
 
-	const [ showLibraryDialog, SaveDialog ] = Dialog.useDialog( {
+	const [ showLibraryDialog, SaveDialog ] = Modal.useDialog( {
 		title: __( 'Save to Library' ),
 		message: (
 			<>
@@ -96,7 +96,7 @@ export const getLibrarySaveAction = () => {
 		]
 	} )
 
-	const [ showConnectDialog, ConnectDialog ] = Dialog.useDialog( {
+	const [ showConnectDialog, ConnectDialog ] = Modal.useDialog( {
 		title: __( 'Connect to Assistant Pro' ),
 		message: __( 'Libraries require a connection to Assistant Pro. Would you like to connect now?' ),
 		buttons: [
