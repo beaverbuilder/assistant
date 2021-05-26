@@ -1,10 +1,13 @@
+import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
+import { getLibrarySaveAction } from './actions-library'
 
 export const getPostActions = ( { history, values, setValue, createNotice } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
+	const { saveToLibrary, LibraryDialog } = getLibrarySaveAction()
 
 	const {
 		id,
@@ -113,12 +116,22 @@ export const getPostActions = ( { history, values, setValue, createNotice } ) =>
 			onClick: clonePost,
 		},
 		{
-			label: isFavorite ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
-			onClick: favoritePost,
+			label: (
+				<>
+					<span>{ __( 'Save to Library' ) }</span>
+					<LibraryDialog />
+				</>
+			),
+			onClick: saveToLibrary,
+			shouldRender: false // disabled
 		},
 		{
 			label: __( 'Export' ),
 			onClick: exportPost,
+		},
+		{
+			label: isFavorite ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
+			onClick: favoritePost,
 		},
 		{
 			label: 'Trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
