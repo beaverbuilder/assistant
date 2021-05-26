@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Dialog from '../dialog'
+import Dialog from '../base'
 
 export const useDialog = ( options ) => {
 	const [ isShowing, setIsShowing ] = useState( false )

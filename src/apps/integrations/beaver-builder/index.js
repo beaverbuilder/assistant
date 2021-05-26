@@ -66,7 +66,8 @@ addFilter( 'fl-asst.currently-viewing-actions', 'fl-assistant', actions => actio
 	if ( 'fl-builder' === action.handle ) {
 		return {
 			...action,
-			label: <Beaver />
+			label: <Beaver />,
+			title: sprintf( 'Edit in %s', action.label ),
 		}
 	}
 	return action
