@@ -122,7 +122,8 @@ export const getPostActions = ( { history, values, setValue, createNotice } ) =>
 					<LibraryDialog />
 				</>
 			),
-			onClick: saveToLibrary
+			onClick: saveToLibrary,
+			shouldRender: false // disabled
 		},
 		{
 			label: __( 'Export' ),
