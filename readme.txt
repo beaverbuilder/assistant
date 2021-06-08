@@ -72,6 +72,12 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 0.7.0.2 ( 2021-06-08 ) =
+* Fixed fatal error when updating user profile settings.
+
+= 0.7.0.1 ( 2021-05-26 ) =
+* Fixed error in the content app.
+
 = 0.7.0 ( 2021-05-20 ) =
 * Panel Size - The panel can now resize to give you more space!
 * New Home App - Things are more easily glanceable on the new home screen.
