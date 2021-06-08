@@ -26,7 +26,7 @@ class UserState {
 	/**
 	 * Default state for the current user.
 	 */
-	protected static $default_state = [
+	public static $default_state = [
 		'appOrder'          => [],
 		'window'            => [
 			'origin'           => [ 1, 0 ],
