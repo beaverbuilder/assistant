@@ -2,7 +2,7 @@
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media, Upload, Beaver Builder
 Requires at least: 5.2
-Tested up to: 5.7.2
+Tested up to: 5.7
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPL2+
@@ -71,6 +71,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 0.7.0.3 ( 2021-06-23 ) =
+* Fixed conflict with jQuery AJAX requests.
 
 = 0.7.0.2 ( 2021-06-08 ) =
 * Fixed fatal error when updating user profile settings.
