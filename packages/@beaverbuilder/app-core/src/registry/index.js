@@ -55,7 +55,7 @@ const createStoreRegistry = () => {
 				),
 			}
 
-			registry[ key ].selectors = createSelectors( selectors, registry[ key ].store )
+			registry[ key ].selectors = createSelectors( { ...selectors }, registry[ key ].store )
 
 			setupStateCaching( key, registry[ key ].store, cache )
 		},
