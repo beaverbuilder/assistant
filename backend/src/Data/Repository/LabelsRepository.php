@@ -38,6 +38,10 @@ class LabelsRepository extends TermsRepository {
 			]
 		)->get_terms();
 
+		if ( ! count( $terms ) ) {
+			return [];
+		}
+
 		$counts = [];
 		$subqueries = [];
 
