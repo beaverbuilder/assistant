@@ -33,7 +33,7 @@ class PluginUpdatesTransformer {
 			'author'         => $plugin->AuthorName,
 			'authorURI'      => $plugin->AuthorURI,
 			'banner'         => $banner,
-			'bannerSizes'    => $update->banners,
+			'bannerSizes'    => isset( $update->banners ) ? $update->banners : null,
 			'content'        => $plugin->Description,
 			'id'             => $update->plugin,
 			'meta'           => $plugin->Version . ' by ' . $plugin->AuthorName,
@@ -46,7 +46,7 @@ class PluginUpdatesTransformer {
 			'version'        => $plugin->Version,
 			'updatedVersion' => $update->new_version,
 			'tested'         => $update->tested,
-			'requiresPHP'    => $update->requires_php,
+			'requiresPHP'    => isset( $update->requires_php ) ? $update->requires_php : null,
 			'pluginURI'      => $plugin->PluginURI,
 		];
 	}

@@ -45,8 +45,8 @@ class AttachmentTransformer {
 			'urls'            => [
 				'medium' => $size ? $size[0] : null,
 			],
-			'height'          => $meta['height'],
-			'width'           => $meta['width'],
+			'height'          => isset( $meta['height'] ) ? $meta['height'] : null,
+			'width'           => isset( $meta['width'] ) ? $meta['width'] : null,
 			'orientation'     => isset( $meta['orientation'] ) ? $meta['orientation'] : null,
 		];
 
