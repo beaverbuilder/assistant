@@ -21,9 +21,14 @@ class StandardReflector implements Reflector {
 	}
 
 	public function getParamTypeHint( \ReflectionFunctionAbstract $function, \ReflectionParameter $param ) {
-		return ( $reflectionClass = $param->getClass() )
-			? $reflectionClass->getName()
-			: null;
+		$type = $param->getType();
+
+		if ( 'ReflectionNamedType' === get_class( $type ) ) {
+			$class = new \ReflectionClass( $type->getName() );
+			return $class->getName();
+		}
+
+		return null;
 	}
 
 	public function getFunction( $functionName ) {
