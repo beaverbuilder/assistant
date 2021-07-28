@@ -21,6 +21,12 @@ class StandardReflector implements Reflector {
 	}
 
 	public function getParamTypeHint( \ReflectionFunctionAbstract $function, \ReflectionParameter $param ) {
+		if ( version_compare( PHP_VERSION, '8.0.0', '<' ) ) {
+			return ( $reflectionClass = $param->getClass() )
+						? $reflectionClass->getName()
+						: null;
+		}
+
 		$type = $param->getType();
 
 		if ( 'ReflectionNamedType' === get_class( $type ) ) {

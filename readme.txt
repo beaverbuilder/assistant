@@ -72,6 +72,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 0.7.0.5 ( 2021-07-28 ) =
+* Fixed fatal error with PHP 7.0.33 and below.
+
 = 0.7.0.4 ( 2021-07-27 ) =
 * Fixed various PHP warnings.
 
