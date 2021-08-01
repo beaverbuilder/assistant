@@ -102,7 +102,11 @@ const config = {
 		filename: `[name].js?var=${ pckg.version }`,
 		chunkFilename: `chunk-[name].js?var=${ pckg.version }`
 	},
-	resolve: { alias },
+	resolve: {
+		alias,
+		modules: [ 'node_modules' ],
+		symlinks: false
+	},
 	module: {
 		rules: [
 			{

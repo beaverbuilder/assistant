@@ -16,7 +16,8 @@
     "dev": "webpack --watch",
     "fix": "eslint src --fix",
     "test": "eslint src",
-    "analyze": "NODE_ENV=analyze webpack --watch"
+    "analyze": "NODE_ENV=analyze webpack --watch",
+    "link:packages": "node bin/link.js"
   },
   "license": "GPL-2.0+",
   "dependencies": {
@@ -47,7 +48,7 @@
     "react-clipboard.js": "^2.0.16",
     "react-color": "^2.18.1",
     "react-dom": "^17.0.2",
-    "react-laag": "^1.8.0",
+    "react-laag": "^2.0.3",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "tiny-invariant": "^1.1.0",
