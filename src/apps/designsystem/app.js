@@ -26,7 +26,6 @@ const FLUID = ( { baseURL } ) => {
 					<Button to={ `${baseURL}/color` }>Color</Button>
 					<Button to={ `${baseURL}/buttons` }>Button</Button>
 					<Button to={ `${baseURL}/icons` }>Icon</Button>
-					<Button to={ `${baseURL}/lists` }>List</Button>
 					<Button to={ `${baseURL}/layout` }>Layout</Button>
 					<Button to={ `${baseURL}/form` }>Form</Button>
 				</Button.Group>
@@ -37,7 +36,6 @@ const FLUID = ( { baseURL } ) => {
 				<Route exact path={ `${baseURL}/color` } component={ Docs.ColorSheet } />
 				<Route exact path={ `${baseURL}/buttons` } component={ Docs.ButtonSheet } />
 				<Route exact path={ `${baseURL}/icons` } component={ Docs.IconSheet } />
-				<Route exact path={ `${baseURL}/lists` } component={ Docs.ListSheet } />
 				<Route exact path={ `${baseURL}/layout` } component={ Docs.LayoutSheet } />
 				<Route exact path={ `${baseURL}/form` } component={ Docs.FormSheet } />
 			</Switch>

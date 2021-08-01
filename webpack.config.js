@@ -2,7 +2,7 @@ const webpack = require( 'webpack' )
 const path = require( 'path' )
 const pckg = require( './package.json' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
-const OptimizeCSSAssets = require( 'optimize-css-assets-webpack-plugin' )
+const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' )
 const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' )
 const sharedConfig = require( '@beaverbuilder/webpack-config' )
 const isProduction = 'production' === process.env.NODE_ENV
@@ -61,7 +61,7 @@ const externals = [
 		'assistant/utils': 'FL.Assistant.utils',
 		'assistant/cloud': 'FL.Assistant.cloud',
 	},
-	function( context, request, callback ) {
+	function( { context, request }, callback ) {
 
 		/* Nested util imports */
 		if ( /assistant\/utils/.test( request ) ) {
@@ -100,9 +100,14 @@ const config = {
 	output: {
 		path: path.resolve( __dirname, 'build' ),
 		filename: `[name].js?var=${ pckg.version }`,
-		chunkFilename: `chunk-[name].js?var=${ pckg.version }`
+		chunkFilename: `chunk-[name].js?var=${ pckg.version }`,
+		publicPath: '',
 	},
-	resolve: { alias },
+	resolve: {
+		alias,
+		modules: [ 'node_modules' ],
+		symlinks: false
+	},
 	module: {
 		rules: [
 			{
@@ -112,27 +117,7 @@ const config = {
 			},
 			{
 				test: /\.s?css$/,
-				use: [
-					{
-						loader: 'style-loader',
-						options: {
-							sourceMap: isProduction
-						}
-					},
-					MiniCssExtractPlugin.loader,
-					{
-						loader: 'css-loader',
-						options: {
-							sourceMap: isProduction
-						}
-					},
-					{
-						loader: 'sass-loader',
-						options: {
-							sourceMap: isProduction
-						}
-					},
-				],
+				use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ],
 			},
 		]
 	},
@@ -148,13 +133,10 @@ const config = {
 }
 
 if ( isProduction ) {
-	config.plugins.push(
-		new OptimizeCSSAssets( {
-			cssProcessorOptions: {
-				safe: true,
-			}
-		} )
-	)
+	config.optimization = {
+		minimize: true,
+		minimizer: [ new CssMinimizerPlugin() ]
+	}
 }
 
 /* Look at @beaverbuilder/webpack-common for additional config.
