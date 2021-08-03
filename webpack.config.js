@@ -108,6 +108,12 @@ const config = {
 		modules: [ 'node_modules' ],
 		symlinks: false
 	},
+	snapshot: {
+
+		// Without this linked packages won't be watched.
+		// https://github.com/webpack/webpack/issues/11612
+		managedPaths: []
+	},
 	module: {
 		rules: [
 			{
