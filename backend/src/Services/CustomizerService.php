@@ -124,7 +124,7 @@ class CustomizerService {
 	 *
 	 * @return object
 	 */
-	protected function init_customizer() {
+	public function init_customizer() {
 		global $wp_customize;
 
 		if ( ! class_exists( 'WP_Customize_Manager' ) ) {
@@ -136,7 +136,9 @@ class CustomizerService {
 		if ( ! did_action( 'customize_register' ) ) {
 			remove_action( 'customize_register', array( $wp_customize, 'register_controls' ) );
 			$wp_customize->register_controls();
+			$wp_customize->start_previewing_theme();
 			do_action( 'customize_register', $wp_customize );
+			$wp_customize->stop_previewing_theme();
 		}
 
 		return $wp_customize;
