@@ -72,6 +72,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 0.7.0.7 ( 2021-09-01 ) =
+* Updated Assistant Pro cloud URLs to production.
+
 = 0.7.0.6 ( 2021-08-16 ) =
 * Fixed fatal error on user profile page with PHP 8.
 * Fixed fatal error when exporting theme settings to Assistant Pro.
