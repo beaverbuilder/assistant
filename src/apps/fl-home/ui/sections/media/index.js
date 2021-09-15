@@ -112,7 +112,7 @@ const MediaGrid = ( {
 				// Loading placeholder
 				if ( null === item ) {
 					return (
-						<div />
+						<div key={ i } />
 					)
 				}
 
@@ -120,6 +120,7 @@ const MediaGrid = ( {
 				if ( item instanceof File ) {
 					return (
 						<div
+							key={ i }
 							src={ URL.createObjectURL( item ) }
 							alt={ sprintf( 'Uploading %s', item.name ) }
 							style={ {

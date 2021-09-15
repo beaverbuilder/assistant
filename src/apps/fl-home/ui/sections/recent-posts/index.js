@@ -18,6 +18,7 @@ const RecentPostsSection = ( { isCollapsed, ...rest } ) => {
 
 	const Actions = () => (
 		<select
+			value={ query.post_type }
 			onChange={ e => {
 				setQuery( { ...query, post_type: e.target.value } )
 			} }
@@ -27,7 +28,6 @@ const RecentPostsSection = ( { isCollapsed, ...rest } ) => {
 					<option
 						key={ value }
 						value={ value }
-						selected={ value === query.post_type }
 					>
 						{ def.labels.plural }
 					</option>

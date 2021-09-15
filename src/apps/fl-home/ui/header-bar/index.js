@@ -56,6 +56,7 @@ const HeaderBar = ( {
 						setIsFocused( true )
 						onFocus()
 					} }
+					onChange={ () => {} } // Prevent react error
 				/>
 				<Button
 					appearance="transparent"
