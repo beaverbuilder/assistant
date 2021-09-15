@@ -5,10 +5,10 @@ namespace FL\Assistant\Hooks\Actions;
 use FL\Assistant\Services\CustomizerService;
 
 /**
- * Class OnPluginsLoaded
+ * Class OnWPLoaded
  * @package FL\Assistant\Hooks\Actions
  */
-class OnPluginsLoaded {
+class OnWPLoaded {
 
 	public function __invoke() {
 		$this->init_customizer_requests();

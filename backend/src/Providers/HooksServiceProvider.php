@@ -4,7 +4,7 @@ namespace FL\Assistant\Providers;
 
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 
-use FL\Assistant\Hooks\Actions\OnPluginsLoaded;
+use FL\Assistant\Hooks\Actions\OnWPLoaded;
 use FL\Assistant\Hooks\Actions\OnEditUserProfile;
 use FL\Assistant\Hooks\Actions\OnEnqueueScripts;
 use FL\Assistant\Hooks\Actions\OnPersonalOptionsUpdate;
@@ -45,8 +45,8 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 	public function actions() {
 
-		// Plugins loaded
-		add_action( 'plugins_loaded', $this->injector->make( OnPluginsLoaded::class ) );
+		// WP loaded
+		add_action( 'wp_loaded', $this->injector->make( OnWPLoaded::class ) );
 
 		// Enqueue Assistant frontend
 		$enqueue_scripts = $this->injector->make( OnEnqueueScripts::class );
