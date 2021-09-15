@@ -1,8 +1,8 @@
 import React from 'react'
-import { useSystemState } from 'assistant/data'
+import { getSystemState } from 'assistant/data'
 
 const AppIcon = ( { context, isSelected = false } ) => {
-	const { counts } = useSystemState()
+	const { counts } = getSystemState()
 	const total = counts['update/total'] ? counts['update/total'] : 0
 	const shouldHighlight = 'sidebar' === context && 0 < total
 	const color = ( shouldHighlight && ! isSelected ) ? 'var(--fluid-blue)' : 'currentColor'
