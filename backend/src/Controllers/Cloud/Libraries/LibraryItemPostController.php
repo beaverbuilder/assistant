@@ -482,9 +482,11 @@ class LibraryItemPostController extends ControllerAbstract {
 		$service = new MediaLibraryService();
 
 		// Import post thumbnail
-		if ( $import && isset( $media->thumb ) && 'screenshot.png' !== $media->thumb->file_name ) {
-			$response = $service->import_cloud_media( $media->thumb, $post_id );
-			set_post_thumbnail( $post_id, $response['id'] );
+		if ( $import && isset( $media->thumb ) ) {
+			if ( ! preg_match( '/screenshot\.(png|jpg|gif)/', $media->thumb->file_name ) ) {
+				$response = $service->import_cloud_media( $media->thumb, $post_id );
+				set_post_thumbnail( $post_id, $response['id'] );
+			}
 		}
 
 		// Import post attachments
