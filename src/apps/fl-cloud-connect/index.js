@@ -2,7 +2,7 @@ import { lazy } from 'react'
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
 import AppIcon from './icon'
-import onMount from './mount'
+import connect from './connect'
 
 const App = lazy( () => import(
 	/* webpackChunkName: "app-cloud-connect" */ './app'
@@ -15,6 +15,11 @@ registerApp( 'fl-cloud-connect', {
 	shouldShowInAppList: false,
 	state: {
 		isValidating: false
-	},
-	onMount
+	}
 } )
+
+/**
+ * Try connecting outside of the app in case the
+ * connection was initiated by another app.
+ */
+connect()
