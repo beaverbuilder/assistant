@@ -123,7 +123,8 @@ const ReplaceButton = ( { item } ) => {
 	const [ posts, setPosts ] = useState( null )
 	const postsApi = getWpRest().posts()
 	const librariesApi = getWpRest().libraries()
-	const label = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.plural : `${ post_type }s`
+	const pluralLabel = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.plural : `${ post_type }s`
+	const singularLabel = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.singular : `${ post_type }`
 
 	useEffect( () => {
 		postsApi.findWhere( {
@@ -139,9 +140,10 @@ const ReplaceButton = ( { item } ) => {
 	}, [] )
 
 	const replacePost = ( id ) => {
+		const message = sprintf( __( 'Do you really want to replace the selected %s with this library item? This cannot be undone.' ), singularLabel.toLowerCase() )
 		if ( ! id ) {
 			return
-		} else if ( ! confirm( __( 'Are you sure you want to replace this library item?' ) ) ) {
+		} else if ( ! confirm( message ) ) {
 			return
 		}
 		setPost( id )
@@ -186,14 +188,14 @@ const ReplaceButton = ( { item } ) => {
 				disabled={ post }
 			>
 				<option value=''>
-					{ ! post && __( 'Replace With...' ) }
+					{ ! post && __( 'Replace...' ) }
 					{ post && __( 'Replacing...' ) }
 				</option>
 				{ null === posts &&
 					<optgroup label={ __( 'Loading...' ) } />
 				}
 				{ null !== posts && ! posts.length &&
-					<optgroup label={ sprintf( __( 'No %s found' ), label.toLowerCase() ) } />
+					<optgroup label={ sprintf( __( 'No %s found' ), pluralLabel.toLowerCase() ) } />
 				}
 				{ null !== posts && !! posts.length &&
 					<ReplaceButtonOptions />
