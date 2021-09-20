@@ -290,7 +290,7 @@ class LibraryItemPostController extends ControllerAbstract {
 				'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
 				'post_mime_type' => $post_data->post_mime_type,
 				'post_name'      => $post_data->post_name,
-				'post_status'    => 'draft',
+				'post_status'    => 'publish',
 				'post_title'     => $post_data->post_title,
 				'post_type'      => $post_data->post_type,
 			]
