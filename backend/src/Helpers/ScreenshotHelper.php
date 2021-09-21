@@ -9,8 +9,8 @@ class ScreenshotHelper {
  	 * @param string $url
 	 * @return array
 	 */
-	static public function get_for_request( $request, $url, $logged_in = true ) {
-		$screenshot = $request->get_param( 'screenshot' );
+	static public function get_for_request( $url, $logged_in = true ) {
+		$screenshot = isset( $_POST['screenshot'] ) ? $_POST['screenshot'] : null;
 
 		if ( $screenshot ) {
 			return [
@@ -19,6 +19,14 @@ class ScreenshotHelper {
 			];
 		}
 
+		return self::get_for_url( $url, $logged_in );
+	}
+
+	/**
+ 	 * @param string $url
+	 * @return array
+	 */
+	static public function get_for_url( $url, $logged_in = true ) {
 		$response = wp_remote_get(
 			$url, [
 				'cookies' => $logged_in ? $_COOKIE : [],
