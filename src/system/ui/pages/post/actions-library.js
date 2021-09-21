@@ -172,7 +172,7 @@ const LibrarySelect = forwardRef( ( { post, CloudUI }, ref ) => {
 
 	return (
 		<>
-			<div>{ __( 'Select a library below to save this post.' ) }</div>
+			<div>{ __( 'Select a library below to save this content.' ) }</div>
 			<Layout.Box padX={ false } >
 				<select
 					value={ library }
