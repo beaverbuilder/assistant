@@ -1,5 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import * as CloudUI from '@beaverbuilder/cloud-ui'
 import { Redirect, Switch, Route } from 'react-router-dom'
 import { getSystemConfig } from 'assistant/data'
 import { Page, Layout } from 'assistant/ui'
@@ -14,7 +15,16 @@ export default ( { baseURL } ) => (
 		</Route>
 		<Route path={ `${baseURL}/tab/:tab` } component={ Main } />
 		<Route path={ `${baseURL}/post/new` } component={ Page.CreatePost } />
-		<Route path={ `${baseURL}/post/:id` } component={ Page.Post } />
+		<Route path={ `${baseURL}/post/:id` } component={ ( { location, match, history } ) => {
+			return (
+				<Page.Post
+					location={ location }
+					match={ match }
+					history={ history }
+					CloudUI={ CloudUI } // Cannot be accessed from system pages yet. Must pass through.
+				/>
+			)
+		} } />
 	</Switch>
 )
 
