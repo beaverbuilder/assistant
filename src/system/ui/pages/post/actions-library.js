@@ -112,7 +112,6 @@ export const useLibrarySaveAction = ( {
 }
 
 const LibrarySuccessMessage = ( { history, response } ) => {
-	console.log( response )
 	return (
 		<>
 			{ __( 'Content saved!' ) }
