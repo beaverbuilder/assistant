@@ -663,6 +663,13 @@ const libraries = () => {
 		},
 
 		/**
+		 * Export WP post data into library
+		 */
+		exportImage( id, libraryId, data = {}, config = {} ) {
+			return http.post( `fl-assistant/v1/images/${id}/library/${libraryId}`, data, config )
+		},
+
+		/**
 		 * Export WP Customizer settings into library
 		 */
 		exportThemeSettings( libraryId, data = {}, config = {} ) {

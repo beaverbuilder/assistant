@@ -2,11 +2,13 @@ import React, { forwardRef, useRef, useImperativeHandle, useState, useEffect } f
 import { __ } from '@wordpress/i18n'
 import { Modal, Layout } from 'ui'
 import { getSystemConfig, useSystemState } from 'data'
+import { getWpRest } from 'utils/wordpress'
 import cloud from 'cloud'
 
 export const useLibrarySaveAction = ( {
+	type,
 	history,
-	values,
+	item,
 	createNotice,
 	CloudUI
 } ) => {
@@ -20,7 +22,8 @@ export const useLibrarySaveAction = ( {
 		message: (
 			<LibrarySelect
 				ref={ selectRef }
-				post={ values }
+				type={ type }
+				item={ item }
 				CloudUI={ CloudUI }
 			/>
 		),
@@ -38,13 +41,13 @@ export const useLibrarySaveAction = ( {
 					closeDialog()
 					showSavingDialog()
 					setSaving( true )
-					selectRef.current.savePost( response => {
+					selectRef.current.save( response => {
 						setSaving( false )
 						createNotice( {
 							status: 'success',
 							content: (
 								<LibrarySuccessMessage
-									response={ response }
+									response={ response.data ? response.data : response }
 									history={ history }
 								/>
 							)
@@ -130,22 +133,37 @@ const LibrarySuccessMessage = ( { history, response } ) => {
 	)
 }
 
-const LibrarySelect = forwardRef( ( { post, CloudUI }, ref ) => {
+const LibrarySelect = forwardRef( ( { type, item, CloudUI }, ref ) => {
 	const [ libraries, setLibraries ] = useState( null )
 	const [ teams, setTeams ] = useState( null )
 	const [ library, setLibrary ] = useState( '' )
 	const uploader = CloudUI.Uploader.useLibrary( parseInt( library ) )
+	const wpRest = getWpRest()
 
-	const savePost = ( success = () => {}, error = () => {} ) => {
+	const savePost = ( success, error ) => {
 		uploader.addFile( {
-			id: post.id,
-			name: post.title,
+			id: item.id,
+			name: item.title,
 			type: 'post',
-			thumbnail: post.thumbnail,
-			previewUrl: post.previewUrl,
+			thumbnail: item.thumbnail,
+			previewUrl: item.previewUrl,
 			onComplete: success,
 			onError: error
 		} )
+	}
+
+	const saveAttachment = ( success, error ) => {
+		wpRest.libraries().exportImage( item.id, library )
+			.then( success )
+			.catch( error )
+	}
+
+	const save = ( success = () => {}, error = () => {} ) => {
+		if ( 'post' === type ) {
+			savePost( success, error )
+		} else if ( 'attachment' === type ) {
+			saveAttachment( success, error )
+		}
 	}
 
 	useEffect( () => {
@@ -159,7 +177,7 @@ const LibrarySelect = forwardRef( ( { post, CloudUI }, ref ) => {
 
 	useImperativeHandle( ref, () => ( {
 		library,
-		savePost
+		save
 	} ) )
 
 	if ( ! libraries || ! teams ) {

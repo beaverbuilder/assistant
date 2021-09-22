@@ -2,12 +2,19 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
-import { useLibrarySaveAction } from './actions-library'
+import { useLibrarySaveAction } from 'ui/library/use-save-action'
 
 export const getPostActions = ( { history, values, setValue, createNotice, CloudUI } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
-	const { saveToLibrary, LibraryDialog } = useLibrarySaveAction( { history, values, createNotice, CloudUI } )
+
+	const { saveToLibrary, LibraryDialog } = useLibrarySaveAction( {
+		type: 'post',
+		item: values,
+		history,
+		createNotice,
+		CloudUI
+	} )
 
 	const {
 		id,

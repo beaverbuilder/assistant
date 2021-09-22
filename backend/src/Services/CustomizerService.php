@@ -28,7 +28,7 @@ class CustomizerService {
 				'media' => [
 					'attachments' => MediaPathHelper::get_image_paths_from_data( $data )
 				],
-				'screenshot' => ScreenshotHelper::get_for_request( home_url(), false ),
+				'screenshot' => ScreenshotHelper::get_for_post_request( home_url(), false ),
 			]
 		);
 	}

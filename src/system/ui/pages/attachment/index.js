@@ -5,15 +5,24 @@ import { Page, Form, Layout, Notice, Button } from 'ui'
 import { getSrcSet } from 'utils/image'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions } from 'data'
+import { useLibrarySaveAction } from 'ui/library/use-save-action'
 import './style.scss'
 
-export const Attachment = () => {
+export const Attachment = ( { CloudUI } ) => {
 	const history = useHistory()
 	const { item } = history.location.state
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 	const { createNotice } = Notice.useNotices()
 	const { id, type, subtype } = item
+
+	const { saveToLibrary, LibraryDialog } = useLibrarySaveAction( {
+		type: 'attachment',
+		item,
+		history,
+		createNotice,
+		CloudUI
+	} )
 
 	const onSubmit = ( { changed, ids } ) => {
 		const data = {
@@ -177,6 +186,10 @@ export const Attachment = () => {
 							href: item.editUrl,
 						},
 						{
+							label: __( 'Save to Library' ),
+							onClick: saveToLibrary,
+						},
+						{
 							label: __( 'Delete' ),
 							status: 'destructive',
 							onClick: deleteAttchment,
@@ -226,6 +239,7 @@ export const Attachment = () => {
 			thumbnail={ <Hero { ...item } /> }
 		>
 			{ renderForm() }
+			<LibraryDialog />
 		</Page.Detail>
 
 	)
