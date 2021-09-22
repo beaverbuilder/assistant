@@ -13,7 +13,7 @@ import { LockView } from './lock'
 import './style.scss'
 
 
-export const Post = ( { location, match, history } ) => {
+export const Post = ( { location, match, history, CloudUI } ) => {
 	const { item } = location.state
 	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes, contentStatus, taxonomies, isSiteAdmin } = getSystemConfig()
@@ -129,7 +129,7 @@ export const Post = ( { location, match, history } ) => {
 					fields: {
 						actions: {
 							component: 'actions',
-							options: args => getPostActions( { history, createNotice, ...args } ),
+							options: args => getPostActions( { history, createNotice, CloudUI, ...args } ),
 						},
 					}
 				},

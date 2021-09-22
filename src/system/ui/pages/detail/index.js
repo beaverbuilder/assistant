@@ -2,7 +2,7 @@ import React from 'react'
 import c from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Button, Icon, Text, Frame } from 'ui'
+import { Button, Icon, Text, Frame, Notice } from 'ui'
 import './style.scss'
 
 const DetailPage = ( {
@@ -18,10 +18,18 @@ const DetailPage = ( {
 } ) => {
 
 	Frame.use()
+
 	const { goBack } = useHistory()
 	const classes = c( 'fluid-page', 'fluid-detail-page', className )
+	const { notices, renderNotices } = Notice.useNotices()
+
 	return (
 		<Tag className={ classes } { ...rest }>
+			{ notices && 0 < notices.length &&
+				<div style={ { position: 'absolute', width: '100%', zIndex: 1 } }>
+					{ renderNotices() }
+				</div>
+			}
 			<div className="fluid-detail-sidebar-backdrop" />
 			<div className="fluid-detail-page-toolbar">
 				<div className="fluid-detail-page-toolbar-area">

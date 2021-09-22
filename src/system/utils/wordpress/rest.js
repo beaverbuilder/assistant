@@ -4,7 +4,7 @@ import { setupCache } from 'axios-cache-adapter'
 import qs from 'qs'
 
 
-const { apiRoot, nonce } = FL_ASSISTANT_CONFIG
+const { apiRoot, nonce, adminURLs } = FL_ASSISTANT_CONFIG
 
 /**
  * Cache adapter for axios requests.
@@ -663,10 +663,47 @@ const libraries = () => {
 		},
 
 		/**
+		 * Export WP post data into library
+		 */
+		exportImage( id, libraryId, data = {}, config = {} ) {
+			return http.post( `fl-assistant/v1/images/${id}/library/${libraryId}`, data, config )
+		},
+
+		/**
 		 * Export WP Customizer settings into library
 		 */
 		exportThemeSettings( libraryId, data = {}, config = {} ) {
-			return http.post( `fl-assistant/v1/library/${libraryId}/library-items/export/theme-settings`, data, config )
+			const http = axios.create( {
+				headers: {
+					common: {
+						'X-WP-Nonce': nonce.api
+					}
+				}
+			} )
+
+			const body = new FormData()
+			body.append( 'fl_assistant_export', libraryId )
+			Object.entries( data ).map( ( [ key, value ] ) => body.append( key, value ) )
+
+			return http.post( adminURLs.customizeBase, body, config )
+		},
+
+		/**
+		 * Export WP Customizer settings into library
+		 */
+		importThemeSettings( itemId, config = {} ) {
+			const http = axios.create( {
+				headers: {
+					common: {
+						'X-WP-Nonce': nonce.api
+					}
+				}
+			} )
+
+			const body = new FormData()
+			body.append( 'fl_assistant_import', itemId )
+
+			return http.post( adminURLs.customizeBase, body, config )
 		},
 	}
 }

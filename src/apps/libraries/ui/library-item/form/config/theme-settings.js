@@ -37,7 +37,7 @@ export const getActions = ( item, actions ) => {
 			return
 		}
 		setImporting( true )
-		api.importItem( item ).then( response => {
+		api.importThemeSettings( item.id ).then( response => {
 			setImporting( false )
 			if ( response.data.error ) {
 				createNotice( {

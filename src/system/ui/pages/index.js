@@ -56,7 +56,7 @@ const Page = ( {
 			className={ classes }
 			onLoad={ onLoad }
 			toolbar={ tabs ? <Layout.TabsToolbar tabs={ tabs } /> : toolbar }
-			overlay={ overlay || ( notices && 0 < notices.length ) && <Overlay /> }
+			overlay={ ( overlay || ( notices && 0 < notices.length ) ) && <Overlay /> }
 			shouldShowBackButton={ true }
 			{ ...rest }
 		>

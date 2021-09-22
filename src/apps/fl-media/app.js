@@ -1,5 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import * as CloudUI from '@beaverbuilder/cloud-ui'
 import { App, Page, List, Filter, Button, Icon, Media } from 'assistant/ui'
 import { useAppState, getAppActions, getSystemConfig } from 'assistant/data'
 import { defaultState } from './data'
@@ -11,7 +12,11 @@ export default props => (
 	<App.Config
 		pages={ {
 			default: Main,
-			'attachment/:id': Page.Attachment
+			'attachment/:id': () => (
+				<Page.Attachment
+					CloudUI={ CloudUI } // Cannot be accessed from system pages yet. Must pass through.
+				/>
+			)
 		} }
 		{ ...props }
 	/>

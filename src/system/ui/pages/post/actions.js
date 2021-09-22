@@ -2,12 +2,19 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
-import { getLibrarySaveAction } from './actions-library'
+import { useLibrarySaveAction } from 'ui/library/use-save-action'
 
-export const getPostActions = ( { history, values, setValue, createNotice } ) => {
+export const getPostActions = ( { history, values, setValue, createNotice, CloudUI } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
-	const { saveToLibrary, LibraryDialog } = getLibrarySaveAction()
+
+	const { saveToLibrary, LibraryDialog } = useLibrarySaveAction( {
+		type: 'post',
+		item: values,
+		history,
+		createNotice,
+		CloudUI
+	} )
 
 	const {
 		id,
@@ -123,7 +130,6 @@ export const getPostActions = ( { history, values, setValue, createNotice } ) =>
 				</>
 			),
 			onClick: saveToLibrary,
-			shouldRender: false // disabled
 		},
 		{
 			label: __( 'Export' ),

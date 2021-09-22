@@ -20,7 +20,6 @@ use FL\Assistant\Controllers\UsersController;
 use FL\Assistant\Controllers\Cloud\Libraries\LibraryItemSvgController;
 use FL\Assistant\Controllers\Cloud\Libraries\LibraryItemImageController;
 use FL\Assistant\Controllers\Cloud\Libraries\LibraryItemPostController;
-use FL\Assistant\Controllers\Cloud\Libraries\LibraryItemThemeSettingsController;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 
 /**
@@ -50,18 +49,12 @@ class RestServiceProvider extends ServiceProviderAbstract {
 		LibraryItemSvgController::class,
 		LibraryItemImageController::class,
 		LibraryItemPostController::class,
-		LibraryItemThemeSettingsController::class,
 		BatchController::class, // Must be last
 	];
 
-
-	/**
-	 *
-	 */
 	public function bootstrap() {
 		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
 	}
-
 
 	/**
 	 * @throws \FL\Assistant\System\Container\InjectionException

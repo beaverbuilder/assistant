@@ -4,13 +4,13 @@ namespace FL\Assistant\Providers;
 
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 
-use FL\Assistant\Hooks\Actions\OnWPLoaded;
 use FL\Assistant\Hooks\Actions\OnEditUserProfile;
 use FL\Assistant\Hooks\Actions\OnEnqueueScripts;
 use FL\Assistant\Hooks\Actions\OnPersonalOptionsUpdate;
 use FL\Assistant\Hooks\Actions\OnWPBeforeAdminBarRender;
 use FL\Assistant\Hooks\Actions\OnBeforeDeletePost;
 use FL\Assistant\Hooks\Actions\OnDeleteTerm;
+use FL\Assistant\Hooks\Actions\OnCustomizeRegister;
 
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
@@ -45,9 +45,6 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 	public function actions() {
 
-		// WP loaded
-		add_action( 'wp_loaded', $this->injector->make( OnWPLoaded::class ) );
-
 		// Enqueue Assistant frontend
 		$enqueue_scripts = $this->injector->make( OnEnqueueScripts::class );
 		add_action( 'wp_enqueue_scripts', $enqueue_scripts );
@@ -65,6 +62,9 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 		// taxonomy actions
 		add_action( 'delete_term', $this->injector->make( OnDeleteTerm::class ) );
+
+		// Customize register
+		add_action( 'customize_register', $this->injector->make( OnCustomizeRegister::class ) );
 
 	}
 
