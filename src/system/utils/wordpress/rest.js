@@ -648,6 +648,22 @@ const libraries = () => {
 		},
 
 		/**
+		 * Import the featured image from a library for a post.
+		 */
+		importPostThumb( postId, thumb = {}, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/import_post_thumb_from_library/${postId}`, { thumb }, config )
+		},
+
+		/**
+		 * Import a media item from a library for a post.
+		 */
+		importPostMedia( postId, media = {}, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/import_post_media_from_library/${postId}`, { media }, config )
+		},
+
+		/**
 		 * Override WP post data with library post item data
 		 */
 		syncPost( id, itemId, config = {} ) {

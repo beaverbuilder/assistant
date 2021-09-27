@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __, sprintf } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
@@ -36,37 +36,75 @@ export const getActions = ( item, actions ) => {
 	return actions
 }
 
+const usePostMediaImport = ( {
+	onComplete = () => {}
+} ) => {
+	const api = getWpRest().libraries()
+	const nextAttachment = useRef( 0 )
+
+	const importPostMedia = ( post, item ) => {
+
+		if ( item.media.thumb ) {
+			importPostThumb( post, item )
+		} else {
+			importPostAttachments( post, item )
+		}
+	}
+
+	const importPostThumb = ( post, item ) => {
+		api.importPostThumb( post.id, item.media.thumb ).finally( () => {
+			importPostAttachments( post, item )
+		} )
+	}
+
+	const importPostAttachments = ( post, item ) => {
+		const { attachments } = item.media
+
+		if ( ! attachments ) {
+			onComplete( post )
+		}
+
+		const attachment = attachments[ nextAttachment.current ]
+
+		if ( ! attachment ) {
+			nextAttachment.current = 0
+			onComplete( post )
+		} else {
+			api.importPostMedia( post.id, attachment ).finally( () => {
+				nextAttachment.current++
+				importPostAttachments( post, item )
+			} )
+		}
+	}
+
+	return importPostMedia
+}
+
 const CreateButton = ( { item } ) => {
 	const history = useHistory()
 	const { createNotice } = Libraries.ItemContext.use()
 	const [ action, setAction ] = useState( null )
 	const api = getWpRest().libraries()
 
-	const createPost = ( action ) => {
-		setAction( action )
-		api.importPost( item.id ).then( response => {
-			if ( 'create' === action ) {
-				createPostComplete( response )
+	const createPostComplete = ( post ) => {
+		setAction( null )
+
+		if ( 'create' === action ) {
+			const { type } = item.data.builder
+			const { bbEditUrl, editUrl } = post
+
+			if ( 'beaver-builder' === type && bbEditUrl ) {
+				window.location.href = bbEditUrl
 			} else {
-				importPostComplete( response )
-				setAction( null )
+				window.location.href = editUrl
 			}
-		} )
-	}
-
-	const createPostComplete = ( response ) => {
-		const { type } = item.data.builder
-		const { bbEditUrl, editUrl } = response.data
-
-		if ( 'beaver-builder' === type && bbEditUrl ) {
-			window.location.href = bbEditUrl
 		} else {
-			window.location.href = editUrl
+			importPostComplete( post )
 		}
 	}
 
-	const importPostComplete = ( response ) => {
-		if ( response.data.error ) {
+	const importPostComplete = ( post ) => {
+		if ( post.error ) {
 			createNotice( {
 				status: 'error',
 				content: __( 'Error importing content.' )
@@ -83,8 +121,8 @@ const CreateButton = ( { item } ) => {
 								marginLeft: 'var(--fluid-sm-space)'
 							} }
 							onClick={ () => {
-								history.push( `/fl-content/post/${ response.data.id }`, {
-									item: response.data
+								history.push( `/fl-content/post/${ post.id }`, {
+									item: post.data
 								} )
 							} }
 						>
@@ -94,6 +132,24 @@ const CreateButton = ( { item } ) => {
 				)
 			} )
 		}
+	}
+
+	const importPostMedia = usePostMediaImport( {
+		onComplete: createPostComplete
+	} )
+
+	const createPost = ( action ) => {
+		setAction( action )
+		api.importPost( item.id ).then( response => {
+			setAction( 'media' )
+			importPostMedia( response.data, item )
+		} ).catch( () => {
+			setAction( null )
+			createNotice( {
+				status: 'error',
+				content: __( 'Error importing content.' )
+			} )
+		} )
 	}
 
 	return (
@@ -107,6 +163,7 @@ const CreateButton = ( { item } ) => {
 					{ ! action && __( 'Create New...' ) }
 					{ 'create' === action && __( 'Creating...' ) }
 					{ 'import' === action && __( 'Importing...' ) }
+					{ 'media' === action && __( 'Importing media...' ) }
 				</option>
 				<option value='create'>{ __( 'Create and Edit' ) }</option>
 				<option value='import'>{ __( 'Import' ) }</option>
@@ -119,6 +176,7 @@ const ReplaceButton = ( { item } ) => {
 	const { contentTypes } = getSystemConfig()
 	const { post_type } = item.data.post
 	const { createNotice } = Libraries.ItemContext.use()
+	const [ action, setAction ] = useState( null )
 	const [ post, setPost ] = useState( null )
 	const [ posts, setPosts ] = useState( null )
 	const postsApi = getWpRest().posts()
@@ -131,7 +189,8 @@ const ReplaceButton = ( { item } ) => {
 			post_type,
 			posts_per_page: -1,
 			orderby: 'post_title',
-			order: 'ASC'
+			order: 'ASC',
+			post_status: 'any'
 		} ).then( response => {
 			setPosts( response.data.items )
 		} ).catch( () => {
@@ -139,25 +198,11 @@ const ReplaceButton = ( { item } ) => {
 		} )
 	}, [] )
 
-	const replacePost = ( id ) => {
-		const message = sprintf( __( 'Do you really want to replace the selected %s with this library item? This cannot be undone.' ), singularLabel.toLowerCase() )
-		if ( ! id ) {
-			return
-		} else if ( ! confirm( message ) ) {
-			return
-		}
-		setPost( id )
-		librariesApi.syncPost( id, item.id ).then( response => {
-			replacePostComplete( response )
-		} ).catch( () => {
-			replacePostComplete()
-		} ).finally( () => {
-			setPost( null )
-		} )
-	}
+	const replacePostComplete = ( post ) => {
+		setPost( null )
+		setAction( null )
 
-	const replacePostComplete = ( response ) => {
-		if ( ! response || ! response.data ) {
+		if ( ! post || post.error ) {
 			createNotice( {
 				status: 'error',
 				content: __( 'Error replacing content.' )
@@ -168,6 +213,30 @@ const ReplaceButton = ( { item } ) => {
 				content: __( 'Content replaced!' )
 			} )
 		}
+	}
+
+	const importPostMedia = usePostMediaImport( {
+		onComplete: replacePostComplete
+	} )
+
+	const replacePost = ( id ) => {
+		const message = sprintf( __( 'Do you really want to replace the selected %s with this library item? This cannot be undone.' ), singularLabel.toLowerCase() )
+
+		if ( ! id ) {
+			return
+		} else if ( ! confirm( message ) ) {
+			return
+		}
+
+		setPost( id )
+		setAction( 'replace' )
+
+		librariesApi.syncPost( id, item.id ).then( response => {
+			setAction( 'media' )
+			importPostMedia( response.data, item )
+		} ).catch( () => {
+			replacePostComplete()
+		} )
 	}
 
 	const ReplaceButtonOptions = () => {
@@ -188,8 +257,9 @@ const ReplaceButton = ( { item } ) => {
 				disabled={ post }
 			>
 				<option value=''>
-					{ ! post && __( 'Replace...' ) }
-					{ post && __( 'Replacing...' ) }
+					{ ! action && __( 'Replace...' ) }
+					{ 'replace' === action && __( 'Replacing...' ) }
+					{ 'media' === action && __( 'Importing media...' ) }
 				</option>
 				{ null === posts &&
 					<optgroup label={ __( 'Loading...' ) } />

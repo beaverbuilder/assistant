@@ -107,9 +107,43 @@ class LibraryItemPostController extends ControllerAbstract {
 							'required' => true,
 							'type'     => 'number',
 						],
-						'import_media' => [
-							'type'    => 'number',
-							'default' => 1,
+					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_others_posts' );
+					},
+				],
+			]
+		);
+
+		$this->route(
+			'/posts/import_post_thumb_from_library/(?P<post_id>\d+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'import_post_thumb_from_library' ],
+					'args'                => [
+						'post_id'      => [
+							'required' => true,
+							'type'     => 'number',
+						],
+					],
+					'permission_callback' => function () {
+						return current_user_can( 'edit_others_posts' );
+					},
+				],
+			]
+		);
+
+		$this->route(
+			'/posts/import_post_media_from_library/(?P<post_id>\d+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => [ $this, 'import_post_media_from_library' ],
+					'args'                => [
+						'post_id'      => [
+							'required' => true,
+							'type'     => 'number',
 						],
 					],
 					'permission_callback' => function () {
@@ -133,10 +167,6 @@ class LibraryItemPostController extends ControllerAbstract {
 						'item_id'      => [
 							'required' => true,
 							'type'     => 'number',
-						],
-						'import_media' => [
-							'type'    => 'number',
-							'default' => 1,
 						],
 					],
 					'permission_callback' => function () {
@@ -275,7 +305,6 @@ class LibraryItemPostController extends ControllerAbstract {
 	 */
 	public function import_from_library( $request ) {
 		$item_id = $request->get_param( 'item_id' );
-		$import_media = ! ! $request->get_param( 'import_media' );
 		$client = new CloudClient;
 		$response = $client->libraries->get_item( $item_id );
 		$post_data = $response->data->post;
@@ -306,7 +335,6 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$this->import_post_meta_from_library( $new_post_id, $response->data->meta );
 		$this->import_post_terms_from_library( $new_post_id, $response->data->terms );
-		$this->import_post_media_from_library( $new_post_id, $response->media, $import_media );
 		$this->regenerate_builder_cache( $response );
 
 		return rest_ensure_response(
@@ -325,7 +353,6 @@ class LibraryItemPostController extends ControllerAbstract {
 	public function sync_from_library( $request ) {
 		$post_id = $request->get_param( 'id' );
 		$item_id = $request->get_param( 'item_id' );
-		$import_media = ! ! $request->get_param( 'import_media' );
 		$client = new CloudClient;
 		$response = $client->libraries->get_item( $item_id );
 
@@ -346,7 +373,6 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$this->import_post_meta_from_library( $post_id, $response->data->meta );
 		$this->import_post_terms_from_library( $post_id, $response->data->terms );
-		$this->import_post_media_from_library( $post_id, $response->media, $import_media );
 		$this->regenerate_builder_cache( $response );
 
 		return rest_ensure_response(
@@ -471,41 +497,44 @@ class LibraryItemPostController extends ControllerAbstract {
 	}
 
 	/**
-	 * Imports the media for a post.
+	 * Imports the featured image for a post.
 	 *
-	 * @param int $post_id
-	 * @param object $media
-	 * @param bool $import
-	 * @return void
+	 * @param object $request
+	 * @return array
 	 */
-	public function import_post_media_from_library( $post_id, $media, $import = true ) {
+	public function import_post_thumb_from_library( $request ) {
+		$post_id = $request->get_param( 'post_id' );
+		$thumb = $request->get_param( 'thumb' );
 		$service = new MediaLibraryService();
 
-		// Import post thumbnail
-		if ( $import && isset( $media->thumb ) ) {
-			if ( ! preg_match( '/screenshot\.(png|jpg|gif)/', $media->thumb->file_name ) ) {
-				$response = $service->import_cloud_media( $media->thumb, $post_id );
-				set_post_thumbnail( $post_id, $response['id'] );
-			}
+		if ( ! preg_match( '/screenshot\.(png|jpg|gif)/', $thumb['file_name'] ) ) {
+			$response = $service->import_cloud_media( $thumb, $post_id );
+			set_post_thumbnail( $post_id, $response['id'] );
 		}
 
-		// Import post attachments
-		if ( isset( $media->attachments ) ) {
-			$imported = [];
+		return [ 'success' => true ];
+	}
 
-			foreach ( $media->attachments as $attachment ) {
-				if ( $import ) {
-					$response = $service->import_cloud_media( $attachment, $post_id );
-					$imported[ $attachment->file_name ] = wp_get_attachment_metadata( $response['id'] );
-					$imported[ $attachment->file_name ]['id'] = $response['id'];
-				} else {
-					$imported[ $attachment->file_name ] = $attachment;
-				}
-			}
+	/**
+	 * Imports a media item for a post.
+	 *
+	 * @param object $request
+	 * @return array
+	 */
+	public function import_post_media_from_library( $request ) {
+		$post_id = $request->get_param( 'post_id' );
+		$media = $request->get_param( 'media' );
+		$service = new MediaLibraryService();
 
-			$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
-			$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
-		}
+		$imported = [];
+		$response = $service->import_cloud_media( $media, $post_id );
+		$imported[ $media['file_name'] ] = wp_get_attachment_metadata( $response['id'] );
+		$imported[ $media['file_name'] ]['id'] = $response['id'];
+
+		$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
+		$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
+
+		return [ 'success' => true ];
 	}
 
 	/**
