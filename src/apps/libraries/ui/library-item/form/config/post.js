@@ -84,11 +84,10 @@ const CreateButton = ( { item } ) => {
 	const history = useHistory()
 	const { createNotice } = Libraries.ItemContext.use()
 	const [ action, setAction ] = useState( null )
+	const [ importingMedia, setImportingMedia ] = useState( false )
 	const api = getWpRest().libraries()
 
 	const createPostComplete = ( post ) => {
-		setAction( null )
-
 		if ( 'create' === action ) {
 			const { type } = item.data.builder
 			const { bbEditUrl, editUrl } = post
@@ -101,6 +100,9 @@ const CreateButton = ( { item } ) => {
 		} else {
 			importPostComplete( post )
 		}
+
+		setAction( null )
+		setImportingMedia( false )
 	}
 
 	const importPostComplete = ( post ) => {
@@ -138,13 +140,13 @@ const CreateButton = ( { item } ) => {
 		onComplete: createPostComplete
 	} )
 
-	const createPost = ( action ) => {
-		setAction( action )
+	const createPost = () => {
 		api.importPost( item.id ).then( response => {
-			setAction( 'media' )
+			setImportingMedia( true )
 			importPostMedia( response.data, item )
 		} ).catch( () => {
 			setAction( null )
+			setImportingMedia( false )
 			createNotice( {
 				status: 'error',
 				content: __( 'Error importing content.' )
@@ -152,18 +154,24 @@ const CreateButton = ( { item } ) => {
 		} )
 	}
 
+	useEffect( () => {
+		if ( action ) {
+			createPost()
+		}
+	}, [ action ] )
+
 	return (
 		<>
 			<select
 				value={ '' }
-				onChange={ e => createPost( e.target.value ) }
+				onChange={ e => setAction( e.target.value ) }
 				disabled={ action }
 			>
 				<option value=''>
-					{ ! action && __( 'Create New...' ) }
-					{ 'create' === action && __( 'Creating...' ) }
-					{ 'import' === action && __( 'Importing...' ) }
-					{ 'media' === action && __( 'Importing media...' ) }
+					{ ! importingMedia && ! action && __( 'Create New...' ) }
+					{ ! importingMedia && 'create' === action && __( 'Creating...' ) }
+					{ ! importingMedia && 'import' === action && __( 'Importing...' ) }
+					{ importingMedia && __( 'Importing media...' ) }
 				</option>
 				<option value='create'>{ __( 'Create and Edit' ) }</option>
 				<option value='import'>{ __( 'Import' ) }</option>
@@ -176,7 +184,7 @@ const ReplaceButton = ( { item } ) => {
 	const { contentTypes } = getSystemConfig()
 	const { post_type } = item.data.post
 	const { createNotice } = Libraries.ItemContext.use()
-	const [ action, setAction ] = useState( null )
+	const [ importingMedia, setImportingMedia ] = useState( false )
 	const [ post, setPost ] = useState( null )
 	const [ posts, setPosts ] = useState( null )
 	const postsApi = getWpRest().posts()
@@ -200,7 +208,7 @@ const ReplaceButton = ( { item } ) => {
 
 	const replacePostComplete = ( post ) => {
 		setPost( null )
-		setAction( null )
+		setImportingMedia( false )
 
 		if ( ! post || post.error ) {
 			createNotice( {
@@ -229,10 +237,9 @@ const ReplaceButton = ( { item } ) => {
 		}
 
 		setPost( id )
-		setAction( 'replace' )
 
 		librariesApi.syncPost( id, item.id ).then( response => {
-			setAction( 'media' )
+			setImportingMedia( true )
 			importPostMedia( response.data, item )
 		} ).catch( () => {
 			replacePostComplete()
@@ -257,9 +264,9 @@ const ReplaceButton = ( { item } ) => {
 				disabled={ post }
 			>
 				<option value=''>
-					{ ! action && __( 'Replace...' ) }
-					{ 'replace' === action && __( 'Replacing...' ) }
-					{ 'media' === action && __( 'Importing media...' ) }
+					{ ! importingMedia && ! post && __( 'Replace...' ) }
+					{ ! importingMedia && post && __( 'Replacing...' ) }
+					{ importingMedia && __( 'Importing media...' ) }
 				</option>
 				{ null === posts &&
 					<optgroup label={ __( 'Loading...' ) } />

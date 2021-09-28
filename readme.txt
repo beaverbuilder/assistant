@@ -72,6 +72,15 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 0.7.0.8 ( 2021-09-28 ) =
+* Added save to library functionality within the content app.
+* Set posts imported from the cloud to published instead of draft.
+* Prevent post screenshots being imported as featured images.
+* Fixed server timeout when importing posts with a lot of media.
+* Fixed errors with exporting Customizer settings.
+* Fixed issues with connecting to the cloud.
+* Fixed miscellaneous React errors.
+
 = 0.7.0.7 ( 2021-09-01 ) =
 * Updated Assistant Pro cloud URLs to production.
 
