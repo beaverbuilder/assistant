@@ -188,7 +188,7 @@ class MediaPathHelper {
 	 * @return array
 	 */
 	static public function get_image_urls_from_string( $string ) {
-		$pattern = '#https?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/)\.(jpg|jpeg|png|gif))#';
+		$pattern = '#https?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/)\.(jpg|jpeg|png|gif|svg))#';
 		$urls = [];
 
 		if ( preg_match_all( $pattern, $string, $matches ) ) {
@@ -241,7 +241,7 @@ class MediaPathHelper {
 			'ext'           => null,
 		];
 
-		preg_match_all( '/(-(\d+)x(\d+))\.(jpg|jpeg|png|gif)/', $url, $matches );
+		preg_match_all( '/(-(\d+)x(\d+))\.(jpg|jpeg|png|gif|svg)/', $url, $matches );
 
 		if ( isset( $matches[1] ) && ! empty( $matches[1] ) ) {
 			$info['full_size_url'] = str_replace( $matches[1], '', $url );
