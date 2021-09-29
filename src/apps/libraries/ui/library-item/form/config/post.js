@@ -41,7 +41,6 @@ const PreviewButton = ( { item } ) => {
 	}
 
 	const previewPostComplete = ( response ) => {
-		console.log( response )
 		if ( ! response || response.data.error ) {
 			createNotice( {
 				status: 'error',
