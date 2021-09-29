@@ -642,9 +642,9 @@ const libraries = () => {
 		/**
 		 * Import library post item into WP
 		 */
-		importPost( itemId, config = {} ) {
+		importPost( item, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/import_from_library/${itemId}`, {}, config )
+			return http.post( 'fl-assistant/v1/posts/import_from_library/', { item: JSON.stringify( item ) }, config )
 		},
 
 		/**
@@ -666,16 +666,16 @@ const libraries = () => {
 		/**
 		 * Override WP post data with library post item data
 		 */
-		syncPost( id, itemId, config = {} ) {
+		syncPost( id, item, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/${id}/sync_from_library/${itemId}`, {}, config )
+			return http.post( `fl-assistant/v1/posts/${id}/sync_from_library/`, { item: JSON.stringify( item ) }, config )
 		},
 
 		/**
 		 * Preview a library post item
 		 */
-		previewPost( itemId, config = {} ) {
-			return http.post( `fl-assistant/v1/posts/preview_library_post/${itemId}`, {}, config )
+		previewPost( item, config = {} ) {
+			return http.post( 'fl-assistant/v1/posts/preview_library_post/', { item: JSON.stringify( item ) }, config )
 		},
 
 		/**

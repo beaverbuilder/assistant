@@ -32,17 +32,11 @@ class LibraryItemPostController extends ControllerAbstract {
 	public function register_routes() {
 
 		$this->route(
-			'/posts/preview_library_post/(?P<item_id>\d+)',
+			'/posts/preview_library_post/',
 			[
 				[
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'preview_library_post' ],
-					'args'                => [
-						'item_id' => [
-							'required' => true,
-							'type'     => 'number',
-						],
-					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_others_posts' );
 					},
@@ -97,17 +91,11 @@ class LibraryItemPostController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/import_from_library/(?P<item_id>\d+)',
+			'/posts/import_from_library/',
 			[
 				[
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'import_from_library' ],
-					'args'                => [
-						'item_id'      => [
-							'required' => true,
-							'type'     => 'number',
-						],
-					],
 					'permission_callback' => function () {
 						return current_user_can( 'edit_others_posts' );
 					},
@@ -154,17 +142,13 @@ class LibraryItemPostController extends ControllerAbstract {
 		);
 
 		$this->route(
-			'/posts/(?P<id>\d+)/sync_from_library/(?P<item_id>\d+)',
+			'/posts/(?P<id>\d+)/sync_from_library/',
 			[
 				[
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'sync_from_library' ],
 					'args'                => [
 						'id'           => [
-							'required' => true,
-							'type'     => 'number',
-						],
-						'item_id'      => [
 							'required' => true,
 							'type'     => 'number',
 						],
@@ -186,14 +170,23 @@ class LibraryItemPostController extends ControllerAbstract {
 	public function preview_library_post( $request ) {
 		global $wpdb;
 
-		$item_id = $request->get_param( 'item_id' );
+		$data = $request->get_param( 'item' );
+		$item = $data ? json_decode( $data ) : null;
+
+		if ( ! $item ) {
+			return rest_ensure_response(
+				[
+					'error' => true,
+				]
+			);
+		}
 
 		$meta = $wpdb->get_row(
 			$wpdb->prepare(
 				"SELECT * FROM $wpdb->postmeta
 				WHERE meta_key = '_fl_asst_preview_library_item_id'
 				AND meta_value = %s",
-				$item_id
+				$item->id
 			)
 		);
 
@@ -217,7 +210,18 @@ class LibraryItemPostController extends ControllerAbstract {
 			]
 		);
 
-		update_post_meta( $post_id, '_fl_asst_preview_library_item_id', $item_id );
+		update_post_meta( $post_id, '_fl_asst_preview_library_item_id', $item->id );
+
+		if ( isset( $item->media->attachments ) ) {
+			$imported = [];
+
+			foreach ( $item->media->attachments as $attachment ) {
+				$imported[ $attachment->file_name ] = $attachment;
+			}
+
+			$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
+			$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
+		}
 
 		return rest_ensure_response(
 			[
@@ -304,10 +308,18 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function import_from_library( $request ) {
-		$item_id = $request->get_param( 'item_id' );
-		$client = new CloudClient;
-		$response = $client->libraries->get_item( $item_id );
-		$post_data = $response->data->post;
+		$data = $request->get_param( 'item' );
+		$item = $data ? json_decode( $data ) : null;
+
+		if ( ! $item ) {
+			return rest_ensure_response(
+				[
+					'error' => true,
+				]
+			);
+		}
+
+		$post_data = $item->data->post;
 
 		$new_post_id = wp_insert_post(
 			[
@@ -333,9 +345,9 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
-		$this->import_post_meta_from_library( $new_post_id, $response->data->meta );
-		$this->import_post_terms_from_library( $new_post_id, $response->data->terms );
-		$this->regenerate_builder_cache( $response );
+		$this->import_post_meta_from_library( $new_post_id, $item->data->meta );
+		$this->import_post_terms_from_library( $new_post_id, $item->data->terms );
+		$this->regenerate_builder_cache( $item );
 
 		return rest_ensure_response(
 			$this->posts->transform(
@@ -352,14 +364,21 @@ class LibraryItemPostController extends ControllerAbstract {
 	 */
 	public function sync_from_library( $request ) {
 		$post_id = $request->get_param( 'id' );
-		$item_id = $request->get_param( 'item_id' );
-		$client = new CloudClient;
-		$response = $client->libraries->get_item( $item_id );
+		$data = $request->get_param( 'item' );
+		$item = $data ? json_decode( $data ) : null;
+
+		if ( ! $item ) {
+			return rest_ensure_response(
+				[
+					'error' => true,
+				]
+			);
+		}
 
 		$updated = wp_update_post(
 			[
 				'ID'           => $post_id,
-				'post_content' => $response->data->post->post_content,
+				'post_content' => $item->data->post->post_content,
 			]
 		);
 
@@ -371,9 +390,9 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
-		$this->import_post_meta_from_library( $post_id, $response->data->meta );
-		$this->import_post_terms_from_library( $post_id, $response->data->terms );
-		$this->regenerate_builder_cache( $response );
+		$this->import_post_meta_from_library( $post_id, $item->data->meta );
+		$this->import_post_terms_from_library( $post_id, $item->data->terms );
+		$this->regenerate_builder_cache( $item );
 
 		return rest_ensure_response(
 			$this->posts->transform(

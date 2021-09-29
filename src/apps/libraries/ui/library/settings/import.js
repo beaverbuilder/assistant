@@ -27,7 +27,7 @@ export default () => {
 		} else if ( 'post' === item.type ) {
 
 			cloud.libraries.getItem( item.id ).then( itemResponse => {
-				api.importPost( item.id ).then( postResponse => {
+				api.importPost( itemResponse.data ).then( postResponse => {
 					importPostMedia( postResponse.data, itemResponse.data ).then( () => {
 						importNextItem()
 					} )

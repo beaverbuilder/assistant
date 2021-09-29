@@ -2,32 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __, sprintf } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
+import { Button } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { usePostMediaImport } from 'ui/library/use-post-media-import'
 
 export const getActions = ( item, actions ) => {
-	const { library } = Libraries.ItemContext.use()
-	const [ previewing, setPreviewing ] = useState( false )
-	const api = getWpRest().libraries()
-
-	const previewPost = () => {
-		setPreviewing( true )
-		api.previewPost( item.id ).then( response => {
-			setPreviewing( false )
-			window.open( response.data.url )
-		} )
-	}
-
 	actions.unshift( {
-		label: __( 'Preview' ),
-		onClick: previewPost,
-		disabled: previewing,
+		component: <PreviewButton item={ item } />
 	} )
 
 	actions.unshift( {
-		component: <ReplaceButton item={ item } />,
-		shouldRender: library.permissions.edit_items
+		component: <ReplaceButton item={ item } />
 	} )
 
 	actions.unshift( {
@@ -35,6 +21,45 @@ export const getActions = ( item, actions ) => {
 	} )
 
 	return actions
+}
+
+const PreviewButton = ( { item } ) => {
+	const { createNotice } = Libraries.ItemContext.use()
+	const [ previewing, setPreviewing ] = useState( false )
+	const api = getWpRest().libraries()
+
+	const previewPost = () => {
+		setPreviewing( true )
+
+		api.previewPost( item ).then( response => {
+			previewPostComplete( response )
+		} ).catch( () => {
+			previewPostComplete()
+		} ).finally( () => {
+			setPreviewing( false )
+		} )
+	}
+
+	const previewPostComplete = ( response ) => {
+		console.log( response )
+		if ( ! response || response.data.error ) {
+			createNotice( {
+				status: 'error',
+				content: __( 'Error previewing content.' )
+			} )
+		} else {
+			window.open( response.data.url )
+		}
+	}
+
+	return (
+		<Button
+			onClick={ previewPost }
+			disabled={ previewing }
+		>
+			{ __( 'Preview' ) }
+		</Button>
+	)
 }
 
 const CreateButton = ( { item } ) => {
@@ -46,7 +71,7 @@ const CreateButton = ( { item } ) => {
 	const importPostMedia = usePostMediaImport()
 
 	const createPost = () => {
-		api.importPost( item.id ).then( response => {
+		api.importPost( item ).then( response => {
 			setImportingMedia( true )
 			importPostMedia( response.data, item ).then( createPostComplete )
 		} ).catch( () => {
@@ -145,6 +170,7 @@ const ReplaceButton = ( { item } ) => {
 	const librariesApi = getWpRest().libraries()
 	const pluralLabel = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.plural : `${ post_type }s`
 	const singularLabel = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.singular : `${ post_type }`
+	const importPostMedia = usePostMediaImport()
 
 	useEffect( () => {
 		postsApi.findWhere( {
@@ -159,6 +185,27 @@ const ReplaceButton = ( { item } ) => {
 			setPosts( [] )
 		} )
 	}, [] )
+
+	const replacePost = ( id ) => {
+		const message = sprintf( __( 'Do you really want to replace the selected %s with this library item? This cannot be undone.' ), singularLabel.toLowerCase() )
+
+		if ( ! id ) {
+			return
+		} else if ( ! confirm( message ) ) {
+			return
+		}
+
+		setPost( id )
+
+		librariesApi.syncPost( id, item ).then( response => {
+			setImportingMedia( true )
+			importPostMedia( response.data, item ).then( () => {
+				replacePostComplete()
+			} )
+		} ).catch( () => {
+			replacePostComplete()
+		} )
+	}
 
 	const replacePostComplete = ( post ) => {
 		setPost( null )
@@ -175,29 +222,6 @@ const ReplaceButton = ( { item } ) => {
 				content: __( 'Content replaced!' )
 			} )
 		}
-	}
-
-	const importPostMedia = usePostMediaImport( {
-		onComplete: replacePostComplete
-	} )
-
-	const replacePost = ( id ) => {
-		const message = sprintf( __( 'Do you really want to replace the selected %s with this library item? This cannot be undone.' ), singularLabel.toLowerCase() )
-
-		if ( ! id ) {
-			return
-		} else if ( ! confirm( message ) ) {
-			return
-		}
-
-		setPost( id )
-
-		librariesApi.syncPost( id, item.id ).then( response => {
-			setImportingMedia( true )
-			importPostMedia( response.data, item )
-		} ).catch( () => {
-			replacePostComplete()
-		} )
 	}
 
 	const ReplaceButtonOptions = () => {
