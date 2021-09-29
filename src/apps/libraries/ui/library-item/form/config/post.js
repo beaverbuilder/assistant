@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __, sprintf } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
+import { usePostMediaImport } from 'ui/library/use-post-media-import'
 
 export const getActions = ( item, actions ) => {
 	const { library } = Libraries.ItemContext.use()
@@ -36,56 +37,27 @@ export const getActions = ( item, actions ) => {
 	return actions
 }
 
-const usePostMediaImport = ( {
-	onComplete = () => {}
-} ) => {
-	const api = getWpRest().libraries()
-	const nextAttachment = useRef( 0 )
-
-	const importPostMedia = ( post, item ) => {
-
-		if ( item.media.thumb ) {
-			importPostThumb( post, item )
-		} else {
-			importPostAttachments( post, item )
-		}
-	}
-
-	const importPostThumb = ( post, item ) => {
-		api.importPostThumb( post.id, item.media.thumb ).finally( () => {
-			importPostAttachments( post, item )
-		} )
-	}
-
-	const importPostAttachments = ( post, item ) => {
-		const { attachments } = item.media
-
-		if ( ! attachments ) {
-			onComplete( post )
-		}
-
-		const attachment = attachments[ nextAttachment.current ]
-
-		if ( ! attachment ) {
-			nextAttachment.current = 0
-			onComplete( post )
-		} else {
-			api.importPostMedia( post.id, attachment ).finally( () => {
-				nextAttachment.current++
-				importPostAttachments( post, item )
-			} )
-		}
-	}
-
-	return importPostMedia
-}
-
 const CreateButton = ( { item } ) => {
 	const history = useHistory()
 	const { createNotice } = Libraries.ItemContext.use()
 	const [ action, setAction ] = useState( null )
 	const [ importingMedia, setImportingMedia ] = useState( false )
 	const api = getWpRest().libraries()
+	const importPostMedia = usePostMediaImport()
+
+	const createPost = () => {
+		api.importPost( item.id ).then( response => {
+			setImportingMedia( true )
+			importPostMedia( response.data, item ).then( createPostComplete )
+		} ).catch( () => {
+			setAction( null )
+			setImportingMedia( false )
+			createNotice( {
+				status: 'error',
+				content: __( 'Error importing content.' )
+			} )
+		} )
+	}
 
 	const createPostComplete = ( post ) => {
 		if ( 'create' === action ) {
@@ -124,7 +96,7 @@ const CreateButton = ( { item } ) => {
 							} }
 							onClick={ () => {
 								history.push( `/fl-content/post/${ post.id }`, {
-									item: post.data
+									item: post
 								} )
 							} }
 						>
@@ -134,24 +106,6 @@ const CreateButton = ( { item } ) => {
 				)
 			} )
 		}
-	}
-
-	const importPostMedia = usePostMediaImport( {
-		onComplete: createPostComplete
-	} )
-
-	const createPost = () => {
-		api.importPost( item.id ).then( response => {
-			setImportingMedia( true )
-			importPostMedia( response.data, item )
-		} ).catch( () => {
-			setAction( null )
-			setImportingMedia( false )
-			createNotice( {
-				status: 'error',
-				content: __( 'Error importing content.' )
-			} )
-		} )
 	}
 
 	useEffect( () => {

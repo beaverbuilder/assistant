@@ -3,11 +3,14 @@ import { __, sprintf } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Button } from 'assistant/ui'
 import { getWpRest } from 'assistant/utils/wordpress'
+import { usePostMediaImport } from 'ui/library/use-post-media-import'
+import cloud from 'assistant/cloud'
 
 export default () => {
 	const { items } = Libraries.LibraryContext.use()
 	const [ currentItem, setCurrentItem ] = useState( null )
 	const [ importComplete, setImportComplete ] = useState( false )
+	const importPostMedia = usePostMediaImport()
 
 	useEffect( () => {
 		if ( null !== currentItem ) {
@@ -22,7 +25,19 @@ export default () => {
 		if ( 'color' === item.type || 'theme_settings' === item.type ) {
 			importNextItem()
 		} else if ( 'post' === item.type ) {
-			api.importPost( item.id ).finally( importNextItem )
+
+			cloud.libraries.getItem( item.id ).then( itemResponse => {
+				api.importPost( item.id ).then( postResponse => {
+					importPostMedia( postResponse.data, itemResponse.data ).then( () => {
+						importNextItem()
+					} )
+				} ).catch( () => {
+					importNextItem()
+				} )
+			} ).catch( () => {
+				importNextItem()
+			} )
+
 		} else {
 			api.importItem( item ).finally( importNextItem )
 		}
