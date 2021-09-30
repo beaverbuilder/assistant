@@ -212,16 +212,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		update_post_meta( $post_id, '_fl_asst_preview_library_item_id', $item->id );
 
-		if ( isset( $item->media->attachments ) ) {
-			$imported = [];
-
-			foreach ( $item->media->attachments as $attachment ) {
-				$imported[ $attachment->file_name ] = $attachment;
-			}
-
-			$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
-			$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
-		}
+		$this->replace_attachment_urls_with_cloud_urls( $item, $post_id );
 
 		return rest_ensure_response(
 			[
@@ -556,6 +547,26 @@ class LibraryItemPostController extends ControllerAbstract {
 		$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
 
 		return [ 'success' => true ];
+	}
+
+	/**
+	 * Replace attachment urls with urls from the cloud.
+	 *
+	 * @param object $item
+	 * @param int $post_id
+	 * @return void
+	 */
+	public function replace_attachment_urls_with_cloud_urls( $item, $post_id ) {
+		if ( isset( $item->media->attachments ) ) {
+			$imported = [];
+
+			foreach ( $item->media->attachments as $attachment ) {
+				$imported[ $attachment->file_name ] = $attachment;
+			}
+
+			$this->replace_imported_attachment_urls_in_content( $post_id, $imported );
+			$this->replace_imported_attachment_urls_in_meta( $post_id, $imported );
+		}
 	}
 
 	/**
