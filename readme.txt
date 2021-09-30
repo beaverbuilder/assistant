@@ -72,6 +72,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 0.7.0.9 ( 2021-09-30 ) =
+* Fixed SVG in posts not importing.
+* Fixed post media not importing when importing an entire library.
+* Fixed Beaver Builder rows importing as layout templates.
+
 = 0.7.0.8 ( 2021-09-28 ) =
 * Added save to library functionality within the content app.
 * Set posts imported from the cloud to published instead of draft.
