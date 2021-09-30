@@ -437,6 +437,8 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function import_post_terms_from_library( $post_id, $terms ) {
+		$terms = is_object( $terms ) ? [ $terms ] : $terms;
+
 		if ( ! $terms || ! is_array( $terms ) || 0 === count( $terms ) ) {
 			return;
 		}
