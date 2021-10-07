@@ -1,6 +1,5 @@
 const webpack = require( 'webpack' )
 const path = require( 'path' )
-const pckg = require( './package.json' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' )
 const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' )
@@ -61,7 +60,7 @@ const externals = [
 		'assistant/utils': 'FL.Assistant.utils',
 		'assistant/cloud': 'FL.Assistant.cloud',
 	},
-	function( { context, request }, callback ) {
+	function( { request }, callback ) {
 
 		/* Nested util imports */
 		if ( /assistant\/utils/.test( request ) ) {
@@ -99,8 +98,8 @@ const config = {
 	externals,
 	output: {
 		path: path.resolve( __dirname, 'build' ),
-		filename: `[name].js?var=${ pckg.version }`,
-		chunkFilename: `chunk-[name].js?var=${ pckg.version }`,
+		filename: '[name].js?var=[contenthash]',
+		chunkFilename: 'chunk-[name].js?var=[contenthash]',
 		publicPath: '',
 	},
 	resolve: {
@@ -130,7 +129,7 @@ const config = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin( {
-			filename: '[name].css',
+			filename: '[name].css?var=[contenthash]',
 		} ),
 		new webpack.DefinePlugin( {
 			'__INCLUDE_PRO__': includePro,
