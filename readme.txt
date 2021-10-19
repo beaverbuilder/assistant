@@ -72,6 +72,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 0.7.1 ( 2021-10-19 ) =
+* Fixed caching issues when updating the plugin to a new version.
+
 = 0.7.0.9 ( 2021-09-30 ) =
 * Fixed SVG in posts not importing.
 * Fixed post media not importing when importing an entire library.
