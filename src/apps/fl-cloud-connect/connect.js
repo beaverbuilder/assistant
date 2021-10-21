@@ -3,13 +3,16 @@ import { getAppActions, getSystemActions } from 'assistant/data'
 import cloud from 'assistant/cloud'
 
 export default () => {
+	const LAST_TOKEN_KEY = 'fl-assistant-last-cloud-token'
 	const { setIsValidating } = getAppActions( 'fl-cloud-connect' )
 	const { setCloudUser } = getSystemActions()
 	const { href } = window.location
 	const { token } = getQueryArgs( href )
+	const lastToken = localStorage.getItem( LAST_TOKEN_KEY )
 
-	if ( token ) {
+	if ( token && token !== lastToken ) {
 		setIsValidating( true )
+		localStorage.setItem( LAST_TOKEN_KEY, token )
 		cloud.session.setToken( token )
 		cloud.auth.refresh().then( response => {
 			cloud.session.create( response.token, response.user, true )
