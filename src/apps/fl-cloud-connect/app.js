@@ -74,7 +74,7 @@ const Main = () => {
 					margin: '0 auto'
 				} }
 			>
-				<Text.Title style={ { fontSize: 20 } }>{ __( 'Coming Soon!' ) }</Text.Title>
+				<Text.Title style={ { fontSize: 20 } }>{ __( 'Introducing Assistant Pro' ) }</Text.Title>
 
 				<p style={ { marginBottom: 30 } }>{__( 'Assistant Pro joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them. To use libraries, you’ll need an Assistant Pro account.' )}</p>
 

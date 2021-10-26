@@ -1,5 +1,5 @@
 import React from 'react'
-import { __, sprintf } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'assistant/data'
 import { Text } from 'assistant/ui'
 import { useResizeObserver } from 'assistant/utils/react'
@@ -7,11 +7,11 @@ import Section from '../generic'
 import './style.scss'
 
 const WelcomeSection = ( { ...rest } ) => {
-	const { currentUser, pluginURL } = getSystemConfig()
+	const { pluginURL } = getSystemConfig()
 
 	return (
 		<Section
-			title={ sprintf( 'Welcome, %s', currentUser.displayName ) }
+			title={ __( 'Try Assistant Pro' ) }
 			className="home-welcome-section"
 			padContent={ false }
 			{ ...rest }
@@ -38,7 +38,7 @@ const ProBanner = ( { pluginURL } ) => {
 		>
 			<img className="pro-logo" src={ `${imgURL}/pro-branding-sm.png` } />
 			<div>
-				<Text.Title style={ { marginTop: 20, fontSize: 18, fontWeight: 'bold' } }>{ __( 'Try Assistant Pro' ) }</Text.Title>
+				<Text.Title style={ { marginTop: 20, fontSize: 18, fontWeight: 'bold' } }>{ __( 'Introducing Assistant Pro' ) }</Text.Title>
 				<p style={ { margin: 0, marginTop: 10, fontSize: 15, marginRight: 150, maxWidth: 200 } }>
 					{ __( 'Get access to all your templates and assets on all your sites' ) }
 				</p>

@@ -28,6 +28,16 @@ const AppsSection = ( { ...rest } ) => {
 		>
 			<Swiper>
 				<Card
+					headline={ <div>Share <strong>Assets</strong> across all your WordPress sites</div> }
+					subtext={ __( 'Get access to all your templates & assets on all your sites with Assistant Pro.' ) }
+					style={ {
+						'--card-bg': 'var(--fl-brand-light-blue)',
+						'--card-color': '#125F77', /* little darker than normal dark blue */
+						backgroundImage: `url(${imgURL}libraries-card.png)`,
+					} }
+					footer={ <GoToButton to="/libraries">{ __( 'Go To Libraries App' ) }</GoToButton> }
+				/>
+				<Card
 					headline={ <div>Find <strong>Content</strong> Fast</div> }
 					subtext={ __( 'The content app lets you find posts, pages and more with lightning speed.' ) }
 					style={ {
@@ -44,15 +54,6 @@ const AppsSection = ( { ...rest } ) => {
 						backgroundImage: `url(${imgURL}media-card.png)`,
 					} }
 					footer={ <GoToButton to="/fl-media">{ __( 'Go To Media App' ) }</GoToButton> }
-				/>
-				<Card
-					headline={ <div>Coming Soon: Share <strong>Libraries</strong> across all your sites</div> }
-					style={ {
-						'--card-bg': 'var(--fl-brand-light-blue)',
-						'--card-color': '#125F77', /* little darker than normal dark blue */
-						backgroundImage: `url(${imgURL}libraries-card.png)`,
-					} }
-					footer={ <GoToButton to="/libraries">{ __( 'Go To Libraries App' ) }</GoToButton> }
 				/>
 			</Swiper>
 		</Section>
