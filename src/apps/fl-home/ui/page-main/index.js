@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeaderBar, SearchResults, Widgets, useSearchResults } from 'home/ui'
+import { HeaderBar, SearchResults, Widgets, useSearchResults } from '../'
 import Welcome from './welcome'
 import HomeSections from '../sections'
 import './style.scss'

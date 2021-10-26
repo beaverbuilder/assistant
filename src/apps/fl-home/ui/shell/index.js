@@ -1,3 +1,5 @@
+__webpack_public_path__ = `${ FL_ASSISTANT_CONFIG.pluginURL }/build/`
+
 import React from 'react'
 import c from 'classnames'
 import { __ } from '@wordpress/i18n'
