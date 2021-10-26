@@ -33,13 +33,6 @@ registerStore( KEY, {
 	selectors,
 } )
 
-if ( cloud.auth.isConnected() ) {
-	cloud.user.get().then( response => {
-		const { setCloudUser } = getDispatch( KEY )
-		setCloudUser( response.data )
-	} )
-}
-
 export const getSystemStore = () => getStore( KEY )
 
 export const useSystemState = shouldUpdate => useStore( KEY, shouldUpdate )
@@ -56,8 +49,30 @@ export const getSystemConfig = () => ( { ...FL_ASSISTANT_CONFIG } )
 
 export { useAppList }
 
+/**
+ * Ensure cloud was connected to this WP user. Refresh
+ * the user data if successful.
+ */
+if ( cloud.auth.isConnected() ) {
+	const { setCloudUser, setIsCloudConnected } = getDispatch( KEY )
+	const { cloudUser } = getStore( KEY ).getState()
+	const { currentUser } = FL_ASSISTANT_CONFIG
 
-// Set up Counts
+	if ( cloudUser.wpId !== currentUser.id ) {
+		setIsCloudConnected( false )
+	} else {
+		cloud.user.get().then( response => {
+			setCloudUser( {
+				...response.data,
+				wpId: currentUser.id
+			} )
+		} )
+	}
+}
+
+/**
+ * Setup initial REST batch requests.
+ */
 getWpRest().batch().get( {
 	'/fl-assistant/v1/counts': counts => {
 		const { setCounts } = getSystemActions()
