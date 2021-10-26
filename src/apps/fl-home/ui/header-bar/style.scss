@@ -39,6 +39,7 @@
         }
 
         .fl-asst-form-input {
+			flex: 1 1 auto;
             height: var(--box-size);
 
             input {
