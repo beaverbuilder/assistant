@@ -23,6 +23,17 @@
 
 /* Checkbox fix - should move to fluid */
 .fluid {
+	.fl-asst-form-item {
+		label {
+			font-weight: normal;
+		}
+	}
+	.fl-asst-form-item-placement-beside {
+		label {
+			align-self: center;
+		}
+	}
+
 	input[type=checkbox],
 	input[type=radio] {
 		padding: 0;
