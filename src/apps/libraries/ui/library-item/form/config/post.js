@@ -199,7 +199,7 @@ const ReplaceButton = ( { item } ) => {
 		librariesApi.syncPost( id, item ).then( response => {
 			setImportingMedia( true )
 			importPostMedia( response.data, item ).then( () => {
-				replacePostComplete()
+				replacePostComplete( response.data )
 			} )
 		} ).catch( () => {
 			replacePostComplete()
