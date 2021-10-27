@@ -74,6 +74,10 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 = 1.0.0 ( 2021-10-26 ) =
 * Assistant Pro is here! You can now organize your templates, images, svg artwork and colors into libraries that you can then access from all your WordPress sites.
+* Added profile menu to the libraries app.
+* Added profile menu item for disconnecting from the Assistant Pro cloud.
+* Reworked cloud connection to only work for the original WordPress user that made the connection.
+* Fixed cloud disconnecting when refreshing right after connecting.
 
 = 0.7.1 ( 2021-10-19 ) =
 * Fixed caching issues when updating the plugin to a new version.
