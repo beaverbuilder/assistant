@@ -6,6 +6,7 @@ import { __ } from '@wordpress/i18n'
 import { DOWN, UP } from '@wordpress/keycodes'
 import { useHistory } from 'react-router-dom'
 import { App, Button, Icon } from 'assistant/ui'
+import { getSystemConfig } from 'assistant/data'
 import './style.scss'
 
 const Shell = ( {
@@ -134,10 +135,12 @@ const AppsSection = () => {
 
 const ShortcutsSection = () => {
 
+	const { adminURLs } = getSystemConfig()
+
 	const shortcuts = [
 		{
 			label: __( 'WordPress Admin', 'fl-assistant' ),
-			href: '/wp-admin',
+			href: adminURLs.dashboard,
 			icon: Icon.WordPress
 		},
 	]
