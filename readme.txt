@@ -72,6 +72,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 1.0.1 ( 2021-11-01 ) =
+* Allow private libraries for unpaid accounts to be viewed in read-only mode.
+
 = 1.0.0 ( 2021-10-26 ) =
 * Assistant Pro is here! You can now organize your templates, images, svg artwork and colors into libraries that you can then access from all your WordPress sites.
 * Added profile menu to the libraries app.
