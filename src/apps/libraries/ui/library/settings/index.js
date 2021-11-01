@@ -6,7 +6,7 @@ import ImportLibrary from './import'
 import './style.scss'
 
 export default () => {
-	const { library } = Libraries.LibraryContext.use()
+	const { isReadOnly, library } = Libraries.LibraryContext.use()
 
 	return (
 		<>
@@ -16,17 +16,21 @@ export default () => {
 				</Page.Section>
 			</Layout.Box>
 
-			<Layout.Box padY={ false }>
-				<Page.Section label={ __( 'Library Collections' ) }>
-					<Libraries.LibraryCollectionsForm />
-				</Page.Section>
-			</Layout.Box>
+			{ ! isReadOnly &&
+				<>
+					<Layout.Box padY={ false }>
+						<Page.Section label={ __( 'Library Collections' ) }>
+							<Libraries.LibraryCollectionsForm />
+						</Page.Section>
+					</Layout.Box>
 
-			<Layout.Box padY={ false }>
-				<Page.Section label={ __( 'Import Library' ) }>
-					<ImportLibrary />
-				</Page.Section>
-			</Layout.Box>
+					<Layout.Box padY={ false }>
+						<Page.Section label={ __( 'Import Library' ) }>
+							<ImportLibrary />
+						</Page.Section>
+					</Layout.Box>
+				</>
+			}
 
 			{ library.permissions.delete &&
 				<Layout.Box>

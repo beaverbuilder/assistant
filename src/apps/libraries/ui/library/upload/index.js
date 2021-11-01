@@ -3,9 +3,9 @@ import { Libraries, Uploader } from '@beaverbuilder/cloud-ui'
 import { Layout } from 'assistant/ui'
 
 export default () => {
-	const { library, showUpload, uploader } = Libraries.LibraryContext.use()
+	const { isReadOnly, library, showUpload, uploader } = Libraries.LibraryContext.use()
 
-	if ( ! library.permissions.edit_items ) {
+	if ( isReadOnly || ! library.permissions.edit_items ) {
 		return null
 	}
 

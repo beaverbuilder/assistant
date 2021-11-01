@@ -6,7 +6,7 @@ import { Libraries } from '@beaverbuilder/cloud-ui'
 export default () => {
 	const history = useHistory()
 	const { pathname } = useLocation()
-	const { library, showUpload, setShowUpload } = Libraries.LibraryContext.use()
+	const { isReadOnly, library, showUpload, setShowUpload } = Libraries.LibraryContext.use()
 	const basePath = `/libraries/${ library.id }`
 
 	if ( ! library.permissions.update && ! library.permissions.edit_items ) {
@@ -28,7 +28,7 @@ export default () => {
 
 	return (
 		<>
-			{ library.permissions.edit_items &&
+			{ ! isReadOnly && library.permissions.edit_items &&
 				<Button
 					appearance='transparent'
 					isSelected={ showUpload && ! pathname.includes( '/settings' ) }

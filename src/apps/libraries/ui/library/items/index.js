@@ -9,10 +9,12 @@ import ItemsHeader from '../header'
 import ItemsFilter from './filter'
 import './style.scss'
 
-const Wrapper = ( { library, onDrop, children, ...rest } ) => {
-	if ( library.permissions.edit_items ) {
+const Wrapper = ( { children, ...rest } ) => {
+	const { isReadOnly, library, uploader } = Libraries.LibraryContext.use()
+
+	if ( ! isReadOnly && library.permissions.edit_items ) {
 		return (
-			<Layout.DropArea onDrop={ onDrop } { ...rest }>
+			<Layout.DropArea onDrop={ uploader.handleDrop } { ...rest }>
 				{ children }
 			</Layout.DropArea>
 		)
@@ -21,13 +23,7 @@ const Wrapper = ( { library, onDrop, children, ...rest } ) => {
 }
 
 export default () => {
-	const {
-		library,
-		items,
-		showUpload,
-		uploader,
-	} = Libraries.LibraryContext.use()
-
+	const { items, showUpload } = Libraries.LibraryContext.use()
 	const { defaultItemsFilter } = useAppState( 'libraries', 'defaultItemsFilter' )
 	const { useItemsFilter } = getAppHooks( 'libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
@@ -47,7 +43,7 @@ export default () => {
 	}
 
 	return (
-		<Wrapper library={ library } onDrop={ uploader.handleDrop } className="fl-asst-library-content">
+		<Wrapper className="fl-asst-library-content">
 			{ hasItems && <ItemsFilter /> }
 			<ItemsHeader />
 			<ItemUpload />
