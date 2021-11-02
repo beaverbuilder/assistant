@@ -205,6 +205,11 @@ class OnEnqueueScripts {
 			return false;
 		}
 
+		// Don't show in Oxygen.
+		if ( isset( $_GET['ct_builder'] ) ) {
+			return false;
+		}
+
 		// User is logged in, and the current request is not customizer or an iframe
 		$state = UserState::get();
 
