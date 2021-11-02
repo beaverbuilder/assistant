@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Form, Icon, Button, Widget, Menu } from 'assistant/ui'
-import { useSystemState, getSystemActions } from 'assistant/data'
+import { useSystemState, getSystemActions, getSystemConfig } from 'assistant/data'
 import SearchSuggestions from './search-suggestions'
 import './style.scss'
 
@@ -16,6 +16,7 @@ const HeaderBar = ( {
 } ) => {
 	const [ isFocused, setIsFocused ] = useState( false )
 	const [ isShowingWidgetLib, setIsShowingWidgetLib ] = useState( false )
+	const { adminURLs } = getSystemConfig()
 
 	const SearchIcon = () => (
 		<span className="search-icon-wrapper">
@@ -60,7 +61,7 @@ const HeaderBar = ( {
 				/>
 				<Button
 					appearance="transparent"
-					href="/wp-admin"
+					href={ adminURLs.dashboard }
 					shape="round"
 					target="_blank"
 					style={ { width: 40, height: 40 } }
