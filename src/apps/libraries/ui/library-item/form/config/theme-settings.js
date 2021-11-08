@@ -13,11 +13,9 @@ export const getActions = ( item, actions ) => {
 	const maybeShowThemeWarning = () => {
 		const { name, slug, parent } = item.data.theme
 
-		if ( slug === themeSlug ) {
+		if ( parent && ( parent.slug === themeSlug || parent.slug === themeParentSlug ) ) {
 			return false
-		} else if ( parent && parent.slug === themeSlug ) {
-			return false
-		} else if ( themeParentSlug && slug === themeParentSlug ) {
+		} else if ( slug === themeSlug || slug === themeParentSlug ) {
 			return false
 		}
 

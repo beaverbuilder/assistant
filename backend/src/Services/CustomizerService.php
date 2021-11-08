@@ -142,11 +142,11 @@ class CustomizerService {
 	public function can_import_settings( $data ) {
 		$theme = $data->theme;
 		$slug = $theme->slug;
-		$parentSlug = $theme->parent ? $theme->parent->slug : null;
+		$parent_slug = $theme->parent ? $theme->parent->slug : null;
 		$stylesheet = get_stylesheet();
 		$template = get_template();
 
-		if ( $slug !== $stylesheet && $slug !== $template && $parentSlug !== $stylesheet ) {
+		if ( ( $theme->parent && $parent_slug !== $template ) || $slug !== $stylesheet ) {
 			return new \WP_Error( 'import', __( 'Import failed! These settings are not for the current theme.' ) );
 		}
 
