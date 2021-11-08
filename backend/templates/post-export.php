@@ -1,6 +1,7 @@
 <?php
+global $wp_version;
 $xml_data = '<?xml version="1.0" encoding="UTF-8" ?>';
-$xml_data .= '<!-- generator="WordPress/3.9" created="2014-04-25 14:19" -->';
+$xml_data .= sprintf( '<!-- generator="WordPress/%s" created="%s" -->', $wp_version, date( 'Y-m-d H:i:s' ) );
 $xml_data .= '<rss version="2.0"
     	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
     	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -30,7 +31,7 @@ $xml_data .= '<rss version="2.0"
 	</wp:author>';
 
 
-	$xml_data .= '<generator>https://wordpress.org/?v=5.3.2</generator>';
+	$xml_data .= '<generator>https://wordpress.org</generator>';
 	$xml_data .= '<item>';
 	$xml_data .= '<title>' . $data['post']->post_title . '</title>';
 
