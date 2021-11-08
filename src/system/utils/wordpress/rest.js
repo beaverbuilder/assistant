@@ -201,16 +201,6 @@ const posts = () => {
 		},
 
 		/**
-		 * Delete Temporary exported file
-		 * @param data
-		 * @param config
-		 */
-		deleteExport( id, config = {} ) {
-			config.cacheKey = 'posts'
-			return http.delete( `fl-assistant/v1/posts/${id}/export`, config )
-		},
-
-		/**
 		 * Adds a label to a post.
 		 */
 		addLabel( postId, labelId, config = {} ) {

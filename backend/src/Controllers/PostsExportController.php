@@ -33,37 +33,22 @@ class PostsExportController extends ControllerAbstract {
 				],
 			]
 		);
-
-		$this->route(
-			'/posts/(?P<id>\d+)/export',
-			[
-				[
-					'methods'             => WP_REST_Server::DELETABLE,
-					'callback'            => [ $this, 'delete_export' ],
-					'permission_callback' => function () {
-						return current_user_can( 'export' );
-					},
-				],
-			]
-		);
 	}
 
 	/**
 	 * Export a single post.
 	 */
 	public function export_post( $request ) {
+		$this->delete_exports();
+
 		/* Get requested post data */
 		$post_id = absint( $request->get_param( 'id' ) );
 		$post = get_post( $post_id );
 
 		/* Create temporary file */
-		$file_url = WP_CONTENT_URL . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
-		$file = WP_CONTENT_DIR . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
-		$current = '';
-
-		if ( file_exists( $file ) ) {
-			$current = file_get_contents( $file );
-		}
+		$upload_dir = wp_upload_dir( null, false );
+		$file_url = $upload_dir['baseurl'] . '/assistant_export_' . $post->ID . '.xml';
+		$file = $upload_dir['basedir'] . '/assistant_export_' . $post->ID . '.xml';
 
 		/* Creates taxonomies string for xml export */
 		$taxonomies = get_taxonomies( '', 'names' );
@@ -147,35 +132,20 @@ class PostsExportController extends ControllerAbstract {
 			]
 		);
 
-		file_put_contents( $file, $current . $export_data );
+		file_put_contents( $file, $export_data );
 
 		return $file_url;
 	}
 
 	/**
-	 * Remove temporary exported file.
+	 * Remove temporary export files.
 	 */
-	public function delete_export( $request ) {
+	public function delete_exports() {
+		$upload_dir = wp_upload_dir( null, false );
+		$files = glob( trailingslashit( $upload_dir['basedir'] ) . 'assistant_export_*.xml' );
 
-		$post_id = absint( $request->get_param( 'id' ) );
-		$post = get_post( $post_id );
-
-		/* Remove temporary file */
-		$file = WP_CONTENT_DIR . '/' . sanitize_file_name( $post->post_title ) . '_' . $post->ID . '.xml';
-
-		if ( file_exists( $file ) ) {
+		foreach ( $files as $file ) {
 			unlink( $file );
-			return rest_ensure_response(
-				[
-					'success' => true,
-				]
-			);
-		} else {
-			return rest_ensure_response(
-				[
-					'error' => true,
-				]
-			);
 		}
 	}
 
