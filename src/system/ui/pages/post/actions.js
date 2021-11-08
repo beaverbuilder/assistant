@@ -89,18 +89,7 @@ export const getPostActions = ( { history, values, setValue, createNotice, Cloud
 				link.href = response.data
 				link.download = title + '_' + id
 				document.body.appendChild( link )
-				link.onclick = function() {
-
-					wpRest
-						.posts().deleteExport( id ).then( response => {
-							if ( response ) {
-								document.body.removeChild( link )
-							}
-						} )
-				}
-
 				link.click()
-
 			} )
 	}
 
