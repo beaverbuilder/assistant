@@ -72,6 +72,13 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 1.0.2 ( 2021-11-08 ) =
+* Private libraries are now the default for paid accounts.
+* Fixed customizer settings not importing for child themes with different directory names.
+* Fixed broken admin URLs when WordPress is installed in a subdirectory.
+* Fixed issues with single post XML export.
+* Fixed issues with Oxygen.
+
 = 1.0.1 ( 2021-11-01 ) =
 * Allow private libraries for unpaid accounts to be viewed in read-only mode.
 
