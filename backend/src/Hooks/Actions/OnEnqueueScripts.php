@@ -223,7 +223,7 @@ class OnEnqueueScripts {
 			return false;
 		}
 
-		return true;
+		return apply_filters( 'fl_assistant_should_enqueue', true );
 	}
 
 	public function register_vendors() {
