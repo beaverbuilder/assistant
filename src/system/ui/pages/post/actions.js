@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { useLibrarySaveAction } from 'ui/library/use-save-action'
+import { createSlug } from 'utils/url'
 
 export const getPostActions = ( { history, values, setValue, createNotice, CloudUI } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
@@ -87,7 +88,7 @@ export const getPostActions = ( { history, values, setValue, createNotice, Cloud
 			.then( response => {
 				const link = document.createElement( 'a' )
 				link.href = response.data
-				link.download = title + '_' + id
+				link.download = createSlug( title ) + '_' + id + '.xml'
 				document.body.appendChild( link )
 				link.click()
 			} )
