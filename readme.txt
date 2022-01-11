@@ -72,6 +72,12 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
+= 1.0.3 ( 2022-01-12 ) =
+* Added fl_assistant_should_enqueue filter.
+* Fixed cloud logging out on connected sites installed on the same domain.
+* Fixed 'View' action showing in the content app for post types that aren't public on the frontend.
+* Fixed filenames when exporting a post.
+
 = 1.0.2 ( 2021-11-08 ) =
 * Private libraries are now the default for paid accounts.
 * Fixed customizer settings not importing for child themes with different directory names.
