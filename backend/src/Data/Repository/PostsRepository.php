@@ -147,6 +147,7 @@ class PostsRepository extends RepositoryAbstract {
 			}
 
 			$data[ $slug ] = [
+				'canView'        => $type->public || $type->publicly_queryable,
 				'canExport'      => $type->can_export,
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,

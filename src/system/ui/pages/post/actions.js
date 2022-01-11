@@ -98,6 +98,7 @@ export const getPostActions = ( { history, values, setValue, createNotice, Cloud
 		{
 			label: contentTypes[type].labels.viewItem,
 			href: url,
+			shouldRender: contentTypes[type].canView
 		},
 		{
 			label: __( 'Edit in Admin' ),
