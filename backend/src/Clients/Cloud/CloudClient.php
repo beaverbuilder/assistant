@@ -30,7 +30,8 @@ class CloudClient {
 		}
 
 		$url = FL_ASSISTANT_CLOUD_URL . "/api$route";
-		$token = isset( $_COOKIE['fl-cloud-token'] ) ? $_COOKIE['fl-cloud-token'] : '';
+		$token_key = 'fl-cloud-token-' . md5( home_url() );
+		$token = isset( $_COOKIE[ $token_key ] ) ? $_COOKIE[ $token_key ] : '';
 		$args['headers'][] = "Authorization: Bearer $token";
 		$curl = curl_init();
 		$fields = isset( $args['data'] ) ? $this->build_query( $args['data'] ) : '';
