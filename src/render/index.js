@@ -12,12 +12,17 @@ let mountNode = undefined
 const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode( mountNode )
 
 const renderAssistant = () => {
+	mountNode = document.getElementById( 'fl-asst-mount' )
 
-	if ( undefined === mountNode ) {
+	if ( ! mountNode ) {
 		mountNode = document.createElement( 'div' )
 		mountNode.classList.add( 'fl-asst-mount', 'fl-asst', 'fluid', 'fl', 'uid' )
+		mountNode.id = 'fl-asst-mount'
 		document.body.appendChild( mountNode )
+	} else {
+		unmountComponentAtNode( mountNode )
 	}
+
 	render( <Assistant />, mountNode )
 }
 
