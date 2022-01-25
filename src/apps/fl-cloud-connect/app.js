@@ -41,15 +41,14 @@ const Banner = () => {
 const Main = () => {
 	const { cloudConfig } = getSystemConfig()
 	const { isValidating } = useAppState( 'fl-cloud-connect' )
-	const { href } = window.location
 
 	if ( isValidating ) {
 		return <Page.Loading />
 	}
 
 	const connect = () => {
-		const redirect = encodeURIComponent( href )
-		window.location.href = `${ cloudConfig.appUrl }/login/connect?redirect=${ redirect }`
+		const redirect = encodeURIComponent( window.parent.location.href )
+		window.parent.location.href = `${ cloudConfig.appUrl }/login/connect?redirect=${ redirect }`
 	}
 
 	return (
