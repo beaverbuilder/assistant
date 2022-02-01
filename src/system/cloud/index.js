@@ -8,7 +8,7 @@ cloud.session.subscribe( data => {
 	setIsCloudConnected( !! data.token )
 } )
 
-cloud.useRequest = useApiRequest
+cloud.useApiRequest = useApiRequest
 cloud.appendFormDataObject = appendFormDataObject
 
 export default cloud
