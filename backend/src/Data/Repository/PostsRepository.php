@@ -133,7 +133,10 @@ class PostsRepository extends RepositoryAbstract {
 		);
 		$ignore = [
 			'attachment',
-			'vcv_tutorials'
+			'vcv_tutorials',
+			'elementor_snippet',
+			'elementor_font',
+			'elementor_icons'
 		];
 
 		foreach ( $types as $slug => $type ) {
