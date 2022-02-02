@@ -131,6 +131,10 @@ class PostsRepository extends RepositoryAbstract {
 			],
 			'objects'
 		);
+		$ignore = [
+			'attachment',
+			'vcv_tutorials'
+		];
 
 		foreach ( $types as $slug => $type ) {
 			if ( ! isset( $type->cap->edit_others_posts ) ) {
@@ -139,7 +143,7 @@ class PostsRepository extends RepositoryAbstract {
 			if ( ! current_user_can( $type->cap->edit_others_posts ) ) {
 				continue;
 			}
-			if ( 'attachment' === $slug ) {
+			if ( in_array( $slug, $ignore ) ) {
 				continue;
 			}
 			if ( ! function_exists( 'get_page_templates' ) ) {
