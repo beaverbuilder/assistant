@@ -16,7 +16,7 @@ const renderAssistant = () => {
 
 	if ( ! mountNode ) {
 		mountNode = document.createElement( 'div' )
-		mountNode.classList.add( 'fl-asst-mount', 'fl-asst', 'fluid', 'fl', 'uid' )
+		mountNode.classList.add( 'fl-asst-mount', 'fl-asst', 'fl-asst-plugin', 'fluid', 'fl', 'uid' )
 		mountNode.id = 'fl-asst-mount'
 		document.body.appendChild( mountNode )
 	} else {
