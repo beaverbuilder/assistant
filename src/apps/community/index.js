@@ -1,6 +1,14 @@
-import { getCommunityAppConfig } from '@beaverbuilder/cloud-ui'
+import { lazy } from 'react'
+import { __ } from '@wordpress/i18n'
 import { registerApp } from 'assistant'
-import { Icon } from 'assistant/ui'
-import '@beaverbuilder/cloud-ui/dist/index.css'
+import { getCommunityAppConfig } from '@beaverbuilder/cloud-ui'
 
-registerApp( 'discover', getCommunityAppConfig() )
+const App = lazy( () => import(
+	/* webpackChunkName: "app-discover" */ './app'
+) )
+
+registerApp( 'discover', {
+	...getCommunityAppConfig(),
+	label: __( 'Discover' ),
+	root: App
+} )
