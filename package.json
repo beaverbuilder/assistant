@@ -39,7 +39,6 @@
     "history": "^5.0.0",
     "html2canvas": "^1.0.0-rc.7",
     "md5": "^2.2.1",
-    "moment": "^2.29.0",
     "promise": "^8.1.0",
     "qs": "^6.9.3",
     "query-string": "^6.13.8",
