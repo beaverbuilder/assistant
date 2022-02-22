@@ -125,12 +125,15 @@ class PostsRepository extends RepositoryAbstract {
 	 */
 	public function get_types() {
 		$data  = [];
-		$types = get_post_types(
-			[
-				'show_ui' => true,
-			],
-			'objects'
-		);
+		$types = get_post_types( [], 'objects' );
+
+		// Types with show_ui false that we want to show
+		$known = [
+			'wp_template',
+			'wp_template_part'
+		];
+
+		// Types to never show
 		$ignore = [
 			'attachment',
 			'vcv_tutorials',
@@ -144,6 +147,9 @@ class PostsRepository extends RepositoryAbstract {
 				continue;
 			}
 			if ( ! current_user_can( $type->cap->edit_others_posts ) ) {
+				continue;
+			}
+			if ( ! $type->show_ui && ! in_array( $slug, $known ) ) {
 				continue;
 			}
 			if ( in_array( $slug, $ignore ) ) {
