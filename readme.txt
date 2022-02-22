@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.0.5 ( 2022-02-22 ) =
+* Added a description field to library items.
+* Changed library description field to a textarea.
+* Misc CSS fixes.
 
 = 1.0.4 ( 2022-02-02 ) =
 * Fixed issues with using Assistant within Divi.
