@@ -147,15 +147,17 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 					<Filter.Button onClick={ () => setQuery( defaultQuery ) }>{__( 'Reset Filter' )}</Filter.Button>
 				</Filter>
 
-				<List.InlineCreate
-					postType={ type }
-					onPostCreated={ () => setQuery( {
-						...defaultState.query,
-						order: 'DESC',
-						orderby: 'ID',
-						key: new Date().getTime()
-					} ) }
-				/>
+				{ ! type.startsWith( 'wp_template' ) &&
+					<List.InlineCreate
+						postType={ type }
+						onPostCreated={ () => setQuery( {
+							...defaultState.query,
+							order: 'DESC',
+							orderby: 'ID',
+							key: new Date().getTime()
+						} ) }
+					/>
+				}
 			</>
 		)
 	}

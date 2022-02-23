@@ -136,6 +136,7 @@ class PostsRepository extends RepositoryAbstract {
 		// Types to never show
 		$ignore = [
 			'attachment',
+			'wp_navigation',
 			'vcv_tutorials',
 			'elementor_snippet',
 			'elementor_font',
