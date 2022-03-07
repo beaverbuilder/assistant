@@ -15,7 +15,7 @@ import ArrowRight from './arrow-right-fix'
 
 const Icon = {
 	...FLUID_Icon,
-	Dashboard,
+	Dashboard, // Moved to icons package
 	Document,
 	DownCaretSmall,
 	DragHandle,
@@ -24,8 +24,8 @@ const Icon = {
 	PencilOutline,
 	LockClosed,
 	LockOpen,
-	ArrowRight,
-	WordPress,
+	ArrowRight, // Fixed in icons package
+	WordPress, // moved to icons package
 }
 
 export default Icon
