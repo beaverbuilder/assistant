@@ -49,6 +49,21 @@ class PostTransformer {
 	/**
 	 * @param \WP_Post $post
 	 *
+	 * @return string
+	 */
+	public function get_edit_post_link( \WP_Post $post ) {
+
+		if ( strstr( $post->post_type, 'wp_template' ) ) {
+			$id = get_stylesheet() . '//' . $post->post_name;
+			return admin_url( "/site-editor.php?postType={$post->post_type}&postId={$id}" );
+		}
+
+		return get_edit_post_link( $post->ID, '' );
+	}
+
+	/**
+	 * @param \WP_Post $post
+	 *
 	 * @return array
 	 */
 	public function transform( \WP_Post $post ) {
@@ -76,7 +91,7 @@ class PostTransformer {
 			'commentsAllowed'  => 'open' === $post->comment_status ? true : false,
 			'excerpt'          => $post->post_excerpt,
 			'date'             => $date,
-			'editUrl'          => get_edit_post_link( $post->ID, '' ),
+			'editUrl'          => $this->get_edit_post_link( $post ),
 			'previewUrl'       => PreviewHelper::get_post_preview_url( $post ),
 			'id'               => $post->ID,
 			'labels'           => [],
