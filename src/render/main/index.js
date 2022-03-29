@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import classname from 'classnames'
+import { Color } from '@beaverbuilder/fluid'
 import { Root as AppCoreRoot } from '@beaverbuilder/app-core'
 import { getSystemActions, useSystemState, getSystemConfig } from 'assistant/data'
 import { Env } from 'assistant/ui'
@@ -24,17 +25,6 @@ const HistoryManager = () => {
 	return null
 }
 
-// TEMP fluid root
-const FLUIDAppearanceRoot = ( { colorScheme = 'light', className, ...rest } ) => {
-	const classes = classname( {
-		[`fluid-color-scheme-${colorScheme}`]: colorScheme
-	}, className )
-
-	return (
-		<div className={ classes } { ...rest } />
-	)
-}
-
 const BaseProviders = ( { displayingIn, children } ) => (
 	<AppCoreRoot router={ Router } >
 		<HistoryManager />
@@ -54,12 +44,12 @@ export const Assistant = () => {
 	const showButton = isHidden && ( 'admin_bar' !== hiddenAppearance || ! isShowingAdminBar )
 	return (
 		<BaseProviders>
-			<FLUIDAppearanceRoot colorScheme={ appearance.brightness }>
+			<Color.SchemeProvider value={ appearance.brightness }>
 				<Frame isHidden={ isHidden }>
 					<AppMain />
 				</Frame>
 				{ showButton && <FloatingButton /> }
-			</FLUIDAppearanceRoot>
+			</Color.SchemeProvider>
 		</BaseProviders>
 	)
 }
