@@ -24,7 +24,7 @@
     "@beaverbuilder/app-core": "^0.2.9",
     "@beaverbuilder/box": "0.0.3",
     "@beaverbuilder/cloud": "^0.5.11",
-    "@beaverbuilder/cloud-ui": "^0.8.12",
+    "@beaverbuilder/cloud-ui": "^0.8.13",
     "@beaverbuilder/fluid": "^0.7.11",
     "@beaverbuilder/fluid-docs": "0.0.7",
     "@beaverbuilder/forms": "^0.3.11",
