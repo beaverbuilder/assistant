@@ -53,7 +53,11 @@
     "redux": "^4.0.5",
     "tiny-invariant": "^1.1.0",
     "use-media": "^1.4.0",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "@codemirror/language-data": "^0.19.2",
+    "@uiw/react-codemirror": "^4.4.3",
+    "codemirror": "^5.65.2",
+    "copy-to-clipboard": "^3.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.1",
