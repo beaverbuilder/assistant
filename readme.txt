@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,10 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.0.8 ( 2022-05-16 ) =
+* Minor improvements and fixes for library code snippets.
+* Creating a new library now defaults to private for paid accounts.
 
 = 1.0.7 ( 2022-04-19 ) =
 * Added the ability to save code snippets to Assistant Pro libraries.
