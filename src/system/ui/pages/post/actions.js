@@ -129,6 +129,7 @@ export const getPostActions = ( { history, values, setValue, createNotice, Cloud
 		{
 			label: isFavorite ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
 			onClick: favoritePost,
+			disabled: true,
 		},
 		{
 			label: 'Trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
