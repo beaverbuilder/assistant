@@ -656,9 +656,17 @@ const libraries = () => {
 		/**
 		 * Override WP post data with library post item data
 		 */
-		syncPost( id, item, config = {} ) {
+		syncPost( postId, item, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/${id}/sync_from_library/`, { item: JSON.stringify( item ) }, config )
+			return http.post( `fl-assistant/v1/posts/${postId}/sync_from_library/`, { item: JSON.stringify( item ) }, config )
+		},
+
+		/**
+		 * Override library item post data with a post on this site
+		 */
+		syncLibraryPost( postId, item, config = {} ) {
+			config.cacheKey = 'posts'
+			return http.post( `fl-assistant/v1/posts/${postId}/sync_to_library/${item.id}`, {}, config )
 		},
 
 		/**

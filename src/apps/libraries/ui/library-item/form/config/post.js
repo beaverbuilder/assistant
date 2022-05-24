@@ -12,17 +12,7 @@ export const getTabs = ( item, tabs ) => {
 		label: __( 'Syncing' ),
 		fields: {
 			buttons: {
-				component: () => (
-					<>
-						<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
-							<strong>{ __( 'Currently Viewing Page: ' ) }</strong> About Us
-						</div>
-						<Button.Group appearance='grid'>
-							<Button>{ __( 'Update Library Item' ) }</Button>
-							<Button>{ __( 'Replace Current Page' ) }</Button>
-						</Button.Group>
-					</>
-				)
+				component: () => <SyncSettings item={ item } />
 			},
 		},
 	}
@@ -176,103 +166,118 @@ const CreateButton = ( { item } ) => {
 	)
 }
 
-const ReplaceButton = ( { item } ) => {
-	const { contentTypes } = getSystemConfig()
-	const { post_type } = item.data.post
+const SyncSettings = ( { item } ) => {
+	const { currentPageView } = getSystemConfig()
+	const { intro, name, isSingular } = currentPageView
+
+	if ( ! isSingular ) {
+		return (
+			<div>
+				{ __( 'Syncing is currently not available. To sync this library item, navigate to the post or page you\'d like to sync.' ) }
+			</div>
+		)
+	}
+
+	return (
+		<>
+			<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
+				<strong>{ intro }:</strong> { name }
+			</div>
+			<Button.Group appearance='grid'>
+				<SyncLibraryItemButton item={ item } />
+				<SyncPostButton item={ item } />
+			</Button.Group>
+		</>
+	)
+}
+
+const SyncLibraryItemButton = ( { item } ) => {
+	const { currentPageView } = getSystemConfig()
+	const { id, type } = currentPageView
+	const [ syncing, setSyncing ] = useState( false )
 	const { createNotice } = Libraries.ItemContext.use()
-	const [ importingMedia, setImportingMedia ] = useState( false )
-	const [ post, setPost ] = useState( null )
-	const [ posts, setPosts ] = useState( null )
-	const postsApi = getWpRest().posts()
 	const librariesApi = getWpRest().libraries()
-	const pluralLabel = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.plural : `${ post_type }s`
-	const singularLabel = contentTypes[ post_type ] ? contentTypes[ post_type ].labels.singular : `${ post_type }`
-	const importPostMedia = usePostMediaImport()
 
-	useEffect( () => {
-		postsApi.findWhere( {
-			post_type,
-			posts_per_page: -1,
-			orderby: 'post_title',
-			order: 'ASC',
-			post_status: 'any'
-		} ).then( response => {
-			setPosts( response.data.items )
-		} ).catch( () => {
-			setPosts( [] )
-		} )
-	}, [] )
+	const syncLibraryPost = () => {
+		const message = sprintf( __( 'Do you really want to sync and replace this library item with the current %s? This cannot be undone.' ), type )
 
-	const replacePost = ( id ) => {
-		const message = sprintf( __( 'Do you really want to replace the selected %s with this library item? This cannot be undone.' ), singularLabel.toLowerCase() )
-
-		if ( ! id ) {
-			return
-		} else if ( ! confirm( message ) ) {
+		if ( ! confirm( message ) ) {
 			return
 		}
 
-		setPost( id )
+		setSyncing( true )
 
-		librariesApi.syncPost( id, item ).then( response => {
-			setImportingMedia( true )
-			importPostMedia( response.data, item ).then( () => {
-				replacePostComplete( response.data )
+		librariesApi.syncLibraryPost( id, item ).then( () => {
+			setSyncing( false )
+			createNotice( {
+				status: 'success',
+				content: __( 'Library item synced!' )
 			} )
 		} ).catch( () => {
-			replacePostComplete()
+			createNotice( {
+				status: 'error',
+				content: __( 'Error syncing library item.' )
+			} )
 		} )
 	}
 
-	const replacePostComplete = ( post ) => {
-		setPost( null )
-		setImportingMedia( false )
+	return (
+		<Button onClick={ syncLibraryPost } disabled={ syncing }>
+			{ ! syncing && __( 'Sync Library Item' ) }
+			{ !! syncing && __( 'Syncing...' ) }
+		</Button>
+	)
+}
+
+const SyncPostButton = ( { item } ) => {
+	const { currentPageView } = getSystemConfig()
+	const { id, type } = currentPageView
+	const [ syncing, setSyncing ] = useState( false )
+	const { createNotice } = Libraries.ItemContext.use()
+	const librariesApi = getWpRest().libraries()
+	const importPostMedia = usePostMediaImport()
+
+	const syncPost = () => {
+		const message = sprintf( __( 'Do you really want to sync and replace the current %s with this library item? This cannot be undone.' ), type )
+
+		if ( ! confirm( message ) ) {
+			return
+		}
+
+		setSyncing( 'content' )
+
+		librariesApi.syncPost( id, item ).then( response => {
+			setSyncing( 'media' )
+			importPostMedia( response.data, item ).then( () => {
+				syncPostComplete( response.data )
+			} )
+		} ).catch( () => {
+			syncPostComplete()
+		} )
+	}
+
+	const syncPostComplete = ( post ) => {
+		setSyncing( false )
 
 		if ( ! post || post.error ) {
 			createNotice( {
 				status: 'error',
-				content: __( 'Error replacing content.' )
+				content: __( 'Error syncing content.' )
 			} )
 		} else {
 			createNotice( {
 				status: 'success',
 				content: __( 'Content replaced!' )
 			} )
+			window.location.reload()
 		}
 	}
 
-	const ReplaceButtonOptions = () => {
-		return posts.map( ( post, i ) => {
-			return (
-				<option key={ i } value={ post.id }>
-					{ post.title }
-				</option>
-			)
-		} )
-	}
-
 	return (
-		<>
-			<select
-				value={ '' }
-				onChange={ e => replacePost( e.target.value ) }
-				disabled={ post }
-			>
-				<option value=''>
-					{ ! importingMedia && ! post && __( 'Replace...' ) }
-					{ ! importingMedia && post && __( 'Replacing...' ) }
-					{ importingMedia && __( 'Importing media...' ) }
-				</option>
-				{ null === posts &&
-					<optgroup label={ __( 'Loading...' ) } />
-				}
-				{ null !== posts && ! posts.length &&
-					<optgroup label={ sprintf( __( 'No %s found' ), pluralLabel.toLowerCase() ) } />
-				}
-				{ null !== posts && !! posts.length &&
-					<ReplaceButtonOptions />
-				}
-			</select>
-		</>
+		<Button onClick={ syncPost } disabled={ syncing }>
+			{ ! syncing && sprintf( __( 'Sync %s' ), type ) }
+			{ 'content' === syncing && __( 'Syncing content...' ) }
+			{ 'media' === syncing && __( 'Syncing media...' ) }
+		</Button>
 	)
 }
