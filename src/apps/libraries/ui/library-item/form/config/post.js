@@ -7,13 +7,31 @@ import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { usePostMediaImport } from 'ui/library/use-post-media-import'
 
+export const getTabs = ( item, tabs ) => {
+	tabs.settings.sections.syncing = {
+		label: __( 'Syncing' ),
+		fields: {
+			buttons: {
+				component: () => (
+					<>
+						<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
+							<strong>{ __( 'Currently Viewing Page: ' ) }</strong> About Us
+						</div>
+						<Button.Group appearance='grid'>
+							<Button>{ __( 'Update Library Item' ) }</Button>
+							<Button>{ __( 'Replace Current Page' ) }</Button>
+						</Button.Group>
+					</>
+				)
+			},
+		},
+	}
+	return tabs
+}
+
 export const getActions = ( item, actions ) => {
 	actions.unshift( {
 		component: <PreviewButton item={ item } />
-	} )
-
-	actions.unshift( {
-		component: <ReplaceButton item={ item } />
 	} )
 
 	actions.unshift( {
