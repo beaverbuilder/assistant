@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __, sprintf } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
-import { Button } from 'assistant/ui'
+import { Button, Icon } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { usePostMediaImport } from 'ui/library/use-post-media-import'
@@ -168,7 +168,7 @@ const CreateButton = ( { item } ) => {
 
 const SyncSettings = ( { item } ) => {
 	const { currentPageView } = getSystemConfig()
-	const { intro, name, isSingular } = currentPageView
+	const { intro, name, type, isSingular } = currentPageView
 
 	if ( ! isSingular ) {
 		return (
@@ -179,15 +179,22 @@ const SyncSettings = ( { item } ) => {
 	}
 
 	return (
-		<>
-			<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
+		<div className='fl-asst-library-item-syncing'>
+			<div style={ { marginBottom: 'var(--fluid-med-space)' } }>
 				<strong>{ intro }:</strong> { name }
+			</div>
+			<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
+				{ sprintf(
+					__( 'Updating the library item will replace its content with the current %s. Updating the %s will replace its content with the library item.' ),
+					type.toLowerCase(),
+					type.toLowerCase()
+				) }
 			</div>
 			<Button.Group appearance='grid'>
 				<SyncLibraryItemButton item={ item } />
 				<SyncPostButton item={ item } />
 			</Button.Group>
-		</>
+		</div>
 	)
 }
 
@@ -199,7 +206,7 @@ const SyncLibraryItemButton = ( { item } ) => {
 	const librariesApi = getWpRest().libraries()
 
 	const syncLibraryPost = () => {
-		const message = sprintf( __( 'Do you really want to sync and replace this library item with the current %s? This cannot be undone.' ), type )
+		const message = sprintf( __( 'Do you really want to sync and replace this library item with the current %s? This cannot be undone.' ), type.toLowerCase() )
 
 		if ( ! confirm( message ) ) {
 			return
@@ -223,7 +230,8 @@ const SyncLibraryItemButton = ( { item } ) => {
 
 	return (
 		<Button onClick={ syncLibraryPost } disabled={ syncing }>
-			{ ! syncing && __( 'Sync Library Item' ) }
+			<Icon.Upload />
+			{ ! syncing && __( 'Update Library Item' ) }
 			{ !! syncing && __( 'Syncing...' ) }
 		</Button>
 	)
@@ -238,7 +246,7 @@ const SyncPostButton = ( { item } ) => {
 	const importPostMedia = usePostMediaImport()
 
 	const syncPost = () => {
-		const message = sprintf( __( 'Do you really want to sync and replace the current %s with this library item? This cannot be undone.' ), type )
+		const message = sprintf( __( 'Do you really want to sync and replace the current %s with this library item? This cannot be undone.' ), type.toLowerCase() )
 
 		if ( ! confirm( message ) ) {
 			return
@@ -275,7 +283,8 @@ const SyncPostButton = ( { item } ) => {
 
 	return (
 		<Button onClick={ syncPost } disabled={ syncing }>
-			{ ! syncing && sprintf( __( 'Sync %s' ), type ) }
+			<Icon.Download />
+			{ ! syncing && sprintf( __( 'Update %s' ), type ) }
 			{ 'content' === syncing && __( 'Syncing content...' ) }
 			{ 'media' === syncing && __( 'Syncing media...' ) }
 		</Button>
