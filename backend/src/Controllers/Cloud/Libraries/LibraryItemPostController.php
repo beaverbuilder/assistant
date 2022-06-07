@@ -74,11 +74,11 @@ class LibraryItemPostController extends ControllerAbstract {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'sync_to_library' ],
 					'args'                => [
-						'id'           => [
+						'id'      => [
 							'required' => true,
 							'type'     => 'number',
 						],
-						'item_id'      => [
+						'item_id' => [
 							'required' => true,
 							'type'     => 'number',
 						],
@@ -110,7 +110,7 @@ class LibraryItemPostController extends ControllerAbstract {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'import_post_thumb_from_library' ],
 					'args'                => [
-						'post_id'      => [
+						'post_id' => [
 							'required' => true,
 							'type'     => 'number',
 						],
@@ -129,7 +129,7 @@ class LibraryItemPostController extends ControllerAbstract {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'import_post_media_from_library' ],
 					'args'                => [
-						'post_id'      => [
+						'post_id' => [
 							'required' => true,
 							'type'     => 'number',
 						],
@@ -148,7 +148,7 @@ class LibraryItemPostController extends ControllerAbstract {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'sync_from_library' ],
 					'args'                => [
-						'id'           => [
+						'id' => [
 							'required' => true,
 							'type'     => 'number',
 						],
@@ -410,12 +410,13 @@ class LibraryItemPostController extends ControllerAbstract {
 			if ( metadata_exists( 'post', $post_id, $meta_key ) ) {
 				delete_metadata( 'post', $post_id, $meta_key );
 			}
-
-			foreach ( $meta_value as $value ) {
-				$value = addslashes( $value );
-				// @codingStandardsIgnoreStart
-				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" );
-				// @codingStandardsIgnoreEnd
+			if ( is_array( $meta_value ) && count( $meta_value ) !== 0 ) {
+				foreach ( $meta_value as $value ) {
+					$value = addslashes( $value );
+					// @codingStandardsIgnoreStart
+					$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" );
+					// @codingStandardsIgnoreEnd
+				}
 			}
 		}
 	}
@@ -440,7 +441,7 @@ class LibraryItemPostController extends ControllerAbstract {
 		foreach ( $terms as $term ) {
 			if ( ! isset( $term->name ) || ! isset( $term->taxonomy ) ) {
 				continue;
-			} else if ( ! taxonomy_exists( $term->taxonomy ) ) {
+			} elseif ( ! taxonomy_exists( $term->taxonomy ) ) {
 				continue;
 			} elseif ( ! isset( $taxonomy_terms ) ) {
 				$taxonomy_terms[ $term->taxonomy ] = [];
