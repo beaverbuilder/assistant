@@ -7,21 +7,3 @@
 		background: transparent;
 	}
 }
-
-.fl-asst-library-item-syncing {
-
-	button {
-		padding: var(--fluid-lg-space) !important;
-
-		span {
-			display: flex;
-		    flex-direction: column !important;
-		}
-		svg {
-			opacity: 0.75;
-			width: 40px;
-			height: 30px;
-		    margin-bottom: var(--fluid-med-space);
-		}
-	}
-}
