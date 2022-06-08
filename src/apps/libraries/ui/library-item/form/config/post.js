@@ -2,26 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { __, sprintf } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
-import { Button, Icon } from 'assistant/ui'
+import { Button, Modal } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
 import { usePostMediaImport } from 'ui/library/use-post-media-import'
 
-export const getTabs = ( item, tabs ) => {
-	tabs.settings.sections.syncing = {
-		label: __( 'Syncing' ),
-		fields: {
-			buttons: {
-				component: () => <SyncSettings item={ item } />
-			},
-		},
-	}
-	return tabs
-}
-
 export const getActions = ( item, actions ) => {
 	actions.unshift( {
 		component: <PreviewButton item={ item } />
+	} )
+
+	actions.unshift( {
+		component: <UpdateButton item={ item } />
 	} )
 
 	actions.unshift( {
@@ -66,6 +58,89 @@ const PreviewButton = ( { item } ) => {
 		>
 			{ __( 'Preview' ) }
 		</Button>
+	)
+}
+
+const UpdateButton = ( { item } ) => {
+	const { currentPageView } = getSystemConfig()
+	const { id, type, isSingular } = currentPageView
+	const [ updating, setUpdating ] = useState( false )
+	const { createNotice } = Libraries.ItemContext.use()
+	const librariesApi = getWpRest().libraries()
+
+	const buttons = [
+		{
+			label: __( 'Cancel' ),
+			disabled: updating,
+			onClick: ( { closeDialog } ) => closeDialog(),
+		}
+	]
+
+	if ( isSingular ) {
+		buttons.push( {
+			label: updating ? __( 'Updating...' ) : __( 'Update' ),
+			isSelected: true,
+			disabled: updating,
+			onClick: ( { closeDialog } ) => {
+				const message = sprintf( __( 'Do you really want to update this library item and replace its content with the current %s? This cannot be undone.' ), type.toLowerCase() )
+
+				if ( ! confirm( message ) ) {
+					return
+				}
+
+				setUpdating( true )
+
+				librariesApi.syncLibraryPost( id, item ).then( () => {
+					createNotice( {
+						status: 'success',
+						content: __( 'Library item updated!' )
+					} )
+				} ).catch( () => {
+					createNotice( {
+						status: 'error',
+						content: __( 'Error updating library item.' )
+					} )
+				} ).finally( () => {
+					setUpdating( false )
+					closeDialog()
+				} )
+			},
+		} )
+	}
+
+	const [ showUpdateDialog, UpdateDialog ] = Modal.useDialog( {
+		title: __( 'Update this Library Item' ),
+		message: <UpdateDialogContent />,
+		buttons
+	} )
+
+	return (
+		<>
+			<Button onClick={ showUpdateDialog }>
+				{ __( 'Update' ) }
+			</Button>
+			<UpdateDialog />
+		</>
+	)
+}
+
+const UpdateDialogContent = () => {
+	const { currentPageView } = getSystemConfig()
+	const { intro, name, type, isSingular } = currentPageView
+
+	if ( ! isSingular ) {
+		return __( 'Updating is currently not available. To update this library item, navigate to the post or page you\'d like to update it with and click the update button again.' )
+	}
+
+	return (
+		<>
+			<div style={ { padding: 'var(--fluid-med-space) 0' } }>
+				<strong>{ intro }:</strong> { name }
+			</div>
+			<div>
+				{ sprintf( __( 'Updating this library item will replace its content with the content of the current %s.' ), type.toLowerCase() ) }
+			</div>
+		</>
 	)
 }
 
@@ -166,127 +241,88 @@ const CreateButton = ( { item } ) => {
 	)
 }
 
-const SyncSettings = ( { item } ) => {
-	const { currentPageView } = getSystemConfig()
-	const { intro, name, type, isSingular } = currentPageView
-
-	if ( ! isSingular ) {
-		return (
-			<div>
-				{ __( 'Syncing is currently not available. To sync this library item, navigate to the post or page you\'d like to sync.' ) }
-			</div>
-		)
-	}
-
-	return (
-		<div className='fl-asst-library-item-syncing'>
-			<div style={ { marginBottom: 'var(--fluid-med-space)' } }>
-				<strong>{ intro }:</strong> { name }
-			</div>
-			<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
-				{ sprintf(
-					__( 'Updating the library item will replace its content with the current %s. Updating the %s will replace its content with the library item.' ),
-					type.toLowerCase(),
-					type.toLowerCase()
-				) }
-			</div>
-			<Button.Group appearance='grid'>
-				<SyncLibraryItemButton item={ item } />
-				<SyncPostButton item={ item } />
-			</Button.Group>
-		</div>
-	)
-}
-
-const SyncLibraryItemButton = ( { item } ) => {
-	const { currentPageView } = getSystemConfig()
-	const { id, type } = currentPageView
-	const [ syncing, setSyncing ] = useState( false )
-	const { createNotice } = Libraries.ItemContext.use()
-	const librariesApi = getWpRest().libraries()
-
-	const syncLibraryPost = () => {
-		const message = sprintf( __( 'Do you really want to sync and replace this library item with the current %s? This cannot be undone.' ), type.toLowerCase() )
-
-		if ( ! confirm( message ) ) {
-			return
-		}
-
-		setSyncing( true )
-
-		librariesApi.syncLibraryPost( id, item ).then( () => {
-			setSyncing( false )
-			createNotice( {
-				status: 'success',
-				content: __( 'Library item synced!' )
-			} )
-		} ).catch( () => {
-			createNotice( {
-				status: 'error',
-				content: __( 'Error syncing library item.' )
-			} )
-		} )
-	}
-
-	return (
-		<Button onClick={ syncLibraryPost } disabled={ syncing }>
-			<Icon.Upload />
-			{ ! syncing && __( 'Update Library Item' ) }
-			{ !! syncing && __( 'Syncing...' ) }
-		</Button>
-	)
-}
-
-const SyncPostButton = ( { item } ) => {
-	const { currentPageView } = getSystemConfig()
-	const { id, type } = currentPageView
-	const [ syncing, setSyncing ] = useState( false )
-	const { createNotice } = Libraries.ItemContext.use()
-	const librariesApi = getWpRest().libraries()
-	const importPostMedia = usePostMediaImport()
-
-	const syncPost = () => {
-		const message = sprintf( __( 'Do you really want to sync and replace the current %s with this library item? This cannot be undone.' ), type.toLowerCase() )
-
-		if ( ! confirm( message ) ) {
-			return
-		}
-
-		setSyncing( 'content' )
-
-		librariesApi.syncPost( id, item ).then( response => {
-			setSyncing( 'media' )
-			importPostMedia( response.data, item ).then( () => {
-				syncPostComplete( response.data )
-			} )
-		} ).catch( () => {
-			syncPostComplete()
-		} )
-	}
-
-	const syncPostComplete = ( post ) => {
-		setSyncing( false )
-
-		if ( ! post || post.error ) {
-			createNotice( {
-				status: 'error',
-				content: __( 'Error syncing content.' )
-			} )
-		} else {
-			createNotice( {
-				status: 'success',
-				content: __( 'Content replaced!' )
-			} )
-			window.location.reload()
-		}
-	}
-
-	return (
-		<Button onClick={ syncPost } disabled={ syncing }>
-			<Icon.Download />
-			{ ! syncing && sprintf( __( 'Update %s' ), type ) }
-			{ 'content' === syncing && __( 'Syncing content...' ) }
-			{ 'media' === syncing && __( 'Syncing media...' ) }
-		</Button>
-	)
-}
+// const SyncSettings = ( { item } ) => {
+// 	const { currentPageView } = getSystemConfig()
+// 	const { intro, name, type, isSingular } = currentPageView
+//
+// 	if ( ! isSingular ) {
+// 		return (
+// 			<div>
+// 				{ __( 'Syncing is currently not available. To sync this library item, navigate to the post or page you\'d like to sync.' ) }
+// 			</div>
+// 		)
+// 	}
+//
+// 	return (
+// 		<div className='fl-asst-library-item-syncing'>
+// 			<div style={ { marginBottom: 'var(--fluid-med-space)' } }>
+// 				<strong>{ intro }:</strong> { name }
+// 			</div>
+// 			<div style={ { marginBottom: 'var(--fluid-lg-space)' } }>
+// 				{ sprintf(
+// 					__( 'Updating the library item will replace its content with the current %s. Updating the %s will replace its content with the library item.' ),
+// 					type.toLowerCase(),
+// 					type.toLowerCase()
+// 				) }
+// 			</div>
+// 			<Button.Group appearance='grid'>
+// 				<SyncLibraryItemButton item={ item } />
+// 				<SyncPostButton item={ item } />
+// 			</Button.Group>
+// 		</div>
+// 	)
+// }
+//
+// const SyncPostButton = ( { item } ) => {
+// 	const { currentPageView } = getSystemConfig()
+// 	const { id, type } = currentPageView
+// 	const [ syncing, setSyncing ] = useState( false )
+// 	const { createNotice } = Libraries.ItemContext.use()
+// 	const librariesApi = getWpRest().libraries()
+// 	const importPostMedia = usePostMediaImport()
+//
+// 	const syncPost = () => {
+// 		const message = sprintf( __( 'Do you really want to sync and replace the current %s with this library item? This cannot be undone.' ), type.toLowerCase() )
+//
+// 		if ( ! confirm( message ) ) {
+// 			return
+// 		}
+//
+// 		setSyncing( 'content' )
+//
+// 		librariesApi.syncPost( id, item ).then( response => {
+// 			setSyncing( 'media' )
+// 			importPostMedia( response.data, item ).then( () => {
+// 				syncPostComplete( response.data )
+// 			} )
+// 		} ).catch( () => {
+// 			syncPostComplete()
+// 		} )
+// 	}
+//
+// 	const syncPostComplete = ( post ) => {
+// 		setSyncing( false )
+//
+// 		if ( ! post || post.error ) {
+// 			createNotice( {
+// 				status: 'error',
+// 				content: __( 'Error syncing content.' )
+// 			} )
+// 		} else {
+// 			createNotice( {
+// 				status: 'success',
+// 				content: __( 'Content replaced!' )
+// 			} )
+// 			window.location.reload()
+// 		}
+// 	}
+//
+// 	return (
+// 		<Button onClick={ syncPost } disabled={ syncing }>
+// 			<Icon.Download />
+// 			{ ! syncing && sprintf( __( 'Update %s' ), type ) }
+// 			{ 'content' === syncing && __( 'Syncing content...' ) }
+// 			{ 'media' === syncing && __( 'Syncing media...' ) }
+// 		</Button>
+// 	)
+// }
