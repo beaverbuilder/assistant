@@ -13,8 +13,6 @@ export const getActions = ( item, actions ) => {
 		component: <PreviewButton item={ item } />
 	} )
 
-	console.log( library, item )
-
 	actions.unshift( {
 		component: <UpdateButton item={ item } />,
 		shouldRender: library.permissions.edit_items
