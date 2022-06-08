@@ -7,12 +7,17 @@ import { getWpRest } from 'assistant/utils/wordpress'
 import { usePostMediaImport } from 'ui/library/use-post-media-import'
 
 export const getActions = ( item, actions ) => {
+	const { library } = Libraries.LibraryContext.use()
+
 	actions.unshift( {
 		component: <PreviewButton item={ item } />
 	} )
 
+	console.log( library, item )
+
 	actions.unshift( {
-		component: <UpdateButton item={ item } />
+		component: <UpdateButton item={ item } />,
+		shouldRender: library.permissions.edit_items
 	} )
 
 	actions.unshift( {
