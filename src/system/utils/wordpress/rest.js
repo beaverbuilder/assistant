@@ -664,9 +664,9 @@ const libraries = () => {
 		/**
 		 * Override library item post data with a post on this site
 		 */
-		syncLibraryPost( postId, item, config = {} ) {
+		syncLibraryPost( postId, item, data = {}, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.post( `fl-assistant/v1/posts/${postId}/sync_to_library/${item.id}`, {}, config )
+			return http.post( `fl-assistant/v1/posts/${postId}/sync_to_library/${item.id}`, data, config )
 		},
 
 		/**

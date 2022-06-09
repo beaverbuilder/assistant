@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
-import { Libraries } from '@beaverbuilder/cloud-ui'
+import { Libraries, Uploader } from '@beaverbuilder/cloud-ui'
 import { Button, Modal } from 'assistant/ui'
 import { getSystemConfig } from 'assistant/data'
 import { getWpRest } from 'assistant/utils/wordpress'
@@ -64,11 +64,12 @@ const PreviewButton = ( { item } ) => {
 }
 
 const UpdateButton = ( { item } ) => {
-	const { currentPageView } = getSystemConfig()
+	const { currentPageView, isLocalhost } = getSystemConfig()
 	const { id, type, isSingular } = currentPageView
 	const [ updating, setUpdating ] = useState( false )
-	const { createNotice } = Libraries.ItemContext.use()
+	const { createNotice, setItem } = Libraries.ItemContext.use()
 	const librariesApi = getWpRest().libraries()
+	const postsApi = getWpRest().posts()
 
 	const buttons = [
 		{
@@ -92,22 +93,35 @@ const UpdateButton = ( { item } ) => {
 
 				setUpdating( true )
 
-				librariesApi.syncLibraryPost( id, item ).then( () => {
-					createNotice( {
-						status: 'success',
-						content: __( 'Library item updated!' ),
-						shouldDismiss: false,
+				const doRequest = ( screenshot = '' ) => {
+					librariesApi.syncLibraryPost( id, item, { screenshot } ).then( response => {
+						setItem( response.data )
+						createNotice( {
+							status: 'success',
+							content: __( 'Library item updated!' ),
+							shouldDismiss: false,
+						} )
+					} ).catch( () => {
+						createNotice( {
+							status: 'error',
+							content: __( 'Error updating library item.' ),
+							shouldDismiss: false,
+						} )
+					} ).finally( () => {
+						setUpdating( false )
+						closeDialog()
 					} )
-				} ).catch( () => {
-					createNotice( {
-						status: 'error',
-						content: __( 'Error updating library item.' ),
-						shouldDismiss: false,
+				}
+
+				if ( isLocalhost ) {
+					postsApi.findById( id ).then( ( { data } ) => {
+						Uploader.screenshotUrl( data.previewUrl ).then( screenshot => {
+							doRequest( screenshot )
+						} )
 					} )
-				} ).finally( () => {
-					setUpdating( false )
-					closeDialog()
-				} )
+				} else {
+					doRequest()
+				}
 			},
 		} )
 	}

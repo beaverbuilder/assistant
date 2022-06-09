@@ -285,10 +285,14 @@ class LibraryItemPostController extends ControllerAbstract {
 		$item_id = $request->get_param( 'item_id' );
 		$post = get_post( $id );
 		$client = new CloudClient;
+		$data = $this->get_save_data( $request, $post );
+
+		// Wipe existing thumbs so we get a new screenshot.
+		$data['media']['thumb'] = null;
 
 		return $client->libraries->update_item(
 			$item_id,
-			$this->get_save_data( $request, $post )
+			$data
 		);
 	}
 
