@@ -2,9 +2,9 @@
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media, Upload, Beaver Builder
 Requires at least: 5.2
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,14 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.0.9 ( 2022-06-09 ) =
+* Fixed intermittent logout issues with Assistant Pro.
+* Fixed PHP notice when importing templates.
+* Fixed PHP 5.6 error with labels.
+* Show "Added" when a template has finished being added to a library.
+* Renamed core "Templates" post type to "Block Templates" to prevent confusion with other template post types.
+* Removed favorite button from the content app.
 
 = 1.0.8 ( 2022-05-16 ) =
 * Minor improvements and fixes for library code snippets.
