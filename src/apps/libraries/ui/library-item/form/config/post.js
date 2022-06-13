@@ -67,6 +67,7 @@ const UpdateButton = ( { item } ) => {
 	const { currentPageView, isLocalhost } = getSystemConfig()
 	const { id, type, isSingular } = currentPageView
 	const [ updating, setUpdating ] = useState( false )
+	const { updateItems } = Libraries.LibraryContext.use()
 	const { createNotice, setItem } = Libraries.ItemContext.use()
 	const librariesApi = getWpRest().libraries()
 	const postsApi = getWpRest().posts()
@@ -96,6 +97,7 @@ const UpdateButton = ( { item } ) => {
 				const doRequest = ( screenshot = '' ) => {
 					librariesApi.syncLibraryPost( id, item, { screenshot } ).then( response => {
 						setItem( response.data )
+						updateItems( response.data )
 						createNotice( {
 							status: 'success',
 							content: __( 'Library item updated!' ),
