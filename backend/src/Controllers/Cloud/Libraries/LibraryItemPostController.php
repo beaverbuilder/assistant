@@ -464,7 +464,7 @@ class LibraryItemPostController extends ControllerAbstract {
 				$term_id = $is_hierarchical ? $new_term['term_taxonomy_id'] : $term->name;
 			}
 
-			$taxonomy_terms[ $term->taxonomy ] = $term_id;
+			$taxonomy_terms[ $term->taxonomy ][] = $term_id;
 		}
 
 		foreach ( $taxonomy_terms as $taxonomy => $terms ) {
