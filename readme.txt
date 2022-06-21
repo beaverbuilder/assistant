@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.0.10 ( 2022-06-21 ) =
+* Added the ability to <a href="https://docs.wpbeaverbuilder.com/assistant/plugin/apps/libraries/#update">update library items</a> with content from the current post or page.
+* Added the ability to <a href="https://docs.wpbeaverbuilder.com/assistant/plugin/apps/libraries/#import-content-1">import library items</a> to override the content of the current post or page.
+* Fixed categories and tags not always importing correctly from a library.
 
 = 1.0.9 ( 2022-06-09 ) =
 * Fixed intermittent logout issues with Assistant Pro.
