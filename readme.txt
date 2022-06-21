@@ -73,8 +73,8 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 == Changelog ==
 
 = 1.0.10 ( 2022-06-21 ) =
-* Added the ability to <a href="https://docs.wpbeaverbuilder.com/assistant/plugin/apps/libraries/#update">update library items</a> with content from the current post or page.
-* Added the ability to <a href="https://docs.wpbeaverbuilder.com/assistant/plugin/apps/libraries/#import-content-1">import library items</a> to override the content of the current post or page.
+* Added the ability to [update library items](https://docs.wpbeaverbuilder.com/assistant/plugin/apps/libraries/#update) with content from the current post or page.
+* Added the ability to [import library items](https://docs.wpbeaverbuilder.com/assistant/plugin/apps/libraries/#import-content-1) to override the content of the current post or page.
 * Fixed categories and tags not always importing correctly from a library.
 
 = 1.0.9 ( 2022-06-09 ) =
