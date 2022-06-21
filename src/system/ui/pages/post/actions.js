@@ -25,20 +25,10 @@ export const getPostActions = ( { history, values, setValue, createNotice, Cloud
 		editUrl,
 		status,
 		trashedStatus,
-		isFavorite,
 		bbCanEdit,
 		bbBranding,
 		bbEditUrl,
 	} = values
-
-	const favoritePost = () => {
-		if ( isFavorite ) {
-			wpRest.notations().deleteFavorite( 'post', id, currentUser.id )
-		} else {
-			wpRest.notations().createFavorite( 'post', id, currentUser.id )
-		}
-		setValue( 'isFavorite', ! isFavorite, true )
-	}
 
 	const clonePost = () => {
 		wpRest
@@ -125,10 +115,6 @@ export const getPostActions = ( { history, values, setValue, createNotice, Cloud
 		{
 			label: __( 'Export' ),
 			onClick: exportPost,
-		},
-		{
-			label: isFavorite ? __( 'Unfavorite' ) : __( 'Mark as Favorite' ),
-			onClick: favoritePost,
 		},
 		{
 			label: 'Trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
