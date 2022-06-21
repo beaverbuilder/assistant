@@ -285,10 +285,11 @@ class LibraryItemPostController extends ControllerAbstract {
 		$item_id = $request->get_param( 'item_id' );
 		$post = get_post( $id );
 		$client = new CloudClient;
+		$data = $this->get_save_data( $request, $post );
 
 		return $client->libraries->update_item(
 			$item_id,
-			$this->get_save_data( $request, $post )
+			$data
 		);
 	}
 
@@ -338,7 +339,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$this->import_post_meta_from_library( $new_post_id, $item->data->meta );
 		$this->import_post_terms_from_library( $new_post_id, $item->data->terms );
-		$this->regenerate_builder_cache( $item );
+		$this->regenerate_builder_cache( $new_post_id, $item );
 
 		return rest_ensure_response(
 			$this->posts->transform(
@@ -383,7 +384,7 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$this->import_post_meta_from_library( $post_id, $item->data->meta );
 		$this->import_post_terms_from_library( $post_id, $item->data->terms );
-		$this->regenerate_builder_cache( $item );
+		$this->regenerate_builder_cache( $post_id, $item );
 
 		return rest_ensure_response(
 			$this->posts->transform(
@@ -640,9 +641,12 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @param object $item
 	 * @return void
 	 */
-	public function regenerate_builder_cache( $item ) {
+	public function regenerate_builder_cache( $post_id, $item ) {
 		$meta = (array) $item->data->meta;
 
+		if ( isset( $meta['_fl_builder_data'] ) && class_exists( 'FLBuilderModel' ) ) {
+			\FLBuilderModel::delete_all_asset_cache( $post_id );
+		}
 		if ( isset( $meta['_elementor_data'] ) && class_exists( 'Elementor\Plugin' ) ) {
 			\Elementor\Plugin::$instance->files_manager->clear_cache();
 		}

@@ -9,6 +9,8 @@ import PencilOutline from './pencil-outline'
 import LockClosed from './lock-closed'
 import LockOpen from './lock-open'
 import WordPress from './wordpress'
+import Upload from './upload'
+import Download from './download'
 
 // ArrowRight - Temp fix util I fix it in @beaverbuilder/icons
 import ArrowRight from './arrow-right-fix'
@@ -26,6 +28,8 @@ const Icon = {
 	LockOpen,
 	ArrowRight,
 	WordPress,
+	Upload,
+	Download,
 }
 
 export default Icon
