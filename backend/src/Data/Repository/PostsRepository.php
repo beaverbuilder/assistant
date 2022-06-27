@@ -130,7 +130,7 @@ class PostsRepository extends RepositoryAbstract {
 		// Types with show_ui false that we want to show
 		$known = [
 			'wp_template',
-			'wp_template_part'
+			'wp_template_part',
 		];
 
 		// Types to never show
@@ -140,7 +140,7 @@ class PostsRepository extends RepositoryAbstract {
 			'vcv_tutorials',
 			'elementor_snippet',
 			'elementor_font',
-			'elementor_icons'
+			'elementor_icons',
 		];
 
 		foreach ( $types as $slug => $type ) {
@@ -183,6 +183,11 @@ class PostsRepository extends RepositoryAbstract {
 					'viewItem' => esc_html( $type->labels->view_item ),
 				],
 			];
+
+			if ( 'wp_template' === $slug || 'wp_template_part' === $slug ) {
+				$data[ $slug ]['labels']['singular'] = sprintf( esc_html_x( 'Block %s', 'Singular type name.', 'fl-assistant' ), $type->labels->singular_name );
+				$data[ $slug ]['labels']['plural'] = sprintf( esc_html_x( 'Block %s', 'Plural type name.', 'fl-assistant' ), $type->labels->name );
+			}
 
 			$taxonomies = get_object_taxonomies( $slug, 'objects' );
 

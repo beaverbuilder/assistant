@@ -1,7 +1,7 @@
 {
   "name": "fl-assistant",
   "title": "Assistant",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
   "repository": {
     "type": "git",
@@ -23,8 +23,8 @@
   "dependencies": {
     "@beaverbuilder/app-core": "^0.2.9",
     "@beaverbuilder/box": "0.0.3",
-    "@beaverbuilder/cloud": "^0.5.11",
-    "@beaverbuilder/cloud-ui": "^0.8.15",
+    "@beaverbuilder/cloud": "^0.5.13",
+    "@beaverbuilder/cloud-ui": "^0.8.19",
     "@beaverbuilder/fluid": "^0.7.11",
     "@beaverbuilder/fluid-docs": "0.0.7",
     "@beaverbuilder/forms": "^0.3.11",
@@ -79,7 +79,7 @@
     "fs-extra": "^9.1.0",
     "jest": "^26.5.0",
     "mini-css-extract-plugin": "^2.1.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.1",
     "npm-install-webpack-plugin": "^4.0.5",
     "postcss-loader": "^6.1.1",
     "sass-loader": "^12.1.0",

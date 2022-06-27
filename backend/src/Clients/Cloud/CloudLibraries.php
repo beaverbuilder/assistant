@@ -48,7 +48,7 @@ class CloudLibraries {
 		if ( isset( $data['media'] ) ) {
 			foreach ( $data['media'] as $key => $media ) {
 				if ( ! $media ) {
-					continue;
+					$data[ "media[$key]" ] = null;
 				} elseif ( is_array( $media ) ) {
 					foreach ( $media as $i => $path ) {
 						if ( $path && file_exists( $path ) ) {
