@@ -146,7 +146,7 @@ class CustomizerService {
 		$stylesheet = get_stylesheet();
 		$template = get_template();
 
-		if ( ( $theme->parent && $parent_slug !== $template ) || $slug !== $stylesheet ) {
+		if ( ( $theme->parent && $parent_slug !== $template ) || ( $slug !== $stylesheet && $parent_slug !== $stylesheet ) ) {
 			return new \WP_Error( 'import', __( 'Import failed! These settings are not for the current theme.' ) );
 		}
 
