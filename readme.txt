@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 1.0.10
+Stable tag: 1.1.0
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,12 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.1.0 ( 2022-06-28 ) =
+* Added the ability to download image and svg library items.
+* Fixed library sorting not working in the libraries app.
+* Fixed customizer settings not importing for parent themes.
+* Fixed a fatal error with PHP 8 when updating an author profile.
 
 = 1.0.10 ( 2022-06-21 ) =
 * Added the ability to [update library items](https://docs.wpbeaverbuilder.com/assistant/plugin/apps/libraries/#update) with content from the current post or page.
