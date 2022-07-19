@@ -3,10 +3,10 @@ import { __ } from '@wordpress/i18n'
 import { registerApp } from 'assistant'
 
 const App = lazy( () => import(
-	/* webpackChunkName: "app-discover" */ './app'
+	/* webpackChunkName: "app-community" */ './app'
 ) )
 
-registerApp( 'discover', {
-	label: __( 'Discover' ),
+registerApp( 'community', {
+	label: __( 'Community' ),
 	root: App
 } )
