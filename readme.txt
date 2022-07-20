@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.2.0 ( 2022-07-20 ) =
+* Added the ability to upload PDF and rich text documents to libraries.
 
 = 1.1.0 ( 2022-06-28 ) =
 * Added the ability to download image and svg library items.
