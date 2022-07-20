@@ -1,16 +1,85 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import { LibraryNav, formatItem, formatSection } from '@beaverbuilder/cloud-ui'
 import { Page, Icon } from 'assistant/ui'
 import { useAppState, useSystemState } from 'assistant/data'
-
 import Actions from './actions'
 import LibrariesFilter from './filter'
 import LibrariesList from './list'
+
+const getSections = ( user, teams, libraries ) => {
+
+	const getItems = ( type = 'user', id = null ) => {
+		const items = id ? libraries[ type ][ id ] : libraries[ type ]
+
+		if ( ! items ) return []
+
+		return items.map( formatItem )
+	}
+
+	const getTeamSections = ( teams = [] ) => {
+		return teams.map( section => ( {
+			...formatSection( section ),
+			items: getItems( 'team', section.id ),
+			canCreateLibraries: section.permissions.edit_libraries,
+		} ) )
+	}
+
+	const communityLibs = getItems( 'access' )
+
+	const sections = [
+		{
+			key: 'user',
+			label: user ? user.name : '',
+			avatar: user.avatar ? user.avatar.sizes.thumb.url : user.gravatar.md,
+			to: '/libraries/user',
+			items: getItems(),
+			canCreateLibraries: true,
+		},
+		{
+			key: 'shared',
+			label: __( 'Shared Libraries' ),
+			avatar: <Icon.Shared />,
+			to: '/libraries/shared',
+			isEnabled: !! libraries.shared.length,
+			items: getItems( 'shared' ),
+			canCreateLibraries: false,
+		},
+		{
+			key: 'community',
+			label: "Community Libraries",
+			avatar: <div />,
+			isEnabled: !! communityLibs.length,
+			items: communityLibs,
+			canCreateLibraries: false,
+		},
+		...getTeamSections( teams )
+	]
+
+	return sections
+}
 
 export default () => {
 	const { cloudUser } = useSystemState()
 	const { filter, libraries, teams } = useAppState( 'libraries' )
 	const { owner, ...query } = filter
+	const isLoadingLibraries = false
+
+	return (
+		<Page
+			title={ __( 'Libraries' ) }
+			icon={ <Icon.Library context="sidebar" /> }
+			shouldShowBackButton={ false }
+			actions={ <Actions /> }
+			padX={ false }
+			padY={ false }
+		>
+			<LibraryNav
+				sections={ getSections( cloudUser, teams, libraries ) }
+				isLoading={ isLoadingLibraries }
+			/>
+		</Page>
+	)
 
 	return (
 		<Page
