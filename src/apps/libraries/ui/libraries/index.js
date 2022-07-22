@@ -77,6 +77,7 @@ export default () => {
 			<LibraryNav
 				sections={ getSections( cloudUser, teams, libraries ) }
 				isLoading={ isLoadingLibraries }
+				displayItemsAs="grid"
 			/>
 		</Page>
 	)

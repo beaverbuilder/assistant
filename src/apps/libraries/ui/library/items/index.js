@@ -1,6 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
+import { Selection } from '@beaverbuilder/fluid'
 import { Button, Layout } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 
@@ -29,6 +30,7 @@ export default () => {
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
 	const filteredItems = Libraries.getFilteredItems( itemsFilter, items )
 	const hasItems = items && !! items.length
+	const { isSelecting } = Selection.use()
 
 	const shouldShowNoResults = () => {
 		const { viewBy, type, collection } = itemsFilter
@@ -44,27 +46,33 @@ export default () => {
 
 	return (
 		<Wrapper className="fl-asst-library-content">
-			{ hasItems && <ItemsFilter /> }
-			<ItemsHeader />
-			<ItemUpload />
-			{ hasItems && <Libraries.ItemsList />}
-			{ shouldShowNoResults() && ! showUpload &&
-				<>
+			{ ! isSelecting && hasItems && <ItemsFilter /> }
+			{ isSelecting && <Selection.Toolbar style={ { minHeight: 48, flexBasis: 48 } } /> }
+			<Selection.Box
+				itemSelector=".fluid-collection-item"
+				mapElementToData={ el => parseInt( el.dataset.selectionId ) }
+			>
+				<ItemsHeader />
+				<ItemUpload />
+				{ hasItems && <Libraries.ItemsList /> }
+				{ shouldShowNoResults() && ! showUpload &&
+					<>
+						<Layout.Box style={ { textAlign: 'center' } }>
+							{ __( 'No results found.' ) }
+						</Layout.Box>
+						<Layout.Row>
+							<Button onClick={ () => setItemsFilter( defaultItemsFilter ) }>
+								{ __( 'Reset Filter' ) }
+							</Button>
+						</Layout.Row>
+					</>
+				}
+				{ items && ! hasItems && ! showUpload &&
 					<Layout.Box style={ { textAlign: 'center' } }>
-						{ __( 'No results found.' ) }
+						{ __( 'This library doesn\'t have any items yet.' ) }
 					</Layout.Box>
-					<Layout.Row>
-						<Button onClick={ () => setItemsFilter( defaultItemsFilter ) }>
-							{ __( 'Reset Filter' ) }
-						</Button>
-					</Layout.Row>
-				</>
-			}
-			{ items && ! hasItems && ! showUpload &&
-				<Layout.Box style={ { textAlign: 'center' } }>
-					{ __( 'This library doesn\'t have any items yet.' ) }
-				</Layout.Box>
-			}
+				}
+			</Selection.Box>
 		</Wrapper>
 	)
 }
