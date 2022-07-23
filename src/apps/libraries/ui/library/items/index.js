@@ -2,8 +2,9 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Selection } from '@beaverbuilder/fluid'
-import { Button, Layout } from 'assistant/ui'
+import { Button, Layout, Icon } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
+import cloud from 'assistant/cloud'
 
 import ItemUpload from '../upload'
 import ItemsHeader from '../header'
@@ -24,13 +25,13 @@ const Wrapper = ( { children, ...rest } ) => {
 }
 
 export default () => {
-	const { items, showUpload } = Libraries.LibraryContext.use()
+	const { items, setItems, showUpload } = Libraries.LibraryContext.use()
 	const { defaultItemsFilter } = useAppState( 'libraries', 'defaultItemsFilter' )
 	const { useItemsFilter } = getAppHooks( 'libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
 	const filteredItems = Libraries.getFilteredItems( itemsFilter, items )
 	const hasItems = items && !! items.length
-	const { isSelecting } = Selection.use()
+	const { isSelecting, items: selectedItems, clearSelection, totalSelectedItems } = Selection.use()
 
 	const shouldShowNoResults = () => {
 		const { viewBy, type, collection } = itemsFilter
@@ -44,10 +45,41 @@ export default () => {
 		return false
 	}
 
+	const DeleteSelectedItemsButton = () => {
+		const { items: libItems, setItems } = Libraries.LibraryContext.use()
+
+		const deleteItems = async ( ids = [] ) => {
+			cloud.libraries.deleteItem( ids ).finally( () => {
+				setItems( [ ...items.filter( obj => ! selectedItems.includes( obj.id ) ) ] )
+				clearSelection()
+			} )
+		}
+		return (
+			<Button
+				status="destructive"
+				icon={ <Icon.Trash /> }
+				disabled={ 0 >= totalSelectedItems }
+				onClick={ () => {
+					if ( confirm( __( 'Do you really want to delete these items?' ) ) ) {
+						deleteItems( selectedItems )
+					}
+				} }
+			>
+				{ __( 'Delete' ) }
+			</Button>
+		)
+	}
+
 	return (
 		<Wrapper className="fl-asst-library-content">
+
 			{ ! isSelecting && hasItems && <ItemsFilter /> }
-			{ isSelecting && <Selection.Toolbar style={ { minHeight: 48, flexBasis: 48 } } /> }
+			{ isSelecting && (
+				<Selection.Toolbar style={ { minHeight: 48, flexBasis: 48 } }>
+					<DeleteSelectedItemsButton />
+				</Selection.Toolbar>
+			) }
+
 			<Selection.Box
 				itemSelector=".fluid-collection-item"
 				mapElementToData={ el => parseInt( el.dataset.selectionId ) }
