@@ -4,7 +4,7 @@ import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Filter } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 
-export default () => {
+export default props => {
 	const { useItemsFilter } = getAppHooks( 'libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
 	const { defaultItemsFilter } = useAppState( 'libraries', [
@@ -35,7 +35,7 @@ export default () => {
 	}
 
 	return (
-		<Filter>
+		<Filter { ...props }>
 			<Filter.RadioGroupItem
 				title={ __( 'View By' ) }
 				items={ {
