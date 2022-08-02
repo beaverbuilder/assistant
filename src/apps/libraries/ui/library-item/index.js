@@ -1,6 +1,7 @@
 import React from 'react'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import * as formConfig from './form'
+import './style.scss' // TEMP! TODO: Move to cloud-ui
 
 export default () => {
 	return (

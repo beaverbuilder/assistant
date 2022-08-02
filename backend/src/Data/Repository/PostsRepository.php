@@ -125,18 +125,22 @@ class PostsRepository extends RepositoryAbstract {
 	 */
 	public function get_types() {
 		$data  = [];
-		$types = get_post_types(
-			[
-				'show_ui' => true,
-			],
-			'objects'
-		);
+		$types = get_post_types( [], 'objects' );
+
+		// Types with show_ui false that we want to show
+		$known = [
+			'wp_template',
+			'wp_template_part',
+		];
+
+		// Types to never show
 		$ignore = [
 			'attachment',
+			'wp_navigation',
 			'vcv_tutorials',
 			'elementor_snippet',
 			'elementor_font',
-			'elementor_icons'
+			'elementor_icons',
 		];
 
 		foreach ( $types as $slug => $type ) {
@@ -144,6 +148,9 @@ class PostsRepository extends RepositoryAbstract {
 				continue;
 			}
 			if ( ! current_user_can( $type->cap->edit_others_posts ) ) {
+				continue;
+			}
+			if ( ! $type->show_ui && ! in_array( $slug, $known ) ) {
 				continue;
 			}
 			if ( in_array( $slug, $ignore ) ) {
@@ -176,6 +183,11 @@ class PostsRepository extends RepositoryAbstract {
 					'viewItem' => esc_html( $type->labels->view_item ),
 				],
 			];
+
+			if ( 'wp_template' === $slug || 'wp_template_part' === $slug ) {
+				$data[ $slug ]['labels']['singular'] = sprintf( esc_html_x( 'Block %s', 'Singular type name.', 'fl-assistant' ), $type->labels->singular_name );
+				$data[ $slug ]['labels']['plural'] = sprintf( esc_html_x( 'Block %s', 'Plural type name.', 'fl-assistant' ), $type->labels->name );
+			}
 
 			$taxonomies = get_object_taxonomies( $slug, 'objects' );
 

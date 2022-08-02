@@ -8,7 +8,6 @@ const ItemActions = ( {
 	item,
 	clonePost,
 	trashPost,
-	favoritePost,
 	isCurrentPage,
 } ) => {
 	const env = Env.use()
@@ -42,12 +41,6 @@ const ItemActions = ( {
 			title: __( 'Duplicate' ),
 			onClick: clonePost,
 			icon: <Icon.Clone />,
-		},
-		{
-			handle: 'favorite-post',
-			title: __( 'Mark as Favorite' ),
-			onClick: favoritePost,
-			icon: item.isFavorite ? <Icon.BookmarkSolid /> : <Icon.Bookmark />,
 		},
 		{
 			handle: 'trash-post',
