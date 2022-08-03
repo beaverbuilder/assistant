@@ -73,9 +73,10 @@ export default () => {
 	return (
 		<Wrapper className="fl-asst-library-content">
 
-			{ ! isSelecting && hasItems && <ItemsFilter /> }
+			<ItemsFilter style={ { visibility: isSelecting && 'hidden' } } />
+
 			{ isSelecting && (
-				<Selection.Toolbar style={ { minHeight: 48, flexBasis: 48 } }>
+				<Selection.Toolbar style={ { minHeight: 48, flexBasis: 48, position: 'absolute', top: 0, width: '100%' } }>
 					<DeleteSelectedItemsButton />
 				</Selection.Toolbar>
 			) }
