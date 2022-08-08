@@ -310,7 +310,11 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
-		$post_data = $item->data->post;
+		$client = new CloudClient;
+		$item = $client->libraries->get_item( $item->id );
+		$post_data = $item->post_data->post;
+		$meta_data = $item->post_data->meta;
+		$term_data = $item->post_data->terms;
 
 		$new_post_id = wp_insert_post(
 			[
@@ -336,8 +340,8 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
-		$this->import_post_meta_from_library( $new_post_id, $item->data->meta );
-		$this->import_post_terms_from_library( $new_post_id, $item->data->terms );
+		$this->import_post_meta_from_library( $new_post_id, $meta_data );
+		$this->import_post_terms_from_library( $new_post_id, $term_data );
 		$this->regenerate_builder_cache( $item );
 
 		return rest_ensure_response(
@@ -366,10 +370,16 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
+		$client = new CloudClient;
+		$item = $client->libraries->get_item( $item->id );
+		$post_data = $item->post_data->post;
+		$meta_data = $item->post_data->meta;
+		$term_data = $item->post_data->terms;
+
 		$updated = wp_update_post(
 			[
 				'ID'           => $post_id,
-				'post_content' => $item->data->post->post_content,
+				'post_content' => $post_data->post_content,
 			]
 		);
 
@@ -381,8 +391,8 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
-		$this->import_post_meta_from_library( $post_id, $item->data->meta );
-		$this->import_post_terms_from_library( $post_id, $item->data->terms );
+		$this->import_post_meta_from_library( $post_id, $meta_data );
+		$this->import_post_terms_from_library( $post_id, $term_data );
 		$this->regenerate_builder_cache( $item );
 
 		return rest_ensure_response(
@@ -641,7 +651,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function regenerate_builder_cache( $item ) {
-		$meta = (array) $item->data->meta;
+		$meta = (array) $item->post_data->meta;
 
 		if ( isset( $meta['_elementor_data'] ) && class_exists( 'Elementor\Plugin' ) ) {
 			\Elementor\Plugin::$instance->files_manager->clear_cache();
