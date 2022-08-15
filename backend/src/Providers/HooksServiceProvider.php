@@ -49,6 +49,7 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 		$enqueue_scripts = $this->injector->make( OnEnqueueScripts::class );
 		add_action( 'wp_enqueue_scripts', $enqueue_scripts );
 		add_action( 'admin_enqueue_scripts', $enqueue_scripts );
+		add_action( 'fl_builder_ui_enqueue_scripts', $enqueue_scripts );
 
 		// setup user profile meta fields - shows on YOUR profile, not on others.
 		add_action( 'show_user_profile', $this->injector->make( OnEditUserProfile::class ) );

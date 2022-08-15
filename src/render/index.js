@@ -26,41 +26,47 @@ const renderAssistant = () => {
 	render( <Assistant />, mountNode )
 }
 
+const renderAssistantBBPanel = () => {
+
+	// Listen for BB publish out (without refresh) and render standalone assistant
+	FLBuilder.addHook( 'endEditingSession', renderAssistant )
+
+	// Listen for BB re-enter editing and ummount standalone assistant
+	FLBuilder.addHook( 'restartEditingSession', unmountAssistant )
+
+	// Setup Assistant panel in Beaver Builder
+	if ( 'Builder' in FL && 'registerPanel' in FL.Builder ) {
+
+		const { registerPanel, togglePanel } = FL.Builder
+
+		registerPanel( 'assistant', {
+			wrapClassName: 'fl-asst',
+			label: __( 'Assistant' ),
+			root: AssistantForBeaverBuilder,
+			render: AssistantForBeaverBuilder, /* legacy */
+			frame: false,
+		} )
+
+		// Setup Trigger Button
+		const button = window.parent.document.querySelector( '.fl-builder-fl-assistant-button' )
+		if ( button ) {
+			button.addEventListener( 'click', () => togglePanel( 'assistant' ) )
+		}
+	}
+}
+
 /**
- * Register Assistant as a Beaver Builder panel.
+ * Register vanilla Assistant or as a Beaver Builder panel.
  *
  * Assistant disables Beaver Builder's default frame and uses it's own.
  * The only big difference is that we override Assistant's isHidden state so BB can mount/unmount it.
  */
-if ( 'FLBuilder' in window ) {
-	FLBuilder.addHook( 'didInitUI', () => {
+const builderFrame = document.getElementById( 'fl-builder-ui-iframe' )
 
-		// Listen for BB publish out (without refresh) and render standalone assistant
-		FLBuilder.addHook( 'endEditingSession', renderAssistant )
-
-		// Listen for BB re-enter editing and ummount standalone assistant
-		FLBuilder.addHook( 'restartEditingSession', unmountAssistant )
-
-		// Setup Assistant panel in Beaver Builder
-		if ( 'Builder' in FL && 'registerPanel' in FL.Builder ) {
-
-			const { registerPanel, togglePanel } = FL.Builder
-
-			registerPanel( 'assistant', {
-				wrapClassName: 'fl-asst',
-				label: __( 'Assistant' ),
-				root: AssistantForBeaverBuilder,
-				render: AssistantForBeaverBuilder, /* legacy */
-				frame: false,
-			} )
-
-			// Setup Trigger Button
-			const button = document.querySelector( '.fl-builder-fl-assistant-button' )
-			if ( button ) {
-				button.addEventListener( 'click', () => togglePanel( 'assistant' ) )
-			}
-		}
-	} )
+if ( builderFrame ) {
+	builderFrame.addEventListener( 'load', renderAssistantBBPanel )
+} else if ( 'FLBuilder' in window ) {
+	FLBuilder.addHook( 'didInitUI', renderAssistantBBPanel )
 } else {
 
 	// Render the standalone Assistant app - We're not in Beaver Builder
