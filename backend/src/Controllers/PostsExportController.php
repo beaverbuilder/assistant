@@ -88,6 +88,10 @@ class PostsExportController extends ControllerAbstract {
 		$meta_values = get_post_meta( $post->ID );
 		foreach ( $meta_values as $key => $values ) {
 			foreach ( $values as $value ) {
+				/* Ignore BB history meta */
+				if ( false !== strpos( $key, '_fl_builder_history' ) ) {
+					continue;
+				}
 				$meta_str .= '<wp:postmeta>
 				<wp:meta_key>' . $this->wxr_cdata( $key ) . '</wp:meta_key>
 				<wp:meta_value>' . $this->wxr_cdata( $value ) . '</wp:meta_value>
