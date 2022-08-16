@@ -2,7 +2,7 @@ import React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
-import { Assistant, AssistantForBeaverBuilder } from './main'
+import { Assistant, AssistantBeaverBuilderIFrameUIRoot, AssistantBeaverBuilderPanel } from './main'
 import renderSkipLink from './skip-link'
 import './admin-bar-item'
 import './style.scss'
@@ -11,6 +11,9 @@ let mountNode = undefined
 
 const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode( mountNode )
 
+/**
+ * Render function for vanilla Assistant outside of Beaver Builder.
+ */
 const renderAssistant = () => {
 	mountNode = document.getElementById( 'fl-asst-mount' )
 
@@ -26,6 +29,35 @@ const renderAssistant = () => {
 	render( <Assistant />, mountNode )
 }
 
+/**
+ * Render function for Assistant inside Beaver Builder's iframe UI.
+ */
+const renderAssistantBBPanelIFrameUI = () => {
+
+	const { registerPanel, togglePanel } = FL.Builder
+
+	registerPanel( 'assistant', {
+		wrapClassName: 'fl-asst',
+		label: __( 'Assistant' ),
+		root: AssistantBeaverBuilderIFrameUIRoot,
+		frame: false,
+		onMount: () => {
+			mountNode = document.getElementById( 'fl-asst-mount' )
+			render( <AssistantBeaverBuilderPanel />, mountNode )
+		},
+		onUnMount: unmountAssistant
+	} )
+
+	// Setup Trigger Button
+	const button = document.querySelector( '.fl-builder-fl-assistant-button' )
+	if ( button ) {
+		button.addEventListener( 'click', () => togglePanel( 'assistant' ) )
+	}
+}
+
+/**
+ * Render function for Assistant inside Beaver Builder's legacy UI.
+ */
 const renderAssistantBBPanel = () => {
 
 	// Listen for BB publish out (without refresh) and render standalone assistant
@@ -42,13 +74,13 @@ const renderAssistantBBPanel = () => {
 		registerPanel( 'assistant', {
 			wrapClassName: 'fl-asst',
 			label: __( 'Assistant' ),
-			root: AssistantForBeaverBuilder,
-			render: AssistantForBeaverBuilder, /* legacy */
+			root: AssistantBeaverBuilderPanel,
+			render: AssistantBeaverBuilderPanel, /* legacy */
 			frame: false,
 		} )
 
 		// Setup Trigger Button
-		const button = window.parent.document.querySelector( '.fl-builder-fl-assistant-button' )
+		const button = document.querySelector( '.fl-builder-fl-assistant-button' )
 		if ( button ) {
 			button.addEventListener( 'click', () => togglePanel( 'assistant' ) )
 		}
@@ -64,7 +96,7 @@ const renderAssistantBBPanel = () => {
 const builderFrame = document.getElementById( 'fl-builder-ui-iframe' )
 
 if ( builderFrame ) {
-	builderFrame.addEventListener( 'load', renderAssistantBBPanel )
+	builderFrame.addEventListener( 'load', renderAssistantBBPanelIFrameUI )
 } else if ( 'FLBuilder' in window ) {
 	FLBuilder.addHook( 'didInitUI', renderAssistantBBPanel )
 } else {
