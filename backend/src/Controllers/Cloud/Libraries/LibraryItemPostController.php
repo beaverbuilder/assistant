@@ -232,7 +232,7 @@ class LibraryItemPostController extends ControllerAbstract {
 		return [
 			'name'       => $post->post_title,
 			'type'       => 'post',
-			'data'       => [
+			'post_data'       => [
 				'post'  => [
 					'comment_status' => $post->comment_status,
 					'menu_order'     => $post->menu_order,
