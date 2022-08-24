@@ -55,7 +55,13 @@ export const Assistant = () => {
 }
 
 // Used for Beaver Builder panel - doesn't have Window Frame or FLUID root.
-export const AssistantForBeaverBuilder = () => (
+export const AssistantBeaverBuilderIFrameUIRoot = () => {
+	return (
+		<div id="fl-asst-mount"></div>
+	)
+}
+
+export const AssistantBeaverBuilderPanel = () => (
 	<BaseProviders displayingIn='beaver-builder'>
 		<Frame>
 			<AppMain />

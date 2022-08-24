@@ -67,7 +67,10 @@ class MediaLibraryService {
 			case 'image/jpeg':
 			case 'image/png':
 			case 'image/gif':
-				$response = $this->import_image( $media->url, $media->file_name, $post_id );
+			case 'application/pdf':
+			case 'application/rtf':
+			case 'text/rtf':
+				$response = $this->import_file( $media->url, $media->file_name, $post_id );
 				break;
 			case 'image/svg':
 			case 'image/svg+xml':
@@ -83,9 +86,9 @@ class MediaLibraryService {
 	}
 
 	/**
-	 * Import an image into the media library.
+	 * Import a file into the media library.
 	 */
-	public function import_image( $url, $name, $post_id = 0 ) {
+	public function import_file( $url, $name, $post_id = 0 ) {
 		require_once( ABSPATH . 'wp-admin/includes/image.php' );
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		require_once( ABSPATH . 'wp-admin/includes/media.php' );
@@ -111,7 +114,7 @@ class MediaLibraryService {
 
 		if ( 200 !== intval( $response_code ) ) {
 			@unlink( $tmp_path );
-			return [ 'error' => __( 'Error downloading image file.' ) ];
+			return [ 'error' => __( 'Error downloading file.' ) ];
 		}
 
 		$id = media_handle_sideload(
@@ -124,7 +127,7 @@ class MediaLibraryService {
 
 		if ( is_wp_error( $id ) ) {
 			@unlink( $tmp_path );
-			return [ 'error' => __( 'Error importing image file.' ) ];
+			return [ 'error' => __( 'Error importing file.' ) ];
 		}
 
 		return [
@@ -133,13 +136,13 @@ class MediaLibraryService {
 		];
 	}
 
+
 	/**
 	 * Import an svg file into the media library.
 	 */
 	public function import_svg( $url, $name, $post_id = 0 ) {
 		$this->add_svg_import_filters();
-
-		return $this->import_image( $url, $name, $post_id );
+		return $this->import_file( $url, $name, $post_id );
 	}
 
 	/**

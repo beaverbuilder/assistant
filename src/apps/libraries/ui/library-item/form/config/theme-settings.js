@@ -37,10 +37,10 @@ export const getActions = ( item, actions ) => {
 		setImporting( true )
 		api.importThemeSettings( item.id ).then( response => {
 			setImporting( false )
-			if ( response.data.error ) {
+			if ( response.data.data.error ) {
 				createNotice( {
 					status: 'error',
-					content: response.data.error,
+					content: response.data.data.error,
 					shouldDismiss: false
 				} )
 			} else {
