@@ -407,6 +407,11 @@ class LibraryItemPostController extends ControllerAbstract {
 			return;
 		}
 
+		if ( isset( $meta->_fl_builder_data ) ) {
+			$meta->_fl_builder_draft = $meta->_fl_builder_data;
+			$meta->_fl_builder_draft_settings = $meta->_fl_builder_data_settings;
+		}
+
 		foreach ( $meta as $meta_key => $meta_value ) {
 			if ( metadata_exists( 'post', $post_id, $meta_key ) ) {
 				delete_metadata( 'post', $post_id, $meta_key );
