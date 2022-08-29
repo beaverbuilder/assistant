@@ -18,8 +18,11 @@ class ImageProxy {
 	}
 
 	public function render_image() {
-		$url = urldecode( $_GET['fl_asst_image_proxy'] );
-		$url = str_replace( '?url=', '', $url );
+		if ( ! isset(  $_GET['fl_asst_image_proxy'] ) && ! isset( $_GET['url'] ) ) {
+			return;
+		}
+
+		$url = urldecode( $_GET['url'] );
 
 		if ( 0 !== strpos( $url, 'http' ) ) {
 			return;
