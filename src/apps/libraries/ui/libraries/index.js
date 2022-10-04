@@ -47,8 +47,8 @@ const getSections = ( user, teams, libraries ) => {
 		},
 		{
 			key: 'community',
-			label: "Community Libraries",
-			avatar: <div />,
+			label: __("Community Libraries"),
+			avatar: <Icon.Swirl />,
 			isEnabled: !! communityLibs.length,
 			items: communityLibs,
 			canCreateLibraries: false,
