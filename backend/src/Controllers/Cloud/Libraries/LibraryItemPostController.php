@@ -313,9 +313,9 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$client = new CloudClient;
 		$item = $client->libraries->get_item( $item->id );
-		$post_data = $item->post_data->post;
-		$meta_data = $item->post_data->meta;
-		$term_data = $item->post_data->terms;
+		$post_data = $item->data->post;
+		$meta_data = $item->data->meta;
+		$term_data = $item->data->terms;
 
 		$new_post_id = wp_insert_post(
 			[
@@ -373,9 +373,9 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$client = new CloudClient;
 		$item = $client->libraries->get_item( $item->id );
-		$post_data = $item->post_data->post;
-		$meta_data = $item->post_data->meta;
-		$term_data = $item->post_data->terms;
+		$post_data = $item->data->post;
+		$meta_data = $item->data->meta;
+		$term_data = $item->data->terms;
 
 		$updated = wp_update_post(
 			[
@@ -657,7 +657,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function regenerate_builder_cache( $post_id, $item ) {
-		$meta = (array) $item->post_data->meta;
+		$meta = (array) $item->data->meta;
 
 		if ( isset( $meta['_fl_builder_data'] ) && class_exists( 'FLBuilderModel' ) ) {
 			\FLBuilderModel::delete_all_asset_cache( $post_id );
