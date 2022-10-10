@@ -11,9 +11,7 @@ const getSections = ( user, teams, libraries ) => {
 
 	const getItems = ( type = 'user', id = null ) => {
 		const items = id ? libraries[ type ][ id ] : libraries[ type ]
-
 		if ( ! items ) return []
-
 		return items.map( formatItem )
 	}
 
