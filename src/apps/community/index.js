@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import { __ } from '@wordpress/i18n'
+import { Icon } from 'assistant/ui'
 import { registerApp } from 'assistant'
 
 const App = lazy( () => import(
@@ -8,5 +9,6 @@ const App = lazy( () => import(
 
 registerApp( 'community', {
 	label: __( 'Community' ),
-	root: App
+	root: App,
+	icon: Icon.Swirl,
 } )
