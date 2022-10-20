@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 1.2.2
+Stable tag: 1.3
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.3 ( 2022-10-24 ) =
+* Changes to support the upcoming Assistant Pro community and marketplace. Details coming soon!
 
 = 1.2.2 ( 2022-09-01 ) =
 * Fixed remote images not showing in screenshots when exporting library items locally.
