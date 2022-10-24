@@ -195,8 +195,8 @@ class OnEnqueueScripts {
 			return false;
 		}
 
-		// Don't show in admin iframes.
-		if ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+		// Don't show in iframes.
+		if ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST && ! isset( $_GET['fl_builder_ui'] ) ) {
 			return false;
 		}
 
