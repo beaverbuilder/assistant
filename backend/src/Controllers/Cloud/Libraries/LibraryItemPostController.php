@@ -229,10 +229,10 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function get_save_data( $request, $post ) {
-		return [
+		$data = [
 			'name'       => $post->post_title,
 			'type'       => 'post',
-			'data'       => [
+			'post_data'       => [
 				'post'  => [
 					'comment_status' => $post->comment_status,
 					'menu_order'     => $post->menu_order,
@@ -249,11 +249,18 @@ class LibraryItemPostController extends ControllerAbstract {
 
 			],
 			'media'      => [
-				'thumb'       => get_attached_file( get_post_thumbnail_id( $post ) ),
 				'attachments' => $this->get_post_image_paths( $post ),
 			],
 			'screenshot' => $this->get_post_screenshot( $request, $post ),
 		];
+
+		$thumbnail = get_attached_file( get_post_thumbnail_id( $post ) );
+
+		if ($thumbnail) {
+			$data['media']['thumb'] = $thumbnail;
+		}
+
+		return $data;
 	}
 
 	/**
@@ -311,7 +318,11 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
+		$client = new CloudClient;
+		$item = $client->libraries->get_item( $item->id );
 		$post_data = $item->data->post;
+		$meta_data = $item->data->meta;
+		$term_data = $item->data->terms;
 
 		$new_post_id = wp_insert_post(
 			[
@@ -337,8 +348,8 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
-		$this->import_post_meta_from_library( $new_post_id, $item->data->meta );
-		$this->import_post_terms_from_library( $new_post_id, $item->data->terms );
+		$this->import_post_meta_from_library( $new_post_id, $meta_data );
+		$this->import_post_terms_from_library( $new_post_id, $term_data );
 		$this->regenerate_builder_cache( $new_post_id, $item );
 
 		return rest_ensure_response(
@@ -367,10 +378,16 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
+		$client = new CloudClient;
+		$item = $client->libraries->get_item( $item->id );
+		$post_data = $item->data->post;
+		$meta_data = $item->data->meta;
+		$term_data = $item->data->terms;
+
 		$updated = wp_update_post(
 			[
 				'ID'           => $post_id,
-				'post_content' => $item->data->post->post_content,
+				'post_content' => $post_data->post_content,
 			]
 		);
 
@@ -382,8 +399,8 @@ class LibraryItemPostController extends ControllerAbstract {
 			);
 		}
 
-		$this->import_post_meta_from_library( $post_id, $item->data->meta );
-		$this->import_post_terms_from_library( $post_id, $item->data->terms );
+		$this->import_post_meta_from_library( $post_id, $meta_data );
+		$this->import_post_terms_from_library( $post_id, $term_data );
 		$this->regenerate_builder_cache( $post_id, $item );
 
 		return rest_ensure_response(

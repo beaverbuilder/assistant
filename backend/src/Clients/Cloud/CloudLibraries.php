@@ -38,7 +38,7 @@ class CloudLibraries {
 	 * @return object
 	 */
 	public function get_item( $item_id ) {
-		return $this->client->get( "/library-items/$item_id" );
+		return $this->client->get( "/library-items/$item_id?include_post_data=1" );
 	}
 
 	/**

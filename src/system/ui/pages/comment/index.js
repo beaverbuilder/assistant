@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { __, sprintf } from '@wordpress/i18n'
 import { useLocation } from 'react-router-dom'
 import { Form, Icon, Button, Page, Layout, Text } from 'ui'
-import b from '@beaverbuilder/box'
 import { getSystemActions } from 'data'
 import { getWpRest, replyToComment } from 'utils/wordpress'
 import './style.scss'
@@ -168,7 +167,7 @@ export const Comment = () => {
 
 	const UpdateCommentBtn = () => {
 		return (
-			<b.row padX style={ { justifyContent: 'space-between' } }>
+			<RowBox style={ { justifyContent: 'space-between' } }>
 				<Button className='cmt-cncl-btn' onClick={ resetEdit }>
 					{__( 'Cancel' )}
 				</Button>
@@ -180,7 +179,7 @@ export const Comment = () => {
 				>
 					{__( 'Save' )}
 				</Button>
-			</b.row>
+			</RowBox>
 		)
 	}
 
@@ -208,7 +207,7 @@ export const Comment = () => {
 
 	const ReplyCommentBtn = () => {
 		return (
-			<b.row padX style={ { justifyContent: 'space-between' } }>
+			<RowBox style={ { justifyContent: 'space-between', paddingBottom: 10 } }>
 				<Button className='fl-asst-cmt-cncl-btn' onClick={ resetReply }>
 					{__( 'Cancel' )}
 				</Button>
@@ -220,7 +219,7 @@ export const Comment = () => {
 				>
 					{__( 'Reply' )}
 				</Button>
-			</b.row>
+			</RowBox>
 		)
 	}
 
@@ -300,9 +299,9 @@ export const Comment = () => {
 			className="fl-asst-comment-details"
 		>
 			<Text.Title>{author.name}</Text.Title>
-			<b.div padX>
+			<div style={ { padding: '20px 0' } }>
 				{ sprintf( 'Commented on %s', date ) }
-			</b.div>
+			</div>
 
 			{ 'edit' !== commentStatus && (
 				<div
@@ -312,13 +311,14 @@ export const Comment = () => {
 				/>
 			)}
 			{ 'edit' === commentStatus && (
-				<div style={ { padding: '10px 0' } }>
+				<div style={ { paddingBottom: 10 } }>
 					<p className="fl-asst-edit-comment-title">{__( 'Edit Comment' )}</p>
 					<textarea
 						className="fl-asst-comment-text"
 						value={ editContent }
 						onChange={ e => setEditContent( e.target.value ) }
 						rows={ 10 }
+						style={ { marginBottom: 10 } }
 					/>
 					<UpdateCommentBtn />
 				</div>
@@ -331,12 +331,13 @@ export const Comment = () => {
 						value={ replyValue }
 						onChange={ e => setReplyValue( e.target.value ) }
 						rows={ 7 }
+						style={ { marginBottom: 10 } }
 					/>
 					<ReplyCommentBtn />
 				</div>
 			) }
 			{ showButtons && (
-				<b.row
+				<RowBox
 					style={ {
 						justifyContent: 'space-evenly',
 						flex: '0 0 auto',
@@ -425,7 +426,7 @@ export const Comment = () => {
 							<Icon.Restore />
 						</Button>
 					)}
-				</b.row>
+				</RowBox>
 			) }
 
 			{ responseMessage.message && (
@@ -441,3 +442,15 @@ export const Comment = () => {
 		</Page>
 	)
 }
+
+const RowBox = ( { style, padX = false, ...rest } ) => (
+	<div
+		style={ {
+			display: 'flex',
+			paddingLeft: padX ? 20 : null,
+			paddingRight: padX ? 20 : null,
+			...style,
+		} }
+		{ ...rest }
+	/>
+)

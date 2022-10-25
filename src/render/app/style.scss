@@ -25,6 +25,7 @@
             min-height: 0;
 			z-index: 0;
             overflow-x: hidden;
+			will-change: transform; /* For layout purposes. Causes new fixed positioning context */
         }
     }
 }

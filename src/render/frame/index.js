@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { motion, useAnimation, useDragControls, useMotionValue, useTransform } from 'framer-motion'
 import useMedia from 'use-media'
 import c from 'classnames'
-import { Env, Frame as _Frame } from 'assistant/ui'
+import { Frame as _Frame } from '@beaverbuilder/fluid'
+import { Env } from 'assistant/ui'
 import { getSystemActions, useSystemState, getSystemConfig } from 'assistant/data'
 import {
 	useEdgeInsets,
