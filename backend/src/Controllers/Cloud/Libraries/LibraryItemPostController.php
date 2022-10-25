@@ -229,7 +229,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function get_save_data( $request, $post ) {
-		return [
+		$data = [
 			'name'       => $post->post_title,
 			'type'       => 'post',
 			'post_data'       => [
@@ -249,11 +249,18 @@ class LibraryItemPostController extends ControllerAbstract {
 
 			],
 			'media'      => [
-				'thumb'       => get_attached_file( get_post_thumbnail_id( $post ) ),
 				'attachments' => $this->get_post_image_paths( $post ),
 			],
 			'screenshot' => $this->get_post_screenshot( $request, $post ),
 		];
+
+		$thumbnail = get_attached_file( get_post_thumbnail_id( $post ) );
+
+		if ($thumbnail) {
+			$data['media']['thumb'] = $thumbnail;
+		}
+
+		return $data;
 	}
 
 	/**
