@@ -72,7 +72,7 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
-= 1.3.1 ( 2022-10-24 ) =
+= 1.3.1 ( 2022-10-31 ) =
 * Fixed creating private libraries.
 
 = 1.3 ( 2022-10-24 ) =
