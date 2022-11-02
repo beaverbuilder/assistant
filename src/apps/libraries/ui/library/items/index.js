@@ -87,7 +87,7 @@ export default () => {
 			>
 				<ItemsHeader />
 				<ItemUpload />
-				{ hasItems && <Libraries.ItemsList /> }
+				<Libraries.ItemsList />
 				{ shouldShowNoResults() && ! showUpload &&
 					<>
 						<Layout.Box style={ { textAlign: 'center' } }>
