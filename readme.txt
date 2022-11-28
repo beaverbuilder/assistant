@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.3.4 ( 2022-11-28 ) =
+* Fixed importing to override a post in wp-admin.
+* Fixed thumb styling for code items in wp-admin.
+* Fixed large code items slowing down the browser.
 
 = 1.3.3 ( 2022-11-21 ) =
 * Fixed downloading items from private libraries.
