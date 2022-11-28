@@ -228,8 +228,15 @@ const ImportButton = ( { item } ) => {
 	}
 
 	const replacePost = () => {
-		if ( ! currentPageView.isSingular ) {
+		const { isSingular, isAdmin, admin } = currentPageView
+		const isAdminPost = isAdmin && 'post' === admin.base
+
+		if ( ! isAdminPost && ! isSingular ) {
 			alert( __( 'Replacing is currently not available. Navigate to the post or page you\'d like to replace and click the import button again.' ) )
+			setAction( null )
+			return
+		} else if ( isAdminPost && 'auto-draft' === admin.post_status ) {
+			alert( __( 'Replacing is currently not available. Please save a draft or publish and refresh the page to replace.' ) )
 			setAction( null )
 			return
 		}

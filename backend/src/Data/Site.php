@@ -11,15 +11,15 @@ class Site {
 	 * Get info about the current page view.
 	 */
 	public function get_current_view() {
-		global $wp_the_query;
+		global $wp_the_query, $post;
 
 		$data    = [];
 		$actions = [];
 		$intro   = __( 'Currently Viewing', 'fl-assistant' );
 		$type    = '';
 		$name    = __( 'Untitled', 'fl-assistant' );
-
-		$obj = get_queried_object();
+		$post_id = null;
+		$admin   = [];
 
 		if ( is_admin() ) {
 
@@ -28,7 +28,19 @@ class Site {
 			$screen = get_current_screen();
 			$name = $screen->id;
 
+			$admin = [
+				'base' => $screen->base,
+				'post_type' => $screen->post_type,
+			];
+
+			if ( is_object( $post ) && 'post' === $screen->base ) {
+				$post_id = $post->ID;
+				$admin['post_status'] = $post->post_status;
+			}
+
 		} else {
+
+			$obj = get_queried_object();
 
 			if ( is_404() ) {
 				$name = __( 'Page Not Found', 'fl-assistant' );
@@ -77,6 +89,7 @@ class Site {
 				$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $post_type );
 				$type      = $post_type;
 				$name      = $obj->post_title;
+				$post_id   = $obj->ID;
 
 				$actions[] = [
 					'handle'     => 'edit',
@@ -118,6 +131,8 @@ class Site {
 		$data['intro']   = $intro;
 		$data['name']    = $name;
 		$data['type']    = $type;
+		$data['id'] 	 = $post_id;
+		$data['admin']	 = $admin;
 
 		$data['actions'] = $this->filter_actions_by_capability( $actions );
 
@@ -152,10 +167,6 @@ class Site {
 		$data['isTag'] = is_tag();
 		$data['isAuthor'] = is_author();
 		$data['isFrontPage'] = is_front_page();
-
-		if ( is_singular() ) {
-			$data['id'] = $obj->ID;
-		}
 
 		return $data;
 	}
