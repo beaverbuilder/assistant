@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.3.5 ( 2022-12-06 ) =
+* Added library support for Astra theme customizer settings.
 
 = 1.3.4 ( 2022-11-28 ) =
 * Fixed importing to override a post in wp-admin.
