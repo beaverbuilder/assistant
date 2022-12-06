@@ -9,16 +9,16 @@
 
 	/* TwentyTwenty Theme Fix - Cause they've lost their minds. */
 	.fluid-button {
-		background-color: var(--background) !important;
-		color: var(--color) !important;
+		background: var(--background);
+		color: var(--color);
 
 		&:hover {
-			background-color: var(--hover) !important;
-			color: var(--hover-color) !important;
+			background-color: var(--hover);
+			color: var(--hover-color);
 		}
 		&.is-selected {
-			background-color: var(--fluid-opaque-4) !important;
-			color: var(--fluid-opaque-14) !important;
+			background-color: var(--fluid-opaque-4);
+			color: var(--fluid-opaque-14);
 
 			&:hover {
 				filter: brightness( 125% );
