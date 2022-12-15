@@ -10,7 +10,9 @@ export default () => {
 	const basePath = `/libraries/${ library.id }`
 
 	if ( ! library.permissions.update && ! library.permissions.edit_items ) {
-		return null
+		if ( ! library.permissions.shared ) {
+			return null
+		}
 	}
 
 	const goToUpload = () => {
@@ -40,7 +42,7 @@ export default () => {
 					<Icon.Plus />
 				</Button>
 			}
-			{ library.permissions.update &&
+			{ ( library.permissions.update || library.permissions.shared ) &&
 				<Button
 					appearance='transparent'
 					isSelected={ pathname.includes( '/settings' ) }
