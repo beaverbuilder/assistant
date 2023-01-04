@@ -7,8 +7,16 @@ use FL\Assistant\Helpers\CustomizerOptionHelper;
 use FL\Assistant\Clients\Cloud\CloudClient;
 use FL\Assistant\Helpers\MediaPathHelper;
 use FL\Assistant\Helpers\ScreenshotHelper;
+use FL\Assistant\Helpers\AstraSettingsHelper;
 
 class CustomizerService {
+
+	/**
+	 * @var array
+	 */
+	private $helpers = [
+		'astra' => AstraSettingsHelper::class,
+	];
 
 	/**
 	 * @param int $library_id
@@ -41,15 +49,17 @@ class CustomizerService {
 
 		$theme_service = new ThemeService();
 		$theme = $theme_service->get_current_theme_data();
+		$template = get_template();
 
-		$data = array(
-			'mods' => array(),
-			'options' => array(),
-			'css' => '',
+		$data = [
 			'theme' => $theme,
-		);
+			'mods' => [],
+			'options' => [],
+			'custom' => [],
+			'css' => '',
+		];
 
-		$ignore = array(
+		$ignore = [
 			'blogname',
 			'blogdescription',
 			'show_on_front',
@@ -60,7 +70,7 @@ class CustomizerService {
 			'sidebars_widgets',
 			'site_icon',
 			'custom_css_post_id',
-		);
+		];
 
 		$mods = get_theme_mods();
 		$settings = $wp_customize->settings();
@@ -85,6 +95,11 @@ class CustomizerService {
 
 		if ( function_exists( 'wp_get_custom_css_post' ) ) {
 			$data['css'] = wp_get_custom_css();
+		}
+
+		if ( isset( $this->helpers[ $template ] ) ) {
+			$helper = new $this->helpers[ $template ];
+			$data['custom'] = json_encode( $helper->export() );
 		}
 
 		return $data;
@@ -160,6 +175,7 @@ class CustomizerService {
 	public function import_settings( $data ) {
 		global $wp_customize;
 
+		$template = get_template();
 		$can_import = $this->can_import_settings( $data );
 
 		if ( is_wp_error( $can_import ) ) {
@@ -184,6 +200,12 @@ class CustomizerService {
 		foreach ( $data->mods as $key => $val ) {
 			do_action( 'customize_save_' . $key, $wp_customize );
 			set_theme_mod( $key, $val );
+		}
+
+		if ( isset( $this->helpers[ $template ] ) ) {
+			$helper = new $this->helpers[ $template ];
+			$settings = json_decode( $data->custom, 1 );
+			$helper->import( $settings );
 		}
 
 		do_action( 'customize_save_after', $wp_customize );
