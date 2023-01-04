@@ -7,22 +7,35 @@ import './style.scss'
 
 export default () => {
 	const { isReadOnly, library } = Libraries.LibraryContext.use()
+	const isShared = library.permissions.shared && ! library.permissions.owner 
 
 	return (
 		<>
-			<Layout.Box padY={ false } className='fl-asst-library-settings'>
-				<Page.Section label={ __( 'Library Settings' ) } padY={ false }>
-					<Libraries.LibrarySettingsForm />
-				</Page.Section>
-			</Layout.Box>
+			{ ! isShared &&
+				<Layout.Box padY={ false } className='fl-asst-library-settings'>
+					<Page.Section label={ __( 'Library Settings' ) } padY={ false }>
+						<Libraries.LibrarySettingsForm />
+					</Page.Section>
+				</Layout.Box>
+			}
 
 			{ ! isReadOnly &&
 				<>
-					<Layout.Box padY={ false }>
-						<Page.Section label={ __( 'Library Collections' ) }>
-							<Libraries.LibraryCollectionsForm />
-						</Page.Section>
-					</Layout.Box>
+					{ ! isShared &&
+						<Layout.Box padY={ false }>
+							<Page.Section label={ __( 'Library Collections' ) }>
+								<Libraries.LibraryCollectionsForm />
+							</Page.Section>
+						</Layout.Box>
+					}
+
+					{ isShared && library.permissions.edit_collections &&
+						<Layout.Box padY={ false }>
+							<Page.Section label={ __( 'Library Collections' ) }>
+								<Libraries.LibraryCollectionsForm />
+							</Page.Section>
+						</Layout.Box>
+					}
 
 					<Layout.Box padY={ false }>
 						<Page.Section label={ __( 'Import Library' ) }>
