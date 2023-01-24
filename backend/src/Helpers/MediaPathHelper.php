@@ -7,6 +7,15 @@ use FL\Assistant\Helpers\JsonHelper;
 class MediaPathHelper {
 
 	/**
+	 * Array of data keys to ignore when parsing data.
+	 *
+	 * @var array
+	 */
+	static private $data_blacklist = [
+		'_seopress_analysis_data'
+	];
+
+	/**
 	 * Replaces the imported attachment in an object or array.
 	 *
 	 * @param object|array|string $data
@@ -210,6 +219,10 @@ class MediaPathHelper {
 		$urls = [];
 
 		foreach ( $data as $key => $val ) {
+			if ( in_array( $key, self::$data_blacklist ) ) {
+				continue;
+			}
+
 			$val = maybe_unserialize( $val );
 
 			if ( is_object( $val ) || is_array( $val ) ) {
