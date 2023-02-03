@@ -205,7 +205,7 @@ const Frame = ( { children, isHidden = false, className, ...rest } ) => {
 					width: _width,
 					left: _left,
 					position: 'fixed',
-					overflow: 'hidden',
+					overflow: 'auto',
 					boxSizing: 'border-box',
 					background: 'var(--fluid-background)',
 					zIndex: isMobile || isBeaverBuilder ? 999999 : 9999, /* we usually want to be under the admin bar menus */
