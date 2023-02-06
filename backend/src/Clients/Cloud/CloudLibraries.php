@@ -21,17 +21,21 @@ class CloudLibraries {
 	 * @return object
 	 */
 	public function create_item( $library_id, $data ) {
-		$data = $this->normalize_media( $data );
-		return $this->client->post( "/libraries/$library_id/library-items", $data );
+		$remaining = $this->convert_media_to_chunks( $data );
+		$result = $this->client->post( "/libraries/$library_id/library-items", $data );
+		$this->upload_remaining_media_chunks( $result->id, $remaining );
+		return $result;
 	}
 
 	/**
 	 * @return object
 	 */
 	public function update_item( $item_id, $data ) {
-		$data = $this->normalize_media( $data );
 		$data['_method'] = 'PUT';
-		return $this->client->post( "/library-items/$item_id", $data );
+		$remaining = $this->convert_media_to_chunks( $data );
+		$result = $this->client->post( "/library-items/$item_id", $data );
+		$this->upload_remaining_media_chunks( $item_id, $remaining );
+		return $result;
 	}
 
 	/**
@@ -42,25 +46,60 @@ class CloudLibraries {
 	}
 
 	/**
+	 * @return void
+	 */
+	public function upload_remaining_media_chunks( $item_id, $chunks ) {
+		for ( $i = 0; $i < count( $chunks ); $i++ ) {
+			$data = array_merge( $chunks[ $i ],
+				[
+					'_method' => 'PUT',
+					'preserve_media' => true,
+				]
+			);
+			$this->client->post( "/library-items/$item_id", $data );
+		}
+	}
+
+	/**
 	 * @return array
 	 */
-	protected function normalize_media( $data ) {
-		if ( isset( $data['media'] ) ) {
-			foreach ( $data['media'] as $key => $media ) {
-				if ( ! $media ) {
-					$data[ "media[$key]" ] = null;
-				} elseif ( is_array( $media ) ) {
-					foreach ( $media as $i => $path ) {
-						if ( $path && file_exists( $path ) ) {
-							$data[ "media[$key][$i]" ] = curl_file_create( $path );
-						}
+	protected function convert_media_to_chunks( &$data ) {
+		$max_uploads = ini_get( 'max_file_uploads' );
+		$files = [];
+
+		// Handle the post thumb - must come first.
+		if ( isset( $data['media']['thumb'] ) ) {
+			if ( file_exists( $data['media']['thumb'] ) ) {
+				$files['media[thumb]'] = curl_file_create( $data['media']['thumb'] );
+			} else {
+				$files['media[thumb]'] = null;
+			}
+		}
+
+		// Handle post attachments.
+		if ( isset( $data['media']['attachments'] ) ) {
+			if ( empty( $data['media']['attachments'] ) ) {
+				$files['media[attachments]'] = null;
+			} else {
+				foreach ( $data['media']['attachments'] as $i => $path ) {
+					if ( $path && file_exists( $path ) ) {
+						$files[ "media[attachments][$i]" ] = curl_file_create( $path );
 					}
-				} elseif ( file_exists( $media ) ) {
-					$data[ "media[$key]" ] = curl_file_create( $media );
 				}
 			}
-			unset( $data['media'] );
 		}
-		return $data;
+
+		// Unset the original media array.
+		unset( $data['media'] );
+
+		// Convert media files to chunks. Send the first chunk with the data.
+		$chunks = array_chunk( $files, $max_uploads, true );
+
+		if ( isset( $chunks[0] ) ) {
+			$data = array_merge( $data, $chunks[0] );
+			array_shift( $chunks );
+		}
+
+		return $chunks;
 	}
 }
