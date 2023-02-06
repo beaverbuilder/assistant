@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,12 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.3.7 ( 2023-02-07 ) =
+* Allow access to library settings for importing all items in a community library.
+* Fixed post media not uploading to libraries for posts with more media than defined in max_file_uploads.
+* Fixed SEO Press causing header and footer images to upload to libraries for posts.
+* Fixed various UI bugs and inconsistencies.
 
 = 1.3.6 ( 2023-01-17 ) =
 * Allow access to library settings for importing all items in a shared library.
