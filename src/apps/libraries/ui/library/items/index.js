@@ -1,5 +1,6 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
+import { useLocation } from 'react-router-dom'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Selection } from '@beaverbuilder/fluid'
 import { Button, Layout, Icon } from 'assistant/ui'
@@ -24,14 +25,29 @@ const Wrapper = ( { children, ...rest } ) => {
 	return <div { ...rest }>{ children }</div>
 }
 
+/**
+ * Check if a string ends with any of the possible endings.
+ *
+ * @param String str - the string to test for endings
+ * @param [String] options - an array of possible ending strings
+ * @return bool
+ */
+const endsWith = ( str, options = [] ) => options.some( option => str.endsWith( option ) )
+
 export default () => {
-	const { items, setItems, showUpload } = Libraries.LibraryContext.use()
+	const location = useLocation()
+	const { items, showUpload, library } = Libraries.LibraryContext.use()
 	const { defaultItemsFilter } = useAppState( 'libraries', 'defaultItemsFilter' )
 	const { useItemsFilter } = getAppHooks( 'libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
 	const filteredItems = Libraries.getFilteredItems( itemsFilter, items )
 	const hasItems = items && !! items.length
 	const { isSelecting, items: selectedItems, clearSelection, totalSelectedItems } = Selection.use()
+
+	const isSelectionEnabled = (
+		library.permissions.edit_items &&
+		! endsWith( location.pathname, [ '/share', '/settings', '/collections' ] )
+	)
 
 	const shouldShowNoResults = () => {
 		const { viewBy, type, collection } = itemsFilter
@@ -46,9 +62,9 @@ export default () => {
 	}
 
 	const DeleteSelectedItemsButton = () => {
-		const { items: libItems, setItems } = Libraries.LibraryContext.use()
+		const { setItems } = Libraries.LibraryContext.use()
 
-		const deleteItems = async ( ids = [] ) => {
+		const deleteItems = async( ids = [] ) => {
 			cloud.libraries.deleteItem( ids ).finally( () => {
 				setItems( [ ...items.filter( obj => ! selectedItems.includes( obj.id ) ) ] )
 				clearSelection()
@@ -84,6 +100,7 @@ export default () => {
 			<Selection.Box
 				itemSelector=".fluid-collection-item"
 				mapElementToData={ el => parseInt( el.dataset.selectionId ) }
+				isEnabled={ isSelectionEnabled }
 			>
 				<ItemsHeader />
 				<ItemUpload />
