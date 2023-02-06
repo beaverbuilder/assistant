@@ -2,15 +2,19 @@ import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Button, Icon } from 'assistant/ui'
 import { Libraries } from '@beaverbuilder/cloud-ui'
+import { useSystemState } from 'assistant/data'
 
 export default () => {
 	const history = useHistory()
+	const { cloudUser } = useSystemState()
 	const { pathname } = useLocation()
 	const { isReadOnly, library, showUpload, setShowUpload } = Libraries.LibraryContext.use()
 	const basePath = `/libraries/${ library.id }`
+	const userid = cloudUser.id
+	const userHasPermission = userid === library.permissions.permissions_user_id
 
 	if ( ! library.permissions.update && ! library.permissions.edit_items ) {
-		if ( ! library.permissions.shared ) {
+		if ( ! library.permissions.shared && ! userHasPermission ) {
 			return null
 		}
 	}
@@ -42,7 +46,7 @@ export default () => {
 					<Icon.Plus />
 				</Button>
 			}
-			{ ( library.permissions.update || library.permissions.shared ) &&
+			{ ( library.permissions.update || library.permissions.shared || userHasPermission ) &&
 				<Button
 					appearance='transparent'
 					isSelected={ pathname.includes( '/settings' ) }

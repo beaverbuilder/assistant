@@ -3,11 +3,15 @@ import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Layout, Page } from 'assistant/ui'
 import ImportLibrary from './import'
+import { useSystemState } from 'assistant/data'
 import './style.scss'
 
 export default () => {
 	const { isReadOnly, library } = Libraries.LibraryContext.use()
-	const isShared = library.permissions.shared && ! library.permissions.owner 
+	const { cloudUser } = useSystemState()
+	const userid = cloudUser.id
+	const userHasPermission = userid === library.permissions.permissions_user_id && ! library.permissions.owner
+	const isShared = ( library.permissions.shared && ! library.permissions.owner ) || userHasPermission
 
 	return (
 		<>
