@@ -64,7 +64,7 @@
     "@babel/preset-env": "^7.13.5",
     "@babel/preset-react": "^7.12.13",
     "@beaverbuilder/eslint-config": "0.0.5",
-    "@beaverbuilder/webpack-config": "0.0.7",
+    "@beaverbuilder/webpack-config": "0.0.8",
     "@wordpress/babel-preset-default": "^5.0.1",
     "axios-mock-adapter": "^1.18.1",
     "babel-jest": "^26.5.0",
@@ -82,7 +82,7 @@
     "postcss-loader": "^6.1.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
-    "webpack": "^5.47.1",
-    "webpack-cli": "^4.7.2"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
