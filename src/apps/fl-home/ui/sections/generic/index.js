@@ -13,6 +13,7 @@ const Section = ( {
 	padContent = true,
 	canCollapse = true,
 	isCollapsed = false,
+	showHeader = true,
 	headerActions,
 	description,
 	footer,
@@ -34,19 +35,21 @@ const Section = ( {
 
 	return (
 		<Tag className={ classes } { ...rest } >
-			<Header
-				title={ title }
-				showCaret={ canCollapse }
-				isExpanded={ showContent }
-				toggleExpanded={ () => {
-					if ( canCollapse ) {
-						const newValue = ! showContent
-						setShowContent( newValue )
-						onToggle( newValue )
-					}
-				} }
-				actions={ headerActions }
-			/>
+			{ showHeader && (
+				<Header
+					title={ title }
+					showCaret={ canCollapse }
+					isExpanded={ showContent }
+					toggleExpanded={ () => {
+						if ( canCollapse ) {
+							const newValue = ! showContent
+							setShowContent( newValue )
+							onToggle( newValue )
+						}
+					} }
+					actions={ headerActions }
+				/>
+			) }
 			{ showContent && (
 				<>
 					{ description && <div className="section-description">{ description }</div> }

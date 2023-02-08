@@ -5,6 +5,7 @@ import RecentPostsSection from './recent-posts'
 import AppsSection from './apps'
 import MediaSection from './media'
 import QuickStats from './stats'
+import CommunitySection from './community'
 
 /* Libraries (pro) and Welcome Banner sections currently disabled */
 
@@ -17,6 +18,10 @@ const HomeSections = () => {
 	const { collapsedSections } = useAppState( 'fl-home' )
 	const { setCollapsedSections } = getAppActions( 'fl-home' )
 	const sections = [
+		{
+			handle: 'community',
+			render: CommunitySection
+		},
 		{
 			handle: 'stats',
 			render: props => <QuickStats title={ <WelcomeMessage /> } { ...props } />
