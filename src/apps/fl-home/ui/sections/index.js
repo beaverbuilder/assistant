@@ -20,7 +20,8 @@ const HomeSections = () => {
 	const sections = [
 		{
 			handle: 'community',
-			render: CommunitySection
+			render: CommunitySection,
+			isHidden: true,
 		},
 		{
 			handle: 'stats',
@@ -43,21 +44,26 @@ const HomeSections = () => {
 	/**
 	 * Caches the expanded/collapsed state in app state
 	 */
-	return sections.map( ( { handle, render: Component } ) => (
-		<Component
-			key={ handle }
-			isCollapsed={ collapsedSections.includes( handle ) }
-			onToggle={ value => {
+	return sections.map( ( { handle, render: Component, isHidden = false } ) => {
 
-				if ( false === value && ! collapsedSections.includes( handle ) ) {
-					setCollapsedSections( [ ...collapsedSections, handle ] )
-				}
-				if ( true === value && collapsedSections.includes( handle ) ) {
-					setCollapsedSections( [ ...collapsedSections.filter( name => name !== handle ) ] )
-				}
-			} }
-		/>
-	) )
+		if ( isHidden ) return null
+
+		return (
+			<Component
+				key={ handle }
+				isCollapsed={ collapsedSections.includes( handle ) }
+				onToggle={ value => {
+
+					if ( false === value && ! collapsedSections.includes( handle ) ) {
+						setCollapsedSections( [ ...collapsedSections, handle ] )
+					}
+					if ( true === value && collapsedSections.includes( handle ) ) {
+						setCollapsedSections( [ ...collapsedSections.filter( name => name !== handle ) ] )
+					}
+				} }
+			/>
+		)
+	} )
 }
 
 export default HomeSections
