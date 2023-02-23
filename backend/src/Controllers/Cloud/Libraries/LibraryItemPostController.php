@@ -243,6 +243,7 @@ class LibraryItemPostController extends ControllerAbstract {
 					'post_name'      => $post->post_name,
 					'post_title'     => $post->post_title,
 					'post_type'      => $post->post_type,
+					'has_post_thumbnail' => has_post_thumbnail( $post ),
 				],
 				'meta'  => get_post_meta( $post->ID ),
 				'terms' => $this->get_post_terms( $post ),
