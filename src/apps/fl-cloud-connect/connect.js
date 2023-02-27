@@ -8,9 +8,10 @@ export default () => {
 	const { setIsValidating } = getAppActions( 'fl-cloud-connect' )
 	const { setCloudUser } = getSystemActions()
 	const { currentUser, homeUrl } = getSystemConfig()
-	const { href } = window.location
-	const { token } = getQueryArgs( href )
 	const lastToken = localStorage.getItem( LAST_TOKEN_KEY + md5( homeUrl ) )
+	const { href } = window.location
+	const { referrer } = window.document
+	const { token } = ( 'undefined' === typeof window.ElementorInlineEditor ) ? getQueryArgs( href ) : getQueryArgs( referrer )
 
 	if ( token && token !== lastToken ) {
 		setIsValidating( true )
