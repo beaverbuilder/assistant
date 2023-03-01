@@ -29,7 +29,11 @@ export const useScrollLoader = ( {
 				}
 			}
 			ref.current.addEventListener( 'scroll', handleScroll )
-			return () => ref.current.removeEventListener( 'scroll', handleScroll )
+			return () => {
+				if ( ref.current ) {
+					ref.current.removeEventListener( 'scroll', handleScroll )
+				}
+			}
 		}
 	}, [ isFetching, hasMore ] )
 
