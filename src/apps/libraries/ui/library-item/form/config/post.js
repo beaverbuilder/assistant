@@ -117,15 +117,23 @@ const UpdateButton = ( { item } ) => {
 					} )
 				}
 
-				if ( isLocalhost ) {
-					postsApi.findById( id ).then( ( { data } ) => {
-						Uploader.screenshotUrl( data.previewUrl ).then( screenshot => {
-							doRequest( screenshot )
-						} )
+				// Screenshots on the server are broken, so we're doing it with JS for now.
+				// This can be replaced with the code below when that's fixed.
+				postsApi.findById( id ).then( ( { data } ) => {
+					Uploader.screenshotUrl( data.previewUrl ).then( screenshot => {
+						doRequest( screenshot )
 					} )
-				} else {
-					doRequest()
-				}
+				} )
+
+				// if ( isLocalhost ) {
+				// 	postsApi.findById( id ).then( ( { data } ) => {
+				// 		Uploader.screenshotUrl( data.previewUrl ).then( screenshot => {
+				// 			doRequest( screenshot )
+				// 		} )
+				// 	} )
+				// } else {
+				// 	doRequest()
+				// }
 			},
 		} )
 	}
