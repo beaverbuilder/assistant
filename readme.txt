@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,10 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.3.9 ( 2023-03-07 ) =
+* Fixed library item screenshots not working correctly when updating an item.
+* Various minor fixes and enhancements.
 
 = 1.3.8 ( 2023-02-09 ) =
 * Fixed library item screenshots not working correctly.
