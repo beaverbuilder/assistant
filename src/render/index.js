@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, unmountComponentAtNode } from 'react-dom'
+import { createRoot } from 'react-dom'
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
 import { Assistant, AssistantBeaverBuilderIFrameUIRoot, AssistantBeaverBuilderPanel } from './main'
@@ -8,8 +8,9 @@ import './admin-bar-item'
 import './style.scss'
 
 let mountNode = undefined
+let root = undefined
 
-const unmountAssistant = () => undefined !== mountNode && unmountComponentAtNode( mountNode )
+const unmountAssistant = () => undefined !== mountNode && root.unmount()
 
 /**
  * Render function for vanilla Assistant outside of Beaver Builder.
@@ -19,14 +20,22 @@ const renderAssistant = () => {
 
 	if ( ! mountNode ) {
 		mountNode = document.createElement( 'div' )
-		mountNode.classList.add( 'fl-asst-mount', 'fl-asst', 'fl-asst-plugin', 'fluid', 'fl', 'uid' )
+		mountNode.classList.add(
+			'fl-asst-mount',
+			'fl-asst',
+			'fl-asst-plugin',
+			'fluid',
+			'fl',
+			'uid'
+		)
 		mountNode.id = 'fl-asst-mount'
 		document.body.appendChild( mountNode )
 	} else {
 		unmountComponentAtNode( mountNode )
 	}
 
-	render( <Assistant />, mountNode )
+	root = createRoot( mountNode )
+	root.render( <Assistant /> )
 }
 
 /**
