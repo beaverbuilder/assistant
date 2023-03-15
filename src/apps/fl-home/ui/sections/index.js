@@ -21,7 +21,6 @@ const HomeSections = () => {
 		{
 			handle: 'community',
 			render: CommunitySection,
-			isHidden: true,
 		},
 		{
 			handle: 'stats',
