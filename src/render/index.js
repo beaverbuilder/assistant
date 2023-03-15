@@ -1,5 +1,5 @@
 import React from 'react'
-import { createRoot } from 'react-dom'
+import { render, createRoot, unmountComponentAtNode } from 'react-dom'
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
 import { Assistant, AssistantBeaverBuilderIFrameUIRoot, AssistantBeaverBuilderPanel } from './main'
@@ -7,10 +7,33 @@ import renderSkipLink from './skip-link'
 import './admin-bar-item'
 import './style.scss'
 
+const isAtLeastReact18 = parseInt( React.version.split('.')[0] ) >= 18
 let mountNode = undefined
 let root = undefined
 
-const unmountAssistant = () => undefined !== mountNode && root.unmount()
+console.log('version', React.version, isAtLeastReact18 )
+
+const unmountAssistant = () => {
+	if ( undefined !== root && isAtLeastReact18 ) {
+		root.unmount()
+	} else {
+		unmountComponentAtNode( mountNode )
+	}
+}
+
+const createMountNode = () => {
+	mountNode = document.createElement( 'div' )
+	mountNode.classList.add(
+		'fl-asst-mount',
+		'fl-asst',
+		'fl-asst-plugin',
+		'fluid',
+		'fl',
+		'uid'
+	)
+	mountNode.id = 'fl-asst-mount'
+	return mountNode
+}
 
 /**
  * Render function for vanilla Assistant outside of Beaver Builder.
@@ -19,23 +42,18 @@ const renderAssistant = () => {
 	mountNode = document.getElementById( 'fl-asst-mount' )
 
 	if ( ! mountNode ) {
-		mountNode = document.createElement( 'div' )
-		mountNode.classList.add(
-			'fl-asst-mount',
-			'fl-asst',
-			'fl-asst-plugin',
-			'fluid',
-			'fl',
-			'uid'
-		)
-		mountNode.id = 'fl-asst-mount'
+		mountNode = createMountNode()
 		document.body.appendChild( mountNode )
 	} else {
-		unmountComponentAtNode( mountNode )
+		unmountAssistant()
 	}
 
-	root = createRoot( mountNode )
-	root.render( <Assistant /> )
+	if ( isAtLeastReact18 ) {
+		root = createRoot( mountNode )
+		root.render( <Assistant /> )
+	} else {
+		render( <Assistant />, mountNode )
+	}
 }
 
 /**
@@ -48,12 +66,8 @@ const renderAssistantBBPanelIFrameUI = () => {
 	registerPanel( 'assistant', {
 		wrapClassName: 'fl-asst',
 		label: __( 'Assistant' ),
-		root: AssistantBeaverBuilderIFrameUIRoot,
+		root: AssistantBeaverBuilderPanel,
 		frame: false,
-		onMount: () => {
-			mountNode = document.getElementById( 'fl-asst-mount' )
-			render( <AssistantBeaverBuilderPanel />, mountNode )
-		},
 		onUnMount: unmountAssistant
 	} )
 
