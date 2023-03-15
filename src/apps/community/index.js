@@ -5,7 +5,6 @@ import { registerApp } from 'assistant'
 import cloud from 'assistant/cloud'
 
 const user = cloud.session.getUser()
-const isAdmin = null === user ? false : user?.is_admin
 const isConnected = cloud.auth.isConnected()
 const App = lazy( () => import(
 	/* webpackChunkName: "app-community" */ './app'
@@ -14,6 +13,6 @@ const App = lazy( () => import(
 registerApp( 'community', {
 	label: __( 'Community' ),
 	root: App,
-	enabled: isAdmin && isConnected,
+	enabled: isConnected,
 	icon: Icon.Swirl
 } )
