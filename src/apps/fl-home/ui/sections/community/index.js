@@ -32,7 +32,7 @@ export default ( { ...rest } ) => {
 					backgroundPosition: 'center',
 				} }
 			>
-				<p>{ __('Discover templates and assets to make your website great with Assitant Pro Community!') }</p>
+				<p>{ __('Discover templates and assets to make your website great with Assistant Pro Community!') }</p>
 			</div>
 			<Button.Group
 				appearance="buttons"
