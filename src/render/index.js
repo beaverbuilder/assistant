@@ -64,8 +64,18 @@ const renderAssistantBBPanelIFrameUI = () => {
 	registerPanel( 'assistant', {
 		wrapClassName: 'fl-asst',
 		label: __( 'Assistant' ),
-		root: AssistantBeaverBuilderPanel,
+		root: AssistantBeaverBuilderIFrameUIRoot,
 		frame: false,
+		onMount: () => {
+			mountNode = document.getElementById( 'fl-asst-mount' )
+
+			if ( isAtLeastReact18 ) {
+				root = createRoot( mountNode )
+				root.render( <AssistantBeaverBuilderPanel /> )
+			} else {
+				render( <AssistantBeaverBuilderPanel />, mountNode )
+			}
+		},
 		onUnMount: unmountAssistant
 	} )
 
