@@ -1,4 +1,4 @@
-import { lazy } from 'react'
+import React, { lazy } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
 import { registerApp } from 'assistant'
@@ -15,5 +15,5 @@ registerApp( 'community', {
 	label: __( 'Community' ),
 	root: App,
 	enabled: isAdmin && isConnected,
-	icon: Icon.Swirl
+	icon: () => <Icon.Swirl />
 } )
