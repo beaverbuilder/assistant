@@ -11,8 +11,6 @@ const isAtLeastReact18 = parseInt( React.version.split('.')[0] ) >= 18
 let mountNode = undefined
 let root = undefined
 
-console.log('version', React.version, isAtLeastReact18 )
-
 const unmountAssistant = () => {
 	if ( undefined !== root && isAtLeastReact18 ) {
 		root.unmount()
