@@ -2,9 +2,7 @@ import React, { lazy } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Icon } from 'assistant/ui'
 import { registerApp } from 'assistant'
-import cloud from 'assistant/cloud'
 
-const isConnected = cloud.auth.isConnected()
 const App = lazy( () => import(
 	/* webpackChunkName: "app-community" */ './app'
 ) )
@@ -12,6 +10,5 @@ const App = lazy( () => import(
 registerApp( 'community', {
 	label: __( 'Community' ),
 	root: App,
-	enabled: isConnected,
 	icon: () => <Icon.Swirl />
 } )
