@@ -58,7 +58,7 @@ if ( cloud.auth.isConnected() ) {
 	const { cloudUser } = getStore( KEY ).getState()
 	const { currentUser } = FL_ASSISTANT_CONFIG
 
-	if ( cloudUser.wpId !== currentUser.id ) {
+	if ( cloudUser?.wpId !== currentUser.id ) {
 		setIsCloudConnected( false )
 	} else {
 		cloud.user.get().then( response => {
