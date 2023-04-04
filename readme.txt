@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.4.1 ( 2023-04-05 ) =
+* Added new libraries view to the community app.
+* Added uploader warning about public libraries for free account users.
+* Fixed community purchase button for users not connected to Assistant Pro.
 
 = 1.4.0 ( 2023-03-20 ) =
 * The Assistant Pro community is here! See it in action at: [https://app.assistant.pro/community](https://app.assistant.pro/community)

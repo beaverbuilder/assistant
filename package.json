@@ -1,7 +1,7 @@
 {
   "name": "fl-assistant",
   "title": "Assistant",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
   "repository": {
     "type": "git",
