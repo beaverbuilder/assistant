@@ -154,6 +154,7 @@ class OnEnqueueScripts {
 			'emptyTrashDays'      => EMPTY_TRASH_DAYS,
 			'frameDefaults'       => UserState::getFrameDefaults(),
 			'homeUrl' 			  => home_url(),
+			'baseUrl'			  => get_bloginfo( 'url' ),
 			'isShowingAdminBar'   => is_admin_bar_showing(),
 			'isAdmin'             => is_admin(),
 			'isSiteAdmin'         => is_super_admin(),
