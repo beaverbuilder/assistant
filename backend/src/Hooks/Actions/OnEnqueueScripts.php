@@ -103,7 +103,7 @@ class OnEnqueueScripts {
 		// Always show in admin bar and hidden in wp-admin.
 		if ( is_admin() ) {
 			$window['isHidden'] = true;
-			$window['hiddenAppearance'] = 'admin_bar';
+			// $window['hiddenAppearance'] = 'admin_bar';
 		}
 
 		$user_state['window'] = $window;

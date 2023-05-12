@@ -83,7 +83,6 @@ export const after = {
 	TOGGLE_IS_SHOWING_UI: ( action, store ) => {
 		const { window } = store.getState()
 		const newWindow = { ...window }
-		delete newWindow.hiddenAppearance // prevent admin from saving over hiddenAppearance
 		wpapi.users().updateState( { window: newWindow } )
 	},
 
