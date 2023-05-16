@@ -198,6 +198,10 @@ class CustomizerService {
 		do_action( 'customize_save', $wp_customize );
 
 		foreach ( $data->mods as $key => $val ) {
+
+			if( is_object( $val ) ) {
+				$val = json_decode( json_encode( $val ), true );
+			}
 			do_action( 'customize_save_' . $key, $wp_customize );
 			set_theme_mod( $key, $val );
 		}
