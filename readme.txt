@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.4.3 ( 2023-05-17 ) =
+* Minor fixes and improvements to the Assistant Pro community.
+* Fixed importing Kadence theme settings causing a fatal error.
+* Fixed user profile options not staying saved.
 
 = 1.4.2 ( 2023-04-18 ) =
 * Minor fixes and improvements to the Assistant Pro community.
