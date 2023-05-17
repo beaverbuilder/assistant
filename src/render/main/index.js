@@ -38,10 +38,10 @@ const BaseProviders = ( { displayingIn, children } ) => (
  * The Normal Standalone Root Component
  */
 export const Assistant = () => {
-	const { isShowingAdminBar } = getSystemConfig()
+	const { isShowingAdminBar, isAdmin } = getSystemConfig()
 	const { appearance, window: win } = useSystemState( [ 'window', 'appearance' ] )
 	const { isHidden, hiddenAppearance } = win
-	const showButton = isHidden && ( 'admin_bar' !== hiddenAppearance || ! isShowingAdminBar )
+	const showButton = ! isAdmin && isHidden && ( 'admin_bar' !== hiddenAppearance || ! isShowingAdminBar )
 	return (
 		<BaseProviders>
 			<Color.SchemeProvider value={ appearance.brightness }>
