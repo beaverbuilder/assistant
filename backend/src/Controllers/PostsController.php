@@ -430,7 +430,9 @@ class PostsController extends ControllerAbstract {
 	 * Deletes a single post based on the specified ID.
 	 */
 	public function delete_post( $request ) {
-		$id = $request->get_param( 'id' );
+		$params = $request->get_params();
+		$id = $params['id'];
+		$force = isset( $params['force'] ) && $params['force'];
 
 		if ( ! current_user_can( 'edit_post', $id ) ) {
 			return rest_ensure_response(
@@ -440,7 +442,7 @@ class PostsController extends ControllerAbstract {
 			);
 		}
 
-		wp_delete_post( $id );
+		wp_delete_post( $id, $force );
 
 		return rest_ensure_response(
 			[
