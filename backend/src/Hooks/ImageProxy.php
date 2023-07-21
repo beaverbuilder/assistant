@@ -22,7 +22,8 @@ class ImageProxy {
 			return;
 		}
 
-		$url = urldecode( $_GET['url'] );
+		$url = esc_url_raw( $_GET['url'] );
+		$url = urldecode( $url );
 
 		if ( 0 !== strpos( $url, 'http' ) ) {
 			return;
