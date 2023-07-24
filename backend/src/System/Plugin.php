@@ -52,6 +52,17 @@ class Plugin {
 
 		// notify assistant was loaded
 		do_action( 'fl_assistant_loaded' );
+
+		// compatibility with SG Optimizer plugin
+		add_filter( 'sgo_js_minify_exclude', [ $this, 'js_minify_exclude' ] );
+	}
+
+	/**
+	 * exclude js if minify javaScript files setting is enabled
+	 */
+	public function js_minify_exclude( $js_list ) {
+		$js_list[] = 'fl-assistant';
+		return $js_list;
 	}
 
 	/**
