@@ -4,7 +4,7 @@ Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media,
 Requires at least: 5.2
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.4.4 ( 2023-07-26 ) =
+* Added the ability to save all posts of a type to a library.
+* Fixed Assistant not working with the SG Optimizer plugin.
+* Fixed connecting to the cloud from within Elementor.
 
 = 1.4.3 ( 2023-05-17 ) =
 * Minor fixes and improvements to the Assistant Pro community.
