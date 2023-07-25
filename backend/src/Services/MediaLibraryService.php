@@ -100,7 +100,7 @@ class MediaLibraryService {
 			return [ 'error' => __( 'Error creating temp file.' ) ];
 		}
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$url,
 			[
 				'timeout'   => 300,
