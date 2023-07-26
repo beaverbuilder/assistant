@@ -74,8 +74,11 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 = 1.4.4 ( 2023-07-26 ) =
 * Added the ability to save all posts of a type to a library.
+* Added the ability to save posts to a library by uploading an XML export file.
+* Fixed selecting library items when the page has been scrolled.
 * Fixed Assistant not working with the SG Optimizer plugin.
 * Fixed connecting to the cloud from within Elementor.
+* Fixed potential SSRF vulnerability with taking library item screenshots.
 
 = 1.4.3 ( 2023-05-17 ) =
 * Minor fixes and improvements to the Assistant Pro community.
