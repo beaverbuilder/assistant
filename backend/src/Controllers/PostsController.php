@@ -266,7 +266,15 @@ class PostsController extends ControllerAbstract {
 	 * Creates a single post.
 	 */
 	public function create_post( $request ) {
-		$id = wp_insert_post( $request->get_params() );
+
+		$params = $request->get_params();
+		if ( isset( $params['meta_input'] ) && is_array( $params['meta_input'] ) ) {
+			foreach ( $params['meta_input'] as $meta_key => $meta_value ) {
+				$params['meta_input'][ $meta_key ] = maybe_unserialize( $meta_value );
+			}
+		}
+
+		$id = wp_insert_post( $params );
 
 		if ( ! $id || is_wp_error( $id ) ) {
 			return [
@@ -422,7 +430,9 @@ class PostsController extends ControllerAbstract {
 	 * Deletes a single post based on the specified ID.
 	 */
 	public function delete_post( $request ) {
-		$id = $request->get_param( 'id' );
+		$params = $request->get_params();
+		$id = $params['id'];
+		$force = isset( $params['force'] ) && $params['force'];
 
 		if ( ! current_user_can( 'edit_post', $id ) ) {
 			return rest_ensure_response(
@@ -432,7 +442,7 @@ class PostsController extends ControllerAbstract {
 			);
 		}
 
-		wp_delete_post( $id );
+		wp_delete_post( $id, $force );
 
 		return rest_ensure_response(
 			[
