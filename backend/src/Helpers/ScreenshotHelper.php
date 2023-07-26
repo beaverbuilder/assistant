@@ -44,7 +44,7 @@ class ScreenshotHelper {
 	 * @return array
 	 */
 	static public function get_for_url( $url, $logged_in = true ) {
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$url, [
 				'cookies' => $logged_in ? $_COOKIE : [],
 			]

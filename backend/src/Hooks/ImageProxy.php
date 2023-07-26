@@ -22,13 +22,14 @@ class ImageProxy {
 			return;
 		}
 
-		$url = urldecode( $_GET['url'] );
+		$url = esc_url_raw( $_GET['url'] );
+		$url = urldecode( $url );
 
 		if ( 0 !== strpos( $url, 'http' ) ) {
 			return;
 		}
 
-		$response = wp_remote_get( $url );
+		$response = wp_safe_remote_get( $url );
 
 		if ( is_wp_error( $response ) ) {
 			return;
