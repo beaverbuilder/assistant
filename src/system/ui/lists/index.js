@@ -10,6 +10,7 @@ import { Users } from './users'
 import { Updates } from './updates'
 import Attachments from './attachments'
 import Sortable from './sortable'
+// import Code from './code'
 import './style.scss'
 
 import { isRenderProp } from 'utils/react'
@@ -124,6 +125,7 @@ List.useScrollLoader = useScrollLoader
 List.useListItems = useListItems
 List.InlineCreate = InlineCreate
 List.Sortable = Sortable
+// List.Code = Code
 
 export { List }
 

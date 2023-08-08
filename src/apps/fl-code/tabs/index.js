@@ -5,13 +5,12 @@ import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 
 import { defaultState } from '../'
 
 export const SummaryTab = () => {
-	const handle = 'fl-content'
+	const handle = 'fl-code'
 	const { getCount } = getSystemSelectors()
 	const { contentTypes } = getSystemConfig()
 	return (
 		<>
 			<Page.Section>
-
 				<div style={ {
 					display: 'grid',
 					gridTemplateColumns: 'repeat(3, 1fr)',
@@ -34,7 +33,6 @@ export const SummaryTab = () => {
 						)
 					} )}
 				</div>
-
 			</Page.Section>
 
 			<Page.Section label={ __( 'Latest Posts' ) } padX={ false }>
@@ -51,7 +49,7 @@ export const SummaryTab = () => {
 								description: null,
 								thumbnailSize: 'sm',
 								to: {
-									pathname: `/${handle}/post/${item.id}`,
+									pathname: `/${handle}/fl_css/${item.id}`,
 									state: { item }
 								},
 							}
@@ -65,7 +63,7 @@ export const SummaryTab = () => {
 }
 
 export const PostTypeTab = ( { type = 'post' } ) => {
-	const handle = 'fl-content'
+	const handle = 'fl-code'
 	const { query, listStyle } = useAppState( handle )
 	const { setQuery, setListStyle } = getAppActions( handle )
 
@@ -75,6 +73,23 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 		maxHeight: '100%',
 		minHeight: 0,
 		flex: '1 1 auto',
+	}
+
+	const BeforeContent = () => {
+
+		return (
+			<>
+				<List.InlineCreate
+					postType={ type }
+					onPostCreated={ () => setQuery( {
+						...defaultState.query,
+						order: 'DESC',
+						orderby: 'ID',
+						key: new Date().getTime()
+					} ) }
+				/>
+			</>
+		)
 	}
 
 	return (
@@ -87,13 +102,14 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 						return {
 							...defaultProps,
 							to: {
-								pathname: `/${handle}/post/${item.id}`,
+								pathname: `/${handle}/fl_css/${item.id}`,
 								state: { item }
 							},
 						}
 					}
 					return defaultProps
 				} }
+				before={ <BeforeContent /> }
 			/>
 		</Layout.Box>
 	)

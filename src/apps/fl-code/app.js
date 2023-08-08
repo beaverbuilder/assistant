@@ -10,13 +10,13 @@ import AppIcon from './icon'
 export default ( { baseURL } ) => (
 	<Switch>
 		<Route exact path={ baseURL }>
-			<Redirect to={ { pathname: `${baseURL}/tab/fl-css` } } />
+			<Redirect to={ { pathname: `${baseURL}/tab/fl_css` } } />
 		</Route>
 		<Route path={ `${baseURL}/tab/:tab` } component={ Main } />
-		<Route path={ `${baseURL}/fl-css/new` } component={ Page.CreatePost } />
-		<Route path={ `${baseURL}/fl-css/:id` } component={ ( { location, match, history } ) => {
+		<Route path={ `${baseURL}/fl_css/new` } component={ Page.CreatePost } />
+		<Route path={ `${baseURL}/fl_css/:id` } component={ ( { location, match, history } ) => {
 			return (
-				<Page.Post
+				<Page.Code
 					location={ location }
 					match={ match }
 					history={ history }
@@ -38,16 +38,16 @@ const Main = () => {
 
 	const tabs = [
 		{
-			handle: 'fl-css',
-			path: '/fl-code/tab/fl-css',
+			handle: 'fl_css',
+			path: '/fl-code/tab/fl_css',
 			label: 'CSS',
-			component: () => <PostTypeTab type={ 'fl-css' } />,
+			component: () => <PostTypeTab type={ 'fl_css' } />,
 		},
 		{
-			handle: 'fl-js',
-			path: '/fl-code/tab/fl-js',
+			handle: 'fl_js',
+			path: '/fl-code/tab/fl_js',
 			label: 'JavaScript',
-			component: () => <PostTypeTab type={ 'fl-js' } />,
+			component: () => <PostTypeTab type={ 'fl_js' } />,
 		}
 	]
 
