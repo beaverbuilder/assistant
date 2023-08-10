@@ -36,7 +36,7 @@ export const SummaryTab = () => {
 			</Page.Section>
 
 			<Page.Section label={ __( 'Latest Posts' ) } padX={ false }>
-				<List.Posts
+				<List.Code
 					query={ {
 						post_type: 'post',
 						posts_per_page: 5
@@ -94,7 +94,7 @@ export const PostTypeTab = ( { type = 'post' } ) => {
 
 	return (
 		<Layout.Box outset={ true } padY={ false } style={ style }>
-			<List.Posts
+			<List.Code
 				query={ { ...query, post_type: type } }
 				listStyle={ listStyle }
 				getItemProps={ ( item, defaultProps ) => {

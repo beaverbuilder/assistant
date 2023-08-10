@@ -30,17 +30,18 @@ export default ( { baseURL } ) => (
 
 const Main = () => {
 	const { contentTypes } = getSystemConfig()
-
 	const getTabs = () => {
 		let tabs = []
 		Object.keys( contentTypes ).map( key => {
-			const type = contentTypes[key]
-			tabs.push( {
-				handle: key,
-				path: '/fl-content/tab/' + key,
-				label: type.labels.plural,
-				component: () => <PostTypeTab type={ key } />,
-			} )
+			if( 'fl_css' !== key && 'fl_js' !== key ) {
+				const type = contentTypes[key]
+				tabs.push( {
+					handle: key,
+					path: '/fl-content/tab/' + key,
+					label: type.labels.plural,
+					component: () => <PostTypeTab type={ key } />,
+				} )
+			}
 		} )
 
 		return tabs

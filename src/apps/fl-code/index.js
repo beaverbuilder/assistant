@@ -9,8 +9,6 @@ const App = lazy( () => import(
 	/* webpackChunkName: "app-content" */ './app'
 ) )
 
-const { contentTypes, taxonomies } = getSystemConfig()
-
 export const defaultState = {
 	listStyle: '',
 	query: {

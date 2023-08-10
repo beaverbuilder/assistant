@@ -8,9 +8,9 @@ import { Comments } from './comments'
 import { Posts } from './posts'
 import { Users } from './users'
 import { Updates } from './updates'
+import { Code } from './code'
 import Attachments from './attachments'
 import Sortable from './sortable'
-// import Code from './code'
 import './style.scss'
 
 import { isRenderProp } from 'utils/react'
@@ -125,7 +125,7 @@ List.useScrollLoader = useScrollLoader
 List.useListItems = useListItems
 List.InlineCreate = InlineCreate
 List.Sortable = Sortable
-// List.Code = Code
+List.Code = Code
 
 export { List }
 

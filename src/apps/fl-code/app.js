@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import * as CloudUI from '@beaverbuilder/cloud-ui'
 import { Redirect, Switch, Route } from 'react-router-dom'
 import { getSystemConfig } from 'assistant/data'
-import { Page, Layout } from 'assistant/ui'
+import { Page, Layout, List } from 'assistant/ui'
 import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
 
@@ -27,8 +27,7 @@ export default ( { baseURL } ) => (
 	</Switch>
 )
 
-const Main = () => {
-	const { contentTypes } = getSystemConfig()
+const Main = ( { baseURL } ) => {
 
 	const Header = () => {
 		return (
