@@ -2,4 +2,31 @@
     .fluid-detail-page#fl-asst-code-detail {
         grid-template-rows: 60px minmax(20px, auto) auto 1fr;
     }
+
+
+    #fl-asst-code-detail {
+
+        .edit-title-button {
+
+            &:hover {
+                background: transparent !important;
+            }
+
+            &:focus, &:active {
+                outline: none;
+                box-shadow: none;
+            }
+        }
+
+        .location-section {
+            .fluid-section-content {
+                background: transparent !important;
+                flex: 1 1 auto;
+                display: grid;
+                grid-gap: var(--fluid-sm-space);
+                grid-template-columns: 1fr 1fr;
+                margin: -3px;
+            }
+        }
+    }
 }
