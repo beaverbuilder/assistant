@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
-import { List, Button, Icon, Layout } from 'ui'
+import { List, Button, Icon } from 'ui'
 import { getWpRest } from 'utils/wordpress'
-import { getSrcSet } from 'utils/image'
 import { getSystemConfig, getSystemSelectors } from 'data'
-import { applyFilters } from '@wordpress/hooks'
 import CodeFile from './icon'
 
 export const Code = ( {
@@ -16,7 +14,7 @@ export const Code = ( {
 } ) => {
 	const { getLabels } = getSystemSelectors()
 	const [ labelsById, setLabelsById ] = useState( [] )
-	const { currentUser, emptyTrashDays } = getSystemConfig()
+	const { emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
 	const labels = getLabels()
 
@@ -201,16 +199,7 @@ export const Code = ( {
 					}, defaultProps.className ),
 					marks: getMarks( item )
 				} )
-
-				const filterArgs = {
-					item,
-					defaultProps,
-					isPending,
-					restorePost,
-					trashPost,
-					clonePost,
-				}
-				return applyFilters( 'fl-asst.list-item-props', props, filterArgs )
+				return props
 			} }
 			{ ...rest }
 		/>

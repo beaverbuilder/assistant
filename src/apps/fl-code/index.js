@@ -1,8 +1,6 @@
 import { lazy } from 'react'
 import { registerApp } from 'assistant'
 import { __ } from '@wordpress/i18n'
-import { getSystemConfig } from 'assistant/data'
-import { Page } from 'assistant/ui'
 import Icon from './icon'
 
 const App = lazy( () => import(
