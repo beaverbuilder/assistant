@@ -8,6 +8,7 @@ import './style.scss'
 
 const InlineCreate = ( {
 	postType = 'post',
+	codeType = null,
 	onPostCreated = () => {},
 	onError = () => {},
 } ) => {
@@ -36,6 +37,12 @@ const InlineCreate = ( {
 			post_type: postType,
 		}
 
+		if( 'fl_code' === postType ) {
+			post.meta_input = {
+				code_type: codeType
+			}
+		}
+
 		const handleError = error => {
 			onError( error )
 			console.error( error ) // eslint-disable-line no-console
@@ -53,10 +60,12 @@ const InlineCreate = ( {
 		} )
 	}
 
+	const typeLabel = 'fl_code' === postType ? codeType : contentTypes[postType].labels.singular
+
 	return (
 		<>
 			<CreateItem
-				typeLabel={ contentTypes[postType].labels.singular }
+				typeLabel={ typeLabel }
 				onCreate={ onCreate }
 			/>
 			{ items.map( ( item, i ) => {

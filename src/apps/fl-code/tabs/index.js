@@ -4,7 +4,7 @@ import { List, Page, Layout } from 'assistant/ui'
 import { useAppState, getAppActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { defaultState } from '../'
 
-export const PostTypeTab = ( { type = 'fl_css' } ) => {
+export const PostTypeTab = ( { type = 'css' } ) => {
 	const handle = 'fl-code'
 	const { query, listStyle } = useAppState( handle )
 	const { setQuery, setListStyle } = getAppActions( handle )
@@ -20,7 +20,8 @@ export const PostTypeTab = ( { type = 'fl_css' } ) => {
 		return (
 			<>
 				<List.InlineCreate
-					postType={ type }
+					postType={ 'fl_code' }
+					codeType={ type }
 					onPostCreated={ () => setQuery( {
 						...defaultState.query,
 						order: 'DESC',
@@ -35,14 +36,19 @@ export const PostTypeTab = ( { type = 'fl_css' } ) => {
 	return (
 		<Layout.Box outset={ true } padY={ false } style={ style }>
 			<List.Code
-				query={ { ...query, post_type: type } }
+				query={ {
+					...query,
+					post_type: 'fl_code',
+					meta_key: 'code_type',
+					meta_value: type
+				} }
 				listStyle={ listStyle }
 				getItemProps={ ( item, defaultProps ) => {
 					if ( item.id ) {
 						return {
 							...defaultProps,
 							to: {
-								pathname: `/${handle}/fl_css/${item.id}`,
+								pathname: `/${handle}/fl_code/${item.id}`,
 								state: { item }
 							},
 						}

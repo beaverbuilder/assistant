@@ -13,7 +13,7 @@ export const defaultState = {
 		order: 'DESC',
 		orderby: 'ID',
 		post_status: 'any',
-		post_type: 'fl_css',
+		post_type: 'fl_code',
 		label: '0',
 	}
 }

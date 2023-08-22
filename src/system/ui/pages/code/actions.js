@@ -31,69 +31,62 @@ export const getCodeActions = ( { history, values, setValue, createNotice, Cloud
 	} = values
 
 	const cloneCode = () => {
-		// Replace clone request with code
-
-		// wpRest
-		// 	.posts()
-		// 	.clone( id )
-		// 	.then( () => {
-		// 		createNotice( {
-		// 			id: 'clone-success',
-		// 			status: 'success',
-		// 			content: __( 'Post Duplicated!' )
-		// 		} )
-		// 	} )
+		wpRest.posts()
+			.clone( id )
+			.then( () => {
+				createNotice( {
+					id: 'clone-success',
+					status: 'success',
+					content: __( 'Code Duplicated!' )
+				} )
+			} )
 	}
 
 	const trashPost = () => {
+
 		if ( ! Number( emptyTrashDays ) ) {
 			if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-
-				// Replace rest trash request with code
-
-				// wpRest
-				// 	.posts()
-				// 	.update( id, 'trash' )
-				// 	.then( () => {
-				// 		createNotice( {
-				// 			id: 'post-delete-success',
-				// 			status: 'success',
-				// 			content: __( 'Post permanently deleted!' )
-				// 		} )
-				// 	} )
+				wpRest
+					.posts()
+					.update( id, 'trash' )
+					.then( () => {
+						createNotice( {
+							id: 'code-delete-success',
+							status: 'success',
+							content: __( 'Code permanently deleted!' )
+						} )
+					} )
 				history.goBack()
 			}
 		} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
 
-			// Replace rest update request with code
-
-			// wpRest.posts().update( id, 'trash' )
-			// setValue( 'trashedStatus', status, true )
-			// setValue( 'status', 'trash', true )
+			wpRest
+				.posts().update( id, 'trash' )
+				setValue( 'trashedStatus', status, true )
+				setValue( 'status', 'trash', true )
 		}
 	}
 
 	const untrashPost = () => {
 
-		// Replace rest update request with code
-
-		// wpRest.posts().update( id, 'untrash' )
-		// setValue( 'status', trashedStatus, true )
-		// setValue( 'trashedStatus', '', true )
+		wpRest
+			.posts().update( id, 'untrash' )
+			setValue( 'status', trashedStatus, true )
+			setValue( 'trashedStatus', '', true )
 	}
 
 	const exportPost = () => {
 
-		// wpRest
-		// 	.posts()
-		// 	.export( id )
-		// 	.then( response => {
-		// 		const link = document.createElement( 'a' )
-		// 		link.href = response.data
-		// 		link.download = createSlug( title ) + '_' + id + '.xml'
-		// 		document.body.appendChild( link )
-		// 		link.click()
-		// 	} )
+		wpRest
+			.posts()
+			.export( id )
+			.then( response => {
+				const link = document.createElement( 'a' )
+				link.href = response.data
+				link.download = createSlug( title ) + '_' + id + '.xml'
+				document.body.appendChild( link )
+				link.click()
+			} )
 	}
 
 	return [
@@ -115,8 +108,8 @@ export const getCodeActions = ( { history, values, setValue, createNotice, Cloud
 			onClick: exportPost,
 		},
 		{
-			label: 'Trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
-			onClick: 'Trash' === status ? untrashPost : trashPost,
+			label: 'trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
+			onClick: 'trash' === status ? untrashPost : trashPost,
 		},
 	]
 }

@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { useHistory } from 'react-router-dom'
 import { Page, Form, Layout, Notice, Button } from 'ui'
@@ -10,39 +10,52 @@ import { getSiteLocations } from './locations'
 import { Icon } from 'ui'
 import './style.scss'
 
-export const Code = ( { CloudUI } ) => {
-	const history = useHistory()
-	const { item } = history.location.state
+export const Code = ( { location, match, history, CloudUI } ) => {
+	const { item } = location.state
 	const wpRest = getWpRest()
 	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes } = getSystemConfig()
 	const { createNotice } = Notice.useNotices()
-	const { id, type, subtype } = item
+	const { id, type, subtype, title, description } = item
 	const label = contentTypes[ item.type ].labels.singular
 
 	const { saveToLibrary, LibraryDialog } = useLibrarySaveAction( {
-		type: 'fl_css',
+		type: 'code',
 		item,
 		history,
 		createNotice,
 		CloudUI
 	} )
 
-	const EditableHeading = ( { initialText } ) => {
+	const EditableHeading = () => {
 
-		const [isEditing, setIsEditing] = useState(false)
-		const [editedText, setEditedText] = useState(initialText)
+		const [ isEditing, setIsEditing ] = useState( false )
+		const [ editedText, setEditedText ] = useState( title )
 
 		const handleEdit = () => {
-			setIsEditing(true)
+			setIsEditing( true )
 		}
 
 		const handleSave = () => {
-			setIsEditing(false)
+
+			if( '' === editedText ) {
+				return
+			}
+
+			const data = {
+				post_title: editedText,
+			}
+
+			item.title = editedText
+			setIsEditing( false )
+			wpRest.posts().update( id, 'data', data ).then( () => {
+
+				setCurrentHistoryState( { item } )
+			} )
 		}
 
-		const handleTextChange = (event) => {
-			setEditedText(event.target.value)
+		const handleTextChange = ( event ) => {
+			setEditedText( event.target.value )
 		}
 
 		return (
@@ -51,6 +64,7 @@ export const Code = ( { CloudUI } ) => {
 					<div style={ { display: 'grid', gap: '10px' } }>
 						<input
 							type="text"
+							id="title"
 							value={ editedText }
 							onChange={ handleTextChange }
 						/>
@@ -59,39 +73,54 @@ export const Code = ( { CloudUI } ) => {
 				) : (
 					<div style={ { display: 'flex', alignItems: 'center' } } >
 						<div className="fluid-detail-page-title-text">{ editedText }</div>
-						<button className="fluid-button fluid-appearance-transparent edit-title-button" onClick={ handleEdit }>
+						<a className="fluid-button fluid-appearance-transparent edit-title-button" onClick={ handleEdit }>
 							<Icon.Edit style={ { width: '16px', height: '16px' } } />
-						</button>
+						</a>
 					</div>
 				) }
 			</div>
 		)
 	}
 
-	const EditableDesc = ( { initialText } ) => {
+	const EditableDesc = () => {
 
-		const [isEditing, setIsEditing] = useState(false)
-		const [editedDesc, setEditedDesc] = useState(initialText)
+		const [ isEditing, setIsEditing ] = useState( false )
+		const [ editedText, setEditedText ] = useState( description )
 
 		const handleEdit = () => {
-			setIsEditing(true)
+			setIsEditing( true )
 		}
 
 		const handleSave = () => {
-			setIsEditing(false)
+
+			if( '' === editedText ) {
+				return
+			}
+
+			const data = {
+				post_content: editedText,
+			}
+
+			item.description = editedText
+			setIsEditing( false )
+			wpRest.posts().update( id, 'data', data ).then( response => {
+				const { data } = response
+				setCurrentHistoryState( { item } )
+			} )
 		}
 
 		const handleDescChange = (event) => {
-			setEditedDesc(event.target.value)
+			setEditedText( event.target.value )
 		}
 
 		return (
 			<div>
-				{ ! isEditing && editedDesc && <div style={ { paddingTop: '10px' } }>{ editedDesc }</div> }
+				{ ! isEditing && <div style={ { paddingTop: '10px' } }>{ editedText }</div> }
 				{ isEditing ? (
 					<div style={ { display: 'grid', gap: '10px', paddingTop: '10px' } }>
 						<textarea
-							value={ editedDesc }
+							id='description'
+							value={ editedText }
 							onChange={ handleDescChange }
 							style={ {
 								maxWidth: '100%',
@@ -104,7 +133,7 @@ export const Code = ( { CloudUI } ) => {
 				) : (
 					<div style={ { paddingTop: '10px' } }>
 						<a style={ { textDecoration: 'underline' } } onClick={ handleEdit }>
-							{ editedDesc ? __( 'Edit Description' ) : __( 'Add Description' ) }
+							{ editedText ? __( 'Edit Description' ) : __( 'Add Description' ) }
 						</a>
 					</div>
 				) }
@@ -112,21 +141,15 @@ export const Code = ( { CloudUI } ) => {
 		)
 	}
 
-	const onSubmit = ( { changed, ids } ) => {
+	const onSubmit = ( { changed, ids, setValue } ) => {
 
 		const data = {
 			meta: {},
 		}
-		for ( let key in changed ) {
-			if ( ! ids[key] ) {
-				continue
-			}
-			data[ids[key]] = changed[key]
-		}
 
 		if ( 'code' in changed ) {
-			item.code = changed.code
 			data.meta.code = changed.code
+			item.code = changed.code
 		}
 
 		const handleError = error => {
@@ -141,7 +164,7 @@ export const Code = ( { CloudUI } ) => {
 		}
 
 		return wpRest
-			.code()
+			.posts()
 			.update( id, 'data', data )
 			.then( response => {
 				const { data } = response
@@ -161,28 +184,18 @@ export const Code = ( { CloudUI } ) => {
 			} )
 	}
 
-	const deleteAttchment = () => {
-		if ( confirm( __( 'Do you really want to delete this media?' ) ) ) {
-			wpRest
-				.code()
-				.update( id, 'trash' )
-				.then( () => {
-					createNotice( {
-						id: 'delete-success',
-						status: 'success',
-						content: __( 'Media Permanently Deleted!' )
-					} )
-				} )
-			history.goBack()
-		}
-	}
-
 	const sections = {
 		meta: {
 			fields: {
+				title: {
+					component: EditableHeading,
+				},
+				description: {
+					component: EditableDesc,
+				},
 				code: {
 					component: 'textarea',
-					id: 'fl_code',
+					id: 'code',
 					rows: 20,
 				},
 			},
@@ -205,7 +218,7 @@ export const Code = ( { CloudUI } ) => {
 	const defaults = {
 		...item,
 		type: type + '/' + subtype,
-	}
+		}
 
 	const {
 		hasChanges,
@@ -238,8 +251,6 @@ export const Code = ( { CloudUI } ) => {
 			toolbarTitle={ sprintf( __( 'Edit %s' ), label ) }
 			toolbarActions={ <ToolbarActions /> }
 		>
-			<EditableHeading initialText={ values.title } />
-			<EditableDesc initialText={ values.description } />
 			{ renderForm() }
 			<LibraryDialog />
 		</Page.Detail>

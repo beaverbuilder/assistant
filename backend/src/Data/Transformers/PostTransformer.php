@@ -116,6 +116,13 @@ class PostTransformer {
 			'hasLock'          => wp_check_post_lock( $post->ID ),
 		];
 
+		// Code App
+		if ( 'fl_code' === $post->post_type ) {
+			$code = get_post_meta( $post->ID, 'code', true );
+			$response['code'] = $code;
+			$response['description'] = $post->post_content;
+		}
+
 		// Post visibility.
 		if ( 'private' === $post->post_status ) {
 			$response['visibility'] = 'private';

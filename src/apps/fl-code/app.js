@@ -9,11 +9,11 @@ import AppIcon from './icon'
 export default ( { baseURL } ) => (
 	<Switch>
 		<Route exact path={ baseURL }>
-			<Redirect to={ { pathname: `${baseURL}/tab/fl_css` } } />
+			<Redirect to={ { pathname: `${baseURL}/tab/fl_code` } } />
 		</Route>
 		<Route path={ `${baseURL}/tab/:tab` } component={ Main } />
-		<Route path={ `${baseURL}/fl_css/new` } component={ Page.CreatePost } />
-		<Route path={ `${baseURL}/fl_css/:id` } component={ ( { location, match, history } ) => {
+		<Route path={ `${baseURL}/fl_code/new` } component={ Page.CreatePost } />
+		<Route path={ `${baseURL}/fl_code/:id` } component={ ( { location, match, history } ) => {
 			return (
 				<Page.Code
 					location={ location }
@@ -36,16 +36,16 @@ const Main = ( { baseURL } ) => {
 
 	const tabs = [
 		{
-			handle: 'fl_css',
-			path: '/fl-code/tab/fl_css',
+			handle: 'fl_code',
+			path: '/fl-code/tab/fl_code',
 			label: 'CSS',
-			component: () => <PostTypeTab type={ 'fl_css' } />,
+			component: () => <PostTypeTab type={ 'CSS' } />,
 		},
 		{
 			handle: 'fl_js',
 			path: '/fl-code/tab/fl_js',
 			label: 'JavaScript',
-			component: () => <PostTypeTab type={ 'fl_js' } />,
+			component: () => <PostTypeTab type={ 'JavaScript' } />,
 		}
 	]
 

@@ -5,8 +5,7 @@ namespace FL\Assistant\Providers;
 
 
 use FL\Assistant\PostTypes\NotationsPostType;
-use FL\Assistant\PostTypes\CssPostType;
-use FL\Assistant\PostTypes\JsPostType;
+use FL\Assistant\PostTypes\CodePostType;
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
 use System\Contracts\PostTypeAbstract;
 
@@ -14,8 +13,7 @@ class PostTypeServiceProvider extends ServiceProviderAbstract {
 
 	protected $post_types = [
 		NotationsPostType::class,
-		CssPostType::class,
-		JsPostType::class,
+		CodePostType::class
 	];
 
 	/**

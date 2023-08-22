@@ -33,7 +33,7 @@ const Main = () => {
 	const getTabs = () => {
 		let tabs = []
 		Object.keys( contentTypes ).map( key => {
-			if( 'fl_css' !== key && 'fl_js' !== key ) {
+			if( 'fl_code' !== key ) {
 				const type = contentTypes[key]
 				tabs.push( {
 					handle: key,

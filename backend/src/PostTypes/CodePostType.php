@@ -6,10 +6,10 @@ use FL\Assistant\System\Contracts\PostTypeAbstract;
 use FL\Assistant\Data\Repository\LabelsRepository;
 
 /**
- * Class CssPostType
+ * Class CodePostType
  * @package FL\Assistant\PostTypes
  */
-class CssPostType extends PostTypeAbstract {
+class CodePostType extends PostTypeAbstract {
 
 	protected $labels;
 
@@ -22,8 +22,8 @@ class CssPostType extends PostTypeAbstract {
 	 */
 	public function register() {
 		register_post_type(
-			'fl_css', [
-				'label'  => __( 'CSS', 'fl-assistant' ),
+			'fl_code', [
+				'label'  => __( 'Code', 'fl-assistant' ),
 				'public' => true,
 				'show_in_menu' => false
 			]
