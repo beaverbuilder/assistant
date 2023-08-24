@@ -77,7 +77,6 @@ export const Post = ( { location, match, history, CloudUI } ) => {
 			sections: {
 				title: {
 					fields: ( { values } ) => {
-						console.log("VLAAAAA",values)
 						return (
 							<>
 								<Layout.Headline>{ values.title }</Layout.Headline>

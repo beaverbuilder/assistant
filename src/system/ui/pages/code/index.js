@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
-import { useHistory } from 'react-router-dom'
 import { Page, Form, Layout, Notice, Button } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions, getSystemConfig } from 'data'
@@ -93,10 +92,6 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 
 		const handleSave = () => {
 
-			if( '' === editedText ) {
-				return
-			}
-
 			const data = {
 				post_content: editedText,
 			}
@@ -115,7 +110,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 
 		return (
 			<div>
-				{ ! isEditing && <div style={ { paddingTop: '10px' } }>{ editedText }</div> }
+				{ ! isEditing && <div>{ editedText }</div> }
 				{ isEditing ? (
 					<div style={ { display: 'grid', gap: '10px', paddingTop: '10px' } }>
 						<textarea
@@ -131,7 +126,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 						<button className="fluid-button fluid-appearance-normal" onClick={ handleSave }>{ __( 'Save' ) }</button>
 					</div>
 				) : (
-					<div style={ { paddingTop: '10px' } }>
+					<div>
 						<a style={ { textDecoration: 'underline' } } onClick={ handleEdit }>
 							{ editedText ? __( 'Edit Description' ) : __( 'Add Description' ) }
 						</a>
@@ -204,21 +199,21 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 			label: __( 'Location' ),
 			fields : args => getSiteLocations( { ...args } ),
 		},
-		actions: {
-			label: __( 'Actions' ),
-			fields: {
-				actions: {
-					component: 'actions',
-					options: args => getCodeActions( { history, createNotice, CloudUI, ...args } ),
-				},
-			}
-		},
+		// actions: {
+		// 	label: __( 'Actions' ),
+		// 	fields: {
+		// 		actions: {
+		// 			component: 'actions',
+		// 			options: args => getCodeActions( { history, createNotice, CloudUI, ...args } ),
+		// 		},
+		// 	}
+		// },
 	}
 
 	const defaults = {
 		...item,
 		type: type + '/' + subtype,
-		}
+	}
 
 	const {
 		hasChanges,
