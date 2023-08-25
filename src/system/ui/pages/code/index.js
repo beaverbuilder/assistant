@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Page, Form, Layout, Notice, Button } from 'ui'
 import { getWpRest } from 'utils/wordpress'
-import { getSystemActions, getSystemConfig } from 'data'
+import { getSystemActions, getSystemConfig, useSystemState } from 'data'
 import { useLibrarySaveAction } from 'ui/library/use-save-action'
 import { getCodeActions } from './actions'
 import { getSiteLocations } from './locations'
@@ -15,6 +15,8 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 	const { setCurrentHistoryState } = getSystemActions()
 	const { contentTypes } = getSystemConfig()
 	const { createNotice } = Notice.useNotices()
+	const { appearance } = useSystemState( [ 'appearance' ] )
+	const mode = appearance.brightness
 	const { id, type, subtype, title, description } = item
 	const label = contentTypes[ item.type ].labels.singular
 
@@ -48,7 +50,6 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 			item.title = editedText
 			setIsEditing( false )
 			wpRest.posts().update( id, 'data', data ).then( () => {
-
 				setCurrentHistoryState( { item } )
 			} )
 		}
@@ -127,7 +128,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 					</div>
 				) : (
 					<div>
-						<a style={ { textDecoration: 'underline' } } onClick={ handleEdit }>
+						<a className="edit-description" onClick={ handleEdit }>
 							{ editedText ? __( 'Edit Description' ) : __( 'Add Description' ) }
 						</a>
 					</div>
@@ -189,9 +190,12 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 					component: EditableDesc,
 				},
 				code: {
-					component: 'textarea',
-					id: 'code',
-					rows: 20,
+					width: '400px',
+					height: '500px',
+					mode: mode,
+					extension: 'css',
+					component: 'code-editor',
+					className: 'fl-asst-code-editor'
 				},
 			},
 		},
@@ -199,15 +203,15 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 			label: __( 'Location' ),
 			fields : args => getSiteLocations( { ...args } ),
 		},
-		// actions: {
-		// 	label: __( 'Actions' ),
-		// 	fields: {
-		// 		actions: {
-		// 			component: 'actions',
-		// 			options: args => getCodeActions( { history, createNotice, CloudUI, ...args } ),
-		// 		},
-		// 	}
-		// },
+		actions: {
+			label: __( 'Actions' ),
+			fields: {
+				actions: {
+					component: 'actions',
+					options: args => getCodeActions( { history, createNotice, CloudUI, ...args } ),
+				},
+			}
+		},
 	}
 
 	const defaults = {

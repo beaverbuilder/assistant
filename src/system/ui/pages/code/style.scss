@@ -2,6 +2,23 @@
 
     #fl-asst-code-detail {
 
+        .edit-title-button {
+
+            &:hover {
+               background: transparent !important;
+            }
+
+            &:focus, &:active {
+               outline: none;
+               box-shadow: none;
+            }
+        }
+
+        .edit-description {
+            color: var(--fluid-opaque-7);
+            text-decoration: underline;
+        }
+
         .fl-asst-form-item-content {
             display: block !important;
         }
