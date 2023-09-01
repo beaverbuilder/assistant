@@ -25,6 +25,10 @@
 
         .fluid-detail-page-content-area {
             padding-top: 0;
+
+            .fl-asst-form-item:nth-child(3) {
+                overflow: hidden;
+            }
         }
     }
 }

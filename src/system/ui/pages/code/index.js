@@ -195,6 +195,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 					mode: mode,
 					extension: 'css',
 					component: 'code-editor',
+					preview: true,
 					className: 'fl-asst-code-editor'
 				},
 			},
@@ -216,7 +217,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 
 	const defaults = {
 		...item,
-		type: type + '/' + subtype,
+		type: type
 	}
 
 	const {

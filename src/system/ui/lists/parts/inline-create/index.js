@@ -121,7 +121,7 @@ const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
 					<Form.Input
 						id="fl-asst-inline-create-item"
 						appearance="transparent"
-						placeholder={ sprintf( 'Create New %s', typeLabel ) }
+						placeholder={ sprintf( 'Create New %s File', typeLabel ) }
 						onKeyPress={ keyPress }
 						onInput={ e => setVal( e.target.value ) }
 						after={
