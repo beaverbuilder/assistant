@@ -119,8 +119,10 @@ class PostTransformer {
 		// Code App
 		if ( 'fl_code' === $post->post_type ) {
 			$code = get_post_meta( $post->ID, 'code', true );
+			$code_type = get_post_meta( $post->ID, 'code_type', true );
 			$response['code'] = $code;
 			$response['description'] = $post->post_content;
+			$response['subtype'] = $code_type;
 		}
 
 		// Post visibility.

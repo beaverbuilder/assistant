@@ -10,7 +10,7 @@ export const getCodeActions = ( { history, values, setValue, createNotice, Cloud
 	const wpRest = getWpRest()
 
 	const { saveToLibrary, LibraryDialog } = useLibrarySaveAction( {
-		type: 'post',
+		type: 'code',
 		item: values,
 		history,
 		createNotice,

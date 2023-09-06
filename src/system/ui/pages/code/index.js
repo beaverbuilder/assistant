@@ -193,7 +193,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 					width: '400px',
 					height: '500px',
 					mode: mode,
-					extension: 'css',
+					extension: 'JavaScript' === subtype ? 'js' : 'css',
 					component: 'code-editor',
 					preview: true,
 					className: 'fl-asst-code-editor'
