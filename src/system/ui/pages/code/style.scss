@@ -23,8 +23,14 @@
             display: block !important;
         }
 
+        .fluid-detail-sidebar-backdrop {
+            grid-row: 2;
+        }
+
         .fluid-detail-page-content-area {
             padding-top: 0;
+            grid-column: 1 / span 2;
+            grid-row: 2;
 
             .fl-asst-form-item:nth-child(3) {
                 overflow: hidden;

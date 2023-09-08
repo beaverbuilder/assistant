@@ -67,6 +67,7 @@ const InlineCreate = ( {
 			<CreateItem
 				typeLabel={ typeLabel }
 				onCreate={ onCreate }
+				type={ postType }
 			/>
 			{ items.map( ( item, i ) => {
 				const { title } = item
@@ -85,7 +86,7 @@ const InlineCreate = ( {
 	)
 }
 
-const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
+const CreateItem = ( { onCreate = () => {}, typeLabel, type } ) => {
 	const [ val, setVal ] = useState( '' )
 
 	useEffect( () => {
@@ -121,7 +122,7 @@ const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
 					<Form.Input
 						id="fl-asst-inline-create-item"
 						appearance="transparent"
-						placeholder={ sprintf( 'Create New %s File', typeLabel ) }
+						placeholder={ 'fl_code' === type ? sprintf( 'Create New %s File', typeLabel ) : sprintf( 'Create New %s', typeLabel ) }
 						onKeyPress={ keyPress }
 						onInput={ e => setVal( e.target.value ) }
 						after={
