@@ -5,7 +5,7 @@ import { getWpRest } from 'utils/wordpress'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
 import { useLibrarySaveAction } from 'ui/library/use-save-action'
 import { getCodeActions } from './actions'
-import { getSiteLocations } from './locations'
+import { Location } from './location'
 import { Icon } from 'ui'
 import './style.scss'
 
@@ -202,7 +202,11 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 		},
 		locations: {
 			label: __( 'Location' ),
-			fields : args => getSiteLocations( { ...args } ),
+			fields: {
+				location: {
+					component: () => <Location item={ item } />,
+				},
+			},
 		},
 		actions: {
 			label: __( 'Actions' ),

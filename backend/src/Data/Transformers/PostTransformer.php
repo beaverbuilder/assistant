@@ -120,6 +120,8 @@ class PostTransformer {
 		if ( 'fl_code' === $post->post_type ) {
 			$code = get_post_meta( $post->ID, 'code', true );
 			$code_type = get_post_meta( $post->ID, 'code_type', true );
+			$locations = get_post_meta( $post->ID, 'code_locations', true );
+			$response['locations'] = $locations;
 			$response['code'] = $code;
 			$response['description'] = $post->post_content;
 			$response['subtype'] = $code_type;

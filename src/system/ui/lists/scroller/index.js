@@ -73,7 +73,7 @@ export const Scroller = ( {
 		if ( 0 === items.length ) {
 			reset()
 		}
-	}, [ items.length ] )
+	}, [ items.length, hasMoreItems ] )
 
 	const classes = classname( 'fl-asst-list-scroller fl-asst-scroller', scrollerClassName )
 
