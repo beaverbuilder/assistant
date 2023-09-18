@@ -39,8 +39,9 @@ const InlineCreate = ( {
 
 		if( 'fl_code' === postType ) {
 			post.meta_input = {
-				code_type: codeType
+				code_type: codeType,
 			}
+			post.post_status = 'publish'
 		}
 
 		const handleError = error => {

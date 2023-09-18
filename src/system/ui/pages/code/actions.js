@@ -42,37 +42,21 @@ export const getCodeActions = ( { history, values, setValue, createNotice, Cloud
 			} )
 	}
 
-	const trashPost = () => {
-
-		if ( ! Number( emptyTrashDays ) ) {
-			if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-				wpRest
-					.posts()
-					.update( id, 'trash' )
-					.then( () => {
-						createNotice( {
-							id: 'code-delete-success',
-							status: 'success',
-							content: __( 'Code permanently deleted!' )
-						} )
-					} )
-				history.goBack()
-			}
-		} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
+	const deleteCode = () => {
+		if ( confirm( __( 'Do you really want to permanently delete this item?' ) ) ) {
 
 			wpRest
-				.posts().update( id, 'trash' )
-				setValue( 'trashedStatus', status, true )
-				setValue( 'status', 'trash', true )
+				.posts()
+				.delete( id, true )
+				.then( () => {
+					createNotice( {
+						id: 'code-delete-success',
+						status: 'success',
+						content: __( 'Code permanently deleted!' )
+					} )
+				} )
+			// history.goBack()
 		}
-	}
-
-	const untrashPost = () => {
-
-		wpRest
-			.posts().update( id, 'untrash' )
-			setValue( 'status', trashedStatus, true )
-			setValue( 'trashedStatus', '', true )
 	}
 
 	const exportPost = () => {
@@ -108,8 +92,8 @@ export const getCodeActions = ( { history, values, setValue, createNotice, Cloud
 			onClick: exportPost,
 		},
 		{
-			label: 'trash' === status ? __( 'Untrash' ) : __( 'Move to Trash' ),
-			onClick: 'trash' === status ? untrashPost : trashPost,
+			label: __( 'Delete' ),
+			onClick: deleteCode,
 		},
 	]
 }

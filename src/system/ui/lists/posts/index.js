@@ -67,10 +67,22 @@ export const Posts = ( {
 
 				const trashPost = () => {
 					const { id, uuid } = item
-					if ( ! Number( emptyTrashDays ) ) {
+					if ( ! Number( emptyTrashDays ) || 'trash' === item.status ) {
 						if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
+
 							removeItem( uuid )
-							wpRest.posts().update( id, 'trash' )
+							if( 'trash' === item.status ) {
+								wpRest
+									.posts()
+									.delete( id, true )
+									.then( () => {
+										updateItem( uuid, {
+											isTrashed: true,
+										} )
+									} )
+							} else {
+								wpRest.posts().update( id, 'trash' )
+							}
 						}
 					} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
 						updateItem( uuid, {

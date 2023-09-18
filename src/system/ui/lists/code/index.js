@@ -53,44 +53,20 @@ export const Code = ( {
 					}
 				}
 
-				const trashPost = () => {
+				const deleteCode = () => {
 					const { id, uuid } = item
-					if ( ! Number( emptyTrashDays ) ) {
-						if ( confirm( __( 'Do you really want to delete this item?' ) ) ) {
-							removeItem( uuid )
-							wpRest.posts().update( id, 'trash' )
-						}
-					} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
-						updateItem( uuid, {
-							id: null,
-							title: __( 'Moving item to trash' ),
-							author: null,
-							visibility: null,
-							isTrashing: true,
-							trashedItem: Object.assign( {}, item ),
-						} )
-						wpRest.posts().update( id, 'trash' ).then( () => {
-							updateItem( uuid, {
-								title: __( 'This item has been moved to the trash' ),
-								isTrashing: false,
-								isTrashed: true,
-							} )
-						} )
-					}
-				}
 
-				const restorePost = () => {
-					updateItem( item.trashedItem.uuid, {
-						title: __( 'Restoring item' ),
-						isTrashed: false,
-						isRestoring: true,
-					} )
-					wpRest.posts().update( item.trashedItem.id, 'untrash' ).then( () => {
-						updateItem( item.trashedItem.uuid, {
-							...item.trashedItem,
-							isRestoring: false,
-						} )
-					} )
+					if ( confirm( __( 'Do you really want to permanently delete this item?' ) ) ) {
+						wpRest
+							.posts()
+							.delete( id, true )
+							.then( () => {
+								updateItem( uuid, {
+									isTrashed: true,
+								} )
+								removeItem( uuid )
+							} )
+					}
 				}
 
 				const getDescription = () => {
@@ -105,13 +81,6 @@ export const Code = ( {
 				const href = window.location.href.split( '?' )
 				const isCurrentPage = () => item.url === href[0]
 
-				const Accessory = () => {
-					if ( item.isTrashed ) {
-						return <Button onClick={ restorePost } tabIndex="-1">{__( 'Restore' )}</Button>
-					}
-					return null
-				}
-
 				const Extras = () => (
 					<div className="fl-asst-item-extras">
 						<Button
@@ -123,7 +92,7 @@ export const Code = ( {
 							<Icon.Clone />
 						</Button>
 						<Button
-							onClick={ trashPost }
+							onClick={ deleteCode }
 							tabIndex="-1"
 							title={ __( 'Move to Trash' ) }
 							status='destructive'
@@ -187,7 +156,6 @@ export const Code = ( {
 					label: <Title />,
 					description: getDescription(),
 					thumbnail: <CodeFile />,
-					accessory: props => <Accessory { ...props } />,
 					extras: Extras,
 					className: classname( {
 						'fl-asst-is-trashing': item.isTrashing,
