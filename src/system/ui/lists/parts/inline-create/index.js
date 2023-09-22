@@ -4,6 +4,7 @@ import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
+import { useHistory } from 'react-router-dom'
 import './style.scss'
 
 const InlineCreate = ( {
@@ -14,6 +15,7 @@ const InlineCreate = ( {
 } ) => {
 	const { contentTypes } = getSystemConfig()
 	const wpRest = getWpRest()
+	const history = useHistory()
 	const [ items, dispatch ] = useReducer( ( state = [], action ) => {
 
 		switch ( action.type ) {
@@ -56,6 +58,12 @@ const InlineCreate = ( {
 			}
 			onPostCreated( data )
 
+			// redirect to edit screen if code app
+			// if( 'fl_code' === postType ) {
+			// 	console.log("Created Data",`/fl-code/fl_code/${data.id}`)
+			// 	// `/${handle}/fl_code/${data.id}`
+			// 	history.push(`/fl-code/fl_code/${data.id}`)
+			// }
 		} ).catch( error => {
 			handleError( error )
 		} )

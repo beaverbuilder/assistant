@@ -36,5 +36,13 @@
                 overflow: hidden;
             }
         }
+
+        &.fl-asst-code-update {
+            background: var(--fluid-blue);
+
+            .fluid-text-title {
+                color: var(--fluid-opaque-14);
+            }
+        }
     }
 }

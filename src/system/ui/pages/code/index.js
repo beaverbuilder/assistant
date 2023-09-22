@@ -28,115 +28,6 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 		CloudUI
 	} )
 
-	const EditableHeading = () => {
-
-		const [ isEditing, setIsEditing ] = useState( false )
-		const [ editedText, setEditedText ] = useState( title )
-
-		const handleEdit = () => {
-			setIsEditing( true )
-		}
-
-		const handleSave = () => {
-
-			if( '' === editedText ) {
-				return
-			}
-
-			const data = {
-				post_title: editedText,
-			}
-
-			item.title = editedText
-			setIsEditing( false )
-			wpRest.posts().update( id, 'data', data ).then( () => {
-				setCurrentHistoryState( { item } )
-			} )
-		}
-
-		const handleTextChange = ( event ) => {
-			setEditedText( event.target.value )
-		}
-
-		return (
-			<div>
-				{ isEditing ? (
-					<div style={ { display: 'grid', gap: '10px' } }>
-						<input
-							type="text"
-							id="title"
-							value={ editedText }
-							onChange={ handleTextChange }
-						/>
-						<button className="fluid-button fluid-appearance-normal" onClick={ handleSave }>{ __( 'Save' ) }</button>
-					</div>
-				) : (
-					<div style={ { display: 'flex', alignItems: 'center' } } >
-						<div className="fluid-detail-page-title-text">{ editedText }</div>
-						<a className="fluid-button fluid-appearance-transparent edit-title-button" onClick={ handleEdit }>
-							<Icon.Edit style={ { width: '16px', height: '16px' } } />
-						</a>
-					</div>
-				) }
-			</div>
-		)
-	}
-
-	const EditableDesc = () => {
-
-		const [ isEditing, setIsEditing ] = useState( false )
-		const [ editedText, setEditedText ] = useState( description )
-
-		const handleEdit = () => {
-			setIsEditing( true )
-		}
-
-		const handleSave = () => {
-
-			const data = {
-				post_content: editedText,
-			}
-
-			item.description = editedText
-			setIsEditing( false )
-			wpRest.posts().update( id, 'data', data ).then( response => {
-				const { data } = response
-				setCurrentHistoryState( { item } )
-			} )
-		}
-
-		const handleDescChange = (event) => {
-			setEditedText( event.target.value )
-		}
-
-		return (
-			<div>
-				{ ! isEditing && <div>{ editedText }</div> }
-				{ isEditing ? (
-					<div style={ { display: 'grid', gap: '10px', paddingTop: '10px' } }>
-						<textarea
-							id='description'
-							value={ editedText }
-							onChange={ handleDescChange }
-							style={ {
-								maxWidth: '100%',
-								minHeight: 100,
-								resize: 'none'
-							} }
-						/>
-						<button className="fluid-button fluid-appearance-normal" onClick={ handleSave }>{ __( 'Save' ) }</button>
-					</div>
-				) : (
-					<div>
-						<a className="edit-description" onClick={ handleEdit }>
-							{ editedText ? __( 'Edit Description' ) : __( 'Add Description' ) }
-						</a>
-					</div>
-				) }
-			</div>
-		)
-	}
-
 	const onSubmit = ( { changed, ids, setValue } ) => {
 
 		const data = {
@@ -146,6 +37,26 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 		if ( 'code' in changed ) {
 			data.meta.code = changed.code
 			item.code = changed.code
+		}
+
+		if ( 'title' in changed ) {
+			item.title = changed.title
+			data.post_title = changed.title
+		}
+
+		if ( 'description' in changed ) {
+			item.description = changed.description
+			data.post_content = changed.description
+		}
+
+		if ( 'enable' in changed ) {
+			data.meta.enable = changed.enable
+			item.enable = changed.enable
+		}
+
+		if ( 'location' in changed ) {
+			data.meta.code_locations = changed.location
+			item.locations = changed.location
 		}
 
 		const handleError = error => {
@@ -184,10 +95,15 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 		meta: {
 			fields: {
 				title: {
-					component: EditableHeading,
+					label: __( 'Title' ),
+					id: 'post_title',
+					component: 'text',
 				},
 				description: {
-					component: EditableDesc,
+					label: __( 'Description' ),
+					id: 'post_content',
+					component: 'textarea',
+					rows: 4,
 				},
 				code: {
 					width: '400px',
@@ -203,8 +119,22 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 		locations: {
 			label: __( 'Location' ),
 			fields: {
+				enable: {
+					label: __( 'Enable' ),
+					labelPlacement: 'beside',
+					component: 'checkbox',
+				},
 				location: {
-					component: () => <Location item={ item } />,
+					component: ( { value, onChange } ) => {
+						return (
+							<Location
+								item={ item }
+								onChange={ newValue => {
+									onChange( { ...newValue } )
+								} }
+							/>
+						)
+					}
 				},
 			},
 		},
@@ -254,6 +184,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 			id="fl-asst-code-detail"
 			toolbarTitle={ sprintf( __( 'Edit %s' ), label ) }
 			toolbarActions={ <ToolbarActions /> }
+			className={ hasChanges ? 'fl-asst-code-update' : 'fl-asst-code-save' }
 		>
 			{ renderForm() }
 			<LibraryDialog />

@@ -121,10 +121,12 @@ class PostTransformer {
 			$code = get_post_meta( $post->ID, 'code', true );
 			$code_type = get_post_meta( $post->ID, 'code_type', true );
 			$locations = get_post_meta( $post->ID, 'code_locations', true );
-			$response['locations'] = $locations;
+			$enabled = get_post_meta( $post->ID, 'enable', true );
 			$response['code'] = $code;
 			$response['description'] = $post->post_content;
+			$response['enable'] = $enabled;
 			$response['subtype'] = $code_type;
+			$response['locations'] = $locations;
 		}
 
 		// Post visibility.

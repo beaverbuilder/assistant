@@ -1,13 +1,11 @@
 import React from 'react'
-import { __ } from '@wordpress/i18n'
-import { Button } from 'ui'
-import Rule from './rule'
+import Rules from './rules'
 
-export const Location = ( { item } ) => {
+export const Location = ( data ) => {
 
 	return (
 		<>
-			<Rule { ...item }/>
+			<Rules { ...data }/>
 		</>
 	)
 }

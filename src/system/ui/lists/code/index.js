@@ -109,41 +109,15 @@ export const Code = ( {
 
 				const getMarks = item => {
 					let marks = []
-
-					if ( item.isTrashing || item.isTrashed || item.isRestoring ) {
-						return []
-					}
-
-					if ( 'labels' in item && 0 < item.labels.length ) {
-
-						item.labels.map( id => {
-							if ( id in labelsById ) {
-								const { color, label } = labelsById[id]
-								marks.push(
-									<span
-										className="fl-asst-list-item-color-mark"
-										style={ { background: color } }
-										title={ label }
-									></span>
-								)
-							}
-						} )
-					}
-
-					if ( 'draft' === item.status ) {
-						marks.push( __( 'Draft' ) )
-					}
-					if ( 'future' === item.status ) {
-						marks.push( __( 'Scheduled' ) )
-					}
-					if ( 'private' === item.visibility ) {
-						marks.push( __( 'Private' ) )
-					}
-					if ( 'protected' === item.visibility ) {
-						marks.push( __( 'Protected' ) )
-					}
-					if ( item.isSticky ) {
-						marks.push( __( 'Sticky' ) )
+					if ( '1' === item.enable ) {
+						marks.push(
+							<span
+								className="fl-asst-list-item-color-mark"
+								style={ { background: 'Green' } }
+								title={ 'Green' }
+							></span>
+						)
+						marks.push( __( 'Active' ) )
 					}
 
 					return marks

@@ -22,12 +22,14 @@ export const PostTypeTab = ( { type = 'css' } ) => {
 				<List.InlineCreate
 					postType={ 'fl_code' }
 					codeType={ type }
-					onPostCreated={ () => setQuery( {
-						...defaultState.query,
-						order: 'DESC',
-						orderby: 'ID',
-						key: new Date().getTime()
-					} ) }
+					onPostCreated={
+						() => setQuery( {
+							...defaultState.query,
+							order: 'DESC',
+							orderby: 'ID',
+							key: new Date().getTime()
+						} )
+					}
 				/>
 			</>
 		)
