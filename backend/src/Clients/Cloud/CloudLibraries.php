@@ -76,6 +76,13 @@ class CloudLibraries {
 			}
 		}
 
+		// Handle image file export.
+		if ( isset( $data['media']['file'] ) ) {
+			if ( file_exists( $data['media']['file'] ) ) {
+				$files['media[file]'] = curl_file_create( $data['media']['file'] );
+			}
+		}
+
 		// Handle post attachments.
 		if ( isset( $data['media']['attachments'] ) ) {
 			if ( empty( $data['media']['attachments'] ) ) {
