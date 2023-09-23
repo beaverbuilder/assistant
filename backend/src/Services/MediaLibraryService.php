@@ -130,12 +130,50 @@ class MediaLibraryService {
 			return [ 'error' => __( 'Error importing file.' ) ];
 		}
 
+		$alt_tag = $this->get_alt_tag_from_post_content( $post_id, $name );
+
+		if ( !empty( $alt_tag ) ) {
+			update_post_meta( $id, '_wp_attachment_image_alt', $alt_tag );
+		}
+
 		return [
 			'id'  => $id,
 			'url' => wp_get_attachment_url( $id ),
 		];
 	}
 
+	/**
+	 * Get the alt tag for a filename from the post content.
+	 */
+	public function get_alt_tag_from_post_content( $post_id, $filename ) {
+		$content = get_post_field( 'post_content', $post_id );
+		$alt_tag = null;
+
+		if ( !empty( $content ) ) {
+			$dom = new \DOMDocument();
+			@$dom->loadHTML( $content );
+			$images = $dom->getElementsByTagName( 'img' );
+
+			foreach ( $images as $image ) {
+				$src = $image->getAttribute( 'src' );
+				$src_filename = basename( parse_url( $src, PHP_URL_PATH ) );
+
+				// Remove dimensions to get the full size filename
+				preg_match_all( '/(-(\d+)x(\d+))\.(jpg|jpeg|png|gif|svg)/', $src_filename, $matches );
+
+				if ( isset( $matches[1] ) && ! empty( $matches[1] ) ) {
+					$src_filename = str_replace( $matches[1], '', $src_filename );
+				}
+
+				if ( $src_filename === $filename ) {
+					$alt_tag = $image->getAttribute( 'alt' );
+					break;
+				}
+			}
+		}
+
+		return $alt_tag;
+	}
 
 	/**
 	 * Import an svg file into the media library.
