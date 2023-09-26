@@ -63,8 +63,8 @@ class LibraryItemCodeController extends ControllerAbstract {
 				'post_content'   => $description,
 				'post_status'    => 'publish',
 				'meta_input' => [
-					'code_type' => $extension,
-					'code' => $code,
+					'_fl_asst_code_type' => $extension,
+					'_fl_asst_code' => $code,
 				]
 			]
 		);

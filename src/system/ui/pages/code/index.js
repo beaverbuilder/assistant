@@ -35,7 +35,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 		}
 
 		if ( 'code' in changed ) {
-			data.meta.code = changed.code
+			data.meta._fl_asst_code = changed.code
 			item.code = changed.code
 		}
 
@@ -50,12 +50,12 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 		}
 
 		if ( 'enable' in changed ) {
-			data.meta.enable = changed.enable
+			data.meta._fl_asst_enable = changed.enable
 			item.enable = changed.enable
 		}
 
 		if ( 'location' in changed ) {
-			data.meta.code_locations = changed.location
+			data.meta._fl_asst_code_locations = changed.location
 			item.locations = changed.location
 		}
 
@@ -120,9 +120,28 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 			label: __( 'Location' ),
 			fields: {
 				enable: {
-					label: __( 'Enable' ),
-					labelPlacement: 'beside',
-					component: 'checkbox',
+					component: ( { value, onChange } ) => {
+						return (
+							<Form.Item label={ __( 'Status' ) } labelPlacement="beside">
+								<Layout.Row gap={ 5 }>
+									<Button
+										isSelected={ '1' === value }
+										appearance="transparent"
+										onClick={ () => onChange( '1' ) }
+									>
+										{ __( 'Enable' ) }
+									</Button>
+									<Button
+										isSelected={ '1' !== value }
+										appearance="transparent"
+										onClick={ () => onChange( '' ) }
+									>
+										{ __( 'Disable' ) }
+									</Button>
+								</Layout.Row>
+							</Form.Item>
+						)
+					}
 				},
 				location: {
 					component: ( { value, onChange } ) => {

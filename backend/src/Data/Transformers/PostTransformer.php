@@ -118,10 +118,10 @@ class PostTransformer {
 
 		// Code App
 		if ( 'fl_code' === $post->post_type ) {
-			$code = get_post_meta( $post->ID, 'code', true );
-			$code_type = get_post_meta( $post->ID, 'code_type', true );
-			$locations = get_post_meta( $post->ID, 'code_locations', true );
-			$enabled = get_post_meta( $post->ID, 'enable', true );
+			$code = get_post_meta( $post->ID, '_fl_asst_code', true );
+			$code_type = get_post_meta( $post->ID, '_fl_asst_code_type', true );
+			$locations = get_post_meta( $post->ID, '_fl_asst_code_locations', true );
+			$enabled = get_post_meta( $post->ID, '_fl_asst_enable', true );
 			$response['code'] = $code;
 			$response['description'] = $post->post_content;
 			$response['enable'] = $enabled;

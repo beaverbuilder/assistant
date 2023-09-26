@@ -81,7 +81,7 @@ const Rules = ( { item, onChange } ) => {
 							<select value={ group.operator } name='operator' onChange={ (e) => handleChange( e, index ) }>
 								<option value=''>{ __( 'Choose...' ) }</option>
 								<option value='equals'>{ __( 'equals' ) }</option>
-								<option value='does not equal'>{ __( 'does not equal' ) }</option>
+								<option value='does_not_equal'>{ __( 'does not equal' ) }</option>
 							</select>
 						}
 

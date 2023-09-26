@@ -41,7 +41,7 @@ export const PostTypeTab = ( { type = 'css' } ) => {
 				query={ {
 					...query,
 					post_type: 'fl_code',
-					meta_key: 'code_type',
+					meta_key: '_fl_asst_code_type',
 					meta_value: type
 				} }
 				listStyle={ listStyle }
