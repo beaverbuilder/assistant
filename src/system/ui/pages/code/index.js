@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n'
 import { Page, Form, Layout, Notice, Button } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
-import { useLibrarySaveAction } from 'ui/library/use-save-action'
 import { getCodeActions } from './actions'
 import { Location } from './location'
 import { Icon } from 'ui'
@@ -19,14 +18,6 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 	const mode = appearance.brightness
 	const { id, type, subtype, title, description } = item
 	const label = contentTypes[ item.type ].labels.singular
-
-	const { saveToLibrary, LibraryDialog } = useLibrarySaveAction( {
-		type: 'code',
-		item,
-		history,
-		createNotice,
-		CloudUI
-	} )
 
 	const onSubmit = ( { changed, ids, setValue } ) => {
 
@@ -206,7 +197,6 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 			className={ hasChanges ? 'fl-asst-code-update' : 'fl-asst-code-save' }
 		>
 			{ renderForm() }
-			<LibraryDialog />
 		</Page.Detail>
 	)
 }

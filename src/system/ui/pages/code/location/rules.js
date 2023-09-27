@@ -87,6 +87,7 @@ const Rules = ( { item, onChange } ) => {
 
 						{ 'post_type' === formData[ index ].type &&
 							<select value={ group.value } name='value' onChange={ (e) => handleChange( e, index ) }>
+								<option value=''>{ __( 'Choose...' ) }</option>
 								{
 									types.map( t => <option value={ t[0] }>{ t[1].labels.singular }</option> )
 								}
