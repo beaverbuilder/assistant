@@ -58,12 +58,9 @@ const InlineCreate = ( {
 			}
 			onPostCreated( data )
 
-			// redirect to edit screen if code app
-			// if( 'fl_code' === postType ) {
-			// 	console.log("Created Data",`/fl-code/fl_code/${data.id}`)
-			// 	// `/${handle}/fl_code/${data.id}`
-			// 	history.push(`/fl-code/fl_code/${data.id}`)
-			// }
+			if( 'fl_code' === postType ) {
+				history.push( `/fl-code/fl_code/${data.id}`, { 'item': data } )
+			}
 		} ).catch( error => {
 			handleError( error )
 		} )
