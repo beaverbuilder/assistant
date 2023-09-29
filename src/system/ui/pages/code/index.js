@@ -192,7 +192,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 	return (
 		<Page.Detail
 			id="fl-asst-code-detail"
-			toolbarTitle={ sprintf( __( 'Edit %s' ), label ) }
+			toolbarTitle={ sprintf( __( 'Edit %s' ), subtype ) }
 			toolbarActions={ <ToolbarActions /> }
 			className={ hasChanges ? 'fl-asst-code-update' : 'fl-asst-code-save' }
 		>
