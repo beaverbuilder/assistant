@@ -32,8 +32,10 @@ const Main = () => {
 	const { contentTypes } = getSystemConfig()
 	const getTabs = () => {
 		let tabs = []
+		const exclude_types = [ 'wp_template', 'fl_code' ]
 		Object.keys( contentTypes ).map( key => {
-			if( 'fl_code' !== key ) {
+
+			if( ! exclude_types.includes( key ) ) {
 				const type = contentTypes[key]
 				tabs.push( {
 					handle: key,
