@@ -16,9 +16,8 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 	const { createNotice } = Notice.useNotices()
 	const { appearance } = useSystemState( [ 'appearance' ] )
 	const mode = appearance.brightness
-	const { id, type, subtype, title, description } = item
+	const { id, type, subtype, title, description, enable } = item
 	const label = contentTypes[ item.type ].labels.singular
-
 	const onSubmit = ( { changed, ids, setValue } ) => {
 
 		const data = {
@@ -102,7 +101,7 @@ export const Code = ( { location, match, history, CloudUI } ) => {
 					mode: mode,
 					extension: 'JavaScript' === subtype ? 'js' : 'css',
 					component: 'code-editor',
-					preview: true,
+					preview: '1' === enable ? true : false,
 					className: 'fl-asst-code-editor'
 				},
 			},
