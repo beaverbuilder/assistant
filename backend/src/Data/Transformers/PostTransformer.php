@@ -105,7 +105,7 @@ class PostTransformer {
 			'terms'            => [],
 			'thumbnail'        => get_the_post_thumbnail_url( $post, 'thumbnail' ),
 			'thumbnailData'    => $thumb_data,
-			'title'            => empty( $post->post_title ) ? __( '(no title)', 'fl-assistant' ) : $post->post_title,
+			'title'            => empty( $post->post_title ) ? __( '(no title)', 'assistant' ) : $post->post_title,
 			'trashedStatus'    => get_post_meta( $post->ID, '_wp_trash_meta_status', true ),
 			'type'             => $post->post_type,
 			'url'              => get_permalink( $post ),

@@ -63,7 +63,7 @@ class PhpVersionCheck {
 		/* translators: php upgrade url. */
 
 		return sprintf(
-			__( 'Assistant requires PHP 5.6 or above. Please <a href="%s">update your PHP version</a> before continuing.', 'fl-assistant' ),
+			__( 'Assistant requires PHP 5.6 or above. Please <a href="%s">update your PHP version</a> before continuing.', 'assistant' ),
 			$url
 		);
 	}

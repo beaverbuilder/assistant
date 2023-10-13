@@ -305,7 +305,7 @@ class PostsController extends ControllerAbstract {
 			'post_password'  => $post->post_password,
 			'post_status'    => 'draft',
 			/* translators: %s: post/page title */
-			'post_title'     => sprintf( _x( '%s - Copy', '%s stands for post/page title.', 'fl-assistant' ), $post->post_title ),
+			'post_title'     => sprintf( _x( '%s - Copy', '%s stands for post/page title.', 'assistant' ), $post->post_title ),
 			'post_type'      => $post->post_type,
 			'to_ping'        => $post->to_ping,
 			'menu_order'     => $post->menu_order,
