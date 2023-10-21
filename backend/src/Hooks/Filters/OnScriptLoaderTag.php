@@ -14,7 +14,6 @@ class OnScriptLoaderTag {
 	public function __invoke( $tag, $handle, $src ) {
 
 		$handles = [
-			'fl-assistant',
 			'fl-assistant-render',
 			'fl-assistant-apps'
 		];
