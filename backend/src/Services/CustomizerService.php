@@ -30,7 +30,7 @@ class CustomizerService {
 		return $client->libraries->create_item(
 			$library_id,
 			[
-				'name'  => sprintf( _x( '%s Settings', '%s theme name', 'fl-assistant' ), $theme->Name ),
+				'name'  => sprintf( _x( '%s Settings', '%s theme name', 'assistant' ), $theme->Name ),
 				'type'  => 'theme_settings',
 				'data'  => $data,
 				'media' => [

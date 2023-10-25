@@ -38,7 +38,7 @@ class OnWPBeforeAdminBarRender {
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'fl_assistant_toggle_ui',
-				'title' => __( 'Assistant', 'fl-assistant' ),
+				'title' => __( 'Assistant', 'assistant' ),
 			]
 		);
 	}

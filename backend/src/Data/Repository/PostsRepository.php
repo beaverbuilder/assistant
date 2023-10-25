@@ -185,8 +185,8 @@ class PostsRepository extends RepositoryAbstract {
 			];
 
 			if ( 'wp_template' === $slug || 'wp_template_part' === $slug ) {
-				$data[ $slug ]['labels']['singular'] = sprintf( esc_html_x( 'Block %s', 'Singular type name.', 'fl-assistant' ), $type->labels->singular_name );
-				$data[ $slug ]['labels']['plural'] = sprintf( esc_html_x( 'Block %s', 'Plural type name.', 'fl-assistant' ), $type->labels->name );
+				$data[ $slug ]['labels']['singular'] = sprintf( esc_html_x( 'Block %s', 'Singular type name.', 'assistant' ), $type->labels->singular_name );
+				$data[ $slug ]['labels']['plural'] = sprintf( esc_html_x( 'Block %s', 'Plural type name.', 'assistant' ), $type->labels->name );
 			}
 
 			$taxonomies = get_object_taxonomies( $slug, 'objects' );
@@ -221,7 +221,7 @@ class PostsRepository extends RepositoryAbstract {
 					'labels'         => [
 						'singular'   => esc_html( $taxonomy->labels->singular_name ),
 						'plural'     => esc_html( $taxonomy->labels->name ),
-						'newItem'    => sprintf( esc_html_x( 'New %s', 'Singular term name.', 'fl-assistant' ), $taxonomy->labels->singular_name ),
+						'newItem'    => sprintf( esc_html_x( 'New %s', 'Singular term name.', 'assistant' ), $taxonomy->labels->singular_name ),
 						'addNewItem' => esc_html( $taxonomy->labels->add_new_item ),
 						'editItem'   => esc_html( $taxonomy->labels->edit_item ),
 					],

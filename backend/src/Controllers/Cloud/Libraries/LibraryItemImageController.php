@@ -58,6 +58,10 @@ class LibraryItemImageController extends ControllerAbstract {
 		$service = new MediaLibraryService();
 		$response = $service->import_cloud_media( $media );
 
+		if ( $response && isset( $response['id'] ) && !empty( $item['data']['alt'] ) ) {
+			update_post_meta( $response['id'], '_wp_attachment_image_alt', $item['data']['alt'] );
+		}
+
 		return rest_ensure_response( $response );
 	}
 
@@ -72,12 +76,20 @@ class LibraryItemImageController extends ControllerAbstract {
 		$path = get_attached_file( $id );
 		$ext = pathinfo( $path, PATHINFO_EXTENSION );
 
+		$data = [];
+
+		$alt = get_post_meta( $id, '_wp_attachment_image_alt', true);
+
+		if ( !empty( $alt ) ) {
+			$data['alt'] = $alt;
+		}
+
 		return $client->libraries->create_item(
 			$library_id,
 			[
 				'name'       => $attachment->post_title,
 				'type'       => 'svg' === $ext ? 'svg' : 'image',
-				'data'       => [],
+				'data'       => $data,
 				'media'      => [
 					'file'       => $path,
 				],

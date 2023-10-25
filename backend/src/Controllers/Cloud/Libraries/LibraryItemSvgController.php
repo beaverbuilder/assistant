@@ -35,6 +35,10 @@ class LibraryItemSvgController extends ControllerAbstract {
 		$service = new MediaLibraryService();
 		$response = $service->import_cloud_media( $media );
 
+		if ( $response && isset( $response['id'] ) && !empty( $item['data']['alt'] ) ) {
+			update_post_meta( $response['id'], '_wp_attachment_image_alt', $item['data']['alt'] );
+		}
+
 		return rest_ensure_response( $response );
 	}
 }
