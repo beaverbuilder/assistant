@@ -7,7 +7,7 @@
  * Description: A tool for navigating a site and accomplishing quick tasks without needing the WordPress admin.
  * License: GNU General Public License v2.0
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: fl-assistant
+ * Text Domain: assistant
  * Copyright: (c) 2021 Beaver Builder
 */
 

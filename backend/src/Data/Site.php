@@ -15,42 +15,42 @@ class Site {
 
 		$data    = [];
 		$actions = [];
-		$intro   = __( 'Currently Viewing', 'fl-assistant' );
+		$intro   = __( 'Currently Viewing', 'assistant' );
 		$type    = '';
-		$name    = __( 'Untitled', 'fl-assistant' );
+		$name    = __( 'Untitled', 'assistant' );
 
 		$obj = get_queried_object();
 
 		if ( is_admin() ) {
 
-			$intro = __( 'Currently Viewing Admin Page', 'fl-assistant' );
-			$type = __( 'Admin Page', 'fl-assistant' );
+			$intro = __( 'Currently Viewing Admin Page', 'assistant' );
+			$type = __( 'Admin Page', 'assistant' );
 			$screen = get_current_screen();
 			$name = $screen->id;
 
 		} else {
 
 			if ( is_404() ) {
-				$name = __( 'Page Not Found', 'fl-assistant' );
-				$type = __( '404', 'fl-assistant' );
+				$name = __( 'Page Not Found', 'assistant' );
+				$type = __( '404', 'assistant' );
 
 			} elseif ( is_search() ) {
 
-				$intro = __( 'Currently Viewing Search Results For', 'fl-assistant' );
-				$type = __( 'Search Results For:', 'fl-assistant' );
+				$intro = __( 'Currently Viewing Search Results For', 'assistant' );
+				$type = __( 'Search Results For:', 'assistant' );
 				$name  = get_search_query();
 
 			} elseif ( is_date() ) {
 
-				$intro = __( 'Currently Viewing Date Archive', 'fl-assistant' );
-				$type = __( 'Date Archive', 'fl-assistant' );
+				$intro = __( 'Currently Viewing Date Archive', 'assistant' );
+				$type = __( 'Date Archive', 'assistant' );
 				$name  = get_the_date();
 
 			} elseif ( is_post_type_archive() ) {
 
 				$post_type = get_post_type_object( 'post' );
-				$intro     = __( 'Currently Viewing Post Type Archive', 'fl-assistant' );
-				$type = __( 'Post Type Archive', 'fl-assistant' );
+				$intro     = __( 'Currently Viewing Post Type Archive', 'assistant' );
+				$type = __( 'Post Type Archive', 'assistant' );
 				$name      = $post_type->labels->singular_name;
 
 			} elseif ( is_tax() || is_category() || is_tag() ) {
@@ -58,7 +58,7 @@ class Site {
 				$tax    = get_taxonomy( $obj->taxonomy );
 				$labels = $tax->labels;
 
-				$intro = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $labels->singular_name );
+				$intro = sprintf( esc_html__( 'Currently Viewing %s', 'assistant' ), $labels->singular_name );
 				$type = $labels->singular_name;
 				$name  = $obj->name;
 
@@ -74,7 +74,7 @@ class Site {
 				$post_type = get_post_type_object( get_post_type() );
 				$labels    = $post_type->labels;
 				$post_type = $labels->singular_name;
-				$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'fl-assistant' ), $post_type );
+				$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'assistant' ), $post_type );
 				$type      = $post_type;
 				$name      = $obj->post_title;
 
@@ -104,14 +104,14 @@ class Site {
 				}
 			} elseif ( is_author() ) {
 
-				$intro = __( 'Currently Viewing Author', 'fl-assistant' );
-				$type = __( 'Author Archive', 'fl-assistant' );
+				$intro = __( 'Currently Viewing Author', 'assistant' );
+				$type = __( 'Author Archive', 'assistant' );
 				$name  = wp_get_current_user()->display_name;
 
 			} elseif ( is_front_page() ) {
-				$intro = __( 'Currently Viewing Post Archive', 'fl-assistant' );
-				$type = __( 'Post Archive', 'fl-assistant' );
-				$name  = __( 'Latest Posts', 'fl-assistant' );
+				$intro = __( 'Currently Viewing Post Archive', 'assistant' );
+				$type = __( 'Post Archive', 'assistant' );
+				$name  = __( 'Latest Posts', 'assistant' );
 			}
 		}
 

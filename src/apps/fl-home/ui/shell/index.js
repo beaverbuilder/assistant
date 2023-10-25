@@ -83,7 +83,7 @@ const FeatureSidebarSection = ( { baseURL = '' } ) => {
 						icon={ <Icon.Dashboard /> }
 						isSelected
 					>
-						{ __( 'Dashboard', 'fl-assistant' ) }
+						{ __( 'Dashboard', 'assistant' ) }
 					</Button>
 				</li>
 			</ul>
@@ -94,7 +94,7 @@ const FeatureSidebarSection = ( { baseURL = '' } ) => {
 const AppsSection = () => {
 	const history = useHistory()
 	return (
-		<SidebarSection title={ __( 'Apps', 'fl-assistant' ) }>
+		<SidebarSection title={ __( 'Apps', 'assistant' ) }>
 			<App.List>
 				{ ( { label, handle, icon, moveDown, moveUp } ) => {
 
@@ -139,7 +139,7 @@ const ShortcutsSection = () => {
 
 	const shortcuts = [
 		{
-			label: __( 'WordPress Admin', 'fl-assistant' ),
+			label: __( 'WordPress Admin', 'assistant' ),
 			href: adminURLs.dashboard,
 			icon: Icon.WordPress
 		},

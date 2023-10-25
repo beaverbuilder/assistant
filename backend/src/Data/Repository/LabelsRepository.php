@@ -124,11 +124,11 @@ class LabelsRepository extends TermsRepository {
 		 * TODO: Load from server config.
 		 */
 		$default_labels = [
-			'#FF305C' => __( 'Red', 'fl-assistant' ),
-			'#FF9500' => __( 'Orange', 'fl-assistant' ),
-			'#FFD000' => __( 'Yellow', 'fl-assistant' ),
-			'#00D281' => __( 'Green', 'fl-assistant' ),
-			'#1BADF8' => __( 'Blue', 'fl-assistant' ),
+			'#FF305C' => __( 'Red', 'assistant' ),
+			'#FF9500' => __( 'Orange', 'assistant' ),
+			'#FFD000' => __( 'Yellow', 'assistant' ),
+			'#00D281' => __( 'Green', 'assistant' ),
+			'#1BADF8' => __( 'Blue', 'assistant' ),
 		];
 
 		foreach ( $default_labels as $color => $label ) {

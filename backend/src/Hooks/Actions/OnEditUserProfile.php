@@ -41,8 +41,8 @@ class OnEditUserProfile {
 				'window'             => $window,
 				'hidden_appearance'  => isset( $window['hiddenAppearance'] ) ? $window['hiddenAppearance'] : '',
 				'hidden_appearances' => [
-					''          => __( 'Button (Default)', 'fl-assistant' ),
-					'admin_bar' => __( 'Admin Bar Item', 'fl-assistant' ),
+					''          => __( 'Button (Default)', 'assistant' ),
+					'admin_bar' => __( 'Admin Bar Item', 'assistant' ),
 				],
 			]
 		);

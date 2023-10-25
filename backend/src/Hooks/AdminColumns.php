@@ -24,7 +24,7 @@ class AdminColumns {
 	}
 
 	public function add_columns( $columns ) {
-		$columns['fl_assistant'] = __( 'Labels', 'fl-assistant' );
+		$columns['fl_assistant'] = __( 'Labels', 'assistant' );
 		return $columns;
 	}
 

@@ -1,9 +1,9 @@
-<h2><?php _e( 'Assistant', 'fl-assistant' ); ?></h2>
+<h2><?php _e( 'Assistant', 'assistant' ); ?></h2>
 <table class="form-table" role="presentation">
 	<tbody>
 	<tr class="user-fl-asst-hidden-ui-wrap">
 		<th>
-			<label for="fl_asst_hidden_ui"><?php _e( 'Toggle Button', 'fl-assistant' ); ?></label>
+			<label for="fl_asst_hidden_ui"><?php _e( 'Toggle Button', 'assistant' ); ?></label>
 		</th>
 		<td>
 			<select name="fl_asst_hidden_ui" id="fl_asst_hidden_ui">
@@ -19,11 +19,11 @@
 		</td>
 	</tr>
 	<tr class="user-show-assistant-in-admin-wrap">
-		<th scope="row"><?php _e( 'Show in Admin', 'fl-assistant' ); ?></th>
+		<th scope="row"><?php _e( 'Show in Admin', 'assistant' ); ?></th>
 		<td>
 			<label for="show_assistant_in_admin">
 				<input type="checkbox" id="show_assistant_in_admin" name="show_assistant_in_admin" <?php echo $show_in_admin ? 'checked' : null; ?> >
-				<?php _e( 'Show Assistant UI in the WordPress Admin', 'fl-assistant' ); ?>
+				<?php _e( 'Show Assistant UI in the WordPress Admin', 'assistant' ); ?>
 			</label>
 		</td>
 	</tr>

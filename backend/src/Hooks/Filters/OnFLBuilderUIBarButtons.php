@@ -40,7 +40,7 @@ class OnFLBuilderUIBarButtons {
 
 		$buttons['fl-assistant'] = [
 			'label' => $icon,
-			'title' => __( 'Assistant', 'fl-assistant' ),
+			'title' => __( 'Assistant', 'assistant' ),
 			'class' => 'fl-builder-button-silent',
 		];
 		return $buttons;
