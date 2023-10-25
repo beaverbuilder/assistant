@@ -2,9 +2,9 @@
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media, Upload, Beaver Builder
 Requires at least: 5.2
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,13 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 
 == Changelog ==
+
+= 1.4.5 ( 2023-10-26 ) =
+* Fixed alt tags for images exported to Assistant Pro.
+* Fixed saving images to a library from the media app.
+* Fixed translation slugs for wp.org.
+* Fixed library search so it finds case insensitive matches.
+* Fixed collapsing library sections.
 
 = 1.4.4 ( 2023-07-26 ) =
 * Added the ability to save all posts of a type to a library.
