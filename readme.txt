@@ -72,7 +72,7 @@ Coming Soon! Our API for creating new apps and extending the existing ones is in
 
 == Changelog ==
 
-= 1.4.5 ( 2023-10-26 ) =
+= 1.4.5 ( 2023-10-30 ) =
 * Fixed alt tags for images exported to Assistant Pro.
 * Fixed saving images to a library from the media app.
 * Fixed translation slugs for wp.org.
