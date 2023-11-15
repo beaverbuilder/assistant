@@ -197,7 +197,7 @@ class MediaPathHelper {
 	 * @return array
 	 */
 	static public function get_image_urls_from_string( $string ) {
-		$pattern = '#https?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/)\.(jpg|jpeg|png|gif|svg))#';
+		$pattern = '#https?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/|_)\.(jpg|jpeg|png|gif|svg|webp))#';
 		$urls = [];
 
 		if ( preg_match_all( $pattern, $string, $matches ) ) {
