@@ -2,9 +2,9 @@
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Beaver Builder, Gutenberg, Blocks, Elementor, Divi, Visual Composer, Page Builder, WordPress Templates, Content Management, Productivity
 Requires at least: 5.2
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,10 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 
 == Changelog ==
+
+= 1.4.6 ( 2023-11-21 ) =
+* Fixed webp images not exporting to Assistant Pro.
+* Fixed images with filenames ending in an underscore not exporting to Assistant Pro.
 
 = 1.4.5 ( 2023-10-30 ) =
 * Fixed alt tags for images exported to Assistant Pro.
