@@ -74,9 +74,10 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 == Changelog ==
 
-= 1.4.6 ( 2023-11-21 ) =
+= 1.4.6 ( 2023-11-27 ) =
 * Fixed webp images not exporting to Assistant Pro.
 * Fixed images with filenames ending in an underscore not exporting to Assistant Pro.
+* Fixed a PHP warning in the WordPress Playground.
 
 = 1.4.5 ( 2023-10-30 ) =
 * Fixed alt tags for images exported to Assistant Pro.
