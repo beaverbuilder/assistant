@@ -75,7 +75,7 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 == Changelog ==
 
 = 1.4.8 ( 2023-12-13 ) =
-* Fixed SVG post thumbnails error that occurred while accessing the library.
+* Fixed an error that occurred when accessing libraries containing items with no thumbnails.
 
 = 1.4.7 ( 2023-12-07 ) =
 * Fixed SVG post thumbnails causing an error in Assistant Pro.
