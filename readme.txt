@@ -4,7 +4,7 @@ Tags: Beaver Builder, Gutenberg, Blocks, Elementor, Divi, Visual Composer, Page 
 Requires at least: 5.2
 Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,9 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 
 == Changelog ==
+
+= 1.4.8 ( 2023-12-13 ) =
+* Fixed SVG post thumbnails error that occurred while accessing the library.
 
 = 1.4.7 ( 2023-12-07 ) =
 * Fixed SVG post thumbnails causing an error in Assistant Pro.
