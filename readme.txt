@@ -1,6 +1,6 @@
 === Assistant - Every Day Productivity Apps ===
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
-Tags: Beaver Builder, Gutenberg, Blocks, Elementor, Divi, Visual Composer, Page Builder, WordPress Templates, Content Management, Productivity
+Tags: Beaver Builder, Gutenberg, Blocks, Elementor, Divi, Visual Composer, Page Builder, WordPress Templates, Content Management, Productivity, Assistant Pro
 Requires at least: 5.2
 Tested up to: 6.4
 Requires PHP: 5.6
@@ -21,7 +21,7 @@ Assistant is a stand-alone tool that provides shortcuts to common tasks, and wil
 *   Keep an eye on comments and updates for themes and plugins
 *   Add custom labels to posts or pages to help organize your site while you work.
 
-The plugin also connects your sites to Assistant Pro - a cloud storage platform designed specifically for WordPress assets. Use the cloud to enhance staging/production workflow, streamline your design processes, and facilitate team collaboration. Assistant Pro is not just an awesome cloud storage platform, perfect for organizing and finding your favorite WordPress assets, it’s a better way of working across all your WordPress sites.
+The plugin also connects your sites to [Assistant Pro](https://assistant.pro/) - a cloud storage platform designed specifically for WordPress assets. Use the cloud to enhance staging/production workflow, streamline your design processes, and facilitate team collaboration. Assistant Pro is not just an awesome cloud storage platform, perfect for organizing and finding your favorite WordPress assets, it’s a better way of working across all your WordPress sites.
 
 *   Store page builder and block editor templates you've created in the cloud. Works with the Block Editor and most popular WordPress page builders
 *   Organize your site’s assets (media, posts, pages, page builder templates and WooCommerce products/coupons/orders) into libraries you can access from anywhere.
