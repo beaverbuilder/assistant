@@ -65,6 +65,7 @@ class MediaLibraryService {
 		switch ( $media->mime_type ) {
 			case 'image/jpg':
 			case 'image/jpeg':
+			case 'image/webp':
 			case 'image/png':
 			case 'image/gif':
 			case 'application/pdf':

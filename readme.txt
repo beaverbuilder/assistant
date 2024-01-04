@@ -1,27 +1,33 @@
 === Assistant - Every Day Productivity Apps ===
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
-Tags: Front-End, Frontend, Productivity, Quick Admin, Content Management, Media, Upload, Beaver Builder
+Tags: Beaver Builder, Gutenberg, Blocks, Elementor, Divi, Visual Composer, Page Builder, WordPress Templates, Content Management, Productivity, Assistant Pro
 Requires at least: 5.2
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 1.4.5
+Stable tag: 1.4.8
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Assistant is a new way to work with WordPress. It's an every-day productivity tool that lets you navigate your WordPress site and handle quick tasks without needing to go to the WordPress Admin area. For example, you can quickly find a page or post and update its title or featured image. You can upload media and navigate to attachment pages. You can moderate comments. You can even run plugin and theme updates. Assistant is organized as a collection of "Apps" for different kinds of tasks. You'll see more apps coming to Assistant in the future.
+Assistant is a free plugin that allows you to work more efficiently in WordPress. It’s a huge time saver and fun to use!
+Assistant is a stand-alone tool that provides shortcuts to common tasks, and will help you work more freely without needing to go to the WordPress admin as much.
 
-Assistant is an open source project from the same team that makes Beaver Builder. It's free and being developed in public. Try it and come join us in helping make it!
+= Features =
 
-= Assistant Features =
-
-*   Access the Assistant UI from any frontend page (post, archive, term, etc...)
+*   Access the front-end UI from anywhere (posts, pages, archives, etc...)
 *   Get a glance of your recently edited posts on the home screen.
 *   Search WordPress directly from the frontend.
 *   Quickly find posts, pages, and custom post types with the content app.
 *   Upload media to WordPress media library by dropping files on the Media app.
-*   The Comments app lets you quick reply, approve, mark as spam and trash comments.
-*   Keep an eye on plugin and theme updates with the Updates app.
+*   Keep an eye on comments and updates for themes and plugins
 *   Add custom labels to posts or pages to help organize your site while you work.
+
+The plugin also connects your sites to [Assistant Pro](https://assistant.pro/) - a cloud storage platform designed specifically for WordPress assets. Use the cloud to enhance staging/production workflow, streamline your design processes, and facilitate team collaboration. Assistant Pro is not just an awesome cloud storage platform, perfect for organizing and finding your favorite WordPress assets, it’s a better way of working across all your WordPress sites.
+
+*   Store page builder and block editor templates you've created in the cloud. Works with the Block Editor and most popular WordPress page builders
+*   Organize your site’s assets (media, posts, pages, page builder templates and WooCommerce products/coupons/orders) into libraries you can access from anywhere.
+*   Works with a variety of common WordPress page builders (Gutenberg, Beaver Builder, Elementor, Divi and Visual Composer)
+*   Delight your team with seamless staging to production workflows
+*   It’s made by the Beaver Builder Team, which means awesome support!
 
 You can also try Assistant on a [demo site here](http://demo.wpbeaverbuilder.com/?new=assistant).
 
@@ -40,39 +46,46 @@ You can also try Assistant on a [demo site here](http://demo.wpbeaverbuilder.com
 
 == Screenshots ==
 
-1. Home App - Get a quick info about the current screen and recent posts. Quickly jump into search, the WP Admin or other Assistant apps.
+1. Do More With Less Clicks. The Home App gives you shortcuts to edit the page you’re currently viewing to perform common tasks from the frontend of your site. You can also take a bird’s eye view of your entire site from the Home App.
 
-2. Content App - The Content app can help you find posts and pages and quickly navigate to them.
+2. Libraries keep your WordPress assets organized and empower your team with carefree staging to production workflows.
 
-3. Post Details - Get more details on a page or quickly change metadata like Title or Featured Image.
+3. The Community Marketplace is where you can monetize your design work and find free and for sale design packages.
 
-4. Media App - Find media fast, get more details, or drop new files to upload.
+4. Posts/Pages, WooCommerce Products, Page Templates and More! With Assistant, all of your site’s content can be accessed and edited from the frontend of WordPress.
 
-5. Attachment Details - update metadata like Title and Alt Text. Navigate to attachment pages.
+5. Organize Your Media Library. Tag, sort and filter your WordPress media.
 
-6. Comments App - Sort through comments, reply, approve, mark as spam, and trash.
+6. Manage Comments and Updates conveniently on the frontend.
 
-7. Pin the panel to whatever edge or corner of the screen you prefer for quick access. Collapse it to a slim toolbar or hide it entirely.
+7. Store Your WordPress Assets in The Cloud. Cloud storage can be accessed from both the WordPress Plugin and also a companion dashboard.
 
 
 == Frequently Asked Questions ==
 
 = Is Assistant Free? =
 
-Yes! All of the core Assistant features are free and will remain so.
+Yes! All of the core Assistant features are free and will remain so. For moving templates and assets between sites, we also offer Assistant Pro via a subscription.
 
 = Does Assistant require Beaver Builder to work? =
 
 No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ installation. Assistant does compliment Beaver Builder and integrates with it nicely.
 
-= Does Assistant provide a public API for developers to create new apps? =
-
-Coming Soon! Our API for creating new apps and extending the existing ones is in development and we'll be talking more about it as we near v1.0. We'll be sharing more details about that as we get closer to that milestone.
-
 
 == Changelog ==
 
-= 1.4.5 ( 2023-10-26 ) =
+= 1.4.8 ( 2023-12-13 ) =
+* Fixed an error that occurred when accessing libraries containing items with no thumbnails.
+
+= 1.4.7 ( 2023-12-07 ) =
+* Fixed SVG post thumbnails causing an error in Assistant Pro.
+
+= 1.4.6 ( 2023-11-27 ) =
+* Fixed webp images not exporting to Assistant Pro.
+* Fixed images with filenames ending in an underscore not exporting to Assistant Pro.
+* Fixed a PHP warning in the WordPress Playground.
+
+= 1.4.5 ( 2023-10-30 ) =
 * Fixed alt tags for images exported to Assistant Pro.
 * Fixed saving images to a library from the media app.
 * Fixed translation slugs for wp.org.
