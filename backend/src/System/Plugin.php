@@ -62,6 +62,7 @@ class Plugin {
 	 */
 	public function js_minify_exclude( $js_list ) {
 		$js_list[] = 'fl-assistant';
+		$js_list[] = 'fl-assistant-apps';
 		return $js_list;
 	}
 
