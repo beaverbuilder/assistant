@@ -4,7 +4,7 @@ Tags: Beaver Builder, Gutenberg, Blocks, Elementor, Divi, Visual Composer, Page 
 Requires at least: 5.2
 Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 1.4.8
+Stable tag: 1.4.9
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,10 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 
 == Changelog ==
+
+= 1.4.9 ( 2024-02-29 ) =
+* Added ordering/re-ordering option for items in a library.
+* Fixed Assistant not working with the SG Optimizer plugin.
 
 = 1.4.8 ( 2023-12-13 ) =
 * Fixed an error that occurred when accessing libraries containing items with no thumbnails.
