@@ -74,7 +74,7 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 == Changelog ==
 
-= 1.4.9 ( 2024-02-29 ) =
+= 1.4.9 ( 2024-03-04 ) =
 * Added ordering/re-ordering option for items in a library.
 * Fixed Assistant not working with the SG Optimizer plugin.
 
