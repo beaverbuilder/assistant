@@ -1,6 +1,6 @@
 === Assistant - Every Day Productivity Apps ===
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
-Tags: Beaver Builder, Gutenberg, Blocks, Elementor, Divi, Visual Composer, Page Builder, WordPress Templates, Content Management, Productivity, Assistant Pro
+Tags: Assistant Pro, Beaver Builder, Page Builder, Gutenberg, Blocks
 Requires at least: 5.2
 Tested up to: 6.4
 Requires PHP: 5.6
@@ -8,10 +8,13 @@ Stable tag: 1.4.9
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+Assistant is a plugin that allows you to work more efficiently. It provides you shortcuts to common admin tasks on the front-end of your website.
+
+== Description ==
 Assistant is a free plugin that allows you to work more efficiently in WordPress. It’s a huge time saver and fun to use!
 Assistant is a stand-alone tool that provides shortcuts to common tasks, and will help you work more freely without needing to go to the WordPress admin as much.
 
-= Features =
+== Features ==
 
 *   Access the front-end UI from anywhere (posts, pages, archives, etc...)
 *   Get a glance of your recently edited posts on the home screen.
