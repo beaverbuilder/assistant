@@ -70,7 +70,7 @@ class CloudLibraries {
 		// Handle the post thumb - must come first.
 		if ( isset( $data['media']['thumb'] ) ) {
 			if ( file_exists( $data['media']['thumb'] ) ) {
-				$files['media[thumb]'] = curl_file_create( $data['media']['thumb'] );
+				$files['media[thumb]'] = new CloudFile( $data['media']['thumb'] );
 			} else {
 				$files['media[thumb]'] = null;
 			}
@@ -79,7 +79,7 @@ class CloudLibraries {
 		// Handle image file export.
 		if ( isset( $data['media']['file'] ) ) {
 			if ( file_exists( $data['media']['file'] ) ) {
-				$files['media[file]'] = curl_file_create( $data['media']['file'] );
+				$files['media[file]'] = new CloudFile( $data['media']['file'] );
 			}
 		}
 
@@ -90,7 +90,7 @@ class CloudLibraries {
 			} else {
 				foreach ( $data['media']['attachments'] as $i => $path ) {
 					if ( $path && file_exists( $path ) ) {
-						$files[ "media[attachments][$i]" ] = curl_file_create( $path );
+						$files[ "media[attachments][$i]" ] = new CloudFile( $path );
 					}
 				}
 			}

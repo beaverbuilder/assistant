@@ -25,33 +25,27 @@ class CloudClient {
 		if ( ! isset( $args['method'] ) ) {
 			$args['method'] = 'GET';
 		}
+
 		if ( ! isset( $args['headers'] ) ) {
 			$args['headers'] = [];
 		}
 
-		$url = FL_ASSISTANT_CLOUD_URL . "/api$route";
 		$token_key = 'fl-cloud-token-' . md5( home_url() );
 		$token = isset( $_COOKIE[ $token_key ] ) ? $_COOKIE[ $token_key ] : '';
-		$args['headers'][] = "Authorization: Bearer $token";
-		$curl = curl_init();
-		$fields = isset( $args['data'] ) ? $this->build_query( $args['data'] ) : '';
 
-		curl_setopt_array(
-			$curl, [
-				CURLOPT_URL            => $url,
-				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_SSL_VERIFYPEER => false,
-				CURLOPT_SSL_VERIFYHOST => false,
-				CURLOPT_USERAGENT      => 'Assistant Plugin',
-				CURLOPT_CUSTOMREQUEST  => $args['method'],
-				CURLOPT_HTTPHEADER     => $args['headers'],
-				CURLOPT_POSTFIELDS     => $fields,
-			]
-		);
+		$args['headers']['Authorization'] = "Bearer $token";
+		$args['body'] = isset( $args['data'] ) ? $this->build_query( $args['data'] ) : '';
+		$args['sslverify'] = false;
+		$args['user-agent'] = 'Assistant Plugin';
 
-		$response = curl_exec( $curl );
+		$response = CloudRequest::request( FL_ASSISTANT_CLOUD_URL . "/api$route", $args );
 
-		return json_decode( $response );
+		if ( is_wp_error( $response ) ) {
+			return null;
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+		return json_decode( $body );
 	}
 
 	/**
@@ -108,7 +102,10 @@ class CloudClient {
 
 		foreach ( $data as $key => $value ) {
 			$new_key = $prefix ? "{$prefix}[{$key}]" : $key;
-			if ( is_object( $value ) && 'CURLFile' === get_class( $value ) ) {
+			if (
+				$value instanceof CURLFile ||	
+				$value instanceof CloudFile
+			) {	
 				$query[ $new_key ] = $value;
 			} elseif ( is_array( $value ) || is_object( $value ) ) {
 				$query += $this->build_query( $value, $new_key );
