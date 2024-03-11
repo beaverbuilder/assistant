@@ -20,7 +20,7 @@ const useAdminBarHeight = () => {
 
 	// Beaver builder
 	if ( 'beaver-builder' === application ) {
-		return 45
+		return 44
 	}
 
 	// Gutenberg
