@@ -158,9 +158,9 @@ const LibrarySelect = forwardRef( ( { type, item, CloudUI }, ref ) => {
 			name: item.title,
 			extension: 'JavaScript' === item.subtype ? 'js' : 'css',
 			content: item.code,
-			description: item.description,
 			onComplete: success,
-			onError: error
+			onError: error,
+			...( item.description !== '' && { description: item.description } )
 		} )
 	}
 
