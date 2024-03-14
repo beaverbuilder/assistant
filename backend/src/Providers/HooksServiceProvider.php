@@ -16,6 +16,7 @@ use FL\Assistant\Hooks\Actions\OnWPHead;
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
 use FL\Assistant\Hooks\Filters\OnScriptLoaderTag;
+use FL\Assistant\Hooks\Filters\OnFLBuilderAdminSettingsPostTypes;
 
 use FL\Assistant\Hooks\AdminColumns;
 use FL\Assistant\Hooks\ImageProxy;
@@ -79,6 +80,8 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 		add_filter( 'heartbeat_received', $this->injector->make( OnHeartbeatReceived::class ), 11, 2 );
 
 		add_filter( 'fl_builder_ui_bar_buttons', $this->injector->make( OnFLBuilderUIBarButtons::class ) );
+
+		add_filter( 'fl_builder_admin_settings_post_types', $this->injector->make( OnFLBuilderAdminSettingsPostTypes::class ) );
 
 		add_filter( 'script_loader_tag', $this->injector->make( OnScriptLoaderTag::class ), 10, 3 );
 	}
