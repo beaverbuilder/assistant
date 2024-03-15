@@ -59,9 +59,10 @@ export const getPostActions = ( { history, values, setValue, createNotice, Cloud
 				history.goBack()
 			}
 		} else if ( confirm( __( 'Do you really want to trash this item?' ) ) ) {
-			wpRest.posts().update( id, 'trash' )
-			setValue( 'trashedStatus', status, true )
-			setValue( 'status', 'trash', true )
+			wpRest
+				.posts().update( id, 'trash' )
+				setValue( 'trashedStatus', status, true )
+				setValue( 'status', 'trash', true )
 		}
 	}
 

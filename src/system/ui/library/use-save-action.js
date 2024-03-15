@@ -152,6 +152,18 @@ const LibrarySelect = forwardRef( ( { type, item, CloudUI }, ref ) => {
 		} )
 	}
 
+	const saveCode = ( success, error ) => {
+		uploader.addFile( {
+			type: 'code',
+			name: item.title,
+			extension: 'JavaScript' === item.subtype ? 'js' : 'css',
+			content: item.code,
+			onComplete: success,
+			onError: error,
+			...( item.description !== '' && { description: item.description } )
+		} )
+	}
+
 	const saveAttachment = ( success, error ) => {
 		wpRest.libraries().exportImage( item.id, library )
 			.then( success )
@@ -159,10 +171,13 @@ const LibrarySelect = forwardRef( ( { type, item, CloudUI }, ref ) => {
 	}
 
 	const save = ( success = () => {}, error = () => {} ) => {
+
 		if ( 'post' === type ) {
 			savePost( success, error )
 		} else if ( 'attachment' === type ) {
 			saveAttachment( success, error )
+		} else if ( 'code' === type ) {
+			saveCode( success, error )
 		}
 	}
 

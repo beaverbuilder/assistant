@@ -116,6 +116,19 @@ class PostTransformer {
 			'hasLock'          => wp_check_post_lock( $post->ID ),
 		];
 
+		// Code App
+		if ( 'fl_code' === $post->post_type ) {
+			$code = get_post_meta( $post->ID, '_fl_asst_code', true );
+			$code_type = get_post_meta( $post->ID, '_fl_asst_code_type', true );
+			$locations = get_post_meta( $post->ID, '_fl_asst_code_locations', true );
+			$enabled = get_post_meta( $post->ID, '_fl_asst_enable', true );
+			$response['code'] = $code;
+			$response['description'] = $post->post_content;
+			$response['enable'] = $enabled;
+			$response['subtype'] = $code_type;
+			$response['locations'] = $locations;
+		}
+
 		// Post visibility.
 		if ( 'private' === $post->post_status ) {
 			$response['visibility'] = 'private';
