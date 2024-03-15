@@ -12,11 +12,12 @@ const Rules = ( { item, onChange } ) => {
 	const typesData = Object.entries( contentTypes )
 	const exclude_types = ['fl-builder-template', 'fl_code', 'fl-theme-layout']
 	const types = typesData.filter( t => true === t[1].canView && !exclude_types.includes( t[0] ) )
-	const [formData, setFormData] = useState( ( '' !== item.locations ) ? item.locations : [{
+	const locations = '' !== item.locations ? ( Array.isArray( item.locations ) ? item.locations : Object.values(item.locations) ) : [{
 		type: '',
 		operator: '',
 		value: '',
-	}] )
+	}]
+	const [formData, setFormData] = useState(locations)
 
 	const handleChange = ( e, index ) => {
 		const { name, value } = e.target
