@@ -62,7 +62,7 @@ export default () => {
 	}
 
 	return (
-		<>
+		<div style={ { gridColumn: 'span 2' } }>
 			<p>
 				{ __( 'Import in progress. Navigating away from this view will stop the import process!' ) }
 			</p>
@@ -84,18 +84,15 @@ export default () => {
 					__( 'Import Complete!' )
 				}
 			</p>
-		</>
+		</div>
 	)
 }
 
 const StartImportButton = ( { onClick } ) => {
 	return (
 		<>
-			<p>
-				{ __( 'Click the button below to import all items in this library into your site.' ) }
-			</p>
-			<Button onClick={ onClick }>
-				{ __( 'Import Library' ) }
+			<Button onClick={ onClick } title={ __( 'Import all items in this library into your site.' ) }>
+				{ __( 'Import All Library Items' ) }
 			</Button>
 		</>
 	)
