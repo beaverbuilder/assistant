@@ -39,7 +39,6 @@ class PostsExportController extends ControllerAbstract {
 	 * Export a single post.
 	 */
 	public function export_post( $request ) {
-		$this->delete_exports();
 
 		/* Get requested post data */
 		$post_id = absint( $request->get_param( 'id' ) );
@@ -137,22 +136,9 @@ class PostsExportController extends ControllerAbstract {
 		);
 
 		file_put_contents( $file, $export_data );
-
+		update_option( 'fl_assistant_export_file', true );
 		return $file_url;
 	}
-
-	/**
-	 * Remove temporary export files.
-	 */
-	public function delete_exports() {
-		$upload_dir = wp_upload_dir( null, false );
-		$files = glob( trailingslashit( $upload_dir['basedir'] ) . 'assistant_export_*.xml' );
-
-		foreach ( $files as $file ) {
-			unlink( $file );
-		}
-	}
-
 
 	function wxr_cdata( $str ) {
 		if ( ! seems_utf8( $str ) ) {
