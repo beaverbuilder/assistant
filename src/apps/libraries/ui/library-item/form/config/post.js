@@ -197,7 +197,7 @@ const ImportButton = ( { item } ) => {
 	}
 
 	const createPostComplete = ( post ) => {
-		const { editUrl, type } = post
+		const { editUrl, type, postTypeRegistered } = post
 		const label = contentTypes[ type ] ? contentTypes[ type ].labels.singular : __( 'Content' )
 
 		setAction( null )
@@ -216,6 +216,12 @@ const ImportButton = ( { item } ) => {
 				content: (
 					<>
 						{ __( 'Library item imported!' ) }
+						{ ! postTypeRegistered && 
+							<>
+							{ ' ' }
+							{ __( 'The post type' ) } "<strong>{ type }</strong>" { __( 'is not registered on this site.' ) }
+							</>
+						}
 						{ editUrl &&
 							<a
 								style={ {
