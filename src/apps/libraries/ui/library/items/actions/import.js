@@ -8,7 +8,7 @@ import { usePostMediaImport } from 'ui/library/use-post-media-import'
 import cloud from 'assistant/cloud'
 
 export default () => {
-  const { items, setItems } = Libraries.LibraryContext.use()
+  const { items, setItems, createNotice } = Libraries.LibraryContext.use()
   const { items: selectedItems, clearSelection, totalSelectedItems } = Selection.use()
 	const [ currentItem, setCurrentItem ] = useState( null )
   const [ completedItemCount, setCompletedItemCount ] = useState( 0 )
@@ -17,6 +17,7 @@ export default () => {
 
   const importItems = async( ids = [] ) => {
     let completedItemCount = 0
+    let invalidPostTypes = []
 
     for ( const id of selectedItems ) {
       const item = items.find( obj => obj.id === id )
@@ -29,6 +30,10 @@ export default () => {
         } else if ( 'post' === item.type ) {
           await cloud.libraries.getItem( item.id ).then( async itemResponse => {
             await api.importPost( itemResponse.data ).then( async postResponse => {
+              if ( ! postResponse.data.postTypeRegistered ) {
+                invalidPostTypes.push( postResponse.data.type )
+              }
+
               await importPostMedia( postResponse.data, itemResponse.data )
             } )
           } )
@@ -40,6 +45,22 @@ export default () => {
       completedItemCount++
       setCompletedItemCount( completedItemCount )
     }
+
+    createNotice( {
+      status: 'success',
+      shouldDismiss: false,
+      content: (
+        <>
+          { __( 'Library items imported!' ) }
+          { ( invalidPostTypes.length > 0 ) && 
+            <>
+            { ' ' }
+            { __( 'These imported post types are not registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
+            </>
+          }
+        </>
+      )
+    } )
 
     setCompletedItemCount( 0 )
     clearSelection()

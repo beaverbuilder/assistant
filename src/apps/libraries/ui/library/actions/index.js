@@ -42,7 +42,7 @@ export default () => {
 				hasItems &&
 				<Layout.Row align="right">
 					<Button onClick={ () => setIsSelecting( true ) }>
-						{ __( 'Select Items' ) }
+						{ __( 'Select' ) }
 					</Button>
 				</Layout.Row>
 			}
