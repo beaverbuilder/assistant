@@ -184,6 +184,22 @@ const ImportButton = ( { item } ) => {
 
 	const createPost = () => {
 		librariesApi.importPost( item ).then( response => {
+			if ( postResponse.data.error && postResponse.data.error_code === 'post_type_not_registered') {
+				createNotice( {
+					status: 'error',
+					shouldDismiss: false,
+					content: (
+						<>
+							{ __( 'The library item was not able to be imported.') }
+							{ ' ' }
+							{ __( 'The post type' ) } "<strong>{ postResponse.data.post_type }</strong>" { __( 'is not registered on this site.' ) }
+						</>
+					)
+				} )
+
+				return
+			}
+
 			setImportingMedia( true )
 			importPostMedia( response.data, item ).then( createPostComplete )
 		} ).catch( () => {
@@ -215,9 +231,10 @@ const ImportButton = ( { item } ) => {
 				shouldDismiss: false,
 				content: (
 					<>
-						{ __( 'Library item imported!' ) }
+						{ postTypeRegistered && __( 'Library item imported!' ) }
 						{ ! postTypeRegistered && 
 							<>
+							{ __( 'The library item was not able to be imported.') }
 							{ ' ' }
 							{ __( 'The post type' ) } "<strong>{ type }</strong>" { __( 'is not registered on this site.' ) }
 							</>

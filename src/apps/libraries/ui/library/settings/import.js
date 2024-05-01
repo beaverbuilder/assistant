@@ -29,6 +29,11 @@ export default () => {
 
 			cloud.libraries.getItem( item.id ).then( itemResponse => {
 				api.importPost( itemResponse.data ).then( postResponse => {
+					if ( postResponse.data.error && postResponse.data.error_code === 'post_type_not_registered') {
+						invalidPostTypes.push( postResponse.data.post_type )
+						return
+					}
+
 					if ( ! postResponse.data.postTypeRegistered ) {
 						invalidPostTypes.push( postResponse.data.type )
 					}
@@ -71,7 +76,7 @@ export default () => {
 						{ ( invalidPostTypes.length > 0 ) && 
 							<>
 							{ ' ' }
-							{ __( 'These imported post types are not registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
+							{ __( 'Some items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
 							</>
 						}
 					</>
