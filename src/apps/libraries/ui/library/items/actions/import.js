@@ -15,8 +15,9 @@ export default () => {
 	const importPostMedia = usePostMediaImport()
   const api = getWpRest().libraries()
 
-  const importItems = async( ids = [] ) => {
+  const importItems = async() => {
     let completedItemCount = 0
+    let invalidItemCount = 0
     let invalidPostTypes = []
 
     for ( const id of selectedItems ) {
@@ -25,13 +26,16 @@ export default () => {
       if ( item !== undefined ) {
         setCurrentItem( item )
         
-        if ( 'color' === item.type || 'theme_settings' === item.type ) {
-          return
+        if ( 'color' === item.type || 'theme_settings' === item.type || 'code' === item.type ) {
+          completedItemCount++
+          setCompletedItemCount( completedItemCount )
+          continue
         } else if ( 'post' === item.type ) {
           await cloud.libraries.getItem( item.id ).then( async itemResponse => {
             await api.importPost( itemResponse.data ).then( async postResponse => {
-              if ( postResponse.data.error && postResponse.data.error_code === 'post_type_not_registered') {
+              if ( postResponse.data.error && postResponse.data.error_code === 'post_type_not_registered' ) {
                 invalidPostTypes.push( postResponse.data.post_type )
+                invalidItemCount++
                 return
               }
 
@@ -51,21 +55,35 @@ export default () => {
       setCompletedItemCount( completedItemCount )
     }
 
-    createNotice( {
-      status: 'success',
-      shouldDismiss: false,
-      content: (
-        <>
-          { __( 'Library items imported!' ) }
-          { ( invalidPostTypes.length > 0 ) && 
-            <>
-            { ' ' }
-            { __( 'Some items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
-            </>
-          }
-        </>
-      )
-    } )
+    invalidPostTypes = Array.from( new Set(invalidPostTypes) ) // Remove duplicates
+
+    if (invalidItemCount < completedItemCount) {
+      createNotice( {
+        status: 'success',
+        shouldDismiss: false,
+        content: (
+          <>
+            { __( 'Library items imported!' ) }
+            { ( invalidItemCount > 0 ) && 
+              <>
+              { ' ' }
+              { __( 'Some items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
+              </>
+            }
+          </>
+        )
+      } )
+    } else {
+      createNotice( {
+        status: 'error',
+        shouldDismiss: false,
+        content: (
+          <>
+            { __( 'The selected items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
+          </>
+        )
+      } )
+    }
 
     setCompletedItemCount( 0 )
     clearSelection()

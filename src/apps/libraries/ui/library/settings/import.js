@@ -7,149 +7,147 @@ import { usePostMediaImport } from 'ui/library/use-post-media-import'
 import cloud from 'assistant/cloud'
 
 export default () => {
-	const { items, createNotice } = Libraries.LibraryContext.use()
-	const [ currentItem, setCurrentItem ] = useState( null )
-	const [ importComplete, setImportComplete ] = useState( false )
-	const importPostMedia = usePostMediaImport()
-	let invalidPostTypes = []
+  const { items, createNotice } = Libraries.LibraryContext.use()
+  const [ currentItem, setCurrentItem ] = useState( null )
+  const [ selectedItems, setSelectedItems ] = useState( [] )
+  const [ importComplete, setImportComplete ] = useState( false )
+  const [ completedItemCount, setCompletedItemCount ] = useState( 0 )
+  const importPostMedia = usePostMediaImport()
+  const api = getWpRest().libraries()
 
-	useEffect( () => {
-		if ( null !== currentItem ) {
-			importCurrentItem()
-		}
-	}, [ currentItem ] )
+  const importItems = async() => {
+    let completedItemCount = 0
+    let invalidItemCount = 0
+    let invalidPostTypes = []
+    let selectedItems = items.map( item => item.id )
 
-	const importCurrentItem = () => {
-		const item = items[ currentItem ]
-		const api = getWpRest().libraries()
+    setSelectedItems( selectedItems )
+    setImportComplete( false )
 
-		if ( 'color' === item.type || 'theme_settings' === item.type ) {
-			importNextItem()
-		} else if ( 'post' === item.type ) {
+    for ( const id of selectedItems ) {
+      const item = items.find( obj => obj.id === id )
 
-			cloud.libraries.getItem( item.id ).then( itemResponse => {
-				api.importPost( itemResponse.data ).then( postResponse => {
-					if ( postResponse.data.error && postResponse.data.error_code === 'post_type_not_registered') {
-						invalidPostTypes.push( postResponse.data.post_type )
-						return
-					}
+      if ( item !== undefined ) {
+        setCurrentItem( item )
+        
+        if ( 'color' === item.type || 'theme_settings' === item.type || 'code' === item.type ) {
+          completedItemCount++
+          setCompletedItemCount( completedItemCount )
+          continue
+        } else if ( 'post' === item.type ) {
+          await cloud.libraries.getItem( item.id ).then( async itemResponse => {
+            await api.importPost( itemResponse.data ).then( async postResponse => {
+              if ( postResponse.data.error && postResponse.data.error_code === 'post_type_not_registered' ) {
+                invalidPostTypes.push( postResponse.data.post_type )
+                invalidItemCount++
+                return
+              }
 
-					if ( ! postResponse.data.postTypeRegistered ) {
-						invalidPostTypes.push( postResponse.data.type )
-					}
+              if ( ! postResponse.data.postTypeRegistered ) {
+                invalidPostTypes.push( postResponse.data.type )
+              }
 
-					importPostMedia( postResponse.data, itemResponse.data ).then( () => {
-						importNextItem()
-					} )
-				} ).catch( () => {
-					importNextItem()
-				} )
-			} ).catch( () => {
-				importNextItem()
-			} )
+              await importPostMedia( postResponse.data, itemResponse.data )
+            } )
+          } )
+        } else {
+          await api.importItem( item )
+        }
+      }
 
-		} else {
-			api.importItem( item ).finally( importNextItem )
-		}
-	}
+      completedItemCount++
+      setCompletedItemCount( completedItemCount )
+    }
 
-	const importNextItem = () => {
-		let nextItem
+    invalidPostTypes = Array.from( new Set(invalidPostTypes) ) // Remove duplicates
 
-		if ( currentItem === null ) {
-			nextItem = 0
-			invalidPostTypes = []
-		} else {
-			nextItem = currentItem + 1
-		}
+    if (invalidItemCount < completedItemCount) {
+      createNotice( {
+        status: 'success',
+        shouldDismiss: false,
+        content: (
+          <>
+            { __( 'Library items imported!' ) }
+            { ( invalidItemCount > 0 ) && 
+              <>
+              { ' ' }
+              { __( 'Some items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
+              </>
+            }
+          </>
+        )
+      } )
+    } else {
+      createNotice( {
+        status: 'error',
+        shouldDismiss: false,
+        content: (
+          <>
+            { __( 'The selected items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
+          </>
+        )
+      } )
+    }
 
-		if ( ! items[ nextItem ] ) {
-			setCurrentItem( null )
-			setImportComplete( true )
+    setCompletedItemCount( 0 )
+    setImportComplete( true )
+  }
 
-			createNotice( {
-				status: 'success',
-				shouldDismiss: false,
-				content: (
-					<>
-						{ __( 'Library items imported!' ) }
-						{ ( invalidPostTypes.length > 0 ) && 
-							<>
-							{ ' ' }
-							{ __( 'Some items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
-							</>
-						}
-					</>
-				)
-			} )
+  if ( null === currentItem && ! importComplete ) {
+    return (
+      <Button
+        onClick={ importItems }
+        title={ __( 'Import all items in this library into your site.' ) }
+      >
+        { __( 'Import All Library Items' ) }
+      </Button>
+    )
+  }
 
-			return
-		}
-		setCurrentItem( nextItem )
-	}
-
-	if ( null === currentItem && ! importComplete ) {
-		return (
-			<StartImportButton
-				onClick={ () => importNextItem() }
-			/>
-		)
-	}
-
-	return (
-		<div style={ { gridColumn: 'span 2' } }>
-			<p>
-				{ __( 'Import in progress. Navigating away from this view will stop the import process!' ) }
-			</p>
-			<LoadingBar
-				progress={ null === currentItem ? 100 : ( currentItem / items.length ) * 100 }
-			/>
-			<p style={ {
-				fontStyle: 'italic',
-				fontSize: '12px',
-				marginTop: 'var(--fluid-sm-space)',
-				whiteSpace: 'nowrap',
-				overflow: 'hidden',
-				textOverflow: 'ellipsis'
-			} }>
-				{ null !== currentItem &&
-					sprintf( __( 'Importing %s' ), items[ currentItem ].name )
-				}
-				{ null === currentItem &&
-					__( 'Import Complete!' )
-				}
-			</p>
-		</div>
-	)
-}
-
-const StartImportButton = ( { onClick } ) => {
-	return (
-		<>
-			<Button onClick={ onClick } title={ __( 'Import all items in this library into your site.' ) }>
-				{ __( 'Import All Library Items' ) }
-			</Button>
-		</>
-	)
+  return (
+    <div style={ { gridColumn: 'span 2' } }>
+      <p>
+        { __( 'Import in progress. Navigating away from this view will stop the import process!' ) }
+      </p>
+      <LoadingBar
+        progress={ ( completedItemCount / selectedItems.length ) * 100 }
+      />
+      <p style={ {
+        fontStyle: 'italic',
+        fontSize: '12px',
+        marginTop: 'var(--fluid-sm-space)',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+      } }>
+        { null !== currentItem &&
+          sprintf( __( 'Importing %s' ), currentItem.name )
+        }
+        { null === currentItem &&
+          __( 'Import Complete!' )
+        }
+      </p>
+    </div>
+  )
 }
 
 const LoadingBar = ( { progress } ) => {
-	return (
-		<div
-			style={ {
-				background: 'var(--fluid-transparent-10)',
-				borderRadius: 'var(--fluid-radius)',
-				height: '6px'
-			} }
-		>
-			<div
-				style={ {
-					background: 'var(--fluid-transparent-4)',
-					borderRadius: 'var(--fluid-radius)',
-					height: '6px',
-					width: `${ progress }%`
-				} }
-			/>
-		</div>
-	)
+  return (
+    <div
+      style={ {
+        background: 'var(--fluid-transparent-10)',
+        borderRadius: 'var(--fluid-radius)',
+        height: '6px'
+      } }
+    >
+      <div
+        style={ {
+          background: 'var(--fluid-transparent-4)',
+          borderRadius: 'var(--fluid-radius)',
+          height: '6px',
+          width: `${ progress }%`
+        } }
+      />
+    </div>
+  )
 }
