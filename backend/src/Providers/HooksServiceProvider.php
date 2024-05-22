@@ -12,6 +12,7 @@ use FL\Assistant\Hooks\Actions\OnBeforeDeletePost;
 use FL\Assistant\Hooks\Actions\OnDeleteTerm;
 use FL\Assistant\Hooks\Actions\OnCustomizeRegister;
 use FL\Assistant\Hooks\Actions\OnWPHead;
+use FL\Assistant\Hooks\Actions\OnWP;
 
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
 use FL\Assistant\Hooks\Filters\OnFLBuilderUIBarButtons;
@@ -70,6 +71,7 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 		// Code snippets
 		add_action( 'wp_head', $this->injector->make( OnWPHead::class ) );
+		add_action( 'wp', $this->injector->make( OnWP::class ) );
 
 	}
 
