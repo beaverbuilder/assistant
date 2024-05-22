@@ -24,8 +24,7 @@ class CodePostType extends PostTypeAbstract {
 		register_post_type(
 			'fl_code', [
 				'label'  => __( 'Code', 'fl-assistant' ),
-				'public' => true,
-				'show_in_menu' => false
+				'public' => false,
 			]
 		);
 
