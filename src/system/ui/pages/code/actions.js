@@ -4,10 +4,12 @@ import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { useLibrarySaveAction } from 'ui/library/use-save-action'
 import { createSlug } from 'utils/url'
+import { useHistory } from 'react-router-dom'
 
 export const getCodeActions = ( { history, values, setValue, createNotice, CloudUI } ) => {
 	const { contentTypes, currentUser, emptyTrashDays } = getSystemConfig()
 	const wpRest = getWpRest()
+	const { goBack } = useHistory()
 
 	const { saveToLibrary, LibraryDialog } = useLibrarySaveAction( {
 		type: 'code',
@@ -44,7 +46,6 @@ export const getCodeActions = ( { history, values, setValue, createNotice, Cloud
 
 	const deleteCode = () => {
 		if ( confirm( __( 'Do you really want to permanently delete this item?' ) ) ) {
-
 			wpRest
 				.posts()
 				.delete( id, true )
@@ -54,8 +55,8 @@ export const getCodeActions = ( { history, values, setValue, createNotice, Cloud
 						status: 'success',
 						content: __( 'Code permanently deleted!' )
 					} )
+					goBack()
 				} )
-			// history.goBack()
 		}
 	}
 
