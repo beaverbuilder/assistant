@@ -69,6 +69,20 @@ export const Code = ( {
 					}
 				}
 
+				const setEnabled = (enabled = true) => {
+					const { id, uuid } = item
+					const data = { meta: { _fl_asst_enable: enabled } }
+
+					wpRest
+						.posts()
+						.update( id, 'data', data )
+						.then( () => {
+							updateItem( uuid, {
+								enable: ( enabled ? '1' : '' ),
+							} )
+						} )
+				}
+
 				const getDescription = () => {
 					if ( item.author ) {
 						return __( 'by' ) + ' ' + item.author
@@ -112,12 +126,26 @@ export const Code = ( {
 					if ( '1' === item.enable ) {
 						marks.push(
 							<span
-								className="fl-asst-list-item-color-mark"
-								style={ { background: 'Green' } }
-								title={ 'Green' }
-							></span>
+								className="fl-asst-list-item-mark-clickable"
+								onClick={ (e) => { setEnabled( false ); e.stopPropagation() } }
+							>
+								<span
+									className="fl-asst-list-item-color-mark"
+									style={ { background: 'Green' } }
+									title={ 'Green' }
+								></span>
+								{ __( 'Active' ) }
+							</span>
 						)
-						marks.push( __( 'Active' ) )
+					} else {
+						marks.push(
+							<span 
+								className="fl-asst-list-item-mark-clickable fl-asst-list-item-mark-inactive"
+								onClick={ (e) => { setEnabled( true ); e.stopPropagation() } }
+							>
+								{ __( 'Inactive' ) }
+							</span>
+						)
 					}
 
 					return marks
