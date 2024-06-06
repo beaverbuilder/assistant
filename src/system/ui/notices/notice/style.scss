@@ -2,28 +2,33 @@
     .fl-asst-notice {
         padding: 0 var(--fluid-lg-space);
         padding-right: var(--fluid-med-space);
+        min-height: 60px;
         margin: 0;
-        height: 60px;
         border: none;
+        border-bottom: 1px solid var(--fluid-opaque-10);
         pointer-events: auto;
 
         &.is-info {
             color: var(--fluid-primary-color);
             background: var(--fluid-primary-background);
             box-shadow: inset 3px 0 0 var(--fluid-primary-color);
+            border-bottom-color: var(--fluid-primary-color);
         }
         &.is-error {
             color: var(--fluid-destructive-color);
             background: var(--fluid-destructive-background);
             box-shadow: inset 3px 0 0 var(--fluid-destructive-color);
+            border-bottom-color: var(--fluid-destructive-color);
         }
         &.is-warning {
             color: var(--fluid-alert-color);
             background: var(--fluid-alert-background);
             box-shadow: inset 3px 0 0 var(--fluid-alert-color);
+            border-bottom-color: var(--fluid-alert-color);
         }
         &.is-success {
             box-shadow: inset 3px 0 0 #4ab866;
+            border-bottom-color: #4ab866;
 
             button svg path {
                 fill: #4ab866;
@@ -41,6 +46,7 @@
 			background: var(--fluid-blue-3);
 			color: var(--fluid-blue-12);
 			box-shadow: inset 3px 0 0 var(--fluid-blue);
+            border-bottom-color: var(--fluid-blue);
 
 			button svg path {
 				fill: var(--fluid-blue);

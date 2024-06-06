@@ -1,8 +1,9 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
-import { Layout, Page } from 'assistant/ui'
+import { Layout, Page, Button } from 'assistant/ui'
 import ImportLibrary from './import'
+import DownloadZip from './download-zip'
 import { useSystemState } from 'assistant/data'
 import './style.scss'
 
@@ -42,8 +43,11 @@ export default () => {
 					}
 
 					<Layout.Box padY={ false }>
-						<Page.Section label={ __( 'Import Library' ) }>
-							<ImportLibrary />
+						<Page.Section label={ __( 'Actions' ) }>
+							<Button.Group appearance="grid">
+								<ImportLibrary />
+								<DownloadZip />
+							</Button.Group>
 						</Page.Section>
 					</Layout.Box>
 				</>
