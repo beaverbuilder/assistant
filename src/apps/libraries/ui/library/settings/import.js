@@ -18,7 +18,7 @@ export default () => {
   const importItems = async() => {
     let completedItemCount = 0
     let invalidItemCount = 0
-    let invalidPostTypes = []
+    let invalidPosts = []
     let selectedItems = items.map( item => item.id )
 
     setSelectedItems( selectedItems )
@@ -31,20 +31,15 @@ export default () => {
         setCurrentItem( item )
         
         if ( 'color' === item.type || 'theme_settings' === item.type || 'code' === item.type ) {
-          completedItemCount++
-          setCompletedItemCount( completedItemCount )
-          continue
+          invalidPosts.push( { name: item.name, type: item.type } )
+          invalidItemCount++
         } else if ( 'post' === item.type ) {
           await cloud.libraries.getItem( item.id ).then( async itemResponse => {
             await api.importPost( itemResponse.data ).then( async postResponse => {
               if ( postResponse.data.error && postResponse.data.error_code === 'post_type_not_registered' ) {
-                invalidPostTypes.push( postResponse.data.post_type )
+                invalidPosts.push( { name: item.name, type: postResponse.data.post_type } )
                 invalidItemCount++
                 return
-              }
-
-              if ( ! postResponse.data.postTypeRegistered ) {
-                invalidPostTypes.push( postResponse.data.type )
               }
 
               await importPostMedia( postResponse.data, itemResponse.data )
@@ -59,7 +54,9 @@ export default () => {
       setCompletedItemCount( completedItemCount )
     }
 
-    invalidPostTypes = Array.from( new Set(invalidPostTypes) ) // Remove duplicates
+    const invalidPostList = invalidPosts.map( post => (
+      <li key={ post.name }>{ post.name } ({ post.type })</li>
+    ) )
 
     if (invalidItemCount < completedItemCount) {
       createNotice( {
@@ -70,8 +67,9 @@ export default () => {
             { __( 'Library items imported!' ) }
             { ( invalidItemCount > 0 ) && 
               <>
-              { ' ' }
-              { __( 'Some items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
+                { ' ' }
+                { __( 'Some items were not able to be imported due to these post types not being registered on this site: ' ) }
+                <br /><ul>{ invalidPostList }</ul>
               </>
             }
           </>
@@ -83,7 +81,8 @@ export default () => {
         shouldDismiss: false,
         content: (
           <>
-            { __( 'The selected items were not able to be imported due to these post types not being registered on this site: ' ) } "<strong>{ invalidPostTypes.join('", "') }</strong>"
+            { __( 'The selected items were not able to be imported due to these post types not being registered on this site: ' ) }
+            <br /><ul>{ invalidPostList }</ul>
           </>
         )
       } )
