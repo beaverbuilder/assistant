@@ -134,7 +134,7 @@ export const Code = ( {
 									style={ { background: 'Green' } }
 									title={ 'Green' }
 								></span>
-								{ __( 'Active' ) }
+								{ __( 'Enabled' ) }
 							</span>
 						)
 					} else {
@@ -143,7 +143,7 @@ export const Code = ( {
 								className="fl-asst-list-item-mark-clickable fl-asst-list-item-mark-inactive"
 								onClick={ (e) => { setEnabled( true ); e.stopPropagation() } }
 							>
-								{ __( 'Inactive' ) }
+								{ __( 'Disabled' ) }
 							</span>
 						)
 					}
