@@ -1,17 +1,21 @@
 import React from 'react'
+import { __ } from '@wordpress/i18n'
 import { useHistory, useLocation } from 'react-router-dom'
-import { Button, Icon } from 'assistant/ui'
+import { Button, Icon, Layout } from 'assistant/ui'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { useSystemState } from 'assistant/data'
+import { Selection } from '@beaverbuilder/fluid'
 
 export default () => {
 	const history = useHistory()
 	const { cloudUser } = useSystemState()
 	const { pathname } = useLocation()
-	const { isReadOnly, library, showUpload, setShowUpload } = Libraries.LibraryContext.use()
+	const { isReadOnly, library, items, showUpload, setShowUpload } = Libraries.LibraryContext.use()
 	const basePath = `/libraries/${ library.id }`
 	const userid = cloudUser.id
 	const userHasPermission = userid === library.permissions.permissions_user_id
+	const { isSelecting, setIsSelecting } = Selection.use()
+	const hasItems = items && !! items.length
 
 	if ( ! library.permissions.update && ! library.permissions.edit_items ) {
 		if ( ! library.permissions.shared && ! userHasPermission ) {
@@ -34,10 +38,19 @@ export default () => {
 
 	return (
 		<>
+			{
+				hasItems &&
+				<Layout.Row align="right">
+					<Button onClick={ () => setIsSelecting( true ) }>
+						{ __( 'Select' ) }
+					</Button>
+				</Layout.Row>
+			}
 			{ ! isReadOnly && library.permissions.edit_items &&
 				<Button
 					appearance='transparent'
 					isSelected={ showUpload && ! pathname.includes( '/settings' ) }
+					title={ __( 'Add Items' ) }
 					onClick={ goToUpload }
 					style={ {
 						marginLeft: 'auto'
@@ -50,6 +63,7 @@ export default () => {
 				<Button
 					appearance='transparent'
 					isSelected={ pathname.includes( '/settings' ) }
+					title={ __( 'Settings' ) }
 					onClick={ goToSettings }
 				>
 					<Icon.Cog />
