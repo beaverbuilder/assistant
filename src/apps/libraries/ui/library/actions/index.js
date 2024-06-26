@@ -39,7 +39,7 @@ export default () => {
 	return (
 		<>
 			{
-				hasItems &&
+				hasItems && ! pathname.includes( '/settings' ) &&
 				<Layout.Row align="right">
 					<Button onClick={ () => setIsSelecting( true ) }>
 						{ __( 'Select' ) }
