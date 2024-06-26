@@ -131,6 +131,7 @@ class PostsRepository extends RepositoryAbstract {
 		$known = [
 			'wp_template',
 			'wp_template_part',
+			'fl_code',
 		];
 
 		// Types to never show

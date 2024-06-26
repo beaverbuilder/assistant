@@ -320,6 +320,19 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$client = new CloudClient;
 		$item = $client->libraries->get_item( $item->id );
+
+		$registered_post_types = get_post_types();
+
+		if ( ! in_array( $item->data->post->post_type, $registered_post_types ) ) {
+			return rest_ensure_response(
+				[
+					'error' => true,
+					'error_code' => 'post_type_not_registered',
+					'post_type' => $item->data->post->post_type,
+				]
+			);
+		}
+
 		$post_data = $item->data->post;
 		$meta_data = $item->data->meta;
 		$term_data = $item->data->terms;

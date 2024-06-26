@@ -1,0 +1,48 @@
+.fl-asst {
+
+    #fl-asst-code-detail {
+
+        .edit-title-button {
+
+            &:hover {
+               background: transparent !important;
+            }
+
+            &:focus, &:active {
+               outline: none;
+               box-shadow: none;
+            }
+        }
+
+        .edit-description {
+            color: var(--fluid-opaque-7);
+            text-decoration: underline;
+        }
+
+        .fl-asst-form-item-content {
+            display: block !important;
+        }
+
+        .fluid-detail-sidebar-backdrop {
+            grid-row: 2;
+        }
+
+        .fluid-detail-page-content-area {
+            padding-top: 0;
+            grid-column: 1 / span 2;
+            grid-row: 2;
+
+            .fl-asst-form-item:nth-child(3) {
+                overflow: hidden;
+            }
+        }
+
+        &.fl-asst-code-update {
+            background: var(--fluid-blue);
+
+            .fluid-text-title {
+                color: var(--fluid-opaque-14);
+            }
+        }
+    }
+}

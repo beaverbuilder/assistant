@@ -11,6 +11,7 @@ use FL\Assistant\Hooks\Actions\OnWPBeforeAdminBarRender;
 use FL\Assistant\Hooks\Actions\OnBeforeDeletePost;
 use FL\Assistant\Hooks\Actions\OnDeleteTerm;
 use FL\Assistant\Hooks\Actions\OnCustomizeRegister;
+use FL\Assistant\Hooks\Actions\OnWPHead;
 use FL\Assistant\Hooks\Actions\OnWP;
 
 use FL\Assistant\Hooks\Filters\OnHeartbeatReceived;
@@ -68,6 +69,8 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 		// Customize register
 		add_action( 'customize_register', $this->injector->make( OnCustomizeRegister::class ) );
 
+		// Code snippets
+		add_action( 'wp_head', $this->injector->make( OnWPHead::class ) );
 		add_action( 'wp', $this->injector->make( OnWP::class ) );
 
 	}

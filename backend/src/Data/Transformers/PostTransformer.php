@@ -74,6 +74,8 @@ class PostTransformer {
 		$thumb_id = get_post_thumbnail_id( $post );
 		$thumb_data = wp_prepare_attachment_for_js( $thumb_id );
 
+		$registered_post_types = get_post_types();
+
 		$all_users = get_users( [ 'who' => 'authors' ] );
 		$users     = [];
 
@@ -86,35 +88,49 @@ class PostTransformer {
 		}
 
 		$response = [
-			'author'           => $author,
-			'post_author'      => $post->post_author,
-			'commentsAllowed'  => 'open' === $post->comment_status ? true : false,
-			'excerpt'          => $post->post_excerpt,
-			'date'             => $date,
-			'editUrl'          => $this->get_edit_post_link( $post ),
-			'previewUrl'       => PreviewHelper::get_post_preview_url( $post ),
-			'id'               => $post->ID,
-			'labels'           => [],
-			'order'            => $post->menu_order,
-			'parent'           => $post->post_parent,
-			'password'         => $post->post_password,
-			'pingbacksAllowed' => 'open' === $post->ping_status ? true : false,
-			'slug'             => $post->post_name,
-			'status'           => $post->post_status,
-			'template'         => empty( $template ) ? 'default' : $template,
-			'terms'            => [],
-			'thumbnail'        => get_the_post_thumbnail_url( $post, 'thumbnail' ),
-			'thumbnailData'    => $thumb_data,
-			'title'            => empty( $post->post_title ) ? __( '(no title)', 'assistant' ) : $post->post_title,
-			'trashedStatus'    => get_post_meta( $post->ID, '_wp_trash_meta_status', true ),
-			'type'             => $post->post_type,
-			'url'              => get_permalink( $post ),
-			'visibility'       => 'public',
-			'commentsCount'    => get_comments_number( $post->ID ),
-			'isSticky'         => is_sticky( $post->ID ),
-			'authorList'       => $users,
-			'hasLock'          => wp_check_post_lock( $post->ID ),
+			'author'             => $author,
+			'post_author'        => $post->post_author,
+			'commentsAllowed'    => 'open' === $post->comment_status ? true : false,
+			'excerpt'            => $post->post_excerpt,
+			'date'               => $date,
+			'editUrl'            => $this->get_edit_post_link( $post ),
+			'previewUrl'         => PreviewHelper::get_post_preview_url( $post ),
+			'id'                 => $post->ID,
+			'labels'             => [],
+			'order'              => $post->menu_order,
+			'parent'             => $post->post_parent,
+			'password'           => $post->post_password,
+			'pingbacksAllowed'   => 'open' === $post->ping_status ? true : false,
+			'slug'               => $post->post_name,
+			'status'             => $post->post_status,
+			'template'           => empty( $template ) ? 'default' : $template,
+			'terms'              => [],
+			'thumbnail'          => get_the_post_thumbnail_url( $post, 'thumbnail' ),
+			'thumbnailData'      => $thumb_data,
+			'title'              => empty( $post->post_title ) ? __( '(no title)', 'assistant' ) : $post->post_title,
+			'trashedStatus'      => get_post_meta( $post->ID, '_wp_trash_meta_status', true ),
+			'type'               => $post->post_type,
+			'url'                => get_permalink( $post ),
+			'visibility'         => 'public',
+			'commentsCount'      => get_comments_number( $post->ID ),
+			'isSticky'           => is_sticky( $post->ID ),
+			'authorList'         => $users,
+			'hasLock'            => wp_check_post_lock( $post->ID ),
+			'postTypeRegistered' => in_array( $post->post_type, $registered_post_types ),
 		];
+
+		// Code App
+		if ( 'fl_code' === $post->post_type ) {
+			$code = get_post_meta( $post->ID, '_fl_asst_code', true );
+			$code_type = get_post_meta( $post->ID, '_fl_asst_code_type', true );
+			$locations = get_post_meta( $post->ID, '_fl_asst_code_locations', true );
+			$enabled = get_post_meta( $post->ID, '_fl_asst_enable', true );
+			$response['code'] = $code;
+			$response['description'] = $post->post_content;
+			$response['enable'] = $enabled;
+			$response['subtype'] = $code_type;
+			$response['locations'] = $locations;
+		}
 
 		// Post visibility.
 		if ( 'private' === $post->post_status ) {

@@ -8,15 +8,15 @@
     "url": "https://github.com/beaverbuilder/assistant.git"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "build:dist": "npm run build && node bin/build-dist.js",
-    "build:pro": "INCLUDE_PRO=true npm run build",
-    "build:pro:dist": "INCLUDE_PRO=true npm run build && node bin/build-dist.js",
+    "build:pro": "cross-env INCLUDE_PRO=true npm run build",
+    "build:pro:dist": "cross-env INCLUDE_PRO=true npm run build && node bin/build-dist.js",
     "build:stats": "webpack --env production --json > stats.json",
     "dev": "webpack",
     "fix": "eslint src --fix",
     "test": "eslint src",
-    "analyze": "NODE_ENV=analyze webpack",
+    "analyze": "cross-env NODE_ENV=analyze webpack",
     "link:packages": "node bin/link.js"
   },
   "license": "GPL-2.0+",
@@ -71,6 +71,7 @@
     "babel-jest": "^26.5.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.2.0",
     "css-minimizer-webpack-plugin": "^3.0.2",
     "eslint": "^7.24.0",

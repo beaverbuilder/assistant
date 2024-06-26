@@ -201,7 +201,7 @@
         pointer-events: none;
         z-index: 1;
         position: absolute;
-        top: -20px;
+        top: 2px;
         min-height: 40px;
         right: var(--fluid-sm-space);
         background: var(--fluid-background);
@@ -262,12 +262,6 @@
             transition-duration: .25s;
         }
     }
-    .fl-asst-list-item:first-child {
-        .fl-asst-item-extras {
-            top: 2px;
-        }
-    }
-
 
     // Marks
     .fl-asst-list-item-marks {
@@ -281,21 +275,33 @@
         justify-content: flex-end;
         align-items: center;
         padding: 0 2px;
-        pointer-events: none;
 
         .fl-asst-list-item-mark {
             font-size: 10px;
             font-weight: normal;
-            padding: 0 5px;
+            padding: 0 5px;            
 
             .fl-asst-list-item-color-mark {
-                display: flex;
-                flex: 0 0 auto;
+                display: inline-block;
                 height: 9px;
                 width: 9px;
                 background: var(--fl-asst-blue);
                 border-radius: 50%;
                 pointer-events: auto;
+                margin-right: 5px;
+            }
+        }
+        
+        .fl-asst-list-item-mark-inactive {
+            color: var(--fluid-opaque-7);
+        }
+
+        .fl-asst-list-item-mark-clickable {
+            padding: 2px;
+            border-radius: 2px;
+
+            &:hover {
+                background-color: var(--fluid-background);
             }
         }
     }

@@ -2,22 +2,20 @@ import React from 'react'
 import { __ } from '@wordpress/i18n'
 import * as CloudUI from '@beaverbuilder/cloud-ui'
 import { Redirect, Switch, Route } from 'react-router-dom'
-import { getSystemConfig } from 'assistant/data'
 import { Page, Layout } from 'assistant/ui'
 import { PostTypeTab } from './tabs'
 import AppIcon from './icon'
-import './style.scss'
 
 export default ( { baseURL } ) => (
 	<Switch>
 		<Route exact path={ baseURL }>
-			<Redirect to={ { pathname: `${baseURL}/tab/post` } } />
+			<Redirect to={ { pathname: `${baseURL}/tab/fl_code` } } />
 		</Route>
 		<Route path={ `${baseURL}/tab/:tab` } component={ Main } />
-		<Route path={ `${baseURL}/post/new` } component={ Page.CreatePost } />
-		<Route path={ `${baseURL}/post/:id` } component={ ( { location, match, history } ) => {
+		<Route path={ `${baseURL}/fl_code/new` } component={ Page.CreatePost } />
+		<Route path={ `${baseURL}/fl_code/:id` } component={ ( { location, match, history } ) => {
 			return (
-				<Page.Post
+				<Page.Code
 					location={ location }
 					match={ match }
 					history={ history }
@@ -28,26 +26,7 @@ export default ( { baseURL } ) => (
 	</Switch>
 )
 
-const Main = () => {
-	const { contentTypes } = getSystemConfig()
-	const getTabs = () => {
-		let tabs = []
-		const exclude_types = [ 'wp_template', 'fl_code' ]
-		Object.keys( contentTypes ).map( key => {
-
-			if( ! exclude_types.includes( key ) ) {
-				const type = contentTypes[key]
-				tabs.push( {
-					handle: key,
-					path: '/fl-content/tab/' + key,
-					label: type.labels.plural,
-					component: () => <PostTypeTab type={ key } />,
-				} )
-			}
-		} )
-
-		return tabs
-	}
+const Main = ( { baseURL } ) => {
 
 	const Header = () => {
 		return (
@@ -55,19 +34,25 @@ const Main = () => {
 		)
 	}
 
-	const tabs = getTabs()
-
-	const onLoad = () => {
-		const item = document.querySelector( '.fl-asst-filter .fluid-button' )
-		if ( item ) {
-			item.focus()
+	const tabs = [
+		{
+			handle: 'fl_code',
+			path: '/fl-code/tab/fl_code',
+			label: 'CSS',
+			component: () => <PostTypeTab type={ 'CSS' } />,
+		},
+		{
+			handle: 'fl_js',
+			path: '/fl-code/tab/fl_js',
+			label: 'JavaScript',
+			component: () => <PostTypeTab type={ 'JavaScript' } />,
 		}
-	}
+	]
 
 	return (
 		<Page
-			id="fl-asst-content-list-page"
-			title={ __( 'Content' ) }
+			id="fl-asst-code-list-page"
+			title={ __( 'Code' ) }
 			icon={ <AppIcon context="sidebar" /> }
 			padY={ false }
 			header={ <Header /> }
@@ -75,7 +60,6 @@ const Main = () => {
 			shouldScroll={ false }
 			shouldShowBackButton={ false }
 			showAsRoot={ true }
-			onLoad={ onLoad }
 		>
 			<Layout.CurrentTab tabs={ tabs } />
 		</Page>

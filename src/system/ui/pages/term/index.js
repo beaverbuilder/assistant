@@ -106,7 +106,6 @@ export const Term = ( { location, history } ) => {
 						taxonomy,
 						value: parent,
 						isVisible: isHierarchical ? true : false
-
 					},
 					description: {
 						label: __( 'Description' ),

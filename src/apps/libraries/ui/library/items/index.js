@@ -3,13 +3,14 @@ import { __ } from '@wordpress/i18n'
 import { useLocation } from 'react-router-dom'
 import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Selection } from '@beaverbuilder/fluid'
-import { Button, Layout, Icon } from 'assistant/ui'
+import { Button, Layout } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
-import cloud from 'assistant/cloud'
 
 import ItemUpload from '../upload'
 import ItemsHeader from '../header'
 import ItemsFilter from './filter'
+import DeleteButton from './actions/delete'
+import ImportButton from './actions/import'
 import './style.scss'
 
 const Wrapper = ( { children, ...rest } ) => {
@@ -42,7 +43,7 @@ export default () => {
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
 	const filteredItems = Libraries.getFilteredItems( itemsFilter, items )
 	const hasItems = items && !! items.length
-	const { isSelecting, items: selectedItems, clearSelection, totalSelectedItems } = Selection.use()
+	const { isSelecting } = Selection.use()
 
 	const isSelectionEnabled = (
 		library.permissions.edit_items &&
@@ -61,39 +62,15 @@ export default () => {
 		return false
 	}
 
-	const DeleteSelectedItemsButton = () => {
-		const { setItems } = Libraries.LibraryContext.use()
-
-		const deleteItems = async( ids = [] ) => {
-			cloud.libraries.deleteItem( ids ).finally( () => {
-				setItems( [ ...items.filter( obj => ! selectedItems.includes( obj.id ) ) ] )
-				clearSelection()
-			} )
-		}
-		return (
-			<Button
-				status="destructive"
-				icon={ <Icon.Trash /> }
-				disabled={ 0 >= totalSelectedItems }
-				onClick={ () => {
-					if ( confirm( __( 'Do you really want to delete these items?' ) ) ) {
-						deleteItems( selectedItems )
-					}
-				} }
-			>
-				{ __( 'Delete' ) }
-			</Button>
-		)
-	}
-
 	return (
 		<Wrapper className="fl-asst-library-content">
 
-			<ItemsFilter style={ { visibility: isSelecting && 'hidden' } } />
+			<ItemsFilter style={ { display: isSelecting && 'none' } } isSticky />
 
 			{ isSelecting && (
-				<Selection.Toolbar style={ { minHeight: 48, flexBasis: 48, position: 'absolute', top: 0, width: '100%' } }>
-					<DeleteSelectedItemsButton />
+				<Selection.Toolbar style={ { minHeight: 48, flexBasis: 48, position: 'sticky', width: '100%' } } isSticky>
+					<ImportButton />
+					<DeleteButton />
 				</Selection.Toolbar>
 			) }
 
