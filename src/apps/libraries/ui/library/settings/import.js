@@ -98,7 +98,7 @@ export default () => {
         onClick={ importItems }
         title={ __( 'Import all items in this library into your site.' ) }
       >
-        { __( 'Import All Library Items' ) }
+        { __( 'Import Library' ) }
       </Button>
     )
   }
