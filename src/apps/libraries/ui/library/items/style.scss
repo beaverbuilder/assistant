@@ -21,8 +21,14 @@
         left: 0;
         width: 100%;
         padding: var(--fluid-med-space);
-        background: var(--fluid-opaque-13);
+        background: var(--fluid-inset-background);
         border-bottom: 1px solid var(--fluid-opaque-10);
         color: var(--fluid-color);
+    }
+
+    .fluid-color-scheme-dark {
+        .fl-asst-import-bar {
+            border-bottom-color: var(--fluid-opaque-3);
+        }
     }
 }
