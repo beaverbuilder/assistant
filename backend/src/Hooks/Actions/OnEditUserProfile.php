@@ -35,6 +35,10 @@ class OnEditUserProfile {
 		$state = $state ? $state : UserState::$default_state;
 		$window = $state['window'];
 
+		if ( ! apply_filters( 'fl_assistant_should_enqueue', true ) ) {
+			return false;
+		}
+
 		$this->view->render(
 			'user-profile', [
 				'show_in_admin'      => $state['shouldShowInAdmin'],
