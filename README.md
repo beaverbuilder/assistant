@@ -1,3 +1,5 @@
+# DEPRECATED REPO - DO NOT USE
+
 # [Assistant](https://assistantforwp.com/)
 
 Assistant is a project started by the makers of Beaver Builder that aims to create a new front end UI space for interacting with WordPress. It consists of a panel that can be toggled on and off of any page (page, post, archive, etc…) on your site. Assistant is meant as a way to quickly navigate between pages and accomplish frequent tasks without going to the WordPress admin. In broader terms Assistant is a UI framework for creating “apps”. This app paradigm allows for any number of new user experiences to be brought to the front end of WordPress.
