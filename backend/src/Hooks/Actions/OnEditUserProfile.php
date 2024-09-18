@@ -31,6 +31,10 @@ class OnEditUserProfile {
 	 */
 	public function __invoke( $user ) {
 
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
+			return false;
+		}
+
 		$state = get_user_meta( $user->ID, UserState::FL_ASSISTANT_STATE, true );
 		$state = $state ? $state : UserState::$default_state;
 		$window = $state['window'];
