@@ -9,6 +9,7 @@ import './fl-comments'
 import './fl-updates'
 import './fl-manage'
 import './fl-cloud-connect'
+import './fl-code'
 
 // Product integrations
 import './integrations'

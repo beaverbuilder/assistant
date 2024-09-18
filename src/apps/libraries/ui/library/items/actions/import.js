@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import { __, sprintf } from '@wordpress/i18n'
-import { Libraries } from '@beaverbuilder/cloud-ui'
-import { Button } from 'assistant/ui'
+import { useState } from 'react'
+import { __ } from '@wordpress/i18n'
 import { getWpRest } from 'assistant/utils/wordpress'
+import { Libraries } from '@beaverbuilder/cloud-ui'
+import { Button, Icon } from 'assistant/ui'
+import { Selection } from '@beaverbuilder/fluid'
 import { usePostMediaImport } from 'ui/library/use-post-media-import'
 import cloud from 'assistant/cloud'
 
 export default () => {
-  const { items, createNotice } = Libraries.LibraryContext.use()
-  const [ currentItem, setCurrentItem ] = useState( null )
-  const [ selectedItems, setSelectedItems ] = useState( [] )
-  const [ importComplete, setImportComplete ] = useState( false )
+  const { items, setItems, createNotice } = Libraries.LibraryContext.use()
+  const { items: selectedItems, clearSelection, totalSelectedItems } = Selection.use()
+	const [ currentItem, setCurrentItem ] = useState( null )
   const [ completedItemCount, setCompletedItemCount ] = useState( 0 )
-  const importPostMedia = usePostMediaImport()
+	const importPostMedia = usePostMediaImport()
   const api = getWpRest().libraries()
 
   const importItems = async() => {
     let completedItemCount = 0
     let invalidItemCount = 0
     let invalidPosts = []
-    let selectedItems = items.map( item => item.id )
-
-    setSelectedItems( selectedItems )
-    setImportComplete( false )
 
     for ( const id of selectedItems ) {
       const item = items.find( obj => obj.id === id )
@@ -89,64 +85,58 @@ export default () => {
     }
 
     setCompletedItemCount( 0 )
-    setImportComplete( true )
+    clearSelection()
   }
-
-  if ( null === currentItem && ! importComplete ) {
-    return (
-      <Button
-        onClick={ importItems }
-        title={ __( 'Import all items in this library into your site.' ) }
-      >
-        { __( 'Import Library' ) }
-      </Button>
-    )
-  }
-
+  
   return (
-    <div style={ { gridColumn: 'span 2' } }>
-      <p>
-        { __( 'Import in progress. Navigating away from this view will stop the import process!' ) }
-      </p>
-      <LoadingBar
-        progress={ ( completedItemCount / selectedItems.length ) * 100 }
-      />
-      <p style={ {
-        fontStyle: 'italic',
-        fontSize: '12px',
-        marginTop: 'var(--fluid-sm-space)',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis'
-      } }>
-        { null !== currentItem &&
-          sprintf( __( 'Importing %s' ), currentItem.name )
-        }
-        { null === currentItem &&
-          __( 'Import Complete!' )
-        }
-      </p>
-    </div>
+    <>
+      <Button
+        disabled={ currentItem !== null }
+        onClick={ importItems }
+      >
+        { __( 'Import' ) }
+      </Button>
+      { currentItem !== null &&
+        <div className="fl-asst-import-bar">
+          <p>
+            { __( 'Import in progress. Navigating away from this view will stop the import process!' ) }
+          </p>
+          <LoadingBar
+            progress={ ( completedItemCount / selectedItems.length ) * 100 }
+          />
+          <p style={ {
+            fontStyle: 'italic',
+            fontSize: '12px',
+            marginTop: 'var(--fluid-sm-space)',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
+          } }>
+            { __( 'Importing' ) } { currentItem.name }
+          </p>
+        </div>
+      }
+    </>
   )
 }
 
 const LoadingBar = ( { progress } ) => {
-  return (
-    <div
-      style={ {
-        background: 'var(--fluid-transparent-10)',
-        borderRadius: 'var(--fluid-radius)',
-        height: '6px'
-      } }
-    >
-      <div
-        style={ {
-          background: 'var(--fluid-transparent-4)',
-          borderRadius: 'var(--fluid-radius)',
-          height: '6px',
-          width: `${ progress }%`
-        } }
-      />
-    </div>
-  )
+	return (
+		<div
+			style={ {
+				background: 'var(--fluid-transparent-10)',
+				borderRadius: 'var(--fluid-radius)',
+				height: '6px'
+			} }
+		>
+			<div
+				style={ {
+					background: 'var(--fluid-transparent-4)',
+					borderRadius: 'var(--fluid-radius)',
+					height: '6px',
+					width: `${ progress }%`
+				} }
+			/>
+		</div>
+	)
 }

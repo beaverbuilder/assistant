@@ -177,7 +177,10 @@ const posts = () => {
 		 */
 		delete( id, force = false, config = {} ) {
 			config.cacheKey = 'posts'
-			return http.delete( `fl-assistant/v1/posts/${id}?force=${force}`, config )
+			config.params = {
+				force: force
+			}
+			return http.delete( `fl-assistant/v1/posts/${id}`, config )
 		},
 
 		/**

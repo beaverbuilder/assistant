@@ -13,9 +13,9 @@ import { Attachment } from './attachment'
 import { Plugin, Theme } from './themes-plugins'
 import { Comment } from './comment'
 import { PageNotFound } from './not-found'
+import { Code } from './code'
 import Loading from './loading'
 import Error from './error'
-
 import './style.scss'
 
 const focusFirstElement = () => {
@@ -68,7 +68,6 @@ const Page = ( {
 // Pass along from FLUID
 Page.Section = FLUIDPage.Section
 
-
 /* ------ Page System Setup ------ */
 Page.defaults = {
 	scrollRef: null,
@@ -88,6 +87,7 @@ Page.NotFound = PageNotFound
 Page.Loading = Loading
 Page.Error = Error
 Page.Detail = DetailPage
+Page.Code = Code
 
 export { Page }
 

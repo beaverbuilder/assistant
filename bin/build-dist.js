@@ -9,7 +9,6 @@ const toDirName = 'assistant'
 const toDir = path.resolve( __dirname, `../../../dist/${toDirName}` )
 
 const filterFiles = src => {
-
     // Get paths to ignore
     const ignores = [
         '.DS_Store',
@@ -40,10 +39,11 @@ const filterFiles = src => {
         'backend/tests',
         'docs',
         'stats.json',
-    ].map( name => `${fromDir}/${name}` )
+    ].map( name => path.join(fromDir, name) )
 
     for( let i in ignores ) {
         const path = ignores[i]
+        
         if ( src.startsWith( path ) ) {
             return false
         }

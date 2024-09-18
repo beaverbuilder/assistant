@@ -4,7 +4,7 @@ Tags: Assistant Pro, Beaver Builder, Page Builder, Gutenberg, Blocks
 Requires at least: 5.2
 Tested up to: 6.6
 Requires PHP: 5.6
-Stable tag: 1.4.9.2
+Stable tag: 1.5.0
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,13 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 
 == Changelog ==
+
+= 1.5.0 ( 2024-08-22 ) =
+* Add Code App that enables you to create and edit CSS and JS code snippets, which you can assign to different sections of your website.
+* Libraries App: Add selection mode to allow for bulk managing of library items including importing and deleting.
+* Libraries App: Add ability to download zip of the library.
+* Fix issue with Libraries app filter not always working correctly.
+* Fix dark mode when importing.
 
 = 1.4.9.2 ( 2024-04-03 ) =
 * Fixed stored XML file security issue with exporting posts potentially exposing author information.

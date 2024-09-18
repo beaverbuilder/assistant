@@ -4,15 +4,18 @@ import { getSystemConfig } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { __, sprintf } from '@wordpress/i18n'
 import { ENTER } from '@wordpress/keycodes'
+import { useHistory } from 'react-router-dom'
 import './style.scss'
 
 const InlineCreate = ( {
 	postType = 'post',
+	codeType = null,
 	onPostCreated = () => {},
 	onError = () => {},
 } ) => {
 	const { contentTypes } = getSystemConfig()
 	const wpRest = getWpRest()
+	const history = useHistory()
 	const [ items, dispatch ] = useReducer( ( state = [], action ) => {
 
 		switch ( action.type ) {
@@ -36,6 +39,13 @@ const InlineCreate = ( {
 			post_type: postType,
 		}
 
+		if( 'fl_code' === postType ) {
+			post.meta_input = {
+				_fl_asst_code_type: codeType,
+			}
+			post.post_status = 'publish'
+		}
+
 		const handleError = error => {
 			onError( error )
 			console.error( error ) // eslint-disable-line no-console
@@ -48,16 +58,22 @@ const InlineCreate = ( {
 			}
 			onPostCreated( data )
 
+			if( 'fl_code' === postType ) {
+				history.push( `/fl-code/fl_code/${data.id}`, { 'item': data } )
+			}
 		} ).catch( error => {
 			handleError( error )
 		} )
 	}
 
+	const typeLabel = 'fl_code' === postType ? codeType : contentTypes[postType].labels.singular
+
 	return (
 		<>
 			<CreateItem
-				typeLabel={ contentTypes[postType].labels.singular }
+				typeLabel={ typeLabel }
 				onCreate={ onCreate }
+				type={ postType }
 			/>
 			{ items.map( ( item, i ) => {
 				const { title } = item
@@ -76,7 +92,7 @@ const InlineCreate = ( {
 	)
 }
 
-const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
+const CreateItem = ( { onCreate = () => {}, typeLabel, type } ) => {
 	const [ val, setVal ] = useState( '' )
 
 	useEffect( () => {
@@ -112,7 +128,7 @@ const CreateItem = ( { onCreate = () => {}, typeLabel } ) => {
 					<Form.Input
 						id="fl-asst-inline-create-item"
 						appearance="transparent"
-						placeholder={ sprintf( 'Create New %s', typeLabel ) }
+						placeholder={ 'fl_code' === type ? sprintf( 'Create New %s File', typeLabel ) : sprintf( 'Create New %s', typeLabel ) }
 						onKeyPress={ keyPress }
 						onInput={ e => setVal( e.target.value ) }
 						after={

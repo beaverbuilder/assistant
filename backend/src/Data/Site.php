@@ -17,6 +17,7 @@ class Site {
 		$actions = [];
 		$intro   = __( 'Currently Viewing', 'assistant' );
 		$type    = '';
+		$type_name	= '';
 		$name    = __( 'Untitled', 'assistant' );
 
 		$obj = get_queried_object();
@@ -52,6 +53,7 @@ class Site {
 				$intro     = __( 'Currently Viewing Post Type Archive', 'assistant' );
 				$type = __( 'Post Type Archive', 'assistant' );
 				$name      = $post_type->labels->singular_name;
+				$type_name = $post_type->name;
 
 			} elseif ( is_tax() || is_category() || is_tag() ) {
 
@@ -72,6 +74,7 @@ class Site {
 			} elseif ( is_singular() || is_attachment() ) {
 
 				$post_type = get_post_type_object( get_post_type() );
+				$type_name = $post_type->name;
 				$labels    = $post_type->labels;
 				$post_type = $labels->singular_name;
 				$intro     = sprintf( esc_html__( 'Currently Viewing %s', 'assistant' ), $post_type );
@@ -118,6 +121,7 @@ class Site {
 		$data['intro']   = $intro;
 		$data['name']    = $name;
 		$data['type']    = $type;
+		$data['type_name']    = $type_name;
 
 		$data['actions'] = $this->filter_actions_by_capability( $actions );
 

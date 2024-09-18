@@ -47,23 +47,25 @@ const DetailPage = ( {
 					</div>
 				) }
 			</div>
-			<div className="fluid-detail-page-hero">
-				<div className="fluid-hero-group">
-					{ title && (
-						<motion.div
-							layout="position"
-							className="fluid-detail-page-title-text"
-						>
-							{title}
-						</motion.div>
-					) }
-					{ thumbnail && (
-						<motion.div layout="position" className="fluid-detail-page-thumbnail">
-							{ thumbnail }
-						</motion.div>
-					) }
+			{ ( title || thumbnail ) &&
+				<div className="fluid-detail-page-hero">
+					<div className="fluid-hero-group">
+						{ title && (
+							<motion.div
+								layout="position"
+								className="fluid-detail-page-title-text"
+							>
+								{title}
+							</motion.div>
+						) }
+						{ thumbnail && (
+							<motion.div layout="position" className="fluid-detail-page-thumbnail">
+								{ thumbnail }
+							</motion.div>
+						) }
+					</div>
 				</div>
-			</div>
+			}
 			{ tabs && (
 				<div className="fluid-detail-page-tabs">
 					<Button.Group>
