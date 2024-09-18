@@ -2,7 +2,7 @@
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Assistant Pro, Beaver Builder, Page Builder, Gutenberg, Blocks
 Requires at least: 5.2
-Tested up to: 6.4
+Tested up to: 6.6
 Requires PHP: 5.6
 Stable tag: 1.4.9.2
 License: GPL2+
