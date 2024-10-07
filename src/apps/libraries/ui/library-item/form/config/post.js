@@ -184,7 +184,7 @@ const ImportButton = ( { item } ) => {
 
 	const createPost = () => {
 		librariesApi.importPost( item ).then( response => {
-			if ( postResponse.data.error && postResponse.data.error_code === 'post_type_not_registered') {
+			if ( response.data.error && response.data.error_code === 'post_type_not_registered') {
 				createNotice( {
 					status: 'error',
 					shouldDismiss: false,
@@ -192,7 +192,7 @@ const ImportButton = ( { item } ) => {
 						<>
 							{ __( 'The library item was not able to be imported.') }
 							{ ' ' }
-							{ __( 'The post type' ) } "<strong>{ postResponse.data.post_type }</strong>" { __( 'is not registered on this site.' ) }
+							{ __( 'The post type' ) } "<strong>{ response.data.post_type }</strong>" { __( 'is not registered on this site.' ) }
 						</>
 					)
 				} )

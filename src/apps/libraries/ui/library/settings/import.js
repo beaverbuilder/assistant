@@ -105,9 +105,11 @@ export default () => {
 
   return (
     <div style={ { gridColumn: 'span 2' } }>
-      <p>
-        { __( 'Import in progress. Navigating away from this view will stop the import process!' ) }
-      </p>
+      { ! importComplete &&
+        <p>
+          { __( 'Import in progress. Navigating away from this view will stop the import process!' ) }
+        </p>
+      }
       <LoadingBar
         progress={ ( completedItemCount / selectedItems.length ) * 100 }
       />
@@ -119,10 +121,10 @@ export default () => {
         overflow: 'hidden',
         textOverflow: 'ellipsis'
       } }>
-        { null !== currentItem &&
+        { null !== currentItem && ! importComplete &&
           sprintf( __( 'Importing %s' ), currentItem.name )
         }
-        { null === currentItem &&
+        { importComplete &&
           __( 'Import Complete!' )
         }
       </p>
