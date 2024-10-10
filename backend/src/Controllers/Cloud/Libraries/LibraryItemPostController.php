@@ -448,7 +448,9 @@ class LibraryItemPostController extends ControllerAbstract {
 			}
 			if ( is_array( $meta_value ) && count( $meta_value ) !== 0 ) {
 				foreach ( $meta_value as $value ) {
-					$value = addslashes( $value );
+					if ( $value !== null ) {
+						$value = addslashes( $value );
+					}
 					// @codingStandardsIgnoreStart
 					$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" );
 					// @codingStandardsIgnoreEnd

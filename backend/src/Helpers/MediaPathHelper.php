@@ -200,6 +200,10 @@ class MediaPathHelper {
 		$pattern = '#https?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/|_)\.(jpg|jpeg|png|gif|svg|webp))#';
 		$urls = [];
 
+		if ( $string === null ) {
+			return $urls;
+		}
+
 		if ( preg_match_all( $pattern, $string, $matches ) ) {
 			if ( isset( $matches[0] ) && ! empty( $matches[0] ) ) {
 				$urls = $matches[0];
