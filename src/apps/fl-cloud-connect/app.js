@@ -39,7 +39,7 @@ const Banner = () => {
 }
 
 const Main = () => {
-	const { cloudConfig } = getSystemConfig()
+	const { cloudConfig, isBBExtension } = getSystemConfig()
 	const { isValidating } = useAppState( 'fl-cloud-connect' )
 
 	if ( isValidating ) {
@@ -73,12 +73,21 @@ const Main = () => {
 					margin: '0 auto'
 				} }
 			>
-				<Text.Title style={ { fontSize: 20 } }>{ __( 'Introducing Assistant Pro' ) }</Text.Title>
-
-				<p style={ { marginBottom: 30 } }>{__( 'Assistant Pro joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them. To use libraries, you’ll need an Assistant Pro account.' )}</p>
-
-				<ConnectButton onClick={ connect }>{ __( 'Connect to Pro' ) }</ConnectButton>
-
+				{ isBBExtension &&
+					<>
+						<Text.Title style={ { fontSize: 20 } }>{ __( 'Beaver Builder Cloud' ) }</Text.Title>
+						<Text.Title style={ { fontSize: 14, marginTop: '5px' } }>{ __( 'Powered by Assistant Pro' ) }</Text.Title>
+						<p style={ { marginBottom: 30 } }>{__( 'Beaver Builder Cloud joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them.' )}</p>
+						<ConnectButton onClick={ connect }>{ __( 'Connect to Cloud' ) }</ConnectButton>
+					</>
+				}
+				{ ! isBBExtension &&
+					<>
+						<Text.Title style={ { fontSize: 20 } }>{ __( 'Introducing Assistant Pro' ) }</Text.Title>
+						<p style={ { marginBottom: 30 } }>{__( 'Assistant Pro joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them. To use libraries, you’ll need an Assistant Pro account.' )}</p>
+						<ConnectButton onClick={ connect }>{ __( 'Connect to Pro' ) }</ConnectButton>
+					</>
+				}
 				<div style={ { marginTop: 30 } }>
 					<a href={ `${ cloudConfig.appUrl }/register` } target='blank'>
 						{ __( 'Don\'t have an account? Register now!' ) }
