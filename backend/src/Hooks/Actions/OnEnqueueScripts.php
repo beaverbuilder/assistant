@@ -9,6 +9,7 @@ use FL\Assistant\Data\Transformers\UserTransformer;
 use FL\Assistant\Data\UserState;
 use FL\Assistant\Data\Mockup;
 use FL\Assistant\Services\ThemeService;
+use FL\Assistant\Helpers\BeaverBuilderHelper;
 use FLBuilderModel;
 
 /**
@@ -186,8 +187,8 @@ class OnEnqueueScripts {
 	 */
 	public function should_enqueue() {
 
-		// Don't enqueue outside of BB if in BB cloud mode.
-		if ( defined( 'FL_ASSISTANT_BB_CLOUD' ) && class_exists( 'FLBuilder' ) && ! FLBuilderModel::is_builder_active() ) {
+		// Don't enqueue outside of BB if in extension mode.
+		if ( BeaverBuilderHelper::is_assistant_extension() && ! FLBuilderModel::is_builder_active() ) {
 			return false;
 		}
 
