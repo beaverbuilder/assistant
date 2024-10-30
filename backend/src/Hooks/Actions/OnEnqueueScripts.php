@@ -177,6 +177,7 @@ class OnEnqueueScripts {
 				'pusherCluster'   => FL_ASSISTANT_PUSHER_CLUSTER,
 			],
 			'embedInBB'           => FL_ASST_SUPPORTS_BB,
+			'isBBExtension'		  => BeaverBuilderHelper::is_assistant_extension(),
 			'themeSlug'           => $theme['slug'],
 			'themeParentSlug'     => $theme['parent'] ? $theme['parent']['slug'] : null,
 		];
