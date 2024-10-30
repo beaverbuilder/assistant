@@ -94,6 +94,7 @@ const config = {
 		system: './src/system',
 		render: './src/render',
 		apps: './src/apps',
+		'apps-cloud': './src/apps-cloud',
 	},
 	externals,
 	output: {
