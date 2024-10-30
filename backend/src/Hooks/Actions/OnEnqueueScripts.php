@@ -189,7 +189,7 @@ class OnEnqueueScripts {
 	public function should_enqueue() {
 
 		// Don't enqueue outside of BB if in extension mode.
-		if ( BeaverBuilderHelper::is_assistant_extension() && ! FLBuilderModel::is_builder_active() ) {
+		if ( BeaverBuilderHelper::is_assistant_extension() && class_exists( 'FLBuilder' ) && ! FLBuilderModel::is_builder_active() ) {
 			return false;
 		}
 
