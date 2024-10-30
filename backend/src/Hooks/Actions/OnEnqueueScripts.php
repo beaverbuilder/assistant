@@ -186,6 +186,11 @@ class OnEnqueueScripts {
 	 */
 	public function should_enqueue() {
 
+		// Don't enqueue outside of BB if in BB cloud mode.
+		if ( defined( 'FL_ASSISTANT_BB_CLOUD' ) && class_exists( 'FLBuilder' ) && ! FLBuilderModel::is_builder_active() ) {
+			return false;
+		}
+
 		// Users must be logged in.
 		if ( ! is_user_logged_in() ) {
 			return false;
