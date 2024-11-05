@@ -75,9 +75,9 @@ const Main = () => {
 			>
 				{ isBBExtension &&
 					<>
-						<Text.Title style={ { fontSize: 20 } }>{ __( 'Beaver Builder Cloud' ) }</Text.Title>
+						<Text.Title style={ { fontSize: 20 } }>{ __( 'Template Cloud' ) }</Text.Title>
 						<Text.Title style={ { fontSize: 14, marginTop: '5px' } }>{ __( 'Powered by Assistant Pro' ) }</Text.Title>
-						<p style={ { marginBottom: 30 } }>{__( 'Beaver Builder Cloud joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them.' )}</p>
+						<p style={ { marginBottom: 30 } }>{__( 'Assistant Pro joins your WordPress sites together and allows you to sync creative assets, posts and layouts between them.' )}</p>
 						<ConnectButton onClick={ connect }>{ __( 'Connect to Cloud' ) }</ConnectButton>
 					</>
 				}
