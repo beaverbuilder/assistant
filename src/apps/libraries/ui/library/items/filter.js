@@ -1,6 +1,7 @@
 import React from 'react'
 import { __ } from '@wordpress/i18n'
 import { Libraries } from '@beaverbuilder/cloud-ui'
+import { Toolbar } from '@beaverbuilder/fluid'
 import { Filter } from 'assistant/ui'
 import { useAppState, getAppHooks } from 'assistant/data'
 
@@ -35,40 +36,49 @@ export default props => {
 	}
 
 	return (
-		<Filter { ...props }>
-			<Filter.RadioGroupItem
-				title={ __( 'View By' ) }
-				items={ {
-					type: __( 'Type' ),
-					collection: __( 'Collection' ),
-				} }
-				value={ itemsFilter.viewBy }
-				defaultValue={ defaultItemsFilter.viewBy }
-				onChange={ value => setItemsFilter( { ...itemsFilter, viewBy: value } ) }
-			/>
-			<TypeOrCollectionFilter />
-			<Filter.RadioGroupItem
-				title={ __( 'Sort By' ) }
-				items={ {
-					name: __( 'Title' ),
-					created_at: __( 'Date Created' ),
-					updated_at: __( 'Last Updated' ),
-				} }
-				value={ itemsFilter.orderBy }
-				defaultValue={ defaultItemsFilter.orderBy }
-				onChange={ value => setItemsFilter( { ...itemsFilter, orderBy: value } ) }
-			/>
-			<Filter.RadioGroupItem
-				title={ __( 'Order' ) }
-				items={ {
-					ASC: __( 'Ascending' ),
-					DESC: __( 'Descending' ),
-				} }
-				value={ itemsFilter.order }
-				defaultValue={ defaultItemsFilter.order }
-				onChange={ value => setItemsFilter( { ...itemsFilter, order: value } ) }
-			/>
-			<Filter.Button onClick={ () => setItemsFilter( defaultItemsFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
-		</Filter>
+		<>
+			<Filter { ...props }>
+				<Filter.RadioGroupItem
+					title={ __( 'View By' ) }
+					items={ {
+						type: __( 'Type' ),
+						collection: __( 'Collection' ),
+					} }
+					value={ itemsFilter.viewBy }
+					defaultValue={ defaultItemsFilter.viewBy }
+					onChange={ value => setItemsFilter( { ...itemsFilter, viewBy: value } ) }
+				/>
+				<TypeOrCollectionFilter />
+				<Filter.RadioGroupItem
+					title={ __( 'Sort By' ) }
+					items={ {
+						name: __( 'Title' ),
+						created_at: __( 'Date Created' ),
+						updated_at: __( 'Last Updated' ),
+					} }
+					value={ itemsFilter.orderBy }
+					defaultValue={ defaultItemsFilter.orderBy }
+					onChange={ value => setItemsFilter( { ...itemsFilter, orderBy: value } ) }
+				/>
+				<Filter.RadioGroupItem
+					title={ __( 'Order' ) }
+					items={ {
+						ASC: __( 'Ascending' ),
+						DESC: __( 'Descending' ),
+					} }
+					value={ itemsFilter.order }
+					defaultValue={ defaultItemsFilter.order }
+					onChange={ value => setItemsFilter( { ...itemsFilter, order: value } ) }
+				/>
+				<Filter.Button onClick={ () => setItemsFilter( defaultItemsFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
+			</Filter>
+			<Toolbar>
+				<Filter.TextInputItem
+					placeholder={ __( 'Filter...' ) }
+					value={ itemsFilter.search }
+					onChange={ value => setItemsFilter( { ...itemsFilter, search: value } ) }
+				/>
+			</Toolbar>
+		</>
 	)
 }

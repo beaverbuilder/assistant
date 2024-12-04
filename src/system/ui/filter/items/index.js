@@ -78,3 +78,14 @@ export const LabelsItem = ( { ...rest } ) => {
 		/>
 	)
 }
+
+export const TextInputItem = ( { title, value, onChange = () => {}, ...rest } ) => {
+	return (
+		<input
+			type="text"
+			value={ value }
+			onChange={ e => onChange( e.target.value, e ) }
+			{ ...rest }
+		/>
+	)
+}

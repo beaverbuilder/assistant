@@ -3,7 +3,7 @@ import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { useLayer } from 'react-laag'
 import { Button, Icon } from '../'
-import { RadioGroupItem, LabelsItem } from './items'
+import { RadioGroupItem, LabelsItem, TextInputItem } from './items'
 import './style.scss'
 
 const Filter = ( { className, isSticky, children, ...rest } ) => {
@@ -88,6 +88,7 @@ const Item = ( { title, subtitle, children, hasLoadedItems = true } ) => {
 Filter.Item = Item
 Filter.RadioGroupItem = RadioGroupItem
 Filter.LabelsItem = LabelsItem
+Filter.TextInputItem = TextInputItem
 
 Filter.Button = ( { children, className, ...rest } ) => {
 	const classes = classname( 'fl-asst-filter-button', className )
