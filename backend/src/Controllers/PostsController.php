@@ -269,8 +269,12 @@ class PostsController extends ControllerAbstract {
 
 		$params = $request->get_params();
 		if ( isset( $params['meta_input'] ) && is_array( $params['meta_input'] ) ) {
+
 			foreach ( $params['meta_input'] as $meta_key => $meta_value ) {
-				$params['meta_input'][ $meta_key ] = maybe_unserialize( $meta_value );
+
+				if ( is_serialized( $meta_value ) ) {
+					$params['meta_input'][ $meta_key ] = maybe_unserialize( $meta_value );
+				}
 			}
 		}
 
