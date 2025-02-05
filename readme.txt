@@ -72,7 +72,7 @@ Yes! All of the core Assistant features are free and will remain so. For moving 
 
 = Does Assistant require Beaver Builder to work? =
 
-No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ installation. Assistant does compliment Beaver Builder and integrates with it nicely.
+No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ installation. Assistant does complement Beaver Builder and integrates with it nicely.
 
 
 == Changelog ==
