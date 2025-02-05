@@ -78,3 +78,17 @@ export const LabelsItem = ( { ...rest } ) => {
 		/>
 	)
 }
+
+export const TextInputItem = ( { title, value, onChange = () => {}, placeholder, ...rest } ) => {
+	return (
+		<li className="fl-asst-filter-item" { ...rest }>
+			<input
+				type="text"
+				value={ value }
+				onChange={ e => onChange( e.target.value, e ) }
+				title={ title }
+				placeholder={ placeholder }
+			/>
+		</li>
+	)
+}

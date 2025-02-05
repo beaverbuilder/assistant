@@ -31,4 +31,26 @@
             border-bottom-color: var(--fluid-opaque-3);
         }
     }
+
+    .fl-asst-filter-item-full-width {
+        grid-column: 1 / -1;
+    }
+
+    .fl-asst-filter-item-search {
+        input {
+            padding-left: 12px;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        input:focus {
+            box-shadow: 0px 0px 0px 1.5px var(--fluid-accent);
+        }
+    }
+
+    .fl-asst-library-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
 }
