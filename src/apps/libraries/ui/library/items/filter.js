@@ -8,8 +8,8 @@ import { useAppState, getAppHooks } from 'assistant/data'
 export default props => {
 	const { useItemsFilter } = getAppHooks( 'libraries' )
 	const [ itemsFilter, setItemsFilter ] = useItemsFilter()
-	const { defaultItemsFilter } = useAppState( 'libraries', [
-		'defaultItemsFilter'
+	const { defaultItemsFilter, showFilters } = useAppState( 'libraries', [
+		'defaultItemsFilter', 'showFilters'
 	] )
 
 	const TypeOrCollectionFilter = () => {
@@ -38,6 +38,15 @@ export default props => {
 	return (
 		<>
 			<Filter { ...props }>
+				{ showFilters &&
+					<Filter.TextInputItem
+						className="fl-asst-filter-item-full-width fl-asst-filter-item-search"
+						title={ __( 'Search' ) }
+						placeholder={ __( 'Filter...' ) }
+						value={ itemsFilter.search }
+						onChange={ value => setItemsFilter( { ...itemsFilter, search: value } ) }
+					/>
+				}
 				<Filter.RadioGroupItem
 					title={ __( 'View By' ) }
 					items={ {
@@ -72,13 +81,6 @@ export default props => {
 				/>
 				<Filter.Button onClick={ () => setItemsFilter( defaultItemsFilter ) }>{__( 'Reset Filter' )}</Filter.Button>
 			</Filter>
-			<Toolbar>
-				<Filter.TextInputItem
-					placeholder={ __( 'Filter...' ) }
-					value={ itemsFilter.search }
-					onChange={ value => setItemsFilter( { ...itemsFilter, search: value } ) }
-				/>
-			</Toolbar>
 		</>
 	)
 }

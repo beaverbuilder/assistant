@@ -20,7 +20,7 @@ const alias = {
 	'vendor-framer-motion': path.resolve( __dirname, './node_modules/framer-motion/' ),
 	'vendor-react-laag': path.resolve( __dirname, './node_modules/react-laag/' ),
 	'vendor-redux': path.resolve( __dirname, './node_modules/redux/' ),
-	'vendor-html2canvas': path.resolve( __dirname, './node_modules/html2canvas/' ),
+	'vendor-html2canvas': path.resolve( __dirname, './node_modules/html2canvas-pro/' ),
 
 	// Our @beaverbuilder/ packages
 	'vendor-app-core': path.resolve( __dirname, './node_modules/@beaverbuilder/app-core' ),

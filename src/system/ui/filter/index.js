@@ -9,9 +9,7 @@ import './style.scss'
 const Filter = ( { className, isSticky, children, ...rest } ) => {
 	const [ showAll, setShowAll ] = useState( false )
 	const hasMore = 6 < Children.count( children )
-	const classes = classname( 'fl-asst-filter', {
-		'is-sticky': isSticky
-	}, className )
+	const classes = classname( 'fl-asst-filter', className )
 	return (
 		<>
 			<ul className={ classes } { ...rest }>

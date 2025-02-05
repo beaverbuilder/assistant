@@ -26,6 +26,7 @@ class CustomizerService {
 		$client = new CloudClient;
 		$data = $this->export_settings();
 		$theme = wp_get_theme();
+		$screenshot = isset( $_POST['screenshot'] ) ? ScreenShotHelper::get_for_post_request( home_url(), false ) : null;
 
 		return $client->libraries->create_item(
 			$library_id,
@@ -36,7 +37,7 @@ class CustomizerService {
 				'media' => [
 					'attachments' => MediaPathHelper::get_image_paths_from_data( $data )
 				],
-				'screenshot' => ScreenshotHelper::get_for_post_request( home_url(), false ),
+				'screenshot' => $screenshot,
 			]
 		);
 	}
