@@ -5,13 +5,13 @@ import { useSystemState } from 'assistant/data'
 import { __ } from '@wordpress/i18n'
 import { Page, Layout } from 'assistant/ui'
 import { Library, Libraries } from '../libraries/ui'
-import { CommunityApp } from '@beaverbuilder/cloud-ui'
+import { CommunityApp, Modal } from '@beaverbuilder/cloud-ui'
+import '@beaverbuilder/cloud-ui/dist/index.css'
 
 export default ( { baseURL } ) => {
+
 	const history = useHistory()
 	const { isCloudConnected } = useSystemState( 'isCloudConnected' )
-
-	// console.log("isCloudConnected",isCloudConnected)
 
 	if ( ! isCloudConnected ) {
 		history.replace( '/fl-cloud-connect' )
@@ -19,54 +19,60 @@ export default ( { baseURL } ) => {
 	}
 
 	return (
-		<Selection.Provider>
-			<Main />
-		</Selection.Provider>
+		<>
+			<Switch>
+				<Route path='/bbapp/library/:id' component={ Modal } />
+				<Route path='/bbapp/user/:id' component={ Modal } />
+				<Route path='/bbapp/item/:id' component={ Modal } />
+				<Route path={ `${baseURL}` } component={ () => <Main baseURL={baseURL} /> } />
+			</Switch>
+			<Modal baseURL={ baseURL } />
+		</>
 	)
 }
 
-const Main = () => {
+const Main = ({ baseURL }) => {
 
-	const [ activeTab, setActiveTab ] = useState( 'fl_library' )
-
-	const tabs = [
-		{
-			handle: 'fl_library',
-			path: '/bbapp/tab/fl_library',
-			label: 'Libraries',
-			component: <Libraries />,
-		},
-		{
-			handle: 'fl_community',
-			path: '/bbapp/tab/fl_community',
-			label: 'Community',
-			component: () => <CommunityApp />,
-		}
-	]
-
-	const Header = () => (
-		<Layout.Tabs
-			tabs={ tabs.map(tab => ({
-				...tab,
-				onClick: () => setActiveTab(tab.handle),
-				isActive: activeTab === tab.handle,
-			})) }
-			shouldHandleOverflow={ true }
-		/>
-	)
+	const [ activeTab, setActiveTab ] = useState("libraries")
+	console.log("MainBase", baseURL)
+	const tabStyle = (isActive) => ({
+		padding: '10px 20px',
+		color: isActive ? 'var(--fluid-opaque-14)' : 'var(--fluid-opaque-5)',
+		backgroundColor: isActive ? 'var(--fluid-opaque-4)' : 'var(--fluid-transparent-12)',
+		cursor: 'pointer',
+		outline: 'none',
+	})
 
 	return (
-		<Page
-			id="fl-asst-bb-integration"
-			title={ __( 'Template Cloud' ) }
-			padY={ false }
-			header={ <Header /> }
-			topContentStyle={ { border: 'none' } }
-			shouldScroll={ false }
-			shouldShowBackButton={ false }
-			showAsRoot={ true }
-		>
-			{ tabs.find( tab => tab.handle === activeTab )?.component }
-		</Page>
+		<div style={ { padding: '16px 0' } }>
+			<div style={ {
+				display: 'flex',
+				backgroundColor: 'var(--fluid-opaque-13)',
+				justifyContent: 'center',
+				gap: '10px',
+				padding: '8px',
+				borderRadius: '8px',
+				width: 'fit-content',
+				margin: 'auto',
+			} }>
+				<button
+					onClick={() => setActiveTab('libraries')}
+					style={tabStyle(activeTab === 'libraries')}
+				>
+					Libraries
+				</button>
+				<button
+					onClick={() => setActiveTab('community')}
+					style={tabStyle(activeTab === 'community')}
+				>
+					Community
+				</button>
+			</div>
+
+			<div style={ { borderTop: 'none' } }>
+				{ 'libraries' === activeTab && <Libraries /> }
+				{ 'community' === activeTab && <CommunityApp baseURL={ baseURL} /> }
+			</div>
+		</div>
 	)
 }
