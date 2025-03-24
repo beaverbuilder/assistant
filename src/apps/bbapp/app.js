@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Redirect, Switch, Route, useHistory } from 'react-router-dom'
 import { Selection } from '@beaverbuilder/fluid'
 import { useSystemState } from 'assistant/data'
@@ -7,6 +7,7 @@ import { Page, Layout } from 'assistant/ui'
 import { Library, Libraries } from '../libraries/ui'
 import { CommunityApp, Modal } from '@beaverbuilder/cloud-ui'
 import '@beaverbuilder/cloud-ui/dist/index.css'
+import cloud from 'assistant/cloud'
 
 export default ( { baseURL } ) => {
 
@@ -31,10 +32,27 @@ export default ( { baseURL } ) => {
 	)
 }
 
-const Main = ({ baseURL }) => {
+const Main = ( { baseURL } ) => {
 
-	const [ activeTab, setActiveTab ] = useState("libraries")
-	console.log("MainBase", baseURL)
+	const [ activeTab, setActiveTab ] = useState( 'libraries' )
+	const [ libraries, setLibraries ] = useState( [] )
+	const [ isLoadingLibraries, setIsLoadingLibraries ] = useState( true )
+
+	const getDefaultLibraries = () => ( {
+		user: [],
+		team: {},
+		shared: [],
+		access: [],
+	} )
+
+	useEffect( () => {
+		setIsLoadingLibraries( true )
+		cloud.libraries.getAllSortedByOwner().then( response => {
+			setLibraries( response )
+			setIsLoadingLibraries( false )
+		} )
+	}, [] )
+
 	const tabStyle = (isActive) => ({
 		padding: '10px 20px',
 		color: isActive ? 'var(--fluid-opaque-14)' : 'var(--fluid-opaque-5)',
@@ -56,21 +74,21 @@ const Main = ({ baseURL }) => {
 				margin: 'auto',
 			} }>
 				<button
-					onClick={() => setActiveTab('libraries')}
-					style={tabStyle(activeTab === 'libraries')}
+					onClick={ () => setActiveTab('libraries') }
+					style={ tabStyle(activeTab === 'libraries') }
 				>
 					Libraries
 				</button>
 				<button
-					onClick={() => setActiveTab('community')}
-					style={tabStyle(activeTab === 'community')}
+					onClick={ () => setActiveTab('community') }
+					style={ tabStyle(activeTab === 'community') }
 				>
 					Community
 				</button>
 			</div>
 
 			<div style={ { borderTop: 'none' } }>
-				{ 'libraries' === activeTab && <Libraries /> }
+				{ 'libraries' === activeTab && <Libraries  preloaded={ libraries } /> }
 				{ 'community' === activeTab && <CommunityApp baseURL={ baseURL} /> }
 			</div>
 		</div>
