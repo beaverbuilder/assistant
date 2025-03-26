@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Redirect, Switch, Route, useHistory } from 'react-router-dom'
-import { Selection } from '@beaverbuilder/fluid'
-import { useSystemState } from 'assistant/data'
+import { Switch, Route, useHistory } from 'react-router-dom'
+import { useSystemState, useAppState, getAppActions } from 'assistant/data'
 import { __ } from '@wordpress/i18n'
-import { Page, Layout } from 'assistant/ui'
-import { Library, Libraries } from '../libraries/ui'
+import { Icon } from 'assistant/ui'
+import { Libraries } from '../libraries/ui'
 import { CommunityApp, Modal } from '@beaverbuilder/cloud-ui'
-import '@beaverbuilder/cloud-ui/dist/index.css'
 import cloud from 'assistant/cloud'
+import classname from 'classnames'
+import './style.scss'
 
 export default ( { baseURL } ) => {
 
@@ -34,7 +34,8 @@ export default ( { baseURL } ) => {
 
 const Main = ( { baseURL } ) => {
 
-	const [ activeTab, setActiveTab ] = useState( 'libraries' )
+	const { setActiveTab } = getAppActions( 'bbapp' )
+	const { activeTab } = useAppState( 'bbapp' )
 	const [ libraries, setLibraries ] = useState( [] )
 	const [ teams, setTeams ] = useState( [] )
 	const [ isLoadingLibraries, setIsLoadingLibraries ] = useState( true )
@@ -61,43 +62,37 @@ const Main = ( { baseURL } ) => {
 		fetchData()
 	}, [])
 
-	const tabStyle = (isActive) => ({
-		padding: '10px 20px',
-		color: isActive ? 'var(--fluid-opaque-14)' : 'var(--fluid-opaque-5)',
-		backgroundColor: isActive ? 'var(--fluid-opaque-4)' : 'var(--fluid-transparent-12)',
-		cursor: 'pointer',
-		outline: 'none',
-	})
-
 	return (
-		<div style={ { padding: '16px 0' } }>
-			<div style={ {
-				display: 'flex',
-				backgroundColor: 'var(--fluid-opaque-13)',
-				justifyContent: 'center',
-				gap: '10px',
-				padding: '8px',
-				borderRadius: '8px',
-				width: 'fit-content',
-				margin: 'auto',
-			} }>
+		<div class="fl-asst-bbapp-wrap">
+			<div class="fl-asst-bbapp-tabs">
 				<button
 					onClick={ () => setActiveTab('libraries') }
-					style={ tabStyle(activeTab === 'libraries') }
+					className={ classname( 'fl-asst-tab-button', { 'is-active': activeTab === 'libraries' } ) }
 				>
-					Libraries
+					<span class="fl-asst-item-icon">
+						<Icon.Library />
+					</span>
+					<span> { __( 'Libraries' ) } </span>
 				</button>
 				<button
 					onClick={ () => setActiveTab('community') }
-					style={ tabStyle(activeTab === 'community') }
+					className={ classname( 'fl-asst-tab-button', { 'is-active': activeTab === 'community' } ) }
 				>
-					Community
+					<span className="fl-asst-item-icon">
+						<Icon.Swirl />
+					</span>
+					<span> { __( 'Community' ) } </span>
 				</button>
 			</div>
 
-			<div style={ { borderTop: 'none' } }>
-				{ 'libraries' === activeTab && <Libraries  preloadedLib={ libraries } preloadedTeams={ teams } /> }
-				{ 'community' === activeTab && <CommunityApp baseURL={ baseURL} /> }
+			<div className="fl-asst-tab-content">
+				{ activeTab === 'libraries' &&
+					<Libraries preloadedLib={ libraries } preloadedTeams={ teams } />
+				}
+
+				{ activeTab === 'community' &&
+					<CommunityApp baseURL={ baseURL } />
+				}
 			</div>
 		</div>
 	)

@@ -10,4 +10,7 @@ registerApp( 'bbapp', {
 	label: __( 'BB App' ),
 	root: App,
 	shouldShowInAppList: true,
+	state: {
+		activeTab: 'libraries'
+	}
 } )

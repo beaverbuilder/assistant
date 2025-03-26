@@ -1,0 +1,51 @@
+.fl-asst {
+    .fl-asst-app-bbapp {
+
+        .fl-asst-bbapp-wrap {
+            padding: 16px 0;
+
+            .fl-asst-bbapp-tabs {
+                display: flex;
+                background-color: var(--fluid-inset-background);
+                justify-content: center;
+                gap: 10px;
+                padding: 8px;
+                border-radius: 8px;
+                width: fit-content;
+                margin: auto;
+
+                .fl-asst-tab-button {
+                    padding: 10px 20px;
+                    color: var(--fluid-opaque-5);
+                    background-color: var(--fluid-inset-background);
+                    cursor: pointer;
+                    box-shadow: none;
+                    outline: none;
+                    border: none;
+
+                    &.is-active {
+                        background-color: var(--fluid-background);
+                    }
+                }
+
+                .fl-asst-item-icon {
+                    display: flex;
+                    align-items: center;
+                    margin-right: 1em;
+                }
+            }
+
+            .fl-asst-tab-content {
+                border-top: none;
+            }
+        }
+    }
+}
+
+.fluid-color-scheme-dark {
+    .fl-asst-bbapp-tabs {
+        .fl-asst-tab-button {
+            color: var(--fluid-opaque-10) !important;
+        }
+    }
+}
