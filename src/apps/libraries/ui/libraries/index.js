@@ -57,12 +57,13 @@ const getSections = ( user, teams, libraries ) => {
 	return sections
 }
 
-export default ( { preloaded = false } ) => {
+export default ( { preloadedLib = false, preloadedTeams = false } ) => {
 	const { cloudUser } = useSystemState()
-	const { filter, libraries: librariesData, teams } = useAppState( 'libraries' )
+	const { filter, libraries: librariesData, teams: teamsData } = useAppState( 'libraries' )
 	const { owner, ...query } = filter
 	const isLoadingLibraries = false
-	const libraries = preloaded ? preloaded : librariesData
+	const libraries = preloadedLib ? preloadedLib : librariesData
+	const teams = preloadedTeams ? preloadedTeams : teamsData
 
 	return (
 		<Page

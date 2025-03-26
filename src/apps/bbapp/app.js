@@ -36,22 +36,30 @@ const Main = ( { baseURL } ) => {
 
 	const [ activeTab, setActiveTab ] = useState( 'libraries' )
 	const [ libraries, setLibraries ] = useState( [] )
+	const [ teams, setTeams ] = useState( [] )
 	const [ isLoadingLibraries, setIsLoadingLibraries ] = useState( true )
+	const [ isLoadingTeams, setIsLoadingTeams ] = useState( true )
 
-	const getDefaultLibraries = () => ( {
-		user: [],
-		team: {},
-		shared: [],
-		access: [],
-	} )
-
-	useEffect( () => {
-		setIsLoadingLibraries( true )
-		cloud.libraries.getAllSortedByOwner().then( response => {
-			setLibraries( response )
-			setIsLoadingLibraries( false )
-		} )
-	}, [] )
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				setIsLoadingTeams( true )
+				setIsLoadingLibraries( true )
+				const [ teamsRes, librariesRes ] = await Promise.all([
+					cloud.teams.getAll(),
+					cloud.libraries.getAllSortedByOwner(),
+				]);
+				setTeams( teamsRes.data )
+				setLibraries( librariesRes )
+			} catch ( error ) {
+				console.error("Error:", error)
+			} finally {
+				setIsLoadingTeams( false )
+				setIsLoadingLibraries( false )
+			}
+		}
+		fetchData()
+	}, [])
 
 	const tabStyle = (isActive) => ({
 		padding: '10px 20px',
@@ -88,7 +96,7 @@ const Main = ( { baseURL } ) => {
 			</div>
 
 			<div style={ { borderTop: 'none' } }>
-				{ 'libraries' === activeTab && <Libraries  preloaded={ libraries } /> }
+				{ 'libraries' === activeTab && <Libraries  preloadedLib={ libraries } preloadedTeams={ teams } /> }
 				{ 'community' === activeTab && <CommunityApp baseURL={ baseURL} /> }
 			</div>
 		</div>
