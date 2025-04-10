@@ -75,13 +75,13 @@ const Main = ( { baseURL } ) => {
 					<span> { __( 'Libraries' ) } </span>
 				</button>
 				<button
-					onClick={ () => setActiveTab('community') }
-					className={ classname( 'fl-asst-tab-button', { 'is-active': activeTab === 'community' } ) }
+					onClick={ () => setActiveTab('showcase') }
+					className={ classname( 'fl-asst-tab-button', { 'is-active': activeTab === 'showcase' } ) }
 				>
 					<span className="fl-asst-item-icon">
 						<Icon.Swirl />
 					</span>
-					<span> { __( 'Community' ) } </span>
+					<span> { __( 'ShowCase' ) } </span>
 				</button>
 			</div>
 
@@ -90,8 +90,8 @@ const Main = ( { baseURL } ) => {
 					<Libraries preloadedLib={ libraries } preloadedTeams={ teams } />
 				}
 
-				{ activeTab === 'community' &&
-					<CommunityApp baseURL={ baseURL } />
+				{ activeTab === 'showcase' &&
+					<CommunityApp baseURL={ baseURL } showcase={ 1 } />
 				}
 			</div>
 		</div>
