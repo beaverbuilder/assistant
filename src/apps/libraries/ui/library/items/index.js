@@ -65,14 +65,16 @@ export default () => {
 	return (
 		<Wrapper className="fl-asst-library-content">
 
-			<ItemsFilter style={ { display: isSelecting && 'none' } } isSticky />
+			<div className="fl-asst-library-sticky">
+				<ItemsFilter />
 
-			{ isSelecting && (
-				<Selection.Toolbar style={ { minHeight: 48, flexBasis: 48, position: 'sticky', width: '100%' } } isSticky>
-					<ImportButton />
-					<DeleteButton />
-				</Selection.Toolbar>
-			) }
+				{ isSelecting && (
+					<Selection.Toolbar style={ { minHeight: 48, flexBasis: 48, width: '100%', top: 'auto' } } isSticky={ false } >
+						<ImportButton />
+						<DeleteButton />
+					</Selection.Toolbar>
+				) }
+			</div>
 
 			<Selection.Box
 				itemSelector=".fluid-collection-item"

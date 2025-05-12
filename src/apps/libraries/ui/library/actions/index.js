@@ -10,11 +10,11 @@ export default () => {
 	const history = useHistory()
 	const { cloudUser } = useSystemState()
 	const { pathname } = useLocation()
-	const { isReadOnly, library, items, showUpload, setShowUpload } = Libraries.LibraryContext.use()
+	const { isReadOnly, library, items, showUpload, setShowUpload, showFilters, setShowFilters } = Libraries.LibraryContext.use()
 	const basePath = `/libraries/${ library.id }`
 	const userid = cloudUser.id
 	const userHasPermission = userid === library.permissions.permissions_user_id
-	const { isSelecting, setIsSelecting } = Selection.use()
+	const { isSelecting, setIsSelecting } = Selection.use()	
 	const hasItems = items && !! items.length
 
 	if ( ! library.permissions.update && ! library.permissions.edit_items ) {
@@ -40,11 +40,22 @@ export default () => {
 		<>
 			{
 				hasItems && ! pathname.includes( '/settings' ) &&
-				<Layout.Row align="right">
-					<Button onClick={ () => setIsSelecting( true ) }>
+				<>
+					<Button 
+						onClick={ () => setIsSelecting( true ) }
+						isSelected={ isSelecting }
+					>
 						{ __( 'Select' ) }
 					</Button>
-				</Layout.Row>
+					<Button 
+						appearance="transparent"
+						isSelected={ showFilters }
+						onClick={ () => setShowFilters( ! showFilters ) }
+						title={ __( 'Search' ) }
+					>
+						<Icon.Search />
+					</Button>
+				</>
 			}
 			{ ! isReadOnly && library.permissions.edit_items &&
 				<Button

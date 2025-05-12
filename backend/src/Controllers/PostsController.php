@@ -266,15 +266,23 @@ class PostsController extends ControllerAbstract {
 	 * Creates a single post.
 	 */
 	public function create_post( $request ) {
+		global $wpdb;
 
 		$params = $request->get_params();
-		if ( isset( $params['meta_input'] ) && is_array( $params['meta_input'] ) ) {
-			foreach ( $params['meta_input'] as $meta_key => $meta_value ) {
-				$params['meta_input'][ $meta_key ] = maybe_unserialize( $meta_value );
+		$meta_inputs = isset( $params['meta_input'] ) ? $params['meta_input'] : [];
+		unset( $params['meta_input'] );
+		$id = wp_insert_post( $params );
+
+		if ( isset( $meta_inputs ) && is_array( $meta_inputs ) && ! empty( $meta_inputs ) ) {
+
+			foreach ( $meta_inputs as $meta_key => $meta_value ) {
+				$meta_key = sanitize_key( $meta_key );
+				if ( null !== $meta_value ) {
+					$meta_value = addslashes( $meta_value );
+				}
+				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$id}, '{$meta_key}', '{$meta_value}')" );
 			}
 		}
-
-		$id = wp_insert_post( $params );
 
 		if ( ! $id || is_wp_error( $id ) ) {
 			return [
