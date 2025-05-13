@@ -5,7 +5,7 @@ const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' )
 const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' )
 const sharedConfig = require( '@beaverbuilder/webpack-config' )
 const isProduction = 'production' === process.env.NODE_ENV
-const includePro = 'true' === process.env.INCLUDE_PRO
+const isBBBuild = 'true' === process.env.BB_BUILD // Only include cloud apps for BB build
 
 const alias = {
 	ui: path.resolve( __dirname, './src/system/ui/' ),
@@ -88,14 +88,26 @@ const vendors = {
 	'vendor-bb-icons': './src/vendors/bb-icons',
 }
 
+// System entry points
+// if you change a key here, you need to update the enqueue url to match
+const entry = { 
+	...vendors,
+	system: './src/system',
+	render: './src/render',
+	apps: './src/apps',
+	'apps-cloud': './src/apps-cloud',
+}
+
+if ( isProduction ) {
+	if ( isBBBuild ) {
+		delete entry['apps']
+	} else {
+		delete entry['apps-cloud']
+	}
+}
+
 const config = {
-	entry: { // if you change a key here, you need to update the enqueue url to match
-		...vendors,
-		system: './src/system',
-		render: './src/render',
-		apps: './src/apps',
-		'apps-cloud': './src/apps-cloud',
-	},
+	entry,
 	externals,
 	output: {
 		path: path.resolve( __dirname, 'build' ),
@@ -131,9 +143,6 @@ const config = {
 		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin( {
 			filename: '[name].css?var=[contenthash]',
-		} ),
-		new webpack.DefinePlugin( {
-			'__INCLUDE_PRO__': includePro,
 		} )
 	]
 }
