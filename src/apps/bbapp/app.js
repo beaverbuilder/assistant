@@ -81,7 +81,7 @@ const Main = ( { baseURL } ) => {
 					<span className="fl-asst-item-icon">
 						<Icon.Swirl />
 					</span>
-					<span> { __( 'ShowCase' ) } </span>
+					<span> { __( 'Showcase' ) } </span>
 				</button>
 			</div>
 
