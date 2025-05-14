@@ -275,10 +275,16 @@ class LibraryItemPostController extends ControllerAbstract {
 		$post = get_post( $id );
 		$client = new CloudClient;
 
-		return $client->libraries->create_item(
+		$response = $client->libraries->create_item(
 			$library_id,
 			$this->get_save_data( $request, $post )
 		);
+
+		if (isset($response->success) && $response->success === false) {
+			return new \WP_Error( 'API Error', $response->message, [ 'status' => 400 ] );
+		}
+
+		return $response;
 	}
 
 	/**
@@ -294,10 +300,16 @@ class LibraryItemPostController extends ControllerAbstract {
 		$client = new CloudClient;
 		$data = $this->get_save_data( $request, $post );
 
-		return $client->libraries->update_item(
+		$response = $client->libraries->update_item(
 			$item_id,
 			$data
 		);
+
+		if (isset($response->success) && $response->success === false) {
+			return new \WP_Error( 'API Error', $response->message, [ 'status' => 400 ] );
+		}
+
+		return $response;
 	}
 
 	/**

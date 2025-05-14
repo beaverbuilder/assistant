@@ -31,8 +31,8 @@ export default () => {
         setCurrentItem( item )
         
         if ( 'color' === item.type || 'theme_settings' === item.type || 'code' === item.type ) {
-          invalidPosts.push( { name: item.name, type: item.type } )
-          invalidItemCount++
+          // invalidPosts.push( { name: item.name, type: item.type } )
+          // invalidItemCount++
         } else if ( 'post' === item.type ) {
           await cloud.libraries.getItem( item.id ).then( async itemResponse => {
             await api.importPost( itemResponse.data ).then( async postResponse => {
