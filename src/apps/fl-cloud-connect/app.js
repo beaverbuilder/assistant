@@ -6,14 +6,6 @@ import { Page, Text, Icon } from 'assistant/ui'
 import { ConnectButton } from './ui'
 
 export default ( { baseURL } ) => {
-	const history = useHistory()
-	const { isCloudConnected } = useSystemState( 'isCloudConnected' )
-	const { isBBExtension } = getSystemConfig()
-
-	if ( isCloudConnected ) {
-		isBBExtension ? history.replace( '/bbapp' ) : history.replace( '/libraries' )
-		return null
-	}
 
 	return (
 		<Switch>

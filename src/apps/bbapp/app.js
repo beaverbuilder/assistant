@@ -7,17 +7,10 @@ import { Libraries } from '../libraries/ui'
 import { CommunityApp, Modal } from '@beaverbuilder/cloud-ui'
 import cloud from 'assistant/cloud'
 import classname from 'classnames'
+import CloudConnect from '../fl-cloud-connect/app'
 import './style.scss'
 
 export default ( { baseURL } ) => {
-
-	const history = useHistory()
-	const { isCloudConnected } = useSystemState( 'isCloudConnected' )
-
-	if ( ! isCloudConnected ) {
-		history.replace( '/fl-cloud-connect' )
-		return null
-	}
 
 	return (
 		<>
@@ -40,26 +33,29 @@ const Main = ( { baseURL } ) => {
 	const [ teams, setTeams ] = useState( [] )
 	const [ isLoadingLibraries, setIsLoadingLibraries ] = useState( true )
 	const [ isLoadingTeams, setIsLoadingTeams ] = useState( true )
+	const { isCloudConnected } = useSystemState( 'isCloudConnected' )
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				setIsLoadingTeams( true )
-				setIsLoadingLibraries( true )
-				const [ teamsRes, librariesRes ] = await Promise.all([
-					cloud.teams.getAll(),
-					cloud.libraries.getAllSortedByOwner(),
-				]);
-				setTeams( teamsRes.data )
-				setLibraries( librariesRes )
-			} catch ( error ) {
-				console.error("Error:", error)
-			} finally {
-				setIsLoadingTeams( false )
-				setIsLoadingLibraries( false )
+		if( isCloudConnected ) {
+			const fetchData = async () => {
+				try {
+					setIsLoadingTeams( true )
+					setIsLoadingLibraries( true )
+					const [ teamsRes, librariesRes ] = await Promise.all([
+						cloud.teams.getAll(),
+						cloud.libraries.getAllSortedByOwner(),
+					]);
+					setTeams( teamsRes.data )
+					setLibraries( librariesRes )
+				} catch ( error ) {
+					console.error("Error:", error)
+				} finally {
+					setIsLoadingTeams( false )
+					setIsLoadingLibraries( false )
+				}
 			}
+			fetchData()
 		}
-		fetchData()
 	}, [])
 
 	return (
@@ -86,7 +82,11 @@ const Main = ( { baseURL } ) => {
 			</div>
 
 			<div className="fl-asst-tab-content">
-				{ activeTab === 'libraries' &&
+				{ activeTab === 'libraries' && ! isCloudConnected &&
+					<CloudConnect baseURL={ baseURL } />
+				}
+
+				{ activeTab === 'libraries' && isCloudConnected &&
 					<Libraries preloadedLib={ libraries } preloadedTeams={ teams } />
 				}
 

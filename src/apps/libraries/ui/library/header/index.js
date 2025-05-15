@@ -18,7 +18,7 @@ export default () => {
 				</Layout.Headline>
 
 				{ library.description &&
-					<div style={ { lineHeight: 1.4 } }>
+					<div style={ { lineHeight: 1.4, margin: '0 20px' } }>
 						{ library.description }
 					</div>
 				}
