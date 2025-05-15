@@ -29,7 +29,7 @@ const Subscribe = ( { remove } ) => {
 				height={ 321 }
 				style={ { marginBottom: 20, borderRadius: 10, pointerEvents: 'none' } }
 			>
-				<img src={ `${pluginURL}/img/asst-banner-sm.jpg` } />
+				<img src={ `${pluginURL}/img/apps/fl-home/asst-banner-sm.jpg` } />
 			</Layout.AspectBox>
 
 			<SubscribeForm removeWidget={ remove } />

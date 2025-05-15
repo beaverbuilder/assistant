@@ -4,6 +4,7 @@ namespace FL\Assistant\Hooks\Actions;
 
 use FL\Assistant\Data\UserState;
 use FL\Assistant\System\View;
+use FL\Assistant\Helpers\BeaverBuilderHelper;
 /**
  * Class OnEditUserProfile
  * @package FL\Assistant\Hooks\Actions
@@ -31,7 +32,7 @@ class OnEditUserProfile {
 	 */
 	public function __invoke( $user ) {
 
-		if ( ! current_user_can( 'edit_others_posts' ) ) {
+		if ( ! current_user_can( 'edit_others_posts' ) || BeaverBuilderHelper::is_assistant_extension() ) {
 			return false;
 		}
 

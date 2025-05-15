@@ -10,8 +10,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "build:dist": "npm run build && node bin/build-dist.js",
-    "build:pro": "cross-env INCLUDE_PRO=true npm run build",
-    "build:pro:dist": "cross-env INCLUDE_PRO=true npm run build && node bin/build-dist.js",
+    "build:bb:dist": "cross-env BB_BUILD=true sh -c 'npm run build && node bin/build-dist.js'",
     "build:stats": "webpack --env production --json > stats.json",
     "dev": "webpack",
     "fix": "eslint src --fix",
@@ -85,6 +84,6 @@
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "webpack-cli": "^5.1.4"
   }
 }

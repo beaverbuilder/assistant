@@ -3,6 +3,7 @@
 namespace FL\Assistant\Providers;
 
 use FL\Assistant\System\Contracts\ServiceProviderAbstract;
+use FL\Assistant\Helpers\BeaverBuilderHelper;
 
 use FL\Assistant\Hooks\Actions\OnEditUserProfile;
 use FL\Assistant\Hooks\Actions\OnEnqueueScripts;
@@ -49,9 +50,10 @@ class HooksServiceProvider extends ServiceProviderAbstract {
 
 		// Enqueue Assistant frontend
 		$enqueue_scripts = $this->injector->make( OnEnqueueScripts::class );
-		add_action( 'wp_enqueue_scripts', $enqueue_scripts );
-		add_action( 'admin_enqueue_scripts', $enqueue_scripts );
-		add_action( 'fl_builder_ui_enqueue_scripts', $enqueue_scripts );
+		$priority = BeaverBuilderHelper::is_assistant_extension() ? 1 : 10;
+		add_action( 'wp_enqueue_scripts', $enqueue_scripts, $priority );
+		add_action( 'admin_enqueue_scripts', $enqueue_scripts, $priority );
+		add_action( 'fl_builder_ui_enqueue_scripts', $enqueue_scripts, $priority );
 
 		// setup user profile meta fields - shows on YOUR profile, not on others.
 		add_action( 'show_user_profile', $this->injector->make( OnEditUserProfile::class ) );
