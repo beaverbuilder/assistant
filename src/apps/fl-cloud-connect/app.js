@@ -20,7 +20,7 @@ const Banner = () => {
 		<div style={ { backgroundColor: 'var(--fl-brand-tan)' } }>
 			<div
 				style={ {
-					backgroundImage: isBBExtension ? `url(${pluginURL}/img/apps/cloud-connect/template-cloud.png)` : `url(${pluginURL}/img/apps/cloud-connect/pro-banner-large.png)`,
+					backgroundImage: isBBExtension ? `url(${pluginURL}/img/apps/cloud-connect/template-cloud.jpg)` : `url(${pluginURL}/img/apps/cloud-connect/pro-banner-large.png)`,
 					backgroundSize: 'cover',
 					backgroundPosition: 'bottom center',
 					paddingTop: 'clamp( 200px, 65%, 303px)',
