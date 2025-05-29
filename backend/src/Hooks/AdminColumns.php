@@ -6,10 +6,15 @@ use FL\Assistant\Data\Transformers\NotationsTransformer;
 use FL\Assistant\Data\Repository\NotationsRepository;
 use FL\Assistant\Data\Repository\LabelsRepository;
 use FL\Assistant\Data\Transformers\LabelsTransformer;
+use FL\Assistant\Helpers\BeaverBuilderHelper;
 
 class AdminColumns {
 
 	public function __construct() {
+		if ( BeaverBuilderHelper::is_assistant_extension() ) {
+			return;
+		}
+
 		add_action( 'init', [ $this, 'enqueue_custom_admin_columns' ], PHP_INT_MAX );
 	}
 

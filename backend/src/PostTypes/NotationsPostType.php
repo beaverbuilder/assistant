@@ -4,6 +4,7 @@ namespace FL\Assistant\PostTypes;
 
 use FL\Assistant\System\Contracts\PostTypeAbstract;
 use FL\Assistant\Data\Repository\LabelsRepository;
+use FL\Assistant\Helpers\BeaverBuilderHelper;
 
 /**
  * Class NotationsPostType
@@ -21,6 +22,10 @@ class NotationsPostType extends PostTypeAbstract {
 	 * @return void
 	 */
 	public function register() {
+		if ( BeaverBuilderHelper::is_assistant_extension() ) {
+			return;
+		}
+
 		register_post_type(
 			'fl_asst_notation', [
 				'label'  => __( 'Assistant Notation', 'assistant' ),

@@ -5,7 +5,7 @@ import classname from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { App, Button, Icon, Env } from 'assistant/ui'
-import { useSystemState, getSystemActions, getSystemSelectors } from 'assistant/data'
+import { useSystemState, getSystemActions, getSystemSelectors, getSystemConfig } from 'assistant/data'
 import { useMedia } from 'utils/react'
 import './style.scss'
 
@@ -14,6 +14,7 @@ const Sidebar = memo( () => {
 	const { selectApp, selectHomeApp } = getSystemSelectors()
 	const { isMobile, isCompactHeight, application } = Env.use()
 	const { toggleIsShowingUI, setIsAppHidden } = getSystemActions()
+	const { isBBExtension } = getSystemConfig()
 	const isVeryCompactHeight = useMedia( { maxHeight: 400 } )
 	const history = useHistory()
 	const { pathname } = history.location
@@ -134,7 +135,7 @@ const Sidebar = memo( () => {
 			<div className="fl-asst-sidebar-cell fl-asst-sidebar-cell-middle">
 				<App.List
 					before={ <HomeItem /> }
-					after={ <ManageItem /> }
+					after={ ! isBBExtension && <ManageItem /> }
 					limit={ getMaxCount() }
 				>
 					{ ( { label, handle, icon, moveDown, moveUp } ) => {
