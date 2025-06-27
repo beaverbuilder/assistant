@@ -78,7 +78,10 @@
 			}
 		}
 	}
-	.fluid-color-scheme-dark {
+}
+
+.fluid-color-scheme-dark {
+	.fl-asst {
 		.fluid-page.fl-asst-home-shell {
 			.fl-asst-home-shell-sidebar {
 				background: hsl( var(--fluid-hue), 10%, 12% );
