@@ -16,6 +16,19 @@ export default () => {
 
 	return (
 		<>
+			{ ! isReadOnly &&
+				<>
+					<Layout.Box padY={ false }>
+						<Page.Section label={ __( 'Actions' ) }>
+							<Button.Group appearance="grid">
+								<ImportLibrary />
+								<DownloadZip />
+							</Button.Group>
+						</Page.Section>
+					</Layout.Box>
+				</>
+			}
+
 			{ ! isShared &&
 				<Layout.Box padY={ false } className='fl-asst-library-settings'>
 					<Page.Section label={ __( 'Library Settings' ) } padY={ false }>
@@ -41,15 +54,6 @@ export default () => {
 							</Page.Section>
 						</Layout.Box>
 					}
-
-					<Layout.Box padY={ false }>
-						<Page.Section label={ __( 'Actions' ) }>
-							<Button.Group appearance="grid">
-								<ImportLibrary />
-								<DownloadZip />
-							</Button.Group>
-						</Page.Section>
-					</Layout.Box>
 				</>
 			}
 

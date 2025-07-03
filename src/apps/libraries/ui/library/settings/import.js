@@ -95,7 +95,11 @@ export default () => {
   if ( null === currentItem && ! importComplete ) {
     return (
       <Button
-        onClick={ importItems }
+        onClick={ () => {
+          if ( confirm( __( 'Are you sure you want to import this entire library into your site? This will import all items, including templates and media files. This action cannot be undone.' ) ) ) {
+            importItems()
+          }
+        } }
         title={ __( 'Import all items in this library into your site.' ) }
       >
         { __( 'Import Library' ) }

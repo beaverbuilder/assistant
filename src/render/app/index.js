@@ -3,7 +3,7 @@ import classname from 'classnames'
 import { useLocation } from 'react-router-dom'
 import { App } from '@beaverbuilder/app-core'
 import { Page, Env, Modal } from 'assistant/ui'
-import { useSystemState } from 'assistant/data'
+import { useSystemState, getSystemConfig } from 'assistant/data'
 import Sidebar from './side-bar'
 import './style.scss'
 
@@ -15,7 +15,8 @@ const AppMain = () => {
 	const rowDirection = 'right' === sideName ? 'row-reverse' : 'row'
 	const isBeaverBuilder = 'beaver-builder' === application
 	const location = useLocation()
-	const appHandle = location.pathname.split( '/' )[1]
+	const { isBBExtension } = getSystemConfig()
+	const appHandle = ! isBBExtension ? location.pathname.split( '/' )[1] : 'bbapp'
 
 	const classes = classname( {
 		'fl-asst-main': true,
@@ -29,12 +30,12 @@ const AppMain = () => {
 
 	return (
 		<div className={ classes } style={ { flexDirection: rowDirection } }>
-			<Sidebar />
+			{ ! isBBExtension && <Sidebar /> }
 			{ displayContent && (
 				<div className="fl-asst-main-content" >
 					<App.Content
 						apps={ apps }
-						defaultApp={ homeKey }
+						defaultApp={ ! isBBExtension ? homeKey : 'bbapp' }
 						loading={ Page.Loading }
 					/>
 				</div>

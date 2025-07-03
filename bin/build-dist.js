@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
 const path = require( 'path' )
+const isBBBuild = 'true' === process.env.BB_BUILD
 
 // Copies plugin folder
 const fromDir = path.resolve( __dirname, '../' )
@@ -51,12 +52,28 @@ const filterFiles = src => {
     return true
 }
 
+const cleanBBBuild = () => {
+    if (!isBBBuild) return;
+
+    const flHomeDir = path.join(toDir, 'img/apps/fl-home');
+    fs.pathExists(flHomeDir, (err, exists) => {
+        if (err) return console.error('Error checking fl-home path:', err);
+
+        if (exists) {
+            fs.remove(flHomeDir, err => {
+                if (err) return console.error('Error deleting fl-home:', err);
+                console.log('Deleted dist img/apps/fl-home');
+            });
+        }
+    });
+};
+
 const copyPluginDir = () => {
     // Create fresh Dir to copy into
     fs.ensureDir( toDir , err => {
         if ( err ) return console.error( err )
-
         fs.copySync( fromDir, toDir, { filter: filterFiles })
+        cleanBBBuild()
     })
 }
 

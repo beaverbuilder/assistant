@@ -39,7 +39,7 @@ const getSections = ( user, teams, libraries ) => {
 			label: __( 'Shared Libraries' ),
 			avatar: <Icon.Shared />,
 			to: '/libraries/shared',
-			isEnabled: !! libraries.shared.length,
+			isEnabled: !! libraries?.shared?.length,
 			items: getItems( 'shared' ),
 			canCreateLibraries: false,
 		},
@@ -57,11 +57,13 @@ const getSections = ( user, teams, libraries ) => {
 	return sections
 }
 
-export default () => {
+export default ( { preloadedLib = false, preloadedTeams = false } ) => {
 	const { cloudUser } = useSystemState()
-	const { filter, libraries, teams } = useAppState( 'libraries' )
+	const { filter, libraries: librariesData, teams: teamsData } = useAppState( 'libraries' )
 	const { owner, ...query } = filter
 	const isLoadingLibraries = false
+	const libraries = preloadedLib ? preloadedLib : librariesData
+	const teams = preloadedTeams ? preloadedTeams : teamsData
 
 	return (
 		<Page
