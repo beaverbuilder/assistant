@@ -78,6 +78,14 @@
 			}
 		}
 	}
+
+	.fluid-color-scheme-dark {
+		.fluid-page.fl-asst-home-shell {
+			.fl-asst-home-shell-sidebar {
+				background: hsl( var(--fluid-hue), 10%, 12% );
+			}
+		}
+	}
 }
 
 .fluid-color-scheme-dark {
