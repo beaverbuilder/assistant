@@ -26,7 +26,7 @@ export default () => {
       if ( item !== undefined ) {
         setCurrentItem( item )
         
-        if ( 'color' === item.type || 'theme_settings' === item.type || 'code' === item.type ) {
+        if ( 'color' === item.type || 'code' === item.type ) {
           // invalidPosts.push( { name: item.name, type: item.type } )
           // invalidItemCount++
         } else if ( 'post' === item.type ) {
@@ -41,6 +41,10 @@ export default () => {
               await importPostMedia( postResponse.data, itemResponse.data )
             } )
           } )
+        } else if ( 'settings' === item.type ) {
+          if ( confirm( __( 'Importing these settings will overwrite your existing settings, do you wish to continue?' ) + "\n" + item.name) ) {
+            await api.importSettings( item.id )
+          }
         } else {
           await api.importItem( item )
         }

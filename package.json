@@ -22,7 +22,7 @@
   "dependencies": {
     "@beaverbuilder/app-core": "^0.2.11",
     "@beaverbuilder/box": "0.0.4",
-    "@beaverbuilder/cloud": "^0.5.28",
+    "@beaverbuilder/cloud": "^0.5.27",
     "@beaverbuilder/cloud-ui": "^0.8.67",
     "@beaverbuilder/fluid": "^0.7.23",
     "@beaverbuilder/fluid-docs": "0.0.6",
@@ -33,7 +33,7 @@
     "@uiw/react-codemirror": "4.22.2",
     "@uiw/react-textarea-code-editor": "^2.0.1",
     "array-move": "^3.0.1",
-    "axios": "0.21.1",
+    "axios": "0.22.0",
     "axios-cache-adapter": "^2.7.3",
     "build": "^0.1.4",
     "classnames": "^2.3.1",
