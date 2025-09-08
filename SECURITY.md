@@ -10,5 +10,5 @@
 
 ## Reporting a Vulnerability
 
-Please report a vulnerability to Patchstack here
-https://patchstack.com/database/wordpress/plugin/assistant/vdp
+Please report a vulnerability to [Patchstack](https://patchstack.com/database/wordpress/plugin/assistant/vdp)
+
