@@ -78,7 +78,7 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 == Changelog ==
 
 = 1.5.3 ( 2025-09-08 ) =
-* Added integration with Beaver Builder.
+* Changes to support the integration of Assistant in Beaver Builder version 2.10
 * Fixed dark mode issues on the Home app and sidebar.
 * Security: Fixed a potential XSS vulnerability in the image proxy
 
