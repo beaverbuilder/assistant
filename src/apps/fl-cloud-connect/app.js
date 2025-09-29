@@ -6,6 +6,13 @@ import { Page, Text, Icon } from 'assistant/ui'
 import { ConnectButton } from './ui'
 
 export default ( { baseURL } ) => {
+	const { isCloudConnected } = useSystemState()
+	const history = useHistory()
+
+	if ( isCloudConnected ) {
+		history.replace( '/libraries' )
+		return null
+	}
 
 	return (
 		<Switch>
