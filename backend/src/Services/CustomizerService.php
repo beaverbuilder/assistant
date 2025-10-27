@@ -38,7 +38,6 @@ class CustomizerService {
 				return rest_ensure_response( [ 'error' => __( 'You do not have permission to export BeaverBuilder settings.' ) ] );
 			}
 
-			$name = 'BeaverBuilder Settings ';
 			$possible_options = [
 				'admin_settings',
 				'global_settings',
@@ -75,7 +74,7 @@ class CustomizerService {
 			}
 
 			if ( in_array( 'global_settings', $options ) ) {
-				$selected_settings[] = 'Global';
+				$selected_settings[] = 'Global Settings';
 			} else {
 				unset( $settings['builder_global_settings'] );
 			}
@@ -97,9 +96,9 @@ class CustomizerService {
 			}
 
 			if ( $all_settings ) {
-				$name .= ' (All)';
+				$name = 'All Settings';
 			} else {
-				$name .= ' (' . implode( ', ', $selected_settings ) . ')';
+				$name = implode( ', ', $selected_settings );
 			}
 
 			$data = json_encode( $settings );
