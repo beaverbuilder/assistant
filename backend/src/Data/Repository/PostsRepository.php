@@ -25,7 +25,7 @@ class PostsRepository extends RepositoryAbstract {
 	 *
 	 * @return array|mixed|\WP_Post|null
 	 */
-	public function find( $id, callable $transform = null ) {
+	public function find( $id, ?callable $transform = null ) {
 		$post = get_post( $id );
 
 		if ( ! is_null( $transform ) ) {
@@ -41,7 +41,7 @@ class PostsRepository extends RepositoryAbstract {
 	 *
 	 * @return array
 	 */
-	public function find_where( array $args = [], callable $transform = null ) {
+	public function find_where( array $args = [], ?callable $transform = null ) {
 		$posts = $this->query( $args )->posts;
 
 		if ( ! is_null( $transform ) ) {
@@ -57,7 +57,7 @@ class PostsRepository extends RepositoryAbstract {
 	 *
 	 * @return array
 	 */
-	public function find_by_label( int $label_id, callable $transform = null ) {
+	public function find_by_label( int $label_id, ?callable $transform = null ) {
 		$labels = $this->notations->get_labels_by_id( 'post', $label_id );
 		$post_ids = [];
 
@@ -87,7 +87,7 @@ class PostsRepository extends RepositoryAbstract {
 	 *
 	 * @return Pager
 	 */
-	public function paginate( array $args = [], callable $transform = null ) {
+	public function paginate( array $args = [], ?callable $transform = null ) {
 		$query = $this->query( $args );
 
 		$pager = new Pager(

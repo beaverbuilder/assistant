@@ -19,7 +19,7 @@ class CommentsRepository extends RepositoryAbstract {
 	 *
 	 * @return array|mixed|\WP_Comment|null
 	 */
-	public function find( $id, callable $transform = null ) {
+	public function find( $id, ?callable $transform = null ) {
 		$comment = get_comment( $id );
 		if ( ! is_null( $transform ) ) {
 			$comment = call_user_func( $transform, $comment );
@@ -34,7 +34,7 @@ class CommentsRepository extends RepositoryAbstract {
 	 *
 	 * @return array|int
 	 */
-	public function find_where( array $args = [], callable $transform = null ) {
+	public function find_where( array $args = [], ?callable $transform = null ) {
 		$comments = $this->query( $args )->get_comments();
 		if ( ! is_null( $transform ) ) {
 			$comments = array_map( $transform, $comments );
@@ -48,7 +48,7 @@ class CommentsRepository extends RepositoryAbstract {
 	 *
 	 * @return Pager
 	 */
-	public function paginate( array $args = [], callable $transform = null ) {
+	public function paginate( array $args = [], ?callable $transform = null ) {
 		$args['no_found_rows'] = false; // Make sure to calc the number of found rows.
 		$query = $this->query( $args );
 

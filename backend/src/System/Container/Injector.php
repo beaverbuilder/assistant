@@ -48,7 +48,7 @@ class Injector {
 	private $delegates = [];
 	private $inProgressMakes = [];
 
-	public function __construct( Reflector $reflector = null ) {
+	public function __construct( ?Reflector $reflector = null ) {
 		$this->reflector = $reflector ?: new CachingReflector;
 	}
 
@@ -424,7 +424,7 @@ class Injector {
 		return new $className;
 	}
 
-	private function provisionFuncArgs( \ReflectionFunctionAbstract $reflFunc, array $definition, array $reflParams = null, $className = null ) {
+	private function provisionFuncArgs( \ReflectionFunctionAbstract $reflFunc, array $definition, ?array $reflParams = null, $className = null ) {
 		$args = [];
 
 		// @TODO store this in ReflectionStorage
