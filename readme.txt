@@ -77,7 +77,7 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 == Changelog ==
 
-= 1.5.4 ( 2025-10-28 ) =
+= 1.5.4 ( 2025-10-29 ) =
 * Fixed implicitly nullable parameter declaration deprecated notice in PHP 8.4 
 * Fixed redirection to libraries after connecting to Assistant Pro
 
@@ -398,3 +398,4 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 = 0.1.0 =
 
 * Initial Public Build
+
