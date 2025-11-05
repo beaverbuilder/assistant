@@ -38,6 +38,17 @@ class ImageProxy {
 		$body = wp_remote_retrieve_body( $response );
 		$headers = wp_remote_retrieve_headers( $response );
 
+		// validate image
+		$filesystem = self::filesystem();
+		$tmpfile    = tempnam( '/tmp', 'assistant' );
+		$filesystem->put_contents( $tmpfile, $body );
+		$validimage = wp_get_image_mime( $tmpfile );
+		$filesystem->delete( $tmpfile );
+
+		if ( ! $validimage ) {
+			return false;
+		}
+
 		if ( ! isset( $headers['content-type'] ) ) {
 			return;
 		} elseif ( 0 !== strpos( $headers['content-type'], 'image/' ) ) {
@@ -47,5 +58,16 @@ class ImageProxy {
 		header( 'Content-type: ' . $headers['content-type'] );
 		echo $body;
 		die();
+	}
+
+	private function filesystem() {
+		global $wp_filesystem;
+
+		if ( is_null( $wp_filesystem ) ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
+		return $wp_filesystem;
 	}
 }

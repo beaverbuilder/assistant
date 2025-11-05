@@ -1,7 +1,7 @@
 {
   "name": "fl-assistant",
   "title": "Assistant",
-  "version": "1.5.3",
+  "version": "1.5.3.1",
   "description": "A plugin to help see what's happening in WordPress and navigate to posts and pages easily.",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "build:dist": "npm run build && node bin/build-dist.js",
-    "build:bb:dist": "cross-env BB_BUILD=true sh -c 'npm run build && node bin/build-dist.js'",
+    "build:bb:dist": "cross-env BB_BUILD=true npm run build:dist",
     "build:stats": "webpack --env production --json > stats.json",
     "dev": "webpack",
     "fix": "eslint src --fix",

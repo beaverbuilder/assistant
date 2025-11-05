@@ -18,7 +18,7 @@ class TermsRepository extends RepositoryAbstract {
 	 *
 	 * @return array|\WP_Error|\WP_Term|null
 	 */
-	public function find( $id, callable $transform = null ) {
+	public function find( $id, ?callable $transform = null ) {
 		$term = get_term( $id );
 		if ( ! is_null( $transform ) ) {
 			$term = call_user_func( $transform, $term );
@@ -33,7 +33,7 @@ class TermsRepository extends RepositoryAbstract {
 	 *
 	 * @return array
 	 */
-	public function find_where( array $args = [], callable $transform = null ) {
+	public function find_where( array $args = [], ?callable $transform = null ) {
 		$terms = $this->query( $args )->get_terms();
 		if ( ! is_null( $transform ) ) {
 			$terms = array_map( $transform, $terms );
@@ -47,7 +47,7 @@ class TermsRepository extends RepositoryAbstract {
 	 *
 	 * @return Pager
 	 */
-	public function paginate( array $args = [], callable $transform = null ) {
+	public function paginate( array $args = [], ?callable $transform = null ) {
 		$query       = $this->query( $args );
 		$total_terms = $this->terms_query_count( $query );
 
@@ -73,7 +73,7 @@ class TermsRepository extends RepositoryAbstract {
 	 * @param callable $transformer
 	 * @return array
 	 */
-	public function get_child_terms( $term, $children, callable $transformer = null ) {
+	public function get_child_terms( $term, $children, ?callable $transformer = null ) {
 		if ( isset( $children[ $term->term_id ] ) ) {
 			$term_children = $children[ $term->term_id ];
 
