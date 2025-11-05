@@ -119,7 +119,7 @@ export default () => {
   let post_types = []
   
   if ( items ) {
-    post_types = [ ...new Set( items.filter( item => item.type === 'post' && item.subtype === null ).map( item => item.data.post.post_type ) ) ]
+    post_types = [ ...new Set( items.filter( item => item.type === 'post' ).map( item => item.data.post.post_type ) ) ]
   }
 
   let hasSettings = false
