@@ -29,7 +29,7 @@ export default () => {
       selectedItems = items.filter( item => item.type === 'post' && item.subtype === 'beaver-builder' ).map( item => item.id )
     } else if ( itemType.startsWith( 'post_type:' ) ) {
       const post_type = itemType.replace( 'post_type:', '' )
-      selectedItems = items.filter( item => item.type === 'post' && item.subtype === null && item.data.post.post_type === post_type ).map( item => item.id )
+      selectedItems = items.filter( item => item.type === 'post' && item.data.post.post_type === post_type ).map( item => item.id )
     } else if ( itemType === 'all-settings' ) {
       selectedItems = items.filter( item => item.type === 'settings' ).map( item => item.id )
     } else if ( itemType === 'theme-settings' ) {
