@@ -2,7 +2,7 @@
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Assistant Pro, Beaver Builder, Page Builder, Gutenberg, Blocks
 Requires at least: 5.2
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 5.6
 Stable tag: 1.5.3.1
 License: GPL2+
@@ -78,7 +78,7 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 == Changelog ==
 
 = 1.5.3.1 ( 2025-10-29 ) =
-* Fixed implicitly nullable parameter declaration deprecated notice in PHP 8.4 
+* Fixed implicitly nullable parameter declaration deprecated notice in PHP 8.4
 * Fixed redirection to libraries after connecting to Assistant Pro
 
 = 1.5.3 ( 2025-09-08 ) =
@@ -398,4 +398,3 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 = 0.1.0 =
 
 * Initial Public Build
-
