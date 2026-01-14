@@ -122,12 +122,23 @@ export default () => {
     post_types = [ ...new Set( items.filter( item => item.type === 'post' ).map( item => item.data.post.post_type ) ) ]
   }
 
-  let hasSettings = false
-  let hasImages = false
+  // Check what types of items exist in the library
+  const hasItems = {
+    anyContent: false,
+    bbContent: false,
+    images: false,
+    allSettings: false,
+    themeSettings: false,
+    bbSettings: false
+  }
 
   if ( items ) {
-    hasSettings = items.some( item => item.type === 'settings' )
-    hasImages = items.some( item => item.type === 'image' || item.type === 'svg' )
+    hasItems.anyContent = items.some( item => item.type === 'post' )
+    hasItems.bbContent = items.some( item => item.type === 'post' && item.subtype === 'beaver-builder' )
+    hasItems.images = items.some( item => item.type === 'image' || item.type === 'svg' )
+    hasItems.allSettings = items.some( item => item.type === 'settings' )
+    hasItems.themeSettings = items.some( item => item.type === 'settings' && item.subtype === 'theme_settings' )
+    hasItems.bbSettings = items.some( item => item.type === 'settings' && item.subtype === 'bb_settings' )
   }
 
   if ( null === currentItem && ! importComplete ) {
@@ -143,10 +154,10 @@ export default () => {
           All Items
         </option>
         <optgroup label={ __( 'Content' ) }>
-          <option value='all-content'>
+          <option value='all-content' disabled={ ! hasItems.anyContent }>
             { __( 'All Content' ) }
           </option>
-          <option value='bb-content'>
+          <option value='bb-content' disabled={ ! hasItems.bbContent }>
             { __( 'Beaver Builder Content' ) }
           </option>
           { post_types.map( post_type => (
@@ -155,24 +166,20 @@ export default () => {
             </option>
           ) ) }
         </optgroup>
-        { hasSettings &&
-          <optgroup label={ __( 'Settings' ) }>
-            <option value='all-settings'>
-              { __( 'All Settings' ) }
-            </option>
-            <option value='theme-settings'>
-              { __( 'Theme Settings' ) }
-            </option>
-            <option value='bb-settings'>
-              { __( 'Beaver Builder Settings' ) }
-            </option>
-          </optgroup>
-        }
-        { hasImages &&
-          <option value='all-images'>
-            { __( 'Images' ) }
+        <optgroup label={ __( 'Settings' ) }>
+          <option value='all-settings' disabled={ ! hasItems.allSettings }>
+            { __( 'All Settings' ) }
           </option>
-        }
+          <option value='theme-settings' disabled={ ! hasItems.themeSettings }>
+            { __( 'Theme Settings' ) }
+          </option>
+          <option value='bb-settings' disabled={ ! hasItems.bbSettings }>
+            { __( 'Beaver Builder Settings' ) }
+          </option>
+        </optgroup>
+        <option value='all-images' disabled={ ! hasItems.images }>
+          { __( 'Images' ) }
+        </option>
       </select>
     )
   }
