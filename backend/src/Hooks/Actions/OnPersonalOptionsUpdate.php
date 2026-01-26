@@ -23,11 +23,13 @@ class OnPersonalOptionsUpdate {
 		$saved = get_user_meta( $user_id, UserState::FL_ASSISTANT_STATE, true );
 		$updates = [];
 		if ( isset( $saved['window'] ) ) {
-			$window                     = $saved['window'];
-			$window['hiddenAppearance'] = $_POST['fl_asst_hidden_ui'];
-			$show_in_admin = isset( $_POST['show_assistant_in_admin'] ) ? $_POST['show_assistant_in_admin'] : false;
+			$window = $saved['window'];
+			if ( isset( $_POST['fl_asst_hidden_ui'] ) ) {
+				$window['hiddenAppearance'] = $_POST['fl_asst_hidden_ui'];
+			}
+			$show_in_admin = isset( $_POST['show_assistant_in_admin'] ) ? (bool) $_POST['show_assistant_in_admin'] : false;
 			$updates = [
-				'shouldShowInAdmin' => boolval( $show_in_admin ),
+				'shouldShowInAdmin' => $show_in_admin,
 				'window'            => $window,
 			];
 		}
