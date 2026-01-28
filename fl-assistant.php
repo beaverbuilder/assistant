@@ -13,11 +13,21 @@
 
 defined( 'ABSPATH' ) || die();
 
-define( 'FL_ASSISTANT_VERSION', '1.5.3.1' );
-define( 'FL_ASSISTANT_FILE', trailingslashit( __FILE__ ) );
-define( 'FL_ASSISTANT_DIR', plugin_dir_path( FL_ASSISTANT_FILE ) );
-define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
-define( 'FL_ASST_SUPPORTS_BB', true );
+if ( ! defined( 'FL_ASSISTANT_VERSION' ) ) {
+	define( 'FL_ASSISTANT_VERSION', '1.5.3.1' );
+}
+if ( ! defined( 'FL_ASSISTANT_FILE' ) ) {
+	define( 'FL_ASSISTANT_FILE', trailingslashit( __FILE__ ) );
+}
+if ( ! defined( 'FL_ASSISTANT_DIR' ) ) {
+	define( 'FL_ASSISTANT_DIR', plugin_dir_path( FL_ASSISTANT_FILE ) );
+}
+if ( ! defined( 'FL_ASSISTANT_URL' ) ) {
+	define( 'FL_ASSISTANT_URL', plugins_url( '/', FL_ASSISTANT_FILE ) );
+}
+if ( ! defined( 'FL_ASST_SUPPORTS_BB' ) ) {
+	define( 'FL_ASST_SUPPORTS_BB', true );
+}
 
 require_once( __DIR__ . '/backend/autoloader.php' );
 
