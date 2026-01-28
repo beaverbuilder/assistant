@@ -4,7 +4,7 @@ Tags: Assistant Pro, Beaver Builder, Page Builder, Gutenberg, Blocks
 Requires at least: 5.2
 Tested up to: 6.9
 Requires PHP: 5.6
-Stable tag: 1.5.3.1
+Stable tag: 1.5.3.2
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,10 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 
 == Changelog ==
+
+= 1.5.3.2 ( 2026-01-28 ) =
+* Fixed PHP warning for undefined array key when updating profile
+* Fixed PHP warning for constants already defined
 
 = 1.5.3.1 ( 2025-10-29 ) =
 * Fixed implicitly nullable parameter declaration deprecated notice in PHP 8.4
