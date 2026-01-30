@@ -17,6 +17,7 @@ export default () => {
 
   const importItems = async( itemType ) => {  
     let completedItemCount = 0
+    let importedItemCount = 0
     let invalidItemCount = 0
     let invalidPosts = []
     let selectedItems = []
@@ -62,14 +63,17 @@ export default () => {
               }
 
               await importPostMedia( postResponse.data, itemResponse.data )
+              importedItemCount++
             } )
           } )
         } else if ( 'settings' === item.type ) {
           if ( confirm( __( 'Importing these settings will overwrite your existing settings, do you wish to continue?' ) + "\n" + item.name) ) {
             await api.importSettings( item.id )
+            importedItemCount++
           }
         } else {
           await api.importItem( item )
+          importedItemCount++
         }
       }
 
@@ -81,7 +85,7 @@ export default () => {
       <li key={ post.name }>{ post.name } ({ post.type })</li>
     ) )
 
-    if (invalidItemCount < completedItemCount) {
+    if ( importedItemCount > 0 ) {
       createNotice( {
         status: 'success',
         shouldDismiss: false,
@@ -98,7 +102,7 @@ export default () => {
           </>
         )
       } )
-    } else {
+    } else if ( invalidItemCount > 0 ) {
       createNotice( {
         status: 'error',
         shouldDismiss: false,
