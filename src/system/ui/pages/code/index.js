@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { Page, Form, Layout, Notice, Button } from 'ui'
 import { getWpRest } from 'utils/wordpress'
 import { getSystemActions, getSystemConfig, useSystemState } from 'data'
