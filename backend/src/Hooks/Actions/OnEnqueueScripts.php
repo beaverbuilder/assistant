@@ -194,6 +194,11 @@ class OnEnqueueScripts {
 	 */
 	public function should_enqueue() {
 
+		// Don't enqueue outside of BB if in extension mode.
+		if ( BeaverBuilderHelper::is_assistant_extension() && class_exists( 'FLBuilder' ) && ! FLBuilderModel::is_builder_active() ) {
+			return false;
+		}
+
 		// Users must be logged in.
 		if ( ! is_user_logged_in() ) {
 			return false;
@@ -299,11 +304,6 @@ class OnEnqueueScripts {
 		$ver = FL_ASSISTANT_VERSION;
 
 		if ( $this->should_enqueue() ) {
-
-			// Don't enqueue outside of BB if in extension mode.
-			if ( BeaverBuilderHelper::is_assistant_extension() && class_exists( 'FLBuilder' ) && ! FLBuilderModel::is_builder_active() ) {
-				return;
-			}
 
 			self::register_vendors();
 
