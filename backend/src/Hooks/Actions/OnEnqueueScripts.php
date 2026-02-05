@@ -300,6 +300,11 @@ class OnEnqueueScripts {
 
 		if ( $this->should_enqueue() ) {
 
+			// Don't enqueue outside of BB if in extension mode.
+			if ( BeaverBuilderHelper::is_assistant_extension() && class_exists( 'FLBuilder' ) && ! FLBuilderModel::is_builder_active() ) {
+				return;
+			}
+
 			self::register_vendors();
 
 			$config = $this->generate_frontend_config();
@@ -332,8 +337,8 @@ class OnEnqueueScripts {
 			wp_localize_script( 'fl-assistant', 'FL_ASSISTANT_INITIAL_STATE', $state );
 
 			// Apps - loaded in footer
-			wp_enqueue_script( 'fl-assistant-apps', $url . 'build/apps.js', [ 'fl-assistant', 'html2canvas' ], $ver, true );
-			//wp_enqueue_style( 'fl-assistant-apps', $url . 'build/apps.css', [ 'fl-assistant' ], $ver, null );
+			$apps = BeaverBuilderHelper::is_assistant_extension() ? 'apps-cloud.js' : 'apps.js';
+			wp_enqueue_script( 'fl-assistant-apps', $url . "build/$apps", [ 'fl-assistant', 'html2canvas' ], $ver, true );
 
 			// Render - loaded in footer
 			wp_enqueue_script( 'fl-assistant-render', $url . 'build/render.js', [ 'fl-assistant' ], $ver, true );
