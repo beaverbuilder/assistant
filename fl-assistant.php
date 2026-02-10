@@ -14,7 +14,7 @@
 defined( 'ABSPATH' ) || die();
 
 if ( ! defined( 'FL_ASSISTANT_VERSION' ) ) {
-	define( 'FL_ASSISTANT_VERSION', '1.5.3.1' );
+	define( 'FL_ASSISTANT_VERSION', '1.5.3.2' );
 }
 if ( ! defined( 'FL_ASSISTANT_FILE' ) ) {
 	define( 'FL_ASSISTANT_FILE', trailingslashit( __FILE__ ) );
