@@ -114,7 +114,7 @@ class CustomizerService {
 				'subtype' => $subtype,
 				'data'  => $data,
 				'media' => [
-					'attachments' => is_array( $data ) ? MediaPathHelper::get_image_paths_from_array( $data ) : MediaPathHelper::get_image_paths_from_string( $data )
+					'attachments' => is_array( $data ) ? MediaPathHelper::get_image_paths_from_data( $data ) : MediaPathHelper::get_image_paths_from_string( $data )
 				],
 				'screenshot' => $screenshot,
 			]
