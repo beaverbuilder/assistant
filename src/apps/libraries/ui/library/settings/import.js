@@ -15,11 +15,31 @@ export default () => {
   const importPostMedia = usePostMediaImport()
   const api = getWpRest().libraries()
 
-  const importItems = async() => {
+  const importItems = async( itemType ) => {  
     let completedItemCount = 0
+    let importedItemCount = 0
     let invalidItemCount = 0
     let invalidPosts = []
-    let selectedItems = items.map( item => item.id )
+    let selectedItems = []
+
+    if ( itemType === 'all' ) {
+      selectedItems = items.map( item => item.id )
+    } else if ( itemType === 'all-content' ) {
+      selectedItems = items.filter( item => item.type === 'post' ).map( item => item.id )
+    } else if ( itemType === 'bb-content' ) {
+      selectedItems = items.filter( item => item.type === 'post' && item.subtype === 'beaver-builder' ).map( item => item.id )
+    } else if ( itemType.startsWith( 'post_type:' ) ) {
+      const post_type = itemType.replace( 'post_type:', '' )
+      selectedItems = items.filter( item => item.type === 'post' && item.data.post.post_type === post_type ).map( item => item.id )
+    } else if ( itemType === 'all-settings' ) {
+      selectedItems = items.filter( item => item.type === 'settings' ).map( item => item.id )
+    } else if ( itemType === 'theme-settings' ) {
+      selectedItems = items.filter( item => item.type === 'settings' && item.subtype === 'theme_settings' ).map( item => item.id )
+    } else if ( itemType === 'bb-settings' ) {
+      selectedItems = items.filter( item => item.type === 'settings' && item.subtype === 'bb_settings' ).map( item => item.id )
+    } else if ( itemType === 'all-images' ) {
+      selectedItems = items.filter( item => item.type === 'image' || item.type === 'svg' ).map( item => item.id )
+    }
 
     setSelectedItems( selectedItems )
     setImportComplete( false )
@@ -30,7 +50,7 @@ export default () => {
       if ( item !== undefined ) {
         setCurrentItem( item )
         
-        if ( 'color' === item.type || 'theme_settings' === item.type || 'code' === item.type ) {
+        if ( 'color' === item.type || 'code' === item.type ) {
           // invalidPosts.push( { name: item.name, type: item.type } )
           // invalidItemCount++
         } else if ( 'post' === item.type ) {
@@ -43,10 +63,17 @@ export default () => {
               }
 
               await importPostMedia( postResponse.data, itemResponse.data )
+              importedItemCount++
             } )
           } )
+        } else if ( 'settings' === item.type ) {
+          if ( confirm( __( 'Importing these settings will overwrite your existing settings, do you wish to continue?' ) + "\n" + item.name) ) {
+            await api.importSettings( item.id )
+            importedItemCount++
+          }
         } else {
           await api.importItem( item )
+          importedItemCount++
         }
       }
 
@@ -58,7 +85,7 @@ export default () => {
       <li key={ post.name }>{ post.name } ({ post.type })</li>
     ) )
 
-    if (invalidItemCount < completedItemCount) {
+    if ( importedItemCount > 0 ) {
       createNotice( {
         status: 'success',
         shouldDismiss: false,
@@ -75,7 +102,7 @@ export default () => {
           </>
         )
       } )
-    } else {
+    } else if ( invalidItemCount > 0 ) {
       createNotice( {
         status: 'error',
         shouldDismiss: false,
@@ -92,18 +119,72 @@ export default () => {
     setImportComplete( true )
   }
 
+  // Get a list of post types from this library's items
+  let post_types = []
+  
+  if ( items ) {
+    post_types = [ ...new Set( items.filter( item => item.type === 'post' ).map( item => item.data.post.post_type ) ) ]
+  }
+
+  // Check what types of items exist in the library
+  const hasItems = {
+    anyContent: false,
+    bbContent: false,
+    images: false,
+    allSettings: false,
+    themeSettings: false,
+    bbSettings: false
+  }
+
+  if ( items ) {
+    hasItems.anyContent = items.some( item => item.type === 'post' )
+    hasItems.bbContent = items.some( item => item.type === 'post' && item.subtype === 'beaver-builder' )
+    hasItems.images = items.some( item => item.type === 'image' || item.type === 'svg' )
+    hasItems.allSettings = items.some( item => item.type === 'settings' )
+    hasItems.themeSettings = items.some( item => item.type === 'settings' && item.subtype === 'theme_settings' )
+    hasItems.bbSettings = items.some( item => item.type === 'settings' && item.subtype === 'bb_settings' )
+  }
+
   if ( null === currentItem && ! importComplete ) {
     return (
-      <Button
-        onClick={ () => {
-          if ( confirm( __( 'Are you sure you want to import this entire library into your site? This will import all items, including templates and media files. This action cannot be undone.' ) ) ) {
-            importItems()
-          }
-        } }
+      <select
         title={ __( 'Import all items in this library into your site.' ) }
+        onChange={ e => importItems( e.target.value ) }
       >
-        { __( 'Import Library' ) }
-      </Button>
+        <option value=''>
+          { __( 'Import Library...' ) }
+        </option>
+        <option value='all'>
+          All Items
+        </option>
+        <optgroup label={ __( 'Content' ) }>
+          <option value='all-content' disabled={ ! hasItems.anyContent }>
+            { __( 'All Content' ) }
+          </option>
+          <option value='bb-content' disabled={ ! hasItems.bbContent }>
+            { __( 'Beaver Builder Content' ) }
+          </option>
+          { post_types.map( post_type => (
+            <option key={ post_type } value={ 'post_type:' + post_type }>
+              Post Type: { post_type }
+            </option>
+          ) ) }
+        </optgroup>
+        <optgroup label={ __( 'Settings' ) }>
+          <option value='all-settings' disabled={ ! hasItems.allSettings }>
+            { __( 'All Settings' ) }
+          </option>
+          <option value='theme-settings' disabled={ ! hasItems.themeSettings }>
+            { __( 'Theme Settings' ) }
+          </option>
+          <option value='bb-settings' disabled={ ! hasItems.bbSettings }>
+            { __( 'Beaver Builder Settings' ) }
+          </option>
+        </optgroup>
+        <option value='all-images' disabled={ ! hasItems.images }>
+          { __( 'Images' ) }
+        </option>
+      </select>
     )
   }
 

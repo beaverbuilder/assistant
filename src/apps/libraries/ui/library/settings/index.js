@@ -17,16 +17,14 @@ export default () => {
 	return (
 		<>
 			{ ! isReadOnly &&
-				<>
-					<Layout.Box padY={ false }>
-						<Page.Section label={ __( 'Actions' ) }>
-							<Button.Group appearance="grid">
-								<ImportLibrary />
-								<DownloadZip />
-							</Button.Group>
-						</Page.Section>
-					</Layout.Box>
-				</>
+				<Layout.Box padY={ false }>
+					<Page.Section label={ __( 'Actions' ) }>
+						<Button.Group appearance="grid">
+							<ImportLibrary />
+							<DownloadZip />
+						</Button.Group>
+					</Page.Section>
+				</Layout.Box>
 			}
 
 			{ ! isShared &&
@@ -39,15 +37,7 @@ export default () => {
 
 			{ ! isReadOnly &&
 				<>
-					{ ! isShared &&
-						<Layout.Box padY={ false }>
-							<Page.Section label={ __( 'Library Collections' ) }>
-								<Libraries.LibraryCollectionsForm />
-							</Page.Section>
-						</Layout.Box>
-					}
-
-					{ isShared && library.permissions.edit_collections &&
+					{ ( ! isShared || ( isShared && library.permissions.edit_collections ) ) &&
 						<Layout.Box padY={ false }>
 							<Page.Section label={ __( 'Library Collections' ) }>
 								<Libraries.LibraryCollectionsForm />

@@ -693,7 +693,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	public function regenerate_builder_cache( $post_id, $item ) {
 		$meta = (array) $item->data->meta;
 
-		if ( isset( $meta['_fl_builder_data'] ) && class_exists( 'FLBuilderModel' ) ) {
+		if ( isset( $meta['_fl_builder_data'] ) && class_exists( '\FLBuilderModel' ) ) {
 			\FLBuilderModel::delete_all_asset_cache( $post_id );
 		}
 		if ( isset( $meta['_elementor_data'] ) && class_exists( 'Elementor\Plugin' ) ) {

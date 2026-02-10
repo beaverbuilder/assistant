@@ -21,7 +21,7 @@ class OnCustomizeRegister {
 
 				$id = absint( $_POST['fl_assistant_export'] );
 				$service = new CustomizerService();
-				$response = $service->export_to_cloud( $id );
+				$response = $service->export_to_cloud( $id, $_POST['subtype'], explode(',', $_POST['options'] ) );
 
 				wp_send_json( $response );
 

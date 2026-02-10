@@ -28,14 +28,23 @@ export const getActions = ( item, actions ) => {
 		return true
 	}
 
-	const importThemeSettings = () => {
-		if ( maybeShowThemeWarning() ) {
-			return
-		} else if ( ! confirm( __( 'Do you really want to import these theme settings? This will update your site design and cannot be undone.' ) ) ) {
-			return
+	const importSettings = () => {
+		if ( item.subtype === 'theme_settings' ) {
+			if ( maybeShowThemeWarning() ) {
+				return
+			} else if ( ! confirm( __( 'Do you really want to import these theme settings? This will update your site design and cannot be undone.' ) ) ) {
+				return
+			}
 		}
+
+		if ( item.subtype === 'bb_settings' ) {
+			if ( ! confirm( __( 'Do you really want to import these Beaver Builder settings? This may update your site design and cannot be undone.' ) ) ) {
+				return
+			}
+		}
+		
 		setImporting( true )
-		api.importThemeSettings( item.id ).then( response => {
+		api.importSettings( item.id ).then( response => {
 			setImporting( false )
 			if ( response.data.data.error ) {
 				createNotice( {
@@ -60,8 +69,8 @@ export const getActions = ( item, actions ) => {
 	}
 
 	actions.unshift( {
-		label: __( 'Apply to Theme' ),
-		onClick: importThemeSettings,
+		label: __( 'Apply Settings' ),
+		onClick: importSettings,
 		disabled: importing,
 	} )
 
