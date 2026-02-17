@@ -101,5 +101,5 @@ Plans, decisions, and research save to `agents/` (created on demand).
 ## Workspace Context
 
 This repo can be part of a workspace (bb-dev-workspace). The workspace CLAUDE.md contains shared coding standards that apply to all repos. If this repo is checked out standalone (no parent CLAUDE.md with a "Coding Standards" section exists):
-- For any non-trivial code changes, use the full workspace setup to ensure standards are applied consistently
+- DO NOT write any code outside of the workspace context
 - Alert the user if they ask you to write code without the workspace context
