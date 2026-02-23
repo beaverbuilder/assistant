@@ -77,10 +77,6 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 == Changelog ==
 
-= 1.5.4 ( 2025-09-30 ) =
-* Add support for adding Beaver Builder settings to libraries
-* Add options when importing a library to be able to choose only specific types of content
-
 = 1.5.3 ( 2025-09-08 ) =
 * Changes to support the integration of Assistant in Beaver Builder version 2.10
 * Fixed dark mode issues on the Home app and sidebar.
@@ -398,5 +394,6 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 = 0.1.0 =
 
 * Initial Public Build
+
 
 
