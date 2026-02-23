@@ -21,7 +21,7 @@ class AttachmentsRepository extends RepositoryAbstract {
 	 *
 	 * @return array
 	 */
-	public function find_where( array $args = [], callable $transform = null ) {
+	public function find_where( array $args = [], ?callable $transform = null ) {
 		$query = $this->query( $args );
 		$attachments = $query->posts;
 		if ( ! is_null( $transform ) ) {
@@ -60,7 +60,7 @@ class AttachmentsRepository extends RepositoryAbstract {
 	}
 
 
-	public function restore( $id, callable $transform = null ) {
+	public function restore( $id, ?callable $transform = null ) {
 		wp_untrash_post( $id );
 		if ( ! is_null( $transform ) ) {
 			return $this->find( $id, $transform );
@@ -75,7 +75,7 @@ class AttachmentsRepository extends RepositoryAbstract {
 	 *
 	 * @return array|\WP_Post|null
 	 */
-	public function find( $id, callable $transform = null ) {
+	public function find( $id, ?callable $transform = null ) {
 		$attachment = get_post( $id );
 		if ( ! is_null( $transform ) ) {
 			$attachment = call_user_func( $transform, $attachment );
@@ -90,7 +90,7 @@ class AttachmentsRepository extends RepositoryAbstract {
 	 *
 	 * @return Pager
 	 */
-	public function paginate( array $args = [], callable $transform = null ) {
+	public function paginate( array $args = [], ?callable $transform = null ) {
 		$query = $this->query( $args );
 
 		$pager = new Pager(

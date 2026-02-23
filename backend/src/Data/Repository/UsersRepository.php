@@ -11,7 +11,7 @@ use FL\Assistant\System\Contracts\RepositoryAbstract;
 class UsersRepository extends RepositoryAbstract {
 
 
-	public function query( array $args = [], callable $transform = null ) {
+	public function query( array $args = [], ?callable $transform = null ) {
 		$defaults = [
 			'number' => 20,
 			'offset' => 0,
@@ -26,7 +26,7 @@ class UsersRepository extends RepositoryAbstract {
 	 *
 	 * @return bool|mixed|\WP_User
 	 */
-	public function find( $id, callable $transform = null ) {
+	public function find( $id, ?callable $transform = null ) {
 
 		$user = get_user_by( 'id', $id );
 		if ( ! is_null( $transform ) ) {
@@ -42,7 +42,7 @@ class UsersRepository extends RepositoryAbstract {
 	 *
 	 * @return array
 	 */
-	public function find_where( array $args = [], callable $transform = null ) {
+	public function find_where( array $args = [], ?callable $transform = null ) {
 		$users = $this->query( $args )->get_results();
 		if ( ! is_null( $transform ) ) {
 			$users = array_map( $transform, $users );
@@ -56,7 +56,7 @@ class UsersRepository extends RepositoryAbstract {
 	 *
 	 * @return Pager
 	 */
-	public function paginate( array $args = [], callable $transform = null ) {
+	public function paginate( array $args = [], ?callable $transform = null ) {
 		$query = $this->query( $args );
 
 		$pager = new Pager(
@@ -76,7 +76,7 @@ class UsersRepository extends RepositoryAbstract {
 	/**
 	 * @return \WP_User
 	 */
-	public function current( callable $transform = null ) {
+	public function current( ?callable $transform = null ) {
 		$current_user = wp_get_current_user();
 		$data = $this->find( $current_user->ID, $transform );
 
