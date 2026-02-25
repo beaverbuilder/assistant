@@ -22,20 +22,99 @@ class CustomizerService {
 	 * @param int $library_id
 	 * @return array
 	 */
-	public function export_to_cloud( $library_id ) {
+	public function export_to_cloud( $library_id, $subtype, $options ) {		
 		$client = new CloudClient;
-		$data = $this->export_settings();
-		$theme = wp_get_theme();
+
+		if ( $subtype === 'theme_settings' ) {
+			$theme = wp_get_theme();
+			$data = $this->export_theme_settings();
+			$name = sprintf( _x( '%s Settings', '%s theme name', 'assistant' ), $theme->Name );
+		} elseif ( $subtype === 'bb_settings' ) {
+			if ( ! class_exists( '\FLBuilderModel') ) {
+				return rest_ensure_response( [ 'error' => __( 'Unable to load BeaverBuilder settings exporter.' ) ] );
+			}
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return rest_ensure_response( [ 'error' => __( 'You do not have permission to export BeaverBuilder settings.' ) ] );
+			}
+
+			$possible_options = [
+				'admin_settings',
+				'global_settings',
+				'global_styles',
+				'global_colors',
+			];
+			$settings = [];
+			$settings['builder_global_settings'] = \FLBuilderModel::get_global_settings();
+			$settings['admin_settings'] = [];
+			$all_settings = true;
+			$selected_settings = [];
+
+			foreach ( \FLBuilderAdminSettings::registered_settings() as $setting ) {
+				$settings['admin_settings'][ $setting ] = get_option( $setting );
+			}
+
+			if ( class_exists( 'FLBuilderGlobalStyles' ) ) {
+				$globals = \FLBuilderGlobalStyles::get_settings( false );
+				$settings['global_colors'] = $globals->colors;
+				unset( $globals->colors );
+				$settings['global_styles'] = $globals;
+			}
+
+			foreach ( $possible_options as $option ) {
+				if ( ! in_array( $option, $options ) ) {
+					$all_settings = false;
+				}
+			}
+
+			if ( in_array( 'admin_settings', $options ) ) {
+				$selected_settings[] = 'Admin';
+			} else {
+				unset( $settings['admin_settings'] );
+			}
+
+			if ( in_array( 'global_settings', $options ) ) {
+				$selected_settings[] = 'Global Settings';
+			} else {
+				unset( $settings['builder_global_settings'] );
+			}
+
+			if ( in_array( 'global_styles', $options ) ) {
+				$selected_settings[] = 'Styles';
+			} else {
+				unset( $settings['global_styles'] );
+			}
+
+			if ( in_array( 'global_colors', $options ) ) {
+				$selected_settings[] = 'Colors';
+			} else {
+				unset( $settings['global_colors'] );
+			}
+
+			if ( isset( $settings['global_colors'] ) && isset ( $globals->prefix ) ) {
+				$settings['global_colors_prefix'] = $globals->prefix;
+			}
+
+			if ( $all_settings ) {
+				$name = 'All Settings';
+			} else {
+				$name = implode( ', ', $selected_settings );
+			}
+
+			$data = json_encode( $settings );
+		}
+
 		$screenshot = isset( $_POST['screenshot'] ) ? ScreenShotHelper::get_for_post_request( home_url(), false ) : null;
 
 		return $client->libraries->create_item(
 			$library_id,
 			[
-				'name'  => sprintf( _x( '%s Settings', '%s theme name', 'assistant' ), $theme->Name ),
-				'type'  => 'theme_settings',
+				'name'  => $name,
+				'type'  => 'settings',
+				'subtype' => $subtype,
 				'data'  => $data,
 				'media' => [
-					'attachments' => MediaPathHelper::get_image_paths_from_data( $data )
+					'attachments' => is_array( $data ) ? MediaPathHelper::get_image_paths_from_data( $data ) : MediaPathHelper::get_image_paths_from_string( $data )
 				],
 				'screenshot' => $screenshot,
 			]
@@ -45,7 +124,7 @@ class CustomizerService {
 	/**
 	 * @return array
 	 */
-	public function export_settings() {
+	public function export_theme_settings() {
 		global $wp_customize;
 
 		$theme_service = new ThemeService();
@@ -114,6 +193,18 @@ class CustomizerService {
 		$client = new CloudClient;
 		$item = $client->libraries->get_item( $item_id );
 
+		if ($item->subtype === 'theme_settings') {
+			return $this->import_theme_settings_from_cloud( $item );
+		} elseif ( $item->subtype === 'bb_settings' ) {
+			// Convert settings back into array
+			$item->data = json_decode(json_encode($item->data), true);
+			return $this->import_bb_settings( $item );
+		} else {
+			return rest_ensure_response( [ 'error' => __( 'Unsupported settings type.' ) ] );
+		}
+	}
+
+	public function import_theme_settings_from_cloud( $item ) {
 		if ( ! is_object( $item ) || empty( $item->data ) ) {
 			return rest_ensure_response( [ 'error' => __( 'Missing item data.' ) ] );
 		}
@@ -127,8 +218,77 @@ class CustomizerService {
 		}
 
 		$data = $this->import_media_from_library( $item );
-		$this->import_settings( $data );
+		$this->import_theme_settings( $data );		
 
+		return rest_ensure_response( [
+			'success' => true
+		] );
+	}
+
+	public function import_bb_settings( $item ) {
+		$data = $item->data;
+
+		if ( !class_exists( '\FLBuilderModel') ) {
+			return rest_ensure_response( [ 'error' => __( 'Unable to load BeaverBuilder settings importer.' ) ] );
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return rest_ensure_response( [ 'error' => __( 'You do not have permission to export BeaverBuilder settings.' ) ] );
+		}
+
+		if ( isset( $data['builder_global_settings'] ) ) {
+			update_option( '_fl_builder_settings', $data['builder_global_settings'], true );
+		}
+
+		// loop through admin settings
+		if ( isset( $data['admin_settings'] ) ) {
+			$settings = $data['admin_settings'];
+
+			foreach ( $settings as $key => $setting ) {
+				update_option( $key, $setting, true );
+			}
+		}
+
+		$globals = get_option( '_fl_builder_styles' );
+		if ( isset( $data['global_styles'] ) ) {
+			$backup_colors        = isset( $globals->colors ) ? $globals->colors : array();
+			$new_settings         = (object) $data['global_styles'];
+			$new_settings->colors = $backup_colors;
+			$globals              = $new_settings;
+			\FLBuilderUtils::update_option( '_fl_builder_styles', $globals, true );
+		}
+
+		// global styles/colors...
+		if ( isset( $data['global_colors'] ) ) {
+			// get current settings and swap out colours
+			$globals = $globals ? $globals : \FLBuilderGlobalStyles::get_settings( false );
+			$current = $globals->colors;
+
+			$new = array_merge( (array) $current, (array) $data['global_colors'] );
+
+			// filter out duplicates
+			$serialized      = array_map( 'serialize', $new );
+			$unique          = array_unique( $serialized );
+			$globals->colors = array_intersect_key( $new, $unique );
+
+			foreach ( $globals->colors as $k => $color ) {
+				if ( empty( $color ) || ! $color['color'] ) {
+					unset( $globals->colors[ $k ] );
+				}
+			}
+
+			if ( isset( $data->global_colors_prefix ) ) {
+				$globals->prefix = $data->global_colors_prefix;
+			}
+
+			// Fixes global colors not starting with 0 key
+			$globals->colors = array_values( $globals->colors );
+
+			\FLBuilderUtils::update_option( '_fl_builder_styles', $globals, true );
+		}
+
+		\FLBuilderModel::delete_asset_cache_for_all_posts();
+		
 		return rest_ensure_response( [
 			'success' => true
 		] );
@@ -173,7 +333,7 @@ class CustomizerService {
 	 * @param array $data
 	 * @return bool|WP_Error
 	 */
-	public function import_settings( $data ) {
+	public function import_theme_settings( $data ) {
 		global $wp_customize;
 
 		$template = get_template();

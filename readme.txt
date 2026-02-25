@@ -77,6 +77,11 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 
 == Changelog ==
 
+= 1.5.4 ( 2026-02-25 ) =
+* Allow exporting/importing of Beaver Builder settings to/from libraries
+* Modify import library to allow selecting type of library item to import
+* Adjust "Add All" UI to prevent accidental exporting of items
+
 = 1.5.3.2 ( 2026-01-28 ) =
 * Fixed PHP warning for undefined array key when updating profile
 * Fixed PHP warning for constants already defined
@@ -402,8 +407,3 @@ No! Assistant is a standalone plugin and can be used with any WordPress 5.0+ ins
 = 0.1.0 =
 
 * Initial Public Build
-
-
-
-
-

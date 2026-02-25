@@ -3,7 +3,7 @@
  * Plugin Name: Assistant
  * Author: The Beaver Builder Team
  * Author URI: https://www.wpbeaverbuilder.com/?utm_medium=assistant&utm_source=plugins-admin-page&utm_campaign=plugins-admin-author
- * Version: 1.5.3.2
+ * Version: 1.5.4
  * Description: A tool for navigating a site and accomplishing quick tasks without needing the WordPress admin.
  * License: GNU General Public License v2.0
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,7 +14,7 @@
 defined( 'ABSPATH' ) || die();
 
 if ( ! defined( 'FL_ASSISTANT_VERSION' ) ) {
-	define( 'FL_ASSISTANT_VERSION', '1.5.3.1' );
+	define( 'FL_ASSISTANT_VERSION', '1.5.4' );
 }
 if ( ! defined( 'FL_ASSISTANT_FILE' ) ) {
 	define( 'FL_ASSISTANT_FILE', trailingslashit( __FILE__ ) );
