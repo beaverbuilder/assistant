@@ -25,6 +25,7 @@ const filterFiles = src => {
         '.gitignore',
         '.travis.yml',
         'babel.config.js',
+        'CLAUDE.md',
         'composer.json',
         'composer.lock',
         'jest.config.js',
