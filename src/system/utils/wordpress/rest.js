@@ -58,7 +58,7 @@ const http = axios.create( {
 	baseURL: apiRoot,
 	headers: {
 		common: {
-			'X-WP-Nonce': nonce.api
+			'X-WP-Nonce': nonce.api,
 		}
 	},
 	adapter: cache.adapter,
@@ -689,7 +689,7 @@ const libraries = () => {
 		/**
 		 * Export WP Customizer settings into library
 		 */
-		exportThemeSettings( libraryId, data = {}, config = {} ) {
+		exportSettings( libraryId, data = {}, config = {} ) {
 			const http = axios.create( {
 				headers: {
 					common: {
@@ -708,7 +708,7 @@ const libraries = () => {
 		/**
 		 * Export WP Customizer settings into library
 		 */
-		importThemeSettings( itemId, config = {} ) {
+		importSettings( itemId, config = {} ) {
 			const http = axios.create( {
 				headers: {
 					common: {

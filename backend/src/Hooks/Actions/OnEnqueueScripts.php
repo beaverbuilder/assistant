@@ -10,6 +10,7 @@ use FL\Assistant\Data\UserState;
 use FL\Assistant\Data\Mockup;
 use FL\Assistant\Services\ThemeService;
 use FL\Assistant\Helpers\BeaverBuilderHelper;
+use FL\Assistant\System\Integrations\BeaverBuilder;
 use FLBuilderModel;
 
 /**
@@ -27,6 +28,8 @@ class OnEnqueueScripts {
 	 * @var PostsRepository
 	 */
 	protected $posts;
+
+	protected $beaver_builder;
 
 	/**
 	 * @var Site
@@ -51,15 +54,16 @@ class OnEnqueueScripts {
 		UsersRepository $users,
 		PostsRepository $posts,
 		Site $site,
-		UserTransformer $user_transform
+		UserTransformer $user_transform,
+		BeaverBuilder $beaver_builder
 	) {
 
 		$this->users          = $users;
 		$this->posts          = $posts;
 		$this->site           = $site;
 		$this->user_transform = $user_transform;
+		$this->beaver_builder = $beaver_builder;	
 	}
-
 
 	/**
 	 * @return array
@@ -160,6 +164,7 @@ class OnEnqueueScripts {
 			'isAdmin'             => is_admin(),
 			'isSiteAdmin'         => is_super_admin(),
 			'isLocalhost'         => $this->site->is_local(),
+			'isBBInstalled'       => $this->beaver_builder->is_installed(),
 			'mockup'              => Mockup::get(),
 			'nonce'               => [
 				'api'             => wp_create_nonce( 'wp_rest' ),
@@ -167,6 +172,8 @@ class OnEnqueueScripts {
 				'replyUnfiltered' => wp_create_nonce( 'unfiltered-html-comment' ),
 				'updates'         => wp_create_nonce( 'updates' ),
 			],
+			'name'                => 'Assistant Plugin',
+			'version'             => FL_ASSISTANT_VERSION,
 			'pluginURL'           => FL_ASSISTANT_URL,
 			'taxonomies'          => $this->posts->get_taxononies(),
 			'userRoles'           => $this->users->get_roles(),
@@ -177,7 +184,7 @@ class OnEnqueueScripts {
 				'pusherCluster'   => FL_ASSISTANT_PUSHER_CLUSTER,
 			],
 			'embedInBB'           => FL_ASST_SUPPORTS_BB,
-			'isBBExtension'		  => BeaverBuilderHelper::is_assistant_extension(),
+			'isBBExtension'       => BeaverBuilderHelper::is_assistant_extension(),
 			'themeSlug'           => $theme['slug'],
 			'themeParentSlug'     => $theme['parent'] ? $theme['parent']['slug'] : null,
 		];
