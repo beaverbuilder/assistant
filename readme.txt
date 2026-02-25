@@ -1,9 +1,9 @@
 === Assistant - Every Day Productivity Apps ===
 Contributors: justinbusa, RobbyMcCullough, billyyoung, brentjettgmailcom, pross, shahidajmeri22, codente
 Tags: Assistant Pro, Beaver Builder, Page Builder, Gutenberg, Blocks
-Requires at least: 5.2
+Requires at least: 6.6
+Requires PHP: 7.2
 Tested up to: 6.9
-Requires PHP: 5.6
 Stable tag: 1.5.4
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
