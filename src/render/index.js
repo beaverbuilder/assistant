@@ -91,11 +91,12 @@ const renderAssistantBBPanelIFrameUI = () => {
  */
 const renderAssistantBBPanel = () => {
 
-	// Listen for BB publish out (without refresh) and render standalone assistant
-	FLBuilder.addHook( 'endEditingSession', renderAssistant )
-
-	// Listen for BB re-enter editing and ummount standalone assistant
-	FLBuilder.addHook( 'restartEditingSession', unmountAssistant )
+	// Only render standalone assistant on exit if not in BB extension mode.
+	// In extension mode, the assistant should only be available within the builder panel.
+	if ( ! FL_ASSISTANT_CONFIG.isBBExtension ) {
+		FLBuilder.addHook( 'endEditingSession', renderAssistant )
+		FLBuilder.addHook( 'restartEditingSession', unmountAssistant )
+	}
 
 	// Setup Assistant panel in Beaver Builder
 	if ( 'Builder' in FL && 'registerPanel' in FL.Builder ) {
