@@ -4,6 +4,7 @@ namespace FL\Assistant\Hooks\Actions;
 
 use FL\Assistant\Hooks\Actions\OnEnqueueScripts;
 use FL\Assistant\Data\UserState;
+use FL\Assistant\Helpers\BeaverBuilderHelper;
 
 
 /**
@@ -23,6 +24,11 @@ class OnWPBeforeAdminBarRender {
 		global $wp_admin_bar;
 
 		if ( ! $this->on_enqueue_scripts->should_enqueue() ) {
+			return;
+		}
+
+		// In BB extension mode, the assistant is only accessible within the builder.
+		if ( BeaverBuilderHelper::is_assistant_extension() ) {
 			return;
 		}
 
