@@ -35,6 +35,7 @@ class CloudClient {
 		$args['headers'][] = "Authorization: Bearer $token";
 		$args['headers'][] = 'X-Application-Name: Assistant Plugin';
 		$args['headers'][] = 'X-Application-Version: ' . FL_ASSISTANT_VERSION;
+		$args['headers'][] = 'X-Api-Version: 3';
 		$curl = curl_init();
 		$fields = isset( $args['data'] ) ? $this->build_query( $args['data'] ) : '';
 

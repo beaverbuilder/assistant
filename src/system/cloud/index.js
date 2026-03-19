@@ -3,6 +3,9 @@ import { getSystemActions } from '../data/system'
 
 const cloud = createCloudClient( FL_ASSISTANT_CONFIG.cloudConfig )
 
+cloud.http.defaults.headers.common['X-Application-Name'] = 'Assistant Plugin'
+cloud.http.defaults.headers.common['X-Api-Version'] = '3'
+
 cloud.session.subscribe( data => {
 	const { setIsCloudConnected } = getSystemActions()
 	setIsCloudConnected( !! data.token )
