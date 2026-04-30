@@ -15,6 +15,24 @@ export default () => {
   const importPostMedia = usePostMediaImport()
   const api = getWpRest().libraries()
 
+  const getConfirmedSettingsIds = ( selectedIds ) => {
+    const confirmedSettingsIds = []
+
+    selectedIds.forEach( id => {
+      const item = items.find( obj => obj.id === id )
+
+      if ( item && 'settings' === item.type ) {
+        const isConfirmed = confirm( __( 'Importing these settings will overwrite your existing settings, do you wish to continue?' ) + '\n' + item.name )
+
+        if ( isConfirmed ) {
+          confirmedSettingsIds.push( item.id )
+        }
+      }
+    } )
+
+    return confirmedSettingsIds
+  }
+
   const importItems = async( itemType ) => {  
     let completedItemCount = 0
     let importedItemCount = 0
@@ -43,6 +61,7 @@ export default () => {
 
     setSelectedItems( selectedItems )
     setImportComplete( false )
+    const confirmedSettingsIds = getConfirmedSettingsIds( selectedItems )
 
     for ( const id of selectedItems ) {
       const item = items.find( obj => obj.id === id )
@@ -67,7 +86,7 @@ export default () => {
             } )
           } )
         } else if ( 'settings' === item.type ) {
-          if ( confirm( __( 'Importing these settings will overwrite your existing settings, do you wish to continue?' ) + "\n" + item.name) ) {
+          if ( confirmedSettingsIds.includes( item.id ) ) {
             await api.importSettings( item.id )
             importedItemCount++
           }

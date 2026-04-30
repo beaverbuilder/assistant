@@ -120,6 +120,19 @@ class PostsRepository extends RepositoryAbstract {
 	}
 
 	/**
+	 * Plural label from registered post type (WP_Post_Type::$label), not contextual list titles.
+	 * @param \WP_Post_Type $type
+	 * @return string
+	 */
+	private function get_stable_plural_label( \WP_Post_Type $type ) {
+		if ( isset( $type->label ) && '' !== $type->label ) {
+			return $type->label;
+		}
+
+		return $type->labels->name;
+	}
+
+	/**
 	 * Get array of post types registered in WordPress
 	 * @return array
 	 */
@@ -178,7 +191,7 @@ class PostsRepository extends RepositoryAbstract {
 				],
 				'labels'         => [
 					'singular' => esc_html( $type->labels->singular_name ),
-					'plural'   => esc_html( $type->labels->name ),
+					'plural'   => esc_html( $this->get_stable_plural_label( $type ) ),
 					'newItem'  => esc_html( $type->labels->new_item ),
 					'editItem' => esc_html( $type->labels->edit_item ),
 					'viewItem' => esc_html( $type->labels->view_item ),
@@ -187,7 +200,7 @@ class PostsRepository extends RepositoryAbstract {
 
 			if ( 'wp_template' === $slug || 'wp_template_part' === $slug ) {
 				$data[ $slug ]['labels']['singular'] = sprintf( esc_html_x( 'Block %s', 'Singular type name.', 'assistant' ), $type->labels->singular_name );
-				$data[ $slug ]['labels']['plural'] = sprintf( esc_html_x( 'Block %s', 'Plural type name.', 'assistant' ), $type->labels->name );
+				$data[ $slug ]['labels']['plural'] = sprintf( esc_html_x( 'Block %s', 'Plural type name.', 'assistant' ), $this->get_stable_plural_label( $type ) );
 			}
 
 			$taxonomies = get_object_taxonomies( $slug, 'objects' );

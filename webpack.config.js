@@ -28,6 +28,10 @@ const alias = {
 	'vendor-fluid': path.resolve( __dirname, './node_modules/@beaverbuilder/fluid' ),
 	'vendor-cloud': path.resolve( __dirname, './node_modules/@beaverbuilder/cloud' ),
 	'vendor-icons': path.resolve( __dirname, './node_modules/@beaverbuilder/icons' ),
+
+	// Don't bundle Stripe in the plugin (checkout only runs on the SaaS app).
+	'@stripe/stripe-js': path.resolve( __dirname, './src/stubs/stripe-js.js' ),
+	'@stripe/react-stripe-js': path.resolve( __dirname, './src/stubs/react-stripe-js.js' ),
 }
 
 /**

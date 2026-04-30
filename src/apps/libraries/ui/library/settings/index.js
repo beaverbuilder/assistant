@@ -4,6 +4,7 @@ import { Libraries } from '@beaverbuilder/cloud-ui'
 import { Layout, Page, Button } from 'assistant/ui'
 import ImportLibrary from './import'
 import DownloadZip from './download-zip'
+import CopyPublicUrl from './copy-public-url'
 import { useSystemState } from 'assistant/data'
 import './style.scss'
 
@@ -22,6 +23,7 @@ export default () => {
 						<Button.Group appearance="grid">
 							<ImportLibrary />
 							<DownloadZip />
+							{ 'public' === library.visibility && <CopyPublicUrl /> }
 						</Button.Group>
 					</Page.Section>
 				</Layout.Box>
