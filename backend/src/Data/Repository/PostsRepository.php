@@ -141,11 +141,11 @@ class PostsRepository extends RepositoryAbstract {
 		$types = get_post_types( [], 'objects' );
 
 		// Types with show_ui false that we want to show
-		$known = [
+		$known = apply_filters( 'fl_assistant_post_types_known', [
 			'wp_template',
 			'wp_template_part',
 			'fl_code',
-		];
+		] );
 
 		// Types to never show
 		$ignore = [
@@ -175,7 +175,7 @@ class PostsRepository extends RepositoryAbstract {
 			}
 
 			$data[ $slug ] = [
-				'canView'        => $type->public || $type->publicly_queryable,
+				'canView'        => $type->public || $type->publicly_queryable || in_array( $slug, $known ),
 				'canExport'      => $type->can_export,
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,
