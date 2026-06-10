@@ -31,6 +31,7 @@ const Main = ( { baseURL } ) => {
 	const { activeTab } = useAppState( 'bbapp' )
 	const [ libraries, setLibraries ] = useState( [] )
 	const [ teams, setTeams ] = useState( [] )
+	const [ folders, setFolders ] = useState( { user: [], team: {} } )
 	const [ isLoadingLibraries, setIsLoadingLibraries ] = useState( true )
 	const [ isLoadingTeams, setIsLoadingTeams ] = useState( true )
 	const { isCloudConnected } = useSystemState( 'isCloudConnected' )
@@ -41,12 +42,14 @@ const Main = ( { baseURL } ) => {
 				try {
 					setIsLoadingTeams( true )
 					setIsLoadingLibraries( true )
-					const [ teamsRes, librariesRes ] = await Promise.all([
+					const [ teamsRes, librariesRes, foldersRes ] = await Promise.all( [
 						cloud.teams.getAll(),
 						cloud.libraries.getAllSortedByOwner(),
-					]);
+						cloud.libraries.getFolders().catch( () => ( { data: { user: [], team: {} } } ) ),
+					] )
 					setTeams( teamsRes.data )
 					setLibraries( librariesRes )
+					setFolders( foldersRes.data || { user: [], team: {} } )
 				} catch ( error ) {
 					console.error("Error:", error)
 				} finally {
@@ -87,7 +90,12 @@ const Main = ( { baseURL } ) => {
 				}
 
 				{ activeTab === 'libraries' && isCloudConnected &&
-					<Libraries preloadedLib={ libraries } preloadedTeams={ teams } />
+					<Libraries
+						preloadedLib={ libraries }
+						preloadedTeams={ teams }
+						preloadedFolders={ folders }
+						isLoadingLibraries={ isLoadingLibraries }
+					/>
 				}
 
 				{ activeTab === 'showcase' &&
