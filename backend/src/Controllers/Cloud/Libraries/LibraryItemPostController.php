@@ -439,20 +439,27 @@ class LibraryItemPostController extends ControllerAbstract {
 
 		$post_data = $item->data->post;
 
+		// wp_insert_post() unslashes the array internally, so the content must be
+		// slashed going in. A design system stores its CSS as JSON in post_content
+		// (with `\n` escapes); without this, wp_insert_post strips those
+		// backslashes and turns every `\n` into a literal `n`, corrupting the
+		// generated stylesheet.
 		$new_post_id = wp_insert_post(
-			[
-				'comment_status' => $post_data->comment_status,
-				'menu_order'     => $post_data->menu_order,
-				'ping_status'    => $post_data->ping_status,
-				'post_author'    => wp_get_current_user()->ID,
-				'post_content'   => $post_data->post_content ? $post_data->post_content : '',
-				'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
-				'post_mime_type' => $post_data->post_mime_type ? $post_data->post_mime_type : '',
-				'post_name'      => $post_data->post_name,
-				'post_status'    => 'publish',
-				'post_title'     => $post_data->post_title,
-				'post_type'      => $post_data->post_type,
-			],
+			wp_slash(
+				[
+					'comment_status' => $post_data->comment_status,
+					'menu_order'     => $post_data->menu_order,
+					'ping_status'    => $post_data->ping_status,
+					'post_author'    => wp_get_current_user()->ID,
+					'post_content'   => $post_data->post_content ? $post_data->post_content : '',
+					'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
+					'post_mime_type' => $post_data->post_mime_type ? $post_data->post_mime_type : '',
+					'post_name'      => $post_data->post_name,
+					'post_status'    => 'publish',
+					'post_title'     => $post_data->post_title,
+					'post_type'      => $post_data->post_type,
+				]
+			),
 			true
 		);
 
