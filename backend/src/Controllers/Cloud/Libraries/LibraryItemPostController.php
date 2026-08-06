@@ -813,6 +813,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function replace_imported_attachment_urls_in_meta( $post_id, $imported ) {
+		global $wpdb;
 		$meta = get_post_meta( $post_id );
 
 		foreach ( $meta as $key => $val ) {
@@ -823,13 +824,27 @@ class LibraryItemPostController extends ControllerAbstract {
 			} elseif ( JsonHelper::is_string_json( $val ) ) {
 				$val = json_decode( $val );
 				$val = MediaPathHelper::replace_imported_attachment_urls_in_data( $val, $imported );
-				$val = wp_slash( json_encode( $val ) );
+				$val = json_encode( $val );
 			} else {
 				$val = MediaPathHelper::replace_imported_attachment_urls_in_string( $val, $imported );
 			}
 
-			update_post_meta( $post_id, $key, $val );
+			// Write via $wpdb, not update_post_meta(): the latter unslashes the
+			// value internally, which strips escaped characters buried in nested
+			// serialized data (e.g. the \" in each module's ds_block_data JSON)
+			// and corrupts _fl_builder_data, leaving ds-block pages blank on
+			// import. maybe_serialize() + a direct update preserves the bytes.
+			$wpdb->update(
+				$wpdb->postmeta,
+				[ 'meta_value' => maybe_serialize( $val ) ],
+				[
+					'post_id'  => $post_id,
+					'meta_key' => $key,
+				]
+			);
 		}
+
+		clean_post_cache( $post_id );
 	}
 
 	/**
