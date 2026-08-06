@@ -615,15 +615,26 @@ class LibraryItemPostController extends ControllerAbstract {
 			}
 			if ( is_array( $meta_value ) && count( $meta_value ) !== 0 ) {
 				foreach ( $meta_value as $value ) {
-					if ( $value !== null ) {
-						$value = addslashes( $value );
-					}
-					// @codingStandardsIgnoreStart
-					$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" );
-					// @codingStandardsIgnoreEnd
+					// Store the (already-serialized) value verbatim via $wpdb->insert
+					// so escaping follows the DB connection. The former hand-rolled
+					// addslashes() + raw INSERT silently failed on hosts running
+					// NO_BACKSLASH_ESCAPES (large builder blobs never stored → blank
+					// imports); $wpdb->insert() is escape-safe on any sql_mode.
+					$wpdb->insert(
+						$wpdb->postmeta,
+						[
+							'post_id'    => $post_id,
+							'meta_key'   => $meta_key,
+							'meta_value' => $value,
+						]
+					);
 				}
 			}
 		}
+
+		// The direct writes bypass the meta cache; flush it so same-request reads
+		// (asset regeneration) and object-cache hosts see the imported meta.
+		clean_post_cache( $post_id );
 	}
 
 	/**
