@@ -13,6 +13,14 @@ use FL\Assistant\Clients\Cloud\CloudClient;
 
 class LibraryItemPostController extends ControllerAbstract {
 
+	/**
+	 * Meta key stamped on a primary library item recording the cloud item ids of
+	 * its companions, so import can pull them and resolve cross-references. Kept
+	 * in meta (not a dedicated field) so it round-trips through the cloud store
+	 * with no API change; stripped from the page after import.
+	 */
+	const COMPANION_ITEMS_META = '_fl_asst_companion_items';
+
 	protected $posts;
 
 	/**
@@ -226,9 +234,13 @@ class LibraryItemPostController extends ControllerAbstract {
 	 *
 	 * @param object $request
 	 * @param object $post
+	 * @param bool   $with_screenshot Whether to capture a front-end screenshot.
+	 *                                Companion posts that never render on the
+	 *                                front end (e.g. a design system) pass false
+	 *                                to skip a wasteful headless capture.
 	 * @return array
 	 */
-	public function get_save_data( $request, $post ) {
+	public function get_save_data( $request, $post, $with_screenshot = true ) {
 		$data = [
 			'name'       => $post->post_title,
 			'type'       => 'post',
@@ -251,7 +263,7 @@ class LibraryItemPostController extends ControllerAbstract {
 			'media'      => [
 				'attachments' => $this->get_post_image_paths( $post ),
 			],
-			'screenshot' => $this->get_post_screenshot( $request, $post ),
+			'screenshot' => $with_screenshot ? $this->get_post_screenshot( $request, $post ) : null,
 		];
 
 		$thumbnail = get_attached_file( get_post_thumbnail_id( $post ) );
@@ -275,16 +287,61 @@ class LibraryItemPostController extends ControllerAbstract {
 		$post = get_post( $id );
 		$client = new CloudClient;
 
-		$response = $client->libraries->create_item(
-			$library_id,
-			$this->get_save_data( $request, $post )
-		);
+		// Upload companions first so their cloud ids can be recorded on the
+		// primary item; import reads them to pull the companions and resolve
+		// the primary post's cross-references at the destination.
+		$companion_ids = $this->save_companions_to_library( $request, $post, $library_id, $client );
+
+		$data = $this->get_save_data( $request, $post );
+
+		if ( $companion_ids ) {
+			$data['post_data']['meta'][ self::COMPANION_ITEMS_META ] = [ wp_json_encode( $companion_ids ) ];
+		}
+
+		$response = $client->libraries->create_item( $library_id, $data );
 
 		if (isset($response->success) && $response->success === false) {
 			return new \WP_Error( 'API Error', $response->message, [ 'status' => 400 ] );
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Uploads any companion posts a primary post depends on to the same library.
+	 *
+	 * Plugins declare companions via the `fl_assistant_library_companion_posts`
+	 * filter (mirroring the `fl_assistant_post_types_known` picker filter), so
+	 * Assistant stays generic and the companion knowledge lives in the plugin
+	 * that owns the relationship. Companions are uploaded as their own library
+	 * items; their cloud ids are returned so the primary item can record them.
+	 *
+	 * @param object     $request
+	 * @param object     $post
+	 * @param int        $library_id
+	 * @param CloudClient $client
+	 * @return array Cloud item ids of the uploaded companions.
+	 */
+	protected function save_companions_to_library( $request, $post, $library_id, $client ) {
+		$companions = apply_filters( 'fl_assistant_library_companion_posts', [], $post, $library_id );
+		$seen = [];
+		$ids  = [];
+
+		foreach ( $companions as $companion_post ) {
+			if ( ! $companion_post instanceof \WP_Post || isset( $seen[ $companion_post->ID ] ) ) {
+				continue;
+			}
+			$seen[ $companion_post->ID ] = true;
+			$response = $client->libraries->create_item(
+				$library_id,
+				$this->get_save_data( $request, $companion_post, false )
+			);
+			if ( isset( $response->id ) ) {
+				$ids[] = $response->id;
+			}
+		}
+
+		return $ids;
 	}
 
 	/**
@@ -333,55 +390,153 @@ class LibraryItemPostController extends ControllerAbstract {
 		$client = new CloudClient;
 		$item = $client->libraries->get_item( $item->id );
 
-		$registered_post_types = get_post_types();
+		$result = $this->import_item( $item );
 
-		if ( ! in_array( $item->data->post->post_type, $registered_post_types ) ) {
+		if ( is_wp_error( $result ) ) {
+			if ( 'post_type_not_registered' === $result->get_error_code() ) {
+				return rest_ensure_response(
+					[
+						'error' => true,
+						'error_code' => 'post_type_not_registered',
+						'post_type' => $result->get_error_data()['post_type'],
+					]
+				);
+			}
 			return rest_ensure_response(
 				[
 					'error' => true,
-					'error_code' => 'post_type_not_registered',
-					'post_type' => $item->data->post->post_type,
 				]
+			);
+		}
+
+		$this->import_companions_from_library( $item, $result, $client );
+
+		return rest_ensure_response(
+			$this->posts->transform(
+				get_post( $result )
+			)
+		);
+	}
+
+	/**
+	 * Creates a local post from a fetched cloud library item.
+	 *
+	 * Shared by the import endpoint and companion import so both create posts
+	 * through one path. Post-type-agnostic: meta (including any identity meta a
+	 * companion carries) and terms are copied verbatim.
+	 *
+	 * @param object $item Fetched cloud library item (with `data->post/meta/terms`).
+	 * @return int|\WP_Error New post id, or an error to be mapped by the caller.
+	 */
+	protected function import_item( $item ) {
+		if ( ! in_array( $item->data->post->post_type, get_post_types(), true ) ) {
+			return new \WP_Error(
+				'post_type_not_registered',
+				'Post type is not registered on this site.',
+				[ 'post_type' => $item->data->post->post_type ]
 			);
 		}
 
 		$post_data = $item->data->post;
-		$meta_data = $item->data->meta;
-		$term_data = $item->data->terms;
 
+		// wp_insert_post() unslashes the array internally, so the content must be
+		// slashed going in. A design system stores its CSS as JSON in post_content
+		// (with `\n` escapes); without this, wp_insert_post strips those
+		// backslashes and turns every `\n` into a literal `n`, corrupting the
+		// generated stylesheet.
 		$new_post_id = wp_insert_post(
-			[
-				'comment_status' => $post_data->comment_status,
-				'menu_order'     => $post_data->menu_order,
-				'ping_status'    => $post_data->ping_status,
-				'post_author'    => wp_get_current_user()->ID,
-				'post_content'   => $post_data->post_content ? $post_data->post_content : '',
-				'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
-				'post_mime_type' => $post_data->post_mime_type ? $post_data->post_mime_type : '',
-				'post_name'      => $post_data->post_name,
-				'post_status'    => 'publish',
-				'post_title'     => $post_data->post_title,
-				'post_type'      => $post_data->post_type,
-			]
+			wp_slash(
+				[
+					'comment_status' => $post_data->comment_status,
+					'menu_order'     => $post_data->menu_order,
+					'ping_status'    => $post_data->ping_status,
+					'post_author'    => wp_get_current_user()->ID,
+					'post_content'   => $post_data->post_content ? $post_data->post_content : '',
+					'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
+					'post_mime_type' => $post_data->post_mime_type ? $post_data->post_mime_type : '',
+					'post_name'      => $post_data->post_name,
+					'post_status'    => 'publish',
+					'post_title'     => $post_data->post_title,
+					'post_type'      => $post_data->post_type,
+				]
+			),
+			true
 		);
 
 		if ( is_wp_error( $new_post_id ) ) {
-			return rest_ensure_response(
-				[
-					'error' => true,
-				]
-			);
+			return $new_post_id;
 		}
 
-		$this->import_post_meta_from_library( $new_post_id, $meta_data );
-		$this->import_post_terms_from_library( $new_post_id, $term_data );
+		$this->import_post_meta_from_library( $new_post_id, $item->data->meta );
+		$this->import_post_terms_from_library( $new_post_id, $item->data->terms );
 		$this->regenerate_builder_cache( $new_post_id, $item );
 
-		return rest_ensure_response(
-			$this->posts->transform(
-				get_post( $new_post_id )
-			)
-		);
+		return $new_post_id;
+	}
+
+	/**
+	 * Imports the companion library items recorded on an imported primary post.
+	 *
+	 * The primary item carries companion cloud ids in `COMPANION_ITEMS_META`
+	 * (stamped at upload). Each companion is pulled and created unless a plugin
+	 * reports it already exists via `fl_assistant_library_companion_exists` —
+	 * the dedup seam where DS-specific UUID matching lives, keeping Assistant
+	 * generic. The linkage meta is stripped from the imported post afterward so a
+	 * later re-save doesn't re-propagate stale ids.
+	 *
+	 * The ids are read from the fetched cloud item, not from the just-imported
+	 * post's meta: import_post_meta_from_library() writes meta with a raw INSERT
+	 * that leaves the meta cache stale, so a same-request get_post_meta() read
+	 * would miss it.
+	 *
+	 * @param object      $item    Fetched cloud library item (the primary).
+	 * @param int         $post_id Imported primary post id.
+	 * @param CloudClient $client
+	 * @return void
+	 */
+	protected function import_companions_from_library( $item, $post_id, $client ) {
+		$companion_ids = $this->get_companion_item_ids( $item );
+
+		foreach ( $companion_ids as $companion_id ) {
+			$companion_item = $client->libraries->get_item( $companion_id );
+
+			if ( ! isset( $companion_item->data->post ) ) {
+				continue;
+			}
+
+			$exists = apply_filters( 'fl_assistant_library_companion_exists', false, $companion_item );
+
+			if ( $exists ) {
+				continue;
+			}
+
+			$this->import_item( $companion_item );
+		}
+
+		if ( $companion_ids ) {
+			delete_post_meta( $post_id, self::COMPANION_ITEMS_META );
+		}
+	}
+
+	/**
+	 * Reads the companion cloud item ids recorded on a fetched library item.
+	 *
+	 * @param object $item Fetched cloud library item (with `data->meta`).
+	 * @return array List of companion cloud item ids (empty when none recorded).
+	 */
+	protected function get_companion_item_ids( $item ) {
+		$meta = $item->data->meta ?? null;
+		$raw  = ( $meta && isset( $meta->{self::COMPANION_ITEMS_META}[0] ) )
+			? $meta->{self::COMPANION_ITEMS_META}[0]
+			: '';
+
+		if ( ! $raw ) {
+			return [];
+		}
+
+		$ids = json_decode( $raw, true );
+
+		return is_array( $ids ) ? array_map( 'absint', $ids ) : [];
 	}
 
 	/**
@@ -460,15 +615,26 @@ class LibraryItemPostController extends ControllerAbstract {
 			}
 			if ( is_array( $meta_value ) && count( $meta_value ) !== 0 ) {
 				foreach ( $meta_value as $value ) {
-					if ( $value !== null ) {
-						$value = addslashes( $value );
-					}
-					// @codingStandardsIgnoreStart
-					$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" );
-					// @codingStandardsIgnoreEnd
+					// Store the (already-serialized) value verbatim via $wpdb->insert
+					// so escaping follows the DB connection. The former hand-rolled
+					// addslashes() + raw INSERT silently failed on hosts running
+					// NO_BACKSLASH_ESCAPES (large builder blobs never stored → blank
+					// imports); $wpdb->insert() is escape-safe on any sql_mode.
+					$wpdb->insert(
+						$wpdb->postmeta,
+						[
+							'post_id'    => $post_id,
+							'meta_key'   => $meta_key,
+							'meta_value' => $value,
+						]
+					);
 				}
 			}
 		}
+
+		// The direct writes bypass the meta cache; flush it so same-request reads
+		// (asset regeneration) and object-cache hosts see the imported meta.
+		clean_post_cache( $post_id );
 	}
 
 	/**
@@ -647,6 +813,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function replace_imported_attachment_urls_in_meta( $post_id, $imported ) {
+		global $wpdb;
 		$meta = get_post_meta( $post_id );
 
 		foreach ( $meta as $key => $val ) {
@@ -657,13 +824,27 @@ class LibraryItemPostController extends ControllerAbstract {
 			} elseif ( JsonHelper::is_string_json( $val ) ) {
 				$val = json_decode( $val );
 				$val = MediaPathHelper::replace_imported_attachment_urls_in_data( $val, $imported );
-				$val = wp_slash( json_encode( $val ) );
+				$val = json_encode( $val );
 			} else {
 				$val = MediaPathHelper::replace_imported_attachment_urls_in_string( $val, $imported );
 			}
 
-			update_post_meta( $post_id, $key, $val );
+			// Write via $wpdb, not update_post_meta(): the latter unslashes the
+			// value internally, which strips escaped characters buried in nested
+			// serialized data (e.g. the \" in each module's ds_block_data JSON)
+			// and corrupts _fl_builder_data, leaving ds-block pages blank on
+			// import. maybe_serialize() + a direct update preserves the bytes.
+			$wpdb->update(
+				$wpdb->postmeta,
+				[ 'meta_value' => maybe_serialize( $val ) ],
+				[
+					'post_id'  => $post_id,
+					'meta_key' => $key,
+				]
+			);
 		}
+
+		clean_post_cache( $post_id );
 	}
 
 	/**
