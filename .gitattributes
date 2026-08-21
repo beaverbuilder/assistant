@@ -1,0 +1,17 @@
+# Line endings are normalized to LF in the repo and on checkout, so a release cut
+# on Windows produces byte-identical files to one cut on macOS or Linux. Without
+# this, a Windows checkout (git defaults to core.autocrlf=true there) yields a
+# CRLF working tree, and the resulting plugin build differs from every other
+# machine's on every line.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.zip binary
