@@ -8,25 +8,14 @@ import { getRequestConfig } from './config'
 
 /**
  * Search result detail screens reuse the same page components the Content and
- * Media apps render, and those pass CloudUI down by hand because system pages
- * can't import it directly (the system bundle treats assistant/data as an
- * external, so importing cloud-ui there is circular). Rendering them here
- * without it left CloudUI undefined and Save to Library threw on
- * CloudUI.Uploader. See #523.
- *
- * Cached per component so the wrapper identity is stable across renders —
- * a fresh function on every render would remount the detail screen.
+ * Media apps render, and those take CloudUI as a prop because system pages
+ * can't import it themselves — cloud-ui imports assistant/data, which is an
+ * external pointing at the global the system bundle itself defines. Render
+ * them without it and Save to Library throws on CloudUI.Uploader. See #523.
  */
-const detailRenderers = new Map()
-
-const getDetailRenderer = Component => {
-	if ( ! detailRenderers.has( Component ) ) {
-		detailRenderers.set( Component, props => (
-			<Component { ...props } CloudUI={ CloudUI } />
-		) )
-	}
-	return detailRenderers.get( Component )
-}
+const renderDetail = Component => props => (
+	<Component { ...props } CloudUI={ CloudUI } />
+)
 
 // Setup config like this
 export default props => {
@@ -48,7 +37,7 @@ export default props => {
 							<Route
 								key={ key }
 								path={ baseURL + addLeadingSlash( detail.path ) }
-								render={ getDetailRenderer( detail.component ) }
+								render={ renderDetail( detail.component ) }
 							/>
 						)
 					}
@@ -59,7 +48,7 @@ export default props => {
 							<Route
 								key={ key }
 								path={ `${baseURL}/all` + addLeadingSlash( detail.path ) }
-								render={ getDetailRenderer( detail.component ) }
+								render={ renderDetail( detail.component ) }
 							/>
 						)
 					}
