@@ -539,7 +539,6 @@ export const Post = ( { location, match, history, CloudUI } ) => {
 			footer={ hasChanges && false === item.hasLock && <Footer /> }
 			tabs={ tabs }
 			onLoad={ focusFirstInput }
-			disable={ item.hasLock }
 		>
 			{item.hasLock && (
 				<Layout.Message status='alert' icon={ Icon.Reject }>
