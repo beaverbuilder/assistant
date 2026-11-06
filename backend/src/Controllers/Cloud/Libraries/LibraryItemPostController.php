@@ -230,9 +230,9 @@ class LibraryItemPostController extends ControllerAbstract {
 	 */
 	public function get_save_data( $request, $post ) {
 		$data = [
-			'name'       => $post->post_title,
-			'type'       => 'post',
-			'post_data'       => [
+			'name'      => $post->post_title,
+			'type'      => 'post',
+			'post_data' => [
 				'post'  => [
 					'comment_status' => $post->comment_status,
 					'menu_order'     => $post->menu_order,
@@ -248,11 +248,15 @@ class LibraryItemPostController extends ControllerAbstract {
 				'terms' => $this->get_post_terms( $post ),
 
 			],
-			'media'      => [
+			'media'     => [
 				'attachments' => $this->get_post_image_paths( $post ),
 			],
-			'screenshot' => $this->get_post_screenshot( $request, $post ),
 		];
+
+		// Omit rather than fall back to HTML: the cloud's HTML screenshot path fails and clears the existing thumb (#530).
+		if ( $request->get_param( 'screenshot' ) ) {
+			$data['screenshot'] = $this->get_post_screenshot( $request, $post );
+		}
 
 		$thumbnail = get_attached_file( get_post_thumbnail_id( $post ) );
 
