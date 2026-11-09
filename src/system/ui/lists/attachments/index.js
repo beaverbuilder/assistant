@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import classname from 'classnames'
 import { __ } from '@wordpress/i18n'
 import { List, Button, Icon, Media, Layout } from 'ui'
-import Clipboard from 'react-clipboard.js'
+import copy from 'copy-to-clipboard'
 import { getSystemSelectors } from 'data'
 import { getWpRest } from 'utils/wordpress'
 import { getSrcSet } from 'utils/image'
@@ -62,14 +62,14 @@ const Attachments = ( {
 							>
 								<Icon.View />
 							</Button>
-							<Clipboard
+							<Button
 								title={ __( 'Copy URL' ) }
-								button-tabIndex={ '-1' }
-								button-className={ 'fluid-button fluid-appearance-transparent' }
-								data-clipboard-text={ item.url }
+								tabIndex="-1"
+								onClick={ () => copy( item.url ) }
+								appearance="transparent"
 							>
 								<Icon.Link />
-							</Clipboard>
+							</Button>
 							<Button
 								title={ __( 'Edit in Admin' ) }
 								tabIndex="-1"
