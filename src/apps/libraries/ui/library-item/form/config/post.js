@@ -120,9 +120,19 @@ const UpdateButton = ( { item } ) => {
 				// Screenshots on the server are broken, so we're doing it with JS for now.
 				// This can be replaced with the code below when that's fixed.
 				postsApi.findById( id ).then( ( { data } ) => {
-					Uploader.screenshotUrl( data.previewUrl ).then( screenshot => {
-						doRequest( screenshot )
+					Uploader.screenshotUrl( data.previewUrl ).then( doRequest, error => {
+						console.error( 'Screenshot failed, updating without one.', error )
+						doRequest()
 					} )
+				} ).catch( error => {
+					console.error( error )
+					createNotice( {
+						status: 'error',
+						content: __( 'Error updating library item.' ),
+						shouldDismiss: false,
+					} )
+					setUpdating( false )
+					closeDialog()
 				} )
 
 				// if ( isLocalhost ) {
