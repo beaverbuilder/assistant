@@ -27,6 +27,16 @@ class LibraryItemCodeController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function import( $request ) {
+
+		// Importing a code item creates an fl_code snippet that prints unescaped, so gate it on unfiltered_html (GHSA-cjjx-c59g-8xgf).
+		if ( ! current_user_can( 'unfiltered_html' ) ) {
+			return rest_ensure_response(
+				[
+					'error' => true,
+				]
+			);
+		}
+
 		$item = $request->get_param( 'item' );
 
 		if ( ! $item ) {

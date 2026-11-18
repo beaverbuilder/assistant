@@ -266,31 +266,52 @@ class PostsController extends ControllerAbstract {
 	 * Creates a single post.
 	 */
 	public function create_post( $request ) {
-		global $wpdb;
-
 		$params = $request->get_params();
+		$post_type = isset( $params['post_type'] ) ? $params['post_type'] : 'post';
+		$type_object = get_post_type_object( $post_type );
+
+		// Authorize against the requested post type, not just the coarse route cap.
+		if ( ! $type_object || ! current_user_can( $type_object->cap->create_posts ) ) {
+			return [ 'error' => true ];
+		}
+
+		// Code snippets print unescaped on the front end, so gate them on unfiltered_html (GHSA-cjjx-c59g-8xgf).
+		if ( 'fl_code' === $post_type && ! current_user_can( 'unfiltered_html' ) ) {
+			return [ 'error' => true ];
+		}
+
 		$meta_inputs = isset( $params['meta_input'] ) ? $params['meta_input'] : [];
 		unset( $params['meta_input'] );
 		$id = wp_insert_post( $params );
 
-		if ( isset( $meta_inputs ) && is_array( $meta_inputs ) && ! empty( $meta_inputs ) ) {
-
-			foreach ( $meta_inputs as $meta_key => $meta_value ) {
-				$meta_key = sanitize_key( $meta_key );
-				if ( null !== $meta_value ) {
-					$meta_value = addslashes( $meta_value );
-				}
-				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$id}, '{$meta_key}', '{$meta_value}')" );
-			}
-		}
-
 		if ( ! $id || is_wp_error( $id ) ) {
-			return [
-				'error' => true,
-			];
+			return [ 'error' => true ];
 		}
+
+		$this->save_meta_inputs( $id, $meta_inputs );
 
 		return $this->transform( get_post( $id ) );
+	}
+
+	/**
+	 * Stores create_post meta through the core API, dropping serialized payloads.
+	 *
+	 * @param int   $id
+	 * @param mixed $meta_inputs
+	 * @return void
+	 */
+	private function save_meta_inputs( $id, $meta_inputs ) {
+		if ( ! is_array( $meta_inputs ) ) {
+			return;
+		}
+
+		foreach ( $meta_inputs as $meta_key => $meta_value ) {
+			// Reject serialized strings so a crafted value cannot be unserialized into an object on read.
+			if ( is_string( $meta_value ) && is_serialized( $meta_value ) ) {
+				continue;
+			}
+			add_post_meta( $id, sanitize_key( $meta_key ), wp_slash( $meta_value ) );
+		}
 	}
 
 	/**
@@ -349,6 +370,15 @@ class PostsController extends ControllerAbstract {
 		$action = $request->get_param( 'action' );
 
 		if ( ! current_user_can( 'edit_post', $id ) ) {
+			return rest_ensure_response(
+				[
+					'error' => true,
+				]
+			);
+		}
+
+		// Editing a code snippet (body, enable flag, or locations) is gated on unfiltered_html (GHSA-cjjx-c59g-8xgf).
+		if ( 'fl_code' === get_post_type( $id ) && ! current_user_can( 'unfiltered_html' ) ) {
 			return rest_ensure_response(
 				[
 					'error' => true,

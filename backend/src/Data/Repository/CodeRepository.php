@@ -16,10 +16,11 @@ class CodeRepository {
 	 * @return \WP_Query
 	 */
 	public function query( array $args = [] ) {
+		// No 'perm' => 'editable': this query renders snippets to every front-end visitor (including logged-out),
+		// not only ones the current user can edit. Author trust is enforced by the unfiltered_html check at render.
 		$args = array_merge(
 			$args, [
-				'post_status' => 'published',
-				'perm'        => 'editable',
+				'post_status' => 'publish',
 				'post_type'   => 'fl_code',
 			]
 		);
@@ -71,6 +72,12 @@ class CodeRepository {
 		if( ! empty( $code_data ) ) {
 			foreach( $code_data as $post ) {
 				$id = $post->ID;
+
+				// Only render snippets whose author still holds unfiltered_html (GHSA-cjjx-c59g-8xgf) - covers pre-existing snippets and demoted authors.
+				if ( ! user_can( $post->post_author, 'unfiltered_html' ) ) {
+					continue;
+				}
+
 				$code = get_post_meta( $id, '_fl_asst_code', true );
 				$code_type = get_post_meta( $id, '_fl_asst_code_type', true );
 				$locations = get_post_meta( $id, '_fl_asst_code_locations', true );
