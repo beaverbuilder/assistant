@@ -1,0 +1,61 @@
+name: Label Issue on PR Submission or Approval
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  label_issue:
+    # Skip draft PRs, and on the review event only act on an approval.
+    if: >-
+      github.event.pull_request.draft == false &&
+      (github.event_name == 'pull_request' || github.event.review.state == 'approved')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add label to linked issue
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            // The only thing the two events change is which label gets applied.
+            const label = context.eventName === 'pull_request_review'
+              ? 'status: approved'
+              : 'status: has pull request';
+            console.log(`Event: ${context.eventName} -> label: ${label}`);
+            console.log(`PR Body: ${pr.body}`);
+            const linkedIssues = (pr.body || '').match(/(fixe?s?|closes?|resolves?)\s+#(\d+)/gi) || [];
+
+            if (linkedIssues.length > 0) {
+              for (const issue of linkedIssues) {
+                // Extract just the number part (the digits after the # symbol)
+                const issueNumber = issue.match(/#(\d+)/)[1];  // Extract the digits after '#'
+                console.log(`Attempting to add label to issue #${issueNumber}`);
+
+                try {
+                  // Check if issue is open before labeling
+                  const issueData = await github.rest.issues.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: parseInt(issueNumber)
+                  });
+
+                  if (issueData.data.state === 'open' && !issueData.data.locked) {
+                    const response = await github.rest.issues.addLabels({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: parseInt(issueNumber),
+                      labels: [label]
+                    });
+                    console.log(`Label added to issue #${issueNumber}:`, response.data);
+                  } else {
+                    console.log(`Skipping issue #${issueNumber}: state=${issueData.data.state}, locked=${issueData.data.locked}`);
+                  }
+                } catch (error) {
+                  console.error(`Failed to add label to issue #${issueNumber}: ${error.message}`);
+                }
+              }
+            } else {
+              console.log('No linked issues found in PR body.');
+            }

@@ -11,7 +11,7 @@ const Rules = ( { item, onChange } ) => {
 	const { contentTypes } = getSystemConfig()
 	const typesData = Object.entries( contentTypes )
 	const exclude_types = ['fl-builder-template', 'fl_code', 'fl-theme-layout']
-	const types = typesData.filter( t => true === t[1].canView && !exclude_types.includes( t[0] ) )
+	const types = typesData.filter( t => true === t[1].hasPublicUrl && !exclude_types.includes( t[0] ) )
 	const locations = '' !== item.locations ? ( Array.isArray( item.locations ) ? item.locations : Object.values(item.locations) ) : [{
 		type: '',
 		operator: '',

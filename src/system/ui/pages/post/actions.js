@@ -89,7 +89,10 @@ export const getPostActions = ( { history, values, setValue, createNotice, Cloud
 		{
 			label: contentTypes[type].labels.viewItem,
 			href: url,
-			shouldRender: contentTypes[type].canView
+
+			// Types can be listed in Assistant without having a front-end permalink,
+			// so gate the View action on hasPublicUrl rather than canView.
+			shouldRender: contentTypes[type].hasPublicUrl
 		},
 		{
 			label: __( 'Edit in Admin' ),

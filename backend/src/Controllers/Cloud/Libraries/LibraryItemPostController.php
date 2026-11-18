@@ -234,17 +234,17 @@ class LibraryItemPostController extends ControllerAbstract {
 	 *
 	 * @param object $request
 	 * @param object $post
-	 * @param bool   $with_screenshot Whether to capture a front-end screenshot.
-	 *                                Companion posts that never render on the
-	 *                                front end (e.g. a design system) pass false
-	 *                                to skip a wasteful headless capture.
+	 * @param bool   $with_screenshot Whether to attach the client's screenshot.
+	 *                                Companion posts (e.g. a design system) pass
+	 *                                false: the request's screenshot is of the
+	 *                                primary post, not of them.
 	 * @return array
 	 */
 	public function get_save_data( $request, $post, $with_screenshot = true ) {
 		$data = [
-			'name'       => $post->post_title,
-			'type'       => 'post',
-			'post_data'       => [
+			'name'      => $post->post_title,
+			'type'      => 'post',
+			'post_data' => [
 				'post'  => [
 					'comment_status' => $post->comment_status,
 					'menu_order'     => $post->menu_order,
@@ -260,11 +260,15 @@ class LibraryItemPostController extends ControllerAbstract {
 				'terms' => $this->get_post_terms( $post ),
 
 			],
-			'media'      => [
+			'media'     => [
 				'attachments' => $this->get_post_image_paths( $post ),
 			],
-			'screenshot' => $with_screenshot ? $this->get_post_screenshot( $request, $post ) : null,
 		];
+
+		// Omit rather than fall back to HTML: the cloud's HTML screenshot path fails and clears the existing thumb (#530).
+		if ( $with_screenshot && $request->get_param( 'screenshot' ) ) {
+			$data['screenshot'] = $this->get_post_screenshot( $request, $post );
+		}
 
 		$thumbnail = get_attached_file( get_post_thumbnail_id( $post ) );
 

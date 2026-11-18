@@ -147,6 +147,15 @@ class PostsRepository extends RepositoryAbstract {
 			'fl_code',
 		] );
 
+		// Of the types above, those whose items are portable enough to bulk add to a
+		// cloud library. Opt-in only: block templates are scoped to a theme via the
+		// wp_theme taxonomy and code snippets have their own library item type, so
+		// neither belongs in the upload picker. Design systems are portable by UUID,
+		// so they do.
+		$library = apply_filters( 'fl_assistant_post_types_library', [
+			'fl-design-system',
+		] );
+
 		// Types to never show
 		$ignore = [
 			'attachment',
@@ -175,7 +184,8 @@ class PostsRepository extends RepositoryAbstract {
 			}
 
 			$data[ $slug ] = [
-				'canView'        => $type->public || $type->publicly_queryable || in_array( $slug, $known ),
+				'canView'        => $type->public || $type->publicly_queryable || in_array( $slug, $library ),
+				'hasPublicUrl'   => $type->public || $type->publicly_queryable,
 				'canExport'      => $type->can_export,
 				'hasArchive'     => $type->has_archive,
 				'isHierarchical' => $type->hierarchical,

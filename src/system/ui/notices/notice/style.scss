@@ -8,6 +8,12 @@
         border-bottom: 1px solid var(--fluid-opaque-10);
         pointer-events: auto;
 
+        // Core renders .components-notice as a grid with align-items: start, which
+        // leaves the content hugging the top of our 60px bar, and rounds the corners
+        // of what should be a flat edge-to-edge notice.
+        align-items: center;
+        border-radius: 0;
+
         &.is-info {
             color: var(--fluid-primary-color);
             background: var(--fluid-primary-background);
