@@ -133,6 +133,15 @@ class PostsRepository extends RepositoryAbstract {
 	}
 
 	/**
+	 * Returns the non-public post types whose items are portable enough for a cloud library.
+	 *
+	 * @return string[]
+	 */
+	public static function get_library_post_types() {
+		return (array) apply_filters( 'fl_assistant_post_types_library', [ 'fl-design-system' ] );
+	}
+
+	/**
 	 * Get array of post types registered in WordPress
 	 * @return array
 	 */
@@ -152,9 +161,7 @@ class PostsRepository extends RepositoryAbstract {
 		// wp_theme taxonomy and code snippets have their own library item type, so
 		// neither belongs in the upload picker. Design systems are portable by UUID,
 		// so they do.
-		$library = apply_filters( 'fl_assistant_post_types_library', [
-			'fl-design-system',
-		] );
+		$library = self::get_library_post_types();
 
 		// Types to never show
 		$ignore = [

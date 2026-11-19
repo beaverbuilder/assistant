@@ -4,10 +4,12 @@ namespace FL\Assistant\Controllers\Cloud\Libraries;
 
 use FL\Assistant\System\Contracts\ControllerAbstract;
 use FL\Assistant\Data\Transformers\PostTransformer;
+use FL\Assistant\Helpers\CompanionPostsHelper;
 use FL\Assistant\Helpers\PreviewHelper;
 use FL\Assistant\Helpers\JsonHelper;
 use FL\Assistant\Helpers\MediaPathHelper;
 use FL\Assistant\Helpers\ScreenshotHelper;
+use FL\Assistant\Services\LibraryPostImporter;
 use FL\Assistant\Services\MediaLibraryService;
 use FL\Assistant\Clients\Cloud\CloudClient;
 
@@ -194,7 +196,7 @@ class LibraryItemPostController extends ControllerAbstract {
 			$request->set_param( 'id', $meta->post_id );
 			$response = $this->sync_from_library( $request );
 		} else {
-			$response = $this->import_from_library( $request );
+			$response = $this->import_library_post( $request, false );
 		}
 
 		if ( isset( $response->data['error'] ) ) {
@@ -229,29 +231,21 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function get_save_data( $request, $post ) {
-		$data = [
+		$companions = CompanionPostsHelper::collect( $post );
+		$data       = [
 			'name'      => $post->post_title,
 			'type'      => 'post',
-			'post_data' => [
-				'post'  => [
-					'comment_status' => $post->comment_status,
-					'menu_order'     => $post->menu_order,
-					'ping_status'    => $post->ping_status,
-					'post_content'   => $post->post_content,
-					'post_excerpt'   => $post->post_excerpt,
-					'post_mime_type' => $post->post_mime_type,
-					'post_name'      => $post->post_name,
-					'post_title'     => $post->post_title,
-					'post_type'      => $post->post_type,
-				],
-				'meta'  => get_post_meta( $post->ID ),
-				'terms' => $this->get_post_terms( $post ),
-
-			],
+			'post_data' => $this->get_post_data( $post ),
 			'media'     => [
 				'attachments' => $this->get_post_image_paths( $post ),
 			],
 		];
+
+		// Companions travel inside this item, so a copied or moved item keeps them.
+		if ( $companions ) {
+			$entries = array_map( [ $this, 'get_post_data' ], $companions );
+			$data['post_data']['meta'][ CompanionPostsHelper::META_KEY ] = [ CompanionPostsHelper::encode( $entries ) ];
+		}
 
 		// Omit rather than fall back to HTML: the cloud's HTML screenshot path fails and clears the existing thumb (#530).
 		if ( $request->get_param( 'screenshot' ) ) {
@@ -265,6 +259,34 @@ class LibraryItemPostController extends ControllerAbstract {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Gets the post, meta and terms a library item stores for a post.
+	 *
+	 * @param object $post
+	 * @return array
+	 */
+	protected function get_post_data( $post ) {
+		$meta = get_post_meta( $post->ID );
+
+		unset( $meta[ CompanionPostsHelper::META_KEY ] );
+
+		return [
+			'post'  => [
+				'comment_status' => $post->comment_status,
+				'menu_order'     => $post->menu_order,
+				'ping_status'    => $post->ping_status,
+				'post_content'   => $post->post_content,
+				'post_excerpt'   => $post->post_excerpt,
+				'post_mime_type' => $post->post_mime_type,
+				'post_name'      => $post->post_name,
+				'post_title'     => $post->post_title,
+				'post_type'      => $post->post_type,
+			],
+			'meta'  => $meta,
+			'terms' => $this->get_post_terms( $post ),
+		];
 	}
 
 	/**
@@ -323,69 +345,67 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return array
 	 */
 	public function import_from_library( $request ) {
+		return $this->import_library_post( $request, true );
+	}
+
+	/**
+	 * Imports a library post, optionally with the companions embedded in it.
+	 *
+	 * @param object $request
+	 * @param bool   $with_companions
+	 * @return \WP_REST_Response
+	 */
+	protected function import_library_post( $request, $with_companions ) {
 		$data = $request->get_param( 'item' );
 		$item = $data ? json_decode( $data ) : null;
 
 		if ( ! $item ) {
-			return rest_ensure_response(
-				[
-					'error' => true,
-				]
-			);
+			return rest_ensure_response( [ 'error' => true ] );
 		}
 
 		$client = new CloudClient;
-		$item = $client->libraries->get_item( $item->id );
+		$item   = $client->libraries->get_item( $item->id );
+		$result = $this->importer()->import_item( $item );
 
-		$registered_post_types = get_post_types();
-
-		if ( ! in_array( $item->data->post->post_type, $registered_post_types ) ) {
-			return rest_ensure_response(
-				[
-					'error' => true,
-					'error_code' => 'post_type_not_registered',
-					'post_type' => $item->data->post->post_type,
-				]
-			);
+		if ( is_wp_error( $result ) ) {
+			return rest_ensure_response( $this->get_import_error_data( $result ) );
 		}
 
-		$post_data = $item->data->post;
-		$meta_data = $item->data->meta;
-		$term_data = $item->data->terms;
+		$response = $this->posts->transform( get_post( $result ) );
+		$errors   = $with_companions ? $this->importer()->import_companions( $item ) : [];
 
-		$new_post_id = wp_insert_post(
-			[
-				'comment_status' => $post_data->comment_status,
-				'menu_order'     => $post_data->menu_order,
-				'ping_status'    => $post_data->ping_status,
-				'post_author'    => wp_get_current_user()->ID,
-				'post_content'   => $post_data->post_content ? $post_data->post_content : '',
-				'post_excerpt'   => $post_data->post_excerpt ? $post_data->post_excerpt : '',
-				'post_mime_type' => $post_data->post_mime_type ? $post_data->post_mime_type : '',
-				'post_name'      => $post_data->post_name,
-				'post_status'    => 'publish',
-				'post_title'     => $post_data->post_title,
-				'post_type'      => $post_data->post_type,
-			]
-		);
-
-		if ( is_wp_error( $new_post_id ) ) {
-			return rest_ensure_response(
-				[
-					'error' => true,
-				]
-			);
+		if ( $errors ) {
+			$response['companion_errors'] = CompanionPostsHelper::report_errors( $errors );
 		}
 
-		$this->import_post_meta_from_library( $new_post_id, $meta_data );
-		$this->import_post_terms_from_library( $new_post_id, $term_data );
-		$this->regenerate_builder_cache( $new_post_id, $item );
+		return rest_ensure_response( $response );
+	}
 
-		return rest_ensure_response(
-			$this->posts->transform(
-				get_post( $new_post_id )
-			)
-		);
+	/**
+	 * Returns the importer that creates local posts from library items.
+	 *
+	 * @return LibraryPostImporter
+	 */
+	protected function importer() {
+		return new LibraryPostImporter();
+	}
+
+	/**
+	 * Maps a failed import to the error shape the client reads.
+	 *
+	 * @param \WP_Error $error
+	 * @return array
+	 */
+	protected function get_import_error_data( $error ) {
+		if ( 'post_type_not_registered' !== $error->get_error_code() ) {
+			return [ 'error' => true ];
+		}
+
+		return [
+			'error'      => true,
+			'error_code' => 'post_type_not_registered',
+			'post_type'  => $error->get_error_data()['post_type'],
+		];
 	}
 
 	/**
@@ -447,32 +467,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function import_post_meta_from_library( $post_id, $meta ) {
-		global $wpdb;
-
-		if ( ! $meta || ! is_object( $meta ) ) {
-			return;
-		}
-
-		if ( isset( $meta->_fl_builder_data ) ) {
-			$meta->_fl_builder_draft = $meta->_fl_builder_data;
-			$meta->_fl_builder_draft_settings = $meta->_fl_builder_data_settings;
-		}
-
-		foreach ( $meta as $meta_key => $meta_value ) {
-			if ( metadata_exists( 'post', $post_id, $meta_key ) ) {
-				delete_metadata( 'post', $post_id, $meta_key );
-			}
-			if ( is_array( $meta_value ) && count( $meta_value ) !== 0 ) {
-				foreach ( $meta_value as $value ) {
-					if ( $value !== null ) {
-						$value = addslashes( $value );
-					}
-					// @codingStandardsIgnoreStart
-					$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$post_id}, '{$meta_key}', '{$value}')" );
-					// @codingStandardsIgnoreEnd
-				}
-			}
-		}
+		$this->importer()->import_meta( $post_id, $meta );
 	}
 
 	/**
@@ -483,48 +478,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function import_post_terms_from_library( $post_id, $terms ) {
-		$terms = is_object( $terms ) ? [ $terms ] : $terms;
-
-		if ( ! $terms || ! is_array( $terms ) || 0 === count( $terms ) ) {
-			return;
-		}
-
-		$taxonomies = get_taxonomies( '', 'objects' );
-		$taxonomy_terms = [];
-
-		foreach ( $terms as $term ) {
-			if ( ! isset( $term->name ) || ! isset( $term->taxonomy ) ) {
-				continue;
-			} elseif ( ! taxonomy_exists( $term->taxonomy ) ) {
-				continue;
-			} elseif ( ! isset( $taxonomy_terms ) ) {
-				$taxonomy_terms[ $term->taxonomy ] = [];
-			}
-
-			$existing_term = term_exists( $term->slug, $term->taxonomy );
-			$is_hierarchical = ! ! $taxonomies[ $term->taxonomy ]->hierarchical;
-
-			if ( is_array( $existing_term ) ) {
-				$term_id = $is_hierarchical ? $existing_term['term_taxonomy_id'] : $term->name;
-			} else {
-				$new_term = wp_insert_term(
-					$term->name,
-					$term->taxonomy,
-					[
-						'description' => $term->description,
-						'slug'        => $term->slug,
-					]
-				);
-				$term_id = $is_hierarchical ? $new_term['term_taxonomy_id'] : $term->name;
-			}
-
-			$taxonomy_terms[ $term->taxonomy ][] = $term_id;
-		}
-
-		foreach ( $taxonomy_terms as $taxonomy => $terms ) {
-			wp_delete_object_term_relationships( $post_id, $taxonomy );
-			wp_set_post_terms( $post_id, $terms, $taxonomy, true );
-		}
+		$this->importer()->import_terms( $post_id, $terms );
 	}
 
 	/**
@@ -651,6 +605,7 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function replace_imported_attachment_urls_in_meta( $post_id, $imported ) {
+		global $wpdb;
 		$meta = get_post_meta( $post_id );
 
 		foreach ( $meta as $key => $val ) {
@@ -661,13 +616,23 @@ class LibraryItemPostController extends ControllerAbstract {
 			} elseif ( JsonHelper::is_string_json( $val ) ) {
 				$val = json_decode( $val );
 				$val = MediaPathHelper::replace_imported_attachment_urls_in_data( $val, $imported );
-				$val = wp_slash( json_encode( $val ) );
+				$val = json_encode( $val );
 			} else {
 				$val = MediaPathHelper::replace_imported_attachment_urls_in_string( $val, $imported );
 			}
 
-			update_post_meta( $post_id, $key, $val );
+			// update_post_meta() unslashes, which strips the escapes inside nested JSON such as ds_block_data.
+			$wpdb->update(
+				$wpdb->postmeta,
+				[ 'meta_value' => maybe_serialize( $val ) ],
+				[
+					'post_id'  => $post_id,
+					'meta_key' => $key,
+				]
+			);
 		}
+
+		clean_post_cache( $post_id );
 	}
 
 	/**
@@ -695,13 +660,6 @@ class LibraryItemPostController extends ControllerAbstract {
 	 * @return void
 	 */
 	public function regenerate_builder_cache( $post_id, $item ) {
-		$meta = (array) $item->data->meta;
-
-		if ( isset( $meta['_fl_builder_data'] ) && class_exists( '\FLBuilderModel' ) ) {
-			\FLBuilderModel::delete_all_asset_cache( $post_id );
-		}
-		if ( isset( $meta['_elementor_data'] ) && class_exists( 'Elementor\Plugin' ) ) {
-			\Elementor\Plugin::$instance->files_manager->clear_cache();
-		}
+		$this->importer()->regenerate_builder_cache( $post_id, $item );
 	}
 }
