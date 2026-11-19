@@ -1,7 +1,7 @@
 import React from 'react'
 import classname from 'classnames'
-import Clipboard from 'react-clipboard.js'
-import { Icon } from 'ui'
+import copy from 'copy-to-clipboard'
+import { Button, Icon } from 'ui'
 import './style.scss'
 
 export const URLControl = ( { value: url, className, ...rest } ) => {
@@ -12,7 +12,7 @@ export const URLControl = ( { value: url, className, ...rest } ) => {
 				<a href={ url }>{url}</a>
 			</div>
 			<div className="fl-asst-control-url-actions">
-				<Clipboard data-clipboard-text={ url } button-className={ 'fluid-button fluid-appearance-transparent' }><Icon.Link /></Clipboard>
+				<Button appearance="transparent" onClick={ () => copy( url ) }><Icon.Link /></Button>
 			</div>
 		</div>
 	)
