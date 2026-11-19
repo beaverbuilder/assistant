@@ -19,7 +19,7 @@ todos:
     status: completed
   - id: pr-body
     content: "Rewrite the PR body for the new format"
-    status: pending
+    status: completed
 ---
 
 # Embed companion posts in the page library item
@@ -97,7 +97,7 @@ Manual, on the local site with Beaver Builder Platform active: save a page with 
 
 ## Implementation Notes (2026-11-19)
 
-- Steps 1 to 6 are done in the working tree, uncommitted. The PR body is drafted but not applied, because the code is not pushed yet.
+- All steps are done: code pushed as 7cc55b15 and the PR body rewritten on 2026-11-19.
 - Not tested: the "`$with_companions` false creates nothing" case. `import_library_post()` builds a `CloudClient` and fetches the item over the network, so it has no unit seam; the preview path is covered by the manual check only.
 - Added beyond the step list: `get_import_error_data()` and `report_companion_errors()`, split out to keep `import_library_post()` under 30 lines; the unregistered-type and insert errors now carry the post title as `name` in their error data so the report can name the companion.
 - Unit suite: the 12 `LibraryItemPost*` tests pass. `TermsControllerTest::test_can_get_terms`, four `PostRepositoryTest` tests and `SearchControllerTest::test_can_search` fail in this worktree and fail the same way on another branch of the main checkout, so they are not from this change.
