@@ -103,3 +103,13 @@ Manual, on the local site with Beaver Builder Platform active: save a page with 
 - Unit suite: the 12 `LibraryItemPost*` tests pass. `TermsControllerTest::test_can_get_terms`, four `PostRepositoryTest` tests and `SearchControllerTest::test_can_search` fail in this worktree and fail the same way on another branch of the main checkout, so they are not from this change.
 - `composer lint` cannot find `WordPress-Core` without `--runtime-set installed_paths vendor/wp-coding-standards/wpcs`. With it, the only findings in the changed files are on legacy lines this change does not touch (the `if ($thumbnail)` and two `if (isset($response->success)` lines).
 - Manual testing against a cloud library has not been run.
+
+## Review follow-up (2026-11-19)
+
+A second review at ff2be3be1 raised two things, both fixed:
+
+- **File size.** The controller had grown past its size on main. `import_item()`, `get_insert_post_args()`, `import_companions()` and the bodies of the meta, terms and builder cache imports moved to a new `Services/LibraryPostImporter` (about 230 lines); the three public controller methods remain as one-line delegates, so their signatures are unchanged. Error reporting moved to `CompanionPostsHelper::report_errors()`. The controller is 665 lines, down from 707 on main.
+- **Companion post types.** A companion is imported only when its post type is library-portable: the list behind the existing `fl_assistant_post_types_library` filter (default `fl-design-system`), now read through `PostsRepository::get_library_post_types()`. Anything else comes back as a `companion_type_not_allowed` error. The embedded data can come from a library another user authored, so it must not choose its own post type.
+- The Context claim that the embedded data survives a library duplicate is unverified: the cloud's duplicate appears to copy items without `post_data` at all, companions or not. Removed from the PR body.
+- Left open from that review: the UI does not show `companion_errors`; preview and the response key have no unit test (no seam for the cloud fetch); `sync_from_library` does not import companions; a null meta value is now stored as SQL NULL; the stored value has no version wrapper.
+

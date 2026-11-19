@@ -67,4 +67,28 @@ class CompanionPostsHelper {
 
 		return $items;
 	}
+
+	/**
+	 * Logs companion import failures and returns them in the shape the response carries.
+	 *
+	 * @param \WP_Error[] $errors
+	 * @return array
+	 */
+	public static function report_errors( $errors ) {
+		$reported = [];
+
+		foreach ( $errors as $error ) {
+			$data = (array) $error->get_error_data();
+			$name = isset( $data['name'] ) ? $data['name'] : '';
+
+			error_log( sprintf( 'Assistant: companion "%s" was not imported: %s', $name, $error->get_error_message() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+
+			$reported[] = [
+				'name' => $name,
+				'code' => $error->get_error_code(),
+			];
+		}
+
+		return $reported;
+	}
 }
